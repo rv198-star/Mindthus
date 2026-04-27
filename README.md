@@ -10,6 +10,15 @@ Short formulation:
 
 > Mindthus turns personal philosophy and methodology into durable `AGENTS.md` instructions and independent `SKILLS` that agents can actually use.
 
+Mindthus can also be installed as a namespaced skills pack for Codex:
+
+- `mindthus:using-mindthus`
+- `mindthus:sela`
+- `mindthus:3l5s`
+- `mindthus:edsp`
+- `mindthus:wae`
+- `mindthus:tvg`
+
 ## Project Posture
 
 The root agent stance is:
@@ -27,6 +36,7 @@ Mindthus is organized through two surfaces:
 
 Current skills:
 
+- `skills/using-mindthus/` — portable AGENTS-style entry skill for Mindthus posture and routing.
 - `skills/sela/` — top-level decision principle: System Efficiency over Local Advantage.
 - `skills/3l5s/` — structures vague, complex, or system-level problems through `Three Layers + Five Steps` (`三层五步`): `Discovery / Definition / Resolution` plus `Baseline -> Target -> Gap -> Strategy -> Breakdown`.
 - `skills/edsp/` — handles ambiguous qualitative judgments through Extreme Deduction + Scenario Projection.
@@ -34,6 +44,12 @@ Current skills:
 - `skills/tvg/` — value-driven thinking-depth enhancer for shallow AI-generated artifacts.
 
 Skill-specific resources live under `skills/*/resources/` so each skill can be used independently. Root-level files should stay limited to project orientation and agent posture.
+
+## Install As A Skills Pack
+
+See [.codex/INSTALL.md](/root/mindthus/.codex/INSTALL.md).
+
+The intended namespace is `mindthus`, so installation exposes the skills as `mindthus:*`.
 
 ## Skill Rule
 
