@@ -2,6 +2,9 @@
 
 Enable Mindthus skills in Codex through native skill discovery.
 
+This is the bundle-style installation path for the `mindthus:*` namespace.
+Codex's system `skill-installer` is useful for individual skills, but it installs them into `~/.codex/skills` rather than as a grouped namespace bundle.
+
 ## Prerequisites
 
 - Git

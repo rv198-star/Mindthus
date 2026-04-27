@@ -53,6 +53,8 @@ See [.codex/INSTALL.md](/root/mindthus/.codex/INSTALL.md).
 
 Codex supports bundle-style discovery through `~/.agents/skills/`, so the intended namespace is `mindthus` and installation exposes the skills as `mindthus:*`.
 
+Codex also has a system `skill-installer` capability for installing individual skills into `~/.codex/skills`, but that path is not the right fit for this repository's pack-style namespace. Mindthus is intended to be installed as one bundle so the skills remain grouped under `mindthus:*`.
+
 ### Claude Code
 
 Claude Code personal skills live under `~/.claude/skills/`.
