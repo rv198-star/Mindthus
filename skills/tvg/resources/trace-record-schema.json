@@ -1,0 +1,41 @@
+{
+  "schema_version": "tvg-trace-v0.2",
+  "required_fields": [
+    "schema_version",
+    "method_version",
+    "module",
+    "value_gain",
+    "rounds",
+    "agentic_exit_audit",
+    "script_support"
+  ],
+  "required_module_fields": [
+    "id",
+    "title",
+    "type",
+    "downstream_consumer",
+    "freeze_granularity"
+  ],
+  "required_value_gain_fields": [
+    "claimed_value_gain",
+    "value_gain_types",
+    "selected_axes",
+    "evidence_support",
+    "remaining_review_bound"
+  ],
+  "required_audit_fields": [
+    "disagreements",
+    "demo_false_positive_risk",
+    "overfitting_risk",
+    "downstream_usability",
+    "exit_state",
+    "why_not_another_round"
+  ],
+  "allowed_exit_states": [
+    "freeze",
+    "freeze-with-review-bound-warning",
+    "return-remediate",
+    "blocked"
+  ],
+  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain or exit_state."
+}
