@@ -10,7 +10,7 @@ Short formulation:
 
 > Mindthus turns personal philosophy and methodology into durable `AGENTS.md` instructions and independent `SKILLS` that agents can actually use.
 
-Mindthus can also be installed as a namespaced skills pack for Codex:
+Mindthus can also be installed as a skills pack:
 
 - `mindthus:using-mindthus`
 - `mindthus:sela`
@@ -47,9 +47,37 @@ Skill-specific resources live under `skills/*/resources/` so each skill can be u
 
 ## Install As A Skills Pack
 
+### Codex
+
 See [.codex/INSTALL.md](/root/mindthus/.codex/INSTALL.md).
 
-The intended namespace is `mindthus`, so installation exposes the skills as `mindthus:*`.
+Codex supports bundle-style discovery through `~/.agents/skills/`, so the intended namespace is `mindthus` and installation exposes the skills as `mindthus:*`.
+
+### Claude Code
+
+Claude Code personal skills live under `~/.claude/skills/`.
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/rv198-star/Mindthus.git ~/.claude/mindthus
+   ```
+
+2. Create the local skills links:
+
+   ```bash
+   mkdir -p ~/.claude/skills
+   ln -s ~/.claude/mindthus/skills/using-mindthus ~/.claude/skills/using-mindthus
+   ln -s ~/.claude/mindthus/skills/sela ~/.claude/skills/sela
+   ln -s ~/.claude/mindthus/skills/3l5s ~/.claude/skills/3l5s
+   ln -s ~/.claude/mindthus/skills/edsp ~/.claude/skills/edsp
+   ln -s ~/.claude/mindthus/skills/wae ~/.claude/skills/wae
+   ln -s ~/.claude/mindthus/skills/tvg ~/.claude/skills/tvg
+   ```
+
+3. Restart Claude Code.
+
+This exposes the same skill set in Claude Code as local skills. Unlike Codex bundle discovery, this path does not currently add a `mindthus:` namespace prefix by itself.
 
 ## Skill Rule
 
