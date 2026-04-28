@@ -16,14 +16,14 @@ from tplan_runtime import read_mission, validate_mission
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate a tplan Mission runtime state.")
-    parser.add_argument("--dir", required=True, help="Mission directory containing mission.json.")
+    parser.add_argument("mission_dir", help="Mission directory containing mission.json.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        errors = validate_mission(read_mission(Path(args.dir)))
+        errors = validate_mission(read_mission(Path(args.mission_dir)))
     except (OSError, json.JSONDecodeError) as exc:
         errors = [str(exc)]
 

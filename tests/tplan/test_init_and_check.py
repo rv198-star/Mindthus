@@ -386,7 +386,7 @@ class CheckMissionTests(unittest.TestCase):
             )
             self.assertEqual(init.returncode, 0, init.stderr)
 
-            result = run_script("check_mission.py", "--dir", str(mission_dir))
+            result = run_script("check_mission.py", str(mission_dir))
 
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("mission_check: ok", result.stdout)
@@ -424,7 +424,7 @@ class CheckMissionTests(unittest.TestCase):
                 ),
             )
 
-            result = run_script("check_mission.py", "--dir", str(mission_dir))
+            result = run_script("check_mission.py", str(mission_dir))
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("task T2 parent_id missing does not exist", result.stdout)
@@ -451,13 +451,39 @@ class CheckMissionTests(unittest.TestCase):
                 ),
             )
 
-            result = run_script("check_mission.py", "--dir", str(mission_dir))
+            result = run_script("check_mission.py", str(mission_dir))
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(
                 "acceptance evidence A1 is not covered by a success-critical task",
                 result.stdout,
             )
+
+    def test_check_mission_rejects_missing_active_task_id(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission = self.valid_mission(
+                [
+                    {
+                        "id": "T1",
+                        "parent_id": None,
+                        "level": 2,
+                        "title": "Define runtime schema",
+                        "status": "pending",
+                        "role": "success-critical",
+                        "mission_contribution": "Defines the contract scripts enforce.",
+                        "acceptance_evidence": ["A1"],
+                        "evidence_links": [],
+                    }
+                ]
+            )
+            del mission["active_task_id"]
+            self.write_mission(mission_dir, mission)
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("missing field: active_task_id", result.stdout)
 
 
 if __name__ == "__main__":

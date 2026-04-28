@@ -247,8 +247,10 @@ def validate_mission(state: Any) -> list[str]:
         elif parent_id not in tasks_by_id:
             errors.append(f"task {task_id} parent_id {parent_id} does not exist")
 
+    if "active_task_id" not in state:
+        errors.append("missing field: active_task_id")
     active_task_id = state.get("active_task_id")
-    if active_task_id is not None:
+    if "active_task_id" in state and active_task_id is not None:
         if not isinstance(active_task_id, str):
             errors.append("active_task_id must be a string or null")
         elif active_task_id not in tasks_by_id:
