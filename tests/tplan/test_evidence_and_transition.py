@@ -1,0 +1,106 @@
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+
+REPO = Path(__file__).resolve().parents[2]
+
+
+def run_script(script_name, *args):
+    return subprocess.run(
+        [sys.executable, str(REPO / "skills" / "tplan" / "scripts" / script_name), *args],
+        text=True,
+        capture_output=True,
+    )
+
+
+def create_mission(tmp):
+    mission_dir = Path(tmp) / "mission"
+    tasks = Path(tmp) / "tasks.json"
+    tasks.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "T1",
+                    "title": "Define runtime schema",
+                    "role": "success-critical",
+                    "mission_contribution": "Defines the runtime contract.",
+                    "acceptance_evidence": ["A1"],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    result = run_script(
+        "init_mission.py",
+        "--dir",
+        str(mission_dir),
+        "--mission-id",
+        "m1",
+        "--title",
+        "Evidence Mission",
+        "--objective",
+        "Record evidence and transitions.",
+        "--acceptance-evidence",
+        "A1:Runtime contract exists.",
+        "--task-json",
+        str(tasks),
+    )
+    if result.returncode != 0:
+        raise AssertionError(result.stderr)
+    return mission_dir
+
+
+class EvidenceAndTransitionTests(unittest.TestCase):
+    def test_record_evidence_appends_jsonl(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "feedback",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Schema draft exists.",
+                "--payload-json",
+                '{"path": "skills/tplan/resources/schema.md"}',
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("recorded_evidence:", result.stdout)
+            lines = (mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()
+            self.assertEqual(len(lines), 1)
+            event = json.loads(lines[0])
+            self.assertEqual(event["event_type"], "feedback")
+            self.assertEqual(event["task_id"], "T1")
+            self.assertEqual(event["payload"]["path"], "skills/tplan/resources/schema.md")
+
+    def test_transition_task_sets_active_and_completed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            active = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "active")
+            self.assertEqual(active.returncode, 0, active.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            self.assertEqual(mission["active_task_id"], "T1")
+            self.assertEqual(mission["tasks"][0]["status"], "active")
+
+            done = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+            self.assertEqual(done.returncode, 0, done.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+            self.assertEqual(mission["tasks"][0]["status"], "completed")
+
+    def test_transition_task_rejects_unknown_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script("transition_task.py", str(mission_dir), "--task-id", "missing", "--status", "active")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task missing does not exist", result.stderr)
+
+
+if __name__ == "__main__":
+    unittest.main()

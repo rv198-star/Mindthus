@@ -440,3 +440,46 @@ def render_mission_md(mission: dict[str, Any]) -> str:
         "## Decision Log\n\n"
         "No decisions recorded yet.\n"
     )
+
+
+def read_events(mission_dir: Path) -> list[dict[str, Any]]:
+    path = mission_paths(mission_dir)["evidence"]
+    events: list[dict[str, Any]] = []
+    if not path.exists():
+        return events
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            events.append(json.loads(line))
+    return events
+
+
+def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
+    path = mission_paths(mission_dir)["evidence"]
+    events = read_events(mission_dir)
+    event = dict(event)
+    event.setdefault("id", f"E{len(events) + 1}")
+    event.setdefault("timestamp", now_iso())
+    event.setdefault("task_id", None)
+    event.setdefault("payload", {})
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    return event
+
+
+def find_task(mission: dict[str, Any], task_id: str) -> dict[str, Any]:
+    for task in mission.get("tasks", []):
+        if str(task.get("id")) == task_id:
+            return task
+    raise TplanError(f"task {task_id} does not exist")
+
+
+def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[str, Any]:
+    if status not in TASK_STATUSES:
+        raise TplanError(f"task status unsupported: {status}")
+    task = find_task(mission, task_id)
+    task["status"] = status
+    if status == "active":
+        mission["active_task_id"] = task_id
+    elif mission.get("active_task_id") == task_id and status != "active":
+        mission["active_task_id"] = None
+    return mission
