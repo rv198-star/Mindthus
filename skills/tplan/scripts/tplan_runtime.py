@@ -483,3 +483,79 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     elif mission.get("active_task_id") == task_id and status != "active":
         mission["active_task_id"] = None
     return mission
+
+
+def parent_chain(mission: dict[str, Any], task_id: str | None) -> list[dict[str, Any]]:
+    if task_id is None:
+        return []
+    tasks = task_map(mission)
+    chain: list[dict[str, Any]] = []
+    current = tasks.get(task_id)
+    seen: set[str] = set()
+    while current:
+        current_id = str(current.get("id"))
+        if current_id in seen:
+            break
+        seen.add(current_id)
+        chain.append(current)
+        parent_id = current.get("parent_id")
+        current = tasks.get(str(parent_id)) if parent_id is not None else None
+    return list(reversed(chain))
+
+
+def tasks_by_status(mission: dict[str, Any]) -> dict[str, list[str]]:
+    grouped = {status: [] for status in sorted(TASK_STATUSES)}
+    for task in mission.get("tasks", []):
+        status = task.get("status")
+        if status in grouped:
+            grouped[status].append(str(task.get("id")))
+    return grouped
+
+
+def active_task(mission: dict[str, Any]) -> dict[str, Any] | None:
+    task_id = mission.get("active_task_id")
+    if task_id is None:
+        return None
+    return task_map(mission).get(str(task_id))
+
+
+def build_survey(mission_dir: Path) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    active = active_task(mission)
+    return {
+        "mission": mission["mission"],
+        "active_task": active,
+        "active_parent_chain": parent_chain(mission, active.get("id") if active else None),
+        "tasks_by_status": tasks_by_status(mission),
+        "resource_sufficiency": mission["mission"]["resource_sufficiency"],
+        "event_count": len(read_events(mission_dir)),
+    }
+
+
+def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    events = read_events(mission_dir)
+    active = active_task(mission)
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "hook": hook,
+        "mission": {
+            "id": mission["mission"]["id"],
+            "title": mission["mission"]["title"],
+            "objective": mission["mission"]["objective"],
+            "status": mission["mission"]["status"],
+            "acceptance_evidence": mission["mission"]["acceptance_evidence"],
+        },
+        "policy": {
+            "human_in_loop": mission["mission"]["human_in_loop"],
+            "risk_tolerance": mission["mission"]["risk_tolerance"],
+            "resource_sufficiency": mission["mission"]["resource_sufficiency"],
+        },
+        "active_task": active,
+        "parent_chain": parent_chain(mission, active.get("id") if active else None),
+        "task_tree_summary": tasks_by_status(mission),
+        "relevant_evidence_events": events[-10:],
+        "current_blockers_or_surprises": [
+            event for event in events[-10:] if event.get("event_type") in {"failure", "blocked", "interruption"}
+        ],
+    }
