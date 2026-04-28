@@ -106,21 +106,48 @@ def load_task_json(path: Path | None) -> list[dict[str, Any]]:
     tasks = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(tasks, list):
         raise TplanError("task JSON must be a list")
+    for index, task in enumerate(tasks, start=1):
+        if not isinstance(task, dict):
+            raise TplanError(f"task {index} must be an object")
     return tasks
 
 
+def require_string_list(task_id: str, name: str, value: Any) -> list[str]:
+    if not isinstance(value, list):
+        raise TplanError(f"task {task_id} {name} must be a list")
+    if not all(isinstance(item, str) for item in value):
+        raise TplanError(f"task {task_id} {name} items must be strings")
+    return list(value)
+
+
 def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any]:
+    if "id" not in raw:
+        raise TplanError("task is missing id")
+    if "title" not in raw:
+        raise TplanError(f"task {raw['id']} is missing title")
+
     task_id = str(raw["id"])
+    status = raw.get("status", "pending")
+    role = raw.get("role", "success-critical")
+    if status not in TASK_STATUSES:
+        allowed = ", ".join(sorted(TASK_STATUSES))
+        raise TplanError(f"task {task_id} status must be one of: {allowed}")
+    if role not in TASK_ROLES:
+        allowed = ", ".join(sorted(TASK_ROLES))
+        raise TplanError(f"task {task_id} role must be one of: {allowed}")
+
     return {
         "id": task_id,
         "parent_id": raw.get("parent_id"),
         "level": int(raw.get("level", default_level)),
         "title": str(raw["title"]),
-        "status": raw.get("status", "pending"),
-        "role": raw.get("role", "success-critical"),
+        "status": status,
+        "role": role,
         "mission_contribution": str(raw.get("mission_contribution", "")),
-        "acceptance_evidence": list(raw.get("acceptance_evidence", [])),
-        "evidence_links": list(raw.get("evidence_links", [])),
+        "acceptance_evidence": require_string_list(
+            task_id, "acceptance_evidence", raw.get("acceptance_evidence", [])
+        ),
+        "evidence_links": require_string_list(task_id, "evidence_links", raw.get("evidence_links", [])),
     }
 
 

@@ -21,6 +21,9 @@ from tplan_runtime import (
 )
 
 
+RUNTIME_FILES = ("mission", "narrative", "evidence", "archive")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Initialize a tplan Mission directory.")
     parser.add_argument("--dir", required=True, help="Mission directory to create.")
@@ -40,14 +43,18 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def refuse_existing_runtime(paths: dict[str, Path]) -> None:
+    existing = [paths[name] for name in RUNTIME_FILES if paths[name].exists()]
+    if existing:
+        details = ", ".join(str(path) for path in existing)
+        raise TplanError(f"mission runtime already exists: {details}")
+
+
 def main() -> int:
     args = parse_args()
     try:
         mission_dir = Path(args.dir)
         paths = mission_paths(mission_dir)
-        paths["dir"].mkdir(parents=True, exist_ok=True)
-        paths["archive"].mkdir(parents=True, exist_ok=True)
-
         mission = build_mission(
             mission_id=args.mission_id,
             title=args.title,
@@ -58,6 +65,9 @@ def main() -> int:
             resource_sufficiency=args.resource_sufficiency,
             tasks=load_task_json(Path(args.task_json) if args.task_json else None),
         )
+        refuse_existing_runtime(paths)
+        paths["dir"].mkdir(parents=True, exist_ok=True)
+        paths["archive"].mkdir(parents=True, exist_ok=True)
         write_json(paths["mission"], mission)
         paths["narrative"].write_text(render_mission_md(mission), encoding="utf-8")
         paths["evidence"].write_text("", encoding="utf-8")

@@ -18,45 +18,55 @@ def run_script(script_name, *args):
 
 
 class InitMissionTests(unittest.TestCase):
+    def write_tasks(self, tmp, tasks):
+        task_path = Path(tmp) / "tasks.json"
+        task_path.write_text(json.dumps(tasks), encoding="utf-8")
+        return task_path
+
+    def init_args(self, mission_dir, *extra):
+        return (
+            "init_mission.py",
+            "--dir",
+            str(mission_dir),
+            "--mission-id",
+            "mission-tplan-l0",
+            "--title",
+            "Build tplan L0",
+            "--objective",
+            "Build a usable L0 tplan skill for Mindthus.",
+            "--acceptance-evidence",
+            "A1:Runtime files exist and validate.",
+            *extra,
+        )
+
     def test_init_mission_creates_runtime_files(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
-            tasks = Path(tmp) / "tasks.json"
-            tasks.write_text(
-                json.dumps(
-                    [
-                        {
-                            "id": "T1",
-                            "title": "Define runtime schema",
-                            "role": "success-critical",
-                            "mission_contribution": "Defines the contract scripts enforce.",
-                            "acceptance_evidence": ["A1"],
-                        }
-                    ]
-                ),
-                encoding="utf-8",
+            tasks = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": "success-critical",
+                        "mission_contribution": "Defines the contract scripts enforce.",
+                        "acceptance_evidence": ["A1"],
+                    }
+                ],
             )
 
             result = run_script(
-                "init_mission.py",
-                "--dir",
-                str(mission_dir),
-                "--mission-id",
-                "mission-tplan-l0",
-                "--title",
-                "Build tplan L0",
-                "--objective",
-                "Build a usable L0 tplan skill for Mindthus.",
-                "--acceptance-evidence",
-                "A1:Runtime files exist and validate.",
-                "--task-json",
-                str(tasks),
-                "--human-in-loop",
-                "0",
-                "--risk-tolerance",
-                "50",
-                "--resource-sufficiency",
-                "60",
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                    "--human-in-loop",
+                    "0",
+                    "--risk-tolerance",
+                    "50",
+                    "--resource-sufficiency",
+                    "60",
+                ),
             )
 
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -73,23 +83,153 @@ class InitMissionTests(unittest.TestCase):
             self.assertEqual(mission["tasks"][0]["parent_id"], None)
             self.assertEqual(mission["tasks"][0]["level"], 2)
 
+    def test_init_mission_rejects_existing_runtime_files_without_truncating_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            first = run_script(*self.init_args(mission_dir))
+            self.assertEqual(first.returncode, 0, first.stderr)
+            evidence = mission_dir / "evidence.jsonl"
+            evidence.write_text('{"event":"keep"}\n', encoding="utf-8")
+
+            result = run_script(*self.init_args(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mission runtime already exists", result.stderr)
+            self.assertEqual(evidence.read_text(encoding="utf-8"), '{"event":"keep"}\n')
+
+    def test_init_mission_rejects_out_of_range_policy_without_creating_mission_dir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--human-in-loop",
+                    "101",
+                ),
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("human_in_loop must be between 0 and 100", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+    def test_init_mission_rejects_bad_task_json_without_creating_mission_dir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = Path(tmp) / "tasks.json"
+            tasks.write_text('{"id": "T1"}', encoding="utf-8")
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task JSON must be a list", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+    def test_init_mission_rejects_non_object_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = self.write_tasks(tmp, ["not a task"])
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task 1 must be an object", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+    def test_init_mission_rejects_string_acceptance_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "acceptance_evidence": "A1",
+                    }
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 acceptance_evidence must be a list", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+    def test_init_mission_rejects_invalid_task_status_and_role(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            bad_status = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "status": "done",
+                    }
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(bad_status),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 status must be one of", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+            bad_role = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": "critical",
+                    }
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(bad_role),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 role must be one of", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
     def test_init_mission_rejects_out_of_range_policy(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
             result = run_script(
-                "init_mission.py",
-                "--dir",
-                str(mission_dir),
-                "--mission-id",
-                "bad",
-                "--title",
-                "Bad Mission",
-                "--objective",
-                "Invalid policy input.",
-                "--acceptance-evidence",
-                "A1:Evidence.",
-                "--human-in-loop",
-                "101",
+                *self.init_args(
+                    mission_dir,
+                    "--human-in-loop",
+                    "101",
+                ),
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("human_in_loop must be between 0 and 100", result.stderr)
