@@ -221,6 +221,90 @@ class InitMissionTests(unittest.TestCase):
             self.assertIn("task T1 role must be one of", result.stderr)
             self.assertFalse(mission_dir.exists())
 
+    def test_init_mission_rejects_non_scalar_task_status_and_role(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            bad_status = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "status": [],
+                    }
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(bad_status),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 status must be a string", result.stderr)
+            self.assertNotIn("Traceback", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+            bad_role = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": [],
+                    }
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(bad_role),
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 role must be a string", result.stderr)
+            self.assertNotIn("Traceback", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
+    def test_init_mission_rejects_invalid_task_level_without_traceback(self):
+        invalid_levels = [
+            (None, "task T1 level must be an integer"),
+            ([], "task T1 level must be an integer"),
+        ]
+        for value, message in invalid_levels:
+            with self.subTest(level=value):
+                with tempfile.TemporaryDirectory() as tmp:
+                    mission_dir = Path(tmp) / "mission"
+                    tasks = self.write_tasks(
+                        tmp,
+                        [
+                            {
+                                "id": "T1",
+                                "title": "Define runtime schema",
+                                "level": value,
+                            }
+                        ],
+                    )
+
+                    result = run_script(
+                        *self.init_args(
+                            mission_dir,
+                            "--task-json",
+                            str(tasks),
+                        ),
+                    )
+
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn(message, result.stderr)
+                    self.assertNotIn("Traceback", result.stderr)
+                    self.assertFalse(mission_dir.exists())
+
     def test_init_mission_rejects_out_of_range_policy(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"

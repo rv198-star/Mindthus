@@ -120,6 +120,21 @@ def require_string_list(task_id: str, name: str, value: Any) -> list[str]:
     return list(value)
 
 
+def require_task_enum(task_id: str, name: str, value: Any, allowed_values: set[str]) -> str:
+    if not isinstance(value, str):
+        raise TplanError(f"task {task_id} {name} must be a string")
+    if value not in allowed_values:
+        allowed = ", ".join(sorted(allowed_values))
+        raise TplanError(f"task {task_id} {name} must be one of: {allowed}")
+    return value
+
+
+def require_task_level(task_id: str, value: Any) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise TplanError(f"task {task_id} level must be an integer")
+    return value
+
+
 def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any]:
     if "id" not in raw:
         raise TplanError("task is missing id")
@@ -127,19 +142,14 @@ def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any
         raise TplanError(f"task {raw['id']} is missing title")
 
     task_id = str(raw["id"])
-    status = raw.get("status", "pending")
-    role = raw.get("role", "success-critical")
-    if status not in TASK_STATUSES:
-        allowed = ", ".join(sorted(TASK_STATUSES))
-        raise TplanError(f"task {task_id} status must be one of: {allowed}")
-    if role not in TASK_ROLES:
-        allowed = ", ".join(sorted(TASK_ROLES))
-        raise TplanError(f"task {task_id} role must be one of: {allowed}")
+    status = require_task_enum(task_id, "status", raw.get("status", "pending"), TASK_STATUSES)
+    role = require_task_enum(task_id, "role", raw.get("role", "success-critical"), TASK_ROLES)
+    level = require_task_level(task_id, raw.get("level", default_level))
 
     return {
         "id": task_id,
         "parent_id": raw.get("parent_id"),
-        "level": int(raw.get("level", default_level)),
+        "level": level,
         "title": str(raw["title"]),
         "status": status,
         "role": role,
