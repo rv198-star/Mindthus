@@ -576,6 +576,7 @@ def validate_hook_output(decision: Any) -> list[str]:
         "evidence_links",
         "proposed_mutations",
         "requires_human",
+        "mission_alignment",
     ):
         if field not in decision:
             errors.append(f"decision missing field: {field}")
@@ -595,6 +596,8 @@ def validate_hook_output(decision: Any) -> list[str]:
         errors.append("proposed_mutations must be a list")
     if not isinstance(decision.get("requires_human"), bool):
         errors.append("requires_human must be a boolean")
+    if not isinstance(decision.get("mission_alignment"), str):
+        errors.append("mission_alignment must be a string")
     return errors
 
 

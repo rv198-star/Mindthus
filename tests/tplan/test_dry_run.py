@@ -141,6 +141,7 @@ class TplanDryRunTests(unittest.TestCase):
                             {"type": "set_active_task", "task_id": "T2"},
                         ],
                         "requires_human": False,
+                        "mission_alignment": "Pausing T2.1 reduces low-leverage expansion and refocuses on T2 for Mission progress.",
                     }
                 ),
                 encoding="utf-8",

@@ -38,6 +38,7 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("mission", mission)
         self.assertIn("tasks", mission)
         self.assertEqual(hook["recommendation"], "continue")
+        self.assertIn("mission_alignment", hook)
 
     def test_resource_files_name_runtime_contracts(self):
         resources = "\n".join(
@@ -50,6 +51,8 @@ class TplanSkillContractTests(unittest.TestCase):
             "success-critical",
             "observational state",
             "decision state",
+            "Mission Review Gate",
+            "mission_alignment",
             "semantic correctness",
         ):
             self.assertIn(phrase, resources)

@@ -76,6 +76,7 @@ def write_decision(tmp, recommendation="switch"):
                     {"type": "set_active_task", "task_id": "T2"}
                 ],
                 "requires_human": False,
+                "mission_alignment": "Switching to T2 advances the runtime task that blocks Mission usability.",
             }
         ),
         encoding="utf-8",
@@ -127,6 +128,7 @@ class ApplyDecisionTests(unittest.TestCase):
                             {"type": "set_mission_status", "status": "abandoned"}
                         ],
                         "requires_human": True,
+                        "mission_alignment": "Closure affects Mission status and must remain tied to release viability.",
                     }
                 ),
                 encoding="utf-8",
@@ -152,6 +154,7 @@ class ApplyDecisionTests(unittest.TestCase):
                             {"type": "set_active_task"},
                         ],
                         "requires_human": False,
+                        "mission_alignment": "The proposed switch claims to advance runtime usability.",
                     }
                 ),
                 encoding="utf-8",
@@ -179,6 +182,33 @@ class ApplyDecisionTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("human_in_loop must be 0 or 100 in tplan.v0.1", result.stderr)
             mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+
+    def test_missing_mission_alignment_fails_without_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "switch",
+                        "rationale": "Switch without Mission alignment should be rejected.",
+                        "confidence": 80,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "set_active_task", "task_id": "T2"},
+                        ],
+                        "requires_human": False,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("decision missing field: mission_alignment", result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
             self.assertIsNone(mission["active_task_id"])
 
 

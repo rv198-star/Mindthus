@@ -76,3 +76,24 @@ A decision packet must include:
 
 Hook output is an evidence-linked recommendation, not proof of semantic correctness.
 Scripts validate shape and authority only.
+
+Required fields:
+
+- `recommendation`
+- `rationale`
+- `confidence`
+- `evidence_links`
+- `proposed_mutations`
+- `requires_human`
+- `mission_alignment`
+
+High-impact hook outputs should also include `mission_review`:
+
+- `objective_alignment`
+- `acceptance_gap`
+- `task_contribution`
+- `roi_effect`
+- `non_action_risk`
+
+`mission_alignment` and `mission_review` keep decisions anchored to Mission
+convergence. They are judgment records, not script-verifiable proof of correctness.

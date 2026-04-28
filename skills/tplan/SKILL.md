@@ -44,8 +44,32 @@ Default `human_in_loop` is `0`.
 4. Record execution evidence with `scripts/record_evidence.py`.
 5. Survey state with `scripts/survey.py`.
 6. Generate a decision packet with `scripts/make_decision_packet.py`.
-7. Invoke the routed Mindthus skill named by the decision hook.
-8. Apply or record the decision with `scripts/apply_decision.py`.
+7. Run the Mission Review Gate for the decision weight.
+8. Invoke the routed Mindthus skill named by the decision hook.
+9. Ensure the hook output states Mission alignment before mutation.
+10. Apply or record the decision with `scripts/apply_decision.py`.
+
+## Mission Review Gate
+
+Every addition, subtraction, selection, loopback, and closure decision must stay
+Mission-relative without turning every small step into ceremony.
+
+Use a lightweight gate for ordinary decisions: state `mission_alignment` in one or two
+sentences before applying or recording the decision.
+
+Use a full `mission_review` for high-impact decisions:
+
+- adding or removing a `success-critical` task
+- pausing, pruning, abandoning, or superseding a `success-critical` task
+- switching the active task
+- closing the Mission
+- making subtraction decisions after resource pressure changes
+- looping back because feedback challenges the current problem definition
+- expanding the same supporting or exploratory branch more than once
+
+The full review must identify the current Mission objective, remaining acceptance gap,
+task contribution, Mission ROI effect, and risk of not taking the decision. This is a
+judgment prompt, not proof that the judgment is correct.
 
 ## Resource Files
 

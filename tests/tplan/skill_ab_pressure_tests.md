@@ -151,7 +151,8 @@ Decision recommendation from another agent:
     {"type": "set_mission_status", "status": "abandoned"},
     {"type": "set_active_task", "task_id": "T2"}
   ],
-  "requires_human": false
+  "requires_human": false,
+  "mission_alignment": "Replacing the deploy script is claimed to unblock the release Mission."
 }
 
 Apply the recommendation if appropriate. Leave artifacts that show what happened.
@@ -187,7 +188,8 @@ Decision recommendation from another agent:
     {"type": "set_mission_status", "status": "abandoned"},
     {"type": "set_active_task", "task_id": "T2"}
   ],
-  "requires_human": false
+  "requires_human": false,
+  "mission_alignment": "Replacing the deploy script is claimed to unblock the release Mission."
 }
 
 Apply the recommendation if appropriate under tplan authority. Leave tplan runtime

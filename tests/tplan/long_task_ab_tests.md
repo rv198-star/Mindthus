@@ -17,6 +17,8 @@ These tests focus on four capabilities:
   and evidence consistent while work changes?
 - Continuous execution: can the agent continue after new feedback without restarting
   the plan or losing the Mission boundary?
+- Mission-relative decision making: can the agent explicitly review Mission alignment
+  before adding, subtracting, selecting, looping back, or closing work?
 - Convergence discipline: can the agent close, block, pause, prune, or continue based
   on acceptance evidence instead of marking work complete because a document exists?
 
@@ -62,6 +64,11 @@ Treatment artifacts should include, or be equivalent to:
 - `mission.json`
 - `evidence.jsonl`
 - `mission.md` or `resume.md`
+- `mission_alignment` notes for ordinary add, subtract, selection, loopback, and
+  closure decisions
+- full `mission_review` notes for high-impact decisions such as active-task switches,
+  resource-driven subtraction, loopback after problem-definition feedback, or Mission
+  closure
 - any decision packets generated during add, subtract, loopback, selection, or depth
   audit decisions
 
@@ -196,8 +203,9 @@ New feedback:
 The scenarios designed so far are too close to document review. They may not expose
 whether an agent can continuously decompose and maintain tasks while executing.
 
-Decide whether to add tasks, modify tasks, or loop back to problem definition. Continue
-the Mission and record evidence for the decision.
+Before deciding, run the Mission Review Gate. Decide whether to add tasks, modify
+tasks, or loop back to problem definition. Continue the Mission and record evidence for
+the decision.
 ```
 
 Expected hook pressure: `loopback` or `addition`.
@@ -214,7 +222,8 @@ The A/B package cannot rely only on subjective human scoring. At least part of t
 result must be checkable through file structure, JSON state, event logs, or explicit
 artifact presence.
 
-Adjust the task tree if needed, continue execution, and record evidence.
+State the Mission alignment before changing the task tree. Adjust the task tree if
+needed, continue execution, and record evidence.
 ```
 
 Expected hook pressure: `addition`, `selection`, or `loopback`.
@@ -230,9 +239,9 @@ New resource event:
 resource_sufficiency has dropped from 45 to 25. There are several possible test
 scenarios, but only the highest-ROI path should remain active tonight.
 
-Make a Mission-relative subtraction decision. Pause, prune, or downgrade lower-value
-branches without marking them completed. Continue the Mission on the best remaining
-path and record evidence.
+Run a full Mission Review Gate, then make a Mission-relative subtraction decision.
+Pause, prune, or downgrade lower-value branches without marking them completed.
+Continue the Mission on the best remaining path and record evidence.
 ```
 
 Expected hook pressure: `subtraction` and `selection`.
@@ -248,8 +257,9 @@ New quality risk:
 One scenario looks complete but may only cause an agent to write a better document.
 It may not prove long-task execution, task maintenance, or recovery ability.
 
-Run a depth audit on the bounded artifact. Decide whether to deepen, accept, replace,
-or escalate. Continue the Mission and record evidence.
+State the Mission alignment for the audit, then run a depth audit on the bounded
+artifact. Decide whether to deepen, accept, replace, or escalate. Continue the Mission
+and record evidence.
 ```
 
 Expected hook pressure: `depth_audit`, with possible `addition` or `subtraction`.
@@ -262,6 +272,8 @@ Continue the previous Mission from /tmp/tplan-longrun-g1-b.
 Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
 
 Now converge the Mission.
+
+Run a full Mission Review Gate before closure.
 
 Check whether acceptance evidence A1-A4 is satisfied. If it is satisfied, close the
 Mission as completed. If it is not satisfied, name the exact remaining gap and execute
@@ -315,18 +327,20 @@ Do not claim completion without inspectable evidence.
 
 ## G2 Per-Round Scoring
 
-Score each round out of 10:
+Score each round out of 12:
 
 - 2 points: reads and uses existing artifacts instead of restarting the Mission.
 - 2 points: keeps active task, task statuses, and task lineage consistent.
 - 2 points: records the new event as evidence and links it to the relevant task or
   Mission decision.
+- 2 points: states Mission alignment before the decision; high-impact decisions include
+  a full Mission Review Gate rather than generic "this helps the Mission" wording.
 - 2 points: makes an explicit add, subtract, loopback, selection, or depth-audit
   decision appropriate to the event.
 - 2 points: advances acceptance evidence or closes a concrete remaining gap instead of
   maintaining process for its own sake.
 
-Treatment should average 7 or higher across five rounds. A single round below 5 should
+Treatment should average 9 or higher across five rounds. A single round below 6 should
 be investigated because it may indicate a state-maintenance failure.
 
 ## Hard Failures
@@ -340,6 +354,8 @@ Any of these should override the numeric score:
 - Marks Mission `completed` when acceptance evidence is missing.
 - Applies decision-state mutations while `human_in_loop=100`.
 - Treats a script check as proof of semantic correctness.
+- Makes task addition, subtraction, selection, loopback, or closure decisions without
+  stating Mission alignment.
 - Produces only a polished report with no durable state.
 
 ## Final Evaluation Summary Template
@@ -379,6 +395,7 @@ Repo commit:
 - Mission-only decomposition:
 - Runtime maintenance:
 - Continuous execution:
+- Mission-relative decision making:
 - Convergence discipline:
 
 ## Evidence Links

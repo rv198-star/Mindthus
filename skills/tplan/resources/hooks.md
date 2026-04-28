@@ -27,4 +27,33 @@ Initial hooks:
 Hook output must include recommendation, rationale, confidence, evidence links, proposed
 mutations, and requires_human.
 
+## Mission Review Gate
+
+Every hook is Mission-relative. Before a hook output can justify a task addition,
+subtraction, selection, loopback, or closure, it must state how the decision serves
+Mission convergence.
+
+Ordinary decisions use the lightweight gate:
+
+- `mission_alignment`: one or two sentences explaining how the recommendation advances
+  the Mission, protects Mission ROI, reduces waste, or preserves convergence.
+
+High-impact decisions use the full gate:
+
+- `mission_review.objective_alignment`: how the decision relates to the current Mission
+  objective.
+- `mission_review.acceptance_gap`: which acceptance evidence is satisfied, still
+  missing, protected, or intentionally deferred.
+- `mission_review.task_contribution`: how the affected task contributes to Mission
+  convergence.
+- `mission_review.roi_effect`: one of `advance`, `protect`, `reduce_waste`,
+  `defer_uncertain`, or `escalate`.
+- `mission_review.non_action_risk`: what Mission risk increases if the decision is not
+  taken.
+
+High-impact decisions include adding or removing success-critical tasks, changing the
+active task, closing the Mission, making subtraction decisions after resource pressure
+changes, looping back because the problem definition is challenged, or expanding the
+same supporting/exploratory branch more than once.
+
 Scripts may validate hook output shape. They must not validate semantic correctness.
