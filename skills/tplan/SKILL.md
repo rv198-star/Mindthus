@@ -54,14 +54,10 @@ Default `human_in_loop` is `0`.
 - `resources/policy.md`: risk/resource policy and human-in-loop authority.
 - `resources/hooks.md`: decision hook triggers, routed skills, input/output contract.
 
-## Scripts
+## Runtime Scripts
 
-Run script help before use:
-
-```bash
-python3 skills/tplan/scripts/init_mission.py --help
-python3 skills/tplan/scripts/check_mission.py --help
-python3 skills/tplan/scripts/make_decision_packet.py --help
-```
+Runtime scripts are added incrementally by implementation tasks. Until those scripts
+exist, treat the script names in the Runtime Loop as planned interfaces rather than
+executable commands.
 
 Script output validates bookkeeping only. Agentic judgment remains required.
