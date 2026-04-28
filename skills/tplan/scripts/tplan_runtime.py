@@ -559,3 +559,90 @@ def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:
             event for event in events[-10:] if event.get("event_type") in {"failure", "blocked", "interruption"}
         ],
     }
+
+
+def validate_hook_output(decision: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(decision, dict):
+        return ["decision must be an object"]
+    for field in (
+        "recommendation",
+        "rationale",
+        "confidence",
+        "evidence_links",
+        "proposed_mutations",
+        "requires_human",
+    ):
+        if field not in decision:
+            errors.append(f"decision missing field: {field}")
+
+    recommendation = decision.get("recommendation")
+    if not isinstance(recommendation, str):
+        errors.append("recommendation must be a string")
+    elif recommendation not in RECOMMENDATIONS:
+        errors.append(f"recommendation unsupported: {recommendation!r}")
+
+    confidence = decision.get("confidence")
+    if isinstance(confidence, bool) or not isinstance(confidence, int) or not 0 <= confidence <= 100:
+        errors.append("confidence must be an integer between 0 and 100")
+    if not isinstance(decision.get("evidence_links", []), list):
+        errors.append("evidence_links must be a list")
+    if not isinstance(decision.get("proposed_mutations", []), list):
+        errors.append("proposed_mutations must be a list")
+    if not isinstance(decision.get("requires_human"), bool):
+        errors.append("requires_human must be a boolean")
+    return errors
+
+
+def record_decision_recommendation(mission_dir: Path, decision: dict[str, Any]) -> dict[str, Any]:
+    return append_event(
+        mission_dir,
+        {
+            "event_type": "decision_recommendation",
+            "summary": decision["rationale"],
+            "task_id": None,
+            "payload": decision,
+        },
+    )
+
+
+def apply_mutation(mission: dict[str, Any], mutation: Any) -> None:
+    if not isinstance(mutation, dict):
+        raise TplanError("mutation must be an object")
+    mutation_type = mutation.get("type")
+    if mutation_type == "set_active_task":
+        set_task_status(mission, str(mutation["task_id"]), "active")
+    elif mutation_type == "transition_task":
+        set_task_status(mission, str(mutation["task_id"]), str(mutation["status"]))
+    elif mutation_type == "set_mission_status":
+        status = str(mutation["status"])
+        if status not in MISSION_STATUSES:
+            raise TplanError(f"mission status unsupported: {status}")
+        mission["mission"]["status"] = status
+    else:
+        raise TplanError(f"mutation type unsupported: {mutation_type}")
+
+
+def apply_decision(mission_dir: Path, decision: Any) -> str:
+    errors = validate_hook_output(decision)
+    if errors:
+        raise TplanError("; ".join(errors))
+
+    mission = read_mission(mission_dir)
+    if mission["mission"]["human_in_loop"] >= 100 or decision["requires_human"]:
+        record_decision_recommendation(mission_dir, decision)
+        return "recorded_recommendation"
+
+    for mutation in decision["proposed_mutations"]:
+        apply_mutation(mission, mutation)
+    write_mission(mission_dir, mission)
+    append_event(
+        mission_dir,
+        {
+            "event_type": "decision_applied",
+            "summary": decision["rationale"],
+            "task_id": None,
+            "payload": decision,
+        },
+    )
+    return "applied_decision"
