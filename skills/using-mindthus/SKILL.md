@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when an agent needs the Mindthus default posture, the portable AGENTS.md-style orientation, or help choosing between Mindthus skills such as SELA, 3L5S, EDSP, WAE, and TVG.
+description: Use when an agent needs the Mindthus default posture, the portable AGENTS.md-style orientation, or help choosing between Mindthus skills such as SELA, 3L5S, TPLAN, EDSP, WAE, and TVG.
 ---
 
 # Using Mindthus
@@ -36,6 +36,18 @@ Mindthus 不是让 agent 更快给答案，而是让 agent 先判断自己面对
 
 适合：工单判断、问题诊断、复杂任务拆解、执行反复返工后的回查。
 
+### `tplan`
+
+Mission-oriented task runtime and project-manager control plane.
+
+Use `tplan` when a Mission needs durable task state, parent-attached task additions,
+Mission-relative selection, subtraction decisions, human-in-loop authority, evidence
+tracking, or decision hooks that route to other Mindthus skills.
+
+`tplan` should not replace `3l5s`, `sela`, `edsp`, `wae`, or `tvg`. It decides when to
+route to them, packages the Mission context, and records the resulting recommendation
+or decision according to `human_in_loop`.
+
 ### `edsp`
 
 定性判断镜头，用来处理悬而不决、难以决断的结构判断。
@@ -65,6 +77,7 @@ Mindthus 不是让 agent 更快给答案，而是让 agent 先判断自己面对
 - 战略判断前，用 `sela` 防短视。
 - 具体处理问题时，用 `3l5s` 做默认问题内核。
 - `3l5s` 中遇到模糊结构判断，用 `edsp`。
+- Long-running Mission execution uses `tplan` as the control plane, then routes semantic judgment to `3l5s`, `sela`, `edsp`, `wae`, or `tvg`.
 - 任何方法里需要分配控制权，用 `wae`。
 - 任一方法产出物看似完整但浅，用 `tvg` 加深。
 
