@@ -67,6 +67,8 @@ TASK_REQUIRED_FIELDS = {
 }
 
 POLICY_FIELDS = ("human_in_loop", "risk_tolerance", "resource_sufficiency")
+MISSION_STRING_FIELDS = ("id", "title", "objective")
+TASK_STRING_FIELDS = ("title", "mission_contribution")
 
 
 class TplanError(ValueError):
@@ -138,6 +140,28 @@ def _require_string_list(errors: list[str], task_id: str, name: str, value: Any)
         errors.append(f"task {task_id} {name} items must be strings")
 
 
+def _require_string_fields(errors: list[str], label: str, data: dict[str, Any], fields: tuple[str, ...]) -> None:
+    for field in fields:
+        if field in data and not isinstance(data[field], str):
+            errors.append(f"{label} {field} must be a string")
+
+
+def _find_parent_cycle(task_id: str, tasks_by_id: dict[str, dict[str, Any]]) -> str | None:
+    path: list[str] = []
+    positions: dict[str, int] = {}
+    current = task_id
+    while current in tasks_by_id:
+        if current in positions:
+            return sorted(path[positions[current] :])[0]
+        positions[current] = len(path)
+        path.append(current)
+        parent_id = tasks_by_id[current].get("parent_id")
+        if not isinstance(parent_id, str):
+            return None
+        current = parent_id
+    return None
+
+
 def validate_mission(state: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(state, dict):
@@ -154,6 +178,7 @@ def validate_mission(state: Any) -> list[str]:
     for field in sorted(MISSION_REQUIRED_FIELDS):
         if field not in mission:
             errors.append(f"mission is missing {field}")
+    _require_string_fields(errors, "mission", mission, MISSION_STRING_FIELDS)
 
     status = mission.get("status")
     if "status" in mission:
@@ -173,10 +198,12 @@ def validate_mission(state: Any) -> list[str]:
             errors.append(f"mission {field} must be between 0 and 100")
 
     evidence = mission.get("acceptance_evidence")
+    mission_acceptance_ids: set[str] = set()
     if "acceptance_evidence" in mission:
         if not isinstance(evidence, list):
             errors.append("mission acceptance_evidence must be a list")
         else:
+            seen_evidence_ids: set[str] = set()
             for index, item in enumerate(evidence, start=1):
                 if not isinstance(item, dict):
                     errors.append(f"mission acceptance_evidence item {index} must be an object")
@@ -184,6 +211,15 @@ def validate_mission(state: Any) -> list[str]:
                     errors.append(f"mission acceptance_evidence item {index} is missing id")
                 elif not isinstance(item["id"], str):
                     errors.append(f"mission acceptance_evidence item {index} id must be a string")
+                else:
+                    evidence_id = item["id"]
+                    if evidence_id in seen_evidence_ids:
+                        errors.append(f"duplicate mission acceptance evidence id {evidence_id}")
+                    else:
+                        seen_evidence_ids.add(evidence_id)
+                        mission_acceptance_ids.add(evidence_id)
+                    if "description" in item and not isinstance(item["description"], str):
+                        errors.append(f"mission acceptance_evidence {evidence_id} description must be a string")
 
     tasks = state.get("tasks")
     normalized_tasks: list[dict[str, Any]] = []
@@ -200,6 +236,7 @@ def validate_mission(state: Any) -> list[str]:
             for field in sorted(TASK_REQUIRED_FIELDS):
                 if field not in task:
                     errors.append(f"task {task_id} is missing {field}")
+            _require_string_fields(errors, f"task {task_id}", task, TASK_STRING_FIELDS)
 
             raw_id = task.get("id")
             if "id" in task:
@@ -231,6 +268,10 @@ def validate_mission(state: Any) -> list[str]:
 
             if "acceptance_evidence" in task:
                 _require_string_list(errors, task_id, "acceptance_evidence", task["acceptance_evidence"])
+                if isinstance(task["acceptance_evidence"], list):
+                    for evidence_id in task["acceptance_evidence"]:
+                        if isinstance(evidence_id, str) and evidence_id not in mission_acceptance_ids:
+                            errors.append(f"task {task_id} acceptance_evidence {evidence_id} does not exist")
             if "evidence_links" in task:
                 _require_string_list(errors, task_id, "evidence_links", task["evidence_links"])
 
@@ -246,6 +287,15 @@ def validate_mission(state: Any) -> list[str]:
             errors.append(f"task {task_id} parent_id must be a string or null")
         elif parent_id not in tasks_by_id:
             errors.append(f"task {task_id} parent_id {parent_id} does not exist")
+        elif parent_id == task_id:
+            errors.append(f"task {task_id} parent_id cannot reference itself")
+
+    cycle_roots: set[str] = set()
+    for task_id in sorted(tasks_by_id):
+        cycle_root = _find_parent_cycle(task_id, tasks_by_id)
+        if cycle_root is not None and cycle_root not in cycle_roots:
+            cycle_roots.add(cycle_root)
+            errors.append(f"task tree contains a cycle involving {cycle_root}")
 
     if "active_task_id" not in state:
         errors.append("missing field: active_task_id")

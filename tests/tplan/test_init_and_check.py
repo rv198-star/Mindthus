@@ -354,6 +354,21 @@ class CheckMissionTests(unittest.TestCase):
             "active_task_id": None,
         }
 
+    def valid_task(self, task_id="T1", **overrides):
+        task = {
+            "id": task_id,
+            "parent_id": None,
+            "level": 2,
+            "title": "Define runtime schema",
+            "status": "pending",
+            "role": "success-critical",
+            "mission_contribution": "Defines the contract scripts enforce.",
+            "acceptance_evidence": ["A1"],
+            "evidence_links": [],
+        }
+        task.update(overrides)
+        return task
+
     def test_check_mission_accepts_valid_tree(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
@@ -484,6 +499,97 @@ class CheckMissionTests(unittest.TestCase):
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("missing field: active_task_id", result.stdout)
+
+    def test_check_mission_rejects_self_parent_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission([self.valid_task(parent_id="T1")]),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 parent_id cannot reference itself", result.stdout)
+
+    def test_check_mission_rejects_parent_cycle(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        self.valid_task("T1", parent_id="T2"),
+                        self.valid_task(
+                            "T2",
+                            parent_id="T1",
+                            role="supporting",
+                            acceptance_evidence=[],
+                        ),
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task tree contains a cycle involving T1", result.stdout)
+
+    def test_check_mission_rejects_duplicate_mission_evidence_id(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission = self.valid_mission([self.valid_task()])
+            mission["mission"]["acceptance_evidence"].append(
+                {
+                    "id": "A1",
+                    "description": "Duplicate acceptance evidence.",
+                }
+            )
+            self.write_mission(mission_dir, mission)
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("duplicate mission acceptance evidence id A1", result.stdout)
+
+    def test_check_mission_rejects_unknown_task_evidence_reference(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission([self.valid_task(acceptance_evidence=["A1", "A2"])]),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 acceptance_evidence A2 does not exist", result.stdout)
+
+    def test_check_mission_rejects_non_string_text_fields(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission = self.valid_mission(
+                [
+                    self.valid_task(
+                        title=["not scalar"],
+                        mission_contribution=None,
+                    )
+                ]
+            )
+            mission["mission"]["id"] = ["mission-tplan-l0"]
+            mission["mission"]["title"] = None
+            mission["mission"]["objective"] = {"text": "Build a usable L0 tplan skill."}
+            self.write_mission(mission_dir, mission)
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mission id must be a string", result.stdout)
+            self.assertIn("mission title must be a string", result.stdout)
+            self.assertIn("mission objective must be a string", result.stdout)
+            self.assertIn("task T1 title must be a string", result.stdout)
+            self.assertIn("task T1 mission_contribution must be a string", result.stdout)
 
 
 if __name__ == "__main__":
