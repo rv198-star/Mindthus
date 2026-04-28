@@ -137,6 +137,50 @@ class ApplyDecisionTests(unittest.TestCase):
             mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
             self.assertEqual(mission["mission"]["status"], "active")
 
+    def test_malformed_mutation_fails_without_traceback_or_partial_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "switch",
+                        "rationale": "Malformed mutation should not partially mutate Mission state.",
+                        "confidence": 80,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "set_active_task"},
+                        ],
+                        "requires_human": False,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mutation set_active_task missing field: task_id", result.stderr)
+            self.assertNotIn("Traceback", result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+
+    def test_reserved_human_in_loop_fails_without_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["mission"]["human_in_loop"] = 50
+            mission_path.write_text(json.dumps(mission), encoding="utf-8")
+            decision = write_decision(tmp)
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("human_in_loop must be 0 or 100 in tplan.v0.1", result.stderr)
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+
 
 if __name__ == "__main__":
     unittest.main()

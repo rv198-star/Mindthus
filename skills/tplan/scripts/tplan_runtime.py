@@ -87,6 +87,8 @@ def slugify(value: str) -> str:
 def require_policy_value(name: str, value: int) -> int:
     if not 0 <= value <= 100:
         raise TplanError(f"{name} must be between 0 and 100")
+    if name == "human_in_loop" and value not in {0, 100}:
+        raise TplanError("human_in_loop must be 0 or 100 in tplan.v0.1")
     return value
 
 
@@ -202,6 +204,8 @@ def validate_mission(state: Any) -> list[str]:
             errors.append(f"mission {field} must be an integer")
         elif not 0 <= value <= 100:
             errors.append(f"mission {field} must be between 0 and 100")
+        elif field == "human_in_loop" and value not in {0, 100}:
+            errors.append("mission human_in_loop must be 0 or 100 in tplan.v0.1")
 
     evidence = mission.get("acceptance_evidence")
     mission_acceptance_ids: set[str] = set()
@@ -606,16 +610,40 @@ def record_decision_recommendation(mission_dir: Path, decision: dict[str, Any]) 
     )
 
 
+def authority_mode(mission: dict[str, Any]) -> str:
+    mission_meta = mission.get("mission", {})
+    value = mission_meta.get("human_in_loop") if isinstance(mission_meta, dict) else None
+    if value == 0:
+        return "autonomous"
+    if value == 100:
+        return "advisory"
+    raise TplanError("human_in_loop must be 0 or 100 in tplan.v0.1")
+
+
+def require_mutation_field(mutation: dict[str, Any], mutation_type: str, field: str) -> Any:
+    if field not in mutation:
+        raise TplanError(f"mutation {mutation_type} missing field: {field}")
+    value = mutation[field]
+    if not isinstance(value, str):
+        raise TplanError(f"mutation {mutation_type} {field} must be a string")
+    return value
+
+
 def apply_mutation(mission: dict[str, Any], mutation: Any) -> None:
     if not isinstance(mutation, dict):
         raise TplanError("mutation must be an object")
     mutation_type = mutation.get("type")
+    if not isinstance(mutation_type, str):
+        raise TplanError("mutation type must be a string")
     if mutation_type == "set_active_task":
-        set_task_status(mission, str(mutation["task_id"]), "active")
+        task_id = require_mutation_field(mutation, mutation_type, "task_id")
+        set_task_status(mission, task_id, "active")
     elif mutation_type == "transition_task":
-        set_task_status(mission, str(mutation["task_id"]), str(mutation["status"]))
+        task_id = require_mutation_field(mutation, mutation_type, "task_id")
+        status = require_mutation_field(mutation, mutation_type, "status")
+        set_task_status(mission, task_id, status)
     elif mutation_type == "set_mission_status":
-        status = str(mutation["status"])
+        status = require_mutation_field(mutation, mutation_type, "status")
         if status not in MISSION_STATUSES:
             raise TplanError(f"mission status unsupported: {status}")
         mission["mission"]["status"] = status
@@ -629,7 +657,8 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
         raise TplanError("; ".join(errors))
 
     mission = read_mission(mission_dir)
-    if mission["mission"]["human_in_loop"] >= 100 or decision["requires_human"]:
+    mode = authority_mode(mission)
+    if mode == "advisory" or decision["requires_human"]:
         record_decision_recommendation(mission_dir, decision)
         return "recorded_recommendation"
 

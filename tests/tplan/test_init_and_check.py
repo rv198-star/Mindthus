@@ -116,6 +116,21 @@ class InitMissionTests(unittest.TestCase):
             self.assertIn("human_in_loop must be between 0 and 100", result.stderr)
             self.assertFalse(mission_dir.exists())
 
+    def test_init_mission_rejects_reserved_human_in_loop_without_creating_mission_dir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--human-in-loop",
+                    "50",
+                ),
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("human_in_loop must be 0 or 100 in tplan.v0.1", result.stderr)
+            self.assertFalse(mission_dir.exists())
+
     def test_init_mission_rejects_bad_task_json_without_creating_mission_dir(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
@@ -520,6 +535,18 @@ class CheckMissionTests(unittest.TestCase):
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("missing field: active_task_id", result.stdout)
+
+    def test_check_mission_rejects_reserved_human_in_loop(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission = self.valid_mission([self.valid_task()])
+            mission["mission"]["human_in_loop"] = 50
+            self.write_mission(mission_dir, mission)
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mission human_in_loop must be 0 or 100 in tplan.v0.1", result.stdout)
 
     def test_check_mission_rejects_self_parent_task(self):
         with tempfile.TemporaryDirectory() as tmp:
