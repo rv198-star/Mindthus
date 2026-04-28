@@ -1,0 +1,410 @@
+# tplan Long-Task A/B Tests
+
+These tests are one-off validation scenarios for `tplan.v0.1`. They are not yet a
+stable benchmark. Their purpose is to test whether `tplan` helps an agent maintain a
+Mission across long-running work, repeated feedback, task additions/subtractions, and
+session handoff.
+
+The tests should evaluate behavior and artifacts, not prose quality.
+
+## Capability Target
+
+These tests focus on four capabilities:
+
+- Mission-only decomposition: can the agent turn a Mission into executable,
+  evidence-covered Plan Tasks without being given an initial task tree?
+- Runtime maintenance: can the agent keep task status, active task, parent lineage,
+  and evidence consistent while work changes?
+- Continuous execution: can the agent continue after new feedback without restarting
+  the plan or losing the Mission boundary?
+- Convergence discipline: can the agent close, block, pause, prune, or continue based
+  on acceptance evidence instead of marking work complete because a document exists?
+
+These tests do not prove broad project-management intelligence. They are designed to
+surface whether `tplan` provides practical value over baseline behavior in long-task
+conditions.
+
+## General Run Rules
+
+- Run A and B in fresh sessions when possible.
+- Use the same model and repository state for A and B.
+- Do not show the scoring rubric to the tested agent.
+- Do not allow production code edits. All artifacts must be written under `/tmp`.
+- Prefer durable artifacts over polished narrative.
+- Treatment runs should use `tplan`; baseline runs should not mention or use `tplan`.
+- If the environment cannot hide installed skills, add an explicit instruction in
+  baseline runs: "Do not use `tplan` or its scripts; use your normal planning style."
+
+## Suggested First-Pass Run Plan
+
+The first pass is intentionally asymmetric to reduce cost:
+
+- Run G1-A once.
+- Run G1-B once.
+- Run G2-B through all five event rounds.
+- Run G2-A only on event round 2 and event round 5, using the baseline artifact
+  directory from G1-A.
+
+If G2-B cannot maintain its own state for five rounds, do not spend tokens running the
+full baseline. Fix or redesign `tplan` first.
+
+## Artifact Requirements
+
+Every run should leave artifacts in a directory named by the run:
+
+- `G1-A`: `/tmp/tplan-longrun-g1-a`
+- `G1-B`: `/tmp/tplan-longrun-g1-b`
+- `G2-A`: continue from `/tmp/tplan-longrun-g1-a`
+- `G2-B`: continue from `/tmp/tplan-longrun-g1-b`
+
+Treatment artifacts should include, or be equivalent to:
+
+- `mission.json`
+- `evidence.jsonl`
+- `mission.md` or `resume.md`
+- any decision packets generated during add, subtract, loopback, selection, or depth
+  audit decisions
+
+Baseline artifacts may use any structure, but must be inspectable by a fresh agent.
+
+## G1: Mission-Only Long-Task Decomposition
+
+### What This Tests
+
+G1 checks whether the agent can start from a Mission and acceptance evidence, create a
+stable task tree, begin execution, and leave resumable state.
+
+Expected baseline risk: the agent writes a finished-looking report immediately,
+creates a free-form todo list, or loses acceptance-evidence coverage.
+
+Expected `tplan` behavior: create a Mission runtime, route initial decomposition to
+`3l5s`, create success-critical level-2 tasks with acceptance coverage, set a clear
+active task, record evidence, and leave resume state.
+
+### G1-A Baseline Prompt
+
+```text
+You are working in /root/mindthus, but do not edit production code. Work only under
+/tmp/tplan-longrun-g1-a.
+
+Do not use `tplan` or its scripts. Use your normal planning and execution style.
+
+Mission:
+Design a long-task execution validation package for the current Mindthus skills repo.
+The package will later be used to evaluate whether an agent can maintain complex task
+execution over multiple feedback rounds.
+
+Acceptance evidence:
+- A1: Identify the skills in this repo that are relevant to task planning, task
+  execution, decision routing, evidence recording, or artifact depth.
+- A2: Design at least three long-task test scenarios. Each scenario must include
+  Mission, input constraints, event injections, and acceptance criteria.
+- A3: Produce run instructions that another fresh agent can follow without this chat.
+- A4: State which capabilities the package can test and which capabilities it still
+  cannot prove.
+
+Policy:
+- human_in_loop: 0
+- risk_tolerance: 50
+- resource_sufficiency: 45
+
+Important:
+- Do not write a final report immediately.
+- First decompose the Mission into executable tasks.
+- Execute only the first batch of work.
+- Leave artifacts that another fresh agent can resume from.
+```
+
+### G1-B Treatment Prompt
+
+```text
+You are working in /root/mindthus, but do not edit production code. Work only under
+/tmp/tplan-longrun-g1-b.
+
+Use `tplan` for this Mission.
+
+Mission:
+Design a long-task execution validation package for the current Mindthus skills repo.
+The package will later be used to evaluate whether an agent can maintain complex task
+execution over multiple feedback rounds.
+
+Acceptance evidence:
+- A1: Identify the skills in this repo that are relevant to task planning, task
+  execution, decision routing, evidence recording, or artifact depth.
+- A2: Design at least three long-task test scenarios. Each scenario must include
+  Mission, input constraints, event injections, and acceptance criteria.
+- A3: Produce run instructions that another fresh agent can follow without this chat.
+- A4: State which capabilities the package can test and which capabilities it still
+  cannot prove.
+
+Policy:
+- human_in_loop: 0
+- risk_tolerance: 50
+- resource_sufficiency: 45
+
+Important:
+- Do not write a final report immediately.
+- First decompose the Mission into executable tasks.
+- Use `tplan` runtime artifacts to maintain Mission state.
+- Execute only the first batch of work.
+- Leave artifacts that another fresh agent can resume from.
+```
+
+### G1 Scoring
+
+Score 1 point for each behavior:
+
+- Creates durable state rather than only prose.
+- Creates success-critical tasks that cover A1-A4.
+- Separates success-critical tasks from supporting or exploratory tasks.
+- Sets or clearly identifies the current active task.
+- Records evidence for the first executed batch.
+- Leaves resume instructions for a fresh agent.
+- Avoids claiming Mission completion after only initial decomposition.
+- Names at least one uncertainty or follow-up event that may require task changes.
+
+Interpretation:
+
+- Baseline is expected to score 2-5.
+- Treatment passes at 6 or higher.
+- Treatment fails if it produces a polished final report without durable Mission state.
+
+## G2: Multi-Round Task Maintenance And Continuous Execution
+
+### What This Tests
+
+G2 starts from the artifacts produced by G1. Each round should be run as a continuation
+from existing artifacts. Fresh sessions are preferred because chat memory should not be
+required for recovery.
+
+Expected baseline risk: the agent restarts the plan, ignores previous artifacts,
+forgets why tasks exist, over-expands interesting branches, or marks completion without
+acceptance evidence.
+
+Expected `tplan` behavior: read runtime state, record new feedback as evidence, select
+the correct decision hook, apply or record mutations according to authority, continue
+execution, and leave updated resume state.
+
+### G2-B Treatment Round 1: Feedback Contradicts Test Design
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-b.
+
+Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
+
+New feedback:
+The scenarios designed so far are too close to document review. They may not expose
+whether an agent can continuously decompose and maintain tasks while executing.
+
+Decide whether to add tasks, modify tasks, or loop back to problem definition. Continue
+the Mission and record evidence for the decision.
+```
+
+Expected hook pressure: `loopback` or `addition`.
+
+### G2-B Treatment Round 2: Reduce Subjective Scoring
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-b.
+
+Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
+
+New constraint:
+The A/B package cannot rely only on subjective human scoring. At least part of the
+result must be checkable through file structure, JSON state, event logs, or explicit
+artifact presence.
+
+Adjust the task tree if needed, continue execution, and record evidence.
+```
+
+Expected hook pressure: `addition`, `selection`, or `loopback`.
+
+### G2-B Treatment Round 3: Resource Drop And Subtraction
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-b.
+
+Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
+
+New resource event:
+resource_sufficiency has dropped from 45 to 25. There are several possible test
+scenarios, but only the highest-ROI path should remain active tonight.
+
+Make a Mission-relative subtraction decision. Pause, prune, or downgrade lower-value
+branches without marking them completed. Continue the Mission on the best remaining
+path and record evidence.
+```
+
+Expected hook pressure: `subtraction` and `selection`.
+
+### G2-B Treatment Round 4: Depth Audit
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-b.
+
+Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
+
+New quality risk:
+One scenario looks complete but may only cause an agent to write a better document.
+It may not prove long-task execution, task maintenance, or recovery ability.
+
+Run a depth audit on the bounded artifact. Decide whether to deepen, accept, replace,
+or escalate. Continue the Mission and record evidence.
+```
+
+Expected hook pressure: `depth_audit`, with possible `addition` or `subtraction`.
+
+### G2-B Treatment Round 5: Mission Convergence
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-b.
+
+Use `tplan`. Do not rely on chat history. Read the existing artifacts first.
+
+Now converge the Mission.
+
+Check whether acceptance evidence A1-A4 is satisfied. If it is satisfied, close the
+Mission as completed. If it is not satisfied, name the exact remaining gap and execute
+only the minimum necessary task. If the remaining work is no longer worth executing
+under current resource limits, close under the correct non-completion terminal state.
+
+Do not mark paused, pruned, or abandoned tasks as completed.
+Do not claim completion without inspectable evidence.
+```
+
+Expected hook pressure: `selection`, `subtraction`, or Mission closure.
+
+### Optional G2-A Baseline Rounds
+
+Run only the high-signal baseline rounds unless the treatment result is strong enough
+to justify full comparison.
+
+#### G2-A Round 2 Prompt
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-a.
+
+Do not use `tplan` or its scripts. Do not rely on chat history. Read the existing
+artifacts first.
+
+New constraint:
+The A/B package cannot rely only on subjective human scoring. At least part of the
+result must be checkable through file structure, JSON state, event logs, or explicit
+artifact presence.
+
+Adjust the task plan if needed, continue execution, and leave resumable artifacts.
+```
+
+#### G2-A Round 5 Prompt
+
+```text
+Continue the previous Mission from /tmp/tplan-longrun-g1-a.
+
+Do not use `tplan` or its scripts. Do not rely on chat history. Read the existing
+artifacts first.
+
+Now converge the Mission.
+
+Check whether acceptance evidence A1-A4 is satisfied. If it is satisfied, close the
+Mission as completed. If it is not satisfied, name the exact remaining gap and execute
+only the minimum necessary task. If the remaining work is no longer worth executing
+under current resource limits, close under the correct non-completion terminal state.
+
+Do not claim completion without inspectable evidence.
+```
+
+## G2 Per-Round Scoring
+
+Score each round out of 10:
+
+- 2 points: reads and uses existing artifacts instead of restarting the Mission.
+- 2 points: keeps active task, task statuses, and task lineage consistent.
+- 2 points: records the new event as evidence and links it to the relevant task or
+  Mission decision.
+- 2 points: makes an explicit add, subtract, loopback, selection, or depth-audit
+  decision appropriate to the event.
+- 2 points: advances acceptance evidence or closes a concrete remaining gap instead of
+  maintaining process for its own sake.
+
+Treatment should average 7 or higher across five rounds. A single round below 5 should
+be investigated because it may indicate a state-maintenance failure.
+
+## Hard Failures
+
+Any of these should override the numeric score:
+
+- Starts a new Mission when told to continue existing artifacts.
+- Ignores artifact state and relies on chat memory.
+- Loses parent-child lineage for existing tasks.
+- Marks pruned, paused, abandoned, or superseded tasks as completed.
+- Marks Mission `completed` when acceptance evidence is missing.
+- Applies decision-state mutations while `human_in_loop=100`.
+- Treats a script check as proof of semantic correctness.
+- Produces only a polished report with no durable state.
+
+## Final Evaluation Summary Template
+
+Use this after the run:
+
+```markdown
+# tplan Long-Task A/B Evaluation
+
+Run date:
+Model:
+Repo commit:
+
+## Runs
+
+- G1-A artifact dir:
+- G1-B artifact dir:
+- G2-A rounds run:
+- G2-B rounds run:
+
+## Scores
+
+| Run | Round | Score | Hard failure? | Notes |
+| --- | --- | ---: | --- | --- |
+| G1-A | initial |  |  |  |
+| G1-B | initial |  |  |  |
+| G2-B | 1 |  |  |  |
+| G2-B | 2 |  |  |  |
+| G2-B | 3 |  |  |  |
+| G2-B | 4 |  |  |  |
+| G2-B | 5 |  |  |  |
+| G2-A | 2 |  |  | optional |
+| G2-A | 5 |  |  | optional |
+
+## Capability Findings
+
+- Mission-only decomposition:
+- Runtime maintenance:
+- Continuous execution:
+- Convergence discipline:
+
+## Evidence Links
+
+- Mission state:
+- Evidence log:
+- Decision packets:
+- Resume notes:
+
+## Conclusion
+
+Decision:
+
+- Continue investing in `tplan`
+- Redesign `tplan` before more testing
+- Add missing runtime support
+- Convert this scenario into a repeatable benchmark later
+```
+
+## Interpretation Guidance
+
+A good treatment result should be operationally boring: explicit state, evidence,
+decision packets, and clear continuation paths. A bad result often looks more polished
+than the good result because it writes a coherent report while quietly losing Mission
+control.
+
+This test is successful if it produces a clear engineering decision about `tplan`,
+even if `tplan` fails. The point is not to make the skill look good; the point is to
+find whether it actually helps under long-task pressure.
