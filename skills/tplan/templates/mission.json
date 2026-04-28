@@ -1,0 +1,34 @@
+{
+  "schema_version": "tplan.v0.1",
+  "mission": {
+    "id": "mission-001",
+    "title": "Example Mission",
+    "objective": "Describe the Mission outcome.",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "A1",
+        "description": "Example acceptance evidence."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "level": 2,
+      "title": "Example success-critical task",
+      "status": "pending",
+      "role": "success-critical",
+      "mission_contribution": "Explains why this task is required for Mission convergence.",
+      "acceptance_evidence": [
+        "A1"
+      ],
+      "evidence_links": []
+    }
+  ],
+  "active_task_id": null
+}
