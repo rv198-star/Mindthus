@@ -319,5 +319,146 @@ class InitMissionTests(unittest.TestCase):
             self.assertIn("human_in_loop must be between 0 and 100", result.stderr)
 
 
+class CheckMissionTests(unittest.TestCase):
+    def write_tasks(self, tmp, tasks):
+        task_path = Path(tmp) / "tasks.json"
+        task_path.write_text(json.dumps(tasks), encoding="utf-8")
+        return task_path
+
+    def write_mission(self, mission_dir, mission):
+        mission_dir.mkdir(parents=True, exist_ok=True)
+        (mission_dir / "mission.json").write_text(
+            json.dumps(mission, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    def valid_mission(self, tasks):
+        return {
+            "schema_version": "tplan.v0.1",
+            "mission": {
+                "id": "mission-tplan-l0",
+                "title": "Build tplan L0",
+                "objective": "Build a usable L0 tplan skill for Mindthus.",
+                "status": "active",
+                "human_in_loop": 0,
+                "risk_tolerance": 50,
+                "resource_sufficiency": 60,
+                "acceptance_evidence": [
+                    {
+                        "id": "A1",
+                        "description": "Runtime files exist and validate.",
+                    }
+                ],
+            },
+            "tasks": tasks,
+            "active_task_id": None,
+        }
+
+    def test_check_mission_accepts_valid_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": "success-critical",
+                        "mission_contribution": "Defines the contract scripts enforce.",
+                        "acceptance_evidence": ["A1"],
+                    }
+                ],
+            )
+            init = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "mission-tplan-l0",
+                "--title",
+                "Build tplan L0",
+                "--objective",
+                "Build a usable L0 tplan skill for Mindthus.",
+                "--acceptance-evidence",
+                "A1:Runtime files exist and validate.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(init.returncode, 0, init.stderr)
+
+            result = run_script("check_mission.py", "--dir", str(mission_dir))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("mission_check: ok", result.stdout)
+
+    def test_check_mission_rejects_orphan_task(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        {
+                            "id": "T1",
+                            "parent_id": None,
+                            "level": 2,
+                            "title": "Define runtime schema",
+                            "status": "pending",
+                            "role": "success-critical",
+                            "mission_contribution": "Defines the contract scripts enforce.",
+                            "acceptance_evidence": ["A1"],
+                            "evidence_links": [],
+                        },
+                        {
+                            "id": "T2",
+                            "parent_id": "missing",
+                            "level": 3,
+                            "title": "Write child task",
+                            "status": "pending",
+                            "role": "supporting",
+                            "mission_contribution": "Adds supporting detail.",
+                            "acceptance_evidence": [],
+                            "evidence_links": [],
+                        },
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", "--dir", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T2 parent_id missing does not exist", result.stdout)
+
+    def test_check_mission_rejects_missing_acceptance_coverage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        {
+                            "id": "T1",
+                            "parent_id": None,
+                            "level": 2,
+                            "title": "Define runtime schema",
+                            "status": "pending",
+                            "role": "success-critical",
+                            "mission_contribution": "Defines the contract scripts enforce.",
+                            "acceptance_evidence": [],
+                            "evidence_links": [],
+                        }
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", "--dir", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "acceptance evidence A1 is not covered by a success-critical task",
+                result.stdout,
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
