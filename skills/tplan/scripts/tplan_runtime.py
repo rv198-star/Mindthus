@@ -116,12 +116,18 @@ def write_mission(mission_dir: Path, data: dict[str, Any]) -> None:
     write_json(mission_paths(mission_dir)["mission"], data)
 
 
-def task_map(tasks: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    return {task["id"]: task for task in tasks if isinstance(task.get("id"), str)}
+def task_map(mission: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    tasks = mission.get("tasks", [])
+    if not isinstance(tasks, list):
+        return {}
+    return {task["id"]: task for task in tasks if isinstance(task, dict) and isinstance(task.get("id"), str)}
 
 
 def acceptance_ids(mission: dict[str, Any]) -> set[str]:
-    evidence = mission.get("acceptance_evidence", [])
+    mission_meta = mission.get("mission", {})
+    if not isinstance(mission_meta, dict):
+        return set()
+    evidence = mission_meta.get("acceptance_evidence", [])
     if not isinstance(evidence, list):
         return set()
     return {item["id"] for item in evidence if isinstance(item, dict) and isinstance(item.get("id"), str)}
@@ -277,7 +283,7 @@ def validate_mission(state: Any) -> list[str]:
 
             normalized_tasks.append(task)
 
-    tasks_by_id = task_map(normalized_tasks)
+    tasks_by_id = task_map(state)
     for task in normalized_tasks:
         task_id = _task_label(0, task)
         parent_id = task.get("parent_id")
@@ -314,7 +320,7 @@ def validate_mission(state: Any) -> list[str]:
         if isinstance(task_evidence, list):
             covered_acceptance_ids.update(item for item in task_evidence if isinstance(item, str))
 
-    for evidence_id in sorted(acceptance_ids(mission)):
+    for evidence_id in sorted(acceptance_ids(state)):
         if evidence_id not in covered_acceptance_ids:
             errors.append(f"acceptance evidence {evidence_id} is not covered by a success-critical task")
 

@@ -7,6 +7,11 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[2]
+SCRIPTS = REPO / "skills" / "tplan" / "scripts"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from tplan_runtime import acceptance_ids, task_map
 
 
 def run_script(script_name, *args):
@@ -405,6 +410,22 @@ class CheckMissionTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("mission_check: ok", result.stdout)
+
+    def test_runtime_helpers_accept_full_mission_state(self):
+        mission = self.valid_mission(
+            [
+                self.valid_task("T1"),
+                self.valid_task("T2", role="supporting", acceptance_evidence=[]),
+            ]
+        )
+
+        try:
+            tasks_by_id = task_map(mission)
+        except Exception as exc:
+            self.fail(f"task_map should accept full mission state: {exc}")
+
+        self.assertEqual(set(tasks_by_id), {"T1", "T2"})
+        self.assertEqual(acceptance_ids(mission), {"A1"})
 
     def test_check_mission_rejects_orphan_task(self):
         with tempfile.TemporaryDirectory() as tmp:
