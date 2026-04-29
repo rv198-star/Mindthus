@@ -16,11 +16,11 @@ Initial hooks:
 
 | Hook | Trigger | Primary skill | Expected decision |
 | --- | --- | --- | --- |
-| `mission_intake` | new Mission | `3l5s` | initial level-2 Plan Tasks and acceptance coverage |
+| `mission_intake` | new Mission | `3l5s` | initial Task nodes and acceptance coverage |
 | `addition` | new work or missing dependency appears | `3l5s` | whether to add a task and where to attach it |
 | `subtraction` | low value, resource pressure, repeated local expansion | `sela` | prune, downgrade, pause, abandon, or continue |
 | `chain_role` | low immediate value but possible path dependency | `wae` | evidence-linked chain-role claim with confidence cap |
-| `selection` | multiple candidate Plan Tasks exist | `sela` | next active task or escalation |
+| `selection` | multiple candidate runtime nodes exist | `sela` | next active node or escalation |
 | `loopback` | feedback contradicts current definition | `3l5s` | return to Discovery, Definition, or Resolution |
 | `depth_audit` | bounded artifact looks complete but shallow | `tvg` | deepen, accept, or escalate |
 
@@ -29,10 +29,10 @@ proposed mutations, and requires_human.
 
 ## Alignment And Mission Review Gates
 
-Ordinary child-level hooks are parent-relative. Before a hook output can justify an
-ordinary child mutation, it must state:
+Ordinary SubTask and Step hooks are parent-relative. Before a hook output can justify
+an ordinary child mutation, it must state:
 
-- `parent_alignment`: how the recommendation advances the parent task.
+- `parent_alignment`: how the recommendation advances the parent node.
 - `mission_trace`: the lightweight path from child -> parent -> Mission evidence.
 
 High-impact hooks remain Mission-relative. Use `mission_alignment` when the decision

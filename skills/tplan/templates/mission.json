@@ -19,7 +19,8 @@
     {
       "id": "T1",
       "parent_id": null,
-      "level": 2,
+      "kind": "task",
+      "level": 1,
       "title": "Example success-critical task",
       "status": "pending",
       "role": "success-critical",
@@ -32,13 +33,28 @@
     {
       "id": "T1.1",
       "parent_id": "T1",
-      "level": 3,
-      "title": "Example child task",
+      "kind": "subtask",
+      "level": 2,
+      "title": "Example subtask",
       "status": "pending",
       "role": "supporting",
       "parent_contribution": "Explains how this child advances T1.",
       "parent_acceptance": "Names the local done condition T1 can verify.",
       "mission_trace": "via T1 -> A1",
+      "evidence_links": []
+    },
+    {
+      "id": "T1.1.S1",
+      "parent_id": "T1.1",
+      "kind": "step",
+      "level": 3,
+      "title": "Example execution step",
+      "status": "pending",
+      "role": "supporting",
+      "parent_contribution": "Explains how this step advances T1.1.",
+      "mission_trace": "via T1.1 -> T1 -> A1",
+      "step_action": "Perform one concrete execution action.",
+      "done_condition": "The action has an inspectable result, blocker, or failure.",
       "evidence_links": []
     }
   ],

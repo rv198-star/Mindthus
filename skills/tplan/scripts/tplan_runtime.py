@@ -40,6 +40,7 @@ TASK_STATUSES = {
 }
 
 TASK_ROLES = {"success-critical", "supporting", "exploratory"}
+NODE_KINDS = {"task", "subtask", "step"}
 
 RECOMMENDATIONS = {"add", "subtract", "continue", "switch", "close", "escalate"}
 
@@ -57,6 +58,7 @@ MISSION_REQUIRED_FIELDS = {
 BASE_TASK_REQUIRED_FIELDS = {
     "id",
     "parent_id",
+    "kind",
     "level",
     "title",
     "status",
@@ -75,14 +77,24 @@ PARENT_ALIGNED_TASK_FIELDS = {
     "mission_trace",
 }
 
+STEP_TASK_FIELDS = {
+    "parent_contribution",
+    "mission_trace",
+    "step_action",
+    "done_condition",
+}
+
 POLICY_FIELDS = ("human_in_loop", "risk_tolerance", "resource_sufficiency")
 MISSION_STRING_FIELDS = ("id", "title", "objective")
 TASK_STRING_FIELDS = (
     "title",
+    "kind",
     "mission_contribution",
     "parent_contribution",
     "parent_acceptance",
     "mission_trace",
+    "step_action",
+    "done_condition",
 )
 
 
@@ -113,6 +125,7 @@ def mission_paths(mission_dir: Path) -> dict[str, Path]:
         "mission": mission_dir / "mission.json",
         "narrative": mission_dir / "mission.md",
         "evidence": mission_dir / "evidence.jsonl",
+        "logs": mission_dir / "logs",
         "archive": mission_dir / "archive",
     }
 
@@ -175,7 +188,10 @@ def _is_parent_aligned_task(task: dict[str, Any]) -> bool:
 
 def _required_task_fields(task: dict[str, Any]) -> set[str]:
     fields = set(BASE_TASK_REQUIRED_FIELDS)
-    if _is_parent_aligned_task(task):
+    kind = task.get("kind")
+    if kind == "step":
+        fields.update(STEP_TASK_FIELDS)
+    elif kind == "subtask" or _is_parent_aligned_task(task):
         fields.update(PARENT_ALIGNED_TASK_FIELDS)
     else:
         fields.update(MISSION_ALIGNED_TASK_FIELDS)
@@ -304,6 +320,14 @@ def validate_mission(state: Any) -> list[str]:
                     allowed = ", ".join(sorted(TASK_ROLES))
                     errors.append(f"task {task_id} role must be one of: {allowed}")
 
+            kind = task.get("kind")
+            if "kind" in task:
+                if not isinstance(kind, str):
+                    errors.append(f"task {task_id} kind must be a string")
+                elif kind not in NODE_KINDS:
+                    allowed = ", ".join(sorted(NODE_KINDS))
+                    errors.append(f"task {task_id} kind must be one of: {allowed}")
+
             if "acceptance_evidence" in task:
                 _require_string_list(errors, task_id, "acceptance_evidence", task["acceptance_evidence"])
                 if isinstance(task["acceptance_evidence"], list):
@@ -319,7 +343,13 @@ def validate_mission(state: Any) -> list[str]:
     for task in normalized_tasks:
         task_id = _task_label(0, task)
         parent_id = task.get("parent_id")
+        kind = task.get("kind")
+        level = task.get("level")
         if parent_id is None:
+            if kind != "task":
+                errors.append(f"task {task_id} root node must be kind task")
+            if level != 1:
+                errors.append(f"task {task_id} task must be level 1")
             continue
         if not isinstance(parent_id, str):
             errors.append(f"task {task_id} parent_id must be a string or null")
@@ -327,6 +357,26 @@ def validate_mission(state: Any) -> list[str]:
             errors.append(f"task {task_id} parent_id {parent_id} does not exist")
         elif parent_id == task_id:
             errors.append(f"task {task_id} parent_id cannot reference itself")
+        else:
+            parent = tasks_by_id[parent_id]
+            parent_kind = parent.get("kind")
+            parent_level = parent.get("level")
+            if parent_kind == "step":
+                errors.append(f"task {task_id} parent {parent_id} cannot be a step")
+            if kind == "task":
+                errors.append(f"task {task_id} task nodes cannot have a parent")
+            elif kind == "subtask":
+                if parent_kind != "task":
+                    errors.append(f"task {task_id} subtask parent must be a task")
+                if level != 2:
+                    errors.append(f"task {task_id} subtask must be level 2")
+            elif kind == "step":
+                if parent_kind not in {"task", "subtask"}:
+                    errors.append(f"task {task_id} step parent must be a task or subtask")
+                if isinstance(parent_level, int) and level != parent_level + 1:
+                    errors.append(f"task {task_id} step level must be parent level plus 1")
+                elif level not in {2, 3}:
+                    errors.append(f"task {task_id} step must be level 2 or 3")
 
     cycle_roots: set[str] = set()
     for task_id in sorted(tasks_by_id):
@@ -346,7 +396,7 @@ def validate_mission(state: Any) -> list[str]:
 
     covered_acceptance_ids: set[str] = set()
     for task in normalized_tasks:
-        if task.get("role") != "success-critical" or task.get("parent_id") is not None or task.get("level") != 2:
+        if task.get("role") != "success-critical" or task.get("kind") != "task":
             continue
         task_evidence = task.get("acceptance_evidence", [])
         if isinstance(task_evidence, list):
@@ -405,32 +455,68 @@ def require_task_level(task_id: str, value: Any) -> int:
     return value
 
 
-def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any]:
+def require_task_kind(task_id: str, value: Any) -> str:
+    if not isinstance(value, str):
+        raise TplanError(f"task {task_id} kind must be a string")
+    if value not in NODE_KINDS:
+        allowed = ", ".join(sorted(NODE_KINDS))
+        raise TplanError(f"task {task_id} kind must be one of: {allowed}")
+    return value
+
+
+def _default_kind(raw: dict[str, Any]) -> str:
+    return "task" if raw.get("parent_id") is None else "subtask"
+
+
+def _default_level(raw: dict[str, Any], kind: str, raw_tasks_by_id: dict[str, dict[str, Any]]) -> int:
+    if kind == "task":
+        return 1
+    if kind == "subtask":
+        return 2
+    parent_id = raw.get("parent_id")
+    parent = raw_tasks_by_id.get(str(parent_id)) if parent_id is not None else None
+    if parent is None:
+        return 2
+    parent_kind = parent.get("kind", _default_kind(parent))
+    return 3 if parent_kind == "subtask" else 2
+
+
+def normalize_task(
+    raw: dict[str, Any],
+    default_level: int = 1,
+    raw_tasks_by_id: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     if "id" not in raw:
         raise TplanError("task is missing id")
     if "title" not in raw:
         raise TplanError(f"task {raw['id']} is missing title")
 
+    raw_tasks_by_id = raw_tasks_by_id or {}
     task_id = str(raw["id"])
+    parent_id = raw.get("parent_id")
+    kind = require_task_kind(task_id, raw.get("kind", _default_kind(raw)))
+    default_role = "success-critical" if kind == "task" else "supporting"
     status = require_task_enum(task_id, "status", raw.get("status", "pending"), TASK_STATUSES)
-    role = require_task_enum(task_id, "role", raw.get("role", "success-critical"), TASK_ROLES)
-    level = require_task_level(task_id, raw.get("level", default_level))
+    role = require_task_enum(task_id, "role", raw.get("role", default_role), TASK_ROLES)
+    inferred_level = _default_level(raw, kind, raw_tasks_by_id) if "level" not in raw else default_level
+    level = require_task_level(task_id, raw.get("level", inferred_level))
 
     task = {
         "id": task_id,
-        "parent_id": raw.get("parent_id"),
+        "parent_id": parent_id,
+        "kind": kind,
         "level": level,
         "title": str(raw["title"]),
         "status": status,
         "role": role,
         "evidence_links": require_string_list(task_id, "evidence_links", raw.get("evidence_links", [])),
     }
-    if task["parent_id"] is None:
+    if kind == "task":
         task["mission_contribution"] = str(raw.get("mission_contribution", ""))
         task["acceptance_evidence"] = require_string_list(
             task_id, "acceptance_evidence", raw.get("acceptance_evidence", [])
         )
-    else:
+    elif kind == "subtask":
         for field in sorted(PARENT_ALIGNED_TASK_FIELDS):
             if field not in raw:
                 raise TplanError(f"task {task_id} is missing {field}")
@@ -444,6 +530,14 @@ def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any
             if not isinstance(raw["mission_contribution"], str):
                 raise TplanError(f"task {task_id} mission_contribution must be a string")
             task["mission_contribution"] = raw["mission_contribution"]
+    else:
+        for field in sorted(STEP_TASK_FIELDS):
+            if field not in raw:
+                raise TplanError(f"task {task_id} is missing {field}")
+            value = raw[field]
+            if not isinstance(value, str):
+                raise TplanError(f"task {task_id} {field} must be a string")
+            task[field] = value
     return task
 
 
@@ -470,7 +564,10 @@ def build_mission(
             "resource_sufficiency": require_policy_value("resource_sufficiency", resource_sufficiency),
             "acceptance_evidence": acceptance_evidence,
         },
-        "tasks": [normalize_task(task) for task in tasks],
+        "tasks": [
+            normalize_task(task, raw_tasks_by_id={str(item["id"]): item for item in tasks if "id" in item})
+            for task in tasks
+        ],
         "active_task_id": None,
     }
 
@@ -512,6 +609,60 @@ def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return event
+
+
+def step_log_path(mission_dir: Path, task_id: str) -> Path:
+    return mission_paths(mission_dir)["logs"] / f"{slugify(task_id)}.jsonl"
+
+
+def read_step_logs(mission_dir: Path, task_id: str) -> list[dict[str, Any]]:
+    path = step_log_path(mission_dir, task_id)
+    events: list[dict[str, Any]] = []
+    if not path.exists():
+        return events
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            events.append(json.loads(line))
+    return events
+
+
+def append_step_log(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
+    task_id = event.get("task_id")
+    if not isinstance(task_id, str) or not task_id:
+        raise TplanError("step log task_id must be a non-empty string")
+    find_task(read_mission(mission_dir), task_id)
+    path = step_log_path(mission_dir, task_id)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    events = read_step_logs(mission_dir, task_id)
+    event = dict(event)
+    event.setdefault("id", f"L{len(events) + 1}")
+    event.setdefault("timestamp", now_iso())
+    event.setdefault("payload", {})
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    return event
+
+
+def archive_task_logs(mission_dir: Path, task_id: str, summary: str) -> Path:
+    find_task(read_mission(mission_dir), task_id)
+    paths = mission_paths(mission_dir)
+    active_log = step_log_path(mission_dir, task_id)
+    archive_dir = paths["archive"] / slugify(task_id)
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    archived_log = archive_dir / "step_logs.jsonl"
+    if active_log.exists():
+        active_log.replace(archived_log)
+    elif not archived_log.exists():
+        archived_log.write_text("", encoding="utf-8")
+    summary_md = archive_dir / "summary.md"
+    summary_md.write_text(
+        f"# Task {task_id} Summary\n\n"
+        f"{summary}\n\n"
+        f"- archived_at: {now_iso()}\n"
+        f"- step_log: step_logs.jsonl\n",
+        encoding="utf-8",
+    )
+    return archive_dir
 
 
 def find_task(mission: dict[str, Any], task_id: str) -> dict[str, Any]:

@@ -79,6 +79,70 @@ class EvidenceAndTransitionTests(unittest.TestCase):
             self.assertEqual(event["task_id"], "T1")
             self.assertEqual(event["payload"]["path"], "skills/tplan/resources/schema.md")
 
+    def test_record_step_log_writes_task_local_log_without_evidence_event(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script(
+                "record_step_log.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--step-id",
+                "S1",
+                "--summary",
+                "Inspected schema constraints.",
+                "--payload-json",
+                '{"files": ["skills/tplan/resources/schema.md"]}',
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("recorded_step_log:", result.stdout)
+
+            evidence_lines = (mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()
+            self.assertEqual(evidence_lines, [])
+
+            log_lines = (mission_dir / "logs" / "T1.jsonl").read_text(encoding="utf-8").splitlines()
+            self.assertEqual(len(log_lines), 1)
+            event = json.loads(log_lines[0])
+            self.assertEqual(event["step_id"], "S1")
+            self.assertEqual(event["task_id"], "T1")
+            self.assertEqual(event["summary"], "Inspected schema constraints.")
+            self.assertEqual(event["payload"]["files"], ["skills/tplan/resources/schema.md"])
+
+    def test_archive_task_logs_moves_logs_to_archive_and_writes_summary(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            log = run_script(
+                "record_step_log.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--step-id",
+                "S1",
+                "--summary",
+                "Inspected schema constraints.",
+            )
+            self.assertEqual(log.returncode, 0, log.stderr)
+
+            result = run_script(
+                "archive_task_logs.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--summary",
+                "Task T1 produced a usable runtime schema boundary.",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("archived_task_logs: T1", result.stdout)
+            self.assertFalse((mission_dir / "logs" / "T1.jsonl").exists())
+            archived = mission_dir / "archive" / "T1" / "step_logs.jsonl"
+            self.assertTrue(archived.exists())
+            self.assertIn("Inspected schema constraints.", archived.read_text(encoding="utf-8"))
+            summary = (mission_dir / "archive" / "T1" / "summary.md").read_text(encoding="utf-8")
+            self.assertIn("# Task T1 Summary", summary)
+            self.assertIn("Task T1 produced a usable runtime schema boundary.", summary)
+            self.assertEqual((mission_dir / "evidence.jsonl").read_text(encoding="utf-8"), "")
+
     def test_transition_task_sets_active_and_completed(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)

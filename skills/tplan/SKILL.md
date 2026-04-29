@@ -23,7 +23,7 @@ Semantic judgment is delegated:
 - `3l5s`: problem definition, decomposition, loopback
 - `sela`: subtraction and Mission-level ROI pressure
 - `edsp`: fuzzy structural choices
-- `wae`: control boundaries and evidence bridges
+- `wae`: control boundaries, evidence bridges, and log/evidence separation
 - `tvg`: artifact depth audit
 
 ## Startup Policy
@@ -39,26 +39,59 @@ Default `human_in_loop` is `0`.
 ## Runtime Loop
 
 1. Initialize Mission files with `scripts/init_mission.py`.
-2. Use `3l5s` to propose success-critical level-2 Plan Tasks.
+2. Use `3l5s` to propose success-critical Task nodes.
 3. Validate the tree with `scripts/check_mission.py`.
-4. Record execution evidence with `scripts/record_evidence.py`.
-5. Survey state with `scripts/survey.py`.
-6. Generate a decision packet with `scripts/make_decision_packet.py`.
-7. Run the parent-alignment or Mission Review Gate for the decision weight.
-8. Invoke the routed Mindthus skill named by the decision hook.
-9. Ensure the hook output states the required alignment before mutation.
-10. Apply or record the decision with `scripts/apply_decision.py`.
+4. Record task-local step logs with `scripts/record_step_log.py` while executing.
+5. Record only acceptance, state-change, blocker, feedback, or decision evidence with
+   `scripts/record_evidence.py`.
+6. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
+   summary or key findings to evidence when they support a claim.
+7. Survey state with `scripts/survey.py`.
+8. Generate a decision packet with `scripts/make_decision_packet.py`.
+9. Run the parent-alignment or Mission Review Gate for the decision weight.
+10. Invoke the routed Mindthus skill named by the decision hook.
+11. Ensure the hook output states the required alignment before mutation.
+12. Apply or record the decision with `scripts/apply_decision.py`.
 
 ## Alignment Gate
 
 Task alignment is hierarchical by default:
 
-- Level-2 / root tasks are strongly responsible to the Mission.
-- Child tasks are strongly responsible to their parent task.
-- Child tasks carry a lightweight `mission_trace` through the parent chain, but do not
+- Task nodes are strongly responsible to the Mission.
+- SubTask nodes are strongly responsible to their parent Task.
+- Step nodes are execution leaves responsible to their parent Task or SubTask.
+- SubTasks and Steps carry a lightweight `mission_trace` through the parent chain, but do not
   repeat a full Mission justification during ordinary execution.
 
-Use a lightweight gate for ordinary child-level decisions:
+Mission is not counted as a task level. Runtime `v0.1` supports:
+
+- `task`: level 1 control node, Mission-facing.
+- `subtask`: level 2 control node, Task-facing.
+- `step`: level 2 or 3 execution leaf.
+
+Simple work may use `Mission -> Task -> Step`. Complex work may use
+`Mission -> Task -> SubTask -> Step`. Step never has children. If a Step needs
+meaningful decomposition, it should raise a split signal and its parent control node
+should replace or upgrade it into a SubTask.
+
+Future expansion may add deeper Task/SubTask control layers, but Step remains the
+stable execution leaf.
+
+## Logs, Evidence, And Summary
+
+Evidence is not a process log.
+
+- `logs/`: step-local records used while doing work. They are allowed to be noisy and
+  should stay below the active execution boundary.
+- `evidence.jsonl`: acceptance, state-change, blocker, feedback, decision, or key
+  finding records that constrain claims.
+- `archive/`: compressed task history. When a task or milestone closes, archive its
+  logs and keep a summary plus only the evidence needed by the parent.
+
+Decision packets should consume evidence and recent blockers, not raw step logs unless
+a specific investigation needs them.
+
+Use a lightweight gate for ordinary SubTask/Step decisions:
 
 - `parent_alignment`: how the recommendation advances the parent task.
 - `mission_trace`: the parent-chain path back to Mission acceptance evidence.

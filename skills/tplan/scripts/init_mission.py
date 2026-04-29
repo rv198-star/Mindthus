@@ -21,7 +21,7 @@ from tplan_runtime import (
 )
 
 
-RUNTIME_FILES = ("mission", "narrative", "evidence", "archive")
+RUNTIME_FILES = ("mission", "narrative", "evidence", "logs", "archive")
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,7 +36,7 @@ def parse_args() -> argparse.Namespace:
         default=[],
         help="Acceptance evidence as ID:description. Repeat for multiple items.",
     )
-    parser.add_argument("--task-json", help="JSON file containing initial Plan Tasks.")
+    parser.add_argument("--task-json", help="JSON file containing initial Task, SubTask, and Step nodes.")
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
@@ -67,6 +67,7 @@ def main() -> int:
         )
         refuse_existing_runtime(paths)
         paths["dir"].mkdir(parents=True, exist_ok=True)
+        paths["logs"].mkdir(parents=True, exist_ok=True)
         paths["archive"].mkdir(parents=True, exist_ok=True)
         write_json(paths["mission"], mission)
         paths["narrative"].write_text(render_mission_md(mission), encoding="utf-8")

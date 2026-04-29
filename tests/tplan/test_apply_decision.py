@@ -40,7 +40,8 @@ def create_mission(tmp, human_in_loop):
                 {
                     "id": "T2.1",
                     "parent_id": "T2",
-                    "level": 3,
+                    "kind": "subtask",
+                    "level": 2,
                     "title": "Draft CLI arguments",
                     "role": "supporting",
                     "parent_contribution": "Supplies the CLI argument draft needed by T2.",

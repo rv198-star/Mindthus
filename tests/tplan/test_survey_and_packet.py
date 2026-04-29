@@ -33,7 +33,8 @@ def create_mission(tmp):
                 {
                     "id": "T1.1",
                     "parent_id": "T1",
-                    "level": 3,
+                    "kind": "subtask",
+                    "level": 2,
                     "title": "Draft mission fields",
                     "role": "supporting",
                     "parent_contribution": "Drafts the fields T1 needs.",

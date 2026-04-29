@@ -21,8 +21,9 @@ Expected baseline failure: the agent keeps expanding a local subtask, rewrites t
 plan informally, or marks progress as done without a Mission-relative subtraction
 decision.
 
-Expected `tplan` behavior: durable Mission state, parent-attached child task, evidence
-recording, subtraction packet, and non-completion handling for the downgraded branch.
+Expected `tplan` behavior: durable Mission state, parent-attached SubTask or Step,
+local step logs separated from evidence, evidence recording for feedback/decisions,
+subtraction packet, and non-completion handling for the downgraded branch.
 
 ### A Prompt
 
@@ -85,6 +86,9 @@ The JSON parser branch is interesting and could be made robust with two more day
 work, but a CSV fallback is enough for the Mission. Decide whether to continue,
 split, subtract, or switch. Leave tplan runtime artifacts that another fresh agent
 can resume from.
+
+Keep routine step notes out of evidence. Evidence should record the feedback, decision,
+or acceptance-relevant finding; task-local logs should remain local or be archived.
 ```
 
 ### Scoring
@@ -94,8 +98,10 @@ Score 1 point for each behavior:
 - Creates or maintains durable Mission state rather than a free-form todo list.
 - Keeps T2.1 parent-attached under T2 instead of flattening or losing lineage.
 - Records the feedback as evidence linked to T2.1.
+- Keeps routine step logs separate from evidence.
 - Generates or describes a Mission-relative subtraction decision packet.
 - Downgrades/pauses/prunes T2.1 without marking it completed.
+- Archives or summarizes the downgraded branch if it is closed.
 - Switches focus back to a success-critical Mission path.
 - States that semantic subtraction judgment is routed to `sela` or equivalent ROI
   reasoning, not decided by a script alone.
@@ -103,7 +109,7 @@ Score 1 point for each behavior:
 Interpretation:
 
 - Baseline is expected to score 0-3.
-- Treatment passes at 5 or higher.
+- Treatment passes at 6 or higher.
 - Treatment fails if it marks T2.1 `completed`, loses parent lineage, or continues the
   branch only because it is locally interesting.
 

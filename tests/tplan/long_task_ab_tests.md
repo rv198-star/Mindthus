@@ -12,13 +12,13 @@ The tests should evaluate behavior and artifacts, not prose quality.
 These tests focus on four capabilities:
 
 - Mission-only decomposition: can the agent turn a Mission into executable,
-  evidence-covered Plan Tasks without being given an initial task tree?
+  evidence-covered Task/SubTask/Step state without being given an initial tree?
 - Runtime maintenance: can the agent keep task status, active task, parent lineage,
-  and evidence consistent while work changes?
+  logs, summaries, and evidence consistent while work changes?
 - Continuous execution: can the agent continue after new feedback without restarting
   the plan or losing the Mission boundary?
 - Alignment-aware decision making: can the agent use parent alignment for ordinary
-  child work and Mission alignment for high-impact add, subtract, selection,
+  SubTask/Step work and Mission alignment for high-impact add, subtract, selection,
   loopback, or closure decisions?
 - Convergence discipline: can the agent close, block, pause, prune, or continue based
   on acceptance evidence instead of marking work complete because a document exists?
@@ -64,8 +64,11 @@ Treatment artifacts should include, or be equivalent to:
 
 - `mission.json`
 - `evidence.jsonl`
+- `logs/` for active task-local step logs, when work is still in progress
+- `archive/` summaries for completed, paused, pruned, abandoned, or superseded task
+  branches
 - `mission.md` or `resume.md`
-- `parent_alignment` notes for ordinary child-level decisions, with lightweight
+- `parent_alignment` notes for ordinary SubTask/Step decisions, with lightweight
   `mission_trace`
 - `mission_alignment` notes for high-impact add, subtract, selection, loopback, and
   closure decisions
@@ -88,8 +91,10 @@ Expected baseline risk: the agent writes a finished-looking report immediately,
 creates a free-form todo list, or loses acceptance-evidence coverage.
 
 Expected `tplan` behavior: create a Mission runtime, route initial decomposition to
-`3l5s`, create success-critical level-2 tasks with acceptance coverage, set a clear
-active task, record evidence, and leave resume state.
+`3l5s`, create success-critical Task nodes with acceptance coverage, split simple
+work directly into Steps or complex work into SubTasks and Steps, set a clear active
+node, record local step logs for execution, record evidence only for claims or state
+changes, and leave resume state.
 
 ### G1-A Baseline Prompt
 
@@ -156,6 +161,8 @@ Important:
 - Do not write a final report immediately.
 - First decompose the Mission into executable tasks.
 - Use `tplan` runtime artifacts to maintain Mission state.
+- Keep step logs separate from evidence; evidence should support claims, acceptance,
+  blockers, feedback, or decisions.
 - Execute only the first batch of work.
 - Leave artifacts that another fresh agent can resume from.
 ```
@@ -168,7 +175,8 @@ Score 1 point for each behavior:
 - Creates success-critical tasks that cover A1-A4.
 - Separates success-critical tasks from supporting or exploratory tasks.
 - Sets or clearly identifies the current active task.
-- Records evidence for the first executed batch.
+- Records local step logs for the first executed batch and promotes only meaningful
+  findings or acceptance-relevant facts to evidence.
 - Leaves resume instructions for a fresh agent.
 - Avoids claiming Mission completion after only initial decomposition.
 - Names at least one uncertainty or follow-up event that may require task changes.
@@ -193,7 +201,8 @@ acceptance evidence.
 
 Expected `tplan` behavior: read runtime state, record new feedback as evidence, select
 the correct decision hook, apply or record mutations according to authority, continue
-execution, and leave updated resume state.
+execution, keep routine step logs local, archive closed task logs into summaries, and
+leave updated resume state.
 
 ### G2-B Treatment Round 1: Feedback Contradicts Test Design
 
@@ -226,7 +235,8 @@ result must be checkable through file structure, JSON state, event logs, or expl
 artifact presence.
 
 State the Mission alignment before changing the task tree. Adjust the task tree if
-needed, continue execution, and record evidence.
+needed, continue execution, and record evidence only for the constraint, decision, or
+checkable result; keep routine execution notes in step logs.
 ```
 
 Expected hook pressure: `addition`, `selection`, or `loopback`.
@@ -244,7 +254,8 @@ scenarios, but only the highest-ROI path should remain active tonight.
 
 Run a full Mission Review Gate, then make a Mission-relative subtraction decision.
 Pause, prune, or downgrade lower-value branches without marking them completed.
-Continue the Mission on the best remaining path and record evidence.
+Archive any closed branch step logs into summaries. Continue the Mission on the best
+remaining path and record evidence for the resource event and decision.
 ```
 
 Expected hook pressure: `subtraction` and `selection`.
@@ -336,11 +347,13 @@ Score each round out of 12:
 - 2 points: keeps active task, task statuses, and task lineage consistent.
 - 2 points: records the new event as evidence and links it to the relevant task or
   Mission decision.
+- 2 points: separates routine step logs from evidence, and archives/summarizes closed
+  branch logs instead of letting process history accumulate at Mission level.
 - 2 points: states Mission alignment before the decision; high-impact decisions include
   a full Mission Review Gate rather than generic "this helps the Mission" wording.
-- 2 points: makes an explicit add, subtract, loopback, selection, or depth-audit
+- 1 point: makes an explicit add, subtract, loopback, selection, or depth-audit
   decision appropriate to the event.
-- 2 points: advances acceptance evidence or closes a concrete remaining gap instead of
+- 1 point: advances acceptance evidence or closes a concrete remaining gap instead of
   maintaining process for its own sake.
 
 Treatment should average 9 or higher across five rounds. A single round below 6 should
@@ -357,6 +370,8 @@ Any of these should override the numeric score:
 - Marks Mission `completed` when acceptance evidence is missing.
 - Applies decision-state mutations while `human_in_loop=100`.
 - Treats a script check as proof of semantic correctness.
+- Treats routine logs as acceptance evidence or lets raw step history expand at Mission
+  level without summary/archive boundaries.
 - Makes task addition, subtraction, selection, loopback, or closure decisions without
   stating Mission alignment.
 - Produces only a polished report with no durable state.
@@ -405,6 +420,7 @@ Repo commit:
 
 - Mission state:
 - Evidence log:
+- Step logs/archive summaries:
 - Decision packets:
 - Resume notes:
 

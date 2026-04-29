@@ -79,6 +79,7 @@ class InitMissionTests(unittest.TestCase):
             self.assertTrue((mission_dir / "mission.json").exists())
             self.assertTrue((mission_dir / "mission.md").exists())
             self.assertTrue((mission_dir / "evidence.jsonl").exists())
+            self.assertTrue((mission_dir / "logs").is_dir())
             self.assertTrue((mission_dir / "archive").is_dir())
 
             mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
@@ -86,7 +87,90 @@ class InitMissionTests(unittest.TestCase):
             self.assertEqual(mission["mission"]["human_in_loop"], 0)
             self.assertEqual(mission["mission"]["resource_sufficiency"], 60)
             self.assertEqual(mission["tasks"][0]["parent_id"], None)
-            self.assertEqual(mission["tasks"][0]["level"], 2)
+            self.assertEqual(mission["tasks"][0]["kind"], "task")
+            self.assertEqual(mission["tasks"][0]["level"], 1)
+
+    def test_init_mission_defaults_child_tasks_to_subtask_level_2(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": "success-critical",
+                        "mission_contribution": "Defines the contract scripts enforce.",
+                        "acceptance_evidence": ["A1"],
+                    },
+                    {
+                        "id": "T1.1",
+                        "parent_id": "T1",
+                        "title": "Draft schema fields",
+                        "role": "supporting",
+                        "parent_contribution": "Drafts the fields required by T1.",
+                        "parent_acceptance": "T1 can review concrete field names.",
+                        "mission_trace": "via T1 -> A1",
+                    },
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                ),
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            nodes = {task["id"]: task for task in mission["tasks"]}
+            self.assertEqual(nodes["T1"]["kind"], "task")
+            self.assertEqual(nodes["T1"]["level"], 1)
+            self.assertEqual(nodes["T1.1"]["kind"], "subtask")
+            self.assertEqual(nodes["T1.1"]["level"], 2)
+
+    def test_init_mission_accepts_task_directly_split_to_step(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            tasks = self.write_tasks(
+                tmp,
+                [
+                    {
+                        "id": "T1",
+                        "title": "Define runtime schema",
+                        "role": "success-critical",
+                        "mission_contribution": "Defines the contract scripts enforce.",
+                        "acceptance_evidence": ["A1"],
+                    },
+                    {
+                        "id": "T1.S1",
+                        "parent_id": "T1",
+                        "kind": "step",
+                        "title": "Inspect existing schema file",
+                        "role": "supporting",
+                        "parent_contribution": "Gives T1 the current schema baseline.",
+                        "mission_trace": "via T1 -> A1",
+                        "step_action": "Read the schema file and list the current task fields.",
+                        "done_condition": "The current task fields are listed in the step result.",
+                    },
+                ],
+            )
+
+            result = run_script(
+                *self.init_args(
+                    mission_dir,
+                    "--task-json",
+                    str(tasks),
+                ),
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            nodes = {task["id"]: task for task in mission["tasks"]}
+            self.assertEqual(nodes["T1.S1"]["kind"], "step")
+            self.assertEqual(nodes["T1.S1"]["level"], 2)
 
     def test_init_mission_rejects_existing_runtime_files_without_truncating_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -378,7 +462,8 @@ class CheckMissionTests(unittest.TestCase):
         task = {
             "id": task_id,
             "parent_id": None,
-            "level": 2,
+            "kind": "task",
+            "level": 1,
             "title": "Define runtime schema",
             "status": "pending",
             "role": "success-critical",
@@ -426,7 +511,7 @@ class CheckMissionTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("mission_check: ok", result.stdout)
 
-    def test_check_mission_accepts_child_task_with_parent_alignment_trace(self):
+    def test_check_mission_accepts_subtask_with_parent_alignment_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
             self.write_mission(
@@ -437,7 +522,8 @@ class CheckMissionTests(unittest.TestCase):
                         {
                             "id": "T1.1",
                             "parent_id": "T1",
-                            "level": 3,
+                            "kind": "subtask",
+                            "level": 2,
                             "title": "Draft schema fields",
                             "status": "pending",
                             "role": "supporting",
@@ -455,6 +541,95 @@ class CheckMissionTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("mission_check: ok", result.stdout)
 
+    def test_check_mission_accepts_subtask_split_to_step(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        self.valid_task("T1"),
+                        {
+                            "id": "T1.1",
+                            "parent_id": "T1",
+                            "kind": "subtask",
+                            "level": 2,
+                            "title": "Draft schema fields",
+                            "status": "pending",
+                            "role": "supporting",
+                            "parent_contribution": "Drafts the fields required by T1.",
+                            "parent_acceptance": "T1 can review concrete field names.",
+                            "mission_trace": "via T1 -> A1",
+                            "evidence_links": [],
+                        },
+                        {
+                            "id": "T1.1.S1",
+                            "parent_id": "T1.1",
+                            "kind": "step",
+                            "level": 3,
+                            "title": "List schema field candidates",
+                            "status": "pending",
+                            "role": "supporting",
+                            "parent_contribution": "Gives T1.1 a concrete field candidate list.",
+                            "mission_trace": "via T1.1 -> T1 -> A1",
+                            "step_action": "List candidate field names and required types.",
+                            "done_condition": "A candidate field list exists for T1.1 review.",
+                            "evidence_links": [],
+                        },
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("mission_check: ok", result.stdout)
+
+    def test_check_mission_rejects_step_with_child(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        self.valid_task("T1"),
+                        {
+                            "id": "T1.S1",
+                            "parent_id": "T1",
+                            "kind": "step",
+                            "level": 2,
+                            "title": "Inspect schema fields",
+                            "status": "pending",
+                            "role": "supporting",
+                            "parent_contribution": "Gives T1 the current schema baseline.",
+                            "mission_trace": "via T1 -> A1",
+                            "step_action": "Read the schema file and list the current task fields.",
+                            "done_condition": "The current task fields are listed in the step result.",
+                            "evidence_links": [],
+                        },
+                        {
+                            "id": "T1.S1.1",
+                            "parent_id": "T1.S1",
+                            "kind": "step",
+                            "level": 3,
+                            "title": "Inspect one schema field",
+                            "status": "pending",
+                            "role": "supporting",
+                            "parent_contribution": "Adds a lower-level action below a step.",
+                            "mission_trace": "via T1.S1 -> T1 -> A1",
+                            "step_action": "Inspect one field.",
+                            "done_condition": "One field has been inspected.",
+                            "evidence_links": [],
+                        },
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1.S1.1 parent T1.S1 cannot be a step", result.stdout)
+
     def test_check_mission_rejects_child_task_missing_parent_alignment(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
@@ -466,7 +641,8 @@ class CheckMissionTests(unittest.TestCase):
                         {
                             "id": "T1.1",
                             "parent_id": "T1",
-                            "level": 3,
+                            "kind": "subtask",
+                            "level": 2,
                             "title": "Draft schema fields",
                             "status": "pending",
                             "role": "supporting",
@@ -509,7 +685,8 @@ class CheckMissionTests(unittest.TestCase):
                         {
                             "id": "T1",
                             "parent_id": None,
-                            "level": 2,
+                            "kind": "task",
+                            "level": 1,
                             "title": "Define runtime schema",
                             "status": "pending",
                             "role": "success-critical",
@@ -520,7 +697,8 @@ class CheckMissionTests(unittest.TestCase):
                         {
                             "id": "T2",
                             "parent_id": "missing",
-                            "level": 3,
+                            "kind": "subtask",
+                            "level": 2,
                             "title": "Write child task",
                             "status": "pending",
                             "role": "supporting",
@@ -548,7 +726,8 @@ class CheckMissionTests(unittest.TestCase):
                         {
                             "id": "T1",
                             "parent_id": None,
-                            "level": 2,
+                            "kind": "task",
+                            "level": 1,
                             "title": "Define runtime schema",
                             "status": "pending",
                             "role": "success-critical",
@@ -576,7 +755,8 @@ class CheckMissionTests(unittest.TestCase):
                     {
                         "id": "T1",
                         "parent_id": None,
-                        "level": 2,
+                        "kind": "task",
+                        "level": 1,
                         "title": "Define runtime schema",
                         "status": "pending",
                         "role": "success-critical",

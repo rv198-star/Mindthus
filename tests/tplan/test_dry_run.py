@@ -57,7 +57,8 @@ class TplanDryRunTests(unittest.TestCase):
                         {
                             "id": "T2.1",
                             "parent_id": "T2",
-                            "level": 3,
+                            "kind": "subtask",
+                            "level": 2,
                             "title": "Prototype transition_task.py state edges",
                             "role": "supporting",
                             "parent_contribution": "Prototypes the state edge behavior needed by T2.",
