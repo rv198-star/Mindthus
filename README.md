@@ -1,10 +1,10 @@
-# Mindthus / 心即
+# Mindthus / 此心
 
 Mindthus is a personal methodology and agent-construction project.
 
-`Thus` means "so / thus / it is so" with a sense of settled judgment. `心即 / Mindthus` means: once the mind has judged the pattern, the work should take that shape.
+`Thus` means "so / thus / it is so" with a sense of settled judgment. `此心 / Mindthus` means: once this mind has judged the pattern, the work should take that shape.
 
-The name draws from Wang Yangming's `心即理`: method is not only an external checklist. It is the crystallization of judgment, evidence boundaries, action posture, and repeated practice.
+The name draws from the idea that method is not only an external checklist. It is the crystallization of judgment, evidence boundaries, action posture, and repeated practice.
 
 Short formulation:
 

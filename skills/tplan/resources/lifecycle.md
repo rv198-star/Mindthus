@@ -39,6 +39,54 @@ external input.
 decision state records PM choices such as split, prune, downgrade, abandon, switch, and
 close. In advisory mode, decision state changes require approval.
 
+## Graceful Stop
+
+When tplan cannot safely continue, it should stop with `requires_human` rather than
+keep trying. This is appropriate when the remaining blocker depends on missing user
+intent, authority, acceptance criteria, product judgment, or external information that
+the agent cannot infer safely.
+
+The stop report is concise and shown in Chinese by default:
+
+```text
+停止报告
+
+当前目标：
+...
+
+已尝试：
+1. ...
+2. ...
+3. ...
+
+阻碍：
+...
+
+为何不能安全继续：
+...
+
+需要人类提供：
+...
+
+恢复条件：
+...
+```
+
+Rules:
+
+- `已尝试` contains at most 3 items.
+- `阻碍` names the single core blocker.
+- `为何不能安全继续` states the concrete risk of continuing automatically.
+- `需要人类提供` is answerable, decidable, or authorizable by a human.
+- `恢复条件` names the condition under which an agent can resume.
+
+Runtime effect:
+
+- write a `stop_report` evidence event with English payload keys and Chinese content
+- mark the current node `blocked`
+- set the Mission status to `requires_human`
+- keep `active_task_id` on the blocked node so resumption is local
+
 ## Step Logs And Archival
 
 Step logs are local execution history for one Step or active runtime node. They help

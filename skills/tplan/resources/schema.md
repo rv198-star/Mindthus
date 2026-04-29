@@ -102,6 +102,16 @@ Each line is one JSON object with:
 - `task_id`
 - `payload`
 
+`stop_report` evidence events use English payload keys with Chinese user-facing
+content:
+
+- `current_goal`
+- `attempts`: 1-3 concise attempts
+- `blocking_issue`
+- `why_cannot_continue_safely`
+- `need_from_human`
+- `resume_condition`
+
 ## logs/
 
 Active step logs are task-local JSONL files named `<task_id>.jsonl`. Each line is one

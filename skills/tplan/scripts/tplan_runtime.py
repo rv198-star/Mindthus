@@ -683,6 +683,59 @@ def archive_task_logs(mission_dir: Path, task_id: str, summary: str) -> Path:
     return archive_dir
 
 
+def format_stop_report(payload: dict[str, Any]) -> str:
+    attempts = payload.get("attempts", [])
+    attempt_lines = "\n".join(f"{index}. {attempt}" for index, attempt in enumerate(attempts, start=1))
+    return (
+        "停止报告\n\n"
+        f"当前目标：\n{payload['current_goal']}\n\n"
+        f"已尝试：\n{attempt_lines}\n\n"
+        f"阻碍：\n{payload['blocking_issue']}\n\n"
+        f"为何不能安全继续：\n{payload['why_cannot_continue_safely']}\n\n"
+        f"需要人类提供：\n{payload['need_from_human']}\n\n"
+        f"恢复条件：\n{payload['resume_condition']}"
+    )
+
+
+def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: dict[str, Any]) -> dict[str, Any]:
+    attempts = payload.get("attempts")
+    if not isinstance(attempts, list):
+        raise TplanError("attempts must be a list")
+    if len(attempts) > 3:
+        raise TplanError("attempts must contain at most 3 items")
+    if not attempts:
+        raise TplanError("attempts must contain at least 1 item")
+    required_fields = (
+        "current_goal",
+        "blocking_issue",
+        "why_cannot_continue_safely",
+        "need_from_human",
+        "resume_condition",
+    )
+    for field in required_fields:
+        if not isinstance(payload.get(field), str) or not payload[field].strip():
+            raise TplanError(f"stop report {field} must be a non-empty string")
+    for attempt in attempts:
+        if not isinstance(attempt, str) or not attempt.strip():
+            raise TplanError("stop report attempts must be non-empty strings")
+
+    mission = read_mission(mission_dir)
+    find_task(mission, task_id)
+    set_task_status(mission, task_id, "blocked")
+    mission["active_task_id"] = task_id
+    mission["mission"]["status"] = "requires_human"
+    write_mission(mission_dir, mission)
+    return append_event(
+        mission_dir,
+        {
+            "event_type": "stop_report",
+            "summary": summary,
+            "task_id": task_id,
+            "payload": payload,
+        },
+    )
+
+
 def find_task(mission: dict[str, Any], task_id: str) -> dict[str, Any]:
     for task in mission.get("tasks", []):
         if str(task.get("id")) == task_id:

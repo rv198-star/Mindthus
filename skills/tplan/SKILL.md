@@ -46,14 +46,16 @@ Default `human_in_loop` is `0`.
 5. Record task-local step logs with `scripts/record_step_log.py` while executing.
 6. Record only acceptance, state-change, blocker, feedback, or decision evidence with
    `scripts/record_evidence.py`.
-7. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
+7. If execution cannot safely continue, write a concise Chinese stop report with
+   `scripts/stop_report.py` and request human intervention.
+8. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
    summary or key findings to evidence when they support a claim.
-8. Survey state with `scripts/survey.py`.
-9. Generate a decision packet with `scripts/make_decision_packet.py`.
-10. Run the parent-alignment or Mission Review Gate for the decision weight.
-11. Invoke the routed Mindthus skill named by the decision hook.
-12. Ensure the hook output states the required alignment before mutation.
-13. Apply or record the decision with `scripts/apply_decision.py`.
+9. Survey state with `scripts/survey.py`.
+10. Generate a decision packet with `scripts/make_decision_packet.py`.
+11. Run the parent-alignment or Mission Review Gate for the decision weight.
+12. Invoke the routed Mindthus skill named by the decision hook.
+13. Ensure the hook output states the required alignment before mutation.
+14. Apply or record the decision with `scripts/apply_decision.py`.
 
 ## Alignment Gate
 
@@ -92,6 +94,42 @@ Evidence is not a process log.
 
 Decision packets should consume evidence and recent blockers, not raw step logs unless
 a specific investigation needs them.
+
+## Graceful Stop
+
+tplan should stop cleanly when continuing would require inventing missing intent,
+authority, acceptance criteria, or product judgment. A stop is not a generic failure:
+it is a handoff to a human with the smallest useful context.
+
+Default user-facing stop reports are Chinese:
+
+```text
+停止报告
+
+当前目标：
+...
+
+已尝试：
+1. ...
+2. ...
+3. ...
+
+阻碍：
+...
+
+为何不能安全继续：
+...
+
+需要人类提供：
+...
+
+恢复条件：
+...
+```
+
+Use `scripts/stop_report.py` to record the report. It writes a `stop_report` evidence
+event, marks the current node `blocked`, sets the Mission to `requires_human`, and
+keeps the blocked node active for resumption.
 
 Use a lightweight gate for ordinary SubTask/Step decisions:
 
