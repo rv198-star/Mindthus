@@ -43,6 +43,14 @@ TASK_ROLES = {"success-critical", "supporting", "exploratory"}
 NODE_KINDS = {"task", "subtask", "step"}
 
 RECOMMENDATIONS = {"add", "subtract", "continue", "switch", "close", "escalate"}
+MISSION_REVIEW_FIELDS = (
+    "objective_alignment",
+    "acceptance_gap",
+    "task_contribution",
+    "roi_effect",
+    "non_action_risk",
+)
+MISSION_REVIEW_ROI_EFFECTS = {"advance", "protect", "reduce_waste", "defer_uncertain", "escalate"}
 
 MISSION_REQUIRED_FIELDS = {
     "id",
@@ -844,15 +852,20 @@ def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:
 
 
 def _is_high_impact_decision(decision: dict[str, Any]) -> bool:
-    if decision.get("recommendation") in {"add", "subtract", "close", "escalate"}:
+    recommendation = decision.get("recommendation")
+    if isinstance(recommendation, str) and recommendation in {"add", "subtract", "close", "escalate"}:
         return True
-    for mutation in decision.get("proposed_mutations", []):
+    proposed_mutations = decision.get("proposed_mutations", [])
+    if not isinstance(proposed_mutations, list):
+        return False
+    for mutation in proposed_mutations:
         if not isinstance(mutation, dict):
             continue
         mutation_type = mutation.get("type")
         if mutation_type in {"set_active_task", "set_mission_status"}:
             return True
-        if mutation_type == "transition_task" and mutation.get("status") in {
+        status = mutation.get("status")
+        if isinstance(status, str) and mutation_type == "transition_task" and status in {
             "paused",
             "pruned",
             "abandoned",
@@ -904,6 +917,13 @@ def decision_repair_template() -> dict[str, Any]:
         "parent_alignment": "For ordinary SubTask/Step decisions, explain how this advances the parent.",
         "mission_trace": "For ordinary SubTask/Step decisions, cite the parent chain back to Mission evidence.",
         "mission_alignment": "For high-impact decisions, explain how this advances Mission convergence.",
+        "mission_review": {
+            "objective_alignment": "How the decision relates to the current Mission objective.",
+            "acceptance_gap": "Which acceptance evidence is satisfied, missing, protected, or deferred.",
+            "task_contribution": "How the affected task contributes to Mission convergence.",
+            "roi_effect": "advance | protect | reduce_waste | defer_uncertain | escalate",
+            "non_action_risk": "What Mission risk increases if the decision is not taken.",
+        },
     }
 
 
@@ -962,6 +982,21 @@ def validate_hook_output(decision: Any) -> list[str]:
                 errors.append("decision missing field: mission_alignment")
             elif not isinstance(decision.get("mission_alignment"), str):
                 errors.append("mission_alignment must be a string")
+            mission_review = decision.get("mission_review")
+            if "mission_review" not in decision:
+                errors.append("decision missing field: mission_review")
+            elif not isinstance(mission_review, dict):
+                errors.append("mission_review must be an object")
+            else:
+                for field in MISSION_REVIEW_FIELDS:
+                    if field not in mission_review:
+                        errors.append(f"mission_review missing field: {field}")
+                    elif not isinstance(mission_review[field], str):
+                        errors.append(f"mission_review {field} must be a string")
+                roi_effect = mission_review.get("roi_effect")
+                if isinstance(roi_effect, str) and roi_effect not in MISSION_REVIEW_ROI_EFFECTS:
+                    allowed = ", ".join(sorted(MISSION_REVIEW_ROI_EFFECTS))
+                    errors.append(f"mission_review roi_effect must be one of: {allowed}")
         elif "mission_alignment" in decision:
             if not isinstance(decision.get("mission_alignment"), str):
                 errors.append("mission_alignment must be a string")

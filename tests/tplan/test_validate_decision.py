@@ -104,6 +104,59 @@ class ValidateDecisionTests(unittest.TestCase):
             self.assertIn("evidence_links items must be strings", report["errors"])
             self.assertEqual(report["next_action"], "repair_decision")
 
+    def test_validate_decision_reports_unhashable_bad_types_without_traceback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "decision.json"
+            write_json(
+                decision,
+                {
+                    "recommendation": ["continue"],
+                    "rationale": "Bad scalar types should return repair errors.",
+                    "confidence": 80,
+                    "evidence_links": [],
+                    "proposed_mutations": [
+                        {"type": "transition_task", "task_id": "T1", "status": ["completed"]}
+                    ],
+                    "requires_human": False,
+                    "parent_alignment": "The decision claims to advance the parent.",
+                    "mission_trace": "via T1 -> A1",
+                },
+            )
+
+            result = run_script("validate_decision.py", "--decision", str(decision), "--json")
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertNotIn("Traceback", result.stderr)
+            report = json.loads(result.stdout)
+            self.assertIn("recommendation must be a string", report["errors"])
+            self.assertIn("mutation transition_task status must be a string", report["errors"])
+            self.assertEqual(report["next_action"], "repair_decision")
+
+    def test_validate_decision_reports_null_mutations_without_traceback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "decision.json"
+            write_json(
+                decision,
+                {
+                    "recommendation": "continue",
+                    "rationale": "Null mutations should be rejected as a repairable contract error.",
+                    "confidence": 80,
+                    "evidence_links": [],
+                    "proposed_mutations": None,
+                    "requires_human": False,
+                    "parent_alignment": "The decision claims to advance the parent.",
+                    "mission_trace": "via T1 -> A1",
+                },
+            )
+
+            result = run_script("validate_decision.py", "--decision", str(decision), "--json")
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertNotIn("Traceback", result.stderr)
+            report = json.loads(result.stdout)
+            self.assertIn("proposed_mutations must be a list", report["errors"])
+            self.assertEqual(report["next_action"], "repair_decision")
+
     def test_validate_decision_reports_bad_mutation_shape_without_mutation(self):
         with tempfile.TemporaryDirectory() as tmp:
             decision = Path(tmp) / "decision.json"
@@ -127,6 +180,59 @@ class ValidateDecisionTests(unittest.TestCase):
             self.assertFalse(report["valid"])
             self.assertIn("mutation set_active_task missing field: task_id", report["errors"])
             self.assertEqual(report["next_action"], "repair_decision")
+
+    def test_validate_decision_requires_mission_review_for_high_impact_decision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "decision.json"
+            write_json(
+                decision,
+                {
+                    "recommendation": "switch",
+                    "rationale": "Switch to the task that unblocks runtime usage.",
+                    "confidence": 80,
+                    "evidence_links": [],
+                    "proposed_mutations": [{"type": "set_active_task", "task_id": "T2"}],
+                    "requires_human": False,
+                    "mission_alignment": "The switch advances Mission runtime usability.",
+                },
+            )
+
+            result = run_script("validate_decision.py", "--decision", str(decision), "--json")
+
+            self.assertNotEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertIn("decision missing field: mission_review", report["errors"])
+            self.assertEqual(report["next_action"], "repair_decision")
+
+    def test_validate_decision_accepts_complete_mission_review_for_high_impact_decision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "decision.json"
+            write_json(
+                decision,
+                {
+                    "recommendation": "switch",
+                    "rationale": "Switch to the task that unblocks runtime usage.",
+                    "confidence": 80,
+                    "evidence_links": [],
+                    "proposed_mutations": [{"type": "set_active_task", "task_id": "T2"}],
+                    "requires_human": False,
+                    "mission_alignment": "The switch advances Mission runtime usability.",
+                    "mission_review": {
+                        "objective_alignment": "T2 is currently the runtime usability bottleneck.",
+                        "acceptance_gap": "A1 remains open until runtime behavior exists.",
+                        "task_contribution": "T2 implements the runtime behavior.",
+                        "roi_effect": "advance",
+                        "non_action_risk": "Staying elsewhere delays runtime validation.",
+                    },
+                },
+            )
+
+            result = run_script("validate_decision.py", "--decision", str(decision), "--json")
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertTrue(report["valid"])
+            self.assertEqual(report["next_action"], "apply_decision")
 
     def test_repair_success_path_validates_second_candidate(self):
         with tempfile.TemporaryDirectory() as tmp:

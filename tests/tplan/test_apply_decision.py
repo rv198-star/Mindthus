@@ -88,6 +88,13 @@ def write_decision(tmp, recommendation="switch"):
                 ],
                 "requires_human": False,
                 "mission_alignment": "Switching to T2 advances the runtime task that blocks Mission usability.",
+                "mission_review": {
+                    "objective_alignment": "T2 is the current runtime implementation path.",
+                    "acceptance_gap": "A1 remains open until runtime behavior exists.",
+                    "task_contribution": "T2 implements the runtime scripts needed by the Mission.",
+                    "roi_effect": "advance",
+                    "non_action_risk": "Leaving T2 inactive delays runtime validation.",
+                },
             }
         ),
         encoding="utf-8",
@@ -140,6 +147,13 @@ class ApplyDecisionTests(unittest.TestCase):
                         ],
                         "requires_human": True,
                         "mission_alignment": "Closure affects Mission status and must remain tied to release viability.",
+                        "mission_review": {
+                            "objective_alignment": "Closure directly changes Mission viability.",
+                            "acceptance_gap": "Runtime acceptance remains unresolved under the closure proposal.",
+                            "task_contribution": "The affected task determines whether closure is valid.",
+                            "roi_effect": "escalate",
+                            "non_action_risk": "Applying closure without review could abandon useful work.",
+                        },
                     }
                 ),
                 encoding="utf-8",

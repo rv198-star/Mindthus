@@ -144,6 +144,13 @@ class TplanDryRunTests(unittest.TestCase):
                         ],
                         "requires_human": False,
                         "mission_alignment": "Pausing T2.1 reduces low-leverage expansion and refocuses on T2 for Mission progress.",
+                        "mission_review": {
+                            "objective_alignment": "The decision refocuses execution on the runtime script task.",
+                            "acceptance_gap": "Runtime script acceptance is still missing.",
+                            "task_contribution": "T2 carries the runtime implementation path.",
+                            "roi_effect": "reduce_waste",
+                            "non_action_risk": "Continuing T2.1 risks local expansion without Mission leverage.",
+                        },
                     }
                 ),
                 encoding="utf-8",
