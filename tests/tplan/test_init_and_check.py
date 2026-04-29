@@ -426,6 +426,63 @@ class CheckMissionTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("mission_check: ok", result.stdout)
 
+    def test_check_mission_accepts_child_task_with_parent_alignment_trace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        self.valid_task("T1"),
+                        {
+                            "id": "T1.1",
+                            "parent_id": "T1",
+                            "level": 3,
+                            "title": "Draft schema fields",
+                            "status": "pending",
+                            "role": "supporting",
+                            "parent_contribution": "Drafts the fields required by T1.",
+                            "parent_acceptance": "T1 can review concrete field names and required types.",
+                            "mission_trace": "via T1 -> A1",
+                            "evidence_links": [],
+                        },
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("mission_check: ok", result.stdout)
+
+    def test_check_mission_rejects_child_task_missing_parent_alignment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            self.write_mission(
+                mission_dir,
+                self.valid_mission(
+                    [
+                        self.valid_task("T1"),
+                        {
+                            "id": "T1.1",
+                            "parent_id": "T1",
+                            "level": 3,
+                            "title": "Draft schema fields",
+                            "status": "pending",
+                            "role": "supporting",
+                            "mission_trace": "via T1 -> A1",
+                            "evidence_links": [],
+                        },
+                    ]
+                ),
+            )
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1.1 is missing parent_contribution", result.stdout)
+            self.assertIn("task T1.1 is missing parent_acceptance", result.stdout)
+
     def test_runtime_helpers_accept_full_mission_state(self):
         mission = self.valid_mission(
             [
@@ -467,8 +524,9 @@ class CheckMissionTests(unittest.TestCase):
                             "title": "Write child task",
                             "status": "pending",
                             "role": "supporting",
-                            "mission_contribution": "Adds supporting detail.",
-                            "acceptance_evidence": [],
+                            "parent_contribution": "Adds supporting detail for parent task.",
+                            "parent_acceptance": "Parent has a concrete supporting detail.",
+                            "mission_trace": "via missing -> A1",
                             "evidence_links": [],
                         },
                     ]
@@ -574,6 +632,9 @@ class CheckMissionTests(unittest.TestCase):
                             parent_id="T1",
                             role="supporting",
                             acceptance_evidence=[],
+                            parent_contribution="Supports T1.",
+                            parent_acceptance="T1 has a concrete supporting output.",
+                            mission_trace="via T1 -> A1",
                         ),
                     ]
                 ),

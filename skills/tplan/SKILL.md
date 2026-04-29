@@ -44,20 +44,27 @@ Default `human_in_loop` is `0`.
 4. Record execution evidence with `scripts/record_evidence.py`.
 5. Survey state with `scripts/survey.py`.
 6. Generate a decision packet with `scripts/make_decision_packet.py`.
-7. Run the Mission Review Gate for the decision weight.
+7. Run the parent-alignment or Mission Review Gate for the decision weight.
 8. Invoke the routed Mindthus skill named by the decision hook.
-9. Ensure the hook output states Mission alignment before mutation.
+9. Ensure the hook output states the required alignment before mutation.
 10. Apply or record the decision with `scripts/apply_decision.py`.
 
-## Mission Review Gate
+## Alignment Gate
 
-Every addition, subtraction, selection, loopback, and closure decision must stay
-Mission-relative without turning every small step into ceremony.
+Task alignment is hierarchical by default:
 
-Use a lightweight gate for ordinary decisions: state `mission_alignment` in one or two
-sentences before applying or recording the decision.
+- Level-2 / root tasks are strongly responsible to the Mission.
+- Child tasks are strongly responsible to their parent task.
+- Child tasks carry a lightweight `mission_trace` through the parent chain, but do not
+  repeat a full Mission justification during ordinary execution.
 
-Use a full `mission_review` for high-impact decisions:
+Use a lightweight gate for ordinary child-level decisions:
+
+- `parent_alignment`: how the recommendation advances the parent task.
+- `mission_trace`: the parent-chain path back to Mission acceptance evidence.
+
+Use `mission_alignment` and, for high-impact decisions, a full `mission_review` when
+the decision can materially affect Mission convergence:
 
 - adding or removing a `success-critical` task
 - pausing, pruning, abandoning, or superseding a `success-critical` task

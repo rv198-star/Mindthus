@@ -37,6 +37,16 @@ def create_mission(tmp, human_in_loop):
                     "mission_contribution": "Implements runtime behavior.",
                     "acceptance_evidence": ["A1"],
                 },
+                {
+                    "id": "T2.1",
+                    "parent_id": "T2",
+                    "level": 3,
+                    "title": "Draft CLI arguments",
+                    "role": "supporting",
+                    "parent_contribution": "Supplies the CLI argument draft needed by T2.",
+                    "parent_acceptance": "T2 can implement script parsing from the draft.",
+                    "mission_trace": "via T2 -> A1",
+                },
             ]
         ),
         encoding="utf-8",
@@ -210,6 +220,36 @@ class ApplyDecisionTests(unittest.TestCase):
             self.assertIn("decision missing field: mission_alignment", result.stderr)
             mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
             self.assertIsNone(mission["active_task_id"])
+
+    def test_child_level_decision_accepts_parent_alignment_without_mission_alignment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "The child draft is ready for parent review.",
+                        "confidence": 75,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "transition_task", "task_id": "T2.1", "status": "completed"},
+                        ],
+                        "requires_human": False,
+                        "parent_alignment": "Completing T2.1 gives T2 its CLI argument draft.",
+                        "mission_trace": "via T2 -> A1",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("applied_decision", result.stdout)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            statuses = {task["id"]: task["status"] for task in mission["tasks"]}
+            self.assertEqual(statuses["T2.1"], "completed")
 
 
 if __name__ == "__main__":

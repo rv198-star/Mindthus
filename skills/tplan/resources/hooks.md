@@ -24,19 +24,19 @@ Initial hooks:
 | `loopback` | feedback contradicts current definition | `3l5s` | return to Discovery, Definition, or Resolution |
 | `depth_audit` | bounded artifact looks complete but shallow | `tvg` | deepen, accept, or escalate |
 
-Hook output must include recommendation, rationale, confidence, evidence links, proposed
-mutations, and requires_human.
+Hook output must include recommendation, rationale, confidence, evidence links,
+proposed mutations, and requires_human.
 
-## Mission Review Gate
+## Alignment And Mission Review Gates
 
-Every hook is Mission-relative. Before a hook output can justify a task addition,
-subtraction, selection, loopback, or closure, it must state how the decision serves
-Mission convergence.
+Ordinary child-level hooks are parent-relative. Before a hook output can justify an
+ordinary child mutation, it must state:
 
-Ordinary decisions use the lightweight gate:
+- `parent_alignment`: how the recommendation advances the parent task.
+- `mission_trace`: the lightweight path from child -> parent -> Mission evidence.
 
-- `mission_alignment`: one or two sentences explaining how the recommendation advances
-  the Mission, protects Mission ROI, reduces waste, or preserves convergence.
+High-impact hooks remain Mission-relative. Use `mission_alignment` when the decision
+materially affects Mission convergence.
 
 High-impact decisions use the full gate:
 

@@ -5,5 +5,6 @@
   "evidence_links": [],
   "proposed_mutations": [],
   "requires_human": false,
-  "mission_alignment": "Continuing preserves progress toward the current Mission acceptance evidence."
+  "parent_alignment": "Continuing advances the immediate parent task.",
+  "mission_trace": "via parent task -> acceptance evidence"
 }

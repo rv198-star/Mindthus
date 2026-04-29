@@ -60,8 +60,9 @@ class TplanDryRunTests(unittest.TestCase):
                             "level": 3,
                             "title": "Prototype transition_task.py state edges",
                             "role": "supporting",
-                            "mission_contribution": "Supports script implementation without redefining Mission completion.",
-                            "acceptance_evidence": [],
+                            "parent_contribution": "Prototypes the state edge behavior needed by T2.",
+                            "parent_acceptance": "T2 can implement transition_task.py with known state edges.",
+                            "mission_trace": "via T2 -> A2",
                         },
                     ]
                 ),

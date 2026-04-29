@@ -28,6 +28,18 @@
         "A1"
       ],
       "evidence_links": []
+    },
+    {
+      "id": "T1.1",
+      "parent_id": "T1",
+      "level": 3,
+      "title": "Example child task",
+      "status": "pending",
+      "role": "supporting",
+      "parent_contribution": "Explains how this child advances T1.",
+      "parent_acceptance": "Names the local done condition T1 can verify.",
+      "mission_trace": "via T1 -> A1",
+      "evidence_links": []
     }
   ],
   "active_task_id": null

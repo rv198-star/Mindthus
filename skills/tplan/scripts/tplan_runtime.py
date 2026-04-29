@@ -54,21 +54,36 @@ MISSION_REQUIRED_FIELDS = {
     "acceptance_evidence",
 }
 
-TASK_REQUIRED_FIELDS = {
+BASE_TASK_REQUIRED_FIELDS = {
     "id",
     "parent_id",
     "level",
     "title",
     "status",
     "role",
+    "evidence_links",
+}
+
+MISSION_ALIGNED_TASK_FIELDS = {
     "mission_contribution",
     "acceptance_evidence",
-    "evidence_links",
+}
+
+PARENT_ALIGNED_TASK_FIELDS = {
+    "parent_contribution",
+    "parent_acceptance",
+    "mission_trace",
 }
 
 POLICY_FIELDS = ("human_in_loop", "risk_tolerance", "resource_sufficiency")
 MISSION_STRING_FIELDS = ("id", "title", "objective")
-TASK_STRING_FIELDS = ("title", "mission_contribution")
+TASK_STRING_FIELDS = (
+    "title",
+    "mission_contribution",
+    "parent_contribution",
+    "parent_acceptance",
+    "mission_trace",
+)
 
 
 class TplanError(ValueError):
@@ -152,6 +167,19 @@ def _require_string_fields(errors: list[str], label: str, data: dict[str, Any], 
     for field in fields:
         if field in data and not isinstance(data[field], str):
             errors.append(f"{label} {field} must be a string")
+
+
+def _is_parent_aligned_task(task: dict[str, Any]) -> bool:
+    return task.get("parent_id") is not None
+
+
+def _required_task_fields(task: dict[str, Any]) -> set[str]:
+    fields = set(BASE_TASK_REQUIRED_FIELDS)
+    if _is_parent_aligned_task(task):
+        fields.update(PARENT_ALIGNED_TASK_FIELDS)
+    else:
+        fields.update(MISSION_ALIGNED_TASK_FIELDS)
+    return fields
 
 
 def _find_parent_cycle(task_id: str, tasks_by_id: dict[str, dict[str, Any]]) -> str | None:
@@ -243,7 +271,7 @@ def validate_mission(state: Any) -> list[str]:
                 continue
 
             task_id = _task_label(index, task)
-            for field in sorted(TASK_REQUIRED_FIELDS):
+            for field in sorted(_required_task_fields(task)):
                 if field not in task:
                     errors.append(f"task {task_id} is missing {field}")
             _require_string_fields(errors, f"task {task_id}", task, TASK_STRING_FIELDS)
@@ -318,7 +346,7 @@ def validate_mission(state: Any) -> list[str]:
 
     covered_acceptance_ids: set[str] = set()
     for task in normalized_tasks:
-        if task.get("role") != "success-critical":
+        if task.get("role") != "success-critical" or task.get("parent_id") is not None or task.get("level") != 2:
             continue
         task_evidence = task.get("acceptance_evidence", [])
         if isinstance(task_evidence, list):
@@ -388,19 +416,35 @@ def normalize_task(raw: dict[str, Any], default_level: int = 2) -> dict[str, Any
     role = require_task_enum(task_id, "role", raw.get("role", "success-critical"), TASK_ROLES)
     level = require_task_level(task_id, raw.get("level", default_level))
 
-    return {
+    task = {
         "id": task_id,
         "parent_id": raw.get("parent_id"),
         "level": level,
         "title": str(raw["title"]),
         "status": status,
         "role": role,
-        "mission_contribution": str(raw.get("mission_contribution", "")),
-        "acceptance_evidence": require_string_list(
-            task_id, "acceptance_evidence", raw.get("acceptance_evidence", [])
-        ),
         "evidence_links": require_string_list(task_id, "evidence_links", raw.get("evidence_links", [])),
     }
+    if task["parent_id"] is None:
+        task["mission_contribution"] = str(raw.get("mission_contribution", ""))
+        task["acceptance_evidence"] = require_string_list(
+            task_id, "acceptance_evidence", raw.get("acceptance_evidence", [])
+        )
+    else:
+        for field in sorted(PARENT_ALIGNED_TASK_FIELDS):
+            if field not in raw:
+                raise TplanError(f"task {task_id} is missing {field}")
+            value = raw[field]
+            if not isinstance(value, str):
+                raise TplanError(f"task {task_id} {field} must be a string")
+            task[field] = value
+        if "acceptance_evidence" in raw:
+            task["acceptance_evidence"] = require_string_list(task_id, "acceptance_evidence", raw["acceptance_evidence"])
+        if "mission_contribution" in raw:
+            if not isinstance(raw["mission_contribution"], str):
+                raise TplanError(f"task {task_id} mission_contribution must be a string")
+            task["mission_contribution"] = raw["mission_contribution"]
+    return task
 
 
 def build_mission(
@@ -565,6 +609,25 @@ def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:
     }
 
 
+def _is_high_impact_decision(decision: dict[str, Any]) -> bool:
+    if decision.get("recommendation") in {"add", "subtract", "close", "escalate"}:
+        return True
+    for mutation in decision.get("proposed_mutations", []):
+        if not isinstance(mutation, dict):
+            continue
+        mutation_type = mutation.get("type")
+        if mutation_type in {"set_active_task", "set_mission_status"}:
+            return True
+        if mutation_type == "transition_task" and mutation.get("status") in {
+            "paused",
+            "pruned",
+            "abandoned",
+            "superseded",
+        }:
+            return True
+    return False
+
+
 def validate_hook_output(decision: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(decision, dict):
@@ -576,7 +639,6 @@ def validate_hook_output(decision: Any) -> list[str]:
         "evidence_links",
         "proposed_mutations",
         "requires_human",
-        "mission_alignment",
     ):
         if field not in decision:
             errors.append(f"decision missing field: {field}")
@@ -596,8 +658,21 @@ def validate_hook_output(decision: Any) -> list[str]:
         errors.append("proposed_mutations must be a list")
     if not isinstance(decision.get("requires_human"), bool):
         errors.append("requires_human must be a boolean")
-    if not isinstance(decision.get("mission_alignment"), str):
-        errors.append("mission_alignment must be a string")
+    if isinstance(decision, dict):
+        if _is_high_impact_decision(decision):
+            if "mission_alignment" not in decision:
+                errors.append("decision missing field: mission_alignment")
+            elif not isinstance(decision.get("mission_alignment"), str):
+                errors.append("mission_alignment must be a string")
+        elif "mission_alignment" in decision:
+            if not isinstance(decision.get("mission_alignment"), str):
+                errors.append("mission_alignment must be a string")
+        else:
+            for field in ("parent_alignment", "mission_trace"):
+                if field not in decision:
+                    errors.append(f"decision missing field: {field}")
+                elif not isinstance(decision.get(field), str):
+                    errors.append(f"{field} must be a string")
     return errors
 
 

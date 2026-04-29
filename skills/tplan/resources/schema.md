@@ -29,7 +29,7 @@ Required Mission fields:
 - `resource_sufficiency`
 - `acceptance_evidence`
 
-Required Plan Task fields:
+Required Plan Task base fields:
 
 - `id`
 - `parent_id`
@@ -37,9 +37,22 @@ Required Plan Task fields:
 - `title`
 - `status`
 - `role`
+- `evidence_links`
+
+Mission-aligned root / level-2 task fields:
+
 - `mission_contribution`
 - `acceptance_evidence`
-- `evidence_links`
+
+Parent-aligned child task fields:
+
+- `parent_contribution`
+- `parent_acceptance`
+- `mission_trace`
+
+Child tasks may include `acceptance_evidence` or `mission_contribution` as optional
+context, but ordinary child execution is controlled by parent alignment, not direct
+Mission justification.
 
 Task roles:
 
@@ -85,7 +98,8 @@ Required fields:
 - `evidence_links`
 - `proposed_mutations`
 - `requires_human`
-- `mission_alignment`
+- ordinary child-level decisions: `parent_alignment` and `mission_trace`
+- high-impact decisions: `mission_alignment`
 
 High-impact hook outputs should also include `mission_review`:
 
@@ -97,3 +111,5 @@ High-impact hook outputs should also include `mission_review`:
 
 `mission_alignment` and `mission_review` keep decisions anchored to Mission
 convergence. They are judgment records, not script-verifiable proof of correctness.
+`parent_alignment` keeps ordinary child work accountable to its immediate parent while
+`mission_trace` preserves lightweight visibility back to the Mission.

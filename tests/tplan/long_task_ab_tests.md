@@ -17,8 +17,9 @@ These tests focus on four capabilities:
   and evidence consistent while work changes?
 - Continuous execution: can the agent continue after new feedback without restarting
   the plan or losing the Mission boundary?
-- Mission-relative decision making: can the agent explicitly review Mission alignment
-  before adding, subtracting, selecting, looping back, or closing work?
+- Alignment-aware decision making: can the agent use parent alignment for ordinary
+  child work and Mission alignment for high-impact add, subtract, selection,
+  loopback, or closure decisions?
 - Convergence discipline: can the agent close, block, pause, prune, or continue based
   on acceptance evidence instead of marking work complete because a document exists?
 
@@ -64,7 +65,9 @@ Treatment artifacts should include, or be equivalent to:
 - `mission.json`
 - `evidence.jsonl`
 - `mission.md` or `resume.md`
-- `mission_alignment` notes for ordinary add, subtract, selection, loopback, and
+- `parent_alignment` notes for ordinary child-level decisions, with lightweight
+  `mission_trace`
+- `mission_alignment` notes for high-impact add, subtract, selection, loopback, and
   closure decisions
 - full `mission_review` notes for high-impact decisions such as active-task switches,
   resource-driven subtraction, loopback after problem-definition feedback, or Mission
@@ -395,7 +398,7 @@ Repo commit:
 - Mission-only decomposition:
 - Runtime maintenance:
 - Continuous execution:
-- Mission-relative decision making:
+- Alignment-aware decision making:
 - Convergence discipline:
 
 ## Evidence Links

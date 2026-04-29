@@ -36,8 +36,9 @@ def create_mission(tmp):
                     "level": 3,
                     "title": "Draft mission fields",
                     "role": "supporting",
-                    "mission_contribution": "Supports schema definition.",
-                    "acceptance_evidence": [],
+                    "parent_contribution": "Drafts the fields T1 needs.",
+                    "parent_acceptance": "T1 can review concrete field names.",
+                    "mission_trace": "via T1 -> A1",
                 },
             ]
         ),
