@@ -79,6 +79,22 @@ class NarrowStateCommandTests(unittest.TestCase):
             statuses = {task["id"]: task["status"] for task in mission["tasks"]}
             self.assertEqual(statuses["T2"], "active")
 
+    def test_set_active_task_clears_previous_active_status(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            first = run_script("set_active_task.py", str(mission_dir), "--task-id", "T1")
+            self.assertEqual(first.returncode, 0, first.stderr)
+
+            second = run_script("set_active_task.py", str(mission_dir), "--task-id", "T2")
+
+            self.assertEqual(second.returncode, 0, second.stderr)
+            mission = mission_state(mission_dir)
+            self.assertEqual(mission["active_task_id"], "T2")
+            statuses = {task["id"]: task["status"] for task in mission["tasks"]}
+            self.assertEqual(statuses["T1"], "pending")
+            self.assertEqual(statuses["T2"], "active")
+            self.assertEqual(list(statuses.values()).count("active"), 1)
+
     def test_complete_task_marks_task_completed_and_clears_active(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)

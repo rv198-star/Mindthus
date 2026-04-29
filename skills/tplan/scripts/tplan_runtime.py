@@ -747,6 +747,10 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     if status not in TASK_STATUSES:
         raise TplanError(f"task status unsupported: {status}")
     task = find_task(mission, task_id)
+    if status == "active":
+        for item in mission.get("tasks", []):
+            if item is not task and item.get("status") == "active":
+                item["status"] = "pending"
     task["status"] = status
     if status == "active":
         mission["active_task_id"] = task_id
@@ -934,11 +938,16 @@ def validate_hook_output(decision: Any) -> list[str]:
     elif recommendation not in RECOMMENDATIONS:
         errors.append(f"recommendation unsupported: {recommendation!r}")
 
+    if "rationale" in decision and not isinstance(decision.get("rationale"), str):
+        errors.append("rationale must be a string")
     confidence = decision.get("confidence")
     if isinstance(confidence, bool) or not isinstance(confidence, int) or not 0 <= confidence <= 100:
         errors.append("confidence must be an integer between 0 and 100")
-    if not isinstance(decision.get("evidence_links", []), list):
+    evidence_links = decision.get("evidence_links", [])
+    if not isinstance(evidence_links, list):
         errors.append("evidence_links must be a list")
+    elif not all(isinstance(item, str) for item in evidence_links):
+        errors.append("evidence_links items must be strings")
     if not isinstance(decision.get("proposed_mutations", []), list):
         errors.append("proposed_mutations must be a list")
     proposed_mutations = decision.get("proposed_mutations", [])

@@ -79,6 +79,31 @@ class ValidateDecisionTests(unittest.TestCase):
             self.assertIn("proposed_mutations", report["repair_template"])
             self.assertEqual(report["next_action"], "repair_decision")
 
+    def test_validate_decision_reports_wrong_scalar_and_list_item_types(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "decision.json"
+            write_json(
+                decision,
+                {
+                    "recommendation": "continue",
+                    "rationale": ["not", "a", "string"],
+                    "confidence": 80,
+                    "evidence_links": ["E1", 2],
+                    "proposed_mutations": [],
+                    "requires_human": False,
+                    "parent_alignment": "The decision advances the parent.",
+                    "mission_trace": "via T1 -> A1",
+                },
+            )
+
+            result = run_script("validate_decision.py", "--decision", str(decision), "--json")
+
+            self.assertNotEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertIn("rationale must be a string", report["errors"])
+            self.assertIn("evidence_links items must be strings", report["errors"])
+            self.assertEqual(report["next_action"], "repair_decision")
+
     def test_validate_decision_reports_bad_mutation_shape_without_mutation(self):
         with tempfile.TemporaryDirectory() as tmp:
             decision = Path(tmp) / "decision.json"
