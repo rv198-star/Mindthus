@@ -40,18 +40,20 @@ Default `human_in_loop` is `0`.
 
 1. Initialize Mission files with `scripts/init_mission.py`.
 2. Use `3l5s` to propose success-critical Task nodes.
-3. Validate the tree with `scripts/check_mission.py`.
-4. Record task-local step logs with `scripts/record_step_log.py` while executing.
-5. Record only acceptance, state-change, blocker, feedback, or decision evidence with
+3. Add Task, SubTask, and Step nodes through `scripts/add_node.py`; do not hand-edit
+   `mission.json` for structure changes.
+4. Validate the tree with `scripts/check_mission.py`.
+5. Record task-local step logs with `scripts/record_step_log.py` while executing.
+6. Record only acceptance, state-change, blocker, feedback, or decision evidence with
    `scripts/record_evidence.py`.
-6. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
+7. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
    summary or key findings to evidence when they support a claim.
-7. Survey state with `scripts/survey.py`.
-8. Generate a decision packet with `scripts/make_decision_packet.py`.
-9. Run the parent-alignment or Mission Review Gate for the decision weight.
-10. Invoke the routed Mindthus skill named by the decision hook.
-11. Ensure the hook output states the required alignment before mutation.
-12. Apply or record the decision with `scripts/apply_decision.py`.
+8. Survey state with `scripts/survey.py`.
+9. Generate a decision packet with `scripts/make_decision_packet.py`.
+10. Run the parent-alignment or Mission Review Gate for the decision weight.
+11. Invoke the routed Mindthus skill named by the decision hook.
+12. Ensure the hook output states the required alignment before mutation.
+13. Apply or record the decision with `scripts/apply_decision.py`.
 
 ## Alignment Gate
 

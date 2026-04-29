@@ -77,6 +77,10 @@ Simple tasks may use `Mission -> Task -> Step`. Complex tasks may use
 nesting yet, but future expansion should extend only the Task/SubTask control layer;
 Step remains the stable execution leaf.
 
+Structure changes should go through `scripts/add_node.py` or another runtime script.
+Agentic judgment decides what to add and why; scripts own field defaults, shape
+normalization, and validation before write.
+
 Task roles:
 
 - `success-critical`: required for Mission completion.

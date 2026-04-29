@@ -541,6 +541,24 @@ def normalize_task(
     return task
 
 
+def normalize_task_for_mission(mission: dict[str, Any], raw: dict[str, Any]) -> dict[str, Any]:
+    raw_tasks_by_id = task_map(mission)
+    raw_tasks_by_id[str(raw.get("id"))] = raw
+    return normalize_task(raw, raw_tasks_by_id=raw_tasks_by_id)
+
+
+def add_task_node(mission_dir: Path, raw: dict[str, Any]) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    node = normalize_task_for_mission(mission, raw)
+    updated = dict(mission)
+    updated["tasks"] = list(mission.get("tasks", [])) + [node]
+    errors = validate_mission(updated)
+    if errors:
+        raise TplanError("; ".join(errors))
+    write_mission(mission_dir, updated)
+    return node
+
+
 def build_mission(
     *,
     mission_id: str,
