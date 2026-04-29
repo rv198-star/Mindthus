@@ -131,6 +131,22 @@ Use `scripts/stop_report.py` to record the report. It writes a `stop_report` evi
 event, marks the current node `blocked`, sets the Mission to `requires_human`, and
 keeps the blocked node active for resumption.
 
+## Contract Failure Policy
+
+Strict runtime scripts should not be the first contact point for loose LLM output.
+
+Before `apply_decision.py`, use `scripts/validate_decision.py` when the decision JSON
+was produced by an LLM or copied from a hook response.
+
+Failure policy:
+
+1. First contract failure: read the validation errors and repair template, then ask the
+   agent to repair the decision JSON shape.
+2. Second contract failure: stop cleanly with `scripts/stop_report.py`, explain the
+   contract blocker in Chinese, and request human intervention.
+
+This repairs shape only. It does not prove the recommendation is semantically correct.
+
 Use a lightweight gate for ordinary SubTask/Step decisions:
 
 - `parent_alignment`: how the recommendation advances the parent task.

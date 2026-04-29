@@ -179,3 +179,15 @@ High-impact hook outputs should also include `mission_review`:
 convergence. They are judgment records, not script-verifiable proof of correctness.
 `parent_alignment` keeps ordinary SubTask/Step work accountable to its immediate parent while
 `mission_trace` preserves lightweight visibility back to the Mission.
+
+## Decision Validation Report
+
+`scripts/validate_decision.py --json` returns:
+
+- `valid`: boolean
+- `errors`: list of shape, type, JSON, or mutation contract errors
+- `repair_template`: null when valid, otherwise a minimal hook-output template
+- `next_action`: `apply_decision` when valid, `repair_decision` when invalid
+
+The report validates contract shape only. It must not be treated as proof that the
+decision is semantically correct.

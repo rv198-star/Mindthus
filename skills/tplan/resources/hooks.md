@@ -57,3 +57,18 @@ changes, looping back because the problem definition is challenged, or expanding
 same supporting/exploratory branch more than once.
 
 Scripts may validate hook output shape. They must not validate semantic correctness.
+
+## Contract Repair Gate
+
+When hook output is produced by an LLM, validate it before applying it:
+
+```bash
+python3 skills/tplan/scripts/validate_decision.py --decision decision.json --json
+```
+
+If validation fails once, repair the JSON using the returned errors and repair template.
+If validation fails twice for the same decision attempt, do not keep guessing fields.
+Use `stop_report.py` and request human intervention.
+
+This gate protects the strict runtime contract without weakening the semantic review
+requirements.
