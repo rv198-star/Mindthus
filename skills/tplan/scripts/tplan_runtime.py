@@ -850,6 +850,61 @@ def _is_high_impact_decision(decision: dict[str, Any]) -> bool:
     return False
 
 
+def validate_mutation_shape(mutation: Any) -> list[str]:
+    if not isinstance(mutation, dict):
+        return ["mutation must be an object"]
+    mutation_type = mutation.get("type")
+    if not isinstance(mutation_type, str):
+        return ["mutation type must be a string"]
+
+    required_fields_by_type = {
+        "set_active_task": ("task_id",),
+        "transition_task": ("task_id", "status"),
+        "set_mission_status": ("status",),
+    }
+    required_fields = required_fields_by_type.get(mutation_type)
+    if required_fields is None:
+        return [f"mutation type unsupported: {mutation_type}"]
+
+    errors: list[str] = []
+    for field in required_fields:
+        if field not in mutation:
+            errors.append(f"mutation {mutation_type} missing field: {field}")
+        elif not isinstance(mutation[field], str):
+            errors.append(f"mutation {mutation_type} {field} must be a string")
+
+    status = mutation.get("status")
+    if mutation_type == "transition_task" and isinstance(status, str) and status not in TASK_STATUSES:
+        errors.append(f"task status unsupported: {status}")
+    if mutation_type == "set_mission_status" and isinstance(status, str) and status not in MISSION_STATUSES:
+        errors.append(f"mission status unsupported: {status}")
+    return errors
+
+
+def decision_repair_template() -> dict[str, Any]:
+    return {
+        "recommendation": "continue",
+        "rationale": "Explain the recommendation in one or two concrete sentences.",
+        "confidence": 50,
+        "evidence_links": [],
+        "proposed_mutations": [],
+        "requires_human": False,
+        "parent_alignment": "For ordinary SubTask/Step decisions, explain how this advances the parent.",
+        "mission_trace": "For ordinary SubTask/Step decisions, cite the parent chain back to Mission evidence.",
+        "mission_alignment": "For high-impact decisions, explain how this advances Mission convergence.",
+    }
+
+
+def decision_validation_report(decision: Any, errors: list[str]) -> dict[str, Any]:
+    valid = not errors
+    return {
+        "valid": valid,
+        "errors": errors,
+        "repair_template": None if valid else decision_repair_template(),
+        "next_action": "apply_decision" if valid else "repair_decision",
+    }
+
+
 def validate_hook_output(decision: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(decision, dict):
@@ -878,6 +933,10 @@ def validate_hook_output(decision: Any) -> list[str]:
         errors.append("evidence_links must be a list")
     if not isinstance(decision.get("proposed_mutations", []), list):
         errors.append("proposed_mutations must be a list")
+    proposed_mutations = decision.get("proposed_mutations", [])
+    if isinstance(proposed_mutations, list):
+        for mutation in proposed_mutations:
+            errors.extend(validate_mutation_shape(mutation))
     if not isinstance(decision.get("requires_human"), bool):
         errors.append("requires_human must be a boolean")
     if isinstance(decision, dict):
