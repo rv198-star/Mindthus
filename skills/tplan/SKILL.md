@@ -54,8 +54,15 @@ Default `human_in_loop` is `0`.
 10. Generate a decision packet with `scripts/make_decision_packet.py`.
 11. Run the parent-alignment or Mission Review Gate for the decision weight.
 12. Invoke the routed Mindthus skill named by the decision hook.
-13. Ensure the hook output states the required alignment before mutation.
-14. Apply or record the decision with `scripts/apply_decision.py`.
+13. Validate LLM-produced hook output with `scripts/validate_decision.py`.
+14. If validation fails once, repair the decision JSON shape; if it fails twice, use
+    `scripts/stop_report.py`.
+15. Apply or record the valid decision with `scripts/apply_decision.py`.
+
+For simple state transitions after judgment has already happened, use narrow commands:
+`scripts/set_active_task.py`, `scripts/complete_task.py`, `scripts/block_task.py`, and
+`scripts/pause_task.py`. These commands do not decide whether the transition is wise;
+they only enforce deterministic runtime state changes.
 
 ## Alignment Gate
 

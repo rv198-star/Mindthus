@@ -191,3 +191,13 @@ convergence. They are judgment records, not script-verifiable proof of correctne
 
 The report validates contract shape only. It must not be treated as proof that the
 decision is semantically correct.
+
+Narrow state commands:
+
+- `scripts/set_active_task.py`: mark a task active after selection judgment exists.
+- `scripts/complete_task.py`: mark a task completed after acceptance has been verified.
+- `scripts/block_task.py`: mark a task blocked after a blocker has been identified.
+- `scripts/pause_task.py`: mark a task paused after pause judgment exists.
+
+These scripts are deterministic state helpers. They do not replace decision hooks for
+high-impact semantic choices.

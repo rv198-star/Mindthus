@@ -19,6 +19,11 @@ class TplanSkillContractTests(unittest.TestCase):
             "templates/mission.md",
             "templates/evidence.jsonl",
             "templates/hook-output.json",
+            "scripts/validate_decision.py",
+            "scripts/set_active_task.py",
+            "scripts/complete_task.py",
+            "scripts/block_task.py",
+            "scripts/pause_task.py",
         ]
         missing = [path for path in required if not (SKILL / path).exists()]
         self.assertEqual(missing, [])
@@ -57,6 +62,12 @@ class TplanSkillContractTests(unittest.TestCase):
             "parent_alignment",
             "mission_trace",
             "semantic correctness",
+            "validate_decision.py",
+            "repair_decision",
+            "set_active_task.py",
+            "complete_task.py",
+            "block_task.py",
+            "pause_task.py",
         ):
             self.assertIn(phrase, resources)
 

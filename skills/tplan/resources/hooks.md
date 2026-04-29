@@ -72,3 +72,13 @@ Use `stop_report.py` and request human intervention.
 
 This gate protects the strict runtime contract without weakening the semantic review
 requirements.
+
+After a decision has already been made, narrow state commands may be used instead of a
+full hook output for routine state recording:
+
+- `set_active_task.py`
+- `complete_task.py`
+- `block_task.py`
+- `pause_task.py`
+
+Use full hook output when the operation itself is the unresolved decision.
