@@ -755,6 +755,14 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     return mission
 
 
+def transition_task_status(mission_dir: Path, task_id: str, status: str) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    set_task_status(mission, task_id, status)
+    task = find_task(mission, task_id)
+    write_mission(mission_dir, mission)
+    return task
+
+
 def parent_chain(mission: dict[str, Any], task_id: str | None) -> list[dict[str, Any]]:
     if task_id is None:
         return []

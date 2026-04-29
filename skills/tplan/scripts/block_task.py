@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply a deterministic task status transition."""
+"""Mark a tplan task blocked after a blocker has been identified."""
 
 from __future__ import annotations
 
@@ -11,21 +11,19 @@ from tplan_runtime import TplanError, transition_task_status
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Transition a tplan task status.")
+    parser = argparse.ArgumentParser(description="Mark a tplan task blocked.")
     parser.add_argument("mission_dir")
     parser.add_argument("--task-id", required=True)
-    parser.add_argument("--status", required=True)
     args = parser.parse_args()
 
-    mission_dir = Path(args.mission_dir)
     try:
-        transition_task_status(mission_dir, args.task_id, args.status)
+        transition_task_status(Path(args.mission_dir), args.task_id, "blocked")
     except (OSError, ValueError, TplanError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
 
-    print(f"transitioned_task: {args.task_id} -> {args.status}")
-    print("script_result: task state changed; semantic judgment remains agentic")
+    print(f"block_task: {args.task_id}")
+    print("script_result: task marked blocked; blocker interpretation remains agentic")
     return 0
 
 
