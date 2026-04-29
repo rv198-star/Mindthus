@@ -1,6 +1,6 @@
 ---
 name: tvg
-description: Use as a value-driven thinking-depth enhancer when an AI-generated bounded module or artifact looks rigorous and standard but is hollow, shallow, random, or weak in judgment, evidence, trade-offs, downstream handoff, reuse, or practical decision/action value.
+description: Use when an AI-generated bounded artifact looks complete but shallow, hollow, random, weak in judgment, missing evidence or trade-offs, or hard for downstream users to reuse; do not use to reopen every document.
 ---
 
 # TVG / Thinking Value-Gain

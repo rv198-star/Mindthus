@@ -1,6 +1,6 @@
 ---
 name: sela
-description: Use as a strategic decision reference before major trend or strategy choices, to avoid short-sighted decisions caused by overvaluing real but local advantages while system-level cost-effectiveness is shifting.
+description: Use before major strategy or trend choices where a real local advantage, old paradigm, or beloved manual excellence may be outweighed by new paradigm system-level cost-effectiveness and order-of-magnitude efficiency.
 ---
 
 # SELA / 系统效率碾压局部优势

@@ -1,6 +1,6 @@
 ---
 name: edsp
-description: Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed.
+description: Use when both options seem right, a qualitative judgment is ambiguous, a boundary is unclear, a proposition may be malformed, or a trend decision needs extreme-case structure before scenario projection.
 ---
 
 # EDSP / Extreme Deduction + Scenario Projection

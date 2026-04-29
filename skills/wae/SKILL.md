@@ -1,6 +1,6 @@
 ---
 name: wae
-description: Use when a workflow, script, schema, agent loop, evidence gate, or review step may be controlling the wrong part of the work; especially when clean structure may be freezing uncertain truth or hiding thin judgment.
+description: Use when workflow, script, agent judgment, schema, review, or evidence may be controlling the wrong part of the work, especially when the control boundary is unclear or clean structure hides thin judgment.
 ---
 
 # WAE / Workflow-Agentic-Evidence

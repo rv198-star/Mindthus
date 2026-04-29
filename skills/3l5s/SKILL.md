@@ -1,6 +1,6 @@
 ---
 name: "3l5s"
-description: Use when a problem is unclear, noisy, repeatedly reworked, or too large to execute directly; also use when a task list looks structured but may not be executable, verifiable, or tied to a falsifiable problem.
+description: Use when the user's problem is unclear, messy, repeatedly reworked, too large, not executable, or when a task list looks structured but lacks falsifiable problem definition, acceptance evidence, or next actions.
 ---
 
 # 3L5S

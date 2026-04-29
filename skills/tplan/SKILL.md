@@ -1,6 +1,6 @@
 ---
 name: tplan
-description: Use when a Mission needs a script-driven task runtime, task tree state, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and evidence tracking.
+description: Use for long-running Mission work that needs durable task state, decision hooks, human-in-loop authority, evidence tracking, resumable execution, or script-driven task runtime; not for simple tasks or ordinary todo lists.
 ---
 
 # tplan
