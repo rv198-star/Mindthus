@@ -1,0 +1,44 @@
+{"id":"3l5s-001","prompt":"这个需求越写越乱了, 每次拆完还是不知道明天先做什么","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","unclear_problem"]}
+{"id":"3l5s-002","prompt":"我们反复返工, 感觉一开始问题就没定义清楚","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","rework"]}
+{"id":"3l5s-003","prompt":"这个任务太大了, 现在只有方向没有可执行步骤","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","too_large"]}
+{"id":"3l5s-004","prompt":"方案有一堆待办, 但每条都像优化一下, 完全不能验收","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","not_executable"]}
+{"id":"3l5s-005","prompt":"我们看到很多异常现象, 但不知道真正问题在哪里","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","discovery"]}
+{"id":"3l5s-006","prompt":"目标很清楚, 但落地路径太复杂, 帮我拆到能开工","should_trigger":true,"expected_skill":"3l5s","acceptable_skills":["3l5s"],"tags":["positive","breakdown"]}
+{"id":"edsp-001","prompt":"两个方案看起来都对, 但我怀疑问题本身问错了","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","false_binary"]}
+{"id":"edsp-002","prompt":"这个边界到底在哪, 再往左一步和往右一步结论都变","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","boundary"]}
+{"id":"edsp-003","prompt":"这是伪二选一吗, 还是应该换一个判断维度","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","malformed_choice"]}
+{"id":"edsp-004","prompt":"趋势很难判, 想看极端情况下哪条路会自然胜出","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","trend"]}
+{"id":"edsp-005","prompt":"这个原则落到具体场景时总摇摆, 需要先把结构坐标定住","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","scenario_projection"]}
+{"id":"edsp-006","prompt":"我们无法定性判断, 变量之间互相牵制","should_trigger":true,"expected_skill":"edsp","acceptable_skills":["edsp"],"tags":["positive","qualitative"]}
+{"id":"sela-001","prompt":"旧方案局部体验真的更好, 但新方案整体成本可能低一个数量级","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","local_vs_system"]}
+{"id":"sela-002","prompt":"手工方案很精致, 但自动化方案的规模效率越来越明显","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","manual_vs_system"]}
+{"id":"sela-003","prompt":"现在是旧范式质量高, 新范式费效比高, 我们该怎么取舍","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","paradigm_shift"]}
+{"id":"sela-004","prompt":"局部优势让团队舍不得放弃, 但系统效率正在碾压","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","efficiency"]}
+{"id":"sela-005","prompt":"用户会不会真的在意旧方案的精细优势, 还是会接受更便宜的方案","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","user_tolerance"]}
+{"id":"sela-006","prompt":"这个行业可能要从人工卓越转向系统化效率, 想判断大趋势","should_trigger":true,"expected_skill":"sela","acceptable_skills":["sela"],"tags":["positive","strategy"]}
+{"id":"wae-001","prompt":"这里到底该让脚本控制, 还是让 agent 自己判断","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae"],"tags":["positive","control_boundary"]}
+{"id":"wae-002","prompt":"证据要不要记录, 记录到什么层级才不会膨胀","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae"],"tags":["positive","evidence_boundary"]}
+{"id":"wae-003","prompt":"workflow 会不会太重, 反而把不确定判断冻死了","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae"],"tags":["positive","workflow_weight"]}
+{"id":"wae-004","prompt":"agent 会不会漂, 我们需要什么证据门槛约束它","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae"],"tags":["positive","agent_drift"]}
+{"id":"wae-005","prompt":"这个结构看着干净, 但我担心只是把薄判断包装起来","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae","tvg"],"tags":["mixed","thin_judgment"]}
+{"id":"wae-006","prompt":"哪些部分应该自动化, 哪些部分必须保留人工判断","should_trigger":true,"expected_skill":"wae","acceptable_skills":["wae"],"tags":["positive","automation_boundary"]}
+{"id":"tvg-001","prompt":"这份 AI 生成的文档结构很完整, 但读完感觉没什么用","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg"],"tags":["positive","hollow_artifact"]}
+{"id":"tvg-002","prompt":"这个方案看起来很规范, 但判断很薄, 下游还是不知道怎么做","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg"],"tags":["positive","downstream"]}
+{"id":"tvg-003","prompt":"帮我把这个模块做一轮有价值的深化, 不要只是变长","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg"],"tags":["positive","deepen"]}
+{"id":"tvg-004","prompt":"这个产物像模板填满了, 但缺少取舍和失败路径","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg"],"tags":["positive","failure_paths"]}
+{"id":"tvg-005","prompt":"审查一下这段计划是不是形式完整但实质空","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg"],"tags":["positive","audit"]}
+{"id":"tvg-006","prompt":"这个方法论已经成形, 但需要补证据边界和下游可用性","should_trigger":true,"expected_skill":"tvg","acceptable_skills":["tvg","wae"],"tags":["mixed","evidence_boundary"]}
+{"id":"tplan-001","prompt":"我要跑一个长期目标, 需要保留任务状态和恢复现场","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan"],"tags":["positive","long_running"]}
+{"id":"tplan-002","prompt":"这个目标可能要做几十步, 中途要能切换任务和记录证据","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan"],"tags":["positive","durable_state"]}
+{"id":"tplan-003","prompt":"需要一个能长期推进的任务运行时, 不只是待办清单","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan"],"tags":["positive","runtime"]}
+{"id":"tplan-004","prompt":"我希望把大目标拆成任务树, 后续轮次还能接着执行","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan"],"tags":["positive","task_tree"]}
+{"id":"tplan-005","prompt":"这个项目要有人类介入权限和可追溯的决策记录","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan","wae"],"tags":["mixed","authority"]}
+{"id":"tplan-006","prompt":"我们要让 agent 自动推进一段时间, 但状态和证据必须持久化","should_trigger":true,"expected_skill":"tplan","acceptable_skills":["tplan"],"tags":["positive","autonomous"]}
+{"id":"none-001","prompt":"帮我把这句话翻译成英文","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","translation"]}
+{"id":"none-002","prompt":"运行一下当前这个仓库的测试","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","command"]}
+{"id":"none-003","prompt":"列出这个目录下有哪些文件","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","filesystem"]}
+{"id":"none-004","prompt":"把这个 JSON 格式化一下","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","formatting"]}
+{"id":"none-005","prompt":"帮我写一个简短的 git commit message","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","small_writing"]}
+{"id":"none-006","prompt":"这个变量名起得不好, 给我几个替代名","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","naming"]}
+{"id":"none-007","prompt":"把 README 第一段改得更顺一点","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","edit"]}
+{"id":"none-008","prompt":"解释一下这行 Python 代码是什么意思","should_trigger":false,"expected_skill":null,"acceptable_skills":[],"tags":["negative","explain"]}
