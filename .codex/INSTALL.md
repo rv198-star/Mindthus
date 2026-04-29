@@ -21,8 +21,8 @@ Codex's system `skill-installer` is useful for individual skills, but it install
 2. Create the skills namespace symlink:
 
    ```bash
-   mkdir -p ~/.agents/skills
-   ln -s ~/.codex/mindthus/skills ~/.agents/skills/mindthus
+   cd ~/.codex/mindthus
+   scripts/install-skills.sh codex --force
    ```
 
 3. Restart Codex so it discovers the skills.
@@ -37,6 +37,7 @@ After installation, Codex should discover:
 - `mindthus:edsp`
 - `mindthus:wae`
 - `mindthus:tvg`
+- `mindthus:tplan`
 
 ## Verify
 
@@ -46,11 +47,18 @@ ls -la ~/.agents/skills/mindthus
 
 The path should point to `~/.codex/mindthus/skills`.
 
+For a repository checkout in another location, pass it explicitly:
+
+```bash
+scripts/install-skills.sh codex --repo /path/to/Mindthus --force
+```
+
 ## Update
 
 ```bash
 cd ~/.codex/mindthus
 git pull
+scripts/install-skills.sh codex --force
 ```
 
 The symlink means updated skills are available after restart.

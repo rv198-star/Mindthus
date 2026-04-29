@@ -18,6 +18,7 @@ Mindthus can also be installed as a skills pack:
 - `mindthus:edsp`
 - `mindthus:wae`
 - `mindthus:tvg`
+- `mindthus:tplan`
 
 ## Project Posture
 
@@ -42,6 +43,7 @@ Current skills:
 - `skills/edsp/` — handles ambiguous qualitative judgments through Extreme Deduction + Scenario Projection.
 - `skills/wae/` — separates deterministic workflow control, agentic judgment, and evidence bridging.
 - `skills/tvg/` — value-driven thinking-depth enhancer for shallow AI-generated artifacts.
+- `skills/tplan/` — Mission-oriented runtime for Task/SubTask/Step state, evidence/log separation, decision hooks, and script-controlled structure changes.
 
 Skill-specific resources live under `skills/*/resources/` so each skill can be used independently. Root-level files should stay limited to project orientation and agent posture.
 
@@ -54,6 +56,14 @@ See [.codex/INSTALL.md](/root/mindthus/.codex/INSTALL.md).
 Codex supports bundle-style discovery through `~/.agents/skills/`, so the intended namespace is `mindthus` and installation exposes the skills as `mindthus:*`.
 
 Codex also has a system `skill-installer` capability for installing individual skills into `~/.codex/skills`, but that path is not the right fit for this repository's pack-style namespace. Mindthus is intended to be installed as one bundle so the skills remain grouped under `mindthus:*`.
+
+For an existing checkout, install or refresh the Codex skills pack with:
+
+```bash
+scripts/install-skills.sh codex --force
+```
+
+This creates `~/.agents/skills/mindthus -> <repo>/skills`. Restart Codex after installing.
 
 ### Claude Code
 
@@ -68,18 +78,47 @@ Claude Code personal skills live under `~/.claude/skills/`.
 2. Create the local skills links:
 
    ```bash
-   mkdir -p ~/.claude/skills
-   ln -s ~/.claude/mindthus/skills/using-mindthus ~/.claude/skills/using-mindthus
-   ln -s ~/.claude/mindthus/skills/sela ~/.claude/skills/sela
-   ln -s ~/.claude/mindthus/skills/3l5s ~/.claude/skills/3l5s
-   ln -s ~/.claude/mindthus/skills/edsp ~/.claude/skills/edsp
-   ln -s ~/.claude/mindthus/skills/wae ~/.claude/skills/wae
-   ln -s ~/.claude/mindthus/skills/tvg ~/.claude/skills/tvg
+   cd ~/.claude/mindthus
+   scripts/install-skills.sh claude --force
    ```
 
 3. Restart Claude Code.
 
 This exposes the same skill set in Claude Code as local skills. Unlike Codex bundle discovery, this path does not currently add a `mindthus:` namespace prefix by itself.
+
+## Verify
+
+Run the repository checks:
+
+```bash
+python3 -m unittest tests.test_packaging_docs -v
+python3 -m unittest discover -s tests/tplan -v
+```
+
+For `tplan` only:
+
+```bash
+python3 -m unittest discover -s tests/tplan -v
+```
+
+The runtime scripts are plain Python and shell scripts. They do not require package
+installation inside the repository; installation means exposing the `skills/` directory
+to the target agent client.
+
+## Packaging Notes
+
+Mindthus is packaged as a skills directory, not as a Python library. The stable package
+surface is:
+
+- `AGENTS.md`
+- `skills/*/SKILL.md`
+- `skills/*/resources/`
+- `skills/*/templates/`
+- `skills/*/scripts/` when a skill needs deterministic runtime support
+
+Use `scripts/install-skills.sh` for local symlink installation. If a future client
+needs an archive artifact, package the repository by preserving the `skills/`
+directory layout exactly; skill paths are part of the runtime contract.
 
 ## Skill Rule
 
