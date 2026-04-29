@@ -14,7 +14,7 @@ from pathlib import Path
 def build_trace(args: argparse.Namespace) -> dict:
     now = datetime.now(timezone.utc).isoformat()
     return {
-        "schema_version": "tvg-trace-v0.2",
+        "schema_version": "tvg-trace-v0.3",
         "method_version": "Thinking Value-Gain Methodology v0.2",
         "created_at": now,
         "updated_at": now,
@@ -42,6 +42,12 @@ def build_trace(args: argparse.Namespace) -> dict:
             "why_not_another_round": "",
         },
         "script_support": {
+            "trace_role": "audit_calibration_log",
+            "trace_boundary": [
+                "Trace is an audit/calibration log, not working context.",
+                "Trace records must not control flow decisions or replace agentic exit audit.",
+                "Do not replay the full trace into later rounds; summarize current-round outcome and archive old detail.",
+            ],
             "trace_initialized_by_script": True,
             "script_verdict": "No schema violations were detected only after validation; agentic audit is still required.",
             "script_cannot_decide": [

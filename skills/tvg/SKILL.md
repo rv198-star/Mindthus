@@ -41,6 +41,18 @@ Every script result means only:
 
 > `No schema violations were detected; agentic audit is still required.`
 
+## Trace Boundary
+
+Trace is an audit/calibration log, not working context.
+
+It records the summary of what was changed, what value was claimed, what remains
+review-bound, and why another round is or is not justified. It must not control flow
+decisions, choose value-gain axes, or decide whether another round runs.
+
+Do not replay the full trace into later rounds by default. Use the current module,
+the current exit gate, and the latest audit summary as working context. Summarize
+current-round outcome in the trace and archive old detail when a run has many rounds.
+
 ## When To Use
 
 Use this skill when:

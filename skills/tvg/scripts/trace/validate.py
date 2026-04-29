@@ -63,6 +63,17 @@ def validate(trace: dict, schema: dict) -> list[str]:
     if exit_state and exit_state not in schema["allowed_exit_states"]:
         errors.append(f"agentic_exit_audit.exit_state: unsupported value {exit_state!r}")
 
+    script_support = require_mapping(trace.get("script_support"), "script_support", errors)
+    for field in schema["required_script_support_fields"]:
+        if field not in script_support:
+            errors.append(f"missing script_support field: {field}")
+    if "trace_boundary" in script_support:
+        require_list(script_support["trace_boundary"], "script_support.trace_boundary", errors)
+    if "script_cannot_decide" in script_support:
+        require_list(script_support["script_cannot_decide"], "script_support.script_cannot_decide", errors)
+    if script_support.get("trace_role") != schema["trace_role"]:
+        errors.append(f"script_support.trace_role: expected {schema['trace_role']!r}")
+
     return errors
 
 

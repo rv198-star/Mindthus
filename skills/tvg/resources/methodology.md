@@ -313,6 +313,23 @@ It prevents:
 - endless refinement
 - over-claiming
 
+### Trace / Working Context Boundary
+
+Trace is an audit/calibration log, not working context.
+
+The working context for a TVG round is the current module, the exit gate, selected
+value-gain axes, and any current evidence or assumptions needed for this round. The
+trace records only the audit summary of what changed, what value was claimed, what
+remains review-bound, and why another round is or is not justified.
+
+Trace must not control flow decisions. It does not decide whether to run another
+round, which axis to choose, or whether the module can exit. Those remain agentic
+audit decisions.
+
+Do not replay the full trace into later rounds by default. If many rounds exist,
+summarize current-round outcome into `value_gain` and `agentic_exit_audit`, then
+archive old detail outside the active working context.
+
 ## Step 4: Run A Bounded Value-Gain Loop
 
 Default loop:
@@ -603,6 +620,10 @@ When this method materially affects a module, record:
 - `exit_state`
 - `agentic_exit_audit_result`
 - `why_another_round_is_or_is_not_justified`
+
+This record is summary-level. It should not accumulate every draft, prompt, discarded
+alternative, or process note. If a run produces verbose round detail, keep the latest
+summary in the active trace and archive old detail separately.
 
 ### Lightweight Trace Mode
 

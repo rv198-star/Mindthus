@@ -1,5 +1,5 @@
 {
-  "schema_version": "tvg-trace-v0.2",
+  "schema_version": "tvg-trace-v0.3",
   "required_fields": [
     "schema_version",
     "method_version",
@@ -31,6 +31,15 @@
     "exit_state",
     "why_not_another_round"
   ],
+  "required_script_support_fields": [
+    "trace_role",
+    "trace_boundary",
+    "trace_initialized_by_script",
+    "script_verdict",
+    "script_cannot_decide"
+  ],
+  "trace_role": "audit_calibration_log",
+  "trace_boundary": "Trace is an audit/calibration log, not working context, and must not control flow decisions. Do not replay the full trace into later rounds; summarize current-round outcome and archive old detail.",
   "allowed_exit_states": [
     "freeze",
     "freeze-with-review-bound-warning",
