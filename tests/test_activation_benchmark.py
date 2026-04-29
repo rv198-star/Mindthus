@@ -12,6 +12,8 @@ BENCH = REPO / "tests" / "activation_benchmark"
 CASES = BENCH / "cases.jsonl"
 SCORER = BENCH / "score_activation.py"
 SKILLS = {"3l5s", "edsp", "sela", "wae", "tvg", "tplan"}
+AUTO_SKILLS = {"3l5s", "edsp", "sela", "wae"}
+MANUAL_ONLY_SKILLS = {"tvg", "tplan"}
 FORBIDDEN_PROMPT_TERMS = {"3l5s", "edsp", "sela", "wae", "tvg", "tplan", "mindthus"}
 
 
@@ -40,6 +42,7 @@ class ActivationBenchmarkTests(unittest.TestCase):
         seen_ids = set()
         skill_counts = Counter()
         negative_count = 0
+        manual_only_probe_count = 0
 
         for case in cases:
             with self.subTest(case=case.get("id", case["_line"])):
@@ -63,17 +66,22 @@ class ActivationBenchmarkTests(unittest.TestCase):
 
                 expected = case.get("expected_skill")
                 if should_trigger:
-                    self.assertIn(expected, SKILLS)
+                    self.assertIn(expected, AUTO_SKILLS)
                     self.assertIn(expected, acceptable)
                     skill_counts[expected] += 1
                 else:
                     self.assertIsNone(expected)
                     self.assertEqual(acceptable, [])
                     negative_count += 1
+                    if case["id"].split("-", 1)[0] in MANUAL_ONLY_SKILLS:
+                        manual_only_probe_count += 1
 
-        for skill in SKILLS:
+        for skill in AUTO_SKILLS:
             self.assertGreaterEqual(skill_counts[skill], 5, skill)
-        self.assertGreaterEqual(negative_count, 6)
+        for skill in MANUAL_ONLY_SKILLS:
+            self.assertEqual(skill_counts[skill], 0, skill)
+        self.assertGreaterEqual(negative_count, 18)
+        self.assertGreaterEqual(manual_only_probe_count, 12)
 
     def test_scorer_computes_activation_metrics(self):
         cases = [
@@ -96,10 +104,10 @@ class ActivationBenchmarkTests(unittest.TestCase):
             {
                 "id": "c3",
                 "prompt": "文档完整但很空",
-                "should_trigger": True,
-                "expected_skill": "tvg",
-                "acceptable_skills": ["tvg"],
-                "tags": ["positive"],
+                "should_trigger": False,
+                "expected_skill": None,
+                "acceptable_skills": [],
+                "tags": ["manual_only_probe"],
             },
             {
                 "id": "c4",
@@ -140,10 +148,10 @@ class ActivationBenchmarkTests(unittest.TestCase):
 
         self.assertEqual(run.returncode, 0, run.stderr)
         report = json.loads(run.stdout)
-        self.assertAlmostEqual(report["metrics"]["recall"], 2 / 3)
+        self.assertAlmostEqual(report["metrics"]["recall"], 1.0)
         self.assertAlmostEqual(report["metrics"]["precision"], 2 / 3)
-        self.assertAlmostEqual(report["metrics"]["route_at_1"], 1 / 3)
-        self.assertAlmostEqual(report["metrics"]["over_trigger_rate"], 1 / 2)
+        self.assertAlmostEqual(report["metrics"]["route_at_1"], 1 / 2)
+        self.assertAlmostEqual(report["metrics"]["over_trigger_rate"], 1 / 3)
         self.assertEqual(report["confusion_matrix"]["edsp"]["wae"], 1)
         self.assertEqual(report["confusion_matrix"]["none"]["tplan"], 1)
 

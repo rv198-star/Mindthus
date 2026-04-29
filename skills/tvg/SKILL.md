@@ -1,6 +1,6 @@
 ---
 name: tvg
-description: Use when an AI-generated bounded artifact looks complete but shallow, hollow, random, weak in judgment, missing evidence or trade-offs, or hard for downstream users to reuse; do not use to reopen every document.
+description: Use only when the user explicitly asks for TVG or a workflow routes a bounded artifact to TVG for depth audit; not for passive activation from ordinary document feedback, requests to deepen, shallow-judgment comments, or generic audit wording.
 ---
 
 # TVG / Thinking Value-Gain
@@ -16,6 +16,17 @@ When used on a bounded artifact with a clear value target, TVG usually has high 
 Short rule:
 
 > Do not deepen for length. Deepen only where practical value can increase.
+
+## Activation Boundary
+
+TVG is manual or workflow-routed. Use it only when the user explicitly asks for TVG,
+or an existing workflow routes a named bounded artifact to TVG.
+
+Workflow routing must be explicit: an external process, script, upstream hook, or user
+instruction names TVG. Do not infer workflow routing from an artifact that merely
+looks suitable for TVG.
+
+普通的“这份文档有点空”“AI 输出看起来浅”“判断很薄”“需要深化”“审查是否空洞”反馈，可以作为判断信号，但不被普通文档反馈被动唤起 TVG。先按当前任务直接回应；只有用户显式要求使用 TVG，或 workflow 明确路由，才进入 TVG trace 和 value-gain loop。
 
 ## Hard Boundary
 

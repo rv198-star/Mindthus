@@ -6,13 +6,17 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
-ROUTE_PHRASES = {
+AUTO_ROUTE_PHRASES = {
     "3l5s": ["越做越乱", "反复返工", "任务太大", "问题不清楚", "不可执行"],
     "edsp": ["两个方案都对", "边界到底在哪", "定性判断", "伪二选一", "趋势难判"],
     "sela": ["旧方案局部优势", "新方案系统效率", "费效比", "旧范式", "新范式"],
     "wae": ["脚本控制还是 agent 判断", "证据要不要记录", "控制边界", "workflow", "evidence"],
-    "tvg": ["AI 文档很完整但没什么用", "结构完整但内容空", "判断薄", "下游不可用", "深化产物"],
-    "tplan": ["长期目标", "保留任务状态", "Mission", "human-in-loop", "任务运行时"],
+}
+
+
+MANUAL_ROUTE_PHRASES = {
+    "tvg": ["显式要求使用 TVG", "workflow 明确路由", "不被普通文档反馈被动唤起"],
+    "tplan": ["显式要求使用 tplan", "workflow 明确路由", "不被长期目标表述被动唤起"],
 }
 
 
@@ -21,14 +25,14 @@ DESCRIPTION_TERMS = {
     "skills/edsp/SKILL.md": ["both options", "ambiguous", "boundary", "qualitative", "trend"],
     "skills/sela/SKILL.md": ["local advantage", "system-level", "cost-effectiveness", "old paradigm", "new paradigm"],
     "skills/wae/SKILL.md": ["workflow", "agent", "script", "evidence", "control boundary"],
-    "skills/tvg/SKILL.md": ["AI-generated", "complete but shallow", "hollow", "downstream", "bounded artifact"],
-    "skills/tplan/SKILL.md": ["long-running", "Mission", "durable task state", "decision hooks", "not for simple tasks"],
+    "skills/tvg/SKILL.md": ["explicitly asks", "TVG", "workflow routes", "bounded artifact", "not for passive activation"],
+    "skills/tplan/SKILL.md": ["explicitly asks", "tplan", "workflow routes", "Mission runtime", "not for passive activation"],
 }
 
 
 ANTI_OVERUSE_PHRASES = {
-    "tplan": ["不是普通 todo", "不因任何 plan 字样自动创建 Mission"],
-    "tvg": ["不是所有文档都需要深化", "不重开整个问题空间"],
+    "tplan": ["不是普通 todo", "不因任何 plan 字样自动创建 Mission", "不被长期目标表述被动唤起"],
+    "tvg": ["不是所有文档都需要深化", "不重开整个问题空间", "不被普通文档反馈被动唤起"],
 }
 
 
@@ -50,7 +54,11 @@ def frontmatter_description(path):
 class MindthusActivationTests(unittest.TestCase):
     def test_agents_has_scenario_route_phrases(self):
         text = read("AGENTS.md")
-        for skill, phrases in ROUTE_PHRASES.items():
+        for skill, phrases in AUTO_ROUTE_PHRASES.items():
+            self.assertIn(skill, text)
+            for phrase in phrases:
+                self.assertIn(phrase, text)
+        for skill, phrases in MANUAL_ROUTE_PHRASES.items():
             self.assertIn(skill, text)
             for phrase in phrases:
                 self.assertIn(phrase, text)
@@ -59,7 +67,11 @@ class MindthusActivationTests(unittest.TestCase):
         text = read("skills/using-mindthus/SKILL.md")
         self.assertIn("router", text.lower())
         self.assertIn("不是固定技能链", text)
-        for skill, phrases in ROUTE_PHRASES.items():
+        for skill, phrases in AUTO_ROUTE_PHRASES.items():
+            self.assertIn(skill, text)
+            for phrase in phrases:
+                self.assertIn(phrase, text)
+        for skill, phrases in MANUAL_ROUTE_PHRASES.items():
             self.assertIn(skill, text)
             for phrase in phrases:
                 self.assertIn(phrase, text)

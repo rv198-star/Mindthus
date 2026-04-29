@@ -7,6 +7,18 @@ It is a sustainable A/B benchmark, not a unit test that proves model behavior by
 Run the same `cases.jsonl` against two versions of the skill pack, collect result JSONL,
 then compare metrics.
 
+The passive activation target set is intentionally narrow:
+
+- Auto-trigger skills: `3l5s`, `edsp`, `sela`, `wae`.
+- Manual-only probes: ordinary `tplan`/`tvg`-shaped prompts that do not also ask for
+  an auto-trigger skill.
+
+`tplan` and `tvg` should be selected only when the user explicitly asks for them or a
+workflow routes to them. In this benchmark, selecting either one from ordinary language
+counts as over-triggering. If the same prompt also asks a real control-boundary,
+problem-definition, strategy, or structural-judgment question, the benchmark may label
+that case as `wae`, `3l5s`, `sela`, or `edsp` instead.
+
 ## Protocol
 
 1. Use the same benchmark cases for each candidate version.

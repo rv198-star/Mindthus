@@ -1,6 +1,6 @@
 ---
 name: tplan
-description: Use for long-running Mission work that needs durable task state, decision hooks, human-in-loop authority, evidence tracking, resumable execution, or script-driven task runtime; not for simple tasks or ordinary todo lists.
+description: Use only when the user explicitly asks for tplan or a workflow routes work into the Mission runtime; not for passive activation from long-term goal wording, durable task state, task trees, resumption, autonomous progress, ordinary plans, or todo lists.
 ---
 
 # tplan
@@ -8,8 +8,25 @@ description: Use for long-running Mission work that needs durable task state, de
 `tplan` is a Mission-oriented project manager and control plane.
 
 Use it when work needs to stay attached to a stable Mission, avoid task-list drift,
-route semantic decisions to Mindthus skills, and preserve task state in a resumable
-runtime.
+route semantic decisions through decision hooks to Mindthus skills, and preserve task
+state in a resumable runtime.
+
+## Activation Boundary
+
+tplan is manual or workflow-routed. Use it only when the user explicitly asks for
+tplan, asks to run a Mission runtime, or an existing workflow routes the work into
+tplan.
+
+Workflow routing must be explicit: an external process, script, upstream hook, or user
+instruction names tplan or Mission runtime. Do not infer workflow routing from a
+request that merely looks suitable for tplan.
+
+长期目标、复杂项目、计划、todo、plan、保留任务状态、任务树、恢复现场、几十步、切换任务、记录证据、后续轮次、自动推进、状态持久化等自然语言需求，可以提示任务可能需要拆解或确认运行方式，但不被长期目标表述被动唤起 tplan。普通执行先用当前最小合适方法处理；需要 tplan 时先向用户确认，而不是自行初始化 Mission 文件和运行时脚本。只有用户显式要求使用 tplan，或 workflow 明确路由到 Mission runtime，才进入 tplan。
+
+For activation-only routing, choose `null` for tplan-shaped natural-language requests
+unless the user explicitly names tplan/Mission runtime or an external workflow names
+tplan. Do not select tplan just because the request mentions many steps, task
+switching, evidence recording, resumable context, or persistent state.
 
 ## Core Boundary
 
