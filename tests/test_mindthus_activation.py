@@ -25,8 +25,31 @@ DESCRIPTION_TERMS = {
     "skills/edsp/SKILL.md": ["both options", "ambiguous", "boundary", "qualitative", "trend"],
     "skills/sela/SKILL.md": ["local advantage", "system-level", "cost-effectiveness", "old paradigm", "new paradigm"],
     "skills/wae/SKILL.md": ["workflow", "agent", "script", "evidence", "control boundary"],
-    "skills/tvg/SKILL.md": ["explicitly asks", "TVG", "workflow routes", "bounded artifact", "not for passive activation"],
-    "skills/tplan/SKILL.md": ["explicitly asks", "tplan", "workflow routes", "Mission runtime", "not for passive activation"],
+    "skills/tvg/SKILL.md": ["manual-only", "never activate", "ordinary document feedback", "explicitly says TVG", "external workflow routes"],
+    "skills/tplan/SKILL.md": ["manual-only", "never activate", "ordinary user language", "explicitly says tplan", "external workflow routes"],
+}
+
+
+MANUAL_DESCRIPTION_PREFIXES = {
+    "skills/tvg/SKILL.md": "manual-only. never activate",
+    "skills/tplan/SKILL.md": "manual-only. never activate",
+}
+
+
+FORBIDDEN_MANUAL_DESCRIPTION_TERMS = {
+    "skills/tvg/SKILL.md": [
+        "bounded artifact",
+        "depth audit",
+        "shallow-judgment",
+        "improve value",
+    ],
+    "skills/tplan/SKILL.md": [
+        "durable task state",
+        "task trees",
+        "resumption",
+        "autonomous progress",
+        "long-term goal",
+    ],
 }
 
 
@@ -82,6 +105,13 @@ class MindthusActivationTests(unittest.TestCase):
             self.assertGreaterEqual(len(description), 120, path)
             for term in terms:
                 self.assertIn(term.lower(), description, path)
+
+    def test_manual_only_skill_descriptions_are_hard_negative_gates(self):
+        for path, prefix in MANUAL_DESCRIPTION_PREFIXES.items():
+            description = frontmatter_description(path).lower()
+            self.assertTrue(description.startswith(prefix), path)
+            for term in FORBIDDEN_MANUAL_DESCRIPTION_TERMS[path]:
+                self.assertNotIn(term, description, path)
 
     def test_tplan_and_tvg_have_anti_overuse_boundaries(self):
         combined = read("AGENTS.md") + "\n" + read("skills/using-mindthus/SKILL.md")
