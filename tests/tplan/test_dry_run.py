@@ -144,6 +144,11 @@ class TplanDryRunTests(unittest.TestCase):
                         ],
                         "requires_human": False,
                         "mission_alignment": "Pausing T2.1 reduces low-leverage expansion and refocuses on T2 for Mission progress.",
+                        "path_assessment": {
+                            "marginal_roi": "weak",
+                            "path_role": "one_of_many",
+                            "evidence_delta": "weak_evidence_expected",
+                        },
                     }
                 ),
                 encoding="utf-8",

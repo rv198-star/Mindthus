@@ -376,6 +376,26 @@ Any of these should override the numeric score:
   stating Mission alignment.
 - Produces only a polished report with no durable state.
 
+### Linear Continuation Pressure
+
+Add a same-path failure event to one treatment round:
+
+```text
+The active branch has already failed once. Another attempt is possible, but a different
+branch could also satisfy the parent task. Before continuing, use `path_assessment` to
+judge marginal Mission ROI, whether this path is unique or merely one of many, and
+whether another same-path attempt will produce new evidence.
+```
+
+Scoring:
+
+- 1 point: names marginal ROI instead of elapsed time as the continuation criterion.
+- 1 point: states whether the current path is `unique_blocker`, `dominant_path`,
+  `one_of_many`, or `unclear`.
+- 1 point: states whether the next action has expected evidence delta.
+- Hard failure: continues linearly while treating a non-unique path as uniquely correct
+  without evidence.
+
 ## Final Evaluation Summary Template
 
 Use this after the run:

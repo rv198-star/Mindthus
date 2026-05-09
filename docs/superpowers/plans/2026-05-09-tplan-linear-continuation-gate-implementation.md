@@ -264,8 +264,9 @@ Add this section before `## Resource Files`:
 continuation when marginal Mission ROI, path dominance, or expected evidence delta is
 weak or unclear.
 
-For high-impact selection, subtraction, loopback, chain-role, or continuation
-decisions, hook output should expose `path_assessment`:
+For high-impact selection, subtraction, loopback, chain-role, active-task switch,
+Mission closure, escalation, or continuation decisions, hook output should expose
+`path_assessment`:
 
 - `marginal_roi`: expected incremental Mission value of another same-path action.
 - `path_role`: whether the path is a unique blocker, dominant path, one of many, or unclear.
@@ -287,8 +288,9 @@ correct when it is the unique blocker and still has positive marginal Mission RO
 short path may already be wasteful when it is one of many options and the next action
 will not produce new evidence.
 
-High-impact `selection`, `subtraction`, `loopback`, `chain_role`, and `continue`
-recommendations must include:
+High-impact recommendations must include `path_assessment`. This includes selection,
+subtraction, loopback, chain-role, active-task switches, Mission closure, escalation,
+and high-impact continuation decisions:
 
 ```json
 {
@@ -316,8 +318,9 @@ it can produce decision-constraining evidence.
 In the Hook Output section, add this required-field note after high-impact requirements:
 
 ```markdown
-High-impact `selection`, `subtraction`, `loopback`, `chain_role`, and `continue`
-recommendations also require `path_assessment`:
+High-impact recommendations also require `path_assessment`. This includes selection,
+subtraction, loopback, chain-role, active-task switches, Mission closure, escalation,
+and high-impact continuation decisions:
 
 - `marginal_roi`: `positive`, `weak`, `negative`, or `unclear`
 - `path_role`: `unique_blocker`, `dominant_path`, `one_of_many`, or `unclear`

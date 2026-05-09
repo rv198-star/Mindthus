@@ -44,6 +44,19 @@ NODE_KINDS = {"task", "subtask", "step"}
 
 RECOMMENDATIONS = {"add", "subtract", "continue", "switch", "close", "escalate"}
 
+PATH_ASSESSMENT_FIELDS = {
+    "marginal_roi": {"positive", "weak", "negative", "unclear"},
+    "path_role": {"unique_blocker", "dominant_path", "one_of_many", "unclear"},
+    "evidence_delta": {
+        "new_evidence_expected",
+        "weak_evidence_expected",
+        "no_new_evidence_expected",
+        "unclear",
+    },
+}
+
+PATH_ASSESSMENT_HOOKS = {"selection", "subtraction", "loopback", "chain_role"}
+
 MISSION_REQUIRED_FIELDS = {
     "id",
     "title",
@@ -850,6 +863,39 @@ def _is_high_impact_decision(decision: dict[str, Any]) -> bool:
     return False
 
 
+def _requires_path_assessment(decision: dict[str, Any]) -> bool:
+    hook = decision.get("hook")
+    if hook in PATH_ASSESSMENT_HOOKS:
+        return True
+    if "mission_alignment" in decision:
+        return True
+    return _is_high_impact_decision(decision)
+
+
+def _validate_path_assessment(decision: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if not _requires_path_assessment(decision):
+        if "path_assessment" in decision and not isinstance(decision.get("path_assessment"), dict):
+            return ["path_assessment must be an object"]
+        return errors
+
+    if "path_assessment" not in decision:
+        return ["decision missing field: path_assessment"]
+
+    assessment = decision.get("path_assessment")
+    if not isinstance(assessment, dict):
+        return ["path_assessment must be an object"]
+
+    for field, allowed_values in PATH_ASSESSMENT_FIELDS.items():
+        value = assessment.get(field)
+        if not isinstance(value, str):
+            errors.append(f"path_assessment {field} must be a string")
+        elif value not in allowed_values:
+            allowed = ", ".join(sorted(allowed_values))
+            errors.append(f"path_assessment {field} unsupported: {value!r}; expected one of: {allowed}")
+    return errors
+
+
 def validate_hook_output(decision: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(decision, dict):
@@ -895,6 +941,7 @@ def validate_hook_output(decision: Any) -> list[str]:
                     errors.append(f"decision missing field: {field}")
                 elif not isinstance(decision.get(field), str):
                     errors.append(f"{field} must be a string")
+        errors.extend(_validate_path_assessment(decision))
     return errors
 
 

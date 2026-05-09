@@ -20,6 +20,13 @@ Mindthus can also be installed as a skills pack:
 - `mindthus:tvg`
 - `mindthus:tplan`
 
+Current release: `v0.4`
+
+v0.4 adds the `tplan` Linear Continuation Gate and the `using-mindthus` Premise Calibration
+pre-route action. The release makes high-impact continuation expose `path_assessment`
+fields for marginal Mission ROI, path role, and evidence delta, while keeping scripts
+limited to shape validation rather than semantic judgment.
+
 ## Project Posture
 
 The root agent stance is:

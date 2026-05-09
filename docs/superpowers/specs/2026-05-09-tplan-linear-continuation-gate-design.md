@@ -112,12 +112,15 @@ not to pretend precision exists.
 
 ## Required Hooks
 
-`path_assessment` is required for:
+`path_assessment` is required for high-impact recommendations, including:
 
 - `selection`
 - `subtraction`
 - `loopback`
 - `chain_role`
+- active-task switches
+- Mission closure
+- escalation
 - any `continue` recommendation that is high-impact
 
 It is optional for ordinary parent-aligned SubTask or Step decisions unless the decision
@@ -186,8 +189,7 @@ Update `skills/tplan/resources/hooks.md` with the required hook list, field sche
 boundary, and decision rules.
 
 Update `skills/tplan/resources/schema.md` so hook output requirements include
-`path_assessment` for high-impact continuation, selection, subtraction, loopback, and
-chain-role decisions.
+`path_assessment` for high-impact decisions.
 
 Update `skills/tplan/templates/hook-output.json` to include a valid example.
 

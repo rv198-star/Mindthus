@@ -10,8 +10,18 @@ class PackagingDocsTests(unittest.TestCase):
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
+        self.assertIn("Current release: `v0.4`", readme)
+        self.assertIn("Linear Continuation Gate", readme)
+        self.assertIn("Premise Calibration", readme)
         self.assertIn("Install", readme)
         self.assertIn("Verify", readme)
+
+    def test_changelog_documents_v0_4_release(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## v0.4", changelog)
+        self.assertIn("Linear Continuation Gate", changelog)
+        self.assertIn("Premise Calibration", changelog)
+        self.assertIn("path_assessment", changelog)
 
     def test_codex_install_doc_names_tplan(self):
         install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")

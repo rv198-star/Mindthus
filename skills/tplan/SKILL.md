@@ -151,6 +151,23 @@ The full review must identify the current Mission objective, remaining acceptanc
 task contribution, Mission ROI effect, and risk of not taking the decision. This is a
 judgment prompt, not proof that the judgment is correct.
 
+## Linear Continuation Gate
+
+`tplan` does not stop because work has taken too long. It challenges same-path
+continuation when marginal Mission ROI, path dominance, or expected evidence delta is
+weak or unclear.
+
+For high-impact selection, subtraction, loopback, chain-role, active-task switch,
+Mission closure, escalation, or continuation decisions, hook output should expose
+`path_assessment`:
+
+- `marginal_roi`: expected incremental Mission value of another same-path action.
+- `path_role`: whether the path is a unique blocker, dominant path, one of many, or unclear.
+- `evidence_delta`: whether the next action is expected to produce decision-constraining evidence.
+
+Scripts validate this structure only. Agentic judgment decides whether the assessment
+is true, and evidence links should constrain the confidence of the recommendation.
+
 ## Resource Files
 
 - `resources/schema.md`: mission files, task fields, decision packet, hook output.

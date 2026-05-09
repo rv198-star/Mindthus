@@ -74,6 +74,14 @@ def create_mission(tmp, human_in_loop):
     return mission_dir
 
 
+def valid_path_assessment():
+    return {
+        "marginal_roi": "positive",
+        "path_role": "dominant_path",
+        "evidence_delta": "new_evidence_expected",
+    }
+
+
 def write_decision(tmp, recommendation="switch"):
     decision = Path(tmp) / "decision.json"
     decision.write_text(
@@ -88,6 +96,7 @@ def write_decision(tmp, recommendation="switch"):
                 ],
                 "requires_human": False,
                 "mission_alignment": "Switching to T2 advances the runtime task that blocks Mission usability.",
+                "path_assessment": valid_path_assessment(),
             }
         ),
         encoding="utf-8",
@@ -140,6 +149,7 @@ class ApplyDecisionTests(unittest.TestCase):
                         ],
                         "requires_human": True,
                         "mission_alignment": "Closure affects Mission status and must remain tied to release viability.",
+                        "path_assessment": valid_path_assessment(),
                     }
                 ),
                 encoding="utf-8",
@@ -166,6 +176,7 @@ class ApplyDecisionTests(unittest.TestCase):
                         ],
                         "requires_human": False,
                         "mission_alignment": "The proposed switch claims to advance runtime usability.",
+                        "path_assessment": valid_path_assessment(),
                     }
                 ),
                 encoding="utf-8",
@@ -251,6 +262,112 @@ class ApplyDecisionTests(unittest.TestCase):
             mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
             statuses = {task["id"]: task["status"] for task in mission["tasks"]}
             self.assertEqual(statuses["T2.1"], "completed")
+
+    def test_high_impact_decision_requires_path_assessment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "switch",
+                        "rationale": "Switching active tasks is high-impact.",
+                        "confidence": 80,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "set_active_task", "task_id": "T2"},
+                        ],
+                        "requires_human": False,
+                        "mission_alignment": "Switching to T2 advances runtime usability.",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("decision missing field: path_assessment", result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+
+    def test_mission_aligned_continue_requires_path_assessment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "Continue the same Mission-level path.",
+                        "confidence": 80,
+                        "evidence_links": [],
+                        "proposed_mutations": [],
+                        "requires_human": False,
+                        "mission_alignment": "Continuing this path claims Mission-level leverage.",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("decision missing field: path_assessment", result.stderr)
+            mission = json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+            self.assertIsNone(mission["active_task_id"])
+
+    def test_path_assessment_must_be_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = write_decision(tmp)
+            payload = json.loads(decision.read_text(encoding="utf-8"))
+            payload["path_assessment"] = "positive"
+            decision.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("path_assessment must be an object", result.stderr)
+
+    def test_path_assessment_rejects_unsupported_enum(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = write_decision(tmp)
+            payload = json.loads(decision.read_text(encoding="utf-8"))
+            payload["path_assessment"]["path_role"] = "only_possible_way"
+            decision.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("path_assessment path_role unsupported", result.stderr)
+
+    def test_low_impact_child_decision_does_not_require_path_assessment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "The child draft is ready for parent review.",
+                        "confidence": 75,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "transition_task", "task_id": "T2.1", "status": "completed"},
+                        ],
+                        "requires_human": False,
+                        "parent_alignment": "Completing T2.1 gives T2 its CLI argument draft.",
+                        "mission_trace": "via T2 -> A1",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

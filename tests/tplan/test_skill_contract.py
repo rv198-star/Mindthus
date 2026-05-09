@@ -40,6 +40,10 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertEqual(hook["recommendation"], "continue")
         self.assertIn("parent_alignment", hook)
         self.assertIn("mission_trace", hook)
+        self.assertIn("path_assessment", hook)
+        self.assertEqual(hook["path_assessment"]["marginal_roi"], "positive")
+        self.assertEqual(hook["path_assessment"]["path_role"], "dominant_path")
+        self.assertEqual(hook["path_assessment"]["evidence_delta"], "new_evidence_expected")
 
     def test_resource_files_name_runtime_contracts(self):
         resources = "\n".join(
@@ -57,6 +61,11 @@ class TplanSkillContractTests(unittest.TestCase):
             "parent_alignment",
             "mission_trace",
             "semantic correctness",
+            "path_assessment",
+            "marginal_roi",
+            "path_role",
+            "evidence_delta",
+            "Elapsed time is not the root criterion",
         ):
             self.assertIn(phrase, resources)
 

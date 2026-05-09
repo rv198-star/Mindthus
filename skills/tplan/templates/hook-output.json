@@ -6,5 +6,10 @@
   "proposed_mutations": [],
   "requires_human": false,
   "parent_alignment": "Continuing advances the immediate parent task.",
-  "mission_trace": "via parent task -> acceptance evidence"
+  "mission_trace": "via parent task -> acceptance evidence",
+  "path_assessment": {
+    "marginal_roi": "positive",
+    "path_role": "dominant_path",
+    "evidence_delta": "new_evidence_expected"
+  }
 }

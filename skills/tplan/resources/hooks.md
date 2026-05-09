@@ -27,6 +27,37 @@ Initial hooks:
 Hook output must include recommendation, rationale, confidence, evidence links,
 proposed mutations, and requires_human.
 
+## Linear Continuation Gate
+
+Elapsed time is not the root criterion for stopping or continuing. A long path may be
+correct when it is the unique blocker and still has positive marginal Mission ROI. A
+short path may already be wasteful when it is one of many options and the next action
+will not produce new evidence.
+
+High-impact recommendations must include `path_assessment`. This includes selection,
+subtraction, loopback, chain-role, active-task switches, Mission closure, escalation,
+and high-impact continuation decisions:
+
+```json
+{
+  "path_assessment": {
+    "marginal_roi": "positive | weak | negative | unclear",
+    "path_role": "unique_blocker | dominant_path | one_of_many | unclear",
+    "evidence_delta": "new_evidence_expected | weak_evidence_expected | no_new_evidence_expected | unclear"
+  }
+}
+```
+
+Workflow validates only object shape and enum values. Agentic judgment decides whether
+the current path really has positive ROI or dominant path status. Evidence links should
+constrain confidence; a complete field set is not proof that continuation is correct.
+
+If `marginal_roi` is weak, negative, or unclear, explain why switch, loopback,
+subtraction, escalation, or stop is worse before continuing. If `path_role` is
+`one_of_many` or `unclear`, compare alternatives. If `evidence_delta` is
+`no_new_evidence_expected` or `unclear`, do not call the next action verification unless
+it can produce decision-constraining evidence.
+
 ## Alignment And Mission Review Gates
 
 Ordinary SubTask and Step hooks are parent-relative. Before a hook output can justify

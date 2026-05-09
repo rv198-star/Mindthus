@@ -175,6 +175,18 @@ High-impact hook outputs should also include `mission_review`:
 - `roi_effect`
 - `non_action_risk`
 
+High-impact recommendations also require `path_assessment`. This includes selection,
+subtraction, loopback, chain-role, active-task switches, Mission closure, escalation,
+and high-impact continuation decisions:
+
+- `marginal_roi`: `positive`, `weak`, `negative`, or `unclear`
+- `path_role`: `unique_blocker`, `dominant_path`, `one_of_many`, or `unclear`
+- `evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
+  `no_new_evidence_expected`, or `unclear`
+
+Runtime scripts validate only the shape and enum values. They do not compute ROI, rank
+paths, infer evidence quality, or decide semantic correctness.
+
 `mission_alignment` and `mission_review` keep decisions anchored to Mission
 convergence. They are judgment records, not script-verifiable proof of correctness.
 `parent_alignment` keeps ordinary SubTask/Step work accountable to its immediate parent while
