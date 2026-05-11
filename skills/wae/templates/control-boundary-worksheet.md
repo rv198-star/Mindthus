@@ -1,6 +1,10 @@
 # WAE Control-Boundary Worksheet
 
-## Work Item
+This worksheet is not the default path. Use the Minimal WAE Check first.
+
+Do not fill every field. Fill only fields that can change the control decision.
+
+## Required Minimal Fields
 
 What part of the work is being assigned control?
 
@@ -8,7 +12,29 @@ What part of the work is being assigned control?
 - Current proposed control:
 - Why this boundary is being questioned:
 
-## Certainty Estimate
+Minimal check:
+
+- Path or truth uncertainty:
+- Claim that needs evidence:
+- Reversibility and blast radius:
+
+Boundary decision:
+
+- Workflow controls:
+- Agentic judgment controls:
+- Evidence constrains:
+
+Expansion trigger:
+
+- None / risk modulator / nested call / runtime failure / L3 tool / human escalation / other:
+
+If there is no expansion trigger, stop here.
+
+## Expanded Fields
+
+Skip any expanded field that cannot change the control decision.
+
+### Certainty Estimate
 
 Workflow certainty:
 
@@ -20,7 +46,7 @@ Context certainty:
 - High / Medium / Low:
 - Why:
 
-## Operational Risk
+### Operational Risk
 
 Reversibility:
 
@@ -47,7 +73,14 @@ Instruction/data boundary:
 - Is any processed data instruction-like:
 - How will it be preserved as data rather than control:
 
-## Control Decision
+Explicit relaxation:
+
+- Is any default boundary being relaxed:
+- granting authority:
+- Scope:
+- expiry:
+
+### Control Details
 
 Recommended primary control:
 
@@ -67,6 +100,13 @@ What agentic judgment must control:
 - Domain interpretation:
 - Revision under new evidence:
 
+Loop budget:
+
+- iterations:
+- tool calls:
+- time:
+- retries:
+
 What evidence must constrain:
 
 - Claim:
@@ -74,13 +114,20 @@ What evidence must constrain:
 - Confidence cap if missing:
 - Review-bound item:
 
+Evidence reporting:
+
+- used tool tiers:
+- fallback layer reached:
+- unresolved uncertainty:
+- side effects not visible to caller:
+
 Human escalation:
 
 - Is escalation eligible:
 - Is escalation temporarily closed by user preference for AI autonomy:
 - Exact decision packet if needed:
 
-## Boundary Risks
+### Boundary Risks
 
 Workflow overreach:
 
@@ -102,7 +149,7 @@ Skill boundary conflict:
 
 - Does another skill or outer workflow impose a stricter boundary?
 
-## Forbidden Automation
+### Forbidden Automation
 
 What must not be automated here?
 
@@ -112,7 +159,7 @@ Why:
 
 - 
 
-## Exit Criteria
+### Exit Criteria
 
 What must be true before this control design is accepted?
 

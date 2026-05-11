@@ -34,7 +34,23 @@ Use this skill when:
 
 Do not use it to slow down low-risk formatting or obviously deterministic work.
 
-## Operating Flow / 判断顺序
+## Minimal WAE Check / 最小检查
+
+Default path is the Minimal WAE Check.
+
+For most daily work, ask only three questions first:
+
+1. Is the uncertainty mainly path or truth?
+2. Does the claim need evidence to constrain it?
+3. Is the action reversible, and how large is the blast radius if wrong?
+
+Only enter the full WAE flow when these answers conflict, the invocation context is nested or automated, tool/action risk is high, or runtime failure shows the boundary was wrong.
+
+Do not open the worksheet by default. Open the full method only when the minimal check is insufficient to make the control-boundary decision.
+
+## Escalated Flow / 升级判断
+
+Use this only when the Minimal WAE Check is insufficient.
 
 1. Estimate `workflow certainty`: how fixed are path, order, and execution method?
 2. Estimate `context certainty`: how complete and trustworthy are facts, semantics, constraints, and runtime truth?
@@ -80,7 +96,7 @@ If a WAE output becomes cleaner but thinner, treat that as a regression.
 
 Use `templates/control-boundary-worksheet.md` when a concrete work item needs a lightweight control-boundary analysis.
 
-The worksheet is an aid for judgment, not evidence that the judgment is correct.
+The worksheet is an aid for judgment, not evidence that the judgment is correct. Do not fill it completely unless each field can change the decision.
 
 ## Full Method
 
