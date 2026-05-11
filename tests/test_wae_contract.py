@@ -129,6 +129,8 @@ class WaeContractTests(unittest.TestCase):
             "Full Method Is Not The Default Path",
             "Stop after the minimal check",
             "Do not run every section",
+            "Future Split Reminder",
+            "split scenario-specific material",
         ):
             self.assertIn(phrase, methodology)
 

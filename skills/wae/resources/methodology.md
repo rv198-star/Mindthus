@@ -53,6 +53,10 @@ Open the full method only when:
 
 The full method is reference material for hard cases. It should not become a ceremony for routine control decisions.
 
+### Future Split Reminder
+
+If this file grows again, do not keep appending sections here by default. Instead, split scenario-specific material into separate resource files first, such as runtime governance, skill nesting and tool authority, or worksheet usage. Keep this file as the mainline reference.
+
 ## Core Claim
 
 `Workflow` should control order.
