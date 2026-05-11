@@ -20,11 +20,38 @@ Context certainty:
 - High / Medium / Low:
 - Why:
 
+## Operational Risk
+
+Reversibility:
+
+- Reversible / partially reversible / irreversible:
+- Rollback or repair path:
+
+Blast radius:
+
+- Low / medium / high:
+- Who or what is affected if wrong:
+
+Tool tier:
+
+- L1 read-only / L2 writable but recoverable / L3 side-effectful or irreversible:
+- Tool authority constraint:
+
+Invocation context:
+
+- Direct user call / nested skill or agent / batch / scheduled / trigger / unattended:
+- Does context tightening reduce agentic freedom:
+
+Instruction/data boundary:
+
+- Is any processed data instruction-like:
+- How will it be preserved as data rather than control:
+
 ## Control Decision
 
 Recommended primary control:
 
-- Workflow shell / Agentic core / Evidence bridge / Human review / Mixed:
+- Workflow shell / Agentic core / Evidence bridge / Mixed:
 
 What workflow should control:
 
@@ -47,6 +74,12 @@ What evidence must constrain:
 - Confidence cap if missing:
 - Review-bound item:
 
+Human escalation:
+
+- Is escalation eligible:
+- Is escalation temporarily closed by user preference for AI autonomy:
+- Exact decision packet if needed:
+
 ## Boundary Risks
 
 Workflow overreach:
@@ -65,6 +98,10 @@ Agentic drift:
 
 - Does the agentic loop have purpose, evidence, and exit criteria?
 
+Skill boundary conflict:
+
+- Does another skill or outer workflow impose a stricter boundary?
+
 ## Forbidden Automation
 
 What must not be automated here?
@@ -80,7 +117,9 @@ Why:
 What must be true before this control design is accepted?
 
 - Evidence:
-- Review:
+- Human escalation:
+- Fallback path:
+- Promotion or demotion signal:
 - Failure signal:
 - Next action:
 
@@ -88,4 +127,4 @@ What must be true before this control design is accepted?
 
 One-sentence boundary:
 
-> Workflow controls ____. Agentic judgment controls ____. Evidence constrains ____.
+> Workflow controls ____. Agentic judgment controls ____. Evidence constrains ____. Human escalation is ____.
