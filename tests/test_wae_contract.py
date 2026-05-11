@@ -157,12 +157,41 @@ class WaeContractTests(unittest.TestCase):
             self.assertIn(phrase, methodology)
 
         for phrase in (
-            "Required Minimal Fields",
+            "Core Fields When Opened",
             "Expanded Fields",
             "Skip any expanded field",
             "Expansion trigger",
         ):
             self.assertIn(phrase, worksheet)
+        self.assertNotIn("Required Minimal Fields", worksheet)
+
+    def test_failure_attribution_is_staged_not_flat(self):
+        text = (WAE / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Stage 1 - Coverage check",
+            "Stage 2 - Layer-attributed check",
+            "If no control layer covered the work, stop at `Unbounded optional lane`",
+            "Workflow-controlled failure",
+            "Agentic-controlled failure",
+            "Evidence-controlled failure",
+            "Cross-layer failure",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_short_decision_surfaces_risk_modulators(self):
+        text = (WAE / "templates" / "control-boundary-worksheet.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Tool tier: ____",
+            "Reversibility/Blast radius: ____",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_complete_expanded_worksheet_can_signal_pseudo_agentic_drift(self):
+        methodology = (WAE / "resources" / "methodology.md").read_text(encoding="utf-8")
+        worksheet = (WAE / "templates" / "control-boundary-worksheet.md").read_text(encoding="utf-8")
+        for text in (methodology, worksheet):
+            self.assertIn("A complete worksheet where every Expanded Field was filled", text)
+            self.assertIn("regression signal, not a quality signal", text)
 
 
 if __name__ == "__main__":

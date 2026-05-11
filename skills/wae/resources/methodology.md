@@ -267,18 +267,18 @@ Structured failure evidence should include attempted path, evidence gathered, un
 
 ### Failure Attribution
 
-Use the anti-patterns as a diagnosis tree after failure:
+Use the anti-patterns as a staged diagnosis tree after failure.
 
-1. Did evidence constrain the claim? If no, it is `Evidence theater`.
-2. Did evidence connect to a real observable surface? If no, it is `Scripted confidence`.
-3. Did real judgment happen, or were fields merely filled? If fields were merely filled, it is `Pseudo-agentic schema`.
-4. Did the loop have purpose, evidence, and exit criteria? If no, it is `Agentic drift`.
-5. Did workflow freeze truth that was still uncertain? If yes, it is `Workflow overreach`.
-6. Did this work escape every control surface? If yes, it is `Unbounded optional lane`.
-7. Was the action evaluated by true reversibility and blast radius? If no, it is `Reversibility misjudgment`.
-8. Was the tool call classified by operation rather than tool name? If no, it is `Tool tier misclassification`.
-9. Did nested, batch, scheduled, trigger, or unattended invocation tighten control? If no, it is `Context tightening skipped`.
-10. Did instruction-like content inside processed data remain data? If no, it is `Instruction/data leak`.
+Stage 1 - Coverage check:
+
+- If no control layer covered the work, stop at `Unbounded optional lane`.
+
+Stage 2 - Layer-attributed check:
+
+- Workflow-controlled failure: did workflow freeze uncertain truth? If yes, `Workflow overreach`. Was the tool call classified by operation rather than tool name? If no, `Tool tier misclassification`.
+- Agentic-controlled failure: did real judgment happen, or were fields merely filled? If fields were merely filled, `Pseudo-agentic schema`. Did the loop have purpose, evidence, exit criteria, and budget? If no, `Agentic drift`. Did nested, batch, scheduled, trigger, or unattended invocation tighten control? If no, `Context tightening skipped`.
+- Evidence-controlled failure: did evidence constrain the claim? If no, `Evidence theater`. Did evidence connect to a real observable surface? If no, `Scripted confidence`.
+- Cross-layer failure: was the action evaluated by true reversibility and blast radius? If no, `Reversibility misjudgment`. Did instruction-like content inside processed data remain data? If no, `Instruction/data leak`.
 
 Attribution should lead to a boundary fix, not just a label.
 
@@ -394,6 +394,8 @@ Common signs:
 Corrective move:
 
 > Keep the worksheet, but reopen the agentic core. Ask what judgment was actually made, what evidence constrained it, and what remains unresolved.
+
+A complete worksheet where every Expanded Field was filled, with no field left blank or marked `not applicable`, is a regression signal, not a quality signal. Decisions with real boundary tension should leave some fields unresolved, contested, or explicitly waived.
 
 ## Practical Decision Table
 

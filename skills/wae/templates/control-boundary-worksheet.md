@@ -4,7 +4,9 @@ This worksheet is not the default path. Use the Minimal WAE Check first.
 
 Do not fill every field. Fill only fields that can change the control decision.
 
-## Required Minimal Fields
+A complete worksheet where every Expanded Field was filled, with no field left blank or marked `not applicable`, is a regression signal, not a quality signal.
+
+## Core Fields When Opened
 
 What part of the work is being assigned control?
 
@@ -174,4 +176,4 @@ What must be true before this control design is accepted?
 
 One-sentence boundary:
 
-> Workflow controls ____. Agentic judgment controls ____. Evidence constrains ____. Human escalation is ____.
+> Workflow controls ____. Agentic judgment controls ____. Evidence constrains ____. Human escalation is ____. Tool tier: ____. Reversibility/Blast radius: ____.
