@@ -14,6 +14,21 @@
 自己可能正在用局部修补替代核心目标推进；下一步优先回到上游、做减法，
 或等量替换，而不是继续加层。
 
+## 方法分层纪律 / Method Layering Discipline
+
+编写或修订方法时，必须把主思想和补漏分支分开写，并显著体现主从关系。
+任何主要段落都应该能标成以下身份之一：
+
+- `core`：方法的中心判断，必须短，并放在最前。
+- `mainline`：正常使用路径，读者只读这里也应该能行动。
+- `guardrail`：从属补漏，只防止主路径误用；guardrail must not become a new judgment center。
+- `boundary`：不用、停止、转交其他方法的条件。
+- `example`：例子只能说明规则，不能静默升级成规则。
+- `runtime support`：脚本、模板、schema、trace、校验器等支撑物。
+
+新增 guardrail 时必须说明它保护哪个 mainline 误用，以及它不能覆盖什么。
+如果一个新增段落无法归入这些层级，先不要写入方法正文。
+
 一句话理解：
 
 > `SELA` 看整体趋势与局部优势的关系；`3L5S` 处理问题从发现到落地；`EDSP` 处理悬而不决的结构判断；`WAE` 处理 Agentic / Workflow / Evidence 的控制边界；`TVG` 处理 AI 产物形式完整但实质浅薄的问题。

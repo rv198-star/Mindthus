@@ -5,13 +5,15 @@ description: Use when a Mission needs a script-driven task runtime, task tree st
 
 # tplan
 
+## Core Claim / 核心判断
+
 `tplan` is a Mission-oriented project manager and control plane.
 
 Use it when work needs to stay attached to a stable Mission, avoid task-list drift,
 route semantic decisions to Mindthus skills, and preserve task state in a resumable
 runtime.
 
-## Core Boundary
+### Core Boundary
 
 `tplan` owns runtime state, order, authority, validation, and decision hook contracts.
 
@@ -26,7 +28,9 @@ Semantic judgment is delegated:
 - `wae`: control boundaries, evidence bridges, and log/evidence separation
 - `tvg`: artifact depth audit
 
-## Startup Policy
+## Mainline / 主路径
+
+### Startup Policy
 
 Mission startup uses three numeric inputs:
 
@@ -36,7 +40,7 @@ Mission startup uses three numeric inputs:
 
 Default `human_in_loop` is `0`.
 
-## Runtime Loop
+### Runtime Loop
 
 1. Initialize Mission files with `scripts/init_mission.py`.
 2. Use `3l5s` to propose success-critical Task nodes.
@@ -57,7 +61,9 @@ Default `human_in_loop` is `0`.
 13. Ensure the hook output states the required alignment before mutation.
 14. Apply or record the decision with `scripts/apply_decision.py`.
 
-## Anti-Spiral Gate
+## Guardrails / 从属补漏
+
+### Anti-Spiral Gate
 
 Long-running Missions should activate Anti-Spiral Self-Audit when observable traces
 suggest local repair may be replacing Mission progress: repeated third touches of the
@@ -68,7 +74,7 @@ This gate is not a separate skill. It is a runtime brake that can route back to 
 for problem loopback, `wae` for control-boundary repair, or subtraction/rollback inside
 the active Mission. Full text lives in `docs/methodologies/anti-spiral-self-audit.md`.
 
-## Alignment Gate
+### Alignment Gate
 
 Task alignment is hierarchical by default:
 
@@ -92,7 +98,7 @@ should replace or upgrade it into a SubTask.
 Future expansion may add deeper Task/SubTask control layers, but Step remains the
 stable execution leaf.
 
-## Logs, Evidence, And Summary
+### Logs, Evidence, And Summary
 
 Evidence is not a process log.
 
@@ -106,7 +112,7 @@ Evidence is not a process log.
 Decision packets should consume evidence and recent blockers, not raw step logs unless
 a specific investigation needs them.
 
-## Graceful Stop
+### Graceful Stop
 
 tplan should stop cleanly when continuing would require inventing missing intent,
 authority, acceptance criteria, or product judgment. A stop is not a generic failure:
@@ -162,7 +168,7 @@ The full review must identify the current Mission objective, remaining acceptanc
 task contribution, Mission ROI effect, and risk of not taking the decision. This is a
 judgment prompt, not proof that the judgment is correct.
 
-## Linear Continuation Gate
+### Linear Continuation Gate
 
 `tplan` does not stop because work has taken too long. It challenges same-path
 continuation when marginal Mission ROI, path dominance, or expected evidence delta is
@@ -179,14 +185,23 @@ Mission closure, escalation, or continuation decisions, hook output should expos
 Scripts validate this structure only. Agentic judgment decides whether the assessment
 is true, and evidence links should constrain the confidence of the recommendation.
 
-## Resource Files
+## Boundaries / 边界
+
+- `tplan` must not become a standalone semantic reasoning engine; route semantic judgment to the appropriate Mindthus skill.
+- Scripts must not decide semantic truth. They validate shape, state legality, authority, and evidence references.
+- Evidence is not a process log; promote only acceptance, blocker, feedback, decision, state-change, or key finding records.
+- Autonomous mode still stops when no authorized, ROI-defensible next action remains.
+
+## Runtime Support / 支撑材料
+
+### Resource Files
 
 - `resources/schema.md`: mission files, task fields, decision packet, hook output.
 - `resources/lifecycle.md`: Mission completion, closure, task states, transitions.
 - `resources/policy.md`: risk/resource policy and human-in-loop authority.
 - `resources/hooks.md`: decision hook triggers, routed skills, input/output contract.
 
-## Runtime Scripts
+### Runtime Scripts
 
 Runtime scripts are added incrementally by implementation tasks. Until those scripts
 exist, treat the script names in the Runtime Loop as planned interfaces rather than

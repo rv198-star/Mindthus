@@ -41,7 +41,9 @@ It has two valid forms:
 - `Single-layer BTGSB`: use the five-step landing method directly.
 - `Three-layer BTGSB`: run BTGSB across `Discovery`, `Definition`, and `Resolution` when signal, problem, and action are not yet separable.
 
-## Choose The Form / 选择形态
+## Mainline / 主路径
+
+### Choose The Form / 选择形态
 
 Use `Single-layer BTGSB` when the problem is already accepted enough to solve.
 
@@ -49,9 +51,9 @@ Use `Three-layer 3L5S` when the agent may be collapsing observation, definition,
 
 Do not force three layers onto every task. The method's value comes from preventing layer collapse, not from maximizing ceremony.
 
-## Main Use Cases / 主用法
+### Main Use Cases / 主用法
 
-### 1. Discover And Define Problems
+#### 1. Discover And Define Problems
 
 Use 3L5S when the real problem is not yet clear. The discovery and definition layers turn abnormal world signals into a problem that can be restated, located, and falsified:
 
@@ -61,7 +63,7 @@ Use 3L5S when the real problem is not yet clear. The discovery and definition la
 
 This prevents the agent from treating symptoms as problems or jumping from weak signal to solution.
 
-### 2. Decompose And Land Known Problems
+#### 2. Decompose And Land Known Problems
 
 Use the resolution layer and the five-step BTGSB operator when the problem is already clear but too large, complex, or non-executable:
 
@@ -72,13 +74,7 @@ Use the resolution layer and the five-step BTGSB operator when the problem is al
 
 This is especially valuable in problem-solving work: it keeps complex problems from becoming vague task lists.
 
-## Default Use In Work Items / 工单默认姿态
-
-- If the problem is unclear: do not start by fixing; use 3L5S to define the problem first.
-- If the problem is too large: do not start by doing; use the 5S operator to break it into tasks first.
-- If execution repeatedly loops or reworks: return to `Baseline -> Target -> Gap -> Strategy -> Breakdown` and check whether problem definition or task decomposition failed to close.
-
-## Single-Layer BTGSB
+### Single-Layer BTGSB
 
 Single-layer BTGSB is not a weaker version of the method. It is the most practical form when the active work is already in the problem-solving or resolution stage.
 
@@ -102,7 +98,7 @@ Flow:
 
 If a breakdown item cannot start, run BTGSB again on that child problem.
 
-## Three-Layer BTGSB
+### Three-Layer BTGSB
 
 Three-layer BTGSB is the epistemic expansion of the same method. Use it when observation, definition, and resolution may be collapsed into one confident but premature answer.
 
@@ -124,7 +120,15 @@ Short rule:
 
 > Discover until the signal is real, define until the problem is falsifiable, resolve until the action is verifiable.
 
-## Script Assistance Boundary / 脚本辅助边界
+## Guardrails / 从属补漏
+
+### Default Use In Work Items / 工单默认姿态
+
+- If the problem is unclear: do not start by fixing; use 3L5S to define the problem first.
+- If the problem is too large: do not start by doing; use the 5S operator to break it into tasks first.
+- If execution repeatedly loops or reworks: return to `Baseline -> Target -> Gap -> Strategy -> Breakdown` and check whether problem definition or task decomposition failed to close.
+
+### Script Assistance Boundary / 脚本辅助边界
 
 3L5S can be supported by lightweight scripts, but scripts must protect judgment rather than replace it.
 
@@ -148,19 +152,27 @@ Script reports should be read as `Shape & Evidence Risk Reports`, not as truth v
 
 Full boundary: `resources/script-boundary.md`.
 
-## Relationship To Other Mindthus Skills
+### Relationship To Other Mindthus Skills
 
 - Use `edsp` when a 3L5S `Gap` or `Strategy` contains a fuzzy structural choice.
 - Use `wae` when deciding whether a 3L5S step should be controlled by workflow, agentic judgment, evidence, or a combination.
 - Use `tvg` after a bounded 3L5S output exists but may still be thin in practical value.
 
-## Resource Files
+## Boundaries / 边界
+
+- 3L5S must not become ceremony; use single-layer BTGSB when the problem is already clear.
+- Do not treat a complete template, script pass, or checklist pass as proof that the judgment is true.
+- Do not use 3L5S to replace domain evidence, runtime verification, or stakeholder judgment.
+
+## Runtime Support / 支撑材料
+
+### Resource Files
 
 - `resources/landing-method.md` — full single-layer BTGSB landing method.
 - `resources/three-layer-recursive-loop.md` — full three-layer BTGSB recursive loop.
 - `resources/script-boundary.md` — WAE-based boundary for script assistance.
 
-## Templates And Scripts
+### Templates And Scripts
 
 - `templates/single-layer-btgsb.md` — working draft for known-problem landing work.
 - `templates/three-layer-3l5s.md` — working draft for signal/problem/action separation.

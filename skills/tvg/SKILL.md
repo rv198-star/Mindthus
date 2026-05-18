@@ -17,7 +17,34 @@ Short rule:
 
 > Do not deepen for length. Deepen only where practical value can increase.
 
-## Hard Boundary
+## Mainline / 主路径
+
+### When To Use
+
+Use this skill when:
+
+- a module exists but may still be thin
+- a document looks complete but downstream use would require invention
+- an AI output looks rigorous but feels hollow, surface-level, or randomly assembled
+- a review needs to distinguish value gain from added length
+- a bounded deepening loop needs trace discipline
+- a bounded module needs a value-driven depth pass before review, reuse, handoff, or exit
+
+Do not use this skill to reopen whole-project strategy or to add process weight to low-risk work.
+
+### Operating Flow
+
+1. Name the smallest module that can be independently frozen, returned, or blocked.
+2. Read `resources/methodology.md` only as needed.
+3. Create a trace with `scripts/trace/init.py`.
+4. Perform agentic value-gain work and fill the trace.
+5. Validate trace shape with `scripts/trace/validate.py`.
+6. Persist the trace with `scripts/trace/persist.py` when useful.
+7. Make the exit decision by agentic audit, not by script output.
+
+## Guardrails / 从属补漏
+
+### Hard Boundary
 
 Scripts support bookkeeping and calibration only. They must never replace agentic judgment.
 
@@ -41,30 +68,24 @@ Every script result means only:
 
 > `No schema violations were detected; agentic audit is still required.`
 
-## When To Use
+### Common Mistakes
 
-Use this skill when:
+- Treating schema validation as audit completion.
+- Letting scripts decide `exit_state`.
+- Running TVG on an unbounded document instead of a named module.
+- Adding another round without a named positive-value hypothesis.
+- Exposing TVG internal vocabulary in final customer/business/architecture deliverables.
 
-- a module exists but may still be thin
-- a document looks complete but downstream use would require invention
-- an AI output looks rigorous but feels hollow, surface-level, or randomly assembled
-- a review needs to distinguish value gain from added length
-- a bounded deepening loop needs trace discipline
-- a bounded module needs a value-driven depth pass before review, reuse, handoff, or exit
+## Boundaries / 边界
 
-Do not use this skill to reopen whole-project strategy or to add process weight to low-risk work.
+- Do not use TVG to reopen whole-project strategy.
+- Do not deepen for length, polish, or template completeness.
+- Do not add process weight to low-risk work.
+- Block rather than deepen when the missing input is evidence, domain input, runtime proof, or stakeholder judgment.
 
-## Operating Flow
+## Runtime Support / 支撑材料
 
-1. Name the smallest module that can be independently frozen, returned, or blocked.
-2. Read `resources/methodology.md` only as needed.
-3. Create a trace with `scripts/trace/init.py`.
-4. Perform agentic value-gain work and fill the trace.
-5. Validate trace shape with `scripts/trace/validate.py`.
-6. Persist the trace with `scripts/trace/persist.py` when useful.
-7. Make the exit decision by agentic audit, not by script output.
-
-## Trace Commands
+### Trace Commands
 
 Initialize:
 
@@ -90,16 +111,8 @@ python3 skills/tvg/scripts/trace/persist.py \
   --store .tvg/traces
 ```
 
-## Resource Files
+### Resource Files
 
 - `resources/methodology.md` — full Thinking Value-Gain methodology
 - `resources/exit-audit-template.md` — human/LLM audit template
 - `resources/trace-record-schema.json` — script validation schema
-
-## Common Mistakes
-
-- Treating schema validation as audit completion.
-- Letting scripts decide `exit_state`.
-- Running TVG on an unbounded document instead of a named module.
-- Adding another round without a named positive-value hypothesis.
-- Exposing TVG internal vocabulary in final customer/business/architecture deliverables.

@@ -10,9 +10,10 @@ class PackagingDocsTests(unittest.TestCase):
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
-        self.assertIn("Current release: `v0.4`", readme)
-        self.assertIn("Linear Continuation Gate", readme)
-        self.assertIn("Premise Calibration", readme)
+        self.assertIn("当前版本：`v0.5`", readme)
+        self.assertIn("方法分层纪律", readme)
+        self.assertIn("SELA", readme)
+        self.assertIn("时机检查", readme)
         self.assertIn("docs/methodologies", readme)
         self.assertIn("Install", readme)
         self.assertIn("Verify", readme)
@@ -25,12 +26,23 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("methodology resource", text)
         self.assertIn("tplan", text)
 
-    def test_changelog_documents_v0_4_release(self):
+    def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        self.assertIn("## v0.4", changelog)
-        self.assertIn("Linear Continuation Gate", changelog)
-        self.assertIn("Premise Calibration", changelog)
-        self.assertIn("path_assessment", changelog)
+        self.assertIn("## v0.5", changelog)
+        self.assertIn("发布日期：2026-05-18", changelog)
+        self.assertIn("方法分层纪律", changelog)
+        self.assertIn("主思想", changelog)
+        self.assertIn("从属补漏", changelog)
+        self.assertIn("SELA", changelog)
+        self.assertIn("时机检查", changelog)
+        self.assertIn("python3 -m unittest discover -s tests -v", changelog)
+
+    def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertEqual(changelog.count("## v0.5"), 1)
+        self.assertEqual(changelog.count("## v0.4"), 1)
+        self.assertIn("发布日期：2026-05-09", changelog)
+        self.assertNotIn("Release date:", changelog)
 
     def test_codex_install_doc_names_tplan(self):
         install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")

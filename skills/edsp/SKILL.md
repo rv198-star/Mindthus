@@ -21,7 +21,9 @@ Short rule:
 
 Scenario Projection remains available as a supplement when a concrete scenario must be placed inside the coordinate system built by Extreme Deduction.
 
-## When To Use
+## Mainline / 主路径
+
+### When To Use
 
 Use this skill when facing questions like:
 
@@ -32,7 +34,7 @@ Use this skill when facing questions like:
 
 Do not use it to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment when those are the actual missing inputs.
 
-## Operating Flow
+### Operating Flow
 
 1. Ask whether the active uncertainty is structural or scenario-specific.
 2. If structural, run `Extreme Deduction`:
@@ -44,12 +46,20 @@ Do not use it to replace evidence acquisition, domain research, runtime proof, o
 3. If Extreme Deduction creates a stable coordinate system and a concrete choice remains, run `Scenario Projection`.
 4. Output the choice guidance, boundary conditions, and what evidence could overturn it.
 
-## Stop Conditions
+## Guardrails / 从属补漏
+
+### Stop Conditions
 
 Stop after Extreme Deduction if the task only needs structural judgment, proposition diagnosis, trend identification, or a finding that the original binary is synthetic.
 
 Run Scenario Projection only when a concrete scenario must be selected inside a stable Extreme Deduction coordinate system.
 
-## Full Method
+## Boundaries / 边界
+
+- Do not use EDSP to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment.
+- Do not run Scenario Projection before Extreme Deduction has produced a stable coordinate system.
+- If the output becomes elegant but does not improve a decision, treat the method use as failed.
+
+## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` when you need the detailed EDSP procedure, anti-patterns, or examples of coordinate-system failure.

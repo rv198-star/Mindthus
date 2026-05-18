@@ -17,7 +17,7 @@ When one side gains an order-of-magnitude advantage in system-level cost-effecti
 
 Local excellence does not disappear. It retreats into niche, premium, transitional, or special-purpose contexts.
 
-## Positioning
+## Mainline / 主路径
 
 This is a top-level strategic decision reference:
 
@@ -30,7 +30,7 @@ Use it to avoid being pulled into short-sighted choices by real but local advant
 
 Do not use it to mechanically conclude that all efficient systems are better.
 
-## When To Use
+### When To Use
 
 Use SELA before major decisions involving:
 
@@ -40,20 +40,37 @@ Use SELA before major decisions involving:
 - premium/small-market advantage vs mass-market efficiency
 - long-term trend judgment where local strengths are real but hard to scale
 
-## Three Questions
+### Three Questions
 
 1. Is the comparison fair, or is it `best A` vs `average B`?
 2. Can the local advantage scale?
 3. Is the claimed user intolerance real, or are people more tolerant of acceptable weakness than expected?
 
-## Boundaries
+## Guardrails / 从属补漏
+
+### Timing Check / 时机检查
+
+After the three questions, run one lightweight timing check before turning the trend
+judgment into an action. This is not a new top-level principle; it only prevents an
+efficiency judgment from becoming too early, too absolute, or too linear.
+
+Ask:
+
+1. Does the old path need 临时保留 while the system path matures?
+2. Would today's choice 锁死未来 by making reversal or migration expensive?
+3. Is this the right 行动窗口 to commit, observe, wait, or run a small trial?
+
+## Boundaries / 边界
 
 Do not apply SELA as the main principle when:
 
 - irreversible harm dominates efficiency, such as core medical decisions, final judicial decisions, or nuclear safety
 - dignity, experience, or ethical bottom lines are the actual value anchor
-- the decision is about short transition windows where local advantage still has market value
+- the decision is about a short transition window where the local advantage still has
+  market value; use the Timing Check before converting long-term direction into an
+  immediate cutover
 
-## Full Method
+## Runtime Support / 支撑材料
 
-Read `resources/methodology.md` for the full principle, prototype cases, correct use, common misuse, and calibration mechanism.
+Read `resources/methodology.md` for the full principle, prototype cases, timing check,
+correct use, common misuse, and calibration mechanism.

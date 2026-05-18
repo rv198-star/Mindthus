@@ -20,12 +20,12 @@ Mindthus can also be installed as a skills pack:
 - `mindthus:tvg`
 - `mindthus:tplan`
 
-Current release: `v0.4`
+当前版本：`v0.5`
 
-v0.4 adds the `tplan` Linear Continuation Gate and the `using-mindthus` Premise Calibration
-pre-route action. The release makes high-impact continuation expose `path_assessment`
-fields for marginal Mission ROI, path role, and evidence delta, while keeping scripts
-limited to shape validation rather than semantic judgment.
+v0.5 新增方法分层纪律，要求方法写作显式区分 `core`、`mainline`、
+`guardrail`、`boundary`、`example` 与 `runtime support`，避免主思想被从属补漏
+和细节优化冲淡。本版本同时为 `SELA` 增加轻量时机检查，并将所有 `SKILL.md`
+入口统一到同一套分层结构。
 
 ## Project Posture
 
@@ -142,6 +142,22 @@ Each skill should stay portable and self-contained:
 - Do not turn a method into ceremony; preserve the judgment it was meant to protect.
 - Do not let scripts, schemas, or templates replace agentic judgment when truth is uncertain.
 
+### Method Layering Discipline / 方法分层纪律
+
+When writing or revising a method, separate the main thought from patch branches.
+Every major section should be identifiable as one of these layers:
+
+- `core`: the method's central claim; this must stay short and first.
+- `mainline`: the normal path a future agent should follow.
+- `guardrail`: a subordinate check that prevents a known misuse; a guardrail must not become a new judgment center.
+- `boundary`: when not to use the method, when to stop, or when to route elsewhere.
+- `example`: illustrative material; examples must not silently become rules.
+- `runtime support`: scripts, templates, schemas, traces, and validation helpers.
+
+Guardrails must state what mainline misuse they protect against and what they cannot
+override. If a new section cannot be assigned to one of these layers, do not add it
+until its role is clear.
+
 ## Working Rule
 
 When adding or revising a method:
@@ -149,8 +165,9 @@ When adding or revising a method:
 1. Clarify the situation first.
 2. Name the bounded method or skill being changed.
 3. Preserve the method's philosophical claim.
-4. Convert the claim into usable agent behavior.
-5. Add evidence, boundaries, and stop conditions.
-6. Keep the skill lean enough to load in context.
+4. Keep the `core` and `mainline` visible before any `guardrail`.
+5. Convert the claim into usable agent behavior.
+6. Add evidence, boundaries, and stop conditions.
+7. Keep the skill lean enough to load in context.
 
 Mindthus is not a warehouse of notes. It is a forge for reusable judgment.
