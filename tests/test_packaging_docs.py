@@ -13,8 +13,17 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("Current release: `v0.4`", readme)
         self.assertIn("Linear Continuation Gate", readme)
         self.assertIn("Premise Calibration", readme)
+        self.assertIn("docs/methodologies", readme)
         self.assertIn("Install", readme)
         self.assertIn("Verify", readme)
+
+    def test_anti_spiral_methodology_resource_exists(self):
+        text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("Anti-Spiral Self-Audit", text)
+        self.assertIn("methodology resource", text)
+        self.assertIn("tplan", text)
 
     def test_changelog_documents_v0_4_release(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")

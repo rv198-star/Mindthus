@@ -269,6 +269,38 @@ The workflow-safe minimum action should preserve state, expose uncertainty, and 
 
 Structured failure evidence should include attempted path, evidence gathered, unresolved conflict, blocked action, and next safe option.
 
+### Anti-Spiral Gate
+
+Anti-Spiral Self-Audit is a WAE-style safety gate for agentic loops. It handles the
+case where the agent keeps acting, but the control signal no longer constrains the
+Mission or root problem.
+
+Use it when observable traces show repeated local repair:
+
+- the same object is being handled for the third time
+- feedback says the output got worse or is still not good enough
+- the next move adds another layer, fallback, special case, or stage
+- the continuation signal is subjective, probabilistic, or self-scored
+- another same-path action is unlikely to produce new decision-constraining evidence
+
+Control assignment:
+
+- Workflow owns the trigger count, object-touch history, allowed action class, and stop
+  state.
+- Agentic judgment owns the one-sentence root-problem restatement and upstream/root
+  cause decision.
+- Evidence owns diff summaries, mechanical checks, user feedback, stable-state markers,
+  and confidence caps.
+
+Default WAE reading:
+
+> A probabilistic agent may generate candidate judgments, but it should not use its own
+> subjective score as the feedback controller for another local repair loop.
+
+When Anti-Spiral fires red, prefer rollback, deletion, upstream redefinition, or equal
+replacement. Do not add a new fallback layer until the upstream cause and evidence
+surface are clear.
+
 ### Failure Attribution
 
 Use the anti-patterns as a staged diagnosis tree after failure.
@@ -473,6 +505,8 @@ WAE does not replace those methods. It assigns control for parts of them.
 - `Tool tier misclassification`: a side-effectful operation is granted the freedom of a safer tool tier.
 - `Context tightening skipped`: nested, batch, scheduled, trigger, or unattended invocation keeps top-level agentic freedom.
 - `Instruction/data leak`: instruction-like content inside processed data changes control authority.
+- `Local repair spiral`: repeated local fixes, additive layers, or self-scored tuning
+  replace upstream cause analysis and Mission-relative evidence.
 
 ## Worksheet Use
 

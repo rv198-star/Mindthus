@@ -24,6 +24,18 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertIn("底层约束", text)
         self.assertIn("目标函数", text)
 
+    def test_anti_spiral_is_activatable_without_becoming_a_skill(self):
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        methodology = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("反螺旋入口", using)
+        self.assertIn("同一局部对象第三次", agents)
+        self.assertIn("not an independent Mindthus skill", methodology)
+        self.assertIn("Third touch, stop first", methodology)
+
     def test_pressure_tests_cover_premise_calibration_behavior(self):
         text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")
         for phrase in (

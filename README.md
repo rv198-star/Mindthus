@@ -42,6 +42,11 @@ Mindthus is organized through two surfaces:
 1. `AGENTS.md` defines the project-level agent posture, operating rules, and contribution boundaries.
 2. `skills/<skill-name>/` contains independent skills, each with its own `SKILL.md` and optional bundled resources.
 
+Methodology resources that should not become standalone skills live under
+`docs/methodologies/`. For example, Anti-Spiral Self-Audit is a cross-cutting execution
+discipline that can be quoted directly in ordinary work and absorbed by `tplan` as a
+runtime gate.
+
 Current skills:
 
 - `skills/using-mindthus/` — portable AGENTS-style entry skill for Mindthus posture and routing.

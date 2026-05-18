@@ -57,6 +57,17 @@ Default `human_in_loop` is `0`.
 13. Ensure the hook output states the required alignment before mutation.
 14. Apply or record the decision with `scripts/apply_decision.py`.
 
+## Anti-Spiral Gate
+
+Long-running Missions should activate Anti-Spiral Self-Audit when observable traces
+suggest local repair may be replacing Mission progress: repeated third touches of the
+same object, user feedback that the result worsened or remains insufficient, additive
+layering, or weak evidence delta on same-path continuation.
+
+This gate is not a separate skill. It is a runtime brake that can route back to `3l5s`
+for problem loopback, `wae` for control-boundary repair, or subtraction/rollback inside
+the active Mission. Full text lives in `docs/methodologies/anti-spiral-self-audit.md`.
+
 ## Alignment Gate
 
 Task alignment is hierarchical by default:

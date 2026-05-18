@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Added Anti-Spiral Self-Audit as a methodology resource, with activation entries in
+  `AGENTS.md` and `using-mindthus`.
+- Added `tplan` `anti_spiral_audit` runtime gate documentation for repeated local
+  repair, additive layering, negative feedback, and weak evidence-delta continuation.
+- Added WAE guidance for treating local repair spirals as a workflow/agent/evidence
+  control-boundary failure mode.
+- Added Anti-Spiral A/B pressure tests that separately score whether an agent triggers
+  the mechanism and whether it exits the spiral.
+
 ## v0.4
 
 Release date: 2026-05-09

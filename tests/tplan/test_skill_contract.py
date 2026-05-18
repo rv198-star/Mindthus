@@ -66,6 +66,8 @@ class TplanSkillContractTests(unittest.TestCase):
             "path_role",
             "evidence_delta",
             "Elapsed time is not the root criterion",
+            "anti_spiral_audit",
+            "Anti-Spiral Runtime Gate",
         ):
             self.assertIn(phrase, resources)
 

@@ -27,6 +27,43 @@ Initial hooks:
 Hook output must include recommendation, rationale, confidence, evidence links,
 proposed mutations, and requires_human.
 
+## Anti-Spiral Runtime Gate
+
+`anti_spiral_audit` is a runtime gate, not a standalone Mindthus skill. It exists so a
+Mission can activate the Anti-Spiral Self-Audit without relying on the agent to notice
+its own loop.
+
+Trigger it when:
+
+- the active run reaches the configured step-count interval
+- the same file, parameter, prompt segment, task node, or local object is touched for
+  the third time
+- user feedback reports that the result is not good enough, should be tried again, or
+  got worse
+- the next proposed mutation adds a new function, file, phase, fallback, rule set, or
+  special-case branch
+- a same-path continuation has weak, unclear, or no expected evidence delta
+
+The gate asks five observable questions:
+
+1. Did the last move add a structural layer?
+2. Is this the third or later touch of the same local object?
+3. Is the quality signal probabilistic or subjective?
+4. Is the next repair aimed at downstream output instead of the upstream cause?
+5. If the last move were deleted, would the system lose little or become clearer?
+
+Gate result:
+
+- `green`: zero or one `yes`; continuation is allowed.
+- `yellow`: two `yes`; next action must be subtraction or equal replacement.
+- `red`: three or more `yes`, or Q3 is `yes`; brake, restate the root problem, return
+  to the nearest stable state, and allow only modification of existing structure or
+  deletion.
+
+Anti-Spiral evidence should point to step logs, object touch counts, feedback events,
+diff summaries, or mechanical checks. Scripts may validate the shape of the audit and
+count observable traces. They must not decide whether the root cause is true.
+
 ## Linear Continuation Gate
 
 Elapsed time is not the root criterion for stopping or continuing. A long path may be
@@ -57,6 +94,9 @@ subtraction, escalation, or stop is worse before continuing. If `path_role` is
 `one_of_many` or `unclear`, compare alternatives. If `evidence_delta` is
 `no_new_evidence_expected` or `unclear`, do not call the next action verification unless
 it can produce decision-constraining evidence.
+
+When weak evidence delta combines with repeated local edits or additive layering,
+route through `anti_spiral_audit` before authorizing same-path continuation.
 
 ## Alignment And Mission Review Gates
 

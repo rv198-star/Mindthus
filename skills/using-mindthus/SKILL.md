@@ -18,6 +18,31 @@ Mindthus 不是让 agent 更快给答案，而是让 agent 先判断自己面对
 - 不要为了形式套完整方法。
 - 不要让结构完整替代真实判断。
 
+## Anti-Spiral Entry / 反螺旋入口
+
+When a long task starts looping around the same local object, activate Anti-Spiral
+before selecting another action.
+
+Triggers:
+
+- the same file, prompt segment, parameter, task node, or local object is handled for
+  the third time
+- user feedback says the result is still not good enough, should be tried again, or got
+  worse
+- the next move would add a new function, file, stage, rule set, fallback, or special
+  case
+- the next same-path action is unlikely to produce new decision-constraining evidence
+
+Short rule:
+
+> Third touch, stop first.
+
+Anti-Spiral is not an independent skill. It is an activation gate that protects the
+objective function from local repair loops. Use
+`docs/methodologies/anti-spiral-self-audit.md` when the full protocol is needed. In a
+`tplan` Mission, treat it as a runtime gate driven by logs, touch counts, feedback, and
+evidence delta.
+
 ## 前置校准 / Premise Calibration
 
 在选择具体 skill 之前，必要时先做一轮轻量前置校准。尤其当用户输入里
