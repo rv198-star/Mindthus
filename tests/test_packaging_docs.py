@@ -2,6 +2,8 @@ import subprocess
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -43,6 +45,21 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertEqual(changelog.count("## v0.4"), 1)
         self.assertIn("发布日期：2026-05-09", changelog)
         self.assertNotIn("Release date:", changelog)
+
+    def test_skill_frontmatter_is_valid_yaml(self):
+        for path in sorted((REPO / "skills").glob("*/SKILL.md")):
+            text = path.read_text(encoding="utf-8")
+            self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
+            end = text.find("\n---", 4)
+            self.assertGreater(end, 0, f"{path} missing frontmatter terminator")
+            frontmatter = text[4:end]
+            try:
+                parsed = yaml.safe_load(frontmatter)
+            except yaml.YAMLError as exc:
+                self.fail(f"{path} has invalid YAML frontmatter: {exc}")
+            self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
+            self.assertIn("name", parsed, f"{path} frontmatter missing name")
+            self.assertIn("description", parsed, f"{path} frontmatter missing description")
 
     def test_codex_install_doc_names_tplan(self):
         install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")
