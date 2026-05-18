@@ -52,6 +52,40 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_router_defines_objective_priority_and_minimal_sufficient_lens(self):
+        for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "先尊重用户给出的目标函数",
+                "若用户未给出",
+                "默认效率优先",
+                "最小充分镜头",
+                "能直接判断就不要开方法",
+                "一个 skill 足够就不要串联",
+                "轻量检查足够就不要展开完整流程",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+    def test_minimal_sufficient_lens_does_not_change_tplan_activation(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        start = text.index("### 最小充分镜头")
+        end = text.index("### Skill 路由", start)
+        section = text[start:end]
+        self.assertNotIn("tplan", section.lower())
+
+    def test_pressure_tests_measure_outcome_effectiveness(self):
+        text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Outcome Effectiveness",
+            "真实效果指标",
+            "faster real-object identification",
+            "fewer invalid method calls",
+            "less local-loop drift",
+            "faster defensible choice",
+            "knows where to stop under uncertainty",
+        ):
+            self.assertIn(phrase, text)
+
 
 if __name__ == "__main__":
     unittest.main()

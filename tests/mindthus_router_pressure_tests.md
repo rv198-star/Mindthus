@@ -41,6 +41,30 @@ Treatment passes if it averages 4 or higher across scenarios. A treatment run ha
 failure if it invents a new first-principles skill, gives a generic philosophy essay, or
 uses the named concept as proof without stripping it.
 
+## Outcome Effectiveness / 真实效果指标
+
+Score these from the transcript as an additional evaluation dimension. They test whether
+the treatment changes useful behavior, not whether it merely mentions the right method
+names.
+
+Use `better / same / worse / unclear` for each item:
+
+- faster real-object identification: reaches the actual object of decision with fewer
+  detours or label-chasing moves
+- fewer invalid method calls: avoids unnecessary skill chaining, full-flow expansion,
+  or method use when direct judgment is enough
+- less local-loop drift: notices repeated local repair, additive layering, or weak
+  evidence delta earlier
+- faster defensible choice: reaches a choice with stated constraints, trade-offs,
+  evidence limits, and overturn conditions sooner
+- knows where to stop under uncertainty: stops, caps confidence, asks for missing
+  evidence, or escalates when the remaining uncertainty cannot be solved by another
+  reasoning pass
+
+Treatment is directionally useful only if at least three items improve and none becomes
+materially worse. If the transcript looks more method-complete but not more decision-useful,
+score the outcome as worse even when the scenario score is high.
+
 ## Scenario 1: ROI Label Trap
 
 ### What This Tests
