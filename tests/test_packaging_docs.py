@@ -92,6 +92,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("## 解决什么问题", text, name)
             self.assertIn("## 核心判断", text, name)
             self.assertIn("## 怎么用", text, name)
+            self.assertIn("## 具体案例", text, name)
+            self.assertGreaterEqual(text.count("### 案例"), 2, name)
             self.assertIn("## 常见误用", text, name)
             self.assertIn("## 边界", text, name)
             self.assertIn("## 与其他方法的关系", text, name)
