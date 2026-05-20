@@ -49,21 +49,24 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        self.assertIn("## v0.5.1", changelog)
-        self.assertIn("## v0.5", changelog)
+        self.assertIn("## v0.5 + v0.5.1", changelog)
+        self.assertIn("GitHub Release 以 `v0.5.1` 发布", changelog)
+        self.assertIn("没有单独发布 GitHub Release `v0.5`", changelog)
         self.assertIn("发布日期：2026-05-18", changelog)
         self.assertIn("方法分层纪律", changelog)
         self.assertIn("主思想", changelog)
         self.assertIn("从属补漏", changelog)
         self.assertIn("SELA", changelog)
         self.assertIn("时机检查", changelog)
+        self.assertIn("EDSP frontmatter 修复", changelog)
         self.assertIn("python3 -m unittest discover -s tests -v", changelog)
 
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
-        self.assertEqual(lines.count("## v0.5.1"), 1)
-        self.assertEqual(lines.count("## v0.5"), 1)
+        self.assertEqual(lines.count("## v0.5 + v0.5.1"), 1)
+        self.assertEqual(lines.count("## v0.5.1"), 0)
+        self.assertEqual(lines.count("## v0.5"), 0)
         self.assertEqual(lines.count("## v0.4"), 1)
         self.assertIn("发布日期：2026-05-09", changelog)
         self.assertNotIn("Release date:", changelog)

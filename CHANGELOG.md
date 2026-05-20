@@ -4,21 +4,12 @@
 
 暂无。
 
-## v0.5.1
+## v0.5 + v0.5.1
 
 发布日期：2026-05-18
 
-### 修复
-
-- 修正 `EDSP` skill frontmatter YAML，使技能包发现和文档打包检查保持稳定。
-
-### 校验
-
-- `python3 -m unittest tests.test_packaging_docs -v`
-
-## v0.5
-
-发布日期：2026-05-18
+说明：GitHub Release 以 `v0.5.1` 发布，合并记录 `v0.5` 的方法分层纪律与
+`v0.5.1` 的 EDSP frontmatter 修复。没有单独发布 GitHub Release `v0.5`。
 
 ### 新增
 
@@ -39,6 +30,11 @@
   Anti-Spiral Gate、Linear Continuation Gate 等放入从属补漏层。
 - 将 `WAE`、`TVG`、`3L5S`、`EDSP` 的脚本、模板、常见误用和停止条件从主路径中
   分离出来，降低入口阅读负担。
+
+### 修复
+
+- 修正 `EDSP` skill frontmatter YAML，使技能包发现和文档打包检查保持稳定。
+- 增加 skill frontmatter 契约测试，避免同类问题回归。
 
 ### 校验
 
