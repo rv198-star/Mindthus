@@ -1,215 +1,141 @@
 # Mindthus / 此心
 
-Mindthus 是一个个人方法论与 agent 构建项目。
+Mindthus 是一套面向 AI agent 的判断方法与技能包：它把复杂问题定义、结构判断、控制边界、长任务运行和反螺旋自检，整理成可以安装、调用、审查和测试的 `AGENTS.md` 与 `SKILLS`。
 
-`Thus` 表示“所以 / 如此 / 就该这样”，带着一种已经定下判断的意味。`此心 / Mindthus` 的意思是：一旦这个心已经看清模式，工作就应该按那个形状展开。
-
-方法不只是外部清单。Mindthus 想做的是把判断、证据边界、行动姿态和重复实践，变成可复用的 `AGENTS.md` 与 `SKILLS`。
+`Thus` 表示“所以 / 如此 / 就该这样”。`此心 / Mindthus` 的意思是：当一个人已经看清问题的形状，后续行动就不该再散乱地试错，而应该沿着那个判断展开。
 
 短句理解：
 
-> Mindthus 把个人哲学和方法论，整理成 agent 真能用的 `AGENTS.md` 指令和独立 `SKILLS`。
+> Mindthus 把一套个人哲学和方法论，做成 agent 真能用的判断镜头与运行纪律。
 
-Mindthus can also be installed as a skills pack:
+当前仓库版本：`v0.5.1`。`v0.5` 引入方法分层纪律，要求方法写作显式区分 `core`、`mainline`、`guardrail`、`boundary`、`example` 与 `runtime support`；`v0.5.1` 修正 EDSP skill frontmatter，保证技能包发现稳定。
 
-- `mindthus:using-mindthus`
-- `mindthus:sela`
-- `mindthus:3l5s`
-- `mindthus:edsp`
-- `mindthus:wae`
-- `mindthus:tvg`
-- `mindthus:tplan`
+安装后会暴露 `mindthus:*` 命名空间，例如 `mindthus:tplan`。
 
-当前版本：`v0.5`
+## 为什么值得试
 
-v0.5 新增方法分层纪律，要求方法写作显式区分 `core`、`mainline`、
-`guardrail`、`boundary`、`example` 与 `runtime support`，避免主思想被从属补漏
-和细节优化冲淡。本版本同时为 `SELA` 增加轻量时机检查，并将所有 `SKILL.md`
-入口统一到同一套分层结构。
+很多 AI workflow 的失败，不是因为模型不会写、不会改、不会执行，而是因为它太早开始执行：把现象当问题，把模板当推理，把日志当证据，把局部修补当进展，把“再试一次”误认为真的在接近目标。
+
+Mindthus 处理的正是这一层。它不追求让 agent 更快给出一个看似完整的答案，而是让 agent 先判断自己面对的是什么问题，再选择合适的方法镜头。这样做的收益很直接：
+
+- 问题还没清楚时，先把问题定义对，而不是直接堆方案。
+- 结构判断摇摆时，先建立坐标系，而不是在 A/B 之间反复横跳。
+- 流程、agent 判断和证据互相抢控制权时，把边界重新划清。
+- 长任务开始围着同一个局部对象反复修补时，及时停下来，回到上游。
+- 文档或方案看起来完整但内容偏薄时，只在能增加真实价值的地方加深。
+
+它的优势不是“更多流程”，而是把容易失控的判断点压成轻量、可复用、可审查的 skill。对新用户来说，Mindthus 提供的是一套可安装的判断操作系统：你可以直接用，也可以拆开读、改造、迁移到自己的 agent 项目里。
 
 ## 它是什么
 
-Mindthus 是一套把方法、边界和控制权整理成可复用技能包的项目。
+Mindthus 不是笔记合集，也不是把 AI 输出包装得更整齐的模板工程。它是一组围绕真实工作失败模式设计的方法论：
 
-它不是单纯的笔记集合，也不是把 AI 产物包装得更整齐的文档工程。
+- `using-mindthus` 提供默认姿态：遇事不要慌，先搞清楚情况再说。
+- `SELA` 处理整体趋势与局部优势之间的战略张力。
+- `3L5S` 处理问题从混乱信号到可执行任务的落地链条。
+- `EDSP` 处理悬而不决、命题可能有问题的结构判断。
+- `WAE` 处理 workflow、agentic judgment 与 evidence 的控制边界。
+- `TVG` 处理 AI 产物形式完整但实质浅薄的问题。
+- `tplan` 处理 Mission 级长任务的状态、证据、停止和继续。
+- `Anti-Spiral` 作为跨方法执行纪律，阻止局部修补螺旋吞掉目标函数。
 
-## 它能做什么
+这些方法不是固定流水线。Mindthus 更强调“最小充分镜头”：能直接判断就不要开方法，一个 skill 足够就不要串联，轻量检查足够就不要展开完整仪式。
 
-- 让 agent 先判断问题类型，再选方法镜头
-- 把复杂问题拆成可执行、可验证、可回退的任务
-- 把长期任务的证据、日志和停止条件分开
-- 把局部修补螺旋、过早切换和错误加层挡在外面
+## 能做什么
 
-## 它如何做到
+Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 
-- `AGENTS.md` 提供项目级姿态和控制边界
-- `skills/*/SKILL.md` 提供独立技能入口
-- `skills/*/resources/` 提供长方法资源和运行支撑
-- `docs/methodologies/` 放跨技能的方法资源，例如 Anti-Spiral
-- `tests/` 把关键文档和格式约束固定下来
+- 复杂任务刚开始，用户只给了模糊目标，需要先判断真实问题是什么。
+- 一个方案看似合理，但长期方向、局部优势和切换时机彼此冲突。
+- Agent 正在写脚本、规则、review gate 或 workflow，但不确定哪里该自动化，哪里必须保留判断。
+- 长任务执行到中后段，任务列表开始漂移，日志很多，证据不清，停止条件不明确。
+- 文档、计划、prompt、skill 已经成形，但读起来像“合格模板”，缺少判断、取舍、失败路径和下游可用性。
 
-## 使用场景
+它不适合替代领域事实、运行时验证、法律/医疗/安全等高风险专家判断。Mindthus 的位置是判断框架和执行纪律：它帮助 agent 问对问题、选对控制面、保留证据约束，但不把方法本身冒充事实。
 
-- 重大趋势判断：[`SELA`](docs/methodologies/sela.md)
-- 混乱问题拆解：[`3L5S`](docs/methodologies/3l5s.md)
-- 结构判断：[`EDSP`](docs/methodologies/edsp.md)
-- 控制边界：[`WAE`](docs/methodologies/wae.md)
-- 长任务编排：[`tplan`](docs/methodologies/tplan.md)
-- 文档价值加深：[`TVG`](docs/methodologies/tvg.md)
-- 防止局部修补螺旋：[`Anti-Spiral`](docs/methodologies/anti-spiral-self-audit.md)
+## 方法论导航
 
-## 方法页
+每个方法页都比 `SKILL.md` 更像说明书：`SKILL.md` 给 agent 执行入口，方法页给人讲清抽象含义、适用边界、常见误用和为什么值得用。
 
-下面这些页会比 `SKILL.md` 更长，专门讲清每个方法的抽象含义、适用边界、常见误用和使用方式。
+- [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：讲清整体与局部、时机检查和长期方向。它解决的是“局部优秀真实存在，但系统级费效比正在改变主战场”时的战略误判。
+- [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：讲清问题如何从混乱信号走到可执行步骤。它解决的是“现象很多但问题没定义清楚”或“问题很大但不可执行”的落地失败。
+- [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：讲清结构判断如何先建坐标系再做场景投影。它解决的是 A/B 都像对、命题可能不成立、原则难落地的判断摇摆。
+- [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：讲清流程、判断和证据各自该管什么。它解决的是脚本、agent 和 review gate 互相越权，导致结构干净但真相不稳。
+- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：讲清如何把薄的成品加深成可用模块。它解决的是 AI 产物看似完整、表达流畅，但缺少证据、取舍、复用和下游行动价值。
+- [`tplan / Mission-oriented project manager`](docs/methodologies/tplan.md)：讲清 Mission 级任务运行、状态和证据边界。它解决的是长任务中 task list 漂移、logs 和 evidence 混杂、继续/停止缺少权威入口。
+- [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：讲清如何防止局部修补变成死亡螺旋。它解决的是同一局部对象被第三次处理、负反馈变多、下一步只想继续加层时的目标函数丢失。
 
-- [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)
-- [`3L5S / 三层五步`](docs/methodologies/3l5s.md)
-- [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)
-- [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)
-- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)
-- [`tplan`](docs/methodologies/tplan.md)
+## 如何做到
 
-## Project Posture
+Mindthus 的项目结构刻意保持简单：
 
-The root agent stance is:
+- `AGENTS.md`：项目级姿态、skill 路由、方法分层纪律和反螺旋入口。
+- `skills/*/SKILL.md`：每个 skill 的最小可加载入口，保证 agent 能在上下文里快速使用。
+- `skills/*/resources/`：较长的方法资源、运行说明和哲学展开，不挤占 skill 入口。
+- `skills/*/scripts/` 与 `templates/`：只在需要确定性运行支撑时存在，例如 `tplan` 和 `TVG`。
+- `docs/methodologies/`：面向人的方法论说明页，帮助新用户理解每个方法为什么存在、何时使用、何时停止。
+- `tests/`：把关键文档契约、skill frontmatter、方法分层和运行脚本固定下来，避免项目只靠口头约定维护。
 
-> 遇事不要慌，先搞清楚情况再说。
+核心纪律是：方法必须把主思想和补漏分支分开。`core` 与 `mainline` 先说明正常路径，`guardrail` 只防止误用，`boundary` 说明停止或转交条件，脚本和 schema 只能做运行支撑，不能替代 agentic judgment。
 
-This means every agent working in this project should prefer situation clarity before conclusion, evidence before confidence, bounded judgment before procedural motion, and executable next steps before decorative structure.
-
-## Organization
-
-Mindthus is organized through two surfaces:
-
-1. `AGENTS.md` defines the project-level agent posture, operating rules, and contribution boundaries.
-2. `skills/<skill-name>/` contains independent skills, each with its own `SKILL.md` and optional bundled resources.
-
-Methodology resources that should not become standalone skills live under
-`docs/methodologies/`. For example, Anti-Spiral Self-Audit is a cross-cutting execution
-discipline that can be quoted directly in ordinary work and absorbed by `tplan` as a
-runtime gate.
-
-Current skills:
-
-- `skills/using-mindthus/` — portable AGENTS-style entry skill for Mindthus posture and routing.
-- `skills/sela/` — top-level decision principle: System Efficiency over Local Advantage.
-- `skills/3l5s/` — structures vague, complex, or system-level problems through `Three Layers + Five Steps` (`三层五步`): `Discovery / Definition / Resolution` plus `Baseline -> Target -> Gap -> Strategy -> Breakdown`.
-- `skills/edsp/` — handles ambiguous qualitative judgments through Extreme Deduction + Scenario Projection.
-- `skills/wae/` — separates deterministic workflow control, agentic judgment, and evidence bridging.
-- `skills/tvg/` — value-driven thinking-depth enhancer for shallow AI-generated artifacts.
-- `skills/tplan/` — Mission-oriented runtime for Task/SubTask/Step state, evidence/log separation, decision hooks, and script-controlled structure changes.
-
-Skill-specific resources live under `skills/*/resources/` so each skill can be used independently. Root-level files should stay limited to project orientation and agent posture.
-
-## Install As A Skills Pack
+## 安装
 
 ### Codex
 
-See [.codex/INSTALL.md](/root/mindthus/.codex/INSTALL.md).
+详细说明见 [.codex/INSTALL.md](.codex/INSTALL.md)。
 
-Codex supports bundle-style discovery through `~/.agents/skills/`, so the intended namespace is `mindthus` and installation exposes the skills as `mindthus:*`.
-
-Codex also has a system `skill-installer` capability for installing individual skills into `~/.codex/skills`, but that path is not the right fit for this repository's pack-style namespace. Mindthus is intended to be installed as one bundle so the skills remain grouped under `mindthus:*`.
-
-For an existing checkout, install or refresh the Codex skills pack with:
+在已有 checkout 中安装或刷新技能包：
 
 ```bash
 scripts/install-skills.sh codex --force
 ```
 
-This creates `~/.agents/skills/mindthus -> <repo>/skills`. Restart Codex after installing.
+这会创建 `~/.agents/skills/mindthus -> <repo>/skills`。重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
 
 ### Claude Code
 
-Claude Code personal skills live under `~/.claude/skills/`.
+Claude Code personal skills 默认位于 `~/.claude/skills/`。
 
-1. Clone the repository:
+```bash
+git clone https://github.com/rv198-star/Mindthus.git ~/.claude/mindthus
+cd ~/.claude/mindthus
+scripts/install-skills.sh claude --force
+```
 
-   ```bash
-   git clone https://github.com/rv198-star/Mindthus.git ~/.claude/mindthus
-   ```
+重启 Claude Code 后即可使用同一套本地 skills。Claude Code 的本地安装路径不会自动增加 `mindthus:` namespace prefix。
 
-2. Create the local skills links:
+## 验证
 
-   ```bash
-   cd ~/.claude/mindthus
-   scripts/install-skills.sh claude --force
-   ```
-
-3. Restart Claude Code.
-
-This exposes the same skill set in Claude Code as local skills. Unlike Codex bundle discovery, this path does not currently add a `mindthus:` namespace prefix by itself.
-
-## Verify
-
-Run the repository checks:
+运行文档与打包检查：
 
 ```bash
 python3 -m unittest tests.test_packaging_docs -v
-python3 -m unittest discover -s tests/tplan -v
 ```
 
-For `tplan` only:
+运行 `tplan` runtime 检查：
 
 ```bash
 python3 -m unittest discover -s tests/tplan -v
 ```
 
-The runtime scripts are plain Python and shell scripts. They do not require package
-installation inside the repository; installation means exposing the `skills/` directory
-to the target agent client.
+运行完整测试：
 
-## Packaging Notes
+```bash
+python3 -m unittest discover -s tests -v
+```
 
-Mindthus is packaged as a skills directory, not as a Python library. The stable package
-surface is:
+本仓库不是 Python library；安装的含义是把 `skills/` 暴露给目标 agent client。稳定打包面包括 `AGENTS.md`、`skills/*/SKILL.md`、`skills/*/resources/`、`skills/*/templates/` 和必要的 `skills/*/scripts/`。
 
-- `AGENTS.md`
-- `skills/*/SKILL.md`
-- `skills/*/resources/`
-- `skills/*/templates/`
-- `skills/*/scripts/` when a skill needs deterministic runtime support
-
-Use `scripts/install-skills.sh` for local symlink installation. If a future client
-needs an archive artifact, package the repository by preserving the `skills/`
-directory layout exactly; skill paths are part of the runtime contract.
-
-## Skill Rule
-
-Each skill should stay portable and self-contained:
-
-- Put trigger logic and operating procedure in `SKILL.md`.
-- Put longer methodology text in `resources/methodology.md`.
-- Do not make a skill depend on project-local memory unless the dependency is explicit.
-- Do not turn a method into ceremony; preserve the judgment it was meant to protect.
-- Do not let scripts, schemas, or templates replace agentic judgment when truth is uncertain.
+## 写作与贡献规则
 
 ### Method Layering Discipline / 方法分层纪律
 
-When writing or revising a method, separate the main thought from patch branches.
-Every major section should be identifiable as one of these layers:
+Mindthus 的方法写作追求可复用判断，而不是文档体量。新增或修订方法时：
 
-- `core`: the method's central claim; this must stay short and first.
-- `mainline`: the normal path a future agent should follow.
-- `guardrail`: a subordinate check that prevents a known misuse; a guardrail must not become a new judgment center.
-- `boundary`: when not to use the method, when to stop, or when to route elsewhere.
-- `example`: illustrative material; examples must not silently become rules.
-- `runtime support`: scripts, templates, schemas, traces, and validation helpers.
+1. 先澄清当前面对的真实对象、底层约束和目标函数。
+2. 保留方法的哲学主张，不要让 guardrail 变成新的判断中心；`guardrail must not become a new judgment center`。
+3. 让 `core` 和 `mainline` 足够短，未来 agent 只读主路径也能行动。
+4. 把证据、边界、停止条件和常见误用写清楚。
+5. 对脚本、schema、trace 保持克制：它们只能约束形状，不能替代判断。
 
-Guardrails must state what mainline misuse they protect against and what they cannot
-override. If a new section cannot be assigned to one of these layers, do not add it
-until its role is clear.
-
-## Working Rule
-
-When adding or revising a method:
-
-1. Clarify the situation first.
-2. Name the bounded method or skill being changed.
-3. Preserve the method's philosophical claim.
-4. Keep the `core` and `mainline` visible before any `guardrail`.
-5. Convert the claim into usable agent behavior.
-6. Add evidence, boundaries, and stop conditions.
-7. Keep the skill lean enough to load in context.
-
-Mindthus is not a warehouse of notes. It is a forge for reusable judgment.
+Mindthus 不是方法论仓库，而是一套让 agent 在复杂工作里保持清醒判断的可执行基础设施。

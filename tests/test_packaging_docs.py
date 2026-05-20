@@ -12,23 +12,28 @@ class PackagingDocsTests(unittest.TestCase):
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
-        self.assertIn("当前版本：`v0.5`", readme)
+        self.assertIn("mindthus:*", readme)
+        self.assertIn("当前仓库版本：`v0.5.1`", readme)
         self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
         self.assertIn("docs/methodologies", readme)
-        self.assertIn("Install", readme)
-        self.assertIn("Verify", readme)
+        self.assertIn("安装", readme)
+        self.assertIn("验证", readme)
 
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
-        self.assertIn("[`SELA`](docs/methodologies/sela.md)", readme)
-        self.assertIn("[`3L5S`](docs/methodologies/3l5s.md)", readme)
-        self.assertIn("[`EDSP`](docs/methodologies/edsp.md)", readme)
-        self.assertIn("[`WAE`](docs/methodologies/wae.md)", readme)
-        self.assertIn("[`tplan`](docs/methodologies/tplan.md)", readme)
-        self.assertIn("[`TVG`](docs/methodologies/tvg.md)", readme)
-        self.assertIn("[`Anti-Spiral`](docs/methodologies/anti-spiral-self-audit.md)", readme)
+        self.assertIn("SELA / 系统效率碾压局部优势", readme)
+        self.assertIn("3L5S / 三层五步", readme)
+        self.assertIn("EDSP / Extreme Deduction + Scenario Projection", readme)
+        self.assertIn("WAE / Workflow-Agentic-Evidence", readme)
+        self.assertIn("TVG / Thinking Value-Gain", readme)
+        self.assertIn("Anti-Spiral / 反螺旋自检", readme)
+        self.assertIn("讲清整体与局部", readme)
+        self.assertIn("讲清问题如何从混乱信号走到可执行步骤", readme)
+        self.assertIn("讲清流程、判断和证据各自该管什么", readme)
+        self.assertIn("死亡螺旋", readme)
+        self.assertIn("可安装的判断操作系统", readme)
 
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
@@ -37,9 +42,11 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("Anti-Spiral Self-Audit", text)
         self.assertIn("methodology resource", text)
         self.assertIn("tplan", text)
+        self.assertIn("Third touch, stop first", text)
 
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## v0.5.1", changelog)
         self.assertIn("## v0.5", changelog)
         self.assertIn("发布日期：2026-05-18", changelog)
         self.assertIn("方法分层纪律", changelog)
@@ -51,8 +58,10 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        self.assertEqual(changelog.count("## v0.5"), 1)
-        self.assertEqual(changelog.count("## v0.4"), 1)
+        lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v0.5.1"), 1)
+        self.assertEqual(lines.count("## v0.5"), 1)
+        self.assertEqual(lines.count("## v0.4"), 1)
         self.assertIn("发布日期：2026-05-09", changelog)
         self.assertNotIn("Release date:", changelog)
 
@@ -74,6 +83,7 @@ class PackagingDocsTests(unittest.TestCase):
             ("wae.md", "Workflow-Agentic-Evidence"),
             ("tvg.md", "Thinking Value-Gain"),
             ("tplan.md", "Mission-oriented project manager"),
+            ("anti-spiral-self-audit.md", "反螺旋自检"),
         ]
         for name, phrase in cases:
             text = (REPO / "docs" / "methodologies" / name).read_text(encoding="utf-8")

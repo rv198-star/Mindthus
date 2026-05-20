@@ -4,6 +4,18 @@
 
 暂无。
 
+## v0.5.1
+
+发布日期：2026-05-18
+
+### 修复
+
+- 修正 `EDSP` skill frontmatter YAML，使技能包发现和文档打包检查保持稳定。
+
+### 校验
+
+- `python3 -m unittest tests.test_packaging_docs -v`
+
 ## v0.5
 
 发布日期：2026-05-18
