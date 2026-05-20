@@ -33,7 +33,8 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("讲清问题如何从混乱信号走到可执行步骤", readme)
         self.assertIn("讲清流程、判断和证据各自该管什么", readme)
         self.assertIn("死亡螺旋", readme)
-        self.assertIn("可安装的判断操作系统", readme)
+        self.assertIn("锋利的刀", readme)
+        self.assertIn("可安装的判断工具箱", readme)
 
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
