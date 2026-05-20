@@ -22,10 +22,13 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
-        self.assertIn("[中文说明书](docs/guide.md)", readme)
-        self.assertIn("是什么", readme)
-        self.assertIn("能做什么", readme)
-        self.assertIn("如何做到", readme)
+        self.assertIn("[`SELA`](docs/methodologies/sela.md)", readme)
+        self.assertIn("[`3L5S`](docs/methodologies/3l5s.md)", readme)
+        self.assertIn("[`EDSP`](docs/methodologies/edsp.md)", readme)
+        self.assertIn("[`WAE`](docs/methodologies/wae.md)", readme)
+        self.assertIn("[`tplan`](docs/methodologies/tplan.md)", readme)
+        self.assertIn("[`TVG`](docs/methodologies/tvg.md)", readme)
+        self.assertIn("[`Anti-Spiral`](docs/methodologies/anti-spiral-self-audit.md)", readme)
 
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
@@ -53,18 +56,6 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("发布日期：2026-05-09", changelog)
         self.assertNotIn("Release date:", changelog)
 
-    def test_chinese_manual_covers_usage_scenarios(self):
-        guide = (REPO / "docs" / "guide.md").read_text(encoding="utf-8")
-        self.assertIn("Mindthus 是什么", guide)
-        self.assertIn("Mindthus 能做什么", guide)
-        self.assertIn("Mindthus 如何做到", guide)
-        self.assertIn("使用场景", guide)
-        self.assertIn("SELA", guide)
-        self.assertIn("3L5S", guide)
-        self.assertIn("WAE", guide)
-        self.assertIn("tplan", guide)
-        self.assertIn("Anti-Spiral", guide)
-
     def test_sela_methodology_names_the_overall_local_tradeoff(self):
         text = (REPO / "skills" / "sela" / "resources" / "methodology.md").read_text(
             encoding="utf-8"
@@ -74,6 +65,27 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("反馈", text)
         self.assertIn("可修正", text)
         self.assertIn("不是一次性静态最优", text)
+
+    def test_methodology_pages_exist_and_cover_their_core_claims(self):
+        cases = [
+            ("sela.md", "系统效率碾压局部优势"),
+            ("3l5s.md", "三层五步"),
+            ("edsp.md", "Extreme Deduction + Scenario Projection"),
+            ("wae.md", "Workflow-Agentic-Evidence"),
+            ("tvg.md", "Thinking Value-Gain"),
+            ("tplan.md", "Mission-oriented project manager"),
+        ]
+        for name, phrase in cases:
+            text = (REPO / "docs" / "methodologies" / name).read_text(encoding="utf-8")
+            self.assertIn(phrase, text, name)
+            self.assertIn("## 这是什么", text, name)
+            self.assertIn("## 解决什么问题", text, name)
+            self.assertIn("## 核心判断", text, name)
+            self.assertIn("## 怎么用", text, name)
+            self.assertIn("## 常见误用", text, name)
+            self.assertIn("## 边界", text, name)
+            self.assertIn("## 与其他方法的关系", text, name)
+            self.assertIn("## 导航", text, name)
 
     def test_skill_frontmatter_is_valid_yaml(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
