@@ -20,6 +20,13 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("Install", readme)
         self.assertIn("Verify", readme)
 
+    def test_readme_links_to_chinese_manual(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        self.assertIn("[中文说明书](docs/guide.md)", readme)
+        self.assertIn("是什么", readme)
+        self.assertIn("能做什么", readme)
+        self.assertIn("如何做到", readme)
+
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
             encoding="utf-8"
@@ -45,6 +52,28 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertEqual(changelog.count("## v0.4"), 1)
         self.assertIn("发布日期：2026-05-09", changelog)
         self.assertNotIn("Release date:", changelog)
+
+    def test_chinese_manual_covers_usage_scenarios(self):
+        guide = (REPO / "docs" / "guide.md").read_text(encoding="utf-8")
+        self.assertIn("Mindthus 是什么", guide)
+        self.assertIn("Mindthus 能做什么", guide)
+        self.assertIn("Mindthus 如何做到", guide)
+        self.assertIn("使用场景", guide)
+        self.assertIn("SELA", guide)
+        self.assertIn("3L5S", guide)
+        self.assertIn("WAE", guide)
+        self.assertIn("tplan", guide)
+        self.assertIn("Anti-Spiral", guide)
+
+    def test_sela_methodology_names_the_overall_local_tradeoff(self):
+        text = (REPO / "skills" / "sela" / "resources" / "methodology.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("整体与局部", text)
+        self.assertIn("可逆", text)
+        self.assertIn("反馈", text)
+        self.assertIn("可修正", text)
+        self.assertIn("不是一次性静态最优", text)
 
     def test_skill_frontmatter_is_valid_yaml(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):

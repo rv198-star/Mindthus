@@ -1,14 +1,14 @@
 # Mindthus / 此心
 
-Mindthus is a personal methodology and agent-construction project.
+Mindthus 是一个个人方法论与 agent 构建项目。
 
-`Thus` means "so / thus / it is so" with a sense of settled judgment. `此心 / Mindthus` means: once this mind has judged the pattern, the work should take that shape.
+`Thus` 表示“所以 / 如此 / 就该这样”，带着一种已经定下判断的意味。`此心 / Mindthus` 的意思是：一旦这个心已经看清模式，工作就应该按那个形状展开。
 
-The name draws from the idea that method is not only an external checklist. It is the crystallization of judgment, evidence boundaries, action posture, and repeated practice.
+方法不只是外部清单。Mindthus 想做的是把判断、证据边界、行动姿态和重复实践，变成可复用的 `AGENTS.md` 与 `SKILLS`。
 
-Short formulation:
+短句理解：
 
-> Mindthus turns personal philosophy and methodology into durable `AGENTS.md` instructions and independent `SKILLS` that agents can actually use.
+> Mindthus 把个人哲学和方法论，整理成 agent 真能用的 `AGENTS.md` 指令和独立 `SKILLS`。
 
 Mindthus can also be installed as a skills pack:
 
@@ -26,6 +26,38 @@ v0.5 新增方法分层纪律，要求方法写作显式区分 `core`、`mainlin
 `guardrail`、`boundary`、`example` 与 `runtime support`，避免主思想被从属补漏
 和细节优化冲淡。本版本同时为 `SELA` 增加轻量时机检查，并将所有 `SKILL.md`
 入口统一到同一套分层结构。
+
+## 它是什么
+
+Mindthus 是一套把方法、边界和控制权整理成可复用技能包的项目。
+
+它不是单纯的笔记集合，也不是把 AI 产物包装得更整齐的文档工程。
+
+## 它能做什么
+
+- 让 agent 先判断问题类型，再选方法镜头
+- 把复杂问题拆成可执行、可验证、可回退的任务
+- 把长期任务的证据、日志和停止条件分开
+- 把局部修补螺旋、过早切换和错误加层挡在外面
+
+## 它如何做到
+
+- `AGENTS.md` 提供项目级姿态和控制边界
+- `skills/*/SKILL.md` 提供独立技能入口
+- `skills/*/resources/` 提供长方法资源和运行支撑
+- `docs/methodologies/` 放跨技能的方法资源，例如 Anti-Spiral
+- `tests/` 把关键文档和格式约束固定下来
+
+## 使用场景
+
+- 重大趋势判断：`SELA`
+- 混乱问题拆解：`3L5S`
+- 结构判断：`EDSP`
+- 控制边界：`WAE`
+- 长任务编排：`tplan`
+- 防止局部修补螺旋：`Anti-Spiral`
+
+更完整的中文说明见 [中文说明书](docs/guide.md)。
 
 ## Project Posture
 
