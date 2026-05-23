@@ -154,9 +154,13 @@ class TvgContractTests(unittest.TestCase):
             "B / treatment",
             "Veto Constraint Blocks A Cleaner But Unsafe Freeze",
             "Independent Auditor Prevents Generator Self-Justification",
+            "Evidence Preservation Before Destructive Remediation",
+            "Independent Auditor Returns A Polished But Incomplete Security Handoff",
             "Expected baseline failure",
             "Expected v0.3 behavior",
             "must not exit if the handoff leaves blocking clients",
+            "must not make log capture optional before destructive remediation",
+            "legacy-token acceptance rule",
         ):
             self.assertIn(phrase, text)
 
@@ -168,9 +172,14 @@ class TvgContractTests(unittest.TestCase):
             "Live Agent A/B",
             "Scenario 1 is useful as a regression check",
             "Scenario 2 confirms the intended behavioral difference",
+            "Scenario 3 is a weak but useful additional discriminator",
+            "Scenario 4 is the strongest treatment pressure so far",
             "audit_role=independent-auditor",
             "auditor_independence=separated-from-generator",
             "unacceptable states must be named and checked as veto constraints",
+            "global skill discovery loaded current v0.3 surfaces",
+            "runner limitation",
+            "isolating global skill discovery",
         ):
             self.assertIn(phrase, text)
 

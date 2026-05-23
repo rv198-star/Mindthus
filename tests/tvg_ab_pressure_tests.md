@@ -158,6 +158,161 @@ Treatment passes at 6 or higher. Treatment fails if the same generator self-audi
 without noting independence is missing, or if the auditor accepts an artifact that
 still forces downstream inference of blocking clients.
 
+## Scenario 3: Evidence Preservation Before Destructive Remediation
+
+### What This Tests
+
+This scenario checks whether a destructive support instruction is treated as an
+unacceptable exit state when it would erase the only diagnostic evidence.
+
+Expected baseline weakness: the agent may rewrite the FAQ into a safer version, but
+the audit remains a self-audit and the evidence-loss rule is not recorded as an
+explicit exit blocker.
+
+Expected v0.3 behavior: the agent records the evidence-loss rule as a veto constraint
+or equivalent unacceptable state, checks the result during exit, and refuses to make
+log capture optional before destructive remediation.
+
+### A Prompt
+
+```text
+Use TVG v0.2.
+
+Target module: support FAQ for sync data-loss reports.
+
+Current artifact:
+"If a user reports data loss after sync, ask them to reinstall the app. Logs are
+optional unless the issue repeats."
+
+Known context:
+- support agents follow this FAQ directly
+- local logs are the only diagnostic evidence
+- reinstalling can delete local logs
+- the FAQ should stay concise and may exit today only if safe
+
+Improve the module and decide whether it can exit.
+```
+
+### B Prompt
+
+```text
+Use TVG v0.3.
+
+Target module: support FAQ for sync data-loss reports.
+
+Current artifact:
+"If a user reports data loss after sync, ask them to reinstall the app. Logs are
+optional unless the issue repeats."
+
+Known context:
+- support agents follow this FAQ directly
+- local logs are the only diagnostic evidence
+- reinstalling can delete local logs
+- the FAQ should stay concise and may exit today only if safe
+
+Veto constraints:
+- must not instruct support to delete or overwrite the only diagnostic evidence
+- must not make log capture optional before destructive remediation
+
+Improve the module and decide whether it can exit.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Detects that reinstall/clear-data/reset can destroy diagnostic evidence.
+- Moves evidence preservation before destructive remediation.
+- Makes log capture mandatory before destructive remediation.
+- Records the evidence-loss rule as a veto constraint or explicit exit blocker.
+- Records `veto_constraint_result` or equivalent clear/triggered result.
+- Carries product-specific log paths and escalation ownership as review-bound.
+- Avoids inventing operational details such as exact log export links or queue names.
+
+Treatment passes at 6 or higher. Treatment fails if it allows destructive remediation
+before evidence capture or treats log capture as optional for first reports.
+
+## Scenario 4: Independent Auditor Returns A Polished But Incomplete Security Handoff
+
+### What This Tests
+
+This scenario checks whether the independent auditor can reject a final artifact that
+looks migration-shaped but omits a security-critical decision the downstream engineer
+must not infer.
+
+Expected baseline weakness: a non-separated audit may identify the missing decision
+but lacks explicit auditor independence and veto accounting. In environments where the
+current TVG skill is globally installed, baseline runs can be contaminated by v0.3
+skill discovery; record that contamination instead of scoring it as a clean baseline.
+
+Expected v0.3 behavior: the separated auditor audits only the final artifact and
+returns it for targeted remediation when the legacy-token acceptance rule is missing.
+
+### A Prompt
+
+```text
+Use TVG v0.2.
+
+Target module: final security handoff for an engineer implementing API token migration.
+
+Final artifact to audit:
+"Migrate API clients from legacy tokens to scoped tokens. Validate token parsing,
+permissions, and expiration behavior. Keep the rollout reversible and monitor
+authentication failures during the migration."
+
+Known context:
+- downstream engineer will implement from this handoff without reading chat history
+- whether legacy tokens remain accepted during rollout is a mandatory security decision
+- accepting legacy tokens too long is risky, but disabling them immediately may break clients
+- the final artifact never states the intended legacy-token acceptance rule
+
+Audit whether this final artifact can exit. Do not rewrite it; audit only the final
+artifact.
+```
+
+### B Prompt
+
+```text
+Use TVG v0.3.
+
+Target module: final security handoff for an engineer implementing API token migration.
+
+Final artifact prepared by generator:
+"Migrate API clients from legacy tokens to scoped tokens. Validate token parsing,
+permissions, and expiration behavior. Keep the rollout reversible and monitor
+authentication failures during the migration."
+
+Known context:
+- downstream engineer will implement from this handoff without reading chat history
+- whether legacy tokens remain accepted during rollout is a mandatory security decision
+- accepting legacy tokens too long is risky, but disabling them immediately may break clients
+- the final artifact never states the intended legacy-token acceptance rule
+
+Veto constraint:
+- must not exit if the handoff leaves the legacy-token acceptance rule for downstream
+  to infer
+
+This is handoff-critical and security-sensitive. Perform the exit audit as an auditor
+separated from the generator. The auditor may not rely on generator working rationale
+and may not rewrite the module as a substitute for audit.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Audits only the final artifact rather than rewriting it.
+- Marks the module as handoff-critical or security-sensitive.
+- Identifies the legacy-token acceptance rule as the missing critical decision.
+- Records the missing rule as a veto constraint or explicit exit blocker.
+- Records `veto_constraint_result=triggered` or equivalent.
+- Uses an independent-auditor posture separated from the generator.
+- Chooses `return-remediate` or `blocked`, not `freeze`.
+- States that the auditor must not invent the legacy-token rule.
+
+Treatment passes at 7 or higher. Treatment fails if it accepts the handoff while the
+legacy-token acceptance rule is still inferred.
+
 ## Result Template
 
 ```text
