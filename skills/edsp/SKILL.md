@@ -43,8 +43,12 @@ Do not use it to replace evidence acquisition, domain research, runtime proof, o
    - collapse outcomes into discrete poles
    - read real-world drift
    - produce positioning or diagnose a malformed proposition
-3. If Extreme Deduction creates a stable coordinate system and a concrete choice remains, run `Scenario Projection`.
-4. Output the choice guidance, boundary conditions, and what evidence could overturn it.
+3. Run the `Multi-Role Challenge` inside the same agent before accepting the L1 skeleton:
+   - `Builder`: proposes the dimensions, extremes, collapsed outcomes, and drift prior
+   - `Challenger`: attacks missed variables, duplicated dimensions, weak extremes, forced collapse, and biased drift reading
+   - `Synthesizer`: keeps, rebuilds, or rejects the coordinate system
+4. If Extreme Deduction creates a stable coordinate system and a concrete choice remains, run `Scenario Projection`.
+5. Output the choice guidance, boundary conditions, and what evidence could overturn it.
 
 ## Guardrails / 从属补漏
 
@@ -53,6 +57,17 @@ Do not use it to replace evidence acquisition, domain research, runtime proof, o
 Stop after Extreme Deduction if the task only needs structural judgment, proposition diagnosis, trend identification, or a finding that the original binary is synthetic.
 
 Run Scenario Projection only when a concrete scenario must be selected inside a stable Extreme Deduction coordinate system.
+
+### Multi-Role Challenge
+
+Use `single-agent multi-role` pressure by default for non-trivial EDSP runs. The
+point is not theatrics; it protects L1 from a clean but wrong skeleton.
+
+Boundary: do not run Scenario Projection if `Challenger` finds a missed decisive variable,
+duplicated dimension, under-pushed extreme, forced outcome collapse, or biased drift
+reading. `Synthesizer` must rebuild L1 or state that EDSP cannot decide yet.
+
+For very high-impact or long-term decisions, separate agents are an escalation option, not the default.
 
 ## Boundaries / 边界
 

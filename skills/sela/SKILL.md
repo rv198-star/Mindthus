@@ -46,6 +46,21 @@ Use SELA before major decisions involving:
 2. Can the local advantage scale?
 3. Is the claimed user intolerance real, or are people more tolerant of acceptable weakness than expected?
 
+### Multi-Role Check
+
+For non-trivial SELA judgments, use `single-agent multi-role` pressure before turning
+the principle into action:
+
+- `System Advocate`: argues the system-efficiency case, scale curve, feedback loop,
+  cost curve, and long-term mainline.
+- `Local Defender`: argues the real local advantage, trust, experience, exception
+  cases, transition value, and hard boundaries.
+- `Timing Auditor`: prevents a long-term efficiency judgment from becoming too early,
+  too absolute, or too linear.
+
+Boundary: separate agents are an escalation option, not the default. Use them only
+when the decision is high-impact, disputed, long-horizon, or path-dependent.
+
 ## Guardrails / 从属补漏
 
 ### Timing Check / 时机检查
@@ -59,6 +74,8 @@ Ask:
 1. Does the old path need 临时保留 while the system path matures?
 2. Would today's choice 锁死未来 by making reversal or migration expensive?
 3. Is this the right 行动窗口 to commit, observe, wait, or run a small trial?
+
+The `Timing Auditor` must keep this from turning an efficiency judgment into an immediate action without a valid action window.
 
 ## Boundaries / 边界
 

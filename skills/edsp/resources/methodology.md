@@ -106,6 +106,31 @@ The heart of the method is the bite between geometry and physics.
    - if reality collapses toward one pole, give the structural judgment
    - if no unique pole emerges, diagnose that the original question is wrong, underspecified, or scenario-dependent
 
+### L1 Multi-Role Challenge
+
+EDSP's highest-risk failure is a wrong coordinate system that feels clean. A single
+agent may over-trust its own dimension decomposition and then make every later step
+look rigorous but wrong.
+
+For non-trivial L1 runs, use `single-agent multi-role` pressure before accepting the
+skeleton:
+
+- `Builder`
+  - proposes the decisive dimensions, extreme projections, collapsed outcomes, and drift prior
+  - must state why each dimension can change the conclusion when pushed to an extreme
+- `Challenger`
+  - attacks the skeleton without rewriting it
+  - asks whether there is a missed decisive variable, duplicated dimension, under-pushed extreme, forced outcome collapse, biased drift reading, or hidden dynamic/game-theoretic structure
+- `Synthesizer`
+  - decides whether to keep the skeleton, rebuild L1, diagnose a malformed proposition, or stop for evidence
+
+Rule: if the Challenger finds a broken skeleton, rebuild L1 rather than continue to L2. L2
+Scenario Projection cannot repair a wrong coordinate system.
+
+Do not default to separate agents. Separate agents are an escalation option for
+high-impact, long-horizon, path-dependent, or already-disputed judgments where the
+cost of self-justification is material.
+
 ### L1 Stop Condition
 
 Stop at L1 when the task is:
