@@ -4,6 +4,38 @@
 
 暂无。
 
+## v0.5.2
+
+发布日期：2026-05-23
+
+说明：这是 `v0.5` 系列的小版本调优，重点是让 Mindthus 的复杂判断更可辩、
+更可测，也更容易讲给非专业但聪明的读者听。
+
+### 新增
+
+- 新增 `SELA` 单 Agent 多角色压力检查：`System Advocate`、`Local Defender`、
+  `Timing Auditor`。它用于非轻量战略判断，防止系统效率原则滑向过早、过绝对
+  或过线性的行动结论。
+- 新增 `EDSP` 单 Agent 多角色挑战：`Builder`、`Challenger`、`Synthesizer`。
+  它用于保护极限推演的第一层结构骨架，避免坐标系干净但错误。
+- 新增 SELA / EDSP 多角色 A/B pressure tests 和实际运行记录，覆盖非平凡判断、
+  低风险确定性任务，以及一个压线摇摆场景。
+- 新增 Mindthus `AGENTS.md` 的 `No Abstract Jargon Wall` 表达纪律：先讲
+  “这对你意味着什么”，再讲 “Mindthus 把它叫做什么”。
+
+### 调整
+
+- `SELA` 文档明确：多角色是单 Agent 内部压力，不默认升级成多个 Agent；多个
+  Agent 只作为高影响、强分歧或路径依赖场景的升级选项。
+- `EDSP` 文档明确：如果 `Challenger` 发现决定性变量遗漏、维度重复、极端推演
+  不充分或漂移读取偏置，不应继续做场景投影，而应重建第一层结构。
+- `tplan` 方法页增加执行驱动的自适应规划架构图，强调它不是先完整规划再执行，
+  而是在 Mission 固定的前提下，用执行反馈持续演化任务树。
+
+### 校验
+
+- `python3 -m unittest discover -s tests -v`
+
 ## v0.5 + v0.5.1
 
 发布日期：2026-05-18

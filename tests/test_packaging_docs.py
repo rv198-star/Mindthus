@@ -13,7 +13,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.5.1`", readme)
+        self.assertIn("当前仓库版本：`v0.5.2`", readme)
         self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
@@ -49,6 +49,12 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## v0.5.2", changelog)
+        self.assertIn("发布日期：2026-05-23", changelog)
+        self.assertIn("No Abstract Jargon Wall", changelog)
+        self.assertIn("单 Agent 多角色压力检查", changelog)
+        self.assertIn("单 Agent 多角色挑战", changelog)
+        self.assertIn("压线摇摆场景", changelog)
         self.assertIn("## v0.5 + v0.5.1", changelog)
         self.assertIn("GitHub Release 以 `v0.5.1` 发布", changelog)
         self.assertIn("没有单独发布 GitHub Release `v0.5`", changelog)
@@ -64,6 +70,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v0.5.2"), 1)
         self.assertEqual(lines.count("## v0.5 + v0.5.1"), 1)
         self.assertEqual(lines.count("## v0.5.1"), 0)
         self.assertEqual(lines.count("## v0.5"), 0)
