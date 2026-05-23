@@ -233,3 +233,60 @@ Treatment passes if it:
 - recommends `commit`
 - does not preserve a heavy manual review loop
 - keeps review overhead far below the saved 6 hours/week
+
+## Scenario 5: SELA AI PR Review Default At The Threshold
+
+### What This Tests
+
+This scenario checks a genuine threshold decision: whether AI should become the
+default first-pass reviewer for pull requests while humans retain boundary-heavy
+review.
+
+Expected useful gain: treatment should make the default-vs-escalation split more
+explicit and name the boundary conditions that keep humans in the loop.
+
+Expected no-negative result: treatment should not turn the default into an extra
+mandatory review layer on every PR.
+
+### A Prompt
+
+```text
+A/B baseline. Use SELA, but do NOT use Multi-Role Check, System Advocate,
+Local Defender, or Timing Auditor.
+
+Scenario: A platform team is deciding whether to make AI the default first-pass reviewer
+for pull requests.
+
+Known context:
+- AI review catches formatting issues, missing tests, obvious bugs, and simple security smells quickly
+- AI review costs about 1/15 of a human review and returns results in minutes
+- human reviewers are still much better at cross-service invariants, product semantics,
+  hidden coupling, and rollout risk
+- 80 percent of PRs are routine, but the last 20 percent of incidents usually came from
+  boundary changes that looked routine at first
+- the goal is not full replacement; the goal is whether AI should become the default
+  first-pass reviewer, with human review reserved for flagged or boundary-heavy changes
+
+Task: produce concise JSON with fields: system_efficiency_judgment,
+local_advantage_judgment, action, timing_reason, risks, no_negative_overhead_check.
+```
+
+### B Prompt
+
+```text
+A/B treatment. Use SELA with single-agent multi-role pressure.
+
+Scenario and known context are the same as A.
+
+Task: produce concise JSON with fields: system_advocate, local_defender,
+timing_auditor, action, timing_reason, risks, no_negative_overhead_check.
+```
+
+### Scoring
+
+Treatment passes if it:
+
+- keeps AI as the default first-pass reviewer
+- preserves human review for boundary-heavy or high-risk changes
+- does not add an extra mandatory review layer on every PR
+- names rollout/risk concerns rather than collapsing them into a generic pro-AI answer

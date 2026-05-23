@@ -136,3 +136,36 @@ Important calibration:
   capable in these examples.
 - The "no negative" claim is limited to these four scenarios. Future tests should keep
   checking whether multi-role is skipped for low-risk work.
+
+## Scenario 5: SELA AI PR Review Default At The Threshold
+
+Pressure:
+
+- AI review is fast and cheap
+- humans retain the edge on boundary changes, cross-service invariants, hidden coupling,
+  and rollout risk
+- most PRs are routine, but recent incidents came from routine-looking boundary changes
+- the decision is whether AI becomes the default first-pass reviewer, not whether humans
+  disappear
+
+Result:
+
+| Variant | Result | Interpretation |
+|---|---|---|
+| A / baseline | Favors AI-first and keeps humans for boundary-heavy or high-risk changes. | Baseline already finds the main split. |
+| B / treatment | Favors AI-first and keeps humans for boundary-heavy or high-risk changes. | Treatment stays aligned, but makes the boundary policy explicit rather than generic. |
+
+Observed positive gain:
+
+- Treatment keeps the default-vs-escalation split explicit.
+- Treatment names the no-negative condition clearly: do not turn AI-first into an extra mandatory layer on every PR.
+
+Observed negative gain:
+
+- None observed. It did not collapse into a generic pro-AI answer or overcorrect into full human gatekeeping.
+
+Calibration:
+
+- This is a genuine threshold scenario, not a trivial deterministic check.
+- Baseline and treatment agree on the action, so the gain is in boundary clarity, not conclusion reversal.
+- The useful signal is that multi-role keeps the default path and the escalation path separate without adding ceremony.

@@ -16,6 +16,7 @@ class MultiRoleAbContractTests(unittest.TestCase):
             "Scenario 2: EDSP Low-Risk Deterministic Formatting",
             "Scenario 3: SELA SaaS Onboarding Replacement",
             "Scenario 4: SELA Low-Risk Internal Digest",
+            "Scenario 5: SELA AI PR Review Default At The Threshold",
             "Non-trivial judgments gain useful pressure",
             "Lightweight cases do not pay unnecessary overhead",
             "multi_role_used=false",
@@ -47,6 +48,9 @@ class MultiRoleAbContractTests(unittest.TestCase):
             "No negative behavior was observed in this run",
             "The positive gain is incremental, not dramatic",
             "The \"no negative\" claim is limited to these four scenarios",
+            "Scenario 5: SELA AI PR Review Default At The Threshold",
+            "genuine threshold scenario",
+            "no-negative condition clearly",
         ):
             self.assertIn(phrase, text)
 
