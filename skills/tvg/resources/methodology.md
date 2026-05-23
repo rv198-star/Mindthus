@@ -1,4 +1,4 @@
-# Thinking Value-Gain Methodology — Value-Oriented Deep Thinking（v0.2）
+# Thinking Value-Gain Methodology — Value-Oriented Deep Thinking（v0.3）
 
 ## Purpose
 
@@ -7,6 +7,8 @@ This document defines a standalone, project-portable methodology for value-orien
 It increases a module's practical thinking value without letting the work drift into shallow completion, random brainstorming, overfitting, or endless refinement.
 
 Depth is the means. Practical value gain is the target. Positive-value exit is the stopping rule.
+
+TVG is not a generic improvement pass. Its leverage comes from combining a clear value target with explicit constraints on what must remain unacceptable, even if the module becomes more complete.
 
 Its primary positioning is universal: it should help different projects solve the recurring AI-work problem where an AI can construct a module, section, artifact unit, plan, design, review, or reasoning block that looks structurally complete but lacks sufficient thinking value for real use.
 
@@ -134,8 +136,10 @@ Because this method is intended to be portable, value gain must be governed befo
 The governance layer has three jobs:
 
 1. classify what kind of value the module needs
-2. require an agentic exit audit rather than format-only approval
-3. control how concrete patterns are admitted so they do not reduce generality
+2. name any module-specific veto constraints that value gain must not violate
+3. require an agentic exit audit rather than format-only approval
+4. separate generator and auditor roles when self-audit would be too weak
+5. control how concrete patterns are admitted so they do not reduce generality
 
 ### Value-Gain Types
 
@@ -152,17 +156,50 @@ Use these types to clarify what `value` means for the current module. Select onl
 
 If the module's value type cannot be named, do not start by adding detail. First clarify what value the module is supposed to create.
 
+### Veto Constraints
+
+`veto_constraints` are explicit unacceptable states for the current module and intended use.
+
+They are not ordinary value-gain axes, writing preferences, or style guidance. They are constraints that can block exit even when the module has improved on selected value-gain axes.
+
+Use veto constraints to capture:
+
+- claims that must not exceed evidence
+- boundaries that must not be blurred
+- downstream assumptions that must not be forced on the next user
+- risks that must not be hidden by cleaner structure
+- unacceptable trade-offs for the current use
+
+Veto constraints must be named before exit audit and, when possible, before deepening begins. If a veto constraint is triggered, the module must not exit as `freeze`. Use `return-remediate` when a targeted fix can remove the violation; use `blocked` when the violation cannot be resolved without missing evidence, domain input, runtime proof, or stakeholder judgment.
+
+Do not turn broad good practice into a veto constraint. A valid veto constraint is specific enough that a reviewer can say what would violate it.
+
 ### Agentic Exit Audit Contract
 
 A value-gain run should leave an agentic exit audit when the module is high-impact, high-uncertainty, or handoff-critical.
+
+For low-risk modules, the generator may perform a lightweight audit if it remains honest about review-bound items and veto constraints.
+
+For high-impact, high-uncertainty, or handoff-critical modules, use independent auditor separation:
+
+- `generator` performs the value-gain loop and prepares the final module.
+- `auditor` reads only the final module, intended use, evidence boundary, review-bound items, and veto constraints needed for exit judgment.
+- `auditor` does not rely on the generator's working notes or rationale to justify exit.
+- `auditor` may accept, return, or block. It must not rewrite the module as part of the same audit.
+
+This is still agentic judgment, not script judgment. The separation reduces self-justifying exits without turning TVG into a heavy default process.
 
 Minimum audit structure:
 
 - `target_module`
 - `claimed_value_gain`
 - `value_gain_type`
+- `veto_constraints`
+- `veto_constraint_result`
 - `evidence_support`
 - `remaining_review_bound`
+- `audit_role`
+- `auditor_independence`
 - `disagreements`
 - `demo_false_positive_risk`
 - `overfitting_risk`
@@ -203,6 +240,7 @@ Ask:
 4. What must not be left for downstream users to invent?
 5. What remaining uncertainty can be explicitly carried as review-bound?
 6. What would make this module look complete but still fail?
+7. What specific unacceptable states would veto exit even if the module improves?
 
 The exit gate should be defined before the loop starts. Otherwise the work becomes subjective and can continue forever.
 
@@ -217,6 +255,7 @@ A module may exit only when:
 - important constraints and failure modes are visible
 - evidence-backed claims are separated from assumptions
 - unresolved uncertainty is explicitly review-bound
+- named veto constraints are not triggered, or exit is returned/blocked honestly
 - another round is unlikely to create meaningful positive value
 - exit readiness has been checked by agentic judgment, not only by script or template audit
 
@@ -258,6 +297,7 @@ It owns:
 - module boundary
 - target artifact unit
 - value-gain axes selected for this round
+- veto constraints for this module and use
 - round limit
 - state transitions
 - required trace record
@@ -512,13 +552,16 @@ A module must not exit only because an automated check, script audit, schema val
 
 Exit requires agentic gatekeeping: a human or LLM reviewer must judge whether the module creates practical value for its actual use.
 
+High-impact, high-uncertainty, or handoff-critical modules should use an auditor separated from the generator. The auditor judges the final module against intended use, evidence, review-bound items, and veto constraints. The auditor should not depend on the generator's private reasoning process to make the exit decision.
+
 The agentic exit audit should ask:
 
 1. Does this module improve decision, action, evidence honesty, review, reuse, or handoff value?
 2. Would it still be useful if the template formatting were removed?
 3. Are the important trade-offs, uncertainties, and failure paths visible?
 4. Are review-bound items honest rather than hidden behind clean structure?
-5. Is another round likely to create meaningful positive value, or only more compliant output?
+5. Are any named veto constraints triggered?
+6. Is another round likely to create meaningful positive value, or only more compliant output?
 
 Automated checks may support the audit, but they cannot replace it.
 
@@ -592,6 +635,7 @@ When this method materially affects a module, record:
 - `module_role`
 - `downstream_consumer`
 - `exit_gate`
+- `veto_constraints`
 - `selected_value_gain_axes`
 - `rounds_run`
 - `round_trigger`
@@ -601,6 +645,9 @@ When this method materially affects a module, record:
 - `review_bound_items`
 - `anti_overfitting_result`
 - `exit_state`
+- `audit_role`
+- `auditor_independence`
+- `veto_constraint_result`
 - `agentic_exit_audit_result`
 - `why_another_round_is_or_is_not_justified`
 

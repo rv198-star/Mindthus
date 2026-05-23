@@ -1,5 +1,5 @@
 {
-  "schema_version": "tvg-trace-v0.2",
+  "schema_version": "tvg-trace-v0.3",
   "required_fields": [
     "schema_version",
     "method_version",
@@ -20,11 +20,15 @@
     "claimed_value_gain",
     "value_gain_types",
     "selected_axes",
+    "veto_constraints",
     "evidence_support",
     "remaining_review_bound"
   ],
   "required_audit_fields": [
+    "audit_role",
+    "auditor_independence",
     "disagreements",
+    "veto_constraint_result",
     "demo_false_positive_risk",
     "overfitting_risk",
     "downstream_usability",
@@ -36,6 +40,25 @@
     "freeze-with-review-bound-warning",
     "return-remediate",
     "blocked"
+  ],
+  "allowed_audit_roles": [
+    "",
+    "generator-self-audit",
+    "independent-auditor",
+    "human-reviewer"
+  ],
+  "allowed_auditor_independence": [
+    "",
+    "not-required",
+    "separated-from-generator",
+    "not-separated-with-reason"
+  ],
+  "allowed_veto_constraint_results": [
+    "",
+    "clear",
+    "triggered",
+    "not-applicable",
+    "unknown"
   ],
   "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain or exit_state."
 }

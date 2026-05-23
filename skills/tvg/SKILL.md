@@ -17,6 +17,11 @@ Short rule:
 
 > Do not deepen for length. Deepen only where practical value can increase.
 
+Two core inputs keep TVG from becoming generic improvement:
+
+- `veto_constraints`: explicit unacceptable states for this module and use. They are not value-gain axes. If one is triggered, the module must not exit as `freeze`.
+- `independent_auditor`: for high-impact, high-uncertainty, or handoff-critical modules, the exit audit should be performed by a reviewer that reads the final module, intended use, evidence, and veto constraints, not the generator's working process.
+
 ## Mainline / 主路径
 
 ### When To Use
@@ -36,11 +41,13 @@ Do not use this skill to reopen whole-project strategy or to add process weight 
 
 1. Name the smallest module that can be independently frozen, returned, or blocked.
 2. Read `resources/methodology.md` only as needed.
-3. Create a trace with `scripts/trace/init.py`.
-4. Perform agentic value-gain work and fill the trace.
-5. Validate trace shape with `scripts/trace/validate.py`.
-6. Persist the trace with `scripts/trace/persist.py` when useful.
-7. Make the exit decision by agentic audit, not by script output.
+3. Name any module-specific veto constraints before deepening.
+4. Create a trace with `scripts/trace/init.py`.
+5. Perform agentic value-gain work and fill the trace.
+6. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
+7. Validate trace shape with `scripts/trace/validate.py`.
+8. Persist the trace with `scripts/trace/persist.py` when useful.
+9. Make the exit decision by agentic audit, not by script output.
 
 ## Guardrails / 从属补漏
 
@@ -58,9 +65,11 @@ Scripts may:
 Scripts must not:
 
 - choose value-gain types or axes
+- create, waive, or satisfy veto constraints
 - decide whether another round is worth doing
 - score value gain, demo risk, or overfitting risk
 - write or change `exit_state`
+- decide whether independent auditor separation is required
 - promote patterns
 - output `PASS` as an audit verdict
 
@@ -94,6 +103,7 @@ python3 skills/tvg/scripts/trace/init.py \
   --module-id example-module \
   --module-title "Example module" \
   --module-type methodology \
+  --veto-constraint "do not freeze if evidence boundaries are hidden" \
   --output /tmp/tvg-trace.json
 ```
 

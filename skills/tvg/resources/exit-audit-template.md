@@ -1,4 +1,4 @@
-# Thinking Value-Gain Agentic Exit Audit Template（v0.2）
+# Thinking Value-Gain Agentic Exit Audit Template（v0.3）
 
 ## Purpose
 
@@ -23,8 +23,11 @@ It must not be replaced by a script pass, schema validation, format check, templ
 - `reviewer`:
 - `review_date`:
 - `input_version_or_run`:
-- `method_version`: `Thinking Value-Gain Methodology v0.2`
+- `method_version`: `Thinking Value-Gain Methodology v0.3`
 - `audit_scope`:
+- `audit_role`: `generator-self-audit | independent-auditor | human-reviewer`
+- `auditor_independence`: `not-required | separated-from-generator | not-separated-with-reason`
+- `independence_note`:
 
 ## Claimed Value Gain
 
@@ -49,6 +52,20 @@ Select all that apply.
 Notes:
 
 - `value_gain_type`:
+
+## Veto Constraints
+
+List the unacceptable states that would block exit even if the module improved on value-gain axes.
+
+These are not ordinary improvement goals. They are exit constraints.
+
+- `veto_constraints`:
+  -
+- `veto_constraint_result`: `clear | triggered | not-applicable | unknown`
+- `triggered_veto_constraints`:
+  -
+- `veto_resolution`: `none-needed | return-remediate | blocked | constraint-waived-by-owner`
+- `why_veto_result_is_honest`:
 
 ## Evidence Support
 
@@ -167,8 +184,10 @@ Required points:
 
 - whether the module creates practical value
 - what kind of value it creates
+- whether named veto constraints are clear or triggered
 - what remains review-bound
 - whether there are disagreements with the run output or claimed exit state
+- whether the audit was independent when independence was required
 - whether exit is honest
 - why script/template audit alone would or would not be insufficient
 

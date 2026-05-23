@@ -47,6 +47,8 @@ def validate(trace: dict, schema: dict) -> list[str]:
         require_list(value_gain["value_gain_types"], "value_gain.value_gain_types", errors)
     if "selected_axes" in value_gain:
         require_list(value_gain["selected_axes"], "value_gain.selected_axes", errors)
+    if "veto_constraints" in value_gain:
+        require_list(value_gain["veto_constraints"], "value_gain.veto_constraints", errors)
     if "remaining_review_bound" in value_gain:
         require_list(value_gain["remaining_review_bound"], "value_gain.remaining_review_bound", errors)
 
@@ -59,6 +61,15 @@ def validate(trace: dict, schema: dict) -> list[str]:
             errors.append(f"missing agentic_exit_audit field: {field}")
     if "disagreements" in audit:
         require_list(audit["disagreements"], "agentic_exit_audit.disagreements", errors)
+    audit_role = audit.get("audit_role")
+    if audit_role not in schema["allowed_audit_roles"]:
+        errors.append(f"agentic_exit_audit.audit_role: unsupported value {audit_role!r}")
+    auditor_independence = audit.get("auditor_independence")
+    if auditor_independence not in schema["allowed_auditor_independence"]:
+        errors.append(f"agentic_exit_audit.auditor_independence: unsupported value {auditor_independence!r}")
+    veto_result = audit.get("veto_constraint_result")
+    if veto_result not in schema["allowed_veto_constraint_results"]:
+        errors.append(f"agentic_exit_audit.veto_constraint_result: unsupported value {veto_result!r}")
     exit_state = audit.get("exit_state")
     if exit_state and exit_state not in schema["allowed_exit_states"]:
         errors.append(f"agentic_exit_audit.exit_state: unsupported value {exit_state!r}")

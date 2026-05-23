@@ -14,8 +14,8 @@ from pathlib import Path
 def build_trace(args: argparse.Namespace) -> dict:
     now = datetime.now(timezone.utc).isoformat()
     return {
-        "schema_version": "tvg-trace-v0.2",
-        "method_version": "Thinking Value-Gain Methodology v0.2",
+        "schema_version": "tvg-trace-v0.3",
+        "method_version": "Thinking Value-Gain Methodology v0.3",
         "created_at": now,
         "updated_at": now,
         "module": {
@@ -29,12 +29,16 @@ def build_trace(args: argparse.Namespace) -> dict:
             "claimed_value_gain": "",
             "value_gain_types": [],
             "selected_axes": [],
+            "veto_constraints": args.veto_constraint,
             "evidence_support": "",
             "remaining_review_bound": [],
         },
         "rounds": [],
         "agentic_exit_audit": {
+            "audit_role": "",
+            "auditor_independence": "",
             "disagreements": [],
+            "veto_constraint_result": "",
             "demo_false_positive_risk": "",
             "overfitting_risk": "",
             "downstream_usability": "",
@@ -46,6 +50,8 @@ def build_trace(args: argparse.Namespace) -> dict:
             "script_verdict": "No schema violations were detected only after validation; agentic audit is still required.",
             "script_cannot_decide": [
                 "value_gain",
+                "veto_constraints",
+                "auditor_independence_requirement",
                 "demo_false_positive_risk",
                 "overfitting_risk",
                 "another_round_value",
@@ -62,6 +68,7 @@ def main() -> int:
     parser.add_argument("--module-type", required=True)
     parser.add_argument("--downstream-consumer", default="")
     parser.add_argument("--freeze-granularity", default="")
+    parser.add_argument("--veto-constraint", action="append", default=[])
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
