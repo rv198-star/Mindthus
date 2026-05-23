@@ -105,6 +105,24 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("## 与其他方法的关系", text, name)
             self.assertIn("## 导航", text, name)
 
+    def test_tplan_methodology_shows_execution_driven_adaptive_planning(self):
+        text = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+        for phrase in (
+            "执行驱动的自适应规划",
+            "Mission 固定",
+            "任务树可以在证据、阻碍和决策信号约束下持续演化",
+            "### 架构流程图",
+            "```mermaid",
+            "选择 active leaf",
+            "执行反馈",
+            "split signal",
+            "blocker / stop report",
+            "decision packet",
+            "Anti-Spiral gate",
+            "执行不会随手重写计划",
+        ):
+            self.assertIn(phrase, text)
+
     def test_skill_frontmatter_is_valid_yaml(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
             text = path.read_text(encoding="utf-8")

@@ -38,6 +38,8 @@
 
 ## 怎么用
 
+`tplan` 不是先把计划一次性定完、审批后再按计划执行。更准确地说，它是执行驱动的自适应规划：Mission 固定，任务树可以在证据、阻碍和决策信号约束下持续演化。
+
 一个标准 `tplan` 运行大致是：
 
 1. 初始化 Mission，写清目标、范围、authority 和验收面。
@@ -49,6 +51,32 @@
 7. 出现第三次局部处理、负反馈、加层冲动或弱 evidence-delta continuation 时，触发 Anti-Spiral gate。
 
 实操中，`tplan` 不需要覆盖所有任务。短小、低风险、一次性工作直接执行即可。它适合那些“如果不记录状态就会漂移”的 Mission。
+
+### 架构流程图
+
+```mermaid
+flowchart TD
+  A["Mission 固定<br/>目标 / 范围 / 验收面"] --> B["初始任务树<br/>Task / SubTask / Step"]
+  B --> C["选择 active leaf<br/>当前最该执行的 Step"]
+  C --> D["执行当前节点<br/>记录 step logs"]
+  D --> E["提取 evidence<br/>只保留能约束 claim 的证据"]
+
+  E --> F{"执行反馈"}
+  F -->|"完成"| G["关闭节点<br/>更新父任务状态"]
+  F -->|"Step 过大"| H["split signal<br/>回到任务树调整"]
+  F -->|"缺信息 / 权限 / 判断"| I["blocker / stop report<br/>停止并交还最小上下文"]
+  F -->|"目标或路径存疑"| J["decision packet<br/>路由到 3L5S / SELA / EDSP / WAE / TVG"]
+  F -->|"同一路径反复修补"| K["Anti-Spiral gate<br/>先刹车再判断"]
+
+  H --> B
+  J --> B
+  K --> J
+  G --> L{"Mission 是否完成"}
+  L -->|"否"| C
+  L -->|"是"| M["Mission closure<br/>用 evidence 支撑收口"]
+```
+
+这张图的重点是循环，而不是阶段。执行不会随手重写计划；执行只产生 `logs`、`evidence`、`split`、`blocker`、`decision packet` 或 `Anti-Spiral` 信号。任务树的调整必须经过这些信号和对应 authority，避免 agent 一边执行、一边现场改目标、一边宣布完成。
 
 ## 具体案例
 
