@@ -13,7 +13,6 @@ class TvgContractTests(unittest.TestCase):
     def test_skill_names_veto_constraints_and_auditor_separation(self):
         text = (TVG / "SKILL.md").read_text(encoding="utf-8")
         for phrase in (
-            "thin-value deepening axis",
             "veto_constraints",
             "explicit unacceptable states",
             "They are not value-gain axes",
@@ -22,7 +21,6 @@ class TvgContractTests(unittest.TestCase):
             "separate generator work from the exit auditor",
             "create, waive, or satisfy veto constraints",
             "decide whether independent auditor separation is required",
-            "route back to `3l5s`, `edsp`, or `wae`",
         ):
             self.assertIn(phrase, text)
 
@@ -39,10 +37,6 @@ class TvgContractTests(unittest.TestCase):
             "independent auditor separation",
             "auditor` reads only the final module",
             "must not rewrite the module as part of the same audit",
-            "thin-value deepening axis",
-            "Route back before deepening",
-            "wrong judgment point",
-            "block rather than deepen",
         ):
             self.assertIn(phrase, text)
 

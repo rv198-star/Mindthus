@@ -7,7 +7,7 @@ description: Use as a value-driven thinking-depth enhancer when an AI-generated 
 
 ## Core Claim
 
-Thinking Value-Gain is the thin-value deepening axis for AI-generated bounded modules.
+Thinking Value-Gain is a value-driven thinking-depth enhancer for AI-generated bounded modules.
 
 It addresses a common AI-output failure mode: the artifact looks complete, rigorous, standardized, and fluent, but the substance is hollow, shallow, random, or too weak for real judgment, decision, action, review, reuse, or handoff.
 
@@ -36,7 +36,6 @@ Use this skill when:
 - a bounded module needs a value-driven depth pass before review, reuse, handoff, or exit
 
 Do not use this skill to reopen whole-project strategy or to add process weight to low-risk work.
-If the artifact is thin because the judgment point was wrong, route back to `3l5s`, `edsp`, or `wae` before deepening.
 
 ### Operating Flow
 
@@ -92,8 +91,6 @@ Every script result means only:
 - Do not deepen for length, polish, or template completeness.
 - Do not add process weight to low-risk work.
 - Block rather than deepen when the missing input is evidence, domain input, runtime proof, or stakeholder judgment.
-- route back to `3l5s`, `edsp`, or `wae` when the artifact is thin because the problem
-  definition, structural judgment, or control boundary is wrong.
 
 ## Runtime Support / 支撑材料
 
