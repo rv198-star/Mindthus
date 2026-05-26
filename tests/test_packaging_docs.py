@@ -56,6 +56,8 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("v0.6 和 v0.5.x 的区别", changelog)
         self.assertIn("认知原语", changelog)
         self.assertIn("能力跃迁", changelog)
+        self.assertIn("AI 认知体系的底层分析/决策底盘", changelog)
+        self.assertIn("底盘能力", changelog)
         self.assertIn("`60-70`", changelog)
         self.assertIn("`90+`", changelog)
         self.assertIn("最小充分镜头", changelog)
