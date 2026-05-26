@@ -80,10 +80,11 @@ class MindthusRouterContractTests(unittest.TestCase):
         section = text[start:end]
         self.assertNotIn("tplan", section.lower())
 
-    def test_shared_primitives_are_referenced_not_reexpanded_in_router_surfaces(self):
+    def test_cognitive_primitives_are_referenced_not_reexpanded_in_router_surfaces(self):
         primitives_path = "docs/methodologies/shared-primitives.md"
         primitives = (REPO / primitives_path).read_text(encoding="utf-8")
-        self.assertIn("## Primitive Index / 原语索引", primitives)
+        self.assertIn("Cognitive Primitives / 认知原语", primitives)
+        self.assertIn("## Cognitive Primitive Index / 认知原语索引", primitives)
         self.assertIn("This is not a new method layer", primitives)
         for phrase in (
             "Minimal Sufficient Lens",
@@ -96,7 +97,7 @@ class MindthusRouterContractTests(unittest.TestCase):
 
         for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
             text = path.read_text(encoding="utf-8")
-            self.assertIn(primitives_path, text, f"{path} should link shared primitives")
+            self.assertIn(primitives_path, text, f"{path} should link cognitive primitives")
             for copied_definition in (
                 "每个抽象概念至少给出一种支撑",
                 "Can this be answered directly?",

@@ -104,9 +104,9 @@ or decision according to `human_in_loop`.
 
 ## Guardrails / 从属补漏
 
-### Shared Primitive References / 共享原语引用
+### Cognitive Primitive References / 认知原语引用
 
-横切纪律统一维护在 `docs/methodologies/shared-primitives.md`。本 skill 只负责
+认知原语统一维护在 `docs/methodologies/shared-primitives.md`。本 skill 只负责
 选择主方法，不在入口处复制每个 guardrail 的完整定义。
 
 ### Anti-Spiral Entry / 反螺旋入口

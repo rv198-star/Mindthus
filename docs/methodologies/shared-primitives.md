@@ -1,11 +1,13 @@
-# Mindthus Shared Primitives / 共享原语
+# Mindthus Cognitive Primitives / 认知原语
 
 ## 这是什么
 
-Shared Primitives 是 Mindthus 多个方法都会用到的横切判断纪律。
+Cognitive Primitives / 认知原语，是 Mindthus 方法论之外的小而关键的判断碎片。
+它们通过横切方式介入不同方法，为主方法提供刹车、施压、证据上限、表达降噪或
+过度方法化控制。
 
 This is not a new method layer. 它不是第七个方法，也不是总入口；它只是把重复出现的
-小型 guardrail 集中成一个 Primitive Index / 原语索引，供 `AGENTS.md`、
+小型 guardrail 集中成一个 Cognitive Primitive Index / 认知原语索引，供 `AGENTS.md`、
 `using-mindthus` 和各 skill 引用。
 
 ## 解决什么问题
@@ -16,23 +18,23 @@ This is not a new method layer. 它不是第七个方法，也不是总入口；
 - guardrail 慢慢变成新的主方法；
 - 修改一处边界时，其他 skill 还停在旧口径。
 
-Use shared primitives by reference. 本页负责定义短规则；具体方法只写“何时触发”，
+Use cognitive primitives by reference. 本页负责定义短规则；具体方法只写“何时触发”，
 不要复制完整定义。
 
 ## 核心判断
 
-共享原语必须同时满足三点：
+认知原语必须同时满足三点：
 
 - 多个方法都会用到；
 - 只保护主方法，不替代主方法；
 - 足够小，不值得变成独立 skill。
 
 Do not copy the full definition into each skill. 如果某个规则需要长流程、独立产物或
-完整运行时，它就不是共享原语。
+完整运行时，它就不是认知原语。
 
 ## 怎么用
 
-## Primitive Index / 原语索引
+## Cognitive Primitive Index / 认知原语索引
 
 | Primitive | Primary owner | Short rule |
 |---|---|---|
@@ -57,7 +59,7 @@ SELA 负责整体效率与局部优势判断。如果销售、法务、实施、
 
 ## 常见误用
 
-第一种误用，是把共享原语当成新流程。它只在信号出现时触发。
+第一种误用，是把认知原语当成新流程。它只在信号出现时触发。
 
 第二种误用，是在各 skill 里复制本页定义。这样会重新制造重复。
 
@@ -65,7 +67,7 @@ SELA 负责整体效率与局部优势判断。如果销售、法务、实施、
 
 ## 边界
 
-共享原语不替代 `SELA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan`。
+认知原语不替代 `SELA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan`。
 
 它也不替代事实、领域研究、运行证明或用户判断。遇到缺输入的问题，正确动作通常是
 补输入、降级结论或停止，而不是新增方法层。

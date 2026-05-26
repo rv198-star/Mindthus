@@ -19,7 +19,7 @@
 可解释性、长期维护或其他目标，以用户目标为准。
 
 选择方法时使用最小充分镜头。方法调用的目标是降低判断成本并提高选择质量，
-不是展示方法完整性。完整原语索引见 `docs/methodologies/shared-primitives.md`。
+不是展示方法完整性。完整认知原语索引见 `docs/methodologies/shared-primitives.md`。
 
 长任务中启用反螺旋入口：如果同一局部对象第三次被处理、用户反馈变差、
 或下一步准备新增一层结构，先暂停并做 Anti-Spiral Self-Audit。默认假设

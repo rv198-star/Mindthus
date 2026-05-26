@@ -97,7 +97,7 @@ class PackagingDocsTests(unittest.TestCase):
             ("tvg.md", "Thinking Value-Gain"),
             ("tplan.md", "Mission-oriented project manager"),
             ("anti-spiral-self-audit.md", "反螺旋自检"),
-            ("shared-primitives.md", "Shared Primitives"),
+            ("shared-primitives.md", "Cognitive Primitives"),
         ]
         for name, phrase in cases:
             text = (REPO / "docs" / "methodologies" / name).read_text(encoding="utf-8")
@@ -118,9 +118,12 @@ class PackagingDocsTests(unittest.TestCase):
             encoding="utf-8"
         )
         for phrase in (
+            "Cognitive Primitives / 认知原语",
+            "方法论之外的小而关键的判断碎片",
+            "通过横切方式介入不同方法",
             "This is not a new method layer",
-            "Primitive Index / 原语索引",
-            "Use shared primitives by reference",
+            "Cognitive Primitive Index / 认知原语索引",
+            "Use cognitive primitives by reference",
             "Primary owner",
             "Do not copy the full definition",
             "Minimal Sufficient Lens",
