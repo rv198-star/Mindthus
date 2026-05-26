@@ -195,6 +195,39 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_using_mindthus_consolidates_pressure_surfaces(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Pressure Surface Check / 施压面检查",
+            "Pressure is not a standalone route",
+            "low-risk deterministic",
+            "Perspective Pressure handles single-view, incentive, or game-theoretic",
+            "SELA and EDSP own role pressure",
+            "TVG owns bounded-artifact value pressure",
+            "Evidence / Claim Ceiling owns proof limits",
+            "Anti-Spiral owns repeated local repair pressure",
+            "owner, reason, and execution effect",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shared_primitives_consolidates_pressure_without_new_method_layer(self):
+        text = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "Pressure Surface Consolidation / 施压面收束",
+            "not a standalone method",
+            "not a new route",
+            "game-theoretic",
+            "incentive",
+            "low-risk deterministic",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_game_theory_is_not_a_standalone_skill(self):
+        for name in ("game-theory", "game_theory", "gametheory"):
+            self.assertFalse((REPO / "skills" / name).exists(), name)
+
     def test_agents_mentions_constraints_arbitration_and_execution_impact(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         for phrase in (

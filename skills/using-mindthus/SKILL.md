@@ -124,6 +124,27 @@ judgment:
 Do not turn every judgment into evidence-only reasoning. Also do not let values or emotion assert factual claims without support.
 If constraints conflict, surface the conflict before choosing a route or action.
 
+#### Pressure Surface Check / 施压面检查
+
+Pressure is not a standalone route. Use it only when a non-trivial judgment needs a
+challenge before action.
+
+Skip pressure for clear, low-risk deterministic, reversible, or mechanically verifiable
+work. In those cases, direct execution, information acquisition, or the selected method
+should proceed without extra role ceremony.
+
+Pressure owners:
+
+- Perspective Pressure handles single-view, incentive, or game-theoretic judgment risk.
+  SELA and EDSP own role pressure.
+- TVG owns bounded-artifact value pressure.
+- Evidence / Claim Ceiling owns proof limits.
+- Anti-Spiral owns repeated local repair pressure.
+
+When pressure is used, name the owner, reason, and execution effect. If it changes no
+strategy, risk handling, evidence requirement, next action, stopping condition, method
+choice, or handoff packet, skip or stop it.
+
 #### Method Arbitration / 方法仲裁
 
 When multiple Mindthus methods seem applicable, do not stack methods by default.

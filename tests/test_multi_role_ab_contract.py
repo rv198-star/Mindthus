@@ -36,6 +36,19 @@ class MultiRoleAbContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_pressure_tests_cover_consolidation_scenarios(self):
+        text = PRESSURE_TESTS.read_text(encoding="utf-8")
+        for phrase in (
+            "Scenario 6: SELA Incentive Pressure Without Game-Theory Method",
+            "Scenario 7: EDSP Deterministic Boundary Skip",
+            "does not create or invoke a standalone game-theory method",
+            "uses Perspective Pressure as a challenge surface",
+            "multi_role_used=false",
+            "low-risk deterministic",
+            "mechanical verification is sufficient",
+        ):
+            self.assertIn(phrase, text)
+
     def test_run_record_captures_incremental_positive_gain_and_limited_claim(self):
         text = RUN_RECORD.read_text(encoding="utf-8")
         for phrase in (
