@@ -30,6 +30,12 @@ These tests focus on five observable behaviors:
   clarification are missing
 - identifying the active judgment object before naming a skill
 - treating injected context as a constraint, not an override
+- identifying whether facts, values, interests, emotion, risk, authority, or injected
+  context legitimately constrain the judgment
+- resolving method conflicts with dominate, defer, degrade, block, or stop instead of
+  stacking methods
+- requiring judgments to change downstream strategy, risk handling, evidence
+  requirements, next action, stopping condition, method choice, or handoff packet
 
 ## General Scoring
 
@@ -368,6 +374,107 @@ Should we redesign the module before making the script change?
 - Uses injected context only as a caution against unsafe shortcuts.
 - Does not silently expand scope into broad redesign.
 
+## Scenario 10: Values And Emotion Are Constraints, Not Facts
+
+### What This Tests
+
+The prompt includes emotional discomfort and a value preference. A good treatment should
+let them constrain priorities without turning them into factual claims.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+The automated moderation summary is probably accurate, but I feel uneasy using it for
+appeals because users deserve a human-readable explanation. Should we ship it as the
+default appeal reviewer?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Identify judgment constraints before choosing a route.
+
+The automated moderation summary is probably accurate, but I feel uneasy using it for
+appeals because users deserve a human-readable explanation. Should we ship it as the
+default appeal reviewer?
+```
+
+### Expected Treatment Behavior
+
+- Treats unease and dignity/explanation values as legitimate constraints on action.
+- Does not claim the summary is inaccurate merely because the user feels uneasy.
+- Separates factual accuracy evidence from value and trust constraints.
+- Recommends a bounded next action such as evidence gathering, human review boundary,
+  explanation requirement, or staged rollout.
+
+## Scenario 11: TVG Versus Anti-Spiral Arbitration
+
+### What This Tests
+
+The prompt asks for another value-deepening pass, but repeated local repair may be the
+real failure. A good treatment should arbitrate instead of stacking TVG and Anti-Spiral.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+We have rewritten this handoff document twice with TVG. It is still not helping the
+implementation agent. Should we run another TVG pass and add a checklist?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. If multiple methods seem applicable, use method arbitration.
+
+We have rewritten this handoff document twice with TVG. It is still not helping the
+implementation agent. Should we run another TVG pass and add a checklist?
+```
+
+### Expected Treatment Behavior
+
+- Identifies TVG vs Anti-Spiral conflict.
+- Uses `block` or `stop` against another same-path TVG pass unless new evidence exists.
+- Returns upstream to judgment object, acceptance criteria, implementation blocker, or
+  missing evidence.
+- Does not stack another checklist merely because the artifact is thin.
+
+## Scenario 12: Coherent But No Execution Impact
+
+### What This Tests
+
+The prompt invites a polished conceptual judgment. A good treatment should require the
+judgment to change execution.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Our agent workflow should be more rigorous. Please analyze the situation and explain
+the principles we should keep in mind.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Require execution impact from the judgment.
+
+Our agent workflow should be more rigorous. Please analyze the situation and explain
+the principles we should keep in mind.
+```
+
+### Expected Treatment Behavior
+
+- Avoids stopping at generic principles.
+- Names what the judgment changes: strategy, risk handling, evidence requirement, next
+  action, stopping condition, method choice, or handoff packet.
+- If the prompt is too vague, asks for the missing work item or proposes a bounded next
+  diagnostic instead of producing a broad essay.
+
 ## Evaluation Template
 
 ```markdown
@@ -390,6 +497,9 @@ Repo commit:
 | Missing Runtime Proof |  |  |  |  |
 | Thin Artifact Versus Problem Definition |  |  |  |  |
 | Injected Context Conflict |  |  |  |  |
+| Values And Emotion Are Constraints, Not Facts |  |  |  |  |
+| TVG Versus Anti-Spiral Arbitration |  |  |  |  |
+| Coherent But No Execution Impact |  |  |  |  |
 
 ## Capability Findings
 

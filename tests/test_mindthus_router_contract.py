@@ -150,6 +150,63 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_using_mindthus_defines_judgment_constraint_recognition(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Judgment Constraint Recognition / 判断约束识别",
+            "Facts and evidence constrain factual claims",
+            "Values and preferences constrain priorities",
+            "Interests and incentives constrain stakeholder interpretation",
+            "Emotional signals constrain attention",
+            "Risk posture and reversibility constrain action strength",
+            "Authority boundaries constrain who may decide",
+            "do not let values or emotion assert factual claims",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_using_mindthus_defines_method_arbitration_actions(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Method Arbitration / 方法仲裁",
+            "`dominate`",
+            "`defer`",
+            "`degrade`",
+            "`block`",
+            "`stop`",
+            "TVG vs Anti-Spiral",
+            "SELA vs WAE",
+            "EDSP vs evidence",
+            "3L5S vs direct execution",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_using_mindthus_requires_execution_impact(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Execution Impact / 执行影响",
+            "strategy",
+            "risk handling",
+            "evidence requirement",
+            "next action",
+            "stopping condition",
+            "method choice",
+            "handoff packet",
+            "If a judgment changes none of these",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_agents_mentions_constraints_arbitration_and_execution_impact(self):
+        text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "判断约束",
+            "事实 claim",
+            "价值、利益、情绪",
+            "方法冲突",
+            "dominate / defer / degrade / block / stop",
+            "执行影响",
+        ):
+            self.assertIn(phrase, text)
+
     def test_agents_mentions_entry_boundary_and_context_injection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         for phrase in (

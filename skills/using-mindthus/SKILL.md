@@ -107,6 +107,64 @@ over older context, and injected context must not silently override the
 user's current instruction. If injected context conflicts with current input, surface
 the conflict before using it.
 
+#### Judgment Constraint Recognition / 判断约束识别
+
+After identifying the judgment object, identify what can legitimately constrain the
+judgment:
+
+- Facts and evidence constrain factual claims.
+- Values and preferences constrain priorities and acceptable trade-offs.
+- Interests and incentives constrain stakeholder interpretation.
+- Emotional signals constrain attention, trust, discomfort, urgency, or caution.
+- Risk posture and reversibility constrain action strength.
+- Authority boundaries constrain who may decide.
+- Injected context constrains interpretation only when it is relevant to the current
+  task and does not silently override current user input.
+
+Do not turn every judgment into evidence-only reasoning. Also do not let values or emotion assert factual claims without support.
+If constraints conflict, surface the conflict before choosing a route or action.
+
+#### Method Arbitration / 方法仲裁
+
+When multiple Mindthus methods seem applicable, do not stack methods by default.
+Choose an arbitration action:
+
+- `dominate`: one method owns the main judgment.
+- `defer`: one method waits for another method to resolve a prerequisite.
+- `degrade`: a method may speak only as a weaker claim because constraints are
+  insufficient.
+- `block`: a method prevents another method from making an over-strong conclusion.
+- `stop`: Mindthus should not continue; use direct execution, information acquisition,
+  user clarification, or handoff.
+
+Common conflict checks:
+
+- TVG vs Anti-Spiral: if another value pass is becoming local repair, Anti-Spiral blocks
+  or redirects TVG.
+- SELA vs WAE: a long-term system-efficiency direction can dominate strategic direction,
+  while WAE may block or degrade immediate action under high risk or irreversibility.
+- EDSP vs evidence: EDSP may give a structural direction, but evidence constraints can
+  degrade or block factual confidence.
+- 3L5S vs direct execution: if the user supplied a clear, bounded, low-risk task, direct
+  execution wins.
+
+#### Execution Impact / 执行影响
+
+A Mindthus judgment should change downstream work. Before treating a judgment as useful,
+name at least one execution impact:
+
+- strategy
+- risk handling
+- evidence requirement
+- next action
+- stopping condition
+- method choice
+- handoff packet
+
+If a judgment changes none of these, it is probably only a coherent explanation. Return
+to direct execution, information acquisition, constraint clarification, or a sharper
+judgment object.
+
 #### `sela`
 
 战略方向上识别整体与局部的关系。
