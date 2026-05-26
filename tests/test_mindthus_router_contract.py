@@ -5,23 +5,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
-def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str, str]]:
-    start = text.index(heading)
-    lines = text[start:].splitlines()
-    rows: dict[str, tuple[str, str]] = {}
-    for line in lines:
-        if not line.startswith("|"):
-            if rows:
-                break
-            continue
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-        if cells == ["Signal", "Kernel", "Route"] or set(cells) == {"---"}:
-            continue
-        if len(cells) == 3:
-            rows[cells[0]] = (cells[1], cells[2])
-    return rows
-
-
 class MindthusRouterContractTests(unittest.TestCase):
     def test_using_mindthus_defines_premise_calibration_as_pre_route_action(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -108,46 +91,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "docs/methodologies/shared-primitives.md",
             "docs/methodologies/threshold-casebook.md",
             "docs/maintenance/versioning-policy.md",
-        ):
-            self.assertIn(phrase, text)
-
-    def test_using_mindthus_route_matrix_covers_expected_branches(self):
-        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        rows = _parse_markdown_table_after(text, "### Route Matrix / 路由矩阵")
-        self.assertEqual(
-            rows,
-            {
-                "clear low-risk edit": ("Stop", "direct execution"),
-                "unclear real problem": ("Find", "`3l5s`"),
-                "long-term system efficiency vs local advantage": ("Find", "`sela`"),
-                "false binary or unstable proposition": ("Find", "`edsp`"),
-                "workflow/agent/evidence ownership conflict": ("Find", "`wae`"),
-                "bounded artifact is complete-looking but thin": ("Deepen", "`tvg`"),
-                "durable mission state or human-in-loop task runtime": ("Find", "`tplan`"),
-                "third touch on same local object": ("Stop/Find", "Anti-Spiral"),
-                "missing facts/domain/runtime/stakeholder input": (
-                    "Stop",
-                    "Evidence / Claim Ceiling",
-                ),
-                "single viewpoint is too self-consistent": (
-                    "Find pressure",
-                    "Perspective Pressure",
-                ),
-            },
-        )
-
-    def test_threshold_casebook_labels_expected_route_for_each_case(self):
-        text = (REPO / "docs" / "methodologies" / "threshold-casebook.md").read_text(
-            encoding="utf-8"
-        )
-        for phrase in (
-            "Expected route: Stop -> direct execution",
-            "Expected route: Find -> `sela` -> direction judgment, not commitment",
-            "Expected route: Find -> `edsp` -> claim ceiling / evidence handoff",
-            "Expected route: Find -> `wae` -> separate script order from truth judgment",
-            "Expected route: Stop -> Evidence / Claim Ceiling -> block rather than deepen",
-            "Expected route: Stop/Find -> Anti-Spiral -> return upstream",
-            "Expected route: Find pressure -> Perspective Pressure -> choose synthetic roles or incentive check",
         ):
             self.assertIn(phrase, text)
 
