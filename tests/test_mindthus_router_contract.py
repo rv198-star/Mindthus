@@ -378,6 +378,22 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_judgment_kernel_acceptance_run_records_live_effectiveness(self):
+        text = (
+            REPO / "tests" / "mindthus_judgment_kernel_acceptance_run_2026-05-26.md"
+        ).read_text(encoding="utf-8")
+        for phrase in (
+            "Mindthus Judgment Kernel Live Acceptance Run",
+            "Behavior score",
+            "98 / 100",
+            "Conservative effective score",
+            "92 / 100",
+            "current-only evaluation",
+            "initially accepted",
+            "not a clean old-vs-new A/B",
+        ):
+            self.assertIn(phrase, text)
+
 
 if __name__ == "__main__":
     unittest.main()
