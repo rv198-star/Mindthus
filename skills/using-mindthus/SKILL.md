@@ -50,6 +50,63 @@ Premise Calibration 不是独立方法论，也不直接产出结论。它只帮
 
 ### Skill 路由
 
+#### Intervention Boundary / 介入边界
+
+Before choosing a Mindthus skill, decide whether Mindthus should intervene at all.
+
+- Direct execution / 直接执行: the task is clear, low-risk, bounded, and facts are
+  sufficient. In this case, do not use Mindthus; answer or execute directly.
+- Information acquisition / 信息补全: facts, files, data, runtime proof, or user clarification
+  are missing. First gather the missing input or ask the user; do not
+  turn missing information into a confident method judgment.
+- Mindthus intervention / Mindthus 介入: the task contains a hard judgment point such
+  as unclear problem definition, structural ambiguity, trend or timing judgment,
+  control-boundary mismatch, thin bounded artifact, Mission-runtime drift, or repeated
+  local repair.
+
+Short rule: simple tasks stay with the base model; missing facts get more input; hard
+judgment points enter Mindthus.
+
+#### Judgment Object Routing / 判断对象路由
+
+After Mindthus intervention is justified, identify the active judgment object before
+choosing an individual skill:
+
+| Judgment object | Default route | Do-not-trigger boundary |
+|---|---|---|
+| Problem-definition failure | `3l5s` | Do not run full 3L5S when the task is already clear and directly executable. |
+| False binary or structural ambiguity | `edsp` | Do not use EDSP when the missing input is facts, domain research, runtime proof, or stakeholder judgment. |
+| Long-term system efficiency versus local advantage | `sela` | Do not turn long-term direction into immediate action without timing and risk checks. |
+| Control-boundary mismatch | `wae` | Do not use WAE to slow down low-risk deterministic work. |
+| Bounded artifact with thin practical value | `tvg` | TVG requires a bounded artifact; do not proactively activate it for vague dissatisfaction or ordinary writing quality. |
+| Mission runtime state, evidence, continuation, or stopping problem | `tplan` | tplan requires Mission-level runtime state; ordinary complexity is not enough. |
+| Repeated local repair or add-layer spiral | `Anti-Spiral` | Use the brake to return upstream; do not make Anti-Spiral a standalone skill. |
+
+If no judgment object is active, return to direct execution, information acquisition,
+or user clarification.
+
+#### Context Injection Point / 上下文注入口
+
+Mindthus may receive relevant contextual constraints from an upstream platform, but it
+does not implement memory, storage, retrieval, ranking, or profile management.
+
+Optional injected context may include:
+
+- `current_goal`
+- `user_preference`
+- `long_term_objective`
+- `role_or_stake`
+- `prior_experience`
+- `risk_posture`
+- `emotional_signal`
+- `authority_boundary`
+- `fresh_context`
+
+Use injected context only as judgment constraints or signals. The current user input takes priority
+over older context, and injected context must not silently override the
+user's current instruction. If injected context conflicts with current input, surface
+the conflict before using it.
+
 #### `sela`
 
 战略方向上识别整体与局部的关系。

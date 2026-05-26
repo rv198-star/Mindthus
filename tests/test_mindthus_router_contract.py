@@ -96,6 +96,72 @@ class MindthusRouterContractTests(unittest.TestCase):
         section = text[start:end]
         self.assertNotIn("tplan", section.lower())
 
+    def test_using_mindthus_defines_intervention_boundary_before_skill_choice(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Intervention Boundary / 介入边界",
+            "Direct execution / 直接执行",
+            "Information acquisition / 信息补全",
+            "Mindthus intervention / Mindthus 介入",
+            "do not use Mindthus",
+            "facts, files, data, runtime proof, or user clarification",
+            "hard judgment point",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_judgment_object_routing_precedes_individual_skill_routes(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        start = text.index("#### Judgment Object Routing / 判断对象路由")
+        first_skill = text.index("#### `sela`", start)
+        section = text[start:first_skill]
+        for phrase in (
+            "Problem-definition failure",
+            "False binary or structural ambiguity",
+            "Long-term system efficiency versus local advantage",
+            "Control-boundary mismatch",
+            "Bounded artifact with thin practical value",
+            "Mission runtime state",
+            "Repeated local repair",
+        ):
+            self.assertIn(phrase, section)
+
+    def test_tvg_and_tplan_are_non_proactive_routes(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "TVG requires a bounded artifact",
+            "tplan requires Mission-level runtime state",
+            "do not proactively activate",
+            "ordinary complexity is not enough",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_context_injection_point_is_interface_not_memory_implementation(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Context Injection Point / 上下文注入口",
+            "does not implement memory",
+            "storage, retrieval, ranking",
+            "current user input takes priority",
+            "must not silently override",
+            "user_preference",
+            "long_term_objective",
+            "risk_posture",
+            "authority_boundary",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_agents_mentions_entry_boundary_and_context_injection(self):
+        text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "介入边界",
+            "直接执行",
+            "先补事实",
+            "Mindthus 介入",
+            "上下文注入口",
+            "当前用户输入优先",
+        ):
+            self.assertIn(phrase, text)
+
     def test_cognitive_primitives_are_referenced_not_reexpanded_in_router_surfaces(self):
         primitives_path = "docs/methodologies/shared-primitives.md"
         primitives = (REPO / primitives_path).read_text(encoding="utf-8")

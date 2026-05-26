@@ -25,6 +25,11 @@ These tests focus on five observable behaviors:
 - routing to the appropriate Mindthus skill instead of treating Premise Calibration as
   a conclusion engine
 - avoiding broad philosophical analysis when a concrete route is enough
+- choosing direct execution when the task is clear and low-risk
+- choosing information acquisition when facts, files, data, runtime proof, or user
+  clarification are missing
+- identifying the active judgment object before naming a skill
+- treating injected context as a constraint, not an override
 
 ## General Scoring
 
@@ -229,6 +234,140 @@ This implementation plan looks complete and professional. Should we accept it?
   usability as constraints.
 - Routes to `tvg` because the bounded artifact may be structurally complete but thin.
 
+## Scenario 6: Simple Direct Task
+
+### What This Tests
+
+The prompt is clear, low-risk, and directly executable. A good treatment should not
+force Mindthus intervention.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Please rewrite this sentence to be shorter: "The current implementation provides a
+large number of useful capabilities, but it may be too verbose for release notes."
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply the intervention boundary before choosing any skill.
+
+Please rewrite this sentence to be shorter: "The current implementation provides a
+large number of useful capabilities, but it may be too verbose for release notes."
+```
+
+### Expected Treatment Behavior
+
+- Chooses direct execution.
+- Does not invoke 3L5S, EDSP, SELA, WAE, TVG, or tplan.
+- Produces the shorter sentence.
+
+## Scenario 7: Missing Runtime Proof
+
+### What This Tests
+
+The prompt asks for a judgment that depends on missing runtime evidence. A good
+treatment should gather or request evidence before judging.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+The new parser is probably safe. Should we remove the old parser path?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply the intervention boundary before choosing any skill.
+
+The new parser is probably safe. Should we remove the old parser path?
+```
+
+### Expected Treatment Behavior
+
+- Chooses information acquisition before final judgment.
+- Names missing runtime proof, comparison evidence, rollback risk, or test coverage.
+- Does not turn "probably safe" into a confident conclusion.
+- May route later to WAE or tplan only after the missing evidence is identified.
+
+## Scenario 8: Thin Artifact Versus Problem Definition
+
+### What This Tests
+
+The prompt contains both dissatisfaction and an existing bounded artifact. A good
+treatment should identify whether the active judgment object is a thin artifact or an
+undefined problem.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+This design note is complete but still does not help the implementation agent decide
+what to do next. Should we rewrite it?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Identify the judgment object before selecting a skill.
+
+This design note is complete but still does not help the implementation agent decide
+what to do next. Should we rewrite it?
+```
+
+### Expected Treatment Behavior
+
+- Identifies a bounded artifact with thin practical value.
+- Routes to TVG only because the artifact exists and the weakness is downstream value.
+- Names implementation handoff, actionability, evidence, or failure paths as the value
+  surfaces.
+
+## Scenario 9: Injected Context Conflict
+
+### What This Tests
+
+Injected context can constrain judgment, but it must not silently override the user's
+current instruction.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Injected context: the user usually prefers long-term maintainability over speed.
+
+Current user request: for this one-off internal script, optimize for fastest safe
+delivery and avoid broad refactors.
+
+Should we redesign the module before making the script change?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply the context injection point rules.
+
+Injected context: the user usually prefers long-term maintainability over speed.
+
+Current user request: for this one-off internal script, optimize for fastest safe
+delivery and avoid broad refactors.
+
+Should we redesign the module before making the script change?
+```
+
+### Expected Treatment Behavior
+
+- Surfaces the conflict between older preference and current instruction.
+- Gives priority to the current explicit request.
+- Uses injected context only as a caution against unsafe shortcuts.
+- Does not silently expand scope into broad redesign.
+
 ## Evaluation Template
 
 ```markdown
@@ -247,6 +386,10 @@ Repo commit:
 | Workflow vs Agent False Binary |  |  |  |  |
 | Trend Slogan Trap |  |  |  |  |
 | Polished Artifact Trap |  |  |  |  |
+| Simple Direct Task |  |  |  |  |
+| Missing Runtime Proof |  |  |  |  |
+| Thin Artifact Versus Problem Definition |  |  |  |  |
+| Injected Context Conflict |  |  |  |  |
 
 ## Capability Findings
 
