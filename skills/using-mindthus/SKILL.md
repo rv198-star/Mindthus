@@ -9,16 +9,34 @@ description: Use when an agent needs the Mindthus default posture, the portable 
 
 > 遇事不要慌，先搞清楚情况再说。
 
-Mindthus 不是让 agent 更快给答案，而是让 agent 先判断自己面对的是什么问题，再选择合适的方法镜头。
+Mindthus is an LLM judgment stabilizer, not a general task router.
 
-它不是固定流程，也不是每次都要串联调用的技能链。它是一组判断镜头：
+它不是让 agent 更快给答案，也不是让每个请求都先进 Mindthus。它只在普通 LLM
+执行不够稳定、判断点容易放错、或产物看起来完整但价值偏薄时介入。
 
-- 先判断现在的问题类型。
-- 再选择合适的 Mindthus skill。
-- 不要为了形式套完整方法。
-- 不要让结构完整替代真实判断。
+Mindthus 的最小内核是三句话：
+
+- Find the right judgment point.
+- Deepen the artifact where value is thin.
+- Stop when Mindthus is not needed.
+
+也就是说：先找准该判断什么；如果已有产物但薄，再做 thin-value deepening；如果
+ordinary LLM execution is enough，就不要开方法。
 
 ## Mainline / 主路径
+
+### Find / Deepen / Stop
+
+先判断当前请求属于哪类：
+
+- `Find`：问题、取舍、边界或控制权还没找准。再路由到 `3l5s`、`sela`、
+  `edsp`、`wae`、`tplan` 或 Anti-Spiral。
+- `Deepen`：对象已经成型，但 judgment、evidence、trade-off、handoff 或 reuse
+  价值偏薄。再路由到 `tvg`。
+- `Stop`：任务清楚、低风险、可直接执行；或缺的是事实、文件、运行结果、领域输入、
+  stakeholder 决策。此时不要为了形式使用 Mindthus。
+
+Stop 是合法结果。Mindthus 的目标是降低判断成本，不是把所有任务都方法化。
 
 ### 前置校准 / Premise Calibration
 
@@ -108,6 +126,21 @@ or decision according to `human_in_loop`.
 
 ## Guardrails / 从属补漏
 
+### Shared Primitives / 共享原语
+
+shared primitives are triggered cross-cutting controls, not standalone skills.
+
+当前最小集合：
+
+- `Minimal Sufficient Lens`：防止过度方法化。
+- `Evidence / Claim Ceiling`：防止结论超过证据。
+- `Perspective Pressure`：防止单一视角自洽。
+- `Anti-Spiral`：防止局部修补循环。
+- `No Abstract Jargon Wall`：防止内部术语替代用户理解。
+
+它们只保护主方法，不决定主问题。需要完整说明时，读
+`docs/methodologies/shared-primitives.md`。
+
 ### Anti-Spiral Entry / 反螺旋入口
 
 When a long task starts looping around the same local object, activate Anti-Spiral
@@ -150,5 +183,7 @@ evidence delta.
 - Premise Calibration 不和 `3l5s`、`edsp`、`wae`、`sela`、`tvg` 或 `tplan` 平级。
 - Mindthus skills 不需要串成固定流程。
 - 问题明确时，不要为了完整性强行调用上层方法。
+- 当普通 LLM 执行已经足够时，直接执行。
+- 当缺的是事实、文件、运行时证明或 stakeholder 判断时，先补输入或降级结论。
 - 脚本、模板、结构化输出只能辅助判断，不能替代判断。
 - 如果输出更整齐但更浅，应视为退化。

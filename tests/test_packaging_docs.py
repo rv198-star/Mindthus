@@ -97,6 +97,8 @@ class PackagingDocsTests(unittest.TestCase):
             ("tvg.md", "Thinking Value-Gain"),
             ("tplan.md", "Mission-oriented project manager"),
             ("anti-spiral-self-audit.md", "反螺旋自检"),
+            ("shared-primitives.md", "Shared Primitives"),
+            ("threshold-casebook.md", "Threshold Casebook"),
         ]
         for name, phrase in cases:
             text = (REPO / "docs" / "methodologies" / name).read_text(encoding="utf-8")
@@ -127,6 +129,104 @@ class PackagingDocsTests(unittest.TestCase):
             "decision packet",
             "Anti-Spiral gate",
             "执行不会随手重写计划",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_v0_6_judgment_kernel_target_records_direction_not_memory_product(self):
+        text = (
+            REPO
+            / "docs"
+            / "superpowers"
+            / "specs"
+            / "2026-05-26-mindthus-v0.6-judgment-kernel-target.md"
+        ).read_text(encoding="utf-8")
+        for phrase in (
+            "direction record, not an implementation plan",
+            "judgment philosophy / method kernel",
+            "Architecture Hygiene Goal",
+            "shared primitives",
+            "cross-cutting mechanisms",
+            "Find the right judgment point",
+            "Deepen the artifact where value is thin",
+            "Stop when Mindthus is not needed",
+            "cognitive memory product",
+            "Raise the judgment philosophy / method kernel",
+            "Minimal Sufficient Lens",
+            "Evidence / Claim Ceiling",
+            "Perspective Pressure",
+            "Multi-Role Pressure",
+            "Adversarial Incentive Check",
+            "prevent architecture decay",
+            "The \"Find The Judgment Point\" Function Is Still Too Distributed",
+            "The \"Deepen Thin Value\" Function Is Strong But Too Isolated",
+            "The Stop Rule Is Not Yet First-Class",
+            "Cross-Method Arbitration Remains Unsettled",
+            "The solution should not be a large patch pile",
+            "fewer primitives rather than more labels",
+            "not scattered guardrails copied",
+            "no requirement that `3L5S` become the universal entry point",
+            "What is the smallest elegant structure",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_versioning_policy_uses_issue_first_release_later(self):
+        text = (REPO / "docs" / "maintenance" / "versioning-policy.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "issue-first, release-later workflow",
+            "Do not start by promising a version scope",
+            "real defects",
+            "`design`: the right shape is not clear yet",
+            "`research`: A/B testing, threshold cases, or evidence are needed",
+            "Issues do not need a milestone at creation time",
+            "After a group of issues is completed",
+            "What version number matches the completed boundary",
+            "`patch`, for example `v0.5.3`",
+            "`minor`, for example `v0.6.0`",
+            "`major`, for example `v1.0.0`",
+            "The version number should describe what was completed",
+            "Version names such as `v0.6` may be used as direction labels",
+            "should not freeze",
+            "scope before the underlying issues are understood",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shared_primitives_document_cross_cutting_controls(self):
+        text = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "AOP",
+            "cross-cutting reasoning controls",
+            "not standalone skills",
+            "Minimal Sufficient Lens",
+            "Evidence / Claim Ceiling",
+            "Perspective Pressure",
+            "Multi-Role Pressure",
+            "Adversarial Incentive Check",
+            "Anti-Spiral",
+            "No Abstract Jargon Wall",
+            "protects a mainline instead of becoming the mainline",
+            "architecture decay",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_threshold_casebook_documents_boundary_cases(self):
+        text = (REPO / "docs" / "methodologies" / "threshold-casebook.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "ordinary execution is enough",
+            "3L5S should not run",
+            "SELA sees direction but not commitment",
+            "EDSP should stop because evidence is missing",
+            "WAE separates script order from agentic truth",
+            "TVG blocks rather than deepens",
+            "Anti-Spiral stops local repair",
+            "Perspective Pressure distinguishes synthetic role pressure",
+            "real incentive conflict",
+            "right answer is a stop, downgrade, or handoff",
         ):
             self.assertIn(phrase, text)
 

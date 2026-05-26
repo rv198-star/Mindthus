@@ -6,6 +6,9 @@ This document defines a standalone, project-portable methodology for value-orien
 
 It increases a module's practical thinking value without letting the work drift into shallow completion, random brainstorming, overfitting, or endless refinement.
 
+In Mindthus, TVG is the thin-value deepening axis: use it after a bounded artifact exists,
+not before the right judgment point is known.
+
 Depth is the means. Practical value gain is the target. Positive-value exit is the stopping rule.
 
 TVG is not a generic improvement pass. Its leverage comes from combining a clear value target with explicit constraints on what must remain unacceptable, even if the module becomes more complete.
@@ -102,6 +105,21 @@ Do not use this method to:
 ### Trigger Question
 
 > `Is this module merely complete, or is it deep enough to be used, challenged, and handed off?`
+
+### Route Back Before Deepening
+
+Route back before deepening when the module is thin because the wrong problem is being
+solved.
+
+- If the real object or problem definition is unclear, route back to `3l5s`.
+- If the proposition is a false binary or unstable structural judgment, route back to
+  `edsp`.
+- If workflow, agentic judgment, or evidence owns the wrong part of the work, route back
+  to `wae`.
+
+This is a wrong judgment point problem, not a TVG problem.
+
+block rather than deepen when missing evidence, domain input, runtime proof, or stakeholder judgment is the reason the module cannot honestly exit.
 
 ## Core Claim
 

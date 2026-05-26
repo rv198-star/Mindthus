@@ -66,6 +66,34 @@ class MindthusRouterContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
+    def test_using_mindthus_exposes_find_deepen_stop_kernel(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "LLM judgment stabilizer",
+            "not a general task router",
+            "Find the right judgment point",
+            "Deepen the artifact where value is thin",
+            "Stop when Mindthus is not needed",
+            "shared primitives",
+            "ordinary LLM execution is enough",
+            "thin-value deepening",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_readme_exposes_kernel_and_shared_primitives_without_overrouting(self):
+        text = (REPO / "README.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Find the right judgment point",
+            "Deepen the artifact where value is thin",
+            "Stop when Mindthus is not needed",
+            "不是通用任务入口",
+            "共享原语",
+            "docs/methodologies/shared-primitives.md",
+            "docs/methodologies/threshold-casebook.md",
+            "docs/maintenance/versioning-policy.md",
+        ):
+            self.assertIn(phrase, text)
+
     def test_minimal_sufficient_lens_does_not_change_tplan_activation(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         start = text.index("### 最小充分镜头")
