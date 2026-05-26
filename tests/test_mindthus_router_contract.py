@@ -5,6 +5,22 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
+def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str, str]]:
+    start = text.index(heading)
+    rows: dict[str, tuple[str, str]] = {}
+    for line in text[start:].splitlines():
+        if not line.startswith("|"):
+            if rows:
+                break
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if cells == ["Primitive", "Primary owner", "Short rule"] or set(cells) == {"---"}:
+            continue
+        if len(cells) == 3:
+            rows[cells[0]] = (cells[1], cells[2])
+    return rows
+
+
 class MindthusRouterContractTests(unittest.TestCase):
     def test_using_mindthus_defines_premise_calibration_as_pre_route_action(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -110,6 +126,88 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertFalse((REPO / "docs" / "methodologies" / "threshold-casebook.md").exists())
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         self.assertNotIn("### Route Matrix / 路由矩阵", text)
+
+    def test_cognitive_primitive_index_has_stable_owner_and_rule_mapping(self):
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        rows = _parse_markdown_table_after(primitives, "## Cognitive Primitive Index / 认知原语索引")
+        self.assertEqual(
+            rows,
+            {
+                "Minimal Sufficient Lens": (
+                    "`using-mindthus`",
+                    "能直接判断就不要开方法；一个 skill 足够就不要串联；轻量检查足够就不要展开完整流程。",
+                ),
+                "Evidence / Claim Ceiling": (
+                    "`WAE`",
+                    "结论强度不能超过证据；缺事实、领域输入、运行证明或 stakeholder 判断时，降级或阻断。",
+                ),
+                "Perspective Pressure": (
+                    "`SELA` / `EDSP`",
+                    "单一视角过度自洽时，用角色压力或激励检查挑战判断。",
+                ),
+                "Anti-Spiral": (
+                    "`anti-spiral-self-audit` / `tplan`",
+                    "同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。",
+                ),
+                "No Abstract Jargon Wall": (
+                    "`AGENTS.md`",
+                    "先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。",
+                ),
+            },
+        )
+
+    def test_skill_routing_surface_preserves_pre_refactor_route_triggers(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        expected_routes = {
+            "sela": ("系统级费效比", "短视选择"),
+            "3l5s": ("问题还不清楚", "Discovery -> Definition"),
+            "tplan": ("durable task state", "human-in-loop authority"),
+            "edsp": ("A/B 都像对", "Extreme Deduction"),
+            "wae": ("Workflow / Agentic / Evidence", "控制权"),
+            "tvg": ("结构完整但实质浅薄", "bounded artifact"),
+        }
+        for skill, phrases in expected_routes.items():
+            self.assertIn(f"#### `{skill}`", using)
+            for phrase in phrases:
+                self.assertIn(phrase, using, f"{skill} route missing {phrase!r}")
+
+    def test_cognitive_primitives_are_active_in_their_primary_owner_surfaces(self):
+        surfaces = {
+            "Minimal Sufficient Lens": (
+                REPO / "skills" / "using-mindthus" / "SKILL.md",
+                ("最小充分镜头", "shared-primitives.md", "不要为了形式"),
+            ),
+            "Evidence / Claim Ceiling": (
+                REPO / "skills" / "wae" / "SKILL.md",
+                ("Evidence should connect claims to observable proof", "confidence caps"),
+            ),
+            "Perspective Pressure / SELA": (
+                REPO / "skills" / "sela" / "SKILL.md",
+                ("Multi-Role Check", "System Advocate", "Local Defender", "Timing Auditor"),
+            ),
+            "Perspective Pressure / EDSP": (
+                REPO / "skills" / "edsp" / "SKILL.md",
+                ("Multi-Role Challenge", "Builder", "Challenger", "Synthesizer"),
+            ),
+            "Anti-Spiral / methodology": (
+                REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md",
+                ("Third touch, stop first", "not an independent Mindthus skill"),
+            ),
+            "Anti-Spiral / tplan": (
+                REPO / "skills" / "tplan" / "SKILL.md",
+                ("Anti-Spiral Gate", "third touches", "local repair"),
+            ),
+            "No Abstract Jargon Wall": (
+                REPO / "AGENTS.md",
+                ("No Abstract Jargon Wall", "shared-primitives.md", "这对你意味着什么"),
+            ),
+        }
+        for primitive, (path, phrases) in surfaces.items():
+            text = path.read_text(encoding="utf-8")
+            for phrase in phrases:
+                self.assertIn(phrase, text, f"{primitive} inactive in {path}: {phrase!r}")
 
     def test_pressure_tests_measure_outcome_effectiveness(self):
         text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")
