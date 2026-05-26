@@ -13,7 +13,9 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.5.2`", readme)
+        self.assertIn("当前仓库版本：`v0.6`", readme)
+        self.assertIn("判断内核", readme)
+        self.assertIn("当前不声明跨模型鲁棒性", readme)
         self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
@@ -49,6 +51,16 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## v0.6", changelog)
+        self.assertIn("发布日期：2026-05-26", changelog)
+        self.assertIn("判断内核入口层", changelog)
+        self.assertIn("介入边界", changelog)
+        self.assertIn("判断对象路由", changelog)
+        self.assertIn("上下文注入口", changelog)
+        self.assertIn("方法仲裁", changelog)
+        self.assertIn("执行影响要求", changelog)
+        self.assertIn("单模型版本", changelog)
+        self.assertIn("不声明跨模型鲁棒性", changelog)
         self.assertIn("## v0.5.2", changelog)
         self.assertIn("发布日期：2026-05-23", changelog)
         self.assertIn("No Abstract Jargon Wall", changelog)
@@ -70,6 +82,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v0.6"), 1)
         self.assertEqual(lines.count("## v0.5.2"), 1)
         self.assertEqual(lines.count("## v0.5 + v0.5.1"), 1)
         self.assertEqual(lines.count("## v0.5.1"), 0)
@@ -131,6 +144,22 @@ class PackagingDocsTests(unittest.TestCase):
             "Perspective Pressure",
             "Anti-Spiral",
             "No Abstract Jargon Wall",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_v0_6_version_acceptance_records_single_model_scope(self):
+        text = (
+            REPO / "tests" / "mindthus_v0_6_version_acceptance_2026-05-26.md"
+        ).read_text(encoding="utf-8")
+        for phrase in (
+            "Mindthus v0.6 Version Acceptance",
+            "single-model release-grade acceptance",
+            "Cross-model testing is explicitly deferred",
+            "Behavior score: `98 / 100`",
+            "Conservative effective score: `92 / 100`",
+            "v0.6 is accepted",
+            "should not say",
+            "proven across models",
         ):
             self.assertIn(phrase, text)
 

@@ -4,6 +4,55 @@
 
 暂无。
 
+## v0.6
+
+发布日期：2026-05-26
+
+说明：这是 Mindthus 判断内核入口层版本。重点不是新增一个大方法，而是让 agent
+先判断自己面对的任务是否需要 Mindthus、缺什么输入、判断对象是什么、哪些约束有效，
+以及方法冲突和下游执行该如何处理。
+
+### 新增
+
+- 新增 Mindthus 介入边界：简单、低风险、事实足够的任务直接执行；缺事实、文件、
+  数据、运行证明或用户澄清时先补信息；只有 hard judgment point 才进入 Mindthus。
+- 新增判断对象路由：先识别问题定义失败、结构歧义、长期系统效率 vs 局部优势、
+  控制边界错配、薄产物、Mission runtime 状态或局部修补螺旋，再选择 skill。
+- 新增上下文注入口：上游平台可以注入长期目标、用户偏好、风险姿态、角色立场等
+  判断约束；Mindthus 不实现 memory、retrieval、ranking 或 profile store。
+- 新增判断约束识别：事实 claim 受证据约束；价值、偏好、利益、情绪、风险姿态和
+  权限边界可以约束优先级、行动强度和责任归属，但不能伪装成事实。
+- 新增方法仲裁动作：`dominate`、`defer`、`degrade`、`block`、`stop`，避免多个
+  Mindthus 方法默认堆叠。
+- 新增执行影响要求：Mindthus 判断必须改变策略、风险处理、证据要求、下一步行动、
+  停止条件、方法选择或交接信息。
+- 新增施压面收束：博弈和激励问题保留为 Perspective Pressure，不新增独立博弈论
+  skill。
+
+### 调整
+
+- `using-mindthus` 从“选择 skill 的说明”升级为判断入口层，但仍保持最小充分镜头，
+  不把自己变成新的总方法。
+- `shared-primitives.md` 明确 pressure surface 只是被触发的挑战面，不是新 route
+  或 standalone method。
+- Mindthus router pressure tests 扩展到 direct execution、missing proof、
+  context conflict、constraint recognition、method arbitration、execution impact
+  和 pressure-surface behavior。
+
+### 验收
+
+- 新增 `tests/mindthus_judgment_kernel_acceptance_run_2026-05-26.md`：当前实现 live
+  acceptance 行为分 `98 / 100`，保守有效分 `92 / 100`。
+- 新增 `tests/mindthus_v0_6_version_acceptance_2026-05-26.md`：记录 v0.6 单模型版本
+  验收范围、证据和非覆盖项。
+- 本次版本验收不声明跨模型鲁棒性，也不是干净 old-vs-new A/B。
+
+### 校验
+
+- `python3 -m unittest tests.test_mindthus_router_contract -v`
+- `python3 -m unittest discover -s tests -v`
+- `git diff --check`
+
 ## v0.5.2
 
 发布日期：2026-05-23
