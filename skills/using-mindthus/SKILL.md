@@ -43,14 +43,10 @@ Premise Calibration 不是独立方法论，也不直接产出结论。它只帮
 效率不是唯一价值，只是缺省优化方向。用户明确给出质量、安全、审美、
 可解释性、长期维护或其他目标时，以用户目标为准。
 
-选择方法时使用最小充分镜头：
+选择方法时使用最小充分镜头。具体短规则维护在
+`docs/methodologies/shared-primitives.md`，这里不复制定义。
 
-- 能直接判断就不要开方法。
-- 一个 skill 足够就不要串联。
-- 轻量检查足够就不要展开完整流程。
-
-如果目标函数彼此冲突，先暴露冲突与取舍，再选择方法镜头。方法调用的
-目标是降低判断成本并提高选择质量，不是展示方法完整性。
+如果目标函数彼此冲突，先暴露冲突与取舍，再选择方法镜头。
 
 ### Skill 路由
 
@@ -107,6 +103,11 @@ or decision according to `human_in_loop`.
 适合：已经成形但缺少证据、取舍、失败路径、边界、下游可用性的 bounded artifact。
 
 ## Guardrails / 从属补漏
+
+### Shared Primitive References / 共享原语引用
+
+横切纪律统一维护在 `docs/methodologies/shared-primitives.md`。本 skill 只负责
+选择主方法，不在入口处复制每个 guardrail 的完整定义。
 
 ### Anti-Spiral Entry / 反螺旋入口
 

@@ -52,7 +52,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_router_defines_objective_priority_and_minimal_sufficient_lens(self):
+    def test_router_defines_objective_priority_and_references_minimal_lens(self):
         for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
             text = path.read_text(encoding="utf-8")
             for phrase in (
@@ -60,11 +60,18 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "若用户未给出",
                 "默认效率优先",
                 "最小充分镜头",
-                "能直接判断就不要开方法",
-                "一个 skill 足够就不要串联",
-                "轻量检查足够就不要展开完整流程",
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "能直接判断就不要开方法",
+            "一个 skill 足够就不要串联",
+            "轻量检查足够就不要展开完整流程",
+        ):
+            self.assertIn(phrase, primitives)
 
     def test_minimal_sufficient_lens_does_not_change_tplan_activation(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -72,6 +79,36 @@ class MindthusRouterContractTests(unittest.TestCase):
         end = text.index("### Skill 路由", start)
         section = text[start:end]
         self.assertNotIn("tplan", section.lower())
+
+    def test_shared_primitives_are_referenced_not_reexpanded_in_router_surfaces(self):
+        primitives_path = "docs/methodologies/shared-primitives.md"
+        primitives = (REPO / primitives_path).read_text(encoding="utf-8")
+        self.assertIn("## Primitive Index / 原语索引", primitives)
+        self.assertIn("This is not a new method layer", primitives)
+        for phrase in (
+            "Minimal Sufficient Lens",
+            "Evidence / Claim Ceiling",
+            "Perspective Pressure",
+            "Anti-Spiral",
+            "No Abstract Jargon Wall",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(primitives_path, text, f"{path} should link shared primitives")
+            for copied_definition in (
+                "每个抽象概念至少给出一种支撑",
+                "Can this be answered directly?",
+                "What evidence constrains this claim?",
+                "Before method labels",
+            ):
+                self.assertNotIn(copied_definition, text, f"{path} copied primitive definition")
+
+    def test_rework_does_not_restore_extra_document_layers(self):
+        self.assertFalse((REPO / "docs" / "methodologies" / "threshold-casebook.md").exists())
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertNotIn("### Route Matrix / 路由矩阵", text)
 
     def test_pressure_tests_measure_outcome_effectiveness(self):
         text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")

@@ -1,0 +1,83 @@
+# Mindthus Shared Primitives / 共享原语
+
+## 这是什么
+
+Shared Primitives 是 Mindthus 多个方法都会用到的横切判断纪律。
+
+This is not a new method layer. 它不是第七个方法，也不是总入口；它只是把重复出现的
+小型 guardrail 集中成一个 Primitive Index / 原语索引，供 `AGENTS.md`、
+`using-mindthus` 和各 skill 引用。
+
+## 解决什么问题
+
+如果每个 skill 都把同一套刹车、证据上限、表达纪律重新写一遍，项目会有三个问题：
+
+- 同一规则出现多个名字；
+- guardrail 慢慢变成新的主方法；
+- 修改一处边界时，其他 skill 还停在旧口径。
+
+Use shared primitives by reference. 本页负责定义短规则；具体方法只写“何时触发”，
+不要复制完整定义。
+
+## 核心判断
+
+共享原语必须同时满足三点：
+
+- 多个方法都会用到；
+- 只保护主方法，不替代主方法；
+- 足够小，不值得变成独立 skill。
+
+Do not copy the full definition into each skill. 如果某个规则需要长流程、独立产物或
+完整运行时，它就不是共享原语。
+
+## 怎么用
+
+## Primitive Index / 原语索引
+
+| Primitive | Primary owner | Short rule |
+|---|---|---|
+| Minimal Sufficient Lens | `using-mindthus` | 能直接判断就不要开方法；一个 skill 足够就不要串联；轻量检查足够就不要展开完整流程。 |
+| Evidence / Claim Ceiling | `WAE` | 结论强度不能超过证据；缺事实、领域输入、运行证明或 stakeholder 判断时，降级或阻断。 |
+| Perspective Pressure | `SELA` / `EDSP` | 单一视角过度自洽时，用角色压力或激励检查挑战判断。 |
+| Anti-Spiral | `anti-spiral-self-audit` / `tplan` | 同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。 |
+| No Abstract Jargon Wall | `AGENTS.md` | 先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。 |
+
+## 具体案例
+
+### 案例 A：TVG 想继续加深第三轮
+
+一份交接文档已经加深两轮，第三轮只是准备再加 checklist。这里不需要在 TVG 内重写
+反螺旋规则，只触发 `Anti-Spiral`，回到上游目标或做等量替换。
+
+### 案例 B：SELA 判断里出现真实利益冲突
+
+SELA 负责整体效率与局部优势判断。如果销售、法务、实施、财务各自会因结论不同而受益
+或受损，不要在 SELA 里复制一套博弈论方法；触发 `Perspective Pressure`，用激励检查
+挑战单一视角。
+
+## 常见误用
+
+第一种误用，是把共享原语当成新流程。它只在信号出现时触发。
+
+第二种误用，是在各 skill 里复制本页定义。这样会重新制造重复。
+
+第三种误用，是让原语决定主问题。原语只刹车、施压或限制 claim，主判断仍归对应 skill。
+
+## 边界
+
+共享原语不替代 `SELA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan`。
+
+它也不替代事实、领域研究、运行证明或用户判断。遇到缺输入的问题，正确动作通常是
+补输入、降级结论或停止，而不是新增方法层。
+
+## 与其他方法的关系
+
+- `using-mindthus` 引用本页来避免入口 skill 变厚。
+- `AGENTS.md` 引用本页来保持默认姿态短。
+- 各方法页只保留与本方法相关的触发条件。
+
+## 导航
+
+- 返回 [README](../../README.md)
+- 查看 [Using Mindthus skill](../../skills/using-mindthus/SKILL.md)
+- 查看 [Anti-Spiral 方法页](anti-spiral-self-audit.md)

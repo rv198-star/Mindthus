@@ -97,6 +97,7 @@ class PackagingDocsTests(unittest.TestCase):
             ("tvg.md", "Thinking Value-Gain"),
             ("tplan.md", "Mission-oriented project manager"),
             ("anti-spiral-self-audit.md", "反螺旋自检"),
+            ("shared-primitives.md", "Shared Primitives"),
         ]
         for name, phrase in cases:
             text = (REPO / "docs" / "methodologies" / name).read_text(encoding="utf-8")
@@ -111,6 +112,24 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("## 边界", text, name)
             self.assertIn("## 与其他方法的关系", text, name)
             self.assertIn("## 导航", text, name)
+
+    def test_shared_primitives_is_an_index_not_an_extra_method_layer(self):
+        text = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "This is not a new method layer",
+            "Primitive Index / 原语索引",
+            "Use shared primitives by reference",
+            "Primary owner",
+            "Do not copy the full definition",
+            "Minimal Sufficient Lens",
+            "Evidence / Claim Ceiling",
+            "Perspective Pressure",
+            "Anti-Spiral",
+            "No Abstract Jargon Wall",
+        ):
+            self.assertIn(phrase, text)
 
     def test_tplan_methodology_shows_execution_driven_adaptive_planning(self):
         text = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
