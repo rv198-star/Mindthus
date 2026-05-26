@@ -38,6 +38,26 @@ ordinary LLM execution is enough，就不要开方法。
 
 Stop 是合法结果。Mindthus 的目标是降低判断成本，不是把所有任务都方法化。
 
+### Route Matrix / 路由矩阵
+
+这张表只用于快速判断初始走势，不替代具体 skill 的边界。
+
+| Signal | Kernel | Route |
+|---|---|---|
+| clear low-risk edit | Stop | direct execution |
+| unclear real problem | Find | `3l5s` |
+| long-term system efficiency vs local advantage | Find | `sela` |
+| false binary or unstable proposition | Find | `edsp` |
+| workflow/agent/evidence ownership conflict | Find | `wae` |
+| bounded artifact is complete-looking but thin | Deepen | `tvg` |
+| durable mission state or human-in-loop task runtime | Find | `tplan` |
+| third touch on same local object | Stop/Find | Anti-Spiral |
+| missing facts/domain/runtime/stakeholder input | Stop | Evidence / Claim Ceiling |
+| single viewpoint is too self-consistent | Find pressure | Perspective Pressure |
+
+If two rows match, prefer the row that reduces overclaiming or over-methodizing first.
+For example, missing runtime proof routes to Stop before TVG deepening.
+
 ### 前置校准 / Premise Calibration
 
 在选择具体 skill 之前，必要时先做一轮轻量前置校准。尤其当用户输入里
