@@ -166,6 +166,27 @@ class PackagingDocsTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_internal_skill_design_patterns_are_not_user_facing(self):
+        text = (REPO / "docs" / "internal" / "skill-design-patterns.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "Internal maintainer note",
+            "not part of the shallow user-facing guide",
+            "learn that induction method",
+            "Judgment Kernel Skill",
+            "Cognitive Control Skill",
+            "Runtime Governance Skill",
+            "Name the cognitive role before naming the implementation shape",
+            "Mindthus pattern",
+            "General implementation shapes",
+        ):
+            self.assertIn(phrase, text)
+
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        self.assertNotIn("skill-design-patterns.md", readme)
+        self.assertNotIn("Judgment Kernel Skill", readme)
+
     def test_v0_6_version_acceptance_records_single_model_scope(self):
         text = (
             REPO / "tests" / "mindthus_v0_6_version_acceptance_2026-05-26.md"
