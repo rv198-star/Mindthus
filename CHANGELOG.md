@@ -4,6 +4,54 @@
 
 暂无。
 
+## v0.6.1
+
+发布日期：2026-05-27
+
+说明：这是 `v0.6` 判断内核版本后的 patch release，重点不是修改 Mindthus 的核心
+判断能力，而是把发布层和内部设计模式补齐，方便后续以“仓库私有、skills 免费开放”
+的方式分发。
+
+### 新增
+
+- 新增内部 skill 设计模式文档：把 Mindthus 归纳为判断内核型、认知控制型和运行治理型
+  skill，作为维护者设计和审查结构时的内部参考，不暴露给浅层用户。
+- 新增 release pack builder：`scripts/build-release-pack.py` 可以生成面向 Claude Code、
+  Codex 和 OpenCode 的平台化发布包。
+- 新增 Claude Code marketplace 发布布局：生成 `claude-code/.claude-plugin/marketplace.json`
+  与 `claude-code/claude-plugin/.claude-plugin/plugin.json`，并把 skills 放入
+  `claude-code/claude-plugin/skills/`。
+- 新增 Codex / OpenCode 发布布局：生成 Codex namespaced skills pack、project
+  `AGENTS.md`，以及 OpenCode `.opencode/skills/mindthus/` 结构。
+- 发布包同步包含 `docs/methodologies/`，避免 `AGENTS.md` 和 skill 正文中引用
+  `docs/methodologies/shared-primitives.md` 等方法页时出现断链。
+- 发布包只抽取公开 skill、平台入口和 `docs/methodologies/`，不把
+  `docs/internal/`、`docs/superpowers/` 等内部设计和执行计划目录带入公开包。
+- Codex / OpenCode 发布包会按平台重写 markdown 内的 skill 路径，避免
+  `AGENTS.md`、方法页导航和命令示例仍指向源码仓库布局。
+
+### 修复
+
+- 修复 Claude Code marketplace `source` 不能引用 `..` 的发布包结构问题。现在生成的
+  marketplace 固定使用 `source: "./claude-plugin"`。
+- 增加测试锁定 Claude marketplace root layout，避免后续发布脚本再次生成 sibling
+  plugin 引用。
+- 发布包构建脚本增加输出目录保护，拒绝把仓库根目录、源码目录或过宽路径作为
+  `--force` 输出目标。
+
+### 验收
+
+- 三平台 smoke 已实际验证过 skill / resource / agent 或 `AGENTS.md` 关键路径：
+  OpenCode、Claude Code、Codex 均能在真实模型调用中返回预期 marker。
+- Claude Code 同时补测了 direct Anthropic-compatible URL + API key 路径。
+- 完整 Mindthus 包的 `claude plugin validate` 在当前环境未能及时完成，因此本版本只
+  声明发布包结构和前述 smoke 路径通过，不声明完整包 validator 已通过。
+
+### 校验
+
+- `python3 -m unittest tests.test_packaging_docs -v`
+- `python3 -m unittest discover -s tests -v`
+
 ## v0.6
 
 发布日期：2026-05-26

@@ -1,4 +1,6 @@
+import json
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,7 +15,9 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.6`", readme)
+        self.assertIn("当前仓库版本：`v0.6.1`", readme)
+        self.assertIn("平台化 release pack", readme)
+        self.assertIn("Claude Code marketplace 发布包布局", readme)
         self.assertIn("判断内核", readme)
         self.assertIn("当前不声明跨模型鲁棒性", readme)
         self.assertIn("方法分层纪律", readme)
@@ -52,6 +56,15 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## v0.6", changelog)
+        self.assertIn("## v0.6.1", changelog)
+        self.assertIn("发布日期：2026-05-27", changelog)
+        self.assertIn("release pack builder", changelog)
+        self.assertIn("source: \"./claude-plugin\"", changelog)
+        self.assertIn("Claude Code marketplace", changelog)
+        self.assertIn("OpenCode、Claude Code、Codex", changelog)
+        self.assertIn("docs/internal/", changelog)
+        self.assertIn("--force", changelog)
+        self.assertIn("完整包 validator", changelog)
         self.assertIn("发布日期：2026-05-26", changelog)
         self.assertIn("v0.6 和 v0.5.x 的区别", changelog)
         self.assertIn("认知原语", changelog)
@@ -101,6 +114,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v0.6.1"), 1)
         self.assertEqual(lines.count("## v0.6"), 1)
         self.assertEqual(lines.count("## v0.5.2"), 1)
         self.assertEqual(lines.count("## v0.5 + v0.5.1"), 1)
@@ -246,6 +260,104 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertTrue(script.exists())
         result = subprocess.run(["bash", "-n", str(script)], text=True, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        self.assertTrue(script.exists())
+        syntax = subprocess.run(
+            ["python3", "-m", "py_compile", str(script)],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(syntax.returncode, 0, syntax.stderr)
+        blocked = subprocess.run(
+            ["python3", str(script), "--out", str(REPO), "--force"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertNotEqual(blocked.returncode, 0)
+        self.assertIn("protected source tree", blocked.stderr)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "release"
+            result = subprocess.run(
+                ["python3", str(script), "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
+            plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"
+            self.assertTrue(marketplace_path.exists())
+            self.assertTrue(plugin_path.exists())
+
+            marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+            plugin = json.loads(plugin_path.read_text(encoding="utf-8"))
+            source = marketplace["plugins"][0]["source"]
+            self.assertEqual(source, "./claude-plugin")
+            self.assertNotIn("..", source)
+            self.assertEqual(plugin["version"], "0.6.1")
+            self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue(
+                (
+                    out
+                    / "claude-code"
+                    / "claude-plugin"
+                    / "docs"
+                    / "methodologies"
+                    / "shared-primitives.md"
+                ).exists()
+            )
+            self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "internal").exists())
+            self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "superpowers").exists())
+
+            self.assertTrue((out / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "codex" / "AGENTS.md").exists())
+            self.assertTrue((out / "codex" / "docs" / "methodologies" / "shared-primitives.md").exists())
+            self.assertFalse((out / "codex" / "docs" / "internal").exists())
+            self.assertFalse((out / "codex" / "docs" / "superpowers").exists())
+            codex_agents = (out / "codex" / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("`skills/mindthus/sela/`", codex_agents)
+            self.assertNotIn("`skills/sela/`", codex_agents)
+            codex_sela_doc = (out / "codex" / "docs" / "methodologies" / "sela.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("../../skills/mindthus/sela/SKILL.md", codex_sela_doc)
+            self.assertNotIn("../../skills/sela/SKILL.md", codex_sela_doc)
+            codex_tvg_skill = (out / "codex" / "skills" / "mindthus" / "tvg" / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("python3 skills/mindthus/tvg/scripts/trace/init.py", codex_tvg_skill)
+            self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", codex_tvg_skill)
+            self.assertTrue(
+                (out / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
+            )
+            self.assertTrue((out / "opencode" / "AGENTS.md").exists())
+            self.assertTrue((out / "opencode" / "docs" / "methodologies" / "shared-primitives.md").exists())
+            self.assertFalse((out / "opencode" / "docs" / "internal").exists())
+            self.assertFalse((out / "opencode" / "docs" / "superpowers").exists())
+            opencode_agents = (out / "opencode" / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("`.opencode/skills/mindthus/sela/`", opencode_agents)
+            self.assertNotIn("`skills/sela/`", opencode_agents)
+            opencode_sela_doc = (
+                out / "opencode" / "docs" / "methodologies" / "sela.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("../../.opencode/skills/mindthus/sela/SKILL.md", opencode_sela_doc)
+            self.assertNotIn("../../skills/sela/SKILL.md", opencode_sela_doc)
+            opencode_tvg_skill = (
+                out / "opencode" / ".opencode" / "skills" / "mindthus" / "tvg" / "SKILL.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("python3 .opencode/skills/mindthus/tvg/scripts/trace/init.py", opencode_tvg_skill)
+            self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
+
+            skill_names = ("3l5s", "sela", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            for platform_dir in (out / "codex", out / "opencode"):
+                markdown = "\n".join(
+                    path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))
+                )
+                for skill_name in skill_names:
+                    self.assertNotIn(f"skills/{skill_name}/", markdown)
 
 
 if __name__ == "__main__":
