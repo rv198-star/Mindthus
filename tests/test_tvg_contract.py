@@ -175,6 +175,32 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_issue_10_ab_packet_contains_ai_review_profile_matrix(self):
+        path = REPO / "tests" / "tvg_ab_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing issue #10 A/B review packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "AI Review Result Matrix",
+            "review_mode: ai-review",
+            "human_review_status: not-run",
+            "Profile: insight_dense",
+            "Profile: balanced",
+            "Profile: coverage_rich",
+            "ai_reviewer_preference: treatment",
+            "ai_review_rationale",
+            "Scenario A1",
+            "Scenario A2",
+            "Scenario B1",
+            "Scenario B2",
+            "Scenario C1",
+            "Scenario C2",
+            "Scenario D1",
+            "Scenario D2",
+            "profile_guardrail_result: clear",
+            "not a human review result",
+        ):
+            self.assertIn(phrase, text)
+
     def test_scripts_still_cannot_score_or_route_issue_10_value_gain(self):
         skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
         method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
