@@ -15,7 +15,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.6.1`", readme)
+        self.assertIn("当前仓库版本：`v0.6.2`", readme)
         self.assertIn("平台化 release pack", readme)
         self.assertIn("Claude Code marketplace 发布包布局", readme)
         self.assertIn("判断内核", readme)
@@ -297,7 +297,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "0.6.1")
+            self.assertEqual(plugin["version"], "0.6.2")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue(
                 (

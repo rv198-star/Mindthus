@@ -4,6 +4,52 @@
 
 暂无。
 
+## v0.6.2
+
+发布日期：2026-05-31
+
+[完整发布日志](docs/releases/v0.6.2.md)
+
+说明：这是 `v0.6` 判断内核后的第二个 patch release，重点是把 TVG 的目标从
+“持续扩厚度”校准为“先保证足够厚度，再提升价值密度和洞察收益”，并补齐
+public skills release boundary 的维护者设计边界。
+
+### 新增
+
+- TVG 从扩厚度升级为 grounded insight value-gain：足够思考厚度是价值前提，
+  grounded insight 是核心收益，value density 是出口质量。
+- TVG 增加 thickness gate：厚度不足时不得提前压缩；厚度足够后再进入价值密度
+  优化、compact-strengthen 或 exit graded refinement。
+- TVG 增加 output profile 交付倾斜：`insight_dense`、`balanced`、
+  `coverage_rich` 只影响最终表达权重，不改变内部状态驱动主线。
+- 新增 `docs/internal/public-skills-release-boundary.md`，明确私有仓库材料与公开
+  skills release pack 的 included / excluded file classes、cleanliness validation
+  和后续 work orders。
+
+### 调整
+
+- `coverage_rich` 明确保留评审和交接结构，避免新版价值密度优化削弱旧版 TVG 的
+  有用厚度。
+- `insight_dense` 保留有校准的判断张力，避免 claim calibration 退化成通用保守
+  免责声明。
+- `balanced` 增加比例感护栏，避免无必要评分系统，同时保留不可逆风险、复审节奏和
+  熔断条件等关键路由控制。
+- release pack 版本号更新到 `0.6.2`。
+
+### 验收
+
+- OpenCode 旧版 vs 新版 TVG A/B 复测：`coverage_rich` 新版胜 `9 vs 7`，
+  `insight_dense` 新版胜 `9 vs 7`，`balanced` 新版胜 `49/50 vs 33/50`。
+- A/B 结论不再解读为“所有档位天然优于任意强基线”，而是：新版先做状态判断，
+  在保留有用厚度的前提下更稳地提炼、收束和校准。
+- #9 release boundary 通过标准库 contract test 固化，避免文档依赖 `PyYAML`
+  环境后才可验证。
+
+### 校验
+
+- `python3 -m unittest tests.test_tvg_contract tests.test_method_layering_contract tests.test_mindthus_router_contract tests.test_release_boundary_contract -v`
+- `git diff --check`
+
 ## v0.6.1
 
 发布日期：2026-05-27
