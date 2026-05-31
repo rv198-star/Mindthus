@@ -40,6 +40,291 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_skill_exposes_state_driven_grounded_insight_loop(self):
+        text = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "state-driven value-gain loop",
+            "Thinking Thickness",
+            "Grounded Insight Yield",
+            "Value Density",
+            "output_profile",
+            "delivery bias, not an internal workflow fork",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_methodology_defines_primary_loop_dimensions_and_state_routing(self):
+        text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Sufficient thinking thickness is the substrate of value",
+            "Grounded insight yield is the core output",
+            "Value density is the delivery quality",
+            "Primary Loop Dimensions",
+            "`Thinking Thickness`",
+            "`Grounded Insight Yield`",
+            "`Value Density`",
+            "State-Driven Round Routing",
+            "`under-thick`",
+            "`adequate-but-loose`",
+            "`over-thick`",
+            "`compact-strengthen`",
+            "Exit-side warning checks",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_methodology_preserves_thickness_before_density_optimization(self):
+        text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Thickness-Before-Density Rule",
+            "Value density must not outrank missing thinking thickness",
+            "density optimization is premature",
+            "retain enough constraints, alternatives, failure paths, evidence boundaries, and review-bound items",
+            "compact only after the thinking substrate is sufficient",
+            "Thickness Gate",
+            "Exit Graded Refinement",
+            "output_profile is applied only after the thickness gate is clear",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_methodology_defines_grounded_novelty_and_stretch_boundaries(self):
+        text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Grounded Novelty",
+            "non-obvious",
+            "anchored in real constraints",
+            "changes understanding, judgment, expression, action",
+            "Grounded Stretch Levels",
+            "`reality-bound`",
+            "`plausible-extension`",
+            "`productive-speculation`",
+            "`free-fantasy`",
+            "unsupported fantasy",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_methodology_keeps_claim_and_handoff_as_late_stage_warnings(self):
+        text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Late-Stage Warning Checks",
+            "`Claim Calibration`",
+            "`Handoff Readiness`",
+            "not inside the primary value-gain loop",
+            "usually causes labeling, downgrade, or review-bound notes",
+            "checked near exit or when the module is explicitly for handoff",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_output_profile_is_delivery_bias_not_workflow_fork(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        combined = skill + "\n" + method
+        for phrase in (
+            "Output Profile Bias",
+            "`insight_dense`",
+            "`balanced`",
+            "`coverage_rich`",
+            "delivery bias, not an internal workflow fork",
+            "must not lower the standard",
+            "must not compress before thinking thickness exists",
+            "must not permit low-value expansion",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_coverage_rich_preserves_review_and_handoff_structure(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Coverage-Rich Review Structure",
+            "`coverage_rich` must preserve useful review structure",
+            "decision questions",
+            "alternatives compared",
+            "failure paths",
+            "evidence / assumption boundary",
+            "review-bound items",
+            "decision criteria",
+            "success / failure conditions",
+            "substitute workflows",
+            "adoption risks",
+            "覆盖厚度优先要保留评审结构",
+            "决策问题",
+            "成败条件",
+            "待确认项",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_insight_dense_preserves_calibrated_claim_tension(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Insight-Dense Claim Tension",
+            "`insight_dense` keeps one decisive grounded claim",
+            "calibrated claim tension",
+            "prefer calibrated tension over defensive negation",
+            "do not turn claim calibration into generic hedging",
+            "洞察密度优先要保留有校准的判断张力",
+            "不是把观点压成保守免责声明",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_balanced_profile_preserves_proportional_routing(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Balanced Proportionality",
+            "`balanced` should preserve executable routing",
+            "avoid synthetic scorecards or machinery unless the task naturally needs scoring",
+            "keep irreversible-risk boundaries or review cadence when they materially change routing",
+            "place irreversible-risk boundaries and minimum review cadence inside the rule body for operational rules",
+            "do not defer core routing controls to review-bound notes",
+            "give a provisional cadence rather than saying only periodic review",
+            "anchor high / medium / low labels when used",
+            "平衡档要保持比例感",
+            "不要为了显得可执行而制造评分系统",
+            "不可逆风险和最低复审节奏要进入规则正文",
+            "不要只写定期复审",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_exit_audit_template_records_grounded_insight_and_profile_prompts(self):
+        text = (TVG / "resources" / "exit-audit-template.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Grounded Insight And Density Check",
+            "thinking_thickness_state",
+            "grounded_insight_yield",
+            "value_density_result",
+            "grounded_stretch_level",
+            "output_profile",
+            "profile_guardrail_result",
+            "audit prompts, not script-scored fields",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_public_tvg_doc_mentions_grounded_insight_density_and_profiles(self):
+        text = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        for phrase in (
+            "思考厚度",
+            "有根洞察",
+            "价值密度",
+            "不是默认扩写",
+            "我没想到，但它说得通",
+            "输出档位",
+            "洞察密度优先",
+            "覆盖厚度优先",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_ab_pressure_tests_cover_issue_10_state_and_profile_scenarios(self):
+        text = (REPO / "tests" / "tvg_ab_pressure_tests.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Issue 10: Thin But Polished Artifact Needs Depth Formation",
+            "Issue 10: Adequately Thick But Loose Artifact Needs Refinement",
+            "Issue 10: Over-Thick Low-Density Artifact Needs Compact Strengthening",
+            "Issue 10: Fresh But Ungrounded Viewpoint Needs Claim Warning Or Rejection",
+            "Issue 10: Grounded Stretch Accepts Productive Speculation",
+            "Issue 10: Coverage-Rich Profile Allows Useful Thickness Without Bloat",
+            "Issue 10: Insight-Dense Profile Must Not Skip Thinking Thickness",
+            "Expected issue #10 treatment behavior",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_issue_10_ab_human_review_packet_exists(self):
+        path = REPO / "tests" / "tvg_ab_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing issue #10 A/B human-review packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Issue #10 A/B Human Review Packet",
+            "source_artifact",
+            "baseline_output",
+            "treatment_output",
+            "selected_state_route",
+            "output_profile",
+            "reviewer_preference_prompt",
+            "grounded insight",
+            "value density",
+            "useful thickness without bloat",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_issue_10_ab_packet_contains_ai_review_profile_matrix(self):
+        path = REPO / "tests" / "tvg_ab_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing issue #10 A/B review packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "AI Review Result Matrix",
+            "review_mode: ai-review",
+            "human_review_status: not-run",
+            "Profile: insight_dense",
+            "Profile: balanced",
+            "Profile: coverage_rich",
+            "ai_reviewer_preference: treatment",
+            "ai_review_rationale",
+            "Scenario A1",
+            "Scenario A2",
+            "Scenario B1",
+            "Scenario B2",
+            "Scenario C1",
+            "Scenario C2",
+            "Scenario D1",
+            "Scenario D2",
+            "profile_guardrail_result: clear",
+            "not a human review result",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_issue_10_ab_packet_includes_strong_baseline_coverage_rich_check(self):
+        path = REPO / "tests" / "tvg_ab_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing issue #10 A/B review packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Strong Baseline Calibration",
+            "strong_baseline_output",
+            "旧式认真扩厚",
+            "不是证明三个输出档位天然都优于基线",
+            "coverage_rich 强基线对照",
+            "ai_reviewer_preference: mixed",
+            "基线齐平",
+            "有用厚度",
+            "低价值扩写",
+            "修正结论",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_issue_10_external_opencode_version_ab_packet_exists(self):
+        path = REPO / "tests" / "tvg_ab_opencode_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing OpenCode old-vs-new TVG A/B packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Issue #10 OpenCode Version A/B Packet",
+            "runner: opencode",
+            "model: opencode/deepseek-v4-flash-free",
+            "old_tvg_commit",
+            "new_tvg_commit",
+            "isolated_project_skills",
+            "same_input_prompts",
+            "Scenario O1",
+            "Scenario O2",
+            "Scenario O3",
+            "old_tvg_output",
+            "new_tvg_output",
+            "external_ai_review",
+            "review_preference",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_scripts_still_cannot_score_or_route_issue_10_value_gain(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        combined = skill + "\n" + method
+        for phrase in (
+            "score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`",
+            "choose TVG state routes",
+            "choose `output_profile`",
+            "decide `compact-strengthen`, `refine`, `deepen`, or `freeze`",
+        ):
+            self.assertIn(phrase, combined)
+
     def test_exit_audit_template_records_veto_and_independence(self):
         text = (TVG / "resources" / "exit-audit-template.md").read_text(encoding="utf-8")
         for phrase in (

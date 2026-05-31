@@ -6,27 +6,25 @@ This document defines a standalone, project-portable methodology for value-orien
 
 It increases a module's practical thinking value without letting the work drift into shallow completion, random brainstorming, overfitting, or endless refinement.
 
-Depth is the means. Practical value gain is the target. Positive-value exit is the stopping rule.
+Depth is the means only when the module is under-thick. Practical value gain is the target. Positive-value exit is the stopping rule.
 
-TVG is not a generic improvement pass. Its leverage comes from combining a clear value target with explicit constraints on what must remain unacceptable, even if the module becomes more complete.
+TVG is not a generic improvement pass and not a thickness-expansion method. Its leverage comes from dynamically deciding whether the current bounded module needs depth formation, grounded insight generation, value refinement, compact strengthening, warning calibration, or honest exit.
 
 Its primary positioning is universal: it should help different projects solve the recurring AI-work problem where an AI can construct a module, section, artifact unit, plan, design, review, or reasoning block that looks structurally complete but lacks sufficient thinking value for real use.
 
-It is designed for AI work, knowledge work, product thinking, engineering design, methodology writing, review work, and any situation where a module may look structurally complete while still being shallow in judgment.
-
-This is not a method for making modules thicker.
-
-It is a method for forcing deeper thinking while keeping that thinking aimed at practical value.
+It is designed for AI work, knowledge work, product thinking, engineering design, methodology writing, review work, and any situation where a module may look structurally complete while still being shallow, over-thick, low-density, or weak in judgment.
 
 Core problem:
 
 > A module can exist, be well-structured, and look complete, but still fail because it has not created enough practical value for decision, action, review, reuse, or handoff.
 
-The most dangerous false positive is an automation- or template-controlled demo artifact: it fully satisfies the template, has excellent structure, and looks review-ready, but still lacks real value-bearing judgment.
+Core relationship:
+
+> Sufficient thinking thickness is the substrate of value. Grounded insight yield is the core output. Value density is the delivery quality.
 
 Core goal:
 
-> Move a module from `structure exists` to `value is increased`: judgment becomes more usable, trade-offs become clearer, evidence becomes more honest, and downstream use no longer requires inventing critical truth.
+> Move a module from `structure exists` to `value is increased`: judgment becomes more usable, insights become less obvious and better grounded, trade-offs become clearer, and the final artifact carries more value per unit of reading burden.
 
 ## Standalone Positioning
 
@@ -107,27 +105,23 @@ Do not use this method to:
 
 The goal is value gain, not thickness for its own sake.
 
-Depth is only useful when it increases the module's ability to support decisions, action, review, reuse, or downstream handoff.
+Sufficient thinking thickness is required because high-value insight rarely appears from thin substrate. But once the module has enough constraints, scenarios, alternatives, trade-offs, evidence boundaries, and failure paths, another expansion round may lower value density rather than improve value.
 
-A module gains thinking value when it has enough of the following:
+TVG rounds are state-driven, not action-fixed. Each round first asks what the module currently lacks, then chooses a value-gain action.
 
-- real constraints
-- concrete scenarios
-- meaningful alternatives
-- explicit trade-offs
-- boundary conditions
-- failure paths
-- evidence and uncertainty separation
-- downstream usability
-- exit reasoning
+Primary loop dimensions:
+
+- `Thinking Thickness`: whether the module has enough thought substrate to support value.
+- `Grounded Insight Yield`: whether the module produces non-obvious but anchored insight.
+- `Value Density`: whether the artifact carries enough value relative to reading burden.
 
 Short rule:
 
-> `Complete is not enough. Value-added enough is the handoff threshold.`
+> `Complete is not enough. Thick is not enough. TVG exits when the module has enough thought substrate, grounded insight, and value density for its actual use.`
 
-Anti-demo rule:
+Grounded novelty rule:
 
-> `A perfect template can still be a low-value demo if it does not improve judgment, action, evidence honesty, or downstream use.`
+> `TVG should make the reader think, "I had not seen it that way, but it makes sense." It may stretch beyond current reality, but the stretch must remain anchored enough to be productive speculation rather than unsupported fantasy.`
 
 ## Value-Gain Governance Layer
 
@@ -155,6 +149,80 @@ Use these types to clarify what `value` means for the current module. Select onl
 | `execution-value` | Does it make action more executable? | next action, owner, validation path, exit state |
 
 If the module's value type cannot be named, do not start by adding detail. First clarify what value the module is supposed to create.
+
+### Primary Loop Dimensions
+
+Use these dimensions for internal calibration. They guide agentic judgment; they are not numeric scores and must not be computed by scripts.
+
+| Dimension | Core Question | Low Signal | High Signal |
+|---|---|---|---|
+| `Thinking Thickness` | Has the module gone deep enough to support value? | missing constraints, scenarios, alternatives, trade-offs, failure paths | enough thought substrate exists for insight or refinement |
+| `Grounded Insight Yield` | Did the run produce non-obvious but anchored insight? | generic, template-like, merely complete | changes understanding, judgment, framing, or action |
+| `Value Density` | Is value concentrated relative to reading burden? | repetition, taxonomy, ornament, low-signal structure | high-signal expression without premature compression |
+
+Do not optimize these dimensions independently. Thickness without insight becomes bloat; insight without grounding becomes fantasy; density without thickness becomes polished thinness.
+
+### Thickness-Before-Density Rule
+
+Value density must not outrank missing thinking thickness. If the module still lacks the substrate required for its actual use, density optimization is premature.
+
+Before compacting or sharpening, retain enough constraints, alternatives, failure paths, evidence boundaries, and review-bound items for the module's downstream use; compact only after the thinking substrate is sufficient.
+
+This is especially important for review, handoff, design, and complex-decision artifacts. In those cases, some visible structure is part of the value, not ornamental bulk.
+
+### Thickness Gate
+
+Before applying any output profile or density optimization, pass the thickness gate:
+
+1. Does the module have enough constraints for its intended use?
+2. Are material alternatives or why-this-not-that reasoning visible?
+3. Are material failure paths and evidence boundaries visible?
+4. Are review-bound items or accepted unknowns visible when the module is for review, handoff, design, or complex decision support?
+
+If the answer is no, run depth formation first. output_profile is applied only after the thickness gate is clear.
+
+### Exit Graded Refinement
+
+After the thickness gate is clear, use `output_profile` as exit-side graded refinement:
+
+- `insight_dense`: keep one decisive grounded claim and compress toward the sharpest judgment.
+- `balanced`: preserve the core judgment and necessary supporting structure without adding synthetic machinery.
+- `coverage_rich`: preserve useful review or handoff structure, including decision criteria when material, while removing only low-value expansion.
+
+This keeps the internal mainline dynamic while preventing value-density optimization from preempting the thinking substrate.
+
+### Grounded Novelty
+
+A high-value TVG result should often contain grounded novelty: a non-obvious but useful viewpoint that ordinary generation would likely miss.
+
+Grounded novelty requires all three:
+
+- `non-obvious`: not a template answer, common summary, or compliance-shaped restatement
+- `grounded`: anchored in real constraints, trends, contradictions, needs, counterexamples, or structural reasoning
+- `useful`: changes understanding, judgment, expression, action, trade-off, or next inquiry
+
+This is not novelty for novelty's sake. A surprising sentence with no anchor is not valid value gain.
+
+### Grounded Stretch Levels
+
+TVG may go beyond current reality when doing so reveals a useful possibility. Current reality is often past evidence and may not contain the full truth. The stretch must keep enough anchors to remain productive.
+
+| Level | Meaning | Treatment |
+|---|---|---|
+| `reality-bound` | stays within current facts and constraints | safe but may be ordinary |
+| `plausible-extension` | extends one step from known tensions or trends | useful default stretch zone |
+| `productive-speculation` | goes beyond available proof while naming the anchor and assumption | allowed when labeled honestly |
+| `free-fantasy` | lacks anchor, reasoning support, or recovery path | reject or return-remediate |
+
+The target is grounded stretch: fresh enough to change perspective, anchored enough to remain believable.
+
+### Late-Stage Warning Checks
+
+`Claim Calibration` and `Handoff Readiness` are late-stage warning checks by default. They should not dominate early internal iteration and are not inside the primary value-gain loop unless the module purpose or risk profile requires it.
+
+`Claim Calibration` warns when a fresh idea is being presented with stronger claim status than it deserves. It usually causes labeling, downgrade, or review-bound notes, not a different main action. It escalates only when factual accuracy, safety, compliance, money, release, or irreversible execution is central.
+
+`Handoff Readiness` is checked near exit or when the module is explicitly for handoff, review, implementation, or reuse. It should not flatten early exploration.
 
 ### Veto Constraints
 
@@ -353,57 +421,74 @@ It prevents:
 - endless refinement
 - over-claiming
 
-## Step 4: Run A Bounded Value-Gain Loop
+## Step 4: Run A Bounded State-Driven Value-Gain Loop
 
 Default loop:
 
 1. `structured draft`
    - create or identify the module in its current structured form
-2. `R1: gap-targeted deepening`
-   - address the most important thinness signals
-3. `R2: comparison / stress-test deepening`
-   - compare alternatives, pressure-test assumptions, expose anti-demo risks
-4. `R3: integration deepening`
-   - integrate the strongest gains and tighten the module
-5. `exit decision`
-   - freeze, freeze-with-review-bound-warning, return-remediate, or block
+2. `state check`
+   - classify the current module state using `Thinking Thickness`, `Grounded Insight Yield`, and `Value Density`
+3. `thickness gate`
+   - if thinking substrate is insufficient for the actual use, run depth formation before density optimization or output-profile shaping
+4. `routed value-gain action`
+   - deepen, continue targeted depth formation, refine, compact-strengthen, return, block, or freeze based on state
+5. `exit graded refinement`
+   - after the thickness gate is clear, apply `output_profile` as delivery shaping only
+6. `Exit-side warning checks`
+   - apply claim calibration and handoff readiness near exit or when the module purpose requires them
+7. `exit decision`
+   - freeze, freeze-with-review-bound-warning, return-remediate, or blocked
 
 Default limit:
 
-> one structured draft + up to three deepening rounds
+> one structured draft + up to three state-driven value-gain rounds
 
-A system may allow more rounds only with explicit justification.
+A system may allow more rounds only with explicit justification and a named positive-value hypothesis.
 
-### Axis Selection And Conflict Rule
+### State-Driven Round Routing
 
-When multiple value-gain axes are possible, do not deepen all of them for completeness.
+| State | Meaning | Next Action |
+|---|---|---|
+| `under-thick` | thought substrate is insufficient | `deepen` |
+| `value-thickening` | more depth is still producing useful insight | continue targeted depth formation |
+| `adequate-but-loose` | thickness exists but expression is loose | `refine` |
+| `over-thick` | extra material adds burden more than value | `compact-strengthen` |
+| `insight-ready` | grounded insight exists but needs delivery shaping | refine and prepare freeze candidate |
+| `blocked` | missing evidence, domain input, runtime proof, or owner decision prevents honest progress | `return-remediate` or `blocked` |
+| `freeze-ready` | another round is unlikely to create meaningful positive value | `freeze` or `freeze-with-review-bound-warning` |
 
-Prioritize the axis most likely to change:
+Exit-side warning checks run after the primary routing state is understood. They may add claim labels, review-bound notes, handoff repair, or a risk-based return/block decision, but they should not become a routine early-loop state.
 
-- decision
-- action
-- evidence honesty
-- handoff usability
-- review confidence
+### Routing Conflict Rule
 
-If two axes conflict, prefer the one that most changes the module's actual downstream use.
+When dimensions conflict, preserve the order of value formation:
 
-Do not add another axis when it would only increase taxonomy, length, or process weight.
+1. If `Thinking Thickness` is too low, do not compress prematurely.
+2. If `Grounded Insight Yield` is low but thickness exists, pressure for hidden contradiction, alternative frame, useful counterexample, or grounded stretch.
+3. If thickness and insight exist but `Value Density` is low, refine or compact-strengthen.
+4. If missing evidence or owner judgment blocks honest progress, return or block instead of writing around the gap.
+
+Do not add an axis, profile, or warning check when it would only increase taxonomy, length, or process weight.
 
 ### Valid Round Triggers
 
 A new round is justified only when a named module unit still has one of these problems:
 
 - generic reasoning
+- insufficient thinking thickness
 - missing alternatives comparison
 - weak trade-off explanation
 - hidden uncertainty
 - missing scenario or failure path
 - weak downstream handoff value
+- weak grounded insight yield
+- low value density
 - unresolved contradiction worth testing
-- evidence / assumption boundary is unclear
+- evidence / assumption boundary is unclear for the module's risk level
 - generalization risk has not been checked
 - template completeness may be hiding demo-level judgment
+- over-thick low-density structure needs compact strengthening
 
 Do not continue based on a vague feeling that more thinking would be nice.
 
@@ -412,11 +497,12 @@ Do not continue based on a vague feeling that more thinking would be nice.
 Each round must record:
 
 - target module unit
+- current state
+- selected value-gain action
 - selected value-gain axis or axes
 - trigger for the round
-- deepening action performed
 - what changed
-- what downstream usability improved
+- what insight, density, or useful thickness improved
 - why another round is or is not justified
 
 If a round leaves no material value trace, treat it as style polish, not value gain.
@@ -558,10 +644,13 @@ The agentic exit audit should ask:
 
 1. Does this module improve decision, action, evidence honesty, review, reuse, or handoff value?
 2. Would it still be useful if the template formatting were removed?
-3. Are the important trade-offs, uncertainties, and failure paths visible?
-4. Are review-bound items honest rather than hidden behind clean structure?
-5. Are any named veto constraints triggered?
-6. Is another round likely to create meaningful positive value, or only more compliant output?
+3. Does it contain grounded insight, or only safer and longer structure?
+4. Is the value density higher, or did the run add reading burden without enough value?
+5. If the output goes beyond current reality, is the stretch anchored enough to be productive speculation rather than free fantasy?
+6. Are the important trade-offs, uncertainties, and failure paths visible?
+7. Are review-bound items honest rather than hidden behind clean structure?
+8. Are any named veto constraints triggered?
+9. Is another round likely to create meaningful positive value, or only more compliant output?
 
 Automated checks may support the audit, but they cannot replace it.
 
@@ -664,6 +753,10 @@ For small or low-risk modules, a lighter trace is acceptable if it still preserv
 
 Use the full trace for high-impact, high-uncertainty, or handoff-critical modules.
 
+Script boundary for issue #10:
+
+Scripts must not score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`; choose TVG state routes; choose `output_profile`; or decide `compact-strengthen`, `refine`, `deepen`, or `freeze`. They may only preserve records that support later agentic audit.
+
 ## Reusable Checklist
 
 Before declaring a module valuable enough, check:
@@ -680,6 +773,56 @@ Before declaring a module valuable enough, check:
 - Has automation/template-controlled demo risk been checked?
 - Has an agentic exit audit checked value, not only format or script pass?
 - Is there a reason to believe another round would or would not create positive value?
+
+## Output Profile Bias
+
+`output_profile` is an optional delivery preference. It is delivery bias, not an internal workflow fork.
+
+| Profile | Delivery Bias | Guardrail |
+|---|---|---|
+| `insight_dense` | sharper judgments, less setup, earlier compact strengthening | must not compress before thinking thickness exists |
+| `balanced` | default expression balance | must still make a clear judgment |
+| `coverage_rich` | more examples, context, reasoning path, and boundaries | must not permit low-value expansion |
+
+Profiles affect final delivery weighting only. They must not lower the standard for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
+
+### Insight-Dense Claim Tension
+
+`insight_dense` keeps one decisive grounded claim. It should make the central boundary sharper, not turn the artifact into a safer but dull disclaimer.
+
+For high-tension claims, preserve calibrated claim tension: prefer calibrated tension over defensive negation. Use claim calibration to mark basis, scope, or review-bound uncertainty; do not turn claim calibration into generic hedging.
+
+Boldness is allowed when the anchor is visible. A dense claim may name a threshold, asymmetry, trade-off, or structural boundary as long as it does not present speculation as proven fact.
+
+### Balanced Proportionality
+
+`balanced` should preserve executable routing without turning a simple decision into a process machine.
+
+Use the simplest control shape that carries the judgment: if / then branches, a small matrix, or a short rule are usually enough; avoid synthetic scorecards or machinery unless the task naturally needs scoring.
+
+Balanced delivery should keep irreversible-risk boundaries or review cadence when they materially change routing, rollback, or ownership. Specifically, place irreversible-risk boundaries and minimum review cadence inside the rule body for operational rules; do not defer core routing controls to review-bound notes. Do not drop those controls merely to look compact.
+
+When the source does not provide exact timing, give a provisional cadence rather than saying only periodic review. When using high / medium / low classifications, anchor high / medium / low labels when used so the rule does not depend on private intuition.
+
+### Coverage-Rich Review Structure
+
+`coverage_rich` must preserve useful review structure when the module is for review, handoff, design explanation, or complex decision support.
+
+In those cases, useful thickness should normally include:
+
+- decision questions
+- decision criteria
+- alternatives compared
+- substitute workflows
+- adoption risks
+- failure paths
+- success / failure conditions
+- evidence / assumption boundary
+- review-bound items
+
+These are not mandatory sections for every output. They are the default shape of useful thickness when the downstream job is review or handoff. Do not collapse them into a single dense sentence merely to raise apparent value density.
+
+Scripts must not choose `output_profile`. The generator or surrounding workflow may name it as a preference, but agentic judgment still decides whether the module has enough substrate, insight, and density to exit.
 
 ## Delivery Translation Rule
 

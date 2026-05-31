@@ -38,6 +38,23 @@ State the value gain claimed by the module or value-gain run.
 - `after_state`:
 - `why_this_is_not_only_more_text_or_structure`:
 
+## Grounded Insight And Density Check
+
+These are audit prompts, not script-scored fields.
+
+- `thinking_thickness_state`: `under-thick | value-thickening | adequate-but-loose | over-thick | insight-ready | blocked | freeze-ready`
+- `grounded_insight_yield`: `none | weak | useful | strong`
+- `value_density_result`: `low | acceptable | high | over-compressed`
+- `grounded_stretch_level`: `reality-bound | plausible-extension | productive-speculation | free-fantasy | not-applicable`
+- `output_profile`: `insight_dense | balanced | coverage_rich | not-specified`
+- `profile_guardrail_result`: `clear | violated | not-applicable`
+
+Audit notes:
+
+- Did the run improve grounded insight, or only add safer structure?
+- Did the final artifact improve value density relative to reading burden?
+- If `output_profile` was used, did it preserve the standards for thinking thickness, grounded insight, and value density?
+
 ## Value-Gain Type
 
 Select all that apply.
