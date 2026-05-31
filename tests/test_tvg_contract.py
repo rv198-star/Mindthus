@@ -219,6 +219,28 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_issue_10_external_opencode_version_ab_packet_exists(self):
+        path = REPO / "tests" / "tvg_ab_opencode_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing OpenCode old-vs-new TVG A/B packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Issue #10 OpenCode Version A/B Packet",
+            "runner: opencode",
+            "model: opencode/deepseek-v4-flash-free",
+            "old_tvg_commit",
+            "new_tvg_commit",
+            "isolated_project_skills",
+            "same_input_prompts",
+            "Scenario O1",
+            "Scenario O2",
+            "Scenario O3",
+            "old_tvg_output",
+            "new_tvg_output",
+            "external_ai_review",
+            "review_preference",
+        ):
+            self.assertIn(phrase, text)
+
     def test_scripts_still_cannot_score_or_route_issue_10_value_gain(self):
         skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
         method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
