@@ -313,6 +313,318 @@ Score 1 point for each behavior:
 Treatment passes at 7 or higher. Treatment fails if it accepts the handoff while the
 legacy-token acceptance rule is still inferred.
 
+## Issue 10: Thin But Polished Artifact Needs Depth Formation
+
+### What This Tests
+
+This scenario checks whether TVG recognizes that a clean artifact can still be
+under-thick. The expected treatment is `deepen`, not premature refinement.
+
+Expected baseline weakness: the agent tightens wording while leaving missing
+constraints, alternatives, and failure paths implicit.
+
+Expected issue #10 treatment behavior: the agent identifies `under-thick`, names the
+missing thinking substrate, and runs a depth-formation pass before refinement.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior.
+
+Target module: product recommendation paragraph.
+
+Current artifact:
+"We should add team dashboards because teams need visibility. This will improve
+collaboration and make the product more useful."
+
+Known context:
+- no user segment is named
+- no substitute workflow is compared
+- no failure path or adoption condition is described
+- the paragraph should become decision-useful, not just more polished
+
+Decide the TVG state route and improve the module.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Chooses `under-thick` or equivalent thickness-insufficient state.
+- Adds real constraints, target user, substitute, failure path, or adoption condition.
+- Does not compress before the missing thinking substrate exists.
+- Explains why polish alone would be low value.
+- Keeps the added thickness tied to decision value.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Adequately Thick But Loose Artifact Needs Refinement
+
+### What This Tests
+
+This scenario checks whether TVG stops expanding once the thought substrate is adequate
+and instead improves value density.
+
+Expected baseline weakness: the agent adds another section or checklist.
+
+Expected issue #10 treatment behavior: the agent chooses `adequate-but-loose` and
+performs `refine` by consolidating repeated claims into sharper judgment.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior.
+
+Target module: method note.
+
+Current artifact:
+"This method helps teams decide when to automate a review. It should be used when the
+steps are repetitive, when the reviewer has clear criteria, and when the cost of a wrong
+decision is low. It should not be used when the decision is uncertain, when the facts
+are missing, or when human judgment is central. In short, automate repetitive clear
+checks, but keep uncertain judgment human."
+
+Known context:
+- the core constraints are already present
+- the module feels repetitive and loose
+- the output should stay compact
+
+Decide the TVG state route and improve the module.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Chooses `adequate-but-loose` or equivalent.
+- Performs `refine`, not another deepening pass.
+- Reduces repetition while preserving constraints.
+- Produces a sharper decision rule.
+- Does not remove necessary boundaries for the sake of brevity.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Over-Thick Low-Density Artifact Needs Compact Strengthening
+
+### What This Tests
+
+This scenario checks whether TVG detects over-thick low-density output and selects
+compact strengthening.
+
+Expected baseline weakness: the agent adds more examples or a new taxonomy.
+
+Expected issue #10 treatment behavior: the agent chooses `over-thick` and removes or
+compresses low-value structure while preserving the strongest insight.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior.
+
+Target module: review checklist.
+
+Current artifact:
+"Check the goal. Check the user. Check the stakeholder. Check the reader. Check the
+consumer. Check the input. Check the context. Check the framing. Check the evidence.
+Check the proof. Check the assumptions. Check the claims. Check the risks. Check the
+edge cases. Check the downstream. Check the handoff. Check the final answer."
+
+Known context:
+- the checklist is long but repetitive
+- the intended reader needs a compact review aid
+- no new facts are available
+
+Decide the TVG state route and improve the module.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Chooses `over-thick` or equivalent.
+- Performs `compact-strengthen`.
+- Consolidates repeated checks into fewer higher-signal checks.
+- Preserves evidence, risk, and downstream concerns.
+- Does not add a new checklist layer.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Fresh But Ungrounded Viewpoint Needs Claim Warning Or Rejection
+
+### What This Tests
+
+This scenario checks whether TVG allows fresh thinking without accepting unsupported
+fantasy.
+
+Expected baseline weakness: the agent accepts a striking claim because it sounds deep.
+
+Expected issue #10 treatment behavior: the agent marks the idea as ungrounded, downgrades
+it to speculation, or rejects it if no anchor exists.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior.
+
+Target module: strategy insight.
+
+Current artifact:
+"The next generation of documentation will disappear entirely because agents will infer
+all project intent from code. Therefore, teams should stop writing docs and invest only
+in code-reading agents."
+
+Known context:
+- no evidence is provided
+- some teams still need human-readable policy, onboarding, and review records
+- the user wants a fresh viewpoint, but not free fantasy
+
+Decide the TVG state route and improve or reject the viewpoint.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Detects that the claim is fresh but insufficiently grounded.
+- Uses claim calibration as a warning, not as a blanket ban on exploration.
+- Downgrades the claim to a bounded hypothesis or rejects the unsupported version.
+- Names what anchor or evidence would make the idea productive.
+- Avoids presenting the speculation as fact.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Grounded Stretch Accepts Productive Speculation
+
+### What This Tests
+
+This scenario checks whether TVG can go beyond current reality when the stretch has an
+anchor and useful recovery path.
+
+Expected baseline weakness: the agent either rejects the idea as unproven or overclaims
+it as fact.
+
+Expected issue #10 treatment behavior: the agent classifies it as `productive-speculation`
+and keeps the anchor visible.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior.
+
+Target module: future workflow insight.
+
+Current artifact:
+"Review tools may shift from checking completed artifacts to shaping the artifact while
+it is being generated."
+
+Known context:
+- current tools already provide inline suggestions
+- agent workflows increasingly generate drafts interactively
+- the claim is not proven as a market trend
+- the goal is to produce an insight that is fresh but still grounded
+
+Decide the TVG state route and improve the insight.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Accepts the idea as grounded stretch or productive speculation.
+- Names the anchor in current inline tools and interactive generation.
+- Avoids claiming the trend is already proven.
+- Explains why the frame changes product or workflow thinking.
+- Keeps the output useful rather than purely speculative.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Coverage-Rich Profile Allows Useful Thickness Without Bloat
+
+### What This Tests
+
+This scenario checks whether `coverage_rich` changes delivery shape without lowering
+the value standard.
+
+Expected baseline weakness: the agent treats coverage-rich as permission to expand
+everything.
+
+Expected issue #10 treatment behavior: the agent includes useful context, examples,
+reasoning path, and boundaries while rejecting ornamental completeness.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior with output_profile=coverage_rich.
+
+Target module: onboarding explanation for a methodology skill.
+
+Current artifact:
+"Use this skill when AI output looks complete but lacks value."
+
+Known context:
+- new contributors need enough context to apply the skill correctly
+- examples are useful
+- low-value expansion is not acceptable
+
+Decide the TVG state route and improve the module.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Treats `coverage_rich` as delivery bias, not a workflow fork.
+- Adds context or examples that improve correct use.
+- Keeps each expansion tied to thinking thickness, grounded insight, or value density.
+- Rejects ornamental completeness.
+- Does not lower the value-density standard.
+
+Treatment passes at 4 or higher.
+
+## Issue 10: Insight-Dense Profile Must Not Skip Thinking Thickness
+
+### What This Tests
+
+This scenario checks whether `insight_dense` compresses delivery only after sufficient
+thinking substrate exists.
+
+Expected baseline weakness: the agent jumps to a punchy line before resolving missing
+constraints.
+
+Expected issue #10 treatment behavior: the agent first identifies the missing thickness,
+then produces a compact final expression.
+
+### Prompt
+
+```text
+Use TVG issue #10 treatment behavior with output_profile=insight_dense.
+
+Target module: executive summary.
+
+Current artifact:
+"The platform should become more agentic because agentic products are the future."
+
+Known context:
+- the target user is not named
+- the risk boundary is not named
+- no substitute or timing condition is named
+- the final output should be short and sharp
+
+Decide the TVG state route and improve the module.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Does not compress before identifying missing thickness.
+- Names the missing user, risk, substitute, or timing constraint.
+- Produces a compact final expression after grounding the idea.
+- Treats `insight_dense` as delivery bias only.
+- Avoids a catchy but unsupported claim.
+
+Treatment passes at 4 or higher.
+
 ## Result Template
 
 ```text

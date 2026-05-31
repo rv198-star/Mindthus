@@ -7,20 +7,30 @@ description: Use as a value-driven thinking-depth enhancer when an AI-generated 
 
 ## Core Claim
 
-Thinking Value-Gain is a value-driven thinking-depth enhancer for AI-generated bounded modules.
+Thinking Value-Gain is a state-driven value-gain loop for AI-generated bounded modules.
 
-It addresses a common AI-output failure mode: the artifact looks complete, rigorous, standardized, and fluent, but the substance is hollow, shallow, random, or too weak for real judgment, decision, action, review, reuse, or handoff.
+It addresses a common AI-output failure mode: the artifact looks complete, rigorous,
+standardized, and fluent, but the substance is hollow, shallow, random, over-expanded,
+or too weak for real judgment, decision, action, review, reuse, or handoff.
 
-When used on a bounded artifact with a clear value target, TVG usually has high upside and low downside: it improves depth without needing to reopen the whole problem.
+TVG is not a thickness-expansion method. Sufficient thinking thickness is the substrate
+of value, Grounded Insight Yield is the core output, and Value Density is the delivery
+quality.
 
 Short rule:
 
-> Do not deepen for length. Deepen only where practical value can increase.
+> Do not deepen by default. First judge whether the module needs depth formation,
+> grounded insight generation, value refinement, compact strengthening, warning
+> calibration, or honest exit.
 
 Two core inputs keep TVG from becoming generic improvement:
 
 - `veto_constraints`: explicit unacceptable states for this module and use. They are not value-gain axes. If one is triggered, the module must not exit as `freeze`.
 - `independent_auditor`: for high-impact, high-uncertainty, or handoff-critical modules, the exit audit should be performed by a reviewer that reads the final module, intended use, evidence, and veto constraints, not the generator's working process.
+
+Optional delivery control:
+
+- `output_profile`: `insight_dense | balanced | coverage_rich`. This is delivery bias, not an internal workflow fork. It may affect final expression shape, but it must not lower the standard for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
 
 ## Mainline / 主路径
 
@@ -42,8 +52,10 @@ Do not use this skill to reopen whole-project strategy or to add process weight 
 1. Name the smallest module that can be independently frozen, returned, or blocked.
 2. Read `resources/methodology.md` only as needed.
 3. Name any module-specific veto constraints before deepening.
-4. Create a trace with `scripts/trace/init.py`.
-5. Perform agentic value-gain work and fill the trace.
+4. Check the current module state using `Thinking Thickness`, `Grounded Insight Yield`,
+   and `Value Density`.
+5. Perform the routed value-gain action: `deepen`, targeted depth formation, `refine`,
+   `compact-strengthen`, warning calibration, `return-remediate`, `blocked`, or `freeze`.
 6. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
 7. Validate trace shape with `scripts/trace/validate.py`.
 8. Persist the trace with `scripts/trace/persist.py` when useful.
@@ -72,6 +84,10 @@ Scripts must not:
 - decide whether independent auditor separation is required
 - promote patterns
 - output `PASS` as an audit verdict
+- score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`
+- choose TVG state routes
+- choose `output_profile`
+- decide `compact-strengthen`, `refine`, `deepen`, or `freeze`
 
 Every script result means only:
 
