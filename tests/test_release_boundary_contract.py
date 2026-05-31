@@ -6,6 +6,17 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
+    def test_v0_6_2_release_surface_is_declared(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
+
+        self.assertIn("当前仓库版本：`v0.6.2`", readme)
+        self.assertIn("## v0.6.2", changelog)
+        self.assertIn("TVG 从扩厚度升级为 grounded insight value-gain", changelog)
+        self.assertIn("public skills release boundary", changelog)
+        self.assertIn('VERSION = "0.6.2"', builder)
+
     def test_public_skills_release_boundary_doc_covers_issue_9_contract(self):
         text = (
             REPO / "docs" / "internal" / "public-skills-release-boundary.md"
