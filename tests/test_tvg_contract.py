@@ -201,6 +201,24 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_issue_10_ab_packet_includes_strong_baseline_coverage_rich_check(self):
+        path = REPO / "tests" / "tvg_ab_run_2026-05-31.md"
+        self.assertTrue(path.exists(), "missing issue #10 A/B review packet")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Strong Baseline Calibration",
+            "strong_baseline_output",
+            "旧式认真扩厚",
+            "不是证明三个输出档位天然都优于基线",
+            "coverage_rich 强基线对照",
+            "ai_reviewer_preference: mixed",
+            "基线齐平",
+            "有用厚度",
+            "低价值扩写",
+            "修正结论",
+        ):
+            self.assertIn(phrase, text)
+
     def test_scripts_still_cannot_score_or_route_issue_10_value_gain(self):
         skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
         method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
