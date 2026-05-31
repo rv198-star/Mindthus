@@ -32,6 +32,8 @@ Optional delivery control:
 
 - `output_profile`: `insight_dense | balanced | coverage_rich`. This is delivery bias, not an internal workflow fork. It may affect final expression shape, but it must not lower the standard for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
 
+Profile guardrails live in `resources/methodology.md`: `insight_dense` should preserve calibrated claim tension, `balanced` should avoid unnecessary synthetic machinery, and `coverage_rich` should preserve useful review or handoff structure.
+
 ## Mainline / 主路径
 
 ### When To Use
@@ -54,12 +56,14 @@ Do not use this skill to reopen whole-project strategy or to add process weight 
 3. Name any module-specific veto constraints before deepening.
 4. Check the current module state using `Thinking Thickness`, `Grounded Insight Yield`,
    and `Value Density`.
-5. Perform the routed value-gain action: `deepen`, targeted depth formation, `refine`,
+5. Pass the thickness gate before applying density optimization or `output_profile`.
+6. Perform the routed value-gain action: `deepen`, targeted depth formation, `refine`,
    `compact-strengthen`, warning calibration, `return-remediate`, `blocked`, or `freeze`.
-6. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
-7. Validate trace shape with `scripts/trace/validate.py`.
-8. Persist the trace with `scripts/trace/persist.py` when useful.
-9. Make the exit decision by agentic audit, not by script output.
+7. Apply `output_profile` only as exit-side graded refinement.
+8. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
+9. Validate trace shape with `scripts/trace/validate.py`.
+10. Persist the trace with `scripts/trace/persist.py` when useful.
+11. Make the exit decision by agentic audit, not by script output.
 
 ## Guardrails / 从属补漏
 

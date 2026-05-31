@@ -174,3 +174,65 @@ This does not support the claim that the new TVG is always better than the old T
 - Old TVG can still be stronger for coverage-rich review artifacts that benefit from explicit structure and review-bound items.
 - New TVG is stronger for insight-dense compression and balanced operational rule refinement.
 - The strongest future TVG direction is not to discard old depth expansion, but to keep useful old thickness while adding state routing, value density, and output-profile discipline.
+
+## Follow-Up Run: Thickness Gate And Profile Refinement Fix
+
+- `old_tvg_source`: `adc07e8`
+- `new_tvg_source`: current working tree after thickness gate, coverage-rich review structure, insight-dense claim tension, and balanced proportionality refinements
+- `run_dir`: `/tmp/tvg-opencode-ab/current-fix/`
+- `same_input_prompts`: yes
+- `language_control`: both old and new outputs were constrained to Simplified Chinese
+- `candidate_mapping_for_scored_review`: Candidate A = old TVG, Candidate B = new TVG
+
+The first pairwise reviews were order-biased: the reviewer selected whichever candidate was listed first in both label orders. Those preference-only runs were treated as unreliable.
+
+The accepted review used scenario rubrics, asked the reviewer to score Candidate B before Candidate A, and required deductions for both candidates.
+
+### Follow-Up Scored Review Result
+
+| Scenario | Profile | Old TVG Score | New TVG Score | Preference | Reviewer Note |
+|---|---|---:|---:|---|---|
+| O1 | `coverage_rich` | 7 | 9 | new | New preserved review structure, decision criteria, success/failure conditions, and explicit evidence boundaries with less redundant expansion. |
+| O2 | `insight_dense` | 7 | 9 | new | New produced a sharper grounded claim around release risk, accountability, and auditable evidence quality. |
+| O3 | `balanced` | 33/50 | 49/50 | new | New kept proportional routing while adding irreversible-risk hard boundaries, misroute rollback, review cadence, and SLA pressure handling. |
+
+### Key New Outputs After Fix
+
+O1 new output preserved:
+
+- review question
+- user segmentation
+- substitute workflows
+- adoption risks
+- failure paths
+- decision criteria
+- review-bound items
+
+O2 new output:
+
+```text
+AI 审查不会无条件取代人工审查——在低风险、高吞吐场景中速度是决定性优势，AI将主导审查；但在高风险或高问责场景中，速度不足以抵消错误成本与可解释证据的缺失，人工审查仍是必要条件。
+```
+
+O3 final new output kept proportional routing and operational controls:
+
+```text
+只有同时满足可枚举、无歧义、可验证三项条件，检查方可自动执行。
+
+不可逆变更：涉及安全权限、数据破坏、生产配置、合规声明，无论规则是否覆盖，必须经人工签收。
+
+规则校准周期：新规则上线首月每周审计一次误报/漏报；连续两个月误报率 < 2% 可降为每月；连续两季保持则降为每季。
+
+误报熔断：同一规则连续 3 次自动判定与人工复审结果不一致，该规则降级为人工审核，待误报率降至 5% 以下方可恢复自动。
+```
+
+### Follow-Up Conclusion
+
+The earlier coverage-rich regression was caused by value-density pressure arriving before the artifact had preserved enough review substrate. The fix is not a fixed "always expand first" workflow. It is:
+
+1. keep the state-driven TVG mainline
+2. require a thickness gate before density optimization or `output_profile`
+3. apply output profiles only as exit-side graded refinement
+4. make `coverage_rich` preserve review/handoff structure
+5. make `insight_dense` preserve calibrated claim tension instead of generic hedging
+6. make `balanced` preserve proportional routing without deferring irreversible-risk boundaries or review cadence

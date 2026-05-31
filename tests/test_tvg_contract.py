@@ -71,6 +71,20 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_methodology_preserves_thickness_before_density_optimization(self):
+        text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Thickness-Before-Density Rule",
+            "Value density must not outrank missing thinking thickness",
+            "density optimization is premature",
+            "retain enough constraints, alternatives, failure paths, evidence boundaries, and review-bound items",
+            "compact only after the thinking substrate is sufficient",
+            "Thickness Gate",
+            "Exit Graded Refinement",
+            "output_profile is applied only after the thickness gate is clear",
+        ):
+            self.assertIn(phrase, text)
+
     def test_methodology_defines_grounded_novelty_and_stretch_boundaries(self):
         text = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
         for phrase in (
@@ -112,6 +126,64 @@ class TvgContractTests(unittest.TestCase):
             "must not lower the standard",
             "must not compress before thinking thickness exists",
             "must not permit low-value expansion",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_coverage_rich_preserves_review_and_handoff_structure(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Coverage-Rich Review Structure",
+            "`coverage_rich` must preserve useful review structure",
+            "decision questions",
+            "alternatives compared",
+            "failure paths",
+            "evidence / assumption boundary",
+            "review-bound items",
+            "decision criteria",
+            "success / failure conditions",
+            "substitute workflows",
+            "adoption risks",
+            "覆盖厚度优先要保留评审结构",
+            "决策问题",
+            "成败条件",
+            "待确认项",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_insight_dense_preserves_calibrated_claim_tension(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Insight-Dense Claim Tension",
+            "`insight_dense` keeps one decisive grounded claim",
+            "calibrated claim tension",
+            "prefer calibrated tension over defensive negation",
+            "do not turn claim calibration into generic hedging",
+            "洞察密度优先要保留有校准的判断张力",
+            "不是把观点压成保守免责声明",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_balanced_profile_preserves_proportional_routing(self):
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = method + "\n" + public_doc
+        for phrase in (
+            "Balanced Proportionality",
+            "`balanced` should preserve executable routing",
+            "avoid synthetic scorecards or machinery unless the task naturally needs scoring",
+            "keep irreversible-risk boundaries or review cadence when they materially change routing",
+            "place irreversible-risk boundaries and minimum review cadence inside the rule body for operational rules",
+            "do not defer core routing controls to review-bound notes",
+            "give a provisional cadence rather than saying only periodic review",
+            "anchor high / medium / low labels when used",
+            "平衡档要保持比例感",
+            "不要为了显得可执行而制造评分系统",
+            "不可逆风险和最低复审节奏要进入规则正文",
+            "不要只写定期复审",
         ):
             self.assertIn(phrase, combined)
 

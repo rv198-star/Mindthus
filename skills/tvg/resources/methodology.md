@@ -162,6 +162,35 @@ Use these dimensions for internal calibration. They guide agentic judgment; they
 
 Do not optimize these dimensions independently. Thickness without insight becomes bloat; insight without grounding becomes fantasy; density without thickness becomes polished thinness.
 
+### Thickness-Before-Density Rule
+
+Value density must not outrank missing thinking thickness. If the module still lacks the substrate required for its actual use, density optimization is premature.
+
+Before compacting or sharpening, retain enough constraints, alternatives, failure paths, evidence boundaries, and review-bound items for the module's downstream use; compact only after the thinking substrate is sufficient.
+
+This is especially important for review, handoff, design, and complex-decision artifacts. In those cases, some visible structure is part of the value, not ornamental bulk.
+
+### Thickness Gate
+
+Before applying any output profile or density optimization, pass the thickness gate:
+
+1. Does the module have enough constraints for its intended use?
+2. Are material alternatives or why-this-not-that reasoning visible?
+3. Are material failure paths and evidence boundaries visible?
+4. Are review-bound items or accepted unknowns visible when the module is for review, handoff, design, or complex decision support?
+
+If the answer is no, run depth formation first. output_profile is applied only after the thickness gate is clear.
+
+### Exit Graded Refinement
+
+After the thickness gate is clear, use `output_profile` as exit-side graded refinement:
+
+- `insight_dense`: keep one decisive grounded claim and compress toward the sharpest judgment.
+- `balanced`: preserve the core judgment and necessary supporting structure without adding synthetic machinery.
+- `coverage_rich`: preserve useful review or handoff structure, including decision criteria when material, while removing only low-value expansion.
+
+This keeps the internal mainline dynamic while preventing value-density optimization from preempting the thinking substrate.
+
 ### Grounded Novelty
 
 A high-value TVG result should often contain grounded novelty: a non-obvious but useful viewpoint that ordinary generation would likely miss.
@@ -400,11 +429,15 @@ Default loop:
    - create or identify the module in its current structured form
 2. `state check`
    - classify the current module state using `Thinking Thickness`, `Grounded Insight Yield`, and `Value Density`
-3. `routed value-gain action`
+3. `thickness gate`
+   - if thinking substrate is insufficient for the actual use, run depth formation before density optimization or output-profile shaping
+4. `routed value-gain action`
    - deepen, continue targeted depth formation, refine, compact-strengthen, return, block, or freeze based on state
-4. `Exit-side warning checks`
+5. `exit graded refinement`
+   - after the thickness gate is clear, apply `output_profile` as delivery shaping only
+6. `Exit-side warning checks`
    - apply claim calibration and handoff readiness near exit or when the module purpose requires them
-5. `exit decision`
+7. `exit decision`
    - freeze, freeze-with-review-bound-warning, return-remediate, or blocked
 
 Default limit:
@@ -752,6 +785,42 @@ Before declaring a module valuable enough, check:
 | `coverage_rich` | more examples, context, reasoning path, and boundaries | must not permit low-value expansion |
 
 Profiles affect final delivery weighting only. They must not lower the standard for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
+
+### Insight-Dense Claim Tension
+
+`insight_dense` keeps one decisive grounded claim. It should make the central boundary sharper, not turn the artifact into a safer but dull disclaimer.
+
+For high-tension claims, preserve calibrated claim tension: prefer calibrated tension over defensive negation. Use claim calibration to mark basis, scope, or review-bound uncertainty; do not turn claim calibration into generic hedging.
+
+Boldness is allowed when the anchor is visible. A dense claim may name a threshold, asymmetry, trade-off, or structural boundary as long as it does not present speculation as proven fact.
+
+### Balanced Proportionality
+
+`balanced` should preserve executable routing without turning a simple decision into a process machine.
+
+Use the simplest control shape that carries the judgment: if / then branches, a small matrix, or a short rule are usually enough; avoid synthetic scorecards or machinery unless the task naturally needs scoring.
+
+Balanced delivery should keep irreversible-risk boundaries or review cadence when they materially change routing, rollback, or ownership. Specifically, place irreversible-risk boundaries and minimum review cadence inside the rule body for operational rules; do not defer core routing controls to review-bound notes. Do not drop those controls merely to look compact.
+
+When the source does not provide exact timing, give a provisional cadence rather than saying only periodic review. When using high / medium / low classifications, anchor high / medium / low labels when used so the rule does not depend on private intuition.
+
+### Coverage-Rich Review Structure
+
+`coverage_rich` must preserve useful review structure when the module is for review, handoff, design explanation, or complex decision support.
+
+In those cases, useful thickness should normally include:
+
+- decision questions
+- decision criteria
+- alternatives compared
+- substitute workflows
+- adoption risks
+- failure paths
+- success / failure conditions
+- evidence / assumption boundary
+- review-bound items
+
+These are not mandatory sections for every output. They are the default shape of useful thickness when the downstream job is review or handoff. Do not collapse them into a single dense sentence merely to raise apparent value density.
 
 Scripts must not choose `output_profile`. The generator or surrounding workflow may name it as a preference, but agentic judgment still decides whether the module has enough substrate, insight, and density to exit.
 
