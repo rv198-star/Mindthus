@@ -13,9 +13,37 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
         self.assertIn("当前仓库版本：`v0.6.2`", readme)
         self.assertIn("## v0.6.2", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v0.6.2.md)", changelog)
         self.assertIn("TVG 从扩厚度升级为 grounded insight value-gain", changelog)
         self.assertIn("public skills release boundary", changelog)
         self.assertIn('VERSION = "0.6.2"', builder)
+
+    def test_v0_6_2_release_log_is_chinese_and_release_ready(self):
+        text = (REPO / "docs" / "releases" / "v0.6.2.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "# Mindthus v0.6.2 发布日志",
+            "发布日期：2026-05-31",
+            "版本定位",
+            "这次解决了什么",
+            "TVG",
+            "厚度闸门",
+            "输出档位",
+            "`insight_dense`",
+            "`balanced`",
+            "`coverage_rich`",
+            "公开技能包发布边界",
+            "#9",
+            "#10",
+            "验证结果",
+            "100/100",
+            "不声明跨模型鲁棒性",
+            "发布后再关闭 #10",
+        ):
+            self.assertIn(phrase, text)
+
+        self.assertNotIn("Release date:", text)
+        self.assertNotIn("Summary", text)
 
     def test_public_skills_release_boundary_doc_covers_issue_9_contract(self):
         text = (

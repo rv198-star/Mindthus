@@ -8,6 +8,8 @@
 
 发布日期：2026-05-31
 
+[完整发布日志](docs/releases/v0.6.2.md)
+
 说明：这是 `v0.6` 判断内核后的第二个 patch release，重点是把 TVG 的目标从
 “持续扩厚度”校准为“先保证足够厚度，再提升价值密度和洞察收益”，并补齐
 public skills release boundary 的维护者设计边界。
