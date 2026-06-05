@@ -10,7 +10,19 @@
 
 [完整发布日志](docs/releases/v0.6.3.md)
 
-说明：这是 `v0.6` 判断内核后的第三个 patch release，重点是收尾 tplan 运行时优化。
+这版主要让 `tplan` 用起来更轻、更像人在沟通，同时保留长任务运行时最重要的安全边界。
+
+对使用者来说，变化很直接：
+
+- 低风险、短路径任务不会一上来就进入完整项目管理流程。
+- 普通进度更新会先讲“当前在做什么、确认了什么、下一步是什么”，不再默认用 `T1`、
+  `E2` 这类内部编号开头。
+- 多条只读调查线索可以交给 SubAgent 并行检查，减少等待时间。
+- SubAgent 只能做侦察，不能改文件、写 evidence、改任务树或替主 agent 下最终结论。
+- 遇到目标变更、关键删除、阻塞或不能安全继续时，`tplan` 仍会触发 review、decision
+  hook 或 graceful stop。
+
+维护者视角：这是 `v0.6` 判断内核后的第三个 patch release，重点是收尾 tplan 运行时优化。
 它不缩小 `tplan` 的能力边界，而是把运行成本从“全程常开”调整为“按风险触发”：
 通过自适应记录密度让普通场景更轻，同时让关键风险仍然触发 alignment、decision hook、
 Mission Review 或 graceful stop。
