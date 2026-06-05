@@ -33,9 +33,9 @@ proposed mutations, and requires_human.
 Mission can activate the Anti-Spiral Self-Audit without relying on the agent to notice
 its own loop.
 
-Trigger it when:
+Do not run it on a fixed step-count interval by default. Trigger it when observable
+signals show that local repair may be replacing Mission progress:
 
-- the active run reaches the configured step-count interval
 - the same file, parameter, prompt segment, task node, or local object is touched for
   the third time
 - user feedback reports that the result is not good enough, should be tried again, or
@@ -100,16 +100,27 @@ route through `anti_spiral_audit` before authorizing same-path continuation.
 
 ## Alignment And Mission Review Gates
 
+Adaptive runtime levels reduce packet frequency, not risk sensitivity. In any runtime
+level, high-impact changes still require alignment or review before mutation.
+
 Ordinary SubTask and Step hooks are parent-relative. Before a hook output can justify
 an ordinary child mutation, it must state:
 
 - `parent_alignment`: how the recommendation advances the parent node.
 - `mission_trace`: the lightweight path from child -> parent -> Mission evidence.
 
-High-impact hooks remain Mission-relative. Use `mission_alignment` when the decision
-materially affects Mission convergence.
+Use three decision handling levels:
 
-High-impact decisions use the full gate:
+- `inline alignment`: ordinary Step/SubTask choices with a short `parent_alignment`
+  note and lightweight `mission_trace`.
+- `light packet`: subpath switch, blocker, repeated failed attempt, or meaningful
+  uncertainty that may affect the parent node.
+- `full mission review`: high-impact Mission-facing choices that can materially affect
+  convergence or authority.
+
+High-impact hooks remain Mission-relative. Use `mission_alignment` when the decision
+materially affects Mission convergence. The `full mission review` path uses the full
+gate:
 
 - `mission_review.objective_alignment`: how the decision relates to the current Mission
   objective.
