@@ -4,6 +4,69 @@
 
 暂无。
 
+## v0.6.3
+
+发布日期：2026-06-05
+
+[完整发布日志](docs/releases/v0.6.3.md)
+
+这版主要让 `tplan` 用起来更轻、更像人在沟通，同时保留长任务运行时最重要的安全边界。
+
+对使用者来说，变化很直接：
+
+- 低风险、短路径任务不会一上来就进入完整项目管理流程。
+- 普通进度更新会先讲“当前在做什么、确认了什么、下一步是什么”，不再默认用 `T1`、
+  `E2` 这类内部编号开头。
+- 多条只读调查线索可以交给 SubAgent 并行检查，减少等待时间。
+- SubAgent 只能做侦察，不能改文件、写 evidence、改任务树或替主 agent 下最终结论。
+- 遇到目标变更、关键删除、阻塞或不能安全继续时，`tplan` 仍会触发 review、decision
+  hook 或 graceful stop。
+
+维护者视角：这是 `v0.6` 判断内核后的第三个 patch release，重点是收尾 tplan 运行时优化。
+它不缩小 `tplan` 的能力边界，而是把运行成本从“全程常开”调整为“按风险触发”：
+通过自适应记录密度让普通场景更轻，同时让关键风险仍然触发 alignment、decision hook、
+Mission Review 或 graceful stop。
+
+### 新增
+
+- `tplan` 增加 Adaptive Runtime Policy：`lite / normal / strict` 是运行仪式和记录密度
+  的内部层级，不是削弱能力的模式。
+- 新增 `init_lite.py` 与 `checkpoint.py`：低风险短路径可以只保存 Mission objective、
+  acceptance criteria、active node、latest state 和必要 evidence / blocker / decision
+  摘要。
+- 新增用户可读输出适配：普通回复先讲当前目标、进展、已确认事项和下一步，不再默认用
+  `T1`、`E2` 这类内部编号开头。
+- 新增只读 SubAgent 加速规则：SubAgents are scouts, not controllers；SubAgent 只做
+  read-only investigation，候选发现必须由主 agent 验证后才能写入 evidence 或影响决策。
+
+### 调整
+
+- Step 延迟实体化：普通执行动作可以先作为本地 log 或 checkpoint，只有需要恢复、验收、
+  回滚、引用 evidence 或动作膨胀成多步时才提升为 Step。
+- Evidence 稀疏化：`evidence.jsonl` 只承载 acceptance、blocker、feedback、decision、
+  state transition 或 key finding，不再吸收普通过程流水账。
+- Decision handling 分成 inline alignment、light packet 和 full mission review，
+  降低普通选择的 packet 成本，同时保留高影响变更的触发强度。
+- Release pack 边界复查：确认生成包不包含仓库测试、内部设计目录、`.git` 或
+  `__pycache__`，新增 tplan 运行资源进入三平台发布目标。
+
+### 验收
+
+- 新版 tplan 与旧版 tplan 做过 A/B 对比：新版能保持 Mission、evidence、decision hook
+  与 stop 能力，同时减少常规 Step 实体化和脚本调用密度。
+- A/B 结论保守处理：由于现场 agent 仍查了不少 help/source，并有外部连接重试污染，
+  不把这次结果宣称为干净性能证明，只作为行为方向验证。
+- 只读 SubAgent pressure scenario 固化了禁止 SubAgent 修改文件、Mission state、
+  evidence、task tree 或 decisions 的边界。
+
+### 校验
+
+- `python3 -m unittest tests/tplan/test_skill_contract.py -v`
+- `python3 -m unittest discover -s tests/tplan -v`
+- `python3 -m py_compile skills/tplan/scripts/*.py`
+- `python3 -m unittest discover -s tests -v`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-release-audit-13 --force`
+
 ## v0.6.2
 
 发布日期：2026-05-31

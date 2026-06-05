@@ -6,17 +6,48 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_v0_6_2_release_surface_is_declared(self):
+    def test_v0_6_3_release_surface_is_declared(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v0.6.2`", readme)
-        self.assertIn("## v0.6.2", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v0.6.2.md)", changelog)
-        self.assertIn("TVG 从扩厚度升级为 grounded insight value-gain", changelog)
-        self.assertIn("public skills release boundary", changelog)
-        self.assertIn('VERSION = "0.6.2"', builder)
+        self.assertIn("当前仓库版本：`v0.6.3`", readme)
+        self.assertIn("## v0.6.3", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v0.6.3.md)", changelog)
+        self.assertIn("tplan 运行时优化", changelog)
+        self.assertIn("SubAgents are scouts, not controllers", changelog)
+        self.assertIn('VERSION = "0.6.3"', builder)
+
+    def test_v0_6_3_release_log_is_chinese_and_release_ready(self):
+        text = (REPO / "docs" / "releases" / "v0.6.3.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "# Mindthus v0.6.3 发布日志",
+            "发布日期：2026-06-05",
+            "版本定位",
+            "这次解决了什么",
+            "自适应运行",
+            "轻，但不降级",
+            "runtime level may reduce recording density",
+            "must not weaken key risk triggers",
+            "init_lite.py",
+            "checkpoint.py",
+            "用户可读输出",
+            "render_user_update.py",
+            "只读 SubAgent 加速",
+            "SubAgents are scouts, not controllers",
+            "candidate findings",
+            "#11",
+            "#12",
+            "#13",
+            "验证结果",
+            "不声明跨模型鲁棒性",
+            "不声称已经给出干净性能证明",
+        ):
+            self.assertIn(phrase, text)
+
+        self.assertNotIn("Release date:", text)
+        self.assertNotIn("Summary", text)
 
     def test_v0_6_2_release_log_is_chinese_and_release_ready(self):
         text = (REPO / "docs" / "releases" / "v0.6.2.md").read_text(encoding="utf-8")
