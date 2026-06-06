@@ -145,6 +145,34 @@ When pressure is used, name the owner, reason, and execution effect. If it chang
 strategy, risk handling, evidence requirement, next action, stopping condition, method
 choice, or handoff packet, skip or stop it.
 
+#### Expression Discipline / 表达纪律
+
+Expression discipline is not a standalone route. It can be used inside an existing
+judgment owner as a clarity aid, or after the active judgment owner is clear. The
+active method keeps decision authority; Approximate Quantified Mapping does not become
+the judgment owner.
+
+Approximate Quantified Mapping can be used inside an existing judgment owner, but the
+active method keeps decision authority and it does not become the judgment owner.
+
+Use `Approximate Quantified Mapping / 非精准量化显影` when a compressed verdict or
+game-relationship claim needs to become legible. The numbers are hypothetical numbers,
+not factual measurements. They expose variables, directions, dominant terms,
+sensitivity points, and 口径 gaps; they do not compute decisions.
+
+Use it only when the relationship is complex enough to hide a real game structure.
+Skip it for simple adjectives, single-variable claims, and low-stakes explanations
+where plain language is enough.
+
+Boundary: skip it for simple adjectives; plain language is enough.
+
+Short rule:
+
+> 数字是假设，关系才是重点。
+
+If the answer starts defending exact digits, stop using this primitive. Return to fact
+gathering, Evidence / Claim Ceiling, or 口径 clarification.
+
 #### Method Arbitration / 方法仲裁
 
 When multiple Mindthus methods seem applicable, do not stack methods by default.

@@ -37,6 +37,12 @@
 选择方法时使用最小充分镜头。方法调用的目标是降低判断成本并提高选择质量，
 不是展示方法完整性。完整认知原语索引见 `docs/methodologies/shared-primitives.md`。
 
+表达复杂判断或博弈关系时，可以使用 `Approximate Quantified Mapping /
+非精准量化显影` 作为表达纪律：hypothetical numbers are not factual measurements；
+数字是假设，关系才是重点。用它显影变量、方向、主导项、敏感项和口径差，
+不要用数字证明事实 claim；do not compute decisions with those numbers。一旦讨论变成防守
+具体数字，回到事实补充、证据上限或口径澄清。
+
 长任务中启用反螺旋入口：如果同一局部对象第三次被处理、用户反馈变差、
 或下一步准备新增一层结构，先暂停并做 Anti-Spiral Self-Audit。默认假设
 自己可能正在用局部修补替代核心目标推进；下一步优先回到上游、做减法，
