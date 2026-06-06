@@ -224,9 +224,133 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_approximate_quantified_mapping_is_a_cognitive_primitive_not_route(self):
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Approximate Quantified Mapping",
+            "非精准量化显影",
+            "数字是假设",
+            "关系才是重点",
+            "variables, directions, dominant terms, sensitivity points, and definition gaps",
+            "not a standalone method",
+            "not a new route",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for text in (using, agents):
+            for phrase in (
+                "Approximate Quantified Mapping",
+                "非精准量化显影",
+                "hypothetical numbers",
+                "not factual measurements",
+                "do not compute decisions",
+            ):
+                self.assertIn(phrase, text)
+
+        start = using.index("#### Judgment Object Routing / 判断对象路由")
+        end = using.index("#### Context Injection Point / 上下文注入口", start)
+        routing_table = using[start:end]
+        self.assertNotIn("Approximate Quantified Mapping", routing_table)
+        self.assertNotIn("非精准量化显影", routing_table)
+
     def test_game_theory_is_not_a_standalone_skill(self):
         for name in ("game-theory", "game_theory", "gametheory"):
             self.assertFalse((REPO / "skills" / name).exists(), name)
+
+    def test_approximate_quantified_mapping_is_not_a_standalone_skill(self):
+        for name in ("qdm", "gsm", "approximate-quantified-mapping"):
+            self.assertFalse((REPO / "skills" / name).exists(), name)
+
+    def test_pressure_tests_cover_approximate_quantified_mapping_effect_cases(self):
+        text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Approximate Quantified Mapping Pressure Tests",
+            "Scenario 13: Youth Opportunity Compression",
+            "Scenario 14: Digit Litigation Stop Condition",
+            "Scenario 15: Qualitative Residual Handoff",
+            "Expected baseline failure",
+            "Expected treatment behavior",
+            "hypothetical numbers",
+            "数字是假设，关系才是重点",
+            "variables, directions, dominant terms, sensitivity points, and definition gaps",
+            "do not defend exact digits",
+            "qualitative residual",
+            "not a standalone skill",
+            "not a decision calculator",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_approximate_quantified_mapping_can_support_but_not_own_judgment(self):
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "can support judgment formation",
+            "must not own the judgment",
+            "SELA, EDSP, 3L5S, WAE, TVG, or tplan keeps judgment ownership",
+            "clarity aid inside an existing judgment owner",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for phrase in (
+            "can be used inside an existing judgment owner",
+            "active method keeps decision authority",
+            "does not become the judgment owner",
+        ):
+            self.assertIn(phrase, using)
+
+    def test_approximate_quantified_mapping_has_anti_overuse_threshold(self):
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Use it only when the game relationship is complex enough",
+            "multi-variable",
+            "口径 conflict",
+            "felt outcome flips",
+            "Skip it for simple, single-variable, low-stakes, or directly explainable claims",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for phrase in (
+            "Use it only when the relationship is complex enough",
+            "skip it for simple adjectives",
+            "plain language is enough",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "Scenario 16: Simple Claim Skips Mapping",
+            "Scenario 17: Single-Variable Cost Comparison Skips Mapping",
+            "Scenario 18: Missing Evidence Blocks Mapping",
+            "Scenario 19: True Multi-Variable Game Triggers Mapping",
+            "Expected treatment behavior",
+            "skips Approximate Quantified Mapping",
+            "single-variable",
+            "chooses information acquisition",
+            "triggers Approximate Quantified Mapping",
+            "plain-language explanation",
+            "no hypothetical numbers",
+        ):
+            self.assertIn(phrase, pressure)
 
     def test_agents_mentions_constraints_arbitration_and_execution_impact(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
@@ -264,6 +388,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Perspective Pressure",
             "Anti-Spiral",
             "No Abstract Jargon Wall",
+            "Approximate Quantified Mapping",
+            "非精准量化显影",
         ):
             self.assertIn(phrase, primitives)
 
@@ -310,6 +436,10 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "No Abstract Jargon Wall": (
                     "`AGENTS.md`",
                     "先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。",
+                ),
+                "Approximate Quantified Mapping / 非精准量化显影": (
+                    "`AGENTS.md` / `using-mindthus`",
+                    "数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。",
                 ),
             },
         )

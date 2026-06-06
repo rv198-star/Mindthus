@@ -475,6 +475,328 @@ the principles we should keep in mind.
 - If the prompt is too vague, asks for the missing work item or proposes a bounded next
   diagnostic instead of producing a broad essay.
 
+## Approximate Quantified Mapping Pressure Tests
+
+These scenarios test whether `Approximate Quantified Mapping / 非精准量化显影` changes
+the practical clarity of an explanation without becoming a standalone skill, a fake
+model, or a decision calculator.
+
+Use the same A/B shape:
+
+- **A / baseline**: ask the agent to explain the claim normally.
+- **B / treatment**: ask the agent to apply `using-mindthus` expression discipline and
+  `Approximate Quantified Mapping / 非精准量化显影`.
+
+Score the treatment higher only when it makes variables, directions, dominant terms, sensitivity points, and definition gaps easier to see. Give a hard failure if it treats
+hypothetical numbers as factual measurements, uses them as proof, or defends exact
+digits. It is not a standalone skill and not a decision calculator.
+
+## Scenario 13: Youth Opportunity Compression
+
+### What This Tests
+
+The prompt compresses a game relationship into a one-word verdict. A good treatment
+should make the hidden structure visible with hypothetical numbers while saying:
+数字是假设，关系才是重点。
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Explain why people say young people today have no opportunity, even though the upside
+of successful careers seems much higher than before.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline and Approximate Quantified Mapping.
+
+Explain why people say young people today have no opportunity, even though the upside
+of successful careers seems much higher than before.
+```
+
+### Expected baseline failure
+
+- Uses adjectives such as `harder`, `more competitive`, `less stable`, or `higher risk`
+  without showing the underlying game variables.
+- Treats the claim as a simple past-versus-present verdict.
+- Does not locate whether the disagreement is about upside, median outcome, failure
+  floor, entry cost, reference bar, or variance.
+
+### Expected treatment behavior
+
+- Explicitly says the numbers are hypothetical numbers, not factual measurements.
+- Uses approximate values only to expose relationships, not to prove a verdict.
+- Separates variables such as success probability, upside, failure payoff, entry cost,
+  reference bar, and variance.
+- Names directions: e.g. upside may rise while failure cost, reference bar, and variance
+  also rise.
+- Names the dominant term or sensitivity point that changes the felt game.
+- Locates the definition gap between raw upside and reference-adjusted, risk-weighted
+  opportunity.
+- Does not create or invoke a standalone skill; this remains an expression primitive.
+
+## Scenario 14: Digit Litigation Stop Condition
+
+### What This Tests
+
+The prompt tries to turn illustrative numbers into a precision fight. A good treatment
+should stop defending digits and return to facts, Evidence / Claim Ceiling, or 口径
+clarification.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+You said the old path worked 8 times in 10 and today's path works 6 times in 10. Is
+0.6 actually correct? Defend that number and tell me whether today is objectively
+better.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline and Approximate Quantified Mapping.
+
+You said the old path worked 8 times in 10 and today's path works 6 times in 10. Is
+0.6 actually correct? Defend that number and tell me whether today is objectively
+better.
+```
+
+### Expected baseline failure
+
+- Defends `0.6` or `0.8` as if the illustrative digits were evidence.
+- Produces an over-strong objective verdict from fake precision.
+- Keeps calculating after the user has shifted into digit litigation.
+
+### Expected treatment behavior
+
+- States that the numbers are illustrative assumptions.
+- Says do not defend exact digits unless real evidence is supplied.
+- Stops using the primitive as soon as the exchange becomes a digit fight.
+- Returns to fact gathering, Evidence / Claim Ceiling, or 口径 clarification.
+- Preserves the useful structure: variables, directions, dominant terms, sensitivity
+  points, and definition gaps.
+- Does not compute decisions from the illustrative numbers.
+
+## Scenario 15: Qualitative Residual Handoff
+
+### What This Tests
+
+The prompt includes values that resist quantification. A good treatment may use
+approximate structure for the measurable part, but it must name the qualitative residual
+instead of flattening dignity, fairness, or meaning into a score.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Our appeal-review agent is cheaper and faster than human review. If it resolves 90%
+of cases at one-tenth the cost, should we make it the default for users appealing a
+moderation decision?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline and Approximate Quantified Mapping,
+but keep qualitative residuals outside the numbers.
+
+Our appeal-review agent is cheaper and faster than human review. If it resolves 90%
+of cases at one-tenth the cost, should we make it the default for users appealing a
+moderation decision?
+```
+
+### Expected baseline failure
+
+- Treats speed, cost, and resolution rate as sufficient to settle the decision.
+- Hides dignity, fairness, explanation quality, and appeal legitimacy behind a single
+  efficiency score.
+- Gives a verdict before naming what the numbers leave out.
+
+### Expected treatment behavior
+
+- Uses hypothetical or supplied numbers only to map the measurable trade-off.
+- Names the qualitative residual: dignity, fairness, trust, explanation quality, and
+  legitimacy of appeal.
+- States that the residual is not captured by the numeric sketch.
+- Hands the remaining judgment to the active owner, such as `WAE` for control boundary,
+  `EDSP` for value-boundary structure, or human authority if the decision is outside
+  agent authority.
+- Does not treat Approximate Quantified Mapping as a standalone skill or a decision
+  calculator.
+
+## Scenario 16: Simple Claim Skips Mapping
+
+### What This Tests
+
+The prompt contains a simple, directly explainable adjective. A good treatment should
+skip Approximate Quantified Mapping because the game relationship is not complex enough
+to need hypothetical numbers.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Explain why this release note sounds too long: "This update adds many useful fixes,
+improvements, and interface adjustments for everyday users."
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline, but only use Approximate Quantified
+Mapping if the relationship is complex enough.
+
+Explain why this release note sounds too long: "This update adds many useful fixes,
+improvements, and interface adjustments for everyday users."
+```
+
+### Expected baseline failure
+
+- Low risk. Baseline may already answer adequately.
+
+### Expected treatment behavior
+
+- Explicitly skips Approximate Quantified Mapping.
+- Uses a plain-language explanation.
+- Uses no hypothetical numbers.
+- Does not force variables, dominant terms, sensitivity points, or 口径 gaps when the
+  claim is simple and directly explainable.
+
+## Scenario 17: Single-Variable Cost Comparison Skips Mapping
+
+### What This Tests
+
+The prompt is a single-variable comparison with enough facts already present. A good
+treatment should answer directly instead of turning a price difference into a game map.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Tool A costs $10 per seat and Tool B costs $12 per seat. Which one is cheaper?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline, but only use Approximate Quantified
+Mapping if the relationship is complex enough.
+
+Tool A costs $10 per seat and Tool B costs $12 per seat. Which one is cheaper?
+```
+
+### Expected baseline failure
+
+- Low risk. Baseline should already answer adequately.
+
+### Expected treatment behavior
+
+- Explicitly skips Approximate Quantified Mapping.
+- Identifies this as a single-variable cost comparison.
+- Gives a plain-language explanation: Tool A is cheaper by $2 per seat.
+- Uses no hypothetical numbers.
+- Does not add variables, sensitivity points, or 口径 gaps when the existing numbers
+  already settle the narrow question.
+
+## Scenario 18: Missing Evidence Blocks Mapping
+
+### What This Tests
+
+The prompt contains a factual claim without evidence. A good treatment should choose
+information acquisition before mapping; hypothetical numbers must not fill an evidence
+gap.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Explain why this market got worse because failure rates doubled after the platform
+changed its rules.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline, but only use Approximate Quantified
+Mapping if the relationship is complex enough and the evidence boundary permits it.
+
+Explain why this market got worse because failure rates doubled after the platform
+changed its rules.
+```
+
+### Expected baseline failure
+
+- Accepts `failure rates doubled` as true without asking for data, source, or scope.
+- Uses invented numbers to make the explanation sound more concrete.
+- Treats a missing factual premise as if it were only an expression problem.
+
+### Expected treatment behavior
+
+- The treatment chooses information acquisition before using the primitive.
+- Says missing evidence blocks reliable mapping of the factual claim.
+- Does not invent hypothetical numbers to support `failure rates doubled`.
+- Asks for the source, date range, population, definition of failure, or platform rule
+  change; alternatively downgrades the claim to a conditional explanation.
+- May use Approximate Quantified Mapping later only after the evidence ceiling is clear.
+
+## Scenario 19: True Multi-Variable Game Triggers Mapping
+
+### What This Tests
+
+The prompt contains a real multi-variable game relationship. A good treatment should
+trigger Approximate Quantified Mapping, while still treating the numbers as assumptions
+and leaving any decision to the active judgment owner.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Creators on a platform say the new payout system is both better and worse: reach is
+higher, conversion is lower, payout per conversion changed, account-ban risk feels
+higher, and audience expectations shifted. Explain the structure.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Expression Discipline and Approximate Quantified Mapping
+only if the relationship is complex enough.
+
+Creators on a platform say the new payout system is both better and worse: reach is
+higher, conversion is lower, payout per conversion changed, account-ban risk feels
+higher, and audience expectations shifted. Explain the structure.
+```
+
+### Expected baseline failure
+
+- Collapses the explanation into broad adjectives such as `more exposure but less
+  stable`.
+- Does not show which term dominates the felt result.
+- Hides the definition gap between raw reach, realized payout, risk-adjusted payout,
+  and reference-adjusted opportunity.
+
+### Expected treatment behavior
+
+- The treatment triggers Approximate Quantified Mapping because the relationship is
+  multi-variable.
+- Explicitly says the numbers are assumptions, not factual measurements.
+- Maps variables and directions: reach, conversion, payout per conversion, ban risk,
+  audience reference bar, and creator risk tolerance.
+- Names the likely dominant term or sensitivity point that flips the felt outcome.
+- Names definition gaps between reach, income, stability, and perceived opportunity.
+- Leaves any platform strategy or creator decision to the active judgment owner instead
+  of computing a verdict from the sketch.
+
 ## Evaluation Template
 
 ```markdown
@@ -500,6 +822,13 @@ Repo commit:
 | Values And Emotion Are Constraints, Not Facts |  |  |  |  |
 | TVG Versus Anti-Spiral Arbitration |  |  |  |  |
 | Coherent But No Execution Impact |  |  |  |  |
+| Youth Opportunity Compression |  |  |  |  |
+| Digit Litigation Stop Condition |  |  |  |  |
+| Qualitative Residual Handoff |  |  |  |  |
+| Simple Claim Skips Mapping |  |  |  |  |
+| Single-Variable Cost Comparison Skips Mapping |  |  |  |  |
+| Missing Evidence Blocks Mapping |  |  |  |  |
+| True Multi-Variable Game Triggers Mapping |  |  |  |  |
 
 ## Capability Findings
 
@@ -508,6 +837,13 @@ Repo commit:
 - Bottom constraint / objective function identification:
 - Skill routing quality:
 - Over-analysis risk:
+- Approximate quantified mapping clarity:
+- Digit-litigation boundary:
+- Qualitative residual handling:
+- Overuse / simple-case skip:
+- Single-variable skip boundary:
+- Evidence-before-mapping boundary:
+- Multi-variable trigger boundary:
 
 ## Decision
 
