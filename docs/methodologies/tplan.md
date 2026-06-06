@@ -23,6 +23,59 @@
 
 `tplan` 的价值不是让项目管理更隆重，而是让 agent 在长时间运行时不丢目标函数。
 
+## 自适应运行策略
+
+`tplan` 应该按风险展开。平时它像一个轻薄的 Mission 状态机，只守住目标、验收面、当前节点、最新状态和必要证据；关键时刻才展开成完整控制面，启用 decision packet、Mission Review、强 evidence link 或 Anti-Spiral brake。
+
+这不是低配 tplan。轻量化只能降低记录密度和运行仪式，不能降低关键风险触发强度。无论处于什么运行级别，以下能力都不能丢：
+
+- Mission objective 和 acceptance criteria 必须可恢复。
+- active node 必须能被下一轮 agent 找回。
+- logs 和 evidence 必须分离。
+- 高影响变更必须有 alignment、review 或 decision hook。
+- 不能安全继续时必须 stop，而不是靠猜测继续。
+
+可以把运行级别理解成三档：
+
+- `lite`：低风险、短路径、可逆、目标清楚。只保存恢复所需的最小状态，不把每个微动作都建成 Step。
+- `normal`：默认 Mission 运行。有任务树、必要 SubTask/Step、稀疏 evidence 和轻量 parent alignment。
+- `strict`：高风险、长期、多分支、需要审计或人类授权。使用完整 decision packet、Mission Review、强 evidence link 和触发式审计。
+
+因此，优化方向不是把 `tplan` 变成 TODO，而是让它在普通场景下少打扰，在风险信号出现时仍然完整接管控制边界。
+
+轻启动的推荐路径是：先用 `init_lite.py` 建立 Mission 和一个 active Task，把 latest state 写进 narrative；然后用 `checkpoint` 记录普通本地 log 或稀疏 evidence。此时可以没有 Step，因为 Step 只在需要恢复、验收、回滚、引用证据或动作膨胀成多步时才实体化。
+
+实现上可以用 `checkpoint` 压缩普通运行成本：一次记录可选本地 log、可选稀疏 evidence，并返回当前 survey。它只减少脚本调用次数，不替代状态变更、decision packet、Mission Review 或 stop report。
+
+## 用户可读输出
+
+`tplan` 内部需要 `T1`、`E2` 这类稳定编号，否则恢复、验证和 evidence link 会乱。但普通用户输出不要把 T1、E2 这类内部编号放在普通回复开头。
+
+面向用户时，先讲：
+
+- 当前目标是什么
+- 当前在推进什么
+- 已经确认了什么
+- 下一步为什么合理
+- 是否需要用户决定什么
+
+内部编号只在调试、审计、严格 review、恢复锚点或用户明确要求时出现，而且应该放在“内部恢复引用”这类次要段落里。
+
+## 只读 SubAgent 加速
+
+SubAgent 是侦察，不是控制器。
+
+当一个 Mission 里有多个彼此独立的调查分支时，`tplan` 可以用 SubAgent 并行读文件、搜索文档、检查测试覆盖、比较候选方案或做只读 review。这样可以降低发现成本，而且不需要用户理解新的开关。
+
+边界必须很硬：
+
+- SubAgent 只能做只读调查。
+- SubAgent 产出的是候选发现，不默认等于 evidence。
+- 主 agent 负责验证、合并、判断和写入。
+- 只有主 agent 可以记录 evidence、更新 Mission 状态、修改任务树、应用 decision 或给用户最终结论。
+
+因此，SubAgent 不改变 `tplan` 的控制结构。它只是让发现阶段更快；Mission 状态、证据边界和决策权仍然由主 agent 和 tplan runtime 控制。
+
 ## 核心判断
 
 `tplan` 的核心判断是：Mission 是上位对象，task/subtask/step 都必须相对 Mission 才有意义。
@@ -42,7 +95,7 @@
 
 一个标准 `tplan` 运行大致是：
 
-1. 初始化 Mission，写清目标、范围、authority 和验收面。
+1. 低风险短路径用 `init_lite.py` 轻启动；需要完整任务树时再用 expanded startup。
 2. 用 `3L5S` 或人工判断提出初始任务树。
 3. 通过脚本新增、切换、关闭或归档节点，避免手改状态造成漂移。
 4. 记录 step logs，但不把 logs 当 evidence。

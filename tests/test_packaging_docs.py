@@ -15,7 +15,9 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.6.2`", readme)
+        self.assertIn("当前仓库版本：`v0.6.3`", readme)
+        self.assertIn("tplan 运行时优化", readme)
+        self.assertIn("只读 SubAgent 加速", readme)
         self.assertIn("平台化 release pack", readme)
         self.assertIn("Claude Code marketplace 发布包布局", readme)
         self.assertIn("判断内核", readme)
@@ -55,6 +57,11 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_changelog_documents_v0_5_release_in_chinese(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertIn("## v0.6.3", changelog)
+        self.assertIn("发布日期：2026-06-05", changelog)
+        self.assertIn("自适应记录密度", changelog)
+        self.assertIn("用户可读输出适配", changelog)
+        self.assertIn("SubAgents are scouts, not controllers", changelog)
         self.assertIn("## v0.6", changelog)
         self.assertIn("## v0.6.1", changelog)
         self.assertIn("发布日期：2026-05-27", changelog)
@@ -114,6 +121,8 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v0.6.3"), 1)
+        self.assertEqual(lines.count("## v0.6.2"), 1)
         self.assertEqual(lines.count("## v0.6.1"), 1)
         self.assertEqual(lines.count("## v0.6"), 1)
         self.assertEqual(lines.count("## v0.5.2"), 1)
@@ -297,7 +306,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "0.6.2")
+            self.assertEqual(plugin["version"], "0.6.3")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue(
                 (

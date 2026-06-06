@@ -81,6 +81,39 @@ Structure changes should go through `scripts/add_node.py` or another runtime scr
 Agentic judgment decides what to add and why; scripts own field defaults, shape
 normalization, and validation before write.
 
+## Adaptive Runtime Records
+
+Runtime level changes how much state is materialized, not what `tplan` is allowed to
+ignore.
+
+Lite mode minimum state:
+
+- Mission objective
+- acceptance criteria
+- active node
+- latest state
+- blocker, evidence, or decision summary when present
+
+Lite startup may be represented as `Mission -> active Task` with no materialized Step.
+Use `scripts/init_lite.py` to create that state. The active root Task must cover current
+Mission acceptance evidence, and the narrative should carry the latest recoverable
+state. A Step is added only after a promotion trigger appears.
+
+`normal` and `strict` may materialize more nodes and review artifacts. `lite` may keep
+ordinary execution as task-local logs or notes, but high-impact changes still follow
+the same alignment, review, and stop contracts.
+
+Promote an action into a Step only when it needs one of these properties:
+
+- recovery by a future agent
+- acceptance or done-condition checking
+- rollback or replacement tracking
+- evidence reference
+- decomposition into multiple actions
+
+Routine actions that do not need these properties should remain below the active
+execution boundary as logs or notes.
+
 Task roles:
 
 - `success-critical`: required for Mission completion.
@@ -92,6 +125,15 @@ Task roles:
 Evidence records observable support for a claim, state change, acceptance condition,
 blocker, feedback item, or decision. It should not contain routine step-by-step process
 logs.
+
+Sparse evidence categories:
+
+- acceptance passed or failed
+- blocker
+- user feedback
+- decision
+- state transition
+- key finding
 
 Each line is one JSON object with:
 
