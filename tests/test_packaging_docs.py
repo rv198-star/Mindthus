@@ -32,12 +32,14 @@ class PackagingDocsTests(unittest.TestCase):
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("SELA / 系统效率碾压局部优势", readme)
+        self.assertIn("MPG / Mainline-Path Game", readme)
         self.assertIn("3L5S / 三层五步", readme)
         self.assertIn("EDSP / Extreme Deduction + Scenario Projection", readme)
         self.assertIn("WAE / Workflow-Agentic-Evidence", readme)
         self.assertIn("TVG / Thinking Value-Gain", readme)
         self.assertIn("Anti-Spiral / 反螺旋自检", readme)
         self.assertIn("讲清整体与局部", readme)
+        self.assertIn("主线承载方案", readme)
         self.assertIn("讲清问题如何从混乱信号走到可执行步骤", readme)
         self.assertIn("脚本、agent、review gate 都在“管事”", readme)
         self.assertIn("死亡螺旋", readme)
@@ -146,6 +148,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_methodology_pages_exist_and_cover_their_core_claims(self):
         cases = [
             ("sela.md", "系统效率碾压局部优势"),
+            ("mpg.md", "Mainline-Path Game"),
             ("3l5s.md", "三层五步"),
             ("edsp.md", "Extreme Deduction + Scenario Projection"),
             ("wae.md", "Workflow-Agentic-Evidence"),
@@ -308,6 +311,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("..", source)
             self.assertEqual(plugin["version"], "0.6.3")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue(
                 (
                     out
@@ -322,12 +326,14 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "superpowers").exists())
 
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "codex" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "codex" / "AGENTS.md").exists())
             self.assertTrue((out / "codex" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "codex" / "docs" / "internal").exists())
             self.assertFalse((out / "codex" / "docs" / "superpowers").exists())
             codex_agents = (out / "codex" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`skills/mindthus/sela/`", codex_agents)
+            self.assertIn("`skills/mindthus/mpg/`", codex_agents)
             self.assertNotIn("`skills/sela/`", codex_agents)
             codex_sela_doc = (out / "codex" / "docs" / "methodologies" / "sela.md").read_text(
                 encoding="utf-8"
@@ -342,12 +348,16 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
+            self.assertTrue(
+                (out / "opencode" / ".opencode" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists()
+            )
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
             self.assertTrue((out / "opencode" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "opencode" / "docs" / "internal").exists())
             self.assertFalse((out / "opencode" / "docs" / "superpowers").exists())
             opencode_agents = (out / "opencode" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`.opencode/skills/mindthus/sela/`", opencode_agents)
+            self.assertIn("`.opencode/skills/mindthus/mpg/`", opencode_agents)
             self.assertNotIn("`skills/sela/`", opencode_agents)
             opencode_sela_doc = (
                 out / "opencode" / "docs" / "methodologies" / "sela.md"
@@ -360,7 +370,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("python3 .opencode/skills/mindthus/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
 
-            skill_names = ("3l5s", "sela", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            skill_names = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
             for platform_dir in (out / "codex", out / "opencode"):
                 markdown = "\n".join(
                     path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))
