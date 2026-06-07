@@ -76,6 +76,25 @@ Do not expose MPG internal field names before the plain-language conclusion.
 3. 怎么办：说清行动姿态、暴露度、载体或触发条件怎么变。
 4. 结构校准：必要时再列 `qualified_mainline` 等字段。
 
+### Reasoning Durability / 推演耐久性
+
+MPG 回放案例不应该用“最后涨了就是对，最后跌了就是错”来打分。later outcome is not the score。
+
+真正要看的是：在当时信息面下，这个推演有没有守住证据边界、有没有把主线和载体拆开、有没有识别路径风险、有没有给出合理触发条件。
+
+短规则是：
+
+> 结果不准不必然失败；信息不全时，触发条件比预测命中更重要。
+
+如果后来出现了当时无法知道的新信息，推演没命中不必然失败。失败的是：当时证据很薄却说得很满、把未来信息偷挪进来、没有留下触发条件，或者事后说不清哪个新事件改变了判断。
+
+所以股票、战争、公司转型这类回放测试要分两层：
+
+- 推演质量：当时逻辑是否自洽，证据是否够，边界是否诚实，行动姿态是否匹配信息强度。
+- 结果回放：后来的事件是否触发了原先设置的升级、降级、换载体或退出条件。
+
+trigger conditions should explain when a later result changed the judgment.
+
 ## 怎么用
 
 MPG 的使用流程很短：

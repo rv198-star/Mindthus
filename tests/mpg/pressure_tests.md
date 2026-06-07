@@ -191,3 +191,29 @@ Expected treatment behavior:
 - only then map the Path-Carrying Strategy: strategic depth, continued resistance,
   national mobilization, guerrilla and regular-war combination, morale preservation,
   and triggers that would downgrade the mainline
+
+## Scenario 10: Stock Playback Reasoning Durability
+
+Input:
+
+> Pick a stock, cut the information at a past date, make an MPG judgment, then check the
+> later price and events.
+
+Expected baseline failure:
+
+- scores the run by whether the stock later went up or down
+- treats later outcome as proof that the original reasoning was right or wrong
+- ignores that the original information may have been incomplete
+- fails to separate reasoning quality from result playback
+
+Expected treatment behavior:
+
+- state that later outcome is not the score
+- evaluate the original run under the information available at the time
+- check whether the reasoning separated mainline from carrier, named path risks, and
+  kept evidence boundaries honest
+- treat information gaps honestly: 结果不准不必然失败 when the missing fact was not
+  available in the slice
+- use later events only to test whether trigger conditions worked
+- require that trigger conditions should explain when a later result changed the
+  judgment

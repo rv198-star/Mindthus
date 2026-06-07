@@ -74,6 +74,22 @@ Default output order:
 The first paragraph should be 普通人能复述. If the answer starts with
 `qualified_mainline:` or a dense field table, rewrite it.
 
+### Reasoning Durability / 推演耐久性
+
+MPG playback should evaluate whether the reasoning held under the 当时信息面, not
+whether the final outcome happened to match.
+
+Short rule:
+
+> 结果不准不必然失败；信息不全时，触发条件比预测命中更重要。
+
+later outcome is not the score. Use later results to ask whether the original reasoning
+respected evidence limits, separated mainline from carrier, named path risks, and left
+usable triggers. A wrong prediction caused by genuinely missing information may still
+be a durable MPG run if the missing information was outside the slice.
+
+In playback review: trigger conditions should explain when a later result changed the judgment.
+
 ### Operating Flow
 
 1. Qualify the mainline. Turn a naked slogan into a constrained claim with actor,

@@ -69,6 +69,19 @@ class MpgContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
+    def test_mpg_scores_reasoning_durability_not_outcome_hindsight(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "Reasoning Durability / 推演耐久性",
+                "结果不准不必然失败",
+                "信息不全",
+                "当时信息面",
+                "later outcome is not the score",
+                "trigger conditions should explain when a later result changed the judgment",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_mpg_pressure_tests_cover_cases_and_boundaries(self):
         text = MPG_PRESSURE.read_text(encoding="utf-8")
         for phrase in (
@@ -81,8 +94,10 @@ class MpgContractTests(unittest.TestCase):
             "Scenario 7: Pure Control Boundary Routes To WAE",
             "Scenario 8: Constrained Mainline Challenge",
             "Scenario 9: War Of Resistance Time-Slice",
+            "Scenario 10: Stock Playback Reasoning Durability",
             "exclude future information",
             "plain-language conclusion",
+            "later outcome is not the score",
             "Expected treatment behavior",
             "Path-Carrying Strategy",
         ):

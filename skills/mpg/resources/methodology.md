@@ -178,6 +178,37 @@ Example:
 Only after this human-readable conclusion should the answer map the carrier, exposure,
 counter-forces, optionality, and triggers.
 
+## Reasoning Durability / 推演耐久性
+
+MPG is not scored by hindsight result matching. In playback tests, later outcome is not the score.
+
+Reasoning Durability / 推演耐久性 asks whether the analysis would still look honest and
+useful under the 当时信息面, even if the later result was different from the forecast.
+
+Short rule:
+
+> 结果不准不必然失败；信息不全时，触发条件比预测命中更重要。
+
+Evaluate an MPG playback on two layers:
+
+- `reasoning_quality`: Did the run respect the evidence boundary, exclude future
+  information, separate mainline from carrier, map path risks, and choose a posture
+  proportional to what was known?
+- `result_playback`: Did later events hit the trigger conditions, reveal missing
+  information, or require the mainline to be upgraded, downgraded, or switched to a new
+  vehicle?
+
+A later miss is not automatically a failed MPG run. It may come from information that
+was genuinely unavailable at the time. The run fails when it overclaims under thin
+evidence, hides uncertainty, gives no usable triggers, or cannot explain what later
+information changed the judgment.
+
+Required review question:
+
+> Did the trigger conditions explain when a later result changed the judgment?
+
+In English contract form: trigger conditions should explain when a later result changed the judgment.
+
 ## Mainline / 主路径
 
 ### Step 1: Qualify The Mainline
