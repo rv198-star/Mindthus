@@ -53,6 +53,27 @@ Good triggers:
 - “The company must transform, but which carrier should cross the cashflow valley?”
 - “Central direction is clear, but local incentives may bend implementation.”
 
+### Human-Readable First / 先讲人话
+
+MPG output must be readable before it is structured.
+
+Short rule:
+
+> 先给人看的判断，再给机器看的字段。
+
+Do not expose MPG internal field names before the plain-language conclusion.
+
+Default output order:
+
+1. 一句话判断: state the conclusion in words a normal reader can repeat.
+2. 为什么: explain the path logic with concrete forces, not framework terms.
+3. 怎么办: say what posture, exposure, vehicle, or trigger should change.
+4. 校准字段: use `qualified_mainline`, `carrier_vehicle`, and other fields only if
+   they help audit the answer.
+
+The first paragraph should be 普通人能复述. If the answer starts with
+`qualified_mainline:` or a dense field table, rewrite it.
+
 ### Operating Flow
 
 1. Qualify the mainline. Turn a naked slogan into a constrained claim with actor,

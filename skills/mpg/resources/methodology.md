@@ -147,6 +147,37 @@ An MPG run should output a Path-Carrying Strategy / 主线承载方案 with thes
 The output may include hypothetical numbers when Approximate Quantified Mapping helps
 make the relationship legible, but the numbers are assumptions, not measurements.
 
+## Human-Readable First / 先讲人话
+
+MPG has an internal structure, but the user-facing answer must start in plain language.
+
+Short rule:
+
+> 先给人看的判断，再给机器看的字段。
+
+Do not expose MPG internal field names before the plain-language conclusion. The
+reader should first see a sentence they can repeat to another person. Only after that
+should the answer reveal the structural fields when they help audit the reasoning.
+
+Required user-facing order:
+
+1. 一句话判断: the plain conclusion.
+2. 为什么: the main path logic in concrete language.
+3. 怎么办: the action posture, exposure change, vehicle change, or trigger.
+4. 结构校准: optional field-level audit.
+
+The 一句话判断 must be 普通人能复述. If it sounds like a worksheet, a risk matrix, or
+an internal trace, it is not yet an MPG deliverable.
+
+Example:
+
+> 在 1938 年《论持久战》发表前的信息下，不能把“中国必胜”当成已知事实；
+> 更稳的判断是：日本很强，但很难快速吞下中国。只要中国不投降、不崩盘，
+> 把战争拖成长时间消耗，日本的胜利路径会越来越吃力，中国的胜算会随时间上升。
+
+Only after this human-readable conclusion should the answer map the carrier, exposure,
+counter-forces, optionality, and triggers.
+
 ## Mainline / 主路径
 
 ### Step 1: Qualify The Mainline

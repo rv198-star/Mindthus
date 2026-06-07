@@ -57,6 +57,18 @@ class MpgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_mpg_output_is_human_readable_before_internal_fields(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "Human-Readable First / 先讲人话",
+                "先给人看的判断，再给机器看的字段",
+                "Do not expose MPG internal field names before the plain-language conclusion",
+                "一句话判断",
+                "普通人能复述",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_mpg_pressure_tests_cover_cases_and_boundaries(self):
         text = MPG_PRESSURE.read_text(encoding="utf-8")
         for phrase in (
@@ -68,6 +80,9 @@ class MpgContractTests(unittest.TestCase):
             "Scenario 6: Missing Evidence Blocks MPG",
             "Scenario 7: Pure Control Boundary Routes To WAE",
             "Scenario 8: Constrained Mainline Challenge",
+            "Scenario 9: War Of Resistance Time-Slice",
+            "exclude future information",
+            "plain-language conclusion",
             "Expected treatment behavior",
             "Path-Carrying Strategy",
         ):

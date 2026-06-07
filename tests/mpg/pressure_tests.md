@@ -163,3 +163,31 @@ Expected treatment behavior:
 - separate structural housing pressure from the leveraged short vehicle
 - output a Path-Carrying Strategy that may accept long-term pressure but reject or
   downgrade the constrained mainline for this carrier
+
+## Scenario 9: War Of Resistance Time-Slice
+
+Input:
+
+> 抗日战争中国必胜，但请回到毛泽东发表《论持久战》之前，隔离你知道的未来信息，
+> 只凭当时知道的信息推演。
+
+Expected baseline failure:
+
+- uses later victory as hidden proof
+- mentions future information such as Pearl Harbor, U.S. entry, Soviet entry, or atomic
+  bombs
+- starts with `qualified_mainline`, `carrier_vehicle`, or other internal fields
+- gives a correct-looking but unreadable worksheet
+
+Expected treatment behavior:
+
+- explicitly exclude future information
+- give a plain-language conclusion first
+- use a sentence like: “在当时信息下，不能把中国必胜当成已知事实；更稳的判断是，
+  日本很强，但很难快速吞下中国，只要中国不投降、不崩盘，把战争拖长，中国胜算会
+  随时间上升。”
+- explain in ordinary language that Japan's short-war path was strong, but its long-war
+  occupation path was hard to carry
+- only then map the Path-Carrying Strategy: strategic depth, continued resistance,
+  national mobilization, guerrilla and regular-war combination, morale preservation,
+  and triggers that would downgrade the mainline
