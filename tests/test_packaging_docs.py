@@ -48,6 +48,31 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("你可能见过这些情况", readme)
         self.assertIn("AI 生成的文档、代码或方案看起来完整，却停在表层", readme)
 
+    def test_public_docs_sync_mpg_unreleased_positioning(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "MPG / 主线-路径博弈",
+            "先讲人话",
+            "推演耐久性",
+            "MPG-AQM",
+            "非精准量化显影",
+        ):
+            self.assertIn(phrase, readme)
+            self.assertIn(phrase, agents)
+
+        for phrase in (
+            "## Unreleased",
+            "MPG / 主线-路径博弈",
+            "Path-Carrying Strategy / 主线承载方案",
+            "Human-Readable First / 先讲人话",
+            "Reasoning Durability / 推演耐久性",
+            "MPG-AQM Visibility Layer / 主线-路径显影层",
+        ):
+            self.assertIn(phrase, changelog)
+
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
             encoding="utf-8"
