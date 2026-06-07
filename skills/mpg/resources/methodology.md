@@ -209,6 +209,47 @@ Required review question:
 
 In English contract form: trigger conditions should explain when a later result changed the judgment.
 
+## MPG-AQM Visibility Layer / 主线-路径显影层
+
+Approximate Quantified Mapping / 非精准量化显影 can be combined with MPG, but only as
+a visibility layer after the plain-language judgment is clear.
+
+Short rule:
+
+> 数字是假设，关系才是重点。
+
+MPG owns the judgment. AQM only makes variables visible. It helps the reader see which
+part of the path is doing the work, but it does not compute the action posture, does
+not score the final answer, and must not become a substitute for evidence.
+
+Use AQM inside MPG when plain language such as “mainline strong but path fragile” is
+too compressed. The useful variables are usually:
+
+| Variable | What it reveals |
+|---|---|
+| `mainline_strength` | how much structural pull the long-term direction has |
+| `path_resistance` | how much volatility, opposition, delay, or cost can bend the path |
+| `carrier_fragility` | whether the chosen vehicle can survive before the mainline resolves |
+| `information_gap` | how much decisive information is unavailable under the time slice |
+| `trigger_strength` | whether new evidence can legitimately upgrade or downgrade posture |
+
+Example:
+
+| Variable | Hypothetical reading |
+|---|---|
+| AI hardware mainline | 8 / 10 |
+| current stock as carrier | 4 / 10 |
+| valuation/path resistance | 7 / 10 |
+| information gap | 5 / 10 |
+| trigger strength from Q2 earnings | 8 / 10 if official, 3 / 10 if rumor |
+
+This table does not decide. It makes the MPG judgment easier to audit: strong mainline,
+fragile carrier, high sensitivity to confirmed earnings.
+
+Boundary: do not calculate the decision. If the answer starts debating whether a
+number should be 6.5 or 7, AQM has failed. Return to Evidence / Claim Ceiling,
+time-slice facts, or plain-language MPG.
+
 ## Mainline / 主路径
 
 ### Step 1: Qualify The Mainline

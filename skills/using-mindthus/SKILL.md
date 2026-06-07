@@ -195,6 +195,7 @@ Common conflict checks:
   or redirects TVG.
 - SELA vs MPG: SELA identifies direction; MPG carries it through path volatility. If
   the mainline itself is unclear, SELA or EDSP should resolve the prerequisite first.
+- MPG vs AQM: MPG owns the judgment; Approximate Quantified Mapping only makes variables visible.
 - SELA vs WAE: a long-term system-efficiency direction can dominate strategic direction,
   while WAE may block or degrade immediate action under high risk or irreversibility.
 - EDSP vs evidence: EDSP may give a structural direction, but evidence constraints can

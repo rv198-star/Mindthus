@@ -90,6 +90,31 @@ be a durable MPG run if the missing information was outside the slice.
 
 In playback review: trigger conditions should explain when a later result changed the judgment.
 
+### MPG-AQM Visibility Layer / 主线-路径显影层
+
+Use Approximate Quantified Mapping / 非精准量化显影 only after the plain-language MPG
+judgment is clear and only when the path relationship is complex enough to hide the
+dominant variables.
+
+Short rule:
+
+> 数字是假设，关系才是重点。
+
+MPG owns the judgment. AQM only makes variables visible. It can expose relative
+strength among mainline pull, path resistance, carrier fragility, information gaps, and
+trigger strength, but it must not score the final answer or calculate the decision.
+
+Use it to clarify:
+
+- mainline strength
+- path resistance
+- carrier fragility
+- information gap
+- trigger strength
+
+Boundary: do not calculate the decision. If the discussion starts defending exact
+digits, stop AQM and return to evidence boundaries or plain-language MPG reasoning.
+
 ### Operating Flow
 
 1. Qualify the mainline. Turn a naked slogan into a constrained claim with actor,

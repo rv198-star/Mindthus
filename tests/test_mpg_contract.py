@@ -82,6 +82,20 @@ class MpgContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
+    def test_mpg_uses_approximate_quantified_mapping_as_visibility_layer(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "MPG-AQM Visibility Layer / 主线-路径显影层",
+                "Approximate Quantified Mapping",
+                "非精准量化显影",
+                "MPG owns the judgment",
+                "AQM only makes variables visible",
+                "do not calculate the decision",
+                "数字是假设，关系才是重点",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_mpg_pressure_tests_cover_cases_and_boundaries(self):
         text = MPG_PRESSURE.read_text(encoding="utf-8")
         for phrase in (
@@ -113,6 +127,8 @@ class MpgContractTests(unittest.TestCase):
             "`mpg`",
             "Long-term system efficiency versus local advantage",
             "SELA identifies direction; MPG carries it through path volatility",
+            "MPG vs AQM",
+            "MPG owns the judgment; Approximate Quantified Mapping only makes variables visible.",
             "Do not use MPG when there is no actor, carrier, exposure, or path decision.",
         ):
             self.assertIn(phrase, text)
