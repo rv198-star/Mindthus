@@ -110,6 +110,46 @@ class SelaFidelityTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_sela_judge_rubric_and_evaluation_packet_exist(self):
+        rubric = (REPO / "skills" / "sela" / "rubrics" / "judge.md").read_text(
+            encoding="utf-8"
+        )
+        packet = (REPO / "tests" / "sela" / "baseline_vs_constrained_evaluation.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "SELA Judge Rubric",
+            "0-2",
+            "D1 对比公平性审查",
+            "D2 局部优势可规模化",
+            "D3 系统效率趋势",
+            "D4 边界豁免检查",
+            "D5 时机动作分级",
+            "D6 反驳题目预设",
+            "form compliance is not enough",
+            "do not score by preferred conclusion",
+            "shape validation is not semantic judgment",
+        ):
+            self.assertIn(phrase, rubric)
+
+        for phrase in (
+            "SELA Baseline vs Constrained Evaluation Packet",
+            "baseline prompt",
+            "constrained prompt",
+            "Case 1: soy sauce",
+            "Case 2: software security review",
+            "Case 3: adaptive tutoring",
+            "failure example",
+            "single-agent seed run",
+            "does not claim cross-model robustness",
+            "external measured seed",
+        ):
+            self.assertIn(phrase, packet)
+
+        self.assertGreaterEqual(packet.count("Baseline score"), 3)
+        self.assertGreaterEqual(packet.count("Constrained score"), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
