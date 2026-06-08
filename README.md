@@ -53,21 +53,19 @@ Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对、原则一落地就摇摆、命题本身可能有坑时，用它先建结构坐标，再做场景投影。
 - [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在“管事”，但没人知道流程、判断和证据各自该管什么时，用它重新划清控制边界。
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：AI 生成的文档、代码或方案看起来完整，却停在表层、缺少厚度、洞察或价值密度时，用它把薄产物加深、提炼或压缩成有判断、有取舍、有下游价值的可用模块。
-- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它把稳定 Mission 转成任务状态、验收证据、决策钩子和可恢复执行。名字仍是 `tplan`；OKR 是对外主口径：Mission 对齐 Objective，acceptance evidence 对齐 Key Results，Task/SubTask/Step 对齐 initiatives/actions。它比普通 OKR 更像动态工作流：每次 checkpoint、evidence、blocker 或 decision hook 都能触发任务树调整。
+- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它管理目标、验收证据、任务状态和停止条件。可以把它理解成给 agent 用的动态 OKR：目标稳定，任务树跟着 checkpoint、evidence、blocker 和用户反馈短周期调整。实际调用时仍使用 `tplan`。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个文件、prompt、参数或任务节点已经第三次被修，下一步还想继续加层时，用它防止局部修补变成死亡螺旋。
 
-## 项目组成
+## 从哪里开始
 
-Mindthus 的项目结构保持简单，方便直接安装，也方便拆开阅读：
+第一次使用时，可以按这个顺序看：
 
-- `skills/*/SKILL.md`：可安装、可调用的 skill 入口。
-- `docs/methodologies/`：面向人的方法说明，解释每个方法解决什么问题、何时使用、何时停止。
-- `skills/*/resources/`：更长的方法资源、运行说明和配套材料。
-- `skills/*/scripts/` 与 `templates/`：少量确定性运行支撑，例如 `tplan` 和 `TVG`。
-- `AGENTS.md`：给使用 Mindthus 的 agent 提供默认姿态和路由规则。
-- `tests/`：固定关键文档契约、skill frontmatter 和运行脚本，避免技能包在迭代中悄悄失效。
+- 想快速判断某个方法适不适合你，先读 `docs/methodologies/`。
+- 想让 Codex 或 Claude Code 实际调用，安装后使用 `skills/*/SKILL.md` 里的 skill。
+- 想了解 agent 应该如何自动选择方法，看 `AGENTS.md`。
+- 想研究配套脚本，再看 `skills/*/scripts/` 与 `templates/`。
 
-想快速了解一个方法，先读 `docs/methodologies/`。要让 agent 实际使用，安装后调用对应 skill。
+本仓库不是 Python library；安装的含义是把 `skills/` 暴露给目标 agent client。
 
 ## 安装
 
@@ -115,26 +113,19 @@ python3 -m unittest discover -s tests/tplan -v
 python3 -m unittest discover -s tests -v
 ```
 
-本仓库不是 Python library；安装的含义是把 `skills/` 暴露给目标 agent client。稳定打包面包括 `AGENTS.md`、`skills/*/SKILL.md`、`skills/*/resources/`、`skills/*/templates/` 和必要的 `skills/*/scripts/`。
+## 可选：记录使用效果
 
-## 发布与维护状态
+如果你在真实任务里试用 Mindthus，并愿意反馈效果，可以用下面的脚本记录一条脱敏使用日志：
 
-当前仓库版本：`v1.0.1`。
+```bash
+python3 scripts/log-fidelity-usage.py --help
+```
 
-`v1.0 Method Fidelity Framework` 把 `tplan`、`3L5S`、`TVG` 已有的校验经验，和 `SELA`、`MPG` 的 fidelity pilots 收束成同一套忠实执行框架。它的定位是“约束关键判断动作，不约束判断结论”：要求方法输出暴露必要字段、失败判据、证据风险和不适用出口，但不让脚本替 agent 批准语义结论。
+默认记录文件是 `data/fidelity-usage-log.jsonl`。它适合记录场景、使用的方法、模型、约束版有没有帮上忙和简单评分，方便之后比较哪些方法真的有效。
 
-维护者需要关注的当前能力：
+## 版本与许可
 
-- Mindthus 现在有明确许可证：开源使用按 AGPLv3，闭源商业使用需要单独授权。
-- judge 层可以用 `scripts/run-fidelity-judge.py` 生成可复现 prompt，并校验 judge JSON 是否完整。
-- 如果模型用 `not_applicable`、`transfer` 或 `challenge_premise` 退出方法，judge 必须审查这个退出本身是否成立。
-- 每次真实使用某个方法后，可以用 `scripts/log-fidelity-usage.py` 手动追加一条 usage log，记录场景、方法、模型、baseline 分、constrained 分和约束是否有帮助。
-
-`v1.0.1` 不新增方法，而是补上一个极简使用日志入口：让真实 fidelity judge 结果可以被脱敏记录、持续积累，开始形成 1.0 -> 2.0 的数据飞轮。`v1.0` 继承 `v0.9` 的 fidelity harness 验证，并补充 SELA 跨模型 baseline 小样本。它证明忠实执行约束在两个已测模型记录中有稳定收益，但仍不声明所有模型、所有方法的普适鲁棒性。
-
-完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
-
-## License
+当前仓库版本：`v1.0.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
@@ -144,13 +135,6 @@ from the author, including proprietary products, private SaaS, commercial platfo
 integration, or commercial use without releasing the corresponding source code required
 by AGPLv3.
 
-中文口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有商业平台、
-商业 SaaS 或不公开对应源代码的商业集成，需要单独取得商业授权。
-
-## 维护者说明
-
-### Method Layering Discipline / 方法分层纪律
-
-这部分主要给贡献者看。修订方法时，Mindthus 使用 Method Layering Discipline：把 `core`、`mainline`、`guardrail`、`boundary`、`example` 与 `runtime support` 分开，避免主思想被补漏分支冲淡。`guardrail must not become a new judgment center`。
+中文口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有商业平台、商业 SaaS 或不公开对应源代码的商业集成，需要单独取得商业授权。
 
 Mindthus 不是方法论仓库，而是一套让 agent 在复杂工作里保持清醒判断的可执行基础设施。

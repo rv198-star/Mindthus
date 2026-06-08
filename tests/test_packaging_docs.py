@@ -35,18 +35,21 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
         self.assertIn("当前仓库版本：`v1.0.1`", readme)
-        self.assertIn("v1.0 Method Fidelity Framework", readme)
         self.assertIn("scripts/log-fidelity-usage.py", readme)
+        self.assertIn("data/fidelity-usage-log.jsonl", readme)
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
-        self.assertIn("judge JSON", readme)
-        self.assertIn("not_applicable", readme)
-        self.assertIn("不声明所有模型、所有方法的普适鲁棒性", readme)
-        self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
         self.assertIn("docs/methodologies", readme)
         self.assertIn("安装", readme)
         self.assertIn("验证", readme)
+        self.assertIn("从哪里开始", readme)
+        self.assertIn("可选：记录使用效果", readme)
+        self.assertIn("版本与许可", readme)
+        self.assertNotIn("维护者需要关注", readme)
+        self.assertNotIn("judge JSON", readme)
+        self.assertNotIn("not_applicable", readme)
+        self.assertNotIn("方法分层纪律", readme)
 
     def test_readme_keeps_release_details_out_of_new_user_intro(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -58,6 +61,8 @@ class PackagingDocsTests(unittest.TestCase):
             "scripts/log-fidelity-usage.py",
             "版本脉络",
             "GitHub Releases",
+            "维护者",
+            "judge JSON",
         ):
             self.assertNotIn(phrase, intro)
 
@@ -79,6 +84,7 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("可安装的判断工具箱", readme)
         self.assertIn("你可能见过这些情况", readme)
         self.assertIn("AI 生成的文档、代码或方案看起来完整，却停在表层", readme)
+        self.assertIn("给 agent 用的动态 OKR", readme)
 
     def test_public_docs_sync_mpg_unreleased_positioning(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")

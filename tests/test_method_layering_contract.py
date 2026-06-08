@@ -8,20 +8,23 @@ SKILL_FILES = sorted((REPO / "skills").glob("*/SKILL.md"))
 
 class MethodLayeringContractTests(unittest.TestCase):
     def test_project_docs_define_method_layering_discipline(self):
-        for path in (REPO / "README.md", REPO / "AGENTS.md"):
-            text = path.read_text(encoding="utf-8")
-            for phrase in (
-                "Method Layering Discipline",
-                "方法分层纪律",
-                "`core`",
-                "`mainline`",
-                "`guardrail`",
-                "`boundary`",
-                "`example`",
-                "`runtime support`",
-                "guardrail must not become a new judgment center",
-            ):
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+        text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Method Layering Discipline",
+            "方法分层纪律",
+            "`core`",
+            "`mainline`",
+            "`guardrail`",
+            "`boundary`",
+            "`example`",
+            "`runtime support`",
+            "guardrail must not become a new judgment center",
+        ):
+            self.assertIn(phrase, text)
+
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        self.assertNotIn("Method Layering Discipline", readme)
+        self.assertNotIn("guardrail must not become a new judgment center", readme)
 
     def test_skill_entrypoints_use_ordered_method_layers(self):
         required_headers = (
