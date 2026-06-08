@@ -106,8 +106,10 @@ class V10ReadinessTests(unittest.TestCase):
 
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
         self.assertIn("closed-source commercial use requires a separate commercial license", readme)
+        self.assertIn("当前仓库版本：`v1.0`", readme)
+        self.assertNotIn("Pre-1.0", readme)
 
-    def test_release_pack_carries_license_files(self):
+    def test_release_pack_carries_license_judge_script_and_rubric(self):
         with tempfile.TemporaryDirectory() as tmp:
             result = subprocess.run(
                 ["python3", "scripts/build-release-pack.py", "--out", tmp, "--force"],
@@ -124,6 +126,34 @@ class V10ReadinessTests(unittest.TestCase):
             ):
                 self.assertTrue((platform_root / "LICENSE").is_file(), platform_root)
                 self.assertTrue((platform_root / "COMMERCIAL-LICENSE.md").is_file(), platform_root)
+                self.assertTrue((platform_root / "scripts" / "run-fidelity-judge.py").is_file(), platform_root)
+
+            self.assertTrue(
+                (
+                    root
+                    / "claude-code"
+                    / "claude-plugin"
+                    / "skills"
+                    / "sela"
+                    / "rubrics"
+                    / "judge.md"
+                ).is_file()
+            )
+            self.assertTrue(
+                (root / "codex" / "skills" / "mindthus" / "sela" / "rubrics" / "judge.md").is_file()
+            )
+            self.assertTrue(
+                (
+                    root
+                    / "opencode"
+                    / ".opencode"
+                    / "skills"
+                    / "mindthus"
+                    / "sela"
+                    / "rubrics"
+                    / "judge.md"
+                ).is_file()
+            )
 
     def test_sela_judge_rubric_reviews_method_exit_legitimacy(self):
         rubric = (REPO / "skills" / "sela" / "rubrics" / "judge.md").read_text(

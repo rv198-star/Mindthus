@@ -2,10 +2,10 @@
 
 Date: 2026-06-08
 
-Status: local readiness work, not a pushed release.
+Status: v1.0 blocker closure record.
 
 This record closes the four known v1.0 blockers after the v0.9 Method Fidelity Harness
-merge. It does not tag or publish v1.0.
+merge. The release tag is handled by the final merge-and-tag step.
 
 ## Closed Items
 
@@ -19,9 +19,7 @@ merge. It does not tag or publish v1.0.
 - Cross-model baseline: `tests/sela/cross_model_baseline_2026-06-08.md` records a second
   model route, `opencode/deepseek-v4-flash-free`, against the existing v0.9 SELA packet.
 
-## Remaining Release Action
+## Final Release Action
 
-The final push / tag / release action is intentionally deferred.
-
-Before publishing v1.0, rerun full verification from the final branch state and decide
-whether to update release metadata, release notes, and package version labels.
+Before publishing v1.0, rerun full verification from the final branch state and confirm
+release metadata, release notes, and package version labels are all in v1.0 form.
