@@ -34,13 +34,17 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v0.6.3`", readme)
+        self.assertIn("当前仓库版本：`v1.0`", readme)
+        self.assertIn("v1.0 Method Fidelity Framework", readme)
+        self.assertIn("AGPLv3 + commercial dual licensing", readme)
+        self.assertIn("judge JSON", readme)
+        self.assertIn("not_applicable", readme)
+        self.assertIn("不声明所有模型、所有方法的普适鲁棒性", readme)
         self.assertIn("tplan 运行时优化", readme)
         self.assertIn("只读 SubAgent 加速", readme)
         self.assertIn("平台化 release pack", readme)
         self.assertIn("Claude Code marketplace 发布包布局", readme)
         self.assertIn("判断内核", readme)
-        self.assertIn("当前不声明跨模型鲁棒性", readme)
         self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
@@ -167,6 +171,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v1.0"), 1)
         self.assertEqual(lines.count("## v0.6.3"), 1)
         self.assertEqual(lines.count("## v0.6.2"), 1)
         self.assertEqual(lines.count("## v0.6.1"), 1)
@@ -353,9 +358,12 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "0.6.3")
+            self.assertEqual(plugin["version"], "1.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue(
+                (out / "claude-code" / "claude-plugin" / "scripts" / "run-fidelity-judge.py").exists()
+            )
             self.assertTrue(
                 (
                     out

@@ -5,7 +5,8 @@ prompt behavior under the SELA Judge Rubric.
 
 This packet does not claim cross-model robustness. It contains one external measured
 seed from the fork review and two single-agent seed run records to exercise the loop.
-Future runs should replace or supplement these records with fresh model outputs.
+The follow-up cross-model record lives at
+`tests/sela/cross_model_baseline_2026-06-08.md`.
 
 ## Shared Inputs
 

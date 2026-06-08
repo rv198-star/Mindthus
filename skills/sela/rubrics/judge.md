@@ -50,3 +50,26 @@ or turns a direction judgment into premature action?
 - Penalize vague "combine both" answers unless they name an action posture and trigger.
 - Penalize hidden hard-boundary bypass even when the trend analysis is strong.
 - Keep the final score separate from outcome correctness.
+
+## Escape Review
+
+If the output uses `not_applicable`, `transfer`, or `challenge_premise`, do not automatically pass a method exit.
+Rule anchor: the judge must review whether the exit itself is justified.
+
+The escape review asks:
+
+- Does the active object really fall outside SELA, or is the model avoiding the hard
+  SELA judgment?
+- If the output uses `transfer`, does the target method actually own the dominant
+  judgment?
+- If the output uses `challenge_premise`, does it name a real faulty assumption rather
+  than using premise challenge as a polite refusal?
+- Would SELA become applicable if the exit were rejected?
+
+For automated records, fill an `escape_review` object with:
+
+- `applicability_exit`: `not_applicable`, `transfer`, or `challenge_premise`
+- `is_exit_justified`: boolean
+- `rationale`: concrete reason for accepting or rejecting the exit
+- `reviewer_action`: `accept_exit`, `reject_exit_and_score_applicable`, or
+  `transfer_to_human`

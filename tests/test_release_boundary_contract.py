@@ -6,17 +6,44 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_v0_6_3_release_surface_is_declared(self):
+    def test_v1_0_release_surface_is_declared(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v0.6.3`", readme)
-        self.assertIn("## v0.6.3", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v0.6.3.md)", changelog)
-        self.assertIn("tplan 运行时优化", changelog)
-        self.assertIn("SubAgents are scouts, not controllers", changelog)
-        self.assertIn('VERSION = "0.6.3"', builder)
+        self.assertIn("当前仓库版本：`v1.0`", readme)
+        self.assertIn("## v1.0", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.0.md)", changelog)
+        self.assertIn("LICENSE blocker closed", changelog)
+        self.assertIn("judge automation blocker closed", changelog)
+        self.assertIn("challenge_premise escape blocker closed", changelog)
+        self.assertIn("cross-model baseline blocker closed", changelog)
+        self.assertIn('VERSION = "1.0"', builder)
+
+    def test_v1_0_release_log_is_chinese_and_release_ready(self):
+        text = (REPO / "docs" / "releases" / "v1.0.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "# Mindthus v1.0 发布日志",
+            "发布日期：2026-06-08",
+            "版本定位",
+            "LICENSE blocker closed",
+            "Judge automation blocker closed",
+            "challenge_premise escape blocker closed",
+            "Cross-model baseline blocker closed",
+            "AGPLv3",
+            "COMMERCIAL-LICENSE.md",
+            "scripts/run-fidelity-judge.py",
+            "escape_review",
+            "opencode/deepseek-v4-flash-free",
+            "不声明所有模型、所有方法的普适鲁棒性",
+            "验证结果",
+            "python3 -m unittest discover -s tests -v",
+            "python3 scripts/build-release-pack.py",
+        ):
+            self.assertIn(phrase, text)
+
+        self.assertNotIn("Release date:", text)
 
     def test_v0_6_3_release_log_is_chinese_and_release_ready(self):
         text = (REPO / "docs" / "releases" / "v0.6.3.md").read_text(encoding="utf-8")

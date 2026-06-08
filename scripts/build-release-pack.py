@@ -9,11 +9,13 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "0.6.3"
+VERSION = "1.0"
 EXCLUDED_DIRS = {"__pycache__"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
+RELEASE_SCRIPTS = ("run-fidelity-judge.py",)
 
 
 def repo_root() -> Path:
@@ -86,7 +88,17 @@ def write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def build_claude_code(root: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+def copy_license_files(root: Path, target: Path) -> None:
+    for filename in LICENSE_FILES:
+        copy_file_filtered(root / filename, target / filename)
+
+
+def copy_release_scripts(root: Path, target: Path) -> None:
+    for filename in RELEASE_SCRIPTS:
+        copy_file_filtered(root / "scripts" / filename, target / "scripts" / filename)
+
+
+def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
     platform_root = root / "claude-code"
     plugin_root = platform_root / "claude-plugin"
 
@@ -115,22 +127,28 @@ def build_claude_code(root: Path, skills_dir: Path, methodologies_dir: Path) -> 
     )
     copy_tree_filtered(skills_dir, plugin_root / "skills")
     copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
+    copy_license_files(repo, plugin_root)
+    copy_release_scripts(repo, plugin_root)
 
 
-def build_codex(root: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
+def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
     platform_root = root / "codex"
     replacements = skill_path_replacements("skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / "skills" / "mindthus", replacements)
     copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies", replacements)
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
+    copy_license_files(repo, platform_root)
+    copy_release_scripts(repo, platform_root)
 
 
-def build_opencode(root: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
+def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
     platform_root = root / "opencode"
     replacements = skill_path_replacements(".opencode/skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / ".opencode" / "skills" / "mindthus", replacements)
     copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies", replacements)
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
+    copy_license_files(repo, platform_root)
+    copy_release_scripts(repo, platform_root)
 
 
 def main() -> int:
@@ -149,13 +167,19 @@ def main() -> int:
         raise SystemExit(f"methodologies directory not found: {methodologies_dir}")
     if not agents_file.is_file():
         raise SystemExit(f"AGENTS.md not found: {agents_file}")
+    for filename in LICENSE_FILES:
+        if not (root / filename).is_file():
+            raise SystemExit(f"{filename} not found: {root / filename}")
+    for filename in RELEASE_SCRIPTS:
+        if not (root / "scripts" / filename).is_file():
+            raise SystemExit(f"{filename} not found: {root / 'scripts' / filename}")
 
     output = args.out.resolve()
     ensure_safe_output_dir(output, root)
     ensure_output_dir(output, args.force)
-    build_claude_code(output, skills_dir, methodologies_dir)
-    build_codex(output, skills_dir, agents_file, methodologies_dir)
-    build_opencode(output, skills_dir, agents_file, methodologies_dir)
+    build_claude_code(output, root, skills_dir, methodologies_dir)
+    build_codex(output, root, skills_dir, agents_file, methodologies_dir)
+    build_opencode(output, root, skills_dir, agents_file, methodologies_dir)
     print(f"built Mindthus release pack at {output}")
     return 0
 
