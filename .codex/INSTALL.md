@@ -33,6 +33,7 @@ After installation, Codex should discover:
 
 - `mindthus:using-mindthus`
 - `mindthus:sela`
+- `mindthus:mpg`
 - `mindthus:3l5s`
 - `mindthus:edsp`
 - `mindthus:wae`

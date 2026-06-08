@@ -4,10 +4,29 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import yaml
-
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def parse_frontmatter_mapping(text: str) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            raise ValueError(f"frontmatter line is not a key/value pair: {raw_line!r}")
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if not key:
+            raise ValueError(f"frontmatter key is empty: {raw_line!r}")
+        if (value.startswith('"') and value.endswith('"')) or (
+            value.startswith("'") and value.endswith("'")
+        ):
+            value = value[1:-1]
+        parsed[key] = value
+    return parsed
 
 
 class PackagingDocsTests(unittest.TestCase):
@@ -32,12 +51,14 @@ class PackagingDocsTests(unittest.TestCase):
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("SELA / 系统效率碾压局部优势", readme)
+        self.assertIn("MPG / Mainline-Path Game", readme)
         self.assertIn("3L5S / 三层五步", readme)
         self.assertIn("EDSP / Extreme Deduction + Scenario Projection", readme)
         self.assertIn("WAE / Workflow-Agentic-Evidence", readme)
         self.assertIn("TVG / Thinking Value-Gain", readme)
         self.assertIn("Anti-Spiral / 反螺旋自检", readme)
         self.assertIn("讲清整体与局部", readme)
+        self.assertIn("主线承载方案", readme)
         self.assertIn("讲清问题如何从混乱信号走到可执行步骤", readme)
         self.assertIn("脚本、agent、review gate 都在“管事”", readme)
         self.assertIn("死亡螺旋", readme)
@@ -45,6 +66,31 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("可安装的判断工具箱", readme)
         self.assertIn("你可能见过这些情况", readme)
         self.assertIn("AI 生成的文档、代码或方案看起来完整，却停在表层", readme)
+
+    def test_public_docs_sync_mpg_unreleased_positioning(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "MPG / 主线-路径博弈",
+            "先讲人话",
+            "推演耐久性",
+            "MPG-AQM",
+            "非精准量化显影",
+        ):
+            self.assertIn(phrase, readme)
+            self.assertIn(phrase, agents)
+
+        for phrase in (
+            "## Unreleased",
+            "MPG / 主线-路径博弈",
+            "Path-Carrying Strategy / 主线承载方案",
+            "Human-Readable First / 先讲人话",
+            "Reasoning Durability / 推演耐久性",
+            "MPG-AQM Visibility Layer / 主线-路径显影层",
+        ):
+            self.assertIn(phrase, changelog)
 
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
@@ -146,6 +192,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_methodology_pages_exist_and_cover_their_core_claims(self):
         cases = [
             ("sela.md", "系统效率碾压局部优势"),
+            ("mpg.md", "Mainline-Path Game"),
             ("3l5s.md", "三层五步"),
             ("edsp.md", "Extreme Deduction + Scenario Projection"),
             ("wae.md", "Workflow-Agentic-Evidence"),
@@ -244,7 +291,7 @@ class PackagingDocsTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_skill_frontmatter_is_valid_yaml(self):
+    def test_skill_frontmatter_has_required_keys(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
             text = path.read_text(encoding="utf-8")
             self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
@@ -252,9 +299,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertGreater(end, 0, f"{path} missing frontmatter terminator")
             frontmatter = text[4:end]
             try:
-                parsed = yaml.safe_load(frontmatter)
-            except yaml.YAMLError as exc:
-                self.fail(f"{path} has invalid YAML frontmatter: {exc}")
+                parsed = parse_frontmatter_mapping(frontmatter)
+            except ValueError as exc:
+                self.fail(f"{path} has invalid frontmatter: {exc}")
             self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
             self.assertIn("name", parsed, f"{path} frontmatter missing name")
             self.assertIn("description", parsed, f"{path} frontmatter missing description")
@@ -308,6 +355,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("..", source)
             self.assertEqual(plugin["version"], "0.6.3")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue(
                 (
                     out
@@ -322,12 +370,14 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "superpowers").exists())
 
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "codex" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "codex" / "AGENTS.md").exists())
             self.assertTrue((out / "codex" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "codex" / "docs" / "internal").exists())
             self.assertFalse((out / "codex" / "docs" / "superpowers").exists())
             codex_agents = (out / "codex" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`skills/mindthus/sela/`", codex_agents)
+            self.assertIn("`skills/mindthus/mpg/`", codex_agents)
             self.assertNotIn("`skills/sela/`", codex_agents)
             codex_sela_doc = (out / "codex" / "docs" / "methodologies" / "sela.md").read_text(
                 encoding="utf-8"
@@ -342,12 +392,16 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
+            self.assertTrue(
+                (out / "opencode" / ".opencode" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists()
+            )
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
             self.assertTrue((out / "opencode" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "opencode" / "docs" / "internal").exists())
             self.assertFalse((out / "opencode" / "docs" / "superpowers").exists())
             opencode_agents = (out / "opencode" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`.opencode/skills/mindthus/sela/`", opencode_agents)
+            self.assertIn("`.opencode/skills/mindthus/mpg/`", opencode_agents)
             self.assertNotIn("`skills/sela/`", opencode_agents)
             opencode_sela_doc = (
                 out / "opencode" / "docs" / "methodologies" / "sela.md"
@@ -360,7 +414,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("python3 .opencode/skills/mindthus/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
 
-            skill_names = ("3l5s", "sela", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            skill_names = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
             for platform_dir in (out / "codex", out / "opencode"):
                 markdown = "\n".join(
                     path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))

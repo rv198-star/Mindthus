@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when an agent needs the Mindthus default posture, the portable AGENTS.md-style orientation, or help choosing between Mindthus skills such as SELA, 3L5S, TPLAN, EDSP, WAE, and TVG.
+description: Use when an agent needs the Mindthus default posture, the portable AGENTS.md-style orientation, or help choosing between Mindthus skills such as SELA, MPG, 3L5S, TPLAN, EDSP, WAE, and TVG.
 ---
 
 # Using Mindthus
@@ -27,7 +27,7 @@ Mindthus 不是让 agent 更快给答案，而是让 agent 先判断自己面对
 被二手概念包装时，先去壳，再路由。
 
 Premise Calibration 不是独立方法论，也不直接产出结论。它只帮助选择
-`3l5s`、`edsp`、`wae`、`sela`、`tvg` 或 `tplan`。
+`3l5s`、`edsp`、`wae`、`sela`、`mpg`、`tvg` 或 `tplan`。
 
 快速问题：
 
@@ -61,8 +61,8 @@ Before choosing a Mindthus skill, decide whether Mindthus should intervene at al
   turn missing information into a confident method judgment.
 - Mindthus intervention / Mindthus 介入: the task contains a hard judgment point such
   as unclear problem definition, structural ambiguity, trend or timing judgment,
-  control-boundary mismatch, thin bounded artifact, Mission-runtime drift, or repeated
-  local repair.
+  path/counter-force volatility, control-boundary mismatch, thin bounded artifact,
+  Mission-runtime drift, or repeated local repair.
 
 Short rule: simple tasks stay with the base model; missing facts get more input; hard
 judgment points enter Mindthus.
@@ -77,6 +77,7 @@ choosing an individual skill:
 | Problem-definition failure | `3l5s` | Do not run full 3L5S when the task is already clear and directly executable. |
 | False binary or structural ambiguity | `edsp` | Do not use EDSP when the missing input is facts, domain research, runtime proof, or stakeholder judgment. |
 | Long-term system efficiency versus local advantage | `sela` | Do not turn long-term direction into immediate action without timing and risk checks. |
+| Qualified mainline with path/counter-force exposure | `mpg` | Do not use MPG when there is no actor, carrier, exposure, or path decision. |
 | Control-boundary mismatch | `wae` | Do not use WAE to slow down low-risk deterministic work. |
 | Bounded artifact with thin practical value | `tvg` | TVG requires a bounded artifact; do not proactively activate it for vague dissatisfaction or ordinary writing quality. |
 | Mission runtime state, evidence, continuation, or stopping problem | `tplan` | tplan requires Mission-level runtime state; ordinary complexity is not enough. |
@@ -137,6 +138,8 @@ Pressure owners:
 
 - Perspective Pressure handles single-view, incentive, or game-theoretic judgment risk.
   SELA and EDSP own role pressure.
+- MPG owns qualified-mainline path volatility, carrier fragility, exposure budget, and
+  trigger design.
 - TVG owns bounded-artifact value pressure.
 - Evidence / Claim Ceiling owns proof limits.
 - Anti-Spiral owns repeated local repair pressure.
@@ -190,6 +193,9 @@ Common conflict checks:
 
 - TVG vs Anti-Spiral: if another value pass is becoming local repair, Anti-Spiral blocks
   or redirects TVG.
+- SELA vs MPG: SELA identifies direction; MPG carries it through path volatility. If
+  the mainline itself is unclear, SELA or EDSP should resolve the prerequisite first.
+- MPG vs AQM: MPG owns the judgment; Approximate Quantified Mapping only makes variables visible.
 - SELA vs WAE: a long-term system-efficiency direction can dominate strategic direction,
   while WAE may block or degrade immediate action under high risk or irreversibility.
 - EDSP vs evidence: EDSP may give a structural direction, but evidence constraints can
@@ -222,6 +228,16 @@ judgment object.
 
 适合：重大趋势判断、战略取舍、旧范式 vs 新范式、手工卓越 vs 系统效率。
 
+#### `mpg`
+
+主线-路径博弈，用来把已经限定的主线转成 Path-Carrying Strategy / 主线承载方案。
+
+当长期主线、战略目标或收敛命题已经存在，但路径会被对抗力量、载体脆弱性、暴露预算、时机和执行机制反复塑形时，用 `mpg`。
+
+适合：AI 长期主线和投资/创业载体、房价长期承压和路径反弹、中央方向和地方执行、公司转型现金流、技术迁移载体风险。
+
+边界：如果主线本身不清楚，先用 `sela` 或 `edsp`；如果没有行动者、载体、暴露和路径决策，不用 `mpg`。
+
 #### `3l5s`
 
 通用问题处理内核，用来发现问题、定义问题、解决问题。
@@ -238,7 +254,7 @@ Use `tplan` when a Mission needs durable task state, parent-attached task additi
 Mission-relative selection, subtraction decisions, human-in-loop authority, evidence
 tracking, or decision hooks that route to other Mindthus skills.
 
-`tplan` should not replace `3l5s`, `sela`, `edsp`, `wae`, or `tvg`. It decides when to
+`tplan` should not replace `3l5s`, `sela`, `mpg`, `edsp`, `wae`, or `tvg`. It decides when to
 route to them, packages the Mission context, and records the resulting recommendation
 or decision according to `human_in_loop`.
 
@@ -298,12 +314,22 @@ objective function from local repair loops. Use
 `tplan` Mission, treat it as a runtime gate driven by logs, touch counts, feedback, and
 evidence delta.
 
+### Fidelity Support
+
+Use `resources/fidelity-contract.md` as the router fidelity contract when behavior
+needs v0.9 fidelity review.
+The contract checks intervention boundary, premise calibration, method routing,
+arbitration, and execution-impact moves without forcing Mindthus onto simple tasks.
+Use `templates/fidelity-output.json` for an example output shape and
+`scripts/validate_using_mindthus_output.py` to validate it with the shared core.
+
 ### 常见组合
 
 - 战略判断前，用 `sela` 防短视。
 - 具体处理问题时，用 `3l5s` 做默认问题内核。
 - `3l5s` 中遇到模糊结构判断，用 `edsp`。
-- Long-running Mission execution uses `tplan` as the control plane, then routes semantic judgment to `3l5s`, `sela`, `edsp`, `wae`, or `tvg`.
+- Long-running Mission execution uses `tplan` as the control plane, then routes semantic judgment to `3l5s`, `sela`, `mpg`, `edsp`, `wae`, or `tvg`.
+- SELA 看整体趋势；MPG 把已经限定的主线转成主线承载方案，检查路径波动、载体和暴露预算。
 - 任何方法里需要分配控制权，用 `wae`。
 - 任一方法产出物看似完整但浅，用 `tvg` 加深。
 
@@ -312,7 +338,7 @@ evidence delta.
 - Premise Calibration 不替代证据、领域研究或运行时验证。
 - Premise Calibration 不展开成宏大哲学分析。
 - Premise Calibration 不作为每次任务的强制流程。
-- Premise Calibration 不和 `3l5s`、`edsp`、`wae`、`sela`、`tvg` 或 `tplan` 平级。
+- Premise Calibration 不和 `3l5s`、`edsp`、`wae`、`sela`、`mpg`、`tvg` 或 `tplan` 平级。
 - Mindthus skills 不需要串成固定流程。
 - 问题明确时，不要为了完整性强行调用上层方法。
 - 脚本、模板、结构化输出只能辅助判断，不能替代判断。

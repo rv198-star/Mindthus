@@ -1,0 +1,39 @@
+{
+  "schema_version": "wae-fidelity-v0.1",
+  "method": "WAE",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Use WAE because the work needs a control-boundary decision before adding workflow.",
+  "action_posture": "hybrid",
+  "required_judgment_moves": {
+    "uncertainty_classification": {
+      "status": "addressed",
+      "finding": "The output identifies whether the uncertainty is mainly path, truth, evidence, authority, or risk.",
+      "failure_criteria_response": "It does not treat every uncertainty as a workflow sequencing problem.",
+      "evidence_surface": "The work contains both mechanical steps and claims that need proof."
+    },
+    "controlling_layer": {
+      "status": "addressed",
+      "finding": "The output chooses workflow, agentic judgment, evidence, human escalation, or a hybrid boundary.",
+      "failure_criteria_response": "A clean worksheet is not substituted for a control decision.",
+      "evidence_surface": "Each layer is attached to the part of the work it can legitimately control."
+    },
+    "risk_modulators": {
+      "status": "addressed",
+      "finding": "Reversibility, blast radius, tool tier, and invocation context are checked.",
+      "failure_criteria_response": "Risk posture does not stay generic after side effects are identified.",
+      "evidence_surface": "The output names the highest-risk action and why its control boundary tightens or relaxes."
+    },
+    "evidence_bridges": {
+      "status": "addressed",
+      "finding": "Claims that need proof or confidence caps receive evidence bridges.",
+      "failure_criteria_response": "Evidence is not treated as optional decoration after the workflow is drawn.",
+      "evidence_surface": "The output maps claim types to required proof, runtime check, or confidence ceiling."
+    },
+    "schema_judgment_boundary": {
+      "status": "addressed",
+      "finding": "The output prevents schemas and clean structure from replacing judgment.",
+      "failure_criteria_response": "It does not treat field completion as semantic correctness.",
+      "evidence_surface": "The boundary states what scripts may check and what agentic judgment must still decide."
+    }
+  }
+}

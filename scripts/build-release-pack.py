@@ -13,7 +13,7 @@ VERSION = "0.6.3"
 EXCLUDED_DIRS = {"__pycache__"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 TEXT_REWRITE_SUFFIXES = {".md"}
-SKILL_NAMES = ("3l5s", "sela", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 
 
 def repo_root() -> Path:

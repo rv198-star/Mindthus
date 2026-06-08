@@ -146,3 +146,6 @@ python3 skills/tvg/scripts/trace/persist.py \
 - `resources/methodology.md` — full Thinking Value-Gain methodology
 - `resources/exit-audit-template.md` — human/LLM audit template
 - `resources/trace-record-schema.json` — script validation schema
+- `resources/fidelity-contract.md` — TVG fidelity contract for v0.9.
+- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
+- `scripts/validate_tvg_output.py` — validate fidelity contract output shape with the shared core.

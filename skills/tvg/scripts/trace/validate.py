@@ -85,6 +85,9 @@ def main() -> int:
     trace_path = Path(args.trace)
     trace = json.loads(trace_path.read_text())
     errors = validate(trace, load_schema(Path(__file__)))
+    print("TVG Shape & Evidence Risk Report")
+    print(f"Path: {trace_path}")
+    print()
     if errors:
         print("schema_violations:")
         for error in errors:
@@ -92,6 +95,7 @@ def main() -> int:
         print("script_result: schema issues found; agentic audit is still required after remediation")
         return 1
 
+    print("No shape or evidence risks detected.")
     print(SCRIPT_DISCLAIMER)
     return 0
 
