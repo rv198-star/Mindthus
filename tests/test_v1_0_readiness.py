@@ -106,7 +106,7 @@ class V10ReadinessTests(unittest.TestCase):
 
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
         self.assertIn("closed-source commercial use requires a separate commercial license", readme)
-        self.assertIn("当前仓库版本：`v1.0`", readme)
+        self.assertIn("当前仓库版本：`v1.0.1`", readme)
         self.assertNotIn("Pre-1.0", readme)
 
     def test_release_pack_carries_license_judge_script_and_rubric(self):

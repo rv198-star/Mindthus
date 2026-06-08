@@ -4,6 +4,26 @@
 
 暂无。
 
+## v1.0.1
+
+发布日期：2026-06-08
+
+[完整发布日志](docs/releases/v1.0.1.md)
+
+说明：本版不新增方法，也不改变 judge 机制；它给 `v1.0 Method Fidelity Framework` 增加一个极简使用日志入口，让每次真实 fidelity judge 结果可以脱敏记录、持续积累，为后续“用数据判断哪些方法有约束增益”打底。
+
+### 新增
+
+- 新增 `scripts/log-fidelity-usage.py`，可追加或校验 `data/fidelity-usage-log.jsonl` usage log。
+- usage log 记录 `scenario`、`method`、`model`、`baseline_score`、`constrained_score`、`max_score`、`constraint_helped`、`source` 和 `tags` 等字段；没有 baseline 时也允许记录 constrained 分，降低真实使用记录门槛。
+- 新增 `data/README.md` 和 `docs/internal/fidelity-usage-log.md`，明确日志只保存脱敏摘要，脚本只检查字段形状，不判断方法价值。
+- release pack 增加 `scripts/log-fidelity-usage.py`，三平台包可以同时保留 judge 校验和 usage log 记录入口。
+
+### 边界
+
+- `v1.0.1` 只建立数据飞轮的最小记录习惯，不声明已经有跨方法统计结论。
+- usage log 是项目资产种子，不是 benchmark 结论；样本量不足时不能用它证明某个方法有效或无效。
+
 ## v1.0
 
 发布日期：2026-06-08

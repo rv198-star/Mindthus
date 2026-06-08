@@ -6,19 +6,26 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_v1_0_release_surface_is_declared(self):
+    def test_current_release_surface_is_v1_0_1(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.0`", readme)
+        self.assertIn("当前仓库版本：`v1.0.1`", readme)
+        self.assertIn("## v1.0.1", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.0.1.md)", changelog)
+        self.assertIn("scripts/log-fidelity-usage.py", changelog)
+        self.assertIn('VERSION = "1.0.1"', builder)
+
+    def test_v1_0_release_surface_is_preserved(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+
         self.assertIn("## v1.0", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.0.md)", changelog)
         self.assertIn("LICENSE blocker closed", changelog)
         self.assertIn("judge automation blocker closed", changelog)
         self.assertIn("challenge_premise escape blocker closed", changelog)
         self.assertIn("cross-model baseline blocker closed", changelog)
-        self.assertIn('VERSION = "1.0"', builder)
 
     def test_v1_0_release_log_is_chinese_and_release_ready(self):
         text = (REPO / "docs" / "releases" / "v1.0.md").read_text(encoding="utf-8")
