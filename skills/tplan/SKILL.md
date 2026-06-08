@@ -19,6 +19,14 @@ If OKR helps a human team keep initiatives attached to objectives and key result
 evidence, task state, and decision authority. It is not a human OKR management system;
 it is a runtime discipline for agents that otherwise drift inside long task lists.
 
+Use OKR language as a user-facing bridge only. Do not rename runtime schema or scripts to OKR fields:
+
+- Mission maps to Objective.
+- acceptance criteria and acceptance evidence map to Key Results.
+- Task, SubTask, and Step map to initiatives and actions.
+- checkpoint, evidence event, blocker, feedback signal, and decision hook map to
+  short-cycle check-ins or review signals.
+
 Its cycle is shorter than ordinary OKR management: every checkpoint, evidence event,
 blocker, feedback signal, or decision hook can update the active workflow while keeping
 the Mission stable. Treat it as a dynamic workflow runtime, not a quarterly planning

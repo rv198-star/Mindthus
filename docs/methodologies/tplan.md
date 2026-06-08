@@ -6,6 +6,15 @@
 
 如果说 OKR 帮人类团队把 initiatives 对齐到 objectives 和 key results，`tplan` 就是帮 agent 把长任务对齐到 Mission 和 acceptance evidence。它不是普通待办清单，也不是把任务写得更长的格式工具，而是给 agent 一个可以恢复、检查、停止和决策的运行时。
 
+术语上建议和 OKR 对齐，但只作为用户理解层，不改 `tplan` 的名字，也不改 runtime/schema 字段：
+
+- `Mission` 对齐 `Objective`：稳定目标，说明这轮长任务到底要达成什么。
+- `acceptance criteria / acceptance evidence` 对齐 `Key Results`：验收面和证据，说明目标是否真的更接近完成。
+- `Task / SubTask / Step` 对齐 `initiatives / actions`：承载行动，而不是替代目标。
+- `checkpoint / evidence / blocker / decision hook` 对齐短周期 `check-in / review signals`：让运行时能及时调整任务树。
+
+这样对外可以说“tplan 是 agent 的 OKR-Runtime”，对内仍保持 `Mission`、`evidence`、`task tree` 和 `decision hook` 这些更适合 agent runtime 的精确术语。
+
 它也比普通 OKR 管理更动态。普通 OKR 往往按周、月、季度复盘；`tplan` 的迭代周期可以短到一次 checkpoint、一次 evidence、一个 blocker、一条用户反馈或一个 decision hook。Mission 保持稳定，但每次 checkpoint、evidence、blocker 或 decision hook 都能触发任务树调整，所以它更像动态工作流：`OKR + dynamic workflow runtime`。
 
 长任务最容易出的问题，不是没有任务，而是任务不断漂移：一开始要解决 A，中途被某个文件、某个测试、某段 prompt 带走，最后 logs 很多，改动很多，却没人能说清 Mission 是否更接近完成。`tplan` 处理的就是这种运行时失控。
@@ -25,7 +34,7 @@
 - 长任务出现局部修补螺旋，需要运行时 brake。
 - 用户需要看到当前 Mission 到底推进到了哪里，而不是只看到“我继续改了”。
 
-`tplan` 的价值不是让项目管理更隆重，而是让 agent 在长时间运行时不丢目标函数。它把 OKR 里的“目标和关键结果”换成 agent runtime 能使用的对象：Mission、acceptance criteria、task state、evidence 和 decision hooks，并允许工作流按短周期运行信号动态调整。
+`tplan` 的价值不是让项目管理更隆重，而是让 agent 在长时间运行时不丢目标函数。它把 OKR 里的“目标和关键结果”翻译成 agent runtime 能使用的对象：Mission、acceptance criteria、task state、evidence 和 decision hooks，并允许工作流按短周期运行信号动态调整。
 
 ## 自适应运行策略
 
