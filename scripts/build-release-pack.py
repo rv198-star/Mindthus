@@ -9,13 +9,13 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.0"
+VERSION = "1.0.1"
 EXCLUDED_DIRS = {"__pycache__"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
-RELEASE_SCRIPTS = ("run-fidelity-judge.py",)
+RELEASE_SCRIPTS = ("run-fidelity-judge.py", "log-fidelity-usage.py")
 
 
 def repo_root() -> Path:
