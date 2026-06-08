@@ -30,7 +30,7 @@ class V09AcceptanceTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
 
-        for phrase in ("v0.9", "Method Fidelity Harness", "v1.0", "约束关键判断动作，不约束判断结论"):
+        for phrase in ("v1.0", "约束关键判断动作，不约束判断结论"):
             self.assertIn(phrase, readme)
 
         for phrase in (

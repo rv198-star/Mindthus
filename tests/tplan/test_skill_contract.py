@@ -32,8 +32,13 @@ class TplanSkillContractTests(unittest.TestCase):
         text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("name: tplan", text)
         self.assertIn("description:", text)
+        self.assertIn("OKR-Runtime for AI agents", text)
         self.assertIn("Mission", text)
+        self.assertIn("acceptance evidence", text)
         self.assertIn("decision hooks", text)
+        self.assertIn("It is not a human OKR management system", text)
+        self.assertIn("Its cycle is shorter than ordinary OKR management", text)
+        self.assertIn("dynamic workflow runtime", text)
         self.assertIn("Scripts must not decide semantic truth", text)
 
     def test_json_templates_are_valid(self):

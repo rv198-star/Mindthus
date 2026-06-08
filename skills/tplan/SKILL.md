@@ -1,17 +1,28 @@
 ---
 name: tplan
-description: Use when a Mission needs a script-driven task runtime, task tree state, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and evidence tracking.
+description: Use when an AI agent needs an OKR-Runtime: a Mission needs script-driven task state, acceptance evidence, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and recovery.
 ---
 
 # tplan
 
 ## Core Claim / 核心判断
 
-`tplan` is a Mission-oriented project manager and control plane.
+`tplan` is an OKR-Runtime for AI agents: a Mission-oriented task state and decision
+control plane.
 
-Use it when work needs to stay attached to a stable Mission, avoid task-list drift,
-route semantic decisions to Mindthus skills, and preserve task state in a resumable
-runtime.
+Use it when work needs to stay attached to a stable Mission, expose acceptance evidence,
+avoid task-list drift, route semantic decisions to Mindthus skills, and preserve task
+state in a resumable runtime.
+
+If OKR helps a human team keep initiatives attached to objectives and key results,
+`tplan` helps an AI agent keep long-running work attached to Mission, acceptance
+evidence, task state, and decision authority. It is not a human OKR management system;
+it is a runtime discipline for agents that otherwise drift inside long task lists.
+
+Its cycle is shorter than ordinary OKR management: every checkpoint, evidence event,
+blocker, feedback signal, or decision hook can update the active workflow while keeping
+the Mission stable. Treat it as a dynamic workflow runtime, not a quarterly planning
+sheet.
 
 ### Core Boundary
 

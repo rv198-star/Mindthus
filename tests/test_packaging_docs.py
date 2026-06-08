@@ -212,7 +212,7 @@ class PackagingDocsTests(unittest.TestCase):
             ("edsp.md", "Extreme Deduction + Scenario Projection"),
             ("wae.md", "Workflow-Agentic-Evidence"),
             ("tvg.md", "Thinking Value-Gain"),
-            ("tplan.md", "Mission-oriented project manager"),
+            ("tplan.md", "OKR-Runtime"),
             ("anti-spiral-self-audit.md", "反螺旋自检"),
             ("shared-primitives.md", "Cognitive Primitives"),
         ]
@@ -291,6 +291,15 @@ class PackagingDocsTests(unittest.TestCase):
     def test_tplan_methodology_shows_execution_driven_adaptive_planning(self):
         text = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
         for phrase in (
+            "OKR-Runtime",
+            "动态工作流",
+            "每次 checkpoint、evidence、blocker 或 decision hook 都能触发任务树调整",
+            "把稳定 Mission 转成任务状态、验收证据、决策钩子和可恢复执行",
+            "Mission 接近 Objective",
+            "acceptance evidence 接近 Key Results",
+            "OKR + dynamic workflow runtime",
+            "不替代项目管理工具",
+            "不追求人类团队 OKR 管理",
             "执行驱动的自适应规划",
             "Mission 固定",
             "任务树可以在证据、阻碍和决策信号约束下持续演化",

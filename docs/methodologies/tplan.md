@@ -1,8 +1,12 @@
-# tplan / Mission-oriented project manager
+# tplan / OKR-Runtime
 
 ## 这是什么
 
-`tplan` 是一个 Mission-oriented project manager 和 control plane。它不是普通待办清单，也不是把任务写得更长的格式工具，而是为长任务提供稳定 Mission、任务树状态、证据记录、停止条件和决策入口。
+`tplan` 是给 AI agent 用的 OKR-Runtime：把稳定 Mission 转成任务状态、验收证据、决策钩子和可恢复执行。
+
+如果说 OKR 帮人类团队把 initiatives 对齐到 objectives 和 key results，`tplan` 就是帮 agent 把长任务对齐到 Mission 和 acceptance evidence。它不是普通待办清单，也不是把任务写得更长的格式工具，而是给 agent 一个可以恢复、检查、停止和决策的运行时。
+
+它也比普通 OKR 管理更动态。普通 OKR 往往按周、月、季度复盘；`tplan` 的迭代周期可以短到一次 checkpoint、一次 evidence、一个 blocker、一条用户反馈或一个 decision hook。Mission 保持稳定，但每次 checkpoint、evidence、blocker 或 decision hook 都能触发任务树调整，所以它更像动态工作流：`OKR + dynamic workflow runtime`。
 
 长任务最容易出的问题，不是没有任务，而是任务不断漂移：一开始要解决 A，中途被某个文件、某个测试、某段 prompt 带走，最后 logs 很多，改动很多，却没人能说清 Mission 是否更接近完成。`tplan` 处理的就是这种运行时失控。
 
@@ -21,7 +25,7 @@
 - 长任务出现局部修补螺旋，需要运行时 brake。
 - 用户需要看到当前 Mission 到底推进到了哪里，而不是只看到“我继续改了”。
 
-`tplan` 的价值不是让项目管理更隆重，而是让 agent 在长时间运行时不丢目标函数。
+`tplan` 的价值不是让项目管理更隆重，而是让 agent 在长时间运行时不丢目标函数。它把 OKR 里的“目标和关键结果”换成 agent runtime 能使用的对象：Mission、acceptance criteria、task state、evidence 和 decision hooks，并允许工作流按短周期运行信号动态调整。
 
 ## 自适应运行策略
 
@@ -78,7 +82,7 @@ SubAgent 是侦察，不是控制器。
 
 ## 核心判断
 
-`tplan` 的核心判断是：Mission 是上位对象，task/subtask/step 都必须相对 Mission 才有意义。
+`tplan` 的核心判断是：Mission 是上位对象，task/subtask/step 都必须相对 Mission 才有意义。换成 OKR 语言，Mission 接近 Objective，acceptance evidence 接近 Key Results，Task/SubTask/Step 接近 initiatives 和 actions；但 `tplan` 额外负责运行时状态、恢复、停止和决策权限。
 
 它重点管理四件事：
 
@@ -159,7 +163,7 @@ flowchart TD
 
 `tplan` 不适合非常短、明确、一次性、低风险的任务。直接执行更有效。
 
-它不替代项目管理工具，也不追求覆盖团队协作的全部现实复杂度。它的重点是 agent runtime：让 agent 在一个 Mission 里知道当前状态、下一步、证据和停止条件。
+它不替代项目管理工具，也不追求人类团队 OKR 管理的全部现实复杂度。它的重点是 agent runtime：让 agent 在一个 Mission 里知道当前状态、下一步、证据和停止条件。
 
 当问题定义不清时，先用 `3L5S`。当控制边界不清时，用 `WAE`。当同一路径反复修补时，先触发 `Anti-Spiral`，不要继续加任务节点。
 
