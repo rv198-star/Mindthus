@@ -41,11 +41,6 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("judge JSON", readme)
         self.assertIn("not_applicable", readme)
         self.assertIn("不声明所有模型、所有方法的普适鲁棒性", readme)
-        self.assertIn("tplan 运行时优化", readme)
-        self.assertIn("只读 SubAgent 加速", readme)
-        self.assertIn("平台化 release pack", readme)
-        self.assertIn("Claude Code marketplace 发布包布局", readme)
-        self.assertIn("判断内核", readme)
         self.assertIn("方法分层纪律", readme)
         self.assertIn("SELA", readme)
         self.assertIn("时机检查", readme)
@@ -53,10 +48,23 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("安装", readme)
         self.assertIn("验证", readme)
 
+    def test_readme_keeps_release_details_out_of_new_user_intro(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        intro = readme.split("## 为什么值得试", 1)[0]
+
+        for phrase in (
+            "当前仓库版本",
+            "v1.0 Method Fidelity Framework",
+            "scripts/log-fidelity-usage.py",
+            "版本脉络",
+            "GitHub Releases",
+        ):
+            self.assertNotIn(phrase, intro)
+
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("SELA / 系统效率碾压局部优势", readme)
-        self.assertIn("MPG / Mainline-Path Game", readme)
+        self.assertIn("Mainline-Path Game", readme)
         self.assertIn("3L5S / 三层五步", readme)
         self.assertIn("EDSP / Extreme Deduction + Scenario Projection", readme)
         self.assertIn("WAE / Workflow-Agentic-Evidence", readme)
