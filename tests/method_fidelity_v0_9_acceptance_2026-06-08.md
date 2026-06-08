@@ -53,4 +53,3 @@ Required verification for this acceptance record:
 
 - `python3 -m unittest discover -s tests -v`
 - `git diff --check`
-

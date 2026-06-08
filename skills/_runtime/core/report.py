@@ -46,4 +46,3 @@ def print_shape_report(
 
     print()
     print(f"Reminder: agentic audit remains required; this report does not validate {truth_boundary}.")
-

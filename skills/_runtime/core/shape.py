@@ -86,4 +86,3 @@ def require_enum_value(
         findings.append(finding("block", "invalid-field", type_message))
     elif value not in allowed:
         findings.append(finding("block", "unsupported-enum", unsupported_message))
-
