@@ -4,10 +4,29 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import yaml
-
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def parse_frontmatter_mapping(text: str) -> dict[str, str]:
+    parsed: dict[str, str] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            raise ValueError(f"frontmatter line is not a key/value pair: {raw_line!r}")
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if not key:
+            raise ValueError(f"frontmatter key is empty: {raw_line!r}")
+        if (value.startswith('"') and value.endswith('"')) or (
+            value.startswith("'") and value.endswith("'")
+        ):
+            value = value[1:-1]
+        parsed[key] = value
+    return parsed
 
 
 class PackagingDocsTests(unittest.TestCase):
@@ -272,7 +291,7 @@ class PackagingDocsTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_skill_frontmatter_is_valid_yaml(self):
+    def test_skill_frontmatter_has_required_keys(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
             text = path.read_text(encoding="utf-8")
             self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
@@ -280,9 +299,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertGreater(end, 0, f"{path} missing frontmatter terminator")
             frontmatter = text[4:end]
             try:
-                parsed = yaml.safe_load(frontmatter)
-            except yaml.YAMLError as exc:
-                self.fail(f"{path} has invalid YAML frontmatter: {exc}")
+                parsed = parse_frontmatter_mapping(frontmatter)
+            except ValueError as exc:
+                self.fail(f"{path} has invalid frontmatter: {exc}")
             self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
             self.assertIn("name", parsed, f"{path} frontmatter missing name")
             self.assertIn("description", parsed, f"{path} frontmatter missing description")

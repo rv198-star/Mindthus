@@ -171,11 +171,14 @@ Full boundary: `resources/script-boundary.md`.
 - `resources/landing-method.md` — full single-layer BTGSB landing method.
 - `resources/three-layer-recursive-loop.md` — full three-layer BTGSB recursive loop.
 - `resources/script-boundary.md` — WAE-based boundary for script assistance.
+- `resources/fidelity-contract.md` — 3L5S fidelity contract for v0.9.
 
 ### Templates And Scripts
 
 - `templates/single-layer-btgsb.md` — working draft for known-problem landing work.
 - `templates/three-layer-3l5s.md` — working draft for signal/problem/action separation.
 - `templates/loopback-record.md` — record surprising feedback and why the analysis loops back.
+- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
 - `scripts/init_3l5s_run.py` — generate a draft from a template.
 - `scripts/check_3l5s_run.py` — produce a shape and evidence risk report.
+- `scripts/validate_3l5s_output.py` — validate fidelity contract output shape with the shared core.

@@ -4,9 +4,13 @@
 
 说明：当前开发分支新增 `MPG / 主线-路径博弈`，把“看见长期主线”之后最容易出错的路径波动、对抗力量和载体承受力，收束成可交付的主线承载方法。
 
+`v0.9 Method Fidelity Harness` 作为 `Pre-1.0` 工程验证线进入当前开发分支。它把现有 `tplan`、`3L5S`、`TVG` 的校验经验与 `SELA`、`MPG` 的 fidelity pilots 收束为统一方向：约束关键判断动作，不约束判断结论。该线只声明进入 `v1.0` 前的机制准备，不直接宣称 v1.0 完成。
+
 ### 新增
 
 - 新增 `MPG / 主线-路径博弈` 独立方法、skill 入口、方法页、资源页和压力测试，用来处理主线兑现前的路径波动。
+- 新增 Method Fidelity Harness 设计、SELA/MPG pilot contract、共享 Shape & Evidence Risk Report、fidelity core、以及 3L5S / TVG 既有 validator 对齐记录，作为 v0.9 验收材料。
+- 新增 3L5S、EDSP、WAE、TVG、using-mindthus 的 fidelity output template 与 shared-core validator；本轮不迁移 `tplan` runtime。
 - MPG 交付 `Path-Carrying Strategy / 主线承载方案`，不只判断行动者能不能穿过波动，还要给出暴露预算、可选性、触发器、熔断点和证据缺口。
 - 新增 `Human-Readable First / 先讲人话` 输出纪律：先讲“这对你意味着什么”，再给结构字段，避免方法分析变成术语墙。
 - 新增 `Reasoning Durability / 推演耐久性` 回放标准：用当时信息面检查推演逻辑是否禁得起推敲，而不是用事后结果命中率粗暴打分。

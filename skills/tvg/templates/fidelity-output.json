@@ -1,0 +1,45 @@
+{
+  "schema_version": "tvg-fidelity-v0.1",
+  "method": "TVG",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Use TVG because a bounded artifact exists and its practical value is still thin.",
+  "action_posture": "refine",
+  "required_judgment_moves": {
+    "bounded_module": {
+      "status": "addressed",
+      "finding": "The output names the smallest module that can be frozen, returned, or blocked.",
+      "failure_criteria_response": "TVG is not used on an unbounded whole-project dissatisfaction.",
+      "evidence_surface": "The module title, intended use, and downstream handoff surface are named."
+    },
+    "veto_constraints": {
+      "status": "addressed",
+      "finding": "Module-specific veto constraints are named before exit.",
+      "failure_criteria_response": "The output does not freeze the module while unacceptable states remain active.",
+      "evidence_surface": "Veto constraints identify hidden evidence gaps, false confidence, or unusable handoff states."
+    },
+    "value_axes": {
+      "status": "addressed",
+      "finding": "Thinking Thickness, Grounded Insight Yield, and Value Density are distinguished.",
+      "failure_criteria_response": "Value gain is not collapsed into length, polish, or template completeness.",
+      "evidence_surface": "The output names which value axis is currently weakest."
+    },
+    "thickness_gate": {
+      "status": "addressed",
+      "finding": "Thickness is checked before density optimization or output profile refinement.",
+      "failure_criteria_response": "The module is not compressed before enough judgment substance exists.",
+      "evidence_surface": "The output states whether density work is allowed or must wait."
+    },
+    "auditor_separation": {
+      "status": "addressed",
+      "finding": "Independent audit is considered for high-impact, uncertain, or handoff-critical modules.",
+      "failure_criteria_response": "The generator does not silently approve its own exit when separation is needed.",
+      "evidence_surface": "The output names whether independent review is required, optional, or unnecessary."
+    },
+    "blocked_input_gate": {
+      "status": "addressed",
+      "finding": "Missing evidence, domain input, runtime proof, or stakeholder judgment blocks or returns the module.",
+      "failure_criteria_response": "The method does not deepen around inputs it cannot legitimately invent.",
+      "evidence_surface": "The output names the controlling missing input and the allowed next action."
+    }
+  }
+}

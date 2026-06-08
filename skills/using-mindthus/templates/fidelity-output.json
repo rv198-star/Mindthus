@@ -1,0 +1,45 @@
+{
+  "schema_version": "using-mindthus-fidelity-v0.1",
+  "method": "using-mindthus",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Use the Mindthus router because the request contains a hard judgment point.",
+  "action_posture": "route",
+  "required_judgment_moves": {
+    "intervention_boundary": {
+      "status": "addressed",
+      "finding": "The output decides between direct execution, information acquisition, and Mindthus intervention.",
+      "failure_criteria_response": "Mindthus is not forced onto a simple, clear, low-risk task.",
+      "evidence_surface": "The request contains unclear judgment, missing facts, or method-selection risk."
+    },
+    "premise_calibration": {
+      "status": "addressed",
+      "finding": "The output strips second-hand concepts when object, constraints, or goal function are unclear.",
+      "failure_criteria_response": "It does not route by fashionable method names or vague abstraction alone.",
+      "evidence_surface": "The calibrated object, constraint, and target function are named."
+    },
+    "constraint_separation": {
+      "status": "addressed",
+      "finding": "Facts, values, risk posture, authority, preference, and evidence constraints are separated.",
+      "failure_criteria_response": "Values or emotions are not allowed to assert unsupported factual claims.",
+      "evidence_surface": "The output states which constraints can affect priority versus factual confidence."
+    },
+    "judgment_object_routing": {
+      "status": "addressed",
+      "finding": "The active judgment object determines the selected skill.",
+      "failure_criteria_response": "The route is not chosen by keyword match alone.",
+      "evidence_surface": "The output maps the hard judgment point to the owning method."
+    },
+    "method_arbitration": {
+      "status": "addressed",
+      "finding": "Conflicting candidate methods are resolved through dominate, defer, degrade, block, or stop.",
+      "failure_criteria_response": "The output does not stack multiple methods by default.",
+      "evidence_surface": "The arbitration action names which method owns, waits, weakens, blocks, or stops."
+    },
+    "execution_impact": {
+      "status": "addressed",
+      "finding": "The method choice changes strategy, risk handling, evidence requirement, next action, stopping condition, or handoff.",
+      "failure_criteria_response": "The route is not accepted as useful if it changes no downstream work.",
+      "evidence_surface": "The output names the concrete execution effect of the route."
+    }
+  }
+}

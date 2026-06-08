@@ -78,3 +78,7 @@ For very high-impact or long-term decisions, separate agents are an escalation o
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` when you need the detailed EDSP procedure, anti-patterns, or examples of coordinate-system failure.
+
+- `resources/fidelity-contract.md` — EDSP fidelity contract for v0.9.
+- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
+- `scripts/validate_edsp_output.py` — validate fidelity contract output shape with the shared core.

@@ -115,6 +115,16 @@ Use it to clarify:
 Boundary: do not calculate the decision. If the discussion starts defending exact
 digits, stop AQM and return to evidence boundaries or plain-language MPG reasoning.
 
+### Fidelity Support
+
+For high-impact, replayed, or regression-tested MPG runs, use the fidelity contract in
+`resources/fidelity-contract.md` and, when useful, validate a structured audit artifact
+with `scripts/validate_mpg_output.py`.
+
+The validator emits an `MPG Shape & Evidence Risk Report`. It checks whether required
+path-carrying moves are present, but it does not judge mainline truth, forecast
+accuracy, or outcome hit rate.
+
 ### Operating Flow
 
 1. Qualify the mainline. Turn a naked slogan into a constrained claim with actor,
@@ -183,5 +193,8 @@ destroying the actor's core advantage, or locking out future upside has failed M
 
 - `resources/methodology.md` — full MPG methodology, output contract, boundaries, and
   mixed cases.
+- `resources/fidelity-contract.md` — MPG fidelity contract for v0.9.
+- `templates/fidelity-output.json` — structured audit artifact template.
+- `scripts/validate_mpg_output.py` — MPG shape and evidence-risk validator.
 - `tests/mpg/pressure_tests.md` — scenario pressure tests for effect, misuse, and
   routing boundaries.
