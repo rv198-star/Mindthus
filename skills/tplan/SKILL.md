@@ -19,7 +19,9 @@ If OKR helps a human team keep initiatives attached to objectives and key result
 evidence, task state, and decision authority. It is not a human OKR management system;
 it is a runtime discipline for agents that otherwise drift inside long task lists.
 
-Use OKR language as a user-facing bridge only. Do not rename runtime schema or scripts to OKR fields:
+Use OKR language as the primary public explanation. Keep current runtime schema and
+scripts in `tplan` runtime terms unless a schema migration explicitly remaps them; the
+reason is runtime precision, not existing user familiarity:
 
 - Mission maps to Objective.
 - acceptance criteria and acceptance evidence map to Key Results.
