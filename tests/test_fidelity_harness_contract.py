@@ -82,6 +82,36 @@ class FidelityHarnessContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_shared_shape_evidence_report_contract_is_defined(self):
+        text = (REPO / "docs" / "internal" / "shape-evidence-risk-report.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Shape & Evidence Risk Report",
+            "review risk, not truth validation",
+            "method",
+            "artifact path",
+            "input source",
+            "mode",
+            "findings",
+            "severity",
+            "info / warn / risk / block",
+            "code",
+            "message",
+            "affected judgment move",
+            "evidence surface",
+            "agentic audit remains required",
+            "shape pass is not semantic approval",
+            "validator must not output a semantic verdict",
+            "tplan",
+            "3L5S",
+            "TVG",
+            "SELA",
+            "MPG",
+        ):
+            self.assertIn(phrase, text)
+
 
 if __name__ == "__main__":
     unittest.main()
