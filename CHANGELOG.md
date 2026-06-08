@@ -9,6 +9,9 @@
 ### 新增
 
 - 新增 `MPG / 主线-路径博弈` 独立方法、skill 入口、方法页、资源页和压力测试，用来处理主线兑现前的路径波动。
+- 新增 AGPLv3 + 商业双授权口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有 SaaS、商业平台集成或不公开对应源代码的商业用途需要单独商业授权。
+- 新增 `scripts/run-fidelity-judge.py`，用于生成可复现 judge prompt 并校验 judge JSON 结果；脚本只检查 rubric 记录形状、分数和 escape-review 覆盖，不替代语义判断。
+- 新增 SELA 跨模型 baseline 记录：在既有 v0.9 packet 之外，补跑 `opencode/deepseek-v4-flash-free` 的 baseline-vs-constrained 小样本，作为 v1.0 readiness 证据而非普适鲁棒性声明。
 - 新增 Method Fidelity Harness 设计、SELA/MPG pilot contract、共享 Shape & Evidence Risk Report、fidelity core、以及 3L5S / TVG 既有 validator 对齐记录，作为 v0.9 验收材料。
 - 新增 3L5S、EDSP、WAE、TVG、using-mindthus 的 fidelity output template 与 shared-core validator；本轮不迁移 `tplan` runtime。
 - MPG 交付 `Path-Carrying Strategy / 主线承载方案`，不只判断行动者能不能穿过波动，还要给出暴露预算、可选性、触发器、熔断点和证据缺口。

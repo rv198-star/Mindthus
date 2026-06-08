@@ -139,6 +139,19 @@ python3 -m unittest discover -s tests -v
 
 本仓库不是 Python library；安装的含义是把 `skills/` 暴露给目标 agent client。稳定打包面包括 `AGENTS.md`、`skills/*/SKILL.md`、`skills/*/resources/`、`skills/*/templates/` 和必要的 `skills/*/scripts/`。
 
+## License
+
+Mindthus uses AGPLv3 + commercial dual licensing.
+
+Open-source use is available under AGPLv3. You may use, modify, distribute, and deploy
+Mindthus under the terms of AGPLv3. In short: closed-source commercial use requires a separate commercial license
+from the author, including proprietary products, private SaaS, commercial platform
+integration, or commercial use without releasing the corresponding source code required
+by AGPLv3.
+
+中文口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有商业平台、
+商业 SaaS 或不公开对应源代码的商业集成，需要单独取得商业授权。
+
 ## 维护者说明
 
 ### Method Layering Discipline / 方法分层纪律

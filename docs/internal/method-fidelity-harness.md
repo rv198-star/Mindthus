@@ -122,3 +122,10 @@ Mindthus can claim `v1.0` only after v0.9 shows that the harness:
 - produces reproducible evidence instead of prettier method pages
 - keeps scripts inside shape validation and evidence-risk reporting
 - avoids over-constraining the very skills it is meant to protect
+
+Release readiness additionally requires:
+
+- an explicit public license surface
+- automated judge-record validation with tests
+- escape-review auditing for `not_applicable`, `transfer`, and `challenge_premise`
+- cross-model baseline evidence that does not overclaim universal robustness
