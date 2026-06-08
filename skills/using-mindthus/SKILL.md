@@ -314,6 +314,12 @@ objective function from local repair loops. Use
 `tplan` Mission, treat it as a runtime gate driven by logs, touch counts, feedback, and
 evidence delta.
 
+### Fidelity Support
+
+Use `resources/fidelity-contract.md` when router behavior needs v0.9 fidelity review.
+The contract checks intervention boundary, premise calibration, method routing,
+arbitration, and execution-impact moves without forcing Mindthus onto simple tasks.
+
 ### 常见组合
 
 - 战略判断前，用 `sela` 防短视。

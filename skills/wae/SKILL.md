@@ -112,3 +112,5 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` when you need quadrants, risk modulators, runtime governance, boundary questions, hard rules, anti-patterns, or the practical decision table.
+
+- `resources/fidelity-contract.md` — WAE fidelity contract for v0.9.

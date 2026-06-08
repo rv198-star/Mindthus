@@ -112,6 +112,25 @@ class FidelityHarnessContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_remaining_method_surfaces_have_fidelity_contracts(self):
+        for skill_name in ("3l5s", "edsp", "wae", "tvg", "using-mindthus"):
+            path = REPO / "skills" / skill_name / "resources" / "fidelity-contract.md"
+            text = path.read_text(encoding="utf-8")
+
+            for phrase in (
+                "Fidelity Contract",
+                "required judgment moves",
+                "not_applicable",
+                "transfer",
+                "challenge premise",
+                "shape pass is not semantic approval",
+                "scripts must not decide semantic truth",
+            ):
+                self.assertIn(phrase, text, f"{skill_name}: {phrase}")
+
+            skill = (REPO / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("resources/fidelity-contract.md", skill, skill_name)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -171,6 +171,7 @@ Full boundary: `resources/script-boundary.md`.
 - `resources/landing-method.md` — full single-layer BTGSB landing method.
 - `resources/three-layer-recursive-loop.md` — full three-layer BTGSB recursive loop.
 - `resources/script-boundary.md` — WAE-based boundary for script assistance.
+- `resources/fidelity-contract.md` — 3L5S fidelity contract for v0.9.
 
 ### Templates And Scripts
 
