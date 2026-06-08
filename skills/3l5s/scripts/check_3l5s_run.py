@@ -260,15 +260,15 @@ def print_text_report(report: dict) -> None:
 
     findings = report["findings"]
     if not findings:
-        print("No obvious shape or evidence risks detected.")
-        print("This is not proof that the judgment is correct.")
+        print("No shape or evidence risks detected.")
+        print("Reminder: agentic audit remains required; this report does not validate truth.")
         return
 
     for finding in findings:
         print(f"- {finding['level'].upper()} [{finding['code']}]: {finding['message']}")
 
     print()
-    print("Reminder: this report exposes review risks; it does not validate truth.")
+    print("Reminder: agentic audit remains required; this report does not validate truth.")
 
 
 def parse_args() -> argparse.Namespace:
