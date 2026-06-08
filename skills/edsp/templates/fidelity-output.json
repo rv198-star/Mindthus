@@ -1,0 +1,45 @@
+{
+  "schema_version": "edsp-fidelity-v0.1",
+  "method": "EDSP",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Use EDSP because the decision depends on structural ambiguity, not only more facts.",
+  "action_posture": "structural_position",
+  "required_judgment_moves": {
+    "uncertainty_type": {
+      "status": "addressed",
+      "finding": "The output states whether the uncertainty is structural or scenario-specific.",
+      "failure_criteria_response": "It does not run Scenario Projection before deciding what kind of uncertainty exists.",
+      "evidence_surface": "The question contains competing principles whose boundary is unclear."
+    },
+    "extreme_variables": {
+      "status": "addressed",
+      "finding": "Key variables are pushed to meaningful extremes.",
+      "failure_criteria_response": "The analysis does not stay at mild middle cases that hide the structure.",
+      "evidence_surface": "Named extremes expose where the options collapse or diverge."
+    },
+    "coordinate_system": {
+      "status": "addressed",
+      "finding": "The output collapses extremes into a structural coordinate system.",
+      "failure_criteria_response": "It does not present a polished list without a reusable structure.",
+      "evidence_surface": "The coordinate system names poles, drift, and malformed-proposition risk."
+    },
+    "multi_role_pressure": {
+      "status": "addressed",
+      "finding": "Builder, Challenger, and Synthesizer pressure are represented.",
+      "failure_criteria_response": "The first clean skeleton is not accepted without challenge.",
+      "evidence_surface": "The challenge names missed variables, weak extremes, or forced collapse risks."
+    },
+    "scenario_projection_gate": {
+      "status": "addressed",
+      "finding": "Scenario Projection is allowed only after the coordinate system is stable.",
+      "failure_criteria_response": "The output stops before projection if the structural skeleton remains unstable.",
+      "evidence_surface": "Projection gate names whether a concrete scenario choice still remains."
+    },
+    "overturn_conditions": {
+      "status": "addressed",
+      "finding": "Evidence or boundary conditions that could overturn the structure are named.",
+      "failure_criteria_response": "The structural conclusion is not treated as impossible to falsify.",
+      "evidence_surface": "The output names facts, authority, or domain input that could change the result."
+    }
+  }
+}

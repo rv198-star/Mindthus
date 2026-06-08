@@ -114,3 +114,5 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 Read `resources/methodology.md` when you need quadrants, risk modulators, runtime governance, boundary questions, hard rules, anti-patterns, or the practical decision table.
 
 - `resources/fidelity-contract.md` — WAE fidelity contract for v0.9.
+- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
+- `scripts/validate_wae_output.py` — validate fidelity contract output shape with the shared core.

@@ -1,0 +1,39 @@
+{
+  "schema_version": "3l5s-fidelity-v0.1",
+  "method": "3L5S",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Use 3L5S to stabilize the problem before executing the task list.",
+  "action_posture": "define_problem",
+  "required_judgment_moves": {
+    "form_choice": {
+      "status": "addressed",
+      "finding": "The run chooses three-layer 3L5S because signal, problem, and action are still collapsed.",
+      "failure_criteria_response": "It does not force full ceremony when a single-layer BTGSB would be enough.",
+      "evidence_surface": "User phrasing contains symptoms and proposed fixes without a falsifiable problem statement."
+    },
+    "layer_separation": {
+      "status": "addressed",
+      "finding": "Discovery holds observations, Definition states the falsifiable problem, and Resolution owns actions.",
+      "failure_criteria_response": "The output does not treat a symptom or proposed solution as the problem itself.",
+      "evidence_surface": "Draft sections name signal, problem, and action separately."
+    },
+    "btgsb_fields": {
+      "status": "addressed",
+      "finding": "Baseline, Target, Gap, Strategy, and Breakdown are each named.",
+      "failure_criteria_response": "The breakdown is not a vague list of improve/research/handle items.",
+      "evidence_surface": "BTGSB fields are present in the working output."
+    },
+    "acceptance_evidence_surface": {
+      "status": "addressed",
+      "finding": "Breakdown items include acceptance evidence or a way to verify arrival.",
+      "failure_criteria_response": "The plan is not accepted solely because the template is complete.",
+      "evidence_surface": "Each next action names observable acceptance or missing evidence."
+    },
+    "loopback_trigger": {
+      "status": "addressed",
+      "finding": "The output names feedback that would send the work back to Discovery or Definition.",
+      "failure_criteria_response": "Execution surprise is not hidden as ordinary implementation detail.",
+      "evidence_surface": "Loopback condition names the signal that would falsify the current problem framing."
+    }
+  }
+}
