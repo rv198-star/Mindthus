@@ -53,7 +53,7 @@ Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对、原则一落地就摇摆、命题本身可能有坑时，用它先建结构坐标，再做场景投影。
 - [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在“管事”，但没人知道流程、判断和证据各自该管什么时，用它重新划清控制边界。
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：AI 生成的文档、代码或方案看起来完整，却停在表层、缺少厚度、洞察或价值密度时，用它把薄产物加深、提炼或压缩成有判断、有取舍、有下游价值的可用模块。
-- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它管理目标、验收证据、任务状态和停止条件。可以把它理解成给 agent 用的动态 OKR：目标稳定，任务树跟着 checkpoint、evidence、blocker 和用户反馈短周期调整。实际调用时仍使用 `tplan`。
+- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它管理目标、验收证据、任务状态和停止条件。它不是季度 OKR 表，而是长任务执行中的动态工作流：目标稳定，任务树跟着 checkpoint、evidence、blocker 和用户反馈短周期调整。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个文件、prompt、参数或任务节点已经第三次被修，下一步还想继续加层时，用它防止局部修补变成死亡螺旋。
 
 ## 从哪里开始

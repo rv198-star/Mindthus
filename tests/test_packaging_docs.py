@@ -84,7 +84,9 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("可安装的判断工具箱", readme)
         self.assertIn("你可能见过这些情况", readme)
         self.assertIn("AI 生成的文档、代码或方案看起来完整，却停在表层", readme)
-        self.assertIn("给 agent 用的动态 OKR", readme)
+        self.assertIn("不是季度 OKR 表", readme)
+        self.assertIn("长任务执行中的动态工作流", readme)
+        self.assertNotIn("实际调用时仍使用", readme)
 
     def test_public_docs_sync_mpg_unreleased_positioning(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
