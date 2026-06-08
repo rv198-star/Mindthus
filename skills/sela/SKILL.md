@@ -77,6 +77,17 @@ Ask:
 
 The `Timing Auditor` must keep this from turning an efficiency judgment into an immediate action without a valid action window.
 
+### Fidelity Support
+
+For high-impact or replayed SELA runs, use the fidelity contract in
+`resources/fidelity-contract.md` and, when useful, validate a structured audit artifact
+with `scripts/validate_sela_output.py`.
+
+The validator emits a `Shape & Evidence Risk Report`. A shape pass is not semantic approval.
+scripts must not decide semantic truth; they only surface missing required judgment
+moves, empty failure-criteria responses, unsupported enums, and missing evidence
+surfaces.
+
 ## Boundaries / 边界
 
 Do not apply SELA as the main principle when:
@@ -91,3 +102,7 @@ Do not apply SELA as the main principle when:
 
 Read `resources/methodology.md` for the full principle, prototype cases, timing check,
 correct use, common misuse, and calibration mechanism.
+
+- `resources/fidelity-contract.md` — SELA fidelity contract for v0.9.
+- `templates/fidelity-output.json` — structured audit artifact template.
+- `scripts/validate_sela_output.py` — SELA shape and evidence-risk validator.
