@@ -9,9 +9,16 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from _runtime.core.report import Finding
+from _runtime.core.shape import findings_from_messages
 
 
 SCHEMA_VERSION = "tplan.v0.1"
@@ -896,7 +903,7 @@ def _validate_path_assessment(decision: dict[str, Any]) -> list[str]:
     return errors
 
 
-def validate_hook_output(decision: Any) -> list[str]:
+def _validate_hook_output_messages(decision: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(decision, dict):
         return ["decision must be an object"]
@@ -943,6 +950,17 @@ def validate_hook_output(decision: Any) -> list[str]:
                     errors.append(f"{field} must be a string")
         errors.extend(_validate_path_assessment(decision))
     return errors
+
+
+def validate_hook_output_findings(decision: Any) -> list[Finding]:
+    return findings_from_messages(
+        _validate_hook_output_messages(decision),
+        code="tplan-hook-output",
+    )
+
+
+def validate_hook_output(decision: Any) -> list[str]:
+    return [finding.message for finding in validate_hook_output_findings(decision)]
 
 
 def record_decision_recommendation(mission_dir: Path, decision: dict[str, Any]) -> dict[str, Any]:
