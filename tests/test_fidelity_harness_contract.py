@@ -54,6 +54,34 @@ class FidelityHarnessContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_sela_fidelity_casebook_defines_reproducible_baseline(self):
+        text = (REPO / "tests" / "sela" / "fidelity_casebook.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("SELA Fidelity Casebook", text)
+        self.assertGreaterEqual(text.count("### Case"), 5)
+
+        for phrase in (
+            "baseline prompt",
+            "constrained prompt",
+            "trap map",
+            "expected faithful judgment moves",
+            "score faithful execution and reasoning quality, not the maintainer's preferred conclusion",
+            "best-A vs average-B",
+            "long-term trend != immediate cutover",
+            "hard boundary",
+            "local advantage scalability",
+            "timing action posture",
+            "misuse challenge",
+            "soy sauce",
+            "software security review",
+            "adaptive tutoring",
+            "local journalism",
+            "medical triage",
+        ):
+            self.assertIn(phrase, text)
+
 
 if __name__ == "__main__":
     unittest.main()
