@@ -1,6 +1,7 @@
 """Shared shape engine for Method Fidelity Harness validators.
 
 The Shape & Evidence Risk Report exposes review risks and does not validate semantic truth.
+Rendered reports still say: agentic audit remains required.
 """
 
 from __future__ import annotations
@@ -8,6 +9,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+from _runtime.core.report import Finding, finding as _finding, print_shape_report
+from _runtime.core.shape import non_empty_string, require_object
 
 
 APPLICABILITY = {"applicable", "not_applicable", "transfer", "challenge_premise"}
@@ -21,14 +25,6 @@ MOVE_FIELDS = (
 
 
 @dataclass(frozen=True)
-class Finding:
-    severity: str
-    code: str
-    message: str
-    judgment_move: str = ""
-
-
-@dataclass(frozen=True)
 class FidelitySpec:
     schema_version: str
     method: str
@@ -36,14 +32,6 @@ class FidelitySpec:
     required_moves: tuple[str, ...]
     action_postures: frozenset[str]
     truth_boundary: str = "semantic truth"
-
-
-def non_empty_string(value: Any) -> bool:
-    return isinstance(value, str) and bool(value.strip())
-
-
-def _finding(severity: str, code: str, message: str, judgment_move: str = "") -> Finding:
-    return Finding(severity, code, message, judgment_move)
 
 
 def _validate_exit(data: dict[str, Any]) -> list[Finding]:
@@ -119,8 +107,9 @@ def _validate_applicable(data: dict[str, Any], spec: FidelitySpec) -> list[Findi
 
 def validate_fidelity_output(data: Any, spec: FidelitySpec) -> list[Finding]:
     findings: list[Finding] = []
-    if not isinstance(data, dict):
-        return [_finding("block", "invalid-root", f"{spec.method} fidelity output must be an object")]
+    root_findings = require_object(data, f"{spec.method} fidelity output must be an object")
+    if root_findings:
+        return root_findings
 
     if data.get("schema_version") != spec.schema_version:
         findings.append(_finding("block", "invalid-schema-version", f"schema_version must be {spec.schema_version}"))
@@ -147,19 +136,13 @@ def validate_fidelity_output(data: Any, spec: FidelitySpec) -> list[Finding]:
 
 
 def print_text_report(path: Path, data: Any, findings: list[Finding], spec: FidelitySpec) -> None:
-    print(spec.report_title)
-    print(f"Path: {path}")
-    print()
+    accepted_exit = ""
     if isinstance(data, dict) and data.get("applicability") in {"not_applicable", "transfer", "challenge_premise"}:
-        print(f"method exit accepted: {data.get('applicability')}")
-        print()
-
-    if not findings:
-        print("No shape or evidence risks detected.")
-    else:
-        for finding in findings:
-            move = f" [{finding.judgment_move}]" if finding.judgment_move else ""
-            print(f"- {finding.severity.upper()} [{finding.code}]{move}: {finding.message}")
-
-    print()
-    print(f"Reminder: agentic audit remains required; this report does not validate {spec.truth_boundary}.")
+        accepted_exit = str(data.get("applicability"))
+    print_shape_report(
+        title=spec.report_title,
+        path=path,
+        findings=findings,
+        truth_boundary=spec.truth_boundary,
+        accepted_exit=accepted_exit,
+    )
