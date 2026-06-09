@@ -52,6 +52,39 @@ TVG 的轻量流程是：
 
 一个好的 TVG 输出，应该让下游少问问题。读者不一定会觉得它“更华丽”，但会觉得它更可判断、更可执行、更能交接。
 
+## 价值定义包
+
+TVG 可以接受 `value_profile`，也就是价值定义包。它的作用不是让 TVG
+更会堆内容，而是先说明“这个产物在本场景里什么叫好，什么叫坏”。
+
+普通任务不需要用户额外提供价值定义。没有外部输入时，TVG 使用默认通用实用价值：
+
+- 决策 / 行动杠杆更清楚。
+- 证据诚实，不把假设写成事实。
+- 下游更容易接手，不需要重新发明上下文。
+- 降低误用、误判、假绿灯和过度自信风险。
+- 保留可复用性，不为了一个样例过拟合。
+- 更可执行，同时保持价值密度。
+
+当任务有强审美、强品牌、强领域或强价值取向时，可以提供一套 `supplied`
+profile。比如影视提示词、品牌文案、法律审查、教学材料、投资备忘录，都可能需要
+不同的优劣定义。
+
+`Value Profile Resolution` 的顺序是：
+
+1. 用户明确提供时，使用 `mode: supplied`。
+2. 项目有默认 profile 时，使用项目默认，除非用户覆盖。
+3. 都没有时，使用 `default practical-value profile`。
+4. Agent 只能从上下文推断时，必须标成 `inferred-with-warning`，并保留证据边界。
+5. 如果 profile source conflicts with the artifact being improved，prefer independent profile sources over the artifact sample。
+
+一句话：默认通用实用价值保证 TVG 不需要每次都先灌价值观；价值定义包让 TVG
+在特定场景里不再把“提升价值”误做成普通加厚。
+
+Profile 不能覆盖事实边界。profiles cannot override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints。
+
+特别注意：不要从待改造样例反推风格规则。如果待升级对象本身可能就是错误、粗糙或跑偏的样例，它只能用来测试 profile，不能作为 profile 的来源。
+
 ## 输出档位
 
 TVG 可以接受输出档位，但档位只影响交付表达，不改变内部主线。
