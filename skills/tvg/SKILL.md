@@ -23,8 +23,9 @@ Short rule:
 > grounded insight generation, value refinement, compact strengthening, warning
 > calibration, or honest exit.
 
-Two core inputs keep TVG from becoming generic improvement:
+Three core inputs keep TVG from becoming generic improvement:
 
+- `value_profile`: optional value definition package for this module and use. If absent, TVG uses the default practical-value profile. A supplied profile defines what good, bad, priority, profile-specific axes, and profile-specific veto constraints mean for the artifact.
 - `veto_constraints`: explicit unacceptable states for this module and use. They are not value-gain axes. If one is triggered, the module must not exit as `freeze`.
 - `independent_auditor`: for high-impact, high-uncertainty, or handoff-critical modules, the exit audit should be performed by a reviewer that reads the final module, intended use, evidence, and veto constraints, not the generator's working process.
 
@@ -33,6 +34,8 @@ Optional delivery control:
 - `output_profile`: `insight_dense | balanced | coverage_rich`. This is delivery bias, not an internal workflow fork. It may affect final expression shape, but it must not lower the standard for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
 
 Profile guardrails live in `resources/methodology.md`: `insight_dense` should preserve calibrated claim tension, `balanced` should avoid unnecessary synthetic machinery, and `coverage_rich` should preserve useful review or handoff structure.
+
+Value profile guardrails live in `resources/methodology.md`: the default practical-value profile is the fallback, supplied profiles may specialize value-gain axes and audit prompts, inferred profiles must be marked `inferred-with-warning`, and profiles cannot override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints.
 
 ## Mainline / 主路径
 
@@ -53,17 +56,19 @@ Do not use this skill to reopen whole-project strategy or to add process weight 
 
 1. Name the smallest module that can be independently frozen, returned, or blocked.
 2. Read `resources/methodology.md` only as needed.
-3. Name any module-specific veto constraints before deepening.
-4. Check the current module state using `Thinking Thickness`, `Grounded Insight Yield`,
+3. Resolve the active `value_profile`: `default | supplied | inferred-with-warning`.
+4. Name any module-specific veto constraints before deepening.
+5. Check the current module state using `Thinking Thickness`, `Grounded Insight Yield`,
    and `Value Density`.
-5. Pass the thickness gate before applying density optimization or `output_profile`.
-6. Perform the routed value-gain action: `deepen`, targeted depth formation, `refine`,
+6. Pass the thickness gate before applying density optimization or `output_profile`.
+7. Select value-gain axes from the default profile or the supplied profile's derived axes.
+8. Perform the routed value-gain action: `deepen`, targeted depth formation, `refine`,
    `compact-strengthen`, warning calibration, `return-remediate`, `blocked`, or `freeze`.
-7. Apply `output_profile` only as exit-side graded refinement.
-8. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
-9. Validate trace shape with `scripts/trace/validate.py`.
-10. Persist the trace with `scripts/trace/persist.py` when useful.
-11. Make the exit decision by agentic audit, not by script output.
+9. Apply `output_profile` only as exit-side graded refinement.
+10. For high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
+11. Validate trace shape with `scripts/trace/validate.py`.
+12. Persist the trace with `scripts/trace/persist.py` when useful.
+13. Make the exit decision by agentic audit, not by script output.
 
 ## Guardrails / 从属补漏
 
@@ -91,6 +96,8 @@ Scripts must not:
 - score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`
 - choose TVG state routes
 - choose `output_profile`
+- choose, infer, complete, rank, or satisfy `value_profile`
+- decide whether a value profile is true, complete, aesthetically successful, or sufficient for exit
 - decide `compact-strengthen`, `refine`, `deepen`, or `freeze`
 
 Every script result means only:
@@ -103,6 +110,7 @@ Every script result means only:
 - Letting scripts decide `exit_state`.
 - Running TVG on an unbounded document instead of a named module.
 - Adding another round without a named positive-value hypothesis.
+- Inferring a specialized value profile from the artifact being improved when that artifact may be the flawed sample.
 - Exposing TVG internal vocabulary in final customer/business/architecture deliverables.
 
 ## Boundaries / 边界
@@ -110,6 +118,8 @@ Every script result means only:
 - Do not use TVG to reopen whole-project strategy.
 - Do not deepen for length, polish, or template completeness.
 - Do not add process weight to low-risk work.
+- Do not require a supplied `value_profile` for ordinary tasks; use the default practical-value profile.
+- Do not let a supplied profile override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints.
 - Block rather than deepen when the missing input is evidence, domain input, runtime proof, or stakeholder judgment.
 
 ## Runtime Support / 支撑材料

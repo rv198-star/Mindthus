@@ -38,6 +38,42 @@ State the value gain claimed by the module or value-gain run.
 - `after_state`:
 - `why_this_is_not_only_more_text_or_structure`:
 
+## Value Profile
+
+Record the active value definition package used by the run. This is an audit prompt, not
+a script-scored field.
+
+- `value_profile_mode`: `default | supplied | inferred-with-warning`
+- `value_profile_name`:
+- `artifact_job`:
+- `good_means`:
+  -
+- `bad_means`:
+  -
+- `priority_order`:
+  -
+- `derived_axes`:
+  -
+- `evidence_basis`:
+  -
+- `prompt_self_audit_questions`:
+  -
+- `image_self_audit_questions`:
+  -
+- `source_notes`:
+  -
+- `profile_veto_constraints`:
+  -
+- `profile_source_independence`: `independent | owner-supplied | inferred-from-context | contaminated | unknown`
+- `profile_source_note`:
+
+Audit notes:
+
+- Did the profile define what counts as good or bad for this artifact's actual use?
+- Did the run avoid inferring profile rules from the artifact being improved when that artifact may be flawed?
+- Did the profile change value-gain axes or audit questions in a useful way?
+- Did any profile preference try to override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints?
+
 ## Grounded Insight And Density Check
 
 These are audit prompts, not script-scored fields.

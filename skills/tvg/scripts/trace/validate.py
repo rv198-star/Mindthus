@@ -39,6 +39,27 @@ def validate(trace: dict, schema: dict) -> list[str]:
         if field not in module:
             errors.append(f"missing module field: {field}")
 
+    profile = require_mapping(trace.get("value_profile"), "value_profile", errors)
+    for field in schema["required_value_profile_fields"]:
+        if field not in profile:
+            errors.append(f"missing value_profile field: {field}")
+    profile_mode = profile.get("mode")
+    if profile_mode not in schema["allowed_value_profile_modes"]:
+        errors.append(f"value_profile.mode: unsupported value {profile_mode!r}")
+    for field in (
+        "good_means",
+        "bad_means",
+        "priority_order",
+        "derived_axes",
+        "evidence_basis",
+        "prompt_self_audit_questions",
+        "image_self_audit_questions",
+        "source_notes",
+        "profile_veto_constraints",
+    ):
+        if field in profile:
+            require_list(profile[field], f"value_profile.{field}", errors)
+
     value_gain = require_mapping(trace.get("value_gain"), "value_gain", errors)
     for field in schema["required_value_gain_fields"]:
         if field not in value_gain:

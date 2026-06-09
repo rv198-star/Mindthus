@@ -4,6 +4,7 @@
     "schema_version",
     "method_version",
     "module",
+    "value_profile",
     "value_gain",
     "rounds",
     "agentic_exit_audit",
@@ -15,6 +16,25 @@
     "type",
     "downstream_consumer",
     "freeze_granularity"
+  ],
+  "required_value_profile_fields": [
+    "mode",
+    "name",
+    "artifact_job",
+    "good_means",
+    "bad_means",
+    "priority_order",
+    "derived_axes",
+    "evidence_basis",
+    "prompt_self_audit_questions",
+    "image_self_audit_questions",
+    "source_notes",
+    "profile_veto_constraints"
+  ],
+  "allowed_value_profile_modes": [
+    "default",
+    "supplied",
+    "inferred-with-warning"
   ],
   "required_value_gain_fields": [
     "claimed_value_gain",
@@ -60,5 +80,5 @@
     "not-applicable",
     "unknown"
   ],
-  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain or exit_state."
+  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain, value_profile truth, aesthetic success, routing, or exit_state. scripts validate profile shape only and must not decide whether a value profile is true, complete, aesthetically successful, or sufficient for exit."
 }

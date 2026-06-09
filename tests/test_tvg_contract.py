@@ -129,6 +129,308 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, combined)
 
+    def test_value_profile_is_first_class_optional_input_with_default_resolution(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = skill + "\n" + method + "\n" + public_doc
+        for phrase in (
+            "value_profile",
+            "Value Profile Resolution",
+            "default practical-value profile",
+            "`default | supplied | inferred-with-warning`",
+            "supplied profile",
+            "project default profile",
+            "profile source conflicts with the artifact being improved",
+            "prefer independent profile sources over the artifact sample",
+            "profiles cannot override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints",
+            "价值定义包",
+            "默认通用实用价值",
+            "不要从待改造样例反推风格规则",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_value_profile_schema_and_scripts_preserve_agentic_boundary(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        schema = (TVG / "resources" / "trace-record-schema.json").read_text(encoding="utf-8")
+        combined = skill + "\n" + method + "\n" + schema
+        for phrase in (
+            "value_profile",
+            "good_means",
+            "bad_means",
+            "priority_order",
+            "derived_axes",
+            "evidence_basis",
+            "profile_veto_constraints",
+            "prompt_self_audit_questions",
+            "image_self_audit_questions",
+            "source_notes",
+            "scripts validate profile shape only",
+            "must not decide whether a value profile is true, complete, aesthetically successful, or sufficient for exit",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_trace_init_accepts_value_profile_metadata_and_validates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "shaw-shot-prompt",
+                    "--module-title",
+                    "Shaw shot prompt",
+                    "--module-type",
+                    "cinematic-prompt",
+                    "--value-profile-mode",
+                    "supplied",
+                    "--value-profile-name",
+                    "Shaw Brothers studio-era wuxia/fantasy",
+                    "--value-profile-artifact-job",
+                    "convert a script beat into a multi-shot cinematic prompt",
+                    "--value-profile-good",
+                    "set-built theatricality is expressed through composition and blocking",
+                    "--value-profile-bad",
+                    "generic modern AI video prompt inflation",
+                    "--value-profile-priority",
+                    "studio-era theatricality before naturalistic realism",
+                    "--value-profile-derived-axis",
+                    "studio-theatricality-depth",
+                    "--value-profile-evidence",
+                    "independent film-history source notes",
+                    "--value-profile-prompt-audit-question",
+                    "Does the prompt express studio-era theatricality through blocking rather than modern spectacle?",
+                    "--value-profile-image-audit-question",
+                    "Does the image read as a set-built widescreen storyboard sheet rather than modern xianxia CG?",
+                    "--value-profile-source-note",
+                    "Independent source notes support the scoped profile; the script paragraph is not a style source.",
+                    "--profile-veto-constraint",
+                    "must not infer style rules from the flawed expansion sample",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            profile = data["value_profile"]
+            self.assertEqual(profile["mode"], "supplied")
+            self.assertEqual(profile["name"], "Shaw Brothers studio-era wuxia/fantasy")
+            self.assertEqual(
+                profile["good_means"],
+                ["set-built theatricality is expressed through composition and blocking"],
+            )
+            self.assertEqual(profile["bad_means"], ["generic modern AI video prompt inflation"])
+            self.assertEqual(profile["derived_axes"], ["studio-theatricality-depth"])
+            self.assertEqual(
+                profile["prompt_self_audit_questions"],
+                ["Does the prompt express studio-era theatricality through blocking rather than modern spectacle?"],
+            )
+            self.assertEqual(
+                profile["image_self_audit_questions"],
+                ["Does the image read as a set-built widescreen storyboard sheet rather than modern xianxia CG?"],
+            )
+            self.assertEqual(
+                profile["source_notes"],
+                ["Independent source notes support the scoped profile; the script paragraph is not a style source."],
+            )
+            self.assertEqual(
+                profile["profile_veto_constraints"],
+                ["must not infer style rules from the flawed expansion sample"],
+            )
+            self.assertIn("value_profile_truth", data["script_support"]["script_cannot_decide"])
+            self.assertIn("aesthetic_success", data["script_support"]["script_cannot_decide"])
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stdout + validation.stderr)
+            self.assertIn("agentic audit is still required", validation.stdout)
+
+    def test_trace_validation_rejects_invalid_value_profile_shape(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "profile-check",
+                    "--module-title",
+                    "Profile check",
+                    "--module-type",
+                    "audit",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            data["value_profile"]["mode"] = "scored"
+            data["value_profile"]["good_means"] = "not-a-list"
+            data["value_profile"]["prompt_self_audit_questions"] = "not-a-list"
+            data["value_profile"]["image_self_audit_questions"] = "not-a-list"
+            data["value_profile"]["source_notes"] = "not-a-list"
+            trace.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 1)
+            self.assertIn("value_profile.mode: unsupported value 'scored'", validation.stdout)
+            self.assertIn("value_profile.good_means: expected list", validation.stdout)
+            self.assertIn("value_profile.prompt_self_audit_questions: expected list", validation.stdout)
+            self.assertIn("value_profile.image_self_audit_questions: expected list", validation.stdout)
+            self.assertIn("value_profile.source_notes: expected list", validation.stdout)
+
+    def test_default_practical_value_profile_resource_exists(self):
+        path = TVG / "resources" / "value-profiles" / "default-practical-value.md"
+        self.assertTrue(path.exists(), "missing default practical-value profile resource")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Default Practical-Value Profile",
+            "mode: default",
+            "decision / action leverage",
+            "evidence honesty",
+            "handoff usability",
+            "risk reduction",
+            "reuse without overfitting",
+            "execution readiness",
+            "This profile is the fallback when no supplied or project default profile is active.",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shaw_brothers_profile_resource_exists_and_rejects_sample_contamination(self):
+        path = TVG / "resources" / "value-profiles" / "shaw-brothers-wuxia-fantasy.md"
+        self.assertTrue(path.exists(), "missing Shaw Brothers wuxia/fantasy value profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Shaw Brothers Studio-Era Wuxia / Fantasy Cinematic Prompt Profile",
+            "mode: supplied",
+            "profile source must be independent from the artifact being improved",
+            "do not infer Shaw Brothers rules from the flawed expansion sample",
+            "studio-era / backlot / set-built theatricality",
+            "wide-screen composition",
+            "saturated color and strong graphic contrast",
+            "stylized rather than naturalistic environments",
+            "melodramatic emotional punctuation",
+            "modern xianxia",
+            "generic AI video prompt inflation",
+            "prompt_self_audit_questions",
+            "image_self_audit_questions",
+            "source_notes",
+            "scoped profile for cinematic prompt and storyboard image generation",
+            "not a universal definition of all Shaw Brothers films",
+            "Clear Water Bay",
+            "independent source notes",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shaw_value_profile_pilot_record_contains_storyboard_and_image_audit(self):
+        path = REPO / "tests" / "tvg_value_profile_shaw_pilot_clean_room_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing clean-room Shaw value-profile pilot record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Value Profile Clean-Room Pilot: Shaw Brothers Snow Mountain Storyboard",
+            "active_value_profile: Shaw Brothers studio-era wuxia / fantasy cinematic prompt profile",
+            "profile_source_rule: do not infer Shaw Brothers rules from the flawed expansion sample",
+            "多镜头分镜提示词",
+            "Shot 01",
+            "shot_count_decision",
+            "shot_count_not_preset: true",
+            "single_page_storyboard_image",
+            "Image2 Pass 1",
+            "Image Self-Audit",
+            "single-page storyboard sheet",
+            "modern xianxia",
+            "modern CG spectacle",
+            "naturalistic disaster film",
+            "generic AI video prompt inflation",
+            "source_attribution_audit",
+            "original_script_source",
+            "profile_source",
+            "independent_storyboard_judgment",
+            "possible_pollution_or_uncertainty",
+            "claim_supported",
+            "evidence_ceiling",
+        ):
+            self.assertIn(phrase, text)
+        self.assertNotIn("shot_count_decision: preset", text)
+
+    def test_king_hu_wuxia_profile_resource_exists_and_is_scoped(self):
+        path = TVG / "resources" / "value-profiles" / "king-hu-wuxia-cinema.md"
+        self.assertTrue(path.exists(), "missing King Hu wuxia value profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "King Hu Wuxia Cinema Prompt / Storyboard Profile",
+            "mode: supplied",
+            "scoped profile for cinematic prompt and storyboard image generation",
+            "not a universal definition of all King Hu films",
+            "Beijing opera",
+            "dance-like combat",
+            "inn / confined-space faction choreography",
+            "widescreen compositions full of graceful character movement",
+            "delayed spectacle",
+            "spiritual or philosophical pressure",
+            "female knight-errant",
+            "modern wire-fu inflation",
+            "generic AI wuxia trailer inflation",
+            "prompt_self_audit_questions",
+            "image_self_audit_questions",
+            "source_notes",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_king_hu_profile_self_iteration_record_exists(self):
+        path = REPO / "tests" / "tvg_value_profile_king_hu_self_iteration_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing King Hu profile self-iteration record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Self-Iteration: King Hu Wuxia Cinema Profile",
+            "iteration_mode: profile_self_iteration",
+            "v1_audit_result: return-remediate",
+            "v2_audit_result: freeze-with-review-bound-warning",
+            "what_changed",
+            "delayed spectacle before action payoff",
+            "spatial intelligence before action density",
+            "avoid generic AI wuxia trailer inflation",
+            "source_attribution_audit",
+            "claim_supported",
+            "evidence_ceiling",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_king_hu_profile_rejects_shaw_cleanwater_bay_pollution(self):
+        path = TVG / "resources" / "value-profiles" / "king-hu-wuxia-cinema.md"
+        self.assertTrue(path.exists(), "missing King Hu wuxia value profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "do not use Shaw Brothers Clear Water Bay / Movietown backlot theatricality as a King Hu proxy",
+            "do not use saturated red-blue Shaw-style hard-light spectacle as the default color logic",
+            "natural or architectural space",
+            "ruined fort, inn, courtyard, temple, bamboo, desert edge, mountain path, or village threshold",
+            "glimpse editing must be translated into partial visibility, occlusion, offscreen implication, or panel sequencing",
+            "the original snow mountain / qilin script is a story constraint, not King Hu evidence",
+        ):
+            self.assertIn(phrase, text)
+
     def test_coverage_rich_preserves_review_and_handoff_structure(self):
         method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
         public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")

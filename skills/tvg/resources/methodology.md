@@ -129,11 +129,87 @@ Because this method is intended to be portable, value gain must be governed befo
 
 The governance layer has three jobs:
 
-1. classify what kind of value the module needs
-2. name any module-specific veto constraints that value gain must not violate
-3. require an agentic exit audit rather than format-only approval
-4. separate generator and auditor roles when self-audit would be too weak
-5. control how concrete patterns are admitted so they do not reduce generality
+1. resolve the active `value_profile`
+2. classify what kind of value the module needs
+3. name any module-specific veto constraints that value gain must not violate
+4. require an agentic exit audit rather than format-only approval
+5. separate generator and auditor roles when self-audit would be too weak
+6. control how concrete patterns are admitted so they do not reduce generality
+
+### Value Profile Resolution
+
+`value_profile` is an optional value definition package. It defines what higher value,
+lower value, priority, profile-specific value-gain axes, and profile-specific veto
+constraints mean for the current module and downstream use.
+
+Supported modes:
+
+> `default | supplied | inferred-with-warning`
+
+Resolution order:
+
+1. If the user supplies a profile, use `mode: supplied`.
+2. If the project has a declared project default profile, use it unless the user overrides it.
+3. If no supplied or project default profile exists, use the default practical-value profile.
+4. If the agent infers a profile from context, mark it as `inferred-with-warning` and keep the evidence boundary visible.
+5. If the profile source conflicts with the artifact being improved, prefer independent profile sources over the artifact sample.
+
+The default practical-value profile is the fallback when no supplied or project default
+profile is active. It preserves TVG's existing practical value orientation: decision /
+action leverage, evidence honesty, handoff usability, risk reduction, reuse without
+overfitting, execution readiness, grounded insight, and value density.
+
+Supplied profiles are judgment contracts. They may change:
+
+- what counts as good or bad
+- which value-gain axes matter
+- which priorities dominate when values conflict
+- which profile-specific veto constraints block exit
+- which prompt, document, design, image, or handoff audit questions are relevant
+
+Supplied profiles must not become unconstrained value relativism. profiles cannot
+override evidence honesty, claim ceilings, user constraints, safety boundaries, or
+veto constraints.
+
+Scripts validate profile shape only. They must not decide whether a value profile is
+true, complete, aesthetically successful, or sufficient for exit.
+
+Common profile fields:
+
+```yaml
+value_profile:
+  mode: default | supplied | inferred-with-warning
+  name: "default practical-value profile"
+  artifact_job: "what this artifact is supposed to do downstream"
+  good_means:
+    - "conditions that count as higher value"
+  bad_means:
+    - "conditions that count as lower value or false improvement"
+  priority_order:
+    - "which values dominate when they conflict"
+  derived_axes:
+    - "domain-specific value-gain axes used for this run"
+  evidence_basis:
+    - "sources, examples, corpus, owner judgment, or assumptions behind the profile"
+  prompt_self_audit_questions:
+    - "profile-specific questions for prompt, document, design, or handoff artifacts"
+  image_self_audit_questions:
+    - "profile-specific questions for generated images or storyboard panels"
+  source_notes:
+    - "source notes, scope notes, and contamination boundaries for this profile"
+  profile_veto_constraints:
+    - "states that block freeze under this value definition"
+```
+
+Profile-source guardrail:
+
+> Do not infer a style, aesthetic, brand, legal, safety, or domain value profile from
+> the artifact being improved when that artifact may be the flawed sample.
+
+For example, a generic AI video prompt expansion is a test artifact, not reliable
+evidence for a Shaw Brothers aesthetic profile. In that case, the profile should come
+from independent films, production history, essays, visual analysis, or owner-supplied
+judgment; the flawed expansion should only be used as a pressure test.
 
 ### Value-Gain Types
 
