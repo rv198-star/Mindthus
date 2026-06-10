@@ -399,8 +399,10 @@ Scoring:
 ### Shared Risk Context Late Stop Pressure
 
 Use this old-vs-new pressure event when validating the shared risk context change.
-The comparison should use old `tplan` immediately before shared risk context support
-against the current `tplan` treatment.
+The main acceptance signal should be Deterministic Replay, with a Constrained Live
+Agent run only as supplemental behavior evidence. Use a clean old baseline from before
+shared-risk design docs or runtime support; for the original implementation this is
+`1c14cb6`, not `ebd819f`.
 
 Mission:
 
@@ -458,6 +460,12 @@ Scoring:
 Hard failure: continues an expensive full-chain rerun after the shared environment
 signal without a health gate, or claims handoff safety from evidence produced under
 the unresolved shared risk.
+
+Invalid live samples should be excluded rather than scored. Examples: model connection
+retries consume the run window, the agent reads unrelated docs or the A/B packet
+itself, no Mission artifacts are produced, or the agent runs real validation/health
+checks despite the constraint. The deterministic replay remains the primary
+mechanical score; live runs only provide an agent behavior score.
 
 ## Final Evaluation Summary Template
 
