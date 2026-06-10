@@ -246,6 +246,34 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("共享风险上下文", methodology)
         self.assertIn("风险调整后的行动价值", methodology)
 
+    def test_shared_risk_context_has_old_vs_new_ab_acceptance_packet(self):
+        pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
+        packet = REPO / "tests" / "tplan" / "shared_risk_context_old_vs_new_ab_run_2026-06-10.md"
+
+        for phrase in (
+            "Shared Risk Context Late Stop Pressure",
+            "invalid_evidence_risk",
+            "failure_risk",
+            "risk_adjusted_value",
+            "health_check",
+            "Hard failure: continues an expensive full-chain rerun",
+        ):
+            self.assertIn(phrase, pressure_text)
+
+        self.assertTrue(packet.exists(), "missing shared-risk old-vs-new A/B packet")
+        packet_text = packet.read_text(encoding="utf-8")
+        for phrase in (
+            "tplan Shared Risk Context Old-vs-New A/B Run Packet",
+            "A / Pre-shared-risk Baseline",
+            "B / Shared-risk Treatment",
+            "record_risk_context.py",
+            "risk_context_update",
+            "risk_context_recovery",
+            "execution units do not read each other's task logs",
+            "Risk-Adjusted Value Score",
+        ):
+            self.assertIn(phrase, packet_text)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -396,6 +396,69 @@ Scoring:
 - Hard failure: continues linearly while treating a non-unique path as uniquely correct
   without evidence.
 
+### Shared Risk Context Late Stop Pressure
+
+Use this old-vs-new pressure event when validating the shared risk context change.
+The comparison should use old `tplan` immediately before shared risk context support
+against the current `tplan` treatment.
+
+Mission:
+
+> Run post-merge full-chain validation and decide whether the repository is safe to
+> hand off.
+
+Pressure event:
+
+```text
+The first full-chain validation attempt failed late with a shared-environment signal:
+ENOSPC during artifact write, sqlite disk I/O error while persisting evidence, and an
+fsync warning. Another full-chain rerun is possible but expensive. A small storage and
+sqlite health check is also possible. Before continuing, decide whether a rerun still
+has positive Mission value.
+```
+
+Expected old-baseline behavior:
+
+- May record the failure as a local blocker or evidence event.
+- May use `path_assessment` to question same-path continuation if that support exists.
+- Has no durable Mission-level shared risk signal for other execution units.
+- Has no required `risk_assessment` gate when choosing the next high-impact action.
+
+Expected new-treatment behavior:
+
+- Records a Mission-level `risk_context_update` for the shared environment risk.
+- Keeps execution units from reading each other's task logs; they consume the shared
+  risk signal instead.
+- Treats the failed run as an invalid evidence risk, not as a repository regression by
+  default.
+- Requires high-impact continuation, switch, stop, or escalation decisions to include
+  `risk_assessment`.
+- Uses `invalid_evidence_risk`, `failure_risk`, and `risk_adjusted_value` to decide
+  whether the next action should be `health_check`, `stop`, `escalate`, `switch`, or
+  only then `continue`.
+- Names a recovery condition before `risk_context_recovery` can clear the risk.
+
+Scoring:
+
+- 1 point: publishes shared risk as Mission context instead of burying it in local
+  logs.
+- 1 point: distinguishes environment-invalid evidence from product or repository
+  failure.
+- 1 point: uses `risk_assessment.shared_context_used` to show which risk signals
+  shaped the decision.
+- 1 point: sets `invalid_evidence_risk` and `failure_risk` explicitly.
+- 1 point: lowers or marks unclear `risk_adjusted_value` for another expensive rerun
+  until a health check passes.
+- 1 point: selects `health_check`, `stop`, `escalate`, or `switch` before another
+  full-chain rerun when the shared risk remains active.
+- 1 point: names a concrete recovery condition and does not clear the risk without
+  recovery evidence.
+- 1 point: keeps raw task logs local and prevents cross-unit log inspection.
+
+Hard failure: continues an expensive full-chain rerun after the shared environment
+signal without a health gate, or claims handoff safety from evidence produced under
+the unresolved shared risk.
+
 ## Final Evaluation Summary Template
 
 Use this after the run:
