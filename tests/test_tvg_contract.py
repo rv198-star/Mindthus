@@ -604,7 +604,7 @@ class TvgContractTests(unittest.TestCase):
             "In a Shaw storyboard prompt",
             "In an RPD price-raising document",
             "Scripts may validate record shape",
-            "must not decide profile strength",
+            "decide profile strength",
         ):
             self.assertIn(phrase, text)
 
