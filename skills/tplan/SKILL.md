@@ -140,11 +140,9 @@ execution units do not read each other's task logs. They publish scoped risk sig
 Mission-level `shared_context.risk_signals`; later decision packets consume active
 signals when judging whether the next action still has risk-adjusted value.
 
-Record shared risk with `scripts/record_risk_context.py`, which writes a live risk
-signal and an auditable `risk_context_update` event. Resolve, supersede, or invalidate
-the signal with the same script, producing `risk_context_recovery` evidence. Routine
-success should not publish shared risk; acceptance success and recovery success may
-publish evidence when they close a claim or restore trust in a shared surface.
+Record shared risk with `scripts/record_risk_context.py`. It writes a live signal and
+an auditable `risk_context_update` event; recovery writes `risk_context_recovery`.
+Routine success should not publish shared risk.
 
 ### Checkpoint Command
 
@@ -195,25 +193,11 @@ mutations, decisions, and final conclusions under the main agent.
 The full loop below is the expanded `normal` / `strict` path. In `lite`, preserve the
 minimum Mission state and use the same risk triggers without running every ceremony step.
 
-1. Initialize Mission files with `scripts/init_lite.py` for lite startup or
-   `scripts/init_mission.py` for expanded startup.
-2. Use `3l5s` to propose success-critical Task nodes.
-3. Add Task, SubTask, and Step nodes through `scripts/add_node.py`; do not hand-edit
-   `mission.json` for structure changes.
-4. Validate the tree with `scripts/check_mission.py`.
-5. Record task-local step logs with `scripts/record_step_log.py` while executing.
-6. Record only acceptance, state-change, blocker, feedback, or decision evidence with
-   `scripts/record_evidence.py`.
-7. If execution cannot safely continue, write a concise Chinese stop report with
-   `scripts/stop_report.py` and request human intervention.
-8. Archive completed task logs with `scripts/archive_task_logs.py` and promote only the
-   summary or key findings to evidence when they support a claim.
-9. Survey state with `scripts/survey.py`.
-10. Generate a decision packet with `scripts/make_decision_packet.py`.
-11. Run the parent-alignment or Mission Review Gate for the decision weight.
-12. Invoke the routed Mindthus skill named by the decision hook.
-13. Ensure the hook output states the required alignment before mutation.
-14. Apply or record the decision with `scripts/apply_decision.py`.
+Initialize with `scripts/init_lite.py` or `scripts/init_mission.py`; use `3l5s` for
+success-critical Task proposal; mutate structure through scripts, not hand edits;
+separate logs from evidence; survey, build a decision packet, run the routed Mindthus
+hook, then apply only validated decisions. If continuation is unsafe, record a Chinese
+stop report and request human intervention.
 
 ## Guardrails / 从属补漏
 
@@ -238,19 +222,8 @@ Task alignment is hierarchical by default:
 - SubTasks and Steps carry a lightweight `mission_trace` through the parent chain, but do not
   repeat a full Mission justification during ordinary execution.
 
-Mission is not counted as a task level. Runtime `v0.1` supports:
-
-- `task`: level 1 control node, Mission-facing.
-- `subtask`: level 2 control node, Task-facing.
-- `step`: level 2 or 3 execution leaf.
-
-Simple work may use `Mission -> Task -> Step`. Complex work may use
-`Mission -> Task -> SubTask -> Step`. Step never has children. If a Step needs
-meaningful decomposition, it should raise a split signal and its parent control node
-should replace or upgrade it into a SubTask.
-
-Future expansion may add deeper Task/SubTask control layers, but Step remains the
-stable execution leaf.
+Mission is not counted as a task level. Runtime `v0.1` supports `task`, `subtask`, and
+`step`; Step remains the stable execution leaf and never has children.
 
 ### Logs, Evidence, And Summary
 
@@ -272,35 +245,11 @@ tplan should stop cleanly when continuing would require inventing missing intent
 authority, acceptance criteria, or product judgment. A stop is not a generic failure:
 it is a handoff to a human with the smallest useful context.
 
-Default user-facing stop reports are Chinese:
-
-```text
-停止报告
-
-当前目标：
-...
-
-已尝试：
-1. ...
-2. ...
-3. ...
-
-阻碍：
-...
-
-为何不能安全继续：
-...
-
-需要人类提供：
-...
-
-恢复条件：
-...
-```
-
-Use `scripts/stop_report.py` to record the report. It writes a `stop_report` evidence
-event, marks the current node `blocked`, sets the Mission to `requires_human`, and
-keeps the blocked node active for resumption.
+Default user-facing stop reports are Chinese and cover current goal, attempts, blocker,
+why continuing is unsafe, what human input is needed, and resumption conditions. Use
+`scripts/stop_report.py`; it writes a `stop_report` evidence event, marks the current
+node `blocked`, sets the Mission to `requires_human`, and keeps the blocked node active
+for resumption.
 
 Use a lightweight gate for ordinary SubTask/Step decisions:
 
@@ -316,20 +265,11 @@ Use decision handling levels to avoid packet overuse:
 - `full mission review`: high-impact Mission-facing changes that can materially affect
   convergence.
 
-Use `mission_alignment` and, for high-impact decisions, a full `mission_review` when
-the decision can materially affect Mission convergence:
-
-- adding or removing a `success-critical` task
-- pausing, pruning, abandoning, or superseding a `success-critical` task
-- switching the active task
-- closing the Mission
-- making subtraction decisions after resource pressure changes
-- looping back because feedback challenges the current problem definition
-- expanding the same supporting or exploratory branch more than once
-
-The full review must identify the current Mission objective, remaining acceptance gap,
-task contribution, Mission ROI effect, and risk of not taking the decision. This is a
-judgment prompt, not proof that the judgment is correct.
+Use `mission_alignment` and, for high-impact decisions, a full `mission_review` when a
+change can materially affect Mission convergence: adding/removing `success-critical`
+work, switching active task, closing Mission, pruning, looping back, or expanding the
+same branch again. The review identifies Mission objective, remaining acceptance gap,
+task contribution, Mission ROI effect, and risk of not acting.
 
 ### Linear Continuation Gate
 
@@ -431,52 +371,10 @@ Prefer these recipes over script-help exploration when the required inputs are a
 known. Use `--help` or source inspection only when arguments are missing, a command
 fails, or behavior is unclear.
 
-Lite startup:
-
-```bash
-python3 skills/tplan/scripts/init_lite.py --dir "$MISSION_DIR" \
-  --mission-id "$MISSION_ID" \
-  --title "$MISSION_TITLE" \
-  --objective "$MISSION_OBJECTIVE" \
-  --acceptance-evidence "A1:First acceptance condition." \
-  --active-task-id T1 \
-  --active-task-title "$ACTIVE_TASK_TITLE" \
-  --active-task-contribution "$ACTIVE_TASK_CONTRIBUTION" \
-  --latest-state "$LATEST_RECOVERABLE_STATE" \
-  --human-in-loop 0 \
-  --risk-tolerance "$RISK_TOLERANCE" \
-  --resource-sufficiency "$RESOURCE_SUFFICIENCY"
-```
-
-Routine lite checkpoint:
-
-```bash
-python3 skills/tplan/scripts/checkpoint.py "$MISSION_DIR" \
-  --task-id T1 \
-  --log-summary "$ROUTINE_NOTE" \
-  --log-payload-json '{"routine_note":true}' \
-  --evidence-type acceptance \
-  --evidence-summary "$ACCEPTANCE_OR_KEY_FINDING" \
-  --evidence-task-id T1 \
-  --evidence-payload-json '{"acceptance_ids":["A1"]}'
-```
-
-High-impact escalation:
-
-```bash
-python3 skills/tplan/scripts/record_evidence.py "$MISSION_DIR" \
-  --event-type user_feedback \
-  --summary "$HIGH_IMPACT_SIGNAL" \
-  --task-id T1 \
-  --payload-json '{"impact":"high"}'
-
-python3 skills/tplan/scripts/make_decision_packet.py "$MISSION_DIR" \
-  --hook subtraction \
-  --output "$MISSION_DIR/decisions/subtraction-packet.json"
-
-python3 skills/tplan/scripts/apply_decision.py "$MISSION_DIR" \
-  --decision "$MISSION_DIR/decisions/subtraction-hook-output.json"
-```
+Lite startup begins with `python3 skills/tplan/scripts/init_lite.py --dir ...`.
+Routine checkpoints use `python3 skills/tplan/scripts/checkpoint.py ...`.
+High-impact escalation records evidence, runs `scripts/make_decision_packet.py`, routes
+the hook, then applies through `scripts/apply_decision.py`.
 
 If the decision cannot be safely applied, record a graceful stop with
 `scripts/stop_report.py` and keep the blocked node active for resumption.
