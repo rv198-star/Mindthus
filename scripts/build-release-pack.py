@@ -10,8 +10,19 @@ from pathlib import Path
 
 
 VERSION = "1.1.0"
-EXCLUDED_DIRS = {"__pycache__"}
-EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
+EXCLUDED_DIRS = {
+    "__pycache__",
+    ".pytest_cache",
+    ".tplan",
+    ".tvg",
+    "artifacts",
+    "logs",
+    "test",
+    "tests",
+}
+EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".pyc", ".pyo", ".tmp", ".webp"}
+EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
+JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
@@ -70,11 +81,16 @@ def copy_tree_filtered(source: Path, target: Path, replacements: dict[str, str] 
         rel = item.relative_to(source)
         if any(part in EXCLUDED_DIRS for part in rel.parts):
             continue
+        lowered = rel.as_posix().lower()
+        if any(token in lowered for token in EXCLUDED_NAME_SUBSTRINGS):
+            continue
         dest = target / rel
         if item.is_dir():
             dest.mkdir(parents=True, exist_ok=True)
             continue
         if item.suffix in EXCLUDED_SUFFIXES:
+            continue
+        if item.suffix == ".jsonl" and rel not in JSONL_ALLOWLIST:
             continue
         copy_file_filtered(item, dest, replacements)
 

@@ -369,6 +369,58 @@ class PackagingDocsTests(unittest.TestCase):
             "Mindthus SKILL.md files should stay thin; move long guidance to resources/ or docs/methodologies/",
         )
 
+    def assert_release_pack_excludes_runtime_artifacts(self, out: Path) -> None:
+        forbidden_dirs = {
+            ".git",
+            ".pytest_cache",
+            ".tplan",
+            ".tvg",
+            "__pycache__",
+            "artifacts",
+            "logs",
+            "test",
+            "tests",
+        }
+        forbidden_suffixes = {
+            ".gif",
+            ".jpeg",
+            ".jpg",
+            ".log",
+            ".mov",
+            ".mp4",
+            ".png",
+            ".pyc",
+            ".pyo",
+            ".tmp",
+            ".webp",
+        }
+        jsonl_allowlist = {
+            Path("claude-code/claude-plugin/skills/tplan/templates/evidence.jsonl"),
+            Path("codex/skills/mindthus/tplan/templates/evidence.jsonl"),
+            Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
+        }
+        jsonl_paths: set[Path] = set()
+
+        for path in out.rglob("*"):
+            rel = path.relative_to(out)
+            self.assertFalse(
+                any(part in forbidden_dirs for part in rel.parts),
+                f"release pack should not include runtime/test directory: {rel}",
+            )
+            if path.is_file():
+                self.assertNotIn(
+                    path.suffix,
+                    forbidden_suffixes,
+                    f"release pack should not include runtime artifact file: {rel}",
+                )
+                lowered = rel.as_posix().lower()
+                self.assertNotIn("ab_run", lowered)
+                self.assertNotIn("pilot", lowered)
+                if path.suffix == ".jsonl":
+                    jsonl_paths.add(rel)
+
+        self.assertEqual(jsonl_paths, jsonl_allowlist)
+
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
             parse_frontmatter_mapping(
@@ -465,6 +517,7 @@ class PackagingDocsTests(unittest.TestCase):
                 capture_output=True,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
+            self.assert_release_pack_excludes_runtime_artifacts(out)
 
             marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
             plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"
