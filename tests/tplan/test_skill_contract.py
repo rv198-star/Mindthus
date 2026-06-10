@@ -322,6 +322,34 @@ class TplanSkillContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, packet_text)
 
+    def test_continuation_authorization_has_old_vs_new_ab_acceptance_packet(self):
+        packet = REPO / "tests" / "tplan" / "continuation_authorization_old_vs_new_ab_run_2026-06-10.md"
+
+        self.assertTrue(packet.exists(), "missing continuation-authorization old-vs-new A/B packet")
+        self.assertTrue(
+            (REPO / "tests" / "tplan" / "continuation_authorization_ab_simulator.py").exists(),
+            "missing continuation-authorization scripted A/B simulator",
+        )
+
+        packet_text = packet.read_text(encoding="utf-8")
+        for phrase in (
+            "tplan Continuation Authorization Old-vs-New A/B Run Packet",
+            "be25f48",
+            "A / Pre-continuation-authorization Baseline",
+            "B / Continuation-authorization Treatment",
+            "placeholder/sample red-team anchors",
+            "continuation_authorization_ab_simulator.py",
+            "pre_continuation_authorization",
+            "continuation_authorization",
+            "authorization_latency",
+            "expensive_same_path_continue_attempts_before_gate",
+            "blocks ungated expensive same-path continuation",
+            "not proof that the whole Mission ends earlier",
+            "targeted_fix",
+            "mechanical score",
+        ):
+            self.assertIn(phrase, packet_text)
+
 
 if __name__ == "__main__":
     unittest.main()
