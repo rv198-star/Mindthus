@@ -2,7 +2,8 @@
 
 This record captures the first run of the revised shared risk context A/B experiment.
 It separates the primary Deterministic Replay result from supplemental Constrained Live
-Agent samples.
+Agent samples. A follow-up run adds the Scripted Agent Simulator layer after the live
+samples proved too noisy to score.
 
 ## Sources
 
@@ -79,6 +80,35 @@ Risk assessment used in the valid decision:
 
 Primary mechanical result: **pass**.
 
+## Scripted Agent Simulator
+
+The simulator was added after the invalid live samples to provide a stable behavior A/B
+between unit tests and live agent runs.
+
+Command pattern:
+
+```bash
+python3 tests/tplan/shared_risk_agent_simulator.py \
+  --source-root <source> \
+  --output-dir <output>
+```
+
+Simulation outputs:
+
+| Arm | runtime_profile | mechanical_score | scripted_agent_score | can publish shared risk | next gate |
+| --- | --- | ---: | ---: | --- | --- |
+| A / Old | `pre_shared_risk` | 0 | 4 | no | `health_check` as plain judgment |
+| B / New | `shared_risk` | 8 | 10 | yes | `health_check` through `risk_assessment` |
+
+New-runtime simulator evidence:
+
+- event types: `risk_context_update`, `decision_applied`, `risk_context_recovery`
+- ungated high-impact decision stderr: `decision missing field: risk_assessment`
+- `risk_assessment.next_gate`: `health_check`
+- `risk_assessment.risk_adjusted_value`: `weak`
+
+Scripted simulator result: **pass**.
+
 ## Constrained Live Agent
 
 Both live samples were invalid under the revised packet rules.
@@ -98,11 +128,15 @@ No agent behavior score should be assigned from these live samples.
 
 ## Conclusion
 
-The revised experiment succeeded at the primary layer: Deterministic Replay verifies
-that the shared risk context runtime changes the available Mission state, decision
-packet, and high-impact decision gate. The treatment blocks a high-impact decision that
-ignores active shared risk and accepts the same decision shape once `risk_assessment`
-sets `next_gate` to `health_check`.
+The revised experiment now succeeds at two stable layers:
+
+- Deterministic Replay verifies that the shared risk context runtime changes the
+  available Mission state, decision packet, and high-impact decision gate.
+- Scripted Agent Simulator verifies that the same fixed health-gate strategy produces a
+  stronger, risk-adjusted decision shape under the new runtime.
+
+The treatment blocks a high-impact decision that ignores active shared risk and accepts
+the same decision shape once `risk_assessment` sets `next_gate` to `health_check`.
 
 The supplemental live layer remains unproven in this run because both samples were
 invalid. Do not claim an agent-behavior improvement from this live attempt.

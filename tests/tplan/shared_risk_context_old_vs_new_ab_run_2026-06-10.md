@@ -1,14 +1,15 @@
 # tplan Shared Risk Context Old-vs-New A/B Run Packet - 2026-06-10
 
-This packet defines the acceptance experiment for the shared risk context change. The
-first live attempt showed that an unconstrained agent run is too noisy: the old source
-was contaminated by shared-risk design docs, the agent spent time exploring runtime
-surface, and one run was polluted by model connection retries.
+This packet defines the acceptance experiment for the shared risk context change. Two
+earlier live attempts were too noisy: one used a contaminated old source that already
+contained shared-risk design docs, and another hit model connection retries before any
+usable Mission artifacts appeared.
 
-The revised experiment therefore has two layers:
+The experiment now has three layers:
 
-- **Deterministic Replay** is the primary acceptance signal.
-- **Constrained Live Agent** is a supplemental behavior signal.
+- **Layer 1: Deterministic Replay** is the primary runtime acceptance signal.
+- **Layer 2: Scripted Agent Simulator** is the stable behavior A/B signal.
+- **Layer 3: Optional Live Pilot** is exploratory only.
 
 The goal is to validate whether the new runtime changes value assessment under shared
 failure risk, not whether an agent can discover the whole `tplan` surface from scratch.
@@ -33,7 +34,7 @@ condition before it is treated as high-value Mission progress.
 
 ## Comparator
 
-Use a clean old baseline. The previous packet used `ebd819f`, but that commit already
+Use a clean old baseline. The earlier packet used `ebd819f`, but that commit already
 contained shared-risk design and plan documents, so it was not a clean old baseline.
 
 | Arm | Source | Purpose |
@@ -54,16 +55,6 @@ If this packet is rebased, keep the semantic comparator:
 
 - old source: before any shared-risk docs or runtime support
 - new source: current shared-risk treatment source
-
-Mechanical source check before running:
-
-| Check | A / Pre-shared-risk Baseline | B / Shared-risk Treatment |
-| --- | --- | --- |
-| `docs/superpowers/specs/*shared-risk*` exists | no | yes |
-| `skills/tplan/scripts/record_risk_context.py` exists | no | yes |
-| `SKILL.md` contains `Shared Risk Context` | no | yes |
-| `resources/schema.md` contains `risk_assessment` | no | yes |
-| `templates/hook-output.json` contains `risk_assessment` | no | yes |
 
 ## Scenario
 
@@ -97,39 +88,30 @@ Policy:
 
 ## Layer 1: Deterministic Replay
 
-Deterministic Replay is the primary acceptance signal. It tests runtime affordances and
-decision gates without depending on a live agent's ability to discover scripts, survive
-network retries, or stop exploring docs.
+Deterministic Replay tests runtime affordances and decision gates without depending on
+agent discovery, network stability, or prompt-following. It answers:
 
-### A / Pre-shared-risk Baseline Replay
+> Did the new runtime make shared risk expressible and enforceable?
 
-Expected mechanical outcome:
+### Replay Checks
 
-- No `record_risk_context.py`.
-- No documented `shared_context.risk_signals`.
-- No `risk_context_update` or `risk_context_recovery` event contract.
-- No `risk_assessment` in hook output templates or validation.
-- The old source may still record a blocker or stop report, but it cannot publish a
-  scoped Mission-level shared risk signal for other execution units to consume.
+| Check | A / Old expected | B / New expected |
+| --- | --- | --- |
+| `docs/superpowers/specs/*shared-risk*` exists | no | yes |
+| `skills/tplan/scripts/record_risk_context.py` exists | no | yes |
+| `SKILL.md` contains `Shared Risk Context` | no | yes |
+| `resources/schema.md` contains `risk_assessment` | no | yes |
+| `templates/hook-output.json` contains `risk_assessment` | no | yes |
 
-Score this as a mechanical score, not an agent behavior score.
+For B, replay must also show:
 
-### B / Shared-risk Treatment Replay
-
-Required replay steps:
-
-1. Initialize a Mission with the scenario above.
-2. Record an active shared risk for `ENOSPC/sqlite/fsync` using
-   `scripts/record_risk_context.py`.
-3. Verify `mission.shared_context.risk_signals[0].status == "active"`.
-4. Verify the last evidence event is `risk_context_update`.
-5. Generate a decision packet and verify it exposes `shared_context.active_risk_signals`.
-6. Try to apply a high-impact continue/switch/stop/escalate decision without
-   `risk_assessment`; it must fail.
-7. Apply the same class of decision with `risk_assessment.next_gate = "health_check"`
-   and `risk_adjusted_value = "weak"` or `"unclear"`; it must pass shape validation.
-8. Record recovery evidence only after a health check, then resolve the risk with
-   `risk_context_recovery`.
+1. A Mission can be initialized for the scenario.
+2. `record_risk_context.py` can publish an active risk signal.
+3. `risk_context_update` appears in `evidence.jsonl`.
+4. A decision packet exposes `shared_context.active_risk_signals`.
+5. A high-impact decision without `risk_assessment` fails.
+6. The same decision shape with `risk_assessment.next_gate = "health_check"` passes.
+7. A recovery step can record `risk_context_recovery`.
 
 Required treatment fields:
 
@@ -146,13 +128,9 @@ Required treatment fields:
 ```
 
 The replay's **Risk-Adjusted Value Score** is represented by
-`risk_assessment.risk_adjusted_value`. For the unresolved shared-environment failure,
-an immediate expensive rerun should score as `weak`, `negative`, or `unclear`, not
+`risk_assessment.risk_adjusted_value`. For unresolved shared-environment failure, an
+immediate expensive rerun should score as `weak`, `negative`, or `unclear`, not
 automatically `positive`.
-
-The exact recommendation may be `continue`, `escalate`, `requires_human`, or another
-valid high-impact route. The acceptance condition is that active shared risk changes the
-decision contract and prevents ungated expensive rerun claims.
 
 ### Deterministic Replay Scoring
 
@@ -165,19 +143,83 @@ decision contract and prevents ungated expensive rerun claims.
 | High-impact decision with active risk requires `risk_assessment` | no | yes | 1 |
 | `risk_assessment` names invalid evidence risk and failure risk | no | yes | 1 |
 | `risk_adjusted_value` can lower immediate rerun value | no | yes | 1 |
-| Risk cannot be resolved without recovery evidence discipline | no | yes | 1 |
+| Risk can be recovered through `risk_context_recovery` | no | yes | 1 |
 
 Expected deterministic result:
 
 - A mechanical score: low on shared-risk mechanics by design.
 - B mechanical score: 8/8.
 
-This is the primary pass/fail check for the runtime change.
+## Layer 2: Scripted Agent Simulator
 
-## Layer 2: Constrained Live Agent
+Scripted Agent Simulator is the stable old-vs-new behavior A/B. It is not a semantic
+truth engine and it does not replace human judgment. It tests the same policy under
+old/new runtime surface by applying one fixed agent strategy:
 
-Constrained Live Agent is supplemental. It tests whether an agent naturally uses the new
-mechanism when the runtime surface is bounded enough to avoid exploration spirals.
+> Classify the failed run as invalid environment evidence, avoid handoff safety claims,
+> and route the next action to a health gate before another expensive rerun.
+
+The simulator lives at:
+
+```bash
+tests/tplan/shared_risk_agent_simulator.py
+```
+
+Run it against both source snapshots:
+
+```bash
+python3 tests/tplan/shared_risk_agent_simulator.py \
+  --source-root /tmp/tplan-shared-risk-ab-old-src \
+  --output-dir /tmp/tplan-shared-risk-ab-old-sim
+
+python3 tests/tplan/shared_risk_agent_simulator.py \
+  --source-root /tmp/tplan-shared-risk-ab-new-src \
+  --output-dir /tmp/tplan-shared-risk-ab-new-sim
+```
+
+Each run writes `simulation_result.json`.
+
+### Simulator Expected Results
+
+| Field | A / Old expected | B / New expected |
+| --- | --- | --- |
+| `runtime_profile` | `pre_shared_risk` | `shared_risk` |
+| `can_publish_shared_risk` | `false` | `true` |
+| `mechanical_score` | `0` | `8` |
+| `scripted_agent_score` | lower than treatment | `10` |
+| `next_gate` or `risk_assessment.next_gate` | `health_check` as plain judgment | `health_check` enforced through `risk_assessment` |
+
+The old simulator may still recommend a health gate through ordinary judgment, but it
+cannot publish shared Mission risk context or use the `risk_assessment` gate. The new
+simulator must record shared risk, prove the ungated decision is rejected, and pass only
+when the decision includes `risk_assessment`.
+
+### Simulator Scoring
+
+`scripted_agent_score` is the agent behavior score for this deterministic layer. It
+scores whether the fixed agent strategy produces a decision shape that can survive the
+runtime contract:
+
+- identifies invalid environment evidence
+- avoids repository-regression diagnosis by default
+- publishes Mission-level shared risk when available
+- avoids cross-unit raw task-log inspection
+- uses `risk_assessment` when supported
+- names `invalid_evidence_risk`
+- names `failure_risk`
+- lowers immediate rerun value through `risk_adjusted_value`
+- chooses `health_check` before full-chain rerun
+- does not claim handoff safety from invalid evidence
+
+This is the main A/B signal for value-assessment behavior. It is more useful than a
+unit test because it simulates a full decision path, and more stable than a live LLM
+because it removes network and exploration noise.
+
+## Layer 3: Optional Live Pilot
+
+Optional Live Pilot is exploratory. It checks whether a live agent naturally discovers
+and uses the mechanism under bounded conditions. It must not override Layer 1 or Layer
+2.
 
 ### Live Run Constraints
 
@@ -191,8 +233,6 @@ Both A and B prompts must include these constraints:
   `skills/tplan/resources/hooks.md`, and relevant script `--help` output.
 - Do not scan unrelated repository docs, plans, tests, or prior A/B packets.
 - Produce final decision artifacts within the run window.
-
-The live run tests agent behavior only. It must not replace Deterministic Replay.
 
 ### Live Prompt
 
@@ -229,7 +269,7 @@ safety unless evidence is valid.
 
 ### Invalid Sample Rules
 
-Mark a live run as an invalid sample, not as pass or fail, when any of these occur:
+Mark a live pilot as an invalid sample, not as pass or fail, when any of these occur:
 
 - model connection retries or transport fallback consume the run window
 - no inspectable Mission artifacts are produced
@@ -241,30 +281,6 @@ Mark a live run as an invalid sample, not as pass or fail, when any of these occ
 
 Invalid samples must be rerun or excluded. Do not use them to claim behavior success or
 failure.
-
-### Live Agent Behavior Scoring
-
-Score this as an agent behavior score after a valid live sample.
-
-| Behavior | Points |
-| --- | ---: |
-| Identifies the failed run as invalid evidence or shared environment risk | 1 |
-| Avoids repository-regression diagnosis by default | 1 |
-| Publishes or attempts to publish Mission-level shared risk when available | 1 |
-| Does not inspect another execution unit's raw task logs as the risk source | 1 |
-| Uses `risk_assessment` when the runtime supports it | 1 |
-| Names `invalid_evidence_risk` and `failure_risk` | 1 |
-| Lowers immediate rerun value through `risk_adjusted_value` | 1 |
-| Chooses `health_check`, `stop`, `switch`, or `escalate` before full-chain rerun | 1 |
-| Names recovery condition | 1 |
-| Does not claim handoff safety from invalid evidence | 1 |
-
-Expected live result:
-
-- A may stop or suggest a health gate through ordinary judgment, but should not publish
-  shared Mission risk context.
-- B should publish or use shared Mission risk context and should include
-  `risk_assessment`.
 
 ## Hard Failures
 
@@ -290,7 +306,7 @@ Model:
 A source:
 B source:
 
-## Deterministic Replay
+## Layer 1: Deterministic Replay
 
 | Behavior | A | B | Notes |
 | --- | --- | --- | --- |
@@ -307,7 +323,14 @@ mechanical score:
 - A:
 - B:
 
-## Constrained Live Agent
+## Layer 2: Scripted Agent Simulator
+
+| Arm | runtime_profile | mechanical_score | scripted_agent_score | Notes |
+| --- | --- | ---: | ---: | --- |
+| A / Pre-shared-risk Baseline |  |  |  |  |
+| B / Shared-risk Treatment |  |  |  |  |
+
+## Layer 3: Optional Live Pilot
 
 | Arm | Valid sample? | agent behavior score | Hard failure? | Notes |
 | --- | --- | ---: | --- | --- |
@@ -329,6 +352,7 @@ Decision:
 ## Interpretation
 
 This A/B is successful only when the conclusion names which layer supports the claim.
-Deterministic Replay can prove runtime affordance and gate behavior. Constrained Live
-Agent can show whether agents naturally use that affordance under bounded conditions.
-Do not merge these two into one vague "A/B result."
+Layer 1 proves runtime affordance and gate behavior. Layer 2 proves that the same fixed
+agent strategy produces a stronger, risk-adjusted decision shape under the new runtime.
+Layer 3 can reveal live-agent usability, but it must not be used as the core pass/fail
+signal while model/network noise dominates.
