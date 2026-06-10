@@ -629,13 +629,14 @@ class TvgContractTests(unittest.TestCase):
             "King Hu Wuxia Cinema Prompt / Storyboard Profile",
             "mode: supplied",
             "value_semantics",
+            "realization_surface",
+            "gain_policy",
             "scoped profile for cinematic prompt and storyboard image generation",
             "not a universal definition of all King Hu films",
-            "Beijing opera",
-            "dance-like combat",
-            "inn / confined-space faction choreography",
-            "widescreen compositions full of graceful character movement",
-            "delayed spectacle",
+            "Chinese opera rhythm",
+            "editing-shaped bursts",
+            "spatial intelligence",
+            "delayed action",
             "spiritual or philosophical pressure",
             "female knight-errant",
             "modern wire-fu inflation",
@@ -651,12 +652,30 @@ class TvgContractTests(unittest.TestCase):
         self.assertTrue(path.exists(), "missing King Hu wuxia value profile")
         text = path.read_text(encoding="utf-8")
         for phrase in (
-            "do not use Shaw Brothers Clear Water Bay / Movietown backlot theatricality as a King Hu proxy",
-            "do not use saturated red-blue Shaw-style hard-light spectacle as the default color logic",
-            "natural or architectural space",
-            "ruined fort, inn, courtyard, temple, bamboo, desert edge, mountain path, or village threshold",
-            "glimpse editing must be translated into partial visibility, occlusion, offscreen implication, or panel sequencing",
-            "the original snow mountain / qilin script is a story constraint, not King Hu evidence",
+            "Shaw Brothers Clear Water Bay / Movietown backlot theatricality used as a King Hu proxy",
+            "must not use saturated red-blue Shaw-style hard-light spectacle as the default color or set logic",
+            "Pollution boundary: do not use any existing expanded prompt, prior pilot record, Image2",
+            "snow mountain / qilin script as King Hu",
+            "A human prompt reference may",
+            "concrete beats must not be copied",
+            "editing must be translated into panel sequence, partial visibility, occlusion, offscreen implication",
+            "loop-assisted prompt/image success as proof that the profile itself is strong",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_king_hu_profile_uses_layered_construction_without_fixed_shot_recipe(self):
+        path = TVG / "resources" / "value-profiles" / "king-hu-wuxia-cinema.md"
+        self.assertTrue(path.exists(), "missing King Hu wuxia value profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "watcher knowledge-state shift",
+            "split when the viewer's knowledge changes, not merely when a new angle sounds cinematic",
+            "translate editing into panel sequence, partial visibility, occlusion, offscreen implication, or abrupt transition cues",
+            "use human reference prompts only to calibrate output thickness, shot granularity, and reviewable structure; abstract the lesson, do not copy the content",
+            "adding eighteen shots, push-ins, aerials, slow motion, or closeups by default",
+            "merge redundant reaction closeups that restate the same emotion without new knowledge or moral pressure",
+            "a strong single-pass profile should already steer the first prompt toward spatial setup, delay, and panel function",
+            "loop-assisted production may improve a prompt or image, but the final claim must separate profile control from runtime rescue",
         ):
             self.assertIn(phrase, text)
 

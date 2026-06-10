@@ -128,7 +128,7 @@ SubAgent 是侦察，不是控制器。
 5. 对关键 claim 记录 evidence，并说明它支撑什么判断。
 6. 遇到路径切换、任务删除、Mission 关闭或高影响继续时，输出 decision packet。
 7. 出现第三次局部处理、负反馈、加层冲动或弱 evidence-delta continuation 时，触发 Anti-Spiral gate。
-8. 准备昂贵同路径继续时，先写 `continuation_authorization`：做继续授权，而不是默认重跑。
+8. 大生成、大重跑或同一路径继续前，先写 `continuation_authorization`：下一轮必须说清会带来什么新证据，不能顺手再跑一遍。
 
 实操中，`tplan` 不需要覆盖所有任务。短小、低风险、一次性工作直接执行即可。它适合那些“如果不记录状态就会漂移”的 Mission。
 
@@ -147,7 +147,7 @@ flowchart TD
   F -->|"缺信息 / 权限 / 判断"| I["blocker / stop report<br/>停止并交还最小上下文"]
   F -->|"目标或路径存疑"| J["decision packet<br/>路由到 3L5S / SELA / EDSP / WAE / TVG"]
   F -->|"同一路径反复修补"| K["Anti-Spiral gate<br/>先刹车再判断"]
-  F -->|"昂贵同路径继续"| N["continuation_authorization<br/>继续授权 / 证据形态 / 缺陷分流"]
+  F -->|"大生成后还想继续同一路径"| N["continuation_authorization<br/>继续授权 / 证据形态 / 缺陷分流"]
 
   H --> B
   J --> B
@@ -162,7 +162,7 @@ flowchart TD
 
 ### 继续授权
 
-`continuation_authorization` 是 Linear Continuation Gate 的一部分，用来约束昂贵同路径继续，例如大生成、大重跑或后处理修补后准备再跑一轮。
+`continuation_authorization` 是 Linear Continuation Gate 的一部分。它管的是这种场景：已经做过一次成本不低的大生成、大重跑或后处理修补，下一步还想沿着同一路径再跑一轮。
 
 次数提醒只负责叫醒，不负责判停。第三次碰同一局部对象、第二次准备大重跑、大生成后出现新缺陷、连续负反馈或弱 evidence delta，只说明需要进入继续授权，不自动停止，也不自动允许重跑。
 
