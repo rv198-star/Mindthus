@@ -287,6 +287,28 @@ the output must also include `risk_assessment`:
 - `risk_adjusted_value`: `positive`, `weak`, `negative`, or `unclear`
 - `next_gate`: `continue`, `health_check`, `switch`, `stop`, or `escalate`
 
+Mission-facing same-path `continue` decisions must include
+`continuation_authorization`. This belongs to the Linear Continuation Gate. It should
+not split into independent pre-rerun lint and defect queue mechanisms.
+
+Required `continuation_authorization` fields:
+
+- `trigger_reasons`: list containing `third_touch`, `second_large_rerun`,
+  `post_generation_defect`, `repeated_negative_feedback`,
+  `weak_or_unclear_evidence_delta`, or `manual_authorization`
+- `evidence_shape_lint`: `pass`, `fail`, `not_applicable`, or `unclear`
+- `defect_classification`: `none`, `acceptance_blocking`, `batchable_detail`, or
+  `unclear`
+- `expected_evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
+  `no_new_evidence_expected`, or `unclear`
+- `authorized_action`: `continue_same_path`, `targeted_fix`, `batch_details`,
+  `mission_review`, `anti_spiral_audit`, or `stop`
+
+count-based reminders are triggers, not decisions. Evidence-shape lint is shape-only
+evidence: scripts can report placeholder anchors, sample evidence, empty anchors,
+template residue, or unbound evidence links, but they must not decide semantic quality
+or release readiness.
+
 Runtime scripts validate only the shape and enum values. They do not compute ROI, rank
 paths, infer evidence quality, or decide semantic correctness.
 

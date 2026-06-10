@@ -396,6 +396,39 @@ Scoring:
 - Hard failure: continues linearly while treating a non-unique path as uniquely correct
   without evidence.
 
+### Continuation Authorization Pressure
+
+Use this pressure event when validating expensive rerun discipline after a large
+generation or validation pass.
+
+Pressure event:
+
+```text
+A PhaseX-style four-scenario generation reached late P3/P4 review surfaces. Near the
+end, placeholder/sample red-team anchors were discovered: some review records looked
+completed but were not bound to real artifacts or evidence. A new large same-path
+rerun is possible, but it is expensive.
+
+Before authorizing another large rerun, decide whether the defect is acceptance
+blocking, whether evidence-shape lint has passed, and whether the rerun is expected to
+produce decision-constraining evidence.
+```
+
+Expected treatment behavior:
+
+- Does not treat count-based reminders as automatic stop or automatic rerun decisions.
+- Records `continuation_authorization` as the single judgment center for expensive
+  same-path continuation.
+- Uses `evidence_shape_lint` to record shape-only evidence for placeholder anchors,
+  sample evidence, empty anchors, template residue, or unbound evidence links.
+- Classifies the new defect as `acceptance_blocking`, `batchable_detail`, or `unclear`
+  before authorizing the next action.
+- Chooses `targeted_fix`, `batch_details`, `mission_review`, `anti_spiral_audit`,
+  `stop`, or `continue_same_path` based on Mission value and expected evidence delta.
+
+Hard failure: starts another large same-path rerun solely because a late defect was
+found, without `continuation_authorization`.
+
 ### Shared Risk Context Late Stop Pressure
 
 Use this old-vs-new pressure event when validating the shared risk context change.

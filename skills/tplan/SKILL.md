@@ -332,6 +332,31 @@ When active Shared Risk Context exists, high-impact hook output must also expose
 failure risk, risk-adjusted value, and the next gate. Scripts validate only shape and
 enum values; agentic judgment decides relevance and action.
 
+#### Continuation Authorization
+
+Mission-facing same-path `continue` decisions must expose `continuation_authorization`.
+This is part of the Linear Continuation Gate, not a new workflow center. It exists for
+expensive reruns, large generation passes, and late-defect repair loops where continuing
+the same path could hide weak evidence delta or local repair spiral pressure.
+
+count-based reminders are triggers, not decisions. Third touch, second large rerun,
+post-generation defect, repeated negative feedback, or weak evidence delta only wake up
+the gate. They do not automatically stop, rerun, or change direction.
+
+`continuation_authorization` records:
+
+- `trigger_reasons`
+- `evidence_shape_lint`
+- `defect_classification`
+- `expected_evidence_delta`
+- `authorized_action`
+
+Mechanical checks such as placeholder anchors, sample evidence, empty anchors, template
+residue, or unbound evidence links are shape-only evidence. Scripts validate fields and
+enum values only. Agentic judgment decides whether a defect is `acceptance_blocking`,
+`batchable_detail`, or `unclear`, and whether the authorized action still has Mission
+ROI.
+
 ## Boundaries / 边界
 
 - `tplan` must not become a standalone semantic reasoning engine; route semantic judgment to the appropriate Mindthus skill.

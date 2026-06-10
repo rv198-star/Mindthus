@@ -92,6 +92,16 @@ def valid_risk_assessment():
     }
 
 
+def valid_continuation_authorization():
+    return {
+        "trigger_reasons": ["second_large_rerun"],
+        "evidence_shape_lint": "pass",
+        "defect_classification": "acceptance_blocking",
+        "expected_evidence_delta": "new_evidence_expected",
+        "authorized_action": "continue_same_path",
+    }
+
+
 def record_active_risk(mission_dir):
     result = run_script(
         "record_risk_context.py",
@@ -380,6 +390,79 @@ class ApplyDecisionTests(unittest.TestCase):
 
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("path_assessment path_role unsupported", result.stderr)
+
+    def test_mission_aligned_continue_requires_continuation_authorization(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "Run another expensive same-path generation after late evidence defects.",
+                        "confidence": 70,
+                        "evidence_links": [],
+                        "proposed_mutations": [],
+                        "requires_human": False,
+                        "mission_alignment": "The rerun claims to advance Mission acceptance evidence.",
+                        "path_assessment": valid_path_assessment(),
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("decision missing field: continuation_authorization", result.stderr)
+
+    def test_valid_continuation_authorization_allows_mission_aligned_continue(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "Run a bounded rerun after classifying the defect as acceptance-blocking.",
+                        "confidence": 70,
+                        "evidence_links": [],
+                        "proposed_mutations": [],
+                        "requires_human": False,
+                        "mission_alignment": "The rerun can produce decision-constraining acceptance evidence.",
+                        "path_assessment": valid_path_assessment(),
+                        "continuation_authorization": valid_continuation_authorization(),
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_continuation_authorization_rejects_unsupported_enum(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            payload = {
+                "recommendation": "continue",
+                "rationale": "Run a bounded rerun after classifying the defect.",
+                "confidence": 70,
+                "evidence_links": [],
+                "proposed_mutations": [],
+                "requires_human": False,
+                "mission_alignment": "The rerun can produce decision-constraining acceptance evidence.",
+                "path_assessment": valid_path_assessment(),
+                "continuation_authorization": valid_continuation_authorization(),
+            }
+            payload["continuation_authorization"]["defect_classification"] = "minor_bug"
+            decision.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("continuation_authorization defect_classification unsupported", result.stderr)
 
     def test_low_impact_child_decision_does_not_require_path_assessment(self):
         with tempfile.TemporaryDirectory() as tmp:

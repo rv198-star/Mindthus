@@ -234,6 +234,36 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("共享风险上下文", methodology)
         self.assertIn("风险调整后的行动价值", methodology)
 
+    def test_continuation_authorization_contract_is_documented(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+        pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
+        hook = json.loads((SKILL / "templates" / "hook-output.json").read_text(encoding="utf-8"))
+
+        for phrase in (
+            "Continuation Authorization",
+            "continuation_authorization",
+            "evidence_shape_lint",
+            "defect_classification",
+            "acceptance_blocking",
+            "batchable_detail",
+            "count-based reminders are triggers, not decisions",
+            "shape-only evidence",
+        ):
+            self.assertIn(phrase, skill_text)
+            self.assertIn(phrase, resources)
+
+        self.assertIn("继续授权", methodology)
+        self.assertIn("次数提醒只负责叫醒，不负责判停", methodology)
+        self.assertIn("Continuation Authorization Pressure", pressure_text)
+        self.assertIn("placeholder/sample red-team anchors", pressure_text)
+        self.assertIn("continuation_authorization", hook)
+        self.assertIn("evidence_shape_lint", hook["continuation_authorization"])
+
     def test_shared_risk_context_has_old_vs_new_ab_acceptance_packet(self):
         pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
         packet = REPO / "tests" / "tplan" / "shared_risk_context_old_vs_new_ab_run_2026-06-10.md"

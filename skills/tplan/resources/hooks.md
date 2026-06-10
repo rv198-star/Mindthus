@@ -98,6 +98,34 @@ it can produce decision-constraining evidence.
 When weak evidence delta combines with repeated local edits or additive layering,
 route through `anti_spiral_audit` before authorizing same-path continuation.
 
+### Continuation Authorization
+
+Mission-facing same-path `continue` decisions require `continuation_authorization`.
+This keeps expensive reruns and large generation passes inside the Linear Continuation
+Gate instead of adding a separate pre-rerun workflow.
+
+```json
+{
+  "continuation_authorization": {
+    "trigger_reasons": ["second_large_rerun"],
+    "evidence_shape_lint": "pass | fail | not_applicable | unclear",
+    "defect_classification": "none | acceptance_blocking | batchable_detail | unclear",
+    "expected_evidence_delta": "new_evidence_expected | weak_evidence_expected | no_new_evidence_expected | unclear",
+    "authorized_action": "continue_same_path | targeted_fix | batch_details | mission_review | anti_spiral_audit | stop"
+  }
+}
+```
+
+count-based reminders are triggers, not decisions. A third touch, second large rerun,
+post-generation defect, repeated negative feedback, or weak evidence delta only routes
+the decision into this gate. It does not automatically stop the Mission or authorize a
+rerun.
+
+Evidence-shape lint is shape-only evidence. Scripts may flag placeholder anchors,
+sample evidence, empty anchors, template residue, or evidence links not bound to real
+artifacts. Scripts must not decide whether human review is substantively credible or
+whether release readiness is semantically true.
+
 ## Shared Risk Context Gate
 
 Shared Risk Context carries Mission-level risk signals that can change risk-adjusted
