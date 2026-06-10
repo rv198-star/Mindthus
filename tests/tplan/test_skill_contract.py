@@ -225,6 +225,27 @@ class TplanSkillContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_shared_risk_context_contract_is_documented(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Shared Risk Context",
+            "risk-adjusted value",
+            "risk_context_update",
+            "risk_assessment",
+            "execution units do not read each other's task logs",
+        ):
+            self.assertIn(phrase, skill_text)
+            self.assertIn(phrase, resources)
+
+        self.assertIn("共享风险上下文", methodology)
+        self.assertIn("风险调整后的行动价值", methodology)
+
 
 if __name__ == "__main__":
     unittest.main()

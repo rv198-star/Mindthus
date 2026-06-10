@@ -30,6 +30,12 @@ def main() -> int:
         active = survey["active_task"]["id"] if survey["active_task"] else "none"
         print(f"active_task: {active}")
         print(f"resource_sufficiency: {survey['resource_sufficiency']}")
+        shared_context = survey["shared_context"]
+        print(
+            "active_risk_signals: "
+            f"{shared_context['active_risk_signal_count']} "
+            f"highest={shared_context['highest_active_severity'] or 'none'}"
+        )
     return 0
 
 
