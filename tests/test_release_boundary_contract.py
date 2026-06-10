@@ -59,8 +59,10 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "退出理由本身是否成立",
             "跨模型小样本",
             "Mindthus v1.0 发布日志",
+            "https://github.com/rv198-star/Mindthus/blob/v1.0/docs/releases/v1.0.md",
         ):
             self.assertIn(phrase, text)
+        self.assertNotIn("](v1.0.md)", text)
 
     def test_v1_0_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
