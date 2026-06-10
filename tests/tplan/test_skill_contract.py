@@ -252,6 +252,10 @@ class TplanSkillContractTests(unittest.TestCase):
         packet_text = packet.read_text(encoding="utf-8")
         for phrase in (
             "tplan Shared Risk Context Old-vs-New A/B Run Packet",
+            "Deterministic Replay",
+            "Constrained Live Agent",
+            "clean old baseline",
+            "1c14cb6",
             "A / Pre-shared-risk Baseline",
             "B / Shared-risk Treatment",
             "record_risk_context.py",
@@ -259,6 +263,9 @@ class TplanSkillContractTests(unittest.TestCase):
             "risk_context_recovery",
             "execution units do not read each other's task logs",
             "Risk-Adjusted Value Score",
+            "invalid sample",
+            "agent behavior score",
+            "mechanical score",
         ):
             self.assertIn(phrase, packet_text)
 

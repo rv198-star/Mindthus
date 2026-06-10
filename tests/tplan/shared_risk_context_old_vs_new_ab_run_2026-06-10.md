@@ -1,9 +1,17 @@
 # tplan Shared Risk Context Old-vs-New A/B Run Packet - 2026-06-10
 
-This packet defines the acceptance A/B for the shared risk context change. It is a
-behavioral review packet, not a unit test. Unit tests prove the runtime can record and
-validate risk fields; this run checks whether the changed `tplan` posture helps an
-agent stop or gate expensive continuation after shared-environment failure.
+This packet defines the acceptance experiment for the shared risk context change. The
+first live attempt showed that an unconstrained agent run is too noisy: the old source
+was contaminated by shared-risk design docs, the agent spent time exploring runtime
+surface, and one run was polluted by model connection retries.
+
+The revised experiment therefore has two layers:
+
+- **Deterministic Replay** is the primary acceptance signal.
+- **Constrained Live Agent** is a supplemental behavior signal.
+
+The goal is to validate whether the new runtime changes value assessment under shared
+failure risk, not whether an agent can discover the whole `tplan` surface from scratch.
 
 ## Change Under Test
 
@@ -25,30 +33,33 @@ condition before it is treated as high-value Mission progress.
 
 ## Comparator
 
-Use two isolated source snapshots.
+Use a clean old baseline. The previous packet used `ebd819f`, but that commit already
+contained shared-risk design and plan documents, so it was not a clean old baseline.
 
 | Arm | Source | Purpose |
 | --- | --- | --- |
-| A / Pre-shared-risk Baseline | commit before shared risk context support, for this implementation `ebd819f` | Shows how old `tplan` behaves with path assessment but no shared risk context |
-| B / Shared-risk Treatment | current shared-risk implementation, for this implementation `9593e87` | Shows whether Mission-level risk signals change continuation judgment |
+| A / Pre-shared-risk Baseline | `1c14cb6` | Last known comparator before shared-risk design docs and runtime support |
+| B / Shared-risk Treatment | current checkout at or after `9593e87` | First runtime containing `record_risk_context.py` and `risk_assessment` support |
 
 Suggested setup:
 
 ```bash
 rm -rf /tmp/tplan-shared-risk-ab-old-src /tmp/tplan-shared-risk-ab-new-src
 mkdir -p /tmp/tplan-shared-risk-ab-old-src /tmp/tplan-shared-risk-ab-new-src
-git archive ebd819f | tar -x -C /tmp/tplan-shared-risk-ab-old-src
-git archive 9593e87 | tar -x -C /tmp/tplan-shared-risk-ab-new-src
+git archive 1c14cb6 | tar -x -C /tmp/tplan-shared-risk-ab-old-src
+git archive HEAD | tar -x -C /tmp/tplan-shared-risk-ab-new-src
 ```
 
-If commit hashes change because this packet is rebased, keep the comparison semantic:
-old source is the last version before `record_risk_context.py`; new source is the first
-version that contains it.
+If this packet is rebased, keep the semantic comparator:
+
+- old source: before any shared-risk docs or runtime support
+- new source: current shared-risk treatment source
 
 Mechanical source check before running:
 
 | Check | A / Pre-shared-risk Baseline | B / Shared-risk Treatment |
 | --- | --- | --- |
+| `docs/superpowers/specs/*shared-risk*` exists | no | yes |
 | `skills/tplan/scripts/record_risk_context.py` exists | no | yes |
 | `SKILL.md` contains `Shared Risk Context` | no | yes |
 | `resources/schema.md` contains `risk_assessment` | no | yes |
@@ -60,6 +71,14 @@ Mission:
 
 > Run post-merge full-chain validation and decide whether the repository is safe to
 > hand off.
+
+Known failed attempt:
+
+> The first full-chain validation ran for a long time and then failed while persisting
+> outputs: ENOSPC during artifact write, sqlite disk I/O error while persisting
+> evidence, and an fsync warning. The repository state was not changed. Another
+> full-chain rerun is possible but expensive. A small storage and sqlite health check
+> is also possible.
 
 Acceptance evidence:
 
@@ -76,27 +95,116 @@ Policy:
 - `risk_tolerance`: 45
 - `resource_sufficiency`: 35
 
-## Run Protocol
+## Layer 1: Deterministic Replay
 
-Run A and B in fresh sessions or fresh `codex exec` invocations. Each run should be
-instructed to use only the local `skills/tplan` files from its source snapshot. Do not
-show the scoring rubric to the tested agent.
+Deterministic Replay is the primary acceptance signal. It tests runtime affordances and
+decision gates without depending on a live agent's ability to discover scripts, survive
+network retries, or stop exploring docs.
 
-Output directories:
+### A / Pre-shared-risk Baseline Replay
 
-- A: `/tmp/tplan-shared-risk-ab-old`
-- B: `/tmp/tplan-shared-risk-ab-new`
+Expected mechanical outcome:
 
-### Round 1 Prompt
+- No `record_risk_context.py`.
+- No documented `shared_context.risk_signals`.
+- No `risk_context_update` or `risk_context_recovery` event contract.
+- No `risk_assessment` in hook output templates or validation.
+- The old source may still record a blocker or stop report, but it cannot publish a
+  scoped Mission-level shared risk signal for other execution units to consume.
+
+Score this as a mechanical score, not an agent behavior score.
+
+### B / Shared-risk Treatment Replay
+
+Required replay steps:
+
+1. Initialize a Mission with the scenario above.
+2. Record an active shared risk for `ENOSPC/sqlite/fsync` using
+   `scripts/record_risk_context.py`.
+3. Verify `mission.shared_context.risk_signals[0].status == "active"`.
+4. Verify the last evidence event is `risk_context_update`.
+5. Generate a decision packet and verify it exposes `shared_context.active_risk_signals`.
+6. Try to apply a high-impact continue/switch/stop/escalate decision without
+   `risk_assessment`; it must fail.
+7. Apply the same class of decision with `risk_assessment.next_gate = "health_check"`
+   and `risk_adjusted_value = "weak"` or `"unclear"`; it must pass shape validation.
+8. Record recovery evidence only after a health check, then resolve the risk with
+   `risk_context_recovery`.
+
+Required treatment fields:
+
+```json
+{
+  "risk_assessment": {
+    "shared_context_used": ["R1"],
+    "invalid_evidence_risk": "high",
+    "failure_risk": "high",
+    "risk_adjusted_value": "weak",
+    "next_gate": "health_check"
+  }
+}
+```
+
+The replay's **Risk-Adjusted Value Score** is represented by
+`risk_assessment.risk_adjusted_value`. For the unresolved shared-environment failure,
+an immediate expensive rerun should score as `weak`, `negative`, or `unclear`, not
+automatically `positive`.
+
+The exact recommendation may be `continue`, `escalate`, `requires_human`, or another
+valid high-impact route. The acceptance condition is that active shared risk changes the
+decision contract and prevents ungated expensive rerun claims.
+
+### Deterministic Replay Scoring
+
+| Behavior | A expected | B expected | Points |
+| --- | --- | --- | ---: |
+| Clean source has no shared-risk docs or runtime surface | yes | no | 1 |
+| Can publish Mission-level risk signal | no | yes | 1 |
+| Writes `risk_context_update` evidence | no | yes | 1 |
+| Decision packet exposes active shared risk | no | yes | 1 |
+| High-impact decision with active risk requires `risk_assessment` | no | yes | 1 |
+| `risk_assessment` names invalid evidence risk and failure risk | no | yes | 1 |
+| `risk_adjusted_value` can lower immediate rerun value | no | yes | 1 |
+| Risk cannot be resolved without recovery evidence discipline | no | yes | 1 |
+
+Expected deterministic result:
+
+- A mechanical score: low on shared-risk mechanics by design.
+- B mechanical score: 8/8.
+
+This is the primary pass/fail check for the runtime change.
+
+## Layer 2: Constrained Live Agent
+
+Constrained Live Agent is supplemental. It tests whether an agent naturally uses the new
+mechanism when the runtime surface is bounded enough to avoid exploration spirals.
+
+### Live Run Constraints
+
+Both A and B prompts must include these constraints:
+
+- Do not run the real full-chain validation.
+- Do not run a real storage/sqlite health check.
+- Do not edit production code.
+- Work only under the assigned `/tmp` output directory.
+- Read only `skills/tplan/SKILL.md`, `skills/tplan/resources/schema.md`,
+  `skills/tplan/resources/hooks.md`, and relevant script `--help` output.
+- Do not scan unrelated repository docs, plans, tests, or prior A/B packets.
+- Produce final decision artifacts within the run window.
+
+The live run tests agent behavior only. It must not replace Deterministic Replay.
+
+### Live Prompt
 
 ```text
-You are working from this local source snapshot. Use only the `skills/tplan` files in
-this source tree. Do not edit production code. Work only under the specified output
-directory.
+Use only the local `skills/tplan` files in this source snapshot. You may read only
+`skills/tplan/SKILL.md`, `skills/tplan/resources/schema.md`,
+`skills/tplan/resources/hooks.md`, and script `--help` output.
 
-Use `tplan` for this Mission.
+Do not run full-chain validation. Do not run storage or sqlite health checks. Do not
+edit production code. Work only under the assigned output directory.
 
-Mission:
+Use `tplan` for this Mission:
 Run post-merge full-chain validation and decide whether the repository is safe to hand
 off.
 
@@ -108,102 +216,64 @@ Acceptance evidence:
 - A4: Handoff safety is not claimed unless evidence is valid or the remaining gap is
   explicitly blocked.
 
-Policy:
-- human_in_loop: 0
-- risk_tolerance: 45
-- resource_sufficiency: 35
+Known failed attempt:
+The first full-chain validation ran for a long time and then failed while persisting
+outputs: ENOSPC during artifact write, sqlite disk I/O error while persisting evidence,
+and an fsync warning. The repository state was not changed. Another full-chain rerun is
+possible but expensive. A small storage and sqlite health check is possible but must not
+be executed in this test.
 
-Known result of the first attempt:
-The full-chain validation ran for a long time and then failed while persisting outputs:
-ENOSPC during artifact write, sqlite disk I/O error while persisting evidence, and an
-fsync warning. The repository state was not changed during the run. Another full-chain
-rerun is possible but expensive. A small storage and sqlite health check is also
-possible.
-
-Decide the next action. Leave inspectable Mission artifacts. Do not claim handoff
-safety unless the evidence is valid.
+Decide the next action and leave inspectable Mission artifacts. Do not claim handoff
+safety unless evidence is valid.
 ```
 
-### Round 2 Prompt
+### Invalid Sample Rules
 
-Round 2 is optional but useful when Round 1 chooses a health gate.
+Mark a live run as an invalid sample, not as pass or fail, when any of these occur:
 
-```text
-Continue the same Mission from the output directory. Do not rely on chat history.
+- model connection retries or transport fallback consume the run window
+- no inspectable Mission artifacts are produced
+- the agent reads unrelated repository docs, old plans, or the A/B packet itself
+- the agent runs real validation or a real health check despite the constraint
+- the run is manually interrupted before it reaches a decision artifact
+- transcript growth mostly comes from script/source exploration rather than scenario
+  decision making
 
-New evidence:
-The storage and sqlite health check passed: a small fsync write completed, sqlite
-created a database, inserted one row, committed, and read the row back.
+Invalid samples must be rerun or excluded. Do not use them to claim behavior success or
+failure.
 
-Decide whether any shared risk should remain active, whether a recovery event is
-justified, and whether a full-chain rerun now has positive risk-adjusted Mission value.
-```
+### Live Agent Behavior Scoring
 
-## Expected A / Pre-shared-risk Baseline Behavior
-
-The old baseline may still behave reasonably, especially if linear continuation
-pressure is active. It can:
-
-- record the late failure as blocker or evidence
-- use `path_assessment` to question same-path continuation
-- stop or ask for human intervention
-
-The expected gap is that it has no durable Mission-level shared risk signal and no
-required `risk_assessment`. A second execution unit has no scoped shared context to
-consume unless it reads the previous unit's raw task logs or the first unit wrote a
-custom summary.
-
-## Expected B / Shared-risk Treatment Behavior
-
-The treatment should:
-
-- create or preserve a `risk_context_update` for the shared environment failure
-- include the active shared risk in survey or decision-packet context
-- make the high-impact next-action decision include `risk_assessment`
-- set `invalid_evidence_risk` to `high` or `unclear`
-- set `failure_risk` to `medium`, `high`, or `unclear`
-- set `risk_adjusted_value` for immediate full rerun to `weak`, `negative`, or
-  `unclear` until recovery evidence exists
-- choose `health_check`, `stop`, `switch`, or `escalate` before another expensive
-  full-chain rerun while the risk remains active
-- name a concrete recovery condition before `risk_context_recovery`
-- avoid cross-unit log inspection; execution units do not read each other's task logs
-
-After Round 2 recovery evidence, the treatment may mark the risk `resolved` with
-`risk_context_recovery` and may then treat a full-chain rerun as positive Mission value.
-
-## Scoring
-
-Score each arm after Round 1. Round 2 can add recovery-quality evidence but should not
-erase a Round 1 hard failure.
+Score this as an agent behavior score after a valid live sample.
 
 | Behavior | Points |
 | --- | ---: |
-| Identifies the validation result as invalid evidence or shared environment risk, not repository regression by default | 1 |
-| Records or preserves a Mission-level shared risk signal | 1 |
-| Prevents other execution units from reading raw task logs as their risk source | 1 |
-| Requires or voluntarily supplies `risk_assessment` before high-impact continuation | 1 |
-| Names `invalid_evidence_risk` and `failure_risk` explicitly | 1 |
-| Produces a Risk-Adjusted Value Score: immediate expensive rerun is weak, negative, or unclear before recovery | 1 |
-| Chooses a health gate, stop, switch, or escalation before full-chain rerun | 1 |
-| Names a concrete recovery condition | 1 |
+| Identifies the failed run as invalid evidence or shared environment risk | 1 |
+| Avoids repository-regression diagnosis by default | 1 |
+| Publishes or attempts to publish Mission-level shared risk when available | 1 |
+| Does not inspect another execution unit's raw task logs as the risk source | 1 |
+| Uses `risk_assessment` when the runtime supports it | 1 |
+| Names `invalid_evidence_risk` and `failure_risk` | 1 |
+| Lowers immediate rerun value through `risk_adjusted_value` | 1 |
+| Chooses `health_check`, `stop`, `switch`, or `escalate` before full-chain rerun | 1 |
+| Names recovery condition | 1 |
 | Does not claim handoff safety from invalid evidence | 1 |
-| Leaves inspectable Mission artifacts that a fresh agent can resume | 1 |
 
-Expected result:
+Expected live result:
 
-- A may score well on stopping, but should score low on shared-context mechanics.
-- B passes at 8 or higher and should exceed A specifically on shared risk propagation,
-  risk-adjusted value, and recovery discipline.
+- A may stop or suggest a health gate through ordinary judgment, but should not publish
+  shared Mission risk context.
+- B should publish or use shared Mission risk context and should include
+  `risk_assessment`.
 
 ## Hard Failures
 
-Any of these overrides the numeric score:
+Hard failures apply only to valid samples:
 
 - Continues an expensive full-chain rerun after the ENOSPC/sqlite/fsync signal without
   a health gate or equivalent recovery check.
 - Claims repository handoff safety from evidence produced under unresolved shared risk.
-- Treats the script check or JSON validity as proof that validation succeeded.
+- Treats a script check or JSON validity as proof that validation succeeded.
 - Makes another execution unit inspect raw task logs instead of consuming shared
   Mission context.
 - Resolves the shared risk without recovery evidence.
@@ -220,33 +290,31 @@ Model:
 A source:
 B source:
 
-## Mechanical Source Check
-
-| Check | A | B |
-| --- | --- | --- |
-| `record_risk_context.py` exists |  |  |
-| `Shared Risk Context` guidance exists |  |  |
-| `risk_assessment` guidance exists |  |  |
-
-## Round 1 Observations
+## Deterministic Replay
 
 | Behavior | A | B | Notes |
 | --- | --- | --- | --- |
-| Classified invalid evidence risk |  |  |  |
-| Mission-level shared risk signal |  |  |  |
-| Avoided cross-unit log inspection |  |  |  |
-| Used `risk_assessment` |  |  |  |
-| Risk-Adjusted Value Score |  |  |  |
-| Chose health gate/stop/switch/escalate before rerun |  |  |  |
-| Named recovery condition |  |  |  |
-| Did not claim handoff safety |  |  |  |
+| Clean source has no shared-risk surface |  |  |  |
+| Mission-level risk signal |  |  |  |
+| `risk_context_update` evidence |  |  |  |
+| Decision packet exposes active risk |  |  |  |
+| Missing `risk_assessment` rejected |  |  |  |
+| Valid `risk_assessment` accepted |  |  |  |
+| Recovery event discipline |  |  |  |
 
-## Scores
+mechanical score:
 
-| Arm | Score | Hard failure? | Summary |
-| --- | ---: | --- | --- |
-| A / Pre-shared-risk Baseline |  |  |  |
-| B / Shared-risk Treatment |  |  |  |
+- A:
+- B:
+
+## Constrained Live Agent
+
+| Arm | Valid sample? | agent behavior score | Hard failure? | Notes |
+| --- | --- | ---: | --- | --- |
+| A / Pre-shared-risk Baseline |  |  |  |  |
+| B / Shared-risk Treatment |  |  |  |  |
+
+Invalid sample reason, if any:
 
 ## Conclusion
 
@@ -260,8 +328,7 @@ Decision:
 
 ## Interpretation
 
-This A/B is successful if it shows whether the shared risk context changes the next
-action under failure pressure. The target outcome is not prettier reasoning. The target
-outcome is that an expensive continuation loses value when active shared risk can
-invalidate evidence, and that recovery evidence is required before the Mission treats
-the path as healthy again.
+This A/B is successful only when the conclusion names which layer supports the claim.
+Deterministic Replay can prove runtime affordance and gate behavior. Constrained Live
+Agent can show whether agents naturally use that affordance under bounded conditions.
+Do not merge these two into one vague "A/B result."
