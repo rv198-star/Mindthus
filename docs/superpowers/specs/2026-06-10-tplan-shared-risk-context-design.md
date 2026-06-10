@@ -1,7 +1,41 @@
 # tplan Shared Risk Context Design
 
-Status: draft for user review
+Status: accepted and implemented
 Date: 2026-06-10
+Closed: 2026-06-10
+
+## Closeout
+
+Implementation and validation are complete on branch `codex/tplan-shared-risk-context`.
+
+Accepted claim:
+
+> Shared Risk Context lets `tplan` promote scoped local environment or evidence risks
+> into Mission-level context, require high-impact decisions to expose
+> `risk_assessment`, and earlier block an untrusted expensive same-path continuation.
+
+Boundary:
+
+- This proves earlier blocking of the untrusted expensive path.
+- This does not prove earlier completion or global blocking of the whole Mission.
+- Optional live-agent samples remain exploratory and were not used as the primary
+  acceptance signal.
+
+Evidence:
+
+- Runtime implementation commit: `9593e87 feat: add tplan shared risk context`
+- A/B packet commits: `4e28937`, `a03d37f`, `e3744dc`, `81446f4`, `668c8b0`
+- Deterministic Replay: B exposes shared risk context, enforces `risk_assessment`, and
+  records `risk_context_update` / `risk_context_recovery`.
+- Scripted Agent Simulator: B scores `mechanical_score=8`,
+  `scripted_agent_score=10`, and `stop_latency.expensive_rerun_attempts_before_gate=0`
+  versus A's `1`.
+- Final verification: `python3 -m unittest discover -s tests/tplan -p 'test_*.py'`
+  passed with 81 tests.
+
+GitHub issue status: no separate open GitHub issue directly matched this local
+shared-risk design; closeout is recorded in this spec and the implementation plan
+instead of closing an unrelated architecture issue.
 
 ## Goal
 
