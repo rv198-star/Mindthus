@@ -52,7 +52,7 @@ class TplanSkillContractTests(unittest.TestCase):
         size = (SKILL / "SKILL.md").stat().st_size
         self.assertLess(
             size,
-            18_000,
+            8_000,
             "SKILL.md should stay a thin discovery entrypoint; put long runtime details in resources/",
         )
 
