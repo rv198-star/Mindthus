@@ -289,13 +289,15 @@ the output must also include `risk_assessment`:
 
 Mission-facing same-path `continue` decisions must include
 `continuation_authorization`. This belongs to the Linear Continuation Gate. It should
-not split into independent pre-rerun lint and defect queue mechanisms.
+not split into independent pressure-case-specific lint, rerun, generation, or defect
+queue mechanisms.
 
 Required `continuation_authorization` fields:
 
-- `trigger_reasons`: list containing `third_touch`, `second_large_rerun`,
-  `post_generation_defect`, `repeated_negative_feedback`,
-  `weak_or_unclear_evidence_delta`, or `manual_authorization`
+- `trigger_reasons`: list containing `third_touch`, `repeated_same_path_attempt`,
+  `post_continuation_defect`, `repeated_negative_feedback`,
+  `high_cost_or_high_blast_radius_continuation`, `weak_or_unclear_evidence_delta`, or
+  `manual_authorization`
 - `evidence_shape_lint`: `pass`, `fail`, `not_applicable`, or `unclear`
 - `defect_classification`: `none`, `acceptance_blocking`, `batchable_detail`, or
   `unclear`
@@ -303,6 +305,10 @@ Required `continuation_authorization` fields:
   `no_new_evidence_expected`, or `unclear`
 - `authorized_action`: `continue_same_path`, `targeted_fix`, `batch_details`,
   `mission_review`, `anti_spiral_audit`, or `stop`
+
+Legacy compatibility: older records may still use `second_large_rerun` or
+`post_generation_defect`, but new records should use the generic same-path continuation
+reasons above.
 
 count-based reminders are triggers, not decisions. Evidence-shape lint is shape-only
 evidence: scripts can report placeholder anchors, sample evidence, empty anchors,
