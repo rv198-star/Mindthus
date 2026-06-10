@@ -71,6 +71,29 @@ RISK_ASSESSMENT_FIELDS = {
     "next_gate": {"continue", "health_check", "switch", "stop", "escalate"},
 }
 
+CONTINUATION_TRIGGER_REASONS = {
+    "third_touch",
+    "second_large_rerun",
+    "post_generation_defect",
+    "repeated_negative_feedback",
+    "weak_or_unclear_evidence_delta",
+    "manual_authorization",
+}
+
+CONTINUATION_AUTHORIZATION_FIELDS = {
+    "evidence_shape_lint": {"pass", "fail", "not_applicable", "unclear"},
+    "defect_classification": {"none", "acceptance_blocking", "batchable_detail", "unclear"},
+    "expected_evidence_delta": PATH_ASSESSMENT_FIELDS["evidence_delta"],
+    "authorized_action": {
+        "continue_same_path",
+        "targeted_fix",
+        "batch_details",
+        "mission_review",
+        "anti_spiral_audit",
+        "stop",
+    },
+}
+
 RISK_SIGNAL_SCOPES = {
     "shared_environment",
     "shared_dependency",
@@ -1238,6 +1261,53 @@ def _validate_risk_assessment(decision: dict[str, Any], active_shared_risks: lis
     return errors
 
 
+def _requires_continuation_authorization(decision: dict[str, Any]) -> bool:
+    return decision.get("recommendation") == "continue" and _requires_path_assessment(decision)
+
+
+def _validate_continuation_authorization(decision: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    required = _requires_continuation_authorization(decision)
+    if not required and "continuation_authorization" not in decision:
+        return errors
+    if "continuation_authorization" not in decision:
+        return ["decision missing field: continuation_authorization"]
+
+    authorization = decision.get("continuation_authorization")
+    if not isinstance(authorization, dict):
+        return ["continuation_authorization must be an object"]
+
+    trigger_reasons = authorization.get("trigger_reasons")
+    if "trigger_reasons" not in authorization:
+        errors.append("continuation_authorization missing field: trigger_reasons")
+    elif not isinstance(trigger_reasons, list):
+        errors.append("continuation_authorization trigger_reasons must be a list")
+    else:
+        for reason in trigger_reasons:
+            if not isinstance(reason, str):
+                errors.append("continuation_authorization trigger_reasons items must be strings")
+                break
+            if reason not in CONTINUATION_TRIGGER_REASONS:
+                allowed = ", ".join(sorted(CONTINUATION_TRIGGER_REASONS))
+                errors.append(
+                    f"continuation_authorization trigger_reasons unsupported: {reason!r}; "
+                    f"expected one of: {allowed}"
+                )
+
+    for field, allowed_values in CONTINUATION_AUTHORIZATION_FIELDS.items():
+        value = authorization.get(field)
+        if field not in authorization:
+            errors.append(f"continuation_authorization missing field: {field}")
+        elif not isinstance(value, str):
+            errors.append(f"continuation_authorization {field} must be a string")
+        elif value not in allowed_values:
+            allowed = ", ".join(sorted(allowed_values))
+            errors.append(
+                f"continuation_authorization {field} unsupported: {value!r}; expected one of: {allowed}"
+            )
+    return errors
+
+
 def _validate_hook_output_messages(
     decision: Any,
     active_shared_risks: list[dict[str, Any]] | None = None,
@@ -1289,6 +1359,7 @@ def _validate_hook_output_messages(
                     errors.append(f"{field} must be a string")
         errors.extend(_validate_path_assessment(decision))
         errors.extend(_validate_risk_assessment(decision, active_shared_risks))
+        errors.extend(_validate_continuation_authorization(decision))
     return errors
 
 

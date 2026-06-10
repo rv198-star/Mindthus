@@ -18,5 +18,12 @@
     "failure_risk": "low",
     "risk_adjusted_value": "positive",
     "next_gate": "continue"
+  },
+  "continuation_authorization": {
+    "trigger_reasons": ["manual_authorization"],
+    "evidence_shape_lint": "not_applicable",
+    "defect_classification": "none",
+    "expected_evidence_delta": "new_evidence_expected",
+    "authorized_action": "continue_same_path"
   }
 }
