@@ -23,7 +23,7 @@ It must not be replaced by a script pass, schema validation, format check, templ
 - `reviewer`:
 - `review_date`:
 - `input_version_or_run`:
-- `method_version`: `Thinking Value-Gain Methodology v0.3`
+- `method_version`: `Thinking Value-Gain Methodology v0.4`
 - `audit_scope`:
 - `audit_role`: `generator-self-audit | independent-auditor | human-reviewer`
 - `auditor_independence`: `not-required | separated-from-generator | not-separated-with-reason`

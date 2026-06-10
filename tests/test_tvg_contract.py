@@ -901,8 +901,8 @@ class TvgContractTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
 
             data = json.loads(trace.read_text(encoding="utf-8"))
-            self.assertEqual(data["schema_version"], "tvg-trace-v0.3")
-            self.assertEqual(data["method_version"], "Thinking Value-Gain Methodology v0.3")
+            self.assertEqual(data["schema_version"], "tvg-trace-v0.4")
+            self.assertEqual(data["method_version"], "Thinking Value-Gain Methodology v0.4")
             self.assertEqual(data["expected_value"]["mode"], "provisional-default")
             self.assertEqual(data["expected_value"]["target_artifact"], "Release note")
             self.assertIn(

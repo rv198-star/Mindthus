@@ -52,8 +52,8 @@ Choose this path because the alternative is slower.
 
     def test_tvg_trace_report_uses_shared_shape_evidence_language(self):
         trace = {
-            "schema_version": "tvg-trace-v0.3",
-            "method_version": "Thinking Value-Gain Methodology v0.3",
+            "schema_version": "tvg-trace-v0.4",
+            "method_version": "Thinking Value-Gain Methodology v0.4",
             "created_at": "2026-06-08T00:00:00Z",
             "updated_at": "2026-06-08T00:00:00Z",
             "module": {

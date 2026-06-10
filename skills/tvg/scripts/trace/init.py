@@ -206,8 +206,8 @@ def build_trace(args: argparse.Namespace) -> dict:
     value_profile = build_value_profile(args)
     expected_value = build_expected_value(args, value_profile)
     return {
-        "schema_version": "tvg-trace-v0.3",
-        "method_version": "Thinking Value-Gain Methodology v0.3",
+        "schema_version": "tvg-trace-v0.4",
+        "method_version": "Thinking Value-Gain Methodology v0.4",
         "created_at": now,
         "updated_at": now,
         "module": {
