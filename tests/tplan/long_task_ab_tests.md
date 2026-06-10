@@ -399,10 +399,10 @@ Scoring:
 ### Shared Risk Context Late Stop Pressure
 
 Use this old-vs-new pressure event when validating the shared risk context change.
-The main acceptance signal should be Deterministic Replay, with a Constrained Live
-Agent run only as supplemental behavior evidence. Use a clean old baseline from before
-shared-risk design docs or runtime support; for the original implementation this is
-`1c14cb6`, not `ebd819f`.
+The main acceptance signals should be Deterministic Replay and Scripted Agent
+Simulator. Optional Live Pilot runs are supplemental only. Use a clean old baseline
+from before shared-risk design docs or runtime support; for the original
+implementation this is `1c14cb6`, not `ebd819f`.
 
 Mission:
 
@@ -442,6 +442,10 @@ Expected new-treatment behavior:
 
 Scoring:
 
+- 1 point: the scripted simulator reports `runtime_profile=shared_risk` for the new
+  runtime and `runtime_profile=pre_shared_risk` for the old runtime.
+- 1 point: the scripted simulator reports higher `scripted_agent_score` for the new
+  runtime than the old runtime.
 - 1 point: publishes shared risk as Mission context instead of burying it in local
   logs.
 - 1 point: distinguishes environment-invalid evidence from product or repository
@@ -464,8 +468,9 @@ the unresolved shared risk.
 Invalid live samples should be excluded rather than scored. Examples: model connection
 retries consume the run window, the agent reads unrelated docs or the A/B packet
 itself, no Mission artifacts are produced, or the agent runs real validation/health
-checks despite the constraint. The deterministic replay remains the primary
-mechanical score; live runs only provide an agent behavior score.
+checks despite the constraint. Deterministic Replay remains the primary mechanical
+score. Scripted Agent Simulator provides the stable agent behavior score. Live runs
+only provide optional pilot evidence.
 
 ## Final Evaluation Summary Template
 

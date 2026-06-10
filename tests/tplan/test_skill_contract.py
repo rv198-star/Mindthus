@@ -261,11 +261,18 @@ class TplanSkillContractTests(unittest.TestCase):
             self.assertIn(phrase, pressure_text)
 
         self.assertTrue(packet.exists(), "missing shared-risk old-vs-new A/B packet")
+        self.assertTrue(
+            (REPO / "tests" / "tplan" / "shared_risk_agent_simulator.py").exists(),
+            "missing shared-risk scripted agent simulator",
+        )
         packet_text = packet.read_text(encoding="utf-8")
         for phrase in (
             "tplan Shared Risk Context Old-vs-New A/B Run Packet",
             "Deterministic Replay",
-            "Constrained Live Agent",
+            "Scripted Agent Simulator",
+            "Optional Live Pilot",
+            "shared_risk_agent_simulator.py",
+            "scripted_agent_score",
             "clean old baseline",
             "1c14cb6",
             "A / Pre-shared-risk Baseline",
