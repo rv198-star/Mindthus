@@ -103,7 +103,7 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("何时拿起哪把刀", readme)
         self.assertIn("可安装的判断工具箱", readme)
         self.assertIn("你可能见过这些情况", readme)
-        self.assertIn("把文本更接近某个“好”的标准", readme)
+        self.assertIn("把一段文字，迭代推向某个“好”的标准", readme)
         self.assertIn("不是季度 OKR 表", readme)
         self.assertIn("长任务执行中的动态工作流", readme)
         self.assertNotIn("实际调用时仍使用", readme)

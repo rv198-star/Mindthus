@@ -1,10 +1,10 @@
 # Mindthus / 此心
 
-Mindthus 是一套教 AI agent 在真实任务里“何时拿起哪把刀”的 skills pack。
+Mindthus 是给 AI agent 用的判断工具箱：它不急着回答，而是先判断当前任务到底是什么问题，再决定“何时拿起哪把刀”。
 
 人们常说 AI agent 缺乏人类的分析能力、决策能力和架构能力。但这可能只说对了一半：很多时候，agent 真正缺的不是“会不会思考”，而是不知道当前任务到底该用哪种思考方式。
 
-用户说“这个系统不好用”，agent 应该先改界面，还是先定义问题？两个方案都像对，agent 应该继续折中，还是先把结构推到极端？任务已经第三次修改同一个 prompt，agent 应该继续加规则，还是停下来回到上游？AI 生成的文档、代码和方案很顺，但价值不足，agent 应该怎么把它强化到真正可用？
+用户说“这个系统不好用”，agent 应该先改界面，还是先定义问题？两个方案都像对，agent 应该继续折中，还是先把结构推到极端？任务已经第三次修改同一个 prompt，agent 应该继续加规则，还是停下来回到上游？一段文字要扩成分镜提示词、一份 PRD 要变得能评审，agent 应该按什么标准迭代？
 
 Mindthus 试图把这些场景里的判断，变成 agent 能安装、调用、审查和测试的 skills。当 agent 能判断什么时候该用问题定义、结构推演、趋势取舍、主线承载、控制边界、定向价值强化或长任务运行纪律时，它的输出就不只是“生成得更像”，而是更接近真正会分析和决策。
 
@@ -47,14 +47,14 @@ Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 
 下面这些方法不是固定流水线，而是一组可按场景选择的刀。实际使用时，agent 只需要调用当前问题需要的 skill；方法页负责讲清每把刀解决什么问题、什么时候该用、什么时候不该用。
 
-- [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：旧方法仍有高手、好体验和局部优势，但新系统的成本、速度和规模化能力正在改写主战场时，用它讲清整体与局部、时机检查和长期方向。
-- [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：主线已经看见，但路径会经过对抗力量、载体脆弱性、暴露预算和触发条件时，用它产出 Path-Carrying Strategy / 主线承载方案。它要求先讲人话，回放时看推演耐久性；复杂变量关系可以用 `MPG-AQM` / 非精准量化显影辅助显影，但不替代 MPG 判断。
-- [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：用户给了一堆现象，大家都在提方案，但没人能一句话说清问题是什么时，用它讲清问题如何从混乱信号走到可执行步骤。
-- [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对、原则一落地就摇摆、命题本身可能有坑时，用它先建结构坐标，再做场景投影。
-- [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在“管事”，但没人知道流程、判断和证据各自该管什么时，用它重新划清控制边界。
-- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：AI 生成的文档、代码、方案或提示词看起来完整却价值不足时，用它把文本更接近某个“好”的标准；这个标准可以来自默认实用价值，也可以由 profile 定义。
-- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它管理目标、验收证据、任务状态和停止条件。它不是季度 OKR 表，而是长任务执行中的动态工作流：目标稳定，任务树跟着 checkpoint、evidence、blocker 和用户反馈短周期调整。
-- [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个文件、prompt、参数或任务节点已经第三次被修，下一步还想继续加层时，用它防止局部修补变成死亡螺旋。
+- [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：判断一个东西虽然局部很强，但会不会被更高效的系统长期挤到边缘。比如手工记账再熟练，也很难长期打过自动化财务系统；手工的价值还在，但主战场可能已经变了。SELA 用来讲清整体与局部、时机检查和长期方向。
+- [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：解决“看对长期方向，不等于能活着走到终点”。比如你相信 AI 是长期主线，但资金、职位或公司现金流撑不过中途波动，这个判断再对也没用。MPG 产出 Path-Carrying Strategy / 主线承载方案，关心的是怎么扛过路径，而不是只喊方向正确；输出要先讲人话，回放看推演耐久性，复杂变量可用 `MPG-AQM` / 非精准量化显影辅助显影。
+- [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：把乱问题变成真问题，再把真问题拆成能做的事。比如“项目不顺”太虚，它会先逼你分清是需求不清、资源不够、目标错了，还是执行断了；然后讲清问题如何从混乱信号走到可执行步骤。
+- [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：用在“两边好像都对”的时候。它会把关键变量推到极端，看这个问题到底是不是伪二选一。比如“要不要全面自动化”，推到极端后可能发现真正问题不是自动化与否，而是哪部分确定、哪部分还需要人判断。
+- [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：判断一件事应该由流程管、由 agent 判断，还是由证据说话。比如脚本、agent、review gate 都在“管事”，但表格打勾不能证明方案靠谱；表格能管顺序，不能替你判断真假。
+- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：把一段文字，迭代推向某个“好”的标准。它不只是润色，也不只是扩写；它会先明确这次“好”是什么意思，再围绕这个标准增强判断、厚度、结构、证据边界或输出形态。比如给它一段剧本文字和“分镜提示词要可画、可审查”的标准，TVG 会把原文一步步推成更有镜头、构图、动作和转场判断的分镜提示词。
+- [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：把一个长期目标变成会拆解、会对齐、会调整的任务运行系统。它不是季度 OKR 表，也不只是记 TODO，而是自动把 Mission 拆成任务、子任务和步骤，并持续检查每个子任务是否还服务总目标；某个地方发现的阻塞和风险，也会共享给整场任务，影响后续判断。比如发版时，测试失败、安装路径异常、包里混入日志都不是孤立小问题，tplan 会判断它们是否影响发布目标、当前子任务还值不值得继续、该拆新任务、改路、暂停还是收束。它是长任务执行中的动态工作流。
+- [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：防止 agent 陷入“再试一次”的小修小补。比如同一个文件、prompt、参数或任务节点已经第三次被修，下一步还想继续加层，它会提醒你先回头看目标、素材或判断标准是不是错了，避免局部修补变成死亡螺旋。
 
 ## 从哪里开始
 
