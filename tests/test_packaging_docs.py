@@ -26,11 +26,30 @@ def parse_frontmatter_mapping(text: str) -> dict[str, str]:
             value.startswith("'") and value.endswith("'")
         ):
             value = value[1:-1]
+        elif ": " in value:
+            raise ValueError(
+                "frontmatter values containing ': ' must be quoted for strict YAML compatibility: "
+                f"{raw_line!r}"
+            )
         parsed[key] = value
     return parsed
 
 
 class PackagingDocsTests(unittest.TestCase):
+    def assert_skill_frontmatter_is_parseable(self, path: Path) -> None:
+        text = path.read_text(encoding="utf-8")
+        self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
+        end = text.find("\n---", 4)
+        self.assertGreater(end, 0, f"{path} missing frontmatter terminator")
+        frontmatter = text[4:end]
+        try:
+            parsed = parse_frontmatter_mapping(frontmatter)
+        except ValueError as exc:
+            self.fail(f"{path} has invalid frontmatter: {exc}")
+        self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
+        self.assertIn("name", parsed, f"{path} frontmatter missing name")
+        self.assertIn("description", parsed, f"{path} frontmatter missing description")
+
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
@@ -335,18 +354,14 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_skill_frontmatter_has_required_keys(self):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
-            text = path.read_text(encoding="utf-8")
-            self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
-            end = text.find("\n---", 4)
-            self.assertGreater(end, 0, f"{path} missing frontmatter terminator")
-            frontmatter = text[4:end]
-            try:
-                parsed = parse_frontmatter_mapping(frontmatter)
-            except ValueError as exc:
-                self.fail(f"{path} has invalid frontmatter: {exc}")
-            self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
-            self.assertIn("name", parsed, f"{path} frontmatter missing name")
-            self.assertIn("description", parsed, f"{path} frontmatter missing description")
+            self.assert_skill_frontmatter_is_parseable(path)
+
+    def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
+        with self.assertRaises(ValueError):
+            parse_frontmatter_mapping(
+                "name: tplan\n"
+                "description: Use when an AI agent needs an OKR-Runtime: a Mission needs state\n"
+            )
 
     def test_codex_install_doc_names_tplan(self):
         install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")
@@ -451,6 +466,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(plugin["version"], "1.1.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
+            for path in sorted((out / "claude-code" / "claude-plugin" / "skills").glob("*/SKILL.md")):
+                self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue(
                 (out / "claude-code" / "claude-plugin" / "scripts" / "run-fidelity-judge.py").exists()
             )
@@ -472,6 +489,8 @@ class PackagingDocsTests(unittest.TestCase):
 
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists())
+            for path in sorted((out / "codex" / "skills" / "mindthus").glob("*/SKILL.md")):
+                self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "codex" / "AGENTS.md").exists())
             self.assertTrue((out / "codex" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "codex" / "docs" / "internal").exists())
@@ -496,6 +515,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists()
             )
+            for path in sorted((out / "opencode" / ".opencode" / "skills" / "mindthus").glob("*/SKILL.md")):
+                self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
             self.assertTrue((out / "opencode" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertFalse((out / "opencode" / "docs" / "internal").exists())

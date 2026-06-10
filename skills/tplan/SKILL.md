@@ -1,6 +1,6 @@
 ---
 name: tplan
-description: Use when an AI agent needs an OKR-Runtime: a Mission needs script-driven task state, acceptance evidence, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and recovery.
+description: "Use when an AI agent needs an OKR-Runtime: a Mission needs script-driven task state, acceptance evidence, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and recovery."
 ---
 
 # tplan
