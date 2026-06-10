@@ -43,10 +43,10 @@ After installation, Codex should discover:
 ## Verify
 
 ```bash
-ls -la ~/.agents/skills/mindthus
+ls -la "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 ```
 
-The path should point to `~/.codex/mindthus/skills`.
+The path should point to the checkout's `skills` directory, for example `~/.codex/mindthus/skills`.
 
 For a repository checkout in another location, pass it explicitly:
 
@@ -67,7 +67,7 @@ The symlink means updated skills are available after restart.
 ## Uninstall
 
 ```bash
-rm ~/.agents/skills/mindthus
+rm "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 ```
 
 Optionally delete the clone:

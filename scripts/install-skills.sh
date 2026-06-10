@@ -8,7 +8,7 @@ Usage:
   scripts/install-skills.sh claude [--repo DIR] [--force]
 
 Modes:
-  codex   Install Mindthus as a namespaced skills pack at ~/.agents/skills/mindthus.
+  codex   Install Mindthus as a namespaced skills pack at ${CODEX_HOME:-~/.codex}/skills/mindthus.
   claude  Link each skill into ~/.claude/skills without a namespace prefix.
 
 Options:
@@ -76,8 +76,10 @@ fi
 
 case "${mode}" in
   codex)
-    link_path "${skills_dir}" "${HOME}/.agents/skills/mindthus" "${force}"
-    echo "installed Mindthus skills pack: ${HOME}/.agents/skills/mindthus -> ${skills_dir}"
+    codex_home="${CODEX_HOME:-${HOME}/.codex}"
+    target="${codex_home}/skills/mindthus"
+    link_path "${skills_dir}" "${target}" "${force}"
+    echo "installed Mindthus skills pack: ${target} -> ${skills_dir}"
     ;;
   claude)
     for skill in "${skills_dir}"/*; do

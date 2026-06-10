@@ -79,7 +79,7 @@ Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 scripts/install-skills.sh codex --force
 ```
 
-这会创建 `~/.agents/skills/mindthus -> <repo>/skills`。重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
+这会创建 `${CODEX_HOME:-~/.codex}/skills/mindthus -> <repo>/skills`。重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
 
 ### Claude Code
 

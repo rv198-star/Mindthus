@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -348,14 +349,67 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_codex_install_doc_names_tplan(self):
         install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        script = (REPO / "scripts" / "install-skills.sh").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", install)
         self.assertIn("scripts/install-skills.sh", install)
+        for text in (install, readme, script):
+            self.assertIn("CODEX_HOME", text)
+            self.assertIn("skills/mindthus", text)
+            self.assertNotIn(".agents/skills/mindthus", text)
 
     def test_install_script_exists_and_has_valid_shell_syntax(self):
         script = REPO / "scripts" / "install-skills.sh"
         self.assertTrue(script.exists())
         result = subprocess.run(["bash", "-n", str(script)], text=True, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_codex_install_script_links_pack_under_codex_home(self):
+        script = REPO / "scripts" / "install-skills.sh"
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_dir = Path(tmp)
+            home = tmp_dir / "home"
+            codex_home = tmp_dir / "codex-home"
+            home.mkdir()
+            env = os.environ.copy()
+            env["HOME"] = str(home)
+            env["CODEX_HOME"] = str(codex_home)
+
+            result = subprocess.run(
+                ["bash", str(script), "codex", "--repo", str(REPO), "--force"],
+                text=True,
+                capture_output=True,
+                env=env,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            target = codex_home / "skills" / "mindthus"
+            self.assertTrue(target.is_symlink(), result.stdout)
+            self.assertEqual(target.resolve(), REPO / "skills")
+            self.assertTrue((target / "tplan" / "SKILL.md").exists())
+            self.assertIn(str(target), result.stdout)
+
+    def test_codex_install_script_defaults_to_home_codex_skills(self):
+        script = REPO / "scripts" / "install-skills.sh"
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "home"
+            home.mkdir()
+            env = os.environ.copy()
+            env["HOME"] = str(home)
+            env.pop("CODEX_HOME", None)
+
+            result = subprocess.run(
+                ["bash", str(script), "codex", "--repo", str(REPO), "--force"],
+                text=True,
+                capture_output=True,
+                env=env,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            target = home / ".codex" / "skills" / "mindthus"
+            self.assertTrue(target.is_symlink(), result.stdout)
+            self.assertEqual(target.resolve(), REPO / "skills")
+            self.assertTrue((target / "tplan" / "SKILL.md").exists())
 
     def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
         script = REPO / "scripts" / "build-release-pack.py"
