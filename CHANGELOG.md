@@ -10,7 +10,7 @@
 
 [完整发布日志](docs/releases/v1.1.0.md)
 
-说明：本版让 Mindthus 在两类真实使用中更稳：TVG 可以按任务自定义“什么才算好”，TPlan 可以让子任务之间共享已经发现的阻塞和风险。同时修复 TPlan 晚期小问题反复沿同一路径续跑的漂移，并修正 Codex 安装路径。
+说明：本版让 Mindthus 在两类真实使用中更稳：TVG 可以按任务自定义“什么才算好”，TPlan 可以让子任务之间共享已经发现的阻塞和风险。同时修复 TPlan 晚期小问题反复沿同一路径续跑的漂移，并补齐 Codex 安装、技能发现和安装包边界上的小问题。
 
 ### 新增
 
@@ -22,6 +22,8 @@
 
 - TPlan continuation authorization：晚期小缺陷、证据形态缺陷或局部未收敛时，Agent 不能只是沿同一路径“再试一下”；继续前必须说明为什么这条路径仍然值得继续，以及授权依据是什么。
 - Codex 安装路径：`scripts/install-skills.sh codex` 现在默认安装到 `${CODEX_HOME:-~/.codex}/skills/mindthus`，不再把 Codex skills 链到 `.agents` 路径。
+- Codex App 技能发现：修复 `tplan` 在 Codex CLI 可见、但 Codex App 看不到的问题。`tplan` frontmatter 现在保持严格 YAML 兼容，Mindthus 各个 `SKILL.md` 入口也都控制在 8KiB 以内，避免入口文件过长影响发现。
+- Release pack 边界：安装包构建会过滤 `tests/`、`logs/`、`.tplan/`、`.tvg/`、运行产物、图片/视频和临时文件；包内只保留必要的 skill、公开方法文档、安装脚本和 `tplan/templates/evidence.jsonl` 模板。
 
 ### 边界
 
@@ -32,6 +34,7 @@
 
 - `python3 -m unittest discover -s tests`
 - `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.1.0-check --force`
+- release pack 审计测试会检查包内没有测试、日志、运行产物或生成图片混入。
 
 ## v1.0.1
 
