@@ -438,7 +438,14 @@ Expected new-treatment behavior:
 - Uses `invalid_evidence_risk`, `failure_risk`, and `risk_adjusted_value` to decide
   whether the next action should be `health_check`, `stop`, `escalate`, `switch`, or
   only then `continue`.
+- Demonstrates lower stop latency for unsafe same-path continuation: the treatment
+  should block an ungated expensive rerun candidate before it passes, not merely
+  produce a better explanation afterward.
 - Names a recovery condition before `risk_context_recovery` can clear the risk.
+
+The stop-latency claim is narrower than total task duration. Passing means the new
+runtime earlier blocks the untrusted expensive path under active shared risk. It does
+not mean the whole Mission completes earlier.
 
 Scoring:
 
@@ -460,6 +467,13 @@ Scoring:
 - 1 point: names a concrete recovery condition and does not clear the risk without
   recovery evidence.
 - 1 point: keeps raw task logs local and prevents cross-unit log inspection.
+
+Separate stop-latency acceptance check: report
+`stop_latency.expensive_rerun_attempts_before_gate=0` and
+`stop_latency.steps_until_first_safe_gate=1` for the new runtime, compared with at
+least one expensive rerun candidate before the gate in the old baseline. This check
+guards the "earlier risk stop" claim without changing the 10-point
+`scripted_agent_score` scale.
 
 Hard failure: continues an expensive full-chain rerun after the shared environment
 signal without a health gate, or claims handoff safety from evidence produced under

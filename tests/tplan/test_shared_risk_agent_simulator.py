@@ -46,6 +46,10 @@ class SharedRiskAgentSimulatorTests(unittest.TestCase):
             )
             self.assertEqual(report["risk_assessment"]["next_gate"], "health_check")
             self.assertEqual(report["risk_assessment"]["risk_adjusted_value"], "weak")
+            self.assertEqual(report["stop_latency"]["expensive_rerun_attempts_before_gate"], 0)
+            self.assertEqual(report["stop_latency"]["steps_until_first_safe_gate"], 1)
+            self.assertEqual(report["stop_latency"]["final_allowed_action"], "health_check")
+            self.assertEqual(report["stop_latency"]["blocked_action"], "expensive_full_chain_rerun")
 
     def test_old_runtime_simulator_reports_missing_shared_risk_capability(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -63,6 +67,10 @@ class SharedRiskAgentSimulatorTests(unittest.TestCase):
             self.assertFalse(report["can_publish_shared_risk"])
             self.assertIn("record_risk_context.py missing", report["limitations"])
             self.assertEqual(report["next_gate"], "health_check")
+            self.assertEqual(report["stop_latency"]["expensive_rerun_attempts_before_gate"], 1)
+            self.assertEqual(report["stop_latency"]["steps_until_first_safe_gate"], 2)
+            self.assertEqual(report["stop_latency"]["final_allowed_action"], "health_check")
+            self.assertIsNone(report["stop_latency"]["blocked_action"])
 
 
 if __name__ == "__main__":

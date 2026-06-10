@@ -21,6 +21,67 @@ SCENARIO = {
 }
 
 
+def pre_shared_risk_stop_latency() -> dict[str, Any]:
+    """Model same-path continuation before a runtime risk gate exists."""
+    return {
+        "loop_model": "same_path_continuation_until_plain_judgment_gate",
+        "expensive_rerun_attempts_before_gate": 1,
+        "steps_until_first_safe_gate": 2,
+        "steps_until_stop_or_escalation": 2,
+        "invalid_evidence_claims": 0,
+        "blocked_action": None,
+        "final_allowed_action": "health_check",
+        "events": [
+            {
+                "step": 1,
+                "candidate_action": "expensive_full_chain_rerun",
+                "runtime_gate": "none",
+                "allowed": True,
+                "reason": "Old runtime has no shared risk gate, so the simulator can only rely on plain judgment.",
+            },
+            {
+                "step": 2,
+                "candidate_action": "health_check",
+                "runtime_gate": "plain_judgment",
+                "allowed": True,
+                "reason": "Plain judgment eventually chooses health_check after one costly continuation candidate.",
+            },
+        ],
+    }
+
+
+def shared_risk_stop_latency(blocked: bool) -> dict[str, Any]:
+    """Model same-path continuation after the runtime risk gate exists."""
+    return {
+        "loop_model": "active_shared_risk_blocks_ungated_continuation",
+        "expensive_rerun_attempts_before_gate": 0 if blocked else 1,
+        "steps_until_first_safe_gate": 1,
+        "steps_until_stop_or_escalation": 1,
+        "invalid_evidence_claims": 0,
+        "blocked_action": "expensive_full_chain_rerun" if blocked else None,
+        "final_allowed_action": "health_check",
+        "events": [
+            {
+                "step": 1,
+                "candidate_action": "expensive_full_chain_rerun",
+                "runtime_gate": "risk_assessment_required",
+                "allowed": not blocked,
+                "reason": (
+                    "Active shared risk requires risk_assessment before high-impact continuation; "
+                    "the ungated rerun candidate is rejected."
+                ),
+            },
+            {
+                "step": 1,
+                "candidate_action": "health_check",
+                "runtime_gate": "risk_assessment.next_gate",
+                "allowed": True,
+                "reason": "risk_assessment sets next_gate=health_check before another full-chain rerun.",
+            },
+        ],
+    }
+
+
 def script_path(source_root: Path, name: str) -> Path:
     return source_root / "skills" / "tplan" / "scripts" / name
 
@@ -56,6 +117,7 @@ def pre_shared_risk_report(source_root: Path, output_dir: Path) -> dict[str, Any
         "mechanical_score": 0,
         "scripted_agent_score": 4,
         "next_gate": "health_check",
+        "stop_latency": pre_shared_risk_stop_latency(),
         "limitations": [
             "record_risk_context.py missing",
             "mission.shared_context.risk_signals unavailable",
@@ -310,6 +372,10 @@ def shared_risk_report(source_root: Path, output_dir: Path) -> dict[str, Any]:
         risk_assessment["next_gate"] == "health_check",
         True,  # does not claim handoff safety from invalid evidence
     ]
+    missing_risk_blocked = (
+        steps["apply_missing_risk_assessment"]["returncode"] != 0
+        and steps["apply_missing_risk_assessment"]["stderr"] == "decision missing field: risk_assessment"
+    )
 
     return {
         "scenario": SCENARIO,
@@ -319,6 +385,7 @@ def shared_risk_report(source_root: Path, output_dir: Path) -> dict[str, Any]:
         "mechanical_score": sum(1 for item in mechanical_checks if item),
         "scripted_agent_score": sum(1 for item in agent_checks if item),
         "risk_assessment": risk_assessment,
+        "stop_latency": shared_risk_stop_latency(missing_risk_blocked),
         "event_types": event_types,
         "packet_shared_context": packet.get("shared_context"),
         "risk_signals": mission.get("shared_context", {}).get("risk_signals", []),

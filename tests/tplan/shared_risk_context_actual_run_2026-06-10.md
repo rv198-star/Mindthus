@@ -10,7 +10,7 @@ samples proved too noisy to score.
 | Arm | Source | Notes |
 | --- | --- | --- |
 | A / Pre-shared-risk Baseline | `1c14cb6` | Clean baseline before shared-risk design docs and runtime support |
-| B / Shared-risk Treatment | `a03d37f` | Current checkout containing shared-risk runtime and revised A/B design |
+| B / Shared-risk Treatment | current checkout after `81446f4` | Current checkout containing shared-risk runtime, revised A/B design, and stop-latency simulation |
 
 Snapshot directories:
 
@@ -100,6 +100,17 @@ Simulation outputs:
 | A / Old | `pre_shared_risk` | 0 | 4 | no | `health_check` as plain judgment |
 | B / New | `shared_risk` | 8 | 10 | yes | `health_check` through `risk_assessment` |
 
+Stop-latency outputs:
+
+| Arm | expensive_rerun_attempts_before_gate | steps_until_first_safe_gate | blocked_action | final_allowed_action |
+| --- | ---: | ---: | --- | --- |
+| A / Old | 1 | 2 | `null` | `health_check` |
+| B / New | 0 | 1 | `expensive_full_chain_rerun` | `health_check` |
+
+The stop-latency result supports the narrower claim that B earlier blocks the
+untrusted expensive path. It does not support claiming that B finishes the whole
+Mission earlier.
+
 New-runtime simulator evidence:
 
 - event types: `risk_context_update`, `decision_applied`, `risk_context_recovery`
@@ -137,6 +148,10 @@ The revised experiment now succeeds at two stable layers:
 
 The treatment blocks a high-impact decision that ignores active shared risk and accepts
 the same decision shape once `risk_assessment` sets `next_gate` to `health_check`.
+The stop-latency simulation further distinguishes the behavior: the old runtime lets
+one expensive rerun candidate pass before plain judgment reaches `health_check`, while
+the new runtime blocks that candidate before it can pass and routes to `health_check`
+at the first gate.
 
 The supplemental live layer remains unproven in this run because both samples were
 invalid. Do not claim an agent-behavior improvement from this live attempt.
