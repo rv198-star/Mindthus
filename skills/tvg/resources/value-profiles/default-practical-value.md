@@ -5,11 +5,48 @@ value_profile:
   mode: default
   name: default practical-value profile
   artifact_job: increase practical thinking value for the module's actual downstream use
+  value_semantics:
+    good_means:
+      - clearer decision / action leverage
+      - evidence honesty
+      - handoff usability
+      - risk reduction
+      - reuse without overfitting
+      - execution readiness
+    bad_means:
+      - more text without more usable judgment
+      - ornamental structure that hides thin thinking
+      - claims that exceed evidence
+    priority_order:
+      - evidence honesty and explicit constraints
+      - downstream usability
+      - decision / action leverage
+      - risk reduction and misuse prevention
+      - reuse without overfitting
+      - execution readiness
+      - value density
+    derived_axes:
+      - judgment-depth
+      - evidence-depth
+      - downstream-depth
+      - failure-depth
+      - generalization-depth
+      - anti-demo-depth
+      - execution-depth
+    evidence_basis:
+      - TVG core method definition
+    profile_veto_constraints:
+      - must not freeze if claims exceed the available evidence
+      - must not freeze if required downstream truth is hidden or left for the next user to infer
 ```
 
 ## Core
 
 This profile is the fallback when no supplied or project default profile is active.
+
+It intentionally uses only the required `value_semantics` layer. It does not define
+`realization_surface` or `gain_policy`; when those optional layers are absent, TVG
+uses the module type, downstream use, and default practical-value gain moves.
 
 It preserves TVG's ordinary value model: a module should become more useful for
 decision, action, review, reuse, handoff, and execution without becoming longer,

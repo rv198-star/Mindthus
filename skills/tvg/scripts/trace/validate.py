@@ -28,6 +28,11 @@ def require_list(value: object, path: str, errors: list[str]) -> None:
         errors.append(f"{path}: expected list")
 
 
+def require_optional_string(value: object, path: str, errors: list[str]) -> None:
+    if value is not None and not isinstance(value, str):
+        errors.append(f"{path}: expected string")
+
+
 def validate(trace: dict, schema: dict) -> list[str]:
     errors: list[str] = []
     for field in schema["required_fields"]:
@@ -39,6 +44,30 @@ def validate(trace: dict, schema: dict) -> list[str]:
         if field not in module:
             errors.append(f"missing module field: {field}")
 
+    expected_value = require_mapping(trace.get("expected_value"), "expected_value", errors)
+    for field in schema["required_expected_value_fields"]:
+        if field not in expected_value:
+            errors.append(f"missing expected_value field: {field}")
+    expected_value_mode = expected_value.get("mode")
+    if expected_value_mode not in schema["allowed_expected_value_modes"]:
+        errors.append(f"expected_value.mode: unsupported value {expected_value_mode!r}")
+    for field in (
+        "target_artifact",
+        "artifact_job",
+        "output_bias",
+        "source",
+    ):
+        if field in expected_value:
+            require_optional_string(expected_value[field], f"expected_value.{field}", errors)
+    for field in (
+        "useful_when",
+        "hard_constraints",
+        "evidence_boundary",
+        "unresolved_expected_value_items",
+    ):
+        if field in expected_value:
+            require_list(expected_value[field], f"expected_value.{field}", errors)
+
     profile = require_mapping(trace.get("value_profile"), "value_profile", errors)
     for field in schema["required_value_profile_fields"]:
         if field not in profile:
@@ -46,19 +75,77 @@ def validate(trace: dict, schema: dict) -> list[str]:
     profile_mode = profile.get("mode")
     if profile_mode not in schema["allowed_value_profile_modes"]:
         errors.append(f"value_profile.mode: unsupported value {profile_mode!r}")
+    semantics = require_mapping(profile.get("value_semantics"), "value_profile.value_semantics", errors)
     for field in (
         "good_means",
         "bad_means",
         "priority_order",
         "derived_axes",
         "evidence_basis",
+        "profile_veto_constraints",
+    ):
+        if field in semantics:
+            require_list(semantics[field], f"value_profile.value_semantics.{field}", errors)
+    for field in schema["required_value_semantics_fields"]:
+        if field not in semantics:
+            errors.append(f"missing value_profile.value_semantics field: {field}")
+    for field in (
         "prompt_self_audit_questions",
         "image_self_audit_questions",
         "source_notes",
-        "profile_veto_constraints",
     ):
         if field in profile:
             require_list(profile[field], f"value_profile.{field}", errors)
+    surface = profile.get("realization_surface")
+    if surface is not None:
+        surface = require_mapping(surface, "value_profile.realization_surface", errors)
+        require_optional_string(surface.get("artifact_role"), "value_profile.realization_surface.artifact_role", errors)
+        require_optional_string(surface.get("downstream_use"), "value_profile.realization_surface.downstream_use", errors)
+        for field in (
+            "observable_units",
+            "granularity_pressure",
+            "review_handles",
+        ):
+            if field in surface:
+                require_list(surface[field], f"value_profile.realization_surface.{field}", errors)
+    gain_policy = profile.get("gain_policy")
+    if gain_policy is not None:
+        gain_policy = require_mapping(gain_policy, "value_profile.gain_policy", errors)
+        for field in (
+            "preferred_moves",
+            "discouraged_moves",
+            "split_rules",
+            "merge_rules",
+            "density_guidance",
+        ):
+            if field in gain_policy:
+                require_list(gain_policy[field], f"value_profile.gain_policy.{field}", errors)
+
+    exit_gate = require_mapping(trace.get("exit_gate"), "exit_gate", errors)
+    for field in schema["required_exit_gate_fields"]:
+        if field not in exit_gate:
+            errors.append(f"missing exit_gate field: {field}")
+    gate_mode = exit_gate.get("mode")
+    if gate_mode not in schema["allowed_exit_gate_modes"]:
+        errors.append(f"exit_gate.mode: unsupported value {gate_mode!r}")
+    for field in (
+        "source",
+        "module_responsibility",
+        "downstream_use",
+        "next_round_positive_value_check",
+    ):
+        if field in exit_gate:
+            require_optional_string(exit_gate[field], f"exit_gate.{field}", errors)
+    for field in (
+        "hard_veto_checks",
+        "value_profile_fit_checks",
+        "downstream_use_checks",
+        "evidence_boundary_checks",
+        "exit_blockers",
+        "unresolved_gate_items",
+    ):
+        if field in exit_gate:
+            require_list(exit_gate[field], f"exit_gate.{field}", errors)
 
     value_gain = require_mapping(trace.get("value_gain"), "value_gain", errors)
     for field in schema["required_value_gain_fields"]:

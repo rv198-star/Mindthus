@@ -5,6 +5,34 @@ value_profile:
   mode: supplied
   name: King Hu wuxia cinema prompt / storyboard profile
   artifact_job: scoped profile for cinematic prompt and storyboard image generation
+  value_semantics:
+    good_means:
+      - spatial intelligence before action density
+      - delayed spectacle before action payoff
+      - Beijing opera rhythm and dance-like combat
+      - moral, political, spiritual, or philosophical pressure made visible through space and timing
+    bad_means:
+      - generic AI wuxia trailer inflation
+      - modern wire-fu inflation
+      - modern xianxia gloss
+      - Shaw-style backlot spectacle used as a King Hu proxy
+    priority_order:
+      - evidence honesty and independent source integrity
+      - spatial legibility before action density
+      - delayed spectacle before action payoff
+      - Beijing opera rhythm and moral pressure before decorative heroism
+    derived_axes:
+      - spatial-intelligence-depth
+      - delayed-spectacle-depth
+      - opera-rhythm-combat-depth
+      - moral-political-pressure-depth
+      - anti-shaw-pollution-depth
+    evidence_basis:
+      - independent King Hu source notes listed below
+    profile_veto_constraints:
+      - must not use Shaw Brothers Clear Water Bay / Movietown backlot theatricality as a King Hu proxy
+      - must not use saturated red-blue Shaw-style hard-light spectacle as the default color logic
+      - must not infer King Hu rules from an artifact being improved when that artifact may be flawed
 ```
 
 ## Scope

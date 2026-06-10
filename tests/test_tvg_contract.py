@@ -157,6 +157,9 @@ class TvgContractTests(unittest.TestCase):
         combined = skill + "\n" + method + "\n" + schema
         for phrase in (
             "value_profile",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
             "good_means",
             "bad_means",
             "priority_order",
@@ -167,7 +170,103 @@ class TvgContractTests(unittest.TestCase):
             "image_self_audit_questions",
             "source_notes",
             "scripts validate profile shape only",
-            "must not decide whether a value profile is true, complete, aesthetically successful, or sufficient for exit",
+            "must not decide whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_default_gate_resolution_is_required_before_value_gain_loop(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        schema = (TVG / "resources" / "trace-record-schema.json").read_text(encoding="utf-8")
+        guide = (TVG / "resources" / "value-profiles" / "profile-construction.md").read_text(encoding="utf-8")
+        combined = skill + "\n" + method + "\n" + public_doc + "\n" + schema + "\n" + guide
+        for phrase in (
+            "Default Gate Resolution",
+            "`provisional-default` expected_value",
+            "before the first value-gain round",
+            "module_responsibility",
+            "downstream_use",
+            "hard_veto_checks",
+            "value_profile_fit_checks",
+            "downstream_use_checks",
+            "evidence_boundary_checks",
+            "exit_blockers",
+            "next_round_positive_value_check",
+            "unresolved_gate_items",
+            "default_gate_correctness",
+            "exit_gate_success",
+            "scripts validate expected_value, profile, and exit_gate shape only",
+            "Gate is not owned by the profile",
+            "默认必须先生成一个",
+            "防止完全没说明输出期望值的运行看起来像完整运行",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_expected_value_is_agent_input_and_gate_is_internal_stop_condition(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        schema = (TVG / "resources" / "trace-record-schema.json").read_text(encoding="utf-8")
+        combined = skill + "\n" + method + "\n" + public_doc + "\n" + schema
+        for phrase in (
+            "expected_value",
+            "Expected Value Resolution",
+            "Agent input contract",
+            "target_artifact",
+            "artifact_job",
+            "useful_when",
+            "hard_constraints",
+            "evidence_boundary",
+            "output_bias",
+            "Gate is an internal stop condition compiled from expected_value",
+            "not a user-facing configuration burden",
+            "输出期望值",
+            "Gate 是 Agent 内部从输出期望值编译出来的停机条件",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_profile_construction_guide_separates_profile_power_from_runtime_rescue(self):
+        path = TVG / "resources" / "value-profiles" / "profile-construction.md"
+        self.assertTrue(path.exists(), "missing TVG value profile construction guide")
+        guide = path.read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        combined = guide + "\n" + method + "\n" + public_doc + "\n" + skill
+        for phrase in (
+            "Single-pass profile power test",
+            "Loop-assisted production test",
+            "Do not collapse these claims",
+            "A weak profile can look strong",
+            "profile_control_power",
+            "required_runtime_rounds",
+            "residual_failure_modes",
+            "runtime_rescue_cost",
+            "Treating loop-assisted artifact success as proof that the profile itself is strong",
+            "单轮弱、但多轮后结果好",
+            "运行时救场误当成 profile 本身强",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_gate_calibration_uses_storyboard_and_rpd_price_examples(self):
+        guide = (TVG / "resources" / "value-profiles" / "profile-construction.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        combined = guide + "\n" + method + "\n" + public_doc
+        for phrase in (
+            "Cross-Artifact Exit Gate",
+            "not a domain quality score",
+            "`hard veto gate`",
+            "`value-semantics fit gate`",
+            "`downstream-use gate`",
+            "`next-round positive-value gate`",
+            "Shaw storyboard prompt",
+            "RPD price-raising document",
+            "supports a more credible price justification, not that the customer will accept the higher price",
+            "RPD 文档增厚提价",
+            "不能证明客户会接受提价",
+            "避免编造 ROI、客户事实",
         ):
             self.assertIn(phrase, combined)
 
@@ -210,6 +309,28 @@ class TvgContractTests(unittest.TestCase):
                     "Independent source notes support the scoped profile; the script paragraph is not a style source.",
                     "--profile-veto-constraint",
                     "must not infer style rules from the flawed expansion sample",
+                    "--value-profile-surface-artifact-role",
+                    "director-style cinematic storyboard prompt",
+                    "--value-profile-surface-downstream-use",
+                    "image generation and storyboard review",
+                    "--value-profile-surface-observable-unit",
+                    "shot",
+                    "--value-profile-surface-observable-unit",
+                    "storyboard panel",
+                    "--value-profile-surface-granularity-pressure",
+                    "split when a physical action changes screen relation",
+                    "--value-profile-surface-review-handle",
+                    "each shot has function, picture, blocking, and source attribution",
+                    "--value-profile-gain-preferred-move",
+                    "turn implied script action into visible shot-to-shot cause and effect",
+                    "--value-profile-gain-discouraged-move",
+                    "adding camera motion without new shot function",
+                    "--value-profile-gain-split-rule",
+                    "split emotional recognition from physical response when relation changes",
+                    "--value-profile-gain-merge-rule",
+                    "merge redundant reaction closeups",
+                    "--value-profile-gain-density-guidance",
+                    "coverage-rich output is allowed only when every unit remains reviewable",
                     "--output",
                     str(trace),
                 ],
@@ -220,15 +341,27 @@ class TvgContractTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
 
             data = json.loads(trace.read_text(encoding="utf-8"))
+            expected_value = data["expected_value"]
             profile = data["value_profile"]
+            gate = data["exit_gate"]
+            semantics = profile["value_semantics"]
+            self.assertEqual(expected_value["mode"], "provisional-default")
+            self.assertEqual(expected_value["target_artifact"], "Shaw shot prompt")
+            self.assertIn("useful_when", expected_value)
+            self.assertIn("hard_constraints", expected_value)
+            self.assertIn("evidence_boundary", expected_value)
             self.assertEqual(profile["mode"], "supplied")
             self.assertEqual(profile["name"], "Shaw Brothers studio-era wuxia/fantasy")
+            self.assertEqual(gate["mode"], "provisional-default")
+            self.assertIn("value_profile_fit_checks", gate)
+            self.assertIn("downstream_consumer is not specified", gate["unresolved_gate_items"])
+            self.assertIn("freeze_granularity is not specified", gate["unresolved_gate_items"])
             self.assertEqual(
-                profile["good_means"],
+                semantics["good_means"],
                 ["set-built theatricality is expressed through composition and blocking"],
             )
-            self.assertEqual(profile["bad_means"], ["generic modern AI video prompt inflation"])
-            self.assertEqual(profile["derived_axes"], ["studio-theatricality-depth"])
+            self.assertEqual(semantics["bad_means"], ["generic modern AI video prompt inflation"])
+            self.assertEqual(semantics["derived_axes"], ["studio-theatricality-depth"])
             self.assertEqual(
                 profile["prompt_self_audit_questions"],
                 ["Does the prompt express studio-era theatricality through blocking rather than modern spectacle?"],
@@ -242,10 +375,25 @@ class TvgContractTests(unittest.TestCase):
                 ["Independent source notes support the scoped profile; the script paragraph is not a style source."],
             )
             self.assertEqual(
-                profile["profile_veto_constraints"],
+                semantics["profile_veto_constraints"],
                 ["must not infer style rules from the flawed expansion sample"],
             )
+            self.assertEqual(profile["realization_surface"]["observable_units"], ["shot", "storyboard panel"])
+            self.assertEqual(
+                profile["realization_surface"]["granularity_pressure"],
+                ["split when a physical action changes screen relation"],
+            )
+            self.assertEqual(
+                profile["gain_policy"]["preferred_moves"],
+                ["turn implied script action into visible shot-to-shot cause and effect"],
+            )
+            self.assertEqual(profile["gain_policy"]["merge_rules"], ["merge redundant reaction closeups"])
             self.assertIn("value_profile_truth", data["script_support"]["script_cannot_decide"])
+            self.assertIn("default_gate_correctness", data["script_support"]["script_cannot_decide"])
+            self.assertIn("exit_gate_success", data["script_support"]["script_cannot_decide"])
+            self.assertIn("realization_surface_fit", data["script_support"]["script_cannot_decide"])
+            self.assertIn("gain_policy_success", data["script_support"]["script_cannot_decide"])
+            self.assertIn("prompt_thickness_success", data["script_support"]["script_cannot_decide"])
             self.assertIn("aesthetic_success", data["script_support"]["script_cannot_decide"])
 
             validation = subprocess.run(
@@ -256,6 +404,48 @@ class TvgContractTests(unittest.TestCase):
             )
             self.assertEqual(validation.returncode, 0, validation.stdout + validation.stderr)
             self.assertIn("agentic audit is still required", validation.stdout)
+
+    def test_trace_default_profile_can_omit_optional_profile_layers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "minimal-profile",
+                    "--module-title",
+                    "Minimal profile",
+                    "--module-type",
+                    "methodology",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            profile = data["value_profile"]
+            self.assertIn("value_semantics", profile)
+            self.assertNotIn("realization_surface", profile)
+            self.assertNotIn("gain_policy", profile)
+            self.assertIn("good_means", profile["value_semantics"])
+            self.assertIn("profile_veto_constraints", profile["value_semantics"])
+            self.assertEqual(data["exit_gate"]["mode"], "provisional-default")
+            self.assertIn("unresolved_gate_items", data["exit_gate"])
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stdout + validation.stderr)
 
     def test_trace_validation_rejects_invalid_value_profile_shape(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -281,10 +471,23 @@ class TvgContractTests(unittest.TestCase):
             )
             data = json.loads(trace.read_text(encoding="utf-8"))
             data["value_profile"]["mode"] = "scored"
-            data["value_profile"]["good_means"] = "not-a-list"
+            data["value_profile"]["value_semantics"]["good_means"] = "not-a-list"
             data["value_profile"]["prompt_self_audit_questions"] = "not-a-list"
             data["value_profile"]["image_self_audit_questions"] = "not-a-list"
             data["value_profile"]["source_notes"] = "not-a-list"
+            data["value_profile"]["realization_surface"] = {
+                "artifact_role": ["not-a-string"],
+                "observable_units": "not-a-list",
+            }
+            data["value_profile"]["gain_policy"] = {
+                "preferred_moves": "not-a-list",
+            }
+            data["expected_value"]["mode"] = "auto-pass"
+            data["expected_value"]["useful_when"] = "not-a-list"
+            data["expected_value"]["artifact_job"] = ["not-a-string"]
+            data["exit_gate"]["mode"] = "auto-pass"
+            data["exit_gate"]["hard_veto_checks"] = "not-a-list"
+            data["exit_gate"]["next_round_positive_value_check"] = ["not-a-string"]
             trace.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
             validation = subprocess.run(
@@ -295,10 +498,19 @@ class TvgContractTests(unittest.TestCase):
             )
             self.assertEqual(validation.returncode, 1)
             self.assertIn("value_profile.mode: unsupported value 'scored'", validation.stdout)
-            self.assertIn("value_profile.good_means: expected list", validation.stdout)
+            self.assertIn("value_profile.value_semantics.good_means: expected list", validation.stdout)
             self.assertIn("value_profile.prompt_self_audit_questions: expected list", validation.stdout)
             self.assertIn("value_profile.image_self_audit_questions: expected list", validation.stdout)
             self.assertIn("value_profile.source_notes: expected list", validation.stdout)
+            self.assertIn("value_profile.realization_surface.artifact_role: expected string", validation.stdout)
+            self.assertIn("value_profile.realization_surface.observable_units: expected list", validation.stdout)
+            self.assertIn("value_profile.gain_policy.preferred_moves: expected list", validation.stdout)
+            self.assertIn("expected_value.mode: unsupported value 'auto-pass'", validation.stdout)
+            self.assertIn("expected_value.useful_when: expected list", validation.stdout)
+            self.assertIn("expected_value.artifact_job: expected string", validation.stdout)
+            self.assertIn("exit_gate.mode: unsupported value 'auto-pass'", validation.stdout)
+            self.assertIn("exit_gate.hard_veto_checks: expected list", validation.stdout)
+            self.assertIn("exit_gate.next_round_positive_value_check: expected string", validation.stdout)
 
     def test_default_practical_value_profile_resource_exists(self):
         path = TVG / "resources" / "value-profiles" / "default-practical-value.md"
@@ -307,6 +519,7 @@ class TvgContractTests(unittest.TestCase):
         for phrase in (
             "Default Practical-Value Profile",
             "mode: default",
+            "value_semantics",
             "decision / action leverage",
             "evidence honesty",
             "handoff usability",
@@ -314,6 +527,7 @@ class TvgContractTests(unittest.TestCase):
             "reuse without overfitting",
             "execution readiness",
             "This profile is the fallback when no supplied or project default profile is active.",
+            "It intentionally uses only the required `value_semantics` layer.",
         ):
             self.assertIn(phrase, text)
 
@@ -324,6 +538,9 @@ class TvgContractTests(unittest.TestCase):
         for phrase in (
             "Shaw Brothers Studio-Era Wuxia / Fantasy Cinematic Prompt Profile",
             "mode: supplied",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
             "profile source must be independent from the artifact being improved",
             "do not infer Shaw Brothers rules from the flawed expansion sample",
             "studio-era / backlot / set-built theatricality",
@@ -340,8 +557,35 @@ class TvgContractTests(unittest.TestCase):
             "not a universal definition of all Shaw Brothers films",
             "Clear Water Bay",
             "independent source notes",
+            "director-style cinematic storyboard prompt",
+            "observable_units",
+            "split when a physical action changes screen relation",
+            "coverage-rich output is allowed only when every added unit remains reviewable",
+            "Director-style prompt references may calibrate thickness, shot granularity, and",
+            "must not be treated as evidence for Shaw Brothers",
         ):
             self.assertIn(phrase, text)
+
+    def test_shaw_layered_profile_does_not_embed_case_specific_story_objects(self):
+        path = TVG / "resources" / "value-profiles" / "shaw-brothers-wuxia-fantasy.md"
+        self.assertTrue(path.exists(), "missing Shaw Brothers wuxia/fantasy value profile")
+        text = path.read_text(encoding="utf-8")
+        forbidden_case_terms = (
+            "Daoist",
+            "old Daoist",
+            "qilin",
+            "snow mountain",
+            "blood trace",
+            "licking",
+            "final touch",
+            "老道",
+            "麒麟",
+            "雪山",
+            "血痕",
+            "舔舐",
+        )
+        for term in forbidden_case_terms:
+            self.assertNotIn(term, text)
 
     def test_shaw_value_profile_pilot_record_contains_storyboard_and_image_audit(self):
         path = REPO / "tests" / "tvg_value_profile_shaw_pilot_clean_room_2026-06-10.md"
@@ -374,6 +618,96 @@ class TvgContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
         self.assertNotIn("shot_count_decision: preset", text)
 
+    def test_shaw_layered_profile_thick_prompt_pilot_exists_and_names_claim_ceiling(self):
+        path = REPO / "tests" / "tvg_value_profile_shaw_layered_thick_prompt_pilot_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing Shaw layered-profile thick prompt pilot")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Layered Value Profile Pilot: Shaw Thick Storyboard Prompt",
+            "profile_shape: `value_semantics` + optional `realization_surface` + optional `gain_policy`",
+            "human_reference_status: user-provided comparison target, not a clean-room source",
+            "human_reference_scope: thickness, detail level, shot breakdown, camera/blocking specificity, and transition craft only; not Shaw aesthetic evidence",
+            "shot_count_decision: 18 shots",
+            "Generated Thick Storyboard Prompt",
+            "Shot 18",
+            "source attribution",
+            "value_semantics_result",
+            "realization_surface_result",
+            "gain_policy_result",
+            "Comparison To Human Prompt Target",
+            "do not compare Shaw aesthetic correctness because the human prompt does not supply Shaw aesthetic criteria",
+            "cannot prove independent human-level generation",
+            "Claim Ceiling",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shaw_layered_profile_self_iteration_rejects_prompt_copying(self):
+        path = REPO / "tests" / "tvg_value_profile_shaw_layered_profile_self_iteration_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing Shaw layered-profile self-iteration record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Shaw Layered Profile Self-Iteration",
+            "anti-overfit_rule",
+            "human_reference_use: evaluation pressure for thickness and storyboard technique only",
+            "human_reference_non_source: the human prompt does not provide Shaw aesthetic evidence",
+            "Round 0: Baseline After First Layered Profile",
+            "Round 1: Remove Script-Specific Leakage",
+            "Round 2: Strengthen General Thickness Controls",
+            "Round 3: Shaw Case Re-Test After Generalization",
+            "Rejected from profile",
+            "the specific old Daoist / qilin story objects",
+            "the human prompt's fixed camera list",
+            "the human prompt as Shaw aesthetic evidence",
+            "exact 18-shot count as a universal rule",
+            "claim_supported",
+            "claim_not_supported",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_shaw_5round_image_iteration_record_and_artifacts_exist(self):
+        path = REPO / "tests" / "tvg_value_profile_shaw_5round_image_iteration_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing Shaw 5-round image iteration record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Shaw Layered Profile 5-Round Image Iteration",
+            "modify profile -> generate prompt -> generate image -> self-audit -> repair",
+            "human_reference_scope: thickness and storyboard technique only; not Shaw aesthetic evidence",
+            "Preflight Safety Note",
+            "Round 1",
+            "Round 2",
+            "Round 3",
+            "Round 4",
+            "Round 5",
+            "best_image: `tests/artifacts/tvg_shaw_layered_5round_pass5.png`",
+            "claim_supported",
+            "claim_not_supported",
+            "does not prove the profile can reliably produce historically accurate Shaw-style frames",
+        ):
+            self.assertIn(phrase, text)
+        for index in range(1, 6):
+            image_path = REPO / "tests" / "artifacts" / f"tvg_shaw_layered_5round_pass{index}.png"
+            self.assertTrue(image_path.exists(), f"missing Shaw 5-round image artifact {index}")
+
+    def test_shaw_standard_profile_prompt_loop_records_round_count(self):
+        path = REPO / "tests" / "tvg_shaw_standard_profile_prompt_loop_2026-06-10.md"
+        self.assertTrue(path.exists(), "missing Shaw standard profile-guided prompt loop record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "TVG Standard Profile-Guided Prompt Loop",
+            "run_type: loop-assisted production test",
+            "profile_status: fixed for this run",
+            "allowed_changes: prompt only",
+            "blocked_changes: no profile changes",
+            "gate_result: return-remediate",
+            "gate_result: freeze-with-review-bound-warning",
+            "rounds_used: 2",
+            "remediation_rounds: 1",
+            "single-pass_result: partial",
+            "loop-assisted_result: usable prompt with review-bound warning",
+            "does not prove one-pass profile control",
+        ):
+            self.assertIn(phrase, text)
+
     def test_king_hu_wuxia_profile_resource_exists_and_is_scoped(self):
         path = TVG / "resources" / "value-profiles" / "king-hu-wuxia-cinema.md"
         self.assertTrue(path.exists(), "missing King Hu wuxia value profile")
@@ -381,6 +715,7 @@ class TvgContractTests(unittest.TestCase):
         for phrase in (
             "King Hu Wuxia Cinema Prompt / Storyboard Profile",
             "mode: supplied",
+            "value_semantics",
             "scoped profile for cinematic prompt and storyboard image generation",
             "not a universal definition of all King Hu films",
             "Beijing opera",
@@ -674,14 +1009,28 @@ class TvgContractTests(unittest.TestCase):
             data = json.loads(trace.read_text(encoding="utf-8"))
             self.assertEqual(data["schema_version"], "tvg-trace-v0.3")
             self.assertEqual(data["method_version"], "Thinking Value-Gain Methodology v0.3")
+            self.assertEqual(data["expected_value"]["mode"], "provisional-default")
+            self.assertEqual(data["expected_value"]["target_artifact"], "Release note")
+            self.assertIn(
+                "must not claim production readiness without runtime proof",
+                data["expected_value"]["hard_constraints"],
+            )
             self.assertEqual(
                 data["value_gain"]["veto_constraints"],
                 ["must not claim production readiness without runtime proof"],
+            )
+            self.assertEqual(data["exit_gate"]["mode"], "provisional-default")
+            self.assertEqual(data["exit_gate"]["downstream_use"], "release reviewer")
+            self.assertEqual(data["exit_gate"]["module_responsibility"], "review")
+            self.assertIn(
+                "must not claim production readiness without runtime proof",
+                data["exit_gate"]["hard_veto_checks"],
             )
             self.assertIn("audit_role", data["agentic_exit_audit"])
             self.assertIn("auditor_independence", data["agentic_exit_audit"])
             self.assertIn("veto_constraint_result", data["agentic_exit_audit"])
             self.assertIn("veto_constraints", data["script_support"]["script_cannot_decide"])
+            self.assertIn("exit_gate_success", data["script_support"]["script_cannot_decide"])
             self.assertIn(
                 "auditor_independence_requirement",
                 data["script_support"]["script_cannot_decide"],

@@ -70,6 +70,77 @@ TVG 可以接受 `value_profile`，也就是价值定义包。它的作用不是
 profile。比如影视提示词、品牌文案、法律审查、教学材料、投资备忘录，都可能需要
 不同的优劣定义。
 
+Profile 对用户仍然是一个入口，但内部可以分层：
+
+- `value_semantics`：必需的最小层。说明什么算高价值、什么算伪增益、优先级、
+  证据基础和 profile-specific veto constraints。
+- `realization_surface`：可选高级层。说明价值应该在哪些可检查单位里显现，例如
+  分镜的 shot / panel、工程设计的 behavior path / interface contract、策略 memo
+  的 decision fork / trigger。
+- `gain_policy`：可选高级层。说明哪些深化动作更可能产生真实 value gain，哪些动作
+  看似努力但只是低价值增厚。它不是评分器，也不是 RL reward model。
+
+允许一个 profile 只有 `value_semantics`。缺少 `realization_surface` 时，TVG 用模块类型
+和下游用途判断价值显现面；缺少 `gain_policy` 时，TVG 回到默认增益动作：证据绑定、
+替代方案和取舍、失败路径、claim ceiling、交接可用性和价值密度。
+
+构建 profile 时要区分两个测试：
+
+- `single-pass profile power test`：固定 profile，只生成一次，不允许 TVG 多轮补救。
+  它看的是 profile 本身有多少控制力。
+- `loop-assisted production test`：允许 TVG 按 loop + Gate 多轮返修。它看的是最终能否
+  产出可用结果，以及需要多少轮运行成本。
+
+这两个 claim 不能混。如果单轮弱、但多轮后结果好，说明 TVG runtime 会补救，不等于
+profile 已经成熟。未来 profile 构建要记录 `profile_control_power`、`required_runtime_rounds`
+和 `residual_failure_modes`，避免把运行时救场误当成 profile 本身强。
+
+TVG 给 Agent 使用时，默认输入不应该是一个让人填写的 Gate，而应该是
+`expected_value`，也就是输出期望值：
+
+- `target_artifact`：要改的片段、模块或产物。
+- `artifact_job`：这个产物要帮谁完成什么评审、决策、实现、生成或交接。
+- `useful_when`：输出达到什么状态才算真的有用。
+- `hard_constraints`：不能违反什么用户约束、安全边界、veto constraints 或事实边界。
+- `evidence_boundary`：哪些不能编，哪些只能标成假设或待确认。
+- `output_bias`：最终表达要更浓缩、平衡，还是保留覆盖厚度。
+
+Gate 是 Agent 内部从输出期望值编译出来的停机条件，不是给用户增加的配置负担。
+这样兼容以前的 TVG 用法：以前其实也是先判断“这个产物要对下游产生什么价值”，只是没有
+把这一步命名和记录得足够明确。
+
+Gate 也不能只按影视提示词来理解。更通用的 Gate 应该同时能解释邵氏分镜和
+RPD 文档增厚提价这两类不同任务：
+
+- `hard veto gate`：证据诚实、claim ceiling、用户约束、安全边界、veto constraints
+  不能被 profile 或更好的表达覆盖。
+- `value-semantics fit gate`：产物是否体现当前 profile 或默认实用价值，而不是只变长。
+- `downstream-use gate`：下游是否能行动、评审、决策、生成、交接，不需要补发明关键事实。
+- `next-round positive-value gate`：下一轮是否有明确正价值假设；如果只是更顺、更厚、更像格式，
+  就不应该继续 loop。
+
+在邵氏分镜里，Gate 可以问：是否保留剧本事实、避开现代仙侠 / CG 奇观 / generic AI video
+prompt inflation、是否有可评审 shot / panel 单位、是否足够支持下一步生图或分镜评审。
+
+在 RPD 文档增厚提价里，Gate 要问的不是“文档有没有更厚”，而是：提价是否被连接到买方结果、
+范围、证据或假设、替代方案、风险归属、实施路径和买方决策；是否避免编造 ROI、客户事实、
+竞品事实、授权关系或付费意愿。这里的证据上限是：TVG 可以支持“这份文档更能支撑提价论证”，
+不能证明客户会接受提价。
+
+如果用户或 workflow 没有显式说明输出期望值，TVG 不能直接进入“加深”。默认必须先生成一个
+`provisional-default` expected_value，然后由 Agent 内部编译出 `exit_gate`：
+
+- 来自 TVG 固定底线：证据诚实、claim ceiling、用户约束、安全边界、veto constraints、
+  不让下游补发明关键事实。
+- 来自当前模块：它负责什么、冻结粒度是什么。
+- 来自下游用途：谁要读、用来评审、决策、实现、生成还是交接。
+- 来自 active profile：默认 practical-value profile，或用户提供的 supplied profile。
+- 来自下一轮正价值条件：下一轮必须有明确 value-gain 假设，不能只是更顺、更厚、更像格式。
+
+这个默认输出期望值和内部 Gate 都是 agentic runtime judgment，不是脚本评分。脚本最多记录和
+校验 `expected_value` / `exit_gate` 形状，防止完全没说明输出期望值的运行看起来像完整运行；
+脚本不能判断输出期望值正确、Gate 成功或是否可以 exit。
+
 `Value Profile Resolution` 的顺序是：
 
 1. 用户明确提供时，使用 `mode: supplied`。
