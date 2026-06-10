@@ -10,13 +10,36 @@
 
 ---
 
+## Closeout
+
+Status: accepted and implemented on 2026-06-10.
+
+Implementation commits:
+
+- `9593e87 feat: add tplan shared risk context`
+- `4e28937 test: add tplan shared risk ab packet`
+- `a03d37f test: refine tplan shared risk ab design`
+- `e3744dc test: record tplan shared risk ab run`
+- `81446f4 test: add tplan shared risk agent simulator`
+- `668c8b0 test: add tplan shared risk stop latency simulation`
+
+Acceptance judgment:
+
+- The original runtime acceptance criteria are implemented.
+- The A/B was accepted on the narrower, stronger claim that B earlier blocks the
+  untrusted expensive path, not that B earlier completes the whole Mission.
+- Final verification: `python3 -m unittest discover -s tests/tplan -p 'test_*.py'`
+  passed with 81 tests.
+- No separate open GitHub issue directly matched this local plan, so this plan and its
+  paired design spec carry the issue closeout record.
+
 ### Task 1: Shared Risk Schema Validation
 
 **Files:**
 - Modify: `tests/tplan/test_shared_risk_context.py`
 - Modify: `skills/tplan/scripts/tplan_runtime.py`
 
-- [ ] **Step 1: Write failing schema tests**
+- [x] **Step 1: Write failing schema tests**
 
 Create `tests/tplan/test_shared_risk_context.py` with helpers that initialize a Mission, manually add `shared_context.risk_signals`, and assert:
 
@@ -49,7 +72,7 @@ def test_check_mission_accepts_valid_shared_risk_context(self):
 
 Add a second test that sets `"severity": "severe"` and expects `risk signal R1 severity unsupported`.
 
-- [ ] **Step 2: Run schema tests and verify RED**
+- [x] **Step 2: Run schema tests and verify RED**
 
 Run:
 
@@ -59,7 +82,7 @@ python3 -m unittest tests.tplan.test_shared_risk_context -v
 
 Expected: fail because current validation ignores or does not validate shared risk context.
 
-- [ ] **Step 3: Implement shared risk validation helpers**
+- [x] **Step 3: Implement shared risk validation helpers**
 
 In `skills/tplan/scripts/tplan_runtime.py`, add enum constants and validation helpers:
 
@@ -80,7 +103,7 @@ Validate optional top-level `shared_context` when present:
 - `source_task_id` must reference an existing task
 - duplicate risk ids are rejected
 
-- [ ] **Step 4: Run schema tests and verify GREEN**
+- [x] **Step 4: Run schema tests and verify GREEN**
 
 Run:
 
@@ -97,7 +120,7 @@ Expected: schema tests pass.
 - Create: `skills/tplan/scripts/record_risk_context.py`
 - Modify: `skills/tplan/scripts/tplan_runtime.py`
 
-- [ ] **Step 1: Write failing record/resolve tests**
+- [x] **Step 1: Write failing record/resolve tests**
 
 Add tests that call:
 
@@ -131,7 +154,7 @@ python3 skills/tplan/scripts/record_risk_context.py <mission_dir> resolve \
 
 Assert that `R1.status == "resolved"` and a `risk_context_recovery` event was appended.
 
-- [ ] **Step 2: Run record/resolve tests and verify RED**
+- [x] **Step 2: Run record/resolve tests and verify RED**
 
 Run:
 
@@ -141,7 +164,7 @@ python3 -m unittest tests.tplan.test_shared_risk_context -v
 
 Expected: fail because `record_risk_context.py` does not exist.
 
-- [ ] **Step 3: Implement runtime helpers and CLI**
+- [x] **Step 3: Implement runtime helpers and CLI**
 
 In `tplan_runtime.py`, add:
 
@@ -152,7 +175,7 @@ In `tplan_runtime.py`, add:
 
 Create `skills/tplan/scripts/record_risk_context.py` with `record` and `resolve` subcommands. The script should print the recorded risk id and evidence id in plain mode and JSON in `--json` mode.
 
-- [ ] **Step 4: Run record/resolve tests and verify GREEN**
+- [x] **Step 4: Run record/resolve tests and verify GREEN**
 
 Run:
 
@@ -170,7 +193,7 @@ Expected: tests pass.
 - Modify: `skills/tplan/scripts/tplan_runtime.py`
 - Modify: `skills/tplan/scripts/survey.py`
 
-- [ ] **Step 1: Write failing survey/packet tests**
+- [x] **Step 1: Write failing survey/packet tests**
 
 Add assertions that after recording `R1`:
 
@@ -178,7 +201,7 @@ Add assertions that after recording `R1`:
 - `survey.py --json` includes `shared_context.highest_active_severity == "high"`
 - decision packet includes `shared_context.active_risk_signals[0].id == "R1"`
 
-- [ ] **Step 2: Run survey/packet tests and verify RED**
+- [x] **Step 2: Run survey/packet tests and verify RED**
 
 Run:
 
@@ -188,7 +211,7 @@ python3 -m unittest tests.tplan.test_shared_risk_context tests.tplan.test_survey
 
 Expected: fail because survey and packet do not expose shared context.
 
-- [ ] **Step 3: Implement survey and packet exposure**
+- [x] **Step 3: Implement survey and packet exposure**
 
 Update `build_survey()` and `build_decision_packet()` to include:
 
@@ -205,7 +228,7 @@ Update `build_survey()` and `build_decision_packet()` to include:
 
 Update `survey.py` plain output with compact active risk count and highest severity.
 
-- [ ] **Step 4: Run survey/packet tests and verify GREEN**
+- [x] **Step 4: Run survey/packet tests and verify GREEN**
 
 Run:
 
@@ -222,7 +245,7 @@ Expected: tests pass.
 - Modify: `skills/tplan/scripts/tplan_runtime.py`
 - Modify: `skills/tplan/templates/hook-output.json`
 
-- [ ] **Step 1: Write failing hook validation tests**
+- [x] **Step 1: Write failing hook validation tests**
 
 Add tests that create an active shared risk signal and assert:
 
@@ -231,7 +254,7 @@ Add tests that create an active shared risk signal and assert:
 - valid `risk_assessment` passes
 - low-impact parent-aligned child decision still passes without `risk_assessment`
 
-- [ ] **Step 2: Run hook tests and verify RED**
+- [x] **Step 2: Run hook tests and verify RED**
 
 Run:
 
@@ -241,7 +264,7 @@ python3 -m unittest tests.tplan.test_apply_decision -v
 
 Expected: fail because hook validation does not know active shared risks.
 
-- [ ] **Step 3: Implement risk assessment validation**
+- [x] **Step 3: Implement risk assessment validation**
 
 Add `RISK_ASSESSMENT_FIELDS` enums and update `validate_hook_output(decision, active_risk_signals=None)`.
 
@@ -249,11 +272,11 @@ In `apply_decision()`, read active risk signals from the Mission and pass them t
 
 Require `risk_assessment` only when active shared risks exist and the decision is high-impact or otherwise requires `path_assessment`.
 
-- [ ] **Step 4: Update hook output template**
+- [x] **Step 4: Update hook output template**
 
 Add a valid `risk_assessment` object to `skills/tplan/templates/hook-output.json`.
 
-- [ ] **Step 5: Run hook tests and verify GREEN**
+- [x] **Step 5: Run hook tests and verify GREEN**
 
 Run:
 
@@ -272,7 +295,7 @@ Expected: hook tests pass.
 - Modify: `skills/tplan/resources/hooks.md`
 - Modify: `docs/methodologies/tplan.md`
 
-- [ ] **Step 1: Write failing contract assertions**
+- [x] **Step 1: Write failing contract assertions**
 
 Extend `test_skill_contract.py` to require phrases:
 
@@ -282,7 +305,7 @@ Extend `test_skill_contract.py` to require phrases:
 - `risk_assessment`
 - `execution units do not read each other's task logs`
 
-- [ ] **Step 2: Run contract tests and verify RED**
+- [x] **Step 2: Run contract tests and verify RED**
 
 Run:
 
@@ -292,7 +315,7 @@ python3 -m unittest tests.tplan.test_skill_contract -v
 
 Expected: fail because docs do not yet describe shared risk context.
 
-- [ ] **Step 3: Update docs**
+- [x] **Step 3: Update docs**
 
 Document:
 
@@ -303,7 +326,7 @@ Document:
 - `risk_assessment` hook output
 - scripts validate shape only
 
-- [ ] **Step 4: Run contract tests and verify GREEN**
+- [x] **Step 4: Run contract tests and verify GREEN**
 
 Run:
 
@@ -318,7 +341,7 @@ Expected: contract tests pass.
 **Files:**
 - No code changes unless verification reveals a defect.
 
-- [ ] **Step 1: Run tplan test suite**
+- [x] **Step 1: Run tplan test suite**
 
 Run:
 
@@ -328,7 +351,7 @@ python3 -m unittest discover -s tests/tplan -p 'test_*.py'
 
 Expected: all tests pass.
 
-- [ ] **Step 2: Check working tree**
+- [x] **Step 2: Check working tree**
 
 Run:
 
@@ -338,7 +361,7 @@ git status --short
 
 Expected: only intended files modified or created.
 
-- [ ] **Step 3: Commit implementation**
+- [x] **Step 3: Commit implementation**
 
 Run:
 
