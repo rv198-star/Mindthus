@@ -25,8 +25,7 @@
 
 ### 边界
 
-- TVG profile 定义价值锚点、输出厚度倾向和迭代检查问题，但脚本仍只校验 profile 形状；不会替 agent 判断 profile 是否审美成功、证据是否足够或是否可以 exit。
-- 胡金铨示范 profile 已补本地非入库 5 轮 profile 构建 smoke 和 3 轮标准 TVG+profile 提示词迭代 smoke；证据上限仍然是示范 profile 可用性和 review-bound 图像生成探针，不能写成稳定视觉泛化证明。
+- TVG profile 定义价值锚点、输出厚度倾向和迭代检查问题，但脚本仍只校验 profile 形状；不会替 agent 判断 profile 是否审美成功、证据是否足够、是否可以 exit，或是否具备稳定视觉泛化能力。
 - TPlan shared risk context 让风险在 Mission 内可见，不等于自动停止或自动改计划；是否继续仍要看目标价值、证据、阻塞和用户授权。
 
 ### 验证

@@ -19,7 +19,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("TPlan Shared Risk Context", changelog)
         self.assertIn("TPlan continuation authorization", changelog)
         self.assertIn("Codex 安装路径", changelog)
-        self.assertIn("胡金铨示范 profile 已补本地非入库 5 轮 profile 构建 smoke", changelog)
+        self.assertIn("不会替 agent 判断 profile 是否审美成功", changelog)
+        self.assertIn("是否具备稳定视觉泛化能力", changelog)
         self.assertIn('VERSION = "1.1.0"', builder)
 
         release_log = (REPO / "docs" / "releases" / "v1.1.0.md").read_text(
@@ -30,8 +31,9 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "Shaw Brothers studio-era wuxia / fantasy",
             "King Hu wuxia cinema",
             "不是电影史分类结论",
-            "胡金铨 profile 发布前补做了本地非入库的 profile -> prompt -> image -> self-audit 构建 smoke",
-            "不能声称它已经具备稳定视觉泛化能力",
+            "如何编写和使用 TVG profile",
+            "输出厚度落在哪些可审查单位上",
+            "把剧本文字扩成可审查的多镜头提示词",
         ):
             self.assertIn(phrase, release_log)
 
