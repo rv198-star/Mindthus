@@ -356,13 +356,14 @@ enum values; agentic judgment decides relevance and action.
 #### Continuation Authorization
 
 Mission-facing same-path `continue` decisions must expose `continuation_authorization`.
-This is part of the Linear Continuation Gate, not a new workflow center. It exists for
-expensive reruns, large generation passes, and late-defect repair loops where continuing
-the same path could hide weak evidence delta or local repair spiral pressure.
+This is part of the Linear Continuation Gate, not a new workflow center. It exists when
+continuing the same path could hide weak evidence delta, unclear defect classification,
+local repair spiral pressure, or a high-cost / high-blast-radius continuation choice.
 
-count-based reminders are triggers, not decisions. Third touch, second large rerun,
-post-generation defect, repeated negative feedback, or weak evidence delta only wake up
-the gate. They do not automatically stop, rerun, or change direction.
+count-based reminders are triggers, not decisions. Third touch, repeated same-path
+attempt, a defect found after continuation, repeated negative feedback, high-cost /
+high-blast-radius continuation, or weak evidence delta only wake up the gate. They do
+not automatically stop, continue, or change direction.
 
 `continuation_authorization` records:
 
@@ -371,6 +372,12 @@ the gate. They do not automatically stop, rerun, or change direction.
 - `defect_classification`
 - `expected_evidence_delta`
 - `authorized_action`
+
+Common `trigger_reasons` should use generic same-path continuation reasons such as
+`repeated_same_path_attempt`, `post_continuation_defect`,
+`high_cost_or_high_blast_radius_continuation`, `repeated_negative_feedback`, and
+`weak_or_unclear_evidence_delta`. Pressure-test-specific labels may exist as legacy
+compatibility, but they are not the main concept.
 
 Mechanical checks such as placeholder anchors, sample evidence, empty anchors, template
 residue, or unbound evidence links are shape-only evidence. Scripts validate fields and
