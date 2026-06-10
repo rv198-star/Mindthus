@@ -587,124 +587,37 @@ class TvgContractTests(unittest.TestCase):
         for term in forbidden_case_terms:
             self.assertNotIn(term, text)
 
-    def test_shaw_value_profile_pilot_record_contains_storyboard_and_image_audit(self):
-        path = REPO / "tests" / "tvg_value_profile_shaw_pilot_clean_room_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing clean-room Shaw value-profile pilot record")
+    def test_profile_construction_guide_separates_profile_power_from_runtime_rescue(self):
+        path = TVG / "resources" / "value-profiles" / "profile-construction.md"
+        self.assertTrue(path.exists(), "missing TVG value-profile construction guide")
         text = path.read_text(encoding="utf-8")
         for phrase in (
-            "TVG Value Profile Clean-Room Pilot: Shaw Brothers Snow Mountain Storyboard",
-            "active_value_profile: Shaw Brothers studio-era wuxia / fantasy cinematic prompt profile",
-            "profile_source_rule: do not infer Shaw Brothers rules from the flawed expansion sample",
-            "多镜头分镜提示词",
-            "Shot 01",
-            "shot_count_decision",
-            "shot_count_not_preset: true",
-            "single_page_storyboard_image",
-            "Image2 Pass 1",
-            "Image Self-Audit",
-            "single-page storyboard sheet",
-            "modern xianxia",
-            "modern CG spectacle",
-            "naturalistic disaster film",
-            "generic AI video prompt inflation",
-            "source_attribution_audit",
-            "original_script_source",
-            "profile_source",
-            "independent_storyboard_judgment",
-            "possible_pollution_or_uncertainty",
-            "claim_supported",
-            "evidence_ceiling",
-        ):
-            self.assertIn(phrase, text)
-        self.assertNotIn("shot_count_decision: preset", text)
-
-    def test_shaw_layered_profile_thick_prompt_pilot_exists_and_names_claim_ceiling(self):
-        path = REPO / "tests" / "tvg_value_profile_shaw_layered_thick_prompt_pilot_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing Shaw layered-profile thick prompt pilot")
-        text = path.read_text(encoding="utf-8")
-        for phrase in (
-            "TVG Layered Value Profile Pilot: Shaw Thick Storyboard Prompt",
-            "profile_shape: `value_semantics` + optional `realization_surface` + optional `gain_policy`",
-            "human_reference_status: user-provided comparison target, not a clean-room source",
-            "human_reference_scope: thickness, detail level, shot breakdown, camera/blocking specificity, and transition craft only; not Shaw aesthetic evidence",
-            "shot_count_decision: 18 shots",
-            "Generated Thick Storyboard Prompt",
-            "Shot 18",
-            "source attribution",
-            "value_semantics_result",
-            "realization_surface_result",
-            "gain_policy_result",
-            "Comparison To Human Prompt Target",
-            "do not compare Shaw aesthetic correctness because the human prompt does not supply Shaw aesthetic criteria",
-            "cannot prove independent human-level generation",
-            "Claim Ceiling",
+            "Single-pass profile power test",
+            "Loop-assisted production test",
+            "Do not collapse these claims.",
+            "Do not build the profile by copying the target artifact",
+            "Human Reference Boundary",
+            "Human references can be useful, but name their role precisely.",
+            "copying the human reference's concrete content into a reusable profile",
+            "Gate is not owned by the profile.",
+            "next-round positive-value gate",
+            "In a Shaw storyboard prompt",
+            "In an RPD price-raising document",
+            "Scripts may validate record shape",
+            "must not decide profile strength",
         ):
             self.assertIn(phrase, text)
 
-    def test_shaw_layered_profile_self_iteration_rejects_prompt_copying(self):
-        path = REPO / "tests" / "tvg_value_profile_shaw_layered_profile_self_iteration_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing Shaw layered-profile self-iteration record")
-        text = path.read_text(encoding="utf-8")
+    def test_generated_profile_outputs_are_ignored_not_contract_fixtures(self):
+        text = (REPO / ".gitignore").read_text(encoding="utf-8")
         for phrase in (
-            "TVG Shaw Layered Profile Self-Iteration",
-            "anti-overfit_rule",
-            "human_reference_use: evaluation pressure for thickness and storyboard technique only",
-            "human_reference_non_source: the human prompt does not provide Shaw aesthetic evidence",
-            "Round 0: Baseline After First Layered Profile",
-            "Round 1: Remove Script-Specific Leakage",
-            "Round 2: Strengthen General Thickness Controls",
-            "Round 3: Shaw Case Re-Test After Generalization",
-            "Rejected from profile",
-            "the specific old Daoist / qilin story objects",
-            "the human prompt's fixed camera list",
-            "the human prompt as Shaw aesthetic evidence",
-            "exact 18-shot count as a universal rule",
-            "claim_supported",
-            "claim_not_supported",
-        ):
-            self.assertIn(phrase, text)
-
-    def test_shaw_5round_image_iteration_record_and_artifacts_exist(self):
-        path = REPO / "tests" / "tvg_value_profile_shaw_5round_image_iteration_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing Shaw 5-round image iteration record")
-        text = path.read_text(encoding="utf-8")
-        for phrase in (
-            "TVG Shaw Layered Profile 5-Round Image Iteration",
-            "modify profile -> generate prompt -> generate image -> self-audit -> repair",
-            "human_reference_scope: thickness and storyboard technique only; not Shaw aesthetic evidence",
-            "Preflight Safety Note",
-            "Round 1",
-            "Round 2",
-            "Round 3",
-            "Round 4",
-            "Round 5",
-            "best_image: `tests/artifacts/tvg_shaw_layered_5round_pass5.png`",
-            "claim_supported",
-            "claim_not_supported",
-            "does not prove the profile can reliably produce historically accurate Shaw-style frames",
-        ):
-            self.assertIn(phrase, text)
-        for index in range(1, 6):
-            image_path = REPO / "tests" / "artifacts" / f"tvg_shaw_layered_5round_pass{index}.png"
-            self.assertTrue(image_path.exists(), f"missing Shaw 5-round image artifact {index}")
-
-    def test_shaw_standard_profile_prompt_loop_records_round_count(self):
-        path = REPO / "tests" / "tvg_shaw_standard_profile_prompt_loop_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing Shaw standard profile-guided prompt loop record")
-        text = path.read_text(encoding="utf-8")
-        for phrase in (
-            "TVG Standard Profile-Guided Prompt Loop",
-            "run_type: loop-assisted production test",
-            "profile_status: fixed for this run",
-            "allowed_changes: prompt only",
-            "blocked_changes: no profile changes",
-            "gate_result: return-remediate",
-            "gate_result: freeze-with-review-bound-warning",
-            "rounds_used: 2",
-            "remediation_rounds: 1",
-            "single-pass_result: partial",
-            "loop-assisted_result: usable prompt with review-bound warning",
-            "does not prove one-pass profile control",
+            ".tplan/missions/clean-room-issue31-value-profile-*/",
+            "tests/artifacts/tvg_*.png",
+            "tests/tvg_shaw_standard_profile_prompt_loop_*.md",
+            "tests/tvg_value_profile_shaw_5round_image_iteration_*.md",
+            "tests/tvg_value_profile_shaw_layered_*.md",
+            "tests/tvg_value_profile_*_self_iteration_*.md",
+            "tests/tvg_value_profile_shaw_pilot_clean_room_*.md",
         ):
             self.assertIn(phrase, text)
 
@@ -730,25 +643,6 @@ class TvgContractTests(unittest.TestCase):
             "prompt_self_audit_questions",
             "image_self_audit_questions",
             "source_notes",
-        ):
-            self.assertIn(phrase, text)
-
-    def test_king_hu_profile_self_iteration_record_exists(self):
-        path = REPO / "tests" / "tvg_value_profile_king_hu_self_iteration_2026-06-10.md"
-        self.assertTrue(path.exists(), "missing King Hu profile self-iteration record")
-        text = path.read_text(encoding="utf-8")
-        for phrase in (
-            "TVG Self-Iteration: King Hu Wuxia Cinema Profile",
-            "iteration_mode: profile_self_iteration",
-            "v1_audit_result: return-remediate",
-            "v2_audit_result: freeze-with-review-bound-warning",
-            "what_changed",
-            "delayed spectacle before action payoff",
-            "spatial intelligence before action density",
-            "avoid generic AI wuxia trailer inflation",
-            "source_attribution_audit",
-            "claim_supported",
-            "evidence_ceiling",
         ):
             self.assertIn(phrase, text)
 
