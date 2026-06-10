@@ -188,11 +188,35 @@ Each run writes `simulation_result.json`.
 | `mechanical_score` | `0` | `8` |
 | `scripted_agent_score` | lower than treatment | `10` |
 | `next_gate` or `risk_assessment.next_gate` | `health_check` as plain judgment | `health_check` enforced through `risk_assessment` |
+| `stop_latency.expensive_rerun_attempts_before_gate` | `1` | `0` |
+| `stop_latency.steps_until_first_safe_gate` | `2` | `1` |
+| `stop_latency.blocked_action` | `null` | `expensive_full_chain_rerun` |
 
 The old simulator may still recommend a health gate through ordinary judgment, but it
 cannot publish shared Mission risk context or use the `risk_assessment` gate. The new
 simulator must record shared risk, prove the ungated decision is rejected, and pass only
 when the decision includes `risk_assessment`.
+
+### Stop Latency Signal
+
+The stop-latency claim is intentionally narrow. It does not claim that B finishes the
+Mission earlier. It claims that B earlier blocks the untrusted expensive path: an
+ungated `expensive_full_chain_rerun` under active shared risk.
+
+`stop_latency` records how many same-path expensive rerun candidates can pass before
+the first safe gate is selected:
+
+- A / Old expected: `expensive_rerun_attempts_before_gate = 1`,
+  `steps_until_first_safe_gate = 2`, `blocked_action = null`, and
+  `final_allowed_action = health_check`.
+- B / New expected: `expensive_rerun_attempts_before_gate = 0`,
+  `steps_until_first_safe_gate = 1`,
+  `blocked_action = expensive_full_chain_rerun`, and
+  `final_allowed_action = health_check`.
+
+This field is the acceptance signal for "earlier risk stop" language. Use "earlier
+blocks the untrusted expensive path" rather than "earlier completes the Mission" or
+"earlier stops all work."
 
 ### Simulator Scoring
 
@@ -213,7 +237,9 @@ runtime contract:
 
 This is the main A/B signal for value-assessment behavior. It is more useful than a
 unit test because it simulates a full decision path, and more stable than a live LLM
-because it removes network and exploration noise.
+because it removes network and exploration noise. `scripted_agent_score` checks the
+decision shape; `stop_latency` checks whether the treatment blocks unsafe same-path
+continuation before an expensive rerun candidate can pass.
 
 ## Layer 3: Optional Live Pilot
 
@@ -325,10 +351,10 @@ mechanical score:
 
 ## Layer 2: Scripted Agent Simulator
 
-| Arm | runtime_profile | mechanical_score | scripted_agent_score | Notes |
-| --- | --- | ---: | ---: | --- |
-| A / Pre-shared-risk Baseline |  |  |  |  |
-| B / Shared-risk Treatment |  |  |  |  |
+| Arm | runtime_profile | mechanical_score | scripted_agent_score | expensive_rerun_attempts_before_gate | steps_until_first_safe_gate | blocked_action | Notes |
+| --- | --- | ---: | ---: | ---: | ---: | --- | --- |
+| A / Pre-shared-risk Baseline |  |  |  |  |  |  |  |
+| B / Shared-risk Treatment |  |  |  |  |  |  |  |
 
 ## Layer 3: Optional Live Pilot
 
@@ -353,6 +379,7 @@ Decision:
 
 This A/B is successful only when the conclusion names which layer supports the claim.
 Layer 1 proves runtime affordance and gate behavior. Layer 2 proves that the same fixed
-agent strategy produces a stronger, risk-adjusted decision shape under the new runtime.
+agent strategy produces a stronger, risk-adjusted decision shape under the new runtime
+and, through `stop_latency`, whether B earlier blocks the untrusted expensive path.
 Layer 3 can reveal live-agent usability, but it must not be used as the core pass/fail
 signal while model/network noise dominates.
