@@ -94,7 +94,7 @@ def valid_risk_assessment():
 
 def valid_continuation_authorization():
     return {
-        "trigger_reasons": ["repeated_same_path_attempt"],
+        "trigger_reasons": ["second_large_rerun"],
         "evidence_shape_lint": "pass",
         "defect_classification": "acceptance_blocking",
         "expected_evidence_delta": "new_evidence_expected",
@@ -399,12 +399,12 @@ class ApplyDecisionTests(unittest.TestCase):
                 json.dumps(
                     {
                         "recommendation": "continue",
-                        "rationale": "Continue the same Mission-facing path after a late evidence defect.",
+                        "rationale": "Run another expensive same-path generation after late evidence defects.",
                         "confidence": 70,
                         "evidence_links": [],
                         "proposed_mutations": [],
                         "requires_human": False,
-                        "mission_alignment": "The continuation claims to advance Mission acceptance evidence.",
+                        "mission_alignment": "The rerun claims to advance Mission acceptance evidence.",
                         "path_assessment": valid_path_assessment(),
                     }
                 ),
@@ -424,12 +424,12 @@ class ApplyDecisionTests(unittest.TestCase):
                 json.dumps(
                     {
                         "recommendation": "continue",
-                        "rationale": "Continue a bounded same-path action after classifying the defect as acceptance-blocking.",
+                        "rationale": "Run a bounded rerun after classifying the defect as acceptance-blocking.",
                         "confidence": 70,
                         "evidence_links": [],
                         "proposed_mutations": [],
                         "requires_human": False,
-                        "mission_alignment": "The continuation can produce decision-constraining acceptance evidence.",
+                        "mission_alignment": "The rerun can produce decision-constraining acceptance evidence.",
                         "path_assessment": valid_path_assessment(),
                         "continuation_authorization": valid_continuation_authorization(),
                     }
@@ -447,12 +447,12 @@ class ApplyDecisionTests(unittest.TestCase):
             decision = Path(tmp) / "decision.json"
             payload = {
                 "recommendation": "continue",
-                "rationale": "Continue a bounded same-path action after classifying the defect.",
+                "rationale": "Run a bounded rerun after classifying the defect.",
                 "confidence": 70,
                 "evidence_links": [],
                 "proposed_mutations": [],
                 "requires_human": False,
-                "mission_alignment": "The continuation can produce decision-constraining acceptance evidence.",
+                "mission_alignment": "The rerun can produce decision-constraining acceptance evidence.",
                 "path_assessment": valid_path_assessment(),
                 "continuation_authorization": valid_continuation_authorization(),
             }

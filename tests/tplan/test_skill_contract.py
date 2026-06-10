@@ -265,16 +265,12 @@ class TplanSkillContractTests(unittest.TestCase):
             "batchable_detail",
             "count-based reminders are triggers, not decisions",
             "shape-only evidence",
-            "repeated_same_path_attempt",
-            "post_continuation_defect",
-            "high_cost_or_high_blast_radius_continuation",
         ):
             self.assertIn(phrase, skill_text)
             self.assertIn(phrase, resources)
 
         self.assertIn("继续授权", methodology)
         self.assertIn("次数提醒只负责叫醒，不负责判停", methodology)
-        self.assertIn("继续同一路径前", methodology)
         self.assertIn("Continuation Authorization Pressure", pressure_text)
         self.assertIn("placeholder/sample red-team anchors", pressure_text)
         self.assertIn("continuation_authorization", hook)

@@ -73,11 +73,6 @@ RISK_ASSESSMENT_FIELDS = {
 
 CONTINUATION_TRIGGER_REASONS = {
     "third_touch",
-    "repeated_same_path_attempt",
-    "post_continuation_defect",
-    "high_cost_or_high_blast_radius_continuation",
-    # Compatibility aliases from the original pressure-test scenario. New records should
-    # prefer the generic same-path continuation reasons above.
     "second_large_rerun",
     "post_generation_defect",
     "repeated_negative_feedback",
