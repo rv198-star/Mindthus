@@ -6,16 +6,41 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_current_release_surface_is_v1_0_1(self):
+    def test_current_release_surface_is_v1_1_0(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.0.1`", readme)
+        self.assertIn("当前仓库版本：`v1.1.0`", readme)
+        self.assertIn("## v1.1.0", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.1.0.md)", changelog)
+        self.assertIn("TVG Value Profile", changelog)
+        self.assertIn("TVG 示例 profile", changelog)
+        self.assertIn("TPlan Shared Risk Context", changelog)
+        self.assertIn("TPlan continuation authorization", changelog)
+        self.assertIn("Codex 安装路径", changelog)
+        self.assertIn("胡金铨示范 profile 已补本地非入库 5 轮 profile 构建 smoke", changelog)
+        self.assertIn('VERSION = "1.1.0"', builder)
+
+        release_log = (REPO / "docs" / "releases" / "v1.1.0.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "两个影视提示词 / 分镜方向的示范 profile",
+            "Shaw Brothers studio-era wuxia / fantasy",
+            "King Hu wuxia cinema",
+            "不是电影史分类结论",
+            "胡金铨 profile 发布前补做了本地非入库的 profile -> prompt -> image -> self-audit 构建 smoke",
+            "不能声称它已经具备稳定视觉泛化能力",
+        ):
+            self.assertIn(phrase, release_log)
+
+    def test_v1_0_1_release_surface_is_preserved(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+
         self.assertIn("## v1.0.1", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.0.1.md)", changelog)
         self.assertIn("scripts/log-fidelity-usage.py", changelog)
-        self.assertIn('VERSION = "1.0.1"', builder)
 
     def test_v1_0_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")

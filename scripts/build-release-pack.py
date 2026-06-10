@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 EXCLUDED_DIRS = {"__pycache__"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 TEXT_REWRITE_SUFFIXES = {".md"}

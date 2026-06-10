@@ -35,7 +35,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v1.0.1`", readme)
+        self.assertIn("当前仓库版本：`v1.1.0`", readme)
         self.assertIn("scripts/log-fidelity-usage.py", readme)
         self.assertIn("data/fidelity-usage-log.jsonl", readme)
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
@@ -189,6 +189,7 @@ class PackagingDocsTests(unittest.TestCase):
     def test_changelog_release_sections_are_chinese_and_not_duplicated(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         lines = changelog.splitlines()
+        self.assertEqual(lines.count("## v1.1.0"), 1)
         self.assertEqual(lines.count("## v1.0.1"), 1)
         self.assertEqual(lines.count("## v1.0"), 1)
         self.assertEqual(lines.count("## v0.6.3"), 1)
@@ -447,7 +448,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.0.1")
+            self.assertEqual(plugin["version"], "1.1.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue(

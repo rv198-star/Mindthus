@@ -147,6 +147,12 @@ class TvgContractTests(unittest.TestCase):
             "价值定义包",
             "默认通用实用价值",
             "不要从待改造样例反推风格规则",
+            "default-practical-value",
+            "shaw-brothers-wuxia-fantasy",
+            "king-hu-wuxia-cinema",
+            "示范 profile，不是电影史分类结论",
+            "三层 profile 怎么发挥作用",
+            "不能证明任何图像模型都会稳定生成对应风格",
         ):
             self.assertIn(phrase, combined)
 

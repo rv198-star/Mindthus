@@ -4,6 +4,36 @@
 
 暂无。
 
+## v1.1.0
+
+发布日期：2026-06-11
+
+[完整发布日志](docs/releases/v1.1.0.md)
+
+说明：本版让 Mindthus 在两类真实使用中更稳：TVG 可以按任务自定义“什么才算好”，TPlan 可以让子任务之间共享已经发现的阻塞和风险。同时修复 TPlan 晚期小问题反复沿同一路径续跑的漂移，并修正 Codex 安装路径。
+
+### 新增
+
+- TVG Value Profile：让 TVG 除了默认的通用标准“增厚内容/价值提升”外，可以支持自定义价值锚点：这个任务里什么算好、什么算跑偏、哪些约束不能破、优先增强哪类价值。也就是用户可以自己定义希望 TVG 增强的价值选择来迭代优化。
+- TVG 示例 profile：随包包含默认 practical-value profile，以及邵氏清水湾棚拍时代武侠 / 神怪、胡金铨武侠电影两个影视提示词 / 分镜方向的示范 profile。它们用于展示 scoped profile 怎么写，不是电影史分类结论，也不是对所有图像模型的风格稳定性保证。
+- TPlan Shared Risk Context：让子任务共享阻塞项和风险。某个子任务发现的阻塞、环境问题、证据风险或共享依赖风险，可以提升到 Mission 级别，让其他子任务和后续决策也能看到。在评估下一步是否继续、切换路径、健康检查、暂停或收束时，Agent 会综合这些阻塞和风险，判断任务可行性和综合价值。
+
+### 修复
+
+- TPlan continuation authorization：晚期小缺陷、证据形态缺陷或局部未收敛时，Agent 不能只是沿同一路径“再试一下”；继续前必须说明为什么这条路径仍然值得继续，以及授权依据是什么。
+- Codex 安装路径：`scripts/install-skills.sh codex` 现在默认安装到 `${CODEX_HOME:-~/.codex}/skills/mindthus`，不再把 Codex skills 链到 `.agents` 路径。
+
+### 边界
+
+- TVG profile 定义价值锚点、输出厚度倾向和迭代检查问题，但脚本仍只校验 profile 形状；不会替 agent 判断 profile 是否审美成功、证据是否足够或是否可以 exit。
+- 胡金铨示范 profile 已补本地非入库 5 轮 profile 构建 smoke 和 3 轮标准 TVG+profile 提示词迭代 smoke；证据上限仍然是示范 profile 可用性和 review-bound 图像生成探针，不能写成稳定视觉泛化证明。
+- TPlan shared risk context 让风险在 Mission 内可见，不等于自动停止或自动改计划；是否继续仍要看目标价值、证据、阻塞和用户授权。
+
+### 验证
+
+- `python3 -m unittest discover -s tests`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.1.0-check --force`
+
 ## v1.0.1
 
 发布日期：2026-06-08

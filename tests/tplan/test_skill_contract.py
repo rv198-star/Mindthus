@@ -245,6 +245,9 @@ class TplanSkillContractTests(unittest.TestCase):
 
         self.assertIn("共享风险上下文", methodology)
         self.assertIn("风险调整后的行动价值", methodology)
+        self.assertIn("如果某个子任务发现的问题只影响自己，就留在本地任务里", methodology)
+        self.assertIn("如果它会影响其他子任务对“还值不值得继续”的判断，就上浮成共享风险", methodology)
+        self.assertIn("普通进展、局部日志、一次性失败和已经被局部修掉的小问题", methodology)
 
     def test_continuation_authorization_contract_is_documented(self):
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
@@ -275,6 +278,8 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("继续授权", methodology)
         self.assertIn("次数提醒只负责叫醒，不负责判停", methodology)
         self.assertIn("继续同一路径前", methodology)
+        self.assertIn("阻止 agent 把“看起来只差一点”误当成继续理由", methodology)
+        self.assertIn("下一步会带来什么新的验收证据", methodology)
         self.assertIn("Continuation Authorization Pressure", pressure_text)
         self.assertIn("placeholder/sample red-team anchors", pressure_text)
         self.assertIn("continuation_authorization", hook)
