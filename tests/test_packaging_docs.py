@@ -356,6 +356,19 @@ class PackagingDocsTests(unittest.TestCase):
         for path in sorted((REPO / "skills").glob("*/SKILL.md")):
             self.assert_skill_frontmatter_is_parseable(path)
 
+    def test_mindthus_skill_entrypoints_stay_within_size_budget(self):
+        budget_bytes = 8 * 1024
+        oversized = {
+            path.parent.name: path.stat().st_size
+            for path in sorted((REPO / "skills").glob("*/SKILL.md"))
+            if path.stat().st_size > budget_bytes
+        }
+        self.assertEqual(
+            oversized,
+            {},
+            "Mindthus SKILL.md files should stay thin; move long guidance to resources/ or docs/methodologies/",
+        )
+
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
             parse_frontmatter_mapping(
