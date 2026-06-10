@@ -225,6 +225,111 @@ class TplanSkillContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_shared_risk_context_contract_is_documented(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Shared Risk Context",
+            "risk-adjusted value",
+            "risk_context_update",
+            "risk_assessment",
+            "execution units do not read each other's task logs",
+        ):
+            self.assertIn(phrase, skill_text)
+            self.assertIn(phrase, resources)
+
+        self.assertIn("共享风险上下文", methodology)
+        self.assertIn("风险调整后的行动价值", methodology)
+
+    def test_continuation_authorization_contract_is_documented(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+        pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
+        hook = json.loads((SKILL / "templates" / "hook-output.json").read_text(encoding="utf-8"))
+
+        for phrase in (
+            "Continuation Authorization",
+            "continuation_authorization",
+            "evidence_shape_lint",
+            "defect_classification",
+            "acceptance_blocking",
+            "batchable_detail",
+            "count-based reminders are triggers, not decisions",
+            "shape-only evidence",
+        ):
+            self.assertIn(phrase, skill_text)
+            self.assertIn(phrase, resources)
+
+        self.assertIn("继续授权", methodology)
+        self.assertIn("次数提醒只负责叫醒，不负责判停", methodology)
+        self.assertIn("Continuation Authorization Pressure", pressure_text)
+        self.assertIn("placeholder/sample red-team anchors", pressure_text)
+        self.assertIn("continuation_authorization", hook)
+        self.assertIn("evidence_shape_lint", hook["continuation_authorization"])
+
+    def test_shared_risk_context_has_reproducible_ab_simulator_contract(self):
+        pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
+        simulator = REPO / "tests" / "tplan" / "shared_risk_agent_simulator.py"
+        simulator_test = REPO / "tests" / "tplan" / "test_shared_risk_agent_simulator.py"
+
+        for phrase in (
+            "Shared Risk Context Late Stop Pressure",
+            "invalid_evidence_risk",
+            "failure_risk",
+            "risk_adjusted_value",
+            "health_check",
+            "Hard failure: continues an expensive full-chain rerun",
+        ):
+            self.assertIn(phrase, pressure_text)
+
+        self.assertTrue(simulator.exists(), "missing shared-risk scripted agent simulator")
+        self.assertTrue(simulator_test.exists(), "missing shared-risk simulator test")
+        combined = simulator.read_text(encoding="utf-8") + "\n" + simulator_test.read_text(encoding="utf-8")
+        for phrase in (
+            "shared_risk_agent_simulator.py",
+            "scripted_agent_score",
+            "stop_latency",
+            "expensive_rerun_attempts_before_gate",
+            "steps_until_first_safe_gate",
+            "active_shared_risk_blocks_ungated_continuation",
+            "record_risk_context.py",
+            "risk_assessment_required",
+            "invalid_environment_evidence",
+            "mechanical_score",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_continuation_authorization_has_reproducible_ab_simulator_contract(self):
+        simulator = REPO / "tests" / "tplan" / "continuation_authorization_ab_simulator.py"
+        simulator_test = REPO / "tests" / "tplan" / "test_continuation_authorization_ab_simulator.py"
+
+        self.assertTrue(simulator.exists(), "missing continuation-authorization scripted A/B simulator")
+        self.assertTrue(simulator_test.exists(), "missing continuation-authorization simulator test")
+
+        combined = simulator.read_text(encoding="utf-8") + "\n" + simulator_test.read_text(encoding="utf-8")
+        for phrase in (
+            "placeholder/sample",
+            "red-team anchor defects",
+            "continuation_authorization_ab_simulator.py",
+            "pre_continuation_authorization",
+            "continuation_authorization",
+            "authorization_latency",
+            "expensive_same_path_continue_attempts_before_gate",
+            "continuation_authorization_blocks_ungated_same_path",
+            "targeted_fix",
+            "mechanical_score",
+        ):
+            self.assertIn(phrase, combined)
+
 
 if __name__ == "__main__":
     unittest.main()

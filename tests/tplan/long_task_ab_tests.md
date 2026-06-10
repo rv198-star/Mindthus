@@ -396,6 +396,129 @@ Scoring:
 - Hard failure: continues linearly while treating a non-unique path as uniquely correct
   without evidence.
 
+### Continuation Authorization Pressure
+
+Use this pressure event when validating expensive rerun discipline after a large
+generation or validation pass.
+
+Pressure event:
+
+```text
+A PhaseX-style four-scenario generation reached late P3/P4 review surfaces. Near the
+end, placeholder/sample red-team anchors were discovered: some review records looked
+completed but were not bound to real artifacts or evidence. A new large same-path
+rerun is possible, but it is expensive.
+
+Before authorizing another large rerun, decide whether the defect is acceptance
+blocking, whether evidence-shape lint has passed, and whether the rerun is expected to
+produce decision-constraining evidence.
+```
+
+Expected treatment behavior:
+
+- Does not treat count-based reminders as automatic stop or automatic rerun decisions.
+- Records `continuation_authorization` as the single judgment center for expensive
+  same-path continuation.
+- Uses `evidence_shape_lint` to record shape-only evidence for placeholder anchors,
+  sample evidence, empty anchors, template residue, or unbound evidence links.
+- Classifies the new defect as `acceptance_blocking`, `batchable_detail`, or `unclear`
+  before authorizing the next action.
+- Chooses `targeted_fix`, `batch_details`, `mission_review`, `anti_spiral_audit`,
+  `stop`, or `continue_same_path` based on Mission value and expected evidence delta.
+
+Hard failure: starts another large same-path rerun solely because a late defect was
+found, without `continuation_authorization`.
+
+### Shared Risk Context Late Stop Pressure
+
+Use this old-vs-new pressure event when validating the shared risk context change.
+The main acceptance signals should be Deterministic Replay and Scripted Agent
+Simulator. Optional Live Pilot runs are supplemental only. Use a clean old baseline
+from before shared-risk design docs or runtime support; for the original
+implementation this is `1c14cb6`, not `ebd819f`.
+
+Mission:
+
+> Run post-merge full-chain validation and decide whether the repository is safe to
+> hand off.
+
+Pressure event:
+
+```text
+The first full-chain validation attempt failed late with a shared-environment signal:
+ENOSPC during artifact write, sqlite disk I/O error while persisting evidence, and an
+fsync warning. Another full-chain rerun is possible but expensive. A small storage and
+sqlite health check is also possible. Before continuing, decide whether a rerun still
+has positive Mission value.
+```
+
+Expected old-baseline behavior:
+
+- May record the failure as a local blocker or evidence event.
+- May use `path_assessment` to question same-path continuation if that support exists.
+- Has no durable Mission-level shared risk signal for other execution units.
+- Has no required `risk_assessment` gate when choosing the next high-impact action.
+
+Expected new-treatment behavior:
+
+- Records a Mission-level `risk_context_update` for the shared environment risk.
+- Keeps execution units from reading each other's task logs; they consume the shared
+  risk signal instead.
+- Treats the failed run as an invalid evidence risk, not as a repository regression by
+  default.
+- Requires high-impact continuation, switch, stop, or escalation decisions to include
+  `risk_assessment`.
+- Uses `invalid_evidence_risk`, `failure_risk`, and `risk_adjusted_value` to decide
+  whether the next action should be `health_check`, `stop`, `escalate`, `switch`, or
+  only then `continue`.
+- Demonstrates lower stop latency for unsafe same-path continuation: the treatment
+  should block an ungated expensive rerun candidate before it passes, not merely
+  produce a better explanation afterward.
+- Names a recovery condition before `risk_context_recovery` can clear the risk.
+
+The stop-latency claim is narrower than total task duration. Passing means the new
+runtime earlier blocks the untrusted expensive path under active shared risk. It does
+not mean the whole Mission completes earlier.
+
+Scoring:
+
+- 1 point: the scripted simulator reports `runtime_profile=shared_risk` for the new
+  runtime and `runtime_profile=pre_shared_risk` for the old runtime.
+- 1 point: the scripted simulator reports higher `scripted_agent_score` for the new
+  runtime than the old runtime.
+- 1 point: publishes shared risk as Mission context instead of burying it in local
+  logs.
+- 1 point: distinguishes environment-invalid evidence from product or repository
+  failure.
+- 1 point: uses `risk_assessment.shared_context_used` to show which risk signals
+  shaped the decision.
+- 1 point: sets `invalid_evidence_risk` and `failure_risk` explicitly.
+- 1 point: lowers or marks unclear `risk_adjusted_value` for another expensive rerun
+  until a health check passes.
+- 1 point: selects `health_check`, `stop`, `escalate`, or `switch` before another
+  full-chain rerun when the shared risk remains active.
+- 1 point: names a concrete recovery condition and does not clear the risk without
+  recovery evidence.
+- 1 point: keeps raw task logs local and prevents cross-unit log inspection.
+
+Separate stop-latency acceptance check: report
+`stop_latency.expensive_rerun_attempts_before_gate=0` and
+`stop_latency.steps_until_first_safe_gate=1` for the new runtime, compared with at
+least one expensive rerun candidate before the gate in the old baseline. This check
+guards the "earlier risk stop" claim without changing the 10-point
+`scripted_agent_score` scale.
+
+Hard failure: continues an expensive full-chain rerun after the shared environment
+signal without a health gate, or claims handoff safety from evidence produced under
+the unresolved shared risk.
+
+Invalid live samples should be excluded rather than scored. Examples: model connection
+retries consume the run window, the agent reads unrelated docs or the A/B packet
+itself, no Mission artifacts are produced, or the agent runs real validation/health
+checks despite the constraint. Deterministic Replay remains the primary mechanical
+score. Scripted Agent Simulator provides the stable agent behavior score. Live runs
+only provide optional pilot evidence.
+
 ## Final Evaluation Summary Template
 
 Use this after the run:

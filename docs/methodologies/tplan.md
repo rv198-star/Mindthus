@@ -60,6 +60,19 @@
 
 实现上可以用 `checkpoint` 压缩普通运行成本：一次记录可选本地 log、可选稀疏 evidence，并返回当前 survey。它只减少脚本调用次数，不替代状态变更、decision packet、Mission Review 或 stop report。
 
+### 共享风险上下文
+
+长任务里的失败不一定只属于当前执行单元。如果失败暴露的是共享环境、共享依赖、共享数据源、证据通道或权限边界的问题，它会改变后续任务的风险调整后的行动价值。
+
+`tplan` 的处理方式不是让执行单元互相读取日志。执行单元不读彼此的 task logs；它们只在局部阻碍、不及预期、无效证据风险、异常成本或恢复信号会影响其他任务时，把 scoped risk signal 上浮到 Mission 的共享风险上下文。后续 decision packet 读取 active risk signals，用来判断下一步行动是否仍然有风险调整后的行动价值。
+
+这能避免两个偏差：
+
+- 单个任务只看到原目标重要，于是高估继续执行的价值。
+- 全局读取所有日志，导致噪音、耦合和错误传播。
+
+共享风险上下文只记录会影响其他任务价值评估的信号。普通顺利进展不需要上浮；验收成功或恢复成功可以作为 evidence 记录，因为它们关闭 claim 或恢复共享面的可信度。
+
 ## 用户可读输出
 
 `tplan` 内部需要 `T1`、`E2` 这类稳定编号，否则恢复、验证和 evidence link 会乱。但普通用户输出不要把 T1、E2 这类内部编号放在普通回复开头。
@@ -115,6 +128,7 @@ SubAgent 是侦察，不是控制器。
 5. 对关键 claim 记录 evidence，并说明它支撑什么判断。
 6. 遇到路径切换、任务删除、Mission 关闭或高影响继续时，输出 decision packet。
 7. 出现第三次局部处理、负反馈、加层冲动或弱 evidence-delta continuation 时，触发 Anti-Spiral gate。
+8. 准备昂贵同路径继续时，先写 `continuation_authorization`：做继续授权，而不是默认重跑。
 
 实操中，`tplan` 不需要覆盖所有任务。短小、低风险、一次性工作直接执行即可。它适合那些“如果不记录状态就会漂移”的 Mission。
 
@@ -133,16 +147,33 @@ flowchart TD
   F -->|"缺信息 / 权限 / 判断"| I["blocker / stop report<br/>停止并交还最小上下文"]
   F -->|"目标或路径存疑"| J["decision packet<br/>路由到 3L5S / SELA / EDSP / WAE / TVG"]
   F -->|"同一路径反复修补"| K["Anti-Spiral gate<br/>先刹车再判断"]
+  F -->|"昂贵同路径继续"| N["continuation_authorization<br/>继续授权 / 证据形态 / 缺陷分流"]
 
   H --> B
   J --> B
   K --> J
+  N --> J
   G --> L{"Mission 是否完成"}
   L -->|"否"| C
   L -->|"是"| M["Mission closure<br/>用 evidence 支撑收口"]
 ```
 
 这张图的重点是循环，而不是阶段。执行不会随手重写计划；执行只产生 `logs`、`evidence`、`split`、`blocker`、`decision packet` 或 `Anti-Spiral` 信号。任务树的调整必须经过这些信号和对应 authority，避免 agent 一边执行、一边现场改目标、一边宣布完成。
+
+### 继续授权
+
+`continuation_authorization` 是 Linear Continuation Gate 的一部分，用来约束昂贵同路径继续，例如大生成、大重跑或后处理修补后准备再跑一轮。
+
+次数提醒只负责叫醒，不负责判停。第三次碰同一局部对象、第二次准备大重跑、大生成后出现新缺陷、连续负反馈或弱 evidence delta，只说明需要进入继续授权，不自动停止，也不自动允许重跑。
+
+继续授权只问一个中心问题：继续同一路径凭什么被授权？
+
+- `evidence_shape_lint`：placeholder、sample evidence、空 anchor、模板残留或未绑定 artifact 的 evidence link 是否存在。
+- `defect_classification`：新缺陷是 `acceptance_blocking`、`batchable_detail` 还是 `unclear`。
+- `expected_evidence_delta`：下一轮是否能产生约束验收判断的新证据。
+- `authorized_action`：继续同路径、定向修复、批处理细节、Mission Review、Anti-Spiral 审计或停止。
+
+脚本只能提供 shape-only evidence 和枚举校验；是否阻断验收、是否值得继续，仍由 agentic judgment 决定。
 
 ## 具体案例
 

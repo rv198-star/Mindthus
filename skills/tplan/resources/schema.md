@@ -19,6 +19,7 @@ Required top-level fields:
 - `tasks`: list of runtime nodes. Runtime `v0.1` supports `task`, `subtask`, and
   `step` nodes.
 - `active_task_id`: task id or null.
+- `shared_context`: optional Mission-level context for scoped shared risk signals.
 
 Required Mission fields:
 
@@ -120,6 +121,54 @@ Task roles:
 - `supporting`: useful but not part of strict Mission completion.
 - `exploratory`: uncertain payoff governed by risk/resource policy.
 
+## Shared Risk Context
+
+Shared Risk Context lets local blockers, degraded conditions, invalid evidence risk,
+abnormal cost, or recovery signals influence later risk-adjusted value assessment
+without coupling execution units. Execution units do not read each other's task logs.
+They publish scoped Mission-level risk signals, and later decision packets consume
+active signals.
+
+`mission.json` may include:
+
+```json
+{
+  "shared_context": {
+    "risk_signals": []
+  }
+}
+```
+
+Each risk signal must include:
+
+- `id`
+- `source_task_id`
+- `scope`
+- `signal`
+- `severity`
+- `confidence`
+- `affected_surfaces`
+- `value_effect`
+- `recommended_gate`
+- `recovery_condition`
+- `status`
+- `created_at`
+- `updated_at`
+
+Optional fields include `source_evidence_id`, `supersedes`, and `notes`.
+
+Allowed values:
+
+- `scope`: `shared_environment`, `shared_dependency`, `shared_data`,
+  `shared_authority`, `shared_evidence_channel`, `mission_policy`, or `other`
+- `severity`: `low`, `medium`, `high`, or `critical`
+- `confidence`: `low`, `medium`, `high`, or `unclear`
+- `status`: `active`, `resolved`, `superseded`, or `invalidated`
+
+Scripts validate shape, enum values, duplicate risk ids, and `source_task_id` links.
+They do not decide whether the risk is real or whether it should change a task's
+risk-adjusted value.
+
 ## evidence.jsonl
 
 Evidence records observable support for a claim, state change, acceptance condition,
@@ -134,6 +183,8 @@ Sparse evidence categories:
 - decision
 - state transition
 - key finding
+- risk_context_update
+- risk_context_recovery
 
 Each line is one JSON object with:
 
@@ -192,6 +243,7 @@ A decision packet must include:
 - resource sufficiency
 - human-in-loop value
 - current blockers or surprises
+- shared context with active risk signals and recent resolved risk signals
 
 ## Hook Output
 
@@ -225,6 +277,37 @@ and high-impact continuation decisions:
 - `path_role`: `unique_blocker`, `dominant_path`, `one_of_many`, or `unclear`
 - `evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
   `no_new_evidence_expected`, or `unclear`
+
+When a high-impact hook output is generated while active Shared Risk Context exists,
+the output must also include `risk_assessment`:
+
+- `shared_context_used`: list of risk signal ids considered
+- `invalid_evidence_risk`: `low`, `medium`, `high`, or `unclear`
+- `failure_risk`: `low`, `medium`, `high`, or `unclear`
+- `risk_adjusted_value`: `positive`, `weak`, `negative`, or `unclear`
+- `next_gate`: `continue`, `health_check`, `switch`, `stop`, or `escalate`
+
+Mission-facing same-path `continue` decisions must include
+`continuation_authorization`. This belongs to the Linear Continuation Gate. It should
+not split into independent pre-rerun lint and defect queue mechanisms.
+
+Required `continuation_authorization` fields:
+
+- `trigger_reasons`: list containing `third_touch`, `second_large_rerun`,
+  `post_generation_defect`, `repeated_negative_feedback`,
+  `weak_or_unclear_evidence_delta`, or `manual_authorization`
+- `evidence_shape_lint`: `pass`, `fail`, `not_applicable`, or `unclear`
+- `defect_classification`: `none`, `acceptance_blocking`, `batchable_detail`, or
+  `unclear`
+- `expected_evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
+  `no_new_evidence_expected`, or `unclear`
+- `authorized_action`: `continue_same_path`, `targeted_fix`, `batch_details`,
+  `mission_review`, `anti_spiral_audit`, or `stop`
+
+count-based reminders are triggers, not decisions. Evidence-shape lint is shape-only
+evidence: scripts can report placeholder anchors, sample evidence, empty anchors,
+template residue, or unbound evidence links, but they must not decide semantic quality
+or release readiness.
 
 Runtime scripts validate only the shape and enum values. They do not compute ROI, rank
 paths, infer evidence quality, or decide semantic correctness.
