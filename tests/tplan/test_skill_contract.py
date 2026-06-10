@@ -300,10 +300,10 @@ class TplanSkillContractTests(unittest.TestCase):
             "stop_latency",
             "expensive_rerun_attempts_before_gate",
             "steps_until_first_safe_gate",
-            "earlier blocks the untrusted expensive path",
+            "active_shared_risk_blocks_ungated_continuation",
             "record_risk_context.py",
             "risk_assessment_required",
-            "invalid sample",
+            "invalid_environment_evidence",
             "mechanical_score",
         ):
             self.assertIn(phrase, combined)
@@ -317,13 +317,14 @@ class TplanSkillContractTests(unittest.TestCase):
 
         combined = simulator.read_text(encoding="utf-8") + "\n" + simulator_test.read_text(encoding="utf-8")
         for phrase in (
-            "placeholder/sample red-team anchors",
+            "placeholder/sample",
+            "red-team anchor defects",
             "continuation_authorization_ab_simulator.py",
             "pre_continuation_authorization",
             "continuation_authorization",
             "authorization_latency",
             "expensive_same_path_continue_attempts_before_gate",
-            "blocks ungated expensive same-path continuation",
+            "continuation_authorization_blocks_ungated_same_path",
             "targeted_fix",
             "mechanical_score",
         ):
