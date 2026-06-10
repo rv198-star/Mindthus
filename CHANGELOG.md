@@ -39,7 +39,7 @@
 
 [完整发布日志](docs/releases/v1.0.1.md)
 
-说明：本版不新增方法，也不改变 judge 机制；它给 `v1.0 Method Fidelity Framework` 增加一个极简使用日志入口，让每次真实 fidelity judge 结果可以脱敏记录、持续积累，为后续“用数据判断哪些方法有约束增益”打底。如果从 `v0.x` 直接升级到 `v1.0.1`，需要同时关注 `v1.0` 的正式发布面：MPG、授权口径、忠实度评审自动化、退出审查和跨模型小样本都已经包含在这个安装版本里。
+说明：本版是当前推荐的 1.0 系列安装版本：它包含 `v1.0` 的正式发布面，包括 MPG、授权口径、忠实度评审自动化、退出审查和跨模型小样本；同时新增一个极简使用日志入口，让每次真实 fidelity judge 结果可以脱敏记录、持续积累，为后续“用数据判断哪些方法有约束增益”打底。
 
 ### 新增
 
@@ -61,7 +61,7 @@
 
 说明：本版新增 `MPG / 主线-路径博弈`，把“看见长期主线”之后最容易出错的路径波动、对抗力量和载体承受力，收束成可交付的主线承载方法。
 
-`v1.0 Method Fidelity Framework` 把现有 `tplan`、`3L5S`、`TVG` 的校验经验与 `SELA`、`MPG` 的 fidelity pilots 收束为统一方向：约束关键判断动作，不约束判断结论。该版本完成 v0.9 之后的发布前置项，可以作为 Mindthus 第一版正式发布面。
+`v1.0 Method Fidelity Framework` 把现有 `tplan`、`3L5S`、`TVG` 的校验经验与 `SELA`、`MPG` 的 fidelity pilots 收束为统一方向：约束关键判断动作，不约束判断结论。该版本可以作为 Mindthus 第一版正式发布面。
 
 ### 1.0 blocker closure
 
@@ -75,8 +75,8 @@
 - 新增 `MPG / 主线-路径博弈` 独立方法、skill 入口、方法页、资源页和压力测试，用来处理主线兑现前的路径波动。
 - 新增 AGPLv3 + 商业双授权口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有 SaaS、商业平台集成或不公开对应源代码的商业用途需要单独商业授权。
 - 新增 `scripts/run-fidelity-judge.py`，用于生成可复现 judge prompt 并校验 judge JSON 结果；脚本只检查 rubric 记录形状、分数和 escape-review 覆盖，不替代语义判断。
-- 新增 SELA 跨模型 baseline 记录：在既有 v0.9 packet 之外，补跑 `opencode/deepseek-v4-flash-free` 的 baseline-vs-constrained 小样本，作为 v1.0 发布证据而非普适鲁棒性声明。
-- 新增 Method Fidelity Harness 设计、SELA/MPG pilot contract、共享 Shape & Evidence Risk Report、fidelity core、以及 3L5S / TVG 既有 validator 对齐记录，作为 v0.9 验收材料。
+- 新增 SELA 跨模型 baseline 记录：补跑 `opencode/deepseek-v4-flash-free` 的 baseline-vs-constrained 小样本，作为 v1.0 发布证据而非普适鲁棒性声明。
+- 新增 Method Fidelity Harness 设计、SELA/MPG pilot contract、共享 Shape & Evidence Risk Report、fidelity core、以及 3L5S / TVG 既有 validator 对齐记录，作为正式发布验收材料。
 - 新增 3L5S、EDSP、WAE、TVG、using-mindthus 的 fidelity output template 与 shared-core validator；本轮不迁移 `tplan` runtime。
 - MPG 交付 `Path-Carrying Strategy / 主线承载方案`，不只判断行动者能不能穿过波动，还要给出暴露预算、可选性、触发器、熔断点和证据缺口。
 - 新增 `Human-Readable First / 先讲人话` 输出纪律：先讲“这对你意味着什么”，再给结构字段，避免方法分析变成术语墙。

@@ -47,22 +47,28 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
         self.assertIn("## v1.0.1", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.0.1.md)", changelog)
-        self.assertIn("如果从 `v0.x` 直接升级到 `v1.0.1`", changelog)
+        self.assertIn("当前推荐的 1.0 系列安装版本", changelog)
+        self.assertIn("MPG、授权口径、忠实度评审自动化、退出审查和跨模型小样本", changelog)
         self.assertIn("scripts/log-fidelity-usage.py", changelog)
 
         for phrase in (
-            "如果从 v0.x 升级",
-            "`v1.0.1` 包含 `v1.0` 的正式发布面",
+            "当前推荐的 1.0 系列安装版本",
+            "提供第一版正式可用的判断框架",
+            "v1.0 正式能力",
+            "`v1.0.1` 同时包含 `v1.0` 的这些更新",
             "MPG / 主线-路径博弈",
             "授权口径",
             "忠实度评审自动化入口",
-            "退出理由本身是否成立",
+            "退出审查",
             "跨模型小样本",
+            "v1.0.1 补丁能力",
             "Mindthus v1.0 发布日志",
             "https://github.com/rv198-star/Mindthus/blob/v1.0/docs/releases/v1.0.md",
         ):
             self.assertIn(phrase, text)
         self.assertNotIn("](v1.0.md)", text)
+        self.assertNotIn("v0.9", text)
+        self.assertNotIn("v0.x", text)
 
     def test_v1_0_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
