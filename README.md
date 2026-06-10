@@ -4,9 +4,9 @@ Mindthus 是一套教 AI agent 在真实任务里“何时拿起哪把刀”的 
 
 人们常说 AI agent 缺乏人类的分析能力、决策能力和架构能力。但这可能只说对了一半：很多时候，agent 真正缺的不是“会不会思考”，而是不知道当前任务到底该用哪种思考方式。
 
-用户说“这个系统不好用”，agent 应该先改界面，还是先定义问题？两个方案都像对，agent 应该继续折中，还是先把结构推到极端？任务已经第三次修改同一个 prompt，agent 应该继续加规则，还是停下来回到上游？AI 生成的文档、代码和方案很顺，但很浅，agent 应该怎么把它做深？
+用户说“这个系统不好用”，agent 应该先改界面，还是先定义问题？两个方案都像对，agent 应该继续折中，还是先把结构推到极端？任务已经第三次修改同一个 prompt，agent 应该继续加规则，还是停下来回到上游？AI 生成的文档、代码和方案很顺，但价值不足，agent 应该怎么把它强化到真正可用？
 
-Mindthus 试图把这些场景里的判断，变成 agent 能安装、调用、审查和测试的 skills。当 agent 能判断什么时候该用问题定义、结构推演、趋势取舍、主线承载、控制边界、价值加深或长任务运行纪律时，它的输出就不只是“生成得更像”，而是更接近真正会分析和决策。
+Mindthus 试图把这些场景里的判断，变成 agent 能安装、调用、审查和测试的 skills。当 agent 能判断什么时候该用问题定义、结构推演、趋势取舍、主线承载、控制边界、定向价值强化或长任务运行纪律时，它的输出就不只是“生成得更像”，而是更接近真正会分析和决策。
 
 `Thus` 表示“所以 / 如此 / 就该这样”。`此心 / Mindthus` 的意思是：当一个人已经看清问题的形状，后续行动就不该再散乱地试错，而应该沿着那个判断展开。
 
@@ -52,7 +52,7 @@ Mindthus 适合放在真实 agent 工作流里，尤其是这些场景：
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：用户给了一堆现象，大家都在提方案，但没人能一句话说清问题是什么时，用它讲清问题如何从混乱信号走到可执行步骤。
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对、原则一落地就摇摆、命题本身可能有坑时，用它先建结构坐标，再做场景投影。
 - [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在“管事”，但没人知道流程、判断和证据各自该管什么时，用它重新划清控制边界。
-- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：AI 生成的文档、代码或方案看起来完整，却停在表层、缺少厚度、洞察或价值密度时，用它把薄产物加深、提炼或压缩成有判断、有取舍、有下游价值的可用模块。
+- [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：AI 生成的文档、代码、方案或提示词看起来完整却价值不足时，用它把文本更接近某个“好”的标准；这个标准可以来自默认实用价值，也可以由 profile 定义。
 - [`tplan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务跑着跑着任务列表漂了、logs 和 evidence 混在一起、继续或停止没人负责时，用它管理目标、验收证据、任务状态和停止条件。它不是季度 OKR 表，而是长任务执行中的动态工作流：目标稳定，任务树跟着 checkpoint、evidence、blocker 和用户反馈短周期调整。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个文件、prompt、参数或任务节点已经第三次被修，下一步还想继续加层时，用它防止局部修补变成死亡螺旋。
 

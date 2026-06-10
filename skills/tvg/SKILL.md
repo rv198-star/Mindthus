@@ -1,21 +1,28 @@
 ---
 name: tvg
-description: Use as a value-driven thinking-depth enhancer when an AI-generated bounded module or artifact looks rigorous and standard but is hollow, shallow, random, or weak in judgment, evidence, trade-offs, downstream handoff, reuse, or practical decision/action value.
+description: Use as a value-directed text/artifact strengthening loop when an AI-generated bounded module looks complete but must be moved closer to an explicit standard of "good" for judgment, evidence, trade-offs, downstream handoff, reuse, or action value.
 ---
 
 # TVG / Thinking Value-Gain
 
 ## Core Claim
 
-Thinking Value-Gain is a state-driven value-gain loop for AI-generated bounded modules.
+Thinking Value-Gain is a value-directed text/artifact transformation loop for
+AI-generated bounded modules.
+
+Short version:
+
+> TVG moves a bounded text or artifact closer to a defined standard of "good".
+> That standard comes from expected_value, the active value_profile, fixed evidence
+> boundaries, veto constraints, and the exit gate.
 
 It addresses a common AI-output failure mode: the artifact looks complete, rigorous,
 standardized, and fluent, but the substance is hollow, shallow, random, over-expanded,
 or too weak for real judgment, decision, action, review, reuse, or handoff.
 
-TVG is not a thickness-expansion method. Sufficient thinking thickness is the substrate
-of value, Grounded Insight Yield is the core output, and Value Density is the delivery
-quality.
+TVG is not a thickness-expansion method and not a generic prompt-writing trick.
+Sufficient thinking thickness is the substrate of value, Grounded Insight Yield is the
+core output, and Value Density is the delivery quality.
 
 Short rule:
 

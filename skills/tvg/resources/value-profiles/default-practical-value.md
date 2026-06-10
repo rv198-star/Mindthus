@@ -48,9 +48,10 @@ It intentionally uses only the required `value_semantics` layer. It does not def
 `realization_surface` or `gain_policy`; when those optional layers are absent, TVG
 uses the module type, downstream use, and default practical-value gain moves.
 
-It preserves TVG's ordinary value model: a module should become more useful for
-decision, action, review, reuse, handoff, and execution without becoming longer,
-more ceremonial, or more confident than its evidence allows.
+It preserves TVG's ordinary value model: a module should move closer to the default
+standard of "good" for practical use. It should become more useful for decision,
+action, review, reuse, handoff, and execution without becoming longer, more ceremonial,
+or more confident than its evidence allows.
 
 ## Good Means
 

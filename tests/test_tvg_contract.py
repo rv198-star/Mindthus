@@ -40,10 +40,13 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_skill_exposes_state_driven_grounded_insight_loop(self):
+    def test_skill_exposes_value_directed_grounded_insight_loop(self):
         text = (TVG / "SKILL.md").read_text(encoding="utf-8")
         for phrase in (
-            "state-driven value-gain loop",
+            "value-directed text/artifact transformation loop",
+            'standard of "good"',
+            "expected_value",
+            "exit gate",
             "Thinking Thickness",
             "Grounded Insight Yield",
             "Value Density",
@@ -760,6 +763,9 @@ class TvgContractTests(unittest.TestCase):
     def test_public_tvg_doc_mentions_grounded_insight_density_and_profiles(self):
         text = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
         for phrase in (
+            "定向文本强化方法",
+            "TVG 让文本更接近某个“好”的标准",
+            "不是普通提示词模板",
             "思考厚度",
             "有根洞察",
             "价值密度",
