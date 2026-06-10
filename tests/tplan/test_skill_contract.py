@@ -276,9 +276,10 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("continuation_authorization", hook)
         self.assertIn("evidence_shape_lint", hook["continuation_authorization"])
 
-    def test_shared_risk_context_has_old_vs_new_ab_acceptance_packet(self):
+    def test_shared_risk_context_has_reproducible_ab_simulator_contract(self):
         pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
-        packet = REPO / "tests" / "tplan" / "shared_risk_context_old_vs_new_ab_run_2026-06-10.md"
+        simulator = REPO / "tests" / "tplan" / "shared_risk_agent_simulator.py"
+        simulator_test = REPO / "tests" / "tplan" / "test_shared_risk_agent_simulator.py"
 
         for phrase in (
             "Shared Risk Context Late Stop Pressure",
@@ -290,53 +291,32 @@ class TplanSkillContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, pressure_text)
 
-        self.assertTrue(packet.exists(), "missing shared-risk old-vs-new A/B packet")
-        self.assertTrue(
-            (REPO / "tests" / "tplan" / "shared_risk_agent_simulator.py").exists(),
-            "missing shared-risk scripted agent simulator",
-        )
-        packet_text = packet.read_text(encoding="utf-8")
+        self.assertTrue(simulator.exists(), "missing shared-risk scripted agent simulator")
+        self.assertTrue(simulator_test.exists(), "missing shared-risk simulator test")
+        combined = simulator.read_text(encoding="utf-8") + "\n" + simulator_test.read_text(encoding="utf-8")
         for phrase in (
-            "tplan Shared Risk Context Old-vs-New A/B Run Packet",
-            "Deterministic Replay",
-            "Scripted Agent Simulator",
-            "Optional Live Pilot",
             "shared_risk_agent_simulator.py",
             "scripted_agent_score",
             "stop_latency",
             "expensive_rerun_attempts_before_gate",
             "steps_until_first_safe_gate",
             "earlier blocks the untrusted expensive path",
-            "clean old baseline",
-            "1c14cb6",
-            "A / Pre-shared-risk Baseline",
-            "B / Shared-risk Treatment",
             "record_risk_context.py",
-            "risk_context_update",
-            "risk_context_recovery",
-            "execution units do not read each other's task logs",
-            "Risk-Adjusted Value Score",
+            "risk_assessment_required",
             "invalid sample",
-            "agent behavior score",
-            "mechanical score",
+            "mechanical_score",
         ):
-            self.assertIn(phrase, packet_text)
+            self.assertIn(phrase, combined)
 
-    def test_continuation_authorization_has_old_vs_new_ab_acceptance_packet(self):
-        packet = REPO / "tests" / "tplan" / "continuation_authorization_old_vs_new_ab_run_2026-06-10.md"
+    def test_continuation_authorization_has_reproducible_ab_simulator_contract(self):
+        simulator = REPO / "tests" / "tplan" / "continuation_authorization_ab_simulator.py"
+        simulator_test = REPO / "tests" / "tplan" / "test_continuation_authorization_ab_simulator.py"
 
-        self.assertTrue(packet.exists(), "missing continuation-authorization old-vs-new A/B packet")
-        self.assertTrue(
-            (REPO / "tests" / "tplan" / "continuation_authorization_ab_simulator.py").exists(),
-            "missing continuation-authorization scripted A/B simulator",
-        )
+        self.assertTrue(simulator.exists(), "missing continuation-authorization scripted A/B simulator")
+        self.assertTrue(simulator_test.exists(), "missing continuation-authorization simulator test")
 
-        packet_text = packet.read_text(encoding="utf-8")
+        combined = simulator.read_text(encoding="utf-8") + "\n" + simulator_test.read_text(encoding="utf-8")
         for phrase in (
-            "tplan Continuation Authorization Old-vs-New A/B Run Packet",
-            "be25f48",
-            "A / Pre-continuation-authorization Baseline",
-            "B / Continuation-authorization Treatment",
             "placeholder/sample red-team anchors",
             "continuation_authorization_ab_simulator.py",
             "pre_continuation_authorization",
@@ -344,11 +324,10 @@ class TplanSkillContractTests(unittest.TestCase):
             "authorization_latency",
             "expensive_same_path_continue_attempts_before_gate",
             "blocks ungated expensive same-path continuation",
-            "not proof that the whole Mission ends earlier",
             "targeted_fix",
-            "mechanical score",
+            "mechanical_score",
         ):
-            self.assertIn(phrase, packet_text)
+            self.assertIn(phrase, combined)
 
 
 if __name__ == "__main__":
