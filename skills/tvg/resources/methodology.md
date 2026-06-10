@@ -129,11 +129,201 @@ Because this method is intended to be portable, value gain must be governed befo
 
 The governance layer has three jobs:
 
-1. classify what kind of value the module needs
-2. name any module-specific veto constraints that value gain must not violate
-3. require an agentic exit audit rather than format-only approval
-4. separate generator and auditor roles when self-audit would be too weak
-5. control how concrete patterns are admitted so they do not reduce generality
+1. resolve `expected_value`
+2. resolve the active `value_profile`
+3. classify what kind of value the module needs
+4. name any module-specific veto constraints that value gain must not violate
+5. require an agentic exit audit rather than format-only approval
+6. separate generator and auditor roles when self-audit would be too weak
+7. control how concrete patterns are admitted so they do not reduce generality
+
+### Expected Value Resolution
+
+`expected_value` is the Agent input contract for what the target artifact should become
+useful for. It is the compatibility bridge to older TVG usage: earlier TVG runs already
+worked this way implicitly by asking what the module should enable downstream. The new
+rule makes that expectation explicit before the loop starts.
+
+Resolve expected_value before the first value-gain round.
+
+Minimum expected-value shape:
+
+```yaml
+expected_value:
+  mode: explicit | provisional-default | inferred-with-warning
+  target_artifact: "the bounded module or artifact being improved"
+  artifact_job: "what this artifact must help a downstream user do"
+  useful_when:
+    - "observable conditions under which the artifact is useful enough"
+  hard_constraints:
+    - "constraints the artifact must not violate"
+  evidence_boundary:
+    - "what cannot be invented, and what must remain assumption or review-bound"
+  output_bias: insight_dense | balanced | coverage_rich
+```
+
+Agent input contract:
+
+- `target_artifact`: what is being improved
+- `artifact_job`: who or what it helps, and for which decision, action, review, render,
+  implementation, reuse, or handoff
+- `useful_when`: output expectations that make the artifact worth freezing
+- `hard_constraints`: user constraints, safety boundaries, veto constraints, and
+  non-overridable facts
+- `evidence_boundary`: where claims must be proven, assumed, or review-bound
+- `output_bias`: whether the final delivery should be denser, balanced, or coverage-rich
+
+Gate is an internal stop condition compiled from expected_value, TVG bottom lines, the
+active value_profile, and any veto constraints. It is not a user-facing configuration
+burden. Users may supply expected value in ordinary language; Agent/runtime traces may
+record the compiled gate for audit.
+
+### Value Profile Resolution
+
+`value_profile` is an optional value definition package. At minimum it defines what
+higher value, lower value, priority, profile-specific value-gain axes, and
+profile-specific veto constraints mean for the current module and downstream use.
+
+A profile may stay minimal. When the default TVG gain moves are enough, a supplied
+profile only needs `value_semantics`. Advanced profiles may add optional layers that
+tell TVG where value should become observable and which deepening moves are preferred.
+Those layers live inside the single profile concept so users do not have to manage a
+separate output contract or domain workflow.
+
+Supported modes:
+
+> `default | supplied | inferred-with-warning`
+
+Resolution order:
+
+1. If the user supplies a profile, use `mode: supplied`.
+2. If the project has a declared project default profile, use it unless the user overrides it.
+3. If no supplied or project default profile exists, use the default practical-value profile.
+4. If the agent infers a profile from context, mark it as `inferred-with-warning` and keep the evidence boundary visible.
+5. If the profile source conflicts with the artifact being improved, prefer independent profile sources over the artifact sample.
+
+The default practical-value profile is the fallback when no supplied or project default
+profile is active. It preserves TVG's existing practical value orientation: decision /
+action leverage, evidence honesty, handoff usability, risk reduction, reuse without
+overfitting, execution readiness, grounded insight, and value density.
+
+Supplied profiles are judgment contracts. They may change:
+
+- what counts as good or bad
+- which value-gain axes matter
+- which priorities dominate when values conflict
+- which profile-specific veto constraints block exit
+- where value should become observable and reviewable in the artifact
+- which deepening moves are likely to create real value gain
+- which prompt, document, design, image, or handoff audit questions are relevant
+
+Supplied profiles must not become unconstrained value relativism. profiles cannot
+override evidence honesty, claim ceilings, user constraints, safety boundaries, or
+veto constraints.
+
+scripts validate profile shape only for profile-specific fields. When a trace includes
+`expected_value` and `exit_gate`, scripts validate expected_value, profile, and exit_gate
+shape only. They must not decide whether expected_value is correct, whether a value
+profile is true, complete, aesthetically successful, thick enough, or sufficient for exit.
+Scripts must not decide whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit.
+
+Layered profile shape:
+
+```yaml
+value_profile:
+  mode: default | supplied | inferred-with-warning
+  name: "default practical-value profile"
+  artifact_job: "what this artifact is supposed to do downstream"
+
+  value_semantics: # required minimum layer
+    good_means:
+      - "conditions that count as higher value"
+    bad_means:
+      - "conditions that count as lower value or false improvement"
+    priority_order:
+      - "which values dominate when they conflict"
+    derived_axes:
+      - "domain-specific value-gain axes used for this run"
+    evidence_basis:
+      - "sources, examples, corpus, owner judgment, or assumptions behind the profile"
+    profile_veto_constraints:
+      - "states that block freeze under this value definition"
+
+  realization_surface: # optional advanced layer
+    artifact_role: "what role the artifact plays downstream"
+    observable_units:
+      - "units where value must be inspectable, such as decision fork, behavior path, shot, panel, interface contract"
+    downstream_use: "how a reader, reviewer, executor, or generator will use the artifact"
+    granularity_pressure:
+      - "signals that the artifact should split, merge, surface, or preserve a unit"
+    review_handles:
+      - "handles a reviewer can inspect to see whether value became visible"
+
+  gain_policy: # optional advanced layer; not a score or reward model
+    preferred_moves:
+      - "deepening moves likely to create real value gain under this profile"
+    discouraged_moves:
+      - "moves that look effortful but usually create false thickness"
+    split_rules:
+      - "when one unit should become multiple reviewable units"
+    merge_rules:
+      - "when repeated units should be collapsed"
+    density_guidance:
+      - "how to preserve useful thickness without ornamental bloat"
+
+  prompt_self_audit_questions:
+    - "profile-specific questions for prompt, document, design, or handoff artifacts"
+  image_self_audit_questions:
+    - "profile-specific questions for generated images or storyboard panels"
+  source_notes:
+    - "source notes, scope notes, and contamination boundaries for this profile"
+```
+
+`value_semantics` is the only required internal layer. If `realization_surface` is
+missing, TVG uses the module type, downstream use, and default practical-value model
+to infer where value should be visible. If `gain_policy` is missing, TVG uses its
+default gain moves: evidence binding, alternatives and trade-offs, failure paths,
+claim ceilings, handoff usefulness, and value density.
+
+`gain_policy` may be understood as a route preference for value-gain actions. It is
+not a scoring system, a reward model, or permission to perform more activity. It says
+which deepening moves are more likely to create real value under the active profile,
+and which moves are likely to produce low-value thickness.
+
+The optional layers must stay abstract. For a cinematic storyboard profile,
+`observable_units` may be shots or panels. For an engineering design note, they may
+be behavior paths, invariants, interface contracts, or failure modes. For a strategy
+memo, they may be decision forks, scenarios, constraints, or triggers. Do not encode
+storyboard-specific rules into TVG's core method.
+
+Profile construction must distinguish profile power from runtime rescue. A weak
+profile can still produce a good artifact if the TVG loop repeatedly repairs the
+prompt, image, document, or plan. That is useful production evidence, but it is not
+evidence that the profile itself is strong.
+
+Use two different evaluations:
+
+- `single-pass profile power test`: fixed profile, one artifact attempt, no remediation
+  loop. This tests how much control the profile itself provides.
+- `loop-assisted production test`: TVG may iterate until the gate passes, but the run
+  must record rounds used, runtime rescue cost, residual failure modes, and claim
+  ceiling.
+
+Do not mark a profile mature merely because loop-assisted output succeeds. If the
+single-pass result is weak and the loop needs many rounds, the honest claim is that TVG
+can rescue the artifact at runtime, not that the profile has strong control power.
+Detailed construction guidance lives in
+`resources/value-profiles/profile-construction.md`.
+
+Profile-source guardrail:
+
+> Do not infer a style, aesthetic, brand, legal, safety, or domain value profile from
+> the artifact being improved when that artifact may be the flawed sample.
+
+For example, a generic AI video prompt expansion is a test artifact, not reliable
+evidence for a Shaw Brothers aesthetic profile. In that case, the profile should come
+from independent films, production history, essays, visual analysis, or owner-supplied
+judgment; the flawed expansion should only be used as a pressure test.
 
 ### Value-Gain Types
 
@@ -312,6 +502,54 @@ Ask:
 
 The exit gate should be defined before the loop starts. Otherwise the work becomes subjective and can continue forever.
 
+### Default Gate Resolution
+
+An explicit user- or workflow-supplied expected value is preferred. When none is
+supplied, TVG must instantiate a `provisional-default` expected_value before the first
+value-gain round, then compile an internal `exit_gate` / stop condition from it.
+
+The default expected value is derived from:
+
+1. TVG fixed bottom lines: evidence honesty, claim ceilings, user constraints, safety
+   boundaries, veto constraints, and no hidden downstream invention.
+2. The named module responsibility and freeze granularity.
+3. The downstream consumer and downstream use.
+4. The active `value_profile`: default practical-value profile unless a supplied or
+   inferred-with-warning profile is active.
+5. The `next-round positive-value` condition: another round needs a named value-gain
+   hypothesis, not only a desire for more polish, compliance, or thickness.
+
+The provisional expected value must be visible in the working record or trace. Minimum
+fields:
+
+- `target_artifact`
+- `artifact_job`
+- `useful_when`
+- `hard_constraints`
+- `evidence_boundary`
+- `output_bias`
+
+The internal compiled gate may be recorded for audit with these fields:
+
+- `module_responsibility`
+- `downstream_use`
+- `hard_veto_checks`
+- `value_profile_fit_checks`
+- `downstream_use_checks`
+- `evidence_boundary_checks`
+- `exit_blockers`
+- `next_round_positive_value_check`
+- `unresolved_gate_items`
+
+If module responsibility, downstream use, freeze granularity, or evidence boundary is
+missing and materially changes the exit decision, do not silently proceed as if the gate
+is known. Ask, return-remediate, or mark the item review-bound/blocking according to risk.
+
+The default expected value and compiled gate are agentic runtime judgments, not script
+decisions. Scripts may initialize and validate `expected_value` and `exit_gate` shape so a
+run cannot omit the stop-condition scaffold, but scripts must not decide expected value
+correctness, default gate correctness, exit gate success, route, or exit state.
+
 ### Exit Gate Template
 
 A module may exit only when:
@@ -326,6 +564,33 @@ A module may exit only when:
 - named veto constraints are not triggered, or exit is returned/blocked honestly
 - another round is unlikely to create meaningful positive value
 - exit readiness has been checked by agentic judgment, not only by script or template audit
+
+### Cross-Artifact Exit Gate
+
+The exit gate is not a domain quality score. It is a routing protocol for whether the
+bounded module should freeze, freeze with review-bound warnings, return for remediation,
+block on missing input, or run another value-gain round.
+
+Use the same gate shape across very different artifacts:
+
+1. `hard veto gate`: no evidence honesty, claim ceiling, user constraint, safety
+   boundary, or veto constraint has been overridden.
+2. `value-semantics fit gate`: the artifact expresses the active value profile or default
+   practical-value standard for its actual job.
+3. `downstream-use gate`: the consumer can act, review, decide, render, implement, or hand
+   off without inventing critical missing truth.
+4. `next-round positive-value gate`: another round has a named positive-value hypothesis;
+   otherwise the loop exits or blocks honestly.
+
+This gate should survive cross-context pressure. In a Shaw storyboard prompt, it checks
+whether the prompt preserves script facts, avoids profile vetoes such as modern CG or
+generic video-prompt inflation, exposes reviewable shot/panel units, and is usable for the
+next image generation or storyboard review step. In an RPD price-raising document, it
+checks whether the thickened document connects price to buyer outcome, scope, proof or
+assumptions, alternatives, risk ownership, implementation path, and the buyer's decision.
+It must not invent ROI, customer facts, competitor facts, authority, or willingness to pay.
+For the RPD case, the supported claim is that the document now supports a more credible
+price justification, not that the customer will accept the higher price.
 
 ## Step 2: Choose Value-Gain Axes
 

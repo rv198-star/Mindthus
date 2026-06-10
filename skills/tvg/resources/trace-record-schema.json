@@ -1,9 +1,12 @@
 {
-  "schema_version": "tvg-trace-v0.3",
+  "schema_version": "tvg-trace-v0.4",
   "required_fields": [
     "schema_version",
     "method_version",
     "module",
+    "expected_value",
+    "value_profile",
+    "exit_gate",
     "value_gain",
     "rounds",
     "agentic_exit_audit",
@@ -15,6 +18,78 @@
     "type",
     "downstream_consumer",
     "freeze_granularity"
+  ],
+  "required_expected_value_fields": [
+    "mode",
+    "target_artifact",
+    "artifact_job",
+    "useful_when",
+    "hard_constraints",
+    "evidence_boundary",
+    "output_bias",
+    "source",
+    "unresolved_expected_value_items"
+  ],
+  "allowed_expected_value_modes": [
+    "explicit",
+    "provisional-default",
+    "inferred-with-warning"
+  ],
+  "required_value_profile_fields": [
+    "mode",
+    "name",
+    "artifact_job",
+    "value_semantics",
+    "prompt_self_audit_questions",
+    "image_self_audit_questions",
+    "source_notes"
+  ],
+  "required_value_semantics_fields": [
+    "good_means",
+    "bad_means",
+    "priority_order",
+    "derived_axes",
+    "evidence_basis",
+    "profile_veto_constraints"
+  ],
+  "optional_value_profile_layers": [
+    "realization_surface",
+    "gain_policy"
+  ],
+  "realization_surface_list_fields": [
+    "observable_units",
+    "granularity_pressure",
+    "review_handles"
+  ],
+  "gain_policy_list_fields": [
+    "preferred_moves",
+    "discouraged_moves",
+    "split_rules",
+    "merge_rules",
+    "density_guidance"
+  ],
+  "allowed_value_profile_modes": [
+    "default",
+    "supplied",
+    "inferred-with-warning"
+  ],
+  "required_exit_gate_fields": [
+    "mode",
+    "source",
+    "module_responsibility",
+    "downstream_use",
+    "hard_veto_checks",
+    "value_profile_fit_checks",
+    "downstream_use_checks",
+    "evidence_boundary_checks",
+    "exit_blockers",
+    "next_round_positive_value_check",
+    "unresolved_gate_items"
+  ],
+  "allowed_exit_gate_modes": [
+    "explicit",
+    "provisional-default",
+    "inferred-with-warning"
   ],
   "required_value_gain_fields": [
     "claimed_value_gain",
@@ -60,5 +135,5 @@
     "not-applicable",
     "unknown"
   ],
-  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain or exit_state."
+  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain, expected_value correctness, value_profile truth, default_gate_correctness, exit_gate_success, realization_surface fit, gain_policy success, prompt thickness success, aesthetic success, routing, or exit_state. scripts validate expected_value, profile, and exit_gate shape only and must not decide whether expected_value is correct or whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit."
 }

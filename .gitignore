@@ -4,3 +4,14 @@
 .tplan/
 __pycache__/
 *.py[cod]
+
+# Local TVG pilot outputs and generated storyboard images.
+.tplan/missions/clean-room-issue31-value-profile-*/
+tests/artifacts/tvg_*.png
+tests/artifacts/tvg_shaw_layered_*.png
+tests/artifacts/tvg_shaw_standard_profile_prompt_loop_image.png
+tests/tvg_shaw_standard_profile_prompt_loop_*.md
+tests/tvg_value_profile_*_self_iteration_*.md
+tests/tvg_value_profile_shaw_pilot_clean_room_*.md
+tests/tvg_value_profile_shaw_5round_image_iteration_*.md
+tests/tvg_value_profile_shaw_layered_*.md

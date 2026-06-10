@@ -52,8 +52,8 @@ Choose this path because the alternative is slower.
 
     def test_tvg_trace_report_uses_shared_shape_evidence_language(self):
         trace = {
-            "schema_version": "tvg-trace-v0.3",
-            "method_version": "Thinking Value-Gain Methodology v0.3",
+            "schema_version": "tvg-trace-v0.4",
+            "method_version": "Thinking Value-Gain Methodology v0.4",
             "created_at": "2026-06-08T00:00:00Z",
             "updated_at": "2026-06-08T00:00:00Z",
             "module": {
@@ -62,6 +62,52 @@ Choose this path because the alternative is slower.
                 "type": "methodology",
                 "downstream_consumer": "maintainer",
                 "freeze_granularity": "module",
+            },
+            "expected_value": {
+                "mode": "provisional-default",
+                "target_artifact": "Example",
+                "artifact_job": "increase practical thinking value for maintainer review",
+                "useful_when": ["maintainer can review and hand off without inventing critical truth"],
+                "hard_constraints": [
+                    "do not override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints"
+                ],
+                "evidence_boundary": ["separate supported claims from assumptions"],
+                "output_bias": "balanced",
+                "source": "test fixture",
+                "unresolved_expected_value_items": [],
+            },
+            "value_profile": {
+                "mode": "default",
+                "name": "default practical-value profile",
+                "artifact_job": "increase practical thinking value for maintainer review",
+                "value_semantics": {
+                    "good_means": ["clearer maintainer review value"],
+                    "bad_means": ["longer output without practical value"],
+                    "priority_order": ["evidence honesty", "downstream usability"],
+                    "derived_axes": [],
+                    "evidence_basis": ["TVG default practical-value model"],
+                    "profile_veto_constraints": [],
+                },
+                "prompt_self_audit_questions": [],
+                "image_self_audit_questions": [],
+                "source_notes": [],
+            },
+            "exit_gate": {
+                "mode": "provisional-default",
+                "source": "test fixture",
+                "module_responsibility": "methodology",
+                "downstream_use": "maintainer",
+                "hard_veto_checks": [
+                    "do not override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints"
+                ],
+                "value_profile_fit_checks": ["artifact expresses default practical-value standard"],
+                "downstream_use_checks": [
+                    "maintainer can review and hand off without inventing critical truth"
+                ],
+                "evidence_boundary_checks": ["separate supported claims from assumptions"],
+                "exit_blockers": [],
+                "next_round_positive_value_check": "another round needs a named positive-value hypothesis",
+                "unresolved_gate_items": [],
             },
             "value_gain": {
                 "claimed_value_gain": "",

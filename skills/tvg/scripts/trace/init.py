@@ -11,11 +11,203 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
+def default_value_profile() -> dict:
+    return {
+        "mode": "default",
+        "name": "default practical-value profile",
+        "artifact_job": "increase practical thinking value for the module's actual downstream use",
+        "value_semantics": {
+            "good_means": [
+                "clearer decision / action leverage",
+                "better evidence honesty",
+                "stronger handoff usability",
+                "risk reduction without false confidence",
+                "reuse without overfitting",
+                "execution readiness",
+            ],
+            "bad_means": [
+                "length, polish, or ornamental structure without practical value",
+                "generic completeness that leaves downstream invention",
+                "confidence that exceeds evidence or hides review-bound uncertainty",
+            ],
+            "priority_order": [
+                "evidence honesty and explicit constraints",
+                "downstream usability",
+                "decision / action leverage",
+                "risk reduction",
+                "reuse and execution readiness",
+                "value density",
+            ],
+            "derived_axes": [],
+            "evidence_basis": [
+                "TVG default practical-value model",
+            ],
+            "profile_veto_constraints": [],
+        },
+        "prompt_self_audit_questions": [],
+        "image_self_audit_questions": [],
+        "source_notes": [],
+    }
+
+
+def build_value_profile(args: argparse.Namespace) -> dict:
+    profile = default_value_profile()
+    if args.value_profile_mode:
+        profile["mode"] = args.value_profile_mode
+    if args.value_profile_name:
+        profile["name"] = args.value_profile_name
+    if args.value_profile_artifact_job:
+        profile["artifact_job"] = args.value_profile_artifact_job
+    semantics = profile["value_semantics"]
+    if args.value_profile_good:
+        semantics["good_means"] = args.value_profile_good
+    if args.value_profile_bad:
+        semantics["bad_means"] = args.value_profile_bad
+    if args.value_profile_priority:
+        semantics["priority_order"] = args.value_profile_priority
+    if args.value_profile_derived_axis:
+        semantics["derived_axes"] = args.value_profile_derived_axis
+    if args.value_profile_evidence:
+        semantics["evidence_basis"] = args.value_profile_evidence
+    if args.value_profile_prompt_audit_question:
+        profile["prompt_self_audit_questions"] = args.value_profile_prompt_audit_question
+    if args.value_profile_image_audit_question:
+        profile["image_self_audit_questions"] = args.value_profile_image_audit_question
+    if args.value_profile_source_note:
+        profile["source_notes"] = args.value_profile_source_note
+    if args.profile_veto_constraint:
+        semantics["profile_veto_constraints"] = args.profile_veto_constraint
+    surface = {}
+    if args.value_profile_surface_artifact_role:
+        surface["artifact_role"] = args.value_profile_surface_artifact_role
+    if args.value_profile_surface_downstream_use:
+        surface["downstream_use"] = args.value_profile_surface_downstream_use
+    if args.value_profile_surface_observable_unit:
+        surface["observable_units"] = args.value_profile_surface_observable_unit
+    if args.value_profile_surface_granularity_pressure:
+        surface["granularity_pressure"] = args.value_profile_surface_granularity_pressure
+    if args.value_profile_surface_review_handle:
+        surface["review_handles"] = args.value_profile_surface_review_handle
+    if surface:
+        profile["realization_surface"] = surface
+    gain_policy = {}
+    if args.value_profile_gain_preferred_move:
+        gain_policy["preferred_moves"] = args.value_profile_gain_preferred_move
+    if args.value_profile_gain_discouraged_move:
+        gain_policy["discouraged_moves"] = args.value_profile_gain_discouraged_move
+    if args.value_profile_gain_split_rule:
+        gain_policy["split_rules"] = args.value_profile_gain_split_rule
+    if args.value_profile_gain_merge_rule:
+        gain_policy["merge_rules"] = args.value_profile_gain_merge_rule
+    if args.value_profile_gain_density_guidance:
+        gain_policy["density_guidance"] = args.value_profile_gain_density_guidance
+    if gain_policy:
+        profile["gain_policy"] = gain_policy
+    return profile
+
+
+def build_expected_value(args: argparse.Namespace, value_profile: dict) -> dict:
+    unresolved_items = list(args.expected_value_unresolved_item)
+    if not args.downstream_consumer:
+        unresolved_items.append("downstream_consumer is not specified")
+    if not args.freeze_granularity:
+        unresolved_items.append("freeze_granularity is not specified")
+    hard_constraints = list(args.expected_value_hard_constraint)
+    hard_constraints.extend(args.veto_constraint)
+    hard_constraints.extend(value_profile.get("value_semantics", {}).get("profile_veto_constraints", []))
+    if not hard_constraints:
+        hard_constraints = [
+            "do not override evidence honesty, claim ceilings, user constraints, safety boundaries, or veto constraints",
+        ]
+    useful_when = list(args.expected_value_useful_when)
+    if not useful_when:
+        useful_when = [
+            "downstream user can act, review, decide, implement, render, or hand off without inventing critical missing truth",
+        ]
+    evidence_boundary = list(args.expected_value_evidence_boundary)
+    if not evidence_boundary:
+        evidence_boundary = [
+            "separate supported claims from assumptions and review-bound uncertainty",
+        ]
+    return {
+        "mode": args.expected_value_mode or "provisional-default",
+        "target_artifact": args.expected_value_target_artifact or args.module_title,
+        "artifact_job": args.expected_value_artifact_job or value_profile["artifact_job"],
+        "useful_when": useful_when,
+        "hard_constraints": hard_constraints,
+        "evidence_boundary": evidence_boundary,
+        "output_bias": args.expected_value_output_bias or "balanced",
+        "source": args.expected_value_source or (
+            "derived from module metadata, downstream consumer, active value_profile, "
+            "and supplied constraints; agentic judgment must refine it when context is thin"
+        ),
+        "unresolved_expected_value_items": unresolved_items,
+    }
+
+
+def build_exit_gate(args: argparse.Namespace, value_profile: dict, expected_value: dict) -> dict:
+    mode = args.exit_gate_mode or "provisional-default"
+    source = args.exit_gate_source or (
+        "internal stop condition compiled from expected_value, TVG fixed bottom lines, "
+        "active value_profile, and any supplied veto constraints; agentic audit must judge it"
+    )
+    unresolved_gate_items = list(args.exit_gate_unresolved_item)
+    unresolved_gate_items.extend(expected_value["unresolved_expected_value_items"])
+    if not args.downstream_consumer:
+        unresolved_gate_items.append("downstream_consumer is not specified")
+    if not args.freeze_granularity:
+        unresolved_gate_items.append("freeze_granularity is not specified")
+
+    semantics = value_profile.get("value_semantics", {})
+    profile_fit_checks = list(args.exit_gate_value_profile_fit_check)
+    if not profile_fit_checks:
+        profile_fit_checks = [
+            "artifact expresses the active value_profile or default practical-value standard for its actual job",
+            "longer output is not treated as value by itself",
+        ]
+        for priority in semantics.get("priority_order", [])[:3]:
+            profile_fit_checks.append(f"profile priority preserved: {priority}")
+
+    hard_veto_checks = list(args.exit_gate_hard_veto_check)
+    hard_veto_checks.extend(expected_value["hard_constraints"])
+    hard_veto_checks.extend(args.veto_constraint)
+    hard_veto_checks.extend(semantics.get("profile_veto_constraints", []))
+    if not hard_veto_checks:
+        hard_veto_checks = [
+            "evidence honesty, claim ceilings, user constraints, safety boundaries, and veto constraints remain non-overridable",
+        ]
+
+    downstream_use_checks = list(args.exit_gate_downstream_use_check)
+    if not downstream_use_checks:
+        downstream_use_checks = list(expected_value["useful_when"])
+
+    evidence_boundary_checks = list(args.exit_gate_evidence_boundary_check)
+    if not evidence_boundary_checks:
+        evidence_boundary_checks = list(expected_value["evidence_boundary"])
+
+    return {
+        "mode": mode,
+        "source": source,
+        "module_responsibility": args.exit_gate_module_responsibility or args.module_type,
+        "downstream_use": args.exit_gate_downstream_use or args.downstream_consumer,
+        "hard_veto_checks": hard_veto_checks,
+        "value_profile_fit_checks": profile_fit_checks,
+        "downstream_use_checks": downstream_use_checks,
+        "evidence_boundary_checks": evidence_boundary_checks,
+        "exit_blockers": args.exit_gate_exit_blocker,
+        "next_round_positive_value_check": args.exit_gate_next_round_positive_value_check
+        or "another round requires a named positive-value hypothesis, not only more polish, compliance, or thickness",
+        "unresolved_gate_items": unresolved_gate_items,
+    }
+
+
 def build_trace(args: argparse.Namespace) -> dict:
     now = datetime.now(timezone.utc).isoformat()
+    value_profile = build_value_profile(args)
+    expected_value = build_expected_value(args, value_profile)
     return {
-        "schema_version": "tvg-trace-v0.3",
-        "method_version": "Thinking Value-Gain Methodology v0.3",
+        "schema_version": "tvg-trace-v0.4",
+        "method_version": "Thinking Value-Gain Methodology v0.4",
         "created_at": now,
         "updated_at": now,
         "module": {
@@ -25,6 +217,9 @@ def build_trace(args: argparse.Namespace) -> dict:
             "downstream_consumer": args.downstream_consumer,
             "freeze_granularity": args.freeze_granularity,
         },
+        "expected_value": expected_value,
+        "value_profile": value_profile,
+        "exit_gate": build_exit_gate(args, value_profile, expected_value),
         "value_gain": {
             "claimed_value_gain": "",
             "value_gain_types": [],
@@ -51,6 +246,15 @@ def build_trace(args: argparse.Namespace) -> dict:
             "script_cannot_decide": [
                 "value_gain",
                 "veto_constraints",
+                "expected_value_correctness",
+                "value_profile_truth",
+                "default_gate_correctness",
+                "exit_gate_success",
+                "realization_surface_fit",
+                "gain_policy_success",
+                "prompt_thickness_success",
+                "aesthetic_success",
+                "profile_completeness",
                 "auditor_independence_requirement",
                 "demo_false_positive_risk",
                 "overfitting_risk",
@@ -69,6 +273,48 @@ def main() -> int:
     parser.add_argument("--downstream-consumer", default="")
     parser.add_argument("--freeze-granularity", default="")
     parser.add_argument("--veto-constraint", action="append", default=[])
+    parser.add_argument("--expected-value-mode", choices=("explicit", "provisional-default", "inferred-with-warning"))
+    parser.add_argument("--expected-value-target-artifact")
+    parser.add_argument("--expected-value-artifact-job")
+    parser.add_argument("--expected-value-useful-when", action="append", default=[])
+    parser.add_argument("--expected-value-hard-constraint", action="append", default=[])
+    parser.add_argument("--expected-value-evidence-boundary", action="append", default=[])
+    parser.add_argument("--expected-value-output-bias")
+    parser.add_argument("--expected-value-source")
+    parser.add_argument("--expected-value-unresolved-item", action="append", default=[])
+    parser.add_argument("--exit-gate-mode", choices=("explicit", "provisional-default", "inferred-with-warning"))
+    parser.add_argument("--exit-gate-source")
+    parser.add_argument("--exit-gate-module-responsibility")
+    parser.add_argument("--exit-gate-downstream-use")
+    parser.add_argument("--exit-gate-hard-veto-check", action="append", default=[])
+    parser.add_argument("--exit-gate-value-profile-fit-check", action="append", default=[])
+    parser.add_argument("--exit-gate-downstream-use-check", action="append", default=[])
+    parser.add_argument("--exit-gate-evidence-boundary-check", action="append", default=[])
+    parser.add_argument("--exit-gate-exit-blocker", action="append", default=[])
+    parser.add_argument("--exit-gate-next-round-positive-value-check")
+    parser.add_argument("--exit-gate-unresolved-item", action="append", default=[])
+    parser.add_argument("--value-profile-mode", choices=("default", "supplied", "inferred-with-warning"))
+    parser.add_argument("--value-profile-name")
+    parser.add_argument("--value-profile-artifact-job")
+    parser.add_argument("--value-profile-good", action="append", default=[])
+    parser.add_argument("--value-profile-bad", action="append", default=[])
+    parser.add_argument("--value-profile-priority", action="append", default=[])
+    parser.add_argument("--value-profile-derived-axis", action="append", default=[])
+    parser.add_argument("--value-profile-evidence", action="append", default=[])
+    parser.add_argument("--value-profile-prompt-audit-question", action="append", default=[])
+    parser.add_argument("--value-profile-image-audit-question", action="append", default=[])
+    parser.add_argument("--value-profile-source-note", action="append", default=[])
+    parser.add_argument("--profile-veto-constraint", action="append", default=[])
+    parser.add_argument("--value-profile-surface-artifact-role")
+    parser.add_argument("--value-profile-surface-downstream-use")
+    parser.add_argument("--value-profile-surface-observable-unit", action="append", default=[])
+    parser.add_argument("--value-profile-surface-granularity-pressure", action="append", default=[])
+    parser.add_argument("--value-profile-surface-review-handle", action="append", default=[])
+    parser.add_argument("--value-profile-gain-preferred-move", action="append", default=[])
+    parser.add_argument("--value-profile-gain-discouraged-move", action="append", default=[])
+    parser.add_argument("--value-profile-gain-split-rule", action="append", default=[])
+    parser.add_argument("--value-profile-gain-merge-rule", action="append", default=[])
+    parser.add_argument("--value-profile-gain-density-guidance", action="append", default=[])
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
