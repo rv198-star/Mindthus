@@ -82,6 +82,44 @@ def valid_path_assessment():
     }
 
 
+def valid_risk_assessment():
+    return {
+        "shared_context_used": ["R1"],
+        "invalid_evidence_risk": "high",
+        "failure_risk": "medium",
+        "risk_adjusted_value": "weak",
+        "next_gate": "health_check",
+    }
+
+
+def record_active_risk(mission_dir):
+    result = run_script(
+        "record_risk_context.py",
+        str(mission_dir),
+        "record",
+        "--task-id",
+        "T1",
+        "--scope",
+        "shared_environment",
+        "--signal",
+        "fsync_unreliable",
+        "--severity",
+        "high",
+        "--confidence",
+        "high",
+        "--affected-surface",
+        "generation",
+        "--value-effect",
+        "Expensive reruns may produce invalid evidence.",
+        "--recommended-gate",
+        "environment_health_gate",
+        "--recovery-condition",
+        "dd fsync and sqlite commit smoke pass",
+    )
+    if result.returncode != 0:
+        raise AssertionError(result.stderr)
+
+
 def write_decision(tmp, recommendation="switch"):
     decision = Path(tmp) / "decision.json"
     decision.write_text(
@@ -346,6 +384,72 @@ class ApplyDecisionTests(unittest.TestCase):
     def test_low_impact_child_decision_does_not_require_path_assessment(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "The child draft is ready for parent review.",
+                        "confidence": 75,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "transition_task", "task_id": "T2.1", "status": "completed"},
+                        ],
+                        "requires_human": False,
+                        "parent_alignment": "Completing T2.1 gives T2 its CLI argument draft.",
+                        "mission_trace": "via T2 -> A1",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_high_impact_decision_with_active_risk_requires_risk_assessment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            record_active_risk(mission_dir)
+            decision = write_decision(tmp)
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("decision missing field: risk_assessment", result.stderr)
+
+    def test_risk_assessment_rejects_unsupported_enum(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            record_active_risk(mission_dir)
+            decision = write_decision(tmp)
+            payload = json.loads(decision.read_text(encoding="utf-8"))
+            payload["risk_assessment"] = valid_risk_assessment()
+            payload["risk_assessment"]["next_gate"] = "rerun_anyway"
+            decision.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("risk_assessment next_gate unsupported", result.stderr)
+
+    def test_valid_risk_assessment_passes_with_active_risk(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            record_active_risk(mission_dir)
+            decision = write_decision(tmp)
+            payload = json.loads(decision.read_text(encoding="utf-8"))
+            payload["risk_assessment"] = valid_risk_assessment()
+            decision.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_low_impact_child_decision_with_active_risk_does_not_require_risk_assessment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            record_active_risk(mission_dir)
             decision = Path(tmp) / "decision.json"
             decision.write_text(
                 json.dumps(

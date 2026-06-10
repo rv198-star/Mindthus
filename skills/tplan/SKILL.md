@@ -109,6 +109,22 @@ Evidence is intentionally sparse. Record evidence only when it constrains accept
 state change, blocker, user feedback, decision, or key finding claims. Routine process
 notes stay in logs or archive summaries.
 
+### Shared Risk Context
+
+Use Shared Risk Context when a local blocker, degraded condition, invalid evidence
+risk, abnormal cost, or recovery signal may affect another execution unit's
+risk-adjusted value assessment.
+
+execution units do not read each other's task logs. They publish scoped risk signals to
+Mission-level `shared_context.risk_signals`; later decision packets consume active
+signals when judging whether the next action still has risk-adjusted value.
+
+Record shared risk with `scripts/record_risk_context.py`, which writes a live risk
+signal and an auditable `risk_context_update` event. Resolve, supersede, or invalidate
+the signal with the same script, producing `risk_context_recovery` evidence. Routine
+success should not publish shared risk; acceptance success and recovery success may
+publish evidence when they close a claim or restore trust in a shared surface.
+
 ### Checkpoint Command
 
 Use `scripts/checkpoint.py` when a lightweight runtime update needs to record an
@@ -311,11 +327,18 @@ Mission closure, escalation, or continuation decisions, hook output should expos
 Scripts validate this structure only. Agentic judgment decides whether the assessment
 is true, and evidence links should constrain the confidence of the recommendation.
 
+When active Shared Risk Context exists, high-impact hook output must also expose
+`risk_assessment`: which shared signals were considered, invalid evidence risk,
+failure risk, risk-adjusted value, and the next gate. Scripts validate only shape and
+enum values; agentic judgment decides relevance and action.
+
 ## Boundaries / 边界
 
 - `tplan` must not become a standalone semantic reasoning engine; route semantic judgment to the appropriate Mindthus skill.
 - Scripts must not decide semantic truth. They validate shape, state legality, authority, and evidence references.
 - Evidence is not a process log; promote only acceptance, blocker, feedback, decision, state-change, or key finding records.
+- Shared Risk Context is not a cross-task transcript; publish only scoped signals that
+  can affect another task's value assessment.
 - Lite mode is not a weaker `tplan`; it reduces runtime ceremony only. It cannot bypass
   high-impact alignment, review, decision hooks, or stop conditions.
 - Autonomous mode still stops when no authorized, ROI-defensible next action remains.

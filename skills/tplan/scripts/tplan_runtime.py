@@ -57,6 +57,57 @@ PATH_ASSESSMENT_FIELDS = {
 
 PATH_ASSESSMENT_HOOKS = {"selection", "subtraction", "loopback", "chain_role"}
 
+RISK_ASSESSMENT_FIELDS = {
+    "invalid_evidence_risk": {"low", "medium", "high", "unclear"},
+    "failure_risk": {"low", "medium", "high", "unclear"},
+    "risk_adjusted_value": {"positive", "weak", "negative", "unclear"},
+    "next_gate": {"continue", "health_check", "switch", "stop", "escalate"},
+}
+
+RISK_SIGNAL_SCOPES = {
+    "shared_environment",
+    "shared_dependency",
+    "shared_data",
+    "shared_authority",
+    "shared_evidence_channel",
+    "mission_policy",
+    "other",
+}
+
+RISK_SIGNAL_SEVERITIES = {"low", "medium", "high", "critical"}
+RISK_SIGNAL_SEVERITY_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
+RISK_SIGNAL_CONFIDENCES = {"low", "medium", "high", "unclear"}
+RISK_SIGNAL_STATUSES = {"active", "resolved", "superseded", "invalidated"}
+
+RISK_SIGNAL_REQUIRED_FIELDS = {
+    "id",
+    "source_task_id",
+    "scope",
+    "signal",
+    "severity",
+    "confidence",
+    "affected_surfaces",
+    "value_effect",
+    "recommended_gate",
+    "recovery_condition",
+    "status",
+    "created_at",
+    "updated_at",
+}
+
+RISK_SIGNAL_STRING_FIELDS = (
+    "id",
+    "source_task_id",
+    "signal",
+    "value_effect",
+    "recommended_gate",
+    "recovery_condition",
+    "created_at",
+    "updated_at",
+    "source_evidence_id",
+    "notes",
+)
+
 MISSION_REQUIRED_FIELDS = {
     "id",
     "title",
@@ -193,6 +244,92 @@ def _require_string_fields(errors: list[str], label: str, data: dict[str, Any], 
     for field in fields:
         if field in data and not isinstance(data[field], str):
             errors.append(f"{label} {field} must be a string")
+
+
+def _risk_signal_label(index: int, signal: dict[str, Any]) -> str:
+    risk_id = signal.get("id")
+    return str(risk_id) if isinstance(risk_id, str) and risk_id else str(index)
+
+
+def _validate_risk_signal_enum(
+    errors: list[str],
+    label: str,
+    signal: dict[str, Any],
+    field: str,
+    allowed_values: set[str],
+) -> None:
+    value = signal.get(field)
+    if field not in signal:
+        return
+    if not isinstance(value, str):
+        errors.append(f"risk signal {label} {field} must be a string")
+    elif value not in allowed_values:
+        allowed = ", ".join(sorted(allowed_values))
+        errors.append(f"risk signal {label} {field} unsupported: {value!r}; expected one of: {allowed}")
+
+
+def _validate_shared_context(
+    errors: list[str],
+    state: dict[str, Any],
+    tasks_by_id: dict[str, dict[str, Any]],
+) -> None:
+    if "shared_context" not in state:
+        return
+
+    shared_context = state.get("shared_context")
+    if not isinstance(shared_context, dict):
+        errors.append("shared_context must be an object")
+        return
+
+    risk_signals = shared_context.get("risk_signals")
+    if not isinstance(risk_signals, list):
+        errors.append("shared_context risk_signals must be a list")
+        return
+
+    seen_risk_ids: set[str] = set()
+    for index, signal in enumerate(risk_signals, start=1):
+        if not isinstance(signal, dict):
+            errors.append(f"risk signal {index} must be an object")
+            continue
+
+        label = _risk_signal_label(index, signal)
+        for field in sorted(RISK_SIGNAL_REQUIRED_FIELDS):
+            if field not in signal:
+                errors.append(f"risk signal {label} is missing {field}")
+
+        _require_string_fields(errors, f"risk signal {label}", signal, RISK_SIGNAL_STRING_FIELDS)
+
+        risk_id = signal.get("id")
+        if isinstance(risk_id, str):
+            if risk_id in seen_risk_ids:
+                errors.append(f"duplicate risk signal id {risk_id}")
+            else:
+                seen_risk_ids.add(risk_id)
+
+        source_task_id = signal.get("source_task_id")
+        if isinstance(source_task_id, str) and source_task_id not in tasks_by_id:
+            errors.append(f"risk signal {label} source_task_id {source_task_id} does not exist")
+
+        affected_surfaces = signal.get("affected_surfaces")
+        if "affected_surfaces" in signal:
+            if not isinstance(affected_surfaces, list):
+                errors.append(f"risk signal {label} affected_surfaces must be a list")
+            elif not affected_surfaces:
+                errors.append(f"risk signal {label} affected_surfaces must not be empty")
+            elif not all(isinstance(item, str) for item in affected_surfaces):
+                errors.append(f"risk signal {label} affected_surfaces items must be strings")
+
+        supersedes = signal.get("supersedes")
+        if "supersedes" in signal:
+            if not isinstance(supersedes, list):
+                errors.append(f"risk signal {label} supersedes must be a list")
+            elif not all(isinstance(item, str) for item in supersedes):
+                errors.append(f"risk signal {label} supersedes items must be strings")
+
+        _validate_risk_signal_enum(errors, label, signal, "scope", RISK_SIGNAL_SCOPES)
+        _validate_risk_signal_enum(errors, label, signal, "severity", RISK_SIGNAL_SEVERITIES)
+        _validate_risk_signal_enum(errors, label, signal, "confidence", RISK_SIGNAL_CONFIDENCES)
+        _validate_risk_signal_enum(errors, label, signal, "status", RISK_SIGNAL_STATUSES)
 
 
 def _is_parent_aligned_task(task: dict[str, Any]) -> bool:
@@ -353,6 +490,8 @@ def validate_mission(state: Any) -> list[str]:
             normalized_tasks.append(task)
 
     tasks_by_id = task_map(state)
+    _validate_shared_context(errors, state, tasks_by_id)
+
     for task in normalized_tasks:
         task_id = _task_label(0, task)
         parent_id = task.get("parent_id")
@@ -642,6 +781,164 @@ def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     return event
 
 
+def _risk_signals(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    shared_context = mission.get("shared_context")
+    if not isinstance(shared_context, dict):
+        return []
+    risk_signals = shared_context.get("risk_signals")
+    if not isinstance(risk_signals, list):
+        return []
+    return [signal for signal in risk_signals if isinstance(signal, dict)]
+
+
+def active_risk_signals(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    return [signal for signal in _risk_signals(mission) if signal.get("status") == "active"]
+
+
+def recent_resolved_risk_signals(mission: dict[str, Any], limit: int = 5) -> list[dict[str, Any]]:
+    resolved = [
+        signal
+        for signal in _risk_signals(mission)
+        if signal.get("status") in {"resolved", "superseded", "invalidated"}
+    ]
+    return resolved[-limit:]
+
+
+def highest_active_risk_severity(mission: dict[str, Any]) -> str | None:
+    severities = [
+        signal.get("severity")
+        for signal in active_risk_signals(mission)
+        if signal.get("severity") in RISK_SIGNAL_SEVERITY_ORDER
+    ]
+    if not severities:
+        return None
+    return max(severities, key=lambda severity: RISK_SIGNAL_SEVERITY_ORDER[str(severity)])
+
+
+def shared_context_summary(mission: dict[str, Any]) -> dict[str, Any]:
+    active = active_risk_signals(mission)
+    return {
+        "active_risk_signals": active,
+        "recent_resolved_risk_signals": recent_resolved_risk_signals(mission),
+        "active_risk_signal_count": len(active),
+        "highest_active_severity": highest_active_risk_severity(mission),
+    }
+
+
+def _ensure_shared_context(mission: dict[str, Any]) -> dict[str, Any]:
+    shared_context = mission.get("shared_context")
+    if not isinstance(shared_context, dict):
+        shared_context = {}
+        mission["shared_context"] = shared_context
+    risk_signals = shared_context.get("risk_signals")
+    if not isinstance(risk_signals, list):
+        shared_context["risk_signals"] = []
+    return shared_context
+
+
+def _next_risk_signal_id(mission: dict[str, Any]) -> str:
+    used = {signal.get("id") for signal in _risk_signals(mission) if isinstance(signal.get("id"), str)}
+    index = len(used) + 1
+    while f"R{index}" in used:
+        index += 1
+    return f"R{index}"
+
+
+def _next_event_id(mission_dir: Path) -> str:
+    return f"E{len(read_events(mission_dir)) + 1}"
+
+
+def record_risk_signal(mission_dir: Path, task_id: str, payload: dict[str, Any]) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    find_task(mission, task_id)
+    shared_context = _ensure_shared_context(mission)
+    event_id = _next_event_id(mission_dir)
+    timestamp = now_iso()
+    signal = {
+        "id": _next_risk_signal_id(mission),
+        "source_task_id": task_id,
+        "source_evidence_id": event_id,
+        "scope": payload.get("scope"),
+        "signal": payload.get("signal"),
+        "severity": payload.get("severity"),
+        "confidence": payload.get("confidence"),
+        "affected_surfaces": payload.get("affected_surfaces"),
+        "value_effect": payload.get("value_effect"),
+        "recommended_gate": payload.get("recommended_gate"),
+        "recovery_condition": payload.get("recovery_condition"),
+        "status": "active",
+        "created_at": timestamp,
+        "updated_at": timestamp,
+    }
+    for optional_field in ("supersedes", "notes"):
+        if optional_field in payload:
+            signal[optional_field] = payload[optional_field]
+    shared_context["risk_signals"].append(signal)
+    errors = validate_mission(mission)
+    if errors:
+        raise TplanError("; ".join(errors))
+    write_mission(mission_dir, mission)
+    event = append_event(
+        mission_dir,
+        {
+            "id": event_id,
+            "timestamp": timestamp,
+            "event_type": "risk_context_update",
+            "summary": payload.get("summary", signal["value_effect"]),
+            "task_id": task_id,
+            "payload": {"risk_signal": signal},
+        },
+    )
+    return {"risk_signal": signal, "event": event}
+
+
+def resolve_risk_signal(
+    mission_dir: Path,
+    task_id: str,
+    risk_id: str,
+    status: str,
+    summary: str,
+    recovery_note: str,
+) -> dict[str, Any]:
+    if status not in RISK_SIGNAL_STATUSES - {"active"}:
+        raise TplanError("risk status for recovery must be resolved, superseded, or invalidated")
+    mission = read_mission(mission_dir)
+    find_task(mission, task_id)
+    signals = _risk_signals(mission)
+    signal = next((item for item in signals if item.get("id") == risk_id), None)
+    if signal is None:
+        raise TplanError(f"risk signal {risk_id} does not exist")
+
+    event_id = _next_event_id(mission_dir)
+    timestamp = now_iso()
+    signal["status"] = status
+    signal["updated_at"] = timestamp
+    signal["resolution_task_id"] = task_id
+    signal["resolution_evidence_id"] = event_id
+    signal["recovery_note"] = recovery_note
+    errors = validate_mission(mission)
+    if errors:
+        raise TplanError("; ".join(errors))
+    write_mission(mission_dir, mission)
+    event = append_event(
+        mission_dir,
+        {
+            "id": event_id,
+            "timestamp": timestamp,
+            "event_type": "risk_context_recovery",
+            "summary": summary,
+            "task_id": task_id,
+            "payload": {
+                "risk_id": risk_id,
+                "status": status,
+                "recovery_note": recovery_note,
+                "risk_signal": signal,
+            },
+        },
+    )
+    return {"risk_signal": signal, "event": event}
+
+
 def step_log_path(mission_dir: Path, task_id: str) -> Path:
     return mission_paths(mission_dir)["logs"] / f"{slugify(task_id)}.jsonl"
 
@@ -811,6 +1108,7 @@ def build_survey(mission_dir: Path) -> dict[str, Any]:
         "active_parent_chain": parent_chain(mission, active.get("id") if active else None),
         "tasks_by_status": tasks_by_status(mission),
         "resource_sufficiency": mission["mission"]["resource_sufficiency"],
+        "shared_context": shared_context_summary(mission),
         "event_count": len(read_events(mission_dir)),
     }
 
@@ -837,6 +1135,7 @@ def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:
         "active_task": active,
         "parent_chain": parent_chain(mission, active.get("id") if active else None),
         "task_tree_summary": tasks_by_status(mission),
+        "shared_context": shared_context_summary(mission),
         "relevant_evidence_events": events[-10:],
         "current_blockers_or_surprises": [
             event for event in events[-10:] if event.get("event_type") in {"failure", "blocked", "interruption"}
@@ -896,8 +1195,45 @@ def _validate_path_assessment(decision: dict[str, Any]) -> list[str]:
     return errors
 
 
-def validate_hook_output(decision: Any) -> list[str]:
+def _requires_risk_assessment(decision: dict[str, Any], active_shared_risks: list[dict[str, Any]]) -> bool:
+    return bool(active_shared_risks) and _requires_path_assessment(decision)
+
+
+def _validate_risk_assessment(decision: dict[str, Any], active_shared_risks: list[dict[str, Any]]) -> list[str]:
     errors: list[str] = []
+    required = _requires_risk_assessment(decision, active_shared_risks)
+    if not required and "risk_assessment" not in decision:
+        return errors
+    if "risk_assessment" not in decision:
+        return ["decision missing field: risk_assessment"]
+
+    assessment = decision.get("risk_assessment")
+    if not isinstance(assessment, dict):
+        return ["risk_assessment must be an object"]
+
+    shared_context_used = assessment.get("shared_context_used")
+    if "shared_context_used" not in assessment:
+        errors.append("risk_assessment missing field: shared_context_used")
+    elif not isinstance(shared_context_used, list):
+        errors.append("risk_assessment shared_context_used must be a list")
+    elif not all(isinstance(item, str) for item in shared_context_used):
+        errors.append("risk_assessment shared_context_used items must be strings")
+
+    for field, allowed_values in RISK_ASSESSMENT_FIELDS.items():
+        value = assessment.get(field)
+        if field not in assessment:
+            errors.append(f"risk_assessment missing field: {field}")
+        elif not isinstance(value, str):
+            errors.append(f"risk_assessment {field} must be a string")
+        elif value not in allowed_values:
+            allowed = ", ".join(sorted(allowed_values))
+            errors.append(f"risk_assessment {field} unsupported: {value!r}; expected one of: {allowed}")
+    return errors
+
+
+def validate_hook_output(decision: Any, active_shared_risks: list[dict[str, Any]] | None = None) -> list[str]:
+    errors: list[str] = []
+    active_shared_risks = active_shared_risks or []
     if not isinstance(decision, dict):
         return ["decision must be an object"]
     for field in (
@@ -942,6 +1278,7 @@ def validate_hook_output(decision: Any) -> list[str]:
                 elif not isinstance(decision.get(field), str):
                     errors.append(f"{field} must be a string")
         errors.extend(_validate_path_assessment(decision))
+        errors.extend(_validate_risk_assessment(decision, active_shared_risks))
     return errors
 
 
@@ -999,11 +1336,11 @@ def apply_mutation(mission: dict[str, Any], mutation: Any) -> None:
 
 
 def apply_decision(mission_dir: Path, decision: Any) -> str:
-    errors = validate_hook_output(decision)
+    mission = read_mission(mission_dir)
+    errors = validate_hook_output(decision, active_risk_signals(mission))
     if errors:
         raise TplanError("; ".join(errors))
 
-    mission = read_mission(mission_dir)
     mode = authority_mode(mission)
     if mode == "advisory" or decision["requires_human"]:
         record_decision_recommendation(mission_dir, decision)

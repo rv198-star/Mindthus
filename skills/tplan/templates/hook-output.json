@@ -11,5 +11,12 @@
     "marginal_roi": "positive",
     "path_role": "dominant_path",
     "evidence_delta": "new_evidence_expected"
+  },
+  "risk_assessment": {
+    "shared_context_used": [],
+    "invalid_evidence_risk": "low",
+    "failure_risk": "low",
+    "risk_adjusted_value": "positive",
+    "next_gate": "continue"
   }
 }

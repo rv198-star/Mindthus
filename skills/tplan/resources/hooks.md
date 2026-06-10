@@ -98,6 +98,39 @@ it can produce decision-constraining evidence.
 When weak evidence delta combines with repeated local edits or additive layering,
 route through `anti_spiral_audit` before authorizing same-path continuation.
 
+## Shared Risk Context Gate
+
+Shared Risk Context carries Mission-level risk signals that can change risk-adjusted
+value assessment for later decisions. It is deliberately not cross-task log sharing:
+execution units do not read each other's task logs. A unit publishes a scoped signal
+when a blocker, degraded shared condition, invalid evidence risk, abnormal cost, or
+recovery result can affect other units.
+
+Risk context is recorded through `risk_context_update` and `risk_context_recovery`
+evidence events, with live state in `mission.shared_context.risk_signals`.
+
+When a high-impact hook output is produced while active shared risks exist, include:
+
+```json
+{
+  "risk_assessment": {
+    "shared_context_used": ["R1"],
+    "invalid_evidence_risk": "low | medium | high | unclear",
+    "failure_risk": "low | medium | high | unclear",
+    "risk_adjusted_value": "positive | weak | negative | unclear",
+    "next_gate": "continue | health_check | switch | stop | escalate"
+  }
+}
+```
+
+Workflow validates only object shape and enum values. Agentic judgment decides whether
+the shared signal applies to the active decision, how much it changes risk-adjusted
+value, and whether the next gate is continuation, health check, switch, stop, or
+escalation.
+
+If a decision ignores active shared risks, its rationale should explain why the risk is
+out of scope, or set `risk_adjusted_value` to `unclear`.
+
 ## Alignment And Mission Review Gates
 
 Adaptive runtime levels reduce packet frequency, not risk sensitivity. In any runtime
