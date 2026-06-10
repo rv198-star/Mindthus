@@ -28,8 +28,10 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         for phrase in (
             "两个影视提示词 / 分镜方向的示范 profile",
-            "Shaw Brothers studio-era wuxia / fantasy",
-            "King Hu wuxia cinema",
+            "邵氏清水湾棚拍时代武侠 / 神怪",
+            "胡金铨武侠电影",
+            "有明确审美目标的 profile",
+            "价值定义、输出形态和扩写策略",
             "不是电影史分类结论",
             "如何编写和使用 TVG profile",
             "输出厚度落在哪些可审查单位上",
