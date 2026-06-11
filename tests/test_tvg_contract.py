@@ -279,6 +279,236 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, combined)
 
+    def test_runtime_observability_and_pressure_are_agentic_references(self):
+        skill = (TVG / "SKILL.md").read_text(encoding="utf-8")
+        method = (TVG / "resources" / "methodology.md").read_text(encoding="utf-8")
+        public_doc = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        schema = (TVG / "resources" / "trace-record-schema.json").read_text(encoding="utf-8")
+        combined = skill + "\n" + method + "\n" + public_doc + "\n" + schema
+        for phrase in (
+            "debug_log",
+            "default-off",
+            "candidate_pool",
+            "value_gain_scoring_reference",
+            "enabled by default",
+            "always-on reference",
+            "scores help compare rounds, not compute decisions",
+            "pressure",
+            "default pressure value 2",
+            "1-5",
+            "5-7 rounds",
+            "resource investment pressure, not quality score",
+            "pressure_correctness",
+            "score_based_exit",
+            "pressure_based_exit",
+            "默认开启",
+            "投入强度",
+        ):
+            self.assertIn(phrase, combined)
+
+    def test_trace_init_debug_log_scoring_and_pressure_defaults_validate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "runtime-defaults",
+                    "--module-title",
+                    "Runtime defaults",
+                    "--module-type",
+                    "skill-intro",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            self.assertEqual(data["debug_log"]["enabled"], False)
+            self.assertEqual(data["debug_log"]["round_entries"], [])
+            scoring = data["value_gain_scoring_reference"]
+            self.assertEqual(scoring["enabled"], True)
+            self.assertEqual(scoring["scale"]["min"], 0)
+            self.assertEqual(scoring["scale"]["max"], 5)
+            self.assertEqual(scoring["round_scores"], [])
+            self.assertGreaterEqual(len(scoring["dimensions"]), 3)
+            pressure = data["pressure"]
+            self.assertEqual(pressure["value"], 2)
+            self.assertEqual(pressure["mode"], "default")
+            self.assertEqual(pressure["typical_rounds"], "2")
+            self.assertIn("resource investment pressure, not quality score", pressure["meaning"])
+            cannot_decide = data["script_support"]["script_cannot_decide"]
+            self.assertIn("value_gain_score_correctness", cannot_decide)
+            self.assertIn("score_based_exit", cannot_decide)
+            self.assertIn("pressure_correctness", cannot_decide)
+            self.assertIn("pressure_based_exit", cannot_decide)
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stdout + validation.stderr)
+
+    def test_trace_init_accepts_debug_log_and_high_pressure_then_validates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "high-pressure",
+                    "--module-title",
+                    "High pressure",
+                    "--module-type",
+                    "methodology-intro",
+                    "--debug-log",
+                    "--pressure-value",
+                    "5",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            self.assertEqual(data["debug_log"]["enabled"], True)
+            self.assertEqual(data["pressure"]["value"], 5)
+            self.assertEqual(data["pressure"]["mode"], "explicit")
+            self.assertEqual(data["pressure"]["typical_rounds"], "5-7")
+            self.assertIn("candidate comparison", data["pressure"]["exploration_passes"])
+            data["debug_log"]["round_entries"].append(
+                {
+                    "round_id": "r1",
+                    "input_summary": "baseline draft",
+                    "candidate_pool": [
+                        {
+                            "id": "c1",
+                            "text": "TVG moves text toward a sharper standard of good.",
+                            "status": "selected",
+                            "rationale": "best matches the expected value",
+                        }
+                    ],
+                    "value_axes_checked": ["value density"],
+                    "gate_checks": ["next round has a named positive-value hypothesis"],
+                    "veto_checks": ["no evidence boundary override"],
+                    "next_round_positive_value_hypothesis": "raise information density without losing clarity",
+                    "decision": "continue",
+                    "decision_rationale": "candidate still lacks concrete example",
+                    "agent_judgment_required": True,
+                }
+            )
+            data["value_gain_scoring_reference"]["round_scores"].append(
+                {
+                    "round_id": "r1",
+                    "dimension_scores": [
+                        {
+                            "dimension_id": "value_density",
+                            "score": 3.4,
+                            "rationale": "clearer than baseline but still wordy",
+                        }
+                    ],
+                    "overall_reference_score": 3.4,
+                    "scoring_basis": "ordinal reference for comparing rounds only",
+                    "agent_judgment_required": True,
+                }
+            )
+            trace.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stdout + validation.stderr)
+
+    def test_trace_validation_rejects_invalid_runtime_observability_shapes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            init = TVG / "scripts" / "trace" / "init.py"
+            validate = TVG / "scripts" / "trace" / "validate.py"
+            subprocess.run(
+                [
+                    "python3",
+                    str(init),
+                    "--module-id",
+                    "runtime-shape",
+                    "--module-title",
+                    "Runtime shape",
+                    "--module-type",
+                    "audit",
+                    "--output",
+                    str(trace),
+                ],
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            data = json.loads(trace.read_text(encoding="utf-8"))
+            data["debug_log"]["enabled"] = "yes"
+            data["debug_log"]["round_entries"] = [
+                {
+                    "round_id": "r1",
+                    "input_summary": "baseline",
+                    "candidate_pool": [{"id": "c1", "text": "x", "status": "winner", "rationale": "x"}],
+                    "value_axes_checked": "not-a-list",
+                    "gate_checks": [],
+                    "veto_checks": [],
+                    "next_round_positive_value_hypothesis": "",
+                    "decision": "auto-pass",
+                    "decision_rationale": "",
+                    "agent_judgment_required": "true",
+                }
+            ]
+            data["value_gain_scoring_reference"]["scale"]["max"] = 4
+            data["value_gain_scoring_reference"]["round_scores"] = [
+                {
+                    "round_id": "r1",
+                    "dimension_scores": [{"dimension_id": "value_density", "score": 5.5, "rationale": "x"}],
+                    "overall_reference_score": True,
+                    "scoring_basis": "x",
+                    "agent_judgment_required": True,
+                }
+            ]
+            data["pressure"]["value"] = 6
+            data["pressure"]["mode"] = "auto"
+            data["pressure"]["exploration_passes"] = "not-a-list"
+            trace.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            validation = subprocess.run(
+                ["python3", str(validate), str(trace)],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(validation.returncode, 1)
+            self.assertIn("debug_log.enabled: expected boolean", validation.stdout)
+            self.assertIn("debug_log.round_entries[0].candidate_pool[0].status: unsupported value 'winner'", validation.stdout)
+            self.assertIn("debug_log.round_entries[0].value_axes_checked: expected list", validation.stdout)
+            self.assertIn("debug_log.round_entries[0].decision: unsupported value 'auto-pass'", validation.stdout)
+            self.assertIn("debug_log.round_entries[0].agent_judgment_required: expected boolean", validation.stdout)
+            self.assertIn("value_gain_scoring_reference.scale.max: expected 5", validation.stdout)
+            self.assertIn("value_gain_scoring_reference.round_scores[0].dimension_scores[0].score: expected number from 0 to 5", validation.stdout)
+            self.assertIn("value_gain_scoring_reference.round_scores[0].overall_reference_score: expected number from 0 to 5", validation.stdout)
+            self.assertIn("pressure.value: expected integer from 1 to 5", validation.stdout)
+            self.assertIn("pressure.mode: unsupported value 'auto'", validation.stdout)
+            self.assertIn("pressure.exploration_passes: expected list", validation.stdout)
+
     def test_trace_init_accepts_value_profile_metadata_and_validates(self):
         with tempfile.TemporaryDirectory() as tmp:
             trace = Path(tmp) / "trace.json"

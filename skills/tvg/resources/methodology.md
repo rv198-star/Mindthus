@@ -178,6 +178,38 @@ active value_profile, and any veto constraints. It is not a user-facing configur
 burden. Users may supply expected value in ordinary language; Agent/runtime traces may
 record the compiled gate for audit.
 
+### Runtime Observation, Scoring, And Pressure
+
+TVG has three runtime reference surfaces. They help the Agent observe and calibrate the
+loop, but they do not replace judgment.
+
+`debug_log` is default-off. When enabled, it records each round's `candidate_pool`,
+value axes checked, Gate checks, veto checks, next-round positive-value hypothesis,
+decision, and rationale. It exists so a user or reviewer can see why the loop continued,
+froze, blocked, or returned for remediation.
+
+`value_gain_scoring_reference` is enabled by default as an always-on reference. It uses
+0-5 ordinal anchors for `Thinking Thickness`, `Grounded Insight Yield`, and
+`Value Density`. The scores are not measurements: scores help compare rounds, not
+compute decisions. A score jump may suggest useful progress; a small jump may suggest
+flattening return; neither is allowed to decide exit by itself.
+
+`pressure` controls resource investment pressure, not quality score. The default
+pressure value 2 means ordinary TVG: usually a core value pass and an exit audit.
+The accepted range is 1-5. Pressure 5 is an extreme setting and may justify roughly
+5-7 rounds only while each next round still has a named positive-value hypothesis.
+
+Pressure and scoring must stay separate:
+
+- Pressure says how much effort the Agent is being asked to spend.
+- Scoring says how the current round appears to compare with prior rounds.
+- Gate still decides whether the artifact can exit, and Gate remains an agentic audit.
+
+Scripts may record and validate these shapes only. They must not decide
+`value_gain_score_correctness`, `score_based_exit`, `pressure_correctness`,
+`pressure_based_exit`, round-budget sufficiency, or whether the user got the intended
+quality.
+
 ### Value Profile Resolution
 
 `value_profile` is an optional value definition package. At minimum it defines what

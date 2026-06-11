@@ -201,6 +201,116 @@ def build_exit_gate(args: argparse.Namespace, value_profile: dict, expected_valu
     }
 
 
+def build_debug_log(args: argparse.Namespace) -> dict:
+    return {
+        "enabled": bool(args.debug_log),
+        "round_entries": [],
+        "script_note": (
+            "debug_log is default-off and observation-only. It records candidate pools, gate checks, "
+            "veto checks, positive-value hypotheses, and agent decisions when enabled; scripts validate "
+            "shape only and never decide candidate quality or exit."
+        ),
+    }
+
+
+def build_value_gain_scoring_reference() -> dict:
+    return {
+        "enabled": True,
+        "scale": {
+            "min": 0,
+            "max": 5,
+            "meaning": (
+                "0-5 ordinal anchors are a reference, not measurement; scores help compare rounds, "
+                "not compute decisions."
+            ),
+        },
+        "dimensions": [
+            {
+                "id": "thinking_thickness",
+                "label": "Thinking Thickness",
+                "question": "Does the artifact now have enough constraints, alternatives, failure paths, and evidence boundaries?",
+                "low_anchor": "thin structure or fluent summary without usable substrate",
+                "mid_anchor": "some real constraints and trade-offs, but downstream still repairs missing judgment",
+                "high_anchor": "enough thought substrate for review, action, reuse, or handoff",
+            },
+            {
+                "id": "grounded_insight_yield",
+                "label": "Grounded Insight Yield",
+                "question": "Does the artifact create non-obvious but anchored understanding or action leverage?",
+                "low_anchor": "mostly obvious restatement, polish, or generic best practice",
+                "mid_anchor": "one or two useful insights but weak grounding or limited transfer",
+                "high_anchor": "changes judgment while staying inside evidence and user constraints",
+            },
+            {
+                "id": "value_density",
+                "label": "Value Density",
+                "question": "Does each added unit carry enough value relative to reading or execution burden?",
+                "low_anchor": "longer, smoother, or more complete-looking without higher utility",
+                "mid_anchor": "useful but still padded, repetitive, or uneven",
+                "high_anchor": "dense, reviewable, and easy to use without losing necessary context",
+            },
+        ],
+        "round_scores": [],
+        "script_note": (
+            "value_gain_scoring_reference is enabled by default as an always-on reference. Scripts validate "
+            "shape and 0-5 range only; agentic judgment decides score meaning, improvement, sufficiency, and exit."
+        ),
+    }
+
+
+def build_pressure(args: argparse.Namespace) -> dict:
+    value = args.pressure_value or 2
+    presets = {
+        1: {
+            "typical_rounds": "1",
+            "exploration_passes": ["single focused value pass"],
+        },
+        2: {
+            "typical_rounds": "2",
+            "exploration_passes": ["core value pass", "exit audit"],
+        },
+        3: {
+            "typical_rounds": "3",
+            "exploration_passes": ["core value pass", "candidate comparison", "exit audit"],
+        },
+        4: {
+            "typical_rounds": "4-5",
+            "exploration_passes": [
+                "candidate comparison",
+                "failure pressure",
+                "downstream-use audit",
+                "compression audit",
+            ],
+        },
+        5: {
+            "typical_rounds": "5-7",
+            "exploration_passes": [
+                "candidate comparison",
+                "sentence-function repair",
+                "confusion audit",
+                "adversarial audit",
+                "compression audit",
+                "benchmark or human-preference check when available",
+            ],
+        },
+    }
+    preset = presets[value]
+    return {
+        "value": value,
+        "mode": "explicit" if args.pressure_value else "default",
+        "meaning": (
+            "resource investment pressure, not quality score; it guides how much effort the Agent should "
+            "spend searching for positive value before exit, but it does not guarantee quality."
+        ),
+        "typical_rounds": preset["typical_rounds"],
+        "exploration_passes": preset["exploration_passes"],
+        "script_note": (
+            "Scripts record pressure shape only. They cannot decide pressure correctness, required round count, "
+            "Gate success, score sufficiency, or whether to exit."
+        ),
+    }
+
+
 def build_trace(args: argparse.Namespace) -> dict:
     now = datetime.now(timezone.utc).isoformat()
     value_profile = build_value_profile(args)
@@ -220,6 +330,9 @@ def build_trace(args: argparse.Namespace) -> dict:
         "expected_value": expected_value,
         "value_profile": value_profile,
         "exit_gate": build_exit_gate(args, value_profile, expected_value),
+        "debug_log": build_debug_log(args),
+        "value_gain_scoring_reference": build_value_gain_scoring_reference(),
+        "pressure": build_pressure(args),
         "value_gain": {
             "claimed_value_gain": "",
             "value_gain_types": [],
@@ -255,6 +368,13 @@ def build_trace(args: argparse.Namespace) -> dict:
                 "prompt_thickness_success",
                 "aesthetic_success",
                 "profile_completeness",
+                "value_gain_score_correctness",
+                "score_improvement",
+                "score_sufficiency",
+                "score_based_exit",
+                "pressure_correctness",
+                "round_budget_sufficiency",
+                "pressure_based_exit",
                 "auditor_independence_requirement",
                 "demo_false_positive_risk",
                 "overfitting_risk",
@@ -293,6 +413,8 @@ def main() -> int:
     parser.add_argument("--exit-gate-exit-blocker", action="append", default=[])
     parser.add_argument("--exit-gate-next-round-positive-value-check")
     parser.add_argument("--exit-gate-unresolved-item", action="append", default=[])
+    parser.add_argument("--debug-log", action="store_true")
+    parser.add_argument("--pressure-value", type=int, choices=range(1, 6))
     parser.add_argument("--value-profile-mode", choices=("default", "supplied", "inferred-with-warning"))
     parser.add_argument("--value-profile-name")
     parser.add_argument("--value-profile-artifact-job")

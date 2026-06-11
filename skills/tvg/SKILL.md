@@ -8,6 +8,7 @@ description: Use as a value-directed text/artifact strengthening loop when an AI
 ## Core Claim
 
 Thinking Value-Gain is a value-directed text/artifact transformation loop for AI-generated bounded modules.
+It runs as a state-driven value-gain loop for artifacts that look complete but are still thin, generic, over-expanded, weak in judgment, or hard to use downstream.
 
 Short version:
 
@@ -24,6 +25,12 @@ Core inputs:
 - `veto_constraints`: explicit unacceptable states. They are not value-gain axes; if triggered, the module must not exit as `freeze`.
 - `independent_auditor`: for high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
 - `output_profile`: `insight_dense | balanced | coverage_rich`. This is delivery bias, not an internal workflow fork; it must not lower standards for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
+
+Runtime references:
+
+- `debug_log`: default-off round detail for `candidate_pool`, Gate checks, veto checks, next-round hypotheses, decisions, and rationales.
+- `value_gain_scoring_reference`: always-on 0-5 reference for comparing rounds. Scores help compare, not compute decisions.
+- `pressure`: resource investment pressure, not quality score. Default pressure value is 2; accepted range is 1-5, and 5 implies roughly 5-7 rounds while positive value remains plausible.
 
 Value profiles can specialize value axes, observable surfaces, gain policies, veto constraints, and audit prompts. They cannot override evidence honesty, claim ceilings, user constraints, safety boundaries, or hard veto constraints.
 
@@ -46,13 +53,15 @@ Use when a bounded module already exists but downstream use would still require 
 9. For high-impact, high-uncertainty, or handoff-critical modules, use an independent exit audit.
 10. Validate and persist trace shape when useful; make the exit decision by agentic audit, not script output.
 
+Read `resources/methodology.md` for full gate, profile, pressure, and scoring guidance.
+
 ## Guardrails / 从属补漏
 
 ### Hard Boundary
 
 Scripts support bookkeeping only. They may initialize traces, validate required fields, persist records, and report factual completeness issues. They must not replace agentic judgment.
 
-Scripts must not create, waive, or satisfy veto constraints; decide whether another round is worth doing; write or change `exit_state`; decide whether independent auditor separation is required; output `PASS` as an audit verdict; score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`; choose TVG state routes; choose `output_profile`; decide whether `expected_value` is correct or complete; choose, infer, complete, rank, or satisfy `value_profile`; decide default gate correctness or exit gate success; decide whether `realization_surface` fit or `gain_policy` success was achieved; decide whether a prompt, document, design, or handoff artifact reached the user's quality target; decide whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit; decide `compact-strengthen`, `refine`, `deepen`, or `freeze`.
+Scripts must not create, waive, or satisfy veto constraints; decide whether another round is worth doing; write or change `exit_state`; decide whether independent auditor separation is required; output `PASS` as an audit verdict; score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`; choose TVG state routes; choose `output_profile`; decide whether `expected_value` is correct or complete; choose, infer, complete, rank, or satisfy `value_profile`; decide default gate correctness or exit gate success; decide whether `realization_surface` fit or `gain_policy` success was achieved; decide whether a prompt, document, design, or handoff artifact reached the user's quality target; decide whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit; decide `value_gain_score_correctness`, `score_based_exit`, `pressure_correctness`, `pressure_based_exit`, `compact-strengthen`, `refine`, `deepen`, or `freeze`.
 
 Every script result means only:
 
@@ -74,13 +83,17 @@ Scripts validate profile shape only and must not decide whether a value profile 
 - Treating loop-assisted artifact success as proof that the profile itself is strong.
 - Exposing TVG internal vocabulary in final customer/business/architecture deliverables.
 
-### Runtime Support
+## Runtime Support
 
-Full method: `resources/methodology.md`. Audit template: `resources/exit-audit-template.md`. Trace schema: `resources/trace-record-schema.json`. Value profile construction: `resources/value-profiles/profile-construction.md`.
+Trace scripts: `python3 skills/tvg/scripts/trace/init.py`, `python3 skills/tvg/scripts/trace/validate.py`, and `python3 skills/tvg/scripts/trace/persist.py`; use `init.py --pressure-value 2` by default.
 
-Trace scripts: `python3 skills/tvg/scripts/trace/init.py`, `python3 skills/tvg/scripts/trace/validate.py`, and `python3 skills/tvg/scripts/trace/persist.py`.
+Add `--debug-log` only when the iteration process itself needs inspection. Debug Log Mode is default-off and observation-only; it may record `candidate_pool`, `gate_checks`, and `next_round_positive_value_hypothesis`, but scripts still cannot decide candidate quality, gate success, next-round value, or exit.
+
+Value-Gain Scoring Reference is enabled by default as an always-on reference for comparing rounds. It uses 0-5 ordinal anchors as reference, not measurement; scores help compare rounds, not compute decisions or exit.
 
 Fidelity support: use `resources/fidelity-contract.md`, `templates/fidelity-output.json`, and `scripts/validate_tvg_output.py`; this is a fidelity contract shape check, not semantic approval.
+
+Resources: `resources/methodology.md`, `resources/exit-audit-template.md`, `resources/trace-record-schema.json`, `resources/value-profiles/profile-construction.md`.
 
 ## Boundaries / 边界
 

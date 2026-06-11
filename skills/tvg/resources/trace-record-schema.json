@@ -7,6 +7,9 @@
     "expected_value",
     "value_profile",
     "exit_gate",
+    "debug_log",
+    "value_gain_scoring_reference",
+    "pressure",
     "value_gain",
     "rounds",
     "agentic_exit_audit",
@@ -91,6 +94,46 @@
     "provisional-default",
     "inferred-with-warning"
   ],
+  "required_debug_log_fields": [
+    "enabled",
+    "round_entries",
+    "script_note"
+  ],
+  "debug_log_candidate_statuses": [
+    "new",
+    "kept",
+    "selected",
+    "rejected",
+    "merged",
+    "superseded"
+  ],
+  "debug_log_decisions": [
+    "continue",
+    "freeze",
+    "blocked",
+    "return-remediate",
+    "needs-audit",
+    "no-decision"
+  ],
+  "required_scoring_reference_fields": [
+    "enabled",
+    "scale",
+    "dimensions",
+    "round_scores",
+    "script_note"
+  ],
+  "required_pressure_fields": [
+    "value",
+    "mode",
+    "meaning",
+    "typical_rounds",
+    "exploration_passes",
+    "script_note"
+  ],
+  "allowed_pressure_modes": [
+    "default",
+    "explicit"
+  ],
   "required_value_gain_fields": [
     "claimed_value_gain",
     "value_gain_types",
@@ -135,5 +178,5 @@
     "not-applicable",
     "unknown"
   ],
-  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain, expected_value correctness, value_profile truth, default_gate_correctness, exit_gate_success, realization_surface fit, gain_policy success, prompt thickness success, aesthetic success, routing, or exit_state. scripts validate expected_value, profile, and exit_gate shape only and must not decide whether expected_value is correct or whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit."
+  "script_boundary": "Scripts validate bookkeeping only. They must not decide value gain, expected_value correctness, value_profile truth, default_gate_correctness, exit_gate_success, realization_surface fit, gain_policy success, prompt thickness success, aesthetic success, value_gain_score_correctness, score_improvement, score_sufficiency, score_based_exit, pressure_correctness, round_budget_sufficiency, pressure_based_exit, routing, or exit_state. scripts validate expected_value, profile, and exit_gate shape only; they may also validate debug_log, value_gain_scoring_reference, and pressure shape. Scripts must not decide whether expected_value is correct or whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit."
 }

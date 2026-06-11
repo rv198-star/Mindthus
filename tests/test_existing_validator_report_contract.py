@@ -109,6 +109,30 @@ Choose this path because the alternative is slower.
                 "next_round_positive_value_check": "another round needs a named positive-value hypothesis",
                 "unresolved_gate_items": [],
             },
+            "debug_log": {
+                "enabled": False,
+                "round_entries": [],
+                "script_note": "shape-only test fixture",
+            },
+            "value_gain_scoring_reference": {
+                "enabled": True,
+                "scale": {
+                    "min": 0,
+                    "max": 5,
+                    "meaning": "shape-only test fixture",
+                },
+                "dimensions": [],
+                "round_scores": [],
+                "script_note": "shape-only test fixture",
+            },
+            "pressure": {
+                "value": 2,
+                "mode": "default",
+                "meaning": "resource investment pressure, not quality score",
+                "typical_rounds": "2",
+                "exploration_passes": [],
+                "script_note": "shape-only test fixture",
+            },
             "value_gain": {
                 "claimed_value_gain": "",
                 "value_gain_types": [],
