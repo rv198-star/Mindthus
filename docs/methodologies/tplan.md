@@ -4,6 +4,8 @@
 
 `tplan` 是给 AI agent 用的 OKR-Runtime：把稳定 Mission 转成任务状态、验收证据、决策钩子和可恢复执行。
 
+![TPlan 架构示意图：OKR-Runtime 在执行中持续对齐目标、共享风险、纠偏收束](assets/tplan-okr-runtime.png)
+
 如果说 OKR 帮人类团队把 initiatives 对齐到 objectives 和 key results，`tplan` 就是帮 agent 把长任务对齐到 Mission 和 acceptance evidence。它不是普通待办清单，也不是把任务写得更长的格式工具，而是给 agent 一个可以恢复、检查、停止和决策的运行时。
 
 术语上可以直接和 OKR 对齐，作为对外主口径；`tplan` 的名字不变。当前 runtime/schema 仍保留 `Mission`、`evidence`、`task tree` 和 `decision hook`，不是为了兼容旧用户，而是因为这些词承载了 agent runtime 里 OKR 原词没有覆盖的状态恢复、证据约束和决策权限语义：

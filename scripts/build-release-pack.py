@@ -21,7 +21,10 @@ EXCLUDED_DIRS = {
     "tests",
 }
 EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".pyc", ".pyo", ".tmp", ".webp"}
-METHODOLOGY_BINARY_ASSET_ALLOWLIST = {Path("assets/tvg-architecture.png")}
+METHODOLOGY_BINARY_ASSET_ALLOWLIST = {
+    Path("assets/tplan-okr-runtime.png"),
+    Path("assets/tvg-architecture.png"),
+}
 EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}

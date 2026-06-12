@@ -400,8 +400,11 @@ class PackagingDocsTests(unittest.TestCase):
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
         binary_asset_allowlist = {
+            Path("claude-code/claude-plugin/docs/methodologies/assets/tplan-okr-runtime.png"),
             Path("claude-code/claude-plugin/docs/methodologies/assets/tvg-architecture.png"),
+            Path("codex/docs/methodologies/assets/tplan-okr-runtime.png"),
             Path("codex/docs/methodologies/assets/tvg-architecture.png"),
+            Path("opencode/docs/methodologies/assets/tplan-okr-runtime.png"),
             Path("opencode/docs/methodologies/assets/tvg-architecture.png"),
         }
         jsonl_paths: set[Path] = set()
