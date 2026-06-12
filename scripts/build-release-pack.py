@@ -21,6 +21,7 @@ EXCLUDED_DIRS = {
     "tests",
 }
 EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".pyc", ".pyo", ".tmp", ".webp"}
+METHODOLOGY_BINARY_ASSET_ALLOWLIST = {Path("assets/tvg-architecture.png")}
 EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
@@ -76,7 +77,13 @@ def copy_file_filtered(source: Path, target: Path, replacements: dict[str, str] 
     shutil.copy2(source, target)
 
 
-def copy_tree_filtered(source: Path, target: Path, replacements: dict[str, str] | None = None) -> None:
+def copy_tree_filtered(
+    source: Path,
+    target: Path,
+    replacements: dict[str, str] | None = None,
+    binary_asset_allowlist: set[Path] | None = None,
+) -> None:
+    binary_asset_allowlist = binary_asset_allowlist or set()
     for item in sorted(source.rglob("*")):
         rel = item.relative_to(source)
         if any(part in EXCLUDED_DIRS for part in rel.parts):
@@ -88,7 +95,7 @@ def copy_tree_filtered(source: Path, target: Path, replacements: dict[str, str] 
         if item.is_dir():
             dest.mkdir(parents=True, exist_ok=True)
             continue
-        if item.suffix in EXCLUDED_SUFFIXES:
+        if item.suffix in EXCLUDED_SUFFIXES and rel not in binary_asset_allowlist:
             continue
         if item.suffix == ".jsonl" and rel not in JSONL_ALLOWLIST:
             continue
@@ -142,7 +149,11 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
         },
     )
     copy_tree_filtered(skills_dir, plugin_root / "skills")
-    copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
+    copy_tree_filtered(
+        methodologies_dir,
+        plugin_root / "docs" / "methodologies",
+        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
+    )
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
 
@@ -151,7 +162,12 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
     platform_root = root / "codex"
     replacements = skill_path_replacements("skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / "skills" / "mindthus", replacements)
-    copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies", replacements)
+    copy_tree_filtered(
+        methodologies_dir,
+        platform_root / "docs" / "methodologies",
+        replacements,
+        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
+    )
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
     copy_license_files(repo, platform_root)
     copy_release_scripts(repo, platform_root)
@@ -161,7 +177,12 @@ def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, 
     platform_root = root / "opencode"
     replacements = skill_path_replacements(".opencode/skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / ".opencode" / "skills" / "mindthus", replacements)
-    copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies", replacements)
+    copy_tree_filtered(
+        methodologies_dir,
+        platform_root / "docs" / "methodologies",
+        replacements,
+        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
+    )
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
     copy_license_files(repo, platform_root)
     copy_release_scripts(repo, platform_root)

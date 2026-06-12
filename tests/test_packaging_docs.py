@@ -399,7 +399,13 @@ class PackagingDocsTests(unittest.TestCase):
             Path("codex/skills/mindthus/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
+        binary_asset_allowlist = {
+            Path("claude-code/claude-plugin/docs/methodologies/assets/tvg-architecture.png"),
+            Path("codex/docs/methodologies/assets/tvg-architecture.png"),
+            Path("opencode/docs/methodologies/assets/tvg-architecture.png"),
+        }
         jsonl_paths: set[Path] = set()
+        binary_asset_paths: set[Path] = set()
 
         for path in out.rglob("*"):
             rel = path.relative_to(out)
@@ -408,11 +414,13 @@ class PackagingDocsTests(unittest.TestCase):
                 f"release pack should not include runtime/test directory: {rel}",
             )
             if path.is_file():
-                self.assertNotIn(
-                    path.suffix,
-                    forbidden_suffixes,
-                    f"release pack should not include runtime artifact file: {rel}",
-                )
+                if path.suffix in forbidden_suffixes:
+                    self.assertIn(
+                        rel,
+                        binary_asset_allowlist,
+                        f"release pack should not include runtime artifact file: {rel}",
+                    )
+                    binary_asset_paths.add(rel)
                 lowered = rel.as_posix().lower()
                 self.assertNotIn("ab_run", lowered)
                 self.assertNotIn("pilot", lowered)
@@ -420,6 +428,7 @@ class PackagingDocsTests(unittest.TestCase):
                     jsonl_paths.add(rel)
 
         self.assertEqual(jsonl_paths, jsonl_allowlist)
+        self.assertEqual(binary_asset_paths, binary_asset_allowlist)
 
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
