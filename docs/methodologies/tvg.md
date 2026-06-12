@@ -10,6 +10,8 @@ TVG 是 `Thinking Value-Gain`，一套定向文本强化方法。它处理的是
 
 ![TVG 架构示意图：Profile 定义标准，Loop 负责改进，Gate 判断达标](assets/tvg-architecture.png)
 
+项目地址：<https://github.com/rv198-star/Mindthus>
+
 这个“好”不是随便的风格偏好，而是来自输出期望值、当前 value profile、事实边界、veto constraints 和 Gate 的可审查标准。默认情况下，它强化通用实用价值；当任务有明确领域、审美、品牌或写作目标时，profile 可以定义这次到底什么算好。
 
 TVG 不鼓励把东西写长。它的核心不是“再扩写一轮”，而是识别一个已经成型的 bounded artifact，在不重开整个问题空间的前提下，判断哪里能增加真实可用性。

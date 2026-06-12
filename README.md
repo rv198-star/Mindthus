@@ -10,6 +10,8 @@ Mindthus 是一套教 AI agent 在真实任务里“何时拿起哪把刀”的 
 
 ![Mindthus 项目总览：TPlan、判断镜头、TVG 与认知原语](docs/assets/mindthus-overview.png)
 
+项目地址：<https://github.com/rv198-star/Mindthus>
+
 它是一套可安装的判断工具箱，不是把流程变多。它把容易靠临场感觉处理的判断点，压成可调用、可审查、可测试的 skills。你可以直接用，也可以拆开读、改造、迁移到自己的 agent 项目里。
 
 `Thus` 表示“所以 / 如此 / 就该这样”。`此心 / Mindthus` 的意思是：看清问题形状之后，后续行动就不该散乱试错，而应该沿着那个判断展开。
