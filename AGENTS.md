@@ -25,6 +25,10 @@
 先判断谁 dominate / defer / degrade / block / stop。输出必须产生执行影响：改变策略、
 风险处理、证据要求、下一步行动、停止条件、方法选择或交接信息。
 
+在交付、冻结、继续迭代、转交或停止前，按 `docs/methodologies/shared-primitives.md`
+里的 Gate Probes 做一次定位自省；如果发现目标漂移、证据不足、误用信号、继续收益不明
+或权限不清，先返修、降级、停止、转交或请求确认。
+
 ## No Abstract Jargon Wall
 
 不要堆 Mindthus 术语。先讲清“这对你意味着什么”，再讲方法名。
