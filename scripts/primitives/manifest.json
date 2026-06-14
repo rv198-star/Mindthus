@@ -1,0 +1,175 @@
+{
+  "schema_version": "mindthus-primitive-activation-v0.1",
+  "script_boundary": "shape_only_reminder_not_semantic_judgment",
+  "events": {
+    "before-route": {
+      "description": "Before selecting a Mindthus method.",
+      "active_primitives": [
+        "minimal_sufficient_lens",
+        "evidence_claim_ceiling"
+      ],
+      "required_agent_checks": [
+        "is_this_clear_low_risk_direct_execution",
+        "are_facts_or_runtime_proof_missing",
+        "what_hard_judgment_point_exists",
+        "which_method_owns_the_next_judgment"
+      ]
+    },
+    "before-freeze": {
+      "description": "Before deliver, freeze, handoff, block, or stop.",
+      "active_primitives": [
+        "gate_probes",
+        "failure_smells",
+        "evidence_claim_ceiling"
+      ],
+      "required_agent_checks": [
+        "current_artifact_or_action_role",
+        "current_state_against_target",
+        "evidence_boundary_and_claim_ceiling",
+        "failure_smell_scan",
+        "next_action_or_downstream_user"
+      ]
+    },
+    "before-continue": {
+      "description": "Before continuing the same path or another value-gain/runtime round.",
+      "active_primitives": [
+        "gate_probes",
+        "anti_spiral",
+        "failure_smells"
+      ],
+      "conditional_primitives": [
+        {
+          "primitive": "continuation_authorization",
+          "method": "tplan"
+        }
+      ],
+      "required_agent_checks": [
+        "why_same_path_is_still_authorized",
+        "next_round_positive_value_or_evidence_delta",
+        "local_repair_spiral_risk",
+        "failure_smell_scan",
+        "stop_or_handoff_condition"
+      ]
+    }
+  },
+  "primitives": {
+    "minimal_sufficient_lens": {
+      "name": "Minimal Sufficient Lens / 最小充分镜头",
+      "short_rule": "能直接判断就不要开方法；一个 skill 足够就不要串联。",
+      "trigger": [
+        "before-route"
+      ],
+      "action_effect": [
+        "direct-execute",
+        "route",
+        "acquire-information",
+        "stop"
+      ],
+      "not_a": [
+        "method-router-replacement",
+        "semantic-judge"
+      ],
+      "owner": "using-mindthus"
+    },
+    "evidence_claim_ceiling": {
+      "name": "Evidence / Claim Ceiling / 证据上限",
+      "short_rule": "结论强度不能超过证据；缺关键事实时降级或阻断。",
+      "trigger": [
+        "before-route",
+        "before-freeze"
+      ],
+      "action_effect": [
+        "downgrade-claim",
+        "gather-evidence",
+        "block",
+        "stop"
+      ],
+      "not_a": [
+        "fact-generator",
+        "evidence-substitute"
+      ],
+      "owner": "WAE"
+    },
+    "gate_probes": {
+      "name": "Gate Probes / 冻结前定位自省",
+      "short_rule": "交付、冻结、继续、转交或停止前，确认当前位置和目标。",
+      "trigger": [
+        "before-freeze",
+        "before-continue"
+      ],
+      "action_effect": [
+        "freeze",
+        "return-remediate",
+        "block",
+        "stop",
+        "ask-user-authority"
+      ],
+      "not_a": [
+        "standalone-method",
+        "semantic-judge",
+        "evidence-substitute",
+        "gate-replacement"
+      ],
+      "owner": "shared-primitives"
+    },
+    "failure_smells": {
+      "name": "Failure Smells / 误用信号",
+      "short_rule": "看见像完成但没推进的信号时先自审；普通信号返修，硬边界阻断。",
+      "trigger": [
+        "before-freeze",
+        "before-continue"
+      ],
+      "action_effect": [
+        "self-audit",
+        "return-remediate",
+        "downgrade-claim",
+        "reroute",
+        "block",
+        "stop"
+      ],
+      "not_a": [
+        "mechanical-block-list",
+        "semantic-judge"
+      ],
+      "owner": "shared-primitives"
+    },
+    "anti_spiral": {
+      "name": "Anti-Spiral / 反螺旋",
+      "short_rule": "同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。",
+      "trigger": [
+        "before-continue"
+      ],
+      "action_effect": [
+        "stop",
+        "return-upstream",
+        "subtract",
+        "reroute",
+        "ask-user-authority"
+      ],
+      "not_a": [
+        "standalone-method",
+        "automatic-stop-rule"
+      ],
+      "owner": "anti-spiral-self-audit"
+    },
+    "continuation_authorization": {
+      "name": "Continuation Authorization / 继续授权",
+      "short_rule": "同路径继续前说明继续凭什么被授权，以及下一步会带来什么新证据。",
+      "trigger": [
+        "before-continue"
+      ],
+      "action_effect": [
+        "authorize-continue",
+        "mission-review",
+        "stop",
+        "ask-user-authority"
+      ],
+      "not_a": [
+        "generic-primitive",
+        "evidence-substitute",
+        "automatic-continue-rule"
+      ],
+      "owner": "tplan"
+    }
+  }
+}

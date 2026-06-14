@@ -30,7 +30,12 @@ JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
-RELEASE_SCRIPTS = ("run-fidelity-judge.py", "log-fidelity-usage.py")
+RELEASE_SCRIPT_PATHS = (
+    Path("run-fidelity-judge.py"),
+    Path("log-fidelity-usage.py"),
+    Path("primitives/check.py"),
+    Path("primitives/manifest.json"),
+)
 
 
 def repo_root() -> Path:
@@ -120,8 +125,8 @@ def copy_license_files(root: Path, target: Path) -> None:
 
 
 def copy_release_scripts(root: Path, target: Path) -> None:
-    for filename in RELEASE_SCRIPTS:
-        copy_file_filtered(root / "scripts" / filename, target / "scripts" / filename)
+    for rel_path in RELEASE_SCRIPT_PATHS:
+        copy_file_filtered(root / "scripts" / rel_path, target / "scripts" / rel_path)
 
 
 def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
@@ -210,9 +215,9 @@ def main() -> int:
     for filename in LICENSE_FILES:
         if not (root / filename).is_file():
             raise SystemExit(f"{filename} not found: {root / filename}")
-    for filename in RELEASE_SCRIPTS:
-        if not (root / "scripts" / filename).is_file():
-            raise SystemExit(f"{filename} not found: {root / 'scripts' / filename}")
+    for rel_path in RELEASE_SCRIPT_PATHS:
+        if not (root / "scripts" / rel_path).is_file():
+            raise SystemExit(f"{rel_path} not found: {root / 'scripts' / rel_path}")
 
     output = args.out.resolve()
     ensure_safe_output_dir(output, root)

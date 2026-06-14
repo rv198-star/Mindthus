@@ -390,6 +390,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "No Abstract Jargon Wall",
             "Approximate Quantified Mapping",
             "非精准量化显影",
+            "Gate Probes",
+            "Failure Smells",
         ):
             self.assertIn(phrase, primitives)
 
@@ -435,11 +437,19 @@ class MindthusRouterContractTests(unittest.TestCase):
                 ),
                 "No Abstract Jargon Wall": (
                     "`AGENTS.md`",
-                    "先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。",
+                    "先做表达定位：我代表什么立场、文字直接服务谁、要把对方带到哪里；先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。",
                 ),
                 "Approximate Quantified Mapping / 非精准量化显影": (
                     "`AGENTS.md` / `using-mindthus`",
                     "数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。",
+                ),
+                "Gate Probes / 冻结前定位自省": (
+                    "`AGENTS.md` / `shared-primitives`",
+                    "交付、冻结、继续、转交或停止前，确认当前产物是什么、现在处于什么状态、接下来服务谁的什么行动。",
+                ),
+                "Failure Smells / 误用信号": (
+                    "`shared-primitives` / 各方法",
+                    "看见“像完成但没推进”的信号时先自审；普通信号触发返修或降级，硬边界触发 block / stop。",
                 ),
             },
         )
