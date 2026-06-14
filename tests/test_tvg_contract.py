@@ -156,6 +156,7 @@ class TvgContractTests(unittest.TestCase):
             "logo-design-prompt-taste",
             "brandkit-board-prompt-taste",
             "ui-redesign-critique-taste",
+            "web-hero-visual-taste",
             "示范 profile，不是电影史分类结论",
             "设计审美总论",
             "三层 profile 怎么发挥作用",
@@ -1015,6 +1016,85 @@ class TvgContractTests(unittest.TestCase):
             "more promising as a taste-aware critique and repair-direction loop",
             "concrete, evidence-bounded repair direction",
             "does not support a claim that Mindthus can produce superior visual design",
+            "True Image Blind Test",
+            "DeskPilot support-ticket hero scenario",
+            "A: taste_skill",
+            "B: tvg_profile",
+            "C: direct",
+            "A最优，C和B差距不大，但C更好一些",
+            "best: taste_skill",
+            "second: direct",
+            "third: tvg_profile",
+            "failed_to_win_visual_blind_test",
+            "external visual taste benchmark won",
+            "TVG+profile should therefore not claim visual taste parity",
+            "Cross-Scene Anti-Overfit Blind Test",
+            "Clayroom is a small neighborhood pottery studio",
+            "TVG self-iteration before blind test",
+            "selected as final TVG candidate",
+            "A: taste_skill_benchmark",
+            "B: direct",
+            "C: tvg_profile_cycle5",
+            "B最精致，A次之，C最次，但三个差距不是太大",
+            "best: direct",
+            "second: taste_skill_benchmark",
+            "third: tvg_profile_cycle5",
+            "failed_to_win_but_gap_narrowed",
+            "did not beat direct prompting in first-look visual quality",
+            "five TVG self-iteration cycles made the output more competitive",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_web_hero_visual_taste_profile_learns_domain_discipline_not_prompt_text(self):
+        path = TVG / "resources" / "value-profiles" / "web-hero-visual-taste.md"
+        self.assertTrue(path.exists(), "missing web hero visual taste profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Web Hero Visual Taste Profile",
+            "mode: supplied",
+            "visually strong, conversion-aware, evidence-honest frontend reference",
+            "first-look visual force",
+            "visual protagonist",
+            "composition anchor",
+            "Media / material / product-state direction",
+            "anti-template avoid list",
+            "did the output beat or at least not degrade a clear direct prompt candidate",
+            "must not copy external taste-skill prompts",
+            "must not claim TVG+profile can replicate or outperform a dedicated visual taste skill",
+            "not a claim that TVG can replicate Taste Skills",
+            "Learn the domain discipline, not the external prompt text",
+            "copying external prompt wording, examples, or checklist text",
+            "optimizing toward one benchmark image's exact winning composition",
+            "first-look force",
+            "visual generation control",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_web_hero_visual_taste_learning_record_preserves_claim_ceiling(self):
+        path = REPO / "tests" / "tvg_web_hero_visual_taste_profile_learning_2026_06_15.md"
+        self.assertTrue(path.exists(), "missing web hero visual taste learning record")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "issue #47",
+            "Learn the domain discipline, not the external prompt text",
+            "Why A New Profile",
+            "Disallowed learning",
+            "copying external Taste Skills prompt wording",
+            "learned_axes",
+            "first-look-visual-force",
+            "composition-specificity",
+            "media-material-direction",
+            "A visual prompt is not good just because it is honest, specific, and product-aware",
+            "DeskPilot blind result",
+            "Clayroom blind result",
+            "External domain-reference-derived",
+            "Explicitly not used",
+            "external prompt wording",
+            "one benchmark image's winning composition as a general rule",
+            "TVG profiles can learn domain-specific visual-generation discipline",
+            "TVG replicates Taste Skills",
+            "TVG beats direct prompting for single hero images",
+            "external benchmark content can be copied into Mindthus",
         ):
             self.assertIn(phrase, text)
 

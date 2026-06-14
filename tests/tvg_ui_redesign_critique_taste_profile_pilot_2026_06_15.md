@@ -211,6 +211,139 @@ Updated diagnosis:
 > TVG+Profile is more promising as a taste-aware critique and repair-direction loop than
 > as a pure visual-generation taste engine.
 
+## True Image Blind Test
+
+After the text-first critique pilot, one extra image blind test was run on the
+DeskPilot support-ticket hero scenario.
+
+Setup:
+
+- Three independent image prompts were generated for the same product facts.
+- The three sources were direct prompt, TVG+profile prompt, and an external
+  taste-skill image-generation prompt used as a benchmark candidate.
+- Images were generated independently, then randomly shuffled into A/B/C.
+- The contact sheet was kept local and was not added to the repository:
+  `/private/tmp/mindthus_blindtest_deskpilot_20260615/deskpilot_blind_contact_sheet.png`
+- Source mapping was hidden during user review.
+
+Hidden mapping after review:
+
+```yaml
+A: taste_skill
+B: tvg_profile
+C: direct
+```
+
+User review:
+
+> A最优，C和B差距不大，但C更好一些
+
+Result:
+
+```yaml
+true_image_blind_test:
+  best: taste_skill
+  second: direct
+  third: tvg_profile
+  result_for_tvg_profile: failed_to_win_visual_blind_test
+  interpretation: "TVG+profile improved product-specific reasoning, but did not beat the dedicated visual taste prompt or the direct prompt in first-look hero quality."
+```
+
+Blind-test diagnosis:
+
+- The dedicated visual taste prompt produced the strongest first-screen image.
+- The direct prompt beat TVG+profile by a small margin in this run.
+- TVG+profile remained useful for critique and evidence-bounded repair direction, but
+  its current image prompt tends to over-prioritize correctness and product semantics
+  over visual force, commercial hero tension, and first-look appeal.
+- This supports a sharper limitation: text-first critique quality and visual-generation
+  taste must be evaluated separately.
+
+## Cross-Scene Anti-Overfit Blind Test
+
+Because the DeskPilot image test could overfit to SaaS hero conventions and the
+external benchmark's winning case-file direction, a second scene was tested without
+reusing the customer-support / review-board domain.
+
+Scene:
+
+> Clayroom is a small neighborhood pottery studio offering beginner wheel-throwing
+> classes, glazing sessions, and private group workshops. The page goal is to make a
+> first-time visitor feel that the studio is warm, real, beginner-friendly, and worth
+> booking for an intro class.
+
+Hard constraints:
+
+- no fake reviews;
+- no star ratings;
+- no fake scarcity;
+- no discounts;
+- no invented teacher bio;
+- no metrics or proof claims.
+
+TVG self-iteration before blind test:
+
+```yaml
+cycles:
+  - cycle: 1
+    positive_value_hypothesis: "Start with a clear, honest class-booking hero."
+    self_audit: "clear but too much like a generic class booking card; risk of unsupported availability language"
+  - cycle: 2
+    positive_value_hypothesis: "Make the tactile hand-making moment the visual protagonist."
+    self_audit: "stronger and more human, but booking usefulness became too weak"
+  - cycle: 3
+    positive_value_hypothesis: "Restore lightweight booking information without returning to a sales-card template."
+    self_audit: "best balance so far, but still close to a conventional pretty craft-site solution"
+  - cycle: 4
+    positive_value_hypothesis: "Add a memorable handmade bowl artifact as a brand signature."
+    self_audit: "more memorable, but the CTA drifted toward visiting the studio rather than booking"
+  - cycle: 5
+    positive_value_hypothesis: "Merge the handmade bowl artifact with a clear beginner-class booking CTA."
+    self_audit: "selected as final TVG candidate; warm, honest, bookable, and not obviously fake-proof driven"
+```
+
+Blind setup:
+
+- TVG candidate was frozen after cycle 5.
+- Direct prompt and external visual-taste benchmark were generated only after the TVG
+  candidate was frozen.
+- Three images were randomly shuffled into A/B/C.
+- The contact sheet was kept local and was not added to the repository:
+  `/private/tmp/mindthus_blindtest_clayroom_20260615/clayroom_true_blind_contact_sheet.png`
+
+Hidden mapping after review:
+
+```yaml
+A: taste_skill_benchmark
+B: direct
+C: tvg_profile_cycle5
+```
+
+User review:
+
+> B最精致，A次之，C最次，但三个差距不是太大
+
+Result:
+
+```yaml
+clayroom_cross_scene_blind_test:
+  best: direct
+  second: taste_skill_benchmark
+  third: tvg_profile_cycle5
+  result_for_tvg_profile: failed_to_win_but_gap_narrowed
+  interpretation: "TVG self-iteration reduced the earlier negative-optimization problem, but still did not beat direct prompting in first-look visual quality."
+```
+
+Cross-scene diagnosis:
+
+- Switching away from SaaS/support prevented the test from simply optimizing toward the
+  previous case-file visual.
+- TVG self-iteration produced a usable candidate and avoided obvious evidence-boundary
+  violations.
+- The user still preferred direct prompting and ranked TVG third.
+- The gap was smaller than the DeskPilot blind test, so the loop may be helping, but the
+  evidence does not yet support visual taste parity or superiority.
+
 ## Source Attribution
 
 Profile-derived:
@@ -237,8 +370,12 @@ Independent artifact judgment:
 Possible uncertainty:
 
 - no real MeetFlow screenshot or prototype was inspected;
-- no external taste-skill black-box critique output has been compared yet in this scenario;
-- this is a text-only pilot and does not prove visual-generation quality;
+- external taste-skill was used only as a benchmark candidate in the blind image test,
+  not as source material for the Mindthus profile;
+- this pilot includes one image blind test, but the sample size is still too small to
+  prove stable visual-generation quality;
+- the Clayroom cross-scene test suggests TVG self-iteration can narrow the gap, but did
+  not win against direct prompting in that run;
 - no user research, analytics, or conversion evidence was inspected.
 
 ## Final Claim
@@ -251,3 +388,9 @@ This pilot supports a narrower and more useful claim than the brandkit image pro
 It does not support a claim that Mindthus can produce superior visual design, outperform
 dedicated taste skills, or replace product/design review.
 
+The additional blind image test makes this limit stronger: in one true image blind run,
+the external visual taste benchmark won, direct prompt came second, and TVG+profile came
+third. TVG+profile should therefore not claim visual taste parity from this issue.
+
+The cross-scene Clayroom test further narrows the evidence: five TVG self-iteration cycles made the output more competitive,
+but the blind ranking was still direct first, external taste benchmark second, and TVG third.
