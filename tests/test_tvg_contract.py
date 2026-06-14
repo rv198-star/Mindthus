@@ -153,7 +153,7 @@ class TvgContractTests(unittest.TestCase):
             "default-practical-value",
             "shaw-brothers-wuxia-fantasy",
             "king-hu-wuxia-cinema",
-            "product-surface-taste-review",
+            "logo-design-prompt-taste",
             "示范 profile，不是电影史分类结论",
             "设计审美总论",
             "三层 profile 怎么发挥作用",
@@ -828,45 +828,49 @@ class TvgContractTests(unittest.TestCase):
         for term in forbidden_case_terms:
             self.assertNotIn(term, text)
 
-    def test_product_surface_taste_profile_is_scoped_not_general_taste_skill(self):
-        path = TVG / "resources" / "value-profiles" / "product-surface-taste-review.md"
-        self.assertTrue(path.exists(), "missing product-surface taste review profile")
+    def test_logo_design_prompt_taste_profile_is_scoped_not_general_taste_skill(self):
+        path = TVG / "resources" / "value-profiles" / "logo-design-prompt-taste.md"
+        self.assertTrue(path.exists(), "missing logo design prompt taste profile")
         text = path.read_text(encoding="utf-8")
         for phrase in (
-            "Product Surface Taste Review Profile",
+            "Logo Design Prompt Taste Profile",
             "mode: supplied",
-            "review and strengthen product surface copy",
+            "strengthen vague logo requests",
             "value_semantics",
             "realization_surface",
             "gain_policy",
-            "generic AI/SaaS surface patterns",
+            "generic AI logo",
             "bad-smell diagnosis",
-            "visible surface unit",
-            "product state",
-            "user job",
-            "evidence boundary",
+            "brand role",
+            "one clear visual idea",
+            "flat vector-like",
+            "small-size recognizability",
+            "monochrome viability",
             "must not copy external taste-skill prompts",
+            "must not copy or imitate famous logos",
             "not a general design taste doctrine",
-            "not a replacement for product design review",
-            "not a claim that Mindthus can match a specialized taste skill",
+            "not a professional logo-design method",
+            "not a claim that Mindthus can match a dedicated taste skill",
         ):
             self.assertIn(phrase, text)
 
-    def test_product_surface_taste_profile_pilot_records_loop_and_claim_ceiling(self):
-        path = REPO / "tests" / "tvg_product_surface_taste_profile_pilot_2026_06_14.md"
-        self.assertTrue(path.exists(), "missing product-surface taste profile pilot")
+    def test_logo_design_prompt_taste_profile_pilot_records_loop_and_claim_ceiling(self):
+        path = REPO / "tests" / "tvg_logo_design_prompt_taste_profile_pilot_2026_06_15.md"
+        self.assertTrue(path.exists(), "missing logo design prompt taste profile pilot")
         text = path.read_text(encoding="utf-8")
         for phrase in (
             "issue #47",
+            "Black-Box Benchmark Design",
             "Single-Pass Profile Power Test",
             "Loop-Assisted Production Test",
             "profile_control_power: partial",
             "Pressure: `4`",
-            "reference_score: 3.3",
-            "reference_score: 4.1",
-            "reference_score: 4.5",
+            "reference_score: 3.4",
+            "reference_score: 4.2",
+            "reference_score: 4.6",
             "freeze-with-review-bound-warning",
-            "bad smell -> visible surface unit -> replacement move -> evidence",
+            "bad smell -> brand role -> one visual idea -> generation constraints",
+            "has not run the external taste-skill black-box comparison yet",
             "does not support a broad claim",
             "dedicated taste-skill",
         ):

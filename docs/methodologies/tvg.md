@@ -186,12 +186,12 @@ Profile 不能覆盖事实边界。profiles cannot override evidence honesty, cl
 - `default-practical-value`：普通任务默认使用的通用实用价值锚点。
 - `shaw-brothers-wuxia-fantasy`：邵氏清水湾棚拍时代武侠 / 神怪影视提示词示范 profile。
 - `king-hu-wuxia-cinema`：胡金铨武侠电影影视提示词示范 profile。
-- `product-surface-taste-review`：产品页面 / 界面概念的局部 taste review 示范 profile。
+- `logo-design-prompt-taste`：Logo 图像生成提示词的局部 taste-good 示范 profile。
 
 这些都是示范 profile，不是电影史分类结论、设计审美总论，也不是对图像模型或产品效果的稳定保证。它们展示的是
 三层 profile 怎么发挥作用：`value_semantics` 说明什么算好，`realization_surface` 说明价值要落在
-shot / panel / source-attribution、product state / user job / bad-smell diagnosis 这类可检查单位上，
-`gain_policy` 说明 TVG 应该优先增加哪些镜头行为、空间关系、产品状态、证据边界或替换动作。
+shot / panel / source-attribution、brand role / logo mark / bad-smell diagnosis 这类可检查单位上，
+`gain_policy` 说明 TVG 应该优先增加哪些镜头行为、空间关系、Logo 约束、证据边界或替换动作。
 
 示范 profile 的证据上限要说清楚：prompt 或图像 smoke 通过，只能支持“这个 profile 对这类输出有
 可用约束力”；不能证明某个导演风格已经被完整定义，也不能证明任何图像模型都会稳定生成对应风格。
