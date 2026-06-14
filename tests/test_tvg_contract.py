@@ -154,6 +154,7 @@ class TvgContractTests(unittest.TestCase):
             "shaw-brothers-wuxia-fantasy",
             "king-hu-wuxia-cinema",
             "logo-design-prompt-taste",
+            "brandkit-board-prompt-taste",
             "示范 profile，不是电影史分类结论",
             "设计审美总论",
             "三层 profile 怎么发挥作用",
@@ -873,6 +874,93 @@ class TvgContractTests(unittest.TestCase):
             "has not run the external taste-skill black-box comparison yet",
             "does not support a broad claim",
             "dedicated taste-skill",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_brandkit_board_prompt_taste_profile_is_scoped_and_pollution_aware(self):
+        path = TVG / "resources" / "value-profiles" / "brandkit-board-prompt-taste.md"
+        self.assertTrue(path.exists(), "missing brandkit board prompt taste profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Brandkit Board Prompt Taste Profile",
+            "mode: supplied",
+            "brand-kit overview boards",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
+            "brand thesis",
+            "panel roles",
+            "system coherence",
+            "anti-generic AI/SaaS",
+            "art-directed-surface-quality",
+            "visible-quality-gate",
+            "if the board would look ugly, dutiful, or template-like, the prompt is not ready",
+            "must not use leaked external skill internals as profile source material",
+            "not a general design taste doctrine",
+            "not a professional brand-strategy method",
+            "not a claim that Mindthus can match a dedicated taste skill",
+            "The earlier `logo-design-prompt-taste` profile remains useful as a narrower subcase",
+            "accidentally exposed external taste-skill internals",
+            "treated as pollution",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_brandkit_board_prompt_taste_profile_pilot_records_benchmark_and_claim_ceiling(self):
+        path = REPO / "tests" / "tvg_brandkit_board_prompt_taste_profile_pilot_2026_06_15.md"
+        self.assertTrue(path.exists(), "missing brandkit board prompt taste profile pilot")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "issue #47",
+            "single brand-kit overview image prompt",
+            "Pollution Boundary",
+            "unexpectedly printed external skill internals",
+            "must not be used as source material for this profile",
+            "direct model brand-board prompt",
+            "external taste-skill brandkit output",
+            "TVG + `brandkit-board-prompt-taste`",
+            "Single-Pass Profile Power Test",
+            "Loop-Assisted Production Test",
+            "profile_control_power: partial",
+            "Pressure: `4`",
+            "reference_score: 3.5",
+            "reference_score: 4.3",
+            "reference_score: 4.7",
+            "freeze-with-review-bound-warning",
+            "Brand-Board Image Blind Review",
+            "option_R",
+            "TVG + brandkit-board-prompt-taste v0.1",
+            "user_feedback_initial: \"比较一般\"",
+            "user_feedback_correction: \"不是一般，是非常丑\"",
+            "strong negative visual-quality failure",
+            "option_S",
+            "direct model brand-board prompt",
+            "user_feedback: \"综合\"",
+            "option_T",
+            "external taste-skill brandkit final prompt",
+            "user_feedback: \"比较有质感\"",
+            "Profile Revision After Blind Review",
+            "brandkit-board-prompt-taste v0.2",
+            "art-directed surface quality",
+            "visible surface quality and rhythm as an exit requirement",
+            "avoid ugly, dutiful brand boards",
+            "Strict-Shell Retest",
+            "no-logo-control",
+            "option_A",
+            "TVG + brandkit-board-prompt-taste v0.2 standardized no-logo shell",
+            "option_B",
+            "direct model prompt standardized no-logo shell",
+            "user_feedback: \"配色和图标好一些\"",
+            "option_C",
+            "external taste-skill final prompt standardized no-logo shell",
+            "overall_user_feedback: \"目前看这三个就不分高低了，开始有些整体雷同，细节不同而已\"",
+            "outputs converged",
+            "comparable cluster",
+            "not a superior result",
+            "strict shell may suppress the external skill's natural strengths",
+            "visible-quality gate",
+            "brand brief -> brand thesis -> panel system -> visible-quality gate -> generation",
+            "outperforms direct prompting",
+            "does not support a broad claim",
         ):
             self.assertIn(phrase, text)
 
