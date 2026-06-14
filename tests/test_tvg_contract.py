@@ -155,6 +155,7 @@ class TvgContractTests(unittest.TestCase):
             "king-hu-wuxia-cinema",
             "logo-design-prompt-taste",
             "brandkit-board-prompt-taste",
+            "ui-redesign-critique-taste",
             "示范 profile，不是电影史分类结论",
             "设计审美总论",
             "三层 profile 怎么发挥作用",
@@ -961,6 +962,59 @@ class TvgContractTests(unittest.TestCase):
             "brand brief -> brand thesis -> panel system -> visible-quality gate -> generation",
             "outperforms direct prompting",
             "does not support a broad claim",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_ui_redesign_critique_taste_profile_is_text_first_and_scoped(self):
+        path = TVG / "resources" / "value-profiles" / "ui-redesign-critique-taste.md"
+        self.assertTrue(path.exists(), "missing UI redesign critique taste profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "UI Redesign Critique Taste Profile",
+            "mode: supplied",
+            "strengthen vague UI/design feedback",
+            "screen's job and the user's decision",
+            "visible UI surface unit",
+            "dominant bad smell",
+            "user impact",
+            "first repair move",
+            "anti-generic-ai-ui",
+            "downstream-design-handoff",
+            "must not use leaked external skill internals as profile source material",
+            "not a general UI design doctrine",
+            "not a replacement for product design review",
+            "not a visual generation skill",
+            "critique-first taste scenario",
+            "Does the image become prettier while leaving the user decision unclear",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_ui_redesign_critique_taste_profile_pilot_records_text_first_result(self):
+        path = REPO / "tests" / "tvg_ui_redesign_critique_taste_profile_pilot_2026_06_15.md"
+        self.assertTrue(path.exists(), "missing UI redesign critique taste profile pilot")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "issue #47",
+            "make weak UI redesign critique useful",
+            "Surface description",
+            "Weak critique baseline",
+            "Screen job",
+            "Dominant bad smell",
+            "Visible surface units",
+            "Single-Pass Profile Power Test",
+            "profile_control_power: strong",
+            "Pressure: `4`",
+            "reference_score: 4.0",
+            "reference_score: 4.6",
+            "freeze-with-review-bound-warning",
+            "This is not mainly a \"make it premium\" problem",
+            "Hero claim",
+            "Hero visual",
+            "Feature cards",
+            "Comparison To Previous Probes",
+            "more promising as a taste-aware critique and repair-direction loop",
+            "concrete, evidence-bounded repair direction",
+            "does not support a claim that Mindthus can produce superior visual design",
         ):
             self.assertIn(phrase, text)
 
