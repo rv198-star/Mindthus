@@ -10,6 +10,10 @@ This is not a new method layer. 它不是第七个方法，也不是总入口；
 小型 guardrail 集中成一个 Cognitive Primitive Index / 认知原语索引，供 `AGENTS.md`、
 `using-mindthus` 和各 skill 引用。
 
+当认知原语需要比文档提醒更硬一点时，使用
+[Primitive Activation / 原语唤起机制](primitive-activation.md)：它通过少数轻量事件
+显性唤起相关原语，但仍然只做 shape-only reminder，不替代 agent 判断。
+
 ## 解决什么问题
 
 如果每个 skill 都把同一套刹车、证据上限、表达纪律重新写一遍，项目会有三个问题：
@@ -199,9 +203,11 @@ SELA 负责整体效率与局部优势判断。如果销售、法务、实施、
 - `using-mindthus` 引用本页来避免入口 skill 变厚。
 - `AGENTS.md` 引用本页来保持默认姿态短。
 - 各方法页只保留与本方法相关的触发条件。
+- `Primitive Activation` 用脚本在少数关键事件上唤起原语，但不判断真伪、价值或 exit。
 
 ## 导航
 
 - 返回 [README](../../README.md)
+- 查看 [Primitive Activation](primitive-activation.md)
 - 查看 [Using Mindthus skill](../../skills/using-mindthus/SKILL.md)
 - 查看 [Anti-Spiral 方法页](anti-spiral-self-audit.md)
