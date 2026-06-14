@@ -153,7 +153,9 @@ class TvgContractTests(unittest.TestCase):
             "default-practical-value",
             "shaw-brothers-wuxia-fantasy",
             "king-hu-wuxia-cinema",
+            "product-surface-taste-review",
             "示范 profile，不是电影史分类结论",
+            "设计审美总论",
             "三层 profile 怎么发挥作用",
             "不能证明任何图像模型都会稳定生成对应风格",
         ):
@@ -825,6 +827,50 @@ class TvgContractTests(unittest.TestCase):
         )
         for term in forbidden_case_terms:
             self.assertNotIn(term, text)
+
+    def test_product_surface_taste_profile_is_scoped_not_general_taste_skill(self):
+        path = TVG / "resources" / "value-profiles" / "product-surface-taste-review.md"
+        self.assertTrue(path.exists(), "missing product-surface taste review profile")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "Product Surface Taste Review Profile",
+            "mode: supplied",
+            "review and strengthen product surface copy",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
+            "generic AI/SaaS surface patterns",
+            "bad-smell diagnosis",
+            "visible surface unit",
+            "product state",
+            "user job",
+            "evidence boundary",
+            "must not copy external taste-skill prompts",
+            "not a general design taste doctrine",
+            "not a replacement for product design review",
+            "not a claim that Mindthus can match a specialized taste skill",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_product_surface_taste_profile_pilot_records_loop_and_claim_ceiling(self):
+        path = REPO / "tests" / "tvg_product_surface_taste_profile_pilot_2026_06_14.md"
+        self.assertTrue(path.exists(), "missing product-surface taste profile pilot")
+        text = path.read_text(encoding="utf-8")
+        for phrase in (
+            "issue #47",
+            "Single-Pass Profile Power Test",
+            "Loop-Assisted Production Test",
+            "profile_control_power: partial",
+            "Pressure: `4`",
+            "reference_score: 3.3",
+            "reference_score: 4.1",
+            "reference_score: 4.5",
+            "freeze-with-review-bound-warning",
+            "bad smell -> visible surface unit -> replacement move -> evidence",
+            "does not support a broad claim",
+            "dedicated taste-skill",
+        ):
+            self.assertIn(phrase, text)
 
     def test_profile_construction_guide_separates_profile_power_from_runtime_rescue(self):
         path = TVG / "resources" / "value-profiles" / "profile-construction.md"

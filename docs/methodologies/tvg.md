@@ -181,16 +181,17 @@ Profile 不能覆盖事实边界。profiles cannot override evidence honesty, cl
 
 特别注意：不要从待改造样例反推风格规则。如果待升级对象本身可能就是错误、粗糙或跑偏的样例，它只能用来测试 profile，不能作为 profile 的来源。
 
-当前随包提供三类 profile 资源：
+当前随包提供四类 profile 资源：
 
 - `default-practical-value`：普通任务默认使用的通用实用价值锚点。
 - `shaw-brothers-wuxia-fantasy`：邵氏清水湾棚拍时代武侠 / 神怪影视提示词示范 profile。
 - `king-hu-wuxia-cinema`：胡金铨武侠电影影视提示词示范 profile。
+- `product-surface-taste-review`：产品页面 / 界面概念的局部 taste review 示范 profile。
 
-后两个是示范 profile，不是电影史分类结论，也不是对图像模型的稳定风格保证。它们展示的是
+这些都是示范 profile，不是电影史分类结论、设计审美总论，也不是对图像模型或产品效果的稳定保证。它们展示的是
 三层 profile 怎么发挥作用：`value_semantics` 说明什么算好，`realization_surface` 说明价值要落在
-shot / panel / source-attribution 这类可检查单位上，`gain_policy` 说明 TVG 扩写剧本时应该优先
-增加哪些镜头行为、空间关系、节奏结构和自审问题。
+shot / panel / source-attribution、product state / user job / bad-smell diagnosis 这类可检查单位上，
+`gain_policy` 说明 TVG 应该优先增加哪些镜头行为、空间关系、产品状态、证据边界或替换动作。
 
 示范 profile 的证据上限要说清楚：prompt 或图像 smoke 通过，只能支持“这个 profile 对这类输出有
 可用约束力”；不能证明某个导演风格已经被完整定义，也不能证明任何图像模型都会稳定生成对应风格。
