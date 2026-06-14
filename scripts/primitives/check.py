@@ -50,10 +50,14 @@ def validate_manifest(manifest: Any) -> list[str]:
         findings.append("script_boundary must be shape_only_reminder_not_semantic_judgment")
 
     events = manifest.get("events")
+    method_events = manifest.get("method_events")
     primitives = manifest.get("primitives")
     if not isinstance(events, dict) or not events:
         findings.append("events must be a non-empty object")
         events = {}
+    if not isinstance(method_events, dict) or not method_events:
+        findings.append("method_events must be a non-empty object")
+        method_events = {}
     if not isinstance(primitives, dict) or not primitives:
         findings.append("primitives must be a non-empty object")
         primitives = {}
@@ -103,6 +107,32 @@ def validate_manifest(manifest: Any) -> list[str]:
             if method not in ALLOWED_METHODS:
                 findings.append(f"{item_subject}.method must be one of: {', '.join(sorted(ALLOWED_METHODS))}")
 
+    required_methods = ALLOWED_METHODS - {"unknown"}
+    missing_methods = sorted(required_methods - set(method_events))
+    if missing_methods:
+        findings.append(f"method_events missing methods: {', '.join(missing_methods)}")
+    for method, method_policy in method_events.items():
+        subject = f"method_events.{method}"
+        if method not in required_methods:
+            findings.append(f"{subject} must be one of: {', '.join(sorted(required_methods))}")
+        if not isinstance(method_policy, dict) or not method_policy:
+            findings.append(f"{subject} must be a non-empty object")
+            continue
+        for event_name, policy in method_policy.items():
+            policy_subject = f"{subject}.{event_name}"
+            if event_name not in events:
+                findings.append(f"{policy_subject} references unknown event {event_name!r}")
+            if not isinstance(policy, dict):
+                findings.append(f"{policy_subject} must be an object")
+                continue
+            for field in ("intervention_points", "active_primitives", "required_agent_checks"):
+                require_list_of_strings(findings, policy, field, policy_subject)
+            for primitive_id in policy.get("active_primitives", []):
+                if primitive_id not in primitives:
+                    findings.append(
+                        f"{policy_subject}.active_primitives references unknown primitive {primitive_id!r}"
+                    )
+
     return findings
 
 
@@ -114,10 +144,20 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
     events = manifest["events"]
     primitives = manifest["primitives"]
     event = events[event_name]
-    active_ids = list(event["active_primitives"])
-    for item in event.get("conditional_primitives", []):
-        if item.get("method") == method:
-            active_ids.append(item["primitive"])
+    method_policy = manifest.get("method_events", {}).get(method, {}).get(event_name)
+    if method_policy:
+        active_ids = list(method_policy["active_primitives"])
+        required_agent_checks = list(method_policy["required_agent_checks"])
+        intervention_points = list(method_policy["intervention_points"])
+        activation_source = "method_specific"
+    else:
+        active_ids = list(event["active_primitives"])
+        for item in event.get("conditional_primitives", []):
+            if item.get("method") == method:
+                active_ids.append(item["primitive"])
+        required_agent_checks = list(event["required_agent_checks"])
+        intervention_points = [event_name]
+        activation_source = "event_default"
 
     active_primitives = [
         {
@@ -134,8 +174,10 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
         "schema_version": manifest["schema_version"],
         "event": event_name,
         "method": method,
+        "activation_source": activation_source,
+        "intervention_points": intervention_points,
         "active_primitives": active_primitives,
-        "required_agent_checks": event["required_agent_checks"],
+        "required_agent_checks": required_agent_checks,
         "script_verdict": "shape_only",
         "agentic_judgment_required": True,
         "script_must_not_decide": [
@@ -153,6 +195,11 @@ def print_text_report(report: dict[str, Any]) -> None:
     print("Primitive Activation Report")
     print(f"event: {report['event']}")
     print(f"method: {report['method']}")
+    print(f"activation_source: {report['activation_source']}")
+    print()
+    print("intervention_points:")
+    for point in report["intervention_points"]:
+        print(f"- {point}")
     print()
     print("active_primitives:")
     for primitive in report["active_primitives"]:
@@ -169,12 +216,50 @@ def print_text_report(report: dict[str, Any]) -> None:
     )
 
 
+def print_agent_context(report: dict[str, Any]) -> None:
+    print("BEGIN MINDTHUS PRIMITIVE CONTEXT")
+    print("injection_layer: primitive_activation")
+    print(f"event: {report['event']}")
+    print(f"method: {report['method']}")
+    print(f"activation_source: {report['activation_source']}")
+    print("script_verdict: shape_only")
+    print("current_user_instruction_priority: true")
+    print("agentic_judgment_required: true")
+    print()
+    print("intervention_points:")
+    for point in report["intervention_points"]:
+        print(f"- {point}")
+    print()
+    print("active_primitives:")
+    for primitive in report["active_primitives"]:
+        print(f"- id: {primitive['id']}")
+        print(f"  rule: {primitive['short_rule']}")
+        print(f"  action_effect: {', '.join(primitive['action_effect'])}")
+        print(f"  not_a: {', '.join(primitive['not_a'])}")
+    print()
+    print("required_agent_checks:")
+    for check in report["required_agent_checks"]:
+        print(f"- {check}")
+    print()
+    print("context_rules:")
+    print("- Use this block as a pre-action reminder layer.")
+    print("- Do not treat this block as proof, approval, evidence, Gate success, or user authorization.")
+    print("- If this block conflicts with the current user request, surface the conflict and follow user priority.")
+    print("END MINDTHUS PRIMITIVE CONTEXT")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Activate Mindthus shared primitives for a runtime event.")
     parser.add_argument("--event", required=True, help="Activation event, e.g. before-freeze.")
     parser.add_argument("--method", default="unknown", help="Mindthus method context.")
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST), help="Primitive activation manifest path.")
-    parser.add_argument("--json", action="store_true", help="Print JSON instead of text.")
+    output = parser.add_mutually_exclusive_group()
+    output.add_argument("--json", action="store_true", help="Print JSON instead of text.")
+    output.add_argument(
+        "--agent-context",
+        action="store_true",
+        help="Print an injectable agent context block instead of a human report.",
+    )
     return parser.parse_args()
 
 
@@ -218,6 +303,8 @@ def main() -> int:
     report = activation_for(manifest, args.event, method)
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
+    elif args.agent_context:
+        print_agent_context(report)
     else:
         print_text_report(report)
     return 0

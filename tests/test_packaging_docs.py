@@ -7,6 +7,13 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
+PRIMITIVE_DEFINITION_FILES = (
+    "evidence-claim-ceiling.md",
+    "perspective-pressure.md",
+    "anti-spiral.md",
+    "no-abstract-jargon-wall.md",
+    "approximate-quantified-mapping.md",
+)
 
 
 def parse_frontmatter_mapping(text: str) -> dict[str, str]:
@@ -562,6 +569,18 @@ class PackagingDocsTests(unittest.TestCase):
                     / "shared-primitives.md"
                 ).exists()
             )
+            for filename in PRIMITIVE_DEFINITION_FILES:
+                self.assertTrue(
+                    (
+                        out
+                        / "claude-code"
+                        / "claude-plugin"
+                        / "docs"
+                        / "methodologies"
+                        / "primitives"
+                        / filename
+                    ).exists()
+                )
             self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "internal").exists())
             self.assertFalse((out / "claude-code" / "claude-plugin" / "docs" / "superpowers").exists())
 
@@ -571,6 +590,8 @@ class PackagingDocsTests(unittest.TestCase):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "codex" / "AGENTS.md").exists())
             self.assertTrue((out / "codex" / "docs" / "methodologies" / "shared-primitives.md").exists())
+            for filename in PRIMITIVE_DEFINITION_FILES:
+                self.assertTrue((out / "codex" / "docs" / "methodologies" / "primitives" / filename).exists())
             self.assertFalse((out / "codex" / "docs" / "internal").exists())
             self.assertFalse((out / "codex" / "docs" / "superpowers").exists())
             codex_agents = (out / "codex" / "AGENTS.md").read_text(encoding="utf-8")
@@ -597,6 +618,8 @@ class PackagingDocsTests(unittest.TestCase):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
             self.assertTrue((out / "opencode" / "docs" / "methodologies" / "shared-primitives.md").exists())
+            for filename in PRIMITIVE_DEFINITION_FILES:
+                self.assertTrue((out / "opencode" / "docs" / "methodologies" / "primitives" / filename).exists())
             self.assertFalse((out / "opencode" / "docs" / "internal").exists())
             self.assertFalse((out / "opencode" / "docs" / "superpowers").exists())
             opencode_agents = (out / "opencode" / "AGENTS.md").read_text(encoding="utf-8")

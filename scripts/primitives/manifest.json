@@ -5,11 +5,11 @@
     "before-route": {
       "description": "Before selecting a Mindthus method.",
       "active_primitives": [
-        "minimal_sufficient_lens",
         "evidence_claim_ceiling"
       ],
       "required_agent_checks": [
         "is_this_clear_low_risk_direct_execution",
+        "context_sufficiency_check",
         "are_facts_or_runtime_proof_missing",
         "what_hard_judgment_point_exists",
         "which_method_owns_the_next_judgment"
@@ -18,9 +18,8 @@
     "before-freeze": {
       "description": "Before deliver, freeze, handoff, block, or stop.",
       "active_primitives": [
-        "gate_probes",
-        "failure_smells",
-        "evidence_claim_ceiling"
+        "evidence_claim_ceiling",
+        "no_abstract_jargon_wall"
       ],
       "required_agent_checks": [
         "current_artifact_or_action_role",
@@ -33,15 +32,8 @@
     "before-continue": {
       "description": "Before continuing the same path or another value-gain/runtime round.",
       "active_primitives": [
-        "gate_probes",
         "anti_spiral",
-        "failure_smells"
-      ],
-      "conditional_primitives": [
-        {
-          "primitive": "continuation_authorization",
-          "method": "tplan"
-        }
+        "evidence_claim_ceiling"
       ],
       "required_agent_checks": [
         "why_same_path_is_still_authorized",
@@ -52,31 +44,299 @@
       ]
     }
   },
-  "primitives": {
-    "minimal_sufficient_lens": {
-      "name": "Minimal Sufficient Lens / 最小充分镜头",
-      "short_rule": "能直接判断就不要开方法；一个 skill 足够就不要串联。",
-      "trigger": [
-        "before-route"
-      ],
-      "action_effect": [
-        "direct-execute",
-        "route",
-        "acquire-information",
-        "stop"
-      ],
-      "not_a": [
-        "method-router-replacement",
-        "semantic-judge"
-      ],
-      "owner": "using-mindthus"
+  "method_events": {
+    "using-mindthus": {
+      "before-route": {
+        "intervention_points": [
+          "premise_calibration",
+          "intervention_boundary",
+          "method_arbitration"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "real_object_constraints_goal_function",
+          "context_sufficiency_check",
+          "direct_execution_or_information_acquisition_first",
+          "hard_judgment_point_and_owner",
+          "method_conflict_action"
+        ]
+      },
+      "before-freeze": {
+        "intervention_points": [
+          "router_answer_freeze"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "gate_probe_current_position_and_next_action",
+          "failure_smell_scan",
+          "route_changed_next_action",
+          "method_names_do_not_replace_plain_meaning",
+          "claim_strength_matches_known_inputs",
+          "downstream_action_or_stop_condition_named"
+        ]
+      }
     },
+    "3l5s": {
+      "before-freeze": {
+        "intervention_points": [
+          "problem_definition_freeze",
+          "btgsb_breakdown_freeze"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "gate_probe_current_position_and_next_action",
+          "failure_smell_scan",
+          "signal_problem_action_separated",
+          "problem_restatable_locatable_falsifiable",
+          "btgsb_target_gap_strategy_verification_present",
+          "next_action_executable"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "loopback_after_surprising_feedback",
+          "rework_or_rebreakdown"
+        ],
+        "active_primitives": [
+          "anti_spiral",
+          "evidence_claim_ceiling"
+        ],
+        "required_agent_checks": [
+          "gate_probe_continue_position",
+          "failure_smell_scan",
+          "loopback_reason_changes_layer_or_strategy",
+          "same_problem_not_repackaged_as_new_tasks",
+          "new_verification_or_evidence_delta"
+        ]
+      }
+    },
+    "edsp": {
+      "before-freeze": {
+        "intervention_points": [
+          "edsp_output_freeze",
+          "scenario_projection_entry"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "perspective_pressure",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "coordinate_system_stability",
+          "dimensions_not_duplicated",
+          "extremes_pushed_until_outcome_collapse",
+          "scenario_projection_after_stable_ed",
+          "evidence_or_stakeholder_boundary"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "coordinate_rebuild_after_challenge"
+        ],
+        "active_primitives": [
+          "perspective_pressure"
+        ],
+        "required_agent_checks": [
+          "challenger_found_decisive_variable",
+          "next_round_rebuilds_dimensions_not_polish",
+          "scenario_projection_not_masking_unstable_ed"
+        ]
+      }
+    },
+    "sela": {
+      "before-freeze": {
+        "intervention_points": [
+          "strategic_direction_freeze",
+          "timing_check"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "perspective_pressure",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "local_advantage_vs_system_feedback",
+          "hard_value_boundary_or_irreversible_harm",
+          "timing_action_separated_from_direction",
+          "stakeholder_perspective_pressure"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "timing_recheck_or_direction_revision"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "perspective_pressure"
+        ],
+        "required_agent_checks": [
+          "new_system_feedback_or_timing_evidence",
+          "not_repeating_efficiency_dogma",
+          "claim_strength_matches_evidence"
+        ]
+      }
+    },
+    "mpg": {
+      "before-freeze": {
+        "intervention_points": [
+          "path_carrying_strategy_freeze",
+          "trigger_conditions_freeze"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "approximate_quantified_mapping",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "actor_carrier_vehicle_exposure_present",
+          "counter_forces_change_posture_or_budget",
+          "trigger_conditions_operational",
+          "if_hypothetical_numbers_used_not_decision_calculator",
+          "mainline_challenge_named"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "path_reassessment_after_new_counterforce"
+        ],
+        "active_primitives": [
+          "anti_spiral",
+          "evidence_claim_ceiling"
+        ],
+        "required_agent_checks": [
+          "new_counterforce_or_carrier_evidence",
+          "same_mainline_not_repeated_as_strategy",
+          "exposure_or_optionality_changes"
+        ]
+      }
+    },
+    "wae": {
+      "before-freeze": {
+        "intervention_points": [
+          "control_boundary_decision_freeze",
+          "script_or_schema_boundary"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "workflow_agentic_evidence_control_layer_named",
+          "script_not_deciding_truth",
+          "claim_bound_to_evidence_or_downgraded",
+          "risk_modulators_checked"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "agentic_loop_or_workflow_retry"
+        ],
+        "active_primitives": [
+          "anti_spiral",
+          "evidence_claim_ceiling"
+        ],
+        "required_agent_checks": [
+          "loop_has_evidence_or_exit_condition",
+          "control_layer_changed_if_failure_repeats",
+          "side_effect_or_blast_radius_reassessed"
+        ]
+      }
+    },
+    "tvg": {
+      "before-freeze": {
+        "intervention_points": [
+          "tvg_exit_gate",
+          "handoff_or_artifact_freeze"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "gate_probe_current_position_and_next_action",
+          "failure_smell_scan",
+          "bounded_artifact_and_expected_value_named",
+          "value_axes_or_profile_applied",
+          "veto_and_claim_ceiling_checked",
+          "downstream_use_no_longer_requires_invention"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "tvg_next_round",
+          "value_gain_loop"
+        ],
+        "active_primitives": [
+          "anti_spiral",
+          "evidence_claim_ceiling"
+        ],
+        "required_agent_checks": [
+          "gate_probe_continue_position",
+          "failure_smell_scan",
+          "next_round_positive_value_hypothesis",
+          "value_gain_score_or_pressure_is_reference_not_decision",
+          "same_round_not_length_polish",
+          "stop_or_freeze_warning_condition"
+        ]
+      }
+    },
+    "tplan": {
+      "before-freeze": {
+        "intervention_points": [
+          "mission_update_or_handoff_freeze",
+          "decision_packet_freeze"
+        ],
+        "active_primitives": [
+          "evidence_claim_ceiling",
+          "no_abstract_jargon_wall"
+        ],
+        "required_agent_checks": [
+          "gate_probe_current_position_and_next_action",
+          "failure_smell_scan",
+          "mission_task_subtask_step_alignment",
+          "evidence_not_just_logs",
+          "decision_hook_or_user_authority_respected",
+          "downstream_resume_context"
+        ]
+      },
+      "before-continue": {
+        "intervention_points": [
+          "same_path_continue_decision",
+          "mission_runtime_continuation"
+        ],
+        "active_primitives": [
+          "anti_spiral",
+          "evidence_claim_ceiling"
+        ],
+        "required_agent_checks": [
+          "gate_probe_continue_position",
+          "why_same_path_is_still_authorized",
+          "next_round_positive_value_or_evidence_delta",
+          "local_repair_spiral_risk",
+          "failure_smell_scan",
+          "stop_or_handoff_condition",
+          "mission_roi_or_authority_for_continuation"
+        ]
+      }
+    }
+  },
+  "primitives": {
     "evidence_claim_ceiling": {
       "name": "Evidence / Claim Ceiling / 证据上限",
       "short_rule": "结论强度不能超过证据；缺关键事实时降级或阻断。",
       "trigger": [
         "before-route",
-        "before-freeze"
+        "before-freeze",
+        "before-continue"
       ],
       "action_effect": [
         "downgrade-claim",
@@ -88,50 +348,66 @@
         "fact-generator",
         "evidence-substitute"
       ],
-      "owner": "WAE"
+      "owner": "primitives/evidence-claim-ceiling"
     },
-    "gate_probes": {
-      "name": "Gate Probes / 冻结前定位自省",
-      "short_rule": "交付、冻结、继续、转交或停止前，确认当前位置和目标。",
+    "perspective_pressure": {
+      "name": "Perspective Pressure / 视角施压",
+      "short_rule": "单一视角过度自洽时，用角色、激励或反方视角挑战判断。",
       "trigger": [
         "before-freeze",
         "before-continue"
       ],
       "action_effect": [
-        "freeze",
-        "return-remediate",
-        "block",
-        "stop",
-        "ask-user-authority"
+        "challenge",
+        "rebuild",
+        "downgrade-claim",
+        "block"
       ],
       "not_a": [
         "standalone-method",
-        "semantic-judge",
-        "evidence-substitute",
-        "gate-replacement"
-      ],
-      "owner": "shared-primitives"
-    },
-    "failure_smells": {
-      "name": "Failure Smells / 误用信号",
-      "short_rule": "看见像完成但没推进的信号时先自审；普通信号返修，硬边界阻断。",
-      "trigger": [
-        "before-freeze",
-        "before-continue"
-      ],
-      "action_effect": [
-        "self-audit",
-        "return-remediate",
-        "downgrade-claim",
-        "reroute",
-        "block",
-        "stop"
-      ],
-      "not_a": [
-        "mechanical-block-list",
+        "debate-theater",
         "semantic-judge"
       ],
-      "owner": "shared-primitives"
+      "owner": "primitives/perspective-pressure"
+    },
+    "no_abstract_jargon_wall": {
+      "name": "No Abstract Jargon Wall / 先说人话",
+      "short_rule": "先确认立场和服务对象，用具体后果讲清楚，再使用方法名。",
+      "trigger": [
+        "before-route",
+        "before-freeze"
+      ],
+      "action_effect": [
+        "rewrite",
+        "audience-position",
+        "remove-jargon",
+        "handoff"
+      ],
+      "not_a": [
+        "style-polish",
+        "semantic-judge"
+      ],
+      "owner": "primitives/no-abstract-jargon-wall"
+    },
+    "approximate_quantified_mapping": {
+      "name": "Approximate Quantified Mapping / 非精准量化显影",
+      "short_rule": "数字是假设，关系才是重点；只显影变量关系，不计算结论。",
+      "trigger": [
+        "before-freeze"
+      ],
+      "action_effect": [
+        "expose-variables",
+        "clarify-dominant-term",
+        "downgrade-numeric-claim",
+        "return-to-evidence"
+      ],
+      "not_a": [
+        "calculator",
+        "measurement",
+        "decision-engine",
+        "semantic-judge"
+      ],
+      "owner": "primitives/approximate-quantified-mapping"
     },
     "anti_spiral": {
       "name": "Anti-Spiral / 反螺旋",
@@ -150,26 +426,7 @@
         "standalone-method",
         "automatic-stop-rule"
       ],
-      "owner": "anti-spiral-self-audit"
-    },
-    "continuation_authorization": {
-      "name": "Continuation Authorization / 继续授权",
-      "short_rule": "同路径继续前说明继续凭什么被授权，以及下一步会带来什么新证据。",
-      "trigger": [
-        "before-continue"
-      ],
-      "action_effect": [
-        "authorize-continue",
-        "mission-review",
-        "stop",
-        "ask-user-authority"
-      ],
-      "not_a": [
-        "generic-primitive",
-        "evidence-substitute",
-        "automatic-continue-rule"
-      ],
-      "owner": "tplan"
+      "owner": "primitives/anti-spiral"
     }
   }
 }
