@@ -3,6 +3,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
+PRIMITIVES = REPO / "docs" / "methodologies" / "primitives"
 
 
 def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str, str]]:
@@ -225,9 +226,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_approximate_quantified_mapping_is_a_cognitive_primitive_not_route(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = (PRIMITIVES / "approximate-quantified-mapping.md").read_text(encoding="utf-8")
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -288,9 +287,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_approximate_quantified_mapping_can_support_but_not_own_judgment(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = (PRIMITIVES / "approximate-quantified-mapping.md").read_text(encoding="utf-8")
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -311,9 +308,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, using)
 
     def test_approximate_quantified_mapping_has_anti_overuse_threshold(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = (PRIMITIVES / "approximate-quantified-mapping.md").read_text(encoding="utf-8")
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -373,6 +368,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Mindthus 介入",
             "上下文注入口",
             "当前用户输入优先",
+            "信息边界",
+            "结论上限",
         ):
             self.assertIn(phrase, text)
 
@@ -382,6 +379,27 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertIn("Cognitive Primitives / 认知原语", primitives)
         self.assertIn("## Cognitive Primitive Index / 认知原语索引", primitives)
         self.assertIn("This is not a new method layer", primitives)
+        expected_definition_files = {
+            "evidence-claim-ceiling.md": "Evidence / Claim Ceiling",
+            "perspective-pressure.md": "Perspective Pressure",
+            "anti-spiral.md": "Anti-Spiral",
+            "no-abstract-jargon-wall.md": "No Abstract Jargon Wall",
+            "approximate-quantified-mapping.md": "Approximate Quantified Mapping",
+        }
+        for filename, title in expected_definition_files.items():
+            with self.subTest(filename=filename):
+                primitive_path = PRIMITIVES / filename
+                self.assertTrue(primitive_path.is_file(), filename)
+                primitive_text = primitive_path.read_text(encoding="utf-8")
+                self.assertIn(title, primitive_text)
+                self.assertIn(f"primitives/{filename}", primitives)
+        for filename in (
+            "minimal-sufficient-lens.md",
+            "gate-probes.md",
+            "failure-smells.md",
+            "continuation-authorization.md",
+        ):
+            self.assertFalse((PRIMITIVES / filename).exists(), filename)
         for phrase in (
             "Minimal Sufficient Lens",
             "Evidence / Claim Ceiling",
@@ -419,10 +437,6 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertEqual(
             rows,
             {
-                "Minimal Sufficient Lens": (
-                    "`using-mindthus`",
-                    "能直接判断就不要开方法；一个 skill 足够就不要串联；轻量检查足够就不要展开完整流程。",
-                ),
                 "Evidence / Claim Ceiling": (
                     "`WAE`",
                     "结论强度不能超过证据；缺事实、领域输入、运行证明或 stakeholder 判断时，降级或阻断。",
@@ -443,16 +457,41 @@ class MindthusRouterContractTests(unittest.TestCase):
                     "`AGENTS.md` / `using-mindthus`",
                     "数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。",
                 ),
-                "Gate Probes / 冻结前定位自省": (
-                    "`AGENTS.md` / `shared-primitives`",
-                    "交付、冻结、继续、转交或停止前，确认当前产物是什么、现在处于什么状态、接下来服务谁的什么行动。",
-                ),
-                "Failure Smells / 误用信号": (
-                    "`shared-primitives` / 各方法",
-                    "看见“像完成但没推进”的信号时先自审；普通信号触发返修或降级，硬边界触发 block / stop。",
-                ),
             },
         )
+        self.assertIn("Related Runtime Checks / 相关运行时检查", primitives)
+        for runtime_check in (
+            "Minimal Sufficient Lens / 最小充分镜头",
+            "Context Sufficiency Check / 信息面充分性检查",
+            "Gate Probes / 冻结前定位自省",
+            "Failure Smells / 误用信号",
+            "Continuation Authorization / 继续授权",
+        ):
+            self.assertIn(runtime_check, primitives)
+
+    def test_context_sufficiency_check_belongs_to_evidence_not_new_primitive(self):
+        evidence = (
+            REPO
+            / "docs"
+            / "methodologies"
+            / "primitives"
+            / "evidence-claim-ceiling.md"
+        ).read_text(encoding="utf-8")
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "current context boundary",
+            "Hidden history",
+            "Context Sufficiency Check",
+            "claim ceiling",
+            "Direction-changing gap",
+        ):
+            self.assertIn(phrase, evidence)
+        for phrase in (
+            "Context Sufficiency Check / 信息面充分性检查",
+            "当前可见输入",
+            "不补时结论上限",
+        ):
+            self.assertIn(phrase, using)
 
     def test_skill_routing_surface_preserves_pre_refactor_route_triggers(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -471,10 +510,6 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_cognitive_primitives_are_active_in_their_primary_owner_surfaces(self):
         surfaces = {
-            "Minimal Sufficient Lens": (
-                REPO / "skills" / "using-mindthus" / "SKILL.md",
-                ("最小充分镜头", "shared-primitives.md", "不要为了形式"),
-            ),
             "Evidence / Claim Ceiling": (
                 REPO / "skills" / "wae" / "SKILL.md",
                 ("Evidence should connect claims to observable proof", "confidence caps"),
@@ -497,13 +532,37 @@ class MindthusRouterContractTests(unittest.TestCase):
             ),
             "No Abstract Jargon Wall": (
                 REPO / "AGENTS.md",
-                ("No Abstract Jargon Wall", "shared-primitives.md", "这对你意味着什么"),
+                (
+                    "No Abstract Jargon Wall",
+                    "shared-primitives.md",
+                    "这对你意味着什么",
+                    "我代表什么立场",
+                    "这段文字直接服务谁",
+                ),
             ),
         }
         for primitive, (path, phrases) in surfaces.items():
             text = path.read_text(encoding="utf-8")
             for phrase in phrases:
                 self.assertIn(phrase, text, f"{primitive} inactive in {path}: {phrase!r}")
+
+    def test_no_abstract_jargon_wall_is_expression_positioning_not_style_polish(self):
+        text = (
+            REPO
+            / "docs"
+            / "methodologies"
+            / "primitives"
+            / "no-abstract-jargon-wall.md"
+        ).read_text(encoding="utf-8")
+        for phrase in (
+            "not style polish",
+            "expression positioning",
+            "whose position",
+            "who the words directly serve",
+            "understanding,",
+            "judgment, action, or risk awareness",
+        ):
+            self.assertIn(phrase, text)
 
     def test_pressure_tests_measure_outcome_effectiveness(self):
         text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")
