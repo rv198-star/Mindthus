@@ -973,6 +973,62 @@ def build_mission_preflight(
     }
 
 
+def attach_project_shared_context(
+    mission: dict[str, Any],
+    project_root: Path,
+    *,
+    source_contexts: list[str] | None = None,
+) -> dict[str, Any]:
+    mission_meta = mission["mission"]
+    preflight = build_mission_preflight(
+        project_root,
+        mission_id=mission_meta["id"],
+        objective=mission_meta["objective"],
+        acceptance_evidence=_mission_acceptance_evidence(mission),
+    )
+    if preflight.get("conflicts"):
+        conflicts = ", ".join(preflight["conflicts"])
+        raise TplanError(f"shared context preflight conflict: {conflicts}")
+
+    loaded_context = preflight.get("loaded_context")
+    loaded_sources = []
+    if isinstance(loaded_context, dict) and isinstance(loaded_context.get("source_contexts"), list):
+        loaded_sources = [str(item) for item in loaded_context["source_contexts"]]
+    active_sources = source_contexts if source_contexts is not None else loaded_sources
+    current = mission.get("shared_context")
+    if not isinstance(current, dict):
+        current = {}
+    risk_signals = current.get("risk_signals")
+    if not isinstance(risk_signals, list):
+        risk_signals = []
+    mission["shared_context"] = {
+        **current,
+        "context_file": shared_context_relative_path(mission_meta["id"]),
+        "source_contexts": active_sources,
+        "risk_signals": risk_signals,
+    }
+    return preflight
+
+
+def write_project_shared_context(project_root: Path, mission: dict[str, Any]) -> Path | None:
+    shared_context = mission.get("shared_context")
+    if not isinstance(shared_context, dict):
+        return None
+    context_file = shared_context.get("context_file")
+    if not isinstance(context_file, str) or not context_file:
+        return None
+    path = project_root / context_file
+    path.parent.mkdir(parents=True, exist_ok=True)
+    source_contexts = shared_context.get("source_contexts")
+    if not isinstance(source_contexts, list):
+        source_contexts = []
+    path.write_text(
+        render_shared_context_markdown(mission, source_contexts=[str(item) for item in source_contexts]),
+        encoding="utf-8",
+    )
+    return path
+
+
 def read_events(mission_dir: Path) -> list[dict[str, Any]]:
     path = mission_paths(mission_dir)["evidence"]
     events: list[dict[str, Any]] = []

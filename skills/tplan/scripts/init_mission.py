@@ -12,11 +12,13 @@ from pathlib import Path
 
 from tplan_runtime import (
     TplanError,
+    attach_project_shared_context,
     build_mission,
     load_task_json,
     mission_paths,
     parse_acceptance_evidence,
     render_mission_md,
+    write_project_shared_context,
     write_json,
 )
 
@@ -37,6 +39,8 @@ def parse_args() -> argparse.Namespace:
         help="Acceptance evidence as ID:description. Repeat for multiple items.",
     )
     parser.add_argument("--task-json", help="JSON file containing initial Task, SubTask, and Step nodes.")
+    parser.add_argument("--project-root", help="Project root used for .tplan/shared_contexts.")
+    parser.add_argument("--source-context", action="append", default=[])
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
@@ -65,6 +69,12 @@ def main() -> int:
             resource_sufficiency=args.resource_sufficiency,
             tasks=load_task_json(Path(args.task_json) if args.task_json else None),
         )
+        if args.project_root:
+            attach_project_shared_context(
+                mission,
+                Path(args.project_root),
+                source_contexts=[str(item) for item in args.source_context],
+            )
         refuse_existing_runtime(paths)
         paths["dir"].mkdir(parents=True, exist_ok=True)
         paths["logs"].mkdir(parents=True, exist_ok=True)
@@ -72,6 +82,8 @@ def main() -> int:
         write_json(paths["mission"], mission)
         paths["narrative"].write_text(render_mission_md(mission), encoding="utf-8")
         paths["evidence"].write_text("", encoding="utf-8")
+        if args.project_root:
+            write_project_shared_context(Path(args.project_root), mission)
         print(f"initialized_mission: {mission_dir}")
         print("script_result: runtime files created; agentic Mission judgment is still required")
         return 0
