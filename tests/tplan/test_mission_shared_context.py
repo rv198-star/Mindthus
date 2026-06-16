@@ -330,5 +330,112 @@ class MissionSharedContextInitTests(unittest.TestCase):
             self.assertIn("- m-old", text)
 
 
+class MissionSharedContextRiskRefreshTests(unittest.TestCase):
+    def init_project_mission(self, tmp, mission_id="m-risk-md"):
+        project_root = Path(tmp) / "project"
+        mission_dir = Path(tmp) / "mission"
+        tasks = write_tasks(tmp)
+        result = run_script(
+            "init_mission.py",
+            "--dir",
+            str(mission_dir),
+            "--project-root",
+            str(project_root),
+            "--mission-id",
+            mission_id,
+            "--title",
+            "Risk Markdown Mission",
+            "--objective",
+            "Keep risk memory in Markdown.",
+            "--acceptance-evidence",
+            "A1:Risk memory is visible.",
+            "--task-json",
+            str(tasks),
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return project_root, mission_dir
+
+    def test_record_risk_context_refreshes_markdown_memory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root, mission_dir = self.init_project_mission(tmp)
+
+            result = run_script(
+                "record_risk_context.py",
+                str(mission_dir),
+                "record",
+                "--task-id",
+                "T1",
+                "--scope",
+                "shared_environment",
+                "--signal",
+                "fsync_unreliable",
+                "--severity",
+                "high",
+                "--confidence",
+                "high",
+                "--affected-surface",
+                "generation",
+                "--value-effect",
+                "Expensive reruns may produce invalid evidence.",
+                "--recommended-gate",
+                "environment_health_gate",
+                "--recovery-condition",
+                "dd fsync and sqlite commit smoke pass",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            text = context_path(project_root, "m-risk-md").read_text(encoding="utf-8")
+            self.assertIn("R1: fsync_unreliable (high, active)", text)
+
+    def test_resolve_risk_context_refreshes_markdown_memory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root, mission_dir = self.init_project_mission(tmp)
+            record = run_script(
+                "record_risk_context.py",
+                str(mission_dir),
+                "record",
+                "--task-id",
+                "T1",
+                "--scope",
+                "shared_environment",
+                "--signal",
+                "fsync_unreliable",
+                "--severity",
+                "high",
+                "--confidence",
+                "high",
+                "--affected-surface",
+                "generation",
+                "--value-effect",
+                "Expensive reruns may produce invalid evidence.",
+                "--recommended-gate",
+                "environment_health_gate",
+                "--recovery-condition",
+                "dd fsync and sqlite commit smoke pass",
+            )
+            self.assertEqual(record.returncode, 0, record.stderr)
+
+            result = run_script(
+                "record_risk_context.py",
+                str(mission_dir),
+                "resolve",
+                "--task-id",
+                "T1",
+                "--risk-id",
+                "R1",
+                "--status",
+                "resolved",
+                "--summary",
+                "Storage smoke passed.",
+                "--recovery-note",
+                "dd fsync and sqlite commit passed.",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            text = context_path(project_root, "m-risk-md").read_text(encoding="utf-8")
+            self.assertIn("### Active\n\n- none", text)
+            self.assertIn("R1: fsync_unreliable (resolved)", text)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1003,6 +1003,7 @@ def attach_project_shared_context(
         risk_signals = []
     mission["shared_context"] = {
         **current,
+        "project_root": str(project_root),
         "context_file": shared_context_relative_path(mission_meta["id"]),
         "source_contexts": active_sources,
         "risk_signals": risk_signals,
@@ -1027,6 +1028,16 @@ def write_project_shared_context(project_root: Path, mission: dict[str, Any]) ->
         encoding="utf-8",
     )
     return path
+
+
+def write_indexed_shared_context(mission: dict[str, Any]) -> Path | None:
+    shared_context = mission.get("shared_context")
+    if not isinstance(shared_context, dict):
+        return None
+    project_root = shared_context.get("project_root")
+    if not isinstance(project_root, str) or not project_root:
+        return None
+    return write_project_shared_context(Path(project_root), mission)
 
 
 def read_events(mission_dir: Path) -> list[dict[str, Any]]:
@@ -1161,6 +1172,7 @@ def record_risk_signal(mission_dir: Path, task_id: str, payload: dict[str, Any])
             "payload": {"risk_signal": signal},
         },
     )
+    write_indexed_shared_context(mission)
     return {"risk_signal": signal, "event": event}
 
 
@@ -1208,6 +1220,7 @@ def resolve_risk_signal(
             },
         },
     )
+    write_indexed_shared_context(mission)
     return {"risk_signal": signal, "event": event}
 
 
