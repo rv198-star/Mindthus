@@ -137,6 +137,13 @@ recovery result can affect other units.
 Risk context is recorded through `risk_context_update` and `risk_context_recovery`
 evidence events, with live state in `mission.shared_context.risk_signals`.
 
+Mission Shared Context Memory is loaded before hooks through Mission identity preflight.
+The project-level file is `.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`.
+Use `preflight_mission.py` to distinguish `continue_existing`, `create_new`, and
+`needs_agentic_selection` before runtime initialization. `source_contexts` may inform a
+new Mission, but they do not create a derived Mission status or transfer acceptance
+authority.
+
 When a high-impact hook output is produced while active shared risks exist, include:
 
 ```json
