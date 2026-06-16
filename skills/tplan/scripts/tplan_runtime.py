@@ -22,6 +22,9 @@ from _runtime.core.shape import findings_from_messages
 
 
 SCHEMA_VERSION = "tplan.v0.1"
+SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
+SHARED_CONTEXT_MARKER_START = "<!-- tplan-shared-context"
+SHARED_CONTEXT_MARKER_END = "-->"
 
 MISSION_STATUSES = {
     "active",
@@ -790,6 +793,184 @@ def render_mission_md(mission: dict[str, Any]) -> str:
         "## Decision Log\n\n"
         "No decisions recorded yet.\n"
     )
+
+
+def shared_context_dir(project_root: Path) -> Path:
+    return project_root / ".tplan" / "shared_contexts"
+
+
+def shared_context_path(project_root: Path, mission_id: str) -> Path:
+    return shared_context_dir(project_root) / f"tplan_mission_shared_context-{slugify(mission_id)}.md"
+
+
+def shared_context_relative_path(mission_id: str) -> str:
+    return f".tplan/shared_contexts/tplan_mission_shared_context-{slugify(mission_id)}.md"
+
+
+def _mission_acceptance_evidence(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    mission_meta = mission.get("mission", {})
+    if not isinstance(mission_meta, dict):
+        return []
+    evidence = mission_meta.get("acceptance_evidence", [])
+    return list(evidence) if isinstance(evidence, list) else []
+
+
+def render_shared_context_markdown(
+    mission: dict[str, Any],
+    *,
+    source_contexts: list[str] | None = None,
+) -> str:
+    mission_meta = mission["mission"]
+    shared_context = mission.get("shared_context", {})
+    if not isinstance(shared_context, dict):
+        shared_context = {}
+    source_contexts = source_contexts if source_contexts is not None else list(shared_context.get("source_contexts", []))
+    metadata = {
+        "schema_version": SHARED_CONTEXT_SCHEMA_VERSION,
+        "mission_id": mission_meta["id"],
+        "title": mission_meta["title"],
+        "objective": mission_meta["objective"],
+        "status": mission_meta["status"],
+        "active_task_id": mission.get("active_task_id"),
+        "acceptance_evidence": _mission_acceptance_evidence(mission),
+        "source_contexts": source_contexts,
+        "updated_at": now_iso(),
+    }
+    risk_signals = _risk_signals(mission)
+    active_risks = [signal for signal in risk_signals if signal.get("status") == "active"]
+    resolved_risks = [signal for signal in risk_signals if signal.get("status") != "active"]
+    acceptance_lines = "\n".join(
+        f"- {item.get('id')}: {item.get('description', '')}"
+        for item in metadata["acceptance_evidence"]
+        if isinstance(item, dict)
+    )
+    source_lines = "\n".join(f"- {item}" for item in source_contexts) or "- none"
+    active_risk_lines = "\n".join(
+        f"- {signal.get('id')}: {signal.get('signal')} ({signal.get('severity')}, {signal.get('status')})"
+        for signal in active_risks
+    ) or "- none"
+    resolved_risk_lines = "\n".join(
+        f"- {signal.get('id')}: {signal.get('signal')} ({signal.get('status')})"
+        for signal in resolved_risks[-5:]
+    ) or "- none"
+    return (
+        f"{SHARED_CONTEXT_MARKER_START}\n"
+        + json.dumps(metadata, ensure_ascii=False, indent=2)
+        + f"\n{SHARED_CONTEXT_MARKER_END}\n"
+        + f"# TPlan Mission Shared Context: {mission_meta['id']}\n\n"
+        "## Mission Snapshot\n\n"
+        f"- title: {mission_meta['title']}\n"
+        f"- objective: {mission_meta['objective']}\n"
+        f"- status: {mission_meta['status']}\n"
+        f"- active_task_id: {mission.get('active_task_id') or 'none'}\n\n"
+        "### Acceptance Evidence\n\n"
+        f"{acceptance_lines or '- none'}\n\n"
+        "## Source Contexts\n\n"
+        f"{source_lines}\n\n"
+        "## Current State\n\n"
+        "- latest_state: not recorded in shared context yet\n\n"
+        "## Shared Risks\n\n"
+        "### Active\n\n"
+        f"{active_risk_lines}\n\n"
+        "### Recently Resolved\n\n"
+        f"{resolved_risk_lines}\n\n"
+        "## Key Findings\n\n"
+        "- none recorded yet\n\n"
+        "## Resume Notes\n\n"
+        "- Load this file before starting or resuming the Mission.\n"
+    )
+
+
+def parse_shared_context_metadata(text: str) -> dict[str, Any]:
+    start = text.find(SHARED_CONTEXT_MARKER_START)
+    if start == -1:
+        return {}
+    json_start = start + len(SHARED_CONTEXT_MARKER_START)
+    end = text.find(SHARED_CONTEXT_MARKER_END, json_start)
+    if end == -1:
+        return {}
+    raw = text[json_start:end].strip()
+    if not raw:
+        return {}
+    data = json.loads(raw)
+    return data if isinstance(data, dict) else {}
+
+
+def read_shared_context_metadata(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    return parse_shared_context_metadata(path.read_text(encoding="utf-8"))
+
+
+def _acceptance_fingerprint(evidence: list[dict[str, Any]]) -> list[tuple[str, str]]:
+    fingerprint: list[tuple[str, str]] = []
+    for item in evidence:
+        if isinstance(item, dict):
+            fingerprint.append((str(item.get("id", "")), str(item.get("description", ""))))
+    return fingerprint
+
+
+def _shared_context_candidate(path: Path) -> dict[str, Any]:
+    metadata = read_shared_context_metadata(path)
+    return {
+        "mission_id": metadata.get("mission_id") or path.stem.removeprefix("tplan_mission_shared_context-"),
+        "title": metadata.get("title"),
+        "objective": metadata.get("objective"),
+        "status": metadata.get("status"),
+        "context_file": str(path),
+    }
+
+
+def build_mission_preflight(
+    project_root: Path,
+    *,
+    mission_id: str | None,
+    objective: str | None = None,
+    acceptance_evidence: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    context_dir = shared_context_dir(project_root)
+    if mission_id is None:
+        candidates = []
+        if context_dir.exists():
+            candidates = [
+                _shared_context_candidate(path)
+                for path in sorted(context_dir.glob("tplan_mission_shared_context-*.md"))
+            ]
+        return {
+            "action": "needs_agentic_selection" if candidates else "create_new",
+            "mission_id": None,
+            "context_file": None,
+            "candidates": candidates,
+            "conflicts": [],
+        }
+
+    path = shared_context_path(project_root, mission_id)
+    if not path.exists():
+        return {
+            "action": "create_new",
+            "mission_id": mission_id,
+            "context_file": str(path),
+            "loaded_context": None,
+            "conflicts": [],
+        }
+
+    metadata = read_shared_context_metadata(path)
+    conflicts: list[str] = []
+    if metadata.get("mission_id") not in {None, mission_id}:
+        conflicts.append("mission_id")
+    if objective is not None and metadata.get("objective") not in {None, objective}:
+        conflicts.append("objective")
+    if acceptance_evidence is not None:
+        existing = metadata.get("acceptance_evidence")
+        if isinstance(existing, list) and _acceptance_fingerprint(existing) != _acceptance_fingerprint(acceptance_evidence):
+            conflicts.append("acceptance_evidence")
+    return {
+        "action": "needs_agentic_selection" if conflicts else "continue_existing",
+        "mission_id": mission_id,
+        "context_file": str(path),
+        "loaded_context": metadata,
+        "conflicts": conflicts,
+    }
 
 
 def read_events(mission_dir: Path) -> list[dict[str, Any]]:
