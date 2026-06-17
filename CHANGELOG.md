@@ -2,7 +2,14 @@
 
 ## Unreleased
 
-暂无。
+### 新增
+
+- Router wake-up canary：`using-mindthus` 增加 `SELA`、`MPG`、`EDSP` 的轻量唤醒探针，并在 `AGENTS.md` 中明确 `3L5S` 不是默认判断归宿，避免结构歧义、战略系统/局部取舍和主线承载问题被高频方法吸收。
+- 新增 router wake-up A/B 分析脚本、fixture、实验设计和弱提示校准记录，用于后续比较 baseline / treatment 的 positive wake-up recall、skip precision、execution impact、adjacent absorption 和 overuse 风险。
+
+### 边界
+
+- 这次 canary 不声明已经证明低频方法唤醒率显著提升。已完成的 known set 和 weak-cue v1 pilot 都触发 baseline-ceiling，说明当前样本没有足够区分度；后续需要真实 replay 或更间接的多轮边界样本继续认证。
 
 ## v1.1.0
 
