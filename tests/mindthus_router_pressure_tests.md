@@ -797,6 +797,221 @@ higher, and audience expectations shifted. Explain the structure.
 - Leaves any platform strategy or creator decision to the active judgment owner instead
   of computing a verdict from the sketch.
 
+## Method Wake-Up Pressure Tests
+
+These scenarios test whether the router notices when low-frequency methods should wake
+up. The goal is not to make `SELA`, `MPG`, or `EDSP` more common by default. The goal is
+to prevent a `3L5S` default sink, `WAE` over-absorption, or premature `TVG` pass when
+the active judgment object is already strategic, path-bearing, or structurally
+ambiguous.
+
+Use the same A/B shape:
+
+- **A / baseline**: ask the agent to use Mindthus normally.
+- **B / treatment**: ask the agent to use `using-mindthus` and apply Wake-Up Probes
+  before selecting the method.
+
+Score the treatment higher only when the selected route changes the next action,
+evidence requirement, stopping condition, risk posture, or handoff packet. A mere method
+name mention does not pass.
+
+## Scenario 20: SELA Positive Wake-Up
+
+### What This Tests
+
+This is a positive wake-up case for `SELA`. The prompt contains a real local advantage,
+but the strategic question is whether system-level efficiency is becoming the mainline.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Our best human onboarding specialists are better than the AI agent for enterprise edge
+cases and angry high-value customers. But the AI agent handles common setup questions
+24/7 at 1/20th cost. Should we keep human onboarding as the default?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+Our best human onboarding specialists are better than the AI agent for enterprise edge
+cases and angry high-value customers. But the AI agent handles common setup questions
+24/7 at 1/20th cost. Should we keep human onboarding as the default?
+```
+
+### Expected Treatment Behavior
+
+- Wakes `SELA` because the active object is local excellence versus system efficiency.
+- Keeps the human advantage real instead of dismissing it.
+- Checks timing, rollback, escalation, and whether monitoring cost erases the efficiency gain.
+- Does not route first to `3L5S` merely because the rollout plan is still incomplete.
+
+## Scenario 21: SELA Skip
+
+### What This Tests
+
+This is a skip case for `SELA`. The prompt has an efficiency claim, but the active
+object is missing evidence and release risk, not a strategic system/local trade-off.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+The new parser is more efficient, but we do not have runtime comparison results yet.
+Should we delete the old parser today?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+The new parser is more efficient, but we do not have runtime comparison results yet.
+Should we delete the old parser today?
+```
+
+### Expected Treatment Behavior
+
+- Skips `SELA` because missing runtime proof and rollback risk dominate.
+- Chooses information acquisition or evidence-bound action first.
+- Does not let an efficiency phrase become a strategic conclusion.
+
+## Scenario 22: MPG Positive Wake-Up
+
+### What This Tests
+
+This is a positive wake-up case for `MPG`. A mainline already exists, but the carrier may
+fail before the mainline resolves.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+We accept that moving to an AI-native subscription product is the long-term company
+mainline. The problem is that old services still fund payroll, sales incentives favor
+old deals, and we have nine months of runway. Should we commit now?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+We accept that moving to an AI-native subscription product is the long-term company
+mainline. The problem is that old services still fund payroll, sales incentives favor
+old deals, and we have nine months of runway. Should we commit now?
+```
+
+### Expected Treatment Behavior
+
+- Wakes `MPG` because the mainline is already qualified enough and the route is shaped
+  by carrier, exposure, timing, and incentive pressure.
+- Separates the subscription mainline from the first implementation vehicle.
+- Produces or asks for a Path-Carrying Strategy: exposure budget, staged migration,
+  optionality, and trigger conditions.
+- Does not route first to `3L5S` as a generic "make a plan" problem.
+
+## Scenario 23: MPG Skip
+
+### What This Tests
+
+This is a skip case for `MPG`. A naked slogan or missing-fact claim should not produce a
+Path-Carrying Strategy.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+This founder will definitely become a billionaire. How should we carry the path?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+This founder will definitely become a billionaire. How should we carry the path?
+```
+
+### Expected Treatment Behavior
+
+- Skips strong `MPG` because the mainline is not qualified and evidence is missing.
+- Names missing facts such as ownership, market, capability, runway, and prior execution.
+- Uses information acquisition or evidence ceiling before any Path-Carrying Strategy.
+
+## Scenario 24: EDSP Positive Wake-Up
+
+### What This Tests
+
+This is a positive wake-up case for `EDSP`. A/B both seem right because the proposition
+may be malformed, not because the task merely needs decomposition.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Should our AI review system optimize for fewer false positives or fewer false
+negatives? Both sound obviously right: false positives waste developer time, but false
+negatives let dangerous changes through.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+Should our AI review system optimize for fewer false positives or fewer false
+negatives? Both sound obviously right: false positives waste developer time, but false
+negatives let dangerous changes through.
+```
+
+### Expected Treatment Behavior
+
+- Wakes `EDSP` because the binary may be malformed across risk tiers, artifact types,
+  and claim classes.
+- Builds or requests a structural coordinate system before recommending one side.
+- May later route control-layer implementation to `WAE`, but EDSP owns the structural
+  ambiguity first.
+
+## Scenario 25: EDSP Skip
+
+### What This Tests
+
+This is a skip case for `EDSP`. Missing data should trigger information acquisition,
+not structural projection.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Which pricing page converts better, version A or version B? We have not looked at the
+experiment data yet.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Wake-Up Probes before selecting the method.
+
+Which pricing page converts better, version A or version B? We have not looked at the
+experiment data yet.
+```
+
+### Expected Treatment Behavior
+
+- Skips `EDSP` because the missing input is experiment data.
+- Chooses information acquisition or asks for the measurement window, sample, metric,
+  and result.
+- Does not turn an empirical A/B test into an elegant structural judgment.
+
 ## Evaluation Template
 
 ```markdown

@@ -135,6 +135,71 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_using_mindthus_defines_low_frequency_method_wakeup_probes(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        start = text.index("#### Wake-Up Probes / 唤醒探针")
+        end = text.index("#### Context Injection Point / 上下文注入口", start)
+        section = text[start:end]
+        for phrase in (
+            "`SELA` wake-up",
+            "`MPG` wake-up",
+            "`EDSP` wake-up",
+            "Do not route through `3l5s`",
+            "Do not let `wae`",
+            "Do not run `tvg`",
+            "strategic, path-bearing, or structurally ambiguous",
+        ):
+            self.assertIn(phrase, section)
+
+    def test_agents_prevents_3l5s_from_becoming_default_judgment_sink(self):
+        text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "3L5S 是默认问题内核，不是默认判断归宿",
+            "结构歧义、战略系统/局部取舍、主线承载",
+            "不要先绕回 3L5S",
+            "直接唤醒 `EDSP`、`SELA` 或 `MPG`",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_router_pressure_tests_cover_low_frequency_wakeup_experiments(self):
+        text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "Method Wake-Up Pressure Tests",
+            "positive wake-up",
+            "skip case",
+            "Scenario 20: SELA Positive Wake-Up",
+            "Scenario 21: SELA Skip",
+            "Scenario 22: MPG Positive Wake-Up",
+            "Scenario 23: MPG Skip",
+            "Scenario 24: EDSP Positive Wake-Up",
+            "Scenario 25: EDSP Skip",
+            "`3L5S` default sink",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_router_wakeup_ab_experiment_design_defines_significance_protocol(self):
+        text = (REPO / "tests" / "router_wakeup_ab_experiment_design.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "Router Wake-Up A/B Experiment Design",
+            "Primary endpoint",
+            "positive wake-up recall",
+            "skip precision",
+            "execution impact",
+            "Scenario 20-25",
+            "holdout",
+            "blind",
+            "McNemar",
+            "non-inferiority",
+            "minimum success threshold",
+            "effect size",
+            "statistically significant",
+        ):
+            self.assertIn(phrase, text)
+
     def test_context_injection_point_is_interface_not_memory_implementation(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         for phrase in (
