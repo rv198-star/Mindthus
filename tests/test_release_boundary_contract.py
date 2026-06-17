@@ -6,26 +6,60 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_current_release_surface_is_v1_1_0(self):
+    def test_current_release_surface_is_v1_1_1(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.1.0`", readme)
-        self.assertIn("## v1.1.0", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.1.0.md)", changelog)
-        self.assertIn("TVG Value Profile", changelog)
-        self.assertIn("TVG 示例 profile", changelog)
-        self.assertIn("TPlan Shared Risk Context", changelog)
-        self.assertIn("TPlan continuation authorization", changelog)
-        self.assertIn("Codex 安装路径", changelog)
-        self.assertIn("不会替 agent 判断 profile 是否审美成功", changelog)
-        self.assertIn("是否具备稳定视觉泛化能力", changelog)
-        self.assertIn('VERSION = "1.1.0"', builder)
+        self.assertIn("当前仓库版本：`v1.1.1`", readme)
+        self.assertIn("## v1.1.1", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.1.1.md)", changelog)
+        self.assertIn("TPlan Mission Shared Context Memory", changelog)
+        self.assertIn("Router wake-up canary", changelog)
+        self.assertIn("preflight_mission.py", changelog)
+        self.assertIn("不声明已经证明低频方法唤醒率显著提升", changelog)
+        self.assertIn("不继承旧 Mission 的 acceptance authority", changelog)
+        self.assertIn('VERSION = "1.1.1"', builder)
+
+        release_log = (REPO / "docs" / "releases" / "v1.1.1.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "# Mindthus v1.1.1 发布日志",
+            "发布日期：2026-06-17",
+            "TPlan Mission Shared Context Memory",
+            ".tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md",
+            "preflight_mission.py",
+            "source_contexts",
+            "Router wake-up canary",
+            "baseline-ceiling",
+            "不声明已经证明低频方法唤醒率显著提升",
+            "不继承旧 Mission 的 acceptance authority",
+            "python3 -m unittest discover -s tests -v",
+            "python3 scripts/build-release-pack.py",
+        ):
+            self.assertIn(phrase, release_log)
+
+        self.assertNotIn("Release date:", release_log)
+
+    def test_v1_1_0_release_surface_is_preserved(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
 
         release_log = (REPO / "docs" / "releases" / "v1.1.0.md").read_text(
             encoding="utf-8"
         )
+        self.assertIn("## v1.1.0", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.1.0.md)", changelog)
+        for phrase in (
+            "TVG Value Profile",
+            "TVG 示例 profile",
+            "TPlan Shared Risk Context",
+            "TPlan continuation authorization",
+            "Codex 安装路径",
+            "不会替 agent 判断 profile 是否审美成功",
+            "是否具备稳定视觉泛化能力",
+        ):
+            self.assertIn(phrase, changelog)
         for phrase in (
             "两个影视提示词 / 分镜方向的示范 profile",
             "邵氏清水湾棚拍时代武侠 / 神怪",

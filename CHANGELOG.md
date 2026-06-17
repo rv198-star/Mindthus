@@ -2,14 +2,33 @@
 
 ## Unreleased
 
+暂无。
+
+## v1.1.1
+
+发布日期：2026-06-17
+
+[完整发布日志](docs/releases/v1.1.1.md)
+
+说明：本版把最近两波 agent runtime 改动收成一个小版本：TPlan 增加 Mission 级共享记忆文件和启动前身份预检，Mindthus router 增加 SELA / MPG / EDSP 的低频方法唤醒 canary。它们都服务同一个目标：让 agent 在长任务和方法选择时少丢上下文、少被高频默认路径吸走。
+
 ### 新增
 
+- TPlan Mission Shared Context Memory：在项目级 `.tplan/shared_contexts/` 下保存 Mission 共享记忆 Markdown，路径形如 `.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`。`preflight_mission.py` 在启动前区分 `continue_existing`、`create_new` 和 `needs_agentic_selection`，`init_lite.py` / `init_mission.py` 可以加载或创建对应 context。
 - Router wake-up canary：`using-mindthus` 增加 `SELA`、`MPG`、`EDSP` 的轻量唤醒探针，并在 `AGENTS.md` 中明确 `3L5S` 不是默认判断归宿，避免结构歧义、战略系统/局部取舍和主线承载问题被高频方法吸收。
 - 新增 router wake-up A/B 分析脚本、fixture、实验设计和弱提示校准记录，用于后续比较 baseline / treatment 的 positive wake-up recall、skip precision、execution impact、adjacent absorption 和 overuse 风险。
 
 ### 边界
 
+- `source_contexts` / `derived_from` 只是新 Mission 的背景记忆和来源关系，不继承旧 Mission 的 acceptance authority；脚本只做路径、字段和 preflight shape 检查，不判断两个 Mission 是否语义相同。
 - 这次 canary 不声明已经证明低频方法唤醒率显著提升。已完成的 known set 和 weak-cue v1 pilot 都触发 baseline-ceiling，说明当前样本没有足够区分度；后续需要真实 replay 或更间接的多轮边界样本继续认证。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -v`
+- `python3 -m unittest tests.tplan.test_mission_shared_context tests.tplan.test_mission_shared_context_agent_simulator tests.tplan.test_skill_contract -v`
+- `python3 -m py_compile skills/tplan/scripts/*.py scripts/router-wakeup-ab.py tests/tplan/mission_shared_context_agent_simulator.py tests/test_router_wakeup_ab_runner.py`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.1.1-check --force`
 
 ## v1.1.0
 
