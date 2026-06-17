@@ -79,6 +79,27 @@
 
 简单理解：如果某个子任务发现的问题只影响自己，就留在本地任务里；如果它会影响其他子任务对“还值不值得继续”的判断，就上浮成共享风险。比如存储不稳定、测试证据不可信、外部接口不可用、同一数据源被证明有缺陷、某个恢复条件还没满足，都应该进入共享风险上下文。普通进展、局部日志、一次性失败和已经被局部修掉的小问题，不应该上浮成 Mission 级噪音。
 
+### Mission 级共享记忆
+
+共享风险只是共享上下文的一部分。长任务真正需要恢复时，还要知道 Mission 目标、
+验收面、当前状态、重要发现、来源上下文和恢复提示。因此 `tplan` 使用项目级
+Markdown 作为 Mission 级共享记忆：
+
+```text
+.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md
+```
+
+这个文件是人和 agent 都能读的主记忆面；`mission.json.shared_context` 只是脚本用的
+运行时索引，保存 context 文件位置、`source_contexts` 和 active risk signals 等结构化字段。
+
+启动前要先做 Mission identity preflight：如果 objective、acceptance evidence 和权限边界
+连续，就是继续旧 Mission；如果目标或验收面已经换了，就是新建 Mission。基于旧 Mission
+开新目标时，可以把旧文件列入 `source_contexts`，但这不是一个独立的派生状态，也不会继承
+旧 Mission 的验收权威。
+
+一句话：继续旧 Mission 是同一个目标没走完；新建 Mission 是目标或验收权威变了；
+`source_contexts` 只是背景记忆，不是状态。
+
 ## 用户可读输出
 
 `tplan` 内部需要 `T1`、`E2` 这类稳定编号，否则恢复、验证和 evidence link 会乱。但普通用户输出不要把 T1、E2 这类内部编号放在普通回复开头。

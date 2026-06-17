@@ -10,6 +10,12 @@ Each Mission directory contains:
 - `logs/`: active task-local step logs.
 - `archive/`: archived step logs and task summaries when needed.
 
+Project-level Mission shared context memory lives outside the Mission directory:
+
+- `.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`: primary
+  Markdown memory for Mission snapshot, source_contexts, current state, shared risks,
+  key findings, and resume notes.
+
 ## mission.json
 
 Required top-level fields:
@@ -19,7 +25,8 @@ Required top-level fields:
 - `tasks`: list of runtime nodes. Runtime `v0.1` supports `task`, `subtask`, and
   `step` nodes.
 - `active_task_id`: task id or null.
-- `shared_context`: optional Mission-level context for scoped shared risk signals.
+- `shared_context`: optional runtime index for the project-level Mission shared
+  context file and scoped shared risk signals.
 
 Required Mission fields:
 
@@ -120,6 +127,35 @@ Task roles:
 - `success-critical`: required for Mission completion.
 - `supporting`: useful but not part of strict Mission completion.
 - `exploratory`: uncertain payoff governed by risk/resource policy.
+
+## Mission Shared Context Memory
+
+Mission shared context Markdown is the primary memory surface. It is stored at:
+
+```text
+.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md
+```
+
+`preflight_mission.py` performs Mission identity startup checks before initialization.
+It can report `continue_existing`, `create_new`, or `needs_agentic_selection`.
+Mission identity is continuity of objective, acceptance evidence, and authority
+boundary. Scripts compare declared metadata only; they do not decide semantic sameness.
+
+`mission.json.shared_context` is the runtime index. When present, it includes:
+
+```json
+{
+  "shared_context": {
+    "project_root": "/path/to/project",
+    "context_file": ".tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md",
+    "source_contexts": [],
+    "risk_signals": []
+  }
+}
+```
+
+`source_contexts` are background memory used when a new Mission learns from prior
+Missions. They are not a Mission status and do not inherit prior acceptance authority.
 
 ## Shared Risk Context
 

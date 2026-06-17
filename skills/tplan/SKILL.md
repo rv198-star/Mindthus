@@ -67,6 +67,15 @@ Mission-level `shared_context.risk_signals`. `scripts/record_risk_context.py` wr
 `risk_context_update`; recovery writes `risk_context_recovery`. High-impact decisions
 with active shared risk must expose `risk_assessment`.
 
+### Mission Shared Context Memory
+
+Before starting a Mission, run Mission identity preflight with `preflight_mission.py`.
+Project-level memory lives at
+`.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`. Continue only
+when Mission identity is continuous; otherwise create a new Mission. `source_contexts`
+are background memory for a new Mission, not a derived Mission status or inherited
+acceptance authority.
+
 ### User-Facing Output Adapter
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
@@ -124,6 +133,8 @@ context.
 - Scripts validate bookkeeping only; they do not prove semantic correctness.
 - Evidence is not a process log.
 - Shared Risk Context is not a cross-task transcript.
+- Mission shared context Markdown is memory; `mission.json.shared_context` is the
+  runtime index.
 - Lite mode reduces ceremony only; it cannot bypass high-impact gates.
 - Autonomous mode still stops when no authorized, ROI-defensible next action remains.
 

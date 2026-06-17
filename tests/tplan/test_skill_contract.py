@@ -257,6 +257,29 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("如果它会影响其他子任务对“还值不值得继续”的判断，就上浮成共享风险", methodology)
         self.assertIn("普通进展、局部日志、一次性失败和已经被局部修掉的小问题", methodology)
 
+    def test_mission_shared_context_memory_contract_is_documented(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            ".tplan/shared_contexts",
+            "tplan_mission_shared_context-<mission_id>.md",
+            "Mission identity",
+            "preflight_mission.py",
+            "source_contexts",
+        ):
+            self.assertIn(phrase, skill_text)
+            self.assertIn(phrase, resources)
+
+        self.assertIn("Mission 级共享记忆", methodology)
+        self.assertIn("不是一个独立的派生状态", methodology)
+        self.assertIn("继续旧 Mission", methodology)
+        self.assertIn("新建 Mission", methodology)
+
     def test_continuation_authorization_contract_is_documented(self):
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
         resources = "\n".join(

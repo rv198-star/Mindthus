@@ -13,11 +13,13 @@ from pathlib import Path
 
 from tplan_runtime import (
     TplanError,
+    attach_project_shared_context,
     build_mission,
     mission_paths,
     parse_acceptance_evidence,
     render_mission_md,
     validate_mission,
+    write_project_shared_context,
     write_json,
 )
 
@@ -41,6 +43,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--active-task-title", required=True)
     parser.add_argument("--active-task-contribution", required=True)
     parser.add_argument("--latest-state", default="Not recorded yet.")
+    parser.add_argument("--project-root", help="Project root used for .tplan/shared_contexts.")
+    parser.add_argument("--source-context", action="append", default=[])
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
@@ -92,6 +96,12 @@ def main() -> int:
             tasks=[task],
         )
         mission["active_task_id"] = args.active_task_id
+        if args.project_root:
+            attach_project_shared_context(
+                mission,
+                Path(args.project_root),
+                source_contexts=[str(item) for item in args.source_context],
+            )
         errors = validate_mission(mission)
         if errors:
             raise TplanError("; ".join(errors))
@@ -105,6 +115,8 @@ def main() -> int:
             encoding="utf-8",
         )
         paths["evidence"].write_text("", encoding="utf-8")
+        if args.project_root:
+            write_project_shared_context(Path(args.project_root), mission)
         print(f"initialized_lite_mission: {mission_dir}")
         print("active_task_id: " + args.active_task_id)
         print("script_result: lite runtime files created; agentic Mission judgment is still required")
