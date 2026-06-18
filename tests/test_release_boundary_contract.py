@@ -12,6 +12,10 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
         self.assertIn("当前仓库版本：`v1.1.1`", readme)
+        self.assertEqual(readme.count("当前仓库版本："), 1)
+        self.assertNotIn("当前仓库版本：`v0.6.3`", readme)
+        self.assertNotIn("## 版本与开发状态", readme)
+        self.assertNotIn("当前开发分支同步", readme)
         self.assertIn("## v1.1.1", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.1.1.md)", changelog)
         self.assertIn("TPlan Mission Shared Context Memory", changelog)
@@ -81,12 +85,13 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
         self.assertIn("## v1.0.1", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.0.1.md)", changelog)
-        self.assertIn("当前推荐的 1.0 系列安装版本", changelog)
+        self.assertIn("当时的 1.0 系列推荐安装版本", changelog)
         self.assertIn("MPG、授权口径、忠实度评审自动化、退出审查和跨模型小样本", changelog)
         self.assertIn("scripts/log-fidelity-usage.py", changelog)
+        self.assertNotIn("当前推荐的 1.0 系列安装版本", changelog)
 
         for phrase in (
-            "当前推荐的 1.0 系列安装版本",
+            "当时的 1.0 系列推荐安装版本",
             "提供第一版正式可用的判断框架",
             "v1.0 正式能力",
             "`v1.0.1` 同时包含 `v1.0` 的这些更新",
@@ -100,6 +105,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "https://github.com/rv198-star/Mindthus/blob/v1.0/docs/releases/v1.0.md",
         ):
             self.assertIn(phrase, text)
+        self.assertNotIn("当前推荐的 1.0 系列安装版本", text)
         self.assertNotIn("](v1.0.md)", text)
         self.assertNotIn("v0.9", text)
         self.assertNotIn("v0.x", text)
