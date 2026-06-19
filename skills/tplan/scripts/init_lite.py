@@ -17,6 +17,7 @@ from tplan_runtime import (
     build_mission,
     mission_paths,
     parse_acceptance_evidence,
+    render_lite_runtime_state,
     render_mission_md,
     validate_mission,
     write_project_shared_context,
@@ -58,13 +59,8 @@ def refuse_existing_runtime(paths: dict[str, Path]) -> None:
         raise TplanError(f"mission runtime already exists: {details}")
 
 
-def render_lite_mission_md(mission: dict[str, object], active_task_id: str, latest_state: str) -> str:
-    return (
-        render_mission_md(mission)
-        + "\n## Lite Runtime State\n\n"
-        f"- active_task_id: {active_task_id}\n"
-        f"- latest_state: {latest_state}\n"
-    )
+def render_lite_mission_md(mission: dict[str, object], latest_state: str) -> str:
+    return render_mission_md(mission) + "\n" + render_lite_runtime_state(mission, latest_state)
 
 
 def main() -> int:
@@ -111,7 +107,7 @@ def main() -> int:
         paths["archive"].mkdir(parents=True, exist_ok=True)
         write_json(paths["mission"], mission)
         paths["narrative"].write_text(
-            render_lite_mission_md(mission, args.active_task_id, args.latest_state),
+            render_lite_mission_md(mission, args.latest_state),
             encoding="utf-8",
         )
         paths["evidence"].write_text("", encoding="utf-8")

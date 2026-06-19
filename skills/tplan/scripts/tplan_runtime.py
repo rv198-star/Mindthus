@@ -244,8 +244,100 @@ def read_mission(mission_dir: Path) -> dict[str, Any]:
     return read_json(mission_paths(mission_dir)["mission"])
 
 
-def write_mission(mission_dir: Path, data: dict[str, Any]) -> None:
+LITE_RUNTIME_STATE_HEADING = "## Lite Runtime State"
+LITE_RUNTIME_STATE_SECTION = re.compile(
+    r"(?ms)^##[ \t]+Lite Runtime State[ \t]*\n.*?(?=^##[ \t]+|\Z)"
+)
+LITE_RUNTIME_LATEST_STATE = re.compile(r"(?m)^- latest_state: (.*)$")
+
+
+def _one_line(value: object) -> str:
+    return " ".join(str(value).split()) or "none"
+
+
+def _lite_active_task_title(mission: dict[str, Any]) -> str:
+    active_task_id = mission.get("active_task_id")
+    if active_task_id is None:
+        return "none"
+    for task in mission.get("tasks", []):
+        if isinstance(task, dict) and task.get("id") == active_task_id:
+            return _one_line(task.get("title", "none"))
+    return "missing"
+
+
+def _lite_task_statuses(mission: dict[str, Any]) -> str:
+    grouped: dict[str, list[str]] = {status: [] for status in sorted(TASK_STATUSES)}
+    for task in mission.get("tasks", []):
+        if not isinstance(task, dict):
+            continue
+        status = task.get("status")
+        task_id = task.get("id")
+        if isinstance(status, str) and status in grouped and isinstance(task_id, str):
+            grouped[status].append(task_id)
+    parts = [f"{status}: {', '.join(ids)}" for status, ids in grouped.items() if ids]
+    return "; ".join(parts) or "none"
+
+
+def render_lite_runtime_state(mission: dict[str, Any], latest_state: str) -> str:
+    mission_meta = mission.get("mission", {})
+    mission_status = mission_meta.get("status", "unknown") if isinstance(mission_meta, dict) else "unknown"
+    active_task_id = mission.get("active_task_id") or "none"
+    return (
+        f"{LITE_RUNTIME_STATE_HEADING}\n\n"
+        f"- mission_status: {_one_line(mission_status)}\n"
+        f"- active_task_id: {_one_line(active_task_id)}\n"
+        f"- active_task_title: {_lite_active_task_title(mission)}\n"
+        f"- task_statuses: {_lite_task_statuses(mission)}\n"
+        f"- latest_state: {_one_line(latest_state)}\n"
+    )
+
+
+def _existing_lite_latest_state(narrative: str) -> str:
+    match = LITE_RUNTIME_LATEST_STATE.search(narrative)
+    if match:
+        return match.group(1)
+    return "Runtime state synchronized from mission.json."
+
+
+def _replace_lite_runtime_state_sections(narrative: str, next_block: str) -> str:
+    matches = list(LITE_RUNTIME_STATE_SECTION.finditer(narrative))
+    if not matches:
+        return narrative
+
+    parts: list[str] = []
+    last_end = 0
+    for index, match in enumerate(matches):
+        parts.append(narrative[last_end : match.start()])
+        if index == 0:
+            parts.append(next_block)
+        last_end = match.end()
+    parts.append(narrative[last_end:])
+    return "".join(parts)
+
+
+def sync_mission_narrative(
+    mission_dir: Path,
+    mission: dict[str, Any],
+    *,
+    latest_state: str | None = None,
+) -> None:
+    narrative_path = mission_paths(mission_dir)["narrative"]
+    if not narrative_path.exists():
+        return
+    narrative = narrative_path.read_text(encoding="utf-8")
+    if LITE_RUNTIME_STATE_HEADING not in narrative:
+        return
+
+    state = latest_state if latest_state is not None else _existing_lite_latest_state(narrative)
+    next_block = render_lite_runtime_state(mission, state)
+    updated = _replace_lite_runtime_state_sections(narrative, next_block)
+    if updated != narrative:
+        narrative_path.write_text(updated, encoding="utf-8")
+
+
+def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str | None = None) -> None:
     write_json(mission_paths(mission_dir)["mission"], data)
+    sync_mission_narrative(mission_dir, data, latest_state=latest_state)
 
 
 def task_map(mission: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -1698,7 +1790,11 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
 
     for mutation in decision["proposed_mutations"]:
         apply_mutation(mission, mutation)
-    write_mission(mission_dir, mission)
+    write_mission(
+        mission_dir,
+        mission,
+        latest_state=f"Decision applied: {decision['recommendation']}.",
+    )
     append_event(
         mission_dir,
         {

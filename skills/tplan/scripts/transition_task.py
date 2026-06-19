@@ -21,7 +21,11 @@ def main() -> int:
     try:
         mission = read_mission(mission_dir)
         set_task_status(mission, args.task_id, args.status)
-        write_mission(mission_dir, mission)
+        write_mission(
+            mission_dir,
+            mission,
+            latest_state=f"Task {args.task_id} transitioned to {args.status}.",
+        )
     except (OSError, ValueError, TplanError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

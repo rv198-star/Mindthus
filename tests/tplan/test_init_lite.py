@@ -17,6 +17,34 @@ def run_script(script_name, *args):
     )
 
 
+def create_lite_mission(tmp):
+    mission_dir = Path(tmp) / "mission"
+    result = run_script(
+        "init_lite.py",
+        "--dir",
+        str(mission_dir),
+        "--mission-id",
+        "m1",
+        "--title",
+        "Lite Mission",
+        "--objective",
+        "Keep human-readable recovery state synchronized.",
+        "--acceptance-evidence",
+        "A1:Recovery state is synchronized.",
+        "--active-task-id",
+        "T1",
+        "--active-task-title",
+        "Prepare compact handoff",
+        "--active-task-contribution",
+        "Keeps enough recovery state to resume.",
+        "--latest-state",
+        "Initial lite state is ready.",
+    )
+    if result.returncode != 0:
+        raise AssertionError(result.stderr)
+    return mission_dir
+
+
 class InitLiteTests(unittest.TestCase):
     def test_init_lite_creates_active_root_task_without_step(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -102,6 +130,102 @@ class InitLiteTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("mission runtime already exists", result.stderr)
             self.assertEqual(mission_file.read_text(encoding="utf-8"), '{"existing": true}\n')
+
+    def test_state_changing_scripts_refresh_lite_runtime_state_in_narrative(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_lite_mission(tmp)
+
+            done = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+
+            self.assertEqual(done.returncode, 0, done.stderr)
+            narrative = (mission_dir / "mission.md").read_text(encoding="utf-8")
+            self.assertIn("mission_status: active", narrative)
+            self.assertIn("active_task_id: none", narrative)
+            self.assertNotIn("active_task_id: T1", narrative)
+
+            decision = Path(tmp) / "close-decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "close",
+                        "rationale": "All lite mission acceptance evidence has been satisfied.",
+                        "confidence": 90,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "set_mission_status", "status": "completed"},
+                        ],
+                        "requires_human": False,
+                        "mission_alignment": "Closing the mission matches the satisfied recovery-state acceptance evidence.",
+                        "path_assessment": {
+                            "marginal_roi": "positive",
+                            "path_role": "dominant_path",
+                            "evidence_delta": "new_evidence_expected",
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            closed = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertEqual(closed.returncode, 0, closed.stderr)
+            narrative = (mission_dir / "mission.md").read_text(encoding="utf-8")
+            self.assertIn("mission_status: completed", narrative)
+            self.assertIn("active_task_id: none", narrative)
+
+    def test_state_refresh_replaces_noncanonical_lite_runtime_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_lite_mission(tmp)
+            narrative_path = mission_dir / "mission.md"
+            narrative_path.write_text(
+                "# Lite Mission\n\n"
+                "## Objective\n\n"
+                "Keep human-readable recovery state synchronized.\n\n"
+                "## Lite Runtime State   \n"
+                "- active_task_id: T1\n"
+                "- latest_state: Initial lite state is ready."
+                "\n\n## Notes\n\n"
+                "Keep this section.\n",
+                encoding="utf-8",
+            )
+
+            done = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+
+            self.assertEqual(done.returncode, 0, done.stderr)
+            narrative = narrative_path.read_text(encoding="utf-8")
+            self.assertEqual(narrative.count("## Lite Runtime State"), 1)
+            self.assertIn("active_task_id: none", narrative)
+            self.assertIn("latest_state: Task T1 transitioned to completed.", narrative)
+            self.assertNotIn("active_task_id: T1", narrative)
+            self.assertIn("## Notes\n\nKeep this section.", narrative)
+
+    def test_state_refresh_collapses_duplicate_lite_runtime_state_sections(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_lite_mission(tmp)
+            narrative_path = mission_dir / "mission.md"
+            narrative_path.write_text(
+                "# Lite Mission\n\n"
+                "## Objective\n\n"
+                "Keep human-readable recovery state synchronized.\n\n"
+                "## Lite Runtime State\n\n"
+                "- active_task_id: T1\n"
+                "- latest_state: First stale copy.\n\n"
+                "## Notes\n\n"
+                "Keep this section.\n\n"
+                "## Lite Runtime State\n\n"
+                "- active_task_id: T1\n"
+                "- latest_state: Second stale copy.\n",
+                encoding="utf-8",
+            )
+
+            done = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+
+            self.assertEqual(done.returncode, 0, done.stderr)
+            narrative = narrative_path.read_text(encoding="utf-8")
+            self.assertEqual(narrative.count("## Lite Runtime State"), 1)
+            self.assertIn("active_task_id: none", narrative)
+            self.assertNotIn("active_task_id: T1", narrative)
+            self.assertIn("## Notes\n\nKeep this section.", narrative)
 
 
 if __name__ == "__main__":
