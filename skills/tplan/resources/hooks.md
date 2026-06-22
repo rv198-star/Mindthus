@@ -52,7 +52,7 @@ review signal needs routing before another local action:
 {
   "mission_pulse": {
     "schema_version": "tplan.pulse.v0.1",
-    "trigger": "before_continue | before_freeze | checkpoint_batch | feedback | blocker | shared_risk | active_switch_candidate | branch_cleanup | manual",
+    "trigger": "before_continue | before_freeze | before_handoff | before_stop | checkpoint_batch | feedback | blocker | shared_risk | active_switch_candidate | branch_cleanup | manual",
     "scope": "active_node | subpath | mission",
     "signals": ["weak_evidence_delta"],
     "evidence_delta": "new_evidence_expected | weak_evidence_expected | no_new_evidence_expected | unclear",
@@ -74,10 +74,11 @@ route, not a standalone undefined gate.
 
 Use `scripts/mission_pulse.py` for a standalone read-only route note. Use
 `survey --pulse --pulse-trigger <trigger>` when the route note should travel with the
-ordinary Mission survey. Both outputs are shape-only inputs for agentic judgment, not
-gate decisions. The runtime output also includes Snapshot-side diagnostics that explain
-what the route saw: recent evidence summary, active task log summary, evidence-link
-lint, review trigger candidates, and `pulse_shape_findings`.
+ordinary Mission survey; in that wrapper, the full Pulse payload is nested under
+`survey["pulse"]`. Both outputs are shape-only inputs for agentic judgment, not gate
+decisions. The runtime output also includes Snapshot-side diagnostics that explain what
+the route saw: recent evidence summary, active task log summary, evidence-link lint,
+review trigger candidates, and `pulse_shape_findings`.
 
 Do not run Pulse as a fixed full-review ritual after every active task. Trigger it from
 events: same-path continuation, freeze or handoff, repeated local touch, weak evidence
@@ -88,6 +89,7 @@ evidence movement. Low-risk routine checkpoints stay Snapshot-only.
 Implemented read-only routes:
 
 - `before_continue` -> `continuation_authorization`
+- `before_freeze`, `before_handoff`, or `before_stop` -> `mission_review`
 - third touch of the same active-task local object -> `anti_spiral_audit`
 - `feedback` trigger with feedback evidence -> `loopback`
 - blocker, failure, interruption, or surprise evidence -> `mission_review`

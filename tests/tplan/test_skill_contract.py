@@ -123,6 +123,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "Prefer these recipes over script-help exploration",
             "scripts/init_lite.py --dir",
             "scripts/checkpoint.py",
+            "scripts/mission_pulse.py",
             "scripts/make_decision_packet.py",
             "thin Mission state machine",
         ):

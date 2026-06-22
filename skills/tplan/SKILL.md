@@ -45,6 +45,8 @@ evidence reference, or decomposition. Sparse Evidence means routine notes stay i
 only acceptance, blocker, feedback, decision, state-change, or key finding records
 become evidence. Checkpoint Command means `scripts/checkpoint.py` may bundle a local log,
 optional sparse evidence, and survey output, without bypassing gates.
+Mission Pulse means `scripts/mission_pulse.py` may build a read-only Snapshot/Pulse/Gate
+route note before continuation, freeze, handoff, stop, branch cleanup, or risk review.
 
 ### Runtime Loop
 
@@ -146,3 +148,4 @@ context.
 - `resources/hooks.md`: decision hooks, routed skills, path/risk/continuation contracts.
 - `resources/user-output.md`: user-facing rendering rules.
 - `resources/subagents.md`: read-only SubAgent acceleration and merge rules.
+- `scripts/mission_pulse.py`: read-only Mission Pulse route note.

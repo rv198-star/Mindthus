@@ -75,6 +75,21 @@ RISK_ASSESSMENT_FIELDS = {
 }
 
 MISSION_PULSE_SCHEMA_VERSION = "tplan.pulse.v0.1"
+MISSION_PULSE_TRIGGERS = {
+    "manual",
+    "before_continue",
+    "before_freeze",
+    "before_handoff",
+    "before_stop",
+    "checkpoint_batch",
+    "feedback",
+    "user_feedback",
+    "blocker",
+    "shared_risk",
+    "active_switch_candidate",
+    "branch_cleanup",
+}
+MISSION_PULSE_SCOPES = {"active_node", "subpath", "mission"}
 MISSION_PULSE_NEXT_GATES = {
     "continue",
     "continuation_authorization",
@@ -1619,6 +1634,10 @@ def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
         findings.append("agentic_judgment_required must be true")
     if pulse.get("schema_version") != MISSION_PULSE_SCHEMA_VERSION:
         findings.append("mission_pulse.schema_version is invalid")
+    if pulse.get("trigger") not in MISSION_PULSE_TRIGGERS:
+        findings.append("mission_pulse.trigger is invalid")
+    if pulse.get("scope") not in MISSION_PULSE_SCOPES:
+        findings.append("mission_pulse.scope is invalid")
     next_gate = pulse.get("next_gate")
     if next_gate not in MISSION_PULSE_NEXT_GATES:
         findings.append("mission_pulse.next_gate is invalid")
@@ -1644,7 +1663,7 @@ def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
 
 def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
     fields: list[str] = []
-    for field in ("scope", "signal", "value_effect", "recommended_gate"):
+    for field in ("scope", "signal"):
         value = signal.get(field)
         if isinstance(value, str):
             fields.append(value)
@@ -1658,7 +1677,12 @@ def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
 def _pulse_route_for_shared_risk(active_risks: list[dict[str, Any]]) -> dict[str, Any] | None:
     if not active_risks:
         return None
-    source_ids = [str(signal.get("id")) for signal in active_risks if isinstance(signal.get("id"), str)]
+    source_ids = [
+        str(signal.get("source_evidence_id"))
+        for signal in active_risks
+        if isinstance(signal.get("source_evidence_id"), str)
+    ]
+    risk_signal_ids = [str(signal.get("id")) for signal in active_risks if isinstance(signal.get("id"), str)]
     signals = ["active_shared_risk"]
     if any(_active_risk_implies_invalid_evidence(signal) for signal in active_risks):
         signals.append("invalid_evidence_risk")
@@ -1667,6 +1691,7 @@ def _pulse_route_for_shared_risk(active_risks: list[dict[str, Any]]) -> dict[str
             "signal": "active_shared_risk",
             "candidate_next_gate": "health_check",
             "source_ids": source_ids,
+            "risk_signal_ids": risk_signal_ids,
             "reason": "Active shared risk can change risk-adjusted Mission value before another local action.",
         },
         "signals": signals,
@@ -1780,7 +1805,28 @@ def _event_source_ids(events: list[dict[str, Any]], limit: int = 3) -> list[str]
     ]
 
 
-def _pulse_route_for_feedback_or_blocker(events: list[dict[str, Any]], trigger: str) -> dict[str, Any] | None:
+def _event_is_on_current_path(
+    event: dict[str, Any],
+    mission: dict[str, Any],
+    active: dict[str, Any] | None,
+) -> bool:
+    task_id = event.get("task_id")
+    if task_id is None:
+        return True
+    if not isinstance(task_id, str):
+        return False
+    task = task_map(mission).get(task_id)
+    if task and task.get("status") in {"completed", "pruned", "abandoned", "superseded"}:
+        return False
+    return active is not None and task_id == active.get("id")
+
+
+def _pulse_route_for_feedback_or_blocker(
+    mission: dict[str, Any],
+    active: dict[str, Any] | None,
+    events: list[dict[str, Any]],
+    trigger: str,
+) -> dict[str, Any] | None:
     feedback_events = _events_by_type(events, {"feedback", "user_feedback"})
     if trigger in {"feedback", "user_feedback"} and feedback_events:
         return {
@@ -1799,8 +1845,12 @@ def _pulse_route_for_feedback_or_blocker(events: list[dict[str, Any]], trigger: 
             "rationale": "Feedback should be routed to loopback for definition or resolution adjustment.",
         }
 
-    blocker_events = _events_by_type(events, {"blocker", "blocked", "failure", "interruption", "surprise"})
-    if trigger == "blocker" or blocker_events:
+    blocker_events = [
+        event
+        for event in _events_by_type(events, {"blocker", "blocked", "failure", "interruption", "surprise"})
+        if _event_is_on_current_path(event, mission, active)
+    ]
+    if blocker_events:
         return {
             "candidate": {
                 "signal": "blocker_or_surprise",
@@ -1819,6 +1869,22 @@ def _pulse_route_for_feedback_or_blocker(events: list[dict[str, Any]], trigger: 
     return None
 
 
+def _active_task_has_acceptance_evidence_movement(
+    active: dict[str, Any],
+    events: list[dict[str, Any]],
+) -> bool:
+    active_id = str(active["id"])
+    event_ids = {event.get("id") for event in events if isinstance(event.get("id"), str)}
+    evidence_links = active.get("evidence_links", [])
+    if isinstance(evidence_links, list) and any(link in event_ids for link in evidence_links if isinstance(link, str)):
+        return True
+    acceptance_event_types = {"acceptance", "acceptance_passed", "acceptance_failed"}
+    return any(
+        event.get("task_id") == active_id and event.get("event_type") in acceptance_event_types
+        for event in events
+    )
+
+
 def _pulse_route_for_checkpoint_batch_without_evidence(
     active: dict[str, Any] | None,
     logs: list[dict[str, Any]],
@@ -1830,9 +1896,7 @@ def _pulse_route_for_checkpoint_batch_without_evidence(
     checkpoint_logs = [log for log in logs if log.get("step_id") == "checkpoint"]
     if len(checkpoint_logs) < 3:
         return None
-    active_id = str(active["id"])
-    active_events = [event for event in events if event.get("task_id") == active_id]
-    if active_events:
+    if _active_task_has_acceptance_evidence_movement(active, events):
         return None
     return {
         "candidate": {
@@ -1848,6 +1912,26 @@ def _pulse_route_for_checkpoint_batch_without_evidence(
         "systemic_probe": "needs_gate",
         "next_gate": "continuation_authorization",
         "rationale": "A checkpoint batch with no evidence movement should authorize continuation explicitly.",
+    }
+
+
+def _pulse_route_for_mission_boundary(trigger: str) -> dict[str, Any] | None:
+    if trigger not in {"before_freeze", "before_handoff", "before_stop"}:
+        return None
+    return {
+        "candidate": {
+            "signal": "mission_boundary_review",
+            "candidate_next_gate": "mission_review",
+            "source_ids": [],
+            "reason": "Freeze, handoff, or stop is a Mission-facing boundary and should be reviewed before closure.",
+        },
+        "signals": ["mission_boundary_review"],
+        "scope": "mission",
+        "evidence_delta": "unclear",
+        "branch_disposition": "defer",
+        "systemic_probe": "needs_gate",
+        "next_gate": "mission_review",
+        "rationale": "Mission boundary triggers should route to Mission Review before freeze, handoff, or stop.",
     }
 
 
@@ -1881,9 +1965,25 @@ def _pulse_route_for_branch_cleanup(mission: dict[str, Any], trigger: str) -> di
     }
 
 
-def _pulse_route_for_before_continue(trigger: str) -> dict[str, Any] | None:
+def _pulse_route_for_before_continue(trigger: str, active: dict[str, Any] | None) -> dict[str, Any] | None:
     if trigger != "before_continue":
         return None
+    if active is None:
+        return {
+            "candidate": {
+                "signal": "active_node_missing",
+                "candidate_next_gate": "mission_review",
+                "source_ids": [],
+                "reason": "Same-path continuation was requested without an active runtime node.",
+            },
+            "signals": ["active_node_missing"],
+            "scope": "mission",
+            "evidence_delta": "unclear",
+            "branch_disposition": "unclear",
+            "systemic_probe": "needs_gate",
+            "next_gate": "mission_review",
+            "rationale": "Continuation needs an active node; without one, route to Mission Review.",
+        }
     return {
         "candidate": {
             "signal": "same_path_continuation",
@@ -1902,6 +2002,9 @@ def _pulse_route_for_before_continue(trigger: str) -> dict[str, Any] | None:
 
 
 def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[str, Any]:
+    if trigger not in MISSION_PULSE_TRIGGERS:
+        allowed = ", ".join(sorted(MISSION_PULSE_TRIGGERS))
+        raise TplanError(f"unsupported pulse trigger: {trigger}; expected one of: {allowed}")
     mission = read_mission(mission_dir)
     survey = build_survey(mission_dir)
     validation_findings = validate_mission(mission)
@@ -1917,10 +2020,11 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
         _pulse_route_for_requires_human(mission, events)
         or _pulse_route_for_shared_risk(active_risks)
         or _pulse_route_for_repeated_local_repair(active, active_logs)
-        or _pulse_route_for_feedback_or_blocker(events, trigger)
+        or _pulse_route_for_feedback_or_blocker(mission, active, events, trigger)
+        or _pulse_route_for_mission_boundary(trigger)
         or _pulse_route_for_checkpoint_batch_without_evidence(active, active_logs, events, trigger)
         or _pulse_route_for_branch_cleanup(mission, trigger)
-        or _pulse_route_for_before_continue(trigger)
+        or _pulse_route_for_before_continue(trigger, active)
     )
     review_trigger_candidates: list[dict[str, Any]] = []
     if route is not None:

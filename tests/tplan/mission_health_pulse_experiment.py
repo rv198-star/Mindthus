@@ -256,7 +256,7 @@ def run_report(source_root: Path, output_dir: Path) -> dict[str, Any]:
         "development_gate": {
             "ready_for_runtime_development": surface["present"]
             and all(scenario["scenario_passed"] for scenario in scenarios),
-            "next_step": "Write failing runtime tests for read-only pulse output before implementing mission_pulse.py.",
+            "next_step": "Keep runtime pulse tests aligned with this scenario contract before changing mission_pulse.py.",
         },
     }
     output_dir.mkdir(parents=True, exist_ok=True)

@@ -125,6 +125,21 @@ class SurveyAndPacketTests(unittest.TestCase):
         self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continuation_authorization")
         self.assertEqual(survey["pulse"]["gate_owner"], "linear_continuation_gate")
 
+    def test_survey_pulse_rejects_unknown_trigger_argument(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script(
+                "survey.py",
+                str(mission_dir),
+                "--pulse",
+                "--pulse-trigger",
+                "bogus_trigger",
+                "--json",
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unsupported pulse trigger", result.stderr)
+
     def test_make_decision_packet_includes_required_context(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)

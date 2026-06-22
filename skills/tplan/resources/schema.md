@@ -293,8 +293,9 @@ agent a thin Mission-level control surface between Snapshot and Gate:
 Required `mission_pulse` fields when used:
 
 - `schema_version`: `tplan.pulse.v0.1`
-- `trigger`: `before_continue`, `before_freeze`, `checkpoint_batch`, `feedback`,
-  `blocker`, `shared_risk`, `active_switch_candidate`, `branch_cleanup`, or `manual`
+- `trigger`: `before_continue`, `before_freeze`, `before_handoff`, `before_stop`,
+  `checkpoint_batch`, `feedback`, `blocker`, `shared_risk`,
+  `active_switch_candidate`, `branch_cleanup`, or `manual`
 - `scope`: `active_node`, `subpath`, or `mission`
 - `signals`: list of observable signal strings
 - `evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
@@ -310,7 +311,8 @@ Required `mission_pulse` fields when used:
 
 Pulse outputs are routing notes, not proof. `scripts/mission_pulse.py` and
 `survey --pulse --pulse-trigger <trigger>` report pulse trigger candidates with
-`script_verdict: shape_only` and `agentic_judgment_required: true`.
+`script_verdict: shape_only` and `agentic_judgment_required: true`. In `survey --pulse`
+output, the full Pulse payload is nested under `survey["pulse"]`.
 Scripts must not decide Mission ROI. They also must not decide evidence sufficiency,
 defect class, health verdict, branch value, systemic truth, or user authority.
 
@@ -333,7 +335,8 @@ Read-only Pulse script output includes:
 `review_trigger_candidates.source_ids` must point to source records when available:
 evidence event ids for feedback/blocker/shared-risk signals, step log ids for local
 repair or checkpoint-batch signals, and task ids for branch selection signals. Object
-ids may be included separately as context, but should not replace source record ids.
+ids and risk signal ids may be included separately as context, but should not replace
+source record ids.
 
 `next_gate=continue` never bypasses existing high-impact requirements.
 `next_gate=health_check` must route to existing shared-risk/Mission-health judgment
