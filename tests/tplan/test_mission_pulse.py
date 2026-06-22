@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from collections import Counter
+from importlib import util
 from pathlib import Path
 
 
@@ -142,6 +143,16 @@ def save_mission(mission_dir, mission):
     (mission_dir / "mission.json").write_text(json.dumps(mission, indent=2), encoding="utf-8")
 
 
+def load_tplan_runtime():
+    spec = util.spec_from_file_location(
+        "tplan_runtime_for_mission_pulse_tests",
+        REPO / "skills" / "tplan" / "scripts" / "tplan_runtime.py",
+    )
+    module = util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class MissionPulseTests(unittest.TestCase):
     def assert_pulse_read_only(self, mission_dir, *args):
         before = mission_tree_snapshot(mission_dir)
@@ -200,11 +211,19 @@ class MissionPulseTests(unittest.TestCase):
             Counter(self.trace_key(entry) for entry in trace),
             Counter(self.trace_key(candidate) for candidate in candidates),
         )
+        for entry in trace:
+            self.assertIn(entry["decision"], {"selected", "suppressed"})
+            self.assertIsInstance(entry.get("reason"), str)
+            self.assertTrue(entry["reason"])
         selected = [entry for entry in trace if entry["decision"] == "selected"]
+        suppressed_trace = [entry for entry in trace if entry["decision"] == "suppressed"]
         self.assertEqual(len(selected), 1, trace)
         self.assertEqual(selected[0]["signal"], pulse["winning_candidate"]["signal"])
         self.assertEqual(self.trace_key(selected[0]), self.trace_key(pulse["winning_candidate"]))
-        self.assertEqual(trace[0]["decision"], "selected", trace)
+        self.assertEqual(
+            Counter(self.trace_key(entry) for entry in suppressed_trace),
+            Counter(self.trace_key(candidate) for candidate in suppressed),
+        )
 
     def test_arbitration_contract_rejects_trace_rows_that_do_not_match_candidates(self):
         winning_candidate = {
@@ -230,6 +249,81 @@ class MissionPulseTests(unittest.TestCase):
 
         with self.assertRaises(AssertionError):
             self.assert_pulse_arbitration_partition(pulse)
+
+    def test_arbitration_contract_rejects_invalid_suppressed_trace_decision(self):
+        winning_candidate = {
+            "signal": "blocker_or_surprise",
+            "priority_class": "current_blocker_or_feedback",
+            "candidate_next_gate": "mission_review",
+            "severity": "high",
+        }
+        suppressed_candidate = {
+            "signal": "user_feedback",
+            "priority_class": "current_blocker_or_feedback",
+            "candidate_next_gate": "loopback",
+            "severity": "high",
+        }
+        pulse = {
+            "review_trigger_candidates": [winning_candidate, suppressed_candidate],
+            "winning_candidate": winning_candidate,
+            "suppressed_candidates": [suppressed_candidate],
+            "arbitration_trace": [
+                {
+                    "signal": "blocker_or_surprise",
+                    "priority_class": "current_blocker_or_feedback",
+                    "candidate_next_gate": "mission_review",
+                    "severity": "high",
+                    "decision": "selected",
+                    "reason": "highest-ranked candidate",
+                },
+                {
+                    "signal": "user_feedback",
+                    "priority_class": "current_blocker_or_feedback",
+                    "candidate_next_gate": "loopback",
+                    "severity": "high",
+                    "decision": "ignored",
+                },
+            ],
+        }
+
+        with self.assertRaises(AssertionError):
+            self.assert_pulse_arbitration_partition(pulse)
+
+    def test_pulse_shape_findings_reject_malformed_arbitration_trace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            feedback = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "feedback",
+                "--task-id",
+                "T1",
+                "--summary",
+                "User says the current definition missed the global review problem.",
+            )
+            self.assertEqual(feedback.returncode, 0, feedback.stderr)
+            blocker = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "blocker",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Current path cannot resolve the acceptance boundary.",
+            )
+            self.assertEqual(blocker.returncode, 0, blocker.stderr)
+
+            pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "feedback")
+
+        for trace_entry in pulse["arbitration_trace"]:
+            if trace_entry["signal"] == "user_feedback":
+                trace_entry["decision"] = "ignored"
+                trace_entry.pop("reason")
+        findings = load_tplan_runtime()._validate_mission_pulse_output(pulse)
+
+        self.assertTrue(any("arbitration_trace" in finding for finding in findings), findings)
 
     def assert_pulse_candidate_contract(
         self,

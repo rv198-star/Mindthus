@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -1724,6 +1725,15 @@ def _validate_mission_pulse_candidate(candidate: dict[str, Any]) -> list[str]:
     return findings
 
 
+def _pulse_arbitration_trace_key(item: dict[str, Any]) -> tuple[Any, Any, Any, Any]:
+    return (
+        item.get("signal"),
+        item.get("priority_class"),
+        item.get("candidate_next_gate"),
+        item.get("severity"),
+    )
+
+
 def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
     findings: list[str] = []
     pulse = output.get("mission_pulse")
@@ -1771,9 +1781,42 @@ def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
     suppressed_candidates = output.get("suppressed_candidates")
     if not isinstance(suppressed_candidates, list):
         findings.append("suppressed_candidates must be a list")
+        suppressed_candidates = []
     arbitration_trace = output.get("arbitration_trace")
     if not isinstance(arbitration_trace, list):
         findings.append("arbitration_trace must be a list")
+        arbitration_trace = []
+    trace_objects: list[dict[str, Any]] = []
+    for entry in arbitration_trace:
+        if not isinstance(entry, dict):
+            findings.append("arbitration_trace entries must be objects")
+            continue
+        trace_objects.append(entry)
+        for name in ("signal", "priority_class", "candidate_next_gate", "severity", "decision", "reason"):
+            if not isinstance(entry.get(name), str) or not entry.get(name):
+                findings.append(f"arbitration_trace.{name} must be a non-empty string")
+        if entry.get("decision") not in {"selected", "suppressed"}:
+            findings.append("arbitration_trace.decision must be selected or suppressed")
+    if Counter(_pulse_arbitration_trace_key(entry) for entry in trace_objects) != Counter(
+        _pulse_arbitration_trace_key(candidate)
+        for candidate in candidates
+        if isinstance(candidate, dict)
+    ):
+        findings.append("arbitration_trace entries must match review_trigger_candidates")
+    selected_trace = [entry for entry in trace_objects if entry.get("decision") == "selected"]
+    suppressed_trace = [entry for entry in trace_objects if entry.get("decision") == "suppressed"]
+    expected_selected_count = 1 if candidates else 0
+    if len(selected_trace) != expected_selected_count:
+        findings.append("arbitration_trace must contain exactly one selected entry when candidates exist")
+    if winning_candidate is not None and isinstance(winning_candidate, dict) and selected_trace:
+        if _pulse_arbitration_trace_key(selected_trace[0]) != _pulse_arbitration_trace_key(winning_candidate):
+            findings.append("arbitration_trace selected entry must match winning_candidate")
+    if Counter(_pulse_arbitration_trace_key(entry) for entry in suppressed_trace) != Counter(
+        _pulse_arbitration_trace_key(candidate)
+        for candidate in suppressed_candidates
+        if isinstance(candidate, dict)
+    ):
+        findings.append("arbitration_trace suppressed entries must match suppressed_candidates")
     if next_gate == "continue" and winning_candidate is not None:
         findings.append("mission_pulse.next_gate=continue requires null winning_candidate")
     if next_gate != "continue" and winning_candidate is None:
