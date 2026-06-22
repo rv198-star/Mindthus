@@ -3,6 +3,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 
@@ -92,6 +93,48 @@ def mission_tree_snapshot(mission_dir):
 
 
 class SurveyAndPacketTests(unittest.TestCase):
+    def pulse_trace_key(self, item):
+        return (
+            item["signal"],
+            item["priority_class"],
+            item["candidate_next_gate"],
+            item["severity"],
+        )
+
+    def assert_pulse_arbitration_partition(self, pulse):
+        candidates = pulse["review_trigger_candidates"]
+        suppressed = pulse["suppressed_candidates"]
+        trace = pulse["arbitration_trace"]
+        if not candidates:
+            self.assertIsNone(pulse["winning_candidate"])
+            self.assertEqual(suppressed, [])
+            self.assertEqual(trace, [])
+            return
+
+        self.assertIsNotNone(pulse["winning_candidate"])
+        self.assertEqual(
+            Counter(json.dumps(candidate, sort_keys=True) for candidate in [pulse["winning_candidate"], *suppressed]),
+            Counter(json.dumps(candidate, sort_keys=True) for candidate in candidates),
+        )
+        self.assertEqual(
+            Counter(self.pulse_trace_key(entry) for entry in trace),
+            Counter(self.pulse_trace_key(candidate) for candidate in candidates),
+        )
+        selected = [entry for entry in trace if entry["decision"] == "selected"]
+        self.assertEqual(len(selected), 1, trace)
+        self.assertEqual(self.pulse_trace_key(selected[0]), self.pulse_trace_key(pulse["winning_candidate"]))
+
+    def assert_survey_pulse_payload_fidelity(self, survey):
+        pulse = survey["pulse"]
+        self.assertEqual(pulse["pulse_shape_findings"], [])
+        self.assertNotIn("health_score", pulse)
+        self.assertNotIn("health_verdict", pulse)
+        self.assertEqual(pulse["snapshot"]["mission"], survey["mission"])
+        self.assertEqual(pulse["snapshot"]["active_task"], survey["active_task"])
+        self.assertEqual(pulse["snapshot"]["tasks_by_status"], survey["tasks_by_status"])
+        self.assertEqual(pulse["snapshot"]["resource_sufficiency"], survey["resource_sufficiency"])
+        self.assert_pulse_arbitration_partition(pulse)
+
     def test_survey_outputs_state_summary(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
@@ -123,7 +166,7 @@ class SurveyAndPacketTests(unittest.TestCase):
             self.assertIn("suppressed_candidates", survey["pulse"])
             self.assertIn("arbitration_trace", survey["pulse"])
             self.assertIsNone(survey["pulse"]["winning_candidate"])
-            self.assertNotIn("health_score", survey["pulse"])
+            self.assert_survey_pulse_payload_fidelity(survey)
 
     def test_survey_pulse_accepts_trigger_argument(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -150,6 +193,7 @@ class SurveyAndPacketTests(unittest.TestCase):
         self.assertEqual(survey["pulse"]["winning_candidate"]["signal"], "same_path_continuation")
         self.assertEqual(survey["pulse"]["winning_candidate"]["priority_class"], "same_path_continuation")
         self.assertEqual(survey["pulse"]["suppressed_candidates"], [])
+        self.assert_survey_pulse_payload_fidelity(survey)
 
     def test_survey_pulse_rejects_unknown_trigger_argument(self):
         with tempfile.TemporaryDirectory() as tmp:

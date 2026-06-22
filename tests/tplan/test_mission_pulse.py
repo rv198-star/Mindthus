@@ -167,6 +167,14 @@ class MissionPulseTests(unittest.TestCase):
     def candidate_token(self, candidate):
         return json.dumps(candidate, sort_keys=True)
 
+    def trace_key(self, item):
+        return (
+            item["signal"],
+            item["priority_class"],
+            item["candidate_next_gate"],
+            item["severity"],
+        )
+
     def assert_pulse_arbitration_partition(self, pulse):
         candidates = pulse["review_trigger_candidates"]
         suppressed = pulse["suppressed_candidates"]
@@ -188,10 +196,40 @@ class MissionPulseTests(unittest.TestCase):
             Counter(entry["signal"] for entry in trace),
             Counter(candidate["signal"] for candidate in candidates),
         )
+        self.assertEqual(
+            Counter(self.trace_key(entry) for entry in trace),
+            Counter(self.trace_key(candidate) for candidate in candidates),
+        )
         selected = [entry for entry in trace if entry["decision"] == "selected"]
         self.assertEqual(len(selected), 1, trace)
         self.assertEqual(selected[0]["signal"], pulse["winning_candidate"]["signal"])
+        self.assertEqual(self.trace_key(selected[0]), self.trace_key(pulse["winning_candidate"]))
         self.assertEqual(trace[0]["decision"], "selected", trace)
+
+    def test_arbitration_contract_rejects_trace_rows_that_do_not_match_candidates(self):
+        winning_candidate = {
+            "signal": "blocker_or_surprise",
+            "priority_class": "current_blocker_or_feedback",
+            "candidate_next_gate": "mission_review",
+            "severity": "high",
+        }
+        pulse = {
+            "review_trigger_candidates": [winning_candidate],
+            "winning_candidate": winning_candidate,
+            "suppressed_candidates": [],
+            "arbitration_trace": [
+                {
+                    "signal": "blocker_or_surprise",
+                    "priority_class": "same_path_continuation",
+                    "candidate_next_gate": "continuation_authorization",
+                    "severity": "low",
+                    "decision": "selected",
+                }
+            ],
+        }
+
+        with self.assertRaises(AssertionError):
+            self.assert_pulse_arbitration_partition(pulse)
 
     def assert_pulse_candidate_contract(
         self,
