@@ -44,8 +44,16 @@ class MissionHealthPulseExperimentTests(unittest.TestCase):
             "continuation_authorization",
         )
         self.assertEqual(
+            scenarios["same_path_continue"]["pulse"]["signals"],
+            ["same_path_continuation"],
+        )
+        self.assertEqual(
             scenarios["repeated_local_repair"]["pulse"]["next_gate"],
             "anti_spiral_audit",
+        )
+        self.assertEqual(
+            scenarios["repeated_local_repair"]["pulse"]["signals"],
+            ["third_touch", "additive_layering"],
         )
         self.assertEqual(scenarios["shared_risk"]["pulse"]["next_gate"], "health_check")
         self.assertEqual(
@@ -54,8 +62,17 @@ class MissionHealthPulseExperimentTests(unittest.TestCase):
         )
         self.assertEqual(scenarios["branch_cleanup"]["pulse"]["next_gate"], "selection")
         self.assertEqual(
+            scenarios["branch_cleanup"]["pulse"]["signals"],
+            ["branch_cleanup_candidate"],
+        )
+        self.assertEqual(scenarios["branch_cleanup"]["pulse"]["branch_disposition"], "unclear")
+        self.assertEqual(
             scenarios["mission_drift_or_authority_gap"]["pulse"]["next_gate"],
             "mission_review",
+        )
+        self.assertEqual(
+            scenarios["mission_drift_or_authority_gap"]["pulse"]["signals"],
+            ["mission_boundary_review"],
         )
         self.assertTrue(scenarios["mission_drift_or_authority_gap"]["requires_full_review"])
 
