@@ -45,9 +45,11 @@ SURFACE_REQUIREMENTS = {
     ],
     "skills/tplan/resources/schema.md": [
         "Mission Pulse Route Note",
-        "tplan.pulse.v0.1",
+        "tplan.pulse.v0.2",
+        "Gate Arbitration",
         "Pulse routes observable signals to an existing Gate",
         "must not decide Mission ROI",
+        "fresh acceptance evidence movement",
         "next_gate=health_check",
     ],
     "docs/methodologies/tplan.md": [

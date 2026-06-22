@@ -45,13 +45,39 @@ Short rule:
 
 > Scripts observe. Pulse routes. Gates decide.
 
-`mission_pulse` is optional and documentation-first. Use it only when a Mission-level
-review signal needs routing before another local action:
+`mission_pulse` is optional and route-only. Use it only when a Mission-level review
+signal needs routing before another local action. The v0.2 route engine is explicit:
+
+```text
+Snapshot -> Candidate Collection -> Candidate Shape Validation -> Gate Arbitration -> Pulse Output -> Gate
+```
+
+Snapshot reports observable state. Pulse routes observable signals to an existing Gate.
+Gate makes the semantic decision and owns any mutation.
 
 ```json
 {
+  "review_trigger_candidates": [
+    {
+      "signal": "mission_boundary_review",
+      "candidate_next_gate": "mission_review",
+      "scope": "mission",
+      "source_kind": "trigger",
+      "source_ids": [],
+      "priority_class": "mission_boundary",
+      "severity": "high",
+      "freshness": "current_trigger",
+      "reason": "Freeze, handoff, or stop is a Mission-facing boundary.",
+      "context": {
+        "trigger": "before_freeze"
+      }
+    }
+  ],
+  "winning_candidate": null,
+  "suppressed_candidates": [],
+  "arbitration_trace": [],
   "mission_pulse": {
-    "schema_version": "tplan.pulse.v0.1",
+    "schema_version": "tplan.pulse.v0.2",
     "trigger": "before_continue | before_freeze | before_handoff | before_stop | checkpoint_batch | feedback | blocker | shared_risk | active_switch_candidate | branch_cleanup | manual",
     "scope": "active_node | subpath | mission",
     "signals": ["weak_evidence_delta"],
@@ -65,9 +91,16 @@ review signal needs routing before another local action:
 }
 ```
 
-Pulse may report observable signals and candidate gates. It must not compute ROI, rank
-paths, classify defects, decide evidence sufficiency, redefine acceptance authority,
-or declare the Mission healthy or unhealthy. Pulse is not a new judgment center.
+Candidate Collection reports all observable route candidates before Gate Arbitration
+selects one controlling route. Lower-priority candidates remain visible under
+`suppressed_candidates` and the selection rationale is exposed through
+`arbitration_trace`. Candidate fields include `signal`, `candidate_next_gate`, `scope`,
+`source_kind`, `source_ids`, `priority_class`, `severity`, `freshness`, `reason`, and
+`context`.
+
+Pulse may report observable signals and candidate gates. It must not compute ROI,
+classify defects, decide evidence sufficiency, redefine acceptance authority, or
+declare the Mission healthy or unhealthy. Pulse is not a new judgment center.
 `next_gate=continue` never bypasses high-impact requirements. `next_gate=health_check`
 routes to the existing shared-risk/Mission-health judgment surface. Health check is a
 route, not a standalone undefined gate.
@@ -78,7 +111,8 @@ ordinary Mission survey; in that wrapper, the full Pulse payload is nested under
 `survey["pulse"]`. Both outputs are shape-only inputs for agentic judgment, not gate
 decisions. The runtime output also includes Snapshot-side diagnostics that explain what
 the route saw: recent evidence summary, active task log summary, evidence-link lint,
-review trigger candidates, and `pulse_shape_findings`.
+review trigger candidates, `winning_candidate`, `suppressed_candidates`,
+`arbitration_trace`, and `pulse_shape_findings`.
 
 Do not run Pulse as a fixed full-review ritual after every active task. Trigger it from
 events: same-path continuation, freeze or handoff, repeated local touch, weak evidence
@@ -97,6 +131,7 @@ Implemented read-only routes:
 - `branch_cleanup` or `active_switch_candidate` -> `selection`
 - Mission status `requires_human` -> `stop`
 - routine `checkpoint_batch` with no trigger candidate -> `continue`
+- checkpoint batch without fresh acceptance evidence movement -> `continuation_authorization`
 
 ## Anti-Spiral Runtime Gate
 

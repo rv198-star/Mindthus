@@ -74,7 +74,7 @@ RISK_ASSESSMENT_FIELDS = {
     "next_gate": {"continue", "health_check", "switch", "stop", "escalate"},
 }
 
-MISSION_PULSE_SCHEMA_VERSION = "tplan.pulse.v0.1"
+MISSION_PULSE_SCHEMA_VERSION = "tplan.pulse.v0.2"
 MISSION_PULSE_TRIGGERS = {
     "manual",
     "before_continue",
@@ -83,7 +83,6 @@ MISSION_PULSE_TRIGGERS = {
     "before_stop",
     "checkpoint_batch",
     "feedback",
-    "user_feedback",
     "blocker",
     "shared_risk",
     "active_switch_candidate",
@@ -115,6 +114,61 @@ MISSION_PULSE_SYSTEMIC_PROBES = {
     "replace_local_fix",
     "needs_gate",
     "unclear",
+}
+MISSION_PULSE_CANDIDATE_SOURCE_KINDS = {
+    "trigger",
+    "mission_state",
+    "evidence_event",
+    "step_log",
+    "risk_signal",
+    "task",
+    "validation",
+    "derived",
+}
+MISSION_PULSE_CANDIDATE_PRIORITIES = {
+    "requires_human_or_stop",
+    "mission_boundary",
+    "runtime_integrity",
+    "active_shared_risk",
+    "current_blocker_or_feedback",
+    "anti_spiral",
+    "checkpoint_weak_evidence_delta",
+    "branch_or_switch_cleanup",
+    "same_path_continuation",
+}
+MISSION_PULSE_PRIORITY_ORDER = {
+    "requires_human_or_stop": 1,
+    "mission_boundary": 2,
+    "runtime_integrity": 3,
+    "active_shared_risk": 4,
+    "current_blocker_or_feedback": 5,
+    "anti_spiral": 6,
+    "checkpoint_weak_evidence_delta": 7,
+    "branch_or_switch_cleanup": 8,
+    "same_path_continuation": 9,
+}
+MISSION_PULSE_CANDIDATE_SEVERITIES = {"low", "medium", "high", "critical"}
+MISSION_PULSE_SEVERITY_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
+MISSION_PULSE_CANDIDATE_FRESHNESS = {
+    "current_trigger",
+    "current_state",
+    "current_path",
+    "checkpoint_window",
+    "recent_evidence",
+    "historical",
+    "unknown",
+}
+MISSION_PULSE_CANDIDATE_REQUIRED_FIELDS = {
+    "signal",
+    "candidate_next_gate",
+    "scope",
+    "source_kind",
+    "source_ids",
+    "priority_class",
+    "severity",
+    "freshness",
+    "reason",
+    "context",
 }
 MISSION_PULSE_GATE_OWNERS = {
     "continue": "inline_alignment",
@@ -1623,11 +1677,48 @@ def _evidence_link_lint(mission: dict[str, Any], events: list[dict[str, Any]]) -
     }
 
 
+def _validate_mission_pulse_candidate(candidate: dict[str, Any]) -> list[str]:
+    findings: list[str] = []
+    missing = sorted(MISSION_PULSE_CANDIDATE_REQUIRED_FIELDS - set(candidate))
+    if missing:
+        findings.append(f"candidate missing fields: {', '.join(missing)}")
+        return findings
+    if candidate.get("candidate_next_gate") not in MISSION_PULSE_NEXT_GATES - {"continue"}:
+        findings.append("candidate.candidate_next_gate is invalid")
+    if candidate.get("scope") not in MISSION_PULSE_SCOPES:
+        findings.append("candidate.scope is invalid")
+    if candidate.get("source_kind") not in MISSION_PULSE_CANDIDATE_SOURCE_KINDS:
+        findings.append("candidate.source_kind is invalid")
+    if candidate.get("priority_class") not in MISSION_PULSE_CANDIDATE_PRIORITIES:
+        findings.append("candidate.priority_class is invalid")
+    if candidate.get("severity") not in MISSION_PULSE_CANDIDATE_SEVERITIES:
+        findings.append("candidate.severity is invalid")
+    if candidate.get("freshness") not in MISSION_PULSE_CANDIDATE_FRESHNESS:
+        findings.append("candidate.freshness is invalid")
+    if not isinstance(candidate.get("source_ids"), list) or not all(
+        isinstance(item, str) for item in candidate.get("source_ids", [])
+    ):
+        findings.append("candidate.source_ids must be a string list")
+    if not isinstance(candidate.get("context"), dict):
+        findings.append("candidate.context must be an object")
+    for name in ("signal", "reason"):
+        if not isinstance(candidate.get(name), str) or not candidate.get(name):
+            findings.append(f"candidate.{name} must be a non-empty string")
+    signals = candidate.get("signals")
+    if signals is not None and (
+        not isinstance(signals, list) or not all(isinstance(item, str) for item in signals)
+    ):
+        findings.append("candidate.signals must be a string list")
+    return findings
+
+
 def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
     findings: list[str] = []
     pulse = output.get("mission_pulse")
     if not isinstance(pulse, dict):
         return ["mission_pulse must be an object"]
+    if output.get("schema_version") != MISSION_PULSE_SCHEMA_VERSION:
+        findings.append("schema_version is invalid")
     if output.get("script_verdict") != "shape_only":
         findings.append("script_verdict must be shape_only")
     if output.get("agentic_judgment_required") is not True:
@@ -1653,12 +1744,69 @@ def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
         value = pulse.get(name)
         if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
             findings.append(f"mission_pulse.{name} must be a string list")
-    if not isinstance(output.get("review_trigger_candidates"), list):
+    candidates = output.get("review_trigger_candidates")
+    if not isinstance(candidates, list):
         findings.append("review_trigger_candidates must be a list")
+        candidates = []
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            findings.append("review_trigger_candidates entries must be objects")
+            continue
+        findings.extend(_validate_mission_pulse_candidate(candidate))
+    winning_candidate = output.get("winning_candidate")
+    if winning_candidate is not None and not isinstance(winning_candidate, dict):
+        findings.append("winning_candidate must be an object or null")
+    suppressed_candidates = output.get("suppressed_candidates")
+    if not isinstance(suppressed_candidates, list):
+        findings.append("suppressed_candidates must be a list")
+    arbitration_trace = output.get("arbitration_trace")
+    if not isinstance(arbitration_trace, list):
+        findings.append("arbitration_trace must be a list")
+    if next_gate == "continue" and winning_candidate is not None:
+        findings.append("mission_pulse.next_gate=continue requires null winning_candidate")
+    if next_gate != "continue" and winning_candidate is None:
+        findings.append("non-continue mission_pulse.next_gate requires winning_candidate")
     for name in ("recent_evidence_summary", "active_log_summary", "evidence_link_lint"):
         if not isinstance(output.get(name), dict):
             findings.append(f"{name} must be an object")
     return findings
+
+
+def _pulse_candidate(
+    *,
+    signal: str,
+    candidate_next_gate: str,
+    scope: str,
+    source_kind: str,
+    source_ids: list[str] | None = None,
+    priority_class: str,
+    severity: str,
+    freshness: str,
+    reason: str,
+    context: dict[str, Any] | None = None,
+    signals: list[str] | None = None,
+    evidence_delta: str = "unclear",
+    branch_disposition: str = "unclear",
+    systemic_probe: str = "needs_gate",
+    rationale: str | None = None,
+) -> dict[str, Any]:
+    return {
+        "signal": signal,
+        "candidate_next_gate": candidate_next_gate,
+        "scope": scope,
+        "source_kind": source_kind,
+        "source_ids": list(source_ids or []),
+        "priority_class": priority_class,
+        "severity": severity,
+        "freshness": freshness,
+        "reason": reason,
+        "context": dict(context or {}),
+        "signals": signals or [signal],
+        "evidence_delta": evidence_delta,
+        "branch_disposition": branch_disposition,
+        "systemic_probe": systemic_probe,
+        "rationale": rationale or reason,
+    }
 
 
 def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
@@ -1674,9 +1822,9 @@ def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
     return "evidence" in haystack
 
 
-def _pulse_route_for_shared_risk(active_risks: list[dict[str, Any]]) -> dict[str, Any] | None:
+def _collect_shared_risk_candidates(active_risks: list[dict[str, Any]]) -> list[dict[str, Any]]:
     if not active_risks:
-        return None
+        return []
     source_ids = [
         str(signal.get("source_evidence_id"))
         for signal in active_risks
@@ -1686,47 +1834,50 @@ def _pulse_route_for_shared_risk(active_risks: list[dict[str, Any]]) -> dict[str
     signals = ["active_shared_risk"]
     if any(_active_risk_implies_invalid_evidence(signal) for signal in active_risks):
         signals.append("invalid_evidence_risk")
-    return {
-        "candidate": {
-            "signal": "active_shared_risk",
-            "candidate_next_gate": "health_check",
-            "source_ids": source_ids,
-            "risk_signal_ids": risk_signal_ids,
-            "reason": "Active shared risk can change risk-adjusted Mission value before another local action.",
-        },
-        "signals": signals,
-        "scope": "mission",
-        "evidence_delta": "unclear",
-        "branch_disposition": "keep",
-        "systemic_probe": "use_existing_structure",
-        "next_gate": "health_check",
-        "rationale": "Active shared risk should be routed to existing risk assessment before continuation.",
-    }
+    return [
+        _pulse_candidate(
+            signal="active_shared_risk",
+            candidate_next_gate="health_check",
+            scope="mission",
+            source_kind="risk_signal",
+            source_ids=source_ids,
+            priority_class="active_shared_risk",
+            severity="high",
+            freshness="current_state",
+            reason="Active shared risk can change risk-adjusted Mission value before another local action.",
+            context={"risk_signal_ids": risk_signal_ids},
+            signals=signals,
+            branch_disposition="keep",
+            systemic_probe="use_existing_structure",
+            rationale="Active shared risk should be routed to existing risk assessment before continuation.",
+        )
+    ]
 
 
-def _pulse_route_for_requires_human(mission: dict[str, Any], events: list[dict[str, Any]]) -> dict[str, Any] | None:
+def _collect_requires_human_candidates(mission: dict[str, Any], events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     if mission.get("mission", {}).get("status") != "requires_human":
-        return None
+        return []
     source_ids = [
         str(event.get("id"))
         for event in events
         if event.get("event_type") == "stop_report" and isinstance(event.get("id"), str)
     ]
-    return {
-        "candidate": {
-            "signal": "requires_human",
-            "candidate_next_gate": "stop",
-            "source_ids": source_ids[-3:],
-            "reason": "Mission already requires human authority before safe continuation.",
-        },
-        "signals": ["requires_human", "authority_boundary_unclear"],
-        "scope": "mission",
-        "evidence_delta": "unclear",
-        "branch_disposition": "defer",
-        "systemic_probe": "needs_gate",
-        "next_gate": "stop",
-        "rationale": "Continuation is not authorized while Mission status requires human intervention.",
-    }
+    return [
+        _pulse_candidate(
+            signal="requires_human",
+            candidate_next_gate="stop",
+            scope="mission",
+            source_kind="mission_state",
+            source_ids=source_ids[-3:],
+            priority_class="requires_human_or_stop",
+            severity="critical",
+            freshness="current_state",
+            reason="Mission already requires human authority before safe continuation.",
+            signals=["requires_human", "authority_boundary_unclear"],
+            branch_disposition="defer",
+            rationale="Continuation is not authorized while Mission status requires human intervention.",
+        )
+    ]
 
 
 def _is_additive_layer_log(log: dict[str, Any]) -> bool:
@@ -1748,12 +1899,12 @@ def _is_additive_layer_log(log: dict[str, Any]) -> bool:
     )
 
 
-def _pulse_route_for_repeated_local_repair(
+def _collect_anti_spiral_candidates(
     active: dict[str, Any] | None,
     logs: list[dict[str, Any]],
-) -> dict[str, Any] | None:
+) -> list[dict[str, Any]]:
     if active is None or not isinstance(active.get("id"), str):
-        return None
+        return []
     object_touches: dict[str, int] = {}
     object_log_ids: dict[str, list[str]] = {}
     additive_layering = False
@@ -1768,29 +1919,30 @@ def _pulse_route_for_repeated_local_repair(
         additive_layering = additive_layering or _is_additive_layer_log(log)
     repeated = sorted(object_id for object_id, count in object_touches.items() if count >= 3)
     if not repeated:
-        return None
+        return []
     source_ids: list[str] = []
     for object_id in repeated:
         source_ids.extend(object_log_ids.get(object_id, []))
     signals = ["third_touch"]
     if additive_layering:
         signals.append("additive_layering")
-    return {
-        "candidate": {
-            "signal": "third_touch",
-            "candidate_next_gate": "anti_spiral_audit",
-            "source_ids": source_ids,
-            "object_ids": repeated,
-            "reason": "The same local object appears in three or more active task logs.",
-        },
-        "signals": signals,
-        "scope": "subpath",
-        "evidence_delta": "weak_evidence_expected",
-        "branch_disposition": "unclear",
-        "systemic_probe": "needs_gate",
-        "next_gate": "anti_spiral_audit",
-        "rationale": "Repeated local repair should route through Anti-Spiral before another local change.",
-    }
+    return [
+        _pulse_candidate(
+            signal="third_touch",
+            candidate_next_gate="anti_spiral_audit",
+            scope="subpath",
+            source_kind="step_log",
+            source_ids=source_ids,
+            priority_class="anti_spiral",
+            severity="medium",
+            freshness="current_path",
+            reason="The same local object appears in three or more active task logs.",
+            context={"object_ids": repeated},
+            signals=signals,
+            evidence_delta="weak_evidence_expected",
+            rationale="Repeated local repair should route through Anti-Spiral before another local change.",
+        )
+    ]
 
 
 def _events_by_type(events: list[dict[str, Any]], event_types: set[str]) -> list[dict[str, Any]]:
@@ -1821,29 +1973,34 @@ def _event_is_on_current_path(
     return active is not None and task_id == active.get("id")
 
 
-def _pulse_route_for_feedback_or_blocker(
+def _collect_feedback_or_blocker_candidates(
     mission: dict[str, Any],
     active: dict[str, Any] | None,
     events: list[dict[str, Any]],
     trigger: str,
-) -> dict[str, Any] | None:
-    feedback_events = _events_by_type(events, {"feedback", "user_feedback"})
-    if trigger in {"feedback", "user_feedback"} and feedback_events:
-        return {
-            "candidate": {
-                "signal": "user_feedback",
-                "candidate_next_gate": "loopback",
-                "source_ids": _event_source_ids(feedback_events),
-                "reason": "Feedback can mean the current problem definition needs a loopback before more execution.",
-            },
-            "signals": ["user_feedback"],
-            "scope": "active_node",
-            "evidence_delta": "unclear",
-            "branch_disposition": "keep",
-            "systemic_probe": "needs_gate",
-            "next_gate": "loopback",
-            "rationale": "Feedback should be routed to loopback for definition or resolution adjustment.",
-        }
+) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    feedback_events = [
+        event
+        for event in _events_by_type(events, {"feedback", "user_feedback"})
+        if _event_is_on_current_path(event, mission, active)
+    ]
+    if trigger == "feedback" and feedback_events:
+        candidates.append(
+            _pulse_candidate(
+                signal="user_feedback",
+                candidate_next_gate="loopback",
+                scope="active_node",
+                source_kind="evidence_event",
+                source_ids=_event_source_ids(feedback_events),
+                priority_class="current_blocker_or_feedback",
+                severity="high",
+                freshness="current_path",
+                reason="Feedback can mean the current problem definition needs a loopback before more execution.",
+                branch_disposition="keep",
+                rationale="Feedback should be routed to loopback for definition or resolution adjustment.",
+            )
+        )
 
     blocker_events = [
         event
@@ -1851,93 +2008,111 @@ def _pulse_route_for_feedback_or_blocker(
         if _event_is_on_current_path(event, mission, active)
     ]
     if blocker_events:
-        return {
-            "candidate": {
-                "signal": "blocker_or_surprise",
-                "candidate_next_gate": "mission_review",
-                "source_ids": _event_source_ids(blocker_events),
-                "reason": "A blocker or surprise may change the Mission-relative path, authority, or acceptance boundary.",
-            },
-            "signals": ["blocker_or_surprise"],
-            "scope": "mission",
-            "evidence_delta": "unclear",
-            "branch_disposition": "unclear",
-            "systemic_probe": "needs_gate",
-            "next_gate": "mission_review",
-            "rationale": "Blockers and surprises should be reviewed at Mission level before local continuation.",
-        }
-    return None
+        candidates.append(
+            _pulse_candidate(
+                signal="blocker_or_surprise",
+                candidate_next_gate="mission_review",
+                scope="mission",
+                source_kind="evidence_event",
+                source_ids=_event_source_ids(blocker_events),
+                priority_class="current_blocker_or_feedback",
+                severity="high",
+                freshness="current_path",
+                reason="A blocker or surprise may change the Mission-relative path, authority, or acceptance boundary.",
+                rationale="Blockers and surprises should be reviewed at Mission level before local continuation.",
+            )
+        )
+    return candidates
+
+
+def _parse_iso_timestamp(value: Any) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed
 
 
 def _active_task_has_acceptance_evidence_movement(
     active: dict[str, Any],
     events: list[dict[str, Any]],
+    batch_start: datetime,
 ) -> bool:
     active_id = str(active["id"])
-    event_ids = {event.get("id") for event in events if isinstance(event.get("id"), str)}
     evidence_links = active.get("evidence_links", [])
-    if isinstance(evidence_links, list) and any(link in event_ids for link in evidence_links if isinstance(link, str)):
-        return True
+    linked_event_ids = {link for link in evidence_links if isinstance(link, str)} if isinstance(evidence_links, list) else set()
     acceptance_event_types = {"acceptance", "acceptance_passed", "acceptance_failed"}
     return any(
-        event.get("task_id") == active_id and event.get("event_type") in acceptance_event_types
+        event.get("task_id") == active_id
+        and _parse_iso_timestamp(event.get("timestamp")) is not None
+        and _parse_iso_timestamp(event.get("timestamp")) >= batch_start
+        and (event.get("event_type") in acceptance_event_types or event.get("id") in linked_event_ids)
         for event in events
     )
 
 
-def _pulse_route_for_checkpoint_batch_without_evidence(
+def _collect_checkpoint_batch_candidates(
     active: dict[str, Any] | None,
     logs: list[dict[str, Any]],
     events: list[dict[str, Any]],
     trigger: str,
-) -> dict[str, Any] | None:
+) -> list[dict[str, Any]]:
     if trigger != "checkpoint_batch" or active is None or not isinstance(active.get("id"), str):
-        return None
+        return []
     checkpoint_logs = [log for log in logs if log.get("step_id") == "checkpoint"]
     if len(checkpoint_logs) < 3:
-        return None
-    if _active_task_has_acceptance_evidence_movement(active, events):
-        return None
-    return {
-        "candidate": {
-            "signal": "checkpoint_batch_without_acceptance_evidence",
-            "candidate_next_gate": "continuation_authorization",
-            "source_ids": _event_source_ids(checkpoint_logs),
-            "reason": "Several active-task checkpoints were recorded without any active-task evidence movement.",
-        },
-        "signals": ["weak_evidence_delta", "checkpoint_batch_without_acceptance_evidence"],
-        "scope": "active_node",
-        "evidence_delta": "weak_evidence_expected",
-        "branch_disposition": "keep",
-        "systemic_probe": "needs_gate",
-        "next_gate": "continuation_authorization",
-        "rationale": "A checkpoint batch with no evidence movement should authorize continuation explicitly.",
-    }
+        return []
+    batch_logs = checkpoint_logs[-3:]
+    batch_start = _parse_iso_timestamp(batch_logs[0].get("timestamp"))
+    if batch_start is not None and _active_task_has_acceptance_evidence_movement(active, events, batch_start):
+        return []
+    return [
+        _pulse_candidate(
+            signal="checkpoint_batch_without_acceptance_evidence",
+            candidate_next_gate="continuation_authorization",
+            scope="active_node",
+            source_kind="step_log",
+            source_ids=_event_source_ids(batch_logs),
+            priority_class="checkpoint_weak_evidence_delta",
+            severity="medium",
+            freshness="checkpoint_window",
+            reason="Several active-task checkpoints were recorded without fresh active-task evidence movement.",
+            signals=["weak_evidence_delta", "checkpoint_batch_without_acceptance_evidence"],
+            evidence_delta="weak_evidence_expected",
+            branch_disposition="keep",
+            rationale="A checkpoint batch with no fresh evidence movement should authorize continuation explicitly.",
+        )
+    ]
 
 
-def _pulse_route_for_mission_boundary(trigger: str) -> dict[str, Any] | None:
+def _collect_mission_boundary_candidates(trigger: str) -> list[dict[str, Any]]:
     if trigger not in {"before_freeze", "before_handoff", "before_stop"}:
-        return None
-    return {
-        "candidate": {
-            "signal": "mission_boundary_review",
-            "candidate_next_gate": "mission_review",
-            "source_ids": [],
-            "reason": "Freeze, handoff, or stop is a Mission-facing boundary and should be reviewed before closure.",
-        },
-        "signals": ["mission_boundary_review"],
-        "scope": "mission",
-        "evidence_delta": "unclear",
-        "branch_disposition": "defer",
-        "systemic_probe": "needs_gate",
-        "next_gate": "mission_review",
-        "rationale": "Mission boundary triggers should route to Mission Review before freeze, handoff, or stop.",
-    }
+        return []
+    return [
+        _pulse_candidate(
+            signal="mission_boundary_review",
+            candidate_next_gate="mission_review",
+            scope="mission",
+            source_kind="trigger",
+            source_ids=[],
+            priority_class="mission_boundary",
+            severity="high",
+            freshness="current_trigger",
+            reason="Freeze, handoff, or stop is a Mission-facing boundary and should be reviewed before closure.",
+            context={"trigger": trigger},
+            branch_disposition="defer",
+            rationale="Mission boundary triggers should route to Mission Review before freeze, handoff, or stop.",
+        )
+    ]
 
 
-def _pulse_route_for_branch_cleanup(mission: dict[str, Any], trigger: str) -> dict[str, Any] | None:
+def _collect_branch_cleanup_candidates(mission: dict[str, Any], trigger: str) -> list[dict[str, Any]]:
     if trigger not in {"branch_cleanup", "active_switch_candidate"}:
-        return None
+        return []
     active_id = mission.get("active_task_id")
     branch_ids = [
         str(task.get("id"))
@@ -1947,57 +2122,128 @@ def _pulse_route_for_branch_cleanup(mission: dict[str, Any], trigger: str) -> di
         and task.get("id") != active_id
     ]
     if not branch_ids:
-        return None
-    return {
-        "candidate": {
-            "signal": "branch_cleanup_candidate",
-            "candidate_next_gate": "selection",
-            "source_ids": branch_ids,
-            "reason": "Supporting or exploratory branches need Mission-relative disposition.",
-        },
-        "signals": ["branch_cleanup_candidate"],
-        "scope": "mission",
-        "evidence_delta": "unclear",
-        "branch_disposition": "unclear",
-        "systemic_probe": "not_needed",
-        "next_gate": "selection",
-        "rationale": "Branch cleanup should route to selection or subtraction instead of direct pruning.",
-    }
+        return []
+    return [
+        _pulse_candidate(
+            signal="branch_cleanup_candidate",
+            candidate_next_gate="selection",
+            scope="mission",
+            source_kind="task",
+            source_ids=branch_ids,
+            priority_class="branch_or_switch_cleanup",
+            severity="low",
+            freshness="current_state",
+            reason="Supporting or exploratory branches need Mission-relative disposition.",
+            branch_disposition="unclear",
+            systemic_probe="not_needed",
+            rationale="Branch cleanup should route to selection or subtraction instead of direct pruning.",
+        )
+    ]
 
 
-def _pulse_route_for_before_continue(trigger: str, active: dict[str, Any] | None) -> dict[str, Any] | None:
+def _collect_same_path_continuation_candidates(
+    trigger: str,
+    active: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
     if trigger != "before_continue":
-        return None
+        return []
     if active is None:
+        return []
+    return [
+        _pulse_candidate(
+            signal="same_path_continuation",
+            candidate_next_gate="continuation_authorization",
+            scope="active_node",
+            source_kind="trigger",
+            source_ids=[],
+            priority_class="same_path_continuation",
+            severity="low",
+            freshness="current_trigger",
+            reason="Same-path continuation requires authorization when Mission-facing value is uncertain.",
+            context={"trigger": trigger},
+            branch_disposition="keep",
+            systemic_probe="not_needed",
+            rationale="Before continuing the active path, route to continuation authorization.",
+        )
+    ]
+
+
+def _collect_no_active_path_candidates(trigger: str, active: dict[str, Any] | None) -> list[dict[str, Any]]:
+    if active is not None:
+        return []
+    if trigger not in {"manual", "checkpoint_batch", "before_continue"}:
+        return []
+    return [
+        _pulse_candidate(
+            signal="active_node_missing",
+            candidate_next_gate="mission_review",
+            scope="mission",
+            source_kind="mission_state",
+            source_ids=[],
+            priority_class="runtime_integrity",
+            severity="high",
+            freshness="current_state",
+            reason="Pulse was asked to continue or inspect the current path without an active runtime node.",
+            context={"trigger": trigger},
+            rationale="Continuation needs an active node; without one, route to Mission Review.",
+        )
+    ]
+
+
+def _collect_pulse_candidates(
+    mission: dict[str, Any],
+    events: list[dict[str, Any]],
+    active: dict[str, Any] | None,
+    active_logs: list[dict[str, Any]],
+    active_risks: list[dict[str, Any]],
+    trigger: str,
+) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    candidates.extend(_collect_requires_human_candidates(mission, events))
+    candidates.extend(_collect_mission_boundary_candidates(trigger))
+    candidates.extend(_collect_no_active_path_candidates(trigger, active))
+    candidates.extend(_collect_shared_risk_candidates(active_risks))
+    candidates.extend(_collect_feedback_or_blocker_candidates(mission, active, events, trigger))
+    candidates.extend(_collect_anti_spiral_candidates(active, active_logs))
+    candidates.extend(_collect_checkpoint_batch_candidates(active, active_logs, events, trigger))
+    candidates.extend(_collect_branch_cleanup_candidates(mission, trigger))
+    candidates.extend(_collect_same_path_continuation_candidates(trigger, active))
+    return candidates
+
+
+def _pulse_candidate_sort_key(candidate: dict[str, Any]) -> tuple[int, int]:
+    priority = MISSION_PULSE_PRIORITY_ORDER.get(str(candidate.get("priority_class")), 999)
+    severity = MISSION_PULSE_SEVERITY_ORDER.get(str(candidate.get("severity")), 0)
+    return (priority, -severity)
+
+
+def _arbitrate_pulse_candidates(candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    if not candidates:
         return {
-            "candidate": {
-                "signal": "active_node_missing",
-                "candidate_next_gate": "mission_review",
-                "source_ids": [],
-                "reason": "Same-path continuation was requested without an active runtime node.",
-            },
-            "signals": ["active_node_missing"],
-            "scope": "mission",
-            "evidence_delta": "unclear",
-            "branch_disposition": "unclear",
-            "systemic_probe": "needs_gate",
-            "next_gate": "mission_review",
-            "rationale": "Continuation needs an active node; without one, route to Mission Review.",
+            "winning_candidate": None,
+            "suppressed_candidates": [],
+            "arbitration_trace": [],
         }
+    ordered = sorted(candidates, key=_pulse_candidate_sort_key)
+    winning_candidate = ordered[0]
+    suppressed_candidates = [candidate for candidate in candidates if candidate is not winning_candidate]
+    arbitration_trace: list[dict[str, Any]] = []
+    for candidate in ordered:
+        selected = candidate is winning_candidate
+        arbitration_trace.append(
+            {
+                "signal": candidate["signal"],
+                "priority_class": candidate["priority_class"],
+                "candidate_next_gate": candidate["candidate_next_gate"],
+                "severity": candidate["severity"],
+                "decision": "selected" if selected else "suppressed",
+                "reason": "highest priority candidate" if selected else "lower priority than selected candidate",
+            }
+        )
     return {
-        "candidate": {
-            "signal": "same_path_continuation",
-            "candidate_next_gate": "continuation_authorization",
-            "source_ids": [],
-            "reason": "Same-path continuation requires authorization when Mission-facing value is uncertain.",
-        },
-        "signals": ["same_path_continuation"],
-        "scope": "active_node",
-        "evidence_delta": "unclear",
-        "branch_disposition": "keep",
-        "systemic_probe": "not_needed",
-        "next_gate": "continuation_authorization",
-        "rationale": "Before continuing the active path, route to continuation authorization.",
+        "winning_candidate": winning_candidate,
+        "suppressed_candidates": suppressed_candidates,
+        "arbitration_trace": arbitration_trace,
     }
 
 
@@ -2016,26 +2262,24 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
     active_log_summary = _active_log_summary(active, active_logs)
     evidence_link_lint = _evidence_link_lint(mission, events)
 
-    route = (
-        _pulse_route_for_requires_human(mission, events)
-        or _pulse_route_for_shared_risk(active_risks)
-        or _pulse_route_for_repeated_local_repair(active, active_logs)
-        or _pulse_route_for_feedback_or_blocker(mission, active, events, trigger)
-        or _pulse_route_for_mission_boundary(trigger)
-        or _pulse_route_for_checkpoint_batch_without_evidence(active, active_logs, events, trigger)
-        or _pulse_route_for_branch_cleanup(mission, trigger)
-        or _pulse_route_for_before_continue(trigger, active)
+    review_trigger_candidates = _collect_pulse_candidates(
+        mission,
+        events,
+        active,
+        active_logs,
+        active_risks,
+        trigger,
     )
-    review_trigger_candidates: list[dict[str, Any]] = []
-    if route is not None:
-        review_trigger_candidates.append(route["candidate"])
-        signals = route["signals"]
-        scope = route["scope"]
-        evidence_delta = route["evidence_delta"]
-        branch_disposition = route["branch_disposition"]
-        systemic_probe = route["systemic_probe"]
-        next_gate = route["next_gate"]
-        rationale = route["rationale"]
+    arbitration = _arbitrate_pulse_candidates(review_trigger_candidates)
+    winning_candidate = arbitration["winning_candidate"]
+    if winning_candidate is not None:
+        signals = winning_candidate["signals"]
+        scope = winning_candidate["scope"]
+        evidence_delta = winning_candidate["evidence_delta"]
+        branch_disposition = winning_candidate["branch_disposition"]
+        systemic_probe = winning_candidate["systemic_probe"]
+        next_gate = winning_candidate["candidate_next_gate"]
+        rationale = winning_candidate["rationale"]
     else:
         signals = []
         scope = "active_node" if survey["active_task"] else "mission"
@@ -2068,6 +2312,9 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
         "active_log_summary": active_log_summary,
         "evidence_link_lint": evidence_link_lint,
         "review_trigger_candidates": review_trigger_candidates,
+        "winning_candidate": winning_candidate,
+        "suppressed_candidates": arbitration["suppressed_candidates"],
+        "arbitration_trace": arbitration["arbitration_trace"],
         "mission_pulse": mission_pulse,
         "gate_owner": MISSION_PULSE_GATE_OWNERS[next_gate],
         "suggested_agent_checks": [

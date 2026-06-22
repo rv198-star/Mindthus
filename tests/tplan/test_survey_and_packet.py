@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[2]
+PULSE_SCHEMA_VERSION = "tplan.pulse.v0.2"
 
 
 def run_script(script_name, *args):
@@ -71,7 +72,7 @@ def create_mission(tmp):
         "record_evidence.py",
         str(mission_dir),
         "--event-type",
-        "feedback",
+        "key_finding",
         "--task-id",
         "T1.1",
         "--summary",
@@ -104,7 +105,13 @@ class SurveyAndPacketTests(unittest.TestCase):
             self.assertIn("pulse", survey)
             self.assertEqual(survey["pulse"]["script_verdict"], "shape_only")
             self.assertTrue(survey["pulse"]["agentic_judgment_required"])
+            self.assertEqual(survey["pulse"]["schema_version"], PULSE_SCHEMA_VERSION)
+            self.assertEqual(survey["pulse"]["mission_pulse"]["schema_version"], PULSE_SCHEMA_VERSION)
             self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continue")
+            self.assertIn("winning_candidate", survey["pulse"])
+            self.assertIn("suppressed_candidates", survey["pulse"])
+            self.assertIn("arbitration_trace", survey["pulse"])
+            self.assertIsNone(survey["pulse"]["winning_candidate"])
             self.assertNotIn("health_score", survey["pulse"])
 
     def test_survey_pulse_accepts_trigger_argument(self):
@@ -124,6 +131,11 @@ class SurveyAndPacketTests(unittest.TestCase):
         self.assertEqual(survey["pulse"]["mission_pulse"]["trigger"], "before_continue")
         self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continuation_authorization")
         self.assertEqual(survey["pulse"]["gate_owner"], "linear_continuation_gate")
+        self.assertIn("winning_candidate", survey["pulse"])
+        self.assertIn("suppressed_candidates", survey["pulse"])
+        self.assertEqual(survey["pulse"]["winning_candidate"]["signal"], "same_path_continuation")
+        self.assertEqual(survey["pulse"]["winning_candidate"]["priority_class"], "same_path_continuation")
+        self.assertEqual(survey["pulse"]["suppressed_candidates"], [])
 
     def test_survey_pulse_rejects_unknown_trigger_argument(self):
         with tempfile.TemporaryDirectory() as tmp:

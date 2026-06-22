@@ -290,9 +290,15 @@ agent a thin Mission-level control surface between Snapshot and Gate:
 - Pulse routes observable signals to an existing Gate.
 - Gate makes the semantic decision and owns any mutation.
 
+Pulse v0.2 uses explicit Candidate Collection and Gate Arbitration:
+
+```text
+Snapshot -> Candidate Collection -> Candidate Shape Validation -> Gate Arbitration -> Pulse Output -> Gate
+```
+
 Required `mission_pulse` fields when used:
 
-- `schema_version`: `tplan.pulse.v0.1`
+- `schema_version`: `tplan.pulse.v0.2`
 - `trigger`: `before_continue`, `before_freeze`, `before_handoff`, `before_stop`,
   `checkpoint_batch`, `feedback`, `blocker`, `shared_risk`,
   `active_switch_candidate`, `branch_cleanup`, or `manual`
@@ -308,6 +314,24 @@ Required `mission_pulse` fields when used:
   or `escalate`
 - `rationale`: route rationale
 - `evidence_links`: list of evidence ids, artifact references, or trace anchors
+
+Required candidate fields:
+
+- `signal`: observable route signal
+- `candidate_next_gate`: existing Gate the signal would route to
+- `scope`: `active_node`, `subpath`, or `mission`
+- `source_kind`: `trigger`, `mission_state`, `evidence_event`, `step_log`,
+  `risk_signal`, `task`, `validation`, or `derived`
+- `source_ids`: source record ids when available
+- `priority_class`: arbitration class such as `mission_boundary`,
+  `active_shared_risk`, `current_blocker_or_feedback`, `anti_spiral`,
+  `checkpoint_weak_evidence_delta`, or `same_path_continuation`
+- `severity`: `low`, `medium`, `high`, or `critical`
+- `freshness`: `current_trigger`, `current_state`, `current_path`,
+  `checkpoint_window`, `recent_evidence`, `historical`, or `unknown`
+- `reason`: route-candidate rationale
+- `context`: object for contextual ids such as `risk_signal_ids`, `object_ids`, or
+  trigger labels
 
 Pulse outputs are routing notes, not proof. `scripts/mission_pulse.py` and
 `survey --pulse --pulse-trigger <trigger>` report pulse trigger candidates with
@@ -327,7 +351,12 @@ Read-only Pulse script output includes:
   layering observation.
 - `evidence_link_lint`: invalid task `evidence_links` shapes and task links not bound
   to a real evidence event id.
-- `review_trigger_candidates`: mechanically observed signal candidates with source ids.
+- `review_trigger_candidates`: all mechanically observed signal candidates.
+- `winning_candidate`: the selected controlling candidate, or null for ordinary
+  `continue`.
+- `suppressed_candidates`: observed candidates that lost Gate Arbitration but remain
+  visible to the selected Gate.
+- `arbitration_trace`: why each candidate was selected or suppressed.
 - `mission_pulse`: the route note described above.
 - `gate_owner`: the existing gate or hook that owns the selected `next_gate`.
 - `pulse_shape_findings`: script self-check findings for the Pulse output shape.
@@ -335,8 +364,12 @@ Read-only Pulse script output includes:
 `review_trigger_candidates.source_ids` must point to source records when available:
 evidence event ids for feedback/blocker/shared-risk signals, step log ids for local
 repair or checkpoint-batch signals, and task ids for branch selection signals. Object
-ids and risk signal ids may be included separately as context, but should not replace
-source record ids.
+ids and risk signal ids live under `context`, but should not replace source record ids.
+
+For checkpoint batches, fresh acceptance evidence movement means an active-task
+acceptance event or linked evidence event whose timestamp falls inside the evaluated
+checkpoint window. Historical linked evidence alone does not suppress a weak-evidence
+route.
 
 `next_gate=continue` never bypasses existing high-impact requirements.
 `next_gate=health_check` must route to existing shared-risk/Mission-health judgment
