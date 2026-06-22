@@ -27,6 +27,57 @@ Initial hooks:
 Hook output must include recommendation, rationale, confidence, evidence links,
 proposed mutations, and requires_human.
 
+## Snapshot / Pulse / Gate Control Surface
+
+TPLAN review control has three layers:
+
+- `Snapshot`: scripts expose runtime state only. Examples: checkpoint, survey,
+  validation findings, active task, recent evidence, task logs, and active shared
+  risks. Snapshot does not decide semantic truth.
+- `Pulse`: a lightweight Mission-level routing note. It asks whether the active path
+  can continue locally or should enter an existing Gate. Pulse is not a new judgment
+  center and does not mutate Mission state by default.
+- `Gate`: existing decision centers such as `continuation_authorization`,
+  `anti_spiral_audit`, `selection`, `subtraction`, `loopback`, `mission_review`,
+  `risk_assessment`, and `stop_report`.
+
+Short rule:
+
+> Scripts observe. Pulse routes. Gates decide.
+
+`mission_pulse` is optional and documentation-first. Use it only when a Mission-level
+review signal needs routing before another local action:
+
+```json
+{
+  "mission_pulse": {
+    "schema_version": "tplan.pulse.v0.1",
+    "trigger": "before_continue | before_freeze | checkpoint_batch | feedback | blocker | shared_risk | active_switch_candidate | branch_cleanup | manual",
+    "scope": "active_node | subpath | mission",
+    "signals": ["weak_evidence_delta"],
+    "evidence_delta": "new_evidence_expected | weak_evidence_expected | no_new_evidence_expected | unclear",
+    "branch_disposition": "keep | close | merge | defer | prune | unclear",
+    "systemic_probe": "not_needed | use_existing_structure | replace_local_fix | needs_gate | unclear",
+    "next_gate": "continue | continuation_authorization | anti_spiral_audit | selection | subtraction | loopback | mission_review | health_check | stop | escalate",
+    "rationale": "Why this route is the next control point.",
+    "evidence_links": []
+  }
+}
+```
+
+Pulse may report observable signals and candidate gates. It must not compute ROI, rank
+paths, classify defects, decide evidence sufficiency, redefine acceptance authority,
+or declare the Mission healthy or unhealthy. Pulse is not a new judgment center.
+`next_gate=continue` never bypasses high-impact requirements. `next_gate=health_check`
+routes to the existing shared-risk/Mission-health judgment surface. Health check is a
+route, not a standalone undefined gate.
+
+Do not run Pulse as a fixed full-review ritual after every active task. Trigger it from
+events: same-path continuation, freeze or handoff, repeated local touch, weak evidence
+delta, user negative feedback, blocker or surprise, active shared risk, active-task
+switch candidate, branch cleanup, or a small batch of checkpoints with no acceptance
+evidence movement. Low-risk routine checkpoints stay Snapshot-only.
+
 ## Anti-Spiral Runtime Gate
 
 `anti_spiral_audit` is a runtime gate, not a standalone Mindthus skill. It exists so a

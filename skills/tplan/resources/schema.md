@@ -281,6 +281,44 @@ A decision packet must include:
 - current blockers or surprises
 - shared context with active risk signals and recent resolved risk signals
 
+## Mission Pulse Route Note
+
+`mission_pulse` is an optional route note, not Mission state by default. It gives the
+agent a thin Mission-level control surface between Snapshot and Gate:
+
+- Snapshot reports observable state.
+- Pulse routes observable signals to an existing Gate.
+- Gate makes the semantic decision and owns any mutation.
+
+Required `mission_pulse` fields when used:
+
+- `schema_version`: `tplan.pulse.v0.1`
+- `trigger`: `before_continue`, `before_freeze`, `checkpoint_batch`, `feedback`,
+  `blocker`, `shared_risk`, `active_switch_candidate`, `branch_cleanup`, or `manual`
+- `scope`: `active_node`, `subpath`, or `mission`
+- `signals`: list of observable signal strings
+- `evidence_delta`: `new_evidence_expected`, `weak_evidence_expected`,
+  `no_new_evidence_expected`, or `unclear`
+- `branch_disposition`: `keep`, `close`, `merge`, `defer`, `prune`, or `unclear`
+- `systemic_probe`: `not_needed`, `use_existing_structure`, `replace_local_fix`,
+  `needs_gate`, or `unclear`
+- `next_gate`: `continue`, `continuation_authorization`, `anti_spiral_audit`,
+  `selection`, `subtraction`, `loopback`, `mission_review`, `health_check`, `stop`,
+  or `escalate`
+- `rationale`: route rationale
+- `evidence_links`: list of evidence ids, artifact references, or trace anchors
+
+Pulse outputs are routing notes, not proof. Runtime scripts may later report pulse
+trigger candidates with `script_verdict: shape_only` and
+`agentic_judgment_required: true`, but scripts must not decide Mission ROI, evidence
+sufficiency, defect class, health verdict, branch value, systemic truth, or user
+authority.
+
+`next_gate=continue` never bypasses existing high-impact requirements.
+`next_gate=health_check` must route to existing shared-risk/Mission-health judgment
+instead of creating a standalone undefined gate. Store Pulse history only if recovery
+or audit evidence later proves it is needed.
+
 ## Hook Output
 
 Hook output is an evidence-linked recommendation, not proof of semantic correctness.

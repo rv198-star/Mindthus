@@ -316,6 +316,55 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("continuation_authorization", hook)
         self.assertIn("evidence_shape_lint", hook["continuation_authorization"])
 
+    def test_mission_health_pulse_contract_is_documented(self):
+        resources = "\n".join(
+            (SKILL / "resources" / name).read_text(encoding="utf-8")
+            for name in ("schema.md", "hooks.md")
+        )
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+        pressure_text = (REPO / "tests" / "tplan" / "mission_health_pulse_ab_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Snapshot / Pulse / Gate",
+            "Scripts observe. Pulse routes. Gates decide.",
+            "mission_pulse",
+            "tplan.pulse.v0.1",
+            "Snapshot reports observable state",
+            "Pulse routes observable signals to an existing Gate",
+            "Gate makes the semantic decision",
+            "next_gate=continue",
+            "next_gate=health_check",
+            "not a standalone undefined gate",
+            "not a new judgment center",
+            "not decide Mission ROI",
+            "not decide semantic truth",
+        ):
+            self.assertIn(phrase, resources)
+
+        for phrase in (
+            "普通低风险推进",
+            "同一路径准备继续",
+            "第三次局部修补",
+            "共享风险影响后续任务",
+            "多分支开始膨胀",
+            "Mission 目标、验收面或权限不清",
+            "只有出现事件信号时才进入 Pulse",
+        ):
+            self.assertIn(phrase, methodology)
+
+        for phrase in (
+            "Scenario A: Routine Checkpoint Must Stay Light",
+            "Scenario B: Same-path Continue Needs Authorization",
+            "Scenario C: Repeated Local Repair Routes To Anti-Spiral Or Subtraction",
+            "Scenario D: Shared Risk Must Not Stay Buried",
+            "Scenario E: Branch Cleanup Must Use Existing Gates",
+            "Scenario F: Mission Drift Or Authority Gap Stops The Path",
+            "Hard failure",
+        ):
+            self.assertIn(phrase, pressure_text)
+
     def test_shared_risk_context_has_reproducible_ab_simulator_contract(self):
         pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")
         simulator = REPO / "tests" / "tplan" / "shared_risk_agent_simulator.py"

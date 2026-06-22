@@ -187,6 +187,31 @@ flowchart TD
 
 这张图的重点是循环，而不是阶段。执行不会随手重写计划；执行只产生 `logs`、`evidence`、`split`、`blocker`、`decision packet` 或 `Anti-Spiral` 信号。任务树的调整必须经过这些信号和对应 authority，避免 agent 一边执行、一边现场改目标、一边宣布完成。
 
+### Snapshot / Pulse / Gate
+
+为了防止 review 逻辑散落在多个 gate 里，`tplan` 使用三层控制面来理解运行时回顾：
+
+- `Snapshot`：脚本只报告状态，例如 checkpoint、survey、active task、最近 evidence、logs、shared risk 和 validation findings。它不判断 Mission 是否健康。
+- `Pulse`：轻量路由层，只问“当前路径还能继续吗，还是应该进入哪个已有 gate？”它可以输出 `next_gate`，但不做 pass/fail、health score 或自动 mutation。
+- `Gate`：真正的判断中心，例如 `continuation_authorization`、`anti_spiral_audit`、`selection`、`subtraction`、`loopback`、`mission_review`、`risk_assessment` 和 `stop_report`。
+
+一句话：
+
+> Scripts observe. Pulse routes. Gates decide.
+
+Pulse 不是每个 active task 后的固定复盘。低风险普通 checkpoint 只停留在 Snapshot。只有出现事件信号时才进入 Pulse：同路径继续、准备 freeze/handoff/stop、第三次触碰同一局部对象、弱 evidence delta、用户负反馈、blocker/surprise、active shared risk、active task switch 候选、分支清理，或一小批 checkpoint 后验收 evidence 没有移动。
+
+场景回放：
+
+- 普通低风险推进：`checkpoint -> Snapshot -> continue`。不触发 full Mission Review，也不要求 agent 写一堆额外字段。
+- 同一路径准备继续：`Snapshot -> Pulse(next_gate=continuation_authorization) -> Gate`。Pulse 只负责叫醒继续授权，真正判断继续是否值得由 `path_assessment` 和 `continuation_authorization` 完成。
+- 第三次局部修补或又想加 fallback：`Snapshot -> Pulse(next_gate=anti_spiral_audit 或 subtraction) -> Gate`。如果进入红色，只允许回上游、减法或等量替换。
+- 共享风险影响后续任务：`risk_context_update -> Snapshot -> Pulse(next_gate=health_check) -> risk_assessment`。这里的 `health_check` 不是新 gate，而是把 active shared risk 带回风险调整后的 Mission 判断。
+- 多分支开始膨胀：`Snapshot -> Pulse(branch_disposition=close|merge|defer|prune) -> selection/subtraction/mission_review`。Pulse 不负责删分支，只把分支卫生问题交给已有 gate。
+- Mission 目标、验收面或权限不清：`Snapshot -> Pulse(next_gate=mission_review|stop|escalate) -> Gate`。如果继续需要 invent intent、authority 或 acceptance criteria，就进入 stop report 或请求人类授权。
+
+这层设计的边界也很硬：如果 Pulse 只能说“记得反思一下”，那它没有新增价值，因为 Gate Probes 和 Primitive Activation 已经覆盖。Pulse 唯一值得存在的理由，是把可观察运行时信号更早、更清楚地路由到已有 gate。
+
 ### 继续授权
 
 `continuation_authorization` 是 Linear Continuation Gate 的一部分。它管的是这种场景：下一步还想沿着同一路径继续，而当前路径的价值、证据增量、缺陷性质或替代路径还需要被说清楚。
