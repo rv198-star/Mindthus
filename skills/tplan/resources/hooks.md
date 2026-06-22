@@ -73,14 +73,28 @@ routes to the existing shared-risk/Mission-health judgment surface. Health check
 route, not a standalone undefined gate.
 
 Use `scripts/mission_pulse.py` for a standalone read-only route note. Use
-`survey --pulse` when the route note should travel with the ordinary Mission survey.
-Both outputs are shape-only inputs for agentic judgment, not gate decisions.
+`survey --pulse --pulse-trigger <trigger>` when the route note should travel with the
+ordinary Mission survey. Both outputs are shape-only inputs for agentic judgment, not
+gate decisions. The runtime output also includes Snapshot-side diagnostics that explain
+what the route saw: recent evidence summary, active task log summary, evidence-link
+lint, review trigger candidates, and `pulse_shape_findings`.
 
 Do not run Pulse as a fixed full-review ritual after every active task. Trigger it from
 events: same-path continuation, freeze or handoff, repeated local touch, weak evidence
 delta, user negative feedback, blocker or surprise, active shared risk, active-task
 switch candidate, branch cleanup, or a small batch of checkpoints with no acceptance
 evidence movement. Low-risk routine checkpoints stay Snapshot-only.
+
+Implemented read-only routes:
+
+- `before_continue` -> `continuation_authorization`
+- third touch of the same active-task local object -> `anti_spiral_audit`
+- `feedback` trigger with feedback evidence -> `loopback`
+- blocker, failure, interruption, or surprise evidence -> `mission_review`
+- active shared risk -> `health_check` as the shared-risk/Mission-health route
+- `branch_cleanup` or `active_switch_candidate` -> `selection`
+- Mission status `requires_human` -> `stop`
+- routine `checkpoint_batch` with no trigger candidate -> `continue`
 
 ## Anti-Spiral Runtime Gate
 

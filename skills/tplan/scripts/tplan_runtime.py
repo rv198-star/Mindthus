@@ -75,6 +75,32 @@ RISK_ASSESSMENT_FIELDS = {
 }
 
 MISSION_PULSE_SCHEMA_VERSION = "tplan.pulse.v0.1"
+MISSION_PULSE_NEXT_GATES = {
+    "continue",
+    "continuation_authorization",
+    "anti_spiral_audit",
+    "selection",
+    "subtraction",
+    "loopback",
+    "mission_review",
+    "health_check",
+    "stop",
+    "escalate",
+}
+MISSION_PULSE_EVIDENCE_DELTAS = {
+    "new_evidence_expected",
+    "weak_evidence_expected",
+    "no_new_evidence_expected",
+    "unclear",
+}
+MISSION_PULSE_BRANCH_DISPOSITIONS = {"keep", "close", "merge", "defer", "prune", "unclear"}
+MISSION_PULSE_SYSTEMIC_PROBES = {
+    "not_needed",
+    "use_existing_structure",
+    "replace_local_fix",
+    "needs_gate",
+    "unclear",
+}
 MISSION_PULSE_GATE_OWNERS = {
     "continue": "inline_alignment",
     "continuation_authorization": "linear_continuation_gate",
@@ -1504,6 +1530,118 @@ def build_survey(mission_dir: Path) -> dict[str, Any]:
     }
 
 
+def _brief_event(event: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": event.get("id"),
+        "event_type": event.get("event_type"),
+        "task_id": event.get("task_id"),
+        "summary": event.get("summary"),
+    }
+
+
+def _recent_evidence_summary(events: list[dict[str, Any]], limit: int = 5) -> dict[str, Any]:
+    counts_by_type: dict[str, int] = {}
+    for event in events:
+        event_type = event.get("event_type")
+        if isinstance(event_type, str):
+            counts_by_type[event_type] = counts_by_type.get(event_type, 0) + 1
+    return {
+        "total_events": len(events),
+        "last_event_id": events[-1].get("id") if events else None,
+        "counts_by_type": counts_by_type,
+        "recent_events": [_brief_event(event) for event in events[-limit:]],
+    }
+
+
+def _brief_step_log(log: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": log.get("id"),
+        "step_id": log.get("step_id"),
+        "summary": log.get("summary"),
+    }
+
+
+def _active_log_summary(
+    active: dict[str, Any] | None,
+    logs: list[dict[str, Any]],
+    limit: int = 5,
+) -> dict[str, Any]:
+    object_touch_counts: dict[str, int] = {}
+    for log in logs:
+        payload = log.get("payload")
+        if isinstance(payload, dict) and isinstance(payload.get("object_id"), str):
+            object_id = payload["object_id"]
+            object_touch_counts[object_id] = object_touch_counts.get(object_id, 0) + 1
+    return {
+        "task_id": active.get("id") if active else None,
+        "log_count": len(logs),
+        "last_log_id": logs[-1].get("id") if logs else None,
+        "recent_logs": [_brief_step_log(log) for log in logs[-limit:]],
+        "object_touch_counts": object_touch_counts,
+        "repeated_object_ids": sorted(object_id for object_id, count in object_touch_counts.items() if count >= 3),
+        "additive_layering_seen": any(_is_additive_layer_log(log) for log in logs),
+    }
+
+
+def _evidence_link_lint(mission: dict[str, Any], events: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    event_ids = {event.get("id") for event in events if isinstance(event.get("id"), str)}
+    invalid: list[dict[str, Any]] = []
+    unbound: list[dict[str, Any]] = []
+    for task in mission.get("tasks", []):
+        if not isinstance(task, dict):
+            continue
+        task_id = task.get("id")
+        if not isinstance(task_id, str):
+            task_id = "<unknown>"
+        links = task.get("evidence_links", [])
+        if not isinstance(links, list):
+            invalid.append({"task_id": task_id, "field": "evidence_links", "reason": "not_a_list"})
+            continue
+        for link in links:
+            if not isinstance(link, str):
+                invalid.append({"task_id": task_id, "evidence_link": link, "reason": "not_a_string"})
+            elif link not in event_ids:
+                unbound.append({"task_id": task_id, "evidence_link": link})
+    return {
+        "invalid_evidence_links": invalid,
+        "unbound_evidence_links": unbound,
+    }
+
+
+def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
+    findings: list[str] = []
+    pulse = output.get("mission_pulse")
+    if not isinstance(pulse, dict):
+        return ["mission_pulse must be an object"]
+    if output.get("script_verdict") != "shape_only":
+        findings.append("script_verdict must be shape_only")
+    if output.get("agentic_judgment_required") is not True:
+        findings.append("agentic_judgment_required must be true")
+    if pulse.get("schema_version") != MISSION_PULSE_SCHEMA_VERSION:
+        findings.append("mission_pulse.schema_version is invalid")
+    next_gate = pulse.get("next_gate")
+    if next_gate not in MISSION_PULSE_NEXT_GATES:
+        findings.append("mission_pulse.next_gate is invalid")
+    if next_gate in MISSION_PULSE_GATE_OWNERS and output.get("gate_owner") != MISSION_PULSE_GATE_OWNERS[next_gate]:
+        findings.append("gate_owner does not match mission_pulse.next_gate")
+    if pulse.get("evidence_delta") not in MISSION_PULSE_EVIDENCE_DELTAS:
+        findings.append("mission_pulse.evidence_delta is invalid")
+    if pulse.get("branch_disposition") not in MISSION_PULSE_BRANCH_DISPOSITIONS:
+        findings.append("mission_pulse.branch_disposition is invalid")
+    if pulse.get("systemic_probe") not in MISSION_PULSE_SYSTEMIC_PROBES:
+        findings.append("mission_pulse.systemic_probe is invalid")
+    for name in ("signals", "evidence_links"):
+        value = pulse.get(name)
+        if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+            findings.append(f"mission_pulse.{name} must be a string list")
+    if not isinstance(output.get("review_trigger_candidates"), list):
+        findings.append("review_trigger_candidates must be a list")
+    for name in ("recent_evidence_summary", "active_log_summary", "evidence_link_lint"):
+        if not isinstance(output.get(name), dict):
+            findings.append(f"{name} must be an object")
+    return findings
+
+
 def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
     fields: list[str] = []
     for field in ("scope", "signal", "value_effect", "recommended_gate"):
@@ -1586,22 +1724,29 @@ def _is_additive_layer_log(log: dict[str, Any]) -> bool:
 
 
 def _pulse_route_for_repeated_local_repair(
-    mission_dir: Path,
     active: dict[str, Any] | None,
+    logs: list[dict[str, Any]],
 ) -> dict[str, Any] | None:
     if active is None or not isinstance(active.get("id"), str):
         return None
     object_touches: dict[str, int] = {}
+    object_log_ids: dict[str, list[str]] = {}
     additive_layering = False
-    for log in read_step_logs(mission_dir, str(active["id"])):
+    for log in logs:
         payload = log.get("payload")
         if isinstance(payload, dict) and isinstance(payload.get("object_id"), str):
             object_id = payload["object_id"]
             object_touches[object_id] = object_touches.get(object_id, 0) + 1
+            log_id = log.get("id")
+            if isinstance(log_id, str):
+                object_log_ids.setdefault(object_id, []).append(log_id)
         additive_layering = additive_layering or _is_additive_layer_log(log)
     repeated = sorted(object_id for object_id, count in object_touches.items() if count >= 3)
     if not repeated:
         return None
+    source_ids: list[str] = []
+    for object_id in repeated:
+        source_ids.extend(object_log_ids.get(object_id, []))
     signals = ["third_touch"]
     if additive_layering:
         signals.append("additive_layering")
@@ -1609,7 +1754,8 @@ def _pulse_route_for_repeated_local_repair(
         "candidate": {
             "signal": "third_touch",
             "candidate_next_gate": "anti_spiral_audit",
-            "source_ids": repeated,
+            "source_ids": source_ids,
+            "object_ids": repeated,
             "reason": "The same local object appears in three or more active task logs.",
         },
         "signals": signals,
@@ -1622,8 +1768,91 @@ def _pulse_route_for_repeated_local_repair(
     }
 
 
+def _events_by_type(events: list[dict[str, Any]], event_types: set[str]) -> list[dict[str, Any]]:
+    return [event for event in events if event.get("event_type") in event_types]
+
+
+def _event_source_ids(events: list[dict[str, Any]], limit: int = 3) -> list[str]:
+    return [
+        str(event.get("id"))
+        for event in events[-limit:]
+        if isinstance(event.get("id"), str)
+    ]
+
+
+def _pulse_route_for_feedback_or_blocker(events: list[dict[str, Any]], trigger: str) -> dict[str, Any] | None:
+    feedback_events = _events_by_type(events, {"feedback", "user_feedback"})
+    if trigger in {"feedback", "user_feedback"} and feedback_events:
+        return {
+            "candidate": {
+                "signal": "user_feedback",
+                "candidate_next_gate": "loopback",
+                "source_ids": _event_source_ids(feedback_events),
+                "reason": "Feedback can mean the current problem definition needs a loopback before more execution.",
+            },
+            "signals": ["user_feedback"],
+            "scope": "active_node",
+            "evidence_delta": "unclear",
+            "branch_disposition": "keep",
+            "systemic_probe": "needs_gate",
+            "next_gate": "loopback",
+            "rationale": "Feedback should be routed to loopback for definition or resolution adjustment.",
+        }
+
+    blocker_events = _events_by_type(events, {"blocker", "blocked", "failure", "interruption", "surprise"})
+    if trigger == "blocker" or blocker_events:
+        return {
+            "candidate": {
+                "signal": "blocker_or_surprise",
+                "candidate_next_gate": "mission_review",
+                "source_ids": _event_source_ids(blocker_events),
+                "reason": "A blocker or surprise may change the Mission-relative path, authority, or acceptance boundary.",
+            },
+            "signals": ["blocker_or_surprise"],
+            "scope": "mission",
+            "evidence_delta": "unclear",
+            "branch_disposition": "unclear",
+            "systemic_probe": "needs_gate",
+            "next_gate": "mission_review",
+            "rationale": "Blockers and surprises should be reviewed at Mission level before local continuation.",
+        }
+    return None
+
+
+def _pulse_route_for_checkpoint_batch_without_evidence(
+    active: dict[str, Any] | None,
+    logs: list[dict[str, Any]],
+    events: list[dict[str, Any]],
+    trigger: str,
+) -> dict[str, Any] | None:
+    if trigger != "checkpoint_batch" or active is None or not isinstance(active.get("id"), str):
+        return None
+    checkpoint_logs = [log for log in logs if log.get("step_id") == "checkpoint"]
+    if len(checkpoint_logs) < 3:
+        return None
+    active_id = str(active["id"])
+    active_events = [event for event in events if event.get("task_id") == active_id]
+    if active_events:
+        return None
+    return {
+        "candidate": {
+            "signal": "checkpoint_batch_without_acceptance_evidence",
+            "candidate_next_gate": "continuation_authorization",
+            "source_ids": _event_source_ids(checkpoint_logs),
+            "reason": "Several active-task checkpoints were recorded without any active-task evidence movement.",
+        },
+        "signals": ["weak_evidence_delta", "checkpoint_batch_without_acceptance_evidence"],
+        "scope": "active_node",
+        "evidence_delta": "weak_evidence_expected",
+        "branch_disposition": "keep",
+        "systemic_probe": "needs_gate",
+        "next_gate": "continuation_authorization",
+        "rationale": "A checkpoint batch with no evidence movement should authorize continuation explicitly.",
+    }
+
+
 def _pulse_route_for_branch_cleanup(mission: dict[str, Any], trigger: str) -> dict[str, Any] | None:
-    if trigger != "branch_cleanup":
+    if trigger not in {"branch_cleanup", "active_switch_candidate"}:
         return None
     active_id = mission.get("active_task_id")
     branch_ids = [
@@ -1678,12 +1907,18 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
     validation_findings = validate_mission(mission)
     events = read_events(mission_dir)
     active = active_task(mission)
+    active_logs = read_step_logs(mission_dir, str(active["id"])) if active and isinstance(active.get("id"), str) else []
     active_risks = shared_context_summary(mission)["active_risk_signals"]
+    recent_evidence_summary = _recent_evidence_summary(events)
+    active_log_summary = _active_log_summary(active, active_logs)
+    evidence_link_lint = _evidence_link_lint(mission, events)
 
     route = (
         _pulse_route_for_requires_human(mission, events)
         or _pulse_route_for_shared_risk(active_risks)
-        or _pulse_route_for_repeated_local_repair(mission_dir, active)
+        or _pulse_route_for_repeated_local_repair(active, active_logs)
+        or _pulse_route_for_feedback_or_blocker(events, trigger)
+        or _pulse_route_for_checkpoint_batch_without_evidence(active, active_logs, events, trigger)
         or _pulse_route_for_branch_cleanup(mission, trigger)
         or _pulse_route_for_before_continue(trigger)
     )
@@ -1719,12 +1954,15 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
         "evidence_links": [],
     }
 
-    return {
+    output = {
         "schema_version": MISSION_PULSE_SCHEMA_VERSION,
         "script_verdict": "shape_only",
         "agentic_judgment_required": True,
         "snapshot": survey,
         "validation_findings": validation_findings,
+        "recent_evidence_summary": recent_evidence_summary,
+        "active_log_summary": active_log_summary,
+        "evidence_link_lint": evidence_link_lint,
         "review_trigger_candidates": review_trigger_candidates,
         "mission_pulse": mission_pulse,
         "gate_owner": MISSION_PULSE_GATE_OWNERS[next_gate],
@@ -1734,6 +1972,8 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
             "Use the selected Gate for authorization, mutation, stop, or escalation.",
         ],
     }
+    output["pulse_shape_findings"] = _validate_mission_pulse_output(output)
+    return output
 
 
 def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:

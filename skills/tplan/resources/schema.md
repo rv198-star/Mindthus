@@ -309,10 +309,31 @@ Required `mission_pulse` fields when used:
 - `evidence_links`: list of evidence ids, artifact references, or trace anchors
 
 Pulse outputs are routing notes, not proof. `scripts/mission_pulse.py` and
-`survey --pulse` report pulse trigger candidates with `script_verdict: shape_only` and
-`agentic_judgment_required: true`, but scripts must not decide Mission ROI, evidence
-sufficiency, defect class, health verdict, branch value, systemic truth, or user
-authority.
+`survey --pulse --pulse-trigger <trigger>` report pulse trigger candidates with
+`script_verdict: shape_only` and `agentic_judgment_required: true`.
+Scripts must not decide Mission ROI. They also must not decide evidence sufficiency,
+defect class, health verdict, branch value, systemic truth, or user authority.
+
+Read-only Pulse script output includes:
+
+- `snapshot`: ordinary Mission survey output.
+- `validation_findings`: Mission shape validation findings.
+- `recent_evidence_summary`: total evidence event count, counts by event type, last
+  event id, and recent event id/type/task/summary rows.
+- `active_log_summary`: active task id, active log count, last log id, recent log
+  id/step/summary rows, local object touch counts, repeated local objects, and additive
+  layering observation.
+- `evidence_link_lint`: invalid task `evidence_links` shapes and task links not bound
+  to a real evidence event id.
+- `review_trigger_candidates`: mechanically observed signal candidates with source ids.
+- `mission_pulse`: the route note described above.
+- `gate_owner`: the existing gate or hook that owns the selected `next_gate`.
+- `pulse_shape_findings`: script self-check findings for the Pulse output shape.
+
+`review_trigger_candidates.source_ids` must point to source records when available:
+evidence event ids for feedback/blocker/shared-risk signals, step log ids for local
+repair or checkpoint-batch signals, and task ids for branch selection signals. Object
+ids may be included separately as context, but should not replace source record ids.
 
 `next_gate=continue` never bypasses existing high-impact requirements.
 `next_gate=health_check` must route to existing shared-risk/Mission-health judgment

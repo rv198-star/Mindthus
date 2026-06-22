@@ -107,6 +107,24 @@ class SurveyAndPacketTests(unittest.TestCase):
             self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continue")
             self.assertNotIn("health_score", survey["pulse"])
 
+    def test_survey_pulse_accepts_trigger_argument(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script(
+                "survey.py",
+                str(mission_dir),
+                "--pulse",
+                "--pulse-trigger",
+                "before_continue",
+                "--json",
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            survey = json.loads(result.stdout)
+
+        self.assertEqual(survey["pulse"]["mission_pulse"]["trigger"], "before_continue")
+        self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continuation_authorization")
+        self.assertEqual(survey["pulse"]["gate_owner"], "linear_continuation_gate")
+
     def test_make_decision_packet_includes_required_context(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)

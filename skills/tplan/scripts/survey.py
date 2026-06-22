@@ -16,13 +16,18 @@ def main() -> int:
     parser.add_argument("mission_dir")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
     parser.add_argument("--pulse", action="store_true", help="Include a read-only Mission Pulse route note.")
+    parser.add_argument(
+        "--pulse-trigger",
+        default="manual",
+        help="Trigger label passed to Mission Pulse when --pulse is set.",
+    )
     args = parser.parse_args()
 
     try:
         mission_dir = Path(args.mission_dir)
         survey = build_survey(mission_dir)
         if args.pulse:
-            survey["pulse"] = build_mission_pulse(mission_dir, trigger="manual")
+            survey["pulse"] = build_mission_pulse(mission_dir, trigger=args.pulse_trigger)
     except (OSError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

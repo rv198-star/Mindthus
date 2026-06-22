@@ -201,6 +201,8 @@ flowchart TD
 
 Pulse 不是每个 active task 后的固定复盘。低风险普通 checkpoint 只停留在 Snapshot。只有出现事件信号时才进入 Pulse：同路径继续、准备 freeze/handoff/stop、第三次触碰同一局部对象、弱 evidence delta、用户负反馈、blocker/surprise、active shared risk、active task switch 候选、分支清理，或一小批 checkpoint 后验收 evidence 没有移动。
 
+运行时入口是 `scripts/mission_pulse.py`，或 `survey --pulse --pulse-trigger <trigger>`。它的输出必须能说明“为什么路由到这个 gate”：最近 evidence 摘要、active task log 摘要、evidence link lint、trigger candidate 和 shape 自检都要留在输出里；但它仍然不能给 health score、pass/fail 或自动修改 Mission。
+
 场景回放：
 
 - 普通低风险推进：`checkpoint -> Snapshot -> continue`。不触发 full Mission Review，也不要求 agent 写一堆额外字段。

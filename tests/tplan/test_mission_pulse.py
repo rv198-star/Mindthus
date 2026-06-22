@@ -80,6 +80,14 @@ def mission_files_snapshot(mission_dir):
     return {str(path.relative_to(mission_dir)): path.read_text(encoding="utf-8") for path in paths}
 
 
+def load_mission(mission_dir):
+    return json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
+
+
+def save_mission(mission_dir, mission):
+    (mission_dir / "mission.json").write_text(json.dumps(mission, indent=2), encoding="utf-8")
+
+
 class MissionPulseTests(unittest.TestCase):
     def test_mission_pulse_is_read_only_and_routes_routine_checkpoint_to_continue(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -105,6 +113,60 @@ class MissionPulseTests(unittest.TestCase):
         self.assertNotIn("health_verdict", pulse)
         self.assertFalse(pulse["review_trigger_candidates"])
         self.assertEqual(pulse["snapshot"]["active_task"]["id"], "T1")
+        self.assertEqual(pulse["recent_evidence_summary"]["total_events"], 0)
+        self.assertEqual(pulse["active_log_summary"]["task_id"], "T1")
+        self.assertEqual(pulse["active_log_summary"]["log_count"], 0)
+        self.assertFalse(pulse["pulse_shape_findings"])
+
+    def test_mission_pulse_reports_evidence_link_lint_and_recent_summaries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            evidence = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "key_finding",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Observed a concrete route signal.",
+            )
+            self.assertEqual(evidence.returncode, 0, evidence.stderr)
+            log = run_script(
+                "record_step_log.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--step-id",
+                "inspect",
+                "--summary",
+                "Inspected pulse output shape.",
+                "--payload-json",
+                '{"object_id": "pulse:shape"}',
+            )
+            self.assertEqual(log.returncode, 0, log.stderr)
+            mission = load_mission(mission_dir)
+            mission["tasks"][0]["evidence_links"] = ["E1", "E999"]
+            save_mission(mission_dir, mission)
+
+            result = run_script("mission_pulse.py", str(mission_dir), "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            pulse = json.loads(result.stdout)
+
+        self.assertEqual(pulse["recent_evidence_summary"]["total_events"], 1)
+        self.assertEqual(pulse["recent_evidence_summary"]["last_event_id"], "E1")
+        self.assertEqual(pulse["recent_evidence_summary"]["counts_by_type"], {"key_finding": 1})
+        self.assertEqual(pulse["recent_evidence_summary"]["recent_events"][0]["summary"], "Observed a concrete route signal.")
+        self.assertEqual(pulse["active_log_summary"]["task_id"], "T1")
+        self.assertEqual(pulse["active_log_summary"]["log_count"], 1)
+        self.assertEqual(pulse["active_log_summary"]["last_log_id"], "L1")
+        self.assertEqual(pulse["active_log_summary"]["object_touch_counts"], {"pulse:shape": 1})
+        self.assertEqual(
+            pulse["evidence_link_lint"]["unbound_evidence_links"],
+            [{"task_id": "T1", "evidence_link": "E999"}],
+        )
+        self.assertFalse(pulse["evidence_link_lint"]["invalid_evidence_links"])
+        self.assertFalse(pulse["pulse_shape_findings"])
 
     def test_mission_pulse_routes_active_shared_risk_to_health_check(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -196,7 +258,82 @@ class MissionPulseTests(unittest.TestCase):
         self.assertIn("third_touch", pulse["mission_pulse"]["signals"])
         self.assertIn("additive_layering", pulse["mission_pulse"]["signals"])
         self.assertEqual(pulse["mission_pulse"]["systemic_probe"], "needs_gate")
-        self.assertIn("prompt:section-a", pulse["review_trigger_candidates"][0]["source_ids"])
+        self.assertEqual(pulse["review_trigger_candidates"][0]["source_ids"], ["L1", "L2", "L3"])
+        self.assertEqual(pulse["review_trigger_candidates"][0]["object_ids"], ["prompt:section-a"])
+        self.assertEqual(pulse["active_log_summary"]["repeated_object_ids"], ["prompt:section-a"])
+
+    def test_mission_pulse_routes_feedback_trigger_to_loopback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            feedback = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "feedback",
+                "--task-id",
+                "T1",
+                "--summary",
+                "User says the current definition missed the global review problem.",
+            )
+            self.assertEqual(feedback.returncode, 0, feedback.stderr)
+
+            result = run_script("mission_pulse.py", str(mission_dir), "--trigger", "feedback", "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            pulse = json.loads(result.stdout)
+
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "loopback")
+        self.assertEqual(pulse["gate_owner"], "loopback_hook")
+        self.assertIn("user_feedback", pulse["mission_pulse"]["signals"])
+        self.assertEqual(pulse["review_trigger_candidates"][0]["source_ids"], ["E1"])
+
+    def test_mission_pulse_routes_blocker_trigger_to_mission_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            blocker = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "blocker",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Current path cannot resolve the acceptance boundary.",
+            )
+            self.assertEqual(blocker.returncode, 0, blocker.stderr)
+
+            result = run_script("mission_pulse.py", str(mission_dir), "--trigger", "blocker", "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            pulse = json.loads(result.stdout)
+
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "mission_review")
+        self.assertEqual(pulse["gate_owner"], "mission_review_gate")
+        self.assertIn("blocker_or_surprise", pulse["mission_pulse"]["signals"])
+        self.assertEqual(pulse["review_trigger_candidates"][0]["source_ids"], ["E1"])
+
+    def test_mission_pulse_routes_checkpoint_batch_without_evidence_movement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            for index in range(3):
+                checkpoint = run_script(
+                    "checkpoint.py",
+                    str(mission_dir),
+                    "--task-id",
+                    "T1",
+                    "--step-id",
+                    "checkpoint",
+                    "--log-summary",
+                    f"Checkpoint {index + 1} moved implementation details only.",
+                )
+                self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr)
+
+            result = run_script("mission_pulse.py", str(mission_dir), "--trigger", "checkpoint_batch", "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            pulse = json.loads(result.stdout)
+
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "continuation_authorization")
+        self.assertIn("weak_evidence_delta", pulse["mission_pulse"]["signals"])
+        self.assertIn("checkpoint_batch_without_acceptance_evidence", pulse["mission_pulse"]["signals"])
+        self.assertEqual(pulse["review_trigger_candidates"][0]["source_ids"], ["L1", "L2", "L3"])
 
     def test_mission_pulse_routes_branch_cleanup_to_selection(self):
         with tempfile.TemporaryDirectory() as tmp:
