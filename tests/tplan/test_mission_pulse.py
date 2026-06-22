@@ -3,6 +3,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 
@@ -161,6 +162,36 @@ class MissionPulseTests(unittest.TestCase):
         self.assertIsInstance(pulse["arbitration_trace"], list)
         for candidate in pulse["review_trigger_candidates"]:
             self.assert_pulse_candidate_contract(candidate)
+        self.assert_pulse_arbitration_partition(pulse)
+
+    def candidate_token(self, candidate):
+        return json.dumps(candidate, sort_keys=True)
+
+    def assert_pulse_arbitration_partition(self, pulse):
+        candidates = pulse["review_trigger_candidates"]
+        suppressed = pulse["suppressed_candidates"]
+        trace = pulse["arbitration_trace"]
+        if not candidates:
+            self.assertIsNone(pulse["winning_candidate"])
+            self.assertEqual(suppressed, [])
+            self.assertEqual(trace, [])
+            return
+
+        self.assertIsNotNone(pulse["winning_candidate"])
+        partition = [pulse["winning_candidate"], *suppressed]
+        self.assertEqual(
+            Counter(self.candidate_token(candidate) for candidate in partition),
+            Counter(self.candidate_token(candidate) for candidate in candidates),
+        )
+        self.assertEqual(len(trace), len(candidates))
+        self.assertEqual(
+            Counter(entry["signal"] for entry in trace),
+            Counter(candidate["signal"] for candidate in candidates),
+        )
+        selected = [entry for entry in trace if entry["decision"] == "selected"]
+        self.assertEqual(len(selected), 1, trace)
+        self.assertEqual(selected[0]["signal"], pulse["winning_candidate"]["signal"])
+        self.assertEqual(trace[0]["decision"], "selected", trace)
 
     def assert_pulse_candidate_contract(
         self,
@@ -361,7 +392,7 @@ class MissionPulseTests(unittest.TestCase):
             candidate,
             candidate_next_gate="health_check",
             priority_class="active_shared_risk",
-            source_kind="risk_signal",
+            source_kind="evidence_event",
             source_ids=["E1"],
             freshness="current_state",
         )
@@ -477,6 +508,43 @@ class MissionPulseTests(unittest.TestCase):
         self.assert_pulse_v2_contract(pulse)
         self.assert_winning_signal(pulse, "active_node_missing")
 
+    def test_mission_pulse_runtime_integrity_wins_over_shared_risk(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            risk = run_script(
+                "record_risk_context.py",
+                str(mission_dir),
+                "record",
+                "--task-id",
+                "T1",
+                "--scope",
+                "shared_evidence_channel",
+                "--signal",
+                "evidence_channel_untrusted_until_smoke_check",
+                "--severity",
+                "high",
+                "--confidence",
+                "high",
+                "--affected-surface",
+                "evidence_persistence",
+                "--value-effect",
+                "Future acceptance evidence may be invalid until the channel is checked.",
+                "--recommended-gate",
+                "health_check",
+                "--recovery-condition",
+                "Evidence channel smoke check passes.",
+            )
+            self.assertEqual(risk.returncode, 0, risk.stderr)
+            transition = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+            self.assertEqual(transition.returncode, 0, transition.stderr)
+
+            pulse = self.assert_pulse_read_only(mission_dir)
+
+        self.assert_pulse_v2_contract(pulse)
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "mission_review")
+        self.assert_winning_signal(pulse, "active_node_missing")
+        self.assert_suppressed_signal(pulse, "active_shared_risk")
+
     def test_mission_pulse_routes_feedback_trigger_to_loopback(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
@@ -562,6 +630,44 @@ class MissionPulseTests(unittest.TestCase):
         self.assertIn("blocker_or_surprise", pulse["mission_pulse"]["signals"])
         self.assert_winning_signal(pulse, "blocker_or_surprise")
         self.assertEqual(pulse["winning_candidate"]["source_ids"], ["E1"])
+
+    def test_mission_pulse_blocker_wins_over_equal_priority_feedback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            feedback = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "feedback",
+                "--task-id",
+                "T1",
+                "--summary",
+                "User says the current definition missed the global review problem.",
+            )
+            self.assertEqual(feedback.returncode, 0, feedback.stderr)
+            blocker = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "blocker",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Current path cannot resolve the acceptance boundary.",
+            )
+            self.assertEqual(blocker.returncode, 0, blocker.stderr)
+
+            pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "feedback")
+
+        self.assert_pulse_v2_contract(pulse)
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "mission_review")
+        self.assertEqual(pulse["gate_owner"], "mission_review_gate")
+        self.assert_winning_signal(pulse, "blocker_or_surprise")
+        self.assert_suppressed_signal(pulse, "user_feedback")
+        suppressed_trace = [
+            entry for entry in pulse["arbitration_trace"] if entry["signal"] == "user_feedback"
+        ][0]
+        self.assertNotEqual(suppressed_trace["reason"], "lower priority than selected candidate")
 
     def test_mission_pulse_stale_completed_task_blocker_does_not_preempt_branch_cleanup(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -866,6 +972,52 @@ class MissionPulseTests(unittest.TestCase):
         self.assert_winning_signal(pulse, "active_shared_risk")
         self.assert_suppressed_signal(pulse, "same_path_continuation")
 
+    def test_mission_pulse_shared_risk_wins_over_blocker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            risk = run_script(
+                "record_risk_context.py",
+                str(mission_dir),
+                "record",
+                "--task-id",
+                "T1",
+                "--scope",
+                "shared_evidence_channel",
+                "--signal",
+                "evidence_channel_untrusted_until_smoke_check",
+                "--severity",
+                "high",
+                "--confidence",
+                "high",
+                "--affected-surface",
+                "evidence_persistence",
+                "--value-effect",
+                "Future acceptance evidence may be invalid until the channel is checked.",
+                "--recommended-gate",
+                "health_check",
+                "--recovery-condition",
+                "Evidence channel smoke check passes.",
+            )
+            self.assertEqual(risk.returncode, 0, risk.stderr)
+            blocker = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "blocker",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Current path cannot resolve the acceptance boundary.",
+            )
+            self.assertEqual(blocker.returncode, 0, blocker.stderr)
+
+            pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "blocker")
+
+        self.assert_pulse_v2_contract(pulse)
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "health_check")
+        self.assert_winning_signal(pulse, "active_shared_risk")
+        self.assert_suppressed_signal(pulse, "blocker_or_surprise")
+
     def test_mission_pulse_feedback_wins_over_anti_spiral_but_preserves_anti_spiral_candidate(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
@@ -901,6 +1053,31 @@ class MissionPulseTests(unittest.TestCase):
         self.assert_pulse_v2_contract(pulse)
         self.assert_winning_signal(pulse, "user_feedback")
         self.assert_suppressed_signal(pulse, "third_touch")
+
+    def test_mission_pulse_anti_spiral_wins_over_checkpoint_weak_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            for index in range(3):
+                result = run_script(
+                    "record_step_log.py",
+                    str(mission_dir),
+                    "--task-id",
+                    "T1",
+                    "--step-id",
+                    "checkpoint",
+                    "--summary",
+                    f"Checkpoint {index + 1} adjusted the same local prompt section.",
+                    "--payload-json",
+                    '{"object_id": "prompt:section-a", "change_kind": "add_layer"}',
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+            pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "checkpoint_batch")
+
+        self.assert_pulse_v2_contract(pulse)
+        self.assertEqual(pulse["mission_pulse"]["next_gate"], "anti_spiral_audit")
+        self.assert_winning_signal(pulse, "third_touch")
+        self.assert_suppressed_signal(pulse, "checkpoint_batch_without_acceptance_evidence")
 
 
 if __name__ == "__main__":

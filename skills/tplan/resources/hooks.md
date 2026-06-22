@@ -73,19 +73,41 @@ Gate makes the semantic decision and owns any mutation.
       }
     }
   ],
-  "winning_candidate": null,
+  "winning_candidate": {
+    "signal": "mission_boundary_review",
+    "candidate_next_gate": "mission_review",
+    "scope": "mission",
+    "source_kind": "trigger",
+    "source_ids": [],
+    "priority_class": "mission_boundary",
+    "severity": "high",
+    "freshness": "current_trigger",
+    "reason": "Freeze, handoff, or stop is a Mission-facing boundary.",
+    "context": {
+      "trigger": "before_freeze"
+    }
+  },
   "suppressed_candidates": [],
-  "arbitration_trace": [],
+  "arbitration_trace": [
+    {
+      "signal": "mission_boundary_review",
+      "priority_class": "mission_boundary",
+      "candidate_next_gate": "mission_review",
+      "severity": "high",
+      "decision": "selected",
+      "reason": "highest-ranked candidate"
+    }
+  ],
   "mission_pulse": {
     "schema_version": "tplan.pulse.v0.2",
-    "trigger": "before_continue | before_freeze | before_handoff | before_stop | checkpoint_batch | feedback | blocker | shared_risk | active_switch_candidate | branch_cleanup | manual",
-    "scope": "active_node | subpath | mission",
-    "signals": ["weak_evidence_delta"],
-    "evidence_delta": "new_evidence_expected | weak_evidence_expected | no_new_evidence_expected | unclear",
-    "branch_disposition": "keep | close | merge | defer | prune | unclear",
-    "systemic_probe": "not_needed | use_existing_structure | replace_local_fix | needs_gate | unclear",
-    "next_gate": "continue | continuation_authorization | anti_spiral_audit | selection | subtraction | loopback | mission_review | health_check | stop | escalate",
-    "rationale": "Why this route is the next control point.",
+    "trigger": "before_freeze",
+    "scope": "mission",
+    "signals": ["mission_boundary_review"],
+    "evidence_delta": "unclear",
+    "branch_disposition": "defer",
+    "systemic_probe": "needs_gate",
+    "next_gate": "mission_review",
+    "rationale": "Mission boundary triggers should route to Mission Review before freeze, handoff, or stop.",
     "evidence_links": []
   }
 }

@@ -1,10 +1,22 @@
+import importlib.util
 import json
+import re
 import unittest
 from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[2]
 SKILL = REPO / "skills" / "tplan"
+
+
+def load_tplan_runtime():
+    spec = importlib.util.spec_from_file_location(
+        "tplan_runtime_for_contract_tests",
+        SKILL / "scripts" / "tplan_runtime.py",
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class TplanSkillContractTests(unittest.TestCase):
@@ -377,6 +389,35 @@ class TplanSkillContractTests(unittest.TestCase):
             "Hard failure",
         ):
             self.assertIn(phrase, pressure_text)
+
+    def test_mission_pulse_priority_classes_are_schema_documented(self):
+        runtime = load_tplan_runtime()
+        schema = (SKILL / "resources" / "schema.md").read_text(encoding="utf-8")
+
+        for priority_class in sorted(runtime.MISSION_PULSE_CANDIDATE_PRIORITIES):
+            self.assertIn(f"`{priority_class}`", schema)
+
+    def test_mission_pulse_hooks_example_is_internally_consistent(self):
+        hooks = (SKILL / "resources" / "hooks.md").read_text(encoding="utf-8")
+        match = re.search(r"```json\n(.*?)\n```", hooks, flags=re.DOTALL)
+        self.assertIsNotNone(match, "hooks.md should include a JSON mission_pulse example")
+        example = json.loads(match.group(1))
+        candidates = example["review_trigger_candidates"]
+
+        if not candidates:
+            self.assertIsNone(example["winning_candidate"])
+            self.assertEqual(example["suppressed_candidates"], [])
+            self.assertEqual(example["arbitration_trace"], [])
+            return
+
+        self.assertIsNotNone(example["winning_candidate"])
+        self.assertEqual(
+            example["winning_candidate"]["signal"],
+            candidates[0]["signal"],
+        )
+        self.assertEqual(example["suppressed_candidates"], [])
+        self.assertEqual(len(example["arbitration_trace"]), len(candidates))
+        self.assertEqual(example["arbitration_trace"][0]["decision"], "selected")
 
     def test_shared_risk_context_has_reproducible_ab_simulator_contract(self):
         pressure_text = (REPO / "tests" / "tplan" / "long_task_ab_tests.md").read_text(encoding="utf-8")

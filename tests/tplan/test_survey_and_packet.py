@@ -83,6 +83,14 @@ def create_mission(tmp):
     return mission_dir
 
 
+def mission_tree_snapshot(mission_dir):
+    return {
+        str(path.relative_to(mission_dir)): path.read_bytes()
+        for path in sorted(mission_dir.rglob("*"))
+        if path.is_file()
+    }
+
+
 class SurveyAndPacketTests(unittest.TestCase):
     def test_survey_outputs_state_summary(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -98,8 +106,11 @@ class SurveyAndPacketTests(unittest.TestCase):
     def test_survey_can_include_read_only_mission_pulse(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
+            before = mission_tree_snapshot(mission_dir)
             result = run_script("survey.py", str(mission_dir), "--pulse", "--json")
             self.assertEqual(result.returncode, 0, result.stderr)
+            after = mission_tree_snapshot(mission_dir)
+            self.assertEqual(after, before)
             survey = json.loads(result.stdout)
             self.assertEqual(survey["mission"]["id"], "m1")
             self.assertIn("pulse", survey)
@@ -117,6 +128,7 @@ class SurveyAndPacketTests(unittest.TestCase):
     def test_survey_pulse_accepts_trigger_argument(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
+            before = mission_tree_snapshot(mission_dir)
             result = run_script(
                 "survey.py",
                 str(mission_dir),
@@ -126,6 +138,8 @@ class SurveyAndPacketTests(unittest.TestCase):
                 "--json",
             )
             self.assertEqual(result.returncode, 0, result.stderr)
+            after = mission_tree_snapshot(mission_dir)
+            self.assertEqual(after, before)
             survey = json.loads(result.stdout)
 
         self.assertEqual(survey["pulse"]["mission_pulse"]["trigger"], "before_continue")

@@ -147,6 +147,18 @@ MISSION_PULSE_PRIORITY_ORDER = {
     "branch_or_switch_cleanup": 8,
     "same_path_continuation": 9,
 }
+MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER = {
+    "requires_human": 1,
+    "mission_boundary_review": 2,
+    "active_node_missing": 3,
+    "active_shared_risk": 4,
+    "blocker_or_surprise": 5,
+    "user_feedback": 6,
+    "third_touch": 7,
+    "checkpoint_batch_without_acceptance_evidence": 8,
+    "branch_cleanup_candidate": 9,
+    "same_path_continuation": 10,
+}
 MISSION_PULSE_CANDIDATE_SEVERITIES = {"low", "medium", "high", "critical"}
 MISSION_PULSE_SEVERITY_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
 MISSION_PULSE_CANDIDATE_FRESHNESS = {
@@ -1839,7 +1851,7 @@ def _collect_shared_risk_candidates(active_risks: list[dict[str, Any]]) -> list[
             signal="active_shared_risk",
             candidate_next_gate="health_check",
             scope="mission",
-            source_kind="risk_signal",
+            source_kind="evidence_event",
             source_ids=source_ids,
             priority_class="active_shared_risk",
             severity="high",
@@ -2211,10 +2223,27 @@ def _collect_pulse_candidates(
     return candidates
 
 
-def _pulse_candidate_sort_key(candidate: dict[str, Any]) -> tuple[int, int]:
+def _pulse_candidate_sort_key(candidate: dict[str, Any]) -> tuple[int, int, int]:
     priority = MISSION_PULSE_PRIORITY_ORDER.get(str(candidate.get("priority_class")), 999)
     severity = MISSION_PULSE_SEVERITY_ORDER.get(str(candidate.get("severity")), 0)
-    return (priority, -severity)
+    tie_break = MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER.get(str(candidate.get("signal")), 999)
+    return (priority, -severity, tie_break)
+
+
+def _pulse_suppression_reason(candidate: dict[str, Any], selected: dict[str, Any]) -> str:
+    candidate_priority = MISSION_PULSE_PRIORITY_ORDER.get(str(candidate.get("priority_class")), 999)
+    selected_priority = MISSION_PULSE_PRIORITY_ORDER.get(str(selected.get("priority_class")), 999)
+    if candidate_priority != selected_priority:
+        return "lower priority than selected candidate"
+    candidate_severity = MISSION_PULSE_SEVERITY_ORDER.get(str(candidate.get("severity")), 0)
+    selected_severity = MISSION_PULSE_SEVERITY_ORDER.get(str(selected.get("severity")), 0)
+    if candidate_severity != selected_severity:
+        return "lower severity than selected candidate within the same priority class"
+    candidate_tie_break = MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER.get(str(candidate.get("signal")), 999)
+    selected_tie_break = MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER.get(str(selected.get("signal")), 999)
+    if candidate_tie_break != selected_tie_break:
+        return "same priority and severity; explicit signal tie-breaker selected a stronger control route"
+    return "same arbitration rank; deterministic collection order selected the first candidate"
 
 
 def _arbitrate_pulse_candidates(candidates: list[dict[str, Any]]) -> dict[str, Any]:
@@ -2237,7 +2266,9 @@ def _arbitrate_pulse_candidates(candidates: list[dict[str, Any]]) -> dict[str, A
                 "candidate_next_gate": candidate["candidate_next_gate"],
                 "severity": candidate["severity"],
                 "decision": "selected" if selected else "suppressed",
-                "reason": "highest priority candidate" if selected else "lower priority than selected candidate",
+                "reason": "highest-ranked candidate"
+                if selected
+                else _pulse_suppression_reason(candidate, winning_candidate),
             }
         )
     return {

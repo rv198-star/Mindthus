@@ -323,9 +323,10 @@ Required candidate fields:
 - `source_kind`: `trigger`, `mission_state`, `evidence_event`, `step_log`,
   `risk_signal`, `task`, `validation`, or `derived`
 - `source_ids`: source record ids when available
-- `priority_class`: arbitration class such as `mission_boundary`,
-  `active_shared_risk`, `current_blocker_or_feedback`, `anti_spiral`,
-  `checkpoint_weak_evidence_delta`, or `same_path_continuation`
+- `priority_class`: `requires_human_or_stop`, `mission_boundary`,
+  `runtime_integrity`, `active_shared_risk`, `current_blocker_or_feedback`,
+  `anti_spiral`, `checkpoint_weak_evidence_delta`, `branch_or_switch_cleanup`,
+  or `same_path_continuation`
 - `severity`: `low`, `medium`, `high`, or `critical`
 - `freshness`: `current_trigger`, `current_state`, `current_path`,
   `checkpoint_window`, `recent_evidence`, `historical`, or `unknown`
