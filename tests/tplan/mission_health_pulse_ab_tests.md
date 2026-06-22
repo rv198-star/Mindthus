@@ -13,6 +13,15 @@ Short rule:
 `mission_pulse` is optional. It is not durable Mission state by default, not a health
 score, not a pass/fail verdict, and not a mutation authority.
 
+Executable experiment harness:
+
+- `tests/tplan/mission_health_pulse_experiment.py`
+- `tests/tplan/test_mission_health_pulse_experiment.py`
+
+The harness is a development gate. It replays all scenarios below and checks that Pulse
+is route-only before any runtime implementation such as `mission_pulse.py` or
+`survey --pulse` is added.
+
 Valid `next_gate` values route into existing control surfaces:
 
 - `continue`
@@ -162,4 +171,3 @@ Hard failure:
 
 - The agent keeps working because process fields are complete even though the real
   decision boundary is missing.
-
