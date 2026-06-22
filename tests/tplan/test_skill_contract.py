@@ -23,6 +23,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "templates/hook-output.json",
             "scripts/init_lite.py",
             "scripts/checkpoint.py",
+            "scripts/mission_pulse.py",
             "scripts/render_user_update.py",
         ]
         missing = [path for path in required if not (SKILL / path).exists()]
@@ -340,6 +341,8 @@ class TplanSkillContractTests(unittest.TestCase):
             "not a new judgment center",
             "not decide Mission ROI",
             "not decide semantic truth",
+            "scripts/mission_pulse.py",
+            "survey --pulse",
         ):
             self.assertIn(phrase, resources)
 

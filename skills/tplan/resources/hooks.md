@@ -72,6 +72,10 @@ or declare the Mission healthy or unhealthy. Pulse is not a new judgment center.
 routes to the existing shared-risk/Mission-health judgment surface. Health check is a
 route, not a standalone undefined gate.
 
+Use `scripts/mission_pulse.py` for a standalone read-only route note. Use
+`survey --pulse` when the route note should travel with the ordinary Mission survey.
+Both outputs are shape-only inputs for agentic judgment, not gate decisions.
+
 Do not run Pulse as a fixed full-review ritual after every active task. Trigger it from
 events: same-path continuation, freeze or handoff, repeated local touch, weak evidence
 delta, user negative feedback, blocker or surprise, active shared risk, active-task

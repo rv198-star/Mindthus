@@ -94,6 +94,19 @@ class SurveyAndPacketTests(unittest.TestCase):
             self.assertEqual(survey["tasks_by_status"]["active"], ["T1.1"])
             self.assertEqual(survey["resource_sufficiency"], 60)
 
+    def test_survey_can_include_read_only_mission_pulse(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            result = run_script("survey.py", str(mission_dir), "--pulse", "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            survey = json.loads(result.stdout)
+            self.assertEqual(survey["mission"]["id"], "m1")
+            self.assertIn("pulse", survey)
+            self.assertEqual(survey["pulse"]["script_verdict"], "shape_only")
+            self.assertTrue(survey["pulse"]["agentic_judgment_required"])
+            self.assertEqual(survey["pulse"]["mission_pulse"]["next_gate"], "continue")
+            self.assertNotIn("health_score", survey["pulse"])
+
     def test_make_decision_packet_includes_required_context(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)

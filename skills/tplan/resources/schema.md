@@ -308,8 +308,8 @@ Required `mission_pulse` fields when used:
 - `rationale`: route rationale
 - `evidence_links`: list of evidence ids, artifact references, or trace anchors
 
-Pulse outputs are routing notes, not proof. Runtime scripts may later report pulse
-trigger candidates with `script_verdict: shape_only` and
+Pulse outputs are routing notes, not proof. `scripts/mission_pulse.py` and
+`survey --pulse` report pulse trigger candidates with `script_verdict: shape_only` and
 `agentic_judgment_required: true`, but scripts must not decide Mission ROI, evidence
 sufficiency, defect class, health verdict, branch value, systemic truth, or user
 authority.

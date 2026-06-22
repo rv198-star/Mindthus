@@ -74,6 +74,20 @@ RISK_ASSESSMENT_FIELDS = {
     "next_gate": {"continue", "health_check", "switch", "stop", "escalate"},
 }
 
+MISSION_PULSE_SCHEMA_VERSION = "tplan.pulse.v0.1"
+MISSION_PULSE_GATE_OWNERS = {
+    "continue": "inline_alignment",
+    "continuation_authorization": "linear_continuation_gate",
+    "anti_spiral_audit": "anti_spiral_runtime_gate",
+    "selection": "selection_hook",
+    "subtraction": "subtraction_hook",
+    "loopback": "loopback_hook",
+    "mission_review": "mission_review_gate",
+    "health_check": "shared_risk_mission_health_route",
+    "stop": "stop_report",
+    "escalate": "human_or_authority_escalation",
+}
+
 CONTINUATION_TRIGGER_REASONS = {
     "third_touch",
     "repeated_same_path_attempt",
@@ -1487,6 +1501,238 @@ def build_survey(mission_dir: Path) -> dict[str, Any]:
         "resource_sufficiency": mission["mission"]["resource_sufficiency"],
         "shared_context": shared_context_summary(mission),
         "event_count": len(read_events(mission_dir)),
+    }
+
+
+def _active_risk_implies_invalid_evidence(signal: dict[str, Any]) -> bool:
+    fields: list[str] = []
+    for field in ("scope", "signal", "value_effect", "recommended_gate"):
+        value = signal.get(field)
+        if isinstance(value, str):
+            fields.append(value)
+    surfaces = signal.get("affected_surfaces")
+    if isinstance(surfaces, list):
+        fields.extend(str(item) for item in surfaces if isinstance(item, str))
+    haystack = " ".join(fields).lower()
+    return "evidence" in haystack
+
+
+def _pulse_route_for_shared_risk(active_risks: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if not active_risks:
+        return None
+    source_ids = [str(signal.get("id")) for signal in active_risks if isinstance(signal.get("id"), str)]
+    signals = ["active_shared_risk"]
+    if any(_active_risk_implies_invalid_evidence(signal) for signal in active_risks):
+        signals.append("invalid_evidence_risk")
+    return {
+        "candidate": {
+            "signal": "active_shared_risk",
+            "candidate_next_gate": "health_check",
+            "source_ids": source_ids,
+            "reason": "Active shared risk can change risk-adjusted Mission value before another local action.",
+        },
+        "signals": signals,
+        "scope": "mission",
+        "evidence_delta": "unclear",
+        "branch_disposition": "keep",
+        "systemic_probe": "use_existing_structure",
+        "next_gate": "health_check",
+        "rationale": "Active shared risk should be routed to existing risk assessment before continuation.",
+    }
+
+
+def _pulse_route_for_requires_human(mission: dict[str, Any], events: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if mission.get("mission", {}).get("status") != "requires_human":
+        return None
+    source_ids = [
+        str(event.get("id"))
+        for event in events
+        if event.get("event_type") == "stop_report" and isinstance(event.get("id"), str)
+    ]
+    return {
+        "candidate": {
+            "signal": "requires_human",
+            "candidate_next_gate": "stop",
+            "source_ids": source_ids[-3:],
+            "reason": "Mission already requires human authority before safe continuation.",
+        },
+        "signals": ["requires_human", "authority_boundary_unclear"],
+        "scope": "mission",
+        "evidence_delta": "unclear",
+        "branch_disposition": "defer",
+        "systemic_probe": "needs_gate",
+        "next_gate": "stop",
+        "rationale": "Continuation is not authorized while Mission status requires human intervention.",
+    }
+
+
+def _is_additive_layer_log(log: dict[str, Any]) -> bool:
+    payload = log.get("payload")
+    if not isinstance(payload, dict):
+        payload = {}
+    change_kind = payload.get("change_kind")
+    if isinstance(change_kind, str) and change_kind in {
+        "add_layer",
+        "add_fallback",
+        "add_rule",
+        "add_branch",
+        "special_case",
+    }:
+        return True
+    summary = log.get("summary")
+    return isinstance(summary, str) and any(
+        marker in summary.lower() for marker in ("fallback", "new layer", "special-case", "special case")
+    )
+
+
+def _pulse_route_for_repeated_local_repair(
+    mission_dir: Path,
+    active: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    if active is None or not isinstance(active.get("id"), str):
+        return None
+    object_touches: dict[str, int] = {}
+    additive_layering = False
+    for log in read_step_logs(mission_dir, str(active["id"])):
+        payload = log.get("payload")
+        if isinstance(payload, dict) and isinstance(payload.get("object_id"), str):
+            object_id = payload["object_id"]
+            object_touches[object_id] = object_touches.get(object_id, 0) + 1
+        additive_layering = additive_layering or _is_additive_layer_log(log)
+    repeated = sorted(object_id for object_id, count in object_touches.items() if count >= 3)
+    if not repeated:
+        return None
+    signals = ["third_touch"]
+    if additive_layering:
+        signals.append("additive_layering")
+    return {
+        "candidate": {
+            "signal": "third_touch",
+            "candidate_next_gate": "anti_spiral_audit",
+            "source_ids": repeated,
+            "reason": "The same local object appears in three or more active task logs.",
+        },
+        "signals": signals,
+        "scope": "subpath",
+        "evidence_delta": "weak_evidence_expected",
+        "branch_disposition": "unclear",
+        "systemic_probe": "needs_gate",
+        "next_gate": "anti_spiral_audit",
+        "rationale": "Repeated local repair should route through Anti-Spiral before another local change.",
+    }
+
+
+def _pulse_route_for_branch_cleanup(mission: dict[str, Any], trigger: str) -> dict[str, Any] | None:
+    if trigger != "branch_cleanup":
+        return None
+    active_id = mission.get("active_task_id")
+    branch_ids = [
+        str(task.get("id"))
+        for task in mission.get("tasks", [])
+        if task.get("role") in {"supporting", "exploratory"}
+        and task.get("status") in {"pending", "active", "paused"}
+        and task.get("id") != active_id
+    ]
+    if not branch_ids:
+        return None
+    return {
+        "candidate": {
+            "signal": "branch_cleanup_candidate",
+            "candidate_next_gate": "selection",
+            "source_ids": branch_ids,
+            "reason": "Supporting or exploratory branches need Mission-relative disposition.",
+        },
+        "signals": ["branch_cleanup_candidate"],
+        "scope": "mission",
+        "evidence_delta": "unclear",
+        "branch_disposition": "unclear",
+        "systemic_probe": "not_needed",
+        "next_gate": "selection",
+        "rationale": "Branch cleanup should route to selection or subtraction instead of direct pruning.",
+    }
+
+
+def _pulse_route_for_before_continue(trigger: str) -> dict[str, Any] | None:
+    if trigger != "before_continue":
+        return None
+    return {
+        "candidate": {
+            "signal": "same_path_continuation",
+            "candidate_next_gate": "continuation_authorization",
+            "source_ids": [],
+            "reason": "Same-path continuation requires authorization when Mission-facing value is uncertain.",
+        },
+        "signals": ["same_path_continuation"],
+        "scope": "active_node",
+        "evidence_delta": "unclear",
+        "branch_disposition": "keep",
+        "systemic_probe": "not_needed",
+        "next_gate": "continuation_authorization",
+        "rationale": "Before continuing the active path, route to continuation authorization.",
+    }
+
+
+def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    survey = build_survey(mission_dir)
+    validation_findings = validate_mission(mission)
+    events = read_events(mission_dir)
+    active = active_task(mission)
+    active_risks = shared_context_summary(mission)["active_risk_signals"]
+
+    route = (
+        _pulse_route_for_requires_human(mission, events)
+        or _pulse_route_for_shared_risk(active_risks)
+        or _pulse_route_for_repeated_local_repair(mission_dir, active)
+        or _pulse_route_for_branch_cleanup(mission, trigger)
+        or _pulse_route_for_before_continue(trigger)
+    )
+    review_trigger_candidates: list[dict[str, Any]] = []
+    if route is not None:
+        review_trigger_candidates.append(route["candidate"])
+        signals = route["signals"]
+        scope = route["scope"]
+        evidence_delta = route["evidence_delta"]
+        branch_disposition = route["branch_disposition"]
+        systemic_probe = route["systemic_probe"]
+        next_gate = route["next_gate"]
+        rationale = route["rationale"]
+    else:
+        signals = []
+        scope = "active_node" if survey["active_task"] else "mission"
+        evidence_delta = "new_evidence_expected"
+        branch_disposition = "keep"
+        systemic_probe = "not_needed"
+        next_gate = "continue"
+        rationale = "No review trigger candidates were mechanically observed; ordinary inline alignment may continue."
+
+    mission_pulse = {
+        "schema_version": MISSION_PULSE_SCHEMA_VERSION,
+        "trigger": trigger,
+        "scope": scope,
+        "signals": signals,
+        "evidence_delta": evidence_delta,
+        "branch_disposition": branch_disposition,
+        "systemic_probe": systemic_probe,
+        "next_gate": next_gate,
+        "rationale": rationale,
+        "evidence_links": [],
+    }
+
+    return {
+        "schema_version": MISSION_PULSE_SCHEMA_VERSION,
+        "script_verdict": "shape_only",
+        "agentic_judgment_required": True,
+        "snapshot": survey,
+        "validation_findings": validation_findings,
+        "review_trigger_candidates": review_trigger_candidates,
+        "mission_pulse": mission_pulse,
+        "gate_owner": MISSION_PULSE_GATE_OWNERS[next_gate],
+        "suggested_agent_checks": [
+            "Confirm the route is appropriate for Mission convergence.",
+            "Do not treat this pulse output as semantic proof.",
+            "Use the selected Gate for authorization, mutation, stop, or escalation.",
+        ],
     }
 
 
