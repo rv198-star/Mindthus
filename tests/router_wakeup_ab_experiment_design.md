@@ -244,6 +244,9 @@ The analyzer validates:
 
 - every baseline record has exactly one treatment pair for the same `scenario_id` and
   `run_id`;
+- each experiment meets its minimum paired-sample gate before certification:
+  `minimum-pairs` for known, holdout, and real-use replay, plus required overuse stress
+  buckets;
 - baseline positive recall does not exceed the experiment's `baseline-ceiling` before
   lift is treated as certifiable;
 - `positive_wakeup` matches `correct_owner` on positive cases and is null outside
@@ -270,6 +273,7 @@ Lift: +33.3 percentage points
 95% CI: [...]
 McNemar p: ...
 Skip precision delta: ...
+Minimum Sample Gate: passed
 ```
 
 ## Minimum Success Threshold

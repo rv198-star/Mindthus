@@ -145,6 +145,7 @@ class RouterWakeupABRunnerTests(unittest.TestCase):
             "weak-cue",
             "router_wakeup_weak_cue_holdout_cases.md",
             "router_wakeup_ab_scores.fixture.jsonl",
+            "minimum-pairs",
         ):
             self.assertIn(phrase, design)
         self.assertTrue(fixture.is_file())
@@ -384,6 +385,44 @@ class RouterWakeupABRunnerTests(unittest.TestCase):
             self.assertIn("method_mcnemar", report)
             self.assertIn("holm_adjusted_p", report["method_mcnemar"]["sela"])
 
+    def test_real_use_replay_requires_minimum_routing_moments_before_certification(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            scores = Path(tmp) / "scores.jsonl"
+            records: list[dict[str, object]] = []
+            for run in range(10):
+                add_positive_pair(
+                    records,
+                    experiment="real_use",
+                    method="sela",
+                    run_id=run,
+                    baseline_pass=False,
+                    treatment_pass=True,
+                )
+            write_jsonl(scores, records)
+
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(RUNNER),
+                    "--scores",
+                    str(scores),
+                    "--experiment",
+                    "real_use",
+                    "--json",
+                    "--fail-on-uncertified",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertFalse(report["certified"])
+            self.assertIn("minimum-pairs", report["failed_checks"])
+            self.assertEqual(report["minimums"]["required_pairs"], 50)
+            self.assertEqual(report["minimums"]["observed_pairs"], 10)
+
     def test_markdown_report_states_claim_ceiling(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
@@ -428,6 +467,7 @@ class RouterWakeupABRunnerTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             report = report_path.read_text(encoding="utf-8")
             self.assertIn("Router Wake-Up A/B Report", report)
+            self.assertIn("Minimum Sample Gate", report)
             self.assertIn("Claim Ceiling", report)
             self.assertIn(
                 "The router wake-up mechanism works on the designed acceptance scenarios.",
@@ -582,6 +622,63 @@ class RouterWakeupABRunnerTests(unittest.TestCase):
             self.assertTrue(report["overuse"]["false_positive_noninferior"])
             self.assertTrue(report["overuse"]["direct_route_preserved"])
             self.assertTrue(report["overuse"]["missing_evidence_route_preserved"])
+
+    def test_overuse_stress_requires_each_stress_bucket(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            scores = Path(tmp) / "scores.jsonl"
+            records: list[dict[str, object]] = []
+            stress_types = ("direct", "missing_evidence", "tvg", "3l5s")
+            for index, case_type in enumerate(stress_types):
+                for run in range(10):
+                    scenario_id = f"overuse-{case_type}"
+                    expected = "tvg" if case_type == "tvg" else case_type
+                    records.append(
+                        scored_record(
+                            experiment="overuse",
+                            scenario_id=scenario_id,
+                            run_id=index * 10 + run,
+                            variant="baseline",
+                            expected_owner=expected,
+                            selected_owner=expected,
+                            case_type=case_type,
+                            correct_owner=True,
+                        )
+                    )
+                    records.append(
+                        scored_record(
+                            experiment="overuse",
+                            scenario_id=scenario_id,
+                            run_id=index * 10 + run,
+                            variant="treatment",
+                            expected_owner=expected,
+                            selected_owner=expected,
+                            case_type=case_type,
+                            correct_owner=True,
+                        )
+                    )
+            write_jsonl(scores, records)
+
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(RUNNER),
+                    "--scores",
+                    str(scores),
+                    "--experiment",
+                    "overuse",
+                    "--json",
+                    "--fail-on-uncertified",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertFalse(report["certified"])
+            self.assertIn("minimum-deterministic", report["failed_checks"])
+            self.assertEqual(report["minimums"]["case_type_counts"]["deterministic"], 0)
 
 
 if __name__ == "__main__":

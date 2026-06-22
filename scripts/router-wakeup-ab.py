@@ -49,19 +49,41 @@ class ExperimentConfig:
     method_lift_min: float | None = None
     require_mcnemar: bool = True
     baseline_ceiling: float | None = None
+    min_pairs: int = 0
+    min_case_type_pairs: dict[str, int] | None = None
 
 
 EXPERIMENTS = {
-    "known": ExperimentConfig("known", positive_lift_min=0.25, alpha=0.05, baseline_ceiling=0.75),
+    "known": ExperimentConfig(
+        "known",
+        positive_lift_min=0.25,
+        alpha=0.05,
+        baseline_ceiling=0.75,
+        min_pairs=60,
+    ),
     "holdout": ExperimentConfig(
         "holdout",
         positive_lift_min=0.20,
         alpha=0.05,
         method_lift_min=0.15,
         baseline_ceiling=0.80,
+        min_pairs=120,
     ),
-    "overuse": ExperimentConfig("overuse", positive_lift_min=0.0, alpha=0.05, require_mcnemar=False),
-    "real_use": ExperimentConfig("real_use", positive_lift_min=0.15, alpha=0.05),
+    "overuse": ExperimentConfig(
+        "overuse",
+        positive_lift_min=0.0,
+        alpha=0.05,
+        require_mcnemar=False,
+        min_pairs=45,
+        min_case_type_pairs={
+            "direct": 10,
+            "missing_evidence": 10,
+            "deterministic": 10,
+            "tvg": 10,
+            "3l5s": 5,
+        },
+    ),
+    "real_use": ExperimentConfig("real_use", positive_lift_min=0.15, alpha=0.05, min_pairs=50),
 }
 
 
@@ -351,6 +373,19 @@ def case_correct_rate(records: list[dict[str, Any]], experiment: str, variant: s
     return rate(sum(1 for record in selected if primary_pass(record)), len(selected))
 
 
+def pair_counts(records: list[dict[str, Any]], experiment: str) -> tuple[int, dict[str, int]]:
+    groups: dict[tuple[str, str, int], str] = {}
+    for record in records:
+        if record["experiment"] != experiment:
+            continue
+        groups[pair_key(record)] = record["case_type"]
+
+    by_case_type: dict[str, int] = {case_type: 0 for case_type in CASE_TYPES}
+    for case_type in groups.values():
+        by_case_type[case_type] += 1
+    return len(groups), by_case_type
+
+
 def analyze(records: list[dict[str, Any]], experiment: str) -> dict[str, Any]:
     config = EXPERIMENTS[experiment]
     baseline = summarize_variant(records, experiment, "baseline")
@@ -360,6 +395,14 @@ def analyze(records: list[dict[str, Any]], experiment: str) -> dict[str, Any]:
     positive_lift = treatment["positive_recall"] - baseline["positive_recall"]
     skip_delta = treatment["skip_precision"] - baseline["skip_precision"]
     failed_checks: list[str] = []
+    observed_pairs, case_type_counts = pair_counts(records, experiment)
+    required_case_type_pairs = config.min_case_type_pairs or {}
+
+    if observed_pairs < config.min_pairs:
+        failed_checks.append("minimum-pairs")
+    for case_type, required in required_case_type_pairs.items():
+        if case_type_counts.get(case_type, 0) < required:
+            failed_checks.append(f"minimum-{case_type.replace('_', '-')}")
 
     baseline_ceiling = (
         config.baseline_ceiling is not None
@@ -458,6 +501,17 @@ def analyze(records: list[dict[str, Any]], experiment: str) -> dict[str, Any]:
         },
         "method_lifts": lifts,
         "method_mcnemar": method_p_values,
+        "minimums": {
+            "required_pairs": config.min_pairs,
+            "observed_pairs": observed_pairs,
+            "pair_requirement_met": observed_pairs >= config.min_pairs,
+            "required_case_type_pairs": required_case_type_pairs,
+            "case_type_counts": case_type_counts,
+            "case_type_requirements_met": {
+                case_type: case_type_counts.get(case_type, 0) >= required
+                for case_type, required in required_case_type_pairs.items()
+            },
+        },
         "skip_precision": {
             "baseline": baseline["skip_precision"],
             "treatment": treatment["skip_precision"],
@@ -551,6 +605,12 @@ def render_markdown(report: dict[str, Any]) -> str:
         )
     lines.extend(
         [
+            "",
+            "## Minimum Sample Gate",
+            "",
+            f"- Required paired routing moments: {report['minimums']['required_pairs']}",
+            f"- Observed paired routing moments: {report['minimums']['observed_pairs']}",
+            f"- Pair requirement met: `{str(report['minimums']['pair_requirement_met']).lower()}`",
             "",
             "## Overuse Guardrails",
             "",

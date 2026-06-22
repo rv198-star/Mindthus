@@ -110,6 +110,22 @@ Update `tests/test_mindthus_router_contract.py` so future edits preserve:
 - pressure-test coverage for positive and skip wake-up cases
 - `AGENTS.md` mirror guidance
 
+### 5. Add Behavioral Certification Gates
+
+The first shipped canary and weak-cue pilot are useful smoke coverage, but both hit
+`baseline-ceiling`. They must not be cited as a significant wake-up-rate lift.
+
+Add runner-level gates so later certification cannot pass on thin evidence:
+
+- known set: at least 60 paired routing moments;
+- holdout set: at least 120 paired routing moments;
+- overuse stress set: required direct, missing-evidence, deterministic, `tvg`, and
+  `3l5s` buckets;
+- real-use replay: at least 50 paired routing moments.
+
+Runs that miss these gates fail with `minimum-pairs` or a specific
+`minimum-<case-type>` failed check before any certification claim is allowed.
+
 ## Non-Goals
 
 - Do not rewrite `SELA`, `MPG`, or `EDSP` core methodology.
@@ -129,11 +145,14 @@ Update `tests/test_mindthus_router_contract.py` so future edits preserve:
   judgments once the active object is already clear.
 - `tests/mindthus_router_pressure_tests.md` includes router-level wake-up experiments
   for `SELA`, `MPG`, and `EDSP`, with both positive and skip cases.
+- `scripts/router-wakeup-ab.py` blocks certification when the sample is below the
+  documented minimum paired routing moments or overuse stress coverage.
 - Contract tests fail before the router/docs changes and pass after them.
 - Focused tests pass:
 
 ```bash
 python3 -m unittest tests.test_mindthus_router_contract -v
+python3 -m unittest tests.test_router_wakeup_ab_runner -v
 python3 -m unittest tests.test_packaging_docs -v
 ```
 
