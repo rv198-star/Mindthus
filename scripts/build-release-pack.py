@@ -21,10 +21,6 @@ EXCLUDED_DIRS = {
     "tests",
 }
 EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".pyc", ".pyo", ".tmp", ".webp"}
-METHODOLOGY_BINARY_ASSET_ALLOWLIST = {
-    Path("assets/tplan-okr-runtime.png"),
-    Path("assets/tvg-architecture.png"),
-}
 EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
@@ -163,13 +159,17 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
         },
     )
     copy_tree_filtered(skills_dir, plugin_root / "skills")
-    copy_tree_filtered(
-        methodologies_dir,
-        plugin_root / "docs" / "methodologies",
-        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
-    )
+    copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
+
+
+def build_claude_code_skills(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+    platform_root = root / "claude-code"
+    copy_tree_filtered(skills_dir, platform_root / "skills")
+    copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies")
+    copy_license_files(repo, platform_root)
+    copy_release_scripts(repo, platform_root)
 
 
 def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
@@ -180,7 +180,6 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
         methodologies_dir,
         platform_root / "docs" / "methodologies",
         replacements,
-        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
     )
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
     copy_license_files(repo, platform_root)
@@ -250,7 +249,6 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
     copy_tree_filtered(
         methodologies_dir,
         plugin_root / "docs" / "methodologies",
-        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
     )
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
@@ -264,7 +262,6 @@ def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, 
         methodologies_dir,
         platform_root / "docs" / "methodologies",
         replacements,
-        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
     )
     copy_file_filtered(agents_file, platform_root / "AGENTS.md", replacements)
     copy_license_files(repo, platform_root)
@@ -274,6 +271,12 @@ def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", required=True, type=Path, help="Output directory for the release pack.")
+    parser.add_argument(
+        "--package",
+        choices=("all", "plugins", "skills"),
+        default="all",
+        help="Package surface to build. Release assets use plugins and skills; all is for local inspection.",
+    )
     parser.add_argument("--force", action="store_true", help="Replace a non-empty output directory.")
     args = parser.parse_args()
 
@@ -297,11 +300,14 @@ def main() -> int:
     output = args.out.resolve()
     ensure_safe_output_dir(output, root)
     ensure_output_dir(output, args.force)
-    build_claude_code(output, root, skills_dir, methodologies_dir)
-    build_codex(output, root, skills_dir, agents_file, methodologies_dir)
-    build_codex_plugin(output, root, skills_dir, methodologies_dir)
-    build_opencode(output, root, skills_dir, agents_file, methodologies_dir)
-    print(f"built Mindthus release pack at {output}")
+    if args.package in ("all", "plugins"):
+        build_claude_code(output, root, skills_dir, methodologies_dir)
+        build_codex_plugin(output, root, skills_dir, methodologies_dir)
+    if args.package in ("all", "skills"):
+        build_claude_code_skills(output, root, skills_dir, methodologies_dir)
+        build_codex(output, root, skills_dir, agents_file, methodologies_dir)
+        build_opencode(output, root, skills_dir, agents_file, methodologies_dir)
+    print(f"built Mindthus {args.package} release pack at {output}")
     return 0
 
 
