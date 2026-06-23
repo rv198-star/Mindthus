@@ -87,13 +87,10 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 ### 选择下载包
 
-| 你的场景 | 下载哪个包 | 安装后得到什么 | 推荐度 |
-| --- | --- | --- | --- |
-| Codex App，想用插件管理启用/更新/卸载 | `mindthus-plugins-${VERSION}.tar.gz` | Codex plugin marketplace + `mindthus@mindthus` plugin | 推荐 |
-| Claude Code，想用插件命名空间 | `mindthus-plugins-${VERSION}.tar.gz` | Claude Code marketplace + `/mindthus:<skill>` | 推荐 |
-| Codex skills-pack | `mindthus-skills-${VERSION}.tar.gz` | `~/.codex/skills/mindthus` 下的 `mindthus:*` skills | 备选 |
-| Claude Code personal skills | `mindthus-skills-${VERSION}.tar.gz` | `~/.claude/skills/<skill>` 下的 personal skills | 备选 |
-| OpenCode | `mindthus-skills-${VERSION}.tar.gz` | 项目内 `.opencode/skills/mindthus/<skill>` | 当前支持方式 |
+优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
+
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-${VERSION}.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-${VERSION}.tar.gz`。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -103,7 +100,7 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 VERSION=1.2.0
 ```
 
-插件包，供 Codex App / Claude Code plugin mode 使用：
+插件包，供 Codex App / Codex CLI / Claude Code plugin mode 使用：
 
 ```bash
 curl -L \
