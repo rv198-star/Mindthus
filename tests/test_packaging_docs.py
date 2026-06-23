@@ -461,18 +461,26 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("清楚低风险任务直接执行", install)
 
         self.assertIn("plugin mode", readme)
+        self.assertIn("### 选择下载包", readme)
+        self.assertIn("Codex App，想用插件管理启用/更新/卸载", readme)
+        self.assertIn("Claude Code personal skills", readme)
+        self.assertIn("不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode", readme)
+        self.assertIn("插件包，供 Codex App / Claude Code plugin mode 使用", readme)
+        self.assertIn("Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用", readme)
         self.assertIn("Codex Plugin Mode（推荐）", readme)
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("codex plugin add mindthus@mindthus", readme)
         self.assertIn("Claude Code Plugin Mode（推荐）", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("claude plugin install mindthus@mindthus", readme)
+        self.assertIn("可直接提到 `mindthus:tplan`", readme)
+        self.assertIn("调用 `/mindthus:using-mindthus`", readme)
         self.assertIn("Codex Skills-Pack Mode", readme)
         self.assertIn("Claude Code Personal Skills Mode", readme)
         self.assertIn("/mindthus:using-mindthus", readme)
         self.assertIn("Claude Code", readme)
         self.assertIn("OpenCode", readme)
-        self.assertIn("OpenCode 继续使用 skills-pack", readme)
+        self.assertIn("在该 OpenCode project 中使用", readme)
 
     def test_install_script_exists_and_has_valid_shell_syntax(self):
         script = REPO / "scripts" / "install-skills.sh"
