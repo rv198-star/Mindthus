@@ -92,7 +92,21 @@ Mindthus 有两种安装形态，推荐顺序很简单：
 
 同一个 client profile 里不要同时启用 plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。迁移到 plugin mode 前，先移除旧的 skills-pack symlink。
 
-先准备一份 release pack：
+先下载 release pack。普通用户不需要 clone 仓库：
+
+```bash
+VERSION=1.2.0
+curl -L \
+  -o /tmp/mindthus-release-${VERSION}.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-release-${VERSION}.tar.gz"
+rm -rf /tmp/mindthus-release
+mkdir -p /tmp/mindthus-release
+tar -xzf /tmp/mindthus-release-${VERSION}.tar.gz -C /tmp/mindthus-release --strip-components=1
+```
+
+当前 release asset 名称是 `mindthus-release-1.2.0.tar.gz`。
+
+如果你正在开发 Mindthus，才需要从源码构建同样结构的 release pack：
 
 ```bash
 git clone https://github.com/rv198-star/Mindthus.git ~/mindthus
@@ -146,19 +160,27 @@ claude plugin marketplace remove mindthus
 
 ### Codex Skills-Pack Mode
 
-在已有 checkout 中安装或刷新技能包：
+release pack 里也包含 Codex skills-pack 形态。这个方式适合不能使用插件管理、需要 portable checkout，或想保留 `mindthus:*` skills namespace 的环境。
+
+```bash
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R /tmp/mindthus-release/codex/skills/mindthus "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
+```
+
+重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
+
+如果你是开发者，并希望 skills 直接跟随当前 checkout，可以改用 symlink installer：
 
 ```bash
 cd ~/mindthus
 scripts/install-skills.sh codex --force
 ```
 
-这会创建 `${CODEX_HOME:-~/.codex}/skills/mindthus -> <repo>/skills`。重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
-
-这个方式适合开发者，因为 symlink 会直接指向当前 checkout；拉取新代码后重启 Codex 即可读到更新。卸载：
+卸载：
 
 ```bash
-rm "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 ```
 
 详细说明见 [.codex/INSTALL.md](.codex/INSTALL.md)。
@@ -166,16 +188,27 @@ rm "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 ### Claude Code Personal Skills Mode
 
 ```bash
-cd ~/mindthus
-scripts/install-skills.sh claude --force
+mkdir -p ~/.claude/skills
+for skill in /tmp/mindthus-release/claude-code/claude-plugin/skills/*; do
+  [ -f "$skill/SKILL.md" ] || continue
+  rm -rf "$HOME/.claude/skills/$(basename "$skill")"
+  cp -R "$skill" "$HOME/.claude/skills/"
+done
 ```
 
 这会把同一套 `skills/` 安装到 Claude Code personal skills 路径。personal skills mode 不会增加 `mindthus:` plugin namespace，通常暴露为 `/<skill>`，或由 Claude 根据 skill description 自动调用。
 
+开发者也可以用 checkout symlink installer：
+
+```bash
+cd ~/mindthus
+scripts/install-skills.sh claude --force
+```
+
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/mindthus
+rm -rf ~/.claude/skills/{3l5s,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
 ```
 
 ### OpenCode
