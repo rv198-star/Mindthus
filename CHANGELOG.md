@@ -4,6 +4,42 @@
 
 暂无。
 
+## v1.1.2
+
+发布日期：2026-06-23
+
+[完整发布日志](docs/releases/v1.1.2.md)
+
+说明：本版把 TPlan 的长任务回顾控制面正式收束为 `Snapshot / Pulse / Gate`：脚本只观察运行时状态，Pulse 只把可观察信号路由到既有 Gate，真正的继续、反螺旋、回路、选择、Mission Review 或停止仍由 Gate 和 agentic judgment 决定。它也补上 router wake-up 认证门槛，避免薄样本或缺桶样本冒充行为提升证明。
+
+### 新增
+
+- TPlan Mission Pulse：新增只读 `mission_pulse.py` 路由面，输出 recent evidence summary、active task log summary、evidence-link lint、review trigger candidates、winning / suppressed candidates、arbitration trace 和 shape findings。
+- TPlan Snapshot / Pulse / Gate 文档：公开方法页补齐当前实现口径，明确 routine checkpoint 只停留在 Snapshot；同路径继续、第三次局部触碰、弱 evidence delta、负反馈、blocker / surprise、shared risk、branch cleanup、freeze / handoff / stop 等事件才进入 Pulse。
+- Mission Pulse 场景回放：新增并固化 routine checkpoint、same-path continuation、Anti-Spiral third touch、feedback loopback、blocker Mission Review、shared risk health check、branch selection、requires-human stop、无 active task runtime integrity 等多场景测试。
+
+### 修复
+
+- Pulse 仲裁模型从零散场景判断收束为统一候选模型：Candidate Collection -> Candidate Shape Validation -> Gate Arbitration -> Pulse Output -> Gate。低优先级候选保留在 `suppressed_candidates` 和 `arbitration_trace`，避免信号被静默丢失。
+- Anti-Spiral runtime gate 现在由 active task logs 中的 `object_id` touch count 和 additive layering 信号触发，第三次触同一局部对象会路由到 `anti_spiral_audit`。
+- Lite Mission narrative state 与 runtime state 同步，避免轻启动后的恢复说明和机器状态脱节。
+- Router wake-up A/B runner 增加 `minimum-pairs` 与 overuse stress 桶覆盖门槛：known / holdout / real-use replay 低于最小 paired routing moments 不允许认证，overuse 缺 direct、missing-evidence、deterministic、`tvg` 或 `3l5s` 桶也会失败。
+
+### 边界
+
+- Pulse 不是 health score、pass/fail verdict、语义判断中心或 mutation authority。`next_gate=continue` 也不能绕过高影响 review、authority 或 stop 边界。
+- Anti-Spiral 不替代正常调试；明确 failing test、明确报错和机械验证进展仍可沿因果链修复。它拦的是没有新证据、只靠局部补丁和加层冲动继续的循环。
+- Router certification gate 只防止 claim 过强；它不声明低频方法 wake-up lift 已被真实 replay 证明。
+
+### 验证
+
+- `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.tplan.test_mission_pulse -v`
+- `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.tplan.test_mission_health_pulse_experiment -v`
+- `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.tplan.test_continuation_authorization_ab_simulator -v`
+- `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_router_wakeup_ab_runner -v`
+- `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.1.2-check --force`
+
 ## v1.1.1
 
 发布日期：2026-06-17

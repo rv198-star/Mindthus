@@ -6,16 +6,47 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
-    def test_current_release_surface_is_v1_1_1(self):
+    def test_current_release_surface_is_v1_1_2(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.1.1`", readme)
+        self.assertIn("当前仓库版本：`v1.1.2`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
         self.assertNotIn("当前仓库版本：`v0.6.3`", readme)
         self.assertNotIn("## 版本与开发状态", readme)
         self.assertNotIn("当前开发分支同步", readme)
+        self.assertIn("## v1.1.2", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.1.2.md)", changelog)
+        self.assertIn("Snapshot / Pulse / Gate", changelog)
+        self.assertIn("Mission Pulse", changelog)
+        self.assertIn("minimum-pairs", changelog)
+        self.assertIn("不声明低频方法 wake-up lift 已被真实 replay 证明", changelog)
+        self.assertIn('VERSION = "1.1.2"', builder)
+
+        release_log = (REPO / "docs" / "releases" / "v1.1.2.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "# Mindthus v1.1.2 发布日志",
+            "发布日期：2026-06-23",
+            "Snapshot -> Pulse -> Gate",
+            "Scripts observe. Pulse routes. Gates decide.",
+            "mission_pulse.py",
+            "winning candidate",
+            "suppressed candidates",
+            "arbitration trace",
+            "anti_spiral_audit",
+            "minimum-pairs",
+            "1.1.2",
+            "python3 scripts/build-release-pack.py",
+        ):
+            self.assertIn(phrase, release_log)
+
+        self.assertNotIn("Release date:", release_log)
+
+    def test_v1_1_1_release_surface_is_preserved(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         self.assertIn("## v1.1.1", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.1.1.md)", changelog)
         self.assertIn("TPlan Mission Shared Context Memory", changelog)
@@ -23,7 +54,6 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("preflight_mission.py", changelog)
         self.assertIn("不声明已经证明低频方法唤醒率显著提升", changelog)
         self.assertIn("不继承旧 Mission 的 acceptance authority", changelog)
-        self.assertIn('VERSION = "1.1.1"', builder)
 
         release_log = (REPO / "docs" / "releases" / "v1.1.1.md").read_text(
             encoding="utf-8"

@@ -141,7 +141,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.1.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.1.2`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
