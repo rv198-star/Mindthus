@@ -1,8 +1,8 @@
 # Installing Mindthus for Codex
 
-Enable Mindthus skills in Codex through native skill discovery.
+Enable Mindthus skills in Codex through plugin mode or native skill discovery.
 
-This is the bundle-style installation path for the `mindthus:*` namespace.
+The bundle-style skills-pack path provides the `mindthus:*` namespace.
 Codex's system `skill-installer` is useful for individual skills, but it installs them into `~/.codex/skills` rather than as a grouped namespace bundle.
 
 ## Prerequisites
@@ -10,7 +10,22 @@ Codex's system `skill-installer` is useful for individual skills, but it install
 - Git
 - Access to the private `rv198-star/Mindthus` repository
 
-## Installation
+## Choose A Mode
+
+- **Codex plugin mode**：把 Mindthus 作为一个 Codex App plugin 管理。适合想要统一启用、禁用和识别 Mindthus 的用户。
+- **skills-pack mode**：创建 `${CODEX_HOME:-~/.codex}/skills/mindthus -> <repo>/skills`。适合 portable checkout、开发调试或不使用插件管理的环境。
+
+同一个 Codex profile 中不要同时启用 Codex plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。迁移到 plugin mode 前，先移除旧的 `~/.codex/skills/mindthus` symlink。
+
+轻量路由纪律：
+
+> 当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
+
+## Codex Plugin Mode
+
+Generated release packs include `codex-plugin/mindthus/` with `.codex-plugin/plugin.json` and the same packaged `skills/` tree. Use this mode when Codex App should present Mindthus as one plugin product.
+
+## Skills-Pack Mode Installation
 
 1. Clone the repository:
 

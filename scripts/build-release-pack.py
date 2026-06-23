@@ -36,6 +36,10 @@ RELEASE_SCRIPT_PATHS = (
     Path("primitives/check.py"),
     Path("primitives/manifest.json"),
 )
+LIGHT_ROUTER_PROMPT = (
+    "当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，"
+    "优先使用 using-mindthus 选择最小充分方法；清楚低风险任务直接执行。"
+)
 
 
 def repo_root() -> Path:
@@ -90,8 +94,10 @@ def copy_tree_filtered(
     target: Path,
     replacements: dict[str, str] | None = None,
     binary_asset_allowlist: set[Path] | None = None,
+    jsonl_allowlist: set[Path] | None = None,
 ) -> None:
     binary_asset_allowlist = binary_asset_allowlist or set()
+    jsonl_allowlist = JSONL_ALLOWLIST if jsonl_allowlist is None else jsonl_allowlist
     for item in sorted(source.rglob("*")):
         rel = item.relative_to(source)
         if any(part in EXCLUDED_DIRS for part in rel.parts):
@@ -105,7 +111,7 @@ def copy_tree_filtered(
             continue
         if item.suffix in EXCLUDED_SUFFIXES and rel not in binary_asset_allowlist:
             continue
-        if item.suffix == ".jsonl" and rel not in JSONL_ALLOWLIST:
+        if item.suffix == ".jsonl" and rel not in jsonl_allowlist:
             continue
         copy_file_filtered(item, dest, replacements)
 
@@ -181,6 +187,59 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
     copy_release_scripts(repo, platform_root)
 
 
+def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+    plugin_root = root / "codex-plugin" / "mindthus"
+    write_json(
+        plugin_root / ".codex-plugin" / "plugin.json",
+        {
+            "name": "mindthus",
+            "version": VERSION,
+            "description": "Judgment framework skills that help agents choose the right method before acting.",
+            "author": {"name": "Mindthus"},
+            "homepage": "https://github.com/rv198-star/Mindthus",
+            "repository": "https://github.com/rv198-star/Mindthus",
+            "license": "AGPL-3.0-or-commercial",
+            "keywords": [
+                "judgment",
+                "agent-workflow",
+                "skills",
+                "decision-making",
+                "tplan",
+                "sela",
+                "mpg",
+            ],
+            "skills": "./skills/",
+            "interface": {
+                "displayName": "Mindthus",
+                "shortDescription": "Choose the right judgment lens before acting",
+                "longDescription": (
+                    "Mindthus is a judgment framework for AI agents. It helps Codex route "
+                    "unclear, strategic, path-dependent, evidence-bound, or artifact-quality "
+                    "problems to the smallest sufficient method instead of adding process everywhere."
+                ),
+                "developerName": "Mindthus",
+                "category": "Engineering",
+                "capabilities": ["Interactive", "Read"],
+                "websiteURL": "https://github.com/rv198-star/Mindthus",
+                "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
+                "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
+                "defaultPrompt": [LIGHT_ROUTER_PROMPT],
+            },
+        },
+    )
+    for skill_name in SKILL_NAMES:
+        jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
+        copy_tree_filtered(skills_dir / skill_name, plugin_root / "skills" / skill_name, jsonl_allowlist=jsonl_allowlist)
+    copy_tree_filtered(skills_dir / "_runtime", plugin_root / "_runtime")
+    copy_tree_filtered(
+        methodologies_dir,
+        plugin_root / "docs" / "methodologies",
+        binary_asset_allowlist=METHODOLOGY_BINARY_ASSET_ALLOWLIST,
+    )
+    copy_license_files(repo, plugin_root)
+    copy_release_scripts(repo, plugin_root)
+
+
 def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
     platform_root = root / "opencode"
     replacements = skill_path_replacements(".opencode/skills/mindthus")
@@ -224,6 +283,7 @@ def main() -> int:
     ensure_output_dir(output, args.force)
     build_claude_code(output, root, skills_dir, methodologies_dir)
     build_codex(output, root, skills_dir, agents_file, methodologies_dir)
+    build_codex_plugin(output, root, skills_dir, methodologies_dir)
     build_opencode(output, root, skills_dir, agents_file, methodologies_dir)
     print(f"built Mindthus release pack at {output}")
     return 0
