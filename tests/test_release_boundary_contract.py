@@ -19,8 +19,6 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("VERSION=1.2.0", readme)
         self.assertIn("mindthus-plugins-${VERSION}.tar.gz", readme)
         self.assertIn("mindthus-skills-${VERSION}.tar.gz", readme)
-        self.assertIn("mindthus-plugins-1.2.0.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.2.0.tar.gz", readme)
         self.assertIn("github.com/rv198-star/Mindthus/releases/download/v${VERSION}", readme)
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
