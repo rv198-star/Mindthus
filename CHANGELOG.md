@@ -2,8 +2,7 @@
 
 ## Unreleased
 
-- README 安装说明补全：明确 Codex / Claude Code 推荐 plugin mode，开发调试和 OpenCode 使用 skills-pack mode，并给出可执行安装、更新和卸载命令。
-- Codex plugin release pack 新增 `.agents/plugins/marketplace.json`，使 `codex plugin marketplace add <release>/codex-plugin` 后可以直接 `codex plugin add mindthus@mindthus`。
+暂无。
 
 ## v1.2.0
 
@@ -11,12 +10,14 @@
 
 [完整发布日志](docs/releases/v1.2.0.md)
 
-说明：本版把 Mindthus 从单一 skills-pack 分发，扩展为 Codex / Claude Code 可识别的插件产品壳，同时保留 `skills/` 作为唯一行为源码。Codex 新增 `codex-plugin/mindthus` release artifact；Claude Code 继续使用既有 plugin artifact；OpenCode 继续使用 skills-pack，不用 command、hook 或 custom tool 模拟 native skills。插件里的提示只是一句 router-only 纪律，不是强制 startup hook。
+说明：本版把 Mindthus 从单一 skills-pack 分发，扩展为 Codex / Claude Code 可识别的插件产品壳，同时保留 `skills/` 作为唯一行为源码。推荐安装入口是 GitHub Release 里的预构建 release pack；Codex / Claude Code plugin mode 和 skills-pack mode 都从同一个 release pack 安装。Codex 新增 `codex-plugin/mindthus` release artifact；Claude Code 继续使用既有 plugin artifact；OpenCode 继续使用 skills-pack，不用 command、hook 或 custom tool 模拟 native skills。插件里的提示只是一句 router-only 纪律，不是强制 startup hook。
 
 ### 新增
 
 - Codex plugin packaging：release builder 新增 `codex-plugin/mindthus/`，包含 `.codex-plugin/plugin.json`、同源 `skills/`、公开 methodology docs、license 和 release scripts。
 - Claude Code plugin 文档化：明确 `claude-code/claude-plugin/` 是插件模式，Claude Code plugin mode 使用 `/mindthus:using-mindthus` 这样的命名空间；personal skills mode 仍是 `/<skill>` 或自动调用。
+- README 安装说明改为 release-pack-first：先下载 `mindthus-release-1.2.0.tar.gz`，解压到 `/tmp/mindthus-release`，再按 Codex plugin、Claude Code plugin、Codex skills-pack、Claude personal skills 或 OpenCode skills-pack 安装；源码 clone 只作为开发者 fallback。
+- Codex plugin release pack 新增 `.agents/plugins/marketplace.json`，使 `codex plugin marketplace add <release>/codex-plugin` 后可以直接 `codex plugin add mindthus@mindthus`。
 - 轻量 router-only 指引：Codex plugin metadata 可以注入一句路由纪律，提醒战略判断、结构歧义、路径波动、控制边界和产物价值厚度问题优先用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
 
 ### 修复
@@ -34,7 +35,7 @@
 
 - `python3 -m unittest tests.test_packaging_docs -v`
 - `python3 -m unittest discover -s tests -v`
-- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.2.0-check --force`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-release --force`
 - Codex plugin validator passed for generated `codex-plugin/mindthus`.
 - Claude Code strict validation passed for generated plugin and marketplace.
 - Codex CLI smoke passed: temporary marketplace add / list / install enabled `mindthus@mindthus-smoke`.
