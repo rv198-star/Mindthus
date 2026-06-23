@@ -30,7 +30,7 @@ class V09AcceptanceTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
 
-        for phrase in ("v1.1.2", "GitHub Releases"):
+        for phrase in ("当前仓库版本：`v1.2.0`", "GitHub Releases"):
             self.assertIn(phrase, readme)
 
         for phrase in (

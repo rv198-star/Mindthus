@@ -4,6 +4,40 @@
 
 暂无。
 
+## v1.2.0
+
+发布日期：2026-06-24
+
+[完整发布日志](docs/releases/v1.2.0.md)
+
+说明：本版把 Mindthus 从单一 skills-pack 分发，扩展为 Codex / Claude Code 可识别的插件产品壳，同时保留 `skills/` 作为唯一行为源码。Codex 新增 `codex-plugin/mindthus` release artifact；Claude Code 继续使用既有 plugin artifact；OpenCode 继续使用 skills-pack，不用 command、hook 或 custom tool 模拟 native skills。插件里的提示只是一句 router-only 纪律，不是强制 startup hook。
+
+### 新增
+
+- Codex plugin packaging：release builder 新增 `codex-plugin/mindthus/`，包含 `.codex-plugin/plugin.json`、同源 `skills/`、公开 methodology docs、license 和 release scripts。
+- Claude Code plugin 文档化：明确 `claude-code/claude-plugin/` 是插件模式，Claude Code plugin mode 使用 `/mindthus:using-mindthus` 这样的命名空间；personal skills mode 仍是 `/<skill>` 或自动调用。
+- 轻量 router-only 指引：Codex plugin metadata 可以注入一句路由纪律，提醒战略判断、结构歧义、路径波动、控制边界和产物价值厚度问题优先用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
+
+### 修复
+
+- Codex plugin 的 discoverable `skills/` 目录只包含真正的 skill；共享 runtime support 放在 plugin root 的 `_runtime/`，避免 `skills/_runtime` 被识别成缺少 `SKILL.md` 的伪 skill。
+- release packaging tests 增加 Codex plugin manifest、artifact cleanliness、OpenCode plugin 缺省不生成、以及 plugin / skills-pack 文档边界检查。
+
+### 边界
+
+- OpenCode 继续使用 skills-pack。当前不发布 `opencode-plugin/`，因为 OpenCode plugin API 尚未验证能原生贡献 `SKILL.md` skills；不会用 hook、command 或 custom tool 模拟 native skills。
+- plugin packaging 是 distribution shell，不是 skills fork。`skills/` 仍是唯一行为源码。
+- router-only 指引不能替代事实补充、证据约束或 agentic judgment，也不能强制低风险确定性任务进入 Mindthus。
+
+### 验证
+
+- `python3 -m unittest tests.test_packaging_docs -v`
+- `python3 -m unittest discover -s tests -v`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.2.0-check --force`
+- Codex plugin validator passed for generated `codex-plugin/mindthus`.
+- Claude Code strict validation passed for generated plugin and marketplace.
+- Codex CLI smoke passed: temporary marketplace add / list / install enabled `mindthus@mindthus-smoke`.
+
 ## v1.1.2
 
 发布日期：2026-06-23
