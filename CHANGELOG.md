@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-暂无。
+- README 安装说明补全：明确 Codex / Claude Code 推荐 plugin mode，开发调试和 OpenCode 使用 skills-pack mode，并给出可执行安装、更新和卸载命令。
+- Codex plugin release pack 新增 `.agents/plugins/marketplace.json`，使 `codex plugin marketplace add <release>/codex-plugin` 后可以直接 `codex plugin add mindthus@mindthus`。
 
 ## v1.2.0
 
