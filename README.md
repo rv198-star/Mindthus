@@ -85,42 +85,108 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 ## 安装
 
-Mindthus 有两种安装形态：
+Mindthus 有两种安装形态，推荐顺序很简单：
 
-- **plugin mode**：适合 Codex App 和 Claude Code，把 Mindthus 当作一个插件产品启用；Codex 使用 `using-mindthus`，Claude Code plugin mode 使用 `/mindthus:using-mindthus`。
-- **skills-pack mode**：适合 portable checkout、开发调试和 OpenCode。OpenCode 继续使用 skills-pack；v1.2 不提供 OpenCode plugin mode，因为当前 OpenCode plugin API 尚未验证能原生贡献 `SKILL.md` skills。
+- **推荐：plugin mode**。Codex App 和 Claude Code 优先用这个方式，把 Mindthus 当作一个插件产品启用、更新和禁用。
+- **备选：skills-pack mode**。适合开发调试、portable checkout、不能使用插件管理的环境，以及 OpenCode。
 
-同一个 client profile 里不要同时启用 plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。
+同一个 client profile 里不要同时启用 plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。迁移到 plugin mode 前，先移除旧的 skills-pack symlink。
 
-### Codex
+先准备一份 release pack：
 
-详细说明见 [.codex/INSTALL.md](.codex/INSTALL.md)。
+```bash
+git clone https://github.com/rv198-star/Mindthus.git ~/mindthus
+cd ~/mindthus
+python3 scripts/build-release-pack.py --out /tmp/mindthus-release --force
+```
+
+### Codex Plugin Mode（推荐）
+
+Codex plugin mode 使用 release pack 里的 `codex-plugin/` marketplace。安装后，Codex 通过插件管理 Mindthus，并读取插件内同源的 `skills/`。
+
+```bash
+codex plugin marketplace add /tmp/mindthus-release/codex-plugin
+codex plugin list --marketplace mindthus --available
+codex plugin add mindthus@mindthus
+codex plugin list
+```
+
+重启 Codex App 后即可使用。插件 metadata 只注入一句轻量 router-only 纪律：当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
+
+卸载：
+
+```bash
+codex plugin remove mindthus@mindthus
+codex plugin marketplace remove mindthus
+```
+
+### Claude Code Plugin Mode（推荐）
+
+Claude Code plugin mode 使用 release pack 里的 `claude-code/` marketplace。安装后，skills 带插件命名空间，例如 `/mindthus:using-mindthus`。
+
+```bash
+claude plugin marketplace add /tmp/mindthus-release/claude-code
+claude plugin install mindthus@mindthus
+claude plugin list
+```
+
+重启 Claude Code 后即可使用。更新时重新构建 release pack，然后运行：
+
+```bash
+claude plugin marketplace update mindthus
+claude plugin update mindthus
+```
+
+卸载：
+
+```bash
+claude plugin uninstall mindthus
+claude plugin marketplace remove mindthus
+```
+
+### Codex Skills-Pack Mode
 
 在已有 checkout 中安装或刷新技能包：
 
 ```bash
+cd ~/mindthus
 scripts/install-skills.sh codex --force
 ```
 
 这会创建 `${CODEX_HOME:-~/.codex}/skills/mindthus -> <repo>/skills`。重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
 
-### Claude Code
-
-Claude Code plugin mode 会给 skills 增加插件命名空间，例如 `/mindthus:using-mindthus`。下面的 personal skills 安装方式不会增加 `mindthus:` prefix，通常暴露为 `/<skill>` 或由 Claude 自动调用。
-
-Claude Code personal skills 默认位于 `~/.claude/skills/`。
+这个方式适合开发者，因为 symlink 会直接指向当前 checkout；拉取新代码后重启 Codex 即可读到更新。卸载：
 
 ```bash
-git clone https://github.com/rv198-star/Mindthus.git ~/.claude/mindthus
-cd ~/.claude/mindthus
+rm "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
+```
+
+详细说明见 [.codex/INSTALL.md](.codex/INSTALL.md)。
+
+### Claude Code Personal Skills Mode
+
+```bash
+cd ~/mindthus
 scripts/install-skills.sh claude --force
 ```
 
-重启 Claude Code 后即可使用同一套本地 skills。Claude Code 的本地安装路径不会自动增加 `mindthus:` namespace prefix。
+这会把同一套 `skills/` 安装到 Claude Code personal skills 路径。personal skills mode 不会增加 `mindthus:` plugin namespace，通常暴露为 `/<skill>`，或由 Claude 根据 skill description 自动调用。
+
+卸载：
+
+```bash
+rm -rf ~/.claude/skills/mindthus
+```
 
 ### OpenCode
 
-OpenCode 继续使用 skills-pack mode：生成包中的 `.opencode/skills/mindthus/<skill>/SKILL.md` 是当前支持路径。OpenCode 虽然有 plugin system，但 v1.2 不用 hook、command 或 custom tool 模拟 native skills。
+OpenCode 继续使用 skills-pack mode：生成包中的 `opencode/.opencode/skills/mindthus/<skill>/SKILL.md` 是当前支持路径。
+
+```bash
+cp -R /tmp/mindthus-release/opencode/.opencode /path/to/your/opencode-project/
+```
+
+OpenCode 虽然有 plugin system，但 v1.2 不提供 OpenCode plugin mode，因为当前 OpenCode plugin API 尚未验证能原生贡献 `SKILL.md` skills。Mindthus 不用 hook、command 或 custom tool 模拟 native skills。
 
 ## 验证
 

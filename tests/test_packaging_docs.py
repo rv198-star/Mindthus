@@ -472,6 +472,14 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("清楚低风险任务直接执行", install)
 
         self.assertIn("plugin mode", readme)
+        self.assertIn("Codex Plugin Mode（推荐）", readme)
+        self.assertIn("codex plugin marketplace add /tmp/mindthus-release/codex-plugin", readme)
+        self.assertIn("codex plugin add mindthus@mindthus", readme)
+        self.assertIn("Claude Code Plugin Mode（推荐）", readme)
+        self.assertIn("claude plugin marketplace add /tmp/mindthus-release/claude-code", readme)
+        self.assertIn("claude plugin install mindthus@mindthus", readme)
+        self.assertIn("Codex Skills-Pack Mode", readme)
+        self.assertIn("Claude Code Personal Skills Mode", readme)
         self.assertIn("/mindthus:using-mindthus", readme)
         self.assertIn("Claude Code", readme)
         self.assertIn("OpenCode", readme)
@@ -615,9 +623,19 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", codex_tvg_skill)
 
             codex_plugin_root = out / "codex-plugin" / "mindthus"
+            codex_marketplace_path = out / "codex-plugin" / ".agents" / "plugins" / "marketplace.json"
             codex_plugin_manifest_path = codex_plugin_root / ".codex-plugin" / "plugin.json"
+            self.assertTrue(codex_marketplace_path.exists())
             self.assertTrue(codex_plugin_manifest_path.exists())
+            codex_marketplace = json.loads(codex_marketplace_path.read_text(encoding="utf-8"))
             codex_plugin_manifest = json.loads(codex_plugin_manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(codex_marketplace["name"], "mindthus")
+            self.assertEqual(codex_marketplace["plugins"][0]["name"], "mindthus")
+            self.assertEqual(
+                codex_marketplace["plugins"][0]["source"],
+                {"source": "local", "path": "./mindthus"},
+            )
+            self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
             self.assertEqual(codex_plugin_manifest["version"], "1.2.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")

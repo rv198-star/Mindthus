@@ -188,7 +188,23 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
 
 
 def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+    marketplace_root = root / "codex-plugin"
     plugin_root = root / "codex-plugin" / "mindthus"
+    write_json(
+        marketplace_root / ".agents" / "plugins" / "marketplace.json",
+        {
+            "name": "mindthus",
+            "interface": {"displayName": "Mindthus"},
+            "plugins": [
+                {
+                    "name": "mindthus",
+                    "source": {"source": "local", "path": "./mindthus"},
+                    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+                    "category": "Engineering",
+                }
+            ],
+        },
+    )
     write_json(
         plugin_root / ".codex-plugin" / "plugin.json",
         {
