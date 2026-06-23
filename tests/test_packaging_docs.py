@@ -54,7 +54,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v1.1.2`", readme)
+        self.assertIn("当前仓库版本：`v1.2.0`", readme)
         self.assertIn("scripts/log-fidelity-usage.py", readme)
         self.assertIn("data/fidelity-usage-log.jsonl", readme)
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
@@ -567,7 +567,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.1.2")
+            self.assertEqual(plugin["version"], "1.2.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             for path in sorted((out / "claude-code" / "claude-plugin" / "skills").glob("*/SKILL.md")):
@@ -619,7 +619,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(codex_plugin_manifest_path.exists())
             codex_plugin_manifest = json.loads(codex_plugin_manifest_path.read_text(encoding="utf-8"))
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.1.2")
+            self.assertEqual(codex_plugin_manifest["version"], "1.2.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertEqual(
