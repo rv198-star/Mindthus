@@ -89,37 +89,33 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-${VERSION}.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-${VERSION}.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.2.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.2.0.tar.gz`。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
 
-```bash
-VERSION=1.2.0
-```
-
 插件包，供 Codex App / Codex CLI / Claude Code plugin mode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-${VERSION}.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-plugins-${VERSION}.tar.gz"
+  -o /tmp/mindthus-plugins-1.2.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.2.0/mindthus-plugins-1.2.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-${VERSION}.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.2.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-${VERSION}.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-skills-${VERSION}.tar.gz"
+  -o /tmp/mindthus-skills-1.2.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.2.0/mindthus-skills-1.2.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-${VERSION}.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.2.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
