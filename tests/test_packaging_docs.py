@@ -402,20 +402,11 @@ class PackagingDocsTests(unittest.TestCase):
             ".webp",
         }
         jsonl_allowlist = {
+            Path("claude-code/skills/tplan/templates/evidence.jsonl"),
             Path("claude-code/claude-plugin/skills/tplan/templates/evidence.jsonl"),
             Path("codex/skills/mindthus/tplan/templates/evidence.jsonl"),
             Path("codex-plugin/mindthus/skills/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
-        }
-        binary_asset_allowlist = {
-            Path("claude-code/claude-plugin/docs/methodologies/assets/tplan-okr-runtime.png"),
-            Path("claude-code/claude-plugin/docs/methodologies/assets/tvg-architecture.png"),
-            Path("codex/docs/methodologies/assets/tplan-okr-runtime.png"),
-            Path("codex/docs/methodologies/assets/tvg-architecture.png"),
-            Path("codex-plugin/mindthus/docs/methodologies/assets/tplan-okr-runtime.png"),
-            Path("codex-plugin/mindthus/docs/methodologies/assets/tvg-architecture.png"),
-            Path("opencode/docs/methodologies/assets/tplan-okr-runtime.png"),
-            Path("opencode/docs/methodologies/assets/tvg-architecture.png"),
         }
         jsonl_paths: set[Path] = set()
         binary_asset_paths: set[Path] = set()
@@ -428,11 +419,6 @@ class PackagingDocsTests(unittest.TestCase):
             )
             if path.is_file():
                 if path.suffix in forbidden_suffixes:
-                    self.assertIn(
-                        rel,
-                        binary_asset_allowlist,
-                        f"release pack should not include runtime artifact file: {rel}",
-                    )
                     binary_asset_paths.add(rel)
                 lowered = rel.as_posix().lower()
                 self.assertNotIn("ab_run", lowered)
@@ -440,8 +426,11 @@ class PackagingDocsTests(unittest.TestCase):
                 if path.suffix == ".jsonl":
                     jsonl_paths.add(rel)
 
-        self.assertEqual(jsonl_paths, jsonl_allowlist)
-        self.assertEqual(binary_asset_paths, binary_asset_allowlist)
+        self.assertTrue(
+            jsonl_paths.issubset(jsonl_allowlist),
+            f"release pack should only include allowlisted jsonl templates: {jsonl_paths - jsonl_allowlist}",
+        )
+        self.assertEqual(binary_asset_paths, set(), "release packs should not carry binary images or media")
 
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
@@ -473,10 +462,10 @@ class PackagingDocsTests(unittest.TestCase):
 
         self.assertIn("plugin mode", readme)
         self.assertIn("Codex Plugin Mode（推荐）", readme)
-        self.assertIn("codex plugin marketplace add /tmp/mindthus-release/codex-plugin", readme)
+        self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("codex plugin add mindthus@mindthus", readme)
         self.assertIn("Claude Code Plugin Mode（推荐）", readme)
-        self.assertIn("claude plugin marketplace add /tmp/mindthus-release/claude-code", readme)
+        self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("claude plugin install mindthus@mindthus", readme)
         self.assertIn("Codex Skills-Pack Mode", readme)
         self.assertIn("Claude Code Personal Skills Mode", readme)
@@ -580,6 +569,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             for path in sorted((out / "claude-code" / "claude-plugin" / "skills").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
+            self.assertTrue((out / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue(
                 (out / "claude-code" / "claude-plugin" / "scripts" / "run-fidelity-judge.py").exists()
             )
@@ -692,6 +684,42 @@ class PackagingDocsTests(unittest.TestCase):
                 )
                 for skill_name in skill_names:
                     self.assertNotIn(f"skills/{skill_name}/", markdown)
+
+    def test_release_pack_builder_can_split_plugin_and_skills_packages(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_dir = Path(tmp)
+            plugins = tmp_dir / "mindthus-plugins-1.2.0"
+            skills = tmp_dir / "mindthus-skills-1.2.0"
+
+            plugin_result = subprocess.run(
+                ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(plugin_result.returncode, 0, plugin_result.stderr)
+            self.assert_release_pack_excludes_runtime_artifacts(plugins)
+            self.assertTrue((plugins / "codex-plugin" / "mindthus" / ".codex-plugin" / "plugin.json").exists())
+            self.assertTrue((plugins / "claude-code" / ".claude-plugin" / "marketplace.json").exists())
+            self.assertFalse((plugins / "codex").exists())
+            self.assertFalse((plugins / "opencode").exists())
+            self.assertFalse((plugins / "claude-code" / "skills").exists())
+
+            skills_result = subprocess.run(
+                ["python3", str(script), "--package", "skills", "--out", str(skills)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(skills_result.returncode, 0, skills_result.stderr)
+            self.assert_release_pack_excludes_runtime_artifacts(skills)
+            self.assertTrue((skills / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((skills / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue(
+                (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
+            )
+            self.assertFalse((skills / "codex-plugin").exists())
+            self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
+            self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
 
 
 if __name__ == "__main__":

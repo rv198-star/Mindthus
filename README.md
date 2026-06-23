@@ -92,34 +92,47 @@ Mindthus 有两种安装形态，推荐顺序很简单：
 
 同一个 client profile 里不要同时启用 plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。迁移到 plugin mode 前，先移除旧的 skills-pack symlink。
 
-先下载 release pack。普通用户不需要 clone 仓库：
+普通用户不需要 clone 仓库。优先按用途下载 release pack：
+
+- plugin mode：下载 `mindthus-plugins-${VERSION}.tar.gz`，包含 Codex plugin 和 Claude Code plugin。
+- skills-pack mode：下载 `mindthus-skills-${VERSION}.tar.gz`，包含 Codex、Claude Code personal skills 和 OpenCode 的 skills-pack 布局。
+
+release pack 不携带 methodology 文档里的大图资产；需要看图文版文档时，直接读 GitHub 仓库或官网文档。
 
 ```bash
 VERSION=1.2.0
 curl -L \
-  -o /tmp/mindthus-release-${VERSION}.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-release-${VERSION}.tar.gz"
-rm -rf /tmp/mindthus-release
-mkdir -p /tmp/mindthus-release
-tar -xzf /tmp/mindthus-release-${VERSION}.tar.gz -C /tmp/mindthus-release --strip-components=1
+  -o /tmp/mindthus-plugins-${VERSION}.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-plugins-${VERSION}.tar.gz"
+rm -rf /tmp/mindthus-plugins
+mkdir -p /tmp/mindthus-plugins
+tar -xzf /tmp/mindthus-plugins-${VERSION}.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+
+curl -L \
+  -o /tmp/mindthus-skills-${VERSION}.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v${VERSION}/mindthus-skills-${VERSION}.tar.gz"
+rm -rf /tmp/mindthus-skills
+mkdir -p /tmp/mindthus-skills
+tar -xzf /tmp/mindthus-skills-${VERSION}.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
-当前 release asset 名称是 `mindthus-release-1.2.0.tar.gz`。
+当前 release asset 名称是 `mindthus-plugins-1.2.0.tar.gz` 和 `mindthus-skills-1.2.0.tar.gz`。
 
 如果你正在开发 Mindthus，才需要从源码构建同样结构的 release pack：
 
 ```bash
 git clone https://github.com/rv198-star/Mindthus.git ~/mindthus
 cd ~/mindthus
-python3 scripts/build-release-pack.py --out /tmp/mindthus-release --force
+python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-plugins --force
+python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-skills --force
 ```
 
 ### Codex Plugin Mode（推荐）
 
-Codex plugin mode 使用 release pack 里的 `codex-plugin/` marketplace。安装后，Codex 通过插件管理 Mindthus，并读取插件内同源的 `skills/`。
+Codex plugin mode 使用 plugins release pack 里的 `codex-plugin/` marketplace。安装后，Codex 通过插件管理 Mindthus，并读取插件内同源的 `skills/`。
 
 ```bash
-codex plugin marketplace add /tmp/mindthus-release/codex-plugin
+codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin
 codex plugin list --marketplace mindthus --available
 codex plugin add mindthus@mindthus
 codex plugin list
@@ -136,10 +149,10 @@ codex plugin marketplace remove mindthus
 
 ### Claude Code Plugin Mode（推荐）
 
-Claude Code plugin mode 使用 release pack 里的 `claude-code/` marketplace。安装后，skills 带插件命名空间，例如 `/mindthus:using-mindthus`。
+Claude Code plugin mode 使用 plugins release pack 里的 `claude-code/` marketplace。安装后，skills 带插件命名空间，例如 `/mindthus:using-mindthus`。
 
 ```bash
-claude plugin marketplace add /tmp/mindthus-release/claude-code
+claude plugin marketplace add /tmp/mindthus-plugins/claude-code
 claude plugin install mindthus@mindthus
 claude plugin list
 ```
@@ -160,12 +173,12 @@ claude plugin marketplace remove mindthus
 
 ### Codex Skills-Pack Mode
 
-release pack 里也包含 Codex skills-pack 形态。这个方式适合不能使用插件管理、需要 portable checkout，或想保留 `mindthus:*` skills namespace 的环境。
+skills release pack 里包含 Codex skills-pack 形态。这个方式适合不能使用插件管理、需要 portable checkout，或想保留 `mindthus:*` skills namespace 的环境。
 
 ```bash
 rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R /tmp/mindthus-release/codex/skills/mindthus "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
+cp -R /tmp/mindthus-skills/codex/skills/mindthus "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 ```
 
 重启 Codex 后，可以通过 `mindthus:*` 命名空间使用这些 skills，例如 `mindthus:tplan`。
@@ -189,7 +202,7 @@ rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 
 ```bash
 mkdir -p ~/.claude/skills
-for skill in /tmp/mindthus-release/claude-code/claude-plugin/skills/*; do
+for skill in /tmp/mindthus-skills/claude-code/skills/*; do
   [ -f "$skill/SKILL.md" ] || continue
   rm -rf "$HOME/.claude/skills/$(basename "$skill")"
   cp -R "$skill" "$HOME/.claude/skills/"
@@ -216,7 +229,7 @@ rm -rf ~/.claude/skills/{3l5s,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
 OpenCode 继续使用 skills-pack mode：生成包中的 `opencode/.opencode/skills/mindthus/<skill>/SKILL.md` 是当前支持路径。
 
 ```bash
-cp -R /tmp/mindthus-release/opencode/.opencode /path/to/your/opencode-project/
+cp -R /tmp/mindthus-skills/opencode/.opencode /path/to/your/opencode-project/
 ```
 
 OpenCode 虽然有 plugin system，但 v1.2 不提供 OpenCode plugin mode，因为当前 OpenCode plugin API 尚未验证能原生贡献 `SKILL.md` skills。Mindthus 不用 hook、command 或 custom tool 模拟 native skills。

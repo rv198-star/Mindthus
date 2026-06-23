@@ -17,12 +17,14 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertNotIn("## 版本与开发状态", readme)
         self.assertNotIn("当前开发分支同步", readme)
         self.assertIn("VERSION=1.2.0", readme)
-        self.assertIn("mindthus-release-${VERSION}.tar.gz", readme)
-        self.assertIn("mindthus-release-1.2.0.tar.gz", readme)
+        self.assertIn("mindthus-plugins-${VERSION}.tar.gz", readme)
+        self.assertIn("mindthus-skills-${VERSION}.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.2.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.2.0.tar.gz", readme)
         self.assertIn("github.com/rv198-star/Mindthus/releases/download/v${VERSION}", readme)
-        self.assertIn("codex plugin marketplace add /tmp/mindthus-release/codex-plugin", readme)
-        self.assertIn("claude plugin marketplace add /tmp/mindthus-release/claude-code", readme)
-        self.assertIn("cp -R /tmp/mindthus-release/opencode/.opencode", readme)
+        self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
+        self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
+        self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
         self.assertIn("## v1.2.0", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.2.0.md)", changelog)
         self.assertIn("release-pack-first", changelog)
@@ -35,7 +37,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "# Mindthus v1.2.0 发布日志",
             "发布日期：2026-06-24",
             "release pack",
-            "mindthus-release-1.2.0.tar.gz",
+            "mindthus-plugins-1.2.0.tar.gz",
+            "mindthus-skills-1.2.0.tar.gz",
             "codex-plugin/.agents/plugins/marketplace.json",
             "codex plugin add mindthus@mindthus",
             "claude plugin install mindthus@mindthus",
