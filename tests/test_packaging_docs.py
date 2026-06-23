@@ -404,6 +404,7 @@ class PackagingDocsTests(unittest.TestCase):
         jsonl_allowlist = {
             Path("claude-code/claude-plugin/skills/tplan/templates/evidence.jsonl"),
             Path("codex/skills/mindthus/tplan/templates/evidence.jsonl"),
+            Path("codex-plugin/mindthus/skills/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
         binary_asset_allowlist = {
@@ -411,6 +412,8 @@ class PackagingDocsTests(unittest.TestCase):
             Path("claude-code/claude-plugin/docs/methodologies/assets/tvg-architecture.png"),
             Path("codex/docs/methodologies/assets/tplan-okr-runtime.png"),
             Path("codex/docs/methodologies/assets/tvg-architecture.png"),
+            Path("codex-plugin/mindthus/docs/methodologies/assets/tplan-okr-runtime.png"),
+            Path("codex-plugin/mindthus/docs/methodologies/assets/tvg-architecture.png"),
             Path("opencode/docs/methodologies/assets/tplan-okr-runtime.png"),
             Path("opencode/docs/methodologies/assets/tvg-architecture.png"),
         }
@@ -457,6 +460,22 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("CODEX_HOME", text)
             self.assertIn("skills/mindthus", text)
             self.assertNotIn(".agents/skills/mindthus", text)
+
+    def test_plugin_mode_docs_cover_codex_claude_and_opencode_boundaries(self):
+        install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("Codex plugin mode", install)
+        self.assertIn("skills-pack mode", install)
+        self.assertIn("~/.codex/skills/mindthus", install)
+        self.assertIn("using-mindthus", install)
+        self.assertIn("清楚低风险任务直接执行", install)
+
+        self.assertIn("plugin mode", readme)
+        self.assertIn("/mindthus:using-mindthus", readme)
+        self.assertIn("Claude Code", readme)
+        self.assertIn("OpenCode", readme)
+        self.assertIn("OpenCode 继续使用 skills-pack", readme)
 
     def test_install_script_exists_and_has_valid_shell_syntax(self):
         script = REPO / "scripts" / "install-skills.sh"
@@ -594,6 +613,32 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertIn("python3 skills/mindthus/tvg/scripts/trace/init.py", codex_tvg_skill)
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", codex_tvg_skill)
+
+            codex_plugin_root = out / "codex-plugin" / "mindthus"
+            codex_plugin_manifest_path = codex_plugin_root / ".codex-plugin" / "plugin.json"
+            self.assertTrue(codex_plugin_manifest_path.exists())
+            codex_plugin_manifest = json.loads(codex_plugin_manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(codex_plugin_manifest["name"], "mindthus")
+            self.assertEqual(codex_plugin_manifest["version"], "1.1.2")
+            self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
+            self.assertIn("Judgment framework", codex_plugin_manifest["description"])
+            self.assertEqual(
+                codex_plugin_manifest["interface"]["defaultPrompt"],
+                [
+                    "当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 using-mindthus 选择最小充分方法；清楚低风险任务直接执行。"
+                ],
+            )
+            self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertFalse((codex_plugin_root / "skills" / "_runtime").exists())
+            self.assertTrue((codex_plugin_root / "_runtime" / "fidelity" / "core.py").exists())
+            for path in sorted((codex_plugin_root / "skills").glob("*/SKILL.md")):
+                self.assert_skill_frontmatter_is_parseable(path)
+            self.assertTrue((codex_plugin_root / "docs" / "methodologies" / "shared-primitives.md").exists())
+            self.assertTrue((codex_plugin_root / "scripts" / "run-fidelity-judge.py").exists())
+            self.assertFalse((codex_plugin_root / "docs" / "internal").exists())
+            self.assertFalse((codex_plugin_root / "docs" / "superpowers").exists())
+
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
@@ -620,6 +665,7 @@ class PackagingDocsTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("python3 .opencode/skills/mindthus/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
+            self.assertFalse((out / "opencode-plugin").exists())
 
             skill_names = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
             for platform_dir in (out / "codex", out / "opencode"):

@@ -85,6 +85,13 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 ## 安装
 
+Mindthus 有两种安装形态：
+
+- **plugin mode**：适合 Codex App 和 Claude Code，把 Mindthus 当作一个插件产品启用；Codex 使用 `using-mindthus`，Claude Code plugin mode 使用 `/mindthus:using-mindthus`。
+- **skills-pack mode**：适合 portable checkout、开发调试和 OpenCode。OpenCode 继续使用 skills-pack；v1.2 不提供 OpenCode plugin mode，因为当前 OpenCode plugin API 尚未验证能原生贡献 `SKILL.md` skills。
+
+同一个 client profile 里不要同时启用 plugin mode 和 skills-pack mode，除非你明确想测试重复 discovery。
+
 ### Codex
 
 详细说明见 [.codex/INSTALL.md](.codex/INSTALL.md)。
@@ -99,6 +106,8 @@ scripts/install-skills.sh codex --force
 
 ### Claude Code
 
+Claude Code plugin mode 会给 skills 增加插件命名空间，例如 `/mindthus:using-mindthus`。下面的 personal skills 安装方式不会增加 `mindthus:` prefix，通常暴露为 `/<skill>` 或由 Claude 自动调用。
+
 Claude Code personal skills 默认位于 `~/.claude/skills/`。
 
 ```bash
@@ -108,6 +117,10 @@ scripts/install-skills.sh claude --force
 ```
 
 重启 Claude Code 后即可使用同一套本地 skills。Claude Code 的本地安装路径不会自动增加 `mindthus:` namespace prefix。
+
+### OpenCode
+
+OpenCode 继续使用 skills-pack mode：生成包中的 `.opencode/skills/mindthus/<skill>/SKILL.md` 是当前支持路径。OpenCode 虽然有 plugin system，但 v1.2 不用 hook、command 或 custom tool 模拟 native skills。
 
 ## 验证
 
