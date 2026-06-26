@@ -325,6 +325,59 @@ class MissionPulseTests(unittest.TestCase):
 
         self.assertTrue(any("arbitration_trace" in finding for finding in findings), findings)
 
+    def test_mission_pulse_rejects_artifact_value_gain_as_next_gate(self):
+        candidate = {
+            "signal": "bounded_artifact_value_gain",
+            "candidate_next_gate": "artifact_value_gain",
+            "scope": "active_node",
+            "source_kind": "derived",
+            "source_ids": ["T1"],
+            "priority_class": "same_path_continuation",
+            "severity": "medium",
+            "freshness": "current_state",
+            "reason": "TVG value-gain is a semantic hook, not a Mission Pulse gate.",
+            "context": {},
+        }
+        pulse = {
+            "schema_version": PULSE_SCHEMA_VERSION,
+            "script_verdict": "shape_only",
+            "agentic_judgment_required": True,
+            "mission_pulse": {
+                "schema_version": PULSE_SCHEMA_VERSION,
+                "trigger": "manual",
+                "scope": "active_node",
+                "signals": ["bounded_artifact_value_gain"],
+                "evidence_delta": "unclear",
+                "branch_disposition": "unclear",
+                "systemic_probe": "not_needed",
+                "next_gate": "artifact_value_gain",
+                "rationale": "Deliberately malformed route for boundary regression.",
+                "evidence_links": [],
+            },
+            "gate_owner": "tvg",
+            "review_trigger_candidates": [candidate],
+            "winning_candidate": candidate,
+            "suppressed_candidates": [],
+            "arbitration_trace": [
+                {
+                    "signal": candidate["signal"],
+                    "priority_class": candidate["priority_class"],
+                    "candidate_next_gate": candidate["candidate_next_gate"],
+                    "severity": candidate["severity"],
+                    "decision": "selected",
+                    "reason": candidate["reason"],
+                }
+            ],
+            "recent_evidence_summary": {},
+            "active_log_summary": {},
+            "evidence_link_lint": {},
+        }
+
+        findings = load_tplan_runtime()._validate_mission_pulse_output(pulse)
+
+        self.assertIn("mission_pulse.next_gate is invalid", findings)
+        self.assertIn("candidate.candidate_next_gate is invalid", findings)
+
     def assert_pulse_candidate_contract(
         self,
         candidate,

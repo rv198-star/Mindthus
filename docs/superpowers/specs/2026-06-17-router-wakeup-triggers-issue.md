@@ -1,5 +1,9 @@
 # Issue Draft: Improve Router Wake-Up Triggers For Low-Frequency Mindthus Methods
 
+> Status note: this is a historical wake-up design issue, not current routing guidance.
+> Descriptions of over-activation are problem statements; current route selection should
+> be read from `skills/using-mindthus/SKILL.md`, `AGENTS.md`, and the active skill docs.
+
 ## Title
 
 Improve Mindthus router wake-up triggers for SELA, MPG, and EDSP

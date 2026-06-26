@@ -118,7 +118,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Problem-definition failure",
             "False binary or structural ambiguity",
             "Long-term system efficiency versus local advantage",
-            "Control-boundary mismatch",
+            "Agentic-system control-boundary mismatch",
             "Bounded artifact with thin practical value",
             "Mission runtime state",
             "Repeated local repair",
@@ -134,6 +134,136 @@ class MindthusRouterContractTests(unittest.TestCase):
             "ordinary complexity is not enough",
         ):
             self.assertIn(phrase, text)
+
+    def test_wae_route_requires_agentic_system_domain_gate(self):
+        skill = (REPO / "skills" / "wae" / "SKILL.md").read_text(encoding="utf-8")
+        methodology = (REPO / "docs" / "methodologies" / "wae.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+
+        for text in (skill, methodology):
+            for phrase in (
+                "agentic-system control-boundary lens",
+                "LLMs, agents, skills, prompts, scripts, schemas, workflows, review gates, or evidence gates",
+                "Domain Gate",
+                "No agentic system, no WAE",
+                "No controller mismatch, no WAE",
+            ):
+                self.assertIn(phrase, text)
+
+        for phrase in (
+            "Agentic-system control-boundary mismatch -> `wae`",
+            "Do not let `wae` absorb ordinary conceptual, organizational, product, or structural boundaries",
+            "No agentic system, no WAE",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "agentic systems",
+            "不是所有边界、责任、流程或证据问题的默认方法",
+            "概念分类、组织责任、产品边界或结构判断",
+        ):
+            self.assertIn(phrase, agents)
+
+    def test_wae_legacy_route_surfaces_are_agentic_scoped(self):
+        paths = (
+            REPO / "docs" / "superpowers" / "plans" / "2026-05-26-mindthus-judgment-kernel-entry-issues.md",
+            REPO / "docs" / "superpowers" / "specs" / "2026-04-28-tplan-v0.1-design.md",
+            REPO / "skills" / "mpg" / "resources" / "methodology.md",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("agentic-system", text.lower(), f"{path} should scope WAE")
+            self.assertNotIn("Control-boundary mismatch", text, f"{path} keeps old WAE route")
+            self.assertNotIn("- `WAE`: control-boundary lens", text, f"{path} keeps generic WAE wording")
+
+    def test_tvg_exit_audit_is_internal_not_generic_external_audit(self):
+        skill = (REPO / "skills" / "tvg" / "SKILL.md").read_text(encoding="utf-8")
+        template = (REPO / "skills" / "tvg" / "resources" / "exit-audit-template.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "TVG audit is internal to the TVG loop",
+            "not a standalone audit method",
+            "No active TVG loop, no TVG audit",
+            "No bounded artifact value-gain target, no TVG",
+            "code, release, workflow, factual, method, strategy, or requirement-boundary audits",
+        ):
+            self.assertIn(phrase, skill)
+
+        for phrase in (
+            "TVG-loop exit audit",
+            "must not be used as a generic audit template outside an active TVG run",
+            "active TVG run",
+        ):
+            self.assertIn(phrase, template)
+
+        for phrase in (
+            "Do not route to `tvg` merely because the user asks for an audit, review, or check",
+            "bounded artifact whose practical value is thin and whose expected value can be named",
+            "No active TVG loop, no TVG audit",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "TVG 的 audit 是内部退出检查",
+            "不是通用外部审计路线",
+            "外部审计先按对象路由",
+        ):
+            self.assertIn(phrase, agents)
+
+    def test_tplan_terminology_does_not_present_tvg_as_generic_audit_route(self):
+        scoped_route_paths = (
+            REPO / "skills" / "tplan" / "resources" / "hooks.md",
+            REPO / "docs" / "superpowers" / "specs" / "2026-04-28-tplan-v0.1-design.md",
+            REPO / "docs" / "superpowers" / "plans" / "2026-04-28-tplan-v0.1-implementation.md",
+        )
+        for path in scoped_route_paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("artifact_value_gain", text, f"{path} should use value-gain wording")
+            self.assertIn("TVG value-gain exit check", text, f"{path} should scope TVG exit")
+        hooks = (REPO / "skills" / "tplan" / "resources" / "hooks.md").read_text(
+            encoding="utf-8"
+        )
+        schema = (REPO / "skills" / "tplan" / "resources" / "schema.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "`artifact_value_gain` is a decision hook, not a Mission Pulse `next_gate`",
+            hooks,
+        )
+        self.assertIn(
+            "TVG internal outcomes such as `deepen`, `return-remediate`, `block`, and `freeze` are",
+            hooks,
+        )
+        self.assertIn(
+            "Decision hook names such as `artifact_value_gain` are not Mission Pulse `next_gate`",
+            schema,
+        )
+        self.assertIn(
+            "not tplan `recommendation` enum values",
+            schema,
+        )
+
+        no_legacy_depth_paths = scoped_route_paths + (
+            REPO / "docs" / "superpowers" / "specs" / "2026-05-09-tplan-linear-continuation-gate-design.md",
+            REPO / "tests" / "tplan" / "long_task_ab_tests.md",
+        )
+        for path in no_legacy_depth_paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("artifact depth", text, f"{path} keeps generic depth wording")
+            self.assertNotIn("artifact-depth", text, f"{path} keeps generic depth wording")
+            self.assertNotIn("depth-audit", text, f"{path} keeps generic audit wording")
+            self.assertNotIn("depth_audit", text, f"{path} keeps generic audit hook")
 
     def test_using_mindthus_defines_low_frequency_method_wakeup_probes(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -176,6 +306,31 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Scenario 24: EDSP Positive Wake-Up",
             "Scenario 25: EDSP Skip",
             "`3L5S` default sink",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_router_pressure_tests_cover_wae_and_tvg_boundary_bugs(self):
+        text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "WAE And TVG Boundary Bug Pressure Tests",
+            "Scenario 26: WAE Positive Agentic-System Control Mismatch",
+            "Scenario 27: WAE Skip Non-Agentic Boundary",
+            "Scenario 27B: WAE Skip Correct Agentic Control Assignment",
+            "Scenario 28: TVG Positive Internal Exit Audit",
+            "Scenario 29: TVG Skip External Release Audit",
+            "Scenario 30: TVG Skip Code Audit",
+            "Scenario 31: TVG Skip External Audit Object Matrix",
+            "No agentic system, no WAE",
+            "No controller mismatch, no WAE",
+            "No active TVG loop, no TVG audit",
+            "factual verification",
+            "method correctness",
+            "requirement boundaries",
+            "Mission runtime continuation",
+            "generic document review",
+            "generic external audit route",
         ):
             self.assertIn(phrase, text)
 

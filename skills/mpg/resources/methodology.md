@@ -417,10 +417,10 @@ realize the mainline, not so it can avoid all volatility forever.
   the mainline after path exposure is modeled.
 - `EDSP`: upstream structural lens when the mainline itself is malformed or when A/B
   categories are unstable.
-- `WAE`: control-boundary lens when the issue is who should control a step: workflow,
-  agent, evidence, human, or governance.
+- `WAE`: agentic-system control-boundary lens when the issue is who should control a
+  step inside an agentic system: workflow, agent, evidence, human, or governance.
 - `3L5S`: problem-definition lens when the task is still unclear.
-- `TVG`: bounded artifact deepening lens after MPG produces a strategy that needs
+- `TVG`: bounded artifact value-gain lens after MPG produces a strategy that needs
   stronger handoff or reuse value.
 - `tplan`: runtime carrier for long tasks; it records evidence and routes hard judgment
   points to MPG when path-carrying decisions appear.

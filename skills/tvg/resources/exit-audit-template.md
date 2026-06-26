@@ -2,9 +2,16 @@
 
 ## Purpose
 
-Use this template to perform the agentic exit audit required by `skills/tvg/resources/methodology.md`.
+Use this template to perform the TVG-loop exit audit required by
+`skills/tvg/resources/methodology.md`.
 
-This audit is a human or LLM judgment artifact. It must decide whether the module creates practical value for its actual use.
+This audit is a human or LLM judgment artifact inside an active TVG run. It must decide
+whether the module creates practical value for its actual use and whether that TVG run
+can honestly exit.
+
+This template must not be used as a generic audit template outside an active TVG run.
+The `input_version_or_run` field must identify the active TVG run, artifact version, or
+explicit value-gain attempt being audited.
 
 It must not be replaced by a script pass, schema validation, format check, template check, or structural completeness review.
 

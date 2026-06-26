@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -32,9 +32,19 @@ RELEASE_SCRIPT_PATHS = (
     Path("primitives/check.py"),
     Path("primitives/manifest.json"),
 )
-LIGHT_ROUTER_PROMPT = (
-    "当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，"
-    "优先使用 using-mindthus 选择最小充分方法；清楚低风险任务直接执行。"
+CLAUDE_ACTIVATION_ROUTER_PROMPT = (
+    "遇事不要慌，先搞清楚情况再说。This is a light Mindthus activation router, not a mandatory workflow. "
+    "Use mindthus:using-mindthus only at hard judgment points: problem definition, structural ambiguity, "
+    "strategic trend/local-advantage tradeoff, path-carrying risk, workflow/agent/evidence control boundary, "
+    "thin artifact value, mission drift, or repeated local repair. Clear, low-risk, fact-sufficient tasks "
+    "should be done directly; when facts, files, runtime behavior, or platform rules are missing, acquire "
+    "evidence first. If an upstream brainstorming/design workflow such as Superpowers Brainstorm is active "
+    "or clearly applicable, let it control design discovery and approval; Mindthus should not repeat "
+    "brainstorming and should intervene only at remaining hard judgment points."
+)
+CODEX_ACTIVATION_ROUTER_PROMPT = (
+    "Mindthus: hard judgment point -> mindthus:using-mindthus; simple direct; "
+    "evidence first; defer to Superpowers Brainstorm."
 )
 
 
@@ -131,6 +141,51 @@ def copy_release_scripts(root: Path, target: Path) -> None:
         copy_file_filtered(root / "scripts" / rel_path, target / "scripts" / rel_path)
 
 
+def write_claude_activation_hook(plugin_root: Path) -> None:
+    write_json(
+        plugin_root / "hooks" / "hooks.json",
+        {
+            "hooks": {
+                "SessionStart": [
+                    {
+                        "matcher": "startup|clear|compact",
+                        "hooks": [
+                            {
+                                "type": "command",
+                                "command": '"${CLAUDE_PLUGIN_ROOT}/hooks/session-start"',
+                                "async": False,
+                            }
+                        ],
+                    }
+                ]
+            }
+        },
+    )
+    script = f"""#!/usr/bin/env bash
+set -euo pipefail
+
+context='<MINDTHUS_ROUTER_CONTEXT>
+{CLAUDE_ACTIVATION_ROUTER_PROMPT}
+</MINDTHUS_ROUTER_CONTEXT>'
+
+escape_for_json() {{
+  local s="$1"
+  s="${{s//\\\\/\\\\\\\\}}"
+  s="${{s//\\"/\\\\\\"}}"
+  s="${{s//$'\\n'/\\\\n}}"
+  s="${{s//$'\\r'/\\\\r}}"
+  s="${{s//$'\\t'/\\\\t}}"
+  printf '%s' "$s"
+}}
+
+printf '{{\\n  "hookSpecificOutput": {{\\n    "hookEventName": "SessionStart",\\n    "additionalContext": "%s"\\n  }}\\n}}\\n' "$(escape_for_json "$context")"
+"""
+    script_path = plugin_root / "hooks" / "session-start"
+    script_path.parent.mkdir(parents=True, exist_ok=True)
+    script_path.write_text(script, encoding="utf-8")
+    script_path.chmod(0o755)
+
+
 def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
     platform_root = root / "claude-code"
     plugin_root = platform_root / "claude-plugin"
@@ -162,6 +217,7 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
     copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
+    write_claude_activation_hook(plugin_root)
 
 
 def build_claude_code_skills(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
@@ -238,7 +294,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
                 "websiteURL": "https://github.com/rv198-star/Mindthus",
                 "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
                 "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
-                "defaultPrompt": [LIGHT_ROUTER_PROMPT],
+                "defaultPrompt": [CODEX_ACTIVATION_ROUTER_PROMPT],
             },
         },
     )

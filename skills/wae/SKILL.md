@@ -11,9 +11,19 @@ Workflow should control order. Agentic reasoning should resolve uncertainty and 
 
 Automation solves deterministic problems. Intelligence solves uncertain problems.
 
-WAE is a control-boundary lens. It answers:
+WAE is an agentic-system control-boundary lens. Use it only when LLMs, agents, skills,
+prompts, scripts, schemas, workflows, review gates, or evidence gates may be
+controlling the wrong part of the work. It answers:
+
+Domain scope: LLMs, agents, skills, prompts, scripts, schemas, workflows, review gates, or evidence gates.
 
 > Who or what should control this part of the work?
+
+Domain Gate: the object must be an LLM / agent / skill / workflow / script / schema /
+evidence-gate system. No agentic system, no WAE.
+
+Control Gate: workflow, agentic reasoning, evidence, schema, script, review, or human
+authority may be controlling the wrong part of the work. No controller mismatch, no WAE.
 
 It is not a generic workflow designer, and it is not a four-quadrant form to fill mechanically. Its value is in catching control mismatch:
 
@@ -35,6 +45,9 @@ Use this skill when:
 - repeated mechanical verification should be separated from semantic judgment
 
 Do not use it to slow down low-risk formatting or obviously deterministic work.
+Do not use it for ordinary conceptual, organizational, product, or structural
+boundaries unless they are inside an agentic system and have a real controller
+mismatch.
 
 ### Minimal WAE Check / 最小检查
 
@@ -105,6 +118,8 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 ## Boundaries / 边界
 
 - WAE answers control-boundary questions; it is not a generic workflow designer.
+- WAE is scoped to agentic-system control boundaries; it is not the default method for
+  ordinary boundary, responsibility, process, or evidence questions.
 - Do not use WAE to slow down low-risk formatting or deterministic work.
 - Do not let worksheet completion, schema shape, or clean structure replace judgment.
 - Do not treat human escalation as a routine fourth control layer.

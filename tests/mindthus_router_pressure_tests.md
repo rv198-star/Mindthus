@@ -1012,6 +1012,247 @@ experiment data yet.
   and result.
 - Does not turn an empirical A/B test into an elegant structural judgment.
 
+## WAE And TVG Boundary Bug Pressure Tests
+
+These scenarios check that the router does not over-activate high-frequency methods
+from surface words. `WAE` requires both an agentic-system domain and controller
+mismatch. `TVG` requires a bounded artifact value-gain target; its audit is internal to
+the TVG loop.
+
+Short rules:
+
+```text
+No agentic system, no WAE.
+No controller mismatch, no WAE.
+No active TVG loop, no TVG audit.
+No bounded artifact value-gain target, no TVG.
+```
+
+## Scenario 26: WAE Positive Agentic-System Control Mismatch
+
+### What This Tests
+
+This is a positive WAE case. The object is an agent workflow, and a schema checklist is
+freezing semantic truth without evidence.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Our agent review workflow fills a JSON checklist. If every field is present, the
+release note is marked "approved", but the checklist never checks whether the claims
+are supported by tests, diffs, or user-visible behavior. What method owns this?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+Our agent review workflow fills a JSON checklist. If every field is present, the
+release note is marked "approved", but the checklist never checks whether the claims
+are supported by tests, diffs, or user-visible behavior. What method owns this?
+```
+
+### Expected Treatment Behavior
+
+- Routes to `WAE` because the active object is an agentic system.
+- Names the controller mismatch: schema/workflow is approving semantic claims.
+- Requires evidence bridges or claim caps instead of treating field completion as proof.
+- Does not route to TVG merely because the release note is an artifact.
+
+## Scenario 27: WAE Skip Non-Agentic Boundary
+
+### What This Tests
+
+This is a WAE skip case. The word "boundary" appears, but there is no LLM, agent, skill,
+script, schema, workflow, review gate, or evidence gate controlling the wrong layer.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+We need to decide whether "enterprise onboarding" and "customer success" should be two
+separate product categories in our roadmap taxonomy. Is this a boundary problem?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+We need to decide whether "enterprise onboarding" and "customer success" should be two
+separate product categories in our roadmap taxonomy. Is this a boundary problem?
+```
+
+### Expected Treatment Behavior
+
+- Skips `WAE`: No agentic system, no WAE.
+- Treats the active object as category/structure judgment, likely `EDSP` or direct
+  structural judgment.
+- Does not use boundary language as a WAE trigger.
+
+## Scenario 27B: WAE Skip Correct Agentic Control Assignment
+
+### What This Tests
+
+This is a WAE control-gate skip case. The object is agentic, but workflow, agentic
+judgment, and evidence already control the correct layers.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Our agent workflow has a fixed checklist for file presence, an LLM reviewer for semantic
+judgment, and a required test/evidence link before claim approval. The team asks whether
+we need WAE just because this is an agent workflow.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+Our agent workflow has a fixed checklist for file presence, an LLM reviewer for semantic
+judgment, and a required test/evidence link before claim approval. The team asks whether
+we need WAE just because this is an agent workflow.
+```
+
+### Expected Treatment Behavior
+
+- Skips `WAE`: No controller mismatch, no WAE.
+- Recognizes that domain scope alone is insufficient.
+- Uses direct execution, monitoring, or a narrower evidence check unless a concrete
+  control-boundary failure appears.
+
+## Scenario 28: TVG Positive Internal Exit Audit
+
+### What This Tests
+
+This is a positive TVG exit-audit case. TVG is already active on a bounded artifact,
+and the remaining question is whether the artifact can exit.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+We ran TVG on a handoff note for an implementation agent. The final note names the
+target module, test expectations, rollback warning, and remaining review-bound items.
+Audit whether it can freeze.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+We ran TVG on a handoff note for an implementation agent. The final note names the
+target module, test expectations, rollback warning, and remaining review-bound items.
+Audit whether it can freeze.
+```
+
+### Expected Treatment Behavior
+
+- Routes to TVG only because an active TVG loop and bounded artifact exist.
+- Treats the audit as TVG-loop exit judgment, not a generic external audit route.
+- Decides `freeze`, `freeze-with-review-bound-warning`, `return-remediate`, or
+  `blocked` based on expected value, evidence boundary, and veto constraints.
+
+## Scenario 29: TVG Skip External Release Audit
+
+### What This Tests
+
+This is a TVG skip case. The prompt says "audit", but the object is release readiness
+with missing runtime proof and stakeholder authority.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Audit whether this feature is ready to release. We have local smoke tests, no
+production runtime proof, and stakeholder approval is still required.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+Audit whether this feature is ready to release. We have local smoke tests, no
+production runtime proof, and stakeholder approval is still required.
+```
+
+### Expected Treatment Behavior
+
+- Skips TVG: No active TVG loop, no TVG audit.
+- Chooses information acquisition, evidence ceiling, release process, or `tplan` if
+  Mission runtime state is active.
+- Does not use TVG as a generic external audit route.
+
+## Scenario 30: TVG Skip Code Audit
+
+### What This Tests
+
+This is a TVG skip case. A code audit should use code review, tests, and verification,
+not TVG, unless the active object is a bounded artifact needing value gain.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+Audit this code change for bugs and missing tests.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+Audit this code change for bugs and missing tests.
+```
+
+### Expected Treatment Behavior
+
+- Skips TVG because this is an external code audit, not TVG-loop exit judgment.
+- Uses code review posture, tests, or verification evidence.
+- Does not route to TVG merely because the user asks for an audit, review, or check.
+
+## Scenario 31: TVG Skip External Audit Object Matrix
+
+### What This Tests
+
+This is a TVG skip matrix. Several prompts say "audit" or "review", but none has an
+active TVG loop or a bounded artifact value-gain target.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the method.
+
+1. Audit whether this factual claim is true; we have no source evidence yet.
+2. Audit whether this method is conceptually correct for all cases.
+3. Audit whether this strategy should be our long-term direction.
+4. Audit whether this requirement boundary belongs in Epic A or Epic B.
+5. Audit whether this Mission should continue after three same-path attempts.
+6. Audit this generic document for quality.
+```
+
+### Expected Treatment Behavior
+
+- Skips `TVG` for factual verification; first acquire sources or cap the claim.
+- Skips `TVG` for method correctness; use method-specific review or structural judgment.
+- Skips `TVG` for strategy; route to `SELA`, `MPG`, `EDSP`, or direct strategy judgment.
+- Skips `TVG` for requirement boundaries; use `EDSP`, `3L5S`, or direct product judgment.
+- Skips `TVG` for Mission runtime continuation; use `tplan` continuation gates.
+- Skips `TVG` for generic document review unless it becomes a named bounded artifact
+  with expected value and an active value-gain loop.
+
 ## Evaluation Template
 
 ```markdown

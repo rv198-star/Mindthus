@@ -221,8 +221,9 @@ Pressure-test prompt update:
 ## Non-Goals And Risks
 
 This version can still produce thin judgment if the agent fills the fields with generic
-language. That is an artifact-depth risk, not a schema problem. Use `tvg` or human
-review when `path_assessment` is formally valid but does not constrain the decision.
+language. That is a bounded artifact value-gain risk, not a schema problem. Use a TVG
+value-gain exit check or human review when `path_assessment` is formally valid but does
+not constrain the decision.
 
 The field may create extra friction in simple work. To control this, it is required only
 for high-impact hooks and high-impact continuation. Ordinary Step execution remains

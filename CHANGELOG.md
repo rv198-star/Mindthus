@@ -2,7 +2,37 @@
 
 ## Unreleased
 
-暂无。
+## v1.3.0
+
+发布日期：2026-06-27
+
+[完整发布日志](docs/releases/v1.3.0.md)
+
+说明：本版把 Mindthus 最近三条相关改动收束成一次统一 release：plugin startup context 新增轻量 Activation Router，WAE 被收窄到 agentic-system control-boundary，TVG 的 exit audit 被收回到 TVG loop 内部。它因此更适合记作一次 minor release，而不是零散 patch。
+
+### 新增
+
+- Claude Code plugin 增加轻量 activation router `SessionStart` hook：只提醒 hard judgment point 时优先考虑 `mindthus:using-mindthus`，清楚低风险任务直接做，事实不足先补证据；它不是强制流程，也不复制 Superpowers Brainstorm。
+- Codex plugin `defaultPrompt` 同步为同一套 activation router 语义的短版，用于提高 Mindthus 在 hard judgment point 场景的唤醒概率；Codex 端文案保持在 128 字节以内，避免被插件加载器忽略。
+
+### 修复
+
+- WAE 路由边界收紧为 agentic-system control-boundary mismatch：没有 agentic system，不进 WAE；没有 controller mismatch，也不进 WAE。普通概念边界、组织责任、产品分类或 issue 粒度问题不再被 WAE 吸走。
+- TVG exit audit 明确收回为 TVG loop 内部退出判断，不再因为用户说了 audit / review / check 就被外部化为通用审计路线；release、code、workflow、factual、method、strategy 和 requirement-boundary 审计按对象路由。
+- tplan 术语和 runtime 合同同步收口：`artifact_value_gain` 是 decision hook，不是 Mission Pulse `next_gate`；新增负测锁住这条边界，避免把 TVG 内部动作误接到 Mission mutation 路径。
+
+### 边界
+
+- Mindthus 不 vendoring Superpowers Brainstorm，也不占用 Superpowers 命名空间；设计/创意/行为变更等需要展开需求的任务仍推荐搭配 Superpowers Brainstorm。
+- 如果上游已有 brainstorming / design workflow，Mindthus 不重复需求澄清，只在剩余问题属于 hard judgment point 时介入。
+- 本版关闭的是 `#64`、`#65`、`#66` 这组三联边界修复，不宣称 `#50` 的 wake-up lift 已完成真实 replay 级行为认证。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -v`
+- `git diff --check`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
 
 ## v1.2.0
 

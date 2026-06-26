@@ -1,6 +1,6 @@
 ---
 name: tvg
-description: Use as a value-directed text/artifact strengthening loop when an AI-generated bounded module looks complete but must be moved closer to an explicit standard of "good" for judgment, evidence, trade-offs, downstream handoff, reuse, or action value.
+description: Use as a value-directed strengthening loop for bounded AI artifacts that need clearer judgment, evidence, trade-offs, handoff, reuse, or action value.
 ---
 
 # TVG / Thinking Value-Gain
@@ -10,18 +10,28 @@ description: Use as a value-directed text/artifact strengthening loop when an AI
 Thinking Value-Gain is a value-directed text/artifact transformation loop for AI-generated bounded modules.
 It runs as a state-driven value-gain loop for artifacts that look complete but are still thin, generic, over-expanded, weak in judgment, or hard to use downstream.
 
-Short version:
-
 > TVG moves a bounded text or artifact closer to a defined standard of "good".
 
-That standard comes from `expected_value`, the active `value_profile`, fixed evidence boundaries, veto constraints, and the exit gate. TVG is for artifacts that look complete, rigorous, standardized, and fluent, but are hollow, shallow, random, over-expanded, or too weak for real judgment, action, review, reuse, or handoff.
+TVG audit is internal to the TVG loop. It is not a standalone audit method; it judges
+whether an active TVG run can exit; not code, release, workflow, factual, method, strategy, or requirement-boundary audits.
+
+Short boundary:
+
+> No active TVG loop, no TVG audit.
+>
+> No bounded artifact value-gain target, no TVG.
+
+That standard comes from `expected_value`, the active `value_profile`, evidence
+boundaries, veto constraints, and the exit gate. TVG is for artifacts that look complete
+but remain hollow, shallow, random, over-expanded, or too weak for judgment, action,
+review, reuse, or handoff.
 
 TVG is not a generic prompt trick or length expansion method. Thinking Thickness is the substrate of value, Grounded Insight Yield is the core output, and Value Density is the delivery quality.
 
 Core inputs:
 
-- `expected_value`: Agent input contract for what the target artifact must become useful for. It names target artifact, artifact job, useful outcome, hard constraints, evidence boundary, and output bias. Gate is an internal stop condition compiled from expected_value, not a user-facing configuration burden.
-- `value_profile`: optional value definition package. If absent, use the default practical-value profile. Resolve as `default | supplied | inferred-with-warning`. A profile may define `value_semantics`, optional `realization_surface`, and optional `gain_policy`.
+- `expected_value`: Agent input contract for target artifact, artifact job, useful outcome, hard constraints, evidence boundary, and output bias. Gate is an internal stop condition, not a user-facing configuration burden.
+- `value_profile`: optional value definition package. If absent, use the default practical-value profile. Resolve as `default | supplied | inferred-with-warning`; profiles may define `value_semantics`, optional `realization_surface`, and optional `gain_policy`.
 - `veto_constraints`: explicit unacceptable states. They are not value-gain axes; if triggered, the module must not exit as `freeze`.
 - `independent_auditor`: for high-impact, high-uncertainty, or handoff-critical modules, separate generator work from the exit auditor.
 - `output_profile`: `insight_dense | balanced | coverage_rich`. This is delivery bias, not an internal workflow fork; it must not lower standards for `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`.
@@ -39,6 +49,10 @@ Value profiles can specialize value axes, observable surfaces, gain policies, ve
 ### When To Use
 
 Use when a bounded module already exists but downstream use would still require invention, judgment repair, evidence recovery, trade-off clarification, review structure, or handoff strengthening. Do not use TVG to reopen whole-project strategy or add process weight to low-risk work.
+Do not use TVG merely because a user says audit, review, or check. Route external
+audits by object first: code correctness, release readiness, workflow health, factual
+verification, method correctness, strategic direction, or requirement boundaries need
+their own evidence, review, or Mindthus owner before TVG is considered.
 
 ### Operating Flow
 
@@ -61,7 +75,7 @@ Read `resources/methodology.md` for full gate, profile, pressure, and scoring gu
 
 Scripts support bookkeeping only. They may initialize traces, validate required fields, persist records, and report factual completeness issues. They must not replace agentic judgment.
 
-Scripts must not create, waive, or satisfy veto constraints; decide whether another round is worth doing; write or change `exit_state`; decide whether independent auditor separation is required; output `PASS` as an audit verdict; score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`; choose TVG state routes; choose `output_profile`; decide whether `expected_value` is correct or complete; choose, infer, complete, rank, or satisfy `value_profile`; decide default gate correctness or exit gate success; decide whether `realization_surface` fit or `gain_policy` success was achieved; decide whether a prompt, document, design, or handoff artifact reached the user's quality target; decide whether a value profile is true, complete, aesthetically successful, thick enough, or sufficient for exit; decide `value_gain_score_correctness`, `score_based_exit`, `pressure_correctness`, `pressure_based_exit`, `compact-strengthen`, `refine`, `deepen`, or `freeze`.
+Scripts must not create, waive, or satisfy veto constraints; decide whether another round is worth doing; write or change `exit_state`; decide whether independent auditor separation is required; output `PASS`; score `Thinking Thickness`, `Grounded Insight Yield`, or `Value Density`; choose TVG state routes or `output_profile`; decide whether `expected_value`, `value_profile`, `realization_surface`, `gain_policy`, scores, pressure, gates, or final quality are correct; or choose `compact-strengthen`, `refine`, `deepen`, or `freeze`.
 
 Every script result means only:
 

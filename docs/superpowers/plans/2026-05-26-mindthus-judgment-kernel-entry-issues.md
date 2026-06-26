@@ -64,7 +64,7 @@ Add this method after the intervention-boundary test:
             "Problem-definition failure",
             "False binary or structural ambiguity",
             "Long-term system efficiency versus local advantage",
-            "Control-boundary mismatch",
+            "Agentic-system control-boundary mismatch",
             "Bounded artifact with thin practical value",
             "Mission runtime state",
             "Repeated local repair",
@@ -180,7 +180,7 @@ choosing an individual skill:
 | Problem-definition failure | `3l5s` | Do not run full 3L5S when the task is already clear and directly executable. |
 | False binary or structural ambiguity | `edsp` | Do not use EDSP when the missing input is facts, domain research, runtime proof, or stakeholder judgment. |
 | Long-term system efficiency versus local advantage | `sela` | Do not turn long-term direction into immediate action without timing and risk checks. |
-| Control-boundary mismatch | `wae` | Do not use WAE to slow down low-risk deterministic work. |
+| Agentic-system control-boundary mismatch | `wae` | No agentic system or controller mismatch, no WAE. |
 | Bounded artifact with thin practical value | `tvg` | TVG requires a bounded artifact; do not proactively activate it for vague dissatisfaction or ordinary writing quality. |
 | Mission runtime state, evidence, continuation, or stopping problem | `tplan` | tplan requires Mission-level runtime state; ordinary complexity is not enough. |
 | Repeated local repair or add-layer spiral | `Anti-Spiral` | Use the brake to return upstream; do not make Anti-Spiral a standalone skill. |

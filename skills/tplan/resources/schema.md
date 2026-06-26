@@ -315,6 +315,15 @@ Required `mission_pulse` fields when used:
 - `rationale`: route rationale
 - `evidence_links`: list of evidence ids, artifact references, or trace anchors
 
+Decision hook names such as `artifact_value_gain` are not Mission Pulse `next_gate`
+values. Pulse routes to existing Gates; those Gates may produce a decision packet that
+invokes a semantic hook.
+
+TVG internal outcomes such as `deepen`, `return-remediate`, `block`, and `freeze` are
+not tplan `recommendation` enum values. They stay inside the TVG loop unless a separate
+Mission-facing decision maps them to `add`, `subtract`, `continue`, `switch`, `close`,
+or `escalate`.
+
 Required candidate fields:
 
 - `signal`: observable route signal

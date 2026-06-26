@@ -54,7 +54,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", readme)
         self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v1.2.0`", readme)
+        self.assertIn("当前仓库版本：`v1.3.0`", readme)
         self.assertIn("scripts/log-fidelity-usage.py", readme)
         self.assertIn("data/fidelity-usage-log.jsonl", readme)
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
@@ -574,9 +574,29 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.2.0")
+            self.assertEqual(plugin["version"], "1.3.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
+            claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
+            claude_hook_script_path = out / "claude-code" / "claude-plugin" / "hooks" / "session-start"
+            self.assertTrue(claude_hook_config_path.exists())
+            self.assertTrue(claude_hook_script_path.exists())
+            claude_hook_config = json.loads(claude_hook_config_path.read_text(encoding="utf-8"))
+            session_start_hooks = claude_hook_config["hooks"]["SessionStart"]
+            self.assertEqual(session_start_hooks[0]["matcher"], "startup|clear|compact")
+            self.assertEqual(
+                session_start_hooks[0]["hooks"][0]["command"],
+                '"${CLAUDE_PLUGIN_ROOT}/hooks/session-start"',
+            )
+            self.assertFalse(session_start_hooks[0]["hooks"][0]["async"])
+            claude_hook_script = claude_hook_script_path.read_text(encoding="utf-8")
+            self.assertIn("MINDTHUS_ROUTER_CONTEXT", claude_hook_script)
+            self.assertIn("mindthus:using-mindthus", claude_hook_script)
+            self.assertIn("upstream brainstorming/design workflow", claude_hook_script)
+            self.assertIn("Superpowers Brainstorm", claude_hook_script)
+            self.assertIn("hard judgment point", claude_hook_script)
+            self.assertIn("directly", claude_hook_script)
+            self.assertNotIn("v3", claude_hook_script.lower())
             for path in sorted((out / "claude-code" / "claude-plugin" / "skills").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
@@ -639,15 +659,22 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.2.0")
+            self.assertEqual(codex_plugin_manifest["version"], "1.3.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
-                    "当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 using-mindthus 选择最小充分方法；清楚低风险任务直接执行。"
+                    "Mindthus: hard judgment point -> mindthus:using-mindthus; simple direct; "
+                    "evidence first; defer to Superpowers Brainstorm."
                 ],
             )
+            codex_default_prompt = codex_plugin_manifest["interface"]["defaultPrompt"][0]
+            self.assertIn("Superpowers Brainstorm", codex_default_prompt)
+            self.assertIn("hard judgment point", codex_default_prompt)
+            self.assertLessEqual(len(codex_default_prompt), 128)
+            self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 128)
+            self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())
             self.assertFalse((codex_plugin_root / "skills" / "_runtime").exists())
@@ -699,8 +726,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.2.0"
-            skills = tmp_dir / "mindthus-skills-1.2.0"
+            plugins = tmp_dir / "mindthus-plugins-1.3.0"
+            skills = tmp_dir / "mindthus-skills-1.3.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

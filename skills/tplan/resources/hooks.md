@@ -22,7 +22,16 @@ Initial hooks:
 | `chain_role` | low immediate value but possible path dependency | `wae` | evidence-linked chain-role claim with confidence cap |
 | `selection` | multiple candidate runtime nodes exist | `sela` | next active node or escalation |
 | `loopback` | feedback contradicts current definition | `3l5s` | return to Discovery, Definition, or Resolution |
-| `depth_audit` | bounded artifact looks complete but shallow | `tvg` | deepen, accept, or escalate |
+| `artifact_value_gain` | bounded artifact needs value-gain and TVG value-gain exit check | `tvg` | deepen, return-remediate, block, or freeze |
+
+`artifact_value_gain` is a decision hook, not a Mission Pulse `next_gate`. Pulse routes
+observable Mission signals to existing Gates such as `mission_review`, `selection`,
+`subtraction`, or `loopback`; a resulting decision packet may then call TVG for bounded
+artifact value-gain.
+
+TVG internal outcomes such as `deepen`, `return-remediate`, `block`, and `freeze` are
+not `apply_decision` recommendations. Convert any Mission-facing action to the normal
+tplan recommendation vocabulary before applying Mission mutations.
 
 Hook output must include recommendation, rationale, confidence, evidence links,
 proposed mutations, and requires_human.

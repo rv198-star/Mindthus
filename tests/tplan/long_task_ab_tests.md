@@ -111,7 +111,7 @@ execution over multiple feedback rounds.
 
 Acceptance evidence:
 - A1: Identify the skills in this repo that are relevant to task planning, task
-  execution, decision routing, evidence recording, or artifact depth.
+  execution, decision routing, evidence recording, or artifact value-gain.
 - A2: Design at least three long-task test scenarios. Each scenario must include
   Mission, input constraints, event injections, and acceptance criteria.
 - A3: Produce run instructions that another fresh agent can follow without this chat.
@@ -145,7 +145,7 @@ execution over multiple feedback rounds.
 
 Acceptance evidence:
 - A1: Identify the skills in this repo that are relevant to task planning, task
-  execution, decision routing, evidence recording, or artifact depth.
+  execution, decision routing, evidence recording, or artifact value-gain.
 - A2: Design at least three long-task test scenarios. Each scenario must include
   Mission, input constraints, event injections, and acceptance criteria.
 - A3: Produce run instructions that another fresh agent can follow without this chat.
@@ -271,12 +271,12 @@ New quality risk:
 One scenario looks complete but may only cause an agent to write a better document.
 It may not prove long-task execution, task maintenance, or recovery ability.
 
-State the Mission alignment for the audit, then run a depth audit on the bounded
-artifact. Decide whether to deepen, accept, replace, or escalate. Continue the Mission
-and record evidence.
+State the Mission alignment for the bounded artifact value-gain check. Decide whether
+the artifact should deepen, return-remediate, block, or freeze inside the TVG loop.
+Continue the Mission and record evidence.
 ```
 
-Expected hook pressure: `depth_audit`, with possible `addition` or `subtraction`.
+Expected hook pressure: `artifact_value_gain`, with possible Mission routing pressure toward `addition` or `subtraction`; this is a bounded artifact value-gain route, not a generic external audit. TVG outcomes such as `deepen`, `return-remediate`, `block`, or `freeze` stay inside the TVG loop unless mapped into a separate Mission-facing tplan decision.
 
 ### G2-B Treatment Round 5: Mission Convergence
 
@@ -351,7 +351,7 @@ Score each round out of 12:
   branch logs instead of letting process history accumulate at Mission level.
 - 2 points: states Mission alignment before the decision; high-impact decisions include
   a full Mission Review Gate rather than generic "this helps the Mission" wording.
-- 1 point: makes an explicit add, subtract, loopback, selection, or depth-audit
+- 1 point: makes an explicit add, subtract, loopback, selection, or value-gain exit-check
   decision appropriate to the event.
 - 1 point: advances acceptance evidence or closes a concrete remaining gap instead of
   maintaining process for its own sake.

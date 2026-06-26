@@ -125,13 +125,13 @@
 
 ### `skills/wae/` — WAE
 
-控制边界镜头，用来处理 Agentic / Workflow / Evidence 的控制权之争。
+控制边界镜头，用来处理 agentic systems 内 Agentic / Workflow / Evidence 的控制权之争。
 
 当不确定某段工作该由流程控制、由 agent 判断，还是由证据约束时，用 `WAE`。它关心的不是“问题是什么”，而是“谁或什么应该控制这部分工作”。
 
 适合：设计 workflow、agent、脚本、审查机制、证据门槛；判断哪里该自动化，哪里必须保留判断。
 
-边界：低风险、确定性的格式化工作不需要套 WAE。
+边界：WAE 不是所有边界、责任、流程或证据问题的默认方法。没有 agentic system 或 controller mismatch，不用 WAE；概念分类、组织责任、产品边界或结构判断通常先看 EDSP、3L5S 或直接判断。低风险、确定性的格式化工作不需要套 WAE。
 
 ### `skills/tvg/` — TVG
 
@@ -142,6 +142,7 @@
 适合：已经成形但缺少证据、取舍、失败路径、边界、下游可用性的 bounded artifact。
 
 边界：TVG 不负责战略方向，不重开整个问题空间；它只转换命名清楚、有边界的产物。脚本只能做记录和校验，不能替代 judgment。
+TVG 的 audit 是内部退出检查，用来判断 active TVG loop 里的产物能否 freeze、return-remediate 或 blocked；不是通用外部审计路线。外部审计先按对象路由：代码、release、workflow、结构、证据、战略或 Mission runtime。
 
 ## 组合方式
 
@@ -151,7 +152,8 @@
 - SELA 看整体趋势后，如果主线需要穿过复杂路径、对抗力量或载体风险，用 `MPG` 做主线承载方案。
 - 具体处理问题时，用 `3L5S` 做默认问题内核。
 - 3L5S 中遇到模糊结构判断，用 `EDSP`。
-- 任何方法里需要分配控制权，用 `WAE`。
+- agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
+  “控制/边界/流程”字样自动唤醒 WAE。
 - 任一方法产出物看似完整但价值不足，用 `TVG` 做定向强化。
 - 长任务出现第三次处理同一局部对象、负反馈、只加不减或新增层冲动时，
   激活反螺旋自检；它不是独立 skill，而是防止目标函数被局部循环吞掉的

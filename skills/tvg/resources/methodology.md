@@ -83,7 +83,7 @@ Typical module types:
 - architecture or design modules
 - engineering implementation modules
 - test or evidence modules
-- review and release-judgment modules
+- review/handoff modules for bounded downstream use, not release readiness or code verification
 - prompt, skill, or workflow modules
 
 ### Do Not Use It To
@@ -467,6 +467,11 @@ Do not turn broad good practice into a veto constraint. A valid veto constraint 
 ### Agentic Exit Audit Contract
 
 A value-gain run should leave an agentic exit audit when the module is high-impact, high-uncertainty, or handoff-critical.
+
+This audit is internal to an active TVG value-gain loop. It is not a standalone
+external audit route for code review, release readiness, workflow health, factual
+verification, method correctness, strategic direction, product taxonomy, requirement
+boundaries, or Mission runtime continuation.
 
 For low-risk modules, the generator may perform a lightweight audit if it remains honest about review-bound items and veto constraints.
 
@@ -934,6 +939,7 @@ This is a calibration signal, not an automatic failure.
 A module must not exit only because an automated check, script audit, schema validation, template check, or structural review passes.
 
 Exit requires agentic gatekeeping: a human or LLM reviewer must judge whether the module creates practical value for its actual use.
+This is TVG-loop exit judgment, not a generic external audit route.
 
 High-impact, high-uncertainty, or handoff-critical modules should use an auditor separated from the generator. The auditor judges the final module against intended use, evidence, review-bound items, and veto constraints. The auditor should not depend on the generator's private reasoning process to make the exit decision.
 
