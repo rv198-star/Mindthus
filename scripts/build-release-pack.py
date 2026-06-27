@@ -286,7 +286,9 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
                 "longDescription": (
                     "Mindthus is a judgment framework for AI agents. It helps Codex route "
                     "unclear, strategic, path-dependent, evidence-bound, or artifact-quality "
-                    "problems to the smallest sufficient method instead of adding process everywhere."
+                    "problems to the smallest sufficient method instead of adding process everywhere. "
+                    "The release-pack manifest uses SPDX AGPL-3.0-only for the open-source lane; "
+                    "separate commercial licensing is documented in the repository license materials."
                 ),
                 "developerName": "Mindthus",
                 "category": "Engineering",

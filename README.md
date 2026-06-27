@@ -241,6 +241,10 @@ from the author, including proprietary products, private SaaS, commercial platfo
 integration, or commercial use without releasing the corresponding source code required
 by AGPLv3.
 
+The release-pack Codex plugin manifest uses SPDX `AGPL-3.0-only` for the open-source
+lane. The separate commercial path is described in
+[COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md) rather than encoded in the SPDX field.
+
 中文口径：开源使用、开源改造和开源部署按 AGPLv3；闭源商业产品、私有商业平台、商业 SaaS 或不公开对应源代码的商业集成，需要单独取得商业授权。
 
 Mindthus 不是方法论仓库，而是一套让 agent 在复杂工作里保持清醒判断的可执行基础设施。

@@ -128,6 +128,8 @@ class V10ReadinessTests(unittest.TestCase):
 
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
         self.assertIn("closed-source commercial use requires a separate commercial license", readme)
+        self.assertIn("SPDX `AGPL-3.0-only`", readme)
+        self.assertIn("rather than encoded in the SPDX field", readme)
         self.assertIn("当前仓库版本：`v1.3.0`", readme)
         self.assertNotIn("Pre-1.0", readme)
 

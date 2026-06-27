@@ -611,6 +611,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((home / ".claude" / "skills" / "_runtime").exists())
             self.assertTrue((home / ".claude" / "skills" / "tplan").is_symlink(), result.stdout)
             self.assertTrue((home / ".claude" / "skills" / "sela").is_symlink(), result.stdout)
+            self.assertIn("repo-local _runtime", result.stdout)
+            self.assertIn("copy _runtime separately", result.stdout)
 
     def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
         script = REPO / "scripts" / "build-release-pack.py"
@@ -738,6 +740,11 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
+            self.assertIn("SPDX AGPL-3.0-only", codex_plugin_manifest["interface"]["longDescription"])
+            self.assertIn(
+                "commercial licensing is documented",
+                codex_plugin_manifest["interface"]["longDescription"],
+            )
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
