@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 import tempfile
@@ -66,6 +67,7 @@ class RenderUserUpdateTests(unittest.TestCase):
     def test_user_update_leads_with_meaning_not_internal_ids(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_lite_mission(tmp)
+            event_id = json.loads((mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()[0])["id"]
 
             result = run_script("render_user_update.py", str(mission_dir))
 
@@ -78,11 +80,12 @@ class RenderUserUpdateTests(unittest.TestCase):
             self.assertIn("已确认：", output)
             self.assertIn("The update explains progress without leading with internal IDs.", output)
             self.assertNotIn("T1", output)
-            self.assertNotIn("E1", output)
+            self.assertNotIn(event_id, output)
 
     def test_user_update_can_include_internal_refs_as_secondary_debug_block(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_lite_mission(tmp)
+            event_id = json.loads((mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()[0])["id"]
 
             result = run_script("render_user_update.py", str(mission_dir), "--include-internal")
 
@@ -91,7 +94,7 @@ class RenderUserUpdateTests(unittest.TestCase):
             self.assertIn("当前目标：", output)
             self.assertIn("内部恢复引用：", output)
             self.assertIn("active_task_id: T1", output)
-            self.assertIn("evidence_ids: E1", output)
+            self.assertIn(f"evidence_ids: {event_id}", output)
             self.assertLess(output.index("当前目标："), output.index("内部恢复引用："))
 
 

@@ -556,6 +556,22 @@ class ApplyDecisionTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_invalid_existing_mission_state_blocks_apply_decision_without_disk_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            mission_path = mission_dir / "mission.json"
+            broken = json.loads(mission_path.read_text(encoding="utf-8"))
+            broken["tasks"][0]["title"] = 123
+            mission_path.write_text(json.dumps(broken), encoding="utf-8")
+            decision = write_decision(tmp)
+
+            result = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 title must be a string", result.stderr)
+            self.assertEqual(json.loads(mission_path.read_text(encoding="utf-8")), broken)
+            self.assertEqual((mission_dir / "evidence.jsonl").read_text(encoding="utf-8"), "")
+
 
 if __name__ == "__main__":
     unittest.main()

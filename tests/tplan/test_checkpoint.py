@@ -85,7 +85,7 @@ class CheckpointTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             output = json.loads(result.stdout)
             self.assertEqual(output["recorded_log"]["id"], "L1")
-            self.assertEqual(output["recorded_evidence"]["id"], "E1")
+            self.assertRegex(output["recorded_evidence"]["id"], r"^E[0-9a-f]{8}$")
             self.assertEqual(output["survey"]["mission"]["id"], "m1")
             self.assertEqual(output["survey"]["active_task"]["id"], "T1")
             self.assertEqual(output["survey"]["event_count"], 1)

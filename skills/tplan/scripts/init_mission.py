@@ -73,6 +73,7 @@ def main() -> int:
             attach_project_shared_context(
                 mission,
                 Path(args.project_root),
+                mission_dir=mission_dir,
                 source_contexts=[str(item) for item in args.source_context],
             )
         refuse_existing_runtime(paths)

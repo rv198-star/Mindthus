@@ -11,7 +11,7 @@ import argparse
 import json
 from pathlib import Path
 
-from tplan_runtime import read_mission, validate_mission
+from tplan_runtime import read_mission, validate_mission, validate_mission_directory_identity
 
 
 def parse_args() -> argparse.Namespace:
@@ -22,8 +22,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    mission_dir = Path(args.mission_dir)
     try:
-        errors = validate_mission(read_mission(Path(args.mission_dir)))
+        mission = read_mission(mission_dir)
+        errors = validate_mission(mission)
+        errors.extend(validate_mission_directory_identity(mission, mission_dir))
     except (OSError, json.JSONDecodeError) as exc:
         errors = [str(exc)]
 

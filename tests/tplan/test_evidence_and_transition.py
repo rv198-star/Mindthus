@@ -165,6 +165,36 @@ class EvidenceAndTransitionTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("task missing does not exist", result.stderr)
 
+    def test_transition_task_rejects_completed_back_to_pending_without_disk_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            active = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "active")
+            self.assertEqual(active.returncode, 0, active.stderr)
+            completed = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "completed")
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            before = (mission_dir / "mission.json").read_text(encoding="utf-8")
+
+            result = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "pending")
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("illegal task status transition", result.stderr)
+            self.assertEqual((mission_dir / "mission.json").read_text(encoding="utf-8"), before)
+
+    def test_transition_task_rejects_unknown_current_status_without_repairing_it(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["tasks"][0]["status"] = "mystery"
+            mission_path.write_text(json.dumps(mission), encoding="utf-8")
+
+            result = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "active")
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("task T1 current status unsupported: mystery", result.stderr)
+            repaired = json.loads(mission_path.read_text(encoding="utf-8"))
+            self.assertEqual(repaired["tasks"][0]["status"], "mystery")
+
 
 if __name__ == "__main__":
     unittest.main()

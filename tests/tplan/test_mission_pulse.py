@@ -139,6 +139,11 @@ def load_mission(mission_dir):
     return json.loads((mission_dir / "mission.json").read_text(encoding="utf-8"))
 
 
+def latest_event_id(mission_dir):
+    lines = (mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()
+    return json.loads(lines[-1])["id"] if lines else None
+
+
 def save_mission(mission_dir, mission):
     (mission_dir / "mission.json").write_text(json.dumps(mission, indent=2), encoding="utf-8")
 
@@ -503,8 +508,9 @@ class MissionPulseTests(unittest.TestCase):
                 '{"object_id": "pulse:shape"}',
             )
             self.assertEqual(log.returncode, 0, log.stderr)
+            event_id = latest_event_id(mission_dir)
             mission = load_mission(mission_dir)
-            mission["tasks"][0]["evidence_links"] = ["E1", "E999"]
+            mission["tasks"][0]["evidence_links"] = [event_id, "E999"]
             save_mission(mission_dir, mission)
 
             result = run_script("mission_pulse.py", str(mission_dir), "--json")
@@ -513,7 +519,7 @@ class MissionPulseTests(unittest.TestCase):
 
         self.assert_pulse_v2_contract(pulse)
         self.assertEqual(pulse["recent_evidence_summary"]["total_events"], 1)
-        self.assertEqual(pulse["recent_evidence_summary"]["last_event_id"], "E1")
+        self.assertEqual(pulse["recent_evidence_summary"]["last_event_id"], event_id)
         self.assertEqual(pulse["recent_evidence_summary"]["counts_by_type"], {"key_finding": 1})
         self.assertEqual(pulse["recent_evidence_summary"]["recent_events"][0]["summary"], "Observed a concrete route signal.")
         self.assertEqual(pulse["active_log_summary"]["task_id"], "T1")
@@ -554,6 +560,7 @@ class MissionPulseTests(unittest.TestCase):
                 "Evidence channel smoke check passes.",
             )
             self.assertEqual(risk.returncode, 0, risk.stderr)
+            event_id = latest_event_id(mission_dir)
 
             pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "shared_risk")
 
@@ -578,7 +585,7 @@ class MissionPulseTests(unittest.TestCase):
             candidate_next_gate="health_check",
             priority_class="active_shared_risk",
             source_kind="evidence_event",
-            source_ids=["E1"],
+            source_ids=[event_id],
             freshness="current_state",
         )
         self.assertEqual(candidate["context"]["risk_signal_ids"], ["R1"])
@@ -744,6 +751,7 @@ class MissionPulseTests(unittest.TestCase):
                 "User says the current definition missed the global review problem.",
             )
             self.assertEqual(feedback.returncode, 0, feedback.stderr)
+            event_id = latest_event_id(mission_dir)
 
             result = run_script("mission_pulse.py", str(mission_dir), "--trigger", "feedback", "--json")
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -760,7 +768,7 @@ class MissionPulseTests(unittest.TestCase):
             candidate_next_gate="loopback",
             priority_class="current_blocker_or_feedback",
             source_kind="evidence_event",
-            source_ids=["E1"],
+            source_ids=[event_id],
             freshness="current_path",
         )
 
@@ -780,6 +788,7 @@ class MissionPulseTests(unittest.TestCase):
                         f"{event_type} changed the Mission path.",
                     )
                     self.assertEqual(event.returncode, 0, event.stderr)
+                    event_id = latest_event_id(mission_dir)
 
                     pulse = self.assert_pulse_read_only(mission_dir)
 
@@ -787,7 +796,7 @@ class MissionPulseTests(unittest.TestCase):
                 self.assertEqual(pulse["mission_pulse"]["next_gate"], "mission_review")
                 self.assertIn("blocker_or_surprise", pulse["mission_pulse"]["signals"])
                 self.assert_winning_signal(pulse, "blocker_or_surprise")
-                self.assertEqual(pulse["winning_candidate"]["source_ids"], ["E1"])
+                self.assertEqual(pulse["winning_candidate"]["source_ids"], [event_id])
                 self.assertEqual(pulse["winning_candidate"]["priority_class"], "current_blocker_or_feedback")
 
     def test_mission_pulse_routes_blocker_trigger_to_mission_review(self):
@@ -804,6 +813,7 @@ class MissionPulseTests(unittest.TestCase):
                 "Current path cannot resolve the acceptance boundary.",
             )
             self.assertEqual(blocker.returncode, 0, blocker.stderr)
+            event_id = latest_event_id(mission_dir)
 
             result = run_script("mission_pulse.py", str(mission_dir), "--trigger", "blocker", "--json")
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -814,7 +824,7 @@ class MissionPulseTests(unittest.TestCase):
         self.assertEqual(pulse["gate_owner"], "mission_review_gate")
         self.assertIn("blocker_or_surprise", pulse["mission_pulse"]["signals"])
         self.assert_winning_signal(pulse, "blocker_or_surprise")
-        self.assertEqual(pulse["winning_candidate"]["source_ids"], ["E1"])
+        self.assertEqual(pulse["winning_candidate"]["source_ids"], [event_id])
 
     def test_mission_pulse_blocker_wins_over_equal_priority_feedback(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -961,8 +971,9 @@ class MissionPulseTests(unittest.TestCase):
                 "Earlier linked finding existed before the checkpoint batch.",
             )
             self.assertEqual(evidence.returncode, 0, evidence.stderr)
+            event_id = latest_event_id(mission_dir)
             mission = load_mission(mission_dir)
-            mission["tasks"][0]["evidence_links"] = ["E1"]
+            mission["tasks"][0]["evidence_links"] = [event_id]
             save_mission(mission_dir, mission)
             for index in range(3):
                 checkpoint = run_script(
@@ -1009,8 +1020,9 @@ class MissionPulseTests(unittest.TestCase):
                 "Fresh linked finding satisfies the current acceptance evidence.",
             )
             self.assertEqual(evidence.returncode, 0, evidence.stderr)
+            event_id = latest_event_id(mission_dir)
             mission = load_mission(mission_dir)
-            mission["tasks"][0]["evidence_links"] = ["E1"]
+            mission["tasks"][0]["evidence_links"] = [event_id]
             save_mission(mission_dir, mission)
 
             pulse = self.assert_pulse_read_only(mission_dir, "--trigger", "checkpoint_batch")

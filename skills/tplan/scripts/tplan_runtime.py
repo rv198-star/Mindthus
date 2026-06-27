@@ -8,8 +8,10 @@ truth.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
+import uuid
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,6 +50,17 @@ TASK_STATUSES = {
     "pruned",
     "abandoned",
     "superseded",
+}
+TERMINAL_TASK_STATUSES = {"completed", "pruned", "abandoned", "superseded"}
+ALLOWED_TASK_TRANSITIONS = {
+    "pending": TASK_STATUSES,
+    "active": TASK_STATUSES - {"pending"},
+    "blocked": TASK_STATUSES - {"pending"},
+    "paused": TASK_STATUSES - {"pending"},
+    "completed": {"completed"},
+    "pruned": {"pruned"},
+    "abandoned": {"abandoned"},
+    "superseded": {"superseded"},
 }
 
 TASK_ROLES = {"success-critical", "supporting", "exploratory"}
@@ -335,6 +348,52 @@ def slugify(value: str) -> str:
     return slug or "unnamed"
 
 
+def runtime_dir_identity(project_root: Path, mission_dir: Path) -> str:
+    try:
+        return str(mission_dir.resolve().relative_to(project_root.resolve()))
+    except ValueError:
+        return str(mission_dir.resolve())
+
+
+def validate_mission_directory_identity(mission: Any, mission_dir: Path) -> list[str]:
+    if not isinstance(mission, dict):
+        return []
+    mission_meta = mission.get("mission")
+    if not isinstance(mission_meta, dict):
+        return []
+    mission_id = mission_meta.get("id")
+    if not isinstance(mission_id, str) or not mission_id:
+        return []
+    dir_slug = slugify(mission_dir.name)
+    if dir_slug in {"mission", "missions"}:
+        return []
+    if slugify(mission_id) not in dir_slug:
+        return [f"mission directory {mission_dir.name} does not match mission_id {mission_id}"]
+    return []
+
+
+def find_project_runtime_dirs(project_root: Path, mission_id: str) -> list[str]:
+    if not project_root.exists():
+        return []
+    runtime_dirs: set[str] = set()
+    for path in project_root.rglob("evidence.jsonl"):
+        mission_path = path.parent / "mission.json"
+        if not mission_path.exists():
+            continue
+        try:
+            mission = read_json(mission_path)
+        except (OSError, json.JSONDecodeError, ValueError):
+            continue
+        if mission.get("schema_version") != SCHEMA_VERSION:
+            continue
+        mission_meta = mission.get("mission")
+        if not isinstance(mission_meta, dict):
+            continue
+        if mission_meta.get("id") == mission_id:
+            runtime_dirs.add(runtime_dir_identity(project_root, mission_path.parent))
+    return sorted(runtime_dirs)
+
+
 def require_policy_value(name: str, value: int) -> int:
     if not 0 <= value <= 100:
         raise TplanError(f"{name} must be between 0 and 100")
@@ -359,7 +418,15 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    tmp_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    try:
+        os.replace(tmp_path, path)
+    except OSError:
+        if tmp_path.exists():
+            tmp_path.unlink()
+        raise
 
 
 def read_mission(mission_dir: Path) -> dict[str, Any]:
@@ -1048,6 +1115,9 @@ def render_shared_context_markdown(
         "active_task_id": mission.get("active_task_id"),
         "acceptance_evidence": _mission_acceptance_evidence(mission),
         "source_contexts": source_contexts,
+        "runtime_dir": shared_context.get("runtime_dir"),
+        "runtime_dir_name": shared_context.get("runtime_dir_name"),
+        "risk_signals": _risk_signals(mission),
         "updated_at": now_iso(),
     }
     risk_signals = _risk_signals(mission)
@@ -1141,6 +1211,7 @@ def build_mission_preflight(
     mission_id: str | None,
     objective: str | None = None,
     acceptance_evidence: list[dict[str, Any]] | None = None,
+    mission_dir: Path | None = None,
 ) -> dict[str, Any]:
     context_dir = shared_context_dir(project_root)
     if mission_id is None:
@@ -1159,13 +1230,21 @@ def build_mission_preflight(
         }
 
     path = shared_context_path(project_root, mission_id)
+    requested_runtime_dir = runtime_dir_identity(project_root, mission_dir) if mission_dir is not None else None
+    requested_runtime_dir_name = mission_dir.name if mission_dir is not None else None
+    discovered_runtime_dirs = find_project_runtime_dirs(project_root, mission_id) if requested_runtime_dir is not None else []
     if not path.exists():
+        conflicts = []
+        if discovered_runtime_dirs and requested_runtime_dir not in discovered_runtime_dirs:
+            conflicts.append("runtime_dir")
+        conflicts = list(dict.fromkeys(conflicts))
         return {
-            "action": "create_new",
+            "action": "needs_agentic_selection" if conflicts else "create_new",
             "mission_id": mission_id,
             "context_file": str(path),
             "loaded_context": None,
-            "conflicts": [],
+            "runtime_dirs": discovered_runtime_dirs,
+            "conflicts": conflicts,
         }
 
     metadata = read_shared_context_metadata(path)
@@ -1178,11 +1257,22 @@ def build_mission_preflight(
         existing = metadata.get("acceptance_evidence")
         if isinstance(existing, list) and _acceptance_fingerprint(existing) != _acceptance_fingerprint(acceptance_evidence):
             conflicts.append("acceptance_evidence")
+    existing_runtime_dir = metadata.get("runtime_dir")
+    existing_runtime_dir_name = metadata.get("runtime_dir_name")
+    if requested_runtime_dir is not None:
+        if isinstance(existing_runtime_dir, str) and existing_runtime_dir != requested_runtime_dir:
+            conflicts.append("runtime_dir")
+        elif isinstance(existing_runtime_dir_name, str) and existing_runtime_dir_name != requested_runtime_dir_name:
+            conflicts.append("runtime_dir")
+        elif discovered_runtime_dirs and any(item != requested_runtime_dir for item in discovered_runtime_dirs):
+            conflicts.append("runtime_dir")
+    conflicts = list(dict.fromkeys(conflicts))
     return {
         "action": "needs_agentic_selection" if conflicts else "continue_existing",
         "mission_id": mission_id,
         "context_file": str(path),
         "loaded_context": metadata,
+        "runtime_dirs": discovered_runtime_dirs or [item for item in (existing_runtime_dir,) if isinstance(item, str)],
         "conflicts": conflicts,
     }
 
@@ -1191,6 +1281,7 @@ def attach_project_shared_context(
     mission: dict[str, Any],
     project_root: Path,
     *,
+    mission_dir: Path | None = None,
     source_contexts: list[str] | None = None,
 ) -> dict[str, Any]:
     mission_meta = mission["mission"]
@@ -1199,6 +1290,7 @@ def attach_project_shared_context(
         mission_id=mission_meta["id"],
         objective=mission_meta["objective"],
         acceptance_evidence=_mission_acceptance_evidence(mission),
+        mission_dir=mission_dir,
     )
     if preflight.get("conflicts"):
         conflicts = ", ".join(preflight["conflicts"])
@@ -1208,19 +1300,34 @@ def attach_project_shared_context(
     loaded_sources = []
     if isinstance(loaded_context, dict) and isinstance(loaded_context.get("source_contexts"), list):
         loaded_sources = [str(item) for item in loaded_context["source_contexts"]]
+    loaded_risk_signals = []
+    if isinstance(loaded_context, dict) and isinstance(loaded_context.get("risk_signals"), list):
+        loaded_risk_signals = [item for item in loaded_context["risk_signals"] if isinstance(item, dict)]
     active_sources = source_contexts if source_contexts is not None else loaded_sources
     current = mission.get("shared_context")
     if not isinstance(current, dict):
         current = {}
     risk_signals = current.get("risk_signals")
     if not isinstance(risk_signals, list):
-        risk_signals = []
+        risk_signals = loaded_risk_signals
+    runtime_dir = current.get("runtime_dir")
+    runtime_dir_name = current.get("runtime_dir_name")
+    if mission_dir is not None:
+        runtime_dir = runtime_dir_identity(project_root, mission_dir)
+        runtime_dir_name = mission_dir.name
+    elif isinstance(loaded_context, dict):
+        if not isinstance(runtime_dir, str):
+            runtime_dir = loaded_context.get("runtime_dir")
+        if not isinstance(runtime_dir_name, str):
+            runtime_dir_name = loaded_context.get("runtime_dir_name")
     mission["shared_context"] = {
         **current,
         "project_root": str(project_root),
         "context_file": shared_context_relative_path(mission_meta["id"]),
         "source_contexts": active_sources,
         "risk_signals": risk_signals,
+        "runtime_dir": runtime_dir,
+        "runtime_dir_name": runtime_dir_name,
     }
     return preflight
 
@@ -1244,13 +1351,27 @@ def write_project_shared_context(project_root: Path, mission: dict[str, Any]) ->
     return path
 
 
-def write_indexed_shared_context(mission: dict[str, Any]) -> Path | None:
+def require_indexed_shared_context_target(mission: dict[str, Any]) -> bool:
     shared_context = mission.get("shared_context")
     if not isinstance(shared_context, dict):
-        return None
+        return False
+    indexed_keys = {"project_root", "context_file", "source_contexts", "runtime_dir", "runtime_dir_name"}
+    if not any(key in shared_context for key in indexed_keys):
+        return False
     project_root = shared_context.get("project_root")
+    context_file = shared_context.get("context_file")
     if not isinstance(project_root, str) or not project_root:
+        raise TplanError("shared_context propagation configured without project_root")
+    if not isinstance(context_file, str) or not context_file:
+        raise TplanError("shared_context propagation configured without context_file")
+    return True
+
+
+def write_indexed_shared_context(mission: dict[str, Any]) -> Path | None:
+    if not require_indexed_shared_context_target(mission):
         return None
+    shared_context = mission["shared_context"]
+    project_root = shared_context.get("project_root")
     return write_project_shared_context(Path(project_root), mission)
 
 
@@ -1267,9 +1388,8 @@ def read_events(mission_dir: Path) -> list[dict[str, Any]]:
 
 def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     path = mission_paths(mission_dir)["evidence"]
-    events = read_events(mission_dir)
     event = dict(event)
-    event.setdefault("id", f"E{len(events) + 1}")
+    event.setdefault("id", _next_event_id(mission_dir))
     event.setdefault("timestamp", now_iso())
     event.setdefault("task_id", None)
     event.setdefault("payload", {})
@@ -1342,7 +1462,7 @@ def _next_risk_signal_id(mission: dict[str, Any]) -> str:
 
 
 def _next_event_id(mission_dir: Path) -> str:
-    return f"E{len(read_events(mission_dir)) + 1}"
+    return f"E{uuid.uuid4().hex[:8]}"
 
 
 def record_risk_signal(mission_dir: Path, task_id: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -1374,7 +1494,7 @@ def record_risk_signal(mission_dir: Path, task_id: str, payload: dict[str, Any])
     errors = validate_mission(mission)
     if errors:
         raise TplanError("; ".join(errors))
-    write_mission(mission_dir, mission)
+    require_indexed_shared_context_target(mission)
     event = append_event(
         mission_dir,
         {
@@ -1386,6 +1506,7 @@ def record_risk_signal(mission_dir: Path, task_id: str, payload: dict[str, Any])
             "payload": {"risk_signal": signal},
         },
     )
+    write_mission(mission_dir, mission)
     write_indexed_shared_context(mission)
     return {"risk_signal": signal, "event": event}
 
@@ -1417,7 +1538,7 @@ def resolve_risk_signal(
     errors = validate_mission(mission)
     if errors:
         raise TplanError("; ".join(errors))
-    write_mission(mission_dir, mission)
+    require_indexed_shared_context_target(mission)
     event = append_event(
         mission_dir,
         {
@@ -1434,6 +1555,7 @@ def resolve_risk_signal(
             },
         },
     )
+    write_mission(mission_dir, mission)
     write_indexed_shared_context(mission)
     return {"risk_signal": signal, "event": event}
 
@@ -1533,8 +1655,10 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
     set_task_status(mission, task_id, "blocked")
     mission["active_task_id"] = task_id
     mission["mission"]["status"] = "requires_human"
-    write_mission(mission_dir, mission)
-    return append_event(
+    errors = validate_mission(mission)
+    if errors:
+        raise TplanError("; ".join(errors))
+    event = append_event(
         mission_dir,
         {
             "event_type": "stop_report",
@@ -1543,6 +1667,8 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
             "payload": payload,
         },
     )
+    write_mission(mission_dir, mission)
+    return event
 
 
 def find_task(mission: dict[str, Any], task_id: str) -> dict[str, Any]:
@@ -1556,6 +1682,12 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     if status not in TASK_STATUSES:
         raise TplanError(f"task status unsupported: {status}")
     task = find_task(mission, task_id)
+    current_status = task.get("status")
+    if current_status not in TASK_STATUSES:
+        raise TplanError(f"task {task_id} current status unsupported: {current_status}")
+    allowed = ALLOWED_TASK_TRANSITIONS.get(str(current_status), {status})
+    if status not in allowed:
+        raise TplanError(f"illegal task status transition for {task_id}: {current_status} -> {status}")
     task["status"] = status
     if status == "active":
         mission["active_task_id"] = task_id
@@ -2701,11 +2833,9 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
 
     for mutation in decision["proposed_mutations"]:
         apply_mutation(mission, mutation)
-    write_mission(
-        mission_dir,
-        mission,
-        latest_state=f"Decision applied: {decision['recommendation']}.",
-    )
+    errors = validate_mission(mission)
+    if errors:
+        raise TplanError("; ".join(errors))
     append_event(
         mission_dir,
         {
@@ -2714,5 +2844,10 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
             "task_id": None,
             "payload": decision,
         },
+    )
+    write_mission(
+        mission_dir,
+        mission,
+        latest_state=f"Decision applied: {decision['recommendation']}.",
     )
     return "applied_decision"

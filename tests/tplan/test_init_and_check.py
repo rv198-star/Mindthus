@@ -880,6 +880,26 @@ class CheckMissionTests(unittest.TestCase):
             self.assertIn("task T1 title must be a string", result.stdout)
             self.assertIn("task T1 mission_contribution must be a string", result.stdout)
 
+    def test_check_mission_rejects_mission_dir_id_mismatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "unrelated-runtime"
+            self.write_mission(mission_dir, self.valid_mission([self.valid_task()]))
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mission directory unrelated-runtime does not match mission_id mission-tplan-l0", result.stdout)
+
+    def test_check_mission_rejects_mission_prefixed_dir_that_still_mismatches_id(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission-alpha"
+            self.write_mission(mission_dir, self.valid_mission([self.valid_task()]))
+
+            result = run_script("check_mission.py", str(mission_dir))
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("mission directory mission-alpha does not match mission_id mission-tplan-l0", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
