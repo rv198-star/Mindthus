@@ -173,6 +173,8 @@ rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 
 ```bash
 mkdir -p ~/.claude/skills
+rm -rf "$HOME/.claude/skills/_runtime"
+cp -R /tmp/mindthus-skills/claude-code/skills/_runtime "$HOME/.claude/skills/_runtime"
 for skill in /tmp/mindthus-skills/claude-code/skills/*; do
   [ -f "$skill/SKILL.md" ] || continue
   rm -rf "$HOME/.claude/skills/$(basename "$skill")"
@@ -180,12 +182,13 @@ for skill in /tmp/mindthus-skills/claude-code/skills/*; do
 done
 ```
 
-重启 Claude Code 后使用 `/<skill>`，例如 `/tplan`；personal skills mode 不会增加 `mindthus:` plugin namespace。
+`_runtime` 是给 validator 和共享脚本使用的运行时支撑目录，不是可调用 skill。重启 Claude Code 后使用 `/<skill>`，例如 `/tplan`；personal skills mode 不会增加 `mindthus:` plugin namespace。
 
 卸载：
 
 ```bash
 rm -rf ~/.claude/skills/{3l5s,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/_runtime
 ```
 
 ### OpenCode

@@ -73,6 +73,18 @@ def run_validator(script: Path, payload: dict) -> subprocess.CompletedProcess[st
         )
 
 
+def run_validator_with_raw_text(script: Path, raw_text: str) -> subprocess.CompletedProcess[str]:
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "fidelity-output.json"
+        path.write_text(raw_text, encoding="utf-8")
+        return subprocess.run(
+            ["python3", str(script), str(path)],
+            text=True,
+            capture_output=True,
+            cwd=REPO,
+        )
+
+
 class RemainingSkillFidelityTests(unittest.TestCase):
     def test_remaining_skills_have_core_validators_templates_and_skill_links(self):
         for slug, spec in METHODS.items():
@@ -140,6 +152,15 @@ class RemainingSkillFidelityTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
                 self.assertIn("method exit accepted: transfer", result.stdout)
                 self.assertIn("agentic audit remains required", result.stdout)
+
+    def test_remaining_validators_report_invalid_json_cleanly(self):
+        for slug, spec in METHODS.items():
+            with self.subTest(skill=slug):
+                result = run_validator_with_raw_text(spec["validator"], '{"schema_version": ')
+
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("invalid JSON at", result.stderr + result.stdout)
+                self.assertNotIn("Traceback", result.stderr + result.stdout)
 
 
 if __name__ == "__main__":

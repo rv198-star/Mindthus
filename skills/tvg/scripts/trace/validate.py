@@ -6,14 +6,18 @@ This script does not judge whether the trace is valuable, true, or ready to exit
 from __future__ import annotations
 
 import argparse
-import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
+from _runtime.core.io import load_json
 
 SCRIPT_DISCLAIMER = "No schema violations were detected; agentic audit is still required."
 
 
 def load_schema(script_path: Path) -> dict:
-    return json.loads((script_path.parents[2] / "resources" / "trace-record-schema.json").read_text())
+    return load_json(script_path.parents[2] / "resources" / "trace-record-schema.json")
 
 
 def require_mapping(value: object, path: str, errors: list[str]) -> dict:
@@ -365,7 +369,7 @@ def main() -> int:
     args = parser.parse_args()
 
     trace_path = Path(args.trace)
-    trace = json.loads(trace_path.read_text())
+    trace = load_json(trace_path)
     errors = validate(trace, load_schema(Path(__file__)))
     print("TVG Shape & Evidence Risk Report")
     print(f"Path: {trace_path}")

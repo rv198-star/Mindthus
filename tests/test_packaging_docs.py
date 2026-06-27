@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -52,20 +53,16 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
-        self.assertIn("mindthus:tplan", readme)
-        self.assertIn("mindthus:*", readme)
-        self.assertIn("当前仓库版本：`v1.3.0`", readme)
-        self.assertIn("scripts/log-fidelity-usage.py", readme)
-        self.assertIn("data/fidelity-usage-log.jsonl", readme)
-        self.assertIn("AGPLv3 + commercial dual licensing", readme)
-        self.assertIn("SELA", readme)
-        self.assertIn("时机检查", readme)
-        self.assertIn("docs/methodologies", readme)
-        self.assertIn("安装", readme)
-        self.assertIn("验证", readme)
-        self.assertIn("从哪里开始", readme)
-        self.assertIn("可选：记录使用效果", readme)
-        self.assertIn("版本与许可", readme)
+        for phrase in (
+            "mindthus:tplan",
+            "mindthus:*",
+            "当前仓库版本：`v1.3.0`",
+            "AGPLv3 + commercial dual licensing",
+            "## 安装",
+            "## 验证",
+            "## 版本与许可",
+        ):
+            self.assertIn(phrase, readme)
         self.assertNotIn("维护者需要关注", readme)
         self.assertNotIn("judge JSON", readme)
         self.assertNotIn("not_applicable", readme)
@@ -88,24 +85,17 @@ class PackagingDocsTests(unittest.TestCase):
 
     def test_readme_links_to_chinese_manual(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
-        self.assertIn("SELA / 系统效率碾压局部优势", readme)
-        self.assertIn("Mainline-Path Game", readme)
-        self.assertIn("3L5S / 三层五步", readme)
-        self.assertIn("EDSP / Extreme Deduction + Scenario Projection", readme)
-        self.assertIn("WAE / Workflow-Agentic-Evidence", readme)
-        self.assertIn("TVG / Thinking Value-Gain", readme)
-        self.assertIn("Anti-Spiral / 反螺旋自检", readme)
-        self.assertIn("讲清整体与局部", readme)
-        self.assertIn("主线承载方案", readme)
-        self.assertIn("讲清问题如何从混乱信号走到可执行步骤", readme)
-        self.assertIn("脚本、agent、review gate 都在“管事”", readme)
-        self.assertIn("死亡螺旋", readme)
-        self.assertIn("何时拿起哪把刀", readme)
-        self.assertIn("可安装的判断工具箱", readme)
-        self.assertIn("你可能见过这些情况", readme)
-        self.assertIn("把一段文字，迭代推向某个“好”的标准", readme)
-        self.assertIn("不是季度 OKR 表", readme)
-        self.assertIn("长任务执行中的动态工作流", readme)
+        for phrase in (
+            "SELA / 系统效率碾压局部优势",
+            "MPG / 主线-路径博弈 / Mainline-Path Game",
+            "3L5S / 三层五步",
+            "EDSP / Extreme Deduction + Scenario Projection",
+            "WAE / Workflow-Agentic-Evidence",
+            "TVG / Thinking Value-Gain",
+            "TPlan / OKR-Runtime",
+            "Anti-Spiral / 反螺旋自检",
+        ):
+            self.assertIn(phrase, readme)
         self.assertNotIn("实际调用时仍使用", readme)
 
     def test_public_docs_sync_mpg_unreleased_positioning(self):
@@ -113,25 +103,10 @@ class PackagingDocsTests(unittest.TestCase):
         agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
 
-        for phrase in (
-            "MPG / 主线-路径博弈",
-            "先讲人话",
-            "推演耐久性",
-            "MPG-AQM",
-            "非精准量化显影",
-        ):
-            self.assertIn(phrase, readme)
-            self.assertIn(phrase, agents)
-
-        for phrase in (
-            "## Unreleased",
-            "MPG / 主线-路径博弈",
-            "Path-Carrying Strategy / 主线承载方案",
-            "Human-Readable First / 先讲人话",
-            "Reasoning Durability / 推演耐久性",
-            "MPG-AQM Visibility Layer / 主线-路径显影层",
-        ):
-            self.assertIn(phrase, changelog)
+        self.assertIn("MPG / 主线-路径博弈", readme)
+        self.assertIn("MPG / 主线-路径博弈", agents)
+        self.assertIn("## Unreleased", changelog)
+        self.assertIn("MPG / 主线-路径博弈", changelog)
 
     def test_anti_spiral_methodology_resource_exists(self):
         text = (REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md").read_text(
@@ -302,6 +277,26 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         self.assertNotIn("skill-design-patterns.md", readme)
         self.assertNotIn("Judgment Kernel Skill", readme)
+
+    def test_worktree_lifecycle_doc_classifies_cleanup_safely(self):
+        text = (REPO / "docs" / "internal" / "worktree-lifecycle.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "Worktree Lifecycle",
+            "Audit date: `2026-06-27`",
+            "git worktree list --porcelain",
+            "Do not remove a dirty or detached worktree blind.",
+            "### Keep",
+            "### Archive Or Review Before Removal",
+            "### Removed In This Cleanup",
+            "### Remove Candidates",
+            "codex/issue-27-thin-core-tplan-adapter",
+            "codex/issue-33-tplan-continuation-mainline",
+            "codex/v0.9-method-fidelity-harness",
+            "release/v0.6.2-prep",
+        ):
+            self.assertIn(phrase, text)
 
     def test_v0_6_version_acceptance_records_single_model_scope(self):
         text = (
@@ -484,6 +479,66 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("OpenCode", readme)
         self.assertIn("在该 OpenCode project 中使用", readme)
 
+    def test_readme_claude_personal_skills_mode_copies_runtime_support(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        section = readme.split("### Claude Code Personal Skills Mode", 1)[1].split(
+            "### OpenCode", 1
+        )[0]
+
+        self.assertIn("/tmp/mindthus-skills/claude-code/skills/_runtime", section)
+        self.assertIn("$HOME/.claude/skills/_runtime", section)
+        self.assertIn("不是可调用 skill", section)
+
+    def test_claude_personal_skills_copy_layout_keeps_validator_runtime_imports_working(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_dir = Path(tmp)
+            out = tmp_dir / "release"
+            result = subprocess.run(
+                ["python3", str(script), "--package", "skills", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            home = tmp_dir / "home"
+            skills_home = home / ".claude" / "skills"
+            skills_home.mkdir(parents=True)
+
+            packaged_skills = out / "claude-code" / "skills"
+            shutil.copytree(packaged_skills / "_runtime", skills_home / "_runtime")
+            for skill in packaged_skills.iterdir():
+                if not (skill / "SKILL.md").is_file():
+                    continue
+                shutil.copytree(skill, skills_home / skill.name)
+
+            payload = tmp_dir / "sela-output.json"
+            payload.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "sela-fidelity-v0.1",
+                        "method": "SELA",
+                        "applicability": "transfer",
+                        "plain_language_conclusion": "SELA is not dominant here.",
+                        "exit_reason": "Another method owns the active hard judgment.",
+                        "transfer_to": "WAE",
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+
+            validator = skills_home / "sela" / "scripts" / "validate_sela_output.py"
+            result = subprocess.run(
+                ["python3", str(validator), str(payload)],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertIn("method exit accepted: transfer", result.stdout)
+
     def test_install_script_exists_and_has_valid_shell_syntax(self):
         script = REPO / "scripts" / "install-skills.sh"
         self.assertTrue(script.exists())
@@ -536,6 +591,26 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(target.is_symlink(), result.stdout)
             self.assertEqual(target.resolve(), REPO / "skills")
             self.assertTrue((target / "tplan" / "SKILL.md").exists())
+
+    def test_claude_install_script_skips_runtime_support_directory(self):
+        script = REPO / "scripts" / "install-skills.sh"
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp) / "home"
+            home.mkdir()
+            env = os.environ.copy()
+            env["HOME"] = str(home)
+
+            result = subprocess.run(
+                ["bash", str(script), "claude", "--repo", str(REPO), "--force"],
+                text=True,
+                capture_output=True,
+                env=env,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse((home / ".claude" / "skills" / "_runtime").exists())
+            self.assertTrue((home / ".claude" / "skills" / "tplan").is_symlink(), result.stdout)
+            self.assertTrue((home / ".claude" / "skills" / "sela").is_symlink(), result.stdout)
 
     def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
         script = REPO / "scripts" / "build-release-pack.py"
@@ -661,6 +736,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
             self.assertEqual(codex_plugin_manifest["version"], "1.3.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
+            self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],

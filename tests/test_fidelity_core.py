@@ -20,6 +20,18 @@ def run_validator(script: Path, payload: dict) -> subprocess.CompletedProcess[st
         )
 
 
+def run_validator_with_raw_text(script: Path, raw_text: str) -> subprocess.CompletedProcess[str]:
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "payload.json"
+        path.write_text(raw_text, encoding="utf-8")
+        return subprocess.run(
+            ["python3", str(script), str(path)],
+            text=True,
+            capture_output=True,
+            cwd=REPO,
+        )
+
+
 class FidelityCoreTests(unittest.TestCase):
     def test_core_module_defines_shared_shape_engine(self):
         text = (REPO / "skills" / "_runtime" / "fidelity" / "core.py").read_text(
@@ -78,6 +90,18 @@ class FidelityCoreTests(unittest.TestCase):
         self.assertEqual(mpg.returncode, 0, mpg.stderr + mpg.stdout)
         self.assertIn("method exit accepted", sela.stdout)
         self.assertIn("method exit accepted", mpg.stdout)
+
+    def test_sela_and_mpg_invalid_json_reports_clean_error(self):
+        for script in (
+            REPO / "skills" / "sela" / "scripts" / "validate_sela_output.py",
+            REPO / "skills" / "mpg" / "scripts" / "validate_mpg_output.py",
+        ):
+            with self.subTest(script=script.name):
+                result = run_validator_with_raw_text(script, '{"schema_version": ')
+
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("invalid JSON at", result.stderr + result.stdout)
+                self.assertNotIn("Traceback", result.stderr + result.stdout)
 
 
 if __name__ == "__main__":

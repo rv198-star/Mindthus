@@ -201,8 +201,14 @@ class MissionPulseTests(unittest.TestCase):
             self.assertEqual(trace, [])
             return
 
-        self.assertIsNotNone(pulse["winning_candidate"])
-        partition = [pulse["winning_candidate"], *suppressed]
+        active_candidates = [
+            candidate for candidate in candidates if candidate.get("candidate_state") != "stale"
+        ]
+        if pulse["winning_candidate"] is None:
+            self.assertEqual(active_candidates, [], pulse)
+            partition = list(suppressed)
+        else:
+            partition = [pulse["winning_candidate"], *suppressed]
         self.assertEqual(
             Counter(self.candidate_token(candidate) for candidate in partition),
             Counter(self.candidate_token(candidate) for candidate in candidates),
@@ -222,9 +228,11 @@ class MissionPulseTests(unittest.TestCase):
             self.assertTrue(entry["reason"])
         selected = [entry for entry in trace if entry["decision"] == "selected"]
         suppressed_trace = [entry for entry in trace if entry["decision"] == "suppressed"]
-        self.assertEqual(len(selected), 1, trace)
-        self.assertEqual(selected[0]["signal"], pulse["winning_candidate"]["signal"])
-        self.assertEqual(self.trace_key(selected[0]), self.trace_key(pulse["winning_candidate"]))
+        expected_selected_count = 1 if active_candidates else 0
+        self.assertEqual(len(selected), expected_selected_count, trace)
+        if pulse["winning_candidate"] is not None:
+            self.assertEqual(selected[0]["signal"], pulse["winning_candidate"]["signal"])
+            self.assertEqual(self.trace_key(selected[0]), self.trace_key(pulse["winning_candidate"]))
         self.assertEqual(
             Counter(self.trace_key(entry) for entry in suppressed_trace),
             Counter(self.trace_key(candidate) for candidate in suppressed),
@@ -1098,6 +1106,167 @@ class MissionPulseTests(unittest.TestCase):
         self.assertEqual(pulse["mission_pulse"]["scope"], "mission")
         self.assert_winning_signal(pulse, "requires_human")
         self.assert_suppressed_signal(pulse, "mission_boundary_review")
+
+    def test_consumed_requires_human_becomes_stale_and_branch_cleanup_can_surface(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            stop = run_script(
+                "stop_report.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--summary",
+                "Cannot continue without user authority.",
+                "--current-goal",
+                "Route an unclear authority boundary.",
+                "--attempt",
+                "Checked runtime state.",
+                "--blocking-issue",
+                "The acceptance authority is unclear.",
+                "--why-cannot-continue-safely",
+                "Continuing would invent acceptance criteria.",
+                "--need-from-human",
+                "Confirm the intended acceptance boundary.",
+                "--resume-condition",
+                "The user confirms the acceptance boundary.",
+            )
+            self.assertEqual(stop.returncode, 0, stop.stderr)
+
+            first = run_script("mission_pulse.py", str(mission_dir), "--trigger", "branch_cleanup", "--json")
+            self.assertEqual(first.returncode, 0, first.stderr)
+            first_pulse = json.loads(first.stdout)
+            self.assert_winning_signal(first_pulse, "requires_human")
+            self.assert_suppressed_signal(first_pulse, "branch_cleanup_candidate")
+
+            consume = run_script(
+                "consume_pulse.py",
+                str(mission_dir),
+                "--trigger",
+                "branch_cleanup",
+                "--signal",
+                "requires_human",
+                "--note",
+                "Human stop route already surfaced.",
+                "--json",
+            )
+            self.assertEqual(consume.returncode, 0, consume.stderr)
+            consumed = json.loads(consume.stdout)
+            self.assertEqual(consumed["consumed_candidate"]["signal"], "requires_human")
+            self.assertEqual(consumed["event"]["event_type"], "pulse_consumed")
+
+            second = run_script("mission_pulse.py", str(mission_dir), "--trigger", "branch_cleanup", "--json")
+            self.assertEqual(second.returncode, 0, second.stderr)
+            second_pulse = json.loads(second.stdout)
+
+        self.assert_pulse_v2_contract(second_pulse)
+        self.assertEqual(second_pulse["mission_pulse"]["next_gate"], "selection")
+        self.assert_winning_signal(second_pulse, "branch_cleanup_candidate")
+        stale_requires_human = self.candidate_by_signal(second_pulse, "requires_human")
+        self.assertEqual(stale_requires_human.get("candidate_state"), "stale")
+        self.assertIn("already consumed", stale_requires_human.get("stale_reason", ""))
+        self.assert_suppressed_signal(second_pulse, "requires_human")
+        stale_trace = [
+            entry for entry in second_pulse["arbitration_trace"] if entry["signal"] == "requires_human"
+        ]
+        self.assertEqual(len(stale_trace), 1)
+        self.assertIn("already consumed", stale_trace[0]["reason"])
+
+    def test_same_path_continuation_remains_active_after_consumption_because_it_is_sticky(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            first = run_script("mission_pulse.py", str(mission_dir), "--trigger", "before_continue", "--json")
+            self.assertEqual(first.returncode, 0, first.stderr)
+            first_pulse = json.loads(first.stdout)
+            self.assert_winning_signal(first_pulse, "same_path_continuation")
+
+            consume = run_script(
+                "consume_pulse.py",
+                str(mission_dir),
+                "--trigger",
+                "before_continue",
+                "--signal",
+                "same_path_continuation",
+                "--note",
+                "Continuation gate acknowledged.",
+                "--json",
+            )
+            self.assertEqual(consume.returncode, 0, consume.stderr)
+
+            second = run_script("mission_pulse.py", str(mission_dir), "--trigger", "before_continue", "--json")
+            self.assertEqual(second.returncode, 0, second.stderr)
+            second_pulse = json.loads(second.stdout)
+
+        self.assert_pulse_v2_contract(second_pulse)
+        self.assertEqual(second_pulse["mission_pulse"]["next_gate"], "continuation_authorization")
+        self.assert_winning_signal(second_pulse, "same_path_continuation")
+        candidate = self.candidate_by_signal(second_pulse, "same_path_continuation")
+        self.assertEqual(candidate.get("candidate_state"), "active")
+        self.assertIsNone(candidate.get("stale_reason"))
+
+    def test_consume_pulse_records_runtime_state_without_removing_original_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            before_event_id = latest_event_id(mission_dir)
+
+            consume = run_script(
+                "consume_pulse.py",
+                str(mission_dir),
+                "--trigger",
+                "before_continue",
+                "--note",
+                "Continuation gate acknowledged.",
+                "--json",
+            )
+            self.assertEqual(consume.returncode, 0, consume.stderr)
+            payload = json.loads(consume.stdout)
+
+            mission = load_mission(mission_dir)
+            pulse_state = mission.get("pulse_state")
+            self.assertIsInstance(pulse_state, dict)
+            consumed_candidates = pulse_state.get("consumed_candidates")
+            self.assertIsInstance(consumed_candidates, list)
+            self.assertEqual(len(consumed_candidates), 1)
+            consumed_candidate = consumed_candidates[0]
+            self.assertEqual(consumed_candidate["signal"], "same_path_continuation")
+            self.assertEqual(payload["consumed_candidate"]["fingerprint"], consumed_candidate["fingerprint"])
+            self.assertEqual(payload["event"]["event_type"], "pulse_consumed")
+            self.assertNotEqual(payload["event"]["id"], before_event_id)
+
+            lines = (mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()
+            self.assertTrue(lines)
+            events = [json.loads(line) for line in lines]
+            self.assertEqual(events[-1]["event_type"], "pulse_consumed")
+            stop_reports = [event for event in events if event["event_type"] == "stop_report"]
+            self.assertEqual(stop_reports, [])
+
+    def test_stale_only_pulse_does_not_emit_shape_findings(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            first = self.assert_pulse_read_only(mission_dir, "--trigger", "branch_cleanup")
+            self.assert_winning_signal(first, "branch_cleanup_candidate")
+
+            consume_branch = run_script(
+                "consume_pulse.py",
+                str(mission_dir),
+                "--trigger",
+                "branch_cleanup",
+                "--signal",
+                "branch_cleanup_candidate",
+                "--note",
+                "Selection route already reviewed.",
+                "--json",
+            )
+            self.assertEqual(consume_branch.returncode, 0, consume_branch.stderr)
+
+            second = self.assert_pulse_read_only(mission_dir, "--trigger", "branch_cleanup")
+
+        self.assert_pulse_v2_contract(second)
+        self.assertEqual(second["mission_pulse"]["next_gate"], "continue")
+        self.assertIsNone(second["winning_candidate"])
+        self.assertTrue(second["review_trigger_candidates"])
+        states = [candidate.get("candidate_state") for candidate in second["review_trigger_candidates"]]
+        self.assertEqual(states, ["stale"])
+        self.assertFalse(second["pulse_shape_findings"])
 
     def test_mission_pulse_boundary_wins_over_shared_risk_but_preserves_suppressed_candidate(self):
         with tempfile.TemporaryDirectory() as tmp:

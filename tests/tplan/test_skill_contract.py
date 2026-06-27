@@ -362,6 +362,11 @@ class TplanSkillContractTests(unittest.TestCase):
             "not a new judgment center",
             "not decide Mission ROI",
             "not decide semantic truth",
+            "scripts/consume_pulse.py",
+            "pulse_state.consumed_candidates",
+            "pulse_consumed",
+            "candidate_state=stale",
+            "remain active by design",
             "fresh acceptance evidence movement",
             "scripts/mission_pulse.py",
             "survey --pulse",
@@ -376,6 +381,9 @@ class TplanSkillContractTests(unittest.TestCase):
             "多分支开始膨胀",
             "Mission 目标、验收面或权限不清",
             "只有出现事件信号时才进入 Pulse",
+            "显式记录消费",
+            "stale",
+            "shared risk、same-path continuation",
         ):
             self.assertIn(phrase, methodology)
 

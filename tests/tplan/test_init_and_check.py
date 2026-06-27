@@ -900,6 +900,19 @@ class CheckMissionTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("mission directory mission-alpha does not match mission_id mission-tplan-l0", result.stdout)
 
+    def test_check_mission_rejects_malformed_json_without_traceback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission_dir.mkdir()
+            (mission_dir / "mission.json").write_text('{"mission_id": ', encoding="utf-8")
+
+            result = run_script("check_mission.py", str(mission_dir))
+            output = result.stdout + result.stderr
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("invalid JSON at", output)
+            self.assertNotIn("Traceback", output)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -269,7 +269,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
             "author": {"name": "Mindthus"},
             "homepage": "https://github.com/rv198-star/Mindthus",
             "repository": "https://github.com/rv198-star/Mindthus",
-            "license": "AGPL-3.0-or-commercial",
+            "license": "AGPL-3.0-only",
             "keywords": [
                 "judgment",
                 "agent-workflow",

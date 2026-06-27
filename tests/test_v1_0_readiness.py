@@ -81,6 +81,25 @@ def run_judge(output_payload: dict, judge_payload: dict) -> subprocess.Completed
 
 
 class V10ReadinessTests(unittest.TestCase):
+    def test_codex_install_doc_no_longer_calls_public_repo_private(self):
+        install = (REPO / ".codex" / "INSTALL.md").read_text(encoding="utf-8")
+        self.assertNotIn("private `rv198-star/Mindthus` repository", install)
+
+    def test_v1_0_readiness_record_has_minimum_contract(self):
+        text = (REPO / "tests" / "method_fidelity_v1_0_readiness_2026-06-08.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "# v1.0 Readiness Blocker Closure",
+            "## Closed Items",
+            "## Non-coverage",
+            "does not claim universal robustness",
+            "## Verification",
+            "python3 -m unittest discover -s tests -v",
+        ):
+            self.assertIn(phrase, text)
+
     def test_agpl_dual_license_surface_is_declared(self):
         license_text = (REPO / "LICENSE").read_text(encoding="utf-8")
         commercial_text = (REPO / "COMMERCIAL-LICENSE.md").read_text(encoding="utf-8")
@@ -103,6 +122,9 @@ class V10ReadinessTests(unittest.TestCase):
             "separate commercial license",
         ):
             self.assertIn(phrase, commercial_text)
+        self.assertIn("https://github.com/rv198-star/Mindthus/issues", commercial_text)
+        self.assertIn("prompt-level", commercial_text)
+        self.assertIn("not legal advice", commercial_text)
 
         self.assertIn("AGPLv3 + commercial dual licensing", readme)
         self.assertIn("closed-source commercial use requires a separate commercial license", readme)

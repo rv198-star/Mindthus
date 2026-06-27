@@ -371,6 +371,17 @@ Read-only Pulse script output includes:
 - `gate_owner`: the existing gate or hook that owns the selected `next_gate`.
 - `pulse_shape_findings`: script self-check findings for the Pulse output shape.
 
+Pulse consumption is explicit, not inferred. `scripts/consume_pulse.py` records that a
+candidate has already been handled by a downstream Gate or operator. The current
+dedupe memory lives under optional Mission state `pulse_state.consumed_candidates`,
+while the append-only audit record is a `pulse_consumed` event in `evidence.jsonl`.
+
+Matching later candidates may include optional fields such as `fingerprint`,
+`candidate_state`, `stale_reason`, and `pulse_consumption`. A consumed candidate may be
+shown as `candidate_state=stale` when the same source delta repeats without change.
+Signals that remain active by design, such as shared risk or same-path continuation,
+stay `active` even after a prior consumption record.
+
 `review_trigger_candidates.source_ids` must point to source records when available:
 evidence event ids for feedback/blocker/shared-risk signals, step log ids for local
 repair or checkpoint-batch signals, and task ids for branch selection signals. Object

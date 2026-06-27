@@ -8,7 +8,7 @@ Codex's system `skill-installer` is useful for individual skills, but it install
 ## Prerequisites
 
 - Git
-- Access to the private `rv198-star/Mindthus` repository
+- A local checkout of `rv198-star/Mindthus` or an extracted public release pack
 
 ## Choose A Mode
 

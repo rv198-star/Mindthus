@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -6,6 +7,12 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
+    def test_current_release_log_does_not_record_exact_suite_count(self):
+        release_log = (REPO / "docs" / "releases" / "v1.3.0.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
+
     def test_current_release_surface_is_v1_3_0(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
@@ -42,23 +49,21 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         for phrase in (
             "# Mindthus v1.3.0 发布日志",
             "发布日期：2026-06-27",
+            "## 版本定位",
+            "## 安装入口",
+            "## 这次解决了什么",
+            "## 边界",
+            "## 验证",
             "#64",
             "#65",
             "#66",
             "Activation Router",
-            "SessionStart",
-            "defaultPrompt",
-            "No agentic system, no WAE.",
-            "No active TVG loop, no TVG audit.",
             "artifact_value_gain",
             "mindthus-plugins-1.3.0.tar.gz",
             "mindthus-skills-1.3.0.tar.gz",
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover -s tests -v",
-            "363 tests OK",
             "#50",
-            "hard judgment point",
-            "Superpowers Brainstorm",
         ):
             self.assertIn(phrase, release_log)
 

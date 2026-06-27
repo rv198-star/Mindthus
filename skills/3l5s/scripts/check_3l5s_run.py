@@ -6,8 +6,13 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from dataclasses import asdict, dataclass
+import sys
+from dataclasses import asdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from _runtime.core.report import Finding
 
 
 STEPS = ("Baseline", "Target", "Gap", "Strategy", "Breakdown")
@@ -46,16 +51,7 @@ DEFINITION_PATTERN = re.compile(
     r"falsif|measure|metric|scope|impact|cause|证伪|衡量|测量|范围|影响|原因",
     re.IGNORECASE,
 )
-SOLUTION_PATTERN = re.compile(
-    r"\bfix\b|\bimplement\b|\bship\b|\bdeploy\b|solution|解决|修复|实现|上线|交付"
-)
-
-
-@dataclass
-class Finding:
-    level: str
-    code: str
-    message: str
+SOLUTION_PATTERN = re.compile(r"\bfix\b|\bimplement\b|\bship\b|\bdeploy\b|solution|解决|修复|实现|上线|交付")
 
 
 def heading_block(text: str, heading_name: str, level: int) -> str:
@@ -265,7 +261,7 @@ def print_text_report(report: dict) -> None:
         return
 
     for finding in findings:
-        print(f"- {finding['level'].upper()} [{finding['code']}]: {finding['message']}")
+        print(f"- {finding['severity'].upper()} [{finding['code']}]: {finding['message']}")
 
     print()
     print("Reminder: agentic audit remains required; this report does not validate truth.")

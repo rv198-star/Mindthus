@@ -9,6 +9,30 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ExistingValidatorReportContractTests(unittest.TestCase):
+    def test_3l5s_json_report_uses_shared_severity_field(self):
+        draft = """# 3L5S Draft
+
+Mode: single-layer
+
+## Baseline
+
+TODO
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "draft.md"
+            path.write_text(draft, encoding="utf-8")
+            result = subprocess.run(
+                ["python3", "skills/3l5s/scripts/check_3l5s_run.py", str(path), "--json"],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertIn("severity", report["findings"][0])
+        self.assertNotIn("level", report["findings"][0])
+
     def test_3l5s_report_uses_shared_shape_evidence_language(self):
         draft = """# 3L5S Draft
 
@@ -170,6 +194,21 @@ Choose this path because the alternative is slower.
         self.assertIn("No shape or evidence risks detected", result.stdout)
         self.assertIn("No schema violations were detected; agentic audit is still required", result.stdout)
         self.assertNotIn("semantic approval", result.stdout)
+
+    def test_tvg_trace_validator_reports_invalid_json_cleanly(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "trace.json"
+            path.write_text('{"schema_version": ', encoding="utf-8")
+            result = subprocess.run(
+                ["python3", "skills/tvg/scripts/trace/validate.py", str(path)],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("invalid JSON at", result.stderr + result.stdout)
+        self.assertNotIn("Traceback", result.stderr + result.stdout)
 
 
 if __name__ == "__main__":

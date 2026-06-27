@@ -4,13 +4,13 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from _runtime.core.io import load_json
 from _runtime.fidelity.core import FidelitySpec, print_text_report, validate_fidelity_output
 
 
@@ -51,7 +51,7 @@ def main() -> int:
     parser.add_argument("path")
     args = parser.parse_args()
     path = Path(args.path)
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = load_json(path)
     findings = validate_fidelity_output(data, SPEC)
     print_text_report(path, data, findings, SPEC)
     return 1 if findings else 0

@@ -23,3 +23,14 @@ merge. The release tag is handled by the final merge-and-tag step.
 
 Before publishing v1.0, rerun full verification from the final branch state and confirm
 release metadata, release notes, and package version labels are all in v1.0 form.
+
+## Non-coverage
+
+This readiness record closes known blockers. It does not claim universal robustness,
+legal finality for every commercial use case, or semantic proof that every Mindthus
+method conclusion is correct.
+
+## Verification
+
+- `python3 -m unittest discover -s tests -v`
+- `python3 scripts/build-release-pack.py --out /tmp/mindthus-v1.0-readiness-check --force`

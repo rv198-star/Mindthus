@@ -20,6 +20,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from _runtime.core.io import load_json
 from _runtime.core.report import Finding
 from _runtime.core.shape import findings_from_messages
 
@@ -208,6 +209,38 @@ MISSION_PULSE_GATE_OWNERS = {
     "stop": "stop_report",
     "escalate": "human_or_authority_escalation",
 }
+MISSION_PULSE_CONSUMABLE_SIGNALS = {
+    "requires_human",
+    "blocker_or_surprise",
+    "user_feedback",
+    "third_touch",
+    "checkpoint_batch_without_acceptance_evidence",
+    "branch_cleanup_candidate",
+}
+MISSION_PULSE_STICKY_SIGNALS = {
+    "active_shared_risk",
+    "same_path_continuation",
+    "mission_boundary_review",
+    "active_node_missing",
+}
+PULSE_STATE_REQUIRED_FIELDS = {
+    "fingerprint",
+    "signal",
+    "candidate_next_gate",
+    "priority_class",
+    "source_ids",
+    "consumed_at",
+}
+PULSE_STATE_STRING_FIELDS = (
+    "fingerprint",
+    "signal",
+    "candidate_next_gate",
+    "priority_class",
+    "consumed_at",
+    "trigger",
+    "consumption_event_id",
+    "note",
+)
 
 CONTINUATION_TRIGGER_REASONS = {
     "third_touch",
@@ -414,7 +447,7 @@ def mission_paths(mission_dir: Path) -> dict[str, Path]:
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return load_json(path, error_factory=TplanError)
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
@@ -651,6 +684,62 @@ def _validate_shared_context(
         _validate_risk_signal_enum(errors, label, signal, "status", RISK_SIGNAL_STATUSES)
 
 
+def _validate_pulse_state(errors: list[str], state: dict[str, Any]) -> None:
+    if "pulse_state" not in state:
+        return
+    pulse_state = state.get("pulse_state")
+    if not isinstance(pulse_state, dict):
+        errors.append("pulse_state must be an object")
+        return
+
+    consumed_candidates = pulse_state.get("consumed_candidates")
+    if not isinstance(consumed_candidates, list):
+        errors.append("pulse_state consumed_candidates must be a list")
+        return
+
+    seen_fingerprints: set[str] = set()
+    for index, item in enumerate(consumed_candidates, start=1):
+        if not isinstance(item, dict):
+            errors.append(f"pulse_state consumed candidate {index} must be an object")
+            continue
+        label = item.get("signal") if isinstance(item.get("signal"), str) else str(index)
+        for field in sorted(PULSE_STATE_REQUIRED_FIELDS):
+            if field not in item:
+                errors.append(f"pulse_state consumed candidate {label} is missing {field}")
+        _require_string_fields(errors, f"pulse_state consumed candidate {label}", item, PULSE_STATE_STRING_FIELDS)
+
+        fingerprint = item.get("fingerprint")
+        if isinstance(fingerprint, str):
+            if fingerprint in seen_fingerprints:
+                errors.append(f"duplicate pulse_state fingerprint {fingerprint}")
+            else:
+                seen_fingerprints.add(fingerprint)
+
+        if "source_ids" in item:
+            _require_string_list(errors, label, "source_ids", item["source_ids"])
+
+        signal = item.get("signal")
+        if isinstance(signal, str) and signal not in MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER:
+            allowed = ", ".join(sorted(MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER))
+            errors.append(
+                f"pulse_state consumed candidate {label} signal unsupported: {signal!r}; expected one of: {allowed}"
+            )
+
+        next_gate = item.get("candidate_next_gate")
+        if isinstance(next_gate, str) and next_gate not in MISSION_PULSE_NEXT_GATES:
+            allowed = ", ".join(sorted(MISSION_PULSE_NEXT_GATES))
+            errors.append(
+                f"pulse_state consumed candidate {label} candidate_next_gate unsupported: {next_gate!r}; expected one of: {allowed}"
+            )
+
+        priority_class = item.get("priority_class")
+        if isinstance(priority_class, str) and priority_class not in MISSION_PULSE_CANDIDATE_PRIORITIES:
+            allowed = ", ".join(sorted(MISSION_PULSE_CANDIDATE_PRIORITIES))
+            errors.append(
+                f"pulse_state consumed candidate {label} priority_class unsupported: {priority_class!r}; expected one of: {allowed}"
+            )
+
+
 def _is_parent_aligned_task(task: dict[str, Any]) -> bool:
     return task.get("parent_id") is not None
 
@@ -810,6 +899,7 @@ def validate_mission(state: Any) -> list[str]:
 
     tasks_by_id = task_map(state)
     _validate_shared_context(errors, state, tasks_by_id)
+    _validate_pulse_state(errors, state)
 
     for task in normalized_tasks:
         task_id = _task_label(0, task)
@@ -1937,9 +2027,14 @@ def _validate_mission_pulse_output(output: dict[str, Any]) -> list[str]:
         findings.append("arbitration_trace entries must match review_trigger_candidates")
     selected_trace = [entry for entry in trace_objects if entry.get("decision") == "selected"]
     suppressed_trace = [entry for entry in trace_objects if entry.get("decision") == "suppressed"]
-    expected_selected_count = 1 if candidates else 0
+    active_candidates = [
+        candidate
+        for candidate in candidates
+        if isinstance(candidate, dict) and candidate.get("candidate_state") != "stale"
+    ]
+    expected_selected_count = 1 if active_candidates else 0
     if len(selected_trace) != expected_selected_count:
-        findings.append("arbitration_trace must contain exactly one selected entry when candidates exist")
+        findings.append("arbitration_trace must contain exactly one selected entry when active candidates exist")
     if winning_candidate is not None and isinstance(winning_candidate, dict) and selected_trace:
         if _pulse_arbitration_trace_key(selected_trace[0]) != _pulse_arbitration_trace_key(winning_candidate):
             findings.append("arbitration_trace selected entry must match winning_candidate")
@@ -2398,6 +2493,90 @@ def _collect_pulse_candidates(
     return candidates
 
 
+def _ensure_pulse_state(mission: dict[str, Any]) -> dict[str, Any]:
+    pulse_state = mission.get("pulse_state")
+    if not isinstance(pulse_state, dict):
+        pulse_state = {}
+        mission["pulse_state"] = pulse_state
+    consumed_candidates = pulse_state.get("consumed_candidates")
+    if not isinstance(consumed_candidates, list):
+        pulse_state["consumed_candidates"] = []
+    return pulse_state
+
+
+def _consumed_pulse_candidates(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    pulse_state = mission.get("pulse_state")
+    if not isinstance(pulse_state, dict):
+        return []
+    consumed_candidates = pulse_state.get("consumed_candidates")
+    if not isinstance(consumed_candidates, list):
+        return []
+    return [item for item in consumed_candidates if isinstance(item, dict)]
+
+
+def _pulse_candidate_fingerprint(candidate: dict[str, Any]) -> str:
+    payload = {
+        "signal": candidate.get("signal"),
+        "candidate_next_gate": candidate.get("candidate_next_gate"),
+        "scope": candidate.get("scope"),
+        "source_kind": candidate.get("source_kind"),
+        "source_ids": candidate.get("source_ids"),
+        "priority_class": candidate.get("priority_class"),
+        "severity": candidate.get("severity"),
+        "freshness": candidate.get("freshness"),
+        "context": candidate.get("context"),
+    }
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True)
+
+
+def _pulse_candidate_is_active_by_design(candidate: dict[str, Any], trigger: str) -> bool:
+    signal = candidate.get("signal")
+    if signal in MISSION_PULSE_STICKY_SIGNALS:
+        return True
+    if signal == "requires_human" and trigger in {"before_continue", "before_freeze", "before_handoff", "before_stop"}:
+        return True
+    return False
+
+
+def _apply_pulse_consumption_state(
+    mission: dict[str, Any],
+    candidates: list[dict[str, Any]],
+    *,
+    trigger: str,
+) -> list[dict[str, Any]]:
+    consumed_index = {
+        str(item.get("fingerprint")): item
+        for item in _consumed_pulse_candidates(mission)
+        if isinstance(item.get("fingerprint"), str)
+    }
+    annotated: list[dict[str, Any]] = []
+    for raw_candidate in candidates:
+        candidate = dict(raw_candidate)
+        fingerprint = _pulse_candidate_fingerprint(candidate)
+        candidate["fingerprint"] = fingerprint
+        consumption = consumed_index.get(fingerprint)
+        if consumption is None:
+            candidate["candidate_state"] = "active"
+            annotated.append(candidate)
+            continue
+
+        candidate["pulse_consumption"] = {
+            "consumed_at": consumption.get("consumed_at"),
+            "trigger": consumption.get("trigger"),
+            "consumption_event_id": consumption.get("consumption_event_id"),
+            "note": consumption.get("note"),
+        }
+        if _pulse_candidate_is_active_by_design(candidate, trigger):
+            candidate["candidate_state"] = "active"
+        else:
+            candidate["candidate_state"] = "stale"
+            candidate["stale_reason"] = (
+                f"already consumed at {consumption.get('consumed_at')} and no new source delta was observed"
+            )
+        annotated.append(candidate)
+    return annotated
+
+
 def _pulse_candidate_sort_key(candidate: dict[str, Any]) -> tuple[int, int, int]:
     priority = MISSION_PULSE_PRIORITY_ORDER.get(str(candidate.get("priority_class")), 999)
     severity = MISSION_PULSE_SEVERITY_ORDER.get(str(candidate.get("severity")), 0)
@@ -2428,22 +2607,32 @@ def _arbitrate_pulse_candidates(candidates: list[dict[str, Any]]) -> dict[str, A
             "suppressed_candidates": [],
             "arbitration_trace": [],
         }
-    ordered = sorted(candidates, key=_pulse_candidate_sort_key)
-    winning_candidate = ordered[0]
+    stale_candidates = [candidate for candidate in candidates if candidate.get("candidate_state") == "stale"]
+    active_candidates = [candidate for candidate in candidates if candidate.get("candidate_state") != "stale"]
+    ordered = sorted(active_candidates, key=_pulse_candidate_sort_key)
+    winning_candidate = ordered[0] if ordered else None
     suppressed_candidates = [candidate for candidate in candidates if candidate is not winning_candidate]
     arbitration_trace: list[dict[str, Any]] = []
-    for candidate in ordered:
+    trace_candidates = ordered + sorted(stale_candidates, key=_pulse_candidate_sort_key)
+    for candidate in trace_candidates:
         selected = candidate is winning_candidate
+        if candidate.get("candidate_state") == "stale":
+            decision = "suppressed"
+            reason = candidate.get("stale_reason") or "already consumed without a new source delta"
+        elif selected:
+            decision = "selected"
+            reason = "highest-ranked candidate"
+        else:
+            decision = "suppressed"
+            reason = _pulse_suppression_reason(candidate, winning_candidate)
         arbitration_trace.append(
             {
                 "signal": candidate["signal"],
                 "priority_class": candidate["priority_class"],
                 "candidate_next_gate": candidate["candidate_next_gate"],
                 "severity": candidate["severity"],
-                "decision": "selected" if selected else "suppressed",
-                "reason": "highest-ranked candidate"
-                if selected
-                else _pulse_suppression_reason(candidate, winning_candidate),
+                "decision": decision,
+                "reason": reason,
             }
         )
     return {
@@ -2475,6 +2664,11 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
         active_logs,
         active_risks,
         trigger,
+    )
+    review_trigger_candidates = _apply_pulse_consumption_state(
+        mission,
+        review_trigger_candidates,
+        trigger=trigger,
     )
     arbitration = _arbitrate_pulse_candidates(review_trigger_candidates)
     winning_candidate = arbitration["winning_candidate"]
@@ -2531,6 +2725,91 @@ def build_mission_pulse(mission_dir: Path, *, trigger: str = "manual") -> dict[s
     }
     output["pulse_shape_findings"] = _validate_mission_pulse_output(output)
     return output
+
+
+def consume_pulse_candidate(
+    mission_dir: Path,
+    candidate: dict[str, Any],
+    *,
+    trigger: str,
+    note: str | None = None,
+) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    fingerprint = candidate.get("fingerprint")
+    if not isinstance(fingerprint, str) or not fingerprint:
+        fingerprint = _pulse_candidate_fingerprint(candidate)
+    timestamp = now_iso()
+    event_id = _next_event_id(mission_dir)
+    entry = {
+        "fingerprint": fingerprint,
+        "signal": candidate.get("signal"),
+        "candidate_next_gate": candidate.get("candidate_next_gate"),
+        "priority_class": candidate.get("priority_class"),
+        "source_ids": list(candidate.get("source_ids", [])) if isinstance(candidate.get("source_ids"), list) else [],
+        "consumed_at": timestamp,
+        "trigger": trigger,
+        "consumption_event_id": event_id,
+        "note": note or "",
+    }
+    pulse_state = _ensure_pulse_state(mission)
+    existing = _consumed_pulse_candidates(mission)
+    pulse_state["consumed_candidates"] = [
+        item for item in existing if item.get("fingerprint") != fingerprint
+    ] + [entry]
+    errors = validate_mission(mission)
+    if errors:
+        raise TplanError("; ".join(errors))
+    event = append_event(
+        mission_dir,
+        {
+            "id": event_id,
+            "timestamp": timestamp,
+            "event_type": "pulse_consumed",
+            "summary": f"Consumed pulse candidate {candidate.get('signal')} -> {candidate.get('candidate_next_gate')}.",
+            "task_id": mission.get("active_task_id"),
+            "payload": {
+                "trigger": trigger,
+                "fingerprint": fingerprint,
+                "candidate": {
+                    "signal": candidate.get("signal"),
+                    "candidate_next_gate": candidate.get("candidate_next_gate"),
+                    "priority_class": candidate.get("priority_class"),
+                    "source_ids": entry["source_ids"],
+                },
+                "note": note,
+            },
+        },
+    )
+    write_mission(mission_dir, mission)
+    return {"consumed_candidate": entry, "event": event}
+
+
+def consume_current_pulse_candidate(
+    mission_dir: Path,
+    *,
+    trigger: str = "manual",
+    signal: str | None = None,
+    note: str | None = None,
+) -> dict[str, Any]:
+    pulse = build_mission_pulse(mission_dir, trigger=trigger)
+    if signal is None:
+        candidate = pulse.get("winning_candidate")
+        if not isinstance(candidate, dict):
+            raise TplanError("no winning pulse candidate is available to consume")
+    else:
+        matches = [
+            item
+            for item in pulse.get("review_trigger_candidates", [])
+            if isinstance(item, dict) and item.get("signal") == signal
+        ]
+        if not matches:
+            raise TplanError(f"pulse candidate {signal!r} was not observed for trigger {trigger}")
+        if len(matches) != 1:
+            raise TplanError(f"pulse candidate {signal!r} is ambiguous for trigger {trigger}")
+        candidate = matches[0]
+    result = consume_pulse_candidate(mission_dir, candidate, trigger=trigger, note=note)
+    result["pulse"] = pulse
+    return result
 
 
 def build_decision_packet(mission_dir: Path, hook: str) -> dict[str, Any]:

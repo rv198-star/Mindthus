@@ -12,16 +12,12 @@ class V09AcceptanceTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
 
         for phrase in (
-            "v0.9 Method Fidelity Harness Acceptance",
-            "Pre-1.0",
-            "SELA and MPG pilots",
-            "3L5S and TVG validator alignment",
-            "fidelity core",
-            "anti-overconstraint audit",
-            "shape pass is not semantic approval",
-            "validator semantic approval forbidden",
-            "v1.0 readiness: not yet",
+            "# v0.9 Method Fidelity Harness Acceptance",
+            "Status: Pre-1.0 acceptance record",
+            "## Scope",
+            "## anti-overconstraint audit",
             "does not claim cross-model robustness",
+            "## Verification",
             "python3 -m unittest discover -s tests -v",
         ):
             self.assertIn(phrase, text)

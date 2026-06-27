@@ -129,6 +129,13 @@ selects one controlling route. Lower-priority candidates remain visible under
 `source_kind`, `source_ids`, `priority_class`, `severity`, `freshness`, `reason`, and
 `context`.
 
+Pulse consumption is a separate runtime action. Use `scripts/consume_pulse.py` when a
+Gate or operator has already handled a candidate and later identical pulses should not
+keep re-winning by accident. The consumption record is written to Mission state
+`pulse_state.consumed_candidates` and mirrored into `evidence.jsonl` as
+`event_type=pulse_consumed`. Later identical candidates may surface as
+`candidate_state=stale`, while signals that remain active by design still stay active.
+
 Pulse may report observable signals and candidate gates. It must not compute ROI,
 classify defects, decide evidence sufficiency, redefine acceptance authority, or
 declare the Mission healthy or unhealthy. Pulse is not a new judgment center.
