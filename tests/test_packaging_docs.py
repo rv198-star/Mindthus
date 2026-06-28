@@ -284,15 +284,17 @@ class PackagingDocsTests(unittest.TestCase):
         )
         for phrase in (
             "Worktree Lifecycle",
-            "Audit date: `2026-06-27`",
+            "Audit date: `2026-06-28`",
             "git worktree list --porcelain",
             "Do not remove a dirty or detached worktree blind.",
             "### Keep",
             "### Archive Or Review Before Removal",
             "### Removed In This Cleanup",
             "### Remove Candidates",
+            "external detached Codex worktree",
+            "archive refs only",
+            "The only remaining non-main worktree is the external detached Codex",
             "codex/issue-27-thin-core-tplan-adapter",
-            "codex/issue-33-tplan-continuation-mainline",
             "codex/v0.9-method-fidelity-harness",
             "release/v0.6.2-prep",
         ):
