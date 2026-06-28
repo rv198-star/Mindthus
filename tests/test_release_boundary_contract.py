@@ -8,62 +8,66 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.3.0.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.0.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_3_0(self):
+    def test_current_release_surface_is_v1_4_0(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.3.0`", readme)
+        self.assertIn("当前仓库版本：`v1.4.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertNotIn("当前仓库版本：`v1.2.0`", readme)
+        self.assertNotIn("当前仓库版本：`v1.3.0`", readme)
         self.assertNotIn("## 版本与开发状态", readme)
         self.assertNotIn("当前开发分支同步", readme)
-        self.assertIn("mindthus-plugins-1.3.0.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.3.0.tar.gz", readme)
+        self.assertIn("局部正确", readme)
+        self.assertIn("带有倾向性的输入", readme)
+        self.assertIn("输入定框审计", readme)
+        self.assertIn("framing-risk", readme)
+        self.assertIn("用户价值、偏好、审美和风险姿态", readme)
+        self.assertIn("mindthus-plugins-1.4.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.4.0.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.3.0/mindthus-plugins-1.3.0.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.0/mindthus-plugins-1.4.0.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.3.0/mindthus-skills-1.3.0.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.0/mindthus-skills-1.4.0.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.3.0", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.3.0.md)", changelog)
-        self.assertIn("Activation Router", changelog)
-        self.assertIn("agentic-system control-boundary mismatch", changelog)
-        self.assertIn("artifact_value_gain", changelog)
-        self.assertIn('VERSION = "1.3.0"', builder)
+        self.assertIn("## v1.4.0", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.0.md)", changelog)
+        self.assertIn("Frame Fitness Check", changelog)
+        self.assertIn("Input Framing Audit", changelog)
+        self.assertIn("Framing-risk signals, not keyword rules", changelog)
+        self.assertIn('VERSION = "1.4.0"', builder)
 
-        release_log = (REPO / "docs" / "releases" / "v1.3.0.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.0.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.3.0 发布日志",
-            "发布日期：2026-06-27",
+            "# Mindthus v1.4.0 发布日志",
+            "发布日期：2026-06-29",
             "## 版本定位",
             "## 安装入口",
             "## 这次解决了什么",
             "## 边界",
             "## 验证",
-            "#64",
-            "#65",
-            "#66",
-            "Activation Router",
-            "artifact_value_gain",
-            "mindthus-plugins-1.3.0.tar.gz",
-            "mindthus-skills-1.3.0.tar.gz",
+            "Frame Fitness Check",
+            "Input Framing Audit",
+            "局部正确",
+            "带有倾向性的输入",
+            "Framing-risk signals, not keyword rules",
+            "mindthus-plugins-1.4.0.tar.gz",
+            "mindthus-skills-1.4.0.tar.gz",
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover -s tests -v",
-            "#50",
         ):
             self.assertIn(phrase, release_log)
 

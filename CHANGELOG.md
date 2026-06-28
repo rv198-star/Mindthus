@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+## v1.4.0
+
+发布日期：2026-06-29
+
+[完整发布日志](docs/releases/v1.4.0.md)
+
+说明：本版把 Mindthus 的入口判断能力正式提升为公开版本面：`Frame Fitness Check / 定框适配检查` 作为认知原语进入总纲，并在 `using-mindthus` 中落地为 `Input Framing Audit / 输入定框审计` 强约束入口协议。它解决的是 agent 容易被局部正确、带有倾向性的输入、实现层真相或单一证据信号带偏的问题。
+
+### 新增
+
+- `Frame Fitness Check`：新增局部框架适配检查，用来判断当前 framing 应保留、限定、重构，还是因证据不足阻断。
+- `Input Framing Audit`：`using-mindthus` 在方法路由前支持结构化输入审计，包含 `true_question`、`packed_premises`、`layer_risks`、`frame_status`、`reframed_question` 和 `routing_decision`。
+- primitive activation manifest 增加 `output_shape`、`frame_status_values` 和 `routing_effect`，让 runtime support 能暴露形状约束，但不替代 agentic judgment。
+
+### 修复
+
+- README 整体叙事从“方法工具箱 / 选对刀”升级为“先纠偏、再路由”：强调 Mindthus 能帮助 AI 避免被局部正确和带有倾向性的输入带偏。
+- 明确 `Framing-risk signals, not keyword rules`：关键词只是高置信线索；没有关键词但出现打包结论、层级偷换或局部机制冒充整体解释，也应触发。
+- 明确边界：没有 frame-risk signal 不触发；没有执行影响就省略；用户价值、偏好、审美和风险姿态是判断约束，不能被当成偏见抹掉。
+- primitive validator 增加 `routing_effect` schema 约束，要求 key 与 `frame_status_values` 对齐，同时保持 shape-only，不判断语义正确性。
+
+### 边界
+
+- 本版不新增 `frame` 或 `anti-sycophancy` 独立 skill。
+- 本版不把输入审计变成所有任务的强制模板；清楚、低风险、事实足够的任务仍直接执行。
+- 本版不允许输入审计替代证据获取、领域事实或正式方法分析。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -v`
+- `git diff --check`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+
 ## v1.3.0
 
 发布日期：2026-06-27

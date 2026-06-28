@@ -2,11 +2,13 @@
 
 AI agent 最大的问题，常常不是不会做事，而是太早开始做事。
 
-用户说“不好用”，它立刻改功能；两个方案都能讲通，它写一堆折中；长任务跑到一半，它被某个文件、prompt 或测试带偏；AI 生成的文档、代码和方案很顺，但没有判断、证据和下游价值。
+更累人的情况，是它没有明显答错。用户给了一个带有倾向性的输入，里面有一部分是真的；agent 顺着这部分局部正确继续推理，越答越完整，越完整越像对，最后却把全局判断带偏。
 
-Mindthus 是一套教 AI agent 在真实任务里“何时拿起哪把刀”的 skills pack。它让 agent 先判断问题形状，再决定该定义问题、推演结构、判断趋势、承载主线、划清控制边界、增厚产物，还是管住长任务。
+比如“Skills 本质上就是提示词”这句话，在实现层有局部真实性；很多 skill 确实会以文本形式进入上下文。但如果 agent 直接接受这个框架，就会把实现载体误当定义，把注意力管理误当架构价值，把局部机制误当整体解释。
 
-> Mindthus 让 agent 先选对刀，再开始用力。
+Mindthus 是一套给 AI agent 用的判断与纠偏 skills pack。它让 agent 在回答、执行或选方法之前，先检查当前问题是否已经被错误 framing、二手概念、局部正确、单一证据或用户立场带偏；然后再选择最小充分方法。
+
+> Mindthus 让 agent 先摆正问题层级，再开始用力。
 
 ![Mindthus 项目总览：TPlan、判断镜头、TVG 与认知原语](docs/assets/mindthus-overview.png)
 
@@ -14,42 +16,50 @@ Mindthus 是一套教 AI agent 在真实任务里“何时拿起哪把刀”的 
 
 它是一套可安装的判断工具箱，不是把流程变多。它把容易靠临场感觉处理的判断点，压成可调用、可审查、可测试的 skills。你可以直接用，也可以拆开读、改造、迁移到自己的 agent 项目里。
 
-`Thus` 表示“所以 / 如此 / 就该这样”。`此心 / Mindthus` 的意思是：看清问题形状之后，后续行动就不该散乱试错，而应该沿着那个判断展开。
+`Thus` 表示“所以 / 如此 / 就该这样”。`此心 / Mindthus` 的意思是：先看清当前判断真正站在哪个层级，后续行动才不该散乱试错，而应该沿着那个判断展开。
 
-## 如何用 Mindthus 提高认知、看到问题本质？
+## Mindthus 先纠偏，再路由
 
-看清问题，比急着解决问题更重要；很多错误，都是从把表象当成本质开始的。
+Mindthus 的第一层能力不是“套方法”，而是纠偏。
 
-很多判断失误，不是因为人不聪明，而是把几件事混在了一起：把情绪当事实，把现象当问题，把局部优势当长期趋势，把执行困难当方向错误，把流程打勾当证据。Mindthus 做的事，就是让 agent 先把这些东西分开。
+它会先问：当前输入是在提问，还是已经夹带结论？这个对象是真问题，还是被话术包装过的问题？现在讨论的是实现层、定义层、价值层、证据层，还是行动层？
 
-第一步，先去壳。把“体验不好”“不够高级”“战略升级”这类大词先放一边，问清楚：具体发生了什么？谁受影响？真正想达成什么？哪些约束不能绕开？
+这一步在 `using-mindthus` 里叫 `Input Framing Audit / 输入定框审计`，背后的认知原语是 `Frame Fitness Check / 定框适配检查`。它不是新的主方法，也不是让 agent 每次都唱反调；它只在出现 framing-risk 时触发。
 
-第二步，再分型。问题不清，用 `3L5S` 把现象压成真问题；两边都像对，用 `EDSP` 看结构；旧方案很好但新系统效率更高，用 `SELA` 看趋势；方向对但路上容易死，用 `MPG` 看路径；不知道该流程管、agent 管还是证据管，用 `WAE`。
+典型 framing-risk 包括：
 
-第三步，压实判断。一个结论不能只是“听起来有道理”，还要说清：它凭什么成立，哪里还不能下结论，下一步该做什么。
+- “本质上 / 其实就是 / 无非是”这类把复杂对象压扁的说法。
+- “正因为我是……”这类用身份或经验给结论加权的说法。
+- 一个句子里打包多个判断，让 agent 顺着结论评价。
+- 把实现层直接说成本体层，把局部机制说成整体解释。
+- 把绿色测试、单一指标、漂亮文档或当前方法路由当成全局正确。
 
-Mindthus 说的“提高认知”，不是多背概念，而是让 agent 先分清现象、问题、结构、趋势、路径和控制边界，再决定怎么行动。
+这些不是关键词规则。没有这些词，只要出现局部正确接管全局判断，也应该触发；有这些词，但只是低风险范围说明或用户偏好，也不应该机械触发。
+
+Mindthus 的目标是让 agent 保留用户目标函数，同时不被用户话术牵着走。用户价值、偏好、审美和风险姿态是有效约束，不能被当成“偏见”抹掉；但事实 claim、定义 claim、证据 claim 和架构 claim 仍然必须受层级与证据约束。
 
 ## 为什么值得试
 
-很多 AI workflow 的失败，不是因为模型写不出东西，而是它没有先问一句：我现在到底在处理哪类问题？
+很多 AI workflow 的失败，不是因为模型写不出东西，而是它太容易在一个局部正确的框架里自洽。
 
 你可能见过这些情况：
 
-- 模糊需求来了，agent 先动手，最后修错对象。
-- A/B 都能讲通，agent 只会折中，不敢判断。
+- 用户先给结论，再让 agent “评价一下”，agent 立刻开始补论据。
+- 一个实现细节是真的，但 agent 把它升级成了定义、本质或整体解释。
+- A/B 都能讲通，agent 只会折中，不敢重构问题层级。
 - CI、脚本、review gate 都有了，却没人说得清哪些结论真的有证据。
 - 长任务跑到中后段，agent 围着同一个文件、prompt 或参数反复修补，还以为这是进展。
 - AI 生成的文档、代码或方案看起来很完整，但只有表层结构，缺少深度、取舍和失败路径。
 
-Mindthus 处理的正是这一层。它不追求让 agent 更快给出一个看似完整的答案，而是让 agent 先判断自己面对的是什么问题，再选择合适的方法镜头。
+Mindthus 处理的正是这一层。它不追求让 agent 更快给出一个看似完整的答案，而是让 agent 先判断自己面对的是什么问题、当前 framing 是否适配、证据上限在哪里、谁应该控制下一步。
 
-它的优势不是“更多流程”，而是把容易失控的判断点压成轻量、可复用、可审查的 skill。
+它的优势不是“更多流程”，而是让 AI 具备更强的独立判断和输入纠偏能力：不盲从用户观点，不迷信自己的第一反应，不把局部正确当成全局答案。
 
 ## 能做什么
 
 Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
+- 用户给了一个带有倾向性的输入，比如“X 本质上就是 Y”，但真正要判断的是 X 和 Y 是否处在同一层级。
 - 用户给了一个模糊目标，比如“把这个项目讲清楚”“把这个任务做完”，但真正的问题还没被定义。
 - 团队在旧方案和新方案之间摇摆：旧方案局部很好，新方案系统效率更高，不知道该试点、等待还是切换。
 - 主线看起来没错，但中间的博弈波动可能很大：AI 长期会走出来、房价长期承压、公司必须转型，却不知道当前载体能不能穿过路径。
@@ -57,12 +67,13 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 - 一个长任务已经积累了很多 logs，但没人说得清当前任务树是否还服务于原始 Mission。
 - AI 生成的文档、代码、计划或 prompt 看似完整，但读起来浅，缺少判断、取舍、失败路径和下游可用性。
 
-它不适合替代领域事实、运行时验证、法律/医疗/安全等高风险专家判断。Mindthus 的位置是判断框架和执行纪律：它帮助 agent 问对问题、选对控制面、保留证据约束，但不把方法本身冒充事实。
+它不适合替代领域事实、运行时验证、法律/医疗/安全等高风险专家判断。Mindthus 的位置是判断框架和执行纪律：它帮助 agent 问对问题、校准 framing、选对控制面、保留证据约束，但不把方法本身冒充事实。
 
 ## 方法论导航
 
-下面这些方法不是固定流水线，而是一组可按场景选择的刀。实际使用时，agent 只需要调用当前问题需要的 skill；方法页负责讲清每把刀解决什么问题、什么时候该用、什么时候不该用。
+下面这些方法不是固定流水线，而是一组可按场景选择的刀。实际使用时，agent 先通过 `using-mindthus` 做最小充分路由；如果输入 framing 已经有风险，先做输入定框审计，再进入具体方法。
 
+- [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断是否需要 Mindthus 介入。清楚、低风险、事实足够的任务直接做；缺事实先取证；出现 hard judgment point 才选方法。若发现 framing-risk，则先识别真实问题、打包前提、层级风险、问题重述和下游路由。
 - [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：判断一个东西虽然局部很强，但会不会被更高效的系统长期挤到边缘。比如手工记账再熟练，也很难长期打过自动化财务系统；手工的价值还在，但主战场可能已经变了。SELA 用来讲清整体与局部、时机检查和长期方向。
 - [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：解决“看对长期方向，不等于能活着走到终点”。比如你相信 AI 是长期主线，但资金、职位或公司现金流撑不过中途波动，这个判断再对也没用。MPG 产出 Path-Carrying Strategy / 主线承载方案，关心的是怎么扛过路径，而不是只喊方向正确；输出要先讲人话，回放看推演耐久性，复杂变量可用 `MPG-AQM` / 非精准量化显影辅助显影。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：把乱问题变成真问题，再把真问题拆成能做的事。比如“项目不顺”太虚，它会先逼你分清是需求不清、资源不够、目标错了，还是执行断了；然后讲清问题如何从混乱信号走到可执行步骤。
@@ -89,8 +100,8 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.3.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.3.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.4.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.4.0.tar.gz`。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -100,22 +111,22 @@ Mindthus 适合放进真实 agent 工作流，尤其是这些场景：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.3.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.3.0/mindthus-plugins-1.3.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.4.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.4.0/mindthus-plugins-1.4.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.3.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.4.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.3.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.3.0/mindthus-skills-1.3.0.tar.gz"
+  -o /tmp/mindthus-skills-1.4.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.4.0/mindthus-skills-1.4.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.3.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.4.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -231,7 +242,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.3.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.4.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

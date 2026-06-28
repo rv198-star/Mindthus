@@ -56,7 +56,10 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.3.0`",
+            "当前仓库版本：`v1.4.0`",
+            "局部正确",
+            "输入定框审计",
+            "framing-risk",
             "AGPLv3 + commercial dual licensing",
             "## 安装",
             "## 验证",
@@ -653,7 +656,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.3.0")
+            self.assertEqual(plugin["version"], "1.4.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -738,7 +741,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.3.0")
+            self.assertEqual(codex_plugin_manifest["version"], "1.4.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
@@ -811,8 +814,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.3.0"
-            skills = tmp_dir / "mindthus-skills-1.3.0"
+            plugins = tmp_dir / "mindthus-plugins-1.4.0"
+            skills = tmp_dir / "mindthus-skills-1.4.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
