@@ -32,6 +32,75 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertIn("底层约束", text)
         self.assertIn("目标函数", text)
 
+    def test_input_framing_audit_is_strong_entry_protocol_inside_using_mindthus(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Input Framing Audit / 输入定框审计",
+            "强约束入口协议",
+            "在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级",
+            "true_question",
+            "packed_premises",
+            "layer_risks",
+            "frame_status",
+            "reframed_question",
+            "routing_decision",
+            "clean / biased / overloaded / malformed",
+            "not keyword rules",
+            "No frame-risk signal, no frame check",
+            "When frame-risk exists",
+            "internal result",
+            "No execution impact, omit the frame check",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "Framing-risk signals, not keyword rules",
+            "这些词只是高置信线索",
+            "没有这些词时，只要出现打包结论、层级偷换、局部机制冒充整体解释，也应触发",
+            "本质上",
+            "归根结底",
+            "其实就是",
+            "无非是",
+            "正因为我是",
+            "先给结论，再让模型评价",
+            "把实现层直接说成本体层",
+            "把局部机制直接说成整体解释",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for phrase in (
+            "`clean` -> normal route",
+            "`biased` -> name bias, then route",
+            "`overloaded` -> split propositions, then route",
+            "`malformed` -> correct the question before analysis",
+            "低风险、低抽象、直接执行类任务，不触发",
+            "不要把拆出很多前提当成判断已经完成",
+            "审计的目标是纠正 framing，不是展示聪明",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for phrase in (
+            "强约束入口协议",
+            "输入定框审计",
+            "内部产出",
+            "frame_status",
+            "routing_decision",
+        ):
+            self.assertIn(phrase, agents)
+
+        for phrase in (
+            "vague dissatisfaction or ordinary writing quality",
+            "MPG owns qualified-mainline path volatility",
+            "information acquisition, clarification, or sharper routing",
+            "validation is not semantic approval",
+        ):
+            self.assertIn(phrase, using)
+
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         self.assertIn("premise calibration", text)
@@ -610,6 +679,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "No Abstract Jargon Wall",
             "Approximate Quantified Mapping",
             "非精准量化显影",
+            "Frame Fitness Check",
+            "定框适配检查",
             "Gate Probes",
             "Failure Smells",
         ):
@@ -662,6 +733,10 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "Approximate Quantified Mapping / 非精准量化显影": (
                     "`AGENTS.md` / `using-mindthus`",
                     "数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。",
+                ),
+                "Frame Fitness Check / 定框适配检查": (
+                    "`using-mindthus` / `shared-primitives`",
+                    "当局部框架可能接管全局判断时，先判断应保留、限定、重构还是因证据不足阻断。",
                 ),
                 "Gate Probes / 冻结前定位自省": (
                     "`AGENTS.md` / `shared-primitives`",
@@ -719,11 +794,103 @@ class MindthusRouterContractTests(unittest.TestCase):
                 REPO / "AGENTS.md",
                 ("No Abstract Jargon Wall", "shared-primitives.md", "这对你意味着什么"),
             ),
+            "Frame Fitness Check": (
+                REPO / "skills" / "using-mindthus" / "SKILL.md",
+                (
+                    "Frame Fitness Check",
+                    "local frame",
+                    "preserve frame",
+                    "qualify frame",
+                    "reframe",
+                    "block pending evidence",
+                    "SELA",
+                ),
+            ),
         }
         for primitive, (path, phrases) in surfaces.items():
             text = path.read_text(encoding="utf-8")
             for phrase in phrases:
                 self.assertIn(phrase, text, f"{primitive} inactive in {path}: {phrase!r}")
+
+    def test_frame_fitness_check_prevents_local_frame_capture_without_contrarianism(self):
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Frame Fitness Check / 定框适配检查",
+            "not a new route",
+            "local frame",
+            "preserve frame",
+            "qualify frame",
+            "reframe",
+            "block pending evidence",
+            "No frame-risk signal, no frame check",
+            "No evidence, no superior frame claim",
+            "No user-value erasure",
+            "如果表述本身在错误层级上，先纠正问题层级，再回答",
+            "不要因为某个说法在实现层成立，就默认它在定义层也成立",
+        ):
+            self.assertIn(phrase, primitives)
+
+        for phrase in (
+            "Frame Fitness Check / 定框适配检查",
+            "local-frame capture",
+            "locally true",
+            "global judgment",
+            "preserve frame",
+            "qualify frame",
+            "reframe",
+            "block pending evidence",
+            "can wake `sela`",
+            "does not require a full SELA run",
+            "wrong level",
+            "implementation-layer truth",
+            "definition-layer truth",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "局部框架",
+            "全局判断",
+            "不是为了唱反调",
+            "用户价值、偏好、审美、风险姿态",
+            "不能被当作偏见抹掉",
+            "如果表述本身在错误层级上，先纠正问题层级，再回答",
+            "不要因为某个说法在实现层成立，就默认它在定义层也成立",
+        ):
+            self.assertIn(phrase, agents)
+
+        for phrase in (
+            "Frame Fitness / Local-Frame Capture Pressure Tests",
+            "Scenario 32: Skills-As-Prompt Local Frame Capture",
+            "Scenario 33: Test Signal Becomes Release Readiness",
+            "Scenario 34: Method Route Becomes Whole Judgment",
+            "Scenario 35: Legitimate User Preference Skip",
+            "Scenario 36: Repeated Local Frame Pressure",
+            "local-frame capture",
+            "globally misdirected",
+            "preserves user preference",
+            "Wrong-Level Statement Audit",
+            "corrects the question level before answering",
+            "implementation-layer truth",
+            "definition-layer truth",
+            "Scenario 37: Strong Entry Protocol For Packed Premises",
+            "true_question",
+            "packed_premises",
+            "layer_risks",
+            "frame_status",
+            "routing_decision",
+            "malformed",
+        ):
+            self.assertIn(phrase, pressure)
 
     def test_pressure_tests_measure_outcome_effectiveness(self):
         text = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(encoding="utf-8")

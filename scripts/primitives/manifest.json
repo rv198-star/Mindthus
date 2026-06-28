@@ -6,10 +6,13 @@
       "description": "Before selecting a Mindthus method.",
       "active_primitives": [
         "minimal_sufficient_lens",
+        "frame_fitness_check",
         "evidence_claim_ceiling"
       ],
       "required_agent_checks": [
         "is_this_clear_low_risk_direct_execution",
+        "is_input_a_question_or_packed_conclusion",
+        "is_a_local_frame_claiming_global_authority",
         "are_facts_or_runtime_proof_missing",
         "what_hard_judgment_point_exists",
         "which_method_owns_the_next_judgment"
@@ -89,6 +92,49 @@
         "evidence-substitute"
       ],
       "owner": "WAE"
+    },
+    "frame_fitness_check": {
+      "name": "Frame Fitness Check / 定框适配检查",
+      "short_rule": "局部框架可能接管全局判断时，先判断保留、限定、重构或因证据不足阻断。",
+      "trigger": [
+        "before-route"
+      ],
+      "action_effect": [
+        "audit-input-framing",
+        "preserve-frame",
+        "qualify-frame",
+        "reframe",
+        "block-pending-evidence",
+        "route"
+      ],
+      "not_a": [
+        "standalone-method",
+        "contrarianism-engine",
+        "semantic-judge",
+        "decorative-template",
+        "user-preference-eraser"
+      ],
+      "output_shape": [
+        "true_question",
+        "packed_premises",
+        "layer_risks",
+        "frame_status",
+        "reframed_question",
+        "routing_decision"
+      ],
+      "frame_status_values": [
+        "clean",
+        "biased",
+        "overloaded",
+        "malformed"
+      ],
+      "routing_effect": {
+        "clean": "normal-route",
+        "biased": "name-bias-then-route",
+        "overloaded": "split-propositions-then-route",
+        "malformed": "correct-question-before-analysis"
+      },
+      "owner": "using-mindthus"
     },
     "gate_probes": {
       "name": "Gate Probes / 冻结前定位自省",

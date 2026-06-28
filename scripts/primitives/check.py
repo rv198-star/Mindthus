@@ -70,6 +70,24 @@ def validate_manifest(manifest: Any) -> list[str]:
                 findings.append(f"{subject}.{field} must be a non-empty string")
         for field in ("trigger", "action_effect", "not_a"):
             require_list_of_strings(findings, primitive, field, subject)
+        for field in ("output_shape", "frame_status_values"):
+            if field in primitive:
+                require_list_of_strings(findings, primitive, field, subject)
+        if "routing_effect" in primitive:
+            routing_effect = primitive["routing_effect"]
+            if not isinstance(routing_effect, dict) or not routing_effect:
+                findings.append(f"{subject}.routing_effect must be a non-empty object when present")
+            else:
+                for key, value in routing_effect.items():
+                    if not non_empty_string(key) or not non_empty_string(value):
+                        findings.append(f"{subject}.routing_effect must map non-empty strings")
+                frame_status_values = primitive.get("frame_status_values")
+                if not isinstance(frame_status_values, list) or any(
+                    not non_empty_string(item) for item in frame_status_values
+                ):
+                    findings.append(f"{subject}.routing_effect requires frame_status_values")
+                elif set(routing_effect) != set(frame_status_values):
+                    findings.append(f"{subject}.routing_effect keys must match frame_status_values")
 
     for event_name, event in events.items():
         subject = f"events.{event_name}"
@@ -119,17 +137,21 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
         if item.get("method") == method:
             active_ids.append(item["primitive"])
 
-    active_primitives = [
-        {
+    active_primitives = []
+    for primitive_id in active_ids:
+        primitive = primitives[primitive_id]
+        item = {
             "id": primitive_id,
-            "name": primitives[primitive_id]["name"],
-            "short_rule": primitives[primitive_id]["short_rule"],
-            "owner": primitives[primitive_id]["owner"],
-            "action_effect": primitives[primitive_id]["action_effect"],
-            "not_a": primitives[primitive_id]["not_a"],
+            "name": primitive["name"],
+            "short_rule": primitive["short_rule"],
+            "owner": primitive["owner"],
+            "action_effect": primitive["action_effect"],
+            "not_a": primitive["not_a"],
         }
-        for primitive_id in active_ids
-    ]
+        for optional_field in ("output_shape", "frame_status_values", "routing_effect"):
+            if optional_field in primitive:
+                item[optional_field] = primitive[optional_field]
+        active_primitives.append(item)
     return {
         "schema_version": manifest["schema_version"],
         "event": event_name,
@@ -140,6 +162,7 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
         "agentic_judgment_required": True,
         "script_must_not_decide": [
             "semantic_truth",
+            "frame_correctness",
             "evidence_sufficiency",
             "gate_success",
             "exit_state",

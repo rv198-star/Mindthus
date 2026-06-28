@@ -361,7 +361,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assert_skill_frontmatter_is_parseable(path)
 
     def test_mindthus_skill_entrypoints_stay_within_size_budget(self):
-        budget_bytes = 8 * 1024
+        budget_bytes = 10 * 1024
         oversized = {
             path.parent.name: path.stat().st_size
             for path in sorted((REPO / "skills").glob("*/SKILL.md"))

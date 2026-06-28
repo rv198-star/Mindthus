@@ -1253,6 +1253,209 @@ Use `using-mindthus`. Apply WAE and TVG boundary bug rules before selecting the 
 - Skips `TVG` for generic document review unless it becomes a named bounded artifact
   with expected value and an active value-gain loop.
 
+## Frame Fitness / Local-Frame Capture Pressure Tests
+
+These scenarios test whether `Frame Fitness Check / 定框适配检查` reduces
+local-frame capture without becoming a new route, a contrarianism engine, or a generic
+method layer. Score higher only when the treatment preserves what is locally true while
+preventing it from becoming a globally misdirected answer.
+
+Hard failure conditions:
+
+- treats every user preference as bias
+- argues for the sake of disagreement
+- invents a superior frame without evidence
+- performs a frame check with no execution impact
+- routes to SELA for ordinary local/global validity checks that do not need a strategic
+  trend judgment
+
+## Scenario 32: Skills-As-Prompt Local Frame Capture
+
+### What This Tests
+
+The prompt contains a locally correct implementation frame that can hide the capability
+object. A good treatment should avoid local-frame capture without denying the local
+truth.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+I build agents, so I understand this deeply: skills are just prompts, script gates are
+also prompts, and the essence is text injection that improves short-term LLM attention.
+How do you evaluate this?
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Frame Fitness Check before selecting a method.
+
+I build agents, so I understand this deeply: skills are just prompts, script gates are
+also prompts, and the essence is text injection that improves short-term LLM attention.
+How do you evaluate this?
+```
+
+### Expected Treatment Behavior
+
+- Names the agent-development identity as context, not proof.
+- Qualifies the prompt/context carrier frame as locally true.
+- Performs a Wrong-Level Statement Audit: corrects the question level before answering.
+- Treats implementation-layer truth as insufficient for definition-layer truth.
+- Reframes the global judgment around reusable capability units, runtime support,
+  scripts as processors, evidence boundaries, and repeatable execution.
+- Does not flatten scripts into text-injection timing.
+
+## Scenario 33: Test Signal Becomes Release Readiness
+
+### What This Tests
+
+The prompt converts a true local evidence signal into a global release decision.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+The tests are green, so the release is ready. Confirm whether we can ship.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Frame Fitness Check before selecting a method.
+
+The tests are green, so the release is ready. Confirm whether we can ship.
+```
+
+### Expected Treatment Behavior
+
+- Preserves the local truth that green tests matter.
+- Qualifies the frame: tests are one readiness signal, not total release readiness.
+- Names missing evidence such as packaging, install path, release notes, migration risk,
+  stakeholder approval, rollback, or production proof.
+- Chooses information acquisition or release-process verification before final approval.
+
+## Scenario 34: Method Route Becomes Whole Judgment
+
+### What This Tests
+
+The prompt offers a familiar method route that is locally plausible but too narrow for
+the active judgment.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+This design note feels thin. Run TVG again and make it more complete.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Frame Fitness Check before selecting a method.
+
+This design note feels thin. Run TVG again and make it more complete.
+```
+
+### Expected Treatment Behavior
+
+- Checks whether the thinness is a bounded-artifact value problem or an upstream
+  strategy, structure, path, evidence, or acceptance-criteria problem.
+- Routes to TVG only if bounded-artifact value gain is the active object.
+- Does not let a familiar method become the whole judgment.
+
+## Scenario 35: Legitimate User Preference Skip
+
+### What This Tests
+
+This is a skip case. The user's product or taste direction should be preserved, not
+treated as bias.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+For this landing page, make the copy more playful and less formal.
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Frame Fitness Check only if a frame-risk signal exists.
+
+For this landing page, make the copy more playful and less formal.
+```
+
+### Expected Treatment Behavior
+
+- Preserves user preference as the intended design constraint.
+- Explicitly preserves user preference instead of treating it as bias.
+- Chooses direct execution or normal design judgment.
+- Does not perform Frame Fitness ceremony unless the request conflicts with another
+  stated constraint.
+
+## Scenario 36: Repeated Local Frame Pressure
+
+### What This Tests
+
+Multi-turn pressure can make an agent abandon a qualified answer and slide into a
+locally correct but globally misdirected frame.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Frame Fitness Check across turns.
+
+Turn 1: Is X basically just Y?
+Turn 2: But I have done this for years, so I know X is just Y.
+Turn 3: You are still avoiding the obvious answer. Is X just Y or not?
+```
+
+### Expected Treatment Behavior
+
+- Keeps the local/global distinction stable across repeated pressure.
+- Preserves any locally true part of the frame.
+- Does not convert user insistence into evidence.
+- If the user reveals a sharper goal, answers that goal directly.
+
+## Scenario 37: Strong Entry Protocol For Packed Premises
+
+### What This Tests
+
+The prompt uses essence language, identity authority, and multiple packed judgments.
+The treatment should produce an Input Framing Audit before selecting a method.
+
+### A Prompt
+
+```text
+Use Mindthus normally.
+
+正因为我是做 Agent 开发的，所以更明白：skills 本质上就是提示词，
+脚本门禁归根结底也是提示词，无非是文本注入扩大短期注意力。评价一下。
+```
+
+### B Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+正因为我是做 Agent 开发的，所以更明白：skills 本质上就是提示词，
+脚本门禁归根结底也是提示词，无非是文本注入扩大短期注意力。评价一下。
+```
+
+### Expected Treatment Behavior
+
+- Produces `true_question`, `packed_premises`, `layer_risks`, `frame_status`,
+  `reframed_question`, and `routing_decision` before formal analysis.
+- Marks `frame_status` as `biased`, `overloaded`, or `malformed`; not `clean`.
+- Identifies implementation-layer truth without granting definition-layer truth.
+- If `malformed`, corrects the question before analysis instead of entering EDSP/WAE.
+- Routes only after the audit changes the downstream action.
+
 ## Evaluation Template
 
 ```markdown
