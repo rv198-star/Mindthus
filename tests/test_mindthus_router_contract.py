@@ -101,6 +101,32 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, using)
 
+    def test_input_framing_audit_rejects_soft_commentary_fallback(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Visible audit requirement",
+            "Do not answer as a soft commentary fallback",
+            "A clever paragraph is not an audit",
+            "Question level before opinion",
+            "step outside the user's narrative",
+            "level-correct judgment",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "Scenario 38: Soft Commentary Regression",
+            "有洞察，但层级压扁了，所以只对了一半",
+            "70分",
+            "soft commentary fallback",
+            "must produce the audit fields before the evaluation",
+            "higher-level judgment",
+        ):
+            self.assertIn(phrase, pressure)
+
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         self.assertIn("premise calibration", text)

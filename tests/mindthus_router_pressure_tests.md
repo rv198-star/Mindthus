@@ -1456,6 +1456,41 @@ Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
 - If `malformed`, corrects the question before analysis instead of entering EDSP/WAE.
 - Routes only after the audit changes the downstream action.
 
+## Scenario 38: Soft Commentary Regression
+
+### What This Tests
+
+The response can sound insightful while falling back to ordinary commentary. A good
+treatment must not replace the strong entry protocol with a fluent half-right
+evaluation.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Someone answered:
+
+"这句话我会评价为：有洞察，但层级压扁了，所以只对了一半。
+如果这是圈内人的口语化判断，我给 70分；如果当成严格技术判断，我不会直接签字。"
+
+Evaluate whether this output satisfies Mindthus v1.4 expectations.
+```
+
+### Expected Treatment Behavior
+
+- Identifies the quoted answer as a soft commentary fallback, not a completed
+  Input Framing Audit.
+- States that the treatment must produce the audit fields before the evaluation:
+  `true_question`, `packed_premises`, `layer_risks`, `frame_status`,
+  `reframed_question`, and `routing_decision`.
+- Explains that "有洞察，但层级压扁了，所以只对了一半" is an insight, not a
+  routing-changing audit result.
+- Treats `70分` as a weak concession to the authority/oral-shorthand frame unless
+  the scoring criterion is explicitly justified.
+- Requires a higher-level judgment: step outside the user's narrative, identify the
+  real object and wrong-level claims, then answer from the corrected level.
+
 ## Evaluation Template
 
 ```markdown
