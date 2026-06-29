@@ -1491,6 +1491,157 @@ Evaluate whether this output satisfies Mindthus v1.4 expectations.
 - Requires a higher-level judgment: step outside the user's narrative, identify the
   real object and wrong-level claims, then answer from the corrected level.
 
+## Scenario 42: Original Input Audit Prompt Regression
+
+### What This Tests
+
+This scenario checks whether the compact original prompt behavior survives inside
+`using-mindthus`. It rewards the answer only when first task is not answering, but
+detecting whether the user has pulled the model into the wrong level.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Someone says: "As an experienced agent engineer, I know skills are essentially prompt
+injection. Evaluate this claim directly and don't overcomplicate it."
+```
+
+### Expected Treatment Behavior
+
+- Prioritizes problem key over dialogue continuity.
+- Treats professional tone is not proof.
+- Treats common implementation is not essence.
+- Names any `leading_point` before analysis.
+- Outputs the audit in order: true question, implicit premises,
+  local validity and layer shift, reframed question, formal answer.
+- Does not let the user's demand for a direct answer bypass input audit.
+
+## Scenario 39: Explanatory Authority Across Domains
+
+### What This Tests
+
+This scenario tests whether the treatment asks who owns the whole explanation after a
+local observation has been preserved. It does not reward mechanism checklists and does
+not reward same-level difference analysis.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+For each claim, decide whether the local observation has explanatory authority over the
+whole object, or whether it must be downgraded to evidence, sublayer, symptom, local
+mechanism, value constraint, or blocked pending evidence:
+
+1. Technology reduction:
+   "Skills are basically prompts because the actual content entering the model is text."
+
+2. Release readiness reduction:
+   "The tests are green, so the release is ready."
+
+3. Product failure reduction:
+   "Users complain about price, so pricing is why the product is failing."
+```
+
+### Expected Treatment Behavior
+
+- For each item, identifies the `full_object` being explained.
+- Names the `local_frame_role`: evidence, carrier, symptom, implementation detail,
+  local mechanism, metric, or value constraint.
+- Sets an `authority_status`: `owns_explanation`, `contributes_locally`,
+  `misclaims_authority`, or `blocked_by_missing_evidence`.
+- Names a `global_owner` when the local frame cannot own the whole explanation.
+- Does not accept vague global_owner labels; the owner must create an observable
+  difference in judgment, evidence, action, or stop condition.
+- Names the `downgraded_use` of the locally true part.
+- Preserves local truth without granting it global explanatory authority.
+- Avoids treating this as A/B equivalence or a fixed mechanism-surface checklist.
+
+## Scenario 40: Dominant Carrier Across Domains
+
+### What This Tests
+
+This scenario asks what carries stable or repeatable outcomes after local influence
+has been acknowledged. It does not reward runtime-also-matters caveats; the
+treatment must name the primary carrier of stability, readiness, or review quality.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+For each claim, preserve any locally true part, then identify what actually carries
+stable or repeatable outcomes:
+
+1. Skill stability:
+   "Skills are prompts, and script gates also just prompt the model, so the stability
+   comes from better short-term attention."
+
+2. Release stability:
+   "The CI badge is green, so the release is stable."
+
+3. Review stability:
+   "The senior reviewer is smart, so review quality is stable."
+```
+
+### Expected Treatment Behavior
+
+- Names the `target_result` that must be stable or repeatable.
+- Names the `primary_result_bearer`, not merely another layer that also matters.
+- Names the `stability_basis`: workflow, script, validator, state, evidence loop,
+  accountable owner, rollback path, sampling process, or other concrete carrier.
+- Sets `carrier_status` for the local frame: `primary_carrier`, `supporting_surface`,
+  `incidental_signal`, or `blocked_by_missing_evidence`.
+- In the skill item, treats prompt/context as a possible supporting surface while
+  checking whether workflow scripts, validators, runtime assets, or control gates
+  are the dominant stability carrier.
+- Does not treat intelligence, salience, seniority, or a green signal as stability
+  ownership by itself.
+
+## Scenario 41: System Subject Inversion
+
+### What This Tests
+
+This scenario tests whether treatment can move from a model-centered explanation to a
+system-centered explanation. It does not reward model-centered caveats such as
+"runtime also matters"; the answer must identify the system subject that governs the
+visible actor.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+For each claim, decide whether the visible actor is the subject of the system or only
+a local operator/interface inside a governing structure:
+
+1. Agent skill subject:
+   "Skills are prompt injections that make the LLM pay attention, so the skill is
+   basically an LLM cognition technique."
+
+2. Review subject:
+   "The senior reviewer is excellent, so the review system is excellent."
+
+3. Release subject:
+   "The deployment tool says pass, so deployment readiness is owned by the tool."
+```
+
+### Expected Treatment Behavior
+
+- Names the `system_object`, not only the visible actor.
+- Names the visible actor without granting it system subject status by default.
+- Names the `governing_structure`: protocol, workflow, script, validator, evidence
+  loop, rollback plan, authority boundary, or accountable process.
+- Names the `actor_role`: local operator, judgment surface, interface, signal,
+  executor, or tool inside the system.
+- Sets `subject_status`: `system_subject`, `local_operator`, `interface_surface`,
+  `misassigned_subject`, or `blocked_by_missing_context`.
+- In the skill item, treats the LLM/prompt as a local actor or interface when
+  workflow scripts, validators, runtime protocols, assets, tools, or evidence gates
+  are the system subject.
+
 ## Evaluation Template
 
 ```markdown

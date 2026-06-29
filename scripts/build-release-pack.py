@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.4.0"
+VERSION = "1.4.1"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -29,6 +29,7 @@ LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
 RELEASE_SCRIPT_PATHS = (
     Path("run-fidelity-judge.py"),
     Path("log-fidelity-usage.py"),
+    Path("log-mindthus-runtime.py"),
     Path("primitives/check.py"),
     Path("primitives/manifest.json"),
 )

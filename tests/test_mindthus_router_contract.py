@@ -114,8 +114,23 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Question level before opinion",
             "step outside the user's narrative",
             "level-correct judgment",
+            "First task: judge whether the user led you to the wrong level",
+            "audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer",
+            "leading_point",
         ):
             self.assertIn(phrase, using)
+
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "problem key over dialogue continuity",
+            "professional tone is not proof",
+            "common implementation is not essence",
+            "first task is not answering",
+            "leading_point",
+        ):
+            self.assertIn(phrase, primitives)
 
         for phrase in (
             "Scenario 38: Soft Commentary Regression",
@@ -124,8 +139,91 @@ class MindthusRouterContractTests(unittest.TestCase):
             "soft commentary fallback",
             "must produce the audit fields before the evaluation",
             "higher-level judgment",
+            "Scenario 42: Original Input Audit Prompt Regression",
+            "first task is not answering",
+            "problem key over dialogue continuity",
+            "professional tone is not proof",
+            "common implementation is not essence",
         ):
             self.assertIn(phrase, pressure)
+
+    def test_input_framing_audit_requires_explanatory_authority_check_design(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for text in (using, primitives):
+            compact_text = " ".join(text.split())
+            for phrase in (
+                "Explanatory Authority Check / 解释权校准",
+                "local observation is trying to own the whole explanation",
+                "full_object",
+                "local_frame_role",
+                "authority_status",
+                "global_owner",
+                "downgraded_use",
+                "owns_explanation",
+                "contributes_locally",
+                "misclaims_authority",
+                "blocked_by_missing_evidence",
+                "concrete higher-level explanatory frame or accountable decision object",
+                "not a vague label",
+                "observable judgment or action difference",
+                "Dominant Carrier Check / 主导承载校准",
+                "which part carries stable or repeatable outcomes",
+                "target_result",
+                "primary_result_bearer",
+                "stability_basis",
+                "carrier_status",
+                "primary_carrier",
+                "supporting_surface",
+                "incidental_signal",
+                "Do not stop at runtime-also-matters",
+                "System Subject Check / 系统主体校准",
+                "visible actor",
+                "system_object",
+                "governing_structure",
+                "actor_role",
+                "subject_status",
+                "misassigned_subject",
+                "local correctness is not explanatory authority",
+            ):
+                self.assertIn(phrase, compact_text)
+
+        section_start = using.index("Explanatory Authority Check / 解释权校准")
+        section_end = using.index("internal result", section_start)
+        authority_section = using[section_start:section_end]
+        self.assertNotIn("Script determinism check", authority_section)
+        self.assertNotIn("carrier, activation, control, state", authority_section)
+        self.assertNotIn("A/B", authority_section)
+
+        pressure_compact = " ".join(pressure.split())
+        for phrase in (
+            "Scenario 39: Explanatory Authority Across Domains",
+            "Technology reduction",
+            "Release readiness reduction",
+            "Product failure reduction",
+            "asks who owns the whole explanation",
+            "Does not accept vague global_owner labels",
+            "observable difference in judgment, evidence, action, or stop condition",
+            "Scenario 40: Dominant Carrier Across Domains",
+            "asks what carries stable or repeatable outcomes",
+            "does not reward runtime-also-matters caveats",
+            "primary_result_bearer",
+            "stability_basis",
+            "Scenario 41: System Subject Inversion",
+            "does not reward model-centered caveats",
+            "system_object",
+            "governing_structure",
+            "misassigned_subject",
+            "does not reward mechanism checklists",
+            "does not reward same-level difference analysis",
+        ):
+            self.assertIn(phrase, pressure_compact)
 
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")

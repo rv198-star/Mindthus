@@ -98,6 +98,15 @@ Core sentence:
 
 > 在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级。
 
+Original input-audit discipline / 原始输入审计纪律:
+
+- first task is not answering; it is judging whether the user led you to the wrong level.
+- Use order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer.
+- Prioritize problem key over dialogue continuity.
+- professional tone is not proof.
+- common implementation is not essence.
+- If the input is leading, name `leading_point` before analysis.
+
 It handles local-frame capture: a local frame is true or useful at one level, but
 begins controlling the global judgment.
 
@@ -129,6 +138,36 @@ answering: 如果表述本身在错误层级上，先纠正问题层级，再回
 
 Do not let implementation-level truth become definition-level truth:
 不要因为某个说法在实现层成立，就默认它在定义层也成立。
+
+Explanatory Authority Check / 解释权校准:
+use this when a local observation is trying to own the whole explanation. First name
+the `full_object` being explained, then identify the `local_frame_role`: evidence,
+sublayer, symptom, implementation detail, local mechanism, metric, analogy, value
+constraint, or another bounded role. Set `authority_status` to `owns_explanation`,
+`contributes_locally`, `misclaims_authority`, or `blocked_by_missing_evidence`. If the
+local frame cannot own the explanation, name the `global_owner` and the
+`downgraded_use` of the locally true part. `global_owner` must be a concrete
+higher-level explanatory frame or accountable decision object, not a vague label,
+and must imply an observable judgment or action difference. local correctness is
+not explanatory authority.
+
+Dominant Carrier Check / 主导承载校准:
+use this when the claim concerns stable or repeatable outcomes, readiness, control,
+or deterministic value. Ask which part carries stable or repeatable outcomes. Name
+the `target_result`, `primary_result_bearer`, `stability_basis`, and
+`carrier_status`: `primary_carrier`, `supporting_surface`, `incidental_signal`, or
+`blocked_by_missing_evidence`. Do not stop at runtime-also-matters; identify the
+dominant stability carrier and downgrade local influence surfaces that only steer
+attention, expose evidence, or assist execution.
+
+System Subject Check / 系统主体校准:
+use this when a visible actor, carrier, model, expert, tool, or signal is being
+treated as the subject of a whole system. Name the `system_object`, the visible actor,
+the `governing_structure`, the `actor_role`, and `subject_status`: `system_subject`,
+`local_operator`, `interface_surface`, `misassigned_subject`, or
+`blocked_by_missing_context`. Do not center the answer on how the visible actor thinks
+or behaves when the higher-level system allocates control, evidence, repetition,
+failure handling, and authority.
 
 When triggered, produce at least this internal result shape before routing:
 

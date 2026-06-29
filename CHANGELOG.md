@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+## v1.4.1
+
+发布日期：2026-06-29
+
+[完整发布日志](docs/releases/v1.4.1.md)
+
+说明：本版是 v1.4 输入定框审计的强化发布。它把真实有效的“先审题、后回答”提示词纪律回灌进 `using-mindthus`，并补上解释权、主导承载和系统主体三类校准，减少 agent 被局部正确、专业口吻或实现层事实带偏后继续自洽的风险。
+
+### 新增
+
+- `using-mindthus` 明确输入审计第一任务：先判断用户是否把问题带到错误层级，再回答。
+- 输入审计输出顺序补齐为 `true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer`，并新增 `leading_point` 识别。
+- 新增 `scripts/log-mindthus-runtime.py`，可输出 repo、本地 marketplace 和 Codex cache 的 sha256、mtime 与关键 marker，用来确认热更新是否真正生效。
+
+### 修复
+
+- 强化 `Explanatory Authority Check / 解释权校准`：局部正确不自动拥有整体解释权。
+- 强化 `Dominant Carrier Check / 主导承载校准`：先判断当前对象真正由什么机制承载，避免把辅助机制误当主体。
+- 强化 `System Subject Check / 系统主体校准`：当对象是系统时，先判断主稳定性来自 workflow、state、gate、evidence、authority 还是模型局部推理。
+- release pack 现在携带 runtime diagnostic script，Codex / Claude Code 插件包可直接用于版本指纹核验。
+
+### 边界
+
+- 本版不针对某个 skills/prompt 示例作弊；新增规则必须服务通用定框、解释权和系统主体判断。
+- 本版不把输入审计扩展成所有任务的模板；低风险、事实足够、直接执行类任务仍直接做。
+- runtime 日志脚本只证明文件版本、hash 和 marker 是否一致，不证明模型一定按规则执行。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -q`
+- `git diff --check`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+- `python3 scripts/log-mindthus-runtime.py --strict`
+
 ## v1.4.0
 
 发布日期：2026-06-29
