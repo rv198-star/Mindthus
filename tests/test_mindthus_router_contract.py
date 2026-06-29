@@ -147,6 +147,35 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, pressure)
 
+    def test_input_framing_audit_productizes_original_prompt_as_mainline_protocol(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Original Prompt Contract / 原始有效提示词合同",
+            "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
+            "1. 我真正问的问题是什么",
+            "2. 我的话里包含了哪些隐含前提",
+            "3. 哪些前提只是局部成立，哪些可能在偷换概念或层级",
+            "4. 如果不接受这些前提，这个问题应该如何被重新表述",
+            "5. 再给出你的正式回答",
+            "优先识别问题关键，而不是优先维持对话连贯",
+            "不要因为我的说法听起来专业，就默认它成立",
+            "不要把当前常见实现方式直接当作本质",
+            "如果发现我在带节奏，先指出带节奏点，再分析问题",
+            "你的第一任务不是回答我，而是判断我有没有把你引到错误层面上",
+            "Auxiliary checks belong inside step 3",
+            "never become a new judgment center",
+            "Forbidden substitute",
+            "有洞察，但层级压扁了，所以只对了一半",
+            "runtime also matters",
+        ):
+            self.assertIn(phrase, using)
+
+        self.assertLess(
+            using.index("Original Prompt Contract / 原始有效提示词合同"),
+            using.index("Explanatory Authority Check / 解释权校准"),
+        )
+
     def test_input_framing_audit_requires_explanatory_authority_check_design(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
@@ -190,6 +219,8 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "actor_role",
                 "subject_status",
                 "misassigned_subject",
+                "skill/workflow answer must name system_object + primary_result_bearer",
+                "prompt/runtime caveat is not enough",
                 "local correctness is not explanatory authority",
             ):
                 self.assertIn(phrase, compact_text)
@@ -224,6 +255,38 @@ class MindthusRouterContractTests(unittest.TestCase):
             "does not reward same-level difference analysis",
         ):
             self.assertIn(phrase, pressure_compact)
+
+    def test_input_framing_audit_requires_core_thesis_extraction(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+
+        for text in (using, primitives):
+            compact_text = " ".join(text.split())
+            for phrase in (
+                "Core Thesis Extraction / 主判断收束",
+                "formal_answer must start with a one-sentence core thesis",
+                "do not leave the main judgment scattered in supporting paragraphs",
+                "local truth -> corrected owner/carrier -> practical consequence",
+                "the strongest sentence must not be buried at the end",
+                "core thesis must name the corrected owner/carrier",
+                "generic A-but-B verdict is not enough",
+                "Object Anchor / 对象锚定",
+                "do not replace the asked object with its larger container",
+                "keep asked object as subject in true_question/reframed_question/core thesis",
+                "answer the component's positioning before the container's architecture",
+                "Essence Wording Guard / 本质措辞护栏",
+                "do not restate carrier/interface as essence",
+                "corrected thesis must reject false essence claims",
+                "Executable Substrate Check / 可执行基底校准",
+                "operative subcomponents move work from generation into execution/verification",
+                "surface steering is not the higher-level positioning",
+                "Composite Object Integrity / 复合对象完整性",
+                "do not strip operative subcomponents out of the asked object",
+                "answer the assembled capability, not the leftover surface",
+            ):
+                self.assertIn(phrase, compact_text)
 
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
