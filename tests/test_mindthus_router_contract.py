@@ -22,6 +22,21 @@ def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str,
 
 
 class MindthusRouterContractTests(unittest.TestCase):
+    def test_mindthus_states_truth_orientation_as_core_principle(self):
+        surfaces = (
+            REPO / "README.md",
+            REPO / "AGENTS.md",
+            REPO / "skills" / "using-mindthus" / "SKILL.md",
+        )
+        for path in surfaces:
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "Truth Orientation / 真相优先",
+                "pursue facts and truth over agreement",
+                "user input is signal, constraint, or hypothesis; not evidence by itself",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_using_mindthus_defines_premise_calibration_as_pre_route_action(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Premise Calibration", text)
@@ -151,7 +166,14 @@ class MindthusRouterContractTests(unittest.TestCase):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
 
         for phrase in (
+            "description: Use when routing Mindthus or auditing frame-risk.",
+            "General frame rule / 通用定框规则",
+            "any locally true frame",
+            "agent inference, method routing, tests, metrics, artifacts, or implementation details",
+            "must earn global explanatory authority before it can define the whole object",
             "Original Prompt Contract / 原始有效提示词合同",
+            "legacy prompt template",
+            "not the judgment center",
             "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
             "1. 我真正问的问题是什么",
             "2. 我的话里包含了哪些隐含前提",
@@ -219,8 +241,8 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "actor_role",
                 "subject_status",
                 "misassigned_subject",
-                "skill/workflow answer must name system_object + primary_result_bearer",
-                "prompt/runtime caveat is not enough",
+                "visible carrier/interface answer must name system_object + primary_result_bearer",
+                "surface caveat is not enough",
                 "local correctness is not explanatory authority",
             ):
                 self.assertIn(phrase, compact_text)
@@ -256,7 +278,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, pressure_compact)
 
-    def test_input_framing_audit_requires_core_thesis_extraction(self):
+    def test_input_framing_audit_requires_partial_truth_capture_main_axis(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
             encoding="utf-8"
@@ -265,6 +287,36 @@ class MindthusRouterContractTests(unittest.TestCase):
         for text in (using, primitives):
             compact_text = " ".join(text.split())
             for phrase in (
+                "Partial Truth Capture / 局部真相捕获",
+                "A locally true observation must not own the whole explanation",
+                "preserve its local truth, then test whether it deserves definition-level authority",
+                "先承认它摸到的那块是真的，再判断它有没有资格代表整头象",
+                "local_truth",
+                "whole_object",
+                "Whole Object Reconstruction / 整体对象还原",
+                "reconstruct the whole object before essence judgment",
+                "target job",
+                "main use cases",
+                "primary value carrier",
+                "local interface role",
+                "authority_weight",
+                "overreach_risk",
+                "corrected_thesis",
+                "value contribution",
+                "usage frequency",
+                "stable outcome",
+                "replacement cost",
+                "decision impact",
+                "grant authority only when the local frame carries the target result",
+                "would change the decision if removed",
+                "predicts outcomes or failures better than competing frames",
+                "blocked_by_missing_evidence when the whole-object carrier is unknown",
+                "definition consequence",
+                "optimization direction",
+                "Non-Mirror Correction / 非镜像纠错",
+                "Failure Channel / 失败通道",
+                "Anti-Sycophancy / 反谄媚",
+                "guardrails must not become the core",
                 "Core Thesis Extraction / 主判断收束",
                 "formal_answer must start with a one-sentence core thesis",
                 "do not leave the main judgment scattered in supporting paragraphs",
@@ -272,21 +324,43 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "the strongest sentence must not be buried at the end",
                 "core thesis must name the corrected owner/carrier",
                 "generic A-but-B verdict is not enough",
-                "Object Anchor / 对象锚定",
-                "do not replace the asked object with its larger container",
-                "keep asked object as subject in true_question/reframed_question/core thesis",
-                "answer the component's positioning before the container's architecture",
                 "Essence Wording Guard / 本质措辞护栏",
                 "do not restate carrier/interface as essence",
                 "corrected thesis must reject false essence claims",
-                "Executable Substrate Check / 可执行基底校准",
-                "operative subcomponents move work from generation into execution/verification",
-                "surface steering is not the higher-level positioning",
-                "Composite Object Integrity / 复合对象完整性",
-                "do not strip operative subcomponents out of the asked object",
-                "answer the assembled capability, not the leftover surface",
+                "A valid local usage is not the definition",
+                "move optimization from the target outcome to surface improvement",
             ):
                 self.assertIn(phrase, compact_text)
+
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+        pressure_compact = " ".join(pressure.split())
+        for phrase in (
+            "Scenario 43: Partial Truth Capture Beats Blind-Elephant Reduction",
+            "the elephant problem is not that the local contact is false",
+            "local truth must not define the whole object",
+            "reconstructs the whole object before judging essence",
+            "target job, main use cases, primary value carrier, and local interface role",
+            "If the definition shifts engineering attention from the target job to surface wording, it is overreaching",
+            "Scenario 44: Local Truth Can Own Explanation",
+            "does not reflexively downgrade a local mechanism",
+            "granting authority when the local mechanism carries the target result",
+            "Scenario 45: Whole Object Reconstruction Beyond Skills",
+            "not a SKILLS-specific patch",
+            "release's target job, main use cases, primary value carrier, and local interface role of tests",
+            "release readiness as the accountable ability to ship a change safely, recoverably, and usefully",
+            "operational safety, rollout control, observability, user impact, and recovery",
+            "Does not treat \"release readiness is not only tests\" as sufficient",
+            "Scenario 46: Whole Object Reconstruction Beyond Release",
+            "product failure is basically a pricing problem",
+            "product success or failure's target job, main use cases, primary value carrier, and local interface role of pricing",
+            "better predicts retention, conversion, unit economics, onboarding, value delivery, positioning, activation, or channel fit",
+            "downgrades pricing to symptom, evidence, value constraint, or blocked_by_missing_evidence when the whole-object carrier is unknown",
+            "Does not treat \"product failure is not only pricing\" as sufficient",
+            "higher-level object and why pricing does or does not own it",
+        ):
+            self.assertIn(phrase, pressure_compact)
 
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")

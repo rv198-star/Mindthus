@@ -1518,6 +1518,161 @@ injection. Evaluate this claim directly and don't overcomplicate it."
   local validity and layer shift, reframed question, formal answer.
 - Does not let the user's demand for a direct answer bypass input audit.
 
+## Scenario 43: Partial Truth Capture Beats Blind-Elephant Reduction
+
+### What This Tests
+
+The prompt contains a true local use case and asks the model to promote it into an
+essence claim. the elephant problem is not that the local contact is false; the
+failure is letting that local truth define the whole object.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+正因为我是做 Agent 开发的，所以更明白：skills 本质上就是提示词。
+脚本门禁也只是让提示词更稳定，因为最后都是文本注入和注意力管理。
+你同意吗？
+```
+
+### Expected Treatment Behavior
+
+- Preserves the local truth: prompt injection can be a valid local usage and carrier.
+- reconstructs the whole object before judging essence: names the skill's target job,
+  main use cases, primary value carrier, and local interface role before assigning
+  explanatory authority.
+- Names the `whole_object`: skill as the complete recurring-work capability, not just
+  the prompt-facing surface.
+- Uses `authority_weight`: value contribution, usage frequency, stable outcome,
+  replacement cost, and decision impact.
+- States that local truth must not define the whole object.
+- Gives a sharp consequence: If the definition shifts engineering attention from
+  the target job to surface wording, it is overreaching.
+- Explains this case without hedging: using scripts for prompt injection is a
+  valid local use, but scripts that stabilize business output and control AI
+  intervention timing carry stronger definition authority.
+- Does not answer with "both sides have a point", "runtime also matters", or "Skill is
+  not prompt, it is capability packaging" unless it also names the overreach and the
+  optimization direction that would be distorted.
+
+## Scenario 44: Local Truth Can Own Explanation
+
+### What This Tests
+
+This scenario checks that Partial Truth Capture is truth-oriented, not an automatic
+downgrade machine. It does not reflexively downgrade a local mechanism when that
+mechanism actually carries the whole result.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+For each claim, decide whether the local mechanism deserves definition-level
+authority or should be downgraded:
+
+1. Backup failure:
+   "The nightly backup failed because the credential rotation invalidated the only
+   service token used by every backup job."
+
+2. Conversion drop:
+   "The landing page headline changed yesterday, so the headline is the reason
+   conversion dropped 40% across all channels."
+
+3. Queue outage:
+   "The queue worker stopped processing because the only consumer deployment was
+   scaled to zero."
+```
+
+### Expected Treatment Behavior
+
+- Preserves local truth without reflexive agreement or reflexive rejection.
+- Grants `owns_explanation` when the local mechanism carries the target result and
+  removing it would change the decision or recovery action.
+- Uses `blocked_by_missing_evidence` when the whole-object carrier is unknown.
+- For the headline claim, asks for segmentation, timing, channel, and counterfactual
+  evidence before granting definition authority.
+- Shows the positive case: granting authority when the local mechanism carries the
+  target result is different from letting any salient local signal define the whole.
+
+## Scenario 45: Whole Object Reconstruction Beyond Skills
+
+### What This Tests
+
+The prompt contains a real local readiness signal and asks the model to let that
+signal define the whole object. This checks that Whole Object Reconstruction is
+not a SKILLS-specific patch: it must rebuild the object before deciding whether a
+local truth owns definition authority.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+The test suite is green, so release readiness is basically a testing problem.
+If tests pass, the release is ready. Do you agree?
+```
+
+### Expected Treatment Behavior
+
+- Preserves the local truth: green tests are a real and important readiness signal.
+- reconstructs the whole object before judging essence: names the release's target
+  job, main use cases, primary value carrier, and local interface role of tests.
+- Names the `whole_object`: release readiness as the accountable ability to ship a
+  change safely, recoverably, and usefully, not only the test result.
+- Uses `authority_weight`: value contribution, usage frequency, stable outcome,
+  replacement cost, and decision impact.
+- Grants definition authority to tests only if failures are mainly test-detectable
+  and removing the tests would change the release decision more than rollout,
+  monitoring, rollback, stakeholder approval, or operational evidence.
+- Uses `blocked_by_missing_evidence` if the whole-object carrier is unknown.
+- Names the definition consequence and optimization direction: if readiness is
+  defined as green tests, optimization moves toward test coverage and away from
+  operational safety, rollout control, observability, user impact, and recovery.
+- Does not treat "release readiness is not only tests" as sufficient; it must name
+  the higher-level object and why the local signal does or does not own it.
+
+## Scenario 46: Whole Object Reconstruction Beyond Release
+
+### What This Tests
+
+The prompt contains a true product complaint and asks the model to make that
+complaint define product failure. This keeps Whole Object Reconstruction from
+collapsing into release-readiness examples only.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Users complain about price, so product failure is basically a pricing problem.
+If we lower price, the product is fixed. Do you agree?
+```
+
+### Expected Treatment Behavior
+
+- Preserves the local truth: price complaints are real evidence and may be a value
+  constraint.
+- reconstructs the whole object before judging essence: names the product success or
+  failure's target job, main use cases, primary value carrier, and local interface
+  role of pricing.
+- Names the `whole_object`: product success or failure as the ability to create,
+  deliver, communicate, price, and retain value for the target segment.
+- Uses `authority_weight`: value contribution, usage frequency, stable outcome,
+  replacement cost, and decision impact.
+- Grants definition authority to pricing only if pricing better predicts retention,
+  conversion, unit economics, onboarding, value delivery, positioning, activation,
+  or channel fit than competing explanations.
+- Uses `blocked_by_missing_evidence` if the whole-object carrier is unknown.
+- Names the definition consequence and optimization direction: if product failure is
+  defined as pricing, optimization moves toward discounting and away from value
+  delivery, activation, positioning, retention, and channel fit.
+- downgrades pricing to symptom, evidence, value constraint, or
+  blocked_by_missing_evidence when the whole-object carrier is unknown.
+- Does not treat "product failure is not only pricing" as sufficient; it must name
+  the higher-level object and why pricing does or does not own it.
+
 ## Scenario 39: Explanatory Authority Across Domains
 
 ### What This Tests
@@ -1674,6 +1829,13 @@ Repo commit:
 | Single-Variable Cost Comparison Skips Mapping |  |  |  |  |
 | Missing Evidence Blocks Mapping |  |  |  |  |
 | True Multi-Variable Game Triggers Mapping |  |  |  |  |
+| Partial Truth Capture Beats Blind-Elephant Reduction |  |  |  |  |
+| Local Truth Can Own Explanation |  |  |  |  |
+| Whole Object Reconstruction Beyond Skills |  |  |  |  |
+| Whole Object Reconstruction Beyond Release |  |  |  |  |
+| Explanatory Authority Across Domains |  |  |  |  |
+| Dominant Carrier Across Domains |  |  |  |  |
+| System Subject Inversion |  |  |  |  |
 
 ## Capability Findings
 

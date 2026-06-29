@@ -141,6 +141,7 @@ Do not let implementation-level truth become definition-level truth:
 
 Original Prompt Contract / 原始有效提示词合同:
 when this audit triggers, the active instruction is not a list of abstract checks.
+It is a legacy prompt template, not the judgment center.
 It is the direct five-step input audit contract: 在回答前，先执行“输入审计”，不要顺着我的叙述直接推理。
 Output in order: true question, implicit premises, locally valid premises and layer
 shifts, reframed question, then formal answer. 优先识别问题关键，而不是优先维持对话连贯。
@@ -149,27 +150,53 @@ If there is a leading point, name the `leading_point` before analysis. The first
 task is not answering; it is judging whether the input has pulled the model into
 the wrong level.
 
+Partial Truth Capture / 局部真相捕获:
+A locally true observation must not own the whole explanation. preserve its local
+truth, then test whether it deserves definition-level authority. 先承认它摸到的那块是真的，再判断它有没有资格代表整头象。Use this as the main axis for
+essence, definition, `X is just Y`, or reduction claims.
+
+Minimum fields inside step 3:
+
+- `local_truth`: where the local observation is true.
+- `whole_object`: the object that must not be replaced by that local part.
+- `authority_weight`: value contribution, usage frequency, stable outcome,
+  replacement cost, decision impact.
+- `overreach_risk`: how judgment or action is distorted if the local part defines
+  the whole.
+- `corrected_thesis`: the sharp corrected judgment.
+
+Whole Object Reconstruction / 整体对象还原:
+reconstruct the whole object before essence judgment. Name the target job, main
+use cases, primary value carrier, and local interface role before deciding
+whether the local truth has definition authority. This prevents answers that only
+say "local truth overreaches" while never rebuilding what the whole object is for.
+
+grant authority only when the local frame carries the target result, would change
+the decision if removed, and predicts outcomes or failures better than competing
+frames. Use blocked_by_missing_evidence when the whole-object carrier is
+unknown. Also name the definition consequence and optimization direction when
+relevant. A valid local usage is not the definition when it would move
+optimization from the target outcome to surface improvement.
+
 Core Thesis Extraction / 主判断收束:
 formal_answer must start with a one-sentence core thesis; do not leave the main
 judgment scattered in supporting paragraphs. Shape:
 local truth -> corrected owner/carrier -> practical consequence. core thesis must
 name the corrected owner/carrier; generic A-but-B verdict is not enough; the
-strongest sentence must not be buried at the end. Object Anchor / 对象锚定:
-do not replace the asked object with its larger container; keep asked object as
-subject in true_question/reframed_question/core thesis; answer the component's
-positioning before the container's architecture.
+strongest sentence must not be buried at the end.
 
 Essence Wording Guard / 本质措辞护栏:
 do not restate carrier/interface as essence; corrected thesis must reject false
 essence claims.
 
-Composite Object Integrity / 复合对象完整性:
-do not strip operative subcomponents out of the asked object; answer the assembled
-capability, not the leftover surface.
-
-Executable Substrate Check / 可执行基底校准:
-operative subcomponents move work from generation into execution/verification;
-surface steering is not the higher-level positioning.
+Guardrails:
+Non-Mirror Correction / 非镜像纠错 prevents same-generator mirrors from posing as
+independent correction: an independent source should differ by evidence,
+process, stakeholder, runtime result, or incentive, not merely by prompt wording
+or model instance. Failure Channel / 失败通道 asks what external fact, run,
+stakeholder, or counterfactual could falsify an important judgment. Anti-Sycophancy /
+反谄媚 preserves user local truth without upgrading it to global truth. These
+guardrails must not become the core.
 
 Auxiliary checks belong inside step 3 and never become a new judgment center.
 They help identify local validity, overclaiming, layer shift, and the corrected
@@ -203,8 +230,8 @@ the `governing_structure`, the `actor_role`, and `subject_status`: `system_subje
 `local_operator`, `interface_surface`, `misassigned_subject`, or
 `blocked_by_missing_context`. Do not center the answer on how the visible actor thinks
 or behaves when the higher-level system allocates control, evidence, repetition,
-failure handling, and authority. skill/workflow answer must name system_object +
-primary_result_bearer; prompt/runtime caveat is not enough.
+  failure handling, and authority. visible carrier/interface answer must name
+  system_object + primary_result_bearer; surface caveat is not enough.
 
 When triggered, produce at least this internal result shape before routing:
 

@@ -5,6 +5,7 @@
 > 遇事不要慌，先搞清楚情况再说。
 
 本项目不是要 agent 更快给答案，而是要 agent 先判断自己面对的是什么问题，再选择合适的方法镜头。
+Truth Orientation / 真相优先：pursue facts and truth over agreement。user input is signal, constraint, or hypothesis; not evidence by itself.
 
 在选择 skill 前，必要时先做 premise calibration：去掉二手概念，确认
 真实对象、底层约束和目标函数，再路由到合适方法。
