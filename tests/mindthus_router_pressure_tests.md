@@ -1673,6 +1673,51 @@ If we lower price, the product is fixed. Do you agree?
 - Does not treat "product failure is not only pricing" as sufficient; it must name
   the higher-level object and why pricing does or does not own it.
 
+## Scenario 47: Whole Elephant Strategy Split
+
+### What This Tests
+
+The prompt gives several locally true observations and asks the model to turn the
+list into a direct essence judgment. This checks whether the treatment names the
+complete object before summarizing local truths, then chooses between weighted
+synthesis and whole-first re-evaluation instead of averaging salient parts.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Five enterprise customers complain about price, three churn interviews mention
+onboarding confusion, sales says security review is the biggest blocker, and
+support says reliability tickets are down. So is product failure basically
+pricing, onboarding, security, or stability?
+```
+
+### Expected Treatment Behavior
+
+- Names the `whole_object` before assigning explanation authority: product
+  success or failure as the ability to create, deliver, communicate, price, trust,
+  and retain value for the target segment.
+- Maps `local_success_points`: price as value constraint, onboarding as
+  activation friction, security as enterprise adoption gate, and reliability
+  trend as operational evidence.
+- Uses `coverage_weight` only after checking whether the contacts cover the
+  decision object rather than repeating one channel, incentive, interface, or
+  abstraction level.
+- Uses weighted_synthesis when local contacts are independent, comparable, and
+  cover enough of the object.
+- Uses whole_first_re_evaluation when local contacts are correlated,
+  same-surface, or miss the governing structure.
+- does not average local truths before naming the whole object.
+- States that fluent evaluation is incomplete unless it exposes whole_object,
+  local_success_points, strategy_choice, definition_owner or result_controller,
+  and decision_consequence.
+- Writes a Whole Elephant audit JSON and runs validate_whole_elephant.py before
+  formal evaluation.
+- Names the resulting action difference: pricing work, onboarding repair,
+  security proof, reliability evidence, positioning, segmentation, or blocked
+  pending evidence.
+
 ## Scenario 39: Explanatory Authority Across Domains
 
 ### What This Tests
@@ -1833,6 +1878,7 @@ Repo commit:
 | Local Truth Can Own Explanation |  |  |  |  |
 | Whole Object Reconstruction Beyond Skills |  |  |  |  |
 | Whole Object Reconstruction Beyond Release |  |  |  |  |
+| Whole Elephant Strategy Split |  |  |  |  |
 | Explanatory Authority Across Domains |  |  |  |  |
 | Dominant Carrier Across Domains |  |  |  |  |
 | System Subject Inversion |  |  |  |  |

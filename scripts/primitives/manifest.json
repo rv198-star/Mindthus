@@ -7,12 +7,14 @@
       "active_primitives": [
         "minimal_sufficient_lens",
         "frame_fitness_check",
+        "whole_elephant_protocol",
         "evidence_claim_ceiling"
       ],
       "required_agent_checks": [
         "is_this_clear_low_risk_direct_execution",
         "is_input_a_question_or_packed_conclusion",
         "is_a_local_frame_claiming_global_authority",
+        "if_partial_truth_triggers_validate_whole_elephant_audit",
         "are_facts_or_runtime_proof_missing",
         "what_hard_judgment_point_exists",
         "which_method_owns_the_next_judgment"
@@ -135,6 +137,48 @@
         "malformed": "correct-question-before-analysis"
       },
       "owner": "using-mindthus"
+    },
+    "whole_elephant_protocol": {
+      "name": "Whole Elephant Protocol / 全象流程",
+      "short_rule": "局部真相可能冒充整体时，先产出可校验全象审计包，再进入正式判断。",
+      "trigger": [
+        "before-route"
+      ],
+      "action_effect": [
+        "validate-whole-elephant-audit",
+        "reconstruct-whole-object",
+        "map-local-success-points",
+        "choose-strategy",
+        "decide-definition-disposition",
+        "name-result-controller",
+        "name-decision-consequence",
+        "name-optimization-misdirection",
+        "plan-formal-answer"
+      ],
+      "not_a": [
+        "standalone-method",
+        "semantic-judge",
+        "definition-decider",
+        "domain-answer-generator"
+      ],
+      "output_shape": [
+        "object_hierarchy",
+        "user_named_object_relation",
+        "canonical_object",
+        "formal_thesis_subject",
+        "umbrella_context",
+        "subject_alignment_reason",
+        "whole_object_reconstruction",
+        "formal_answer_plan",
+        "whole_object",
+        "local_success_points",
+        "strategy_choice",
+        "corrected_thesis",
+        "definition_owner",
+        "result_controller",
+        "decision_consequence"
+      ],
+      "owner": "shared-primitives"
     },
     "gate_probes": {
       "name": "Gate Probes / 冻结前定位自省",

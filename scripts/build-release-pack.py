@@ -31,6 +31,7 @@ RELEASE_SCRIPT_PATHS = (
     Path("log-fidelity-usage.py"),
     Path("log-mindthus-runtime.py"),
     Path("primitives/check.py"),
+    Path("primitives/validate_whole_elephant.py"),
     Path("primitives/manifest.json"),
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (

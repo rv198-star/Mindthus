@@ -22,6 +22,15 @@ Partial Truth Capture / 局部真相捕获
 A locally true observation must not own the whole explanation
 Whole Object Reconstruction / 整体对象还原
 reconstruct the whole object before essence judgment
+Whole Elephant Protocol / 全象流程
+local_success_points
+weighted_synthesis
+whole_first_re_evaluation
+strategy_choice
+definition_owner
+result_controller
+decision_consequence
+validate_whole_elephant.py
 target job
 main use cases
 primary value carrier
@@ -59,6 +68,20 @@ Partial Truth Capture / 局部真相捕获
 A locally true observation must not own the whole explanation
 Whole Object Reconstruction / 整体对象还原
 reconstruct the whole object before essence judgment
+Whole Elephant Protocol / 全象流程
+start by naming the complete object before summarizing local truths
+local_success_points
+coverage_weight
+weighted_synthesis
+whole_first_re_evaluation
+strategy_choice
+definition_owner
+result_controller
+decision_consequence
+When Partial Truth Capture triggers, the formal answer is incomplete without
+scripts/primitives/validate_whole_elephant.py
+mindthus-whole-elephant-audit-v0.1
+validation failure blocks formal answer
 target job
 main use cases
 primary value carrier
@@ -85,9 +108,18 @@ System Subject Check / 系统主体校准
 def write_runtime_tree(root: Path, using_text: str = USING_TEXT, primitives_text: str = PRIMITIVES_TEXT) -> None:
     (root / "skills" / "using-mindthus").mkdir(parents=True)
     (root / "docs" / "methodologies").mkdir(parents=True)
+    (root / "scripts" / "primitives").mkdir(parents=True)
     (root / "skills" / "using-mindthus" / "SKILL.md").write_text(using_text, encoding="utf-8")
     (root / "docs" / "methodologies" / "shared-primitives.md").write_text(
         primitives_text,
+        encoding="utf-8",
+    )
+    (root / "scripts" / "primitives" / "manifest.json").write_text(
+        '{"primitives":{"whole_elephant_protocol":{}}}\n',
+        encoding="utf-8",
+    )
+    (root / "scripts" / "primitives" / "validate_whole_elephant.py").write_text(
+        'SCHEMA_VERSION = "mindthus-whole-elephant-audit-v0.1"\n',
         encoding="utf-8",
     )
 
@@ -134,6 +166,30 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertIn(
                 "reconstruct the whole object before essence judgment",
                 payload["markers"],
+            )
+            self.assertIn("Whole Elephant Protocol / 全象流程", payload["markers"])
+            self.assertIn(
+                "start by naming the complete object before summarizing local truths",
+                payload["markers"],
+            )
+            self.assertIn("local_success_points", payload["markers"])
+            self.assertIn("coverage_weight", payload["markers"])
+            self.assertIn("weighted_synthesis", payload["markers"])
+            self.assertIn("whole_first_re_evaluation", payload["markers"])
+            self.assertIn("strategy_choice", payload["markers"])
+            self.assertIn("definition_owner", payload["markers"])
+            self.assertIn("result_controller", payload["markers"])
+            self.assertIn("decision_consequence", payload["markers"])
+            self.assertIn("validate_whole_elephant.py", payload["markers"])
+            self.assertIn(
+                "When Partial Truth Capture triggers, the formal answer is incomplete without",
+                payload["markers"],
+            )
+            self.assertIn("mindthus-whole-elephant-audit-v0.1", payload["markers"])
+            self.assertIn("validation failure blocks formal answer", payload["markers"])
+            self.assertIn(
+                "scripts/primitives/validate_whole_elephant.py",
+                payload["locations"]["cache"]["files"],
             )
             self.assertIn("target job", payload["markers"])
             self.assertIn("main use cases", payload["markers"])

@@ -368,12 +368,21 @@ class PackagingDocsTests(unittest.TestCase):
         oversized = {
             path.parent.name: path.stat().st_size
             for path in sorted((REPO / "skills").glob("*/SKILL.md"))
-            if path.stat().st_size > budget_bytes
+            if path.parent.name != "using-mindthus" and path.stat().st_size > budget_bytes
         }
         self.assertEqual(
             oversized,
             {},
             "Mindthus SKILL.md files should stay thin; move long guidance to resources/ or docs/methodologies/",
+        )
+
+    def test_using_mindthus_entrypoint_stays_thin_enough_for_attention(self):
+        budget_bytes = 11264
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        self.assertLessEqual(
+            path.stat().st_size,
+            budget_bytes,
+            "using-mindthus is the routing entrypoint; keep it under 11KiB and move long semantics to shared primitives/scripts.",
         )
 
     def assert_release_pack_excludes_runtime_artifacts(self, out: Path) -> None:

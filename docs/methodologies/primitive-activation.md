@@ -29,6 +29,16 @@ python3 scripts/primitives/check.py --event before-freeze --method tvg
 脚本输出该事件应唤起哪些原语、agent 需要自查哪些点，并明确：
 `script_verdict: shape_only`，`agentic_judgment_required: true`。
 
+For primitives that need a visible audit artifact, activation can hand off to a
+shape validator. Whole Elephant Protocol / 全象流程 uses:
+
+```bash
+python3 scripts/primitives/validate_whole_elephant.py audit.json
+```
+
+That validator only checks whether the required audit fields exist. It does not
+decide whether the final judgment is true.
+
 ## 为什么不是完整 AOP
 
 完整 AOP 会要求定义大量 join point、生命周期阶段和注入规则。Mindthus 当前没有这个诉求。
@@ -86,6 +96,12 @@ owner: shared-primitives
 - 判断方法输出是否正确。
 - 判断审美、业务、策略或用户价值是否成功。
 - 替代用户授权、TVG exit gate 或 tplan continuation authorization。
+
+`scripts/primitives/validate_whole_elephant.py` is stricter but still shape-only:
+it can block a formal answer when the Whole Elephant audit JSON is missing
+`object_hierarchy`, `whole_object`, `local_success_points`, `strategy_choice`,
+`definition_owner`, `result_controller`, or `decision_consequence`; it still
+cannot decide whether those fields are substantively correct.
 
 脚本成功只表示：
 
