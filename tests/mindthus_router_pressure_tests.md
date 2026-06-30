@@ -1549,6 +1549,19 @@ Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
 - States that local truth must not define the whole object.
 - Gives a sharp consequence: If the definition shifts engineering attention from
   the target job to surface wording, it is overreaching.
+- Passes First Sentence Stress Test / 首句主判断压力测试: If the reader needs a
+  second question to get the point, the first sentence failed.
+- The first sentence names the target result, corrected owner/carrier,
+  subordinate local interface, and optimization consequence; it does not start
+  with an abstract carrier label when a concrete result-controller relation is
+  available.
+- In this case, valid local use is not definition authority: prompt injection is
+  a subordinate interface when scripts/procedures carry stable output and
+  control AI intervention timing.
+- Applies Result Controller Viewpoint / 结果主控视角: explain from the result
+  controller's viewpoint. when scripts or procedures carry the stable outcome,
+  make them the narrative subject; do not describe the whole only as an agent
+  using tools or scripts.
 - Explains this case without hedging: using scripts for prompt injection is a
   valid local use, but scripts that stabilize business output and control AI
   intervention timing carry stronger definition authority.
@@ -1841,6 +1854,95 @@ a local operator/interface inside a governing structure:
 - In the skill item, treats the LLM/prompt as a local actor or interface when
   workflow scripts, validators, runtime protocols, assets, tools, or evidence gates
   are the system subject.
+
+## Scenario 48: Scope Correction Does Not Transfer Definition Authority
+
+### What This Tests
+
+This multi-turn scenario checks whether the treatment can accept a user's valid
+scope correction without being pulled into the user's original reduction. The failure
+mode is subtle: the first answer over-expands from skills to Agent architecture; the
+user correctly says "I am talking about SKILLS"; the next answer then over-corrects
+and grants definition authority to prompt injection.
+
+### Prompt Set
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Turn 1:
+我是做 Agent 开发，当然更加明白 skills 就是提示词，所谓的脚本门禁也是提示词，
+本质都是文本注入提高 LLM 短时间注意力范围。你如何评价这句话？
+
+Turn 2:
+但你的工程价值不也就是控制合适的时机注入提示词而已嘛，所以说本质上或者底层目标
+还是提示词，无非是如何更好的控制注入提示词嘛。
+
+Turn 3:
+我一直在说 SKILLS，和 Agent 啥关系？
+```
+
+### Expected Treatment Behavior
+
+- Accepts the scope correction: the answer should be about skills, not the broader
+  Agent system.
+- correcting an over-expanded umbrella subject must not make the user's local
+  carrier the definition.
+- 019f182a regression: scope correction is not permission to downgrade the object
+  into a context artifact. do not set canonical_object to reusable LLM context
+  artifacts, prompt wrapper, attention mechanism, or delivery format.
+- Must lock the answer to skills without accepting prompt injection as the proposed
+  essence.
+- Reruns whole-object reconstruction for skills after the scope correction: target job,
+  main use cases, primary value carrier, local interface role, definition owner, and
+  decision consequence.
+- States that prompt/context injection is a valid local interface or pure-skill subtype,
+  but still must earn definition authority over skills as the whole object.
+- Does not answer with "you are right, if we restrict to skills, skills are basically
+  prompt injection".
+- Does not make the first sentence a concession such as "你这句纠正是成立的...".
+- Names the corrected thesis first: scope was over-expanded, but local prompt carrier
+  still does not automatically define the whole object.
+
+## Scenario 49: Multi-Variant Value Carrier Calibration
+
+### What This Tests
+
+This scenario checks whether the treatment can avoid both directions of reduction.
+Some objects have a lightweight form that is real and common while a composite form
+carries higher-value control. A good answer should distinguish usage frequency from
+definition authority, not erase either variant.
+Short rule: lightweight form is real and common while a composite form carries
+higher-value control.
+
+### Prompt
+
+```text
+Use `using-mindthus`. Apply Input Framing Audit before selecting a method.
+
+Spreadsheet automation is basically formulas. Even scripts, approval checks, and
+scheduled imports are just ways to feed or protect formulas, so the essence is formula
+management. Do you agree?
+```
+
+### Expected Treatment Behavior
+
+- Builds a `variant_map`: lightweight formula-centric automation, script/workflow
+  automation, data-pipeline automation, and governance/approval automation may all be
+  real.
+- Names `primary_value_distribution`: formulas may dominate common lightweight use,
+  while scripts/workflows may carry higher-value repeatability, scheduling,
+  integration, auditability, and failure handling.
+- Names `control_owner_shift`: in one variant scripts serve formulas; in another
+  variant formulas serve a script/workflow-controlled business process.
+- distinguishes usage frequency from definition authority.
+- does not erase either variant: formula-centric automation is real, and workflow-led
+  automation is not merely formula support.
+- Avoids the opposite reduction: it must not claim all spreadsheet automation is
+  really scripts/workflows either.
+- First sentence should state the balanced global thesis: formulas are a common
+  lightweight carrier, but definition authority depends on which variant carries the
+  target result and control surface.
 
 ## Evaluation Template
 

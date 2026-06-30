@@ -121,6 +121,43 @@ def validate_manifest(manifest: Any) -> list[str]:
             if method not in ALLOWED_METHODS:
                 findings.append(f"{item_subject}.method must be one of: {', '.join(sorted(ALLOWED_METHODS))}")
 
+    for event_name, event in events.items():
+        if not isinstance(event, dict):
+            continue
+        event_primitives = list(event.get("active_primitives", []))
+        conditional = event.get("conditional_primitives", [])
+        if isinstance(conditional, list):
+            event_primitives.extend(
+                item.get("primitive") for item in conditional if isinstance(item, dict)
+            )
+        for primitive_id in event_primitives:
+            primitive = primitives.get(primitive_id)
+            if isinstance(primitive, dict) and event_name not in primitive.get("trigger", []):
+                findings.append(
+                    f"events.{event_name}.active_primitives includes {primitive_id} "
+                    f"but primitive trigger does not include {event_name}"
+                )
+
+    for primitive_id, primitive in primitives.items():
+        if not isinstance(primitive, dict):
+            continue
+        for event_name in primitive.get("trigger", []):
+            event = events.get(event_name)
+            if not isinstance(event, dict):
+                findings.append(f"primitives.{primitive_id}.trigger references unknown event {event_name!r}")
+                continue
+            active_or_conditional = set(event.get("active_primitives", []))
+            conditional = event.get("conditional_primitives", [])
+            if isinstance(conditional, list):
+                active_or_conditional.update(
+                    item.get("primitive") for item in conditional if isinstance(item, dict)
+                )
+            if primitive_id not in active_or_conditional:
+                findings.append(
+                    f"primitives.{primitive_id}.trigger includes {event_name} "
+                    f"but event does not activate that primitive"
+                )
+
     return findings
 
 

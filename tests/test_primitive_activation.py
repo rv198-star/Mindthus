@@ -52,7 +52,109 @@ def formal_answer_plan(canonical_subject: str) -> dict:
     }
 
 
+def variant_calibration() -> dict:
+    return {
+        "variant_map": [
+            "lightweight local-signal-led variant",
+            "composite target-result-led variant",
+        ],
+        "primary_value_distribution": (
+            "the local signal may dominate common lightweight usage, while the "
+            "composite variant may carry higher-value stability and decision control"
+        ),
+        "control_owner_shift": (
+            "in one variant the system serves the local signal; in another the local "
+            "signal serves the target-result control surface"
+        ),
+    }
+
+
 class PrimitiveActivationTests(unittest.TestCase):
+    def test_manifest_event_activation_and_primitive_triggers_stay_bidirectional(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        events = manifest["events"]
+        primitives = manifest["primitives"]
+
+        for event_name, event in events.items():
+            event_primitives = set(event["active_primitives"])
+            for item in event.get("conditional_primitives", []):
+                event_primitives.add(item["primitive"])
+            for primitive_id in event_primitives:
+                self.assertIn(
+                    event_name,
+                    primitives[primitive_id]["trigger"],
+                    f"{primitive_id} is active for {event_name} but does not list that trigger",
+                )
+
+        for primitive_id, primitive in primitives.items():
+            for event_name in primitive["trigger"]:
+                event = events[event_name]
+                active_or_conditional = set(event["active_primitives"])
+                active_or_conditional.update(
+                    item["primitive"] for item in event.get("conditional_primitives", [])
+                )
+                self.assertIn(
+                    primitive_id,
+                    active_or_conditional,
+                    f"{primitive_id} lists {event_name} but the event does not activate it",
+                )
+
+    def test_manifest_validator_rejects_activation_trigger_mismatch(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        manifest["primitives"]["whole_elephant_protocol"]["trigger"] = ["before-route"]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = run_check(
+                "--event",
+                "before-answer",
+                "--method",
+                "using-mindthus",
+                "--manifest",
+                str(manifest_path),
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "events.before-answer.active_primitives includes whole_elephant_protocol but primitive trigger does not include before-answer",
+            result.stdout,
+        )
+
+    def test_before_answer_activates_aop_answer_aspects(self) -> None:
+        result = run_check("--event", "before-answer", "--method", "using-mindthus", "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+
+        self.assertEqual(report["script_verdict"], "shape_only")
+        self.assertEqual(report["event"], "before-answer")
+        self.assertEqual(
+            [item["id"] for item in report["active_primitives"]],
+            [
+                "whole_elephant_protocol",
+                "core_thesis_extraction",
+                "first_sentence_stress_test",
+                "essence_wording_guard",
+            ],
+        )
+        self.assertIn("build_compact_visible_audit", report["required_agent_checks"])
+        self.assertIn("start_formal_answer_with_core_thesis", report["required_agent_checks"])
+        self.assertIn("ensure_no_second_question_gap", report["required_agent_checks"])
+
+        first_sentence = next(
+            item for item in report["active_primitives"] if item["id"] == "first_sentence_stress_test"
+        )
+        self.assertIn("target_result", first_sentence["output_shape"])
+        self.assertIn("corrected_owner_or_carrier", first_sentence["output_shape"])
+        self.assertIn("final_say_language", first_sentence["output_shape"])
+        self.assertIn("controller_inversion", first_sentence["output_shape"])
+        self.assertIn("local_interface_role", first_sentence["output_shape"])
+        self.assertIn("optimization_consequence", first_sentence["output_shape"])
+        self.assertIn("name-global-thesis-first", first_sentence["action_effect"])
+        self.assertIn("deny-local-definition-authority", first_sentence["action_effect"])
+        self.assertIn("translate-definition-authority-to-final-say", first_sentence["action_effect"])
+        self.assertIn("name-controller-inversion-when-variants-differ", first_sentence["action_effect"])
+
     def test_before_route_activates_frame_fitness_shape_only_reminder(self) -> None:
         result = run_check("--event", "before-route", "--method", "using-mindthus", "--json")
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
@@ -116,6 +218,9 @@ class PrimitiveActivationTests(unittest.TestCase):
                 "umbrella_context",
                 "subject_alignment_reason",
                 "whole_object_reconstruction",
+                "variant_map",
+                "primary_value_distribution",
+                "control_owner_shift",
                 "formal_answer_plan",
                 "whole_object",
                 "local_success_points",
@@ -220,6 +325,9 @@ class PrimitiveActivationTests(unittest.TestCase):
                 "umbrella_context",
                 "subject_alignment_reason",
                 "whole_object_reconstruction",
+                "variant_map",
+                "primary_value_distribution",
+                "control_owner_shift",
                 "formal_answer_plan",
                 "whole_object",
                 "local_success_points",
@@ -235,6 +343,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
                 "object_hierarchy": {
                     "user_named_object": "green tests",
                     "whole_object": "release readiness",
@@ -242,7 +351,7 @@ class PrimitiveActivationTests(unittest.TestCase):
                     "role_layer": "regression signal",
                 },
                 "whole_object": "release readiness",
-                "user_named_object_relation": "canonical_object",
+                "user_named_object_relation": "component_or_interface",
                 "local_success_points": [
                     "green tests are real readiness evidence",
                     "pricing complaints are real value evidence",
@@ -269,6 +378,840 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
         self.assertIn("script_verdict: shape_only", result.stdout)
         self.assertIn("agentic_judgment_required: true", result.stdout)
+
+    def test_whole_elephant_validator_accepts_visible_answer_that_starts_with_core_thesis(self) -> None:
+        opening = (
+            "Skills are defined by reusable task control, not by the locally valid prompt interface, "
+            "so optimizing them as prompt wording misdirects work away from stable task completion."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skill capability",
+                    "component_layer": "prompt text",
+                    "role_layer": "attention steering interface",
+                },
+                "whole_object": "skill capability",
+                "canonical_object": "skill capability",
+                "formal_thesis_subject": "skill capability",
+                "umbrella_context": "agent runtime",
+                "subject_alignment_reason": "skill capability is being defined; agent runtime is only context",
+                "whole_object_reconstruction": {
+                    "target_job": "make task completion stable, reusable, and verifiable",
+                    "main_use_cases": "execution, validation, handoff, and recovery",
+                    "primary_value_carrier": "scripted task control and verification contract",
+                    "local_interface_role": "prompt injection as attention steering",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skill capability"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["prompt injection is a valid local interface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "scripted task control and verification contract",
+                "result_controller": "scripts, validators, resources, and recovery protocol",
+                "decision_consequence": "do not optimize skills as prompt wording",
+                "visible_formal_answer": opening
+                + " Prompt injection still matters, but only as a subordinate interface.",
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_whole_elephant_validator_rejects_core_thesis_that_starts_with_local_concession(self) -> None:
+        opening = (
+            "Prompt injection is a valid local interface, but skills are defined by reusable task control, "
+            "so optimizing them as prompt wording misdirects work away from stable task completion."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skill capability",
+                    "component_layer": "prompt text",
+                    "role_layer": "attention steering interface",
+                },
+                "whole_object": "skill capability",
+                "canonical_object": "skill capability",
+                "formal_thesis_subject": "skill capability",
+                "umbrella_context": "agent runtime",
+                "subject_alignment_reason": "skill capability is being defined; agent runtime is only context",
+                "whole_object_reconstruction": {
+                    "target_job": "make task completion stable, reusable, and verifiable",
+                    "main_use_cases": "execution, validation, handoff, and recovery",
+                    "primary_value_carrier": "scripted task control and verification contract",
+                    "local_interface_role": "prompt injection as attention steering",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skill capability"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["prompt injection is a valid local interface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "scripted task control and verification contract",
+                "result_controller": "scripts, validators, resources, and recovery protocol",
+                "decision_consequence": "do not optimize skills as prompt wording",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must start with the global thesis, not local-truth concession",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_core_thesis_that_over_accommodates_local_truth(self) -> None:
+        opening = (
+            "Skills are not only prompt injection; scripts and runtime also matter for agent systems."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skill capability",
+                    "component_layer": "prompt text",
+                    "role_layer": "attention steering interface",
+                },
+                "whole_object": "skill capability",
+                "canonical_object": "skill capability",
+                "formal_thesis_subject": "skill capability",
+                "umbrella_context": "agent runtime",
+                "subject_alignment_reason": "skill capability is being defined; agent runtime is only context",
+                "whole_object_reconstruction": {
+                    "target_job": "make task completion stable, reusable, and verifiable",
+                    "main_use_cases": "execution, validation, handoff, and recovery",
+                    "primary_value_carrier": "scripted task control and verification contract",
+                    "local_interface_role": "prompt injection as attention steering",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skill capability"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["prompt injection is a valid local interface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "scripted task control and verification contract",
+                "result_controller": "scripts, validators, resources, and recovery protocol",
+                "decision_consequence": "do not optimize skills as prompt wording",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must not over-accommodate local truth as a generic not-only caveat",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_chinese_local_concession_first(self) -> None:
+        opening = (
+            "测试通过当然很关键，但 release readiness 还包括回滚、监控和审批。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must start with the global thesis, not local-truth concession",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_chinese_not_only_variant_cross_domain(self) -> None:
+        opening = (
+            "发布准备并非只有测试，还包括回滚、监控、灰度和审批。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must not over-accommodate local truth as a generic not-only caveat",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_weak_broader_view_thesis(self) -> None:
+        opening = "This needs a broader view."
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must carry definition authority, result control, or optimization consequence",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_chinese_incomplete_concession_first(self) -> None:
+        opening = "这个判断有道理但不完整，release readiness 还需要回滚、监控和审批。"
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must start with the global thesis, not local-truth concession",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_allows_global_thesis_with_subordinate_local_importance(self) -> None:
+        opening = (
+            "发布准备的定义权属于安全可恢复的交付能力，测试也很重要但只是其中一类证据。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_whole_elephant_validator_rejects_missing_variant_calibration(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "spreadsheet formulas",
+                    "whole_object": "spreadsheet automation",
+                    "component_layer": "formulas",
+                    "role_layer": "calculation interface",
+                },
+                "whole_object": "spreadsheet automation",
+                "canonical_object": "spreadsheet automation",
+                "formal_thesis_subject": "spreadsheet automation",
+                "umbrella_context": "business operations automation",
+                "subject_alignment_reason": "spreadsheet automation is being defined; business operations is context",
+                "whole_object_reconstruction": {
+                    "target_job": "make recurring spreadsheet work repeatable and auditable",
+                    "main_use_cases": "calculation, scheduled import, approval, and reporting",
+                    "primary_value_carrier": "repeatable workflow control and audit trail",
+                    "local_interface_role": "formulas as calculation surface",
+                },
+                "formal_answer_plan": formal_answer_plan("spreadsheet automation"),
+                "local_success_points": ["formulas are a real and common lightweight automation surface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": "Spreadsheet automation is defined by the variant that carries the target result, not by formulas by default.",
+                "definition_owner": "repeatable workflow control and audit trail",
+                "result_controller": "scripts, schedules, approvals, imports, formulas, and monitoring",
+                "decision_consequence": "do not optimize only formulas when workflow control owns the business result",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("variant_map must be a non-empty list", result.stdout)
+        self.assertIn("primary_value_distribution must be a non-empty string", result.stdout)
+        self.assertIn("control_owner_shift must be a non-empty string", result.stdout)
+
+    def test_whole_elephant_validator_rejects_single_variant_map(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "variant_map": ["formula-centric spreadsheet automation"],
+                "primary_value_distribution": "formulas are common and therefore define automation",
+                "control_owner_shift": "scripts serve formulas",
+                "object_hierarchy": {
+                    "user_named_object": "spreadsheet formulas",
+                    "whole_object": "spreadsheet automation",
+                    "component_layer": "formulas",
+                    "role_layer": "calculation interface",
+                },
+                "whole_object": "spreadsheet automation",
+                "canonical_object": "spreadsheet automation",
+                "formal_thesis_subject": "spreadsheet automation",
+                "umbrella_context": "business operations automation",
+                "subject_alignment_reason": "spreadsheet automation is being defined; business operations is context",
+                "whole_object_reconstruction": {
+                    "target_job": "make recurring spreadsheet work repeatable and auditable",
+                    "main_use_cases": "calculation, scheduled import, approval, and reporting",
+                    "primary_value_carrier": "repeatable workflow control and audit trail",
+                    "local_interface_role": "formulas as calculation surface",
+                },
+                "formal_answer_plan": formal_answer_plan("spreadsheet automation"),
+                "local_success_points": ["formulas are a real and common lightweight automation surface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": "Spreadsheet automation is defined by the variant that carries the target result, not by formulas by default.",
+                "definition_owner": "repeatable workflow control and audit trail",
+                "result_controller": "scripts, schedules, approvals, imports, formulas, and monitoring",
+                "decision_consequence": "do not optimize only formulas when workflow control owns the business result",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("variant_map must include at least two candidate variants", result.stdout)
+
+    def test_whole_elephant_validator_allows_single_variant_when_granting_definition(self) -> None:
+        opening = (
+            "Backup failure is carried by the invalidated service token, so recovery must "
+            "restore credential authority before rerunning jobs."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "variant_map": ["credential rotation invalidated the only backup token"],
+                "primary_value_distribution": (
+                    "the local credential mechanism carries the whole backup result in this case"
+                ),
+                "control_owner_shift": (
+                    "backup execution depends on credential authority rather than the credential "
+                    "being only a surface symptom"
+                ),
+                "object_hierarchy": {
+                    "user_named_object": "credential rotation",
+                    "whole_object": "backup failure",
+                    "component_layer": "service token",
+                    "role_layer": "credential authority",
+                },
+                "whole_object": "backup failure",
+                "canonical_object": "backup failure",
+                "formal_thesis_subject": "backup failure",
+                "umbrella_context": "backup operations",
+                "subject_alignment_reason": "backup failure is being explained; credential rotation is the causal mechanism",
+                "whole_object_reconstruction": {
+                    "target_job": "complete nightly backup jobs",
+                    "main_use_cases": "backup, restore, and incident recovery",
+                    "primary_value_carrier": "valid credential authority for every backup job",
+                    "local_interface_role": "service token used by backup jobs",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("backup failure"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "grant_as_definition",
+                    "local_truth_boundary": "The local credential mechanism owns this failure because every backup job depends on it.",
+                    "definition_consequence": "Recovery should restore credential authority before searching for weaker explanations.",
+                    "optimization_misdirection": "do not average this with unrelated backup surfaces before fixing the causal owner",
+                },
+                "local_success_points": ["credential rotation invalidated the only service token"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "component_or_interface",
+                "corrected_thesis": opening,
+                "definition_owner": "invalidated service token",
+                "result_controller": "credential authority for every backup job",
+                "decision_consequence": "restore or rotate the service token before rerunning jobs",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_whole_elephant_validator_allows_same_carrier_interface_for_granted_owner(self) -> None:
+        opening = (
+            "Backup failure is defined by the invalidated service token because that "
+            "single credential controls every backup job."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "variant_map": ["invalidated service token controls every backup job"],
+                "primary_value_distribution": "the same credential mechanism carries the whole backup result",
+                "control_owner_shift": "backup jobs serve credential authority; the token is not merely a symptom",
+                "object_hierarchy": {
+                    "user_named_object": "invalidated service token",
+                    "whole_object": "backup failure",
+                    "component_layer": "service token",
+                    "role_layer": "credential authority",
+                },
+                "whole_object": "backup failure",
+                "canonical_object": "backup failure",
+                "formal_thesis_subject": "backup failure",
+                "umbrella_context": "backup operations",
+                "subject_alignment_reason": "backup failure is being explained; the service token is the causal owner",
+                "whole_object_reconstruction": {
+                    "target_job": "complete nightly backup jobs",
+                    "main_use_cases": "backup, restore, and incident recovery",
+                    "primary_value_carrier": "invalidated service token",
+                    "local_interface_role": "invalidated service token",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("backup failure"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "grant_as_definition",
+                    "local_truth_boundary": "The local service token owns the target result because every backup job depends on it.",
+                    "definition_consequence": "Recovery should restore credential authority before searching weaker explanations.",
+                    "optimization_misdirection": "do not average this with unrelated backup surfaces before fixing the causal owner",
+                },
+                "local_success_points": ["the invalidated service token controls every backup job"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "component_or_interface",
+                "corrected_thesis": opening,
+                "definition_owner": "invalidated service token",
+                "result_controller": "credential authority for every backup job",
+                "decision_consequence": "restore or rotate the service token before rerunning jobs",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_whole_elephant_validator_rejects_local_signal_marked_canonical_object(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "green tests",
+                    "whole_object": "release readiness",
+                    "component_layer": "test suite",
+                    "role_layer": "regression signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery system",
+                "subject_alignment_reason": "release readiness is being judged; tests are local evidence",
+                "whole_object_reconstruction": {
+                    "target_job": "ship useful changes safely",
+                    "main_use_cases": "release, rollback, and recovery decisions",
+                    "primary_value_carrier": "operational safety and rollout control",
+                    "local_interface_role": "green tests as regression evidence",
+                },
+                "local_success_points": ["green tests are real regression evidence"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": "Release readiness is carried by safe and recoverable shipping capability, not green tests alone.",
+                "definition_owner": "safe and recoverable release capability",
+                "result_controller": "rollout, observability, rollback, and evidence gates",
+                "decision_consequence": "do not ship based on green tests alone",
+                "formal_answer_plan": formal_answer_plan("release readiness"),
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "user_named_object_relation cannot be canonical_object when user_named_object is not aligned with canonical_object",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_corrected_thesis_that_contradicts_plan(self) -> None:
+        opening = (
+            "Release readiness is carried by safe recoverable shipping capability, "
+            "so green tests cannot define readiness by themselves."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "release readiness",
+                "canonical_object": "release readiness",
+                "formal_thesis_subject": "release readiness",
+                "umbrella_context": "software delivery",
+                "subject_alignment_reason": "release readiness is being defined; software delivery is context",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("release readiness"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "reject_as_definition",
+                },
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": "Green tests define release readiness.",
+                "definition_owner": "safe recoverable release capability",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                "decision_consequence": "do not define readiness as green tests",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("corrected_thesis must align with formal_answer_plan.opening_core_thesis", result.stdout)
+
+    def test_whole_elephant_validator_rejects_drifting_whole_object_package(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "release readiness",
+                    "whole_object": "release readiness",
+                    "component_layer": "green tests",
+                    "role_layer": "readiness signal",
+                },
+                "whole_object": "public trust in a charity",
+                "canonical_object": "public trust in a charity",
+                "formal_thesis_subject": "public trust in a charity",
+                "umbrella_context": "nonprofit governance",
+                "subject_alignment_reason": "release readiness somehow became public trust",
+                "whole_object_reconstruction": {
+                    "target_job": "ship a useful change safely and recoverably",
+                    "main_use_cases": "deploy, observe, recover, and accept residual risk",
+                    "primary_value_carrier": "safe recoverable release capability",
+                    "local_interface_role": "green tests as readiness evidence",
+                },
+                "formal_answer_plan": formal_answer_plan("public trust in a charity"),
+                "local_success_points": ["green tests are a strong local readiness signal"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": "Public trust is carried by accountable governance.",
+                "definition_owner": "accountable governance",
+                "result_controller": "transparent reporting and stakeholder trust",
+                "decision_consequence": "do not use green tests as the charity trust definition",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("object_hierarchy.whole_object must align with whole_object", result.stdout)
+
+    def test_whole_elephant_validator_rejects_scope_correction_that_transfers_definition_authority(self) -> None:
+        opening = (
+            "你这句纠正是成立的：如果讨论对象严格限定为 skills，而不是更大的执行系统，"
+            "那么 skills 的核心工程价值基本就是“在合适时机注入合适提示词”。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skills as reusable context/instruction modules",
+                    "component_layer": "skill metadata, trigger description, instruction text, optional scripts/assets/templates, and optional validation routines",
+                    "role_layer": "Skills decide what task-specific behavior instructions enter short-term model context and sometimes provide executable support material.",
+                },
+                "whole_object": "Skills as a mechanism in an LLM product or coding assistant.",
+                "canonical_object": "Skills mechanism itself",
+                "formal_thesis_subject": "Whether skills are essentially controlled prompt injection",
+                "umbrella_context": "Discussion of skills, not the broader Agent system architecture.",
+                "subject_alignment_reason": "The user explicitly corrected that the intended object is skills themselves; previous Agent framing over-expanded the object.",
+                "whole_object_reconstruction": {
+                    "target_job": "Increase the chance that the model applies the right procedure, standards, and constraints for a task.",
+                    "main_use_cases": "Routing specialized instructions, increasing salience, preserving procedural detail, attaching reusable scripts/templates, and standardizing output shape.",
+                    "primary_value_carrier": "Controlled activation of task-specific instruction/context bundles.",
+                    "local_interface_role": "Prompt text injected into the model context.",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("Skills mechanism itself"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "qualify_as_component",
+                    "local_truth_boundary": "The reduction is strong for pure skills and for prompt-level gate instructions; optional scripts and validators should be treated as skill-attached assets.",
+                    "definition_consequence": "The better distinction is pure prompt skill versus skill package with executable attachments.",
+                    "optimization_misdirection": "Over-expanding to Agent architecture hides that skills mainly solve context selection and instruction salience.",
+                },
+                "local_success_points": [
+                    "The user explicitly scoped the topic to skills.",
+                    "Most skills work by injecting instruction text into short-term context.",
+                    "Activation timing, routing, priority, and context management are engineering around prompt injection.",
+                ],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": (
+                    "When the object is skills themselves, the user's reduction is mostly right: "
+                    "a skill is primarily a packaged instruction/context unit plus activation rules."
+                ),
+                "definition_owner": "The definition is owned by the skill mechanism's role in context construction and behavior conditioning.",
+                "result_controller": "The result is mostly controlled by trigger selection, context priority, instruction wording, model adherence, and any attached executable checks.",
+                "decision_consequence": "The correct critique should not drift to Agent architecture; it should distinguish pure prompt skills from skills that bundle scripts or validators.",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "formal_answer_plan.opening_core_thesis must not transfer definition authority while correcting scope",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_scope_correction_object_downgrade(self) -> None:
+        opening = (
+            "在讨论 Skills 定位时，定义权属于可复用上下文和行为约束注入单元本身，"
+            "Agent 只是一个使用场景，不该拥有解释权。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "variant_map": [
+                    "lightweight prompt/context skill",
+                    "skill with reusable procedures and validation support",
+                ],
+                "primary_value_distribution": (
+                    "context packaging is common, while procedural control and validation "
+                    "may carry higher-value repeatability"
+                ),
+                "control_owner_shift": (
+                    "the answer corrected an Agent-level umbrella subject but then let "
+                    "context injection own the skill definition"
+                ),
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skills as reusable LLM context artifacts",
+                    "component_layer": "prompt text, trigger descriptions, and optional assets",
+                    "role_layer": "context injection and behavior shaping",
+                },
+                "whole_object": "skills as reusable LLM context artifacts",
+                "canonical_object": "skills as reusable LLM context artifacts",
+                "formal_thesis_subject": "skills as reusable LLM context artifacts",
+                "umbrella_context": "LLM product practice after removing the broader Agent frame",
+                "subject_alignment_reason": (
+                    "The user corrected the previous Agent framing, so the answer should "
+                    "focus on skills themselves."
+                ),
+                "whole_object_reconstruction": {
+                    "target_job": "make reusable instructions and procedures available to an LLM",
+                    "main_use_cases": "domain workflows, coding conventions, and repeatable response protocols",
+                    "primary_value_carrier": "packaged reusable context with trigger rules and procedural constraints",
+                    "local_interface_role": "prompt text injection as the most common runtime carrier",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skills as reusable LLM context artifacts"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "qualify_as_component",
+                    "local_truth_boundary": "The reduction is strongest when discussing runtime delivery into context.",
+                    "definition_consequence": "Skills should be described as reusable context/procedure packages.",
+                    "optimization_misdirection": "The answer stops discussing Agent architecture and centers context injection.",
+                },
+                "local_success_points": [
+                    "The user correctly rejected the broader Agent scope.",
+                    "Many skills are delivered as text in the context window.",
+                ],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": (
+                    "Skills as reusable LLM context artifacts use text as their main carrier."
+                ),
+                "definition_owner": (
+                    "The Skill artifact's role in LLM context management and behavior shaping."
+                ),
+                "result_controller": (
+                    "skill text, trigger rule, inclusion timing, model compliance, and optional validation"
+                ),
+                "decision_consequence": "Do not drag Agent architecture into the center of Skills positioning.",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "canonical_object must not downgrade the user-named object into a local carrier after scope correction",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_visible_answer_that_starts_with_audit_or_internal_stdout(self) -> None:
+        opening = (
+            "Skills are defined by reusable task control, not by the locally valid prompt interface, "
+            "so optimizing them as prompt wording misdirects work away from stable task completion."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "object_hierarchy": {
+                    "user_named_object": "skills",
+                    "whole_object": "skill capability",
+                    "component_layer": "prompt text",
+                    "role_layer": "attention steering interface",
+                },
+                "whole_object": "skill capability",
+                "canonical_object": "skill capability",
+                "formal_thesis_subject": "skill capability",
+                "umbrella_context": "agent runtime",
+                "subject_alignment_reason": "skill capability is being defined; agent runtime is only context",
+                "whole_object_reconstruction": {
+                    "target_job": "make task completion stable, reusable, and verifiable",
+                    "main_use_cases": "execution, validation, handoff, and recovery",
+                    "primary_value_carrier": "scripted task control and verification contract",
+                    "local_interface_role": "prompt injection as attention steering",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skill capability"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["prompt injection is a valid local interface"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "scripted task control and verification contract",
+                "result_controller": "scripts, validators, resources, and recovery protocol",
+                "decision_consequence": "do not optimize skills as prompt wording",
+                "visible_formal_answer": (
+                    "定框审计：true_question 是 skills 是否只是 prompt。"
+                    "script_verdict: shape_only。其实 skills 不只是 prompt。"
+                ),
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "visible_formal_answer first sentence must start with formal_answer_plan.opening_core_thesis",
+            result.stdout,
+        )
+        self.assertIn("visible_formal_answer must not expose internal script stdout", result.stdout)
 
     def test_whole_elephant_validator_rejects_missing_fields_and_bad_strategy(self) -> None:
         result = run_whole_elephant_validator(

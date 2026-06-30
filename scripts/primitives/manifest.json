@@ -20,6 +20,22 @@
         "which_method_owns_the_next_judgment"
       ]
     },
+    "before-answer": {
+      "description": "Before producing a formal answer after frame-risk or partial-truth capture.",
+      "active_primitives": [
+        "whole_elephant_protocol",
+        "core_thesis_extraction",
+        "first_sentence_stress_test",
+        "essence_wording_guard"
+      ],
+      "required_agent_checks": [
+        "build_compact_visible_audit",
+        "validate_whole_elephant_audit_when_triggered",
+        "start_formal_answer_with_core_thesis",
+        "ensure_no_second_question_gap",
+        "reject_false_essence_claim_when_disposition_rejects_definition"
+      ]
+    },
     "before-freeze": {
       "description": "Before deliver, freeze, handoff, block, or stop.",
       "active_primitives": [
@@ -142,7 +158,8 @@
       "name": "Whole Elephant Protocol / 全象流程",
       "short_rule": "局部真相可能冒充整体时，先产出可校验全象审计包，再进入正式判断。",
       "trigger": [
-        "before-route"
+        "before-route",
+        "before-answer"
       ],
       "action_effect": [
         "validate-whole-elephant-audit",
@@ -169,6 +186,9 @@
         "umbrella_context",
         "subject_alignment_reason",
         "whole_object_reconstruction",
+        "variant_map",
+        "primary_value_distribution",
+        "control_owner_shift",
         "formal_answer_plan",
         "whole_object",
         "local_success_points",
@@ -177,6 +197,78 @@
         "definition_owner",
         "result_controller",
         "decision_consequence"
+      ],
+      "owner": "shared-primitives"
+    },
+    "core_thesis_extraction": {
+      "name": "Core Thesis Extraction / 主判断收束",
+      "short_rule": "正式回答首句必须承载主判断，不把最强句埋到后面。",
+      "trigger": [
+        "before-answer"
+      ],
+      "action_effect": [
+        "start-with-core-thesis",
+        "name-corrected-owner-or-carrier",
+        "name-practical-consequence"
+      ],
+      "not_a": [
+        "style-polish",
+        "summary-label",
+        "semantic-judge"
+      ],
+      "output_shape": [
+        "opening_core_thesis",
+        "corrected_owner_or_carrier",
+        "practical_consequence"
+      ],
+      "owner": "shared-primitives"
+    },
+    "first_sentence_stress_test": {
+      "name": "First Sentence Stress Test / 首句主判断压力测试",
+      "short_rule": "如果读者还要追问第二句才抓到重点，首句失败。",
+      "trigger": [
+        "before-answer"
+      ],
+      "action_effect": [
+        "prevent-buried-core",
+        "name-global-thesis-first",
+        "deny-local-definition-authority",
+        "name-target-result",
+        "name-optimization-consequence",
+        "translate-definition-authority-to-final-say",
+        "name-controller-inversion-when-variants-differ",
+        "apply-result-controller-viewpoint"
+      ],
+      "not_a": [
+        "rhetorical-sharpness-only",
+        "style-polish",
+        "semantic-judge"
+      ],
+      "output_shape": [
+        "target_result",
+        "corrected_owner_or_carrier",
+        "final_say_language",
+        "controller_inversion",
+        "result_controller_viewpoint",
+        "local_interface_role",
+        "optimization_consequence"
+      ],
+      "owner": "shared-primitives"
+    },
+    "essence_wording_guard": {
+      "name": "Essence Wording Guard / 本质措辞护栏",
+      "short_rule": "不要把局部载体或接口重新说成本质。",
+      "trigger": [
+        "before-answer"
+      ],
+      "action_effect": [
+        "reject-false-essence-wording",
+        "preserve-local-truth-boundary",
+        "name-definition-disposition"
+      ],
+      "not_a": [
+        "contrarianism-engine",
+        "semantic-judge"
       ],
       "owner": "shared-primitives"
     },

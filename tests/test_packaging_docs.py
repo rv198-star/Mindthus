@@ -377,12 +377,46 @@ class PackagingDocsTests(unittest.TestCase):
         )
 
     def test_using_mindthus_entrypoint_stays_thin_enough_for_attention(self):
-        budget_bytes = 11264
+        budget_bytes = 10 * 1024
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
         self.assertLessEqual(
             path.stat().st_size,
             budget_bytes,
-            "using-mindthus is the routing entrypoint; keep it under 11KiB and move long semantics to shared primitives/scripts.",
+            "using-mindthus is the routing entrypoint; keep it under 10KiB and move long semantics to AOP primitives/scripts.",
+        )
+
+    def test_using_mindthus_entrypoint_stays_within_word_attention_budget(self):
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        word_count = len(path.read_text(encoding="utf-8").split())
+        self.assertLessEqual(
+            word_count,
+            925,
+            "using-mindthus should stay under 925 words; move detailed semantics to shared primitives, resources, or validators.",
+        )
+
+    def test_using_mindthus_entrypoint_has_no_empty_markdown_headings(self):
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        lines = path.read_text(encoding="utf-8").splitlines()
+        empty_headings: list[str] = []
+        for index, line in enumerate(lines):
+            stripped = line.strip()
+            if not stripped.startswith("#"):
+                continue
+            next_content = next(
+                (
+                    candidate.strip()
+                    for candidate in lines[index + 1 :]
+                    if candidate.strip()
+                ),
+                "",
+            )
+            if next_content.startswith("#"):
+                empty_headings.append(stripped)
+
+        self.assertEqual(
+            empty_headings,
+            [],
+            "using-mindthus should not keep empty routing headings; every heading must carry executable guidance.",
         )
 
     def assert_release_pack_excludes_runtime_artifacts(self, out: Path) -> None:

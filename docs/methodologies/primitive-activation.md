@@ -2,7 +2,9 @@
 
 ## 这是什么
 
-Primitive Activation 是认知原语的轻量工程承载方式。
+Primitive Activation 是认知原语的轻量工程承载方式。v1.4.1 之后，它采用
+Lightweight AOP / 轻量切面模型：入口 skill 只声明 join point 和必须唤醒的
+primitive，规则正文留在 `shared-primitives.md`、`manifest.json` 和 validators。
 
 它解决的不是“再造一个方法”，而是让横切原语在少数关键动作前被明确叫醒：
 选方法前、交付 / 冻结前、同路径继续前。
@@ -12,7 +14,7 @@ Primitive Activation 是认知原语的轻量工程承载方式。
 > 原语唤起只提醒 agent 该想什么，不替 agent 判断想得对不对。
 
 这比纯文档提醒更硬一点，因为它给原语稳定 `id`、触发事件和行动影响；
-但它不是完整 AOP，不做全生命周期注入，不做通用 hook engine，也不替代
+但它不是重型 AOP，不做全生命周期注入，不做通用 hook engine，也不替代
 `SELA`、`MPG`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan` 的主判断。
 
 ## 为什么不是纯文档
@@ -39,15 +41,17 @@ python3 scripts/primitives/validate_whole_elephant.py audit.json
 That validator only checks whether the required audit fields exist. It does not
 decide whether the final judgment is true.
 
-## 为什么不是完整 AOP
+## 为什么不是重型 AOP
 
-完整 AOP 会要求定义大量 join point、生命周期阶段和注入规则。Mindthus 当前没有这个诉求。
+重型 AOP 会要求定义大量 join point、生命周期阶段和注入规则。Mindthus 当前只需要
+少数强约束切面，避免入口 skill 复制过长规则。
 
-当前只保留三个轻量事件：
+当前只保留四个轻量事件：
 
 | Event | 什么时候用 | 唤起目标 |
 |---|---|---|
 | `before-route` | 选择 Mindthus 方法前 | 避免简单任务被方法化，避免缺事实时用方法补洞。 |
+| `before-answer` | frame-risk 或 partial-truth capture 后、正式回答前 | 确保全象审计内隐、首句主判断和本质措辞护栏生效。 |
 | `before-freeze` | 交付、冻结、转交或停止前 | 避免“看起来完成”但目标漂移、证据不足、误用信号未处理。 |
 | `before-continue` | 同路径继续或长任务继续前 | 避免惯性续跑、局部修补螺旋和无证据增量的继续。 |
 
@@ -100,8 +104,11 @@ owner: shared-primitives
 `scripts/primitives/validate_whole_elephant.py` is stricter but still shape-only:
 it can block a formal answer when the Whole Elephant audit JSON is missing
 `object_hierarchy`, `whole_object`, `local_success_points`, `strategy_choice`,
+`variant_map`, `primary_value_distribution`, `control_owner_shift`,
 `definition_owner`, `result_controller`, or `decision_consequence`; it still
-cannot decide whether those fields are substantively correct.
+cannot decide whether those fields are substantively correct. It also blocks
+scope-correction audits that relabel the user-named object into local-carrier
+labels such as prompt wrapper, attention mechanism, or delivery format.
 
 脚本成功只表示：
 
