@@ -41,6 +41,7 @@ def main() -> None:
                 "physical_feedback": scene["physical_feedback"],
                 "camera_defaults": camera["camera_defaults"],
                 "lighting_defaults": camera["lighting_defaults"],
+                "decisive_pressure_frame": camera["decisive_pressure_frame"],
                 "negative_visual_failure_handles": negative["safe_visual_failure_handles"],
             },
             notes=[

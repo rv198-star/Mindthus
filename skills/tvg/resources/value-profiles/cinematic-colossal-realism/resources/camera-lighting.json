@@ -13,5 +13,28 @@
     "atmospheric_media": ["rain", "mist", "dust", "silt", "smoke", "snow", "water turbidity"],
     "exposure_behavior": ["layered shadows", "controlled highlights", "visible light scatter", "distant detail absorbed by atmosphere"]
   },
+  "decisive_pressure_frame": {
+    "use_when": "pressure 4-5 or when the brief asks for extreme oppression, awe, dread, or a decisive cinematic first read",
+    "composition_cues": [
+      "near-overhead local threat cue",
+      "dominant subject fragment",
+      "upper-third focal pressure point",
+      "dark mass crossing the upper frame",
+      "compressed witness-to-colossus distance",
+      "one readable head, claw, eye, hand, rib arc, shadow, or body segment"
+    ],
+    "lighting_cues": [
+      "backlight or lightning behind the dominant fragment",
+      "low-key exposure with readable edge texture",
+      "foreground practical lights kept small against the mass"
+    ],
+    "guardrails": [
+      "avoid replacing witness scale with poster display",
+      "avoid pushing the decisive fragment to the far edge",
+      "keep at least one foreground witness or instrument anchor",
+      "keep the colossus partially hidden or frame-overflowing",
+      "do not add secondary detail that weakens the first-read threat"
+    ]
+  },
   "texture_defaults": ["weathering", "wet surfaces", "dust or silt", "imperfect lens edge", "fine film grain"]
 }

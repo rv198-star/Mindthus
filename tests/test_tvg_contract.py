@@ -1309,6 +1309,45 @@ class TvgContractTests(unittest.TestCase):
             self.assertIn("profile", payload)
             self.assertEqual(payload["profile"], "cinematic-colossal-realism")
 
+    def test_cinematic_colossal_profile_has_decisive_pressure_support(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "decisive-pressure-frame-depth",
+            "Use a decisive pressure frame",
+            "first-read cinematic pressure",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        pressure_frame = camera["decisive_pressure_frame"]
+        self.assertIn("near-overhead local threat cue", pressure_frame["composition_cues"])
+        self.assertIn("dominant subject fragment", pressure_frame["composition_cues"])
+        self.assertIn("upper-third focal pressure point", pressure_frame["composition_cues"])
+        self.assertIn("avoid replacing witness scale with poster display", pressure_frame["guardrails"])
+        self.assertIn("avoid pushing the decisive fragment to the far edge", pressure_frame["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertEqual(payload["primary_category"], "eastern_dragon_colossus")
+        self.assertIn("decisive_pressure_frame", payload["skeleton"])
+        self.assertIn(
+            "near-overhead local threat cue",
+            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
+        )
+        self.assertIn(
+            "upper-third focal pressure point",
+            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["decisive_pressure_frame"])
+
     def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
         scripts = profile_dir / "scripts"

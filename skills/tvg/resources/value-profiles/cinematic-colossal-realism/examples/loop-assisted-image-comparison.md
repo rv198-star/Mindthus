@@ -187,3 +187,57 @@ profile package at pressure 5 is the best Mindthus-shaped version because it cre
 more auditable visual contract while approaching the original skill's image quality. This
 single Images2 run does not prove that TVG P5 is generally stronger than the original
 skill.
+
+## Beijing Black Dragon Pressure Comparison - 2026-07-01
+
+Subject: `中国黑龙盘踞在京城上空，压迫感极强`
+
+Compared variants:
+
+1. `Original SKILL`: external skill behavior sample expansion.
+2. `TVG P2`: current profile with ordinary pressure.
+3. `TVG P4`: current profile with stronger pressure.
+4. `TVG P5`: current profile with highest pressure.
+
+Local ignored artifacts:
+
+- `tests/artifacts/tvg_beijing_black_dragon_original_skill.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tvg_p2.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tvg_p4.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tvg_p5.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tuned_p4.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tuned_p4_v2.png`
+- `tests/artifacts/tvg_beijing_black_dragon_contact_sheet.png`
+- `tests/artifacts/tvg_beijing_black_dragon_tuned_v2_contact_sheet.png`
+
+Observed one-run comparison:
+
+- `Original SKILL` produced the strongest result in this run. It won on immediate
+  cinematic punch because the dragon head, storm aperture, city, palace edge, rain,
+  and witnesses formed one decisive threat image.
+- `TVG P2` preserved scale and scene readability, but it was too conservative for
+  "压迫感极强"; the prompt contract was correct but the first read was less forceful.
+- `TVG P4` moved closer to the right balance, with clearer dragon readability and
+  stronger overhead pressure than P2, while retaining witness and city anchors.
+- `TVG P5` produced the strongest profile signature, but some of its extra field
+  discipline competed with the primary threat image.
+
+Tuning implication:
+
+The profile should not copy the external skill wording. It should abstract the winning
+behavior as a profile surface: a decisive pressure frame. High-pressure TVG should still
+keep witness scale, physical feedback, partial visibility, and runtime-support
+boundaries, but it needs one dominant near-overhead subject fragment that lands before
+secondary detail.
+
+Follow-up tuning result:
+
+Adding decisive-pressure-frame support and a narrow upper-third focal guardrail moved
+the TVG P4 image closer to the original skill: the dragon head became a clearer
+near-overhead threat while witness scale, palace wall, city lights, rain, and traffic
+remained visible. The original skill still had the strongest one-shot directorly punch
+in this run because its storm aperture, head placement, and contrast formed a cleaner
+primary image. The tuned TVG profile reduced the gap without claiming superiority.
+
+This remains one-run loop-assisted production evidence, not proof that the external
+skill is generally better or that the tuned profile is generally mature.

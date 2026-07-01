@@ -17,24 +17,28 @@ value_profile:
       - terse mythic or colossal subjects become concrete, reviewable image prompt packets
       - human-scale viewpoint anchors make the viewer feel present and small
       - three-layer scale relation connects human scale, environment scale, and colossus scale
+      - first-read cinematic pressure comes from one decisive subject fragment threatening the witness field
       - physical environment feedback makes the subject feel materially present
       - partial occlusion and frame overflow preserve credible enormity and mystery
       - camera, light, atmosphere, texture, and negative constraints are visible and reviewable
     bad_means:
       - cinematic adjectives replace camera, scale, light, and physical relations
       - full-body centered poster staging replaces witnessed presence
+      - evenly distributed checklist detail weakens the primary threat image
       - media-pollution terms appear in positive or negative prompts
       - scripts or generated images are treated as proof of aesthetic success
     priority_order:
       - evidence honesty and user constraints
       - TVG control boundary before prompt convenience
       - human-scale and environment-scale anchoring before spectacle
+      - first-read cinematic pressure before secondary detail density
       - physical feedback and credible light before surface detail
       - partial visibility before complete monster display
       - negative-constraint hygiene before prompt inflation
     derived_axes:
       - human-scale-anchor-depth
       - three-layer-scale-depth
+      - decisive-pressure-frame-depth
       - physical-feedback-depth
       - partial-visibility-depth
       - camera-lighting-credibility-depth
@@ -74,6 +78,7 @@ Value becomes observable through:
 - subject identity: the prompt names what kind of presence is being rendered
 - viewer position: a human-scale or instrument-scale witness is located in the scene
 - scale ladder: human scale, environment scale, and colossus scale are all visible
+- decisive pressure frame: one near-overhead head, hand, claw, eye, rib arc, shadow, or body fragment dominates the upper-third first read without deleting the witness field or drifting to the far edge
 - partial visibility: the subject exceeds the frame or is occluded by atmosphere, terrain, structures, or water
 - physical feedback: clouds, rain, dust, water, lights, debris, fabric, cables, trees, crowds, or instruments react
 - camera and light: lens, framing, viewpoint, exposure, light source, atmosphere, and texture are reviewable
@@ -86,11 +91,12 @@ Useful TVG moves usually happen in this order:
 
 1. Classify the terse subject into a candidate visual family.
 2. Build a three-layer scale ladder before adding surface detail.
-3. Add environment feedback before adding more adjectives.
-4. Use partial visibility to preserve weight, mystery, and frame pressure.
-5. Translate "cinematic" into camera, light, atmosphere, exposure, and material behavior.
-6. Clean negative constraints so forbidden media labels do not pollute generation.
-7. Run deterministic lint only as a support check, then let TVG decide remediation or exit.
+3. Use a decisive pressure frame when the artifact needs high first-read cinematic pressure, especially at pressure 4-5.
+4. Add environment feedback before adding more adjectives.
+5. Use partial visibility to preserve weight, mystery, and frame pressure.
+6. Translate "cinematic" into camera, light, atmosphere, exposure, and material behavior.
+7. Clean negative constraints so forbidden media labels do not pollute generation.
+8. Run deterministic lint only as a support check, then let TVG decide remediation or exit.
 
 Discouraged moves:
 
@@ -105,6 +111,7 @@ Runtime support may:
 
 - classify a terse subject into candidate categories
 - build a prompt skeleton from deterministic defaults
+- expose decisive-pressure-frame cues for agentic filling
 - report missing human scale, missing physical feedback, media-term contamination, or field drift
 - preserve user-supplied field templates
 - record image-comparison evidence with a claim ceiling
@@ -126,21 +133,23 @@ Every runtime-support result means only:
 
 1. Does the prompt establish a human-scale witness or instrument-scale witness?
 2. Does it show a three-layer relation among witness, environment, and colossus?
-3. Does the subject change the surrounding physical world?
-4. Is the subject partially occluded, frame-overflowing, or otherwise too large to be fully mastered by the image?
-5. Are camera, light, atmosphere, exposure, and material behavior concrete enough to review?
-6. Are negative constraints phrased as visual failure modes rather than forbidden media labels?
-7. Could a downstream reviewer identify what came from profile defaults, what came from user input, and what came from TVG judgment?
+3. Does it contain one decisive subject fragment that creates first-read cinematic pressure?
+4. Does the subject change the surrounding physical world?
+5. Is the subject partially occluded, frame-overflowing, or otherwise too large to be fully mastered by the image?
+6. Are camera, light, atmosphere, exposure, and material behavior concrete enough to review?
+7. Are negative constraints phrased as visual failure modes rather than forbidden media labels?
+8. Could a downstream reviewer identify what came from profile defaults, what came from user input, and what came from TVG judgment?
 
 ## Image Self-Audit Questions
 
 1. Does the image show a witness-scale anchor rather than only a large subject?
 2. Does the environment make the subject's scale legible?
-3. Is there visible physical feedback from the subject?
-4. Does the image avoid centered poster display when the profile calls for witnessed scale?
-5. Does light behave as if it comes from a credible source and passes through atmosphere, water, dust, smoke, rain, or haze?
-6. Does the image avoid media drift toward animation, game, concept-art, or plastic surfaces?
-7. Is the evidence claim capped to this run?
+3. Does the first read land on a dominant but partial threat fragment?
+4. Is there visible physical feedback from the subject?
+5. Does the image avoid centered poster display when the profile calls for witnessed scale?
+6. Does light behave as if it comes from a credible source and passes through atmosphere, water, dust, smoke, rain, or haze?
+7. Does the image avoid media drift toward animation, game, concept-art, or plastic surfaces?
+8. Is the evidence claim capped to this run?
 
 ## Source Notes
 
