@@ -42,6 +42,8 @@ def main() -> None:
                 "camera_defaults": camera["camera_defaults"],
                 "lighting_defaults": camera["lighting_defaults"],
                 "decisive_pressure_frame": camera["decisive_pressure_frame"],
+                "director_shot_spine": camera["director_shot_spine"],
+                "controlled_fracture_coherence": camera["controlled_fracture_coherence"],
                 "negative_visual_failure_handles": negative["safe_visual_failure_handles"],
             },
             notes=[

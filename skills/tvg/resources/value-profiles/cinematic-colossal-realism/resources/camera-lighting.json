@@ -36,5 +36,50 @@
       "do not add secondary detail that weakens the first-read threat"
     ]
   },
+  "director_shot_spine": {
+    "use_when": "when the image has enough pressure but lacks a directorly one-frame intention",
+    "shot_cues": [
+      "primary focal decision",
+      "viewer-eye path",
+      "reveal aperture or silhouette logic",
+      "edge occlusion as shot evidence",
+      "secondary details serve the shot"
+    ],
+    "practical_applications": [
+      "name where the first look lands",
+      "route the eye from foreground witness or frame edge to the subject fragment",
+      "explain why the subject is visible in this instant",
+      "use roof, window, cave, cloud, water, dust, or shadow edges as framing evidence",
+      "demote rain, lights, crowds, debris, and texture when they compete with the primary image"
+    ],
+    "guardrails": [
+      "do not let checklist detail compete with the primary image",
+      "keep the primary focus readable through reveal light",
+      "do not remove witness scale to make a clean poster",
+      "do not add a shot list; keep it one decisive frame",
+      "do not copy external skill wording"
+    ]
+  },
+  "controlled_fracture_coherence": {
+    "use_when": "when weather, damage, occlusion, darkness, or broken surfaces create scale and pressure but risk becoming visual mess",
+    "allowed_chaos_materials": [
+      "rain streaks, haze, debris, partial occlusion, broken reflections, damaged surfaces",
+      "mud, soot, scratches, condensation, water marks, dust, silt, torn fabric, bent trees, snapped flags",
+      "fragmented light beams, imperfect lens edges, frame-cropped architecture, damaged vehicles or structures"
+    ],
+    "coherence_rules": [
+      "every chaotic element must point to focus, scale, motion, or atmosphere",
+      "preserve physical continuity across fragments",
+      "keep directional forces consistent across rain, fabric, trees, smoke, dust, and reflections",
+      "separate readable subject silhouette from messy texture",
+      "keep foreground clutter subordinate to the viewer-eye path"
+    ],
+    "guardrails": [
+      "do not sterilize the scene",
+      "do not let texture become random clutter",
+      "do not let brokenness hide the primary subject",
+      "do not replace controlled weather and damage with clean decorative polish"
+    ]
+  },
   "texture_defaults": ["weathering", "wet surfaces", "dust or silt", "imperfect lens edge", "fine film grain"]
 }

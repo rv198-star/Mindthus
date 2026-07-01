@@ -18,6 +18,8 @@ value_profile:
       - human-scale viewpoint anchors make the viewer feel present and small
       - three-layer scale relation connects human scale, environment scale, and colossus scale
       - first-read cinematic pressure comes from one decisive subject fragment threatening the witness field
+      - director shot spine makes focus, eye path, reveal logic, and edge occlusion serve one chosen frame
+      - controlled fracture coherence makes messy material becomes readable pressure instead of random damage
       - physical environment feedback makes the subject feel materially present
       - partial occlusion and frame overflow preserve credible enormity and mystery
       - camera, light, atmosphere, texture, and negative constraints are visible and reviewable
@@ -25,6 +27,8 @@ value_profile:
       - cinematic adjectives replace camera, scale, light, and physical relations
       - full-body centered poster staging replaces witnessed presence
       - evenly distributed checklist detail weakens the primary threat image
+      - secondary details compete with the chosen shot instead of supporting it
+      - rain, haze, debris, broken reflections, or partial occlusion become random clutter
       - media-pollution terms appear in positive or negative prompts
       - scripts or generated images are treated as proof of aesthetic success
     priority_order:
@@ -32,6 +36,8 @@ value_profile:
       - TVG control boundary before prompt convenience
       - human-scale and environment-scale anchoring before spectacle
       - first-read cinematic pressure before secondary detail density
+      - director shot spine before adding more scene coverage
+      - controlled fracture coherence before texture density
       - physical feedback and credible light before surface detail
       - partial visibility before complete monster display
       - negative-constraint hygiene before prompt inflation
@@ -39,6 +45,8 @@ value_profile:
       - human-scale-anchor-depth
       - three-layer-scale-depth
       - decisive-pressure-frame-depth
+      - director-shot-spine-depth
+      - controlled-fracture-coherence-depth
       - physical-feedback-depth
       - partial-visibility-depth
       - camera-lighting-credibility-depth
@@ -79,6 +87,8 @@ Value becomes observable through:
 - viewer position: a human-scale or instrument-scale witness is located in the scene
 - scale ladder: human scale, environment scale, and colossus scale are all visible
 - decisive pressure frame: one near-overhead head, hand, claw, eye, rib arc, shadow, or body fragment dominates the upper-third first read without deleting the witness field or drifting to the far edge
+- director shot spine: primary focus, viewer-eye path, reveal aperture, edge occlusion, and secondary details serve the shot; reveal light must keep the primary focus readable
+- controlled fracture coherence: rain, haze, debris, partial occlusion, broken reflections, and damaged surfaces stay physically continuous and compositionally useful
 - partial visibility: the subject exceeds the frame or is occluded by atmosphere, terrain, structures, or water
 - physical feedback: clouds, rain, dust, water, lights, debris, fabric, cables, trees, crowds, or instruments react
 - camera and light: lens, framing, viewpoint, exposure, light source, atmosphere, and texture are reviewable
@@ -92,11 +102,13 @@ Useful TVG moves usually happen in this order:
 1. Classify the terse subject into a candidate visual family.
 2. Build a three-layer scale ladder before adding surface detail.
 3. Use a decisive pressure frame when the artifact needs high first-read cinematic pressure, especially at pressure 4-5.
-4. Add environment feedback before adding more adjectives.
-5. Use partial visibility to preserve weight, mystery, and frame pressure.
-6. Translate "cinematic" into camera, light, atmosphere, exposure, and material behavior.
-7. Clean negative constraints so forbidden media labels do not pollute generation.
-8. Run deterministic lint only as a support check, then let TVG decide remediation or exit.
+4. Add a director shot spine so the prompt chooses one focal decision, one eye path, and one reveal reason.
+5. Use controlled fracture coherence so dirt, weather, damage, and occlusion support focus, scale, motion, or atmosphere.
+6. Add environment feedback before adding more adjectives.
+7. Use partial visibility to preserve weight, mystery, and frame pressure.
+8. Translate "cinematic" into camera, light, atmosphere, exposure, and material behavior.
+9. Clean negative constraints so forbidden media labels do not pollute generation.
+10. Run deterministic lint only as a support check, then let TVG decide remediation or exit.
 
 Discouraged moves:
 
@@ -112,6 +124,8 @@ Runtime support may:
 - classify a terse subject into candidate categories
 - build a prompt skeleton from deterministic defaults
 - expose decisive-pressure-frame cues for agentic filling
+- expose director-shot-spine cues for agentic filling
+- expose controlled-fracture-coherence cues for agentic filling
 - report missing human scale, missing physical feedback, media-term contamination, or field drift
 - preserve user-supplied field templates
 - record image-comparison evidence with a claim ceiling
@@ -134,22 +148,26 @@ Every runtime-support result means only:
 1. Does the prompt establish a human-scale witness or instrument-scale witness?
 2. Does it show a three-layer relation among witness, environment, and colossus?
 3. Does it contain one decisive subject fragment that creates first-read cinematic pressure?
-4. Does the subject change the surrounding physical world?
-5. Is the subject partially occluded, frame-overflowing, or otherwise too large to be fully mastered by the image?
-6. Are camera, light, atmosphere, exposure, and material behavior concrete enough to review?
-7. Are negative constraints phrased as visual failure modes rather than forbidden media labels?
-8. Could a downstream reviewer identify what came from profile defaults, what came from user input, and what came from TVG judgment?
+4. Does the prompt name the primary focus, viewer-eye path, reveal logic, and edge occlusion?
+5. Do messy, broken, or occluding materials point to focus, scale, motion, or atmosphere?
+6. Does the subject change the surrounding physical world?
+7. Is the subject partially occluded, frame-overflowing, or otherwise too large to be fully mastered by the image?
+8. Are camera, light, atmosphere, exposure, and material behavior concrete enough to review?
+9. Are negative constraints phrased as visual failure modes rather than forbidden media labels?
+10. Could a downstream reviewer identify what came from profile defaults, what came from user input, and what came from TVG judgment?
 
 ## Image Self-Audit Questions
 
 1. Does the image show a witness-scale anchor rather than only a large subject?
 2. Does the environment make the subject's scale legible?
 3. Does the first read land on a dominant but partial threat fragment?
-4. Is there visible physical feedback from the subject?
-5. Does the image avoid centered poster display when the profile calls for witnessed scale?
-6. Does light behave as if it comes from a credible source and passes through atmosphere, water, dust, smoke, rain, or haze?
-7. Does the image avoid media drift toward animation, game, concept-art, or plastic surfaces?
-8. Is the evidence claim capped to this run?
+4. Does the shot read as one chosen frame rather than evenly distributed coverage?
+5. Does dirt, haze, debris, reflection, or occlusion read as controlled texture rather than random clutter?
+6. Is there visible physical feedback from the subject?
+7. Does the image avoid centered poster display when the profile calls for witnessed scale?
+8. Does light behave as if it comes from a credible source and passes through atmosphere, water, dust, smoke, rain, or haze?
+9. Does the image avoid media drift toward animation, game, concept-art, or plastic surfaces?
+10. Is the evidence claim capped to this run?
 
 ## Source Notes
 

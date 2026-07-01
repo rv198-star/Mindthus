@@ -207,8 +207,14 @@ Local ignored artifacts:
 - `tests/artifacts/tvg_beijing_black_dragon_tvg_p5.png`
 - `tests/artifacts/tvg_beijing_black_dragon_tuned_p4.png`
 - `tests/artifacts/tvg_beijing_black_dragon_tuned_p4_v2.png`
+- `tests/artifacts/tvg_beijing_black_dragon_director_spine_p4.png`
+- `tests/artifacts/tvg_beijing_black_dragon_director_spine_p4_v2.png`
+- `tests/artifacts/tvg_beijing_black_dragon_controlled_fracture_p4.png`
 - `tests/artifacts/tvg_beijing_black_dragon_contact_sheet.png`
 - `tests/artifacts/tvg_beijing_black_dragon_tuned_v2_contact_sheet.png`
+- `tests/artifacts/tvg_beijing_black_dragon_director_spine_contact_sheet.png`
+- `tests/artifacts/tvg_beijing_black_dragon_director_spine_v2_contact_sheet.png`
+- `tests/artifacts/tvg_beijing_black_dragon_controlled_fracture_contact_sheet.png`
 
 Observed one-run comparison:
 
@@ -238,6 +244,31 @@ near-overhead threat while witness scale, palace wall, city lights, rain, and tr
 remained visible. The original skill still had the strongest one-shot directorly punch
 in this run because its storm aperture, head placement, and contrast formed a cleaner
 primary image. The tuned TVG profile reduced the gap without claiming superiority.
+
+Director-shot-spine follow-up:
+
+Adding director-shot-spine support improved the shot intention: the profile now asks for
+one primary focal decision, a viewer-eye path from frame edge and witnesses to the
+subject, a reveal aperture or silhouette reason, edge occlusion as shot evidence, and
+secondary details that serve the chosen frame. The first generated director-spine image
+exposed a new failure mode: lightning and cloud-aperture contrast can steal the shot
+from the dragon head. A narrow guardrail was added so reveal light must keep the primary
+focus readable instead of becoming the subject. The v2 image reduced that glare problem
+and restored dragon-head readability, while still not surpassing the original skill's
+cleaner one-shot visual economy.
+
+Controlled-fracture follow-up:
+
+The external skill's strongest behavior appears to be not just pressure or directorly
+framing, but the ability to turn dirty, rainy, broken, partially occluded material into
+readable cinematic pressure. The tuned profile now names this as controlled fracture
+coherence: rain, haze, debris, broken reflections, damaged edges, and partial occlusion
+are allowed, but each must support focus, scale, motion, or atmosphere. A generated
+controlled-fracture P4 image kept the scene dark, wet, and fragmented while making the
+rain direction, palace edge, traffic reflections, cloud aperture, dragon body arc, and
+foreground witnesses read as one pressure field. It still does not prove superiority
+over the original skill, but it identifies a more accurate migration target than
+"add more cinematic detail."
 
 This remains one-run loop-assisted production evidence, not proof that the external
 skill is generally better or that the tuned profile is generally mature.

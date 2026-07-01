@@ -1348,6 +1348,76 @@ class TvgContractTests(unittest.TestCase):
         )
         self.assertNotIn("aesthetic_success", payload["skeleton"]["decisive_pressure_frame"])
 
+    def test_cinematic_colossal_profile_has_director_shot_spine_support(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "director-shot-spine-depth",
+            "director shot spine",
+            "secondary details serve the shot",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        shot_spine = camera["director_shot_spine"]
+        for cue in (
+            "primary focal decision",
+            "viewer-eye path",
+            "reveal aperture or silhouette logic",
+            "edge occlusion as shot evidence",
+            "secondary details serve the shot",
+        ):
+            self.assertIn(cue, shot_spine["shot_cues"])
+        self.assertIn("do not let checklist detail compete with the primary image", shot_spine["guardrails"])
+        self.assertIn("keep the primary focus readable through reveal light", shot_spine["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("director_shot_spine", payload["skeleton"])
+        self.assertIn("primary focal decision", payload["skeleton"]["director_shot_spine"]["shot_cues"])
+        self.assertNotIn("director_quality", payload["skeleton"]["director_shot_spine"])
+
+    def test_cinematic_colossal_profile_controls_mess_and_fracture(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "controlled-fracture-coherence-depth",
+            "controlled fracture coherence",
+            "messy material becomes readable pressure",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        fracture = camera["controlled_fracture_coherence"]
+        self.assertIn("rain streaks, haze, debris, partial occlusion, broken reflections, damaged surfaces", fracture["allowed_chaos_materials"])
+        self.assertIn("every chaotic element must point to focus, scale, motion, or atmosphere", fracture["coherence_rules"])
+        self.assertIn("preserve physical continuity across fragments", fracture["coherence_rules"])
+        self.assertIn("do not sterilize the scene", fracture["guardrails"])
+        self.assertIn("do not let texture become random clutter", fracture["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("controlled_fracture_coherence", payload["skeleton"])
+        self.assertIn(
+            "every chaotic element must point to focus, scale, motion, or atmosphere",
+            payload["skeleton"]["controlled_fracture_coherence"]["coherence_rules"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["controlled_fracture_coherence"])
+
     def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
         scripts = profile_dir / "scripts"
