@@ -1,0 +1,23 @@
+{
+  "schema_version": "cinematic-colossal-image-audit-rubric-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "prompt_review_handles": [
+    "human_scale_anchor",
+    "three_layer_scale",
+    "physical_environment_feedback",
+    "partial_visibility",
+    "credible_camera_lighting",
+    "negative_constraint_hygiene",
+    "runtime_support_boundary"
+  ],
+  "image_review_handles": [
+    "witness_anchor_visible",
+    "environment_scale_visible",
+    "subject_affects_environment",
+    "not_full_centered_poster",
+    "light_source_credible",
+    "no_media_drift",
+    "claim_ceiling_recorded"
+  ],
+  "claim_ceiling": "Images2 output is loop-assisted production evidence for one run, not proof that the profile is generally strong."
+}

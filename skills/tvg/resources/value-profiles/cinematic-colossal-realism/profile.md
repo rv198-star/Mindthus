@@ -1,0 +1,150 @@
+# Cinematic Colossal Realism TVG Profile
+
+This profile treats the external cinematic prompt skill as a behavior sample, not source truth.
+It must not copy the external skill's concrete wording into reusable Mindthus resources.
+
+The purpose is to demonstrate a TVG advanced profile package. The profile defines what
+"good" means, where that value becomes observable, which value-gain moves are useful,
+and which deterministic runtime support can help without replacing TVG judgment.
+
+```yaml
+value_profile:
+  mode: supplied
+  name: cinematic colossal realism
+  artifact_job: scoped profile for cinematic image-prompt generation and image review
+  value_semantics:
+    good_means:
+      - terse mythic or colossal subjects become concrete, reviewable image prompt packets
+      - human-scale viewpoint anchors make the viewer feel present and small
+      - three-layer scale relation connects human scale, environment scale, and colossus scale
+      - physical environment feedback makes the subject feel materially present
+      - partial occlusion and frame overflow preserve credible enormity and mystery
+      - camera, light, atmosphere, texture, and negative constraints are visible and reviewable
+    bad_means:
+      - cinematic adjectives replace camera, scale, light, and physical relations
+      - full-body centered poster staging replaces witnessed presence
+      - media-pollution terms appear in positive or negative prompts
+      - scripts or generated images are treated as proof of aesthetic success
+    priority_order:
+      - evidence honesty and user constraints
+      - TVG control boundary before prompt convenience
+      - human-scale and environment-scale anchoring before spectacle
+      - physical feedback and credible light before surface detail
+      - partial visibility before complete monster display
+      - negative-constraint hygiene before prompt inflation
+    derived_axes:
+      - human-scale-anchor-depth
+      - three-layer-scale-depth
+      - physical-feedback-depth
+      - partial-visibility-depth
+      - camera-lighting-credibility-depth
+      - negative-constraint-hygiene-depth
+      - runtime-support-boundary-depth
+    evidence_basis:
+      - external skill behavior sample, abstracted only as runtime habits
+      - TVG profile construction discipline
+    profile_veto_constraints:
+      - must not copy the external skill's concrete wording
+      - must not freeze when the prompt lacks human-scale anchoring
+      - must not freeze when the prompt lacks physical environment feedback
+      - scripts must not decide aesthetic success, profile maturity, or TVG exit
+  realization_surface:
+    artifact_role: cinematic image prompt packet and generated-image review record
+  gain_policy:
+    preferred_moves:
+      - classify terse subject into candidate visual category before expansion
+  runtime_support:
+    purpose: deterministic support only
+```
+
+## Scope
+
+This is a scoped profile for cinematic image prompts involving mythic, divine,
+monstrous, disaster-scale, deep-sea, sky, or cosmic colossus subjects. It is not a
+general film theory profile and not a complete prompt-generation skill.
+
+The external reference may calibrate behavior families such as terse-input expansion,
+field preservation, scale anchoring, physical feedback, and negative-constraint hygiene.
+It must not supply reusable wording, facts, or final aesthetic authority.
+
+## Realization Surface
+
+Value becomes observable through:
+
+- subject identity: the prompt names what kind of presence is being rendered
+- viewer position: a human-scale or instrument-scale witness is located in the scene
+- scale ladder: human scale, environment scale, and colossus scale are all visible
+- partial visibility: the subject exceeds the frame or is occluded by atmosphere, terrain, structures, or water
+- physical feedback: clouds, rain, dust, water, lights, debris, fabric, cables, trees, crowds, or instruments react
+- camera and light: lens, framing, viewpoint, exposure, light source, atmosphere, and texture are reviewable
+- negative constraints: visual failure modes are named without media-pollution terms
+- generated-image audit: output can be checked for scale, feedback, visibility, light, and medium drift
+
+## Gain Policy
+
+Useful TVG moves usually happen in this order:
+
+1. Classify the terse subject into a candidate visual family.
+2. Build a three-layer scale ladder before adding surface detail.
+3. Add environment feedback before adding more adjectives.
+4. Use partial visibility to preserve weight, mystery, and frame pressure.
+5. Translate "cinematic" into camera, light, atmosphere, exposure, and material behavior.
+6. Clean negative constraints so forbidden media labels do not pollute generation.
+7. Run deterministic lint only as a support check, then let TVG decide remediation or exit.
+
+Discouraged moves:
+
+- adding longer lists of cinematic adjectives without new reviewable surfaces
+- using full centered subject display as the default for colossal subjects
+- treating a script finding as a semantic verdict
+- treating one generated image as proof that the profile is generally strong
+
+## Runtime Support
+
+Runtime support may:
+
+- classify a terse subject into candidate categories
+- build a prompt skeleton from deterministic defaults
+- report missing human scale, missing physical feedback, media-term contamination, or field drift
+- preserve user-supplied field templates
+- record image-comparison evidence with a claim ceiling
+
+Runtime support must not:
+
+- decide TVG exit state
+- output `PASS`
+- score aesthetic quality
+- decide profile maturity
+- waive veto constraints
+- prove historical, cinematic, or model-generation truth
+
+Every runtime-support result means only:
+
+> Deterministic support findings were produced; agentic TVG audit is still required.
+
+## Prompt Self-Audit Questions
+
+1. Does the prompt establish a human-scale witness or instrument-scale witness?
+2. Does it show a three-layer relation among witness, environment, and colossus?
+3. Does the subject change the surrounding physical world?
+4. Is the subject partially occluded, frame-overflowing, or otherwise too large to be fully mastered by the image?
+5. Are camera, light, atmosphere, exposure, and material behavior concrete enough to review?
+6. Are negative constraints phrased as visual failure modes rather than forbidden media labels?
+7. Could a downstream reviewer identify what came from profile defaults, what came from user input, and what came from TVG judgment?
+
+## Image Self-Audit Questions
+
+1. Does the image show a witness-scale anchor rather than only a large subject?
+2. Does the environment make the subject's scale legible?
+3. Is there visible physical feedback from the subject?
+4. Does the image avoid centered poster display when the profile calls for witnessed scale?
+5. Does light behave as if it comes from a credible source and passes through atmosphere, water, dust, smoke, rain, or haze?
+6. Does the image avoid media drift toward animation, game, concept-art, or plastic surfaces?
+7. Is the evidence claim capped to this run?
+
+## Source Notes
+
+- External reference role: behavior sample for runtime habits.
+- Contamination boundary: do not copy prompt wording, examples, or concrete phrasing.
+- TVG boundary: profile and scripts contribute value semantics, review surfaces, and support findings; TVG still owns exit judgment.
+- Image-generation boundary: Images2 outputs can support loop-assisted observations, not general profile-strength proof.

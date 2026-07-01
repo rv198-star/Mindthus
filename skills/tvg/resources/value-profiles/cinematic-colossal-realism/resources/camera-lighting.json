@@ -1,0 +1,17 @@
+{
+  "schema_version": "cinematic-colossal-camera-lighting-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "camera_defaults": {
+    "aspect_ratio": "2.39:1 widescreen",
+    "viewpoint": "human-scale or instrument-scale witness position",
+    "angle": "low position with restrained upward angle",
+    "lens": "medium telephoto or telephoto compression unless confined-space proximity requires wide angle",
+    "depth": "medium depth or deep focus when scale relation must remain readable"
+  },
+  "lighting_defaults": {
+    "credible_sources": ["storm light", "moon edge", "city lights", "searchlights", "submersible lamps", "temple window light", "firelight"],
+    "atmospheric_media": ["rain", "mist", "dust", "silt", "smoke", "snow", "water turbidity"],
+    "exposure_behavior": ["layered shadows", "controlled highlights", "visible light scatter", "distant detail absorbed by atmosphere"]
+  },
+  "texture_defaults": ["weathering", "wet surfaces", "dust or silt", "imperfect lens edge", "fine film grain"]
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "cinematic-colossal-subject-taxonomy-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "categories": [
+    {
+      "id": "eastern_dragon_colossus",
+      "label": "Eastern dragon colossus",
+      "keywords": ["chinese dragon", "eastern dragon", "dragon god", "long dragon"],
+      "scene_default": "storm_city_or_mountain",
+      "scale_default": "cloud_layer"
+    },
+    {
+      "id": "deep_sea_colossus_deity",
+      "label": "Deep-sea colossus deity",
+      "keywords": ["sea god", "underwater god", "deep sea", "black tide", "dragon bone", "sunken god", "ocean god"],
+      "scene_default": "deep_sea_trench",
+      "scale_default": "shipwreck_trench"
+    },
+    {
+      "id": "cosmic_omen",
+      "label": "Cosmic omen",
+      "keywords": ["black sun", "eclipse", "sky eye", "moon", "cosmic", "star"],
+      "scene_default": "darkened_city_sky",
+      "scale_default": "sky_and_horizon"
+    },
+    {
+      "id": "religious_colossus",
+      "label": "Religious colossus",
+      "keywords": ["ancient god", "deity", "buddha", "idol", "temple", "statue"],
+      "scene_default": "temple_or_ruined_plaza",
+      "scale_default": "architecture"
+    },
+    {
+      "id": "unknown_colossus",
+      "label": "Unknown colossus",
+      "keywords": [],
+      "scene_default": "edge_of_known_world",
+      "scale_default": "human_environment_colossus"
+    }
+  ]
+}

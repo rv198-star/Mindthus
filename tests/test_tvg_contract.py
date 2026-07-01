@@ -1274,6 +1274,109 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_cinematic_colossal_profile_package_exists_and_uses_four_layers(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = profile_dir / "profile.md"
+        self.assertTrue(profile.exists())
+        text = profile.read_text(encoding="utf-8")
+        for phrase in (
+            "cinematic colossal realism",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
+            "runtime_support",
+            "behavior sample, not source truth",
+            "must not copy the external skill's concrete wording",
+            "scripts must not decide aesthetic success, profile maturity, or TVG exit",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_cinematic_colossal_runtime_resources_have_required_shapes(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        resource_names = (
+            "subject-taxonomy.json",
+            "scene-defaults.json",
+            "camera-lighting.json",
+            "negative-constraints.json",
+            "field-templates.json",
+            "image-audit-rubric.json",
+        )
+        for name in resource_names:
+            path = profile_dir / "resources" / name
+            self.assertTrue(path.exists(), name)
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            self.assertIn("schema_version", payload)
+            self.assertIn("profile", payload)
+            self.assertEqual(payload["profile"], "cinematic-colossal-realism")
+
+    def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        scripts = profile_dir / "scripts"
+        classify = subprocess.run(
+            ["python3", str(scripts / "classify_subject.py"), "black tide dragon bone god"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(classify.returncode, 0, classify.stderr)
+        classified = json.loads(classify.stdout)
+        self.assertEqual(classified["script_boundary"], "support_only_agentic_audit_required")
+        self.assertEqual(classified["primary_category"], "deep_sea_colossus_deity")
+        self.assertNotIn("PASS", classify.stdout)
+        self.assertNotIn("freeze", classify.stdout.lower())
+
+        lint = subprocess.run(
+            [
+                "python3",
+                str(scripts / "lint_prompt_packet.py"),
+                "--prompt",
+                "A huge god in the ocean, cinematic, animation style.",
+            ],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(lint.returncode, 1, lint.stderr + lint.stdout)
+        linted = json.loads(lint.stdout)
+        self.assertEqual(linted["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("missing_human_scale_anchor", linted["finding_codes"])
+        self.assertIn("missing_physical_environment_feedback", linted["finding_codes"])
+        self.assertIn("forbidden_media_term", linted["finding_codes"])
+        self.assertNotIn("PASS", lint.stdout)
+
+    def test_cinematic_colossal_field_lock_validator_reports_template_drift(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        script = profile_dir / "scripts" / "validate_field_lock.py"
+        expected = "【镜头角度】\n【景别】\n【前景】\n【远景】"
+        output = "【镜头角度】\n低机位\n【前景】\n潜水器\n【远景】\n古神"
+        result = subprocess.run(
+            ["python3", str(script), "--expected-fields", expected, "--output", output],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 1, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("missing_field", payload["finding_codes"])
+        self.assertEqual(payload["missing_fields"], ["【景别】"])
+
+    def test_cinematic_colossal_examples_separate_profile_power_from_runtime_rescue(self):
+        examples = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism" / "examples"
+        single_pass = (examples / "single-pass-profile-power.md").read_text(encoding="utf-8")
+        loop_assisted = (examples / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
+        for phrase in (
+            "single_pass_profile_power",
+            "profile_control_power: partial",
+            "claim_ceiling",
+            "fixed profile",
+        ):
+            self.assertIn(phrase, single_pass)
+        for phrase in (
+            "loop_assisted_profile_use",
+            "baseline vs basic profile vs advanced four-layer profile",
+            "Images2 output is loop-assisted production evidence",
+            "does not prove the profile is generally strong",
+        ):
+            self.assertIn(phrase, loop_assisted)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,18 @@
+{
+  "schema_version": "cinematic-colossal-negative-constraints-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "forbidden_media_terms": ["animation", "anime", "game cg", "game screenshot", "concept art", "character sheet", "cartoon render"],
+  "safe_visual_failure_handles": [
+    "cheap_effects_feel",
+    "plastic_surface",
+    "overly_smooth_material",
+    "weightless_floating",
+    "blank_clean_background",
+    "no_environment_contact",
+    "flat_even_lighting",
+    "poster_centered_subject",
+    "missing_human_scale_anchor",
+    "overly_saturated_color",
+    "over_sharpened_edges"
+  ]
+}

@@ -893,6 +893,31 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
 
+    def test_release_pack_includes_cinematic_colossal_profile_package(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "release"
+            result = subprocess.run(
+                ["python3", str(script), "--package", "skills", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            packaged = (
+                out
+                / "codex"
+                / "skills"
+                / "mindthus"
+                / "tvg"
+                / "resources"
+                / "value-profiles"
+                / "cinematic-colossal-realism"
+            )
+            self.assertTrue((packaged / "profile.md").exists())
+            self.assertTrue((packaged / "resources" / "subject-taxonomy.json").exists())
+            self.assertTrue((packaged / "scripts" / "lint_prompt_packet.py").exists())
+            self.assertTrue((packaged / "examples" / "loop-assisted-image-comparison.md").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
