@@ -43,6 +43,7 @@ def main() -> None:
                 "lighting_defaults": camera["lighting_defaults"],
                 "decisive_pressure_frame": camera["decisive_pressure_frame"],
                 "director_shot_spine": camera["director_shot_spine"],
+                "director_subtraction_pass": camera["director_subtraction_pass"],
                 "controlled_fracture_coherence": camera["controlled_fracture_coherence"],
                 "shot_economy_mode": camera["shot_economy_mode"],
                 "negative_visual_failure_handles": negative["safe_visual_failure_handles"],

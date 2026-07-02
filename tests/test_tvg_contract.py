@@ -1384,6 +1384,43 @@ class TvgContractTests(unittest.TestCase):
         self.assertIn("primary focal decision", payload["skeleton"]["director_shot_spine"]["shot_cues"])
         self.assertNotIn("director_quality", payload["skeleton"]["director_shot_spine"])
 
+    def test_cinematic_colossal_profile_has_director_subtraction_pass(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "director-subtraction-depth",
+            "director subtraction pass",
+            "one major event",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        subtraction = camera["director_subtraction_pass"]
+        self.assertEqual(subtraction["major_event_budget"], 1)
+        self.assertEqual(subtraction["foreground_intrusion_budget"], 2)
+        self.assertIn(
+            "if two actions read equally strong, demote one into reaction, silhouette, or atmosphere",
+            subtraction["subtractive_checks"],
+        )
+        self.assertIn("competing highlights", subtraction["demotion_targets"])
+        self.assertIn(
+            "do not solve clutter by collapsing the scene into a close hero portrait",
+            subtraction["guardrails"],
+        )
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("director_subtraction_pass", payload["skeleton"])
+        self.assertEqual(payload["skeleton"]["director_subtraction_pass"]["major_event_budget"], 1)
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["director_subtraction_pass"])
+
     def test_cinematic_colossal_profile_controls_mess_and_fracture(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
         profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
@@ -1437,6 +1474,7 @@ class TvgContractTests(unittest.TestCase):
         self.assertIn("motion", economy["allowed_supporting_vector_roles"])
         self.assertIn("atmosphere", economy["allowed_supporting_vector_roles"])
         self.assertIn("demote correct but attention-expensive elements", economy["demotion_policy"])
+        self.assertIn("keep secondary action as reaction or aftermath when the main event is already readable", economy["demotion_policy"])
         self.assertIn("preserve quiet or dark zones when they strengthen the primary image", economy["negative_space_policy"])
         self.assertIn("do not increase pressure by filling every region", economy["guardrails"])
         self.assertIn("do not collapse the scale vector into a close character shot", economy["guardrails"])
@@ -1457,6 +1495,30 @@ class TvgContractTests(unittest.TestCase):
             payload["skeleton"]["shot_economy_mode"]["demotion_policy"],
         )
         self.assertNotIn("aesthetic_success", payload["skeleton"]["shot_economy_mode"])
+
+    def test_cinematic_colossal_image_audit_rubric_tracks_director_subtraction(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        rubric = json.loads((profile_dir / "resources" / "image-audit-rubric.json").read_text(encoding="utf-8"))
+        self.assertIn("director_subtraction_pass", rubric["prompt_review_handles"])
+        self.assertIn("single_major_event_visible", rubric["image_review_handles"])
+
+        negative = json.loads((profile_dir / "resources" / "negative-constraints.json").read_text(encoding="utf-8"))
+        self.assertIn("split_competing_actions", negative["safe_visual_failure_handles"])
+        self.assertIn("highlight_steals_subject", negative["safe_visual_failure_handles"])
+
+    def test_cinematic_colossal_profile_documents_pressure_fit_guidance(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "recommended starting",
+            "pressure is `3`",
+            "This pressure guidance is profile-specific operating advice",
+        ):
+            self.assertIn(phrase, profile)
+
+        examples = (profile_dir / "examples" / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
+        self.assertIn("## Pressure-Fit Guidance", examples)
+        self.assertIn("best general starting point for this profile", examples)
 
     def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
@@ -1511,6 +1573,7 @@ class TvgContractTests(unittest.TestCase):
         examples = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism" / "examples"
         single_pass = (examples / "single-pass-profile-power.md").read_text(encoding="utf-8")
         loop_assisted = (examples / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
+        research_log = (examples / "loop-assisted-research-log.md").read_text(encoding="utf-8")
         for phrase in (
             "single_pass_profile_power",
             "profile_control_power: partial",
@@ -1523,8 +1586,13 @@ class TvgContractTests(unittest.TestCase):
             "baseline vs basic profile vs advanced four-layer profile",
             "Images2 output is loop-assisted production evidence",
             "does not prove the profile is generally strong",
+            "canonical exemplar note",
         ):
             self.assertIn(phrase, loop_assisted)
+        self.assertNotIn("【最终提示词】", loop_assisted)
+        self.assertNotIn("B Original SKILL", loop_assisted)
+        self.assertIn("Loop-Assisted Research Log", research_log)
+        self.assertIn("donor-skill behavior family summary", research_log)
 
 
 if __name__ == "__main__":

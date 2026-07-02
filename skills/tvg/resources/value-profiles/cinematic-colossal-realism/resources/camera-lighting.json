@@ -60,6 +60,29 @@
       "do not copy external skill wording"
     ]
   },
+  "director_subtraction_pass": {
+    "use_when": "pressure 4-5, or when the frame has pressure and scale but still reads like several small actions instead of one major event",
+    "major_event_budget": 1,
+    "foreground_intrusion_budget": 2,
+    "subtractive_checks": [
+      "if two actions read equally strong, demote one into reaction, silhouette, or atmosphere",
+      "if a bright effect reads before the subject, shrink it, darken it, or move it behind the event hierarchy",
+      "if foreground weapons, debris, branches, beams, or architecture cut the frame into pieces, keep only the ones that route the eye",
+      "if destruction does not read as the result of the main force, merge it into dust, smoke, shadow, or aftermath"
+    ],
+    "demotion_targets": [
+      "competing highlights",
+      "parallel micro-actions",
+      "gratuitous foreground intrusion",
+      "decorative destruction"
+    ],
+    "guardrails": [
+      "do not remove witness scale or environment scale while simplifying",
+      "do not solve clutter by collapsing the scene into a close hero portrait",
+      "do not sterilize weather, fracture, or atmosphere to create fake cleanliness",
+      "do not let secondary reaction beats become equal-strength micro-events"
+    ]
+  },
   "controlled_fracture_coherence": {
     "use_when": "when weather, damage, occlusion, darkness, or broken surfaces create scale and pressure but risk becoming visual mess",
     "allowed_chaos_materials": [
@@ -93,6 +116,7 @@
     ],
     "demotion_policy": [
       "demote correct but attention-expensive elements",
+      "keep secondary action as reaction or aftermath when the main event is already readable",
       "turn extra figures into silhouettes when they compete with the subject",
       "turn extra debris into directional streaks or atmosphere when it competes with the subject",
       "turn extra lights into small practical points when they compete with reveal light"
