@@ -81,5 +81,34 @@
       "do not replace controlled weather and damage with clean decorative polish"
     ]
   },
+  "shot_economy_mode": {
+    "use_when": "pressure 4-5, or whenever the prompt is becoming correct but visually crowded",
+    "primary_image_budget": 1,
+    "supporting_vector_budget": 3,
+    "allowed_supporting_vector_roles": ["focus", "scale", "motion", "atmosphere"],
+    "texture_budget_policy": [
+      "texture exists only when it supports the primary image or one supporting vector",
+      "foreground clutter must either lead the eye or be darkened, blurred, cropped, or removed",
+      "background detail must either show scale or dissolve into atmosphere"
+    ],
+    "demotion_policy": [
+      "demote correct but attention-expensive elements",
+      "turn extra figures into silhouettes when they compete with the subject",
+      "turn extra debris into directional streaks or atmosphere when it competes with the subject",
+      "turn extra lights into small practical points when they compete with reveal light"
+    ],
+    "negative_space_policy": [
+      "preserve quiet or dark zones when they strengthen the primary image",
+      "allow low-detail atmosphere when it improves scale and pressure",
+      "do not treat every empty region as a defect"
+    ],
+    "guardrails": [
+      "do not increase pressure by filling every region",
+      "do not satisfy every profile surface at equal visual weight",
+      "do not remove human-scale or instrument-scale anchors",
+      "do not collapse the scale vector into a close character shot",
+      "do not make the scene sterile while reducing clutter"
+    ]
+  },
   "texture_defaults": ["weathering", "wet surfaces", "dust or silt", "imperfect lens edge", "fine film grain"]
 }

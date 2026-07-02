@@ -215,6 +215,8 @@ Local ignored artifacts:
 - `tests/artifacts/tvg_beijing_black_dragon_director_spine_contact_sheet.png`
 - `tests/artifacts/tvg_beijing_black_dragon_director_spine_v2_contact_sheet.png`
 - `tests/artifacts/tvg_beijing_black_dragon_controlled_fracture_contact_sheet.png`
+- `tests/artifacts/tvg_hanli_dayan_tuned_p5_shot_economy.png`
+- `tests/artifacts/tvg_hanli_dayan_shot_economy_contact_sheet.png`
 
 Observed one-run comparison:
 
@@ -269,6 +271,22 @@ rain direction, palace edge, traffic reflections, cloud aperture, dragon body ar
 foreground witnesses read as one pressure field. It still does not prove superiority
 over the original skill, but it identifies a more accurate migration target than
 "add more cinematic detail."
+
+Shot-economy follow-up:
+
+High-pressure TVG originally behaved too much like an enhancer: it protected many valid
+surfaces at once, which increased pressure but also increased visual competition. The
+profile now includes shot-economy-mode support: one primary image, up to three
+supporting vectors, texture budget limits, explicit demotion of correct but
+attention-expensive elements, and permission to preserve quiet or dark zones.
+
+A Han Li / Dayan Sword Formation P5 comparison showed the effect clearly. The old P5
+image created stronger field pressure than P2, but debris, figures, sword trails, ruins,
+and smoke competed for attention. The shot-economy P5 image made Han Li and the nearest
+sword ring easier to read and reduced clutter by demoting extra debris, figures, and
+background detail. Its trade-off was a narrower sense of battlefield scale. This suggests
+the next boundary: subtraction must protect the primary image without collapsing the
+scale vector into a close character shot.
 
 This remains one-run loop-assisted production evidence, not proof that the external
 skill is generally better or that the tuned profile is generally mature.

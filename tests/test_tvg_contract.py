@@ -1418,6 +1418,46 @@ class TvgContractTests(unittest.TestCase):
         )
         self.assertNotIn("aesthetic_success", payload["skeleton"]["controlled_fracture_coherence"])
 
+    def test_cinematic_colossal_profile_has_shot_economy_mode(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "shot-economy-mode-depth",
+            "shot economy mode",
+            "subtractive selection before additive strengthening",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        economy = camera["shot_economy_mode"]
+        self.assertEqual(economy["primary_image_budget"], 1)
+        self.assertEqual(economy["supporting_vector_budget"], 3)
+        self.assertIn("focus", economy["allowed_supporting_vector_roles"])
+        self.assertIn("scale", economy["allowed_supporting_vector_roles"])
+        self.assertIn("motion", economy["allowed_supporting_vector_roles"])
+        self.assertIn("atmosphere", economy["allowed_supporting_vector_roles"])
+        self.assertIn("demote correct but attention-expensive elements", economy["demotion_policy"])
+        self.assertIn("preserve quiet or dark zones when they strengthen the primary image", economy["negative_space_policy"])
+        self.assertIn("do not increase pressure by filling every region", economy["guardrails"])
+        self.assertIn("do not collapse the scale vector into a close character shot", economy["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("shot_economy_mode", payload["skeleton"])
+        self.assertEqual(payload["skeleton"]["shot_economy_mode"]["primary_image_budget"], 1)
+        self.assertIn(
+            "demote correct but attention-expensive elements",
+            payload["skeleton"]["shot_economy_mode"]["demotion_policy"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["shot_economy_mode"])
+
     def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
         scripts = profile_dir / "scripts"
