@@ -33,6 +33,7 @@ RELEASE_SCRIPT_PATHS = (
     Path("primitives/check.py"),
     Path("primitives/validate_whole_elephant.py"),
     Path("primitives/manifest.json"),
+    Path("mindthus_cli.py"),
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "遇事不要慌，先搞清楚情况再说。This is a light Mindthus activation router, not a mandatory workflow. "
