@@ -1007,6 +1007,58 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_public_tvg_doc_adds_profile_layering_and_case_index(self):
+        text = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        for phrase in (
+            "TVG-Profile 是什么",
+            "Profile 的分层",
+            "`runtime_support`",
+            "当前随包提供五类 profile 资源",
+            "plain-sharp-skill-intro",
+            "cinematic-colossal-realism",
+            "案例索引",
+            "tvg-profile-cases/plain-sharp-skill-intro.md",
+            "tvg-profile-cases/film-style-profiles.md",
+            "tvg-profile-cases/cinematic-colossal-realism.md",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_tvg_profile_case_pages_exist_and_cover_three_example_lanes(self):
+        cases = {
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "plain-sharp-skill-intro.md": (
+                "Profile 不一定要从脚本、赛马、",
+                "`runtime_support`：没有",
+                "这个案例是我们给 TVG-Profile 准备的一条轻量起步线",
+            ),
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "film-style-profiles.md": (
+                "`shaw-brothers-wuxia-fantasy`",
+                "`king-hu-wuxia-cinema`",
+                "我们用来展示另一条高级路线",
+            ),
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "cinematic-colossal-realism.md": (
+                "不是把外部 cinematic prompt skill 原样搬进来",
+                "行为样本，而不是 source truth",
+                "我们给它的角色，本来就只是确定性支撑，不是审美裁决",
+            ),
+        }
+        for path, phrases in cases.items():
+            self.assertTrue(path.exists(), path.name)
+            text = path.read_text(encoding="utf-8")
+            for phrase in phrases:
+                self.assertIn(phrase, text, f"{path.name}: {phrase}")
+
     def test_ab_pressure_tests_cover_issue_10_state_and_profile_scenarios(self):
         text = (REPO / "tests" / "tvg_ab_pressure_tests.md").read_text(encoding="utf-8")
         for phrase in (
