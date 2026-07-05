@@ -8,19 +8,19 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.4.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.2.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_4_1(self):
+    def test_current_release_surface_is_v1_4_2(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.4.1`", readme)
+        self.assertIn("当前仓库版本：`v1.4.2`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertNotIn("当前仓库版本：`v1.3.0`", readme)
+        self.assertNotIn("当前仓库版本：`v1.4.1`", readme)
         self.assertNotIn("## 版本与开发状态", readme)
         self.assertNotIn("当前开发分支同步", readme)
         self.assertIn("局部正确", readme)
@@ -28,55 +28,54 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("mindthus-plugins-1.4.1.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.4.1.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.4.2.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.4.2.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.1/mindthus-plugins-1.4.1.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.2/mindthus-plugins-1.4.2.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.1/mindthus-skills-1.4.1.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.2/mindthus-skills-1.4.2.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.4.1", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.4.1.md)", changelog)
-        self.assertIn("Explanatory Authority Check", changelog)
-        self.assertIn("Dominant Carrier Check", changelog)
-        self.assertIn("System Subject Check", changelog)
-        self.assertIn('VERSION = "1.4.1"', builder)
+        self.assertIn("## v1.4.2", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.2.md)", changelog)
+        self.assertIn("Compact Semantic Triad", changelog)
+        self.assertIn("Decision Context Calibration", changelog)
+        self.assertIn("MPG Scalar Commitment Unpack", changelog)
+        self.assertIn('VERSION = "1.4.2"', builder)
 
-        release_log = (REPO / "docs" / "releases" / "v1.4.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.2.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.4.1 发布日志",
-            "发布日期：2026-06-29",
+            "# Mindthus v1.4.2 发布日志",
+            "发布日期：2026-07-06",
             "## 版本定位",
             "## 安装入口",
             "## 这次解决了什么",
+            "## 工程变化",
             "## 边界",
+            "## 已处理 issue",
             "## 验证",
-            "Explanatory Authority Check",
-            "Dominant Carrier Check",
-            "System Subject Check",
-            "Input Framing Audit",
-            "局部正确",
-            "先审题，后答题",
-            "scripts/log-mindthus-runtime.py",
-            "## 实测校准样例",
-            "019f1753",
-            "skills 就是提示词",
-            "目标 95 分参考回答",
-            "当前版本仍未完全达到预期",
-            "脚本主导",
-            "LLM 主导",
-            "mindthus-plugins-1.4.1.tar.gz",
-            "mindthus-skills-1.4.1.tar.gz",
+            "Compact Semantic Triad / 三根硬支柱",
+            "Contrastive Consequence Probe / 后果对比探针",
+            "Decision Context Calibration / 决策语境校准",
+            "Aspect Ownership Matrix / 切面主导权矩阵",
+            "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+            "scripts/primitives/whole_elephant_validator.py",
+            "docs/methodologies/primitives/whole-elephant-protocol.md",
+            "本版不关闭 #83",
+            "#78 Refactor Whole Elephant guardrail into compact semantic contract",
+            "#81 Add Decision Context Calibration and Aspect Ownership Matrix",
+            "#82 Add MPG scalar-to-vector unpack primitive",
+            "mindthus-plugins-1.4.2.tar.gz",
+            "mindthus-skills-1.4.2.tar.gz",
             "python3 scripts/build-release-pack.py",
-            "python3 -m unittest discover -s tests -q",
+            "python3 -m pytest -q",
         ):
             self.assertIn(phrase, release_log)
 

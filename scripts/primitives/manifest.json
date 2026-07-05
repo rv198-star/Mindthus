@@ -1,36 +1,70 @@
 {
   "schema_version": "mindthus-primitive-activation-v0.1",
   "script_boundary": "shape_only_reminder_not_semantic_judgment",
+  "ownership_calibration_scenarios": {
+    "skills_prompt_essence": {
+      "description": "A locally true prompt/context carrier tries to define SKILLS essence.",
+      "expected_judgment_owner": "whole_elephant_protocol",
+      "support_aspects": [
+        "decision_context_calibration"
+      ],
+      "cues": [
+        "local_truth_claims_whole_object_essence",
+        "definition_authority_question",
+        "implementation_carrier_overclaims_essence"
+      ]
+    },
+    "display_scaling_op_usability": {
+      "description": "A 27-inch 4K/5K/BetterDisplay debate turns on whose situated decision is being served.",
+      "expected_judgment_owner": "decision_context_calibration",
+      "support_aspects": [
+        "whole_elephant_protocol"
+      ],
+      "cues": [
+        "answer_flips_by_actor_timing_target_or_tradeoff",
+        "situated_decision_judgment",
+        "abstract_fairness_would_drift_from_user_goal"
+      ]
+    }
+  },
   "events": {
     "before-route": {
       "description": "Before selecting a Mindthus method.",
       "active_primitives": [
         "minimal_sufficient_lens",
         "frame_fitness_check",
+        "mpg_scalar_commitment_unpack",
+        "decision_context_calibration",
         "whole_elephant_protocol",
         "evidence_claim_ceiling"
       ],
       "required_agent_checks": [
         "is_this_clear_low_risk_direct_execution",
         "is_input_a_question_or_packed_conclusion",
+        "does_scalar_commitment_hide_mainline_carrier_path_exposure_commitment",
         "is_a_local_frame_claiming_global_authority",
+        "does_answer_flip_by_actor_timing_target_or_tradeoff",
         "if_partial_truth_triggers_validate_whole_elephant_audit",
         "are_facts_or_runtime_proof_missing",
         "what_hard_judgment_point_exists",
+        "which_aspect_owns_formal_answer_when_owner_candidates_conflict",
         "which_method_owns_the_next_judgment"
       ]
     },
     "before-answer": {
       "description": "Before producing a formal answer after frame-risk or partial-truth capture.",
       "active_primitives": [
+        "decision_context_calibration",
         "whole_elephant_protocol",
         "core_thesis_extraction",
         "first_sentence_stress_test",
         "essence_wording_guard"
       ],
       "required_agent_checks": [
-        "build_compact_visible_audit",
+        "build_internal_compact_audit",
         "validate_whole_elephant_audit_when_triggered",
+        "choose_single_judgment_owner_when_owner_candidates_conflict",
+        "do_not_average_aspect_outputs",
         "start_formal_answer_with_core_thesis",
         "ensure_no_second_question_gap",
         "reject_false_essence_claim_when_disposition_rejects_definition"
@@ -154,23 +188,109 @@
       },
       "owner": "using-mindthus"
     },
+    "mpg_scalar_commitment_unpack": {
+      "name": "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+      "short_rule": "路径波动下的单点承诺先显影 mainline/carrier/path/exposure/commitment；只改 MPG 路由输入，不下判断。",
+      "trigger": [
+        "before-route"
+      ],
+      "action_effect": [
+        "surface-latent-vector",
+        "route-mpg-ready",
+        "ask-one-clarification",
+        "defer-to-mainline-or-evidence",
+        "not-applicable"
+      ],
+      "not_a": [
+        "judgment-owner",
+        "general-unpack-skill",
+        "multi-round-interrogation",
+        "mpg-decision-engine"
+      ],
+      "output_shape": [
+        "mainline",
+        "carrier",
+        "path_volatility",
+        "exposure",
+        "commitment",
+        "route_state",
+        "one_clarification"
+      ],
+      "aspect_role": "support",
+      "ownership_scope": [
+        "method_routing_input_shape"
+      ],
+      "degrade_to": [
+        "support_probe"
+      ],
+      "owner": "shared-primitives"
+    },
+    "decision_context_calibration": {
+      "name": "Decision Context Calibration / 决策语境校准",
+      "short_rule": "处境化判断先锁定决策者、时点、目标函数和可接受损耗；全局不是更抽象，而是对当前决策更有定义权。",
+      "trigger": [
+        "before-route",
+        "before-answer"
+      ],
+      "action_effect": [
+        "lock-decision-actor",
+        "lock-decision-timing",
+        "lock-target-function",
+        "name-acceptable-tradeoff",
+        "name-global-for-current-decision",
+        "prevent-abstract-fairness-drift"
+      ],
+      "not_a": [
+        "standalone-method",
+        "semantic-judge",
+        "preference-eraser",
+        "abstract-neutrality-engine",
+        "whole-elephant-replacement"
+      ],
+      "output_shape": [
+        "decision_actor",
+        "decision_timing",
+        "target_function",
+        "acceptable_tradeoff",
+        "global_for_this_decision",
+        "answer_posture"
+      ],
+      "aspect_role": "judgment_owner",
+      "ownership_scope": [
+        "formal_answer_thesis",
+        "decision_target"
+      ],
+      "exclusive_with": [
+        "whole_elephant_protocol"
+      ],
+      "owns_when": [
+        "judgment depends on actor, timing, target function, or acceptable tradeoff",
+        "who is right, worth it, should do, or acceptable changes by decision context",
+        "abstract fairness would drift away from the active user's decision"
+      ],
+      "defer_when": [
+        "core issue is essence, definition authority, or local mechanism capture",
+        "answer would not flip after changing actor, timing, target function, or acceptable tradeoff"
+      ],
+      "degrade_to": [
+        "support_probe"
+      ],
+      "owner": "shared-primitives"
+    },
     "whole_elephant_protocol": {
       "name": "Whole Elephant Protocol / 全象流程",
-      "short_rule": "局部真相可能冒充整体时，先产出可校验全象审计包，再进入正式判断。",
+      "short_rule": "局部真相可能冒充整体时，先锁定完整对象、结果主控和局部胜出后的优化偏移，再进入正式判断。",
       "trigger": [
         "before-route",
         "before-answer"
       ],
       "action_effect": [
         "validate-whole-elephant-audit",
-        "reconstruct-whole-object",
-        "map-local-success-points",
-        "choose-strategy",
-        "decide-definition-disposition",
+        "build-compact-semantic-triad",
+        "compare-local-frame-and-whole-object-consequences",
         "name-result-controller",
         "name-decision-consequence",
-        "name-optimization-misdirection",
-        "plan-formal-answer"
+        "name-optimization-misdirection"
       ],
       "not_a": [
         "standalone-method",
@@ -178,10 +298,17 @@
         "definition-decider",
         "domain-answer-generator"
       ],
-      "output_shape": [
+      "required_output_shape": [
+        "canonical_object",
+        "result_controller",
+        "misdirection_if_local_wins",
+        "local_frame_wins",
+        "whole_object_wins",
+        "better_direction_for_target"
+      ],
+      "expanded_debug_shape": [
         "object_hierarchy",
         "user_named_object_relation",
-        "canonical_object",
         "formal_thesis_subject",
         "umbrella_context",
         "subject_alignment_reason",
@@ -195,8 +322,27 @@
         "strategy_choice",
         "corrected_thesis",
         "definition_owner",
-        "result_controller",
         "decision_consequence"
+      ],
+      "aspect_role": "judgment_owner",
+      "ownership_scope": [
+        "formal_answer_thesis",
+        "definition_authority"
+      ],
+      "exclusive_with": [
+        "decision_context_calibration"
+      ],
+      "owns_when": [
+        "local truth claims whole-object essence",
+        "carrier, implementation detail, single metric, or local mechanism tries to define the whole object",
+        "the active question is definition authority rather than situated action choice"
+      ],
+      "defer_when": [
+        "answer would flip by actor, timing, target function, or acceptable tradeoff",
+        "the active question is who is right, worth it, should do, or acceptable for a situated decision"
+      ],
+      "degrade_to": [
+        "support_probe"
       ],
       "owner": "shared-primitives"
     },

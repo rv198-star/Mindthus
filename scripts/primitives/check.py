@@ -27,6 +27,11 @@ ALLOWED_METHODS = {
     "tplan",
     "unknown",
 }
+ALLOWED_ASPECT_ROLES = {
+    "constraint",
+    "judgment_owner",
+    "support",
+}
 
 
 def non_empty_string(value: Any) -> bool:
@@ -58,6 +63,42 @@ def validate_manifest(manifest: Any) -> list[str]:
         findings.append("primitives must be a non-empty object")
         primitives = {}
 
+    scenarios = manifest.get("ownership_calibration_scenarios", {})
+    if scenarios is None:
+        scenarios = {}
+    if not isinstance(scenarios, dict):
+        findings.append("ownership_calibration_scenarios must be an object when present")
+        scenarios = {}
+    for scenario_id, scenario in scenarios.items():
+        subject = f"ownership_calibration_scenarios.{scenario_id}"
+        if not non_empty_string(scenario_id):
+            findings.append("ownership calibration scenario id must be a non-empty string")
+        if not isinstance(scenario, dict):
+            findings.append(f"{subject} must be an object")
+            continue
+        if not non_empty_string(scenario.get("description")):
+            findings.append(f"{subject}.description must be a non-empty string")
+        owner_id = scenario.get("expected_judgment_owner")
+        if not non_empty_string(owner_id):
+            findings.append(f"{subject}.expected_judgment_owner must be a non-empty string")
+        elif owner_id not in primitives:
+            findings.append(
+                f"{subject}.expected_judgment_owner references unknown primitive {owner_id!r}"
+            )
+        else:
+            owner = primitives[owner_id]
+            if isinstance(owner, dict) and owner.get("aspect_role") != "judgment_owner":
+                findings.append(
+                    f"{subject}.expected_judgment_owner must reference a judgment_owner primitive"
+                )
+        require_list_of_strings(findings, scenario, "support_aspects", subject)
+        require_list_of_strings(findings, scenario, "cues", subject)
+        for aspect_id in scenario.get("support_aspects", []):
+            if isinstance(aspect_id, str) and aspect_id not in primitives:
+                findings.append(
+                    f"{subject}.support_aspects references unknown primitive {aspect_id!r}"
+                )
+
     for primitive_id, primitive in primitives.items():
         subject = f"primitives.{primitive_id}"
         if not non_empty_string(primitive_id):
@@ -70,9 +111,35 @@ def validate_manifest(manifest: Any) -> list[str]:
                 findings.append(f"{subject}.{field} must be a non-empty string")
         for field in ("trigger", "action_effect", "not_a"):
             require_list_of_strings(findings, primitive, field, subject)
-        for field in ("output_shape", "frame_status_values"):
+        for field in (
+            "output_shape",
+            "required_output_shape",
+            "expanded_debug_shape",
+            "frame_status_values",
+            "ownership_scope",
+            "exclusive_with",
+            "owns_when",
+            "defer_when",
+            "degrade_to",
+        ):
             if field in primitive:
                 require_list_of_strings(findings, primitive, field, subject)
+        if "aspect_role" in primitive and primitive["aspect_role"] not in ALLOWED_ASPECT_ROLES:
+            findings.append(
+                f"{subject}.aspect_role must be one of: {', '.join(sorted(ALLOWED_ASPECT_ROLES))}"
+            )
+        for exclusive_id in primitive.get("exclusive_with", []):
+            if isinstance(exclusive_id, str) and exclusive_id not in primitives:
+                findings.append(
+                    f"{subject}.exclusive_with references unknown primitive {exclusive_id!r}"
+                )
+            elif isinstance(exclusive_id, str):
+                partner = primitives.get(exclusive_id)
+                if isinstance(partner, dict) and primitive_id not in partner.get("exclusive_with", []):
+                    findings.append(
+                        f"{subject}.exclusive_with must be symmetric: {primitive_id} "
+                        f"lists {exclusive_id} but not vice versa"
+                    )
         if "routing_effect" in primitive:
             routing_effect = primitive["routing_effect"]
             if not isinstance(routing_effect, dict) or not routing_effect:
@@ -185,7 +252,19 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
             "action_effect": primitive["action_effect"],
             "not_a": primitive["not_a"],
         }
-        for optional_field in ("output_shape", "frame_status_values", "routing_effect"):
+        for optional_field in (
+            "output_shape",
+            "required_output_shape",
+            "expanded_debug_shape",
+            "frame_status_values",
+            "routing_effect",
+            "aspect_role",
+            "ownership_scope",
+            "exclusive_with",
+            "owns_when",
+            "defer_when",
+            "degrade_to",
+        ):
             if optional_field in primitive:
                 item[optional_field] = primitive[optional_field]
         active_primitives.append(item)
@@ -218,6 +297,19 @@ def print_text_report(report: dict[str, Any]) -> None:
     for primitive in report["active_primitives"]:
         print(f"- {primitive['id']}: {primitive['short_rule']}")
     print()
+    aspect_items = [
+        primitive for primitive in report["active_primitives"] if "aspect_role" in primitive
+    ]
+    if aspect_items:
+        print("aspect_ownership:")
+        for primitive in aspect_items:
+            scope = ",".join(primitive.get("ownership_scope", [])) or "-"
+            exclusive_with = ",".join(primitive.get("exclusive_with", [])) or "-"
+            print(
+                f"- {primitive['id']}: role={primitive['aspect_role']}; "
+                f"scope={scope}; exclusive_with={exclusive_with}"
+            )
+        print()
     print("required_agent_checks:")
     for check in report["required_agent_checks"]:
         print(f"- {check}")

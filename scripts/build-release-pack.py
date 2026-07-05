@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.4.1"
+VERSION = "1.4.2"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -32,6 +32,7 @@ RELEASE_SCRIPT_PATHS = (
     Path("log-mindthus-runtime.py"),
     Path("primitives/check.py"),
     Path("primitives/validate_whole_elephant.py"),
+    Path("primitives/whole_elephant_validator.py"),
     Path("primitives/manifest.json"),
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (

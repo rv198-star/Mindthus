@@ -5,6 +5,16 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
+def _read_shared_primitive_docs() -> str:
+    """Return the split primitive contract: compact index plus detail files."""
+    methodologies = REPO / "docs" / "methodologies"
+    parts = [(methodologies / "shared-primitives.md").read_text(encoding="utf-8")]
+    primitives_dir = methodologies / "primitives"
+    if primitives_dir.exists():
+        parts.extend(path.read_text(encoding="utf-8") for path in sorted(primitives_dir.glob("*.md")))
+    return "\n".join(parts)
+
+
 def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str, str]]:
     start = text.index(heading)
     rows: dict[str, tuple[str, str]] = {}
@@ -49,9 +59,7 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_input_framing_audit_is_strong_entry_protocol_inside_using_mindthus(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
 
         for phrase in (
@@ -69,7 +77,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "No frame-risk signal, no frame check",
             "When frame-risk exists",
             "internal result",
-            "No execution impact, omit the frame check",
+            "No execution impact:omit frame check",
         ):
             self.assertIn(phrase, using)
 
@@ -123,7 +131,8 @@ class MindthusRouterContractTests(unittest.TestCase):
         )
 
         for phrase in (
-            "Visible audit requirement",
+            "Audit discipline",
+            "audit hidden",
             "Do not answer as a soft commentary fallback",
             "A clever paragraph is not an audit",
             "Question level before opinion",
@@ -135,9 +144,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, using)
 
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         for phrase in (
             "problem key over dialogue continuity",
             "professional tone is not proof",
@@ -164,9 +171,7 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_input_framing_audit_productizes_original_prompt_as_mainline_protocol(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
 
         for phrase in (
             "description: Use when routing Mindthus or auditing frame-risk.",
@@ -206,9 +211,7 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_input_framing_audit_requires_explanatory_authority_check_design(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
             encoding="utf-8"
         )
@@ -317,9 +320,7 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_input_framing_audit_requires_partial_truth_capture_main_axis(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
 
         using_compact = " ".join(using.split())
         primitives_compact = " ".join(primitives.split())
@@ -327,19 +328,19 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Partial Truth Capture / 局部真相捕获",
             "A locally true observation must not own the whole explanation",
             "Whole Elephant hard gate",
-            "Visible Whole Elephant output contract",
-            "MUST build this audit before formal_answer",
+            "Internal Whole Elephant contract",
+            "MUST build compact audit before formal_answer",
             "declare partial_truth_capture_triggered:true/false",
+            "compact fields:canonical_object;result_controller;misdirection_if_local_wins",
+            "consequence probe:local_frame_wins;whole_object_wins;better_direction_for_target",
+            "expanded audit(object_hierarchy/whole_object_reconstruction/variant_map/formal_answer_plan) optional guardrail/debug support",
             "Audit Hidden By Default / 审计默认内隐",
-            "full audit JSON is internal by default",
+            "full audit JSON internal by default",
             "do not show full whole_elephant_audit by default",
             "do not output short audit by default",
-            "object_hierarchy(user_named_object/whole_object/component_layer/role_layer)",
             "variant_map",
-            "primary_value_distribution",
-            "control_owner_shift",
             "validation_command",
-            "whole_elephant_validation is internal evidence by default",
+            "whole_elephant_validation internal evidence by default",
             "output_evidence",
             "Do not claim validation passed unless the command actually ran",
             "No command evidence, no formal_answer",
@@ -420,19 +421,17 @@ class MindthusRouterContractTests(unittest.TestCase):
         contract = (
             REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
         ).read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         primitives_compact = " ".join(primitives.split())
 
         for text in (using, contract):
             text_compact = " ".join(text.split())
             for phrase in (
                 "Audit Hidden By Default / 审计默认内隐",
-                "full audit JSON is internal by default",
+                "full audit JSON internal by default",
                 "do not show full whole_elephant_audit by default",
                 "do not output short audit by default",
-                "whole_elephant_validation is internal evidence by default",
+                "whole_elephant_validation internal evidence by default",
                 "visible output starts with formal answer",
                 "expand only when user asks, validation fails, or handoff/debug needs it",
             ):
@@ -471,11 +470,41 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, compact)
 
+    def test_whole_elephant_contract_uses_compact_semantic_triad(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        primitives = _read_shared_primitive_docs()
+        contract = (
+            REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
+        ).read_text(encoding="utf-8")
+        calibration = (
+            REPO / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml"
+        ).read_text(encoding="utf-8")
+
+        combined = " ".join("\n".join((using, primitives, contract, calibration)).split())
+        for phrase in (
+            "Compact Semantic Triad / 三根硬支柱",
+            "canonical_object",
+            "result_controller",
+            "misdirection_if_local_wins",
+            "triad first",
+            "expanded audit is guardrail/debug support",
+            "Contrastive Consequence Probe / 后果对比探针",
+            "local_frame_wins",
+            "whole_object_wins",
+            "better_direction_for_target",
+            "guardrail must not become the judgment center",
+            "schema_version: mindthus-calibration-pairs-v0.1",
+            "skills-prompt-injection-019f1753",
+            "local_carrier_claims_definition_authority",
+            "regression_output_shape",
+            "target_output_shape",
+            "why_target_wins",
+        ):
+            self.assertIn(phrase, combined)
+
     def test_core_thesis_first_sentence_must_carry_decisive_point(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         primitives_compact = " ".join(primitives.split())
         contract = (
             REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
@@ -502,8 +531,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "First Sentence Stress Test / 首句主判断压力测试",
             "If the reader needs a second question to get the point, the first sentence failed",
             "target result, corrected owner/carrier, subordinate local interface, and optimization consequence",
-            "translate internal definition authority into human final-say language",
-            "use phrases like final say, who decides, or 谁说了算",
+            "translate internal definition authority into human language",
+            "谁说了算、什么控制结果、局部机制有没有定义权",
             "name controller inversion when variants differ",
             "whether the local surface serves the whole operating loop or the loop serves the local surface",
             "one concrete contrast",
@@ -540,8 +569,8 @@ class MindthusRouterContractTests(unittest.TestCase):
         for phrase in (
             "Partial Truth Capture / 局部真相捕获",
             "A locally true observation must not own the whole explanation",
-            "preserve its local truth, then test whether it deserves definition-level authority",
-            "先承认它摸到的那块是真的，再判断它有没有资格代表整头象",
+            "First name the whole object and result controller",
+            "先还原整头象，再限定摸到的那块在哪里是真的",
             "local_truth",
             "whole_object",
             "Whole Object Reconstruction / 整体对象还原",
@@ -735,9 +764,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         for phrase in (
             "能直接判断就不要开方法",
             "一个 skill 足够就不要串联",
@@ -948,6 +975,62 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, section)
 
+    def test_mpg_scalar_commitment_unpack_is_support_only_pre_route_probe(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        primitives = _read_shared_primitive_docs()
+        manual_cases = (
+            REPO / "tests" / "mpg" / "scalar_commitment_unpack_manual_review_cases.md"
+        ).read_text(encoding="utf-8")
+
+        using_compact = " ".join(using.split())
+        for phrase in (
+            "MPG-unpack:scalar-commitment",
+            "mainline/carrier/path/exposure/commitment",
+            "support-only",
+        ):
+            self.assertIn(phrase, using_compact)
+
+        primitives_compact = " ".join(primitives.split())
+        for phrase in (
+            "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+            "Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影",
+            "support primitive, not a judgment owner",
+            "single-point decision",
+            "mainline",
+            "carrier",
+            "path_volatility",
+            "exposure",
+            "commitment",
+            "`mpg_ready`",
+            "`needs_one_clarification`",
+            "`mainline_unclear`",
+            "`evidence_missing`",
+            "`not_applicable`",
+            "Do not expose a field table by default",
+            "MPG still owns the path-carrying judgment",
+        ):
+            self.assertIn(phrase, primitives_compact)
+
+        for phrase in (
+            "P1: Investment Carrier Under Drawdown",
+            "P2: Career Carrier With Runway Risk",
+            "P3: Organization Transformation Cashflow Valley",
+            "P4: Technical Route As Carrier",
+            "P5: Project Maintenance Without Obvious Investment Words",
+            "S1: Pure Fact Lookup",
+            "S2: Consumer Preference Without Path-Carrying Structure",
+            "S3: Naked Mainline Without Carrier",
+            "S4: Evidence-Missing Carrier Claim",
+            "S5: Empirical A/B Test",
+            "S6: Control Boundary Trap",
+            "C1: Mainline Itself Is The Question",
+            "C2: Consumer Question With Long-Horizon Exposure",
+            "C3: Product Migration With Ambiguous Owner",
+            "At least two independent SubAgents",
+            "Human Review",
+        ):
+            self.assertIn(phrase, manual_cases)
+
     def test_agents_prevents_3l5s_from_becoming_default_judgment_sink(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         for phrase in (
@@ -1098,9 +1181,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_shared_primitives_consolidates_pressure_without_new_method_layer(self):
-        text = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        text = _read_shared_primitive_docs()
         for phrase in (
             "Pressure Surface Consolidation / 施压面收束",
             "not a standalone method",
@@ -1112,9 +1193,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_approximate_quantified_mapping_is_a_cognitive_primitive_not_route(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -1175,9 +1254,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_approximate_quantified_mapping_can_support_but_not_own_judgment(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -1198,9 +1275,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, using)
 
     def test_approximate_quantified_mapping_has_anti_overuse_threshold(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -1297,15 +1372,58 @@ class MindthusRouterContractTests(unittest.TestCase):
             ):
                 self.assertNotIn(copied_definition, text, f"{path} copied primitive definition")
 
+    def test_shared_primitives_index_links_to_split_primitive_files(self):
+        index = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
+            encoding="utf-8"
+        )
+        expected_files = {
+            "primitives/aspect-ownership.md": (
+                "Aspect Ownership Matrix / 切面主导权矩阵",
+                "Aspect Aggregation Ban / 切面合计禁令",
+            ),
+            "primitives/frame-fitness-check.md": (
+                "Frame Fitness Check / 定框适配检查",
+                "Framing-risk signals, not keyword rules",
+                "Original Prompt Contract / 原始有效提示词合同",
+            ),
+            "primitives/decision-context-calibration.md": (
+                "Decision Context Calibration / 决策语境校准",
+                "answer flip",
+                "global_for_this_decision",
+            ),
+            "primitives/whole-elephant-protocol.md": (
+                "Whole Elephant Protocol / 全象流程",
+                "Compact Semantic Triad / 三根硬支柱",
+                "Result Controller Viewpoint / 结果主控视角",
+            ),
+            "primitives/mpg-scalar-commitment-unpack.md": (
+                "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+                "Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影",
+                "mainline / carrier / path_volatility / exposure / commitment",
+            ),
+            "primitives/expression-pressure-and-gates.md": (
+                "Approximate Quantified Mapping / 非精准量化显影",
+                "Pressure Surface Consolidation / 施压面收束",
+                "Gate Probes / 冻结前定位自省",
+                "Failure Smells / 误用信号",
+            ),
+        }
+
+        for relative_path, required_phrases in expected_files.items():
+            self.assertIn(relative_path, index)
+            detail = (REPO / "docs" / "methodologies" / relative_path)
+            self.assertTrue(detail.exists(), f"{relative_path} should exist")
+            detail_text = detail.read_text(encoding="utf-8")
+            for phrase in required_phrases:
+                self.assertIn(phrase, detail_text, f"{relative_path} missing {phrase!r}")
+
     def test_rework_does_not_restore_extra_document_layers(self):
         self.assertFalse((REPO / "docs" / "methodologies" / "threshold-casebook.md").exists())
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         self.assertNotIn("### Route Matrix / 路由矩阵", text)
 
     def test_cognitive_primitive_index_has_stable_owner_and_rule_mapping(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         rows = _parse_markdown_table_after(primitives, "## Cognitive Primitive Index / 认知原语索引")
         self.assertEqual(
             rows,
@@ -1337,6 +1455,14 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "Frame Fitness Check / 定框适配检查": (
                     "`using-mindthus` / `shared-primitives`",
                     "当局部框架可能接管全局判断时，先判断应保留、限定、重构还是因证据不足阻断。",
+                ),
+                "MPG Scalar Commitment Unpack / MPG 标量承诺显影": (
+                    "`shared-primitives` / `scripts/primitives`",
+                    "路径波动下的单点承诺先显影 `mainline / carrier / path_volatility / exposure / commitment`，再判断是否交给 MPG。",
+                ),
+                "Decision Context Calibration / 决策语境校准": (
+                    "`shared-primitives` / `scripts/primitives`",
+                    "处境化判断先锁定决策者、时点、目标函数和可接受损耗；全局不是更抽象，而是对当前决策更有定义权。",
                 ),
                 "Whole Elephant Protocol / 全象流程": (
                     "`shared-primitives` / `scripts/primitives`",
@@ -1418,9 +1544,7 @@ class MindthusRouterContractTests(unittest.TestCase):
                 self.assertIn(phrase, text, f"{primitive} inactive in {path}: {phrase!r}")
 
     def test_frame_fitness_check_prevents_local_frame_capture_without_contrarianism(self):
-        primitives = (REPO / "docs" / "methodologies" / "shared-primitives.md").read_text(
-            encoding="utf-8"
-        )
+        primitives = _read_shared_primitive_docs()
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )

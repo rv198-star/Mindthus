@@ -23,6 +23,10 @@ A locally true observation must not own the whole explanation
 Whole Object Reconstruction / 整体对象还原
 reconstruct the whole object before essence judgment
 Whole Elephant Protocol / 全象流程
+Compact Semantic Triad / 三根硬支柱
+misdirection_if_local_wins
+Contrastive Consequence Probe / 后果对比探针
+better_direction_for_target
 local_success_points
 weighted_synthesis
 whole_first_re_evaluation
@@ -69,7 +73,11 @@ A locally true observation must not own the whole explanation
 Whole Object Reconstruction / 整体对象还原
 reconstruct the whole object before essence judgment
 Whole Elephant Protocol / 全象流程
+Compact Semantic Triad / 三根硬支柱
 start by naming the complete object before summarizing local truths
+misdirection_if_local_wins
+Contrastive Consequence Probe / 后果对比探针
+better_direction_for_target
 local_success_points
 coverage_weight
 weighted_synthesis
@@ -105,23 +113,75 @@ System Subject Check / 系统主体校准
 """
 
 
-def write_runtime_tree(root: Path, using_text: str = USING_TEXT, primitives_text: str = PRIMITIVES_TEXT) -> None:
-    (root / "skills" / "using-mindthus").mkdir(parents=True)
+def write_runtime_tree(
+    root: Path,
+    using_text: str = USING_TEXT,
+    primitives_text: str = PRIMITIVES_TEXT,
+    *,
+    runtime_layout: str = "skills",
+) -> None:
+    (root / "skills" / "using-mindthus" / "resources").mkdir(parents=True)
     (root / "docs" / "methodologies").mkdir(parents=True)
+    (root / "docs" / "methodologies" / "primitives").mkdir(parents=True)
     (root / "scripts" / "primitives").mkdir(parents=True)
+    (root / "skills" / "using-mindthus" / "scripts").mkdir(parents=True)
+    runtime_root = root / ("_runtime" if runtime_layout == "top-level" else "skills/_runtime")
+    (runtime_root / "core").mkdir(parents=True)
+    (runtime_root / "fidelity").mkdir(parents=True)
     (root / "skills" / "using-mindthus" / "SKILL.md").write_text(using_text, encoding="utf-8")
+    (root / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml").write_text(
+        "schema_version: mindthus-calibration-pairs-v0.1\n"
+        "pairs:\n"
+        "  - id: release-readiness-green-tests\n"
+        "    failure_mode: local_success_claims_release_authority\n",
+        encoding="utf-8",
+    )
     (root / "docs" / "methodologies" / "shared-primitives.md").write_text(
         primitives_text,
         encoding="utf-8",
     )
+    for primitive_file in (
+        "aspect-ownership.md",
+        "decision-context-calibration.md",
+        "expression-pressure-and-gates.md",
+        "frame-fitness-check.md",
+        "mpg-scalar-commitment-unpack.md",
+        "whole-elephant-protocol.md",
+    ):
+        (root / "docs" / "methodologies" / "primitives" / primitive_file).write_text(
+            primitives_text,
+            encoding="utf-8",
+        )
     (root / "scripts" / "primitives" / "manifest.json").write_text(
         '{"primitives":{"whole_elephant_protocol":{}}}\n',
+        encoding="utf-8",
+    )
+    (root / "scripts" / "primitives" / "check.py").write_text(
+        'SCHEMA_VERSION = "mindthus-primitive-activation-v0.1"\n',
         encoding="utf-8",
     )
     (root / "scripts" / "primitives" / "validate_whole_elephant.py").write_text(
         'SCHEMA_VERSION = "mindthus-whole-elephant-audit-v0.1"\n',
         encoding="utf-8",
     )
+    (root / "scripts" / "primitives" / "whole_elephant_validator.py").write_text(
+        'SCHEMA_VERSION = "mindthus-whole-elephant-audit-v0.1"\n',
+        encoding="utf-8",
+    )
+    (root / "skills" / "using-mindthus" / "scripts" / "validate_using_mindthus_output.py").write_text(
+        'SPEC = "using-mindthus-fidelity-v0.1"\n',
+        encoding="utf-8",
+    )
+    for runtime_path in (
+        runtime_root / "__init__.py",
+        runtime_root / "core" / "__init__.py",
+        runtime_root / "core" / "io.py",
+        runtime_root / "core" / "report.py",
+        runtime_root / "core" / "shape.py",
+        runtime_root / "fidelity" / "__init__.py",
+        runtime_root / "fidelity" / "core.py",
+    ):
+        runtime_path.write_text("# runtime fixture\n", encoding="utf-8")
 
 
 class LogMindthusRuntimeTests(unittest.TestCase):
@@ -130,9 +190,10 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             root = Path(tmp)
             repo = root / "repo"
             marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
-            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.1"
-            for runtime_root in (repo, marketplace, cache):
-                write_runtime_tree(runtime_root)
+            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
+            write_runtime_tree(repo)
+            write_runtime_tree(marketplace, runtime_layout="top-level")
+            write_runtime_tree(cache, runtime_layout="top-level")
 
             result = subprocess.run(
                 [
@@ -168,6 +229,10 @@ class LogMindthusRuntimeTests(unittest.TestCase):
                 payload["markers"],
             )
             self.assertIn("Whole Elephant Protocol / 全象流程", payload["markers"])
+            self.assertIn("Compact Semantic Triad / 三根硬支柱", payload["markers"])
+            self.assertIn("misdirection_if_local_wins", payload["markers"])
+            self.assertIn("Contrastive Consequence Probe / 后果对比探针", payload["markers"])
+            self.assertIn("better_direction_for_target", payload["markers"])
             self.assertIn(
                 "start by naming the complete object before summarizing local truths",
                 payload["markers"],
@@ -189,6 +254,14 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertIn("validation failure blocks formal answer", payload["markers"])
             self.assertIn(
                 "scripts/primitives/validate_whole_elephant.py",
+                payload["locations"]["cache"]["files"],
+            )
+            self.assertIn(
+                "scripts/primitives/whole_elephant_validator.py",
+                payload["locations"]["cache"]["files"],
+            )
+            self.assertIn(
+                "skills/using-mindthus/resources/calibration-pairs.yaml",
                 payload["locations"]["cache"]["files"],
             )
             self.assertIn("target job", payload["markers"])
@@ -225,13 +298,14 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             root = Path(tmp)
             repo = root / "repo"
             marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
-            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.1"
+            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
             write_runtime_tree(repo)
-            write_runtime_tree(marketplace)
+            write_runtime_tree(marketplace, runtime_layout="top-level")
             write_runtime_tree(
                 cache,
                 using_text=USING_TEXT.replace("System Subject Check / 系统主体校准\n", ""),
                 primitives_text=PRIMITIVES_TEXT.replace("System Subject Check / 系统主体校准\n", ""),
+                runtime_layout="top-level",
             )
 
             result = subprocess.run(
@@ -261,6 +335,45 @@ class LogMindthusRuntimeTests(unittest.TestCase):
                 payload["locations"]["cache"]["files"]["skills/using-mindthus/SKILL.md"]["markers"][
                     "System Subject Check / 系统主体校准"
                 ]
+            )
+
+    def test_strict_mode_fails_when_tracked_file_is_missing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            repo = root / "repo"
+            marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
+            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
+            write_runtime_tree(repo)
+            write_runtime_tree(marketplace, runtime_layout="top-level")
+            write_runtime_tree(cache, runtime_layout="top-level")
+            (cache / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml").unlink()
+
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(repo),
+                    "--marketplace-root",
+                    str(marketplace),
+                    "--cache-root",
+                    str(cache),
+                    "--json",
+                    "--strict",
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 1, result.stdout)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["summary"]["status"], "mismatch")
+            self.assertFalse(payload["summary"]["all_tracked_files_present"])
+            self.assertFalse(
+                payload["locations"]["cache"]["files"][
+                    "skills/using-mindthus/resources/calibration-pairs.yaml"
+                ]["exists"]
             )
 
 

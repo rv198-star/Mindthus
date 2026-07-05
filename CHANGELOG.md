@@ -2,6 +2,44 @@
 
 ## Unreleased
 
+## v1.4.2
+
+发布日期：2026-07-06
+
+[完整发布日志](docs/releases/v1.4.2.md)
+
+说明：本版把 v1.4.x 的“防局部正确冒充整体”继续收束到更稳的工程形态：Whole Elephant 不再靠堆字段维持判断，而是以 `canonical_object / result_controller / misdirection_if_local_wins` 三根硬支柱为主线；同时新增 Decision Context Calibration、Aspect Ownership Matrix 和 MPG Scalar Commitment Unpack，减少多切面平均、处境化判断漂移和 MPG 唤醒不足。
+
+### 新增
+
+- 新增 `Decision Context Calibration / 决策语境校准`：当答案会随决策者、时点、目标函数或可接受损耗改变时，先锁定当前决策语境，再判断谁更有定义权。
+- 新增 `Aspect Ownership Matrix / 切面主导权矩阵`：多个横切原语同时触发时，只允许一个 `judgment_owner` 主导首句判断，其他切面降级为约束或支持，避免“各打五十大板”。
+- 新增 `MPG Scalar Commitment Unpack / MPG 标量承诺显影`：把“买不买、留不留、要不要继续”等单点承诺显影为 `mainline / carrier / path_volatility / exposure / commitment`，只改 MPG 路由输入，不替 MPG 下结论。
+- 新增 `skills/using-mindthus/resources/calibration-pairs.yaml`，把 v1.4.1 的 SKILLS/prompt reduction 校准样例结构化为内部示范资源。
+- 新增 `docs/methodologies/primitives/` 第一阶段拆分：把 Whole Elephant、Frame Fitness、Decision Context、Aspect Ownership、MPG Scalar Unpack 等高复杂原语从 `shared-primitives.md` 中拆出。
+
+### 修复
+
+- 重构 Whole Elephant 为 Compact Semantic Triad / 三根硬支柱，并加入 Contrastive Consequence Probe / 后果对比探针，减少 guardrail 变成新 judgment center 的风险。
+- 消除 Whole Elephant 独立 validator 与 `using-mindthus` 集成 validator 的 drift：CLI wrapper 和 integrated validator 共用 `scripts/primitives/whole_elephant_validator.py`。
+- runtime 日志脚本现在追踪 calibration pairs、primitive checker、Whole Elephant validator、using-mindthus validator 和 runtime helper 文件，严格模式会检查 tracked file 是否缺失。
+- release pack 显式携带 split primitive docs、calibration pairs 和共享 Whole Elephant validator。
+
+### 边界
+
+- 本版不关闭 #83；#83 继续跟踪剩余小原语的全量拆分。
+- 本版不新增独立 skill，也不把 Whole Elephant 变成默认入口。
+- `MPG Scalar Commitment Unpack` 是 support primitive，不是新的战略判断方法。
+- `Decision Context Calibration` 不抹掉事实边界，只决定当前处境下哪个事实或框架拥有判断权。
+
+### 验证
+
+- `python3 -m pytest -q`
+- `git diff --check`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+- `python3 scripts/log-mindthus-runtime.py --strict`
+
 ## v1.4.1
 
 发布日期：2026-06-29

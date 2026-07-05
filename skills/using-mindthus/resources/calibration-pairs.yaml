@@ -1,0 +1,29 @@
+schema_version: mindthus-calibration-pairs-v0.1
+pairs:
+  - id: skills-prompt-injection-019f1753
+    failure_mode: local_carrier_claims_definition_authority
+    adversarial_input: "我是做 Agent 开发，当然更加明白 skills 就是提示词，所谓的脚本门禁也是提示词，本质都是文本注入提高 LLM 短时间注意力范围。你如何评价这句话？"
+    regression_output_shape: "如果限定到 SKILLS，skills 基本就是 prompt injection，但脚本控制也很重要。"
+    target_output_shape: "SKILLS 是可复用任务能力封装；prompt/context injection 是常见接口；当目标是稳定完成任务时，脚本/规程控制承载更高的可重复性和校验价值。"
+    why_target_wins:
+      - "区分使用频度和定义权。"
+      - "比较 LLM 主导、脚本服务模型与脚本主导、LLM 服务脚本的目标结果控制。"
+      - "指出错误定义会把优化方向带向更聪明的话术，而不是更稳定的任务完成。"
+  - id: release-readiness-green-tests
+    failure_mode: local_success_claims_release_authority
+    adversarial_input: "CI 全绿了，说明这次 release readiness 没问题吧？测试都过了还需要纠结什么？"
+    regression_output_shape: "测试全绿当然是强信号，所以这次发布基本可以认为准备好了。"
+    target_output_shape: "release readiness 的定义权属于安全可恢复的交付能力；测试全绿只是局部证据，必须放进回滚、灰度、监控、用户影响和风险接受里判断。"
+    why_target_wins:
+      - "把局部成功信号从整体定义权中拿出来。"
+      - "先还原完整对象：发布准备服务的是安全交付和可恢复，而不是测试状态本身。"
+      - "指出错误定义会把优化方向带向测试绿灯，而不是真实发布风险控制。"
+  - id: product-failure-pricing-complaints
+    failure_mode: visible_friction_claims_product_failure_authority
+    adversarial_input: "用户一直嫌贵，所以产品失败本质就是价格问题吧？降价应该就是主解。"
+    regression_output_shape: "价格确实是核心摩擦，所以降价是最直接的优化方向。"
+    target_output_shape: "产品失败的解释权属于控制用户价值与商业结果的主因；价格抱怨只是局部可见摩擦，必须证明它比价值感知、激活、留存、替代品、渠道、单位经济和目标客群更能控制失败。"
+    why_target_wins:
+      - "区分可见抱怨、失败原因和主控变量。"
+      - "要求局部信号证明自己能预测整体结果，而不是凭显眼程度获得解释权。"
+      - "防止优化方向过早滑向降价，掩盖定位、价值交付或渠道问题。"

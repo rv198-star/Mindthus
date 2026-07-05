@@ -4,62 +4,79 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import sys
 from pathlib import Path
 
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+THIS_FILE = Path(__file__).resolve()
+
+
+def _prepend_import_root(path: Path) -> None:
+    value = str(path)
+    if value not in sys.path:
+        sys.path.insert(0, value)
+
+
+def _find_runtime_import_root() -> Path:
+    for candidate in THIS_FILE.parents:
+        if (candidate / "_runtime").is_dir():
+            return candidate
+        skills_runtime = candidate / "skills" / "_runtime"
+        if skills_runtime.is_dir():
+            return candidate / "skills"
+    raise ImportError("Cannot locate packaged _runtime import root")
+
+
+def _find_whole_elephant_validator_path() -> Path:
+    path_parts = THIS_FILE.parts
+    candidate_roots: list[Path] = []
+    for index, part in enumerate(path_parts):
+        if part != "skills":
+            continue
+        tail = path_parts[index + 1 :]
+        if tail[:1] == ("using-mindthus",) or tail[:2] == ("mindthus", "using-mindthus"):
+            root_parts = path_parts[:index]
+            if root_parts and root_parts[-1] == ".opencode":
+                root_parts = root_parts[:-1]
+            candidate_roots.append(Path(*root_parts))
+    candidate_roots.extend(THIS_FILE.parents)
+
+    seen: set[Path] = set()
+    for candidate in candidate_roots:
+        if candidate in seen:
+            continue
+        seen.add(candidate)
+        validator = candidate / "scripts" / "primitives" / "whole_elephant_validator.py"
+        if validator.is_file():
+            return validator
+    raise ImportError("Cannot locate packaged scripts/primitives import root")
+
+
+def _load_whole_elephant_validator() -> object:
+    validator_path = _find_whole_elephant_validator_path()
+    spec = importlib.util.spec_from_file_location("mindthus_whole_elephant_validator", validator_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load whole elephant validator from {validator_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+_prepend_import_root(_find_runtime_import_root())
+_WHOLE_ELEPHANT_VALIDATOR = _load_whole_elephant_validator()
 
 from _runtime.core.io import load_json
 from _runtime.core.report import Finding, finding
 from _runtime.fidelity.core import FidelitySpec, print_text_report, validate_fidelity_output
+exposes_internal_stdout = _WHOLE_ELEPHANT_VALIDATOR.exposes_internal_stdout
+first_visible_sentence = _WHOLE_ELEPHANT_VALIDATOR.first_visible_sentence
+looks_like_generic_not_only_caveat = _WHOLE_ELEPHANT_VALIDATOR.looks_like_generic_not_only_caveat
+looks_like_local_truth_concession_first = _WHOLE_ELEPHANT_VALIDATOR.looks_like_local_truth_concession_first
+looks_like_score_concession = _WHOLE_ELEPHANT_VALIDATOR.looks_like_score_concession
+looks_like_soft_not_wrong_concession = _WHOLE_ELEPHANT_VALIDATOR.looks_like_soft_not_wrong_concession
+validate_whole_elephant_audit = _WHOLE_ELEPHANT_VALIDATOR.validate_audit
 
-
-WHOLE_ELEPHANT_SCHEMA_VERSION = "mindthus-whole-elephant-audit-v0.1"
-WHOLE_ELEPHANT_STRATEGIES = {"weighted_synthesis", "whole_first_re_evaluation"}
-WHOLE_ELEPHANT_USER_NAMED_OBJECT_RELATIONS = {
-    "canonical_object",
-    "component_or_interface",
-    "umbrella_context",
-    "ambiguous_needs_evidence",
-}
-WHOLE_ELEPHANT_STRING_FIELDS = (
-    "whole_object",
-    "canonical_object",
-    "formal_thesis_subject",
-    "umbrella_context",
-    "subject_alignment_reason",
-    "corrected_thesis",
-    "definition_owner",
-    "result_controller",
-    "decision_consequence",
-)
-WHOLE_ELEPHANT_HIERARCHY_FIELDS = (
-    "user_named_object",
-    "whole_object",
-    "component_layer",
-    "role_layer",
-)
-WHOLE_ELEPHANT_RECONSTRUCTION_FIELDS = (
-    "target_job",
-    "main_use_cases",
-    "primary_value_carrier",
-    "local_interface_role",
-)
-WHOLE_ELEPHANT_FORMAL_ANSWER_PLAN_FIELDS = (
-    "opening_core_thesis",
-    "canonical_subject",
-    "definition_disposition",
-    "local_truth_boundary",
-    "definition_consequence",
-    "optimization_misdirection",
-)
-WHOLE_ELEPHANT_DEFINITION_DISPOSITIONS = {
-    "grant_as_definition",
-    "reject_as_definition",
-    "qualify_as_component",
-    "blocked_by_missing_evidence",
-}
 
 SPEC = FidelitySpec(
     schema_version="using-mindthus-fidelity-v0.1",
@@ -92,212 +109,11 @@ def _non_empty_string(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _normalize_text(value: object) -> str:
-    return " ".join(str(value).casefold().split())
-
-
 def _placeholder_command(value: str) -> bool:
     return "..." in value or "<" in value or ">" in value
 
 
-def _looks_like_score_concession(value: object) -> bool:
-    text = _normalize_text(value)
-    return any(marker in text for marker in ("70%", "70分", "half-right", "half right")) or (
-        any(marker in text for marker in ("%", "分"))
-        and any(marker in text for marker in ("right", "对", "correct", "成立"))
-    )
-
-
-def _looks_like_both_sides_concession(value: object) -> bool:
-    text = _normalize_text(value)
-    return any(
-        marker in text
-        for marker in (
-            "both sides have a point",
-            "both sides are right",
-            "两边都有道理",
-            "双方都有道理",
-            "各有道理",
-            "都有道理",
-        )
-    )
-
-
-def _looks_like_soft_not_wrong_concession(value: object) -> bool:
-    text = _normalize_text(value)
-    return any(
-        marker in text
-        for marker in (
-            "i would not say this claim is wrong",
-            "i won't say this claim is wrong",
-            "i would not say it is wrong",
-            "i won't say it is wrong",
-            "我不会说这句话错",
-            "不能说它错",
-            "不能说这句话错",
-            "不是错",
-            "不算错",
-            "只是还不完整",
-        )
-    )
-
-
-def _validate_object_hierarchy(audit: dict[str, object]) -> list[Finding]:
-    hierarchy = audit.get("object_hierarchy")
-    if not isinstance(hierarchy, dict):
-        return [
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.object_hierarchy is required",
-            )
-        ]
-
-    findings: list[Finding] = []
-    for field in WHOLE_ELEPHANT_HIERARCHY_FIELDS:
-        if not _non_empty_string(hierarchy.get(field)):
-            findings.append(
-                finding(
-                    "block",
-                    "invalid-whole-elephant-audit",
-                    f"whole_elephant_audit.object_hierarchy.{field} must be a non-empty string",
-                )
-            )
-    return findings
-
-
-def _validate_whole_object_reconstruction(audit: dict[str, object]) -> list[Finding]:
-    reconstruction = audit.get("whole_object_reconstruction")
-    findings: list[Finding] = []
-    if not isinstance(reconstruction, dict):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.whole_object_reconstruction is required",
-            )
-        )
-        reconstruction = {}
-    for field in WHOLE_ELEPHANT_RECONSTRUCTION_FIELDS:
-        if not _non_empty_string(reconstruction.get(field)):
-            findings.append(
-                finding(
-                    "block",
-                    "invalid-whole-elephant-audit",
-                    f"whole_elephant_audit.whole_object_reconstruction.{field} must be a non-empty string",
-                )
-            )
-    if (
-        _non_empty_string(reconstruction.get("primary_value_carrier"))
-        and _normalize_text(reconstruction.get("primary_value_carrier"))
-        == _normalize_text(reconstruction.get("local_interface_role"))
-    ):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.whole_object_reconstruction.primary_value_carrier must differ from local_interface_role",
-            )
-        )
-    return findings
-
-
-def _validate_formal_answer_plan(audit: dict[str, object]) -> list[Finding]:
-    plan = audit.get("formal_answer_plan")
-    findings: list[Finding] = []
-    if not isinstance(plan, dict):
-        return [
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan is required",
-            )
-        ]
-
-    for field in WHOLE_ELEPHANT_FORMAL_ANSWER_PLAN_FIELDS:
-        if not _non_empty_string(plan.get(field)):
-            findings.append(
-                finding(
-                    "block",
-                    "invalid-whole-elephant-audit",
-                    f"whole_elephant_audit.formal_answer_plan.{field} must be a non-empty string",
-                )
-            )
-
-    disposition = plan.get("definition_disposition")
-    if _non_empty_string(disposition) and disposition not in WHOLE_ELEPHANT_DEFINITION_DISPOSITIONS:
-        choices = ", ".join(sorted(WHOLE_ELEPHANT_DEFINITION_DISPOSITIONS))
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                f"whole_elephant_audit.formal_answer_plan.definition_disposition must be one of: {choices}",
-            )
-        )
-
-    if (
-        _non_empty_string(plan.get("canonical_subject"))
-        and _non_empty_string(audit.get("canonical_object"))
-        and _normalize_text(plan.get("canonical_subject")) != _normalize_text(audit.get("canonical_object"))
-    ):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.canonical_subject must match canonical_object",
-            )
-        )
-
-    if _looks_like_score_concession(plan.get("opening_core_thesis")):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.opening_core_thesis must not use score-as-concession framing",
-            )
-        )
-    if _looks_like_both_sides_concession(plan.get("local_truth_boundary")):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.local_truth_boundary must name the boundary of the local truth, not a both-sides concession",
-            )
-        )
-    if (
-        plan.get("definition_disposition") == "reject_as_definition"
-        and _looks_like_soft_not_wrong_concession(plan.get("opening_core_thesis"))
-    ):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.opening_core_thesis must not soften a rejected definition into a not-wrong concession",
-            )
-        )
-
-    forbidden = plan.get("forbidden_answer_forms")
-    if not isinstance(forbidden, list) or not forbidden:
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.forbidden_answer_forms must be a non-empty list",
-            )
-        )
-    elif any(not _non_empty_string(item) for item in forbidden):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.formal_answer_plan.forbidden_answer_forms must contain only non-empty strings",
-            )
-        )
-    return findings
-
-
 def _validate_whole_elephant_audit(audit: object) -> list[Finding]:
-    findings: list[Finding] = []
     if not isinstance(audit, dict):
         return [
             finding(
@@ -307,66 +123,14 @@ def _validate_whole_elephant_audit(audit: object) -> list[Finding]:
             )
         ]
 
-    if audit.get("schema_version") != WHOLE_ELEPHANT_SCHEMA_VERSION:
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                f"whole_elephant_audit.schema_version must be {WHOLE_ELEPHANT_SCHEMA_VERSION}",
-            )
+    return [
+        finding(
+            "block",
+            "invalid-whole-elephant-audit",
+            f"whole_elephant_audit.{shape_finding}",
         )
-    for field in WHOLE_ELEPHANT_STRING_FIELDS:
-        if not _non_empty_string(audit.get(field)):
-            findings.append(
-                finding(
-                    "block",
-                    "invalid-whole-elephant-audit",
-                    f"whole_elephant_audit.{field} must be a non-empty string",
-                )
-            )
-    findings.extend(_validate_object_hierarchy(audit))
-    findings.extend(_validate_whole_object_reconstruction(audit))
-    findings.extend(_validate_formal_answer_plan(audit))
-
-    local_success_points = audit.get("local_success_points")
-    if not isinstance(local_success_points, list) or not local_success_points:
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.local_success_points must be a non-empty list",
-            )
-        )
-    elif any(not _non_empty_string(point) for point in local_success_points):
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                "whole_elephant_audit.local_success_points must contain only non-empty strings",
-            )
-        )
-
-    strategy_choice = audit.get("strategy_choice")
-    if strategy_choice not in WHOLE_ELEPHANT_STRATEGIES:
-        choices = ", ".join(sorted(WHOLE_ELEPHANT_STRATEGIES))
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                f"whole_elephant_audit.strategy_choice must be one of: {choices}",
-            )
-        )
-    user_named_object_relation = audit.get("user_named_object_relation")
-    if user_named_object_relation not in WHOLE_ELEPHANT_USER_NAMED_OBJECT_RELATIONS:
-        choices = ", ".join(sorted(WHOLE_ELEPHANT_USER_NAMED_OBJECT_RELATIONS))
-        findings.append(
-            finding(
-                "block",
-                "invalid-whole-elephant-audit",
-                f"whole_elephant_audit.user_named_object_relation must be one of: {choices}",
-            )
-        )
-    return findings
+        for shape_finding in validate_whole_elephant_audit(audit)
+    ]
 
 
 def _validate_whole_elephant_contract(data: object) -> list[Finding]:
@@ -394,6 +158,49 @@ def _validate_whole_elephant_contract(data: object) -> list[Finding]:
         ]
 
     findings = _validate_whole_elephant_audit(data.get("whole_elephant_audit"))
+    conclusion = data.get("plain_language_conclusion")
+    if _non_empty_string(conclusion):
+        first_sentence = first_visible_sentence(conclusion)
+        if looks_like_local_truth_concession_first(first_sentence):
+            findings.append(
+                finding(
+                    "block",
+                    "weak-partial-truth-conclusion",
+                    "plain_language_conclusion must start with the global thesis, not local-truth concession",
+                )
+            )
+        if looks_like_score_concession(conclusion):
+            findings.append(
+                finding(
+                    "block",
+                    "weak-partial-truth-conclusion",
+                    "plain_language_conclusion must not use score-as-concession framing",
+                )
+            )
+        if looks_like_soft_not_wrong_concession(conclusion):
+            findings.append(
+                finding(
+                    "block",
+                    "weak-partial-truth-conclusion",
+                    "plain_language_conclusion must not soften a rejected definition into a not-wrong concession",
+                )
+            )
+        if looks_like_generic_not_only_caveat(first_sentence):
+            findings.append(
+                finding(
+                    "block",
+                    "weak-partial-truth-conclusion",
+                    "plain_language_conclusion must not be a generic not-only caveat",
+                )
+            )
+        if exposes_internal_stdout(conclusion):
+            findings.append(
+                finding(
+                    "block",
+                    "internal-stdout-exposed",
+                    "plain_language_conclusion must not expose internal script stdout",
+                )
+            )
     validation = data.get("whole_elephant_validation")
     if not isinstance(validation, dict):
         findings.append(

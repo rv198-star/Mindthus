@@ -56,7 +56,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.4.1`",
+            "当前仓库版本：`v1.4.2`",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -699,7 +699,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.4.1")
+            self.assertEqual(plugin["version"], "1.4.2")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -787,7 +787,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.4.1")
+            self.assertEqual(codex_plugin_manifest["version"], "1.4.2")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
@@ -811,6 +811,15 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue(
+                (
+                    codex_plugin_root
+                    / "skills"
+                    / "using-mindthus"
+                    / "resources"
+                    / "calibration-pairs.yaml"
+                ).exists()
+            )
             self.assertFalse((codex_plugin_root / "skills" / "_runtime").exists())
             self.assertTrue((codex_plugin_root / "_runtime" / "fidelity" / "core.py").exists())
             for path in sorted((codex_plugin_root / "skills").glob("*/SKILL.md")):
@@ -818,6 +827,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((codex_plugin_root / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "run-fidelity-judge.py").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "log-mindthus-runtime.py").exists())
+            self.assertTrue(
+                (codex_plugin_root / "scripts" / "primitives" / "whole_elephant_validator.py").exists()
+            )
             self.assertFalse((codex_plugin_root / "docs" / "internal").exists())
             self.assertFalse((codex_plugin_root / "docs" / "superpowers").exists())
 
@@ -857,12 +869,34 @@ class PackagingDocsTests(unittest.TestCase):
                 for skill_name in skill_names:
                     self.assertNotIn(f"skills/{skill_name}/", markdown)
 
+    def test_release_pack_includes_split_primitive_docs(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "release"
+            result = subprocess.run(
+                ["python3", str(script), "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            primitive_doc = Path("docs") / "methodologies" / "primitives" / "whole-elephant-protocol.md"
+            expected_roots = (
+                out / "claude-code",
+                out / "claude-code" / "claude-plugin",
+                out / "codex",
+                out / "codex-plugin" / "mindthus",
+                out / "opencode",
+            )
+            for root in expected_roots:
+                self.assertTrue((root / primitive_doc).exists(), f"{root} missing {primitive_doc}")
+
     def test_release_pack_builder_can_split_plugin_and_skills_packages(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.4.1"
-            skills = tmp_dir / "mindthus-skills-1.4.1"
+            plugins = tmp_dir / "mindthus-plugins-1.4.2"
+            skills = tmp_dir / "mindthus-skills-1.4.2"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
@@ -889,6 +923,73 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
+            self.assertTrue(
+                (
+                    skills
+                    / "codex"
+                    / "skills"
+                    / "mindthus"
+                    / "using-mindthus"
+                    / "resources"
+                    / "calibration-pairs.yaml"
+                ).exists()
+            )
+            self.assertTrue(
+                (
+                    skills
+                    / "claude-code"
+                    / "skills"
+                    / "using-mindthus"
+                    / "resources"
+                    / "calibration-pairs.yaml"
+                ).exists()
+            )
+            self.assertTrue(
+                (
+                    skills
+                    / "opencode"
+                    / ".opencode"
+                    / "skills"
+                    / "mindthus"
+                    / "using-mindthus"
+                    / "resources"
+                    / "calibration-pairs.yaml"
+                ).exists()
+            )
+            codex_using_validator = (
+                skills
+                / "codex"
+                / "skills"
+                / "mindthus"
+                / "using-mindthus"
+                / "scripts"
+                / "validate_using_mindthus_output.py"
+            )
+            shadow = tmp_dir / "scripts" / "primitives"
+            shadow.mkdir(parents=True)
+            (shadow / "__init__.py").write_text("", encoding="utf-8")
+            (shadow.parent / "__init__.py").write_text("", encoding="utf-8")
+            (shadow / "whole_elephant_validator.py").write_text(
+                "raise RuntimeError('shadowed ancestor validator')\n",
+                encoding="utf-8",
+            )
+            near_shadow = skills / "codex" / "skills" / "mindthus" / "scripts" / "primitives"
+            near_shadow.mkdir(parents=True)
+            (near_shadow / "__init__.py").write_text("", encoding="utf-8")
+            (near_shadow.parent / "__init__.py").write_text("", encoding="utf-8")
+            (near_shadow / "whole_elephant_validator.py").write_text(
+                "raise RuntimeError('near ancestor shadow')\n",
+                encoding="utf-8",
+            )
+            validator_help = subprocess.run(
+                ["python3", str(codex_using_validator), "--help"],
+                cwd=tmp_dir,
+                env={**os.environ, "PYTHONPATH": str(tmp_dir)},
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(validator_help.returncode, 0, validator_help.stderr)
+            self.assertIn("Validate using-mindthus fidelity output shape", validator_help.stdout)
             self.assertFalse((skills / "codex-plugin").exists())
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())

@@ -2,36 +2,67 @@
 
 This Fidelity Contract defines required judgment moves for the Mindthus router.
 
+Layering rule:
+
+- `core`: Compact Semantic Triad / 三根硬支柱. Name `canonical_object`,
+  `result_controller`, and `misdirection_if_local_wins` before any field-heavy audit.
+  triad first keeps the answer centered on the judged object, the target-result
+  controller, and the optimization drift if local truth wins too much authority.
+- `mainline`: preserve local truth, reconstruct the whole object, assign or deny
+  definition authority, then state the consequence in the formal answer.
+- `guardrail`: expanded audit fields, shape validators, and calibration examples.
+  expanded audit is guardrail/debug support; guardrail must not become the judgment
+  center.
+- `boundary`: simple, clear, low-risk, fact-sufficient tasks skip Whole Elephant.
+
+Contrastive Consequence Probe / 后果对比探针:
+
+- `local_frame_wins`: what the agent would optimize if the local frame owned the
+  definition.
+- `whole_object_wins`: what the agent would optimize if the complete object stays in
+  control.
+- `better_direction_for_target`: which path better serves the stated or inferred
+  target function.
+
 required judgment moves:
 
 - perform intervention-boundary judgment before choosing a skill
 - do premise calibration when the object, constraints, or goal function are unclear
+- for situated judgments, lock `decision_actor`, `decision_timing`,
+  `target_function`, `acceptable_tradeoff`, and `global_for_this_decision` before
+  deciding who is right, whether it is worth it, or whether a compromise is acceptable
 - separate facts from values, risks, authority, and user preference constraints
 - route by active judgment object, not by keyword
+- when a scalar commitment hides `mainline / carrier / path_volatility / exposure /
+  commitment`, surface that latent vector before MPG routing; route state is
+  `mpg_ready`, `needs_one_clarification`, `mainline_unclear`, `evidence_missing`,
+  or `not_applicable`; this is support-only and MPG still owns the judgment
 - arbitrate conflicts with dominate / defer / degrade / block / stop
+- when judgment-owning aspects conflict, choose one `judgment_owner` for the first
+  formal thesis and degrade the other to support; do not average aspect outputs into
+  a polite balanced answer. Boundary-complete answers are allowed, but boundary
+  repairs must not become equal-weight thesis unless they change the result
+  controller, decision target, evidence ceiling, or definition authority
 - require execution impact from any method use
 - when `partial_truth_capture_triggered` is true, include `whole_elephant_audit`
   and `whole_elephant_validation.script_verdict == "shape_only"` before `formal_answer`
-- `whole_elephant_audit.object_hierarchy` must separate the user-named object
-  from the whole object, component layer, and role layer
-- `whole_elephant_audit.whole_object_reconstruction` must expose target_job,
-  main_use_cases, primary_value_carrier, and local_interface_role
-- `whole_elephant_audit` must expose `variant_map`,
-  `primary_value_distribution`, and `control_owner_shift` before assigning
-  definition authority
-- `whole_elephant_audit.formal_answer_plan` must expose opening_core_thesis,
-  canonical_subject, definition_disposition, local_truth_boundary,
-  definition_consequence, optimization_misdirection, and forbidden_answer_forms
-- `whole_elephant_audit.corrected_thesis` must be present, and
-  primary_value_carrier must differ from local_interface_role unless
-  `grant_as_definition` makes that local mechanism the causal/result owner
-- `whole_elephant_audit` fields must stay internally consistent: object hierarchy,
-  whole_object, canonical_object, formal thesis subject, opening_core_thesis, and
-  corrected_thesis must not drift into different objects or grant authority to a
-  rejected local interface
-- Audit Hidden By Default / 审计默认内隐: full audit JSON is internal by
+- `whole_elephant_audit` must expose the compact core:
+  `canonical_object`, `result_controller`, `misdirection_if_local_wins`,
+  `local_frame_wins`, `whole_object_wins`, and `better_direction_for_target`
+- expanded audit fields are optional guardrail/debug support. If used,
+  `object_hierarchy` separates the user-named object from whole object,
+  component layer, and role layer; `whole_object_reconstruction` exposes
+  target_job, main_use_cases, primary_value_carrier, and local_interface_role;
+  `formal_answer_plan` exposes opening_core_thesis, canonical_subject,
+  definition_disposition, local_truth_boundary, definition_consequence,
+  optimization_misdirection, and forbidden_answer_forms
+- expanded strategy packages must expose `variant_map`,
+  `primary_value_distribution`, `control_owner_shift`, `local_success_points`,
+  and `strategy_choice`; their fields must stay internally consistent and must
+  not grant authority to a rejected local interface
+- Audit Hidden By Default / 审计默认内隐: full audit JSON internal by
   default; do not show full whole_elephant_audit by default; do not output short
-  audit by default. whole_elephant_validation is internal evidence by default.
+  audit by default. whole_elephant_validation internal evidence by default.
   visible output starts with formal answer; expand only when user asks,
   validation fails, or handoff/debug needs it.
 - visible audit is only for explicit/debug paths; never dump raw JSON/YAML unless
@@ -44,18 +75,19 @@ required judgment moves:
   artifact, prompt wrapper, attention mechanism, or delivery format. The audit
   labels themselves must not relabel the user-named object as the local carrier
   after a valid scope correction.
-- `formal_answer` should start from formal_answer_plan.opening_core_thesis and
-  carry its local truth boundary and definition consequence into the answer
+- `formal_answer` should start with the global thesis named by the compact core:
+  canonical object, result controller, and the consequence if the local frame wins
 - `formal_answer` opening must pass First Sentence Stress Test / 首句主判断压力测试:
   If the reader needs a second question to get the point, the first sentence failed.
   Name the target result, corrected owner/carrier, subordinate local interface,
   and optimization consequence when relevant; do not start with an abstract
   carrier label when a concrete result-controller relation is available.
-- `formal_answer_plan.opening_core_thesis` must carry definition authority,
-  result control, or optimization consequence; broad placeholders and
-  concession-first "有道理但不完整" openings fail.
+- If expanded `formal_answer_plan` is present, its `opening_core_thesis` must
+  match that global thesis and carry definition authority, result control, or
+  optimization consequence; broad placeholders and concession-first
+  "有道理但不完整" openings fail.
 - Visible thesis should translate internal definition authority into human
-  final-say language: final say, who decides, or 谁说了算. When variants differ,
+  language: 谁说了算、什么控制结果、局部机制有没有定义权. When variants differ,
   name the controller inversion and give one concrete contrast, preferably a
   two-pole concrete contrast: one case where the local surface leads and one case
   where it becomes subordinate.
@@ -84,6 +116,30 @@ Allowed exits:
 shape pass is not semantic approval. scripts must not decide semantic truth; router
 discipline protects method choice without forcing Mindthus onto simple tasks.
 
+## Aspect Ownership Calibration
+
+`Decision Context Calibration / 决策语境校准` owns the first thesis when the answer
+would flip by actor, timing, target function, or acceptable tradeoff. `Whole Elephant
+Protocol / 全象流程` owns the first thesis when a local truth, carrier, implementation
+detail, or metric is trying to define the whole object's essence.
+
+These aspects may both activate, but they must not be averaged. If they compete over
+`formal_answer_thesis`, pick the owner and downgrade the other to `support_probe`.
+
+Bad default:
+
+> Mike has physical-layer correctness, and momo has usability-layer correctness.
+
+Better situated default:
+
+> If the active object is the original poster's practical usability concern, momo's
+> answer is more on target; Mike's physical warning remains a boundary, but it loses
+> authority if used to deny BetterDisplay's practical value.
+
+Case material:
+
+- `docs/cases/2026-07-05-decision-context-calibration-display-scaling.md`
+
 ## v1.4.1 发布校准样例
 
 这个样例是校准证据，不是针对某个领域的硬编码答案。它记录的是：
@@ -107,8 +163,9 @@ discipline protects method choice without forcing Mindthus onto simple tasks.
 
 目标 95 分参考回答：
 
-> 对 SKILLS 来说，提示词/上下文注入是一种真实且常见的轻量用法，
-> 但它不能自动拥有本质解释权。更关键的问题是：谁控制目标结果。
+> SKILLS 的定义权不属于提示词/上下文注入，而属于可复用任务能力封装：
+> 谁控制目标结果，谁才有解释权。提示词/上下文注入是一种真实且常见的轻量接口，
+> 但它不能自动拥有本质解释权。
 > 一种形态是 LLM 主导，脚本服务模型，skill 主要负责安排上下文；
 > 另一种形态是脚本主导，LLM 服务脚本，skill 把流程、校验、复用性和
 > AI 介入时机封装成任务能力。前者常见，后者在稳定完成任务、可复用、

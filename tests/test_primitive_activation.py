@@ -54,6 +54,7 @@ def formal_answer_plan(canonical_subject: str) -> dict:
 
 def variant_calibration() -> dict:
     return {
+        **compact_triad_probe(),
         "variant_map": [
             "lightweight local-signal-led variant",
             "composite target-result-led variant",
@@ -67,6 +68,74 @@ def variant_calibration() -> dict:
             "signal serves the target-result control surface"
         ),
     }
+
+
+def compact_triad_probe() -> dict:
+    return {
+        "misdirection_if_local_wins": (
+            "surface optimization takes definition authority from the result-controlling whole"
+        ),
+        "local_frame_wins": (
+            "the answer optimizes the locally true interface and treats its success as essence"
+        ),
+        "whole_object_wins": (
+            "the answer optimizes the complete object by asking what controls the target result"
+        ),
+        "better_direction_for_target": (
+            "whole-object re-evaluation better preserves the target result than local-frame optimization"
+        ),
+    }
+
+
+WHOLE_ELEPHANT_REQUIRED_SHAPE = [
+    "canonical_object",
+    "result_controller",
+    "misdirection_if_local_wins",
+    "local_frame_wins",
+    "whole_object_wins",
+    "better_direction_for_target",
+]
+
+
+WHOLE_ELEPHANT_EXPANDED_DEBUG_SHAPE = [
+    "object_hierarchy",
+    "user_named_object_relation",
+    "formal_thesis_subject",
+    "umbrella_context",
+    "subject_alignment_reason",
+    "whole_object_reconstruction",
+    "variant_map",
+    "primary_value_distribution",
+    "control_owner_shift",
+    "formal_answer_plan",
+    "whole_object",
+    "local_success_points",
+    "strategy_choice",
+    "corrected_thesis",
+    "definition_owner",
+    "decision_consequence",
+]
+
+
+DECISION_CONTEXT_OUTPUT_SHAPE = [
+    "decision_actor",
+    "decision_timing",
+    "target_function",
+    "acceptable_tradeoff",
+    "global_for_this_decision",
+    "answer_posture",
+]
+
+
+MPG_SCALAR_COMMITMENT_OUTPUT_SHAPE = [
+    "mainline",
+    "carrier",
+    "path_volatility",
+    "exposure",
+    "commitment",
+    "route_state",
+    "one_clarification",
+]
 
 
 class PrimitiveActivationTests(unittest.TestCase):
@@ -131,15 +200,32 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertEqual(
             [item["id"] for item in report["active_primitives"]],
             [
+                "decision_context_calibration",
                 "whole_elephant_protocol",
                 "core_thesis_extraction",
                 "first_sentence_stress_test",
                 "essence_wording_guard",
             ],
         )
-        self.assertIn("build_compact_visible_audit", report["required_agent_checks"])
+        self.assertIn("build_internal_compact_audit", report["required_agent_checks"])
+        self.assertIn(
+            "choose_single_judgment_owner_when_owner_candidates_conflict",
+            report["required_agent_checks"],
+        )
+        self.assertIn("do_not_average_aspect_outputs", report["required_agent_checks"])
         self.assertIn("start_formal_answer_with_core_thesis", report["required_agent_checks"])
         self.assertIn("ensure_no_second_question_gap", report["required_agent_checks"])
+
+        decision_context = next(
+            item for item in report["active_primitives"] if item["id"] == "decision_context_calibration"
+        )
+        self.assertEqual(decision_context["aspect_role"], "judgment_owner")
+        self.assertEqual(
+            decision_context["ownership_scope"],
+            ["formal_answer_thesis", "decision_target"],
+        )
+        self.assertEqual(decision_context["exclusive_with"], ["whole_elephant_protocol"])
+        self.assertEqual(decision_context["output_shape"], DECISION_CONTEXT_OUTPUT_SHAPE)
 
         first_sentence = next(
             item for item in report["active_primitives"] if item["id"] == "first_sentence_stress_test"
@@ -167,9 +253,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             [
                 "minimal_sufficient_lens",
                 "frame_fitness_check",
+                "mpg_scalar_commitment_unpack",
+                "decision_context_calibration",
                 "whole_elephant_protocol",
                 "evidence_claim_ceiling",
             ],
+        )
+        self.assertIn(
+            "does_scalar_commitment_hide_mainline_carrier_path_exposure_commitment",
+            report["required_agent_checks"],
         )
         self.assertIn(
             "is_a_local_frame_claiming_global_authority",
@@ -177,6 +269,14 @@ class PrimitiveActivationTests(unittest.TestCase):
         )
         self.assertIn(
             "if_partial_truth_triggers_validate_whole_elephant_audit",
+            report["required_agent_checks"],
+        )
+        self.assertIn(
+            "does_answer_flip_by_actor_timing_target_or_tradeoff",
+            report["required_agent_checks"],
+        )
+        self.assertIn(
+            "which_aspect_owns_formal_answer_when_owner_candidates_conflict",
             report["required_agent_checks"],
         )
         frame = next(
@@ -208,28 +308,48 @@ class PrimitiveActivationTests(unittest.TestCase):
         whole = next(
             item for item in report["active_primitives"] if item["id"] == "whole_elephant_protocol"
         )
+        self.assertEqual(whole["required_output_shape"], WHOLE_ELEPHANT_REQUIRED_SHAPE)
+        self.assertEqual(whole["expanded_debug_shape"], WHOLE_ELEPHANT_EXPANDED_DEBUG_SHAPE)
+        self.assertEqual(whole["aspect_role"], "judgment_owner")
+        self.assertEqual(whole["ownership_scope"], ["formal_answer_thesis", "definition_authority"])
+        self.assertEqual(whole["exclusive_with"], ["decision_context_calibration"])
+
+        decision_context = next(
+            item for item in report["active_primitives"] if item["id"] == "decision_context_calibration"
+        )
+        self.assertEqual(decision_context["output_shape"], DECISION_CONTEXT_OUTPUT_SHAPE)
+        self.assertEqual(decision_context["aspect_role"], "judgment_owner")
         self.assertEqual(
-            whole["output_shape"],
-            [
-                "object_hierarchy",
-                "user_named_object_relation",
-                "canonical_object",
-                "formal_thesis_subject",
-                "umbrella_context",
-                "subject_alignment_reason",
-                "whole_object_reconstruction",
-                "variant_map",
-                "primary_value_distribution",
-                "control_owner_shift",
-                "formal_answer_plan",
-                "whole_object",
-                "local_success_points",
-                "strategy_choice",
-                "corrected_thesis",
-                "definition_owner",
-                "result_controller",
-                "decision_consequence",
-            ],
+            decision_context["ownership_scope"],
+            ["formal_answer_thesis", "decision_target"],
+        )
+        self.assertEqual(decision_context["exclusive_with"], ["whole_elephant_protocol"])
+
+        mpg_unpack = next(
+            item for item in report["active_primitives"] if item["id"] == "mpg_scalar_commitment_unpack"
+        )
+        self.assertEqual(mpg_unpack["output_shape"], MPG_SCALAR_COMMITMENT_OUTPUT_SHAPE)
+        self.assertEqual(mpg_unpack["aspect_role"], "support")
+        self.assertEqual(mpg_unpack["ownership_scope"], ["method_routing_input_shape"])
+        self.assertEqual(mpg_unpack["degrade_to"], ["support_probe"])
+        self.assertNotIn("exclusive_with", mpg_unpack)
+
+    def test_text_report_surfaces_aspect_ownership_metadata(self) -> None:
+        result = run_check("--event", "before-answer", "--method", "using-mindthus")
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("aspect_ownership:", result.stdout)
+        self.assertIn(
+            "- decision_context_calibration: role=judgment_owner; "
+            "scope=formal_answer_thesis,decision_target; "
+            "exclusive_with=whole_elephant_protocol",
+            result.stdout,
+        )
+        self.assertIn(
+            "- whole_elephant_protocol: role=judgment_owner; "
+            "scope=formal_answer_thesis,definition_authority; "
+            "exclusive_with=decision_context_calibration",
+            result.stdout,
         )
 
     def test_frame_fitness_manifest_preserves_shape_only_boundary(self) -> None:
@@ -265,6 +385,27 @@ class PrimitiveActivationTests(unittest.TestCase):
                 "malformed": "correct-question-before-analysis",
             },
         )
+
+    def test_mpg_scalar_commitment_unpack_manifest_preserves_support_boundary(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        primitive = manifest["primitives"]["mpg_scalar_commitment_unpack"]
+
+        self.assertEqual(
+            primitive["name"],
+            "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+        )
+        self.assertIn("before-route", primitive["trigger"])
+        self.assertIn("surface-latent-vector", primitive["action_effect"])
+        self.assertIn("route-mpg-ready", primitive["action_effect"])
+        self.assertIn("ask-one-clarification", primitive["action_effect"])
+        self.assertIn("judgment-owner", primitive["not_a"])
+        self.assertIn("general-unpack-skill", primitive["not_a"])
+        self.assertIn("mpg-decision-engine", primitive["not_a"])
+        self.assertEqual(primitive["output_shape"], MPG_SCALAR_COMMITMENT_OUTPUT_SHAPE)
+        self.assertEqual(primitive["aspect_role"], "support")
+        self.assertEqual(primitive["ownership_scope"], ["method_routing_input_shape"])
+        self.assertEqual(primitive["degrade_to"], ["support_probe"])
+        self.assertNotIn("exclusive_with", primitive)
 
     def test_routing_effect_keys_must_match_frame_status_values(self) -> None:
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -313,30 +454,178 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertEqual(primitive["name"], "Whole Elephant Protocol / 全象流程")
         self.assertIn("before-route", primitive["trigger"])
         self.assertIn("validate-whole-elephant-audit", primitive["action_effect"])
+        self.assertIn("build-compact-semantic-triad", primitive["action_effect"])
+        self.assertIn("compare-local-frame-and-whole-object-consequences", primitive["action_effect"])
         self.assertIn("semantic-judge", primitive["not_a"])
         self.assertIn("definition-decider", primitive["not_a"])
+        self.assertEqual(primitive["required_output_shape"], WHOLE_ELEPHANT_REQUIRED_SHAPE)
+        self.assertEqual(primitive["expanded_debug_shape"], WHOLE_ELEPHANT_EXPANDED_DEBUG_SHAPE)
+        self.assertEqual(primitive["aspect_role"], "judgment_owner")
+        self.assertEqual(primitive["ownership_scope"], ["formal_answer_thesis", "definition_authority"])
+        self.assertEqual(primitive["exclusive_with"], ["decision_context_calibration"])
+        self.assertIn("local truth claims whole-object essence", primitive["owns_when"])
+        self.assertIn(
+            "answer would flip by actor, timing, target function, or acceptable tradeoff",
+            primitive["defer_when"],
+        )
+        self.assertEqual(primitive["degrade_to"], ["support_probe"])
+
+    def test_decision_context_manifest_preserves_aspect_ownership_contract(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        primitive = manifest["primitives"]["decision_context_calibration"]
+
         self.assertEqual(
-            primitive["output_shape"],
-            [
-                "object_hierarchy",
-                "user_named_object_relation",
-                "canonical_object",
-                "formal_thesis_subject",
-                "umbrella_context",
-                "subject_alignment_reason",
-                "whole_object_reconstruction",
-                "variant_map",
-                "primary_value_distribution",
-                "control_owner_shift",
-                "formal_answer_plan",
-                "whole_object",
-                "local_success_points",
-                "strategy_choice",
-                "corrected_thesis",
-                "definition_owner",
-                "result_controller",
-                "decision_consequence",
-            ],
+            primitive["name"],
+            "Decision Context Calibration / 决策语境校准",
+        )
+        self.assertIn("before-route", primitive["trigger"])
+        self.assertIn("before-answer", primitive["trigger"])
+        self.assertIn("lock-decision-actor", primitive["action_effect"])
+        self.assertIn("lock-target-function", primitive["action_effect"])
+        self.assertIn("prevent-abstract-fairness-drift", primitive["action_effect"])
+        self.assertIn("semantic-judge", primitive["not_a"])
+        self.assertIn("preference-eraser", primitive["not_a"])
+        self.assertEqual(primitive["output_shape"], DECISION_CONTEXT_OUTPUT_SHAPE)
+        self.assertEqual(primitive["aspect_role"], "judgment_owner")
+        self.assertEqual(
+            primitive["ownership_scope"],
+            ["formal_answer_thesis", "decision_target"],
+        )
+        self.assertEqual(primitive["exclusive_with"], ["whole_elephant_protocol"])
+        self.assertIn(
+            "judgment depends on actor, timing, target function, or acceptable tradeoff",
+            primitive["owns_when"],
+        )
+        self.assertIn(
+            "core issue is essence, definition authority, or local mechanism capture",
+            primitive["defer_when"],
+        )
+        self.assertEqual(primitive["degrade_to"], ["support_probe"])
+
+    def test_ownership_calibration_scenarios_route_known_cases_to_expected_owner(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        scenarios = manifest["ownership_calibration_scenarios"]
+
+        self.assertEqual(
+            scenarios["skills_prompt_essence"]["expected_judgment_owner"],
+            "whole_elephant_protocol",
+        )
+        self.assertIn(
+            "local_truth_claims_whole_object_essence",
+            scenarios["skills_prompt_essence"]["cues"],
+        )
+        self.assertEqual(
+            scenarios["display_scaling_op_usability"]["expected_judgment_owner"],
+            "decision_context_calibration",
+        )
+        self.assertIn(
+            "answer_flips_by_actor_timing_target_or_tradeoff",
+            scenarios["display_scaling_op_usability"]["cues"],
+        )
+
+        primitives = manifest["primitives"]
+        for scenario_id, scenario in scenarios.items():
+            owner_id = scenario["expected_judgment_owner"]
+            self.assertEqual(
+                primitives[owner_id]["aspect_role"],
+                "judgment_owner",
+                f"{scenario_id} expected owner must be a judgment_owner aspect",
+            )
+            self.assertGreaterEqual(len(scenario["support_aspects"]), 1)
+            self.assertGreaterEqual(len(scenario["cues"]), 1)
+            for aspect_id in scenario["support_aspects"]:
+                self.assertIn(aspect_id, primitives)
+
+    def test_manifest_rejects_unknown_ownership_calibration_owner(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        manifest["ownership_calibration_scenarios"]["skills_prompt_essence"][
+            "expected_judgment_owner"
+        ] = "missing_owner"
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = run_check(
+                "--event",
+                "before-route",
+                "--method",
+                "using-mindthus",
+                "--manifest",
+                str(manifest_path),
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "ownership_calibration_scenarios.skills_prompt_essence.expected_judgment_owner "
+            "references unknown primitive 'missing_owner'",
+            result.stdout,
+        )
+
+    def test_manifest_rejects_unknown_exclusive_with_primitive(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        manifest["primitives"]["whole_elephant_protocol"]["exclusive_with"] = ["missing_primitive"]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = run_check(
+                "--event",
+                "before-route",
+                "--method",
+                "using-mindthus",
+                "--manifest",
+                str(manifest_path),
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "exclusive_with references unknown primitive 'missing_primitive'",
+            result.stdout,
+        )
+
+    def test_manifest_rejects_asymmetric_exclusive_with_primitive(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        manifest["primitives"]["decision_context_calibration"]["exclusive_with"] = []
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = run_check(
+                "--event",
+                "before-route",
+                "--method",
+                "using-mindthus",
+                "--manifest",
+                str(manifest_path),
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "exclusive_with must be symmetric: whole_elephant_protocol lists "
+            "decision_context_calibration but not vice versa",
+            result.stdout,
+        )
+
+    def test_manifest_rejects_invalid_aspect_role(self) -> None:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        manifest["primitives"]["whole_elephant_protocol"]["aspect_role"] = "central_router"
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest_path = Path(tmp) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = run_check(
+                "--event",
+                "before-route",
+                "--method",
+                "using-mindthus",
+                "--manifest",
+                str(manifest_path),
+            )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "aspect_role must be one of: constraint, judgment_owner, support",
+            result.stdout,
         )
 
     def test_whole_elephant_validator_accepts_complete_shape_only_audit(self) -> None:
@@ -357,7 +646,7 @@ class PrimitiveActivationTests(unittest.TestCase):
                     "pricing complaints are real value evidence",
                 ],
                 "strategy_choice": "whole_first_re_evaluation",
-                "corrected_thesis": "Release readiness is carried by safe and recoverable shipping capability, not green tests alone.",
+                "corrected_thesis": "release readiness must be defined by its primary value carrier, not by a locally true interface.",
                 "canonical_object": "release readiness",
                 "formal_thesis_subject": "release readiness",
                 "umbrella_context": "software delivery system",
@@ -379,6 +668,164 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertIn("script_verdict: shape_only", result.stdout)
         self.assertIn("agentic_judgment_required: true", result.stdout)
 
+    def test_whole_elephant_validator_accepts_compact_triad_probe_audit(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "release readiness",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                **compact_triad_probe(),
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("script_verdict: shape_only", result.stdout)
+
+    def test_whole_elephant_validator_accepts_product_pricing_compact_audit(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "product failure",
+                "result_controller": (
+                    "value perception, activation, retention, channel fit, target segment, and unit economics"
+                ),
+                "misdirection_if_local_wins": (
+                    "visible pricing complaints would own the definition before proving they control failure"
+                ),
+                "local_frame_wins": "the answer optimizes discounting because price is the loudest symptom",
+                "whole_object_wins": (
+                    "the answer tests whether price, positioning, value delivery, or channel fit controls failure"
+                ),
+                "better_direction_for_target": (
+                    "whole-object diagnosis better protects product-market learning than immediate discounting"
+                ),
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_whole_elephant_validator_rejects_compact_audit_missing_triad_or_probe(self) -> None:
+        payload = {
+            "schema_version": "mindthus-whole-elephant-audit-v0.1",
+            "canonical_object": "release readiness",
+            "result_controller": "rollback, monitoring, rollout, and evidence gates",
+            **compact_triad_probe(),
+        }
+        del payload["misdirection_if_local_wins"]
+        del payload["whole_object_wins"]
+
+        result = run_whole_elephant_validator(payload)
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("misdirection_if_local_wins must be a non-empty string", result.stdout)
+        self.assertIn("whole_object_wins must be a non-empty string", result.stdout)
+
+    def test_whole_elephant_validator_rejects_partial_strategy_package_without_strategy_choice(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "release readiness",
+                "result_controller": "rollback, monitoring, rollout, and evidence gates",
+                **compact_triad_probe(),
+                "variant_map": [
+                    "test-suite readiness signal",
+                    "operational release readiness",
+                ],
+                "primary_value_distribution": "green tests carry regression signal value",
+                "control_owner_shift": "tests inform release decisions",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("strategy_choice must be one of", result.stdout)
+        self.assertIn("local_success_points must be a non-empty list", result.stdout)
+        self.assertIn("whole_object_reconstruction is required", result.stdout)
+        self.assertIn("formal_answer_plan is required", result.stdout)
+
+    def test_whole_elephant_validator_rejects_compact_visible_answer_that_starts_with_local_truth(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "product failure",
+                "result_controller": (
+                    "value perception, activation, retention, channel fit, target segment, and unit economics"
+                ),
+                "misdirection_if_local_wins": (
+                    "visible pricing complaints would own the definition before proving they control failure"
+                ),
+                "local_frame_wins": "the answer optimizes discounting because price is the loudest symptom",
+                "whole_object_wins": (
+                    "the answer tests whether price, positioning, value delivery, or channel fit controls failure"
+                ),
+                "better_direction_for_target": (
+                    "whole-object diagnosis better protects product-market learning than immediate discounting"
+                ),
+                "visible_formal_answer": (
+                    "Pricing complaints are a valid local signal, but product failure needs a broader view."
+                ),
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "visible_formal_answer first sentence must start with the global thesis, not local-truth concession",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_compact_visible_answer_with_score_concession(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "release readiness",
+                "result_controller": "rollout, observability, rollback, and user-impact evidence",
+                **compact_triad_probe(),
+                "visible_formal_answer": "This claim is 70% right and 30% incomplete.",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "visible_formal_answer must not use score-as-concession framing",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_compact_visible_answer_with_soft_not_wrong_concession(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "release readiness",
+                "result_controller": "rollout, observability, rollback, and user-impact evidence",
+                **compact_triad_probe(),
+                "visible_formal_answer": "I would not say this claim is wrong; it is just incomplete.",
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "visible_formal_answer must not soften a rejected definition into a not-wrong concession",
+            result.stdout,
+        )
+
+    def test_whole_elephant_validator_rejects_visible_answer_that_later_softens_verdict(self) -> None:
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                "canonical_object": "release readiness",
+                "result_controller": "rollout, observability, rollback, and user-impact evidence",
+                **compact_triad_probe(),
+                "visible_formal_answer": (
+                    "Release readiness is defined by safe recoverable shipping capability. "
+                    "This claim is not wrong, just incomplete."
+                ),
+            }
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "visible_formal_answer must not soften a rejected definition into a not-wrong concession",
+            result.stdout,
+        )
+
     def test_whole_elephant_validator_accepts_visible_answer_that_starts_with_core_thesis(self) -> None:
         opening = (
             "Skills are defined by reusable task control, not by the locally valid prompt interface, "
@@ -387,6 +834,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 **variant_calibration(),
                 "object_hierarchy": {
                     "user_named_object": "skills",
@@ -423,6 +871,52 @@ class PrimitiveActivationTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
 
+    def test_whole_elephant_validator_accepts_control_structure_governs_outcomes_thesis(self) -> None:
+        opening = (
+            "Defining skills and script gates as just prompts mistakes their textual carrier "
+            "for the control structure that actually governs reusable agent outcomes."
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
+                **variant_calibration(),
+                "object_hierarchy": {
+                    "user_named_object": "skills and script gates",
+                    "whole_object": "agent system skills and script gates",
+                    "component_layer": "prompt/context carrier and script reminder text",
+                    "role_layer": "routing and validation interfaces inside an agent system",
+                },
+                "whole_object": "agent system skills and script gates",
+                "canonical_object": "agent system skills and script gates",
+                "formal_thesis_subject": "agent system skills and script gates",
+                "umbrella_context": "agent development with LLM-centered runtimes",
+                "subject_alignment_reason": (
+                    "the question asks what skills and script gates are, not prompt transport alone"
+                ),
+                "whole_object_reconstruction": {
+                    "target_job": "make agent behavior reusable, steerable, and checkable across tasks",
+                    "main_use_cases": "route methods, encode boundaries, trigger tools, validate output shape, and block invalid continuation",
+                    "primary_value_carrier": "control over routing, validation, and execution consequences",
+                    "local_interface_role": "textual prompt/context carrier presented to the LLM",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("agent system skills and script gates"),
+                    "opening_core_thesis": opening,
+                },
+                "local_success_points": ["skills and gates often arrive as tokens at the model boundary"],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "the routing-validation-execution control loop",
+                "result_controller": "routing, validators, tool interfaces, state, and failure handling",
+                "decision_consequence": "do not optimize skills and script gates as prompt wording",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
     def test_whole_elephant_validator_rejects_core_thesis_that_starts_with_local_concession(self) -> None:
         opening = (
             "Prompt injection is a valid local interface, but skills are defined by reusable task control, "
@@ -431,6 +925,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "object_hierarchy": {
                     "user_named_object": "skills",
                     "whole_object": "skill capability",
@@ -476,6 +971,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "object_hierarchy": {
                     "user_named_object": "skills",
                     "whole_object": "skill capability",
@@ -521,6 +1017,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "object_hierarchy": {
                     "user_named_object": "release readiness",
                     "whole_object": "release readiness",
@@ -817,6 +1314,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "variant_map": ["credential rotation invalidated the only backup token"],
                 "primary_value_distribution": (
                     "the local credential mechanism carries the whole backup result in this case"
@@ -871,6 +1369,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "variant_map": ["invalidated service token controls every backup job"],
                 "primary_value_distribution": "the same credential mechanism carries the whole backup result",
                 "control_owner_shift": "backup jobs serve credential authority; the token is not merely a symptom",
@@ -1097,6 +1596,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
                 "variant_map": [
                     "lightweight prompt/context skill",
                     "skill with reusable procedures and validation support",
@@ -1162,6 +1662,73 @@ class PrimitiveActivationTests(unittest.TestCase):
             "canonical_object must not downgrade the user-named object into a local carrier after scope correction",
             result.stdout,
         )
+
+    def test_whole_elephant_validator_allows_scope_correction_to_control_interface(self) -> None:
+        opening = (
+            "skills / 脚本门禁的定义权不属于文本注入；真正控制结果的是围绕它们建立的"
+            "控制契约、可执行约束、证据门槛和失败处理。"
+        )
+        result = run_whole_elephant_validator(
+            {
+                "schema_version": "mindthus-whole-elephant-audit-v0.1",
+                **compact_triad_probe(),
+                "variant_map": [
+                    "skills as prompt/context injection",
+                    "skills / script gates as reusable control contracts",
+                ],
+                "primary_value_distribution": (
+                    "text injection is a common carrier, while reusable control contracts "
+                    "carry stronger repeatability and failure-control value"
+                ),
+                "control_owner_shift": (
+                    "the answer corrected the broader Agent scope without letting prompt "
+                    "injection own the definition"
+                ),
+                "object_hierarchy": {
+                    "user_named_object": "skills / 脚本门禁",
+                    "whole_object": "skills / 脚本门禁这类 agent 控制接口",
+                    "component_layer": "prompt text, validation scripts, evidence gates, and failure handling",
+                    "role_layer": "control contract for repeatable task behavior",
+                },
+                "whole_object": "skills / 脚本门禁这类 agent 控制接口",
+                "canonical_object": "skills / 脚本门禁",
+                "formal_thesis_subject": "skills / 脚本门禁",
+                "umbrella_context": "Agent 系统控制与任务执行",
+                "subject_alignment_reason": (
+                    "这里要纠正此前把问题拖到更广义 Agent 的 scope drift，"
+                    "但不能把 skills / 脚本门禁降级成文本注入。"
+                ),
+                "whole_object_reconstruction": {
+                    "target_job": "在重复任务里稳定改变路由、证据门槛、停止条件和执行行为",
+                    "main_use_cases": "复用任务镜头、绑定验证、阻断不合格输出、约束失败处理",
+                    "primary_value_carrier": "可复用控制契约与外部可执行约束",
+                    "local_interface_role": "文本注入与注意力锚定",
+                },
+                "formal_answer_plan": {
+                    **formal_answer_plan("skills / 脚本门禁"),
+                    "opening_core_thesis": opening,
+                    "definition_disposition": "reject_as_definition",
+                    "local_truth_boundary": "文本注入是常见载体和入口用法，不拥有整体定义权。",
+                    "definition_consequence": (
+                        "如果接受文本注入为定义，优化会滑向提示词润色，远离稳定任务完成。"
+                    ),
+                    "optimization_misdirection": "prompt wording over repeatable task control",
+                },
+                "local_success_points": [
+                    "skills often enter short-term model context as text",
+                    "some script gates are only soft prompt-level reminders",
+                ],
+                "strategy_choice": "whole_first_re_evaluation",
+                "user_named_object_relation": "canonical_object",
+                "corrected_thesis": opening,
+                "definition_owner": "可复用控制契约与外部可执行约束组成的结果承载回路",
+                "result_controller": "控制契约、脚本校验、证据门槛、停止条件和失败处理",
+                "decision_consequence": "不要把 skills / 脚本门禁优化成更聪明的话术。",
+                "visible_formal_answer": opening,
+            }
+        )
+
+        self.assertEqual(result.returncode, 0, result.stdout)
 
     def test_whole_elephant_validator_rejects_visible_answer_that_starts_with_audit_or_internal_stdout(self) -> None:
         opening = (
@@ -1308,7 +1875,6 @@ class PrimitiveActivationTests(unittest.TestCase):
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("whole_object_reconstruction is required", result.stdout)
-        self.assertIn("whole_object_reconstruction.target_job must be a non-empty string", result.stdout)
 
     def test_whole_elephant_validator_rejects_missing_corrected_thesis(self) -> None:
         audit = {

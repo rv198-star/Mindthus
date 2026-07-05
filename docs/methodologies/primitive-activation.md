@@ -31,15 +31,16 @@ python3 scripts/primitives/check.py --event before-freeze --method tvg
 脚本输出该事件应唤起哪些原语、agent 需要自查哪些点，并明确：
 `script_verdict: shape_only`，`agentic_judgment_required: true`。
 
-For primitives that need a visible audit artifact, activation can hand off to a
-shape validator. Whole Elephant Protocol / 全象流程 uses:
+For primitives that need internal audit evidence, activation can hand off to a
+shape and wording-risk validator. Whole Elephant Protocol / 全象流程 uses:
 
 ```bash
 python3 scripts/primitives/validate_whole_elephant.py audit.json
 ```
 
-That validator only checks whether the required audit fields exist. It does not
-decide whether the final judgment is true.
+That validator checks whether the compact audit core exists and whether any
+expanded/debug audit package is internally shaped. It does not decide whether
+the final judgment is true.
 
 ## 为什么不是重型 AOP
 
@@ -80,9 +81,54 @@ not_a:
   - evidence-substitute
   - gate-replacement
 owner: shared-primitives
+aspect_role: constraint
+ownership_scope:
+  - freeze_state
 ```
 
 这些字段让 AGENTS、skill、脚本、trace 和后续文档能引用同一个原语，而不是复制一段自然语言。
+
+## Aspect Ownership Matrix / 切面主导权矩阵
+
+Some primitives can influence the same visible thesis. Primitive Activation records
+that relationship without becoming a semantic judge.
+
+Optional metadata:
+
+```yaml
+aspect_role: judgment_owner | constraint | support
+ownership_scope:
+  - formal_answer_thesis
+  - definition_authority
+exclusive_with:
+  - decision_context_calibration
+owns_when:
+  - locally true mechanism claims whole-object essence
+defer_when:
+  - answer would flip by actor, timing, target function, or acceptable tradeoff
+degrade_to:
+  - support_probe
+```
+
+Rules:
+
+- Multiple primitives may activate at the same event.
+- Only `judgment_owner` primitives with overlapping scopes and explicit
+  `exclusive_with` relationships compete for the first thesis.
+- Constraint and support primitives remain active; they do not enter ownership
+  arbitration.
+- If ownership conflicts, choose one `judgment_owner` for the formal answer and
+  degrade the other judgment owner to support.
+- Do not average aspect outputs into a polite, low-judgment synthesis.
+
+Current high-risk conflict:
+
+| Conflict | Owner when... |
+|---|---|
+| `whole_elephant_protocol` vs `decision_context_calibration` | Whole Elephant owns essence/definition capture; Decision Context owns situated judgments that flip by actor, timing, target function, or acceptable tradeoff. |
+
+The script can report this metadata. It cannot decide which owner is semantically
+right for the current case.
 
 ## 脚本边界
 
@@ -90,7 +136,7 @@ owner: shared-primitives
 
 1. 根据 `event` 找到应唤起的 primitives。
 2. 根据 `method` 应用少量条件性唤起，例如 `tplan` 的 continuation authorization。
-3. 返回 required agent checks。
+3. 返回 required agent checks 和可见的 aspect ownership metadata。
 4. 校验 manifest 形状，防止原语记录坏掉。
 
 它不能：
@@ -101,14 +147,17 @@ owner: shared-primitives
 - 判断审美、业务、策略或用户价值是否成功。
 - 替代用户授权、TVG exit gate 或 tplan continuation authorization。
 
-`scripts/primitives/validate_whole_elephant.py` is stricter but still shape-only:
-it can block a formal answer when the Whole Elephant audit JSON is missing
-`object_hierarchy`, `whole_object`, `local_success_points`, `strategy_choice`,
-`variant_map`, `primary_value_distribution`, `control_owner_shift`,
-`definition_owner`, `result_controller`, or `decision_consequence`; it still
-cannot decide whether those fields are substantively correct. It also blocks
-scope-correction audits that relabel the user-named object into local-carrier
-labels such as prompt wrapper, attention mechanism, or delivery format.
+`scripts/primitives/validate_whole_elephant.py` is stricter and checks shape plus wording-risk:
+it can block a formal answer when the Whole Elephant audit JSON is missing the
+compact core: `canonical_object`, `result_controller`,
+`misdirection_if_local_wins`, `local_frame_wins`, `whole_object_wins`, or
+`better_direction_for_target`. If the agent emits expanded/debug fields such as
+`object_hierarchy`, `whole_object_reconstruction`, `strategy_choice`,
+`variant_map`, or `formal_answer_plan`, the validator checks their shape and
+basic internal consistency. It still cannot decide whether those fields are
+substantively correct. It also blocks scope-correction audits that relabel the
+user-named object into local-carrier labels such as prompt wrapper, attention
+mechanism, or delivery format.
 
 脚本成功只表示：
 

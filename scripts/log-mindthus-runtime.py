@@ -12,13 +12,40 @@ from pathlib import Path
 from typing import Any
 
 
-VERSION = "1.4.1"
+VERSION = "1.4.2"
 RELATIVE_FILES = (
     "skills/using-mindthus/SKILL.md",
+    "skills/using-mindthus/resources/calibration-pairs.yaml",
     "docs/methodologies/shared-primitives.md",
+    "docs/methodologies/primitives/aspect-ownership.md",
+    "docs/methodologies/primitives/decision-context-calibration.md",
+    "docs/methodologies/primitives/expression-pressure-and-gates.md",
+    "docs/methodologies/primitives/frame-fitness-check.md",
+    "docs/methodologies/primitives/mpg-scalar-commitment-unpack.md",
+    "docs/methodologies/primitives/whole-elephant-protocol.md",
+    "scripts/primitives/check.py",
     "scripts/primitives/manifest.json",
     "scripts/primitives/validate_whole_elephant.py",
+    "scripts/primitives/whole_elephant_validator.py",
+    "skills/using-mindthus/scripts/validate_using_mindthus_output.py",
+    "skills/_runtime/__init__.py",
+    "skills/_runtime/core/__init__.py",
+    "skills/_runtime/core/io.py",
+    "skills/_runtime/core/report.py",
+    "skills/_runtime/core/shape.py",
+    "skills/_runtime/fidelity/__init__.py",
+    "skills/_runtime/fidelity/core.py",
 )
+
+RUNTIME_TOP_LEVEL_ALIASES = {
+    "skills/_runtime/__init__.py": "_runtime/__init__.py",
+    "skills/_runtime/core/__init__.py": "_runtime/core/__init__.py",
+    "skills/_runtime/core/io.py": "_runtime/core/io.py",
+    "skills/_runtime/core/report.py": "_runtime/core/report.py",
+    "skills/_runtime/core/shape.py": "_runtime/core/shape.py",
+    "skills/_runtime/fidelity/__init__.py": "_runtime/fidelity/__init__.py",
+    "skills/_runtime/fidelity/core.py": "_runtime/fidelity/core.py",
+}
 REQUIRED_MARKERS = (
     "Original Prompt Contract / 原始有效提示词合同",
     "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
@@ -33,6 +60,10 @@ REQUIRED_MARKERS = (
     "Whole Object Reconstruction / 整体对象还原",
     "reconstruct the whole object before essence judgment",
     "Whole Elephant Protocol / 全象流程",
+    "Compact Semantic Triad / 三根硬支柱",
+    "misdirection_if_local_wins",
+    "Contrastive Consequence Probe / 后果对比探针",
+    "better_direction_for_target",
     "start by naming the complete object before summarizing local truths",
     "local_success_points",
     "coverage_weight",
@@ -103,9 +134,19 @@ def iso_mtime(path: Path) -> str:
     return datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat()
 
 
-def inspect_file(path: Path) -> dict[str, Any]:
+def inspect_file(root: Path, rel: str) -> dict[str, Any]:
+    candidates = [root / rel]
+    if rel in RUNTIME_TOP_LEVEL_ALIASES:
+        candidates.append(root / RUNTIME_TOP_LEVEL_ALIASES[rel])
+    path = next((candidate for candidate in candidates if candidate.is_file()), candidates[0])
     exists = path.is_file()
-    info: dict[str, Any] = {"path": str(path), "exists": exists}
+    info: dict[str, Any] = {
+        "path": str(path),
+        "canonical_relative_path": rel,
+        "exists": exists,
+    }
+    if path != candidates[0]:
+        info["resolved_relative_path"] = RUNTIME_TOP_LEVEL_ALIASES[rel]
     if not exists:
         info["markers"] = {marker: False for marker in REQUIRED_MARKERS}
         return info
@@ -123,13 +164,17 @@ def inspect_file(path: Path) -> dict[str, Any]:
 
 
 def inspect_location(label: str, root: Path) -> dict[str, Any]:
-    files = {rel: inspect_file(root / rel) for rel in RELATIVE_FILES}
+    files = {rel: inspect_file(root, rel) for rel in RELATIVE_FILES}
     return {"label": label, "root": str(root), "exists": root.exists(), "files": files}
 
 
 def compare_hashes(locations: dict[str, dict[str, Any]]) -> dict[str, Any]:
     comparisons: dict[str, Any] = {}
     for rel in RELATIVE_FILES:
+        presence = {
+            label: bool(location["files"][rel].get("exists"))
+            for label, location in locations.items()
+        }
         hashes = {
             label: location["files"][rel].get("sha256")
             for label, location in locations.items()
@@ -138,6 +183,8 @@ def compare_hashes(locations: dict[str, dict[str, Any]]) -> dict[str, Any]:
         unique_hashes = sorted(set(hashes.values()))
         comparisons[rel] = {
             "hashes": hashes,
+            "presence": presence,
+            "all_present": all(presence.values()),
             "all_available_match": len(unique_hashes) <= 1,
             "unique_hashes": unique_hashes,
         }
@@ -169,7 +216,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     all_available_hashes_match = all(
         comparison["all_available_match"] for comparison in comparisons.values()
     )
-    status = "ok" if all_required_markers_present and all_available_hashes_match else "mismatch"
+    all_tracked_files_present = all(
+        comparison["all_present"] for comparison in comparisons.values()
+    )
+    status = (
+        "ok"
+        if all_required_markers_present and all_available_hashes_match and all_tracked_files_present
+        else "mismatch"
+    )
     return {
         "schema_version": "mindthus-runtime-log-v0.1",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -182,6 +236,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "status": status,
             "all_required_markers_present": all_required_markers_present,
             "all_available_hashes_match": all_available_hashes_match,
+            "all_tracked_files_present": all_tracked_files_present,
         },
     }
 
@@ -229,7 +284,11 @@ def main() -> int:
     )
     parser.add_argument("--codex-home", default=codex_home, type=Path, help="Codex home directory.")
     parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON.")
-    parser.add_argument("--strict", action="store_true", help="Exit 1 on missing markers or hash mismatch.")
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit 1 on missing tracked files, missing markers, or hash mismatch.",
+    )
     args = parser.parse_args()
 
     report = build_report(args)
