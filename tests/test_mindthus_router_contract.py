@@ -1269,6 +1269,24 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_agents_document_companion_lenses_without_fixed_pipeline(self):
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Companion Lens / 握手镜头",
+            "不是固定流水线，也不是命中一个就自动唤醒另一个",
+            "`3L5S + EDSP`",
+            "problem shape -> structural judgment",
+            "3L5S 先定义问题形状；如果 Definition 暴露伪二分、结构摇摆或 A/B 都像对，再让 EDSP 补结构推演",
+            "`TVG + Anti-Spiral`",
+            "TVG 的停止纪律",
+            "下一轮没有明确 value-gain hypothesis 时，Anti-Spiral 应阻止继续加深",
+            "`SELA + MPG + AQM`",
+            "direction + carrier + visibility",
+            "SELA 校准方向压力，MPG 决定路径承载动作，AQM 只显影变量关系，不夺取 judgment_owner",
+            "补位镜头不自动夺取主导权",
+        ):
+            self.assertIn(phrase, agents)
+
     def test_using_mindthus_requires_execution_impact(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         for phrase in (
