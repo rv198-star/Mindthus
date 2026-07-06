@@ -47,6 +47,11 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("Method Reference Boundary", changelog)
         self.assertIn("MPG-AQM 会话取证负测", changelog)
         self.assertIn("TVG 外部审查边界", changelog)
+        self.assertIn("v1.4.2 GitHub Release 已撤回", changelog)
+        self.assertIn("Compact Semantic Triad / 三根硬支柱", changelog)
+        self.assertIn("Decision Context Calibration / 决策语境校准", changelog)
+        self.assertIn("Aspect Ownership Matrix / 切面主导权矩阵", changelog)
+        self.assertIn("MPG Scalar Commitment Unpack / MPG 标量承诺显影", changelog)
         self.assertIn('VERSION = "1.4.3"', builder)
 
         release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
@@ -56,14 +61,24 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "# Mindthus v1.4.3 发布日志",
             "发布日期：2026-07-06",
             "## 版本定位",
+            "## 吸收自 v1.4.2 的内容",
             "## 主要变化",
             "## 边界",
             "## 验证",
+            "v1.4.2 GitHub Release 已删除",
+            "Compact Semantic Triad / 三根硬支柱",
+            "Contrastive Consequence Probe / 后果对比探针",
+            "Decision Context Calibration / 决策语境校准",
+            "Aspect Ownership Matrix / 切面主导权矩阵",
+            "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
+            "docs/methodologies/primitives/",
+            "scripts/primitives/whole_elephant_validator.py",
             "Method Reference Boundary / 方法引用边界",
             "method name in an inspection request is evidence scope, not route ownership",
             "019f359a-6aa2-78c0-9ac5-822abae99495",
             "TVG 外部审查防回归",
             "skills/mpg/SKILL.md",
+            "不要从 v1.4.2 安装或引用其 release asset",
             "本版不关闭 #85",
             "本版不新增独立 skill",
             "不声称解决所有 discovery 层误触",

@@ -8,7 +8,19 @@
 
 [完整发布日志](docs/releases/v1.4.3.md)
 
-说明：本版是 v1.4.2 之后的轻量 patch，重点修正方法引用与方法激活的边界：读取某个方法作为验收 rubric，不等于当前任务由该方法主导。同时补充 TVG 外部审查负测，并清理入口体积，避免路由层继续变厚。
+说明：本版替代并吸收已撤回的 v1.4.2。它包含 v1.4.2 的 Whole Elephant / Decision Context / Aspect Ownership / MPG Scalar Unpack 架构收束，同时补上方法引用与方法激活边界：读取某个方法作为验收 rubric，不等于当前任务由该方法主导。
+
+v1.4.2 GitHub Release 已撤回，不再作为安装入口。用户应直接使用 v1.4.3。
+
+### 吸收自 v1.4.2 的内容
+
+- Whole Elephant 收束为 `Compact Semantic Triad / 三根硬支柱`：`canonical_object / result_controller / misdirection_if_local_wins`，用于锁定完整对象、结果主控和局部真相获胜后的优化偏移。
+- 新增 `Contrastive Consequence Probe / 后果对比探针`：比较 `local_frame_wins` 与 `whole_object_wins` 后的行动方向，避免局部正确反复施压后接管定义权。
+- 新增 `Decision Context Calibration / 决策语境校准`：处境化判断先确认决策者、时点、目标函数和可接受损耗，再判断哪个框架拥有当前判断权。
+- 新增 `Aspect Ownership Matrix / 切面主导权矩阵`：多个横切原语同时触发时，只允许一个 `judgment_owner` 主导首句判断，其他切面降级为约束或支持。
+- 新增 `MPG Scalar Commitment Unpack / MPG 标量承诺显影`：把买不买、留不留、要不要继续等压缩承诺显影为 `mainline / carrier / path_volatility / exposure / commitment`，只做 MPG 路由输入，不替 MPG 下结论。
+- `docs/methodologies/shared-primitives.md` 拆成轻索引，复杂原语细节移入 `docs/methodologies/primitives/`。
+- Whole Elephant 独立 validator 与 `using-mindthus` 集成 validator 共用 `scripts/primitives/whole_elephant_validator.py`，减少 validator drift。
 
 ### 修复
 
@@ -39,6 +51,8 @@
 发布日期：2026-07-06
 
 [完整发布日志](docs/releases/v1.4.2.md)
+
+撤回说明：v1.4.2 GitHub Release 已删除，内容已并入 v1.4.3；不要使用 v1.4.2 作为安装入口。
 
 说明：本版把 v1.4.x 的“防局部正确冒充整体”继续收束到更稳的工程形态：Whole Elephant 不再靠堆字段维持判断，而是以 `canonical_object / result_controller / misdirection_if_local_wins` 三根硬支柱为主线；同时新增 Decision Context Calibration、Aspect Ownership Matrix 和 MPG Scalar Commitment Unpack，减少多切面平均、处境化判断漂移和 MPG 唤醒不足。
 
