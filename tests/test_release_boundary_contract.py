@@ -8,18 +8,19 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.4.2.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_4_2(self):
+    def test_current_release_surface_is_v1_4_3(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.4.2`", readme)
+        self.assertIn("当前仓库版本：`v1.4.3`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
+        self.assertNotIn("当前仓库版本：`v1.4.2`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.1`", readme)
         self.assertNotIn("## 版本与开发状态", readme)
         self.assertNotIn("当前开发分支同步", readme)
@@ -28,52 +29,44 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("mindthus-plugins-1.4.2.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.4.2.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.4.3.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.4.3.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.2/mindthus-plugins-1.4.2.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.3/mindthus-plugins-1.4.3.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.2/mindthus-skills-1.4.2.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.3/mindthus-skills-1.4.3.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.4.2", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.4.2.md)", changelog)
-        self.assertIn("Compact Semantic Triad", changelog)
-        self.assertIn("Decision Context Calibration", changelog)
-        self.assertIn("MPG Scalar Commitment Unpack", changelog)
-        self.assertIn('VERSION = "1.4.2"', builder)
+        self.assertIn("## v1.4.3", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.3.md)", changelog)
+        self.assertIn("Method Reference Boundary", changelog)
+        self.assertIn("MPG-AQM 会话取证负测", changelog)
+        self.assertIn("TVG 外部审查边界", changelog)
+        self.assertIn('VERSION = "1.4.3"', builder)
 
-        release_log = (REPO / "docs" / "releases" / "v1.4.2.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.4.2 发布日志",
+            "# Mindthus v1.4.3 发布日志",
             "发布日期：2026-07-06",
             "## 版本定位",
-            "## 安装入口",
-            "## 这次解决了什么",
-            "## 工程变化",
+            "## 主要变化",
             "## 边界",
-            "## 已处理 issue",
             "## 验证",
-            "Compact Semantic Triad / 三根硬支柱",
-            "Contrastive Consequence Probe / 后果对比探针",
-            "Decision Context Calibration / 决策语境校准",
-            "Aspect Ownership Matrix / 切面主导权矩阵",
-            "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
-            "scripts/primitives/whole_elephant_validator.py",
-            "docs/methodologies/primitives/whole-elephant-protocol.md",
-            "本版不关闭 #83",
-            "#78 Refactor Whole Elephant guardrail into compact semantic contract",
-            "#81 Add Decision Context Calibration and Aspect Ownership Matrix",
-            "#82 Add MPG scalar-to-vector unpack primitive",
-            "mindthus-plugins-1.4.2.tar.gz",
-            "mindthus-skills-1.4.2.tar.gz",
+            "Method Reference Boundary / 方法引用边界",
+            "method name in an inspection request is evidence scope, not route ownership",
+            "019f359a-6aa2-78c0-9ac5-822abae99495",
+            "TVG 外部审查防回归",
+            "skills/mpg/SKILL.md",
+            "本版不关闭 #85",
+            "本版不新增独立 skill",
+            "不声称解决所有 discovery 层误触",
             "python3 scripts/build-release-pack.py",
             "python3 -m pytest -q",
         ):

@@ -32,7 +32,20 @@ SELA 先看三件事：
 
 如果局部优势无法规模化，而系统效率差距正在扩大，长期方向通常会向系统方案收敛。局部不一定消失，但更可能退到 niche、过渡期、审美边界、监管边界或高价值例外场景。
 
-SELA 同时要求做时机检查。长期方向正确，不等于现在必须立刻全切。真正可落地的策略通常是可逆、可观察、可修正的持续逼近：先判断方向，再决定是 `commit`、`trial`、`hold` 还是 `wait`。
+SELA 同时要求做时机检查。长期方向正确，不等于现在必须立刻全切。真正可落地的策略通常是可逆、可观察、可修正的持续逼近：先判断方向，再决定是 `commit`、`trial`、`hold` 还是 `wait`。但如果问题已经包含承载者、路径波动、暴露预算或具体承诺，时机检查不能替代 MPG，应交给 MPG 做主线承载判断。
+
+### SELA ↔ MPG Twin-Lens Handshake
+
+SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+
+SELA calibrates direction; MPG owns path-carrying action. When the companion check
+applies, the first visible sentence must be a plain-language thesis that separates
+direction calibration from path action in ordinary language. Do not start the default
+answer with `direction:` or `current carrier/path:`. Default answer must not start with
+debug labels. Internal labels are debug/audit support; hide them unless the user asks
+for audit, validation, or handoff. Use
+`SELA dominate + MPG not yet needed` only when没有载体、路径或行动承诺需要判断。do not
+turn a direction win into a carrier commitment.
 
 ## 怎么用
 
@@ -92,9 +105,12 @@ SELA 不适合机械套用在不可逆伤害、尊严底线、伦理底线、司
 
 当问题本身不是长期系统趋势，而是命题结构不清、控制边界不清或任务不可执行时，应转给 `EDSP`、`WAE` 或 `3L5S`。
 
+当问题已经包含明确承载者、路径波动、暴露预算或具体承诺时，不要让 SELA 的时机检查吞掉 MPG-ready 问题。SELA 可以先校准方向压力，但主线能否穿过路径应交给 `MPG`。
+
 ## 与其他方法的关系
 
 - `using-mindthus` 负责前置校准，避免把流行概念当成真实对象。
+- `MPG` 和 SELA 是姐妹战略镜头。常见顺序是 SELA 先校准方向压力，MPG 再测试载体和路径能否承载；这是顺序，不是层级。
 - `EDSP` 负责更模糊的结构判断，例如这是不是一个假二选一。
 - `WAE` 负责判断这段工作该由流程、agent 判断还是证据控制。
 - `tplan` 负责在长任务里记录 SELA 判断、行动窗口和后续证据。

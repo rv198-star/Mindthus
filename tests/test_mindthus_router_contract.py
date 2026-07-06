@@ -15,6 +15,15 @@ def _read_shared_primitive_docs() -> str:
     return "\n".join(parts)
 
 
+def _skill_description(skill_name: str) -> str:
+    text = (REPO / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
+    _, frontmatter, _ = text.split("---", 2)
+    for line in frontmatter.splitlines():
+        if line.startswith("description:"):
+            return line.split(":", 1)[1].strip().strip('"')
+    raise AssertionError(f"{skill_name} missing description")
+
+
 def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str, str]]:
     start = text.index(heading)
     rows: dict[str, tuple[str, str]] = {}
@@ -32,6 +41,37 @@ def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str,
 
 
 class MindthusRouterContractTests(unittest.TestCase):
+    def test_skill_discovery_descriptions_route_strategic_path_questions_through_router(self):
+        using_desc = _skill_description("using-mindthus")
+        sela_desc = _skill_description("sela")
+        mpg_desc = _skill_description("mpg")
+
+        for phrase in (
+            "any Mindthus judgment lens",
+            "strategic/path/control/framing ambiguity",
+            "before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan",
+        ):
+            self.assertIn(phrase, using_desc)
+
+        for phrase in (
+            "system-efficiency versus local-advantage",
+            "external system efficiency vs local/internal advantage",
+            "when concrete carrier/exposure/path action is also present",
+            "support lens with MPG rather than sole owner",
+        ):
+            self.assertIn(phrase, sela_desc)
+        self.assertNotIn(
+            "not when a concrete carrier, exposure, path, or commitment is the action question",
+            sela_desc,
+        )
+
+        for phrase in (
+            "concrete carrier",
+            "continue/commit/hold/exit/switch decision",
+            "path volatility, costs, delays, fragility, or counter-forces",
+        ):
+            self.assertIn(phrase, mpg_desc)
+
     def test_mindthus_states_truth_orientation_as_core_principle(self):
         surfaces = (
             REPO / "README.md",
@@ -174,7 +214,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         primitives = _read_shared_primitive_docs()
 
         for phrase in (
-            "description: Use when routing Mindthus or auditing frame-risk.",
+            "description: Use when any Mindthus judgment lens may apply",
             "General frame rule / 通用定框规则",
             "any locally true frame",
             "agent inference, method routing, tests, metrics, artifacts, or implementation details",
@@ -321,26 +361,21 @@ class MindthusRouterContractTests(unittest.TestCase):
     def test_input_framing_audit_requires_partial_truth_capture_main_axis(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         primitives = _read_shared_primitive_docs()
+        contract = (
+            REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
+        ).read_text(encoding="utf-8")
 
         using_compact = " ".join(using.split())
-        primitives_compact = " ".join(primitives.split())
+        combined_compact = " ".join("\n".join((primitives, contract)).split())
         for phrase in (
             "Partial Truth Capture / 局部真相捕获",
             "A locally true observation must not own the whole explanation",
             "Whole Elephant hard gate",
             "Internal Whole Elephant contract",
             "MUST build compact audit before formal_answer",
-            "declare partial_truth_capture_triggered:true/false",
-            "compact fields:canonical_object;result_controller;misdirection_if_local_wins",
-            "consequence probe:local_frame_wins;whole_object_wins;better_direction_for_target",
-            "expanded audit(object_hierarchy/whole_object_reconstruction/variant_map/formal_answer_plan) optional guardrail/debug support",
             "Audit Hidden By Default / 审计默认内隐",
             "full audit JSON internal by default",
-            "do not show full whole_elephant_audit by default",
-            "do not output short audit by default",
-            "variant_map",
             "validation_command",
-            "whole_elephant_validation internal evidence by default",
             "output_evidence",
             "Do not claim validation passed unless the command actually ran",
             "No command evidence, no formal_answer",
@@ -414,7 +449,22 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Essence Wording Guard / 本质措辞护栏",
             "corrected thesis must reject false essence claims",
         ):
-            self.assertIn(phrase, primitives_compact)
+            self.assertIn(phrase, combined_compact)
+
+        for phrase in (
+            "canonical_object",
+            "result_controller",
+            "misdirection_if_local_wins",
+            "local_frame_wins",
+            "whole_object_wins",
+            "better_direction_for_target",
+            "expanded audit fields are optional guardrail/debug support",
+            "variant_map",
+            "whole_elephant_validation internal evidence by default",
+            "do not show full whole_elephant_audit by default",
+            "do not output short audit",
+        ):
+            self.assertIn(phrase, combined_compact)
 
     def test_whole_elephant_audit_is_hidden_by_default(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -424,21 +474,30 @@ class MindthusRouterContractTests(unittest.TestCase):
         primitives = _read_shared_primitive_docs()
         primitives_compact = " ".join(primitives.split())
 
-        for text in (using, contract):
-            text_compact = " ".join(text.split())
-            for phrase in (
-                "Audit Hidden By Default / 审计默认内隐",
-                "full audit JSON internal by default",
-                "do not show full whole_elephant_audit by default",
-                "do not output short audit by default",
-                "whole_elephant_validation internal evidence by default",
-                "visible output starts with formal answer",
-                "expand only when user asks, validation fails, or handoff/debug needs it",
-            ):
-                self.assertIn(phrase, text_compact)
+        using_compact = " ".join(using.split())
+        for phrase in (
+            "Audit Hidden By Default / 审计默认内隐",
+            "full audit JSON internal by default",
+            "visible output starts with formal answer",
+            "expand only when user asks, validation fails, or handoff/debug needs it",
+        ):
+            self.assertIn(phrase, using_compact)
 
-            self.assertNotIn("show compact whole_elephant_validation", text_compact)
-            self.assertNotIn("Visible output should keep", text_compact)
+        contract_compact = " ".join(contract.split())
+        for phrase in (
+            "Audit Hidden By Default / 审计默认内隐",
+            "full audit JSON internal by default",
+            "do not show full whole_elephant_audit by default",
+            "do not output short audit by default",
+            "whole_elephant_validation internal evidence by default",
+            "visible output starts with formal answer",
+            "expand only when user asks, validation fails, or handoff/debug needs it",
+        ):
+            self.assertIn(phrase, contract_compact)
+
+        for text in (using_compact, contract_compact):
+            self.assertNotIn("show compact whole_elephant_validation", text)
+            self.assertNotIn("Visible output should keep", text)
 
         for phrase in (
             "visible answer must not expose script stdout fields",
@@ -915,6 +974,37 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, agents)
 
+    def test_method_reference_tasks_do_not_promote_named_methods_to_route_owner(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
+            encoding="utf-8"
+        )
+
+        for phrase in (
+            "Method Reference Boundary / 方法引用边界",
+            "method name in an inspection request is evidence scope, not route ownership",
+            "conversation forensics",
+            "rubric reference",
+            "do not say the current task is using MPG merely because it checks MPG-AQM",
+            "target session evidence",
+            "current confirmation request",
+        ):
+            self.assertIn(phrase, using)
+
+        for phrase in (
+            "Scenario 50: MPG-AQM Session Forensics Is Not MPG Route Ownership",
+            "method-reference boundary",
+            "Expected baseline failure",
+            "Expected treatment behavior",
+            "may read MPG-AQM rules as a rubric",
+            "must not claim the current task is dominated by MPG",
+            "target session evidence",
+            "current confirmation request",
+        ):
+            self.assertIn(phrase, pressure)
+
     def test_tplan_terminology_does_not_present_tvg_as_generic_audit_route(self):
         scoped_route_paths = (
             REPO / "skills" / "tplan" / "resources" / "hooks.md",
@@ -974,6 +1064,35 @@ class MindthusRouterContractTests(unittest.TestCase):
             "strategic, path-bearing, or structurally ambiguous",
         ):
             self.assertIn(phrase, section)
+
+    def test_sela_mpg_sibling_activation_for_path_carrying_commitments(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        manual_cases = (
+            REPO / "tests" / "mpg" / "scalar_commitment_unpack_manual_review_cases.md"
+        ).read_text(encoding="utf-8")
+
+        using_compact = " ".join(using.split())
+        for phrase in (
+            "SELA and MPG are sibling strategic lenses",
+            "SELA qualifies system-efficiency direction pressure",
+            "MPG qualifies path-carrying action",
+            "Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy",
+            "SELA must not swallow MPG-ready carrier/path/exposure/commitment questions",
+            "MPG must not replace SELA for naked system-efficiency direction judgment",
+            "MPG route handoff: when `mpg` dominates and system-efficiency direction pressure is present, carry `SELA support + MPG dominate` into the answer plan",
+            "Do not leave SELA support implicit after selecting MPG",
+            "AQM visibility map or skipped reason",
+            "One final answer, two distinct judgment surfaces",
+        ):
+            self.assertIn(phrase, using_compact)
+
+        for phrase in (
+            "Sibling activation expected",
+            "SELA surface",
+            "MPG surface",
+            "Must not let SELA alone swallow this MPG-ready action question",
+        ):
+            self.assertIn(phrase, manual_cases)
 
     def test_mpg_scalar_commitment_unpack_is_support_only_pre_route_probe(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -1225,6 +1344,25 @@ class MindthusRouterContractTests(unittest.TestCase):
         routing_table = using[start:end]
         self.assertNotIn("Approximate Quantified Mapping", routing_table)
         self.assertNotIn("非精准量化显影", routing_table)
+
+    def test_aqm_snapshot_is_visible_when_user_asks_for_dominant_variables(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "visible AQM snapshot / 显影快照",
+            "variables are many",
+            "not generic balance",
+            "dominant factor",
+            "after the one-sentence thesis",
+            "mainline strength",
+            "path resistance",
+            "carrier fragility",
+            "information gap",
+            "trigger strength",
+            "stage/probe, not commit",
+        ):
+            self.assertIn(phrase, using)
 
     def test_game_theory_is_not_a_standalone_skill(self):
         for name in ("game-theory", "game_theory", "gametheory"):

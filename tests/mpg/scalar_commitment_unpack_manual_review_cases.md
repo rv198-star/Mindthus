@@ -116,12 +116,16 @@ Prompt:
 
 Expected behavior:
 
+- Sibling activation expected.
+- SELA surface: external API/model market may have system-level cost-efficiency pressure.
+- MPG surface: whether the internal model platform can carry the open-source/internal-capability mainline through the concrete path.
 - Surface mainline: open-source model improvement / internal capability.
 - Surface carrier: internal model platform.
 - Surface path volatility: budget burn, delivery drag, hosted API price decline, team trust.
 - Surface exposure: one year of budget, product opportunity cost, platform credibility.
 - Route state: `mpg_ready`.
 - Must separate the self-build mainline from the current platform vehicle.
+- Must not let SELA alone swallow this MPG-ready action question.
 
 ### P5: Project Maintenance Without Obvious Investment Words
 

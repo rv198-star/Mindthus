@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "scripts" / "log-mindthus-runtime.py"
+CURRENT_VERSION = "1.4.3"
 
 
 USING_TEXT = """\
@@ -190,7 +191,7 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             root = Path(tmp)
             repo = root / "repo"
             marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
-            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
+            cache = root / "cache" / "mindthus" / "mindthus" / CURRENT_VERSION
             write_runtime_tree(repo)
             write_runtime_tree(marketplace, runtime_layout="top-level")
             write_runtime_tree(cache, runtime_layout="top-level")
@@ -298,7 +299,7 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             root = Path(tmp)
             repo = root / "repo"
             marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
-            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
+            cache = root / "cache" / "mindthus" / "mindthus" / CURRENT_VERSION
             write_runtime_tree(repo)
             write_runtime_tree(marketplace, runtime_layout="top-level")
             write_runtime_tree(
@@ -342,7 +343,7 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             root = Path(tmp)
             repo = root / "repo"
             marketplace = root / "marketplace" / "codex-plugin" / "mindthus"
-            cache = root / "cache" / "mindthus" / "mindthus" / "1.4.2"
+            cache = root / "cache" / "mindthus" / "mindthus" / CURRENT_VERSION
             write_runtime_tree(repo)
             write_runtime_tree(marketplace, runtime_layout="top-level")
             write_runtime_tree(cache, runtime_layout="top-level")

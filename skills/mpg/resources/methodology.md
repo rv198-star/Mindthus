@@ -28,16 +28,43 @@ by counter-forces. A correct long-term direction can still destroy the actor if 
 carrier is too fragile, the vehicle is wrong, the exposure budget is exceeded, or the
 timeline is constrained.
 
+SELA and MPG are sibling strategic lenses.
+
+Common order: SELA calibrates direction before MPG tests carrier/path, but this is
+sequence, not hierarchy.
+
 MPG qualifies, stress-tests, and carries a mainline.
 
-This matters because SELA identifies the mainline, but SELA does not by itself decide
-whether this actor, using this carrier and vehicle, can cross this path. MPG can
-challenge a SELA-style direction when the constrained mainline fails under path
-conditions.
+This matters because SELA may qualify the system-efficiency direction pressure, but
+SELA does not by itself decide whether this actor, using this carrier and vehicle, can
+cross this path. MPG can challenge a SELA-style direction when the constrained
+mainline fails under path conditions.
 
 Core relationship:
 
-> SELA identifies the mainline. MPG qualifies, stress-tests, and carries it.
+> SELA and MPG are sibling strategic lenses. Common order: SELA calibrates direction before MPG tests carrier/path; sequence, not hierarchy. MPG qualifies, stress-tests, and carries the path-carrying action.
+
+### SELA ↔ MPG Twin-Lens Handshake
+
+MPG direct-load companion check: when the input presents a system-efficiency/trend-based mainline, run a lightweight SELA support check before path strategy. When this applies, you must read `mindthus:sela` before the final answer. Do not treat this as an internal memory-only check.
+
+Direct-load output obligation: do not wait for using-mindthus to carry this handoff.
+When MPG is loaded directly, the first visible sentence must be a plain-language thesis
+that separates long-term direction from current carrier/path in ordinary language. Do
+not start the default answer with `direction:` or `current carrier/path:`.
+Default answer must not start with debug labels.
+Good first sentence: `长期保留内部模型能力是对的，但当前全栈自建平台这条路不该继续。`
+Internal labels (`direction`, `current carrier/path`, `qualified_mainline`,
+`carrier_vehicle`, etc.) are debug/audit support; hide them unless the user asks for
+audit, validation, or handoff. It must state whether the long-term direction is
+supported, failed, or evidence-limited; then choose the path posture.
+
+Use `SELA support + MPG dominate` when the direction pressure is plausible but the
+carrier, exposure, vehicle, or commitment still decides the action. MPG still owns the action posture, exposure, vehicle, and triggers.
+
+If the direction check fails, return to SELA or EDSP before path strategy. If variables
+visibly pull in different directions, include a short AQM visibility map or say why it
+is skipped.
 
 ## Standalone Positioning
 
@@ -65,6 +92,14 @@ Use MPG when all three trigger conditions are true:
    reverse the route.
 3. A real actor must configure carrier, exposure, timing, optionality, authority, or
    vehicle before the mainline resolves.
+
+Structural trigger:
+
+> mainline + proxy/carrier + concentrated exposure + now/continue/commit decision
+
+Use MPG when someone accepts a long-term mainline and wants to place a scarce resource
+(`稀缺资源`) on the purest carrier (`最纯载体`), most direct proxy, or most representative vehicle. This is not domain-specific: the scarce resource can be money, time, team budget, career option,
+product roadmap, organizational trust, compute, attention, or political capital.
 
 Typical domains:
 
@@ -233,6 +268,13 @@ too compressed. The useful variables are usually:
 | `information_gap` | how much decisive information is unavailable under the time slice |
 | `trigger_strength` | whether new evidence can legitimately upgrade or downgrade posture |
 
+Visible snapshot trigger: when the user says variables are many, asks for the
+dominant factor, or rejects generic balance / not generic balance, add a short visible AQM snapshot / 显影快照
+after the one-sentence thesis. Keep it compact and subordinate to MPG:
+`mainline strength / path resistance / carrier fragility / information gap /
+trigger strength -> stage/probe, not commit`. Do not expose a long audit table unless
+the user asks for validation or handoff.
+
 Example:
 
 | Variable | Hypothetical reading |
@@ -373,10 +415,10 @@ will survive the next 12 months” may be false.
 
 ### Do Not Collapse MPG Into SELA
 
-SELA identifies a strategic direction. MPG carries a qualified direction through the
-path. If the only judgment is overall/local system efficiency, use SELA. If the
-direction must be translated into carrier, vehicle, exposure, optionality, and triggers,
-use MPG.
+SELA and MPG are sibling strategic lenses. SELA calibrates strategic direction
+pressure; MPG tests whether a qualified direction can be carried through the path. If
+the only judgment is overall/local system efficiency, use SELA. If the direction must
+be translated into carrier, vehicle, exposure, optionality, and triggers, use MPG.
 
 ### Do Not Use MPG Without A Carrier
 
@@ -437,7 +479,10 @@ realize the mainline, not so it can avoid all volatility forever.
 | Technology migration | new stack wins | legacy risk, uptime, compliance | can team migrate safely? | reversible slices, probe, staged cutover |
 | Agent automation | automation improves scale | trust, evidence, control boundary | can workflow earn adoption? | WAE + staged MPG handoff |
 
-## Example Output Skeleton
+## Audit-Only Output Skeleton
+
+Use this skeleton only when the user asks for audit, validation, or handoff. Do not
+show it in the default answer.
 
 ```text
 qualified_mainline:

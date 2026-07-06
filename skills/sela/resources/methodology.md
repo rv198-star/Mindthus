@@ -1,6 +1,6 @@
 # 系统效率碾压局部优势（SELA）
 
-> 顶层决策哲学原则 · 元层级 · 领域无关 · 优先级最高
+> 顶层战略镜头 · 元层级 · 领域无关 · 方向校准优先，但不自动覆盖姐妹方法
 
 ## 原则
 
@@ -55,6 +55,21 @@ SELA 的主要风险不是推理不够顺，而是太顺：一旦接受“系统
 
 时机检查不是独立原则，也不是补一套人文价值观或风险哲学。它只是让效率判断
 在落地前多看一眼行动时机，避免把“长期会赢”误写成“现在立刻全切”。
+
+时机检查不能替代 MPG。只要问题已经出现承载者、路径波动、暴露预算或具体承诺，就先用 SELA 校准方向压力，再交给 MPG 判断主线能否穿过路径。不能让 SELA 吞掉 MPG-ready 问题。
+
+### SELA ↔ MPG Twin-Lens Handshake
+
+SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+
+SELA calibrates direction; MPG owns path-carrying action. When the companion check
+applies, the first visible sentence must be a plain-language thesis that separates
+direction calibration from path action in ordinary language. Do not start the default
+answer with `direction:` or `current carrier/path:`. Default answer must not start with
+debug labels. Internal labels are debug/audit support; hide them unless the user asks
+for audit, validation, or handoff. Use
+`SELA dominate + MPG not yet needed` only when no carrier/path action is being decided.
+do not turn a direction win into a carrier commitment.
 
 三个问题合成一张轻量检查卡：
 

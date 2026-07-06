@@ -1944,6 +1944,41 @@ management. Do you agree?
   lightweight carrier, but definition authority depends on which variant carries the
   target result and control surface.
 
+## Scenario 50: MPG-AQM Session Forensics Is Not MPG Route Ownership
+
+### What This Tests
+
+This method-reference boundary case checks whether the router separates a named method
+inside an inspection request from the active method owner of the current task. A good
+answer may read MPG-AQM rules as a rubric, but the task itself is conversation
+forensics, not an MPG path strategy judgment.
+
+### Prompt
+
+```text
+Use Mindthus normally.
+
+019f359a-6aa2-78c0-9ac5-822abae99495，这个会话我不确定它是否有启用
+MPG-AQM，帮我确认下。
+```
+
+### Expected baseline failure
+
+- Treats the string `MPG-AQM` as enough reason to say the current task is using or
+  activating MPG.
+- Gives a method-routing answer before checking target session evidence.
+- Blurs target session evidence with the current confirmation request.
+
+### Expected treatment behavior
+
+- Identifies the task as session forensics / log audit first.
+- may read MPG-AQM rules as a rubric reference, but must not claim the current task is dominated by MPG.
+- Checks target session evidence: loaded skills, AQM visibility snapshot, and whether
+  AQM was subordinate to MPG in that session.
+- States the boundary explicitly: the target session may have used MPG-AQM, while the
+  current confirmation request is evidence acquisition.
+- Does not output MPG strategy structure unless the user asks for a new MPG judgment.
+
 ## Evaluation Template
 
 ```markdown

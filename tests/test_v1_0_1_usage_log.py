@@ -145,7 +145,7 @@ class V101UsageLogTests(unittest.TestCase):
         )
 
         for phrase in (
-            "当前仓库版本：`v1.4.2`",
+            "当前仓库版本：`v1.4.3`",
             "scripts/log-fidelity-usage.py",
             "data/fidelity-usage-log.jsonl",
             "可选：记录使用效果",
@@ -174,7 +174,7 @@ class V101UsageLogTests(unittest.TestCase):
                     / "plugin.json"
                 ).read_text(encoding="utf-8")
             )
-            self.assertEqual(plugin["version"], "1.4.2")
+            self.assertEqual(plugin["version"], "1.4.3")
             for platform_root in (
                 root / "claude-code" / "claude-plugin",
                 root / "codex",

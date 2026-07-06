@@ -44,6 +44,50 @@ class SelaContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_timing_check_does_not_absorb_mpg_ready_path_questions(self):
+        skill = (SELA / "SKILL.md").read_text(encoding="utf-8")
+        methodology = (SELA / "resources" / "methodology.md").read_text(encoding="utf-8")
+
+        for phrase in (
+            "Timing Check is not a substitute for MPG",
+            "carrier, exposure, path volatility, or concrete commitment",
+            "transfer/degrade to MPG",
+            "SELA must not absorb MPG-ready questions",
+        ):
+            self.assertIn(phrase, skill)
+
+        for phrase in (
+            "时机检查不能替代 MPG",
+            "承载者、路径波动、暴露预算或具体承诺",
+            "交给 MPG",
+            "不能让 SELA 吞掉 MPG-ready 问题",
+        ):
+            self.assertIn(phrase, methodology)
+
+    def test_sela_direct_load_runs_mpg_companion_check_for_path_commitments(self):
+        for path in (
+            SELA / "SKILL.md",
+            SELA / "resources" / "methodology.md",
+            REPO / "docs" / "methodologies" / "sela.md",
+        ):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "SELA ↔ MPG Twin-Lens Handshake",
+                "SELA direct-load companion check",
+                "MPG companion check",
+                "must read `mindthus:mpg`",
+                "Do not treat this as an internal memory-only check",
+                "carrier, exposure, path volatility, or continue/exit commitment",
+                "SELA calibrates direction; MPG owns path-carrying action",
+                "first visible sentence must be a plain-language thesis",
+                "Default answer must not start",
+                "debug/audit support",
+                "ordinary language",
+                "SELA dominate + MPG not yet",
+                "carrier commitment",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_methodology_adds_role_pressure_without_efficiency_dogma(self):
         text = (SELA / "resources" / "methodology.md").read_text(encoding="utf-8")
         for phrase in (

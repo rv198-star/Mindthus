@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when routing Mindthus or auditing frame-risk.
+description: Use when any Mindthus judgment lens may apply; method routing, frame-risk audit, or strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan.
 ---
 ## Core Claim
 Truth Orientation / 真相优先:pursue facts and truth over agreement;user input is signal, constraint, or hypothesis; not evidence by itself
@@ -11,28 +11,23 @@ Premise Calibration / 前置校准不是独立方法论;只帮助选择;真实�
 ### Input Framing Audit / 输入定框审计
 强约束入口协议:When frame-risk exists,在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级
 Frame Fitness Check / 定框适配检查:local frame;local-frame capture;locally true;global judgment;preserve frame;qualify frame;reframe;block pending evidence;wrong level;implementation-layer truth;definition-layer truth;can wake `sela`;does not require a full SELA run;not keyword rules;No frame-risk signal, no frame check
-General frame rule / 通用定框规则:any locally true frame:agent inference, method routing, tests, metrics, artifacts, or implementation details must earn global explanatory authority before it can define the whole object
+General frame rule / 通用定框规则:any locally true frame;agent inference, method routing, tests, metrics, artifacts, or implementation details;must earn global explanatory authority before it can define the whole object
 Original Prompt Contract / 原始有效提示词合同:legacy prompt template;not the judgment center;first task is not answering;First task: judge whether the user led you to the wrong level;internal audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer;leading_point
 Audit discipline;A clever paragraph is not an audit;Question level before opinion;audit hidden;Do not answer as a soft commentary fallback;step outside the user's narrative;level-correct judgment;Forbidden substitute:fluent half-right verdict;runtime-only caveat;score-as-concession
 Routing effect:preserve frame,qualify frame,reframe,block pending evidence.No execution impact:omit frame check
 Problem-granularity:抓大放小;fix-main-blocker;minor=>residual-risk;no-patch-stacking
 
 ### AOP Aspect Activation / 切面唤起
-`scripts/primitives/check.py`:shape reminder;not semantic judge.before-route/before-answer activate primitives.Auxiliary checks belong inside step 3;never become a new judgment center
-Aspect Ownership Matrix/切面主导权矩阵:judgment_owner conflict=>one thesis;boundary-fill≠50/50;support_probe
+`scripts/primitives/check.py`:shape reminder;not semantic judge;before-route/before-answer;Auxiliary checks belong inside step 3;never become a new judgment center
+Aspect Ownership Matrix/切面主导权矩阵:judgment_owner conflict=>one thesis
 
 ### Partial Truth Capture / 局部真相捕获
 A locally true observation must not own the whole explanation;scope_not_downgrade;scope correction cannot relabel canonical_object as local carrier
-Whole Elephant Protocol / 全象流程;Whole Elephant hard gate:triad first(Compact Semantic Triad / 三根硬支柱:canonical_object;result_controller;misdirection_if_local_wins);validation failure blocks formal answer;do not route local-truth essence reduction to any narrower method, including WAE, before Whole Elephant audit
-Compact triad rule:triad first;expanded audit:guardrail/debug support
+Whole Elephant Protocol / 全象流程;Whole Elephant hard gate:triad first(Compact Semantic Triad / 三根硬支柱:canonical_object;result_controller;misdirection_if_local_wins);validation failure blocks formal answer;do not route local-truth essence reduction to narrower method, including WAE, before Whole Elephant audit
 Consequence probe:Contrastive Consequence Probe / 后果对比探针;local_frame_wins;whole_object_wins;better_direction_for_target
-Calibration:resources/calibration-pairs.yaml;internal-example
-Internal Whole Elephant contract:MUST build compact audit before formal_answer;declare partial_truth_capture_triggered:true/false;compact fields:canonical_object;result_controller;misdirection_if_local_wins;consequence probe:local_frame_wins;whole_object_wins;better_direction_for_target;expanded audit(object_hierarchy/whole_object_reconstruction/variant_map/formal_answer_plan) optional guardrail/debug support;validation_command;output_evidence
-Audit Hidden By Default / 审计默认内隐:full audit JSON internal by default;do not show full whole_elephant_audit by default;do not output short audit by default;whole_elephant_validation internal evidence by default;visible output starts with formal answer;expand only when user asks, validation fails, or handoff/debug needs it
-Validator path rule:resolve scripts/primitives;run `python3 scripts/primitives/validate_whole_elephant.py <audit.json>`;Do not claim validation passed unless the command actually ran;No command evidence, no formal_answer;If the command cannot run, block formal_answer;Chinese-first;no jargon wall
-
-### Decision Context Calibration / 决策语境校准
-Answer-flip:actor/timing/target/tradeoff;全局不是抽象层级更高，而是对当前目标更有定义权
+Internal Whole Elephant contract:MUST build compact audit before formal_answer;triad+probe;validation_command;output_evidence;details=>resources/fidelity-contract.md
+Audit Hidden By Default / 审计默认内隐:full audit JSON internal by default;visible output starts with formal answer;expand only when user asks, validation fails, or handoff/debug needs it
+Validator path rule:Do not claim validation passed unless the command actually ran;No command evidence, no formal_answer;If the command cannot run, block formal_answer
 
 ### Formal Answer Gate
 Core Thesis Extraction / 主判断收束:formal_answer must start with a one-sentence core thesis
@@ -50,6 +45,7 @@ internal result:true_question,packed_premises/implicit_premises,layer_risks/loca
 .
 #### Intervention Boundary / 介入边界
 Direct execution / 直接执行:do not use Mindthus.Information acquisition / 信息补全:facts, files, data, runtime proof, or user clarification.Mindthus intervention / Mindthus 介入:hard judgment point
+Method Reference Boundary / 方法引用边界:method name in an inspection request is evidence scope, not route ownership;conversation forensics;rubric reference;do not say the current task is using MPG merely because it checks MPG-AQM;separate target session evidence from current confirmation request
 
 #### Judgment Object Routing / 判断对象路由
 Problem-definition failure;False binary or structural ambiguity;Long-term system efficiency versus local advantage;Qualified mainline with path/counter-force exposure;Agentic-system control-boundary mismatch;Bounded artifact with thin practical value;Mission runtime state;Repeated local repair
@@ -57,7 +53,7 @@ Problem-definition failure;False binary or structural ambiguity;Long-term system
 #### `sela`
 Long-term system efficiency versus local advantage;系统级费效比;短视选择
 #### `mpg`
-Qualified mainline with path/counter-force exposure;`mpg`;Do not use MPG when there is no actor, carrier, exposure, or path decision.
+Qualified mainline with path/counter-force exposure;mainline + proxy/carrier + concentrated exposure + now/continue/commit decision;concentrated scarce-resource exposure;not domain-specific;`mpg`;Do not use MPG when there is no actor, carrier, exposure, or path decision.
 #### `3l5s`
 Problem-definition failure;问题还不清楚;Discovery -> Definition
 #### `tplan`
@@ -70,7 +66,7 @@ Agentic-system control-boundary mismatch -> `wae`;Workflow / Agentic / Evidence;
 Bounded artifact with thin practical value;结构完整但实质浅薄;bounded artifact;TVG requires a bounded artifact whose practical value is thin and whose expected value can be named;vague dissatisfaction or ordinary writing quality;No bounded artifact value-gain target, no TVG.No active TVG loop, no TVG audit
 
 #### Wake-Up Probes / 唤醒探针
-strategic, path-bearing, or structurally ambiguous:`SELA` wake-up;`MPG` wake-up;MPG-unpack:scalar-commitment=>mainline/carrier/path/exposure/commitment;support-only;`EDSP` wake-up.Do not route through `3l5s`.Do not let `wae` absorb ordinary conceptual, organizational, product, or structural boundaries.Do not run `tvg`.Do not route to `tvg` merely because the user asks for an audit, review, or check
+strategic, path-bearing, or structurally ambiguous:`SELA` wake-up;`MPG` wake-up;MPG-unpack:scalar-commitment=>mainline/carrier/path/exposure/commitment;mainline+proxy/carrier+concentrated scarce-resource exposure+commit;support-only;`EDSP` wake-up.Do not route through `3l5s`.Do not let `wae` absorb ordinary conceptual, organizational, product, or structural boundaries.Do not run `tvg`.Do not route to `tvg` merely because the user asks for an audit, review, or check
 
 #### Context Injection Point / 上下文注入口
 user_preference,long_term_objective,risk_posture,authority_boundary;does not implement memory;storage, retrieval, ranking;current user input takes priority;must not silently override
@@ -82,15 +78,16 @@ Facts and evidence constrain factual claims.Values and preferences constrain pri
 Pressure is not a standalone route;low-risk deterministic.Perspective Pressure handles single-view, incentive, or game-theoretic.SELA and EDSP own role pressure;MPG owns qualified-mainline path volatility;TVG owns bounded-artifact value pressure;Evidence / Claim Ceiling owns proof limits;Anti-Spiral owns repeated local repair pressure;owner, reason, and execution effect
 
 #### Expression Discipline / 表达纪律
-Approximate Quantified Mapping / 非精准量化显影 can be used inside an existing judgment owner;active method keeps decision authority;does not become the judgment owner;Use it only when the relationship is complex enough;hypothetical numbers;not factual measurements;do not compute decisions;skip it for simple adjectives;plain language is enough
+Approximate Quantified Mapping / 非精准量化显影 can be used inside an existing judgment owner;active method keeps decision authority;does not become the judgment owner;Use it only when the relationship is complex enough;hypothetical numbers;not factual measurements;do not compute decisions;skip it for simple adjectives;plain language is enough;when MPG dominates and user says variables are many/dominant factor/not generic balance, include visible AQM snapshot / 显影快照 after the one-sentence thesis:mainline strength / path resistance / carrier fragility / information gap / trigger strength -> stage/probe, not commit
 
 #### Method Arbitration / 方法仲裁
-`dominate`,`defer`,`degrade`,`block`,`stop`.TVG vs Anti-Spiral;SELA vs WAE;EDSP vs evidence;3L5S vs direct execution;MPG vs AQM.SELA identifies direction; MPG carries it through path volatility.MPG owns the judgment; Approximate Quantified Mapping only makes variables visible.
+`dominate`,`defer`,`degrade`,`block`,`stop`;TVG vs Anti-Spiral;SELA vs WAE;EDSP vs evidence;3L5S vs direct execution;MPG vs AQM;SELA and MPG are sibling strategic lenses;SELA qualifies system-efficiency direction pressure;MPG qualifies path-carrying action;Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy;SELA must not swallow MPG-ready carrier/path/exposure/commitment questions;MPG must not replace SELA for naked system-efficiency direction judgment;MPG route handoff: when `mpg` dominates and system-efficiency direction pressure is present, carry `SELA support + MPG dominate` into the answer plan;Do not leave SELA support implicit after selecting MPG;AQM visibility map or skipped reason;One final answer, two distinct judgment surfaces;Approximate Quantified Mapping only makes variables visible.
 
 #### Execution Impact / 执行影响
 strategy;risk handling;evidence requirement;next action;stopping condition;method choice;handoff packet.If a judgment changes none of these, information acquisition, clarification, or sharper routing
 
 ## Guardrails
 docs/methodologies/shared-primitives.md;反螺旋入口;fidelity contract;resources/fidelity-contract.md;templates/fidelity-output.json;validate_using_mindthus_output.py;validation is not semantic approval
+
 ## Boundaries
-.
+No hard judgment point, no Mindthus. Missing facts first. Named method in evidence review is reference, not route owner.

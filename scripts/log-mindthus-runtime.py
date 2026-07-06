@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 
-VERSION = "1.4.2"
+VERSION = "1.4.3"
 RELATIVE_FILES = (
     "skills/using-mindthus/SKILL.md",
     "skills/using-mindthus/resources/calibration-pairs.yaml",

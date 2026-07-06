@@ -2,6 +2,38 @@
 
 ## Unreleased
 
+## v1.4.3
+
+发布日期：2026-07-06
+
+[完整发布日志](docs/releases/v1.4.3.md)
+
+说明：本版是 v1.4.2 之后的轻量 patch，重点修正方法引用与方法激活的边界：读取某个方法作为验收 rubric，不等于当前任务由该方法主导。同时补充 TVG 外部审查负测，并清理入口体积，避免路由层继续变厚。
+
+### 修复
+
+- `using-mindthus` 新增 `Method Reference Boundary / 方法引用边界`：日志取证、会话核验、方法使用确认等任务可以参考方法规则，但当前 `judgment_owner` 仍由任务对象决定。
+- 新增 MPG-AQM 会话取证负测：确认“某会话是否启用了 MPG-AQM”应走 evidence/session forensics，不应声明当前任务由 MPG 主导。
+- 保留并验证 TVG 外部审查边界：普通 release/code/log review 不因 `review / audit / check` 词面触发 TVG，除非存在 active TVG loop 和 bounded artifact value-gain target。
+
+### 工程
+
+- `skills/mpg/SKILL.md` 瘦身到 10KiB 以下，把完整说明留在 `resources/methodology.md`。
+- `using-mindthus` 增补 `## Boundaries` 层级；入口预算调整为 11KiB / 1100 words，避免为了硬压 10KiB 删除关键路由锚点。
+
+### 边界
+
+- 本版不关闭 #85；#85 继续跟踪真实会话中 `reference/rubric read` 与 `method activation` 的边界表现。
+- 本版不新增独立 skill，也不改变 TVG/MPG 的真实适用场景。
+
+### 验证
+
+- `python3 -m pytest -q`
+- `python3 -m unittest tests.test_mpg_contract tests.test_mindthus_router_contract tests.test_sela_contract -v`
+- `python3 -m pytest tests/test_packaging_docs.py tests/test_method_layering_contract.py -q`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+
 ## v1.4.2
 
 发布日期：2026-07-06

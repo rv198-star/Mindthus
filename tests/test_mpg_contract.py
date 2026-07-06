@@ -7,6 +7,7 @@ MPG_SKILL = REPO / "skills" / "mpg" / "SKILL.md"
 MPG_RESOURCE = REPO / "skills" / "mpg" / "resources" / "methodology.md"
 MPG_DOC = REPO / "docs" / "methodologies" / "mpg.md"
 MPG_PRESSURE = REPO / "tests" / "mpg" / "pressure_tests.md"
+MPG_TWIN_LENS_BEHAVIOR = REPO / "tests" / "mpg" / "twin_lens_behavior_acceptance_cases.md"
 
 
 class MpgContractTests(unittest.TestCase):
@@ -36,7 +37,9 @@ class MpgContractTests(unittest.TestCase):
             "naked mainline",
             "qualified mainline",
             "MPG can challenge",
-            "SELA identifies the mainline",
+            "SELA and MPG are sibling strategic lenses",
+            "Common order: SELA calibrates direction before MPG tests carrier/path",
+            "sequence, not hierarchy",
             "MPG qualifies, stress-tests, and carries",
             "return to SELA or EDSP",
             "constrained mainline",
@@ -96,6 +99,63 @@ class MpgContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
+    def test_mpg_aqm_outputs_visible_snapshot_for_dominant_variable_requests(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "visible AQM snapshot / 显影快照",
+                "variables are many",
+                "not generic balance",
+                "dominant factor",
+                "after the one-sentence thesis",
+                "mainline strength",
+                "path resistance",
+                "carrier fragility",
+                "information gap",
+                "trigger strength",
+                "stage/probe, not commit",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+    def test_mpg_direct_load_runs_sela_support_check_for_trend_based_mainlines(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "SELA ↔ MPG Twin-Lens Handshake",
+                "MPG direct-load companion check",
+                "SELA support check",
+                "must read `mindthus:sela`",
+                "Do not treat this as an internal memory-only check",
+                "system-efficiency/trend-based mainline",
+                "SELA support + MPG dominate",
+                "MPG still owns the action posture",
+                "If the direction check fails, return to SELA or EDSP before path strategy",
+                "include a short AQM visibility map or say why it",
+                "Direct-load output obligation",
+                "do not wait for using-mindthus to carry this handoff",
+                "first visible sentence must be a plain-language thesis",
+                "Default answer must not start",
+                "debug/audit support",
+                "ordinary language",
+                "evidence-limited",
+                "carrier/path",
+                "visibly pull in different directions",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+    def test_mpg_discovers_proxy_carrier_concentrated_exposure_structure(self):
+        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+            text = path.read_text(encoding="utf-8")
+            for phrase in (
+                "mainline + proxy/carrier + concentrated exposure + now/continue/commit decision",
+                "scarce resource",
+                "purest carrier",
+                "稀缺资源",
+                "最纯载体",
+                "not domain-specific",
+            ):
+                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
     def test_mpg_pressure_tests_cover_cases_and_boundaries(self):
         text = MPG_PRESSURE.read_text(encoding="utf-8")
         for phrase in (
@@ -117,7 +177,30 @@ class MpgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_using_mindthus_routes_mpg_without_displacing_sela(self):
+    def test_sela_mpg_twin_lens_acceptance_is_behavioral_not_label_based(self):
+        text = MPG_TWIN_LENS_BEHAVIOR.read_text(encoding="utf-8")
+        for phrase in (
+            "SELA-MPG Twin-Lens Behavior Acceptance Cases",
+            "Behavior target, not dual skill discovery",
+            "Do not judge by whether the answer names both skills",
+            "SELA surface",
+            "MPG dominate",
+            "direction_calibration",
+            "path_carrying_action",
+            "support_lens_present",
+            "execution_impact",
+            "Twin Positives",
+            "SELA-Only Controls",
+            "MPG-Only Controls",
+            "Skip Traps",
+            "SubAgent smoke batch",
+            "Open-source models keep improving",
+            "internal model platform",
+            "platform burns a full year of budget",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_using_mindthus_routes_mpg_as_sibling_to_sela(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
@@ -126,10 +209,18 @@ class MpgContractTests(unittest.TestCase):
             "Qualified mainline with path/counter-force exposure",
             "`mpg`",
             "Long-term system efficiency versus local advantage",
-            "SELA identifies direction; MPG carries it through path volatility",
+            "SELA and MPG are sibling strategic lenses",
+            "SELA qualifies system-efficiency direction pressure",
+            "MPG qualifies path-carrying action",
+            "Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy",
+            "SELA must not swallow MPG-ready carrier/path/exposure/commitment questions",
+            "MPG must not replace SELA for naked system-efficiency direction judgment",
             "MPG vs AQM",
-            "MPG owns the judgment; Approximate Quantified Mapping only makes variables visible.",
+            "Approximate Quantified Mapping only makes variables visible.",
             "Do not use MPG when there is no actor, carrier, exposure, or path decision.",
+            "mainline + proxy/carrier + concentrated exposure + now/continue/commit decision",
+            "concentrated scarce-resource exposure",
+            "not domain-specific",
         ):
             self.assertIn(phrase, text)
         for phrase in (

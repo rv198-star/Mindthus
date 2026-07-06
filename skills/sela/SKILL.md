@@ -1,6 +1,6 @@
 ---
 name: sela
-description: Use as a strategic decision reference before major trend or strategy choices, to avoid short-sighted decisions caused by overvaluing real but local advantages while system-level cost-effectiveness is shifting.
+description: Use for long-term system-efficiency versus local-advantage direction pressure, especially old paradigm vs scalable system or external system efficiency vs local/internal advantage; when concrete carrier/exposure/path action is also present, use as a support lens with MPG rather than sole owner.
 ---
 
 # SELA / 系统效率碾压局部优势
@@ -23,7 +23,7 @@ This is a top-level strategic decision reference:
 
 - meta-level
 - domain-independent
-- high priority before lower-level methods
+- early strategic lens, not automatic owner over sibling methods
 - anti-short-sightedness, not conclusion-style
 
 Use it to avoid being pulled into short-sighted choices by real but local advantages that may not survive system-level cost-effectiveness pressure.
@@ -76,6 +76,21 @@ Ask:
 3. Is this the right 行动窗口 to commit, observe, wait, or run a small trial?
 
 The `Timing Auditor` must keep this from turning an efficiency judgment into an immediate action without a valid action window.
+
+Timing Check is not a substitute for MPG. If the question already contains a carrier, exposure, path volatility, or concrete commitment, transfer/degrade to MPG after SELA calibrates the direction pressure. SELA must not absorb MPG-ready questions.
+
+### SELA ↔ MPG Twin-Lens Handshake
+
+SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+
+SELA calibrates direction; MPG owns path-carrying action. When the companion check
+applies, the first visible sentence must be a plain-language thesis that separates
+direction calibration from path action in ordinary language. Do not start the default
+answer with `direction:` or `current carrier/path:`. Default answer must not start with
+debug labels. Internal labels are debug/audit support; hide them unless the user asks
+for audit, validation, or handoff. Use
+`SELA dominate + MPG not yet needed` only when no carrier/path action is being decided.
+do not turn a direction win into a carrier commitment.
 
 ### Fidelity Support
 

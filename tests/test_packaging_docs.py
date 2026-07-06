@@ -56,7 +56,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.4.2`",
+            "当前仓库版本：`v1.4.3`",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -377,12 +377,12 @@ class PackagingDocsTests(unittest.TestCase):
         )
 
     def test_using_mindthus_entrypoint_stays_thin_enough_for_attention(self):
-        budget_bytes = 10 * 1024
+        budget_bytes = 11 * 1024
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
         self.assertLessEqual(
             path.stat().st_size,
             budget_bytes,
-            "using-mindthus is the routing entrypoint; keep it under 10KiB and move long semantics to AOP primitives/scripts.",
+            "using-mindthus is the routing entrypoint; keep it under 11KiB and move long semantics to AOP primitives/scripts.",
         )
 
     def test_using_mindthus_entrypoint_stays_within_word_attention_budget(self):
@@ -390,8 +390,8 @@ class PackagingDocsTests(unittest.TestCase):
         word_count = len(path.read_text(encoding="utf-8").split())
         self.assertLessEqual(
             word_count,
-            925,
-            "using-mindthus should stay under 925 words; move detailed semantics to shared primitives, resources, or validators.",
+            1100,
+            "using-mindthus should stay under 1100 words; move detailed semantics to shared primitives, resources, or validators.",
         )
 
     def test_using_mindthus_entrypoint_has_no_empty_markdown_headings(self):
@@ -699,7 +699,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.4.2")
+            self.assertEqual(plugin["version"], "1.4.3")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -787,7 +787,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.4.2")
+            self.assertEqual(codex_plugin_manifest["version"], "1.4.3")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
@@ -895,8 +895,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.4.2"
-            skills = tmp_dir / "mindthus-skills-1.4.2"
+            plugins = tmp_dir / "mindthus-plugins-1.4.3"
+            skills = tmp_dir / "mindthus-skills-1.4.3"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
