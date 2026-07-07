@@ -235,6 +235,75 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("只读 SubAgent 加速", methodology)
         self.assertIn("SubAgent 是侦察，不是控制器", methodology)
 
+    def test_role_separated_review_policy_stays_lightweight(self):
+        skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        policy = (SKILL / "resources" / "policy.md").read_text(encoding="utf-8")
+        hooks = (SKILL / "resources" / "hooks.md").read_text(encoding="utf-8")
+        subagents = (SKILL / "resources" / "subagents.md").read_text(encoding="utf-8")
+        codex_adapter = (SKILL / "resources" / "platforms" / "codex.md").read_text(encoding="utf-8")
+        claude_adapter = (SKILL / "resources" / "platforms" / "claude-code.md").read_text(encoding="utf-8")
+        opencode_adapter = (SKILL / "resources" / "platforms" / "opencode.md").read_text(encoding="utf-8")
+        codex_script = (SKILL / "scripts" / "codex_review_packet.py").read_text(encoding="utf-8")
+        platform_script = (SKILL / "scripts" / "platform_review_packet.py").read_text(encoding="utf-8")
+        methodology = (REPO / "docs" / "methodologies" / "tplan.md").read_text(encoding="utf-8")
+        compact_policy = re.sub(r"\s+", " ", policy)
+        hooks_lower = hooks.lower()
+
+        for phrase in (
+            "Role-Separated Review Policy",
+            "responsibility separation, not reviewer isolation",
+            "not a new runtime role model",
+            "does not require SubAgents, clean sessions, extra gates, or new schema",
+            "doing, direction-checking, acceptance, and learning",
+            "Task/SubTask/Step",
+            "Pulse/hooks/Mission Review",
+            "acceptance evidence",
+            "Mission Shared Context / Shared Risk Context",
+            "same-agent phase separation",
+            "Low-risk reversible work stays lightweight",
+        ):
+            self.assertIn(phrase, compact_policy)
+
+        self.assertIn("Role-Separated Review Policy", skill_text)
+        self.assertIn("responsibility separation", skill_text)
+        self.assertIn("SubAgents are optional carriers", subagents)
+        self.assertIn("`advise` or `grade`", subagents)
+        self.assertIn("candidate findings", subagents)
+        self.assertIn("direction-checking", hooks_lower)
+        self.assertIn("acceptance grading", hooks_lower)
+        self.assertIn("mission_review.acceptance_gap", hooks_lower)
+        self.assertIn("resources/platforms/*.md", skill_text)
+        self.assertIn("scripts/*review_packet.py", skill_text)
+        self.assertIn("codex -s read-only -a never exec --ephemeral", codex_adapter)
+        self.assertIn("--run-cli", codex_adapter)
+        self.assertIn("--orchestration-mode recommended", codex_adapter)
+        self.assertIn("Codex Review Orchestration Mode", codex_adapter)
+        self.assertIn("recommended Codex tplan path", codex_adapter)
+        self.assertIn("not a mandatory four-agent runtime", codex_adapter)
+        self.assertIn("subagent-dispatch.json", codex_adapter)
+        self.assertIn("candidate_findings_only", codex_script)
+        self.assertIn("multi_agent_v1.spawn_agent", codex_script)
+        self.assertIn("--run-cli", codex_script)
+        self.assertIn("--orchestration-mode", codex_script)
+        self.assertIn("recommended_codex_tplan_path", codex_script)
+        self.assertIn("Claude Code Role-Separated Review Adapter", claude_adapter)
+        self.assertIn("https://code.claude.com/docs/en/sub-agents", claude_adapter)
+        self.assertIn("permissionMode: plan", claude_adapter)
+        self.assertIn("OpenCode Role-Separated Review Adapter", opencode_adapter)
+        self.assertIn("https://open-code.ai/en/docs/agents", opencode_adapter)
+        self.assertIn("edit: deny", opencode_adapter)
+        self.assertIn("deny `bash`", opencode_adapter)
+        self.assertIn("tplan.claude_code_adapter.v0.1", platform_script)
+        self.assertIn("tplan.opencode_adapter.v0.1", platform_script)
+        self.assertIn("permissionMode: plan", platform_script)
+        self.assertIn('"read": "allow"', platform_script)
+        self.assertIn('"bash": "deny"', platform_script)
+        self.assertIn('"edit": "deny"', platform_script)
+        self.assertNotIn('"git diff*": "allow"', platform_script)
+        self.assertIn("generated_platform_carrier_artifacts_only", platform_script)
+        self.assertIn("重要任务不要让同一股惯性同时负责做、判断方向、给自己验收和沉淀经验", methodology)
+        self.assertIn("不是四个常驻 agent", methodology)
+
     def test_pressure_tests_cover_read_only_subagent_acceleration(self):
         text = (REPO / "tests" / "tplan" / "skill_ab_pressure_tests.md").read_text(encoding="utf-8")
         for phrase in (
@@ -246,6 +315,38 @@ class TplanSkillContractTests(unittest.TestCase):
             "fails if any SubAgent mutates files, Mission state, evidence, task tree, or decisions",
         ):
             self.assertIn(phrase, text)
+
+    def test_pressure_tests_cover_role_separated_review_policy(self):
+        text = (REPO / "tests" / "tplan" / "skill_ab_pressure_tests.md").read_text(encoding="utf-8")
+        compact_text = re.sub(r"\s+", " ", text)
+        for phrase in (
+            "Group 5: Role-Separated Review Policy",
+            "doing, direction-checking, acceptance, and learning",
+            "not a four-agent workflow",
+            "low-risk reversible work stays lightweight",
+            "same-agent phase separation",
+            "Mission Shared Context",
+            "Shared Risk Context",
+            "fails if it requires SubAgents, clean sessions, new gates, or new schema",
+            "Codex Adapter Implementation",
+            "codex_review_packet.py",
+            "Codex Review Orchestration Mode",
+            "--orchestration-mode recommended",
+            "grade required",
+            "strict",
+            "codex -s read-only -a never exec --ephemeral",
+            "Claude Code Adapter Implementation",
+            "--platform claude-code",
+            "permissionMode: plan",
+            "OpenCode Adapter Implementation",
+            "--platform opencode",
+            "mode: subagent",
+            "edit: deny",
+            "task: deny",
+            "bash: deny",
+            "candidate findings",
+        ):
+            self.assertIn(phrase, compact_text)
 
     def test_shared_risk_context_contract_is_documented(self):
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")

@@ -21,6 +21,16 @@ Short rule:
 
 ## Output Shape
 
+`templates/fidelity-output.json is a fill-in skeleton` for real MPG runs. It is not
+expected to pass as-is because required fields are intentionally empty.
+
+Use `fixtures/fidelity-smoke-pass.json` when you need a passing smoke input for the
+validator:
+
+```bash
+python3 scripts/validate_mpg_output.py fixtures/fidelity-smoke-pass.json
+```
+
 Required top-level fields for an applicable MPG run:
 
 - `schema_version`: `mpg-fidelity-v0.1`

@@ -142,10 +142,16 @@ def build_record(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
-def read_jsonl(path: Path) -> tuple[list[dict[str, Any]], list[Finding]]:
+def is_default_log_path(path: Path) -> bool:
+    return path.resolve(strict=False) == (Path.cwd() / DEFAULT_LOG).resolve(strict=False)
+
+
+def read_jsonl(path: Path, *, allow_missing_empty: bool = False) -> tuple[list[dict[str, Any]], list[Finding]]:
     records: list[dict[str, Any]] = []
     findings: list[Finding] = []
     if not path.exists():
+        if allow_missing_empty:
+            return records, findings
         findings.append(Finding(0, "missing-log", f"usage log not found: {path}"))
         return records, findings
 
@@ -169,7 +175,8 @@ def print_findings(findings: list[Finding]) -> None:
 
 
 def validate_log(path: Path) -> int:
-    records, findings = read_jsonl(path)
+    missing_default_log = not path.exists() and is_default_log_path(path)
+    records, findings = read_jsonl(path, allow_missing_empty=missing_default_log)
     if findings:
         print("Fidelity Usage Log Report")
         print(f"Log file: {path}")
@@ -178,6 +185,8 @@ def validate_log(path: Path) -> int:
     print("Fidelity Usage Log Report")
     print(f"Log file: {path}")
     print(f"Records: {len(records)}")
+    if missing_default_log:
+        print("No usage-log data yet; the default log is optional until the first record is appended.")
     print("No usage-log shape risks detected.")
     return 0
 

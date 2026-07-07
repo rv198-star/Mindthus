@@ -49,6 +49,8 @@ def _validate_applicable(data: dict[str, Any], spec: FidelitySpec) -> list[Findi
     for field in ("plain_language_conclusion", "action_posture", "required_judgment_moves"):
         if field not in data:
             findings.append(_finding("block", "missing-field", f"missing field: {field}"))
+    if "plain_language_conclusion" in data and not non_empty_string(data.get("plain_language_conclusion")):
+        findings.append(_finding("block", "empty-field", "plain_language_conclusion is empty"))
 
     posture = data.get("action_posture")
     if isinstance(posture, str):

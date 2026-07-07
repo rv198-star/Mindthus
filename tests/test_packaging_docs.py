@@ -419,6 +419,23 @@ class PackagingDocsTests(unittest.TestCase):
             "using-mindthus should not keep empty routing headings; every heading must carry executable guidance.",
         )
 
+    def test_using_mindthus_entrypoint_limits_marker_chain_density(self):
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        lines = path.read_text(encoding="utf-8").splitlines()
+        long_lines = [
+            (line_number, len(line))
+            for line_number, line in enumerate(lines, start=1)
+            if len(line) > 420
+        ]
+        semicolon_chains = [
+            (line_number, line.count(";"))
+            for line_number, line in enumerate(lines, start=1)
+            if line.count(";") > 10
+        ]
+
+        self.assertEqual([], long_lines, "using-mindthus has overlong marker lines")
+        self.assertEqual([], semicolon_chains, "using-mindthus has dense semicolon marker chains")
+
     def assert_release_pack_excludes_runtime_artifacts(self, out: Path) -> None:
         forbidden_dirs = {
             ".git",

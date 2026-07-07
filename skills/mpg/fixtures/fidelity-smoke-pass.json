@@ -1,0 +1,57 @@
+{
+  "schema_version": "mpg-fidelity-v0.1",
+  "method": "MPG",
+  "applicability": "applicable",
+  "plain_language_conclusion": "The AI-tools mainline can remain intact while the current vendor exposure should be staged instead of treated as a one-shot commitment.",
+  "action_posture": "stage",
+  "required_judgment_moves": {
+    "qualified_mainline": {
+      "status": "addressed",
+      "finding": "The mainline is conditional: AI tools should reduce review latency for routine checks over the next two quarters if false-positive handling stays bounded.",
+      "failure_criteria_response": "The output does not treat a broad AI trend slogan as enough for action.",
+      "evidence_surface": "Scenario names actor, horizon, expected gain, and failure meaning."
+    },
+    "carrier_vehicle_separation": {
+      "status": "addressed",
+      "finding": "The mainline is AI-assisted review; the current vendor is only one carrier and the plugin integration is the vehicle.",
+      "failure_criteria_response": "The output does not equate a correct mainline with committing to the current vendor.",
+      "evidence_surface": "Scenario separates strategic direction, vendor choice, and integration work."
+    },
+    "counter_force_map": {
+      "status": "addressed",
+      "finding": "Counter-forces are vendor lock-in, reviewer distrust after noisy findings, and migration delay if the API changes.",
+      "failure_criteria_response": "The output names concrete path-shaping forces instead of generic risk language.",
+      "evidence_surface": "Scenario gives lock-in cost, adoption trust, and integration fragility."
+    },
+    "exposure_budget": {
+      "status": "addressed",
+      "finding": "Exposure is capped to one team and reversible integration work until false positives and support response are measured.",
+      "failure_criteria_response": "The output ties exposure to loss, delay, and trust cost.",
+      "evidence_surface": "Scenario includes limited team scope and reversible rollout options."
+    },
+    "optionality_design": {
+      "status": "addressed",
+      "finding": "Keep exported review traces and a fallback rule-based checker so the team can switch vendor without losing audit history.",
+      "failure_criteria_response": "The output preserves concrete routes rather than saying only to stay flexible.",
+      "evidence_surface": "Scenario allows instrumentation and fallback checks."
+    },
+    "trigger_conditions": {
+      "status": "addressed",
+      "finding": "Expand only if median review latency drops and high-severity misses do not increase; switch vehicle if support or API stability fails twice.",
+      "failure_criteria_response": "The output names triggers that change action.",
+      "evidence_surface": "Scenario has measurable latency, severity, support, and API stability indicators."
+    },
+    "mainline_challenge": {
+      "status": "addressed",
+      "finding": "The mainline would be rejected for this team if routine checks are not the bottleneck or if trust loss exceeds saved review time.",
+      "failure_criteria_response": "The output can challenge or narrow the mainline.",
+      "evidence_surface": "Scenario leaves bottleneck and trust impact as testable uncertainties."
+    },
+    "aqm_boundary": {
+      "status": "addressed",
+      "finding": "Approximate variable mapping is used only to expose sensitivity between latency gain, trust cost, and lock-in; it does not compute the decision.",
+      "failure_criteria_response": "The output does not let approximate numbers decide the answer.",
+      "evidence_surface": "Scenario uses AQM as a visibility aid under MPG, not as the judgment owner."
+    }
+  }
+}

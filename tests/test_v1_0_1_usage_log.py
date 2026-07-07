@@ -10,6 +10,44 @@ USAGE_LOGGER = REPO / "scripts" / "log-fidelity-usage.py"
 
 
 class V101UsageLogTests(unittest.TestCase):
+    def test_validate_missing_default_log_reports_empty_fresh_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--validate",
+                    "--log",
+                    "data/fidelity-usage-log.jsonl",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=tmp,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            self.assertIn("Records: 0", result.stdout)
+            self.assertIn("No usage-log data yet", result.stdout)
+            self.assertIn("No usage-log shape risks detected", result.stdout)
+
+    def test_validate_missing_non_default_log_still_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--validate",
+                    "--log",
+                    "other/missing-usage-log.jsonl",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=tmp,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("missing-log", result.stdout)
+
     def test_usage_logger_appends_and_validates_redacted_record(self):
         with tempfile.TemporaryDirectory() as tmp:
             log_path = Path(tmp) / "usage.jsonl"

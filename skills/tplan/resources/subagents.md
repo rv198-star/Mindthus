@@ -11,6 +11,10 @@ user-facing conclusions.
 SubAgent outputs are candidate findings. The main agent must verify, merge, decide,
 and write any tplan runtime state.
 
+SubAgents are optional carriers for role-separated review. They may carry read-only
+`advise` or `grade` work when coordination cost is justified, but they do not create a
+new tplan role model and never own final authority.
+
 ## Allowed Read-only Work
 
 SubAgents may:

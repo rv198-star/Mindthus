@@ -18,5 +18,14 @@ Use:
 python3 scripts/log-fidelity-usage.py --help
 ```
 
+On a fresh checkout, validating the default path before any record exists is allowed:
+
+```bash
+python3 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl
+```
+
+It reports `Records: 0` and `No usage-log data yet`; missing non-default paths still
+fail.
+
 The log is a data flywheel seed, not a benchmark claim. It is useful only after enough
 real or evaluation records accumulate.

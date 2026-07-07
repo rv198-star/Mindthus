@@ -268,7 +268,14 @@ def print_human(report: dict[str, Any]) -> None:
 
 def main() -> int:
     codex_home = default_codex_home()
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        epilog=(
+            "Runtime boundary: status=ok verifies installed files, hashes, and marker "
+            "presence only. It does not prove model behavior, semantic judgment quality, "
+            "or runtime activation correctness."
+        ),
+    )
     parser.add_argument("--repo-root", default=repo_root(), type=Path, help="Mindthus repository root.")
     parser.add_argument(
         "--marketplace-root",

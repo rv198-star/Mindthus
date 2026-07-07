@@ -47,6 +47,9 @@ become evidence. Checkpoint Command means `scripts/checkpoint.py` may bundle a l
 optional sparse evidence, and survey output, without bypassing gates.
 Mission Pulse means `scripts/mission_pulse.py` may build a read-only Snapshot/Pulse/Gate
 route note before continuation, freeze, handoff, stop, branch cleanup, or risk review.
+Role-Separated Review Policy keeps important Mission claims from collapsing doing,
+direction-checking, acceptance, and learning into one cognitive flow. It is
+responsibility separation, not a new runtime role model.
 
 ### Runtime Loop
 
@@ -148,4 +151,6 @@ context.
 - `resources/hooks.md`: decision hooks, routed skills, path/risk/continuation contracts.
 - `resources/user-output.md`: user-facing rendering rules.
 - `resources/subagents.md`: read-only SubAgent acceleration and merge rules.
+- `resources/platforms/*.md`: optional platform review carrier adapters.
 - `scripts/mission_pulse.py`: read-only Mission Pulse route note.
+- `scripts/*review_packet.py`: creates review carrier packets and optional platform runs.

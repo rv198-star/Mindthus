@@ -210,15 +210,15 @@ def _validate_whole_elephant_contract(data: object) -> list[Finding]:
                 "whole_elephant_validation is required when partial_truth_capture_triggered is true",
             )
         )
-    elif validation.get("script_verdict") != "shape_only":
+    elif validation.get("script_verdict") not in {"shape_only", "not_run_fallback"}:
         findings.append(
             finding(
                 "block",
                 "invalid-whole-elephant-validation",
-                "whole_elephant_validation.script_verdict must be 'shape_only'",
+                "whole_elephant_validation.script_verdict must be 'shape_only' or 'not_run_fallback'",
             )
         )
-    else:
+    elif validation.get("script_verdict") == "shape_only":
         if not _non_empty_string(validation.get("command")):
             findings.append(
                 finding(
@@ -241,6 +241,23 @@ def _validate_whole_elephant_contract(data: object) -> list[Finding]:
                     "block",
                     "missing-whole-elephant-validation-evidence",
                     "whole_elephant_validation.output_evidence must include observed validator output",
+                )
+            )
+    else:
+        if not _non_empty_string(validation.get("fallback_reason")):
+            findings.append(
+                finding(
+                    "block",
+                    "missing-whole-elephant-validation-fallback",
+                    "whole_elephant_validation.fallback_reason must explain why the script did not run",
+                )
+            )
+        if not _non_empty_string(validation.get("self_check_evidence")):
+            findings.append(
+                finding(
+                    "block",
+                    "missing-whole-elephant-validation-fallback",
+                    "whole_elephant_validation.self_check_evidence must describe the internal shape self-check",
                 )
             )
     return findings

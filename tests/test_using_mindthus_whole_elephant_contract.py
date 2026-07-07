@@ -164,6 +164,16 @@ def skills_prompt_injection_drift_audit() -> dict:
 
 
 class UsingMindthusWholeElephantContractTests(unittest.TestCase):
+    def test_fidelity_contract_allows_no_script_fallback_verdict(self) -> None:
+        contract = (
+            REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
+        ).read_text(encoding="utf-8")
+        compact = " ".join(contract.split())
+
+        self.assertIn("script_verdict` must be `shape_only` when the script ran", compact)
+        self.assertIn("or `not_run_fallback` when the host cannot run the script", compact)
+        self.assertNotIn('script_verdict == "shape_only"` before `formal_answer`', compact)
+
     def template_payload(self) -> dict:
         return json.loads(TEMPLATE.read_text(encoding="utf-8"))
 
@@ -194,7 +204,37 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
         result = run_validator(payload)
 
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("whole_elephant_validation.script_verdict must be 'shape_only'", result.stdout)
+        self.assertIn(
+            "whole_elephant_validation.script_verdict must be 'shape_only' or 'not_run_fallback'",
+            result.stdout,
+        )
+
+    def test_partial_truth_trigger_allows_explicit_no_script_fallback(self) -> None:
+        payload = self.template_payload()
+        payload["partial_truth_capture_triggered"] = True
+        payload["whole_elephant_audit"] = whole_elephant_audit()
+        payload["whole_elephant_validation"] = {
+            "script_verdict": "not_run_fallback",
+            "fallback_reason": "python or filesystem execution is unavailable in this host",
+            "self_check_evidence": "compact triad and consequence probe were checked internally",
+            "disclosure": "script validation did not run",
+        }
+
+        result = run_validator(payload)
+
+        self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_no_script_fallback_requires_reason_and_self_check_evidence(self) -> None:
+        payload = self.template_payload()
+        payload["partial_truth_capture_triggered"] = True
+        payload["whole_elephant_audit"] = whole_elephant_audit()
+        payload["whole_elephant_validation"] = {"script_verdict": "not_run_fallback"}
+
+        result = run_validator(payload)
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("whole_elephant_validation.fallback_reason must explain why the script did not run", result.stdout)
+        self.assertIn("whole_elephant_validation.self_check_evidence must describe the internal shape self-check", result.stdout)
 
     def test_partial_truth_trigger_requires_command_evidence_not_verbal_claim(self) -> None:
         payload = self.template_payload()

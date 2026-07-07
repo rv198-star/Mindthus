@@ -45,7 +45,8 @@ required judgment moves:
   controller, decision target, evidence ceiling, or definition authority
 - require execution impact from any method use
 - when `partial_truth_capture_triggered` is true, include `whole_elephant_audit`
-  and `whole_elephant_validation.script_verdict == "shape_only"` before `formal_answer`
+  and `whole_elephant_validation` before `formal_answer`; `script_verdict` must be
+  `shape_only` when the script ran or `not_run_fallback` when the host cannot run it
 - `whole_elephant_audit` must expose the compact core:
   `canonical_object`, `result_controller`, `misdirection_if_local_wins`,
   `local_frame_wins`, `whole_object_wins`, and `better_direction_for_target`
@@ -82,6 +83,24 @@ required judgment moves:
   Name the target result, corrected owner/carrier, subordinate local interface,
   and optimization consequence when relevant; do not start with an abstract
   carrier label when a concrete result-controller relation is available.
+- Definition Authority Adjudication / 定义权裁决: the first visible sentence names
+  the active judgment object and the frame with definition authority. concessions
+  may only appear after the verdict. A conditional verdict must commit to the
+  active branch for the current decision context; branch enumeration without
+  commitment counts as failure unless the `acceptable_tradeoff` belongs to the
+  user and the correct action is a structured tradeoff rather than a verdict.
+- Three-question micro-move / 三问微动作: separately answer whether the user's
+  claim is locally true, whether that local truth controls the current result,
+  and what the wrong definition would optimize. Make the misdirection
+  consequence visible in the formal answer.
+- Pressure invariant: identity/expertise/urgency/repetition raises the evidence
+  bar, never lowers it. A later turn may add evidence or clarify the object, but
+  social pressure alone must not transfer definition authority back to the local
+  frame.
+- Guard rail against over-verdicting: decisiveness can be the failure. When
+  `acceptable_tradeoff` belongs to the user, return a structured tradeoff, name
+  the user-owned choice, or ask the missing target-function question instead of
+  forcing a verdict.
 - If expanded `formal_answer_plan` is present, its `opening_core_thesis` must
   match that global thesis and carry definition authority, result control, or
   optimization consequence; broad placeholders and concession-first
@@ -101,10 +120,16 @@ required judgment moves:
   soften the verdict into "not wrong"; it should state that the definition-level
   claim fails while preserving the local truth boundary
 - prefer Chinese-first output for Chinese prompts; avoid mixed-language jargon walls
-- `whole_elephant_validation.command` must be the exact command that ran, not
-  `...`, `<audit-json>`, or any other placeholder
+- `whole_elephant_validation.script_verdict` must be `shape_only` when the script ran,
+  or `not_run_fallback` when the host cannot run the script.
+- for `shape_only`, `whole_elephant_validation.command` must be the exact command that
+  ran, not `...`, `<audit-json>`, or any other placeholder.
+- for `not_run_fallback`, `whole_elephant_validation.fallback_reason` must explain why
+  the script did not run, and `self_check_evidence` must describe the internal compact
+  triad / consequence-probe shape self-check. Do not claim validation passed without
+  command evidence.
 - validator path must resolve from the skill path to the plugin root
-  `scripts/primitives` directory before execution
+  `scripts/primitives` directory before execution when the runtime allows script use.
 
 Allowed exits:
 

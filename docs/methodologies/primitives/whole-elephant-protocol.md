@@ -184,7 +184,13 @@ guardrail/debug support, not a new judgment center.
 Shape and wording-risk validation gate:
 write a Whole Elephant audit JSON: write a `mindthus-whole-elephant-audit-v0.1` JSON
 audit and run `python3 scripts/primitives/validate_whole_elephant.py <audit.json>`
-before formal_answer. validation failure blocks formal answer.
+before formal_answer when the runtime can execute the script. validation failure blocks
+formal answer.
+
+If the host cannot run the script, use `not_run_fallback`: perform an internal compact
+triad and consequence-probe self-check, record why the script could not run, and disclose
+that script validation did not run when this matters for handoff or debug. Do not claim
+validation passed without command evidence.
 
 The script checks required shape and obvious concession-wording risks; it does not
 decide semantic truth, definition correctness, evidence sufficiency, domain value, or
@@ -196,7 +202,9 @@ Audit Package Consistency / 审计包一致性:
 not grant definition authority to a local interface that
 `formal_answer_plan.definition_disposition` rejects.
 
-Validator path rule: resolve from skill path to plugin root scripts/primitives.
+Validator path rule: resolve from skill path to plugin root scripts/primitives. When
+that path or runtime is unavailable, record fallback reason instead of inventing command
+evidence.
 
 Audit Hidden By Default / 审计默认内隐: Do not output short audit by default.
 whole_elephant_validation is internal evidence by default. visible answer starts with

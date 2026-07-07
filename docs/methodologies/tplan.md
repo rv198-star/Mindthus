@@ -142,6 +142,14 @@ SubAgent 是侦察，不是控制器。
 
 `tplan` 不决定 semantic truth。它不会替 `3L5S` 定义问题，不会替 `SELA` 做战略判断，不会替 `EDSP` 建结构坐标。它负责把这些判断放进一个可运行、可追踪、可停止的 Mission 控制面里。
 
+## 从属策略：责任分离
+
+重要任务不要让同一股惯性同时负责做、判断方向、给自己验收和沉淀经验。能独立复核就独立复核；不能，就用分阶段、标准和证据把它们隔开。
+
+这不是四个常驻 agent，也不是四套新 gate。`tplan` 本体只规定哪些责任不能静默混在一起：执行落在 Task/SubTask/Step，方向检查落在 Pulse、hooks 和 Mission Review，验收看 acceptance evidence、rubric 和 evidence links，沉淀进入 Mission Shared Context；只有影响其他任务风险判断的沉淀才进入 Shared Risk Context。
+
+因此，外界说的 `execute / advise / grade / dream` 在 `tplan` 里只是降低理解成本的责任名，不是新的内部本体。没有 SubAgent、独立会话或 clean CLI 的平台仍然可以用；有这些能力的平台可以在外围 adapter 里增强隔离，但不改变 `tplan` 的 Mission、证据和决策权结构。
+
 ## 怎么用
 
 `tplan` 不是先把计划一次性定完、审批后再按计划执行。更准确地说，它是执行驱动的自适应规划：Mission 固定，任务树可以在证据、阻碍和决策信号约束下持续演化。

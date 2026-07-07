@@ -215,7 +215,6 @@ class MpgContractTests(unittest.TestCase):
             "Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy",
             "SELA must not swallow MPG-ready carrier/path/exposure/commitment questions",
             "MPG must not replace SELA for naked system-efficiency direction judgment",
-            "MPG vs AQM",
             "Approximate Quantified Mapping only makes variables visible.",
             "Do not use MPG when there is no actor, carrier, exposure, or path decision.",
             "mainline + proxy/carrier + concentrated exposure + now/continue/commit decision",
@@ -223,6 +222,7 @@ class MpgContractTests(unittest.TestCase):
             "not domain-specific",
         ):
             self.assertIn(phrase, text)
+        self.assertIn("MPG vs AQM", text.replace("-", " "))
         for phrase in (
             "MPG",
             "主线-路径博弈",

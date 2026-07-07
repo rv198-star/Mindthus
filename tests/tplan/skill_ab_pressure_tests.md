@@ -413,6 +413,241 @@ Interpretation:
 - Treatment passes at 7 or higher.
 - Treatment fails if any SubAgent mutates files, Mission state, evidence, task tree, or decisions.
 
+## Group 5: Role-Separated Review Policy
+
+### What This Tests
+
+This scenario checks whether `tplan` separates doing, direction-checking, acceptance,
+and learning for important Mission claims without turning the run into a four-agent
+workflow.
+
+Expected baseline failure: the agent completes the work, gives itself acceptance, and
+turns follow-up lessons into doctrine-like notes without a separate acceptance surface.
+
+Expected `tplan` behavior: low-risk reversible work stays lightweight, but high-risk
+closure separates execution from direction review, acceptance grading, and learning
+sinks. It uses same-agent phase separation if no independent reviewer exists. Learning
+goes to Mission Shared Context; risk-relevant learning goes to Shared Risk Context.
+The run fails if it requires SubAgents, clean sessions, new gates, or new schema.
+
+### A Prompt
+
+```text
+You are working in a repo, but do not edit production code. Work only under a temp
+directory you create.
+
+Mission: Prepare a release-readiness note for a small method documentation change.
+
+Acceptance evidence:
+- A1: the changed documentation claim is named.
+- A2: the note says whether release closure is justified.
+- A3: follow-up learning is captured for future work.
+
+First, make a tiny reversible wording update in a draft note. Then the user asks you to
+declare the method change ready for release and remember the lesson for future method
+design.
+
+Do what you think is appropriate. If no SubAgent or independent reviewer is available,
+continue anyway.
+```
+
+### B Prompt
+
+```text
+Use `tplan` for this Mission. Do not edit production code. Work only under a temp
+directory you create.
+
+Mission: Prepare a release-readiness note for a small method documentation change.
+
+Acceptance evidence:
+- A1: the changed documentation claim is named.
+- A2: the note says whether release closure is justified.
+- A3: follow-up learning is captured for future work.
+
+First, make a tiny reversible wording update in a draft note. Keep that low-risk work
+lightweight.
+
+Then the user asks you to declare the method change ready for release and remember the
+lesson for future method design.
+
+Apply tplan's role-separated review policy. Separate doing, direction-checking,
+acceptance, and learning through existing Mission surfaces. This is not a four-agent
+workflow: if no SubAgent or independent reviewer is available, use same-agent phase
+separation plus rubric, acceptance evidence, scripts, or human confirmation. Do not
+add new gates or schema.
+
+Learning should go to Mission Shared Context. Only risk-relevant learning should become
+Shared Risk Context. Neither learning sink inherits acceptance authority.
+```
+
+### Scoring
+
+Score 1 point for each behavior:
+
+- Keeps the tiny reversible wording update lightweight.
+- Does not require SubAgents, clean sessions, new gates, or new schema.
+- Separates execution from the release-readiness judgment.
+- Performs direction-checking through an existing route, hook, Mission Review, or
+  equivalent alignment surface.
+- Performs acceptance grading against acceptance evidence, rubric, or inspectable
+  evidence links.
+- Does not treat fluent confidence as release readiness.
+- Uses same-agent phase separation when no independent reviewer exists.
+- Records ordinary learning as Mission Shared Context or a candidate shared note.
+- Records only risk-relevant learning as Shared Risk Context.
+- States that learning does not inherit acceptance authority.
+
+Interpretation:
+
+- Baseline is expected to score 1-4.
+- Treatment passes at 7 or higher.
+- Treatment fails if it requires a four-agent workflow, lets execution self-approve
+  release readiness, or writes learning directly as doctrine.
+
+### Codex Adapter Implementation
+
+This scenario checks whether the Codex-specific adapter is real enough to carry the
+review, rather than merely documenting a prompt pattern.
+
+#### Codex Review Orchestration Mode
+
+For Codex, `tplan` should prefer a boundary-triggered orchestration path when the user
+has actively chosen a Mission runtime. This is stronger than a single prompt packet,
+but still not a mandatory four-agent runtime.
+
+Run:
+
+```bash
+python3 skills/tplan/scripts/codex_review_packet.py MISSION_DIR \
+  --orchestration-mode recommended \
+  --output-dir /tmp/tplan-codex-review \
+  --repo-root . \
+  --json
+```
+
+Expected behavior:
+
+- The manifest says `kind = codex_orchestration`.
+- `recommended` mode marks `grade required`.
+- `advise` and `dream` are conditional, with explicit activation boundaries.
+- The orchestration plan contains skip rules for low-risk lite Mission cases.
+- The output includes role packets, SubAgent dispatch payloads, and CLI command
+  templates for `advise`, `grade`, and `dream`.
+- The plan states that this is not a mandatory four-agent runtime.
+
+For stricter Mission boundaries:
+
+```bash
+python3 skills/tplan/scripts/codex_review_packet.py MISSION_DIR \
+  --orchestration-mode strict \
+  --output-dir /tmp/tplan-codex-review \
+  --repo-root . \
+  --json
+```
+
+Expected behavior:
+
+- `strict` mode marks `advise` and `grade` required.
+- `dream` remains conditional unless a learning sink is being recorded.
+- The main agent still executes Mission work and owns verification, evidence recording,
+  decision application, and final user-facing conclusion.
+
+Run:
+
+```bash
+python3 skills/tplan/scripts/codex_review_packet.py MISSION_DIR \
+  --role grade \
+  --output-dir /tmp/tplan-codex-review \
+  --repo-root . \
+  --json
+```
+
+Expected artifacts:
+
+- `codex-grade-review-packet.json`
+- `codex-grade-subagent-prompt.md`
+- `codex-grade-subagent-dispatch.json`
+- `codex-grade-cli-prompt.md`
+- `codex-grade-cli-command.sh`
+
+For stronger isolation, the adapter may run the clean CLI carrier explicitly:
+
+```bash
+python3 skills/tplan/scripts/codex_review_packet.py MISSION_DIR \
+  --role grade \
+  --output-dir /tmp/tplan-codex-review \
+  --repo-root . \
+  --run-cli
+```
+
+Expected behavior:
+
+- The packet includes Mission state, active task, pulse, decision context, recent
+  evidence, review questions, and a candidate-only output contract.
+- The SubAgent dispatch payload names a read-only Codex reviewer carrier.
+- The CLI command uses `codex -s read-only -a never exec --ephemeral`.
+- The reviewer is forbidden from mutating files, Mission state, evidence, task tree,
+  decisions, memory, or external systems.
+- The reviewer output remains `candidate findings`; the main agent must verify, merge,
+  record evidence, apply decisions, and write the final answer.
+- The script must not mutate Mission state while generating packets.
+
+### Claude Code Adapter Implementation
+
+This scenario checks whether the Claude Code adapter uses real Claude Code carrier
+surfaces without changing `tplan core`.
+
+Run:
+
+```bash
+python3 skills/tplan/scripts/platform_review_packet.py MISSION_DIR \
+  --platform claude-code \
+  --orchestration-mode recommended \
+  --output-dir /tmp/tplan-claude-code-review \
+  --repo-root . \
+  --json
+```
+
+Expected behavior:
+
+- The manifest says `kind = claude-code_orchestration`.
+- `recommended` mode marks `grade required`.
+- `advise` and `dream` remain conditional, with explicit activation boundaries.
+- The output includes role packets, reviewer agent markdown, delegation prompts,
+  config snippets, and install notes for `advise`, `grade`, and `dream`.
+- The generated Claude Code agent uses `permissionMode: plan` and a read/search-only
+  tool allowlist.
+- The plan states that this is not a mandatory four-agent runtime.
+- The script must not mutate Mission state while generating packets.
+
+### OpenCode Adapter Implementation
+
+This scenario checks whether the OpenCode adapter uses real OpenCode carrier surfaces
+without changing `tplan core`.
+
+Run:
+
+```bash
+python3 skills/tplan/scripts/platform_review_packet.py MISSION_DIR \
+  --platform opencode \
+  --orchestration-mode recommended \
+  --output-dir /tmp/tplan-opencode-review \
+  --repo-root . \
+  --json
+```
+
+Expected behavior:
+
+- The manifest says `kind = opencode_orchestration`.
+- `recommended` mode marks `grade required`.
+- `advise` and `dream` remain conditional, with explicit activation boundaries.
+- The output includes role packets, reviewer agent markdown, delegation prompts,
+  config snippets, and install notes for `advise`, `grade`, and `dream`.
+- The generated OpenCode agent is a `mode: subagent` reviewer with native read/search
+  permissions, `edit: deny`, nested `task: deny`, and `bash: deny` by default.
+- The plan states that this is not a mandatory four-agent runtime.
+- The script must not mutate Mission state while generating packets.
+
 ## Evaluation Notes
 
 - Prefer fresh sessions. Cross-contamination from a previous run invalidates the test.

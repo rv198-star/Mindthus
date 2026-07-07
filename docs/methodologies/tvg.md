@@ -188,9 +188,15 @@ Profile 不能覆盖事实边界。profiles cannot override evidence honesty, cl
 
 当前随包提供三类 profile 资源：
 
-- `default-practical-value`：普通任务默认使用的通用实用价值锚点。
-- `shaw-brothers-wuxia-fantasy`：邵氏清水湾棚拍时代武侠 / 神怪影视提示词示范 profile。
-- `king-hu-wuxia-cinema`：胡金铨武侠电影影视提示词示范 profile。
+- [`default-practical-value`](../../skills/tvg/resources/value-profiles/default-practical-value.md)：普通任务默认使用的通用实用价值锚点。
+- [`shaw-brothers-wuxia-fantasy`](../../skills/tvg/resources/value-profiles/shaw-brothers-wuxia-fantasy.md)：邵氏清水湾棚拍时代武侠 / 神怪影视提示词示范 profile。
+- [`king-hu-wuxia-cinema`](../../skills/tvg/resources/value-profiles/king-hu-wuxia-cinema.md)：胡金铨武侠电影影视提示词示范 profile。
+
+如果要写、改或评审自己的 TVG-Profile，先看
+[`TVG Value Profile Construction Guide`](../../skills/tvg/resources/value-profiles/profile-construction.md)。
+它比本文更偏操作：最小 profile 结构、`value_semantics / realization_surface / gain_policy`
+三层怎么取舍、single-pass profile power test 和 loop-assisted production test 如何分开记录，
+都放在那里。
 
 后两个是示范 profile，不是电影史分类结论，也不是对图像模型的稳定风格保证。它们展示的是
 三层 profile 怎么发挥作用：`value_semantics` 说明什么算好，`realization_surface` 说明价值要落在

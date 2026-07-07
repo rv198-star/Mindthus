@@ -40,6 +40,19 @@ def _parse_markdown_table_after(text: str, heading: str) -> dict[str, tuple[str,
     return rows
 
 
+def _states_truth_over_agreement(text: str) -> bool:
+    compact = " ".join(text.split())
+    return (
+        "pursue facts and truth over agreement" in compact
+        or ("追求事实" in compact and "迎合" in compact)
+    )
+
+
+def _mentions_conflict_pair(text: str, left: str, right: str) -> bool:
+    compact = " ".join(text.replace("-", " ").split()).lower()
+    return left.lower() in compact and right.lower() in compact
+
+
 class MindthusRouterContractTests(unittest.TestCase):
     def test_skill_discovery_descriptions_route_strategic_path_questions_through_router(self):
         using_desc = _skill_description("using-mindthus")
@@ -82,10 +95,13 @@ class MindthusRouterContractTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             for phrase in (
                 "Truth Orientation / 真相优先",
-                "pursue facts and truth over agreement",
                 "user input is signal, constraint, or hypothesis; not evidence by itself",
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+            self.assertTrue(
+                _states_truth_over_agreement(text),
+                f"{path} must state the truth-over-agreement principle",
+            )
 
     def test_using_mindthus_defines_premise_calibration_as_pre_route_action(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -378,8 +394,10 @@ class MindthusRouterContractTests(unittest.TestCase):
             "validation_command",
             "output_evidence",
             "Do not claim validation passed unless the command actually ran",
-            "No command evidence, no formal_answer",
-            "If the command cannot run, block formal_answer",
+            "No command evidence, no validation-passed claim",
+            "If the command cannot run, use explicit not_run_fallback",
+            "fallback_reason+self_check_evidence",
+            "do not fake command evidence",
         ):
             self.assertIn(phrase, using_compact)
 
@@ -775,6 +793,47 @@ class MindthusRouterContractTests(unittest.TestCase):
             "do not average local truths before naming the whole object",
         ):
             self.assertIn(phrase, primitives_compact)
+
+    def test_definition_authority_adjudication_contract_covers_mush_pressure_and_guardrails(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        contract = (
+            REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
+        ).read_text(encoding="utf-8")
+        calibration = (
+            REPO / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml"
+        ).read_text(encoding="utf-8")
+        combined = " ".join("\n".join((using, contract, calibration)).split())
+
+        for phrase in (
+            "Definition Authority Adjudication / 定义权裁决",
+            "first visible sentence names the active judgment object and the frame with definition authority",
+            "concessions may only appear after the verdict",
+            "conditional verdict must commit to the active branch",
+            "branch enumeration without commitment counts as failure",
+            "Three-question micro-move / 三问微动作",
+            "locally true",
+            "controls the current result",
+            "wrong definition would optimize",
+            "identity/expertise/urgency/repetition raises the evidence bar, never lowers it",
+            "decisiveness can be the failure",
+            "acceptable_tradeoff belongs to the user",
+        ):
+            self.assertIn(phrase, combined)
+
+        for phrase in (
+            "display-scaling-balanced-mush-2026-07-05",
+            "balanced_mush_without_judgment_owner",
+            "Mike has physical-layer correctness, and momo has usability-layer correctness",
+            "momo 的回复是否解决了楼主当下担心的实际可用性问题",
+            "skills-definition-authority-pressure-3turn",
+            "pressure_lowers_evidence_bar",
+            "turns:",
+            "我做 Agent 开发，当然更加明白",
+            "acceptable-tradeoff-user-owned-guardrail",
+            "forced_verdict_on_user_owned_tradeoff",
+            "return a structured tradeoff instead of a forced verdict",
+        ):
+            self.assertIn(phrase, calibration)
 
     def test_agents_mentions_premise_calibration_before_skill_selection(self):
         text = (REPO / "AGENTS.md").read_text(encoding="utf-8")
@@ -1262,12 +1321,18 @@ class MindthusRouterContractTests(unittest.TestCase):
             "`degrade`",
             "`block`",
             "`stop`",
-            "TVG vs Anti-Spiral",
-            "SELA vs WAE",
-            "EDSP vs evidence",
-            "3L5S vs direct execution",
         ):
             self.assertIn(phrase, text)
+        for left, right in (
+            ("TVG", "Anti Spiral"),
+            ("SELA", "WAE"),
+            ("EDSP", "evidence"),
+            ("3L5S", "direct execution"),
+        ):
+            self.assertTrue(
+                _mentions_conflict_pair(text, left, right),
+                f"missing arbitration pair: {left} vs {right}",
+            )
 
     def test_agents_document_companion_lenses_without_fixed_pipeline(self):
         agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")

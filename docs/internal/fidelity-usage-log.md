@@ -81,6 +81,10 @@ python3 scripts/log-fidelity-usage.py \
 python3 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl
 ```
 
+Fresh checkout note: if the default `data/fidelity-usage-log.jsonl` file does not
+exist yet, validation reports `Records: 0` and exits 0. Missing non-default log paths
+still fail, so a typo is not silently accepted.
+
 ## 边界
 
 - 日志只保存可脱敏摘要，不保存完整隐私上下文。

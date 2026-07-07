@@ -1,0 +1,36 @@
+name: Python validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  unittest-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Package and README validation
+        run: python3 -m unittest tests.test_packaging_docs -v
+
+      - name: tplan runtime validation
+        run: python3 -m unittest discover -s tests/tplan -v
+
+      - name: Primitive and runtime smoke checks
+        run: |
+          python3 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl
+          python3 scripts/log-mindthus-runtime.py --help
+          python3 skills/sela/scripts/validate_sela_output.py skills/sela/fixtures/fidelity-smoke-pass.json
+          python3 skills/mpg/scripts/validate_mpg_output.py skills/mpg/fixtures/fidelity-smoke-pass.json
+
+      - name: Full unittest suite
+        # unittest is canonical here because README documents unittest commands as the release surface.
+        run: python3 -m unittest discover -s tests -q

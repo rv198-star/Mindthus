@@ -1,0 +1,45 @@
+{
+  "schema_version": "sela-fidelity-v0.1",
+  "method": "SELA",
+  "applicability": "applicable",
+  "plain_language_conclusion": "A human onboarding team should keep the complex-account path while productized self-serve handles repeatable setup.",
+  "action_posture": "dual_track",
+  "required_judgment_moves": {
+    "fair_comparison_check": {
+      "status": "addressed",
+      "finding": "The comparison separates best human specialists from average self-serve flow and does not let either side define the whole case.",
+      "failure_criteria_response": "The output does not compare best-A against average-B without naming the mismatch.",
+      "evidence_surface": "Scenario states repeatable setup work, complex-account exceptions, and current human onboarding strengths."
+    },
+    "local_advantage_scalability": {
+      "status": "addressed",
+      "finding": "Human judgment remains valuable for unusual accounts, but routine setup support does not scale as cheaply as productized guidance.",
+      "failure_criteria_response": "The output does not praise local excellence without asking whether it scales.",
+      "evidence_surface": "Scenario distinguishes bespoke expert rescue from repeated setup questions."
+    },
+    "system_efficiency_trajectory": {
+      "status": "addressed",
+      "finding": "The scalable system improves as documentation, telemetry, and guided setup accumulate, so routine cases should migrate first.",
+      "failure_criteria_response": "The output names the time curve instead of declaring that system efficiency wins immediately.",
+      "evidence_surface": "Scenario includes a growing user base and repeated onboarding bottlenecks."
+    },
+    "hard_boundary_check": {
+      "status": "addressed",
+      "finding": "Enterprise trust and revenue risk create a boundary: complex migrations should not be forced through self-serve until escalation is proven.",
+      "failure_criteria_response": "The output names a boundary where system efficiency cannot mechanically dominate.",
+      "evidence_surface": "Scenario facts include complex accounts and revenue-sensitive onboarding."
+    },
+    "timing_action_posture": {
+      "status": "addressed",
+      "finding": "The action is dual_track: route repeatable setup to productized self-serve while preserving specialist escalation for high-risk accounts.",
+      "failure_criteria_response": "The output does not jump from long-term trend to immediate full replacement.",
+      "evidence_surface": "Scenario has both repeatable work and still-fragile exception handling."
+    },
+    "misuse_challenge": {
+      "status": "addressed",
+      "finding": "The run rejects the misuse that SELA means replacing all human work as soon as scalable systems appear.",
+      "failure_criteria_response": "The output challenges the premise instead of blindly applying SELA as automation maximalism.",
+      "evidence_surface": "Scenario contains a local human advantage with real but bounded authority."
+    }
+  }
+}

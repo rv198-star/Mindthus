@@ -186,6 +186,21 @@ def write_runtime_tree(
 
 
 class LogMindthusRuntimeTests(unittest.TestCase):
+    def test_help_text_names_runtime_boundary(self):
+        result = subprocess.run(
+            ["python3", str(SCRIPT), "--help"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        help_text = " ".join(result.stdout.split())
+        self.assertIn("installed files, hashes, and marker presence only", help_text)
+        self.assertIn("does not prove model behavior", help_text)
+        self.assertIn("semantic judgment quality", help_text)
+        self.assertIn("runtime activation correctness", help_text)
+
     def test_reports_matching_runtime_fingerprints_and_markers_as_json(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

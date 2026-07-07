@@ -11,7 +11,15 @@ Short rule:
 
 ## Output Shape
 
-Use `templates/fidelity-output.json` when a SELA run needs runtime validation.
+`templates/fidelity-output.json is a fill-in skeleton` for real SELA runs. It is
+not expected to pass as-is because required fields are intentionally empty.
+
+Use `fixtures/fidelity-smoke-pass.json` when you need a passing smoke input for the
+validator:
+
+```bash
+python3 scripts/validate_sela_output.py fixtures/fidelity-smoke-pass.json
+```
 
 Required top-level fields for an applicable SELA run:
 

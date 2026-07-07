@@ -36,6 +36,12 @@ tplan recommendation vocabulary before applying Mission mutations.
 Hook output must include recommendation, rationale, confidence, evidence links,
 proposed mutations, and requires_human.
 
+Role-separated review uses existing hooks instead of adding new gates.
+Direction-checking maps to Pulse, decision hooks, path/risk assessment, and Mission
+Review. Acceptance grading maps to rubric, acceptance criteria, evidence links, and
+`mission_review.acceptance_gap`. The reviewer surface can advise or grade, but final
+authority remains with acceptance evidence, Mission Review, or an authorized human.
+
 ## Snapshot / Pulse / Gate Control Surface
 
 TPLAN review control has three layers:
