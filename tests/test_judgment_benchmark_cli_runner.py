@@ -177,6 +177,182 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(result["returncode"], 124)
         self.assertIn("timed out", result["answer"])
 
+    def test_run_codex_sets_home_override_and_records_it(self):
+        runner = load_runner()
+        captured_env = {}
+
+        def fake_run(*args, **kwargs):
+            captured_env.update(kwargs["env"])
+            return SimpleNamespace(stdout="", stderr="", returncode=0)
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner.subprocess,
+            "run",
+            side_effect=fake_run,
+        ):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            home = Path(tmp) / "empty-home"
+
+            result = runner.run_codex(
+                "prompt",
+                out_dir,
+                "mtj-home",
+                Path(tmp) / "codex-home",
+                REPO,
+                Path(tmp),
+                None,
+                1,
+                home=home,
+            )
+
+        self.assertEqual(captured_env["HOME"], str(home))
+        self.assertEqual(captured_env["CODEX_HOME"], str(Path(tmp) / "codex-home"))
+        self.assertEqual(result["home"], str(home))
+
+    def test_empty_home_root_allocates_one_empty_home_per_stem(self):
+        runner = load_runner()
+        with tempfile.TemporaryDirectory() as tmp:
+            args = SimpleNamespace(home=None, empty_home_root=Path(tmp) / "homes")
+
+            home = runner.home_for_stem(args, "mtj-001-turn-1")
+
+            self.assertEqual(home, Path(tmp) / "homes" / "mtj-001-turn-1")
+            self.assertTrue(home.is_dir())
+
+    def test_empty_home_root_rejects_reused_non_empty_home(self):
+        runner = load_runner()
+        with tempfile.TemporaryDirectory() as tmp:
+            args = SimpleNamespace(home=None, empty_home_root=Path(tmp) / "homes")
+            home = runner.home_for_stem(args, "mtj-001-turn-1")
+            (home / "state").write_text("not empty", encoding="utf-8")
+
+            with self.assertRaises(RuntimeError):
+                runner.home_for_stem(args, "mtj-001-turn-1")
+
+    def test_activation_summary_counts_mindthus_superpowers_and_no_command_cases(self):
+        runner = load_runner()
+        summary = runner.activation_summary(
+            [
+                {
+                    "case_id": "mtj-001",
+                    "case_number": 1,
+                    "loaded_commands_all_turns": ["Read mindthus:using-mindthus"],
+                    "contamination_flags_all_turns": [],
+                    "turns": [{"user_prompt": "ordinary prompt"}],
+                },
+                {
+                    "case_id": "mtj-002",
+                    "case_number": 2,
+                    "loaded_commands_all_turns": ["Read /Users/william/.codex/superpowers"],
+                    "contamination_flags_all_turns": ["Read /Users/william/.codex/superpowers"],
+                    "turns": [{"user_prompt": "ordinary prompt"}],
+                },
+                {
+                    "case_id": "mtj-003",
+                    "case_number": 3,
+                    "loaded_commands_all_turns": [],
+                    "contamination_flags_all_turns": [],
+                    "turns": [{"user_prompt": "$mindthus:using-mindthus answer this"}],
+                },
+            ]
+        )
+
+        self.assertEqual(summary["case_count"], 3)
+        self.assertEqual(summary["mindthus_loaded_count"], 1)
+        self.assertEqual(summary["natural_mindthus_loaded_count"], 1)
+        self.assertEqual(summary["superpowers_loaded_count"], 1)
+        self.assertEqual(summary["no_commands_loaded_count"], 1)
+        self.assertEqual(summary["forced_mindthus_prompt_count"], 1)
+        self.assertEqual(summary["contaminated_case_count"], 1)
+
+    def test_contamination_report_separates_generator_and_judge_flags(self):
+        runner = load_runner()
+        report = runner.contamination_report(
+            [
+                {
+                    "case_id": "mtj-001",
+                    "case_number": 1,
+                    "contamination_flags_all_turns": ["Read docs/benchmarks/latest.md"],
+                }
+            ],
+            [
+                {
+                    "case_id": "mtj-002",
+                    "case_number": 2,
+                    "judge_contamination_flags": ["Read superpowers"],
+                }
+            ],
+        )
+
+        self.assertEqual(report["generator_contaminated_case_count"], 1)
+        self.assertEqual(report["judge_contaminated_case_count"], 1)
+        self.assertEqual(report["generator_cases"][0]["case_id"], "mtj-001")
+        self.assertEqual(report["judge_cases"][0]["case_id"], "mtj-002")
+
+    def test_failure_diagnostics_separate_loaded_failed_and_not_loaded_failed(self):
+        runner = load_runner()
+        diagnostics = runner.failure_diagnostics(
+            [
+                {
+                    "case_id": "mtj-037",
+                    "case_number": 37,
+                    "multi_turn": False,
+                    "loaded_commands_all_turns": ["Read mindthus:using-mindthus"],
+                },
+                {
+                    "case_id": "mtj-050",
+                    "case_number": 50,
+                    "multi_turn": True,
+                    "loaded_commands_all_turns": [],
+                },
+                {
+                    "case_id": "mtj-031",
+                    "case_number": 31,
+                    "multi_turn": False,
+                    "loaded_commands_all_turns": ["Read mindthus:tvg"],
+                },
+            ],
+            [
+                {
+                    "case_id": "mtj-037",
+                    "case_number": 37,
+                    "group_id": "I",
+                    "score": 0,
+                    "first_sentence_lock": False,
+                    "verdict_commitment_anti_mush": False,
+                    "over_forced_verdict": False,
+                },
+                {
+                    "case_id": "mtj-050",
+                    "case_number": 50,
+                    "group_id": "L",
+                    "score": 1,
+                    "first_sentence_lock": False,
+                    "verdict_commitment_anti_mush": False,
+                    "over_forced_verdict": False,
+                },
+                {
+                    "case_id": "mtj-031",
+                    "case_number": 31,
+                    "group_id": "G",
+                    "score": 2,
+                    "first_sentence_lock": None,
+                    "verdict_commitment_anti_mush": None,
+                    "over_forced_verdict": False,
+                },
+            ],
+        )
+
+        self.assertEqual(diagnostics["failed_case_count"], 2)
+        self.assertEqual(diagnostics["mindthus_loaded_failed_case_count"], 1)
+        self.assertEqual(diagnostics["no_commands_failed_case_count"], 1)
+        self.assertEqual(diagnostics["multi_turn_failed_case_count"], 1)
+        loaded_failure = diagnostics["failed_cases"][0]
+        self.assertEqual(loaded_failure["case_id"], "mtj-037")
+        self.assertTrue(loaded_failure["mindthus_loaded"])
+        self.assertFalse(loaded_failure["verdict_commitment_anti_mush"])
+
 
 if __name__ == "__main__":
     unittest.main()

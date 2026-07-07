@@ -22,6 +22,13 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
+CONTAMINATION_RE = re.compile(
+    r"superpowers|judgment_benchmark_50_cases|docs/benchmarks|pass_criteria|fail_signal|judge notes",
+    re.IGNORECASE,
+)
+MINDTHUS_RE = re.compile(r"mindthus", re.IGNORECASE)
+SUPERPOWERS_RE = re.compile(r"superpowers", re.IGNORECASE)
+FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 
 
 ISOLATION_INSTRUCTION = (
@@ -105,6 +112,28 @@ def command_text(args: list[str]) -> str:
     return proc.stdout.strip() if proc.returncode == 0 else ""
 
 
+def contamination_flags_for(loaded_commands: list[str]) -> list[str]:
+    return [command for command in loaded_commands if CONTAMINATION_RE.search(command)]
+
+
+def home_for_stem(args: argparse.Namespace, stem: str) -> Path | None:
+    explicit_home = getattr(args, "home", None)
+    empty_home_root = getattr(args, "empty_home_root", None)
+    if explicit_home and empty_home_root:
+        raise ValueError("--home and --empty-home-root cannot be used together")
+    if explicit_home:
+        home = Path(explicit_home)
+        home.mkdir(parents=True, exist_ok=True)
+        return home
+    if empty_home_root:
+        home = Path(empty_home_root) / stem
+        if home.exists() and any(home.iterdir()):
+            raise RuntimeError(f"empty HOME directory is not empty: {home}")
+        home.mkdir(parents=True, exist_ok=True)
+        return home
+    return None
+
+
 def run_codex(
     prompt: str,
     out_dir: Path,
@@ -115,12 +144,16 @@ def run_codex(
     model: str | None,
     timeout: int,
     *,
+    home: Path | None = None,
     resume_thread_id: str | None = None,
     persist_session: bool = False,
     output_schema: Path | None = None,
 ) -> dict[str, Any]:
     env = os.environ.copy()
     env["CODEX_HOME"] = str(codex_home)
+    if home is not None:
+        home.mkdir(parents=True, exist_ok=True)
+        env["HOME"] = str(home)
 
     last_path = out_dir / "answers" / f"{stem}.txt"
     events_path = out_dir / "events" / f"{stem}.jsonl"
@@ -211,11 +244,7 @@ def run_codex(
             agent_messages.append(str(item.get("text", "")))
         if event.get("type") == "turn.completed":
             usage = event.get("usage")
-    contamination_flags = [
-        command
-        for command in loaded_commands
-        if re.search(r"superpowers|judgment_benchmark_50_cases|docs/benchmarks|pass_criteria|fail_signal", command)
-    ]
+    contamination_flags = contamination_flags_for(loaded_commands)
 
     return {
         "command": cmd,
@@ -228,6 +257,7 @@ def run_codex(
         "stderr_path": str(stderr_path),
         "last_message_path": str(last_path),
         "prompt_path": str(prompt_path),
+        "home": str(home) if home is not None else None,
         "loaded_commands": loaded_commands,
         "contamination_flags": contamination_flags,
         "agent_messages": agent_messages,
@@ -312,6 +342,7 @@ def run_case(
             Path(args.execution_root),
             args.model,
             args.timeout,
+            home=home_for_stem(args, f"{case_id}-turn-{idx}"),
             resume_thread_id=thread_id if idx > 1 else None,
             persist_session=persist,
         )
@@ -470,6 +501,7 @@ def judge_case(
         Path(args.execution_root),
         args.judge_model or args.model,
         args.timeout,
+        home=home_for_stem(args, f"{case_id}-judge"),
         output_schema=schema_path,
     )
     try:
@@ -511,9 +543,149 @@ def judge_case(
         "case_type": case["case_type"],
         "judge_returncode": result["returncode"],
         "judge_usage": result.get("usage"),
+        "judge_loaded_commands": result.get("loaded_commands", []),
+        "judge_contamination_flags": result.get("contamination_flags", []),
     }
     score_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     return record
+
+
+def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
+    case_summaries: list[dict[str, Any]] = []
+    for response in responses:
+        commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
+        prompt_text = "\n".join(str(turn.get("user_prompt", "")) for turn in response.get("turns", []))
+        mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+        superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+        forced_mindthus_prompt = bool(FORCED_MINDTHUS_RE.search(prompt_text))
+        case_summaries.append(
+            {
+                "case_id": response.get("case_id"),
+                "case_number": response.get("case_number"),
+                "mindthus_loaded": mindthus_loaded,
+                "superpowers_loaded": superpowers_loaded,
+                "no_commands_loaded": not commands,
+                "forced_mindthus_prompt": forced_mindthus_prompt,
+                "natural_mindthus_loaded": mindthus_loaded and not forced_mindthus_prompt,
+                "contaminated": bool(response.get("contamination_flags_all_turns")),
+            }
+        )
+
+    def count(key: str) -> int:
+        return sum(1 for item in case_summaries if item[key])
+
+    case_count = len(case_summaries)
+    return {
+        "schema_version": "mindthus-judgment-cli-activation-summary-v0.1",
+        "case_count": case_count,
+        "mindthus_loaded_count": count("mindthus_loaded"),
+        "superpowers_loaded_count": count("superpowers_loaded"),
+        "no_commands_loaded_count": count("no_commands_loaded"),
+        "natural_mindthus_loaded_count": count("natural_mindthus_loaded"),
+        "forced_mindthus_prompt_count": count("forced_mindthus_prompt"),
+        "contaminated_case_count": count("contaminated"),
+        "mindthus_loaded_rate": round(count("mindthus_loaded") / case_count, 3) if case_count else None,
+        "superpowers_loaded_rate": round(count("superpowers_loaded") / case_count, 3) if case_count else None,
+        "no_commands_loaded_rate": round(count("no_commands_loaded") / case_count, 3) if case_count else None,
+        "case_summaries": case_summaries,
+    }
+
+
+def contamination_report(
+    responses: list[dict[str, Any]],
+    scores: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    generator_cases = [
+        {
+            "case_id": response.get("case_id"),
+            "case_number": response.get("case_number"),
+            "contamination_flags_all_turns": response.get("contamination_flags_all_turns", []),
+        }
+        for response in responses
+        if response.get("contamination_flags_all_turns")
+    ]
+    judge_cases = [
+        {
+            "case_id": score.get("case_id"),
+            "case_number": score.get("case_number"),
+            "judge_contamination_flags": score.get("judge_contamination_flags", []),
+        }
+        for score in scores or []
+        if score.get("judge_contamination_flags")
+    ]
+    return {
+        "schema_version": "mindthus-judgment-cli-contamination-report-v0.1",
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "generator_contaminated_case_count": len(generator_cases),
+        "judge_contaminated_case_count": len(judge_cases),
+        "generator_cases": generator_cases,
+        "judge_cases": judge_cases,
+    }
+
+
+def write_activation_summary(out_dir: Path, responses: list[dict[str, Any]]) -> dict[str, Any]:
+    summary = activation_summary(responses)
+    (out_dir / "activation-summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return summary
+
+
+def write_contamination_report(
+    out_dir: Path,
+    responses: list[dict[str, Any]],
+    scores: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    report = contamination_report(responses, scores)
+    (out_dir / "contamination-report.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return report
+
+
+def failure_diagnostics(
+    responses: list[dict[str, Any]],
+    scores: list[dict[str, Any]],
+) -> dict[str, Any]:
+    response_by_case = {response.get("case_id"): response for response in responses}
+    failed_cases: list[dict[str, Any]] = []
+    for score in scores:
+        if int(score.get("score", 0)) >= 2:
+            continue
+        response = response_by_case.get(score.get("case_id"), {})
+        commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
+        mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+        superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+        failed_cases.append(
+            {
+                "case_id": score.get("case_id"),
+                "case_number": score.get("case_number"),
+                "score": score.get("score"),
+                "group_id": score.get("group_id"),
+                "multi_turn": bool(response.get("multi_turn")),
+                "mindthus_loaded": mindthus_loaded,
+                "superpowers_loaded": superpowers_loaded,
+                "no_commands_loaded": not commands,
+                "first_sentence_lock": score.get("first_sentence_lock"),
+                "verdict_commitment_anti_mush": score.get("verdict_commitment_anti_mush"),
+                "over_forced_verdict": score.get("over_forced_verdict"),
+            }
+        )
+
+    def count(key: str) -> int:
+        return sum(1 for item in failed_cases if item[key])
+
+    return {
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.1",
+        "failed_case_count": len(failed_cases),
+        "mindthus_loaded_failed_case_count": count("mindthus_loaded"),
+        "superpowers_loaded_failed_case_count": count("superpowers_loaded"),
+        "no_commands_failed_case_count": count("no_commands_loaded"),
+        "multi_turn_failed_case_count": count("multi_turn"),
+        "failed_cases": failed_cases,
+    }
 
 
 def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
@@ -567,6 +739,13 @@ def main() -> int:
     parser.add_argument("--cases", type=Path, default=DEFAULT_CASES)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--codex-home", type=Path, required=True)
+    parser.add_argument("--home", type=Path, default=None, help="Set HOME for every Codex subprocess.")
+    parser.add_argument(
+        "--empty-home-root",
+        type=Path,
+        default=None,
+        help="Create a separate empty HOME directory under this root for each Codex subprocess.",
+    )
     parser.add_argument("--repo-root", type=Path, default=ROOT)
     parser.add_argument("--execution-root", type=Path, default=Path("/tmp/mindthus-benchmark-workspace"))
     parser.add_argument("--variant", default="baseline+Mindthus-hotfix")
@@ -578,7 +757,14 @@ def main() -> int:
     parser.add_argument("--select", default=None, help="Case numbers, e.g. 1-10,12,50.")
     parser.add_argument("--phase", choices=("generate", "judge", "all"), default="all")
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--fail-on-contamination",
+        action="store_true",
+        help="Exit nonzero if a generator or judge subprocess loads forbidden benchmark or host-skill context.",
+    )
     args = parser.parse_args()
+    if args.home and args.empty_home_root:
+        parser.error("--home and --empty-home-root cannot be used together")
 
     ensure_dirs(args.out_dir)
     all_cases = load_cases(args.cases)
@@ -599,6 +785,8 @@ def main() -> int:
         "codex_cli_version": command_text(["codex", "--version"]),
         "case_count": len(cases),
         "codex_home": str(args.codex_home),
+        "home": str(args.home) if args.home else None,
+        "empty_home_root": str(args.empty_home_root) if args.empty_home_root else None,
         "repo_root": str(args.repo_root),
         "execution_root": str(args.execution_root),
         "model": args.model,
@@ -606,6 +794,8 @@ def main() -> int:
         "jobs": args.jobs,
         "timeout": args.timeout,
         "plugin_context": args.plugin_context,
+        "fail_on_contamination": args.fail_on_contamination,
+        "contamination_patterns": CONTAMINATION_RE.pattern,
         "generator_isolation_instruction": isolation_instruction(args.plugin_context),
         "judge_isolation_instruction": JUDGE_ISOLATION_INSTRUCTION,
     }
@@ -643,12 +833,24 @@ def main() -> int:
                 print(f"generated {record['case_id']} rc={record['returncode']}", flush=True)
         responses.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "raw-responses.jsonl", responses)
+        write_activation_summary(args.out_dir, responses)
+        if args.fail_on_contamination:
+            report = write_contamination_report(args.out_dir, responses)
+            if report["generator_contaminated_case_count"]:
+                print(json.dumps(report, ensure_ascii=False, indent=2))
+                return 2
     else:
         for path in sorted((args.out_dir / "answers").glob("mtj-*.record.json")):
             record = json.loads(path.read_text(encoding="utf-8"))
             if record["case_id"] in case_by_id:
                 responses.append(record)
         responses.sort(key=lambda item: int(item["case_number"]))
+        write_activation_summary(args.out_dir, responses)
+        if args.fail_on_contamination:
+            report = write_contamination_report(args.out_dir, responses)
+            if report["generator_contaminated_case_count"]:
+                print(json.dumps(report, ensure_ascii=False, indent=2))
+                return 2
 
     if args.phase in {"judge", "all"}:
         schema_path = args.out_dir / "judge-output-schema.json"
@@ -668,10 +870,17 @@ def main() -> int:
         scores.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "score-records.jsonl", scores)
         summary = summarize(scores)
+        summary["activation"] = activation_summary(responses)
+        summary["failure_diagnostics"] = failure_diagnostics(responses, scores)
         (args.out_dir / "summary.json").write_text(
             json.dumps(summary, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
+        if args.fail_on_contamination:
+            report = write_contamination_report(args.out_dir, responses, scores)
+            if report["generator_contaminated_case_count"] or report["judge_contaminated_case_count"]:
+                print(json.dumps(report, ensure_ascii=False, indent=2))
+                return 2
         print(json.dumps(summary, ensure_ascii=False, indent=2))
 
     return 0

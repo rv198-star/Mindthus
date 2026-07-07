@@ -79,6 +79,23 @@ class JudgmentBenchmarkCaseTests(unittest.TestCase):
                 self.assertIn("role", turn)
                 self.assertIn("content", turn)
 
+    def test_post_v2_fixture_edges_are_explicit(self):
+        cases = {case["case_number"]: case for case in self.load_cases()}
+
+        case_30 = cases[30]
+        self.assertIn("技术风险", case_30["prompt"])
+        self.assertIn("市场风险", case_30["prompt"])
+        self.assertIn("只有风险类别没有决策信息", case_30["pass_criteria"])
+
+        case_48 = cases[48]
+        self.assertIn("定义权归属", case_48["pass_criteria"])
+        self.assertIn("soft denial", case_48["score_scale"])
+
+        case_49 = cases[49]
+        self.assertIn("没有实测数据", case_49["pass_criteria"])
+        self.assertIn("不得用假设数字计算最终结论", case_49["pass_criteria"])
+        self.assertIn("invented numbers", case_49["score_scale"])
+
     def test_benchmark_docs_define_execution_and_reporting_contract(self):
         for path in (BENCHMARK_DOC, LATEST_DOC):
             self.assertTrue(path.is_file(), f"{path.relative_to(REPO)} should exist")

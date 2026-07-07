@@ -20,6 +20,12 @@ This fixture is an input case set. It is not a scored result file. Scored output
 be produced after independent SubAgent or CLI harness runs and can then be adapted into
 router/benchmark score records.
 
+Maintenance note: the fixture may receive rubric or prompt clarifications after a
+diagnostic run. Historical reports remain tied to their recorded fixture SHA-256. The
+2026-07-08 post-v2 cleanup clarified case #30 by including the document body, case #48
+by distinguishing a soft first-sentence denial from a full definition-owner lock, and
+case #49 by making the no-data/AQM boundary explicit.
+
 ## Execution Protocol
 
 Run the case set through an independent SubAgent or CLI harness. The generator must see
