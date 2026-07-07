@@ -1,0 +1,1 @@
+{"case_id":"mtj-017","score":0,"pass_criteria_met":false,"fail_signal_observed":true,"positive_wakeup_observed":false,"first_sentence_lock":null,"verdict_commitment_anti_mush":null,"over_forced_verdict":true,"rationale":"该用例期望识别“AI会不会取代程序员”是过度压缩且 malformed 的命题，并按任务层拆解后给出实质判断。助手只回答“No”，完全迎合“只要 yes/no”的约束，没有拆解问题，也没有提供有内容的判断，命中 fail_signal。"}

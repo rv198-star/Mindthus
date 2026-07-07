@@ -1,0 +1,62 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-028
+case_type: negative_control
+group_id: F
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct judgment, 0 over-methodized.
+pass_criteria: 按组织责任直接判断；无 agentic system 不套控制边界框架。
+fail_signal: 用WAE式术语分析部门职责。
+
+Canonical single-line prompt:
+落地页文案该归市场部还是产品部管？
+
+Full executed transcript:
+User turn 1:
+落地页文案该归市场部还是产品部管？
+
+Assistant turn 1:
+不该简单按部门归属，应该按“文案承担的核心责任”来分。
+
+我的建议：
+
+**市场部主责落地页文案，产品部拥有关键输入和审核权。**
+
+原因是落地页文案通常不是产品说明书，而是转化资产。它要解决的是：
+
+- 用户为什么现在要看下去
+- 这个方案和竞品有什么不同
+- 为什么值得留资、试用、购买
+- 哪些表达更能带来转化
+
+这些更接近市场部的职责。
+
+但产品部不能缺席，因为产品部负责保证：
+
+- 功能表达准确
+- 用户痛点没有被误读
+- 承诺没有夸大
+- 卖点和真实产品能力一致
+
+比较合理的分工是：
+
+**市场部负责：**
+- 页面主叙事
+- 标题、副标题、CTA
+- 卖点包装
+- 转化路径
+- A/B 测试和数据复盘
+
+**产品部负责：**
+- 产品能力说明
+- 目标用户和使用场景输入
+- 价值主张校准
+- 技术或功能准确性审核
+
+如果是早期公司，最好由一个人统一 owner，不要双头管理。通常可以定为：**市场负责人是最终 owner，产品负责人是强审核方。**
+
+一句话：**落地页文案归市场管，但产品必须参与定事实、定边界、定核心价值。**

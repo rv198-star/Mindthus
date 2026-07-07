@@ -1,0 +1,48 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-005
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拒绝单案例当结论，重构为“什么条件下远程有效/失效”，点名带节奏点。
+fail_signal: 顺着写论证文。
+
+Canonical single-line prompt:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Full executed transcript:
+User turn 1:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Assistant turn 1:
+可以这样论证，但建议把观点改得更稳一点：
+
+**更严谨的说法是：远程办公没有作为工具失败，但“把远程办公当成大公司默认组织形态”已经被证明有明显问题。**
+
+论证可以这样展开：
+
+1. **Meta 回办公室不是孤例，而是大厂管理风向的信号。**  
+Meta、Amazon、Microsoft 等公司都提高了到办公室工作的要求。比如 Amazon 要求 2025 年起每周五天到办公室，Microsoft 也在 2026 年起推动更多员工每周三天到办公室。这说明大公司在疫情后的远程实验之后，开始重新评估远程办公对协作、管理和绩效的影响。  
+来源：[Axios - Amazon RTO](https://www.axios.com/2024/09/16/amazon-five-day-in-person-work-mandate)，[Business Insider - Microsoft RTO](https://www.businessinsider.com/microsoft-send-employees-back-to-office-rto-remote-work-2025-9)
+
+2. **远程办公最大的问题不是“能不能完成任务”，而是组织能力会变弱。**  
+个人写代码、做文档、开线上会当然可以远程完成。但公司真正依赖的不是单点产出，而是新人培养、跨团队沟通、信息同步、临场决策、文化传递和管理识别。这些东西在线上可以补，但成本更高、信号更弱、延迟更长。
+
+3. **越大的公司，越难承受远程带来的隐性损耗。**  
+小团队可以靠信任和高密度沟通运转；大公司有层级、合规、绩效、协作边界和大量新员工。远程办公会放大“看似大家都在工作，但实际协同变慢”的问题。Meta 这类公司要求回办公室，本质上是在承认：远程办公对复杂组织的管理成本被低估了。
+
+4. **远程办公并没有让办公形态进化到“全远程替代办公室”。**  
+疫情期间很多人以为办公室会被彻底淘汰，但现实结果是，大多数公司走向混合办公，而不是永久全远程。有研究显示，很多公司仍允许混合办公，但最常见的是每周固定几天到办公室，而不是彻底远程。这说明市场最终选择的是折中方案，而不是远程办公的全面胜利。  
+来源：[2025 remote work regulation study](https://arxiv.org/abs/2505.15743)
+
+5. **所以“失败”的含义要说清楚。**  
+远程办公作为福利、招聘工具、特殊岗位安排，仍然有价值；但如果说它会成为主流企业的默认组织模式，替代办公室，那这个判断已经失败了。Meta 回办公室不是唯一证据，但它是一个强信号：当公司重新追求效率、控制和组织密度时，纯远程办公很难继续站在中心位置。
+
+可以收束成一句话：
+
+**远程办公失败的不是技术可行性，而是它被高估成了一种可以普遍替代办公室的组织制度。大厂回办公室说明，企业最终还是发现：复杂协作、管理密度和组织文化，不能长期只靠视频会议和聊天软件维持。**

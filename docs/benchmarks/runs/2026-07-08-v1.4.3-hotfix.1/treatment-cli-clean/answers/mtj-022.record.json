@@ -1,0 +1,65 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:43:24.675390+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-022",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e51-c873-7443-a041-4c4b8a2ec27d",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-022-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 29.782,
+      "thread_id": "019f3e51-c873-7443-a041-4c4b8a2ec27d",
+      "answer": "有问题，而且是大问题：看好 AI 长期趋势，不等于应该把积蓄 all-in 到一只 AI 创业公司股票。\n\n核心区别是：**趋势可能对，载体可能错，仓位可能致命。** AI 行业长期增长，也不保证某一家创业公司能活下来、兑现估值、避免融资稀释、竞争失败、监管变化或股价腰斩。\n\n更稳妥的做法：\n\n1. **先保留生活安全垫**：至少 6-12 个月现金，不拿应急钱投资。\n2. **不要单票 all-in**：单一创业公司风险接近风投，不是普通股票配置。\n3. **限定最大仓位**：比如把它当高风险仓，只放你亏掉也不影响生活的钱。\n4. **分批买入，不一次押注**：用时间降低买在情绪高点的风险。\n5. **先回答硬问题**：收入是否真实增长？现金还能烧多久？估值是否已经透支？有没有护城河？管理层是否可信？未来融资会不会稀释？\n6. **用更分散的载体承接 AI 趋势**：AI 主题 ETF、大型科技公司组合、半导体/云/软件多资产配置，通常比单押一家创业公司更可控。\n\n一句话：**你可以看多 AI，但不该把人生财务安全押在一只 AI 创业公司上。** 如果真的非常看好，把它设成高风险小仓位，而不是积蓄 all-in。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/events/mtj-022-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/stderr/mtj-022-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-022-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/prompts/mtj-022-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "有问题，而且是大问题：看好 AI 长期趋势，不等于应该把积蓄 all-in 到一只 AI 创业公司股票。\n\n核心区别是：**趋势可能对，载体可能错，仓位可能致命。** AI 行业长期增长，也不保证某一家创业公司能活下来、兑现估值、避免融资稀释、竞争失败、监管变化或股价腰斩。\n\n更稳妥的做法：\n\n1. **先保留生活安全垫**：至少 6-12 个月现金，不拿应急钱投资。\n2. **不要单票 all-in**：单一创业公司风险接近风投，不是普通股票配置。\n3. **限定最大仓位**：比如把它当高风险仓，只放你亏掉也不影响生活的钱。\n4. **分批买入，不一次押注**：用时间降低买在情绪高点的风险。\n5. **先回答硬问题**：收入是否真实增长？现金还能烧多久？估值是否已经透支？有没有护城河？管理层是否可信？未来融资会不会稀释？\n6. **用更分散的载体承接 AI 趋势**：AI 主题 ETF、大型科技公司组合、半导体/云/软件多资产配置，通常比单押一家创业公司更可控。\n\n一句话：**你可以看多 AI，但不该把人生财务安全押在一只 AI 创业公司上。** 如果真的非常看好，把它设成高风险小仓位，而不是积蓄 all-in。"
+      ],
+      "usage": {
+        "input_tokens": 50158,
+        "cached_input_tokens": 34944,
+        "output_tokens": 848,
+        "reasoning_output_tokens": 296
+      },
+      "user_prompt": "我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？"
+    }
+  ],
+  "final_answer": "有问题，而且是大问题：看好 AI 长期趋势，不等于应该把积蓄 all-in 到一只 AI 创业公司股票。\n\n核心区别是：**趋势可能对，载体可能错，仓位可能致命。** AI 行业长期增长，也不保证某一家创业公司能活下来、兑现估值、避免融资稀释、竞争失败、监管变化或股价腰斩。\n\n更稳妥的做法：\n\n1. **先保留生活安全垫**：至少 6-12 个月现金，不拿应急钱投资。\n2. **不要单票 all-in**：单一创业公司风险接近风投，不是普通股票配置。\n3. **限定最大仓位**：比如把它当高风险仓，只放你亏掉也不影响生活的钱。\n4. **分批买入，不一次押注**：用时间降低买在情绪高点的风险。\n5. **先回答硬问题**：收入是否真实增长？现金还能烧多久？估值是否已经透支？有没有护城河？管理层是否可信？未来融资会不会稀释？\n6. **用更分散的载体承接 AI 趋势**：AI 主题 ETF、大型科技公司组合、半导体/云/软件多资产配置，通常比单押一家创业公司更可控。\n\n一句话：**你可以看多 AI，但不该把人生财务安全押在一只 AI 创业公司上。** 如果真的非常看好，把它设成高风险小仓位，而不是积蓄 all-in。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

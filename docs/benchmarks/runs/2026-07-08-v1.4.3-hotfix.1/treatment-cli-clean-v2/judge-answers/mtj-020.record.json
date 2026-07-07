@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-020",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确区分了目标函数“1年10万粉/增长”与局部优势“单条手工精致”，指出真正竞争点是持续产出、测试选题、复盘和放大爆款；同时识别了全手工的产能瓶颈，包括频率、试错速度和体力，并给出半模板化与手工亮点结合的路径。没有停留在“质量重要”。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:28.112123+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 20,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13869,
+    "cached_input_tokens": 12672,
+    "output_tokens": 295,
+    "reasoning_output_tokens": 124
+  }
+}

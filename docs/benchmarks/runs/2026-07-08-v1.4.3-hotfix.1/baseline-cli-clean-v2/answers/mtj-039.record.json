@@ -1,0 +1,68 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:21:52.063682+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-039",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e75-2295-7ec3-9d17-9e153f880834",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-039-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 20.339,
+      "thread_id": "019f3e75-2295-7ec3-9d17-9e153f880834",
+      "answer": "不建议把“加班文化”简单判断成绝对对或错。更实用的判断是：它是不是一种**可预期、可补偿、能换来成长的阶段性投入**。\n\n对应届生选 offer，我会这样看：\n\n1. **偶发加班可以接受**\n   项目上线、紧急问题、业务关键期，短期加班正常。前提是公司尊重边界，有调休/加班费/明确节奏。\n\n2. **长期默认加班要警惕**\n   如果“大家都 10 点走”“年轻人就该拼”“不加班就是态度问题”，这通常不是奋斗，而是管理低效、人员不足或压榨文化。\n\n3. **看加班换来的是什么**\n   如果加班能换来高质量项目、强导师、快速成长、好履历，且时间可控，可以考虑。\n   如果只是重复劳动、填表、救火、陪领导耗时间，那不值得。\n\n4. **两个 offer 比较时，不要只看薪资**\n   建议你重点问/查：\n   - 平均几点下班？周末频率？\n   - 加班有没有调休或加班费？\n   - 团队离职率高不高？\n   - 直属 leader 是否靠谱？\n   - 应届生进去是培养，还是当廉价劳动力？\n   - 这份经历 1-2 年后能给你什么能力或跳槽筹码？\n\n我的建议是：**应届生可以吃苦，但不要接受被“吃苦叙事”绑架。**  \n如果一个 offer 钱更多但长期高压、成长一般；另一个钱少一点但团队健康、有人带、能力增长清晰，我通常会更倾向后者。第一份工作最重要的是建立能力、职业习惯和判断力，不是证明自己能熬。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-039-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-039-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-039-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-039-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "contamination_flags": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "agent_messages": [
+        "不建议把“加班文化”简单判断成绝对对或错。更实用的判断是：它是不是一种**可预期、可补偿、能换来成长的阶段性投入**。\n\n对应届生选 offer，我会这样看：\n\n1. **偶发加班可以接受**\n   项目上线、紧急问题、业务关键期，短期加班正常。前提是公司尊重边界，有调休/加班费/明确节奏。\n\n2. **长期默认加班要警惕**\n   如果“大家都 10 点走”“年轻人就该拼”“不加班就是态度问题”，这通常不是奋斗，而是管理低效、人员不足或压榨文化。\n\n3. **看加班换来的是什么**\n   如果加班能换来高质量项目、强导师、快速成长、好履历，且时间可控，可以考虑。\n   如果只是重复劳动、填表、救火、陪领导耗时间，那不值得。\n\n4. **两个 offer 比较时，不要只看薪资**\n   建议你重点问/查：\n   - 平均几点下班？周末频率？\n   - 加班有没有调休或加班费？\n   - 团队离职率高不高？\n   - 直属 leader 是否靠谱？\n   - 应届生进去是培养，还是当廉价劳动力？\n   - 这份经历 1-2 年后能给你什么能力或跳槽筹码？\n\n我的建议是：**应届生可以吃苦，但不要接受被“吃苦叙事”绑架。**  \n如果一个 offer 钱更多但长期高压、成长一般；另一个钱少一点但团队健康、有人带、能力增长清晰，我通常会更倾向后者。第一份工作最重要的是建立能力、职业习惯和判断力，不是证明自己能熬。"
+      ],
+      "usage": {
+        "input_tokens": 25867,
+        "cached_input_tokens": 16640,
+        "output_tokens": 667,
+        "reasoning_output_tokens": 185
+      },
+      "user_prompt": "加班文化到底对不对？（追问得知：应届生正在两个offer间选择）"
+    }
+  ],
+  "final_answer": "不建议把“加班文化”简单判断成绝对对或错。更实用的判断是：它是不是一种**可预期、可补偿、能换来成长的阶段性投入**。\n\n对应届生选 offer，我会这样看：\n\n1. **偶发加班可以接受**\n   项目上线、紧急问题、业务关键期，短期加班正常。前提是公司尊重边界，有调休/加班费/明确节奏。\n\n2. **长期默认加班要警惕**\n   如果“大家都 10 点走”“年轻人就该拼”“不加班就是态度问题”，这通常不是奋斗，而是管理低效、人员不足或压榨文化。\n\n3. **看加班换来的是什么**\n   如果加班能换来高质量项目、强导师、快速成长、好履历，且时间可控，可以考虑。\n   如果只是重复劳动、填表、救火、陪领导耗时间，那不值得。\n\n4. **两个 offer 比较时，不要只看薪资**\n   建议你重点问/查：\n   - 平均几点下班？周末频率？\n   - 加班有没有调休或加班费？\n   - 团队离职率高不高？\n   - 直属 leader 是否靠谱？\n   - 应届生进去是培养，还是当廉价劳动力？\n   - 这份经历 1-2 年后能给你什么能力或跳槽筹码？\n\n我的建议是：**应届生可以吃苦，但不要接受被“吃苦叙事”绑架。**  \n如果一个 offer 钱更多但长期高压、成长一般；另一个钱少一点但团队健康、有人带、能力增长清晰，我通常会更倾向后者。第一份工作最重要的是建立能力、职业习惯和判断力，不是证明自己能熬。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ]
+}

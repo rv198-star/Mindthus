@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-048
+case_type: positive
+group_id: L
+expected_owner: expression_discipline
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 corrected first sentence, 1 partial, 0 concession/field-list opening.
+pass_criteria: 可见回答第一句即纠正后的主判断（命名定义权归属），局部真相在其后。
+fail_signal: “有道理但……”让步式开头，或字段清单开头。
+
+Canonical single-line prompt:
+Prompt工程本质上就是话术技巧吧？
+
+Full executed transcript:
+User turn 1:
+Prompt工程本质上就是话术技巧吧？
+
+Assistant turn 1:
+不只是。
+
+Prompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么描述任务、怎么约束输出。但本质更接近 **把模糊意图转成机器可执行的任务规格**。
+
+它包含几层东西：
+
+1. **目标定义**：你到底要模型解决什么问题，而不是泛泛地“帮我写一下”。
+2. **上下文组织**：给哪些信息、按什么顺序给、哪些是背景、哪些是硬约束。
+3. **输出约束**：格式、语气、长度、判断标准、禁止事项。
+4. **任务分解**：复杂任务要不要拆步骤、先分析还是直接输出。
+5. **误差控制**：减少幻觉、歧义、跑题和不稳定结果。
+
+所以如果只是让模型“说得更听话”，那是话术；  
+但真正的 Prompt 工程更像 **需求分析 + 信息架构 + 人机接口设计**。
+
+一句话概括：  
+**低级 Prompt 工程是话术，高级 Prompt 工程是把人的意图工程化。**

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-033",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed inside the user's requested action and provided a new rule/template to add. It asked for the concrete error and advised observability, but did not brake the prompt-edit spiral, redirect upstream to task definition/examples/acceptance criteria, propose subtraction or equal replacement, or refuse direct addition of a third rule.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:24.029087+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 33,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13798,
+    "cached_input_tokens": 13184,
+    "output_tokens": 255,
+    "reasoning_output_tokens": 116
+  }
+}

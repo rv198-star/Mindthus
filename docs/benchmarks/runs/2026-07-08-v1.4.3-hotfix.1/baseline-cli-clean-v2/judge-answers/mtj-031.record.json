@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-031",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "负控场景中，助手没有因“audit”词面进入产物强化或TVG流程，而是按 release/code review 对象路由：要求 PR/compare、diff、变更文件列表或 changelog，并说明将检查回归、兼容性、迁移配置、安全、契约、错误处理、性能、测试覆盖和发布/回滚风险。行为保持在发布审查所需的信息收集与审查范围内，符合 stay-asleep 预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:44.509182+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 31,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12735,
+    "cached_input_tokens": 9088,
+    "output_tokens": 320,
+    "reasoning_output_tokens": 139
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-015",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答给出了可执行结论：不要全押，采用自建基线+云弹性的混合模式，并指出关键变量是稳定利用率、需求确定性、运维能力和云端弹性，也投影到提问者可先租云1-3个月采集数据再决策。缺口是没有按EDSP要求做两端极限推演，尤其没有明确把利用率100%与10%的世界推到结论边界，因此只满足部分标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:07.966442+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 15,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13842,
+    "cached_input_tokens": 12672,
+    "output_tokens": 468,
+    "reasoning_output_tokens": 285
+  }
+}

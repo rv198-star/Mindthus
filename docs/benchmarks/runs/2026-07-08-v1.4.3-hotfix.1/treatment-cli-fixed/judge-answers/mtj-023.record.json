@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-023",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response does not accept the long-term bullish premise as sufficient for immediate leverage. It explicitly separates long-term direction from path tolerance and personal carrying capacity, then focuses on 3-7 year volatility, liquidity, rental yield, income/rate shocks, cash reserves, concentration risk, and entry timing. This matches the expected MPG-style shift from trend conclusion to path/cash-flow exposure and conditional triggers, with no single-point buy verdict.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:37:04.346223+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 23,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17242,
+    "cached_input_tokens": 2432,
+    "output_tokens": 273,
+    "reasoning_output_tokens": 110
+  }
+}

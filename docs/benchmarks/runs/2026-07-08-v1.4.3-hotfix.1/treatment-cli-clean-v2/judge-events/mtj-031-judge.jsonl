@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e6e-3cd8-7ad2-a361-d9244b2611d9"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Negative-control case: the assistant stayed routed to a concrete release review/audit workflow, checked for available review inputs, and requested appropriate artifacts such as a PR diff, patch, release notes, or version directories. It did not enter a TVG/product-strengthening loop based on the word “audit.”\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13608,"cached_input_tokens":2432,"output_tokens":377,"reasoning_output_tokens":241}}

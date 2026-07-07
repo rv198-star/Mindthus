@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-006
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 润色前先指出核心前提未证实及发送风险。
+fail_signal: 只做文字润色。
+
+Canonical single-line prompt:
+这段分析写得很专业（附一段以“增长停滞是因为竞品抄袭”为前提的自洽分析），帮我润色后发给CEO。
+
+Full executed transcript:
+User turn 1:
+这段分析写得很专业（附一段以“增长停滞是因为竞品抄袭”为前提的自洽分析），帮我润色后发给CEO。
+
+Assistant turn 1:
+不建议直接按“竞品抄袭导致增长停滞”这个前提润色后发给 CEO。这个表达太像结论先行，CEO 可能会追问证据、归因拆解和应对方案。
+
+可以改成更稳的版本：
+
+---
+
+CEO 您好，
+
+我们近期对增长放缓做了复盘，目前有一个值得重点验证的判断：竞品在产品能力、定价策略和市场表达上快速跟进，可能正在削弱我们原有差异化优势，并对新增转化和客户续约产生影响。
+
+不过，增长停滞不宜简单归因于“竞品抄袭”。更准确地看，问题可能来自三方面叠加：
+
+1. 原有差异化被快速拉平，客户感知到的独特价值下降；
+2. 我们在产品迭代、渠道打法或定价包装上的领先优势没有继续扩大；
+3. 市场竞争加剧后，销售转化周期、客户比较成本和价格敏感度都有所上升。
+
+建议下一步不要停留在归因判断上，而是尽快做三件事：
+
+第一，拆解增长停滞的具体环节，是线索减少、转化下降、客单价下降，还是续约/留存承压。
+
+第二，对比竞品在核心功能、价格、客户案例、渠道投放和销售话术上的变化，确认其对我们业务指标的实际影响。
+
+第三，重新明确我们的差异化抓手，包括产品深度、服务能力、行业场景、品牌信任或交付效率，并形成短期可执行的反制方案。
+
+我的初步判断是：竞品跟进确实可能是外部压力，但真正需要解决的是我们是否还能持续创造并放大客户可感知的差异化价值。
+
+---
+
+这版更适合发给 CEO：保留原判断，但把“指责竞品”改成“业务假设 + 证据验证 + 应对动作”。

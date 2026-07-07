@@ -1,0 +1,15 @@
+可以，但当前消息里没有看到“完整栈和代码”。请把下面三样贴出来，我就能直接定位并给出修改版代码：
+
+1. 完整 `NullPointerException` 栈，尤其是第一段 `at ...(...java:行号)`
+2. 抛错方法所在类的完整代码，至少包含报错行上下 30 行
+3. 触发这段代码的输入或调用方式
+
+先别只贴最后一行异常。`NullPointerException` 的关键通常是栈里第一个指向你项目代码的行号，例如：
+
+```text
+java.lang.NullPointerException
+  at com.xxx.UserService.getName(UserService.java:42)
+```
+
+我需要看 `UserService.java:42` 那一行，以及这一行里每个可能为 `null` 的对象来源。  
+贴出来后我会按“哪个对象为 null → 为什么会是 null → 应该在源头初始化、校验，还是允许为空”的顺序给你修。

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-044",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant answered the travel recommendation question directly with age-appropriate Paris museums, practical notes, and a short top-two recommendation. It did not perform framing analysis or invoke Mindthus-style methodology, so it stayed asleep as expected for this negative control.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:30.933416+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17190,
+    "cached_input_tokens": 2432,
+    "output_tokens": 181,
+    "reasoning_output_tokens": 56
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-016",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response does not split effort evenly. It reframes the choice as conditional on whether retention has crossed a viable threshold, explicitly identifies growth with poor retention as pouring traffic into a leaky bucket, and states a practical default: validate a minimal retention loop before scaling growth, without waiting for perfect retention.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:28.141319+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 16,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17031,
+    "cached_input_tokens": 2432,
+    "output_tokens": 287,
+    "reasoning_output_tokens": 151
+  }
+}

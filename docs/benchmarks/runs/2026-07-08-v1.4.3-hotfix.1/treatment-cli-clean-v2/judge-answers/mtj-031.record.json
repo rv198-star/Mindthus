@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-031",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Negative-control case: the assistant stayed routed to a concrete release review/audit workflow, checked for available review inputs, and requested appropriate artifacts such as a PR diff, patch, release notes, or version directories. It did not enter a TVG/product-strengthening loop based on the word “audit.”",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:12.665610+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 31,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13608,
+    "cached_input_tokens": 2432,
+    "output_tokens": 377,
+    "reasoning_output_tokens": 241
+  }
+}

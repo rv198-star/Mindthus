@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-045",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Negative control: the assistant stayed direct, stated it lacked access to Q3 revenue data, and requested/proposed concrete data sources. It did not introduce a judgment framework or method wrapper instead of acquiring the missing data.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:27:13.948741+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 45,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12880,
+    "cached_input_tokens": 12160,
+    "output_tokens": 186,
+    "reasoning_output_tokens": 67
+  }
+}

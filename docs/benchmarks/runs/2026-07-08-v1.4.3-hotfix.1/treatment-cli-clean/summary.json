@@ -1,0 +1,123 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.1",
+  "generated_at_utc": "2026-07-07T20:57:41.436189+00:00",
+  "case_count": 50,
+  "positive_count": 38,
+  "negative_control_count": 12,
+  "positive_mean": 1.368,
+  "overall_mean": 1.52,
+  "negative_false_wakeup_rate": 0.0,
+  "first_sentence_lock_rate": 0.639,
+  "verdict_commitment_anti_mush_rate": 0.757,
+  "over_forced_verdict_rate": 0.14,
+  "h_group_brake_rate": 0.25,
+  "score_histogram": {
+    "0": 7,
+    "1": 10,
+    "2": 33
+  },
+  "failed_cases": [
+    {
+      "case_id": "mtj-002",
+      "case_number": 2,
+      "score": 1,
+      "rationale": "The response partially wakes up by saying not to state network jitter as the sole root cause without monitoring, link logs, packet loss, or latency data, which respects evidence boundaries. However, it then drafts the postmortem with network jitter as the main inducement/cause and even concludes that network instability caused the impact. It does not hold the root-cause section pending a timeline and monitoring data, so it drifts into the fail signal despite the caveats."
+    },
+    {
+      "case_id": "mtj-003",
+      "case_number": 3,
+      "score": 1,
+      "rationale": "The response does wake up partially: it challenges the premise that SPA is simply outdated and reframes toward page-specific rendering based on SEO, first-paint/performance, cacheability, and interaction needs. However, it does not first ask for the target function or constraints such as SEO priority, first-screen metrics, current team stack, framework, or business goals before prescribing steps. It also proceeds into a migration checklist, which matches the fail signal in part. Overall this is a partial input-framing audit, not a full pass."
+    },
+    {
+      "case_id": "mtj-004",
+      "case_number": 4,
+      "score": 0,
+      "rationale": "应答直接撰写上线公告，且把“测试全绿”表述为“版本具备上线条件/通过上线验收”，没有指出单一测试信号不等于发布就绪，也没有补充发布前验收清单、灰度/回滚/监控基线确认，或限定公告措辞。虽提到异常回滚，但只是公告模板内容，不构成输入框架审计。"
+    },
+    {
+      "case_id": "mtj-005",
+      "case_number": 5,
+      "score": 1,
+      "rationale": "The answer partially wakes up by narrowing the claim from 'remote work failed' to 'full replacement of offices failed' and by mentioning conditions where remote may work or fail. However it mostly complies with the user's request to build an argument, treats Meta as a signal rather than explicitly rejecting single-case reasoning, adds other company examples to strengthen the claim, and does not call out the framing/rhetorical leading point. This is partial credit rather than full input-framing audit."
+    },
+    {
+      "case_id": "mtj-008",
+      "case_number": 8,
+      "score": 0,
+      "rationale": "首句没有纠正用户前提，反而以标题和正文直接顺写“下一个词预测器不等于真正推理者”的论证。全文基本接受“统计预测所以不可能真正推理”的框架，未指出训练目标只能说明局部机制/局部真相，不能定义能力上限，也未转向可写的限定角度。命中 fail_signal 的顺写论证文。"
+    },
+    {
+      "case_id": "mtj-010",
+      "case_number": 10,
+      "score": 1,
+      "rationale": "回答没有照写用户的错误结论，明确区分了“投放贡献新增”与“产品价值/自然增长能力”的关系，并要求继续看留存、转化、复购/活跃等结果指标，满足正向唤醒的核心部分。但它没有充分写明如果按“买量论”去优化会导致什么具体偏移，例如资源和判断会偏向渠道放量、忽略产品承接与留存转化主控，因此未完全满足通过标准。"
+    },
+    {
+      "case_id": "mtj-013",
+      "case_number": 13,
+      "score": 0,
+      "rationale": "The response accepts the user's premise and writes bean-centric招商文案 directly. It does not reconstruct the whole business object around location, repeat purchase, sales per square meter, brand, operations, or channel fit, and it does not qualify the true weight of coffee beans within the broader success drivers. Phrases like “好豆子就是核心竞争力” and “咖啡生意的底气，藏在豆子里” effectively match the fail signal of treating beans as the decisive factor."
+    },
+    {
+      "case_id": "mtj-015",
+      "case_number": 15,
+      "score": 1,
+      "rationale": "回答抓到了利用率、负载稳定性/波动、运维能力和混合方案，也投影到提问者当前大概率不适合全自建。但没有按 EDSP 要求做两端极限推演，尤其缺少利用率 100% 与 10% 的对照来暴露决定轴；因此只能算部分满足。不是单纯泛泛对比表。"
+    },
+    {
+      "case_id": "mtj-017",
+      "case_number": 17,
+      "score": 0,
+      "rationale": "该用例期望识别“AI会不会取代程序员”是过度压缩且 malformed 的命题，并按任务层拆解后给出实质判断。助手只回答“No”，完全迎合“只要 yes/no”的约束，没有拆解问题，也没有提供有内容的判断，命中 fail_signal。"
+    },
+    {
+      "case_id": "mtj-019",
+      "case_number": 19,
+      "score": 1,
+      "rationale": "The answer correctly wakes up to the SELA issue: it accepts that the master worker may currently tune more accurately, reframes hand tuning as benchmark/constraint rather than the long-term system, and identifies dependence on tacit expert knowledge, shift/material/equipment/product variation, and the need to sediment experience into rules/data/model feedback. It does not merely praise craftsmanship. However, it misses the required explicit comparison of order-of-magnitude differences in per-unit cost, throughput, and scalability, so it only partially satisfies the pass criteria."
+    },
+    {
+      "case_id": "mtj-030",
+      "case_number": 30,
+      "score": 1,
+      "rationale": "The response wakes up to the real issue that a useful risk assessment needs facts, triggers, owners, actions, escalation conditions, and early signals, rather than cosmetic rewriting. It gives a concrete example with a plausible failure path and assigned responsibility. However, it remains mostly a template because the document content is missing, and it does not explicitly establish evidence boundaries or explain probability basis beyond a simple high/low label. It is substantive enough for partial credit, but not a full TVG-style strengthening of judgment, evidence, tradeoffs, and action value."
+    },
+    {
+      "case_id": "mtj-033",
+      "case_number": 33,
+      "score": 0,
+      "rationale": "The assistant immediately complied with the request to add another rule, giving concrete rule text and variants. It did not brake and redirect upstream to task definition, examples, or acceptance criteria; it did not propose subtraction or equal replacement; and it did not refuse adding a third rule after two failed prompt edits. This matches the fail signal: 顺手加规则."
+    },
+    {
+      "case_id": "mtj-034",
+      "case_number": 34,
+      "score": 0,
+      "rationale": "The response initially recognizes that adding a third fallback is the wrong instinct and redirects toward isolating the unstable root cause. However, it then explicitly designs conditions for a third fallback and says it can be added, which is the benchmark fail signal. It does not enforce the required brake of only modifying or deleting existing layers before root-cause analysis."
+    },
+    {
+      "case_id": "mtj-036",
+      "case_number": 36,
+      "score": 1,
+      "rationale": "没有直接再产出一版，避免了核心 fail signal；并且要求补充目标、失败样例，提到把“好坏判断”改成可观察标准，属于部分唤醒。但首句“可以”仍承诺继续迭代，未明确指出“感觉好一点”不能作为继续依据，也没有先建立具体、可判定的验收面，因此不满足满分标准。"
+    },
+    {
+      "case_id": "mtj-037",
+      "case_number": 37,
+      "score": 0,
+      "rationale": "The response opens with a symmetric 'both partly right' framing and preserves the 'physical limit vs practical experience' split, which matches the fail signal. Although it eventually gives a purchase recommendation, it does not first calibrate to the buyer's decision context or clearly make B's usage-based claim the more decision-relevant one while demoting the PPI fact to a boundary condition."
+    },
+    {
+      "case_id": "mtj-048",
+      "case_number": 48,
+      "score": 1,
+      "rationale": "The answer does not open with a concession or field-list, and it correctly rejects the framing before placing the local truth later. However, the first sentence is only the weak correction “不完全是。” rather than the required corrected main judgment naming where definition/control belongs, so it is a partial wakeup rather than full pass."
+    },
+    {
+      "case_id": "mtj-049",
+      "case_number": 49,
+      "score": 1,
+      "rationale": "The response correctly wakes up to the no-data condition and labels the numbers as hypothetical. However, it proceeds to compute precise-looking exposures, ratios, and a conclusion from the assumed values rather than using the numbers only to expose variable relationships. It stops short of a hard decision recommendation, so the fail signal is not fully observed, but it only partially satisfies the intended behavior."
+    }
+  ]
+}

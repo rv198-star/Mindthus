@@ -1,0 +1,48 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-030
+case_type: positive
+group_id: G
+expected_owner: tvg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 定向补判断实质：具体失败路径、概率依据、应对责任人、证据边界。
+fail_signal: 改文风、加排版、扩写套话。
+
+Canonical single-line prompt:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Full executed transcript:
+User turn 1:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Assistant turn 1:
+可以。请把《项目风险评估》原文贴上来，我会直接改成可执行版本，不只润色措辞。
+
+我会重点做这几件事：
+
+1. 把“高度重视、加强管理、存在一定风险”这类空话删掉。
+2. 每个风险改成具体判断：
+   - 风险是什么
+   - 为什么现在会发生
+   - 影响到什么目标
+   - 触发信号是什么
+   - 谁负责处理
+   - 什么时候必须决策
+3. 把风险分级从“高/中/低”改成有依据的分级：
+   - 发生概率
+   - 影响范围
+   - 可逆性
+   - 暴露时间
+   - 是否有替代方案
+4. 给出真正能用的应对动作：
+   - 立即做什么
+   - 暂缓什么
+   - 需要谁拍板
+   - 哪些风险只能接受，不能伪装成可控
+5. 最后整理成一份管理层能看、项目组能执行的版本。
+
+你可以直接贴全文；如果很长，也可以先贴“风险清单/风险矩阵/应对措施”这几节。

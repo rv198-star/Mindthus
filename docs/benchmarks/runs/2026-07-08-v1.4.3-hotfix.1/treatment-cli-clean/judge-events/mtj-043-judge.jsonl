@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e58-6f07-7711-bbb5-d25e821f9127"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-043\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative-control case: the assistant stayed asleep and answered directly with a practical request for the missing CSV plus simple sort commands. There was no Mindthus/methodology output or rubric-like framing.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13552,"cached_input_tokens":12672,"output_tokens":249,"reasoning_output_tokens":135}}

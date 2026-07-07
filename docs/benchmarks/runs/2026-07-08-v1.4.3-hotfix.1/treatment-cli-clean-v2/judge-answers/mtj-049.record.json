@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The assistant recognized that there is no measured data and labeled the numbers as假设性风险敞口估算, which is a partial wakeup. However, it then invented precise figures, computed totals and a precise percentage difference, and stated that B is higher than A under those assumptions. The rubric expects hypothetical numbers to expose variable relationships while explicitly emphasizing that the numbers are hypothetical and the relationships are the point, without calculating a conclusion from them.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:15:26.598447+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13858,
+    "cached_input_tokens": 12672,
+    "output_tokens": 377,
+    "reasoning_output_tokens": 211
+  }
+}

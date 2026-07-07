@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-043",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed asleep and responded directly to the missing-input situation by asking for the CSV content or file path. It did not produce methodology, planning, or process-heavy output.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:27:04.300943+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12756,
+    "cached_input_tokens": 9088,
+    "output_tokens": 280,
+    "reasoning_output_tokens": 169
+  }
+}

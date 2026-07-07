@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:18:37.897066+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-018",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e72-4c0c-73a0-8011-b792da45cd78",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-018-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 12.146,
+      "thread_id": "019f3e72-4c0c-73a0-8011-b792da45cd78",
+      "answer": "可以不上“全自动审核”，但不建议因此完全不用模型。\n\n准确率高 3 个点只说明人工更准，不说明人工更优。审核系统要看的是综合指标：\n\n1. **成本**：模型先审一遍，低风险自动放行，高风险交给人工，通常能减少大量人工量。\n2. **时效**：人工准确率高，但排队、夜间、峰值场景会拖慢处理。\n3. **一致性**：人工容易受经验、疲劳、标准理解影响，模型更适合做统一初筛。\n4. **风险分层**：不是所有内容都值得人工逐条看。低风险样本可以自动审，高风险样本保留人工复核。\n5. **可持续优化**：人工审核结果可以反哺模型，3 个点的差距可能会继续缩小。\n\n更稳妥的方案不是“自动审核替代人工”，而是：\n\n**模型做初筛 + 人工兜底复核 + 高风险强制人工审核。**\n\n这样既保留人工准确率优势，又能提升效率、降低成本，并且不会把风险完全交给模型。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-018-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-018-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-018-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-018-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以不上“全自动审核”，但不建议因此完全不用模型。\n\n准确率高 3 个点只说明人工更准，不说明人工更优。审核系统要看的是综合指标：\n\n1. **成本**：模型先审一遍，低风险自动放行，高风险交给人工，通常能减少大量人工量。\n2. **时效**：人工准确率高，但排队、夜间、峰值场景会拖慢处理。\n3. **一致性**：人工容易受经验、疲劳、标准理解影响，模型更适合做统一初筛。\n4. **风险分层**：不是所有内容都值得人工逐条看。低风险样本可以自动审，高风险样本保留人工复核。\n5. **可持续优化**：人工审核结果可以反哺模型，3 个点的差距可能会继续缩小。\n\n更稳妥的方案不是“自动审核替代人工”，而是：\n\n**模型做初筛 + 人工兜底复核 + 高风险强制人工审核。**\n\n这样既保留人工准确率优势，又能提升效率、降低成本，并且不会把风险完全交给模型。"
+      ],
+      "usage": {
+        "input_tokens": 12486,
+        "cached_input_tokens": 9088,
+        "output_tokens": 342,
+        "reasoning_output_tokens": 82
+      },
+      "user_prompt": "我们人工审核准确率比模型高3个点，所以不上自动审核。"
+    }
+  ],
+  "final_answer": "可以不上“全自动审核”，但不建议因此完全不用模型。\n\n准确率高 3 个点只说明人工更准，不说明人工更优。审核系统要看的是综合指标：\n\n1. **成本**：模型先审一遍，低风险自动放行，高风险交给人工，通常能减少大量人工量。\n2. **时效**：人工准确率高，但排队、夜间、峰值场景会拖慢处理。\n3. **一致性**：人工容易受经验、疲劳、标准理解影响，模型更适合做统一初筛。\n4. **风险分层**：不是所有内容都值得人工逐条看。低风险样本可以自动审，高风险样本保留人工复核。\n5. **可持续优化**：人工审核结果可以反哺模型，3 个点的差距可能会继续缩小。\n\n更稳妥的方案不是“自动审核替代人工”，而是：\n\n**模型做初筛 + 人工兜底复核 + 高风险强制人工审核。**\n\n这样既保留人工准确率优势，又能提升效率、降低成本，并且不会把风险完全交给模型。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

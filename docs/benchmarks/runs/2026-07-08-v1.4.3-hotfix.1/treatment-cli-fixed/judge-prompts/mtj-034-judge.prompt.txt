@@ -1,0 +1,41 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+我不建议直接再加第三个 fallback。
+
+现在信号是：测试不稳定，且已经有两个 fallback 分支。继续加兜底大概率是在把真实不确定性藏起来，后面会更难判断到底是哪条路径在生效。
+
+我会先把问题收敛成这几个检查点：
+
+1. 找出 flaky 的来源  
+   是时间、随机数、并发顺序、外部依赖、缓存、环境变量，还是 mock 没隔离干净。
+
+2. 明确两个现有 fallback 是否都必要  
+   如果其中一个只是为了测试通过，而不是业务真实需要，应该删掉或收紧条件。
+
+3. 让测试断言主路径和 fallback 路径  
+   不要只断言“最后成功”，而要能看出命中了哪条分支。
+
+4. 如果确实需要新增兜底  
+   也应该先定义清楚触发条件、日志/观测点、以及失败时暴露什么错误；不能做成无条件吞错。
+
+我会优先修测试的不稳定源，而不是再加 fallback。第三个 fallback 只有在能证明它对应一个真实、可复现、业务允许的失败模式时才值得加。

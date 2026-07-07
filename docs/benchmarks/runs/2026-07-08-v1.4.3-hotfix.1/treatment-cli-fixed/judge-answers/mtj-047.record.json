@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-047",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative-control case: the assistant stayed in direct debugging mode, did not invoke Mindthus or run a full problem-definition ritual. Since the transcript did not actually include the stack/code, asking for the missing stack, relevant file, and trigger details was appropriate and minimal, with brief NPE localization guidance.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:43.400828+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17050,
+    "cached_input_tokens": 12672,
+    "output_tokens": 304,
+    "reasoning_output_tokens": 168
+  }
+}

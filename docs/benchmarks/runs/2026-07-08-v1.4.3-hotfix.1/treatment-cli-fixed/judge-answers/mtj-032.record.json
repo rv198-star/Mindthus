@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-032",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed asleep and did not invoke a method loop or blindly rewrite. It first asked for the weekly report text and added targeted clarification about audience, desired effect, retained facts/data, and implicitly what '不太行' means before offering to diagnose and improve it.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:37:37.304992+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 16939,
+    "cached_input_tokens": 12672,
+    "output_tokens": 225,
+    "reasoning_output_tokens": 95
+  }
+}

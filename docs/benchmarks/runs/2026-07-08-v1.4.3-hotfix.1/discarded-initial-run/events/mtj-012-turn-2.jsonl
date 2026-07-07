@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e3d-f7d4-7ee2-93fc-7d0c06cb7520"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"如果只谈 **ReAct 循环本身**，可以这么说：\n\n**ReAct 循环抓住了 Agent 能力的一个核心内核：基于观察反馈，不断选择下一步行动。**\n\n但说“ReAct 循环就是 Agent 能力的本质”，还是太满。\n\n更准的表述是：\n\n> ReAct 循环是 Agent 能力的最小可见结构之一：Reason → Act → Observe → 再 Reason。\n\n它体现的是：\n\n- 不是一次性输出；\n- 会根据环境结果更新判断；\n- 会把思考转成行动；\n- 行动结果会反过来影响下一步。\n\n所以你如果强调“Agent 和普通问答模型的差别”，ReAct 确实非常接近本质。\n\n但如果严格说“本质”，它更像是**Agent 能力的控制循环形式**，不是全部本质。缺少目标保持、停止判断、错误恢复、工具选择质量时，ReAct 只是循环壳子。\n\n一句话：**ReAct 不是全部本质，但它抓住了 Agent 能力最关键的外显结构。**"}}
+{"type":"turn.completed","usage":{"input_tokens":39374,"cached_input_tokens":14592,"output_tokens":887,"reasoning_output_tokens":271}}

@@ -1,0 +1,43 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-009
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出调度是组件层，整体对象是集群状态收敛/编排系统；说明局部在哪一层为真。
+fail_signal: “可以这么理解”式让步。
+
+Canonical single-line prompt:
+Kubernetes说白了就是个进程调度器吧？
+
+Full executed transcript:
+User turn 1:
+Kubernetes说白了就是个进程调度器吧？
+
+Assistant turn 1:
+不准确。说 Kubernetes 是“进程调度器”会把它降维了。
+
+更接近的说法是：**Kubernetes 是一个面向容器化应用的集群操作系统/编排系统**。它确实包含“调度”能力，但调度的对象不是普通进程，而是 **Pod**，也就是一组容器及其运行环境声明。
+
+它做的不只是“把进程放到某台机器上跑”，还包括：
+
+- **资源调度**：把 Pod 放到合适的节点上；
+- **期望状态维护**：你声明要 3 个副本，它就持续把系统拉回 3 个；
+- **故障恢复**：容器挂了、节点挂了，会重建或迁移；
+- **服务发现与负载均衡**：让服务之间稳定互相访问；
+- **滚动发布与回滚**：控制应用升级过程；
+- **配置与密钥管理**：管理 ConfigMap、Secret；
+- **存储挂载**：把持久化卷接到 Pod 上；
+- **扩缩容**：根据规则或负载调整副本数。
+
+如果硬要类比：
+
+> Linux 内核调度的是进程；  
+> Kubernetes 调度的是分布式集群里的应用工作负载。
+
+所以“进程调度器”这个说法可以作为很粗的直觉入口，但不能作为准确理解。更准确地说，Kubernetes 是：**用声明式方式管理一组机器上的容器化应用生命周期的控制系统**。

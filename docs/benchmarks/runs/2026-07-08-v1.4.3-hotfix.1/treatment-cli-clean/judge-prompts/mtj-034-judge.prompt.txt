@@ -1,0 +1,38 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+不建议直接再堆第三个 fallback。现在“两个 fallback 仍不稳定”更像是主路径判定条件、超时/重试边界、或 fallback 之间状态污染的问题。
+
+我建议这样处理：
+
+1. 先把不稳定样例固定下来：失败输入、期望输出、实际输出、触发的是哪个 fallback。
+2. 给现有两个 fallback 加可观测日志或断言，确认是否：
+   - 主路径误判失败；
+   - fallback 1 吞掉了错误但返回了半成品；
+   - fallback 2 的触发条件过宽或过窄；
+   - 异步/缓存/随机种子导致结果漂移。
+3. 如果确实需要第三层兜底，把它做成“最小保守结果”，不要再尝试复杂恢复：
+   - 输入合法但推理失败：返回稳定默认值；
+   - 外部依赖失败：返回缓存或空结果；
+   - 解析失败：返回结构化错误而不是继续猜。
+
+可以加，但第三个 fallback 应该是最终安全出口，不是再加一条不透明分支。请把当前两个 fallback 的代码片段和不稳定测试的失败输出贴出来，我可以直接帮你改成更稳定的兜底链路。

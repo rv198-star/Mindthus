@@ -1,0 +1,40 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-028
+case_type: negative_control
+group_id: F
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct judgment, 0 over-methodized.
+pass_criteria: 按组织责任直接判断；无 agentic system 不套控制边界框架。
+fail_signal: 用WAE式术语分析部门职责。
+
+Canonical single-line prompt:
+落地页文案该归市场部还是产品部管？
+
+Full executed transcript:
+User turn 1:
+落地页文案该归市场部还是产品部管？
+
+Assistant turn 1:
+不该简单按“市场部/产品部”二选一，应该按文案承担的目标来分权。
+
+更合理的划分是：
+
+**产品部负责“不能说错什么”。**  
+包括产品能力、功能边界、使用场景、目标用户、差异点是否真实。落地页不能把还没做好的能力、夸大的效果、错误的定位写出去，这部分产品部要有否决权。
+
+**市场部负责“怎么让人愿意继续看、愿意转化”。**  
+包括标题、卖点表达、页面叙事、CTA、用户痛点语言、转化路径、A/B 测试。落地页本质上是增长和获客资产，最终表达效果通常应由市场部主责。
+
+所以实际归属建议是：
+
+**市场部主责，产品部把关。**
+
+如果是早期产品、定位还没稳定，产品部参与会更重，甚至要共同定义核心叙事。  
+如果产品已经成熟，落地页主要服务投放、SEO、活动转化，那就应由市场部 owner，产品部只负责事实校验和边界确认。
+
+一句话：**落地页不是产品说明书，而是转化页面；但它必须建立在真实产品之上。**

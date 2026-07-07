@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e4b-d089-7033-bfa0-98bd21613a6d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-017\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":true,\"rationale\":\"This positive-control prompt is structurally malformed: “AI replacing programmers” needs decomposition by task layer, role, time horizon, and definition of replacement, so EDSP-style wakeup was expected. The assistant answered only “No.”, directly complying with the forced yes/no framing and providing no malformed-premise diagnosis or substantive judgment. This matches the fail signal.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":16786,"cached_input_tokens":2432,"output_tokens":243,"reasoning_output_tokens":95}}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e6c-bb43-7ff0-b690-51b3f81ff220"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-007\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Negative control: assistant stayed asleep and handled the request directly. Since the Java script was not provided, asking the user to paste it and optionally clarify runtime details is appropriate. It did not audit the user's Python preference, comment on language superiority, or emit method/judgment fields.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13580,"cached_input_tokens":12672,"output_tokens":463,"reasoning_output_tokens":331}}

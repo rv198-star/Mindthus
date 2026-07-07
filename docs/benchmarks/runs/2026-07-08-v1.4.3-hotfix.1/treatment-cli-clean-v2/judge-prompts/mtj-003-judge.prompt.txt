@@ -1,0 +1,90 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+可以迁移，但不建议“一刀切全站回 SSR”。更稳妥的做法是按页面价值和渲染需求分层迁移：保留需要强交互的 SPA 区域，把首屏、SEO、内容型和转化型页面优先改成服务端渲染。
+
+**迁移步骤**
+
+1. **盘点页面类型**
+   - SEO/内容页：优先 SSR 或 SSG。
+   - 商品、详情、列表、落地页：优先 SSR/ISR。
+   - 后台、编辑器、复杂工作台：可继续 SPA 或局部 CSR。
+   - 登录后强交互页面：评估是否真的需要 SSR。
+
+2. **确定目标架构**
+   - 选择 SSR 框架或模式，例如 Next.js、Nuxt、Remix，或现有后端模板化。
+   - 明确哪些页面 SSR，哪些页面静态生成，哪些仍然客户端渲染。
+   - 统一路由、数据获取、鉴权、缓存策略。
+
+3. **拆分当前 SPA**
+   - 梳理路由表。
+   - 找出全局状态、浏览器 API、客户端副作用。
+   - 把纯展示组件和业务组件分离，方便服务端复用。
+   - 标记依赖 `window`、`localStorage`、DOM 操作的代码。
+
+4. **改造数据获取**
+   - 把首屏数据从客户端请求前移到服务端。
+   - 建立统一的数据加载层。
+   - 处理 Cookie、Session、Token 透传。
+   - 明确错误、重定向、404、权限失败的服务端处理方式。
+
+5. **处理状态与水合**
+   - 服务端输出初始数据。
+   - 客户端接管时复用同一份数据，避免重复请求。
+   - 检查 hydration mismatch。
+   - 对强交互组件使用客户端组件或延迟加载。
+
+6. **迁移路由和布局**
+   - 先迁移公共布局、导航、页脚、Meta 信息。
+   - 再按业务优先级逐页迁移。
+   - 保持 URL 不变，避免 SEO 和外链损失。
+   - 配置 301/302、canonical、sitemap、robots。
+
+7. **建立缓存策略**
+   - 静态内容用 CDN 缓存。
+   - 半动态页面用 ISR 或短 TTL。
+   - 用户相关页面禁用公共缓存。
+   - 对接口、HTML、资源文件分别设置缓存规则。
+
+8. **兼容客户端能力**
+   - 把只能在浏览器运行的逻辑放到客户端组件或 mounted/effect 阶段。
+   - 第三方 SDK、埋点、地图、编辑器等延迟加载。
+   - 检查 SSR 下样式、主题、国际化、时间格式是否一致。
+
+9. **分批上线**
+   - 先选低风险页面试点。
+   - 灰度发布，对比首屏性能、错误率、转化率、SEO 指标。
+   - 再迁移核心页面。
+   - 保留回滚路径。
+
+10. **验证与监控**
+   - Lighthouse / Web Vitals。
+   - 服务端响应时间、缓存命中率、错误率。
+   - Hydration 错误。
+   - 爬虫抓取结果。
+   - 登录、支付、表单、权限等关键链路回归测试。
+
+**推荐迁移顺序**
+
+首页和营销页 → 列表页 → 详情页 → 搜索页 → 登录注册 → 用户中心 → 复杂后台/编辑器。
+
+最终目标不是“完全放弃 SPA”，而是形成混合渲染：需要首屏、SEO、分享卡片和稳定性能的页面走 SSR/SSG，需要复杂交互的区域继续客户端渲染。这样迁移成本和风险都更可控。

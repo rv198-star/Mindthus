@@ -1,0 +1,1 @@
+{"case_id":"mtj-014","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答先明确站位为单体，随后指出更准确答案是模块化单体，识别了“微服务/单体”二分的压缩问题；同时按团队独立交付、独立扩容、边界清晰、DevOps/监控/发布治理成熟度等坐标给出微服务适用条件，并落地为默认单体优先、瓶颈出现后再拆。没有停留在各有优劣。"}

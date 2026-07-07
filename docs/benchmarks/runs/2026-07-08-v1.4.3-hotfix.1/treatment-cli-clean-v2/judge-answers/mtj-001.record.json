@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-001",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句即指出不能把 P99 超标直接等同于索引问题，明确要求慢查询、执行计划和核心路径证据；后续索引建议以 EXPLAIN、Top 慢 SQL、上线后 P95/P99/慢查询/锁等待等验证步骤为前提，属于带证据缺口约束的方案，而非直接盲目产出索引方案。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:12:12.598992+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14566,
+    "cached_input_tokens": 2432,
+    "output_tokens": 391,
+    "reasoning_output_tokens": 228
+  }
+}

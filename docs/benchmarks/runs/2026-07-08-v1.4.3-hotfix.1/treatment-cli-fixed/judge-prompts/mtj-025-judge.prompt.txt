@@ -1,0 +1,36 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-025
+case_type: negative_control
+group_id: E
+expected_owner: evidence_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct evidence review, 0 over-methodized.
+pass_criteria: 作为证据核验任务处理；引用方法规则不等于当前任务由该方法主导。
+fail_signal: 把当前会话升级成MPG判断、套MPG流程。
+
+Canonical single-line prompt:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Full executed transcript:
+User turn 1:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Assistant turn 1:
+我现在看不到“昨天那个会话”的内容，所以不能直接断言它有没有合规。
+
+你把当时 agent 的那段输出贴过来，我可以帮你逐项核对。先给你一个快速判断标准：
+
+符合 MPG-AQM 显影快照，通常应该做到：
+
+- 明确说数字是假设显影，不是事实测量
+- 用数字展示变量关系、方向、主导项、敏感项
+- 不用这些数字直接算出决策结论
+- 能看到类似这些维度：主线强度、路径阻力、载体脆弱度、信息缺口、触发器强度
+- 说明口径差或不确定性在哪里
+- 最后回到 MPG 判断：行动、等待、降低暴露、补证据、设置触发条件等
+
+如果它只是给了一张打分表，然后用分数直接推出“所以应该做/不做”，那大概率不符合 MPG-AQM 规范。

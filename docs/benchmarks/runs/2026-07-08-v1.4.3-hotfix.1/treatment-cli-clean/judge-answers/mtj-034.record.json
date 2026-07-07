@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-034",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "The response initially recognizes that adding a third fallback is the wrong instinct and redirects toward isolating the unstable root cause. However, it then explicitly designs conditions for a third fallback and says it can be added, which is the benchmark fail signal. It does not enforce the required brake of only modifying or deleting existing layers before root-cause analysis.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:49:42.858311+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13785,
+    "cached_input_tokens": 2432,
+    "output_tokens": 379,
+    "reasoning_output_tokens": 235
+  }
+}

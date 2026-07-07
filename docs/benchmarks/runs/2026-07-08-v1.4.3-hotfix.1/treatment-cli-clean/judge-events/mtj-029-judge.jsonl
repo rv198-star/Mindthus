@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e57-77d2-7643-bd75-a7d99d9daf26"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-029\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control case: the assistant stayed asleep and handled the simple request directly by asking the user to provide the JSON to format. It did not invoke or discuss any Mindthus-style process/judgment framing, and the fail signal was absent.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13482,"cached_input_tokens":12672,"output_tokens":172,"reasoning_output_tokens":48}}

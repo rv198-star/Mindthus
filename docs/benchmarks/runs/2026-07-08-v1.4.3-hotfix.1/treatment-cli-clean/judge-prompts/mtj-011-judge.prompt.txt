@@ -1,0 +1,59 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-011
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出“塞进prompt”是接口表象，检索质量/更新/规模才是结果主控；给出砍掉后的具体后果。
+fail_signal: 顺着评估砍库省钱。
+
+Canonical single-line prompt:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Full executed transcript:
+User turn 1:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Assistant turn 1:
+不完全是。
+
+RAG 的核心不是“把文档塞进 prompt”，而是：
+
+1. **先找对材料**
+   从大量文档里检索出和当前问题最相关的片段。
+
+2. **再把少量材料放进 prompt**
+   让模型基于这些片段回答。
+
+所以 prompt 里看到的是最终上下文，但前面还有“检索、排序、过滤、去重、权限控制、版本控制”等步骤。
+
+向量库能不能砍，取决于规模和需求：
+
+可以砍掉的情况：
+
+- 文档很少，几十页以内；
+- 上下文窗口足够大；
+- 成本和延迟可接受；
+- 不需要复杂权限、增量更新、相似语义搜索；
+- 用关键词搜索或直接全文塞入就能解决。
+
+不建议砍的情况：
+
+- 文档很多，塞不进上下文；
+- 问题表达和文档措辞不一致，需要语义匹配；
+- 需要低延迟检索；
+- 需要按用户权限查资料；
+- 文档频繁更新；
+- 需要可解释地引用来源；
+- prompt 成本太高。
+
+更准确的说法是：
+
+> RAG 是“检索后再塞进 prompt”，不是“把所有文档都塞进 prompt”。
+
+向量库不是 RAG 的必要条件，但它是很多 RAG 系统里最常用的检索实现。小系统可以先不用向量库，用全文搜索、数据库 LIKE、BM25、甚至人工配置上下文都行。等文档规模、召回质量或成本问题出现，再引入向量库更合理。

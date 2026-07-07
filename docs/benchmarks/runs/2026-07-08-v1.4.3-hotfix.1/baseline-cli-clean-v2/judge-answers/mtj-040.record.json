@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-040",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有做对称的“两边都有道理”折中，而是确立了主判断：‘老代码难维护’不能推出‘必须重写整个后端’，重写只能在根架构失配、成本收益和可验证迁移条件成立时作为工程方案。其余内容被降级为约束条件，如业务演进风险、团队承受能力、分阶段替换、可回滚验证等，符合处境化和载体问题的主论点推进。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:26:42.016376+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 40,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13296,
+    "cached_input_tokens": 12160,
+    "output_tokens": 354,
+    "reasoning_output_tokens": 170
+  }
+}

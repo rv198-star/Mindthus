@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-047
+case_type: negative_control
+group_id: K
+expected_owner: direct_debugging
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct debugging, 0 over-methodized.
+pass_criteria: 直接定位修复。
+fail_signal: 走完整问题定义仪式。
+
+Canonical single-line prompt:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Full executed transcript:
+User turn 1:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Assistant turn 1:
+请把完整栈和相关代码贴出来，尤其是：
+
+1. 抛异常的完整 stack trace
+2. 栈里指向的那一行代码
+3. 相关方法/类的上下文
+4. 入参或对象初始化代码
+
+目前这条消息里没有实际代码和栈，我还不能准确定位哪个对象是 `null`。  
+你贴出来后，我会直接指出是哪一行、哪个变量为空，并给出修改后的代码。

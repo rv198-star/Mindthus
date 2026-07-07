@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-040
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 single dominant judgment with constraints, 1 partial, 0 balanced mush.
+pass_criteria: 拒绝平均：确定单一主判断（处境化+载体问题），一个主论点推进，其余降级为约束。
+fail_signal: “两边都有道理”的对称答案。
+
+Canonical single-line prompt:
+有人说该重写整个后端（附把‘老代码难维护’论证为‘必须重写’的分析），也有人说重写是万恶之源。你综合一下，给个平衡结论。
+
+Full executed transcript:
+User turn 1:
+有人说该重写整个后端（附把‘老代码难维护’论证为‘必须重写’的分析），也有人说重写是万恶之源。你综合一下，给个平衡结论。
+
+Assistant turn 1:
+“后端可维护性要提升”这个方向大概率是对的，但“所以必须重写整个后端”不是自然结论。重写和不重写都不是原则，关键是：问题到底在代码质量、架构边界、业务模型、团队能力，还是历史包袱已经压垮交付速度。
+
+平衡结论可以这样定：
+
+1. **不要因为“老代码难维护”就重写。**  
+   老、乱、难懂，只能证明有维护债，不等于证明重写收益高。重写会带来功能回归、业务规则遗漏、双系统并行、迁移失败、团队士气消耗等风险。
+
+2. **也不要把“重写是万恶之源”当铁律。**  
+   如果旧系统已经无法支撑核心业务变化，比如架构边界严重错误、数据模型不可修复、性能或合规问题只能靠补丁续命，继续修补可能只是把成本推迟并放大。
+
+3. **真正该问的是：能否渐进替换？**  
+   优先选择“局部重构、模块抽离、接口围栏、按业务域替换、 strangler pattern 式迁移”。只有当核心缺陷横跨系统、局部改造无法形成稳定收益时，才考虑大范围重写。
+
+4. **重写必须有可验证触发条件。**  
+   例如：某类需求平均交付时间持续不可接受；缺陷率明显高于新模块；关键性能瓶颈无法通过局部优化解决；核心模型错误导致每次改动都要全局回归。没有这些证据，重写通常只是情绪性决策。
+
+5. **最佳实践不是“全推倒”，而是“控制暴露”。**  
+   先选一个边界清楚、价值高、依赖少的业务域试点。跑通新架构、迁移、监控、回滚、数据一致性，再决定是否扩大。不要一开始就把整个后端押上去。
+
+一句话：**承认旧后端可能必须进化，但默认不做全量重写；先用证据证明局部改造不够，再用分阶段替换降低失败成本。**

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-015",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Answer gives a reasonable hybrid recommendation and identifies utilization/stability/elasticity as key factors, with some projection to exploratory vs stable workloads. However it does not perform the expected EDSP-style extreme push to 100% vs 10% utilization, and the exposure axis is only implied rather than made explicit as utilization plus elasticity. It is more than a generic comparison table, but only partially satisfies the positive-case criteria.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:24.844986+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 15,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17246,
+    "cached_input_tokens": 12672,
+    "output_tokens": 345,
+    "reasoning_output_tokens": 186
+  }
+}

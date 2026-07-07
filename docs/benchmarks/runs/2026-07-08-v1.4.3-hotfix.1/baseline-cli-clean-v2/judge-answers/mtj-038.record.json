@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-038",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答基于用户的一年3万公里和可装家充给出明确判断“新能源车更合适”，并用用车成本和场景理由支撑。也明确了答案翻转或调整的条件，如经常长途、低温高速多、不想规划充电时考虑插混/增程，只有特殊偏好或偏远地区才考虑油车。不是抽象中立对比。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:26:23.153703+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 38,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13144,
+    "cached_input_tokens": 11648,
+    "output_tokens": 268,
+    "reasoning_output_tokens": 101
+  }
+}

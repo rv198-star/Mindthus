@@ -1,0 +1,82 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-030
+case_type: positive
+group_id: G
+expected_owner: tvg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 定向补判断实质：具体失败路径、概率依据、应对责任人、证据边界。
+fail_signal: 改文风、加排版、扩写套话。
+
+Canonical single-line prompt:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Full executed transcript:
+User turn 1:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Assistant turn 1:
+可以。我这边没有看到文档正文；你把《项目风险评估》贴上来后，我可以直接帮你改成一版可用于评审、决策和跟踪的版本。
+
+我会把它从“套话型风险评估”改成这种结构：
+
+**1. 风险总览**
+- 当前项目总体风险等级：高 / 中 / 低
+- 最关键的 3-5 个风险
+- 是否建议继续推进：继续 / 有条件继续 / 暂缓
+- 需要管理层决策的事项
+
+**2. 风险清单**
+每个风险都写成可判断、可追踪的形式：
+
+| 风险 | 触发条件 | 影响 | 概率 | 等级 | 责任人 | 应对措施 | 截止时间 |
+|---|---|---|---|---|---|---|---|
+
+例如不要写：
+
+> 项目进度存在一定不确定性，需要加强沟通协调。
+
+改成：
+
+> 若核心供应商在 8 月 15 日前无法交付接口联调环境，系统集成测试将至少延迟 2 周，影响 9 月底上线目标。当前概率中高。责任人：张三。应对措施：本周内确认备用供应商方案，并在 8 月 10 日前完成替代环境验证。
+
+**3. 重点风险分析**
+对高风险项逐条说明：
+- 为什么这是风险
+- 最坏情况下会发生什么
+- 当前已有证据是什么
+- 还缺哪些信息
+- 谁来拍板
+- 什么时候必须处理
+
+**4. 应对策略**
+区分四类处理方式：
+- 规避：改变方案，避免风险发生
+- 降低：减少发生概率或影响
+- 转移：通过合同、保险、外包等方式转移
+- 接受：明确接受风险，并准备兜底方案
+
+**5. 预警指标**
+把“加强监控”改成明确指标：
+
+- 进度偏差超过 10%
+- 预算消耗超过计划值 15%
+- 关键岗位空缺超过 2 周
+- 供应商连续两次延期
+- 测试缺陷关闭率低于 80%
+
+**6. 下一步行动**
+最后必须落到行动：
+
+| 行动项 | 负责人 | 完成时间 | 产出物 |
+|---|---|---|---|
+
+你把原文发来后，我可以帮你做三件事：
+
+1. 删除空话、套话、重复表述  
+2. 补成真正能指导决策的风险内容  
+3. 输出一版正式、专业、可直接提交的《项目风险评估》文档版本

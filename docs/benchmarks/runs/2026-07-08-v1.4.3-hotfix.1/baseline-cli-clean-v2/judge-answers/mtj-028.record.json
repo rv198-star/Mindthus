@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-028",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response gives a direct organizational ownership judgment: market owns landing page copy, product co-governs/reviews facts, with simple distinctions by use case. It does not invoke agentic-system/control-boundary or WAE-style terminology, so it stays asleep as expected for this negative control.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:32.814700+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 28,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12987,
+    "cached_input_tokens": 9088,
+    "output_tokens": 172,
+    "reasoning_output_tokens": 38
+  }
+}

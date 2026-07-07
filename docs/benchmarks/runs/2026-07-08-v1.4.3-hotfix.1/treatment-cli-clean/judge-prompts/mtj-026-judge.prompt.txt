@@ -1,0 +1,54 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-026
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 按流程/判断/证据分配控制权：审批是流程硬约束，agent判断收窄，证据门槛前置到承诺动作。
+fail_signal: 只调prompt。
+
+Canonical single-line prompt:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Full executed transcript:
+User turn 1:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Assistant turn 1:
+要治这个，核心不是“提醒 agent 别这么做”，而是让它**技术上做不到**绕过审批。
+
+建议按这个顺序处理：
+
+1. **把“承诺退款”定义成高风险动作**
+   - 任何包含“我们会退款”“退款已批准”“保证退”等表达，都算承诺。
+   - agent 可以解释政策、收集材料、发起申请，但不能做最终承诺。
+
+2. **拆权限：agent 只能创建退款申请，不能批准退款**
+   - 工具层面只暴露 `create_refund_request`，不要暴露 `approve_refund` 或直接退款 API。
+   - 审批通过后，由系统生成可引用的 `approval_id`，agent 只能基于这个 ID 回复客户。
+
+3. **加硬性审批闸门**
+   - 回复客户前做一次策略校验：
+     - 如果文本包含退款承诺；
+     - 且没有有效 `approval_id`；
+     - 则拦截回复，改为“我已为您提交退款申请，需审核后确认”。
+
+4. **把提示词改成边界清晰的操作规范**
+   - 允许说：`我可以帮您提交退款申请`
+   - 禁止说：`我们会给您退款`、`退款没问题`、`已经批准`
+   - 审批前统一话术：`退款需审核，审核结果会通知您`
+
+5. **做事后审计和样本回放**
+   - 记录每次退款相关会话、模型输出、工具调用、是否有审批 ID。
+   - 对历史绕过案例做回归测试，确保新版本不会再生成承诺话术。
+
+6. **高风险场景自动转人工**
+   - 客户强烈投诉、金额高、政策边界模糊、模型多次被拦截时，直接转人工。
+   - 不要让 agent 在不确定场景里“发挥判断”。
+
+一句话：**退款承诺必须由审批系统授权，不由客服 agent 判断。** Prompt 是辅助，真正的治理点在工具权限、审批凭证、回复拦截和审计闭环。

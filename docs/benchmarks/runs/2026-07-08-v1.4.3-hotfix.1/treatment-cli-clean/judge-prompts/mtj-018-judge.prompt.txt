@@ -1,0 +1,32 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-018
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，给混合架构方向。
+fail_signal: 只比较准确率。
+
+Canonical single-line prompt:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Full executed transcript:
+User turn 1:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Assistant turn 1:
+这个结论不成立，最多只能说明“人工在当前样本上的准确率更高”，不能推出“所以不上自动审核”。
+
+关键看 3 个点买来了什么、又损失了什么：
+
+- 如果模型准确率低 3 个点，但成本低很多、速度快很多、可 24 小时覆盖、可先筛掉 70%-90% 的低风险内容，那自动审核仍然值得上。
+- 如果这 3 个点集中在高风险错杀/漏放场景，比如合规、金融、医疗、未成年人安全，那模型不能直接替代人工，但可以做预审、分流、召回补充。
+- 如果人工准确率是抽样精品审核，模型面对的是全量实时流量，这个比较本身可能不公平。
+- 真正该比的是：全链路成本、处理时效、漏审率、错杀率、高风险召回、人工产能占用、峰值承压能力，而不是单看总体准确率。
+
+更稳的判断是：不要因为人工高 3 个点就完全不上自动审核。可以先做“模型初筛 + 高风险/低置信度进人工 + 抽样复核”的混合方案，用线上数据验证自动审核是否能降低成本和时延，同时不放大关键风险。

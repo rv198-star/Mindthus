@@ -1,0 +1,137 @@
+可以，但不要“全表补索引”。P99 超标应按慢 SQL 排序建索引，优先处理贡献最高的查询。方案如下：
+
+**1. 先锁定 Top SQL**
+
+按 `P99 / 调用量 / 总耗时` 排序，取前 10 条：
+
+- `WHERE` 高频过滤字段
+- `JOIN ON` 字段
+- `ORDER BY / GROUP BY` 字段
+- 分页查询里的排序字段
+- 状态、租户、时间范围组合条件
+
+**2. 建复合索引原则**
+
+索引字段顺序：
+
+```text
+等值条件字段 -> 范围条件字段 -> 排序字段 -> 覆盖查询字段
+```
+
+例如查询：
+
+```sql
+SELECT id, status, created_at
+FROM orders
+WHERE tenant_id = ?
+  AND user_id = ?
+  AND status = ?
+  AND created_at >= ?
+ORDER BY created_at DESC
+LIMIT 50;
+```
+
+建议索引：
+
+```sql
+CREATE INDEX idx_orders_tenant_user_status_created
+ON orders (tenant_id, user_id, status, created_at DESC);
+```
+
+**3. 常见表的索引模板**
+
+订单/交易表：
+
+```sql
+CREATE INDEX idx_orders_tenant_status_created
+ON orders (tenant_id, status, created_at DESC);
+
+CREATE INDEX idx_orders_user_created
+ON orders (user_id, created_at DESC);
+```
+
+用户维度查询：
+
+```sql
+CREATE INDEX idx_users_tenant_mobile
+ON users (tenant_id, mobile);
+
+CREATE INDEX idx_users_tenant_email
+ON users (tenant_id, email);
+```
+
+消息/日志/流水表：
+
+```sql
+CREATE INDEX idx_events_tenant_type_created
+ON events (tenant_id, event_type, created_at DESC);
+
+CREATE INDEX idx_events_trace_id
+ON events (trace_id);
+```
+
+关联表：
+
+```sql
+CREATE INDEX idx_order_items_order_id
+ON order_items (order_id);
+
+CREATE INDEX idx_order_items_sku_id
+ON order_items (sku_id);
+```
+
+**4. 避免无效索引**
+
+不要单独给低基数字段建索引：
+
+```sql
+status
+type
+is_deleted
+gender
+```
+
+这类字段应放进复合索引里，例如：
+
+```sql
+CREATE INDEX idx_table_tenant_status_created
+ON table_name (tenant_id, status, created_at DESC);
+```
+
+**5. 上线步骤**
+
+1. 对 Top 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`
+2. 确认出现全表扫描、文件排序、临时表或回表严重
+3. 先在只读副本或灰度库建索引
+4. 对比执行计划和 P95/P99
+5. 低峰期在线建索引
+6. 观察写入延迟、锁等待、磁盘增长
+7. 删除重复索引和长期未使用索引
+
+**6. 上线 SQL 注意**
+
+PostgreSQL：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_xxx
+ON table_name (...);
+```
+
+MySQL 8/InnoDB：
+
+```sql
+ALTER TABLE table_name
+ADD INDEX idx_xxx (...),
+ALGORITHM=INPLACE,
+LOCK=NONE;
+```
+
+**结论**
+
+先按慢 SQL Top 10 建复合索引，优先覆盖：
+
+```text
+tenant_id / user_id / status / created_at / join_id
+```
+
+这类高频组合。不要按字段名机械补索引，否则 P99 可能没降，写入和磁盘成本反而上升。

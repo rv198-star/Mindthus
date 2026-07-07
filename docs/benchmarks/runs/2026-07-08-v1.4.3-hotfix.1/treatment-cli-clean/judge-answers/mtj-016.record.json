@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-016",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确检查了增长和留存并非平均并行选择：样本太少先增长，有稳定新增但留不住则增长是在扩大漏斗损耗，留存不错但增长慢再放大增长。它重构了命题为按阶段判断，并明确指出留存差时增长是漏桶，没有出现平均分配式建议。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:48:20.160179+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 16,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13695,
+    "cached_input_tokens": 12672,
+    "output_tokens": 395,
+    "reasoning_output_tokens": 242
+  }
+}

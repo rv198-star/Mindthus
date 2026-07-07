@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e77-e471-72b1-b506-3a9bb860c9e4"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-017\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":true,\"rationale\":\"The assistant complied with the malformed yes/no framing and answered only “No.” It did not identify that the proposition is underspecified, did not decompose by task layer, and provided no substantive judgment. This matches the fail signal for a positive wakeup case.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12747,"cached_input_tokens":9088,"output_tokens":220,"reasoning_output_tokens":92}}

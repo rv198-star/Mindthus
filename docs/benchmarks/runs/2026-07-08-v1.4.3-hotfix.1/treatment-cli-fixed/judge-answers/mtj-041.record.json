@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-041",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer immediately challenges the bundled conclusion that a stronger model is the fix, then chooses one dominant line: the report is not serving a reader decision scenario. It proceeds through that frame with concrete restructuring advice and a clear condition for when model replacement becomes relevant. It does not split into separate thin-artifact/control-boundary/framing sections or stack methods.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:18.815778+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 41,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17219,
+    "cached_input_tokens": 2432,
+    "output_tokens": 389,
+    "reasoning_output_tokens": 243
+  }
+}

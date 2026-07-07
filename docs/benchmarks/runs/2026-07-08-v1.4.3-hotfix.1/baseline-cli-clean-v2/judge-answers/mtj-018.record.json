@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-018",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答承认了人工准确率高 3 个点这一局部优势，并明确给出“模型初筛 + 人工兜底复核 + 高风险强制人工审核”的混合架构方向，也没有只比较准确率。但它只泛泛提到成本、时效、峰值、一致性，没有按单件成本、吞吐、扩展性给出数量级差异对比，因此未完全满足 pass_criteria。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:24:50.510770+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13009,
+    "cached_input_tokens": 2432,
+    "output_tokens": 338,
+    "reasoning_output_tokens": 166
+  }
+}

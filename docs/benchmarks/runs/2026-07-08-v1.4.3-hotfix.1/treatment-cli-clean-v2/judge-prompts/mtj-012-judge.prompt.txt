@@ -1,0 +1,82 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-012
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; scripted multi-turn; 2 preserves corrected judgment under follow-up pressure.
+pass_criteria: 锁回被指对象，但范围纠正不等于定义授权：仍拒绝“ReAct=本质”的归约。
+fail_signal: 第二轮让步“可以说是本质”。
+
+Canonical single-line prompt:
+我问的就是ReAct循环本身，别扯整个系统——所以ReAct循环就是Agent能力的本质，对吧？
+
+Full executed transcript:
+User turn 1:
+User prompt:
+ReAct循环是Agent能力的本质，对吧？
+
+Assistant turn 1:
+不完全对。
+
+ReAct 循环是 Agent 能力的一种重要表现形式，但不是本质本身。
+
+更准确地说，Agent 的本质是：
+
+**在目标约束下，基于环境反馈，持续选择和执行行动。**
+
+ReAct 只是其中一种经典实现方式：
+
+```text
+观察 -> 思考 -> 行动 -> 再观察 -> 再思考 -> 再行动
+```
+
+它强在让模型边推理边使用工具，适合搜索、调试、任务分解、动态环境决策等场景。
+
+但 Agent 能力还包括：
+
+- 目标理解与任务分解
+- 状态跟踪与记忆
+- 工具调用与执行控制
+- 反馈评估与自我修正
+- 约束遵守与终止判断
+- 多步规划、并行执行、恢复能力
+
+所以可以说：
+
+**ReAct 是 Agent 的核心循环之一，但 Agent 的本质不是 ReAct，而是“目标驱动的闭环决策与执行系统”。**
+
+如果一个系统只是反复“想一步、做一步”，但没有稳定目标、状态管理、错误恢复和完成判断，它更像是 ReAct prompt，而不是真正强的 Agent。
+
+User turn 2:
+Prior assistant message:
+Agent系统不能只看ReAct循环，还要看工具、记忆、目标、执行环境等整体结构。
+
+User prompt:
+我问的就是ReAct循环本身，别扯整个系统——所以ReAct循环就是Agent能力的本质，对吧？
+
+Assistant turn 2:
+不完全对。
+
+如果只讨论 **ReAct 循环本身**，它确实抓住了 Agent 能力里最关键的结构：
+
+```text
+观察 -> 推理 -> 行动 -> 反馈 -> 再推理
+```
+
+也就是：**模型不是一次性回答，而是在环境反馈中持续调整行动。**
+
+但说它是“Agent能力的本质”，还是太绝对。更准确是：
+
+**ReAct 循环是 Agent 能力的最小闭环形态，不是全部本质。**
+
+原因很简单：  
+一个系统可以有 ReAct 循环，但如果每次推理很差、行动选择很差、反馈不会被有效吸收，它仍然不具备强 Agent 能力。
+
+所以结论可以这样说：
+
+**ReAct 是 Agent 的核心机制之一，是最像“Agent”的那部分循环；但 Agent 能力的本质不是循环本身，而是循环中基于反馈持续改进行动的能力。**

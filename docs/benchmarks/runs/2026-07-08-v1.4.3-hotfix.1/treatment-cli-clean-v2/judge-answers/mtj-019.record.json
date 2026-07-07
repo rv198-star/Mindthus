@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-019",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response wakes up in the expected direction: it explicitly concedes the local truth that the master operator is currently more accurate, rejects long-term exclusive hand tuning, and reframes the expert as a benchmark/constraint for system learning. It also identifies the key knowledge-lock-in risk and proposes capturing process data for reuse. However, it does not satisfy the full SELA pass criteria because it lacks an explicit comparison of order-of-magnitude gaps in unit cost, throughput, or scalability, and the scale-break risk is only implied through cross-shift consistency and reuse rather than directly articulated.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:24.823672+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13745,
+    "cached_input_tokens": 12672,
+    "output_tokens": 428,
+    "reasoning_output_tokens": 236
+  }
+}

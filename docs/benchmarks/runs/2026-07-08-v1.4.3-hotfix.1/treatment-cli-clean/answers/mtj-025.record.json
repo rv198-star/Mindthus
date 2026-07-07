@@ -1,0 +1,55 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:43:38.626460+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-025",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e52-3cb7-7e23-b626-cbbab05c6ddf",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-025-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 13.949,
+      "thread_id": "019f3e52-3cb7-7e23-b626-cbbab05c6ddf",
+      "answer": "我这边看不到“昨天那个会话”的历史内容，所以不能直接核对它有没有按 MPG-AQM 规范输出显影快照。\n\n你把昨天那段 agent 输出贴过来，我可以帮你逐项核对。最低判断标准可以先看三点：\n\n1. 是否有明确的“显影快照”段落或等价结构，而不是只给结论。\n2. 是否把当前主线、承载对象、稀缺资源暴露、路径波动/阻力、继续/切换/退出等判断要素显影出来。\n3. 是否给出可复核的状态判断和下一步动作，而不是泛泛建议。\n\n如果输出里只有“建议继续/不建议继续”这类结论，没有把上述判断依据摊开，通常就不能算合格的 MPG-AQM 显影快照。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/events/mtj-025-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/stderr/mtj-025-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-025-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/prompts/mtj-025-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我这边看不到“昨天那个会话”的历史内容，所以不能直接核对它有没有按 MPG-AQM 规范输出显影快照。\n\n你把昨天那段 agent 输出贴过来，我可以帮你逐项核对。最低判断标准可以先看三点：\n\n1. 是否有明确的“显影快照”段落或等价结构，而不是只给结论。\n2. 是否把当前主线、承载对象、稀缺资源暴露、路径波动/阻力、继续/切换/退出等判断要素显影出来。\n3. 是否给出可复核的状态判断和下一步动作，而不是泛泛建议。\n\n如果输出里只有“建议继续/不建议继续”这类结论，没有把上述判断依据摊开，通常就不能算合格的 MPG-AQM 显影快照。"
+      ],
+      "usage": {
+        "input_tokens": 13234,
+        "cached_input_tokens": 13184,
+        "output_tokens": 303,
+        "reasoning_output_tokens": 110
+      },
+      "user_prompt": "帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？"
+    }
+  ],
+  "final_answer": "我这边看不到“昨天那个会话”的历史内容，所以不能直接核对它有没有按 MPG-AQM 规范输出显影快照。\n\n你把昨天那段 agent 输出贴过来，我可以帮你逐项核对。最低判断标准可以先看三点：\n\n1. 是否有明确的“显影快照”段落或等价结构，而不是只给结论。\n2. 是否把当前主线、承载对象、稀缺资源暴露、路径波动/阻力、继续/切换/退出等判断要素显影出来。\n3. 是否给出可复核的状态判断和下一步动作，而不是泛泛建议。\n\n如果输出里只有“建议继续/不建议继续”这类结论，没有把上述判断依据摊开，通常就不能算合格的 MPG-AQM 显影快照。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

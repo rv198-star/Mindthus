@@ -1,0 +1,42 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:24:31.039893+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-044",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e40-beba-7f91-94ca-f8a00861d3bc",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-044-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 1,
+      "duration_seconds": 12.716,
+      "thread_id": "019f3e40-beba-7f91-94ca-f8a00861d3bc",
+      "answer": "",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-044-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-044-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-044-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [],
+      "usage": null
+    }
+  ],
+  "final_answer": "",
+  "returncode": 1,
+  "loaded_commands_all_turns": []
+}

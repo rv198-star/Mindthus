@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-048",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response wakes up to the needed correction and avoids a concession-style or field-list opening. However, the first sentence is only the terse correction “不只是。” rather than the full corrected main judgment that owns the definition, such as stating that prompt engineering is not essentially rhetoric but task-specification/intent engineering. The substantive definition appears in the following sentence, so this is partial rather than full credit.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:15:28.557053+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13725,
+    "cached_input_tokens": 12672,
+    "output_tokens": 557,
+    "reasoning_output_tokens": 401
+  }
+}

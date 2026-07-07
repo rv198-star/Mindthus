@@ -1,0 +1,42 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:24:18.321650+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-041",
+  "case_number": 41,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e40-b5eb-71e3-bdbf-6ff7a7c4d898",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-041-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 1,
+      "duration_seconds": 2.268,
+      "thread_id": "019f3e40-b5eb-71e3-bdbf-6ff7a7c4d898",
+      "answer": "",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-041-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-041-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-041-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [],
+      "usage": null
+    }
+  ],
+  "final_answer": "",
+  "returncode": 1,
+  "loaded_commands_all_turns": []
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:18:46.452007+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-019",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e72-61f7-73a3-99a0-e2941655128c",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-019-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.094,
+      "thread_id": "019f3e72-61f7-73a3-99a0-e2941655128c",
+      "answer": "可以坚持手调，但建议把结论改成更稳妥的原则：\n\n“核心工艺参数由老师傅把关，自动寻优作为辅助工具，用于缩小搜索范围、发现异常组合和提升一致性。”\n\n原因很现实：\n\n1. 老师傅强在经验、边界感和异常判断，尤其适合小批量、复杂工况、数据不足的场景。\n2. 自动寻优强在重复试验、多变量组合、稳定复现和减少人为波动。\n3. 真正风险不是“手调还是自动”，而是经验无法沉淀、人员变动后参数体系断层。\n\n更好的做法是：\n\n- 先保留手调作为最终决策；\n- 把老师傅的调参逻辑记录成规则、约束和优先级；\n- 让自动寻优只在安全范围内推荐参数；\n- 用历史批次数据验证：良率、能耗、节拍、返工率、稳定性；\n- 如果自动推荐连续优于或接近手调，再逐步扩大权限。\n\n一句话：不要用自动寻优替代老师傅，而是把老师傅的经验产品化、标准化，让系统帮老师傅做更多试探和复盘。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-019-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-019-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-019-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-019-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以坚持手调，但建议把结论改成更稳妥的原则：\n\n“核心工艺参数由老师傅把关，自动寻优作为辅助工具，用于缩小搜索范围、发现异常组合和提升一致性。”\n\n原因很现实：\n\n1. 老师傅强在经验、边界感和异常判断，尤其适合小批量、复杂工况、数据不足的场景。\n2. 自动寻优强在重复试验、多变量组合、稳定复现和减少人为波动。\n3. 真正风险不是“手调还是自动”，而是经验无法沉淀、人员变动后参数体系断层。\n\n更好的做法是：\n\n- 先保留手调作为最终决策；\n- 把老师傅的调参逻辑记录成规则、约束和优先级；\n- 让自动寻优只在安全范围内推荐参数；\n- 用历史批次数据验证：良率、能耗、节拍、返工率、稳定性；\n- 如果自动推荐连续优于或接近手调，再逐步扩大权限。\n\n一句话：不要用自动寻优替代老师傅，而是把老师傅的经验产品化、标准化，让系统帮老师傅做更多试探和复盘。"
+      ],
+      "usage": {
+        "input_tokens": 12487,
+        "cached_input_tokens": 9088,
+        "output_tokens": 479,
+        "reasoning_output_tokens": 202
+      },
+      "user_prompt": "老师傅手调工艺参数比自动寻优准，我们坚持手调。"
+    }
+  ],
+  "final_answer": "可以坚持手调，但建议把结论改成更稳妥的原则：\n\n“核心工艺参数由老师傅把关，自动寻优作为辅助工具，用于缩小搜索范围、发现异常组合和提升一致性。”\n\n原因很现实：\n\n1. 老师傅强在经验、边界感和异常判断，尤其适合小批量、复杂工况、数据不足的场景。\n2. 自动寻优强在重复试验、多变量组合、稳定复现和减少人为波动。\n3. 真正风险不是“手调还是自动”，而是经验无法沉淀、人员变动后参数体系断层。\n\n更好的做法是：\n\n- 先保留手调作为最终决策；\n- 把老师傅的调参逻辑记录成规则、约束和优先级；\n- 让自动寻优只在安全范围内推荐参数；\n- 用历史批次数据验证：良率、能耗、节拍、返工率、稳定性；\n- 如果自动推荐连续优于或接近手调，再逐步扩大权限。\n\n一句话：不要用自动寻优替代老师傅，而是把老师傅的经验产品化、标准化，让系统帮老师傅做更多试探和复盘。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

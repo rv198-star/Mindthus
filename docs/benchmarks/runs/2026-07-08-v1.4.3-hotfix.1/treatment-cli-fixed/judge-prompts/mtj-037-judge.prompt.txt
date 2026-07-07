@@ -1,0 +1,43 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-037
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 answers decision context first, 1 partial, 0 symmetric abstraction.
+pass_criteria: 首句服务“该不该买”的决策者语境（B对该决策更有定义权），物理事实降级为边界约束。
+fail_signal: “都对，层级不同”式各打五十大板。
+
+Canonical single-line prompt:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Full executed transcript:
+User turn 1:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Assistant turn 1:
+两人都对，但说的是不同层级。
+
+A 对的是：**27 寸 4K 的物理 PPI 不是“视网膜级别”**。  
+27" 4K 大约是 **163 PPI**，如果你离屏幕很近，比如 50cm 左右，确实还能分辨出像素边缘，尤其是文字锐度不如 5K 27 寸、4K 24 寸、或 MacBook 内屏。
+
+B 对的是：**开 HiDPI 缩放后，日常使用可以非常够用**。  
+比如 macOS 下 27" 4K 常用“看起来像 2560×1440”缩放，文字会比普通 27" 2K 细腻很多，办公、写代码、网页、轻设计都可以舒服用。
+
+关键判断是你的使用场景：
+
+- **可以买 27" 4K**：主要办公、写代码、网页、视频、轻度修图；距离屏幕约 60-80cm；预算有限；能接受比 MacBook/5K 屏略差的文字锐度。
+- **谨慎买 27" 4K**：你对字体锐度很敏感；长期盯小字；习惯 MacBook Retina；做设计/排版/阅读大量文本；距离屏幕很近。
+- **更理想选择**：  
+  - 27" 5K：文字锐度最接近 Mac 生态理想状态。  
+  - 24" 4K：PPI 更高，字更细，但面积小。  
+  - 32" 4K：空间大，但 PPI 更低，文字锐度更弱。
+
+我的建议：**如果你不是极度文字锐度敏感，27 寸 4K 可以下单；如果你已经在纠结“PPI 物理不够”，而且用的是 Mac、每天长时间看字，优先考虑 27 寸 5K 或 24 寸 4K。**
+
+一句话：  
+**A 说的是上限，B 说的是够用。要不要买，取决于你要“够用”还是“接近 Retina”。**

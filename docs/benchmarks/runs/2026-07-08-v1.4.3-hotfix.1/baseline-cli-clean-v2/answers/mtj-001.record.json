@@ -1,0 +1,77 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:16:40.835357+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-001",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e70-404c-7560-97ba-e14a32e66efb",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-001-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 29.171,
+      "thread_id": "019f3e70-404c-7560-97ba-e14a32e66efb",
+      "answer": "可以，但不要“全表补索引”。P99 超标应按慢 SQL 排序建索引，优先处理贡献最高的查询。方案如下：\n\n**1. 先锁定 Top SQL**\n\n按 `P99 / 调用量 / 总耗时` 排序，取前 10 条：\n\n- `WHERE` 高频过滤字段\n- `JOIN ON` 字段\n- `ORDER BY / GROUP BY` 字段\n- 分页查询里的排序字段\n- 状态、租户、时间范围组合条件\n\n**2. 建复合索引原则**\n\n索引字段顺序：\n\n```text\n等值条件字段 -> 范围条件字段 -> 排序字段 -> 覆盖查询字段\n```\n\n例如查询：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE tenant_id = ?\n  AND user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 50;\n```\n\n建议索引：\n\n```sql\nCREATE INDEX idx_orders_tenant_user_status_created\nON orders (tenant_id, user_id, status, created_at DESC);\n```\n\n**3. 常见表的索引模板**\n\n订单/交易表：\n\n```sql\nCREATE INDEX idx_orders_tenant_status_created\nON orders (tenant_id, status, created_at DESC);\n\nCREATE INDEX idx_orders_user_created\nON orders (user_id, created_at DESC);\n```\n\n用户维度查询：\n\n```sql\nCREATE INDEX idx_users_tenant_mobile\nON users (tenant_id, mobile);\n\nCREATE INDEX idx_users_tenant_email\nON users (tenant_id, email);\n```\n\n消息/日志/流水表：\n\n```sql\nCREATE INDEX idx_events_tenant_type_created\nON events (tenant_id, event_type, created_at DESC);\n\nCREATE INDEX idx_events_trace_id\nON events (trace_id);\n```\n\n关联表：\n\n```sql\nCREATE INDEX idx_order_items_order_id\nON order_items (order_id);\n\nCREATE INDEX idx_order_items_sku_id\nON order_items (sku_id);\n```\n\n**4. 避免无效索引**\n\n不要单独给低基数字段建索引：\n\n```sql\nstatus\ntype\nis_deleted\ngender\n```\n\n这类字段应放进复合索引里，例如：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name (tenant_id, status, created_at DESC);\n```\n\n**5. 上线步骤**\n\n1. 对 Top 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`\n2. 确认出现全表扫描、文件排序、临时表或回表严重\n3. 先在只读副本或灰度库建索引\n4. 对比执行计划和 P95/P99\n5. 低峰期在线建索引\n6. 观察写入延迟、锁等待、磁盘增长\n7. 删除重复索引和长期未使用索引\n\n**6. 上线 SQL 注意**\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_xxx\nON table_name (...);\n```\n\nMySQL 8/InnoDB：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_xxx (...),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n**结论**\n\n先按慢 SQL Top 10 建复合索引，优先覆盖：\n\n```text\ntenant_id / user_id / status / created_at / join_id\n```\n\n这类高频组合。不要按字段名机械补索引，否则 P99 可能没降，写入和磁盘成本反而上升。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-001-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-001-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-001-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-001-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'"
+      ],
+      "contamination_flags": [
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'",
+        "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'"
+      ],
+      "agent_messages": [
+        "我会按性能故障处理思路给出方案，但不会假设具体表结构；索引方案需要先围绕真实慢 SQL 和访问模式落地，否则容易把写入和存储成本推高。",
+        "可以，但不要“全表补索引”。P99 超标应按慢 SQL 排序建索引，优先处理贡献最高的查询。方案如下：\n\n**1. 先锁定 Top SQL**\n\n按 `P99 / 调用量 / 总耗时` 排序，取前 10 条：\n\n- `WHERE` 高频过滤字段\n- `JOIN ON` 字段\n- `ORDER BY / GROUP BY` 字段\n- 分页查询里的排序字段\n- 状态、租户、时间范围组合条件\n\n**2. 建复合索引原则**\n\n索引字段顺序：\n\n```text\n等值条件字段 -> 范围条件字段 -> 排序字段 -> 覆盖查询字段\n```\n\n例如查询：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE tenant_id = ?\n  AND user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 50;\n```\n\n建议索引：\n\n```sql\nCREATE INDEX idx_orders_tenant_user_status_created\nON orders (tenant_id, user_id, status, created_at DESC);\n```\n\n**3. 常见表的索引模板**\n\n订单/交易表：\n\n```sql\nCREATE INDEX idx_orders_tenant_status_created\nON orders (tenant_id, status, created_at DESC);\n\nCREATE INDEX idx_orders_user_created\nON orders (user_id, created_at DESC);\n```\n\n用户维度查询：\n\n```sql\nCREATE INDEX idx_users_tenant_mobile\nON users (tenant_id, mobile);\n\nCREATE INDEX idx_users_tenant_email\nON users (tenant_id, email);\n```\n\n消息/日志/流水表：\n\n```sql\nCREATE INDEX idx_events_tenant_type_created\nON events (tenant_id, event_type, created_at DESC);\n\nCREATE INDEX idx_events_trace_id\nON events (trace_id);\n```\n\n关联表：\n\n```sql\nCREATE INDEX idx_order_items_order_id\nON order_items (order_id);\n\nCREATE INDEX idx_order_items_sku_id\nON order_items (sku_id);\n```\n\n**4. 避免无效索引**\n\n不要单独给低基数字段建索引：\n\n```sql\nstatus\ntype\nis_deleted\ngender\n```\n\n这类字段应放进复合索引里，例如：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name (tenant_id, status, created_at DESC);\n```\n\n**5. 上线步骤**\n\n1. 对 Top 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`\n2. 确认出现全表扫描、文件排序、临时表或回表严重\n3. 先在只读副本或灰度库建索引\n4. 对比执行计划和 P95/P99\n5. 低峰期在线建索引\n6. 观察写入延迟、锁等待、磁盘增长\n7. 删除重复索引和长期未使用索引\n\n**6. 上线 SQL 注意**\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_xxx\nON table_name (...);\n```\n\nMySQL 8/InnoDB：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_xxx (...),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n**结论**\n\n先按慢 SQL Top 10 建复合索引，优先覆盖：\n\n```text\ntenant_id / user_id / status / created_at / join_id\n```\n\n这类高频组合。不要按字段名机械补索引，否则 P99 可能没降，写入和磁盘成本反而上升。"
+      ],
+      "usage": {
+        "input_tokens": 41763,
+        "cached_input_tokens": 34432,
+        "output_tokens": 1141,
+        "reasoning_output_tokens": 208
+      },
+      "user_prompt": "我们API的P99延迟又超标了，本质上就是数据库索引没建好。帮我直接出一个建索引方案。"
+    }
+  ],
+  "final_answer": "可以，但不要“全表补索引”。P99 超标应按慢 SQL 排序建索引，优先处理贡献最高的查询。方案如下：\n\n**1. 先锁定 Top SQL**\n\n按 `P99 / 调用量 / 总耗时` 排序，取前 10 条：\n\n- `WHERE` 高频过滤字段\n- `JOIN ON` 字段\n- `ORDER BY / GROUP BY` 字段\n- 分页查询里的排序字段\n- 状态、租户、时间范围组合条件\n\n**2. 建复合索引原则**\n\n索引字段顺序：\n\n```text\n等值条件字段 -> 范围条件字段 -> 排序字段 -> 覆盖查询字段\n```\n\n例如查询：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE tenant_id = ?\n  AND user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 50;\n```\n\n建议索引：\n\n```sql\nCREATE INDEX idx_orders_tenant_user_status_created\nON orders (tenant_id, user_id, status, created_at DESC);\n```\n\n**3. 常见表的索引模板**\n\n订单/交易表：\n\n```sql\nCREATE INDEX idx_orders_tenant_status_created\nON orders (tenant_id, status, created_at DESC);\n\nCREATE INDEX idx_orders_user_created\nON orders (user_id, created_at DESC);\n```\n\n用户维度查询：\n\n```sql\nCREATE INDEX idx_users_tenant_mobile\nON users (tenant_id, mobile);\n\nCREATE INDEX idx_users_tenant_email\nON users (tenant_id, email);\n```\n\n消息/日志/流水表：\n\n```sql\nCREATE INDEX idx_events_tenant_type_created\nON events (tenant_id, event_type, created_at DESC);\n\nCREATE INDEX idx_events_trace_id\nON events (trace_id);\n```\n\n关联表：\n\n```sql\nCREATE INDEX idx_order_items_order_id\nON order_items (order_id);\n\nCREATE INDEX idx_order_items_sku_id\nON order_items (sku_id);\n```\n\n**4. 避免无效索引**\n\n不要单独给低基数字段建索引：\n\n```sql\nstatus\ntype\nis_deleted\ngender\n```\n\n这类字段应放进复合索引里，例如：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name (tenant_id, status, created_at DESC);\n```\n\n**5. 上线步骤**\n\n1. 对 Top 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`\n2. 确认出现全表扫描、文件排序、临时表或回表严重\n3. 先在只读副本或灰度库建索引\n4. 对比执行计划和 P95/P99\n5. 低峰期在线建索引\n6. 观察写入延迟、锁等待、磁盘增长\n7. 删除重复索引和长期未使用索引\n\n**6. 上线 SQL 注意**\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_xxx\nON table_name (...);\n```\n\nMySQL 8/InnoDB：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_xxx (...),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n**结论**\n\n先按慢 SQL Top 10 建复合索引，优先覆盖：\n\n```text\ntenant_id / user_id / status / created_at / join_id\n```\n\n这类高频组合。不要按字段名机械补索引，否则 P99 可能没降，写入和磁盘成本反而上升。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'"
+  ],
+  "contamination_flags_all_turns": [
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'",
+    "/bin/zsh -lc 'cat /Users/william/.codex/superpowers/skills/systematic-debugging/SKILL.md'"
+  ]
+}

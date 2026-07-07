@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-039",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有停留在“加班文化对不对”的泛泛道德判断，而是切到应届生在两个 offer 间选择的决策场景，围绕可预期、可补偿、成长收益、团队健康、leader、离职率等目标函数给出比较框架和倾向性建议。也保留了事实层的边界，如调休/加班费、长期高压和压榨风险。整体属于处境化决策建议。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:26:36.211055+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13179,
+    "cached_input_tokens": 12160,
+    "output_tokens": 328,
+    "reasoning_output_tokens": 145
+  }
+}

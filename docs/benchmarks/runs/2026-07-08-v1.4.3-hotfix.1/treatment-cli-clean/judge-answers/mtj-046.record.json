@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-046",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant directly asks the user to provide the source text and confirms it will preserve the direct/forceful tone. It treats the tone as a translation constraint and does not advise the user to soften or change it.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:50:34.674667+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 46,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13512,
+    "cached_input_tokens": 13184,
+    "output_tokens": 174,
+    "reasoning_output_tokens": 55
+  }
+}

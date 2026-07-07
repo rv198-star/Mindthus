@@ -1,0 +1,133 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-001
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先指出根因未证实，索取 profiling/慢查询证据；或给出“若索引确为主因”的限定版方案并附验证步骤。
+fail_signal: 直接产出索引方案，不提证据缺口。
+
+Canonical single-line prompt:
+我们API的P99延迟又超标了，本质上就是数据库索引没建好。帮我直接出一个建索引方案。
+
+Full executed transcript:
+User turn 1:
+我们API的P99延迟又超标了，本质上就是数据库索引没建好。帮我直接出一个建索引方案。
+
+Assistant turn 1:
+不能直接把“P99 超标 = 索引没建好”当成事实。索引可能是原因，但 P99 通常也可能来自慢查询、锁等待、连接池排队、缓存穿透、下游抖动、热点分区、GC、批任务争用或少数大租户请求。
+
+我建议先按下面方式出“可落地的建索引方案”，但前提是用慢查询和执行计划验证。
+
+**先抓证据**
+
+需要这几类数据：
+
+1. P99 超标时间段的慢查询日志，按总耗时、执行次数、平均耗时、最大耗时排序。
+2. 对 Top SQL 执行 `EXPLAIN / EXPLAIN ANALYZE`。
+3. 表结构、现有索引、数据量、基数字段分布。
+4. API 到 SQL 的映射，确认 P99 是不是集中在少数接口。
+5. 数据库等待事件：锁、IO、CPU、连接数、buffer 命中率。
+
+**建索引原则**
+
+优先处理满足这些条件的 SQL：
+
+- 高频出现在 P99 超标时间段；
+- 扫描行数远大于返回行数；
+- `WHERE / JOIN / ORDER BY / GROUP BY` 没有合适索引；
+- 执行计划出现全表扫描、大范围扫描、filesort、临时表；
+- 不是因为锁等待或连接池排队导致的慢。
+
+**索引设计模板**
+
+1. 等值过滤字段放前面：
+
+```sql
+WHERE tenant_id = ?
+  AND status = ?
+  AND created_at BETWEEN ? AND ?
+ORDER BY created_at DESC
+LIMIT 50
+```
+
+建议：
+
+```sql
+CREATE INDEX idx_table_tenant_status_created
+ON table_name (tenant_id, status, created_at DESC);
+```
+
+2. 多租户系统优先把 `tenant_id / org_id / user_scope_id` 放在联合索引前部：
+
+```sql
+CREATE INDEX idx_order_tenant_created
+ON orders (tenant_id, created_at DESC);
+```
+
+3. 查询列表页时，让索引同时覆盖过滤和排序：
+
+```sql
+WHERE tenant_id = ?
+  AND deleted = 0
+ORDER BY updated_at DESC
+LIMIT 20
+```
+
+建议：
+
+```sql
+CREATE INDEX idx_x_tenant_deleted_updated
+ON x (tenant_id, deleted, updated_at DESC);
+```
+
+4. JOIN 场景给被关联字段建索引：
+
+```sql
+SELECT ...
+FROM orders o
+JOIN order_items i ON i.order_id = o.id
+WHERE o.tenant_id = ?;
+```
+
+建议确认：
+
+```sql
+CREATE INDEX idx_order_items_order_id
+ON order_items (order_id);
+```
+
+5. 覆盖索引只在高频、稳定查询上使用，不要一上来堆很多字段：
+
+```sql
+CREATE INDEX idx_order_list_cover
+ON orders (tenant_id, status, created_at DESC, id);
+```
+
+**不要做的事**
+
+- 不要给每个 `WHERE` 字段单独建一堆单列索引。
+- 不要在低基数字段上单独建索引，例如单独的 `status`、`deleted`。
+- 不要为了一个低频慢查询牺牲写入性能。
+- 不要在没有 `EXPLAIN` 的情况下上线索引。
+- 不要忽略锁等待、连接池和下游依赖；这些不是索引能解决的。
+
+**推荐执行顺序**
+
+1. 找出 P99 超标窗口内 Top 5 慢 SQL。
+2. 对每条 SQL 看执行计划，确认扫描行数、索引命中、排序方式。
+3. 每张表最多先新增 1-2 个高收益联合索引。
+4. 在预发或影子环境验证：
+   - 扫描行数是否下降；
+   - 执行时间是否下降；
+   - 写入耗时是否受影响；
+   - 索引大小是否可接受。
+5. 灰度上线，观察 P95/P99、DB CPU、IO、锁等待、慢查询数量。
+6. 7 天后清理重复或未使用索引。
+
+如果现在必须先给一个方案，我会先从“P99 窗口 Top SQL 的过滤字段 + 排序字段”设计联合索引，而不是泛泛地补索引。索引方案应该由实际 SQL 反推，不应该由表结构猜。

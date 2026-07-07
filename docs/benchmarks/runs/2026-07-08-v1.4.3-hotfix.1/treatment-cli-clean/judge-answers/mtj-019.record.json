@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-019",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer correctly wakes up to the SELA issue: it accepts that the master worker may currently tune more accurately, reframes hand tuning as benchmark/constraint rather than the long-term system, and identifies dependence on tacit expert knowledge, shift/material/equipment/product variation, and the need to sediment experience into rules/data/model feedback. It does not merely praise craftsmanship. However, it misses the required explicit comparison of order-of-magnitude differences in per-unit cost, throughput, and scalability, so it only partially satisfies the pass criteria.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:48:33.776122+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13829,
+    "cached_input_tokens": 13184,
+    "output_tokens": 389,
+    "reasoning_output_tokens": 207
+  }
+}

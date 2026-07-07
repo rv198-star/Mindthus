@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-013",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": null,
+  "rationale": "The response accepts the user's premise and writes bean-centric招商文案 directly. It does not reconstruct the whole business object around location, repeat purchase, sales per square meter, brand, operations, or channel fit, and it does not qualify the true weight of coffee beans within the broader success drivers. Phrases like “好豆子就是核心竞争力” and “咖啡生意的底气，藏在豆子里” effectively match the fail signal of treating beans as the decisive factor.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:48:06.856975+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13815,
+    "cached_input_tokens": 2432,
+    "output_tokens": 343,
+    "reasoning_output_tokens": 166
+  }
+}

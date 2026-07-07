@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-032",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "负控场景应保持直接澄清而非启动方法化强化。助手没有盲目重写，而是先要求用户提供周报正文，并补充询问汇报对象、期望风格、是否保留格式等与“哪里不行”相关的修改约束。虽然没有逐字追问“不行是信息密度还是说服力”，但行为符合 targeted clarification，未观察到 fail_signal。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:12.711818+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13607,
+    "cached_input_tokens": 12672,
+    "output_tokens": 277,
+    "reasoning_output_tokens": 108
+  }
+}

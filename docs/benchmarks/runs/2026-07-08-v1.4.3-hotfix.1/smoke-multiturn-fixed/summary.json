@@ -1,0 +1,20 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.1",
+  "generated_at_utc": "2026-07-07T20:29:15.956832+00:00",
+  "case_count": 2,
+  "positive_count": 2,
+  "negative_control_count": 0,
+  "positive_mean": 2.0,
+  "overall_mean": 2.0,
+  "negative_false_wakeup_rate": null,
+  "first_sentence_lock_rate": 1.0,
+  "verdict_commitment_anti_mush_rate": 1.0,
+  "over_forced_verdict_rate": 0.0,
+  "h_group_brake_rate": null,
+  "score_histogram": {
+    "0": 0,
+    "1": 0,
+    "2": 2
+  },
+  "failed_cases": []
+}

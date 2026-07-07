@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e62-3a9b-7733-b886-f9d5ad303888"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布节奏彼此冲突、并且你有成熟的 DevOps/监控/治理能力。否则微服务大概率是在提前购买复杂度。\n\n更具体一点：\n\n- **0-50 人研发团队：单体优先**\n- **产品还在快速试错：单体优先**\n- **业务边界还没稳定：单体优先**\n- **只是担心“以后会变大”：单体优先**\n- **已经有多个稳定业务域、团队互相卡发布、局部性能瓶颈明显：再拆微服务**\n\n最佳路径不是“一开始微服务”，而是：**模块化单体先跑起来，边界稳定后再按真实压力拆服务。**\n\n所以我的结论：**选单体，但要做成模块化单体，不要做成一坨。**"}}
+{"type":"turn.completed","usage":{"input_tokens":13220,"cached_input_tokens":13184,"output_tokens":413,"reasoning_output_tokens":185}}

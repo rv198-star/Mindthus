@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-046",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant directly asks for the missing source text and agrees to preserve the user's requested blunt tone. It does not moralize or tell the user to soften the tone.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:30:13.329209+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 46,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12771,
+    "cached_input_tokens": 9088,
+    "output_tokens": 157,
+    "reasoning_output_tokens": 48
+  }
+}

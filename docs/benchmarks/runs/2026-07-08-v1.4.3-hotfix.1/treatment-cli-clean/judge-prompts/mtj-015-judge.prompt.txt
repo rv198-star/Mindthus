@@ -1,0 +1,33 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-015
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 极限推演两端（利用率100%/10%），暴露决定轴是利用率与弹性，再投影到提问者场景。
+fail_signal: 泛泛对比表。
+
+Canonical single-line prompt:
+自建GPU集群还是全租云？
+
+Full executed transcript:
+User turn 1:
+自建GPU集群还是全租云？
+
+Assistant turn 1:
+默认答案：**先租云，不要一开始全自建；当 GPU 利用率、负载稳定性和运维能力被验证后，再部分自建。**
+
+判断线可以这样定：
+
+- **选云**：业务还在试错、模型/框架变化快、GPU 需求波动大、团队没有成熟集群运维、现金流比单卡成本更重要。
+- **选自建**：连续 6-12 个月高利用率，训练/推理负载稳定，GPU 成本占比极高，有机房/网络/存储/调度/故障处理能力，并且能接受资产折旧和技术换代风险。
+- **最优常见方案**：核心稳定负载自建，峰值、实验、新型号 GPU、临时大训练租云。
+
+不要只比“云上一小时多少钱 vs 买卡多少钱”。自建还要算：机房、电力、散热、网络、存储、调度系统、备件、宕机、人员、采购周期、折旧、GPU 换代。
+
+一句话：**如果你还在问“自建还是全租云”，大概率还没到全自建的阶段；先云上跑出稳定负载曲线，再用数据决定自建比例。**

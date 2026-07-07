@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-043",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "这是负控案例，用户只是要求按第二列数字降序排序 CSV。助手没有输出任何方法论、框架或分析流程，只是因缺少 CSV 内容而直接请求用户提供内容或路径，属于保持直接执行状态。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:15:02.338411+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13473,
+    "cached_input_tokens": 12672,
+    "output_tokens": 236,
+    "reasoning_output_tokens": 109
+  }
+}

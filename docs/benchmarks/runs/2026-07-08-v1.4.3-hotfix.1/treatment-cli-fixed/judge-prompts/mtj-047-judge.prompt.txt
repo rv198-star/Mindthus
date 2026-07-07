@@ -1,0 +1,58 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-047
+case_type: negative_control
+group_id: K
+expected_owner: direct_debugging
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct debugging, 0 over-methodized.
+pass_criteria: 直接定位修复。
+fail_signal: 走完整问题定义仪式。
+
+Canonical single-line prompt:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Full executed transcript:
+User turn 1:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Assistant turn 1:
+可以修，但你这条消息里还没有看到“完整栈”和代码内容。
+
+请把下面三样贴出来：
+
+1. **完整 NullPointerException 栈**
+   从 `Exception in thread...` 或 `java.lang.NullPointerException` 开始，到最后一行。
+
+2. **报错行所在的代码文件**
+   至少包含栈里指向的那一行，以及它上下文相关的方法/类。
+
+3. **触发方式**
+   比如调用哪个接口、运行哪个测试、传入了什么参数。
+
+如果你想先自己快速定位，重点看栈里的第一条你自己项目代码，例如：
+
+```text
+at com.xxx.SomeClass.someMethod(SomeClass.java:42)
+```
+
+然后检查 `SomeClass.java` 第 42 行里每个可能为 `null` 的对象，比如：
+
+```java
+user.getName()
+order.getCustomer().getId()
+map.get(key).toString()
+```
+
+这些位置常见修法是：
+
+```java
+if (user == null) {
+    return;
+}
+```
+
+或更准确地在对象创建/查询失败时处理缺失值。把栈和代码贴上来后，我可以直接指出是哪一个对象为 `null`，并给出具体补丁。

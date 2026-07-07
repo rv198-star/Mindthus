@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e61-a2f0-78e3-ada1-94cfc85d5baf"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全是。可以说 Kubernetes **包含“调度进程/容器到机器上运行”的能力**，但把它说成“进程调度器”会低估它。\n\n更准确地说：\n\nKubernetes 是一个**容器化应用的集群操作系统/编排系统**。它关心的不是单机上的进程时间片调度，而是：\n\n- 把 Pod 放到合适的节点上运行\n- 维持期望状态，比如“我要 3 个副本”，少了就补\n- 处理服务发现和负载均衡\n- 做滚动发布、回滚\n- 管理配置、密钥、存储挂载\n- 监控容器健康，失败后重启或迁移\n- 根据资源、亲和性、污点等规则做集群级调度\n\n所以如果类比：\n\n- Linux 内核调度器：调度**进程/线程**到 CPU\n- Kubernetes scheduler：调度**Pod**到集群节点\n- Kubernetes 整体：不只是 scheduler，还包括控制器、API Server、etcd、kubelet、网络、服务发现等一整套控制系统\n\n一句话：**Kubernetes 不是“进程调度器”，而是“以声明式方式管理容器化工作负载的集群控制系统”；调度只是其中一部分。**"}}
+{"type":"turn.completed","usage":{"input_tokens":13216,"cached_input_tokens":13184,"output_tokens":344,"reasoning_output_tokens":36}}

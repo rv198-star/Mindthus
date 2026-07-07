@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-028
+case_type: negative_control
+group_id: F
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct judgment, 0 over-methodized.
+pass_criteria: 按组织责任直接判断；无 agentic system 不套控制边界框架。
+fail_signal: 用WAE式术语分析部门职责。
+
+Canonical single-line prompt:
+落地页文案该归市场部还是产品部管？
+
+Full executed transcript:
+User turn 1:
+落地页文案该归市场部还是产品部管？
+
+Assistant turn 1:
+应该由**市场部主责，产品部共管**。
+
+更准确地说：
+
+- **市场部负责表达**：目标人群、卖点包装、转化路径、标题、CTA、情绪调性、A/B 测试和投放转化。
+- **产品部负责事实**：产品能力、核心价值、使用场景、功能边界、差异化依据，避免夸大或讲偏。
+- **最终责任看落地页用途**：
+  - 用于广告投放、获客、活动转化：市场部 Owner。
+  - 用于产品官网、功能介绍、定价页：市场部 Owner，产品部强审核。
+  - 用于产品内引导、升级页、功能教育：产品部 Owner，市场/增长参与优化。
+
+最佳机制不是争归属，而是定流程：**市场写，产品校准，增长/数据看转化，最终由对应业务目标的负责人拍板**。  
+一句话：落地页是转化资产，不是产品说明书，所以通常应归市场部管，但产品部必须有内容否决权。

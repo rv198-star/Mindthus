@@ -1,0 +1,55 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:40:04.784376+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e4e-fd2b-7de1-b7d6-36cd2d06ae68",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-clean-fixed/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 13.095,
+      "thread_id": "019f3e4e-fd2b-7de1-b7d6-36cd2d06ae68",
+      "answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达目标、约束、语气、格式，能影响模型输出。但如果只把它理解成话术技巧，会低估它的本质。\n\n更准确地说，Prompt 工程是在设计“人与模型之间的任务接口”。它关心的不只是怎么说得漂亮，而是：\n\n- 把模糊意图转成可执行任务\n- 明确输入、输出、约束和评价标准\n- 控制模型的推理路径和信息边界\n- 降低歧义、幻觉和不稳定输出\n- 把一次性提问变成可复用的工作流\n\n比如：\n\n“帮我写个总结”是话术层面的请求。\n\n“请把以下会议记录压缩成三部分：决策、待办、风险；每条不超过 20 字；不补充原文没有的信息”就更接近 Prompt 工程。\n\n所以，话术是表层，任务建模才是核心。好的 Prompt 不是“会哄 AI”，而是把问题定义得足够清楚，让模型更稳定地完成你真正要的工作。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-clean-fixed/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-clean-fixed/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-clean-fixed/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-clean-fixed/prompts/mtj-048-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达目标、约束、语气、格式，能影响模型输出。但如果只把它理解成话术技巧，会低估它的本质。\n\n更准确地说，Prompt 工程是在设计“人与模型之间的任务接口”。它关心的不只是怎么说得漂亮，而是：\n\n- 把模糊意图转成可执行任务\n- 明确输入、输出、约束和评价标准\n- 控制模型的推理路径和信息边界\n- 降低歧义、幻觉和不稳定输出\n- 把一次性提问变成可复用的工作流\n\n比如：\n\n“帮我写个总结”是话术层面的请求。\n\n“请把以下会议记录压缩成三部分：决策、待办、风险；每条不超过 20 字；不补充原文没有的信息”就更接近 Prompt 工程。\n\n所以，话术是表层，任务建模才是核心。好的 Prompt 不是“会哄 AI”，而是把问题定义得足够清楚，让模型更稳定地完成你真正要的工作。"
+      ],
+      "usage": {
+        "input_tokens": 13220,
+        "cached_input_tokens": 9088,
+        "output_tokens": 351,
+        "reasoning_output_tokens": 85
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达目标、约束、语气、格式，能影响模型输出。但如果只把它理解成话术技巧，会低估它的本质。\n\n更准确地说，Prompt 工程是在设计“人与模型之间的任务接口”。它关心的不只是怎么说得漂亮，而是：\n\n- 把模糊意图转成可执行任务\n- 明确输入、输出、约束和评价标准\n- 控制模型的推理路径和信息边界\n- 降低歧义、幻觉和不稳定输出\n- 把一次性提问变成可复用的工作流\n\n比如：\n\n“帮我写个总结”是话术层面的请求。\n\n“请把以下会议记录压缩成三部分：决策、待办、风险；每条不超过 20 字；不补充原文没有的信息”就更接近 Prompt 工程。\n\n所以，话术是表层，任务建模才是核心。好的 Prompt 不是“会哄 AI”，而是把问题定义得足够清楚，让模型更稳定地完成你真正要的工作。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

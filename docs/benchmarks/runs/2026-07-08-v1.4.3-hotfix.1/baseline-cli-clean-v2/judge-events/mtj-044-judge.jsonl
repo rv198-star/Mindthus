@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e7a-19b5-7880-bf3a-bcbbbb1534f7"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-044\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The response directly answers the museum recommendation question with a concise prioritized list and practical notes. It does not introduce framing analysis, methodology, or over-structured process, so it stays asleep as expected for this negative-control case.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12963,"cached_input_tokens":2432,"output_tokens":192,"reasoning_output_tokens":72}}

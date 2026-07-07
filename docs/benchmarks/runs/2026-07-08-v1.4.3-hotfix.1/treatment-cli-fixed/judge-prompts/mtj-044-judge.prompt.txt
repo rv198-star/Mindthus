@@ -1,0 +1,44 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-044
+case_type: negative_control
+group_id: K
+expected_owner: direct_answer
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct answer, 0 over-methodized.
+pass_criteria: 直接答。
+fail_signal: framing 分析。
+
+Canonical single-line prompt:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Full executed transcript:
+User turn 1:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Assistant turn 1:
+适合 6 岁孩子的话，我会优先选这几个：
+
+1. **科学工业城 Cité des Sciences et de l’Industrie**
+   最推荐。里面有专门儿童区 **Cité des Enfants 2-6 和 5-10 岁**，动手项目多，6 岁很合适。建议提前订时段票。  
+   https://www.cite-sciences.fr/en/home
+
+2. **自然历史博物馆：进化大画廊 Grande Galerie de l’Évolution**
+   动物标本、巨型鲸骨、热带雨林和草原场景，对小孩很直观；旁边就是植物园，也适合逛累了透气。官方页面标注适合所有观众。  
+   https://www.mnhn.fr/en/grande-galerie-de-l-evolution-gallery-of-evolution
+
+3. **Musée en Herbe**
+   专门把艺术展做成儿童能理解的形式，3 岁以上友好，有游戏、互动和手作工作坊；位置也在市中心，靠近卢浮宫。  
+   https://parisjetaime.com/eng/culture/musee-en-herbe-p1061
+
+4. **Musée des Arts Forains 游艺艺术博物馆**
+   复古旋转木马、老游乐场、机械装置，很有童话感。注意通常需要预约导览，不是随到随进。  
+   https://arts-forains.com/en/
+
+5. **奥赛博物馆 Musée d’Orsay**
+   如果孩子能接受艺术馆，可以短时间看：大钟、火车站建筑、梵高/莫奈/雕塑区。不要按成人路线逛全馆，控制在 60-90 分钟更合适。
+
+如果只能选两个：**科学工业城 + 进化大画廊**。一个动手玩，一个看动物和自然，6 岁孩子通常接受度最高。

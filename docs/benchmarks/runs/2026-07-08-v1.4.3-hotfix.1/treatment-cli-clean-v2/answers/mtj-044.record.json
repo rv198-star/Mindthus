@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:11:54.517160+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-044",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e66-e14b-7fb0-89ab-98f338ec7873",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-044-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 359.977,
+      "thread_id": "019f3e66-e14b-7fb0-89ab-98f338ec7873",
+      "answer": "适合 6 岁孩子的，我会优先选这些：\n\n1. **科学工业城 Cité des sciences：Cité des enfants**\n   最推荐。官方有 **2-6岁** 和 **5-10岁** 两个儿童区，6岁可以按孩子状态选；偏动手、探索、玩中学。暑期还常有儿童展和活动。([cite-sciences.fr](https://www.cite-sciences.fr/fr/au-programme/expos-permanentes/cite-des-enfants))\n\n2. **Musée en Herbe 小草博物馆**\n   儿童友好的艺术博物馆，官方写明面向 **3到103岁**，有适合 **6-12岁** 的创作工作坊。规模不大，不容易累。([musee-en-herbe.com](https://www.musee-en-herbe.com/))\n\n3. **自然历史博物馆 / Jardin des Plantes 一带**\n   重点看 **Grande Galerie de l’Évolution** 或古生物馆。动物标本、骨架、恐龙感强，6岁通常很吃这一套。可以顺便逛植物园，节奏更松。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Grande_galerie_de_l%27%C3%89volution?utm_source=openai))\n\n4. **Musée des Arts Forains 露天游艺艺术博物馆**\n   复古游乐场、旋转木马、表演式导览，很有“玩”的感觉。注意官方说明通常需要预约参观。([arts-forains.com](https://arts-forains.com/))\n\n5. **Musée du quai Branly - Jacques Chirac**\n   如果孩子对面具、乐器、世界文化感兴趣，可以去。官方有家庭导览资料和“Mon p’tit guide”儿童小导览；也靠近埃菲尔铁塔，适合顺路。([quaibranly.fr](https://www.quaibranly.fr/fr/))\n\n6. **卢浮宫**\n   不是最轻松，但可以只看 45-60 分钟：埃及馆、拿破仑三世公寓、几件“寻宝式”作品。不要按成人路线硬逛。\n\n**我的排序：**  \n第一次带6岁孩子去巴黎博物馆：**Cité des enfants > Musée en Herbe > 自然历史博物馆 > Arts Forains > Quai Branly > 卢浮宫短线**。\n\n出发前建议查当天开放时间和是否要预约，巴黎很多亲子活动名额会满。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-044-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-044-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-044-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-044-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "适合 6 岁孩子的，我会优先选这些：\n\n1. **科学工业城 Cité des sciences：Cité des enfants**\n   最推荐。官方有 **2-6岁** 和 **5-10岁** 两个儿童区，6岁可以按孩子状态选；偏动手、探索、玩中学。暑期还常有儿童展和活动。([cite-sciences.fr](https://www.cite-sciences.fr/fr/au-programme/expos-permanentes/cite-des-enfants))\n\n2. **Musée en Herbe 小草博物馆**\n   儿童友好的艺术博物馆，官方写明面向 **3到103岁**，有适合 **6-12岁** 的创作工作坊。规模不大，不容易累。([musee-en-herbe.com](https://www.musee-en-herbe.com/))\n\n3. **自然历史博物馆 / Jardin des Plantes 一带**\n   重点看 **Grande Galerie de l’Évolution** 或古生物馆。动物标本、骨架、恐龙感强，6岁通常很吃这一套。可以顺便逛植物园，节奏更松。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Grande_galerie_de_l%27%C3%89volution?utm_source=openai))\n\n4. **Musée des Arts Forains 露天游艺艺术博物馆**\n   复古游乐场、旋转木马、表演式导览，很有“玩”的感觉。注意官方说明通常需要预约参观。([arts-forains.com](https://arts-forains.com/))\n\n5. **Musée du quai Branly - Jacques Chirac**\n   如果孩子对面具、乐器、世界文化感兴趣，可以去。官方有家庭导览资料和“Mon p’tit guide”儿童小导览；也靠近埃菲尔铁塔，适合顺路。([quaibranly.fr](https://www.quaibranly.fr/fr/))\n\n6. **卢浮宫**\n   不是最轻松，但可以只看 45-60 分钟：埃及馆、拿破仑三世公寓、几件“寻宝式”作品。不要按成人路线硬逛。\n\n**我的排序：**  \n第一次带6岁孩子去巴黎博物馆：**Cité des enfants > Musée en Herbe > 自然历史博物馆 > Arts Forains > Quai Branly > 卢浮宫短线**。\n\n出发前建议查当天开放时间和是否要预约，巴黎很多亲子活动名额会满。"
+      ],
+      "usage": {
+        "input_tokens": 44946,
+        "cached_input_tokens": 13184,
+        "output_tokens": 1198,
+        "reasoning_output_tokens": 663
+      },
+      "user_prompt": "巴黎有哪些适合带6岁孩子的博物馆？"
+    }
+  ],
+  "final_answer": "适合 6 岁孩子的，我会优先选这些：\n\n1. **科学工业城 Cité des sciences：Cité des enfants**\n   最推荐。官方有 **2-6岁** 和 **5-10岁** 两个儿童区，6岁可以按孩子状态选；偏动手、探索、玩中学。暑期还常有儿童展和活动。([cite-sciences.fr](https://www.cite-sciences.fr/fr/au-programme/expos-permanentes/cite-des-enfants))\n\n2. **Musée en Herbe 小草博物馆**\n   儿童友好的艺术博物馆，官方写明面向 **3到103岁**，有适合 **6-12岁** 的创作工作坊。规模不大，不容易累。([musee-en-herbe.com](https://www.musee-en-herbe.com/))\n\n3. **自然历史博物馆 / Jardin des Plantes 一带**\n   重点看 **Grande Galerie de l’Évolution** 或古生物馆。动物标本、骨架、恐龙感强，6岁通常很吃这一套。可以顺便逛植物园，节奏更松。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Grande_galerie_de_l%27%C3%89volution?utm_source=openai))\n\n4. **Musée des Arts Forains 露天游艺艺术博物馆**\n   复古游乐场、旋转木马、表演式导览，很有“玩”的感觉。注意官方说明通常需要预约参观。([arts-forains.com](https://arts-forains.com/))\n\n5. **Musée du quai Branly - Jacques Chirac**\n   如果孩子对面具、乐器、世界文化感兴趣，可以去。官方有家庭导览资料和“Mon p’tit guide”儿童小导览；也靠近埃菲尔铁塔，适合顺路。([quaibranly.fr](https://www.quaibranly.fr/fr/))\n\n6. **卢浮宫**\n   不是最轻松，但可以只看 45-60 分钟：埃及馆、拿破仑三世公寓、几件“寻宝式”作品。不要按成人路线硬逛。\n\n**我的排序：**  \n第一次带6岁孩子去巴黎博物馆：**Cité des enfants > Musée en Herbe > 自然历史博物馆 > Arts Forains > Quai Branly > 卢浮宫短线**。\n\n出发前建议查当天开放时间和是否要预约，巴黎很多亲子活动名额会满。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

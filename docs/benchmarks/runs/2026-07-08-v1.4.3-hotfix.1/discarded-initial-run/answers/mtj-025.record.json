@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:22:48.154075+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-025",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e3f-3228-7391-8365-ab97292f4039",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-025-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 11.351,
+      "thread_id": "019f3e3f-3228-7391-8365-ab97292f4039",
+      "answer": "我现在没法直接核对，因为这轮上下文里没有“昨天那个会话”的原文或输出。\n\n你把那段 agent 输出贴过来，我可以帮你核对它是否满足 MPG-AQM 的关键要求，重点看这几项：\n\n- 有没有明确说数字是假设显影，不是事实测量\n- 有没有显影变量关系，而不是用数字直接下结论\n- 有没有区分主线强度、路径阻力、载体脆弱度、信息缺口、触发器等关键项\n- 有没有把判断仍交给 MPG，而不是让 AQM 数字替代判断\n- 有没有避免把非精准量化包装成精确计算或评分\n\n如果它只是列了几个分数，然后直接根据总分做决定，通常就不算符合 MPG-AQM 规范。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-025-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-025-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-025-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "我现在没法直接核对，因为这轮上下文里没有“昨天那个会话”的原文或输出。\n\n你把那段 agent 输出贴过来，我可以帮你核对它是否满足 MPG-AQM 的关键要求，重点看这几项：\n\n- 有没有明确说数字是假设显影，不是事实测量\n- 有没有显影变量关系，而不是用数字直接下结论\n- 有没有区分主线强度、路径阻力、载体脆弱度、信息缺口、触发器等关键项\n- 有没有把判断仍交给 MPG，而不是让 AQM 数字替代判断\n- 有没有避免把非精准量化包装成精确计算或评分\n\n如果它只是列了几个分数，然后直接根据总分做决定，通常就不算符合 MPG-AQM 规范。"
+      ],
+      "usage": {
+        "input_tokens": 16536,
+        "cached_input_tokens": 9088,
+        "output_tokens": 270,
+        "reasoning_output_tokens": 85
+      }
+    }
+  ],
+  "final_answer": "我现在没法直接核对，因为这轮上下文里没有“昨天那个会话”的原文或输出。\n\n你把那段 agent 输出贴过来，我可以帮你核对它是否满足 MPG-AQM 的关键要求，重点看这几项：\n\n- 有没有明确说数字是假设显影，不是事实测量\n- 有没有显影变量关系，而不是用数字直接下结论\n- 有没有区分主线强度、路径阻力、载体脆弱度、信息缺口、触发器等关键项\n- 有没有把判断仍交给 MPG，而不是让 AQM 数字替代判断\n- 有没有避免把非精准量化包装成精确计算或评分\n\n如果它只是列了几个分数，然后直接根据总分做决定，通常就不算符合 MPG-AQM 规范。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

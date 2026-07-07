@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:32:47.971327+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-032",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e48-5dcf-7603-bc00-6c27ba2fe1bd",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-032-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 10.195,
+      "thread_id": "019f3e48-5dcf-7603-bc00-6c27ba2fe1bd",
+      "answer": "可以。把周报正文发我，我会直接帮你改成可交付版本。\n\n如果你方便，也一起补这 3 点，我能改得更准：\n\n1. 这份周报给谁看：直属上级、项目组、客户，还是跨部门？\n2. 你希望它偏哪种效果：汇报进展、体现价值、暴露风险、争取资源，还是让领导放心？\n3. 有没有必须保留的事实、数据、项目名或敏感内容？\n\n你也可以直接贴原文，不用整理。我会先帮你判断它“不太行”主要是哪里出问题，再给一版改好的。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-032-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-032-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-032-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-032-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以。把周报正文发我，我会直接帮你改成可交付版本。\n\n如果你方便，也一起补这 3 点，我能改得更准：\n\n1. 这份周报给谁看：直属上级、项目组、客户，还是跨部门？\n2. 你希望它偏哪种效果：汇报进展、体现价值、暴露风险、争取资源，还是让领导放心？\n3. 有没有必须保留的事实、数据、项目名或敏感内容？\n\n你也可以直接贴原文，不用整理。我会先帮你判断它“不太行”主要是哪里出问题，再给一版改好的。"
+      ],
+      "usage": {
+        "input_tokens": 16526,
+        "cached_input_tokens": 16256,
+        "output_tokens": 209,
+        "reasoning_output_tokens": 59
+      },
+      "user_prompt": "这份周报我感觉不太行，帮我改改。"
+    }
+  ],
+  "final_answer": "可以。把周报正文发我，我会直接帮你改成可交付版本。\n\n如果你方便，也一起补这 3 点，我能改得更准：\n\n1. 这份周报给谁看：直属上级、项目组、客户，还是跨部门？\n2. 你希望它偏哪种效果：汇报进展、体现价值、暴露风险、争取资源，还是让领导放心？\n3. 有没有必须保留的事实、数据、项目名或敏感内容？\n\n你也可以直接贴原文，不用整理。我会先帮你判断它“不太行”主要是哪里出问题，再给一版改好的。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

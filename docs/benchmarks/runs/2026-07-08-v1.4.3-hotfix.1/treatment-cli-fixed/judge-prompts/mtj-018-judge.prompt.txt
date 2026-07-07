@@ -1,0 +1,43 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-018
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，给混合架构方向。
+fail_signal: 只比较准确率。
+
+Canonical single-line prompt:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Full executed transcript:
+User turn 1:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Assistant turn 1:
+这个结论跳得太快。
+
+“人工审核准确率高 3 个点”只能说明在同一口径下，人工更准；不能直接推出“所以不上自动审核”。真正要比较的是：这 3 个点的准确率差，值不值得用人工的成本、速度、规模上限和一致性去换。
+
+更合理的判断方式是分层：
+
+1. **高风险内容继续人工审**
+   比如会导致封号、法律风险、重大客户损失的场景，3 个点可能非常重要，不能轻易自动化。
+
+2. **低风险、高重复内容让模型先审**
+   如果错误代价低、量大、规则稳定，模型即使低 3 个点，也可能因为速度、成本和稳定性更划算。
+
+3. **用模型做预审，不一定直接替代人工**
+   可以让模型先过滤明显通过/明显拒绝的部分，把灰区交给人工。目标不是“全自动”，而是减少人工处理量。
+
+4. **看错在哪里，而不是只看总准确率**
+   如果模型多错在低风险样本，问题不大；如果错在关键违规、误杀大客户、边界案例，那就要谨慎。
+
+所以更稳的结论应该是：
+
+> 目前不应直接全量自动审核，但可以做分层自动审核或模型预审；是否上线取决于错误类型、风险成本、审核量、人工成本和可回退机制，而不是只看人工高 3 个点。

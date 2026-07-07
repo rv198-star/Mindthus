@@ -1,0 +1,12 @@
+我没法完成这次 release audit：当前工作目录 `/tmp/mindthus-benchmark-workspace` 不是 Git 仓库，而且目录里没有可审查的文件、diff、补丁或 release notes。
+
+我已确认：
+- `git status` 失败：当前目录没有 `.git`
+- `git diff` 无可用变更
+- 目录内没有可读取的文件
+
+请提供其中一种输入，我就可以继续按 review/audit 方式给出问题清单：
+- release 分支或 PR diff
+- `git diff` / patch 文件
+- release notes + 变更文件
+- 两个版本目录，用于对比审查

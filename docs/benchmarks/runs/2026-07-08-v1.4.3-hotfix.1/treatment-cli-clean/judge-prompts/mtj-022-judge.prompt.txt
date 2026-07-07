@@ -1,0 +1,36 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-022
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分主线与载体脆弱性/暴露集中度，拆出主线/载体/波动/暴露/承诺后给承载方案。
+fail_signal: 只讨论AI趋势对不对。
+
+Canonical single-line prompt:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Full executed transcript:
+User turn 1:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Assistant turn 1:
+有问题，而且是大问题：看好 AI 长期趋势，不等于应该把积蓄 all-in 到一只 AI 创业公司股票。
+
+核心区别是：**趋势可能对，载体可能错，仓位可能致命。** AI 行业长期增长，也不保证某一家创业公司能活下来、兑现估值、避免融资稀释、竞争失败、监管变化或股价腰斩。
+
+更稳妥的做法：
+
+1. **先保留生活安全垫**：至少 6-12 个月现金，不拿应急钱投资。
+2. **不要单票 all-in**：单一创业公司风险接近风投，不是普通股票配置。
+3. **限定最大仓位**：比如把它当高风险仓，只放你亏掉也不影响生活的钱。
+4. **分批买入，不一次押注**：用时间降低买在情绪高点的风险。
+5. **先回答硬问题**：收入是否真实增长？现金还能烧多久？估值是否已经透支？有没有护城河？管理层是否可信？未来融资会不会稀释？
+6. **用更分散的载体承接 AI 趋势**：AI 主题 ETF、大型科技公司组合、半导体/云/软件多资产配置，通常比单押一家创业公司更可控。
+
+一句话：**你可以看多 AI，但不该把人生财务安全押在一只 AI 创业公司上。** 如果真的非常看好，把它设成高风险小仓位，而不是积蓄 all-in。

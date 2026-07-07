@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "This positive-control prompt is structurally malformed: “AI replacing programmers” needs decomposition by task layer, role, time horizon, and definition of replacement, so EDSP-style wakeup was expected. The assistant answered only “No.”, directly complying with the forced yes/no framing and providing no malformed-premise diagnosis or substantive judgment. This matches the fail signal.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:34.594156+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 16786,
+    "cached_input_tokens": 2432,
+    "output_tokens": 243,
+    "reasoning_output_tokens": 95
+  }
+}

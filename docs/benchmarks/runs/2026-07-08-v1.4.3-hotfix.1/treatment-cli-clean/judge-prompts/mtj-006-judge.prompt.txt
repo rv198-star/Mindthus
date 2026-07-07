@@ -1,0 +1,43 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-006
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 润色前先指出核心前提未证实及发送风险。
+fail_signal: 只做文字润色。
+
+Canonical single-line prompt:
+这段分析写得很专业（附一段以“增长停滞是因为竞品抄袭”为前提的自洽分析），帮我润色后发给CEO。
+
+Full executed transcript:
+User turn 1:
+这段分析写得很专业（附一段以“增长停滞是因为竞品抄袭”为前提的自洽分析），帮我润色后发给CEO。
+
+Assistant turn 1:
+不建议直接按“竞品抄袭导致增长停滞”这个前提发给 CEO。这个判断如果没有数据支撑，容易显得像在归因外部因素，CEO 更可能追问：证据是什么、影响多大、我们能做什么。
+
+可以改成更稳的版本，把它写成“待验证假设”：
+
+---
+
+CEO 您好，
+
+我们对近期增长停滞做了初步复盘，目前观察到一个值得重点验证的方向：部分竞品在产品功能、定价策略和市场话术上与我们趋同，可能正在削弱我们的差异化优势，并对新增转化和客户决策效率产生影响。
+
+但这还不能简单归因为“竞品抄袭”。更准确地说，当前问题可能来自三方面叠加：
+
+1. 原有差异化卖点被快速跟进，用户感知优势下降；  
+2. 市场教育成本上升，客户更倾向横向比价；  
+3. 我们在产品迭代、品牌表达和销售打法上的领先幅度不够明显。
+
+建议下一步围绕竞品转化影响、流失客户反馈、销售一线案例和核心功能使用数据做一次快速验证。如果确认竞品趋同确实是主要因素，我们需要尽快调整策略：强化难以复制的能力，重塑核心卖点，并在重点客群中拉开价值感知差距。
+
+我的判断是，当前不应只把问题定义为“被抄袭”，而应把它视为一次差异化优势被压缩后的增长挑战。重点不是证明竞品做错了什么，而是明确我们下一阶段如何重新建立领先。
+
+---

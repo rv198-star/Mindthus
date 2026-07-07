@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e4c-f82e-7b82-b48c-ab4fdb13b5e1"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-035\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control: the assistant correctly treated this as normal evidence-driven debugging because each prior edit corresponded to a concrete failing test that turned green. It explicitly avoided anti-spiral escalation and requested the next failing test details needed to continue. No mechanical Mindthus/anti-spiral lecture or stop behavior appeared.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":16890,"cached_input_tokens":12672,"output_tokens":228,"reasoning_output_tokens":90}}

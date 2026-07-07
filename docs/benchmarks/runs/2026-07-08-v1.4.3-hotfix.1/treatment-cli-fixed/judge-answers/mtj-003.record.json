@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-003",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant did wake up to the framing problem: it challenged the premise that SPA is simply outdated, reframed SSR as page- and objective-dependent, and limited the migration strategy to SSR/SSG/ISR/CSR by page type. It avoided the pure fail signal of directly listing a migration checklist without caveat. However, it did not first ask for the target function or constraints such as SEO, first-screen performance, business pages, current stack, team capability, or deployment constraints before giving steps. It also only implicitly addressed the level error in 'outdated' rather than explicitly naming it as a trend narrative being substituted for engineering judgment. This is a partial pass, not full.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:22.481956+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 18056,
+    "cached_input_tokens": 2432,
+    "output_tokens": 475,
+    "reasoning_output_tokens": 261
+  }
+}

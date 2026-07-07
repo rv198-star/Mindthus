@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-024",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant correctly separates the broad AI-transition trend from the high-stakes path decision of quitting now. It emphasizes optionality, staged validation, runway, customer/payment evidence, unique advantage, and explicit quit-trigger conditions. It does not infer 'AI trend therefore resign now'; it recommends shifting toward AI while preserving income and testing before committing.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:49:01.674256+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13883,
+    "cached_input_tokens": 12672,
+    "output_tokens": 262,
+    "reasoning_output_tokens": 119
+  }
+}

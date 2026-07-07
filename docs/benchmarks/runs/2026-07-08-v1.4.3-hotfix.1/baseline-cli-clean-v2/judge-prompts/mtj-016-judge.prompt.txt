@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+一般先做留存，再放大增长。
+
+判断标准很简单：
+
+- 如果用户来了但不回来，先做留存。增长只会把流量倒进漏桶，获客成本越花越高。
+- 如果还没有足够用户样本，先做小规模增长，用来验证需求、定位人群和拿反馈。
+- 如果已有一批用户持续使用、复购、转介绍，再加大增长投入。
+
+可以按阶段看：
+
+1. **0 到 1：先找有效用户**
+   小规模获客，验证谁真的需要你。
+
+2. **1 到 10：优先留存**
+   看次日、7 日、30 日留存，复购率，激活率，核心行为完成率。把产品价值打透。
+
+3. **10 到 100：增长放大**
+   当留存稳定、单位经济模型成立，再投渠道、内容、销售、裂变、广告。
+
+一句话：**没有留存，增长是烧钱；没有增长，留存没有样本。早期小增长验证需求，随后优先留存，最后规模化增长。**

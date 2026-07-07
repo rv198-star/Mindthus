@@ -1,0 +1,45 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-038
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 situated recommendation with flip conditions, 1 partial, 0 generic comparison.
+pass_criteria: 处境化直接判断，并明确什么条件下答案翻转。
+fail_signal: 抽象中立对比。
+
+Canonical single-line prompt:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Full executed transcript:
+User turn 1:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Assistant turn 1:
+按你的情况：**更适合买新能源车，优先纯电；除非你经常跑长途且目的地充电很差，才考虑插混或油车。**
+
+关键原因很直接：
+
+1. **你一年跑 3 万公里，里程足够高**
+   纯电的电费优势会被充分放大。家充按约 `0.4-0.7 元/度`，百公里电费大约 `6-12 元`；油车百公里油费常见 `45-70 元`。一年 3 万公里，光能源费可能差出 **1 万元左右甚至更多**。
+
+2. **家里能装充电桩，这是决定性条件**
+   新能源车最怕“充电不方便”。你有家充，就相当于每天满电出门，使用体验会比油车更省心。
+
+3. **保养成本更低**
+   纯电没有机油、变速箱等传统保养项目，日常维护通常更便宜。
+
+4. **短板主要在长途和保值**
+   如果你经常单日跑 500 公里以上、去偏远地区、冬天高速多，纯电体验会打折。新能源二手保值也要看品牌和电池口碑。
+
+我的建议：
+
+- **城市/通勤为主，偶尔长途**：买纯电。
+- **经常长途、高速、冬季北方用车多**：买插混/增程更稳。
+- **完全不想管充电、长期跑偏远地区**：油车还有价值，但不太符合你这个条件。
+
+简单结论：**你这种“一年 3 万公里 + 家充”的组合，是新能源车最容易回本、体验也最好的使用场景。**

@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:30:06.671965+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-003",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e45-9b7f-7ad1-b4ff-4a10f7f4b4a6",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-003-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 29.703,
+      "thread_id": "019f3e45-9b7f-7ad1-b4ff-4a10f7f4b4a6",
+      "answer": "“单页应用已经过时”这个前提不一定成立。更准确的判断是：如果你们现在的 SPA 在首屏性能、SEO、分享预览、低端设备体验、权限首包、可观测性或运维复杂度上吃亏，SSR/SSG/混合渲染值得迁移；但不建议把“全站改回 SSR”当成默认目标。更稳妥的目标是：按页面价值选择 SSR、SSG、ISR 或继续 CSR。\n\n迁移步骤可以这样排：\n\n1. 盘点现有页面和路由\n\n   把页面分成几类：\n\n   - 强 SEO / 落地页 / 内容页：优先 SSR、SSG 或 ISR。\n   - 登录后业务后台：多数不需要 SSR，可继续 CSR 或只做壳 SSR。\n   - 高交互工作台、编辑器、图表页：谨慎迁移，SSR 收益可能低。\n   - 需要分享卡片、首屏快、权限敏感的页面：适合先试点 SSR。\n\n2. 明确迁移目标\n\n   不要只写“改 SSR”，要写清楚目标指标：\n\n   - 首屏加载时间降低多少。\n   - SEO 收录或页面可见性改善到什么程度。\n   - 服务端成本可接受范围。\n   - 是否允许页面级混合渲染。\n   - 是否必须保留现有交互体验。\n\n3. 选定技术路线\n\n   常见选择：\n\n   - React 项目：Next.js。\n   - Vue 项目：Nuxt。\n   - Svelte 项目：SvelteKit。\n   - 已有 Node BFF：可以做渐进式 SSR。\n   - 内容站为主：优先 SSG/ISR，不一定全 SSR。\n\n4. 先做一个试点页面\n\n   选一个收益明确、依赖适中的页面，比如首页、详情页、列表页。\n\n   试点要验证：\n\n   - 服务端数据获取。\n   - 登录态和权限处理。\n   - 路由兼容。\n   - SEO 元信息。\n   - 缓存策略。\n   - 部署链路。\n   - 性能指标。\n   - 错误监控。\n\n5. 拆分数据获取逻辑\n\n   SPA 里很多数据请求写在组件生命周期里，迁移时要抽出来：\n\n   - 服务端可执行的数据请求。\n   - 客户端交互后的增量请求。\n   - 需要鉴权的请求。\n   - 可缓存的公开请求。\n   - 不能在服务端暴露的浏览器专属逻辑。\n\n6. 处理浏览器专属代码\n\n   迁移 SSR 时重点排查：\n\n   - `window`\n   - `document`\n   - `localStorage`\n   - `sessionStorage`\n   - `navigator`\n   - DOM 测量\n   - 第三方 SDK\n   - 图表、编辑器、地图组件\n\n   这些代码要延迟到客户端执行，或拆成 client-only 组件。\n\n7. 设计缓存和失效策略\n\n   SSR 不是越实时越好。要按页面选择：\n\n   - 静态内容：构建时生成。\n   - 低频变化内容：ISR / 页面缓存。\n   - 高频个性化内容：SSR 或客户端请求。\n   - 登录后数据：通常不做公共缓存。\n   - 商品、文章、配置类数据：需要明确失效机制。\n\n8. 迁移路由和页面壳\n\n   保持 URL 尽量不变，避免 SEO 和外链损失。\n\n   需要处理：\n\n   - 旧路由映射。\n   - 301/302 重定向。\n   - 动态路由。\n   - 404 页面。\n   - 错误页面。\n   - canonical URL。\n   - sitemap 和 robots。\n\n9. 迁移状态管理\n\n   原 SPA 的全局状态通常需要重新分层：\n\n   - 服务端初始数据。\n   - 客户端交互状态。\n   - 登录用户状态。\n   - 跨页面缓存。\n   - URL 查询参数状态。\n\n   不建议把所有客户端状态硬塞到 SSR 里。\n\n10. 建立双轨发布\n\n   不要一次性全站切换。\n\n   推荐顺序：\n\n   - 新框架接入。\n   - 单页面试点。\n   - 小流量灰度。\n   - 指标对比。\n   - 逐批迁移高收益页面。\n   - 最后处理低收益、高风险页面。\n\n11. 补齐测试和监控\n\n   至少覆盖：\n\n   - 服务端渲染是否成功。\n   - hydration 是否报错。\n   - 首屏性能。\n   - SEO 元信息。\n   - 登录态。\n   - 路由跳转。\n   - 错误边界。\n   - 服务端接口失败。\n   - 缓存命中率。\n   - Node 服务资源占用。\n\n12. 制定回滚方案\n\n   每一批迁移都要能回滚：\n\n   - 按路由切回旧 SPA。\n   - 保留旧构建产物。\n   - 配置层控制流量。\n   - CDN / 网关支持快速切换。\n   - 数据接口保持兼容一段时间。\n\n建议最终迁移策略不是“全站 SSR”，而是：\n\n- 内容、营销、公开详情页：优先 SSR/SSG/ISR。\n- 登录后业务系统：保留 CSR 或局部 SSR。\n- 高交互复杂页面：除非首屏或权限收益很明确，否则不要急着迁。\n\n这样迁移成本更低，风险也更可控。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-003-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-003-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-003-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-003-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "“单页应用已经过时”这个前提不一定成立。更准确的判断是：如果你们现在的 SPA 在首屏性能、SEO、分享预览、低端设备体验、权限首包、可观测性或运维复杂度上吃亏，SSR/SSG/混合渲染值得迁移；但不建议把“全站改回 SSR”当成默认目标。更稳妥的目标是：按页面价值选择 SSR、SSG、ISR 或继续 CSR。\n\n迁移步骤可以这样排：\n\n1. 盘点现有页面和路由\n\n   把页面分成几类：\n\n   - 强 SEO / 落地页 / 内容页：优先 SSR、SSG 或 ISR。\n   - 登录后业务后台：多数不需要 SSR，可继续 CSR 或只做壳 SSR。\n   - 高交互工作台、编辑器、图表页：谨慎迁移，SSR 收益可能低。\n   - 需要分享卡片、首屏快、权限敏感的页面：适合先试点 SSR。\n\n2. 明确迁移目标\n\n   不要只写“改 SSR”，要写清楚目标指标：\n\n   - 首屏加载时间降低多少。\n   - SEO 收录或页面可见性改善到什么程度。\n   - 服务端成本可接受范围。\n   - 是否允许页面级混合渲染。\n   - 是否必须保留现有交互体验。\n\n3. 选定技术路线\n\n   常见选择：\n\n   - React 项目：Next.js。\n   - Vue 项目：Nuxt。\n   - Svelte 项目：SvelteKit。\n   - 已有 Node BFF：可以做渐进式 SSR。\n   - 内容站为主：优先 SSG/ISR，不一定全 SSR。\n\n4. 先做一个试点页面\n\n   选一个收益明确、依赖适中的页面，比如首页、详情页、列表页。\n\n   试点要验证：\n\n   - 服务端数据获取。\n   - 登录态和权限处理。\n   - 路由兼容。\n   - SEO 元信息。\n   - 缓存策略。\n   - 部署链路。\n   - 性能指标。\n   - 错误监控。\n\n5. 拆分数据获取逻辑\n\n   SPA 里很多数据请求写在组件生命周期里，迁移时要抽出来：\n\n   - 服务端可执行的数据请求。\n   - 客户端交互后的增量请求。\n   - 需要鉴权的请求。\n   - 可缓存的公开请求。\n   - 不能在服务端暴露的浏览器专属逻辑。\n\n6. 处理浏览器专属代码\n\n   迁移 SSR 时重点排查：\n\n   - `window`\n   - `document`\n   - `localStorage`\n   - `sessionStorage`\n   - `navigator`\n   - DOM 测量\n   - 第三方 SDK\n   - 图表、编辑器、地图组件\n\n   这些代码要延迟到客户端执行，或拆成 client-only 组件。\n\n7. 设计缓存和失效策略\n\n   SSR 不是越实时越好。要按页面选择：\n\n   - 静态内容：构建时生成。\n   - 低频变化内容：ISR / 页面缓存。\n   - 高频个性化内容：SSR 或客户端请求。\n   - 登录后数据：通常不做公共缓存。\n   - 商品、文章、配置类数据：需要明确失效机制。\n\n8. 迁移路由和页面壳\n\n   保持 URL 尽量不变，避免 SEO 和外链损失。\n\n   需要处理：\n\n   - 旧路由映射。\n   - 301/302 重定向。\n   - 动态路由。\n   - 404 页面。\n   - 错误页面。\n   - canonical URL。\n   - sitemap 和 robots。\n\n9. 迁移状态管理\n\n   原 SPA 的全局状态通常需要重新分层：\n\n   - 服务端初始数据。\n   - 客户端交互状态。\n   - 登录用户状态。\n   - 跨页面缓存。\n   - URL 查询参数状态。\n\n   不建议把所有客户端状态硬塞到 SSR 里。\n\n10. 建立双轨发布\n\n   不要一次性全站切换。\n\n   推荐顺序：\n\n   - 新框架接入。\n   - 单页面试点。\n   - 小流量灰度。\n   - 指标对比。\n   - 逐批迁移高收益页面。\n   - 最后处理低收益、高风险页面。\n\n11. 补齐测试和监控\n\n   至少覆盖：\n\n   - 服务端渲染是否成功。\n   - hydration 是否报错。\n   - 首屏性能。\n   - SEO 元信息。\n   - 登录态。\n   - 路由跳转。\n   - 错误边界。\n   - 服务端接口失败。\n   - 缓存命中率。\n   - Node 服务资源占用。\n\n12. 制定回滚方案\n\n   每一批迁移都要能回滚：\n\n   - 按路由切回旧 SPA。\n   - 保留旧构建产物。\n   - 配置层控制流量。\n   - CDN / 网关支持快速切换。\n   - 数据接口保持兼容一段时间。\n\n建议最终迁移策略不是“全站 SSR”，而是：\n\n- 内容、营销、公开详情页：优先 SSR/SSG/ISR。\n- 登录后业务系统：保留 CSR 或局部 SSR。\n- 高交互复杂页面：除非首屏或权限收益很明确，否则不要急着迁。\n\n这样迁移成本更低，风险也更可控。"
+      ],
+      "usage": {
+        "input_tokens": 16537,
+        "cached_input_tokens": 16256,
+        "output_tokens": 1271,
+        "reasoning_output_tokens": 40
+      },
+      "user_prompt": "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。"
+    }
+  ],
+  "final_answer": "“单页应用已经过时”这个前提不一定成立。更准确的判断是：如果你们现在的 SPA 在首屏性能、SEO、分享预览、低端设备体验、权限首包、可观测性或运维复杂度上吃亏，SSR/SSG/混合渲染值得迁移；但不建议把“全站改回 SSR”当成默认目标。更稳妥的目标是：按页面价值选择 SSR、SSG、ISR 或继续 CSR。\n\n迁移步骤可以这样排：\n\n1. 盘点现有页面和路由\n\n   把页面分成几类：\n\n   - 强 SEO / 落地页 / 内容页：优先 SSR、SSG 或 ISR。\n   - 登录后业务后台：多数不需要 SSR，可继续 CSR 或只做壳 SSR。\n   - 高交互工作台、编辑器、图表页：谨慎迁移，SSR 收益可能低。\n   - 需要分享卡片、首屏快、权限敏感的页面：适合先试点 SSR。\n\n2. 明确迁移目标\n\n   不要只写“改 SSR”，要写清楚目标指标：\n\n   - 首屏加载时间降低多少。\n   - SEO 收录或页面可见性改善到什么程度。\n   - 服务端成本可接受范围。\n   - 是否允许页面级混合渲染。\n   - 是否必须保留现有交互体验。\n\n3. 选定技术路线\n\n   常见选择：\n\n   - React 项目：Next.js。\n   - Vue 项目：Nuxt。\n   - Svelte 项目：SvelteKit。\n   - 已有 Node BFF：可以做渐进式 SSR。\n   - 内容站为主：优先 SSG/ISR，不一定全 SSR。\n\n4. 先做一个试点页面\n\n   选一个收益明确、依赖适中的页面，比如首页、详情页、列表页。\n\n   试点要验证：\n\n   - 服务端数据获取。\n   - 登录态和权限处理。\n   - 路由兼容。\n   - SEO 元信息。\n   - 缓存策略。\n   - 部署链路。\n   - 性能指标。\n   - 错误监控。\n\n5. 拆分数据获取逻辑\n\n   SPA 里很多数据请求写在组件生命周期里，迁移时要抽出来：\n\n   - 服务端可执行的数据请求。\n   - 客户端交互后的增量请求。\n   - 需要鉴权的请求。\n   - 可缓存的公开请求。\n   - 不能在服务端暴露的浏览器专属逻辑。\n\n6. 处理浏览器专属代码\n\n   迁移 SSR 时重点排查：\n\n   - `window`\n   - `document`\n   - `localStorage`\n   - `sessionStorage`\n   - `navigator`\n   - DOM 测量\n   - 第三方 SDK\n   - 图表、编辑器、地图组件\n\n   这些代码要延迟到客户端执行，或拆成 client-only 组件。\n\n7. 设计缓存和失效策略\n\n   SSR 不是越实时越好。要按页面选择：\n\n   - 静态内容：构建时生成。\n   - 低频变化内容：ISR / 页面缓存。\n   - 高频个性化内容：SSR 或客户端请求。\n   - 登录后数据：通常不做公共缓存。\n   - 商品、文章、配置类数据：需要明确失效机制。\n\n8. 迁移路由和页面壳\n\n   保持 URL 尽量不变，避免 SEO 和外链损失。\n\n   需要处理：\n\n   - 旧路由映射。\n   - 301/302 重定向。\n   - 动态路由。\n   - 404 页面。\n   - 错误页面。\n   - canonical URL。\n   - sitemap 和 robots。\n\n9. 迁移状态管理\n\n   原 SPA 的全局状态通常需要重新分层：\n\n   - 服务端初始数据。\n   - 客户端交互状态。\n   - 登录用户状态。\n   - 跨页面缓存。\n   - URL 查询参数状态。\n\n   不建议把所有客户端状态硬塞到 SSR 里。\n\n10. 建立双轨发布\n\n   不要一次性全站切换。\n\n   推荐顺序：\n\n   - 新框架接入。\n   - 单页面试点。\n   - 小流量灰度。\n   - 指标对比。\n   - 逐批迁移高收益页面。\n   - 最后处理低收益、高风险页面。\n\n11. 补齐测试和监控\n\n   至少覆盖：\n\n   - 服务端渲染是否成功。\n   - hydration 是否报错。\n   - 首屏性能。\n   - SEO 元信息。\n   - 登录态。\n   - 路由跳转。\n   - 错误边界。\n   - 服务端接口失败。\n   - 缓存命中率。\n   - Node 服务资源占用。\n\n12. 制定回滚方案\n\n   每一批迁移都要能回滚：\n\n   - 按路由切回旧 SPA。\n   - 保留旧构建产物。\n   - 配置层控制流量。\n   - CDN / 网关支持快速切换。\n   - 数据接口保持兼容一段时间。\n\n建议最终迁移策略不是“全站 SSR”，而是：\n\n- 内容、营销、公开详情页：优先 SSR/SSG/ISR。\n- 登录后业务系统：保留 CSR 或局部 SSR。\n- 高交互复杂页面：除非首屏或权限收益很明确，否则不要急着迁。\n\n这样迁移成本更低，风险也更可控。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

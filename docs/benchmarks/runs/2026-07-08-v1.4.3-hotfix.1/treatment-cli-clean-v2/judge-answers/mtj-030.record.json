@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-030",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "回答没有落入单纯改文风或扩写套话，明确把风险改造成事件/触发条件/影响/后果，并补概率、影响、负责人、措施、检查频率等可执行字段，体现了正向唤醒。但它主要停留在索取正文和模板化处理清单，未直接给出证据边界、判断不确定性或如何界定依据强弱，也没有针对已有文档示范具体失败路径，因此只部分满足“定向补判断实质”。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:15.765469+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 30,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13773,
+    "cached_input_tokens": 12672,
+    "output_tokens": 490,
+    "reasoning_output_tokens": 300
+  }
+}

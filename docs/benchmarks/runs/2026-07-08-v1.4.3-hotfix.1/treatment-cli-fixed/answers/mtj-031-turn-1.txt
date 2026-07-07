@@ -1,0 +1,18 @@
+可以。请把这次 release 的材料发我，至少需要其中一种：
+
+- PR / commit diff
+- release notes / changelog
+- 变更文件列表
+- 测试结果或 CI 链接
+- 关键需求说明、风险点、迁移说明
+
+我会按 release audit 的角度看：
+
+1. 是否有行为回归或破坏兼容性
+2. 是否有未覆盖的边界条件
+3. 配置、数据迁移、部署顺序是否安全
+4. 文档和 release notes 是否准确
+5. 测试是否足够支撑本次变更
+6. 是否存在不该混入 release 的改动
+
+你可以直接贴 diff，或者先贴 changelog + 关键 PR 列表。

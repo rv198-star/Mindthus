@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-037
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 answers decision context first, 1 partial, 0 symmetric abstraction.
+pass_criteria: 首句服务“该不该买”的决策者语境（B对该决策更有定义权），物理事实降级为边界约束。
+fail_signal: “都对，层级不同”式各打五十大板。
+
+Canonical single-line prompt:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Full executed transcript:
+User turn 1:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Assistant turn 1:
+两人都对，但说的是不同标准：**A 对的是“达不到 27 寸 5K 那种物理级 Retina/完美 2x 标准”；B 对的是“日常使用开 HiDPI 后清晰度通常够用”。**
+
+27 寸 4K 大约 **163 PPI**。  
+27 寸 5K 大约 **218 PPI**，所以如果你想要在 27 寸上用“看起来像 2560×1440”的空间，同时保持接近苹果 Retina 的细腻度，**27 寸 4K 确实物理像素不够**。
+
+但 27 寸 4K 开缩放后并不是不能用：
+
+- **Windows**：27 寸 4K 用 150% 缩放，文字和界面通常很舒服。
+- **macOS**：可以用“看起来像 2560×1440”，但属于缩放渲染再压回 4K，清晰度不如 27 寸 5K，敏感的人能看出来。
+- **普通办公、网页、代码、视频**：大多数人会觉得够用。
+- **设计、长时间看小字、从 MacBook Retina / iMac 5K 过来**：可能会嫌“不够锐”。
+
+我的下单建议：
+
+如果你用 **Windows**，27 寸 4K 可以下。  
+如果你用 **Mac**，预算够、又在意文字细腻度，优先 **27 寸 5K**；预算有限再买 27 寸 4K。  
+如果你只是纠结“会不会糊到不能用”，答案是：**不会，够用；但它不是顶级清晰。**

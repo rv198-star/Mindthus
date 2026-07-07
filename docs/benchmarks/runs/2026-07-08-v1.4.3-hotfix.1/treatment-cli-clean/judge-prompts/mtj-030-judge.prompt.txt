@@ -1,0 +1,88 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-030
+case_type: positive
+group_id: G
+expected_owner: tvg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 定向补判断实质：具体失败路径、概率依据、应对责任人、证据边界。
+fail_signal: 改文风、加排版、扩写套话。
+
+Canonical single-line prompt:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Full executed transcript:
+User turn 1:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Assistant turn 1:
+可以。现在我没看到正文内容，所以先给你一版“去套话”的改造方式；你把原文贴上来后，我可以按这套标准直接逐段改写。
+
+真正有用的《项目风险评估》要从“风险口号”改成“可判断、可追踪、可负责”的文档。建议把每条风险改成这个格式：
+
+```text
+风险名称：
+当前事实：
+触发条件：
+影响范围：
+概率 / 影响等级：
+早期信号：
+责任人：
+应对策略：
+下一步动作：
+截止时间：
+需要升级的条件：
+```
+
+例如，把这种套话：
+
+> 项目存在进度风险，需加强沟通协调，确保按期交付。
+
+改成：
+
+> 风险名称：核心接口联调延期  
+> 当前事实：支付接口、订单接口尚未完成联调；原计划 7 月 12 日完成，目前仍缺少测试环境账号。  
+> 触发条件：若 7 月 10 日 18:00 前仍无法完成测试环境接入，则联调节点至少延期 3 个工作日。  
+> 影响范围：影响支付闭环验收、UAT 开始时间和上线排期。  
+> 概率 / 影响：概率高，影响高。  
+> 早期信号：接口文档变更超过 2 次；测试环境不可用超过 1 天；联调缺陷未在 24 小时内响应。  
+> 责任人：后端负责人 A、测试负责人 B。  
+> 应对策略：当天锁定接口版本；测试环境账号由项目经理升级到系统负责人协调；支付链路先用 Mock 完成非阻塞验证。  
+> 下一步动作：7 月 9 日 15:00 前完成账号开通；7 月 10 日完成首轮联调；7 月 11 日输出缺陷清单。  
+> 升级条件：7 月 10 日仍未完成首轮联调，升级至项目例会决策是否调整上线范围。
+
+你这份文档可以按三步改：
+
+1. 删除空话  
+   例如“加强管理”“高度重视”“持续跟进”“及时沟通”这类句子，如果没有责任人、时间点、触发条件，就删掉或重写。
+
+2. 补事实  
+   每个风险至少要回答：现在到底发生了什么？哪项计划、资源、质量、合规或依赖已经偏离？
+
+3. 补动作  
+   每个风险必须有一个可以马上执行的动作，而不是“关注”“推进”“协调”。
+
+最终文档建议改成这几个部分：
+
+```text
+一、总体风险判断
+用 3-5 句话说明当前项目最大的不确定性是什么，是否影响上线/预算/范围/质量。
+
+二、重大风险清单
+只放真正需要管理层或项目组盯住的风险，不要堆数量。
+
+三、风险分级
+按高 / 中 / 低分级，并说明判断依据。
+
+四、应对计划
+每条风险对应责任人、动作、截止时间、升级条件。
+
+五、需决策事项
+列出当前必须由谁拍板的事项，避免风险评估变成旁观报告。
+```
+
+你可以直接把文档正文发我，我会帮你改成一版“能开会、能追责、能落地”的版本。

@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:31:42.660719+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-018",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e47-43e7-7391-8813-e4f1c341d4f0",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-018-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 17.069,
+      "thread_id": "019f3e47-43e7-7391-8813-e4f1c341d4f0",
+      "answer": "这个结论跳得太快。\n\n“人工审核准确率高 3 个点”只能说明在同一口径下，人工更准；不能直接推出“所以不上自动审核”。真正要比较的是：这 3 个点的准确率差，值不值得用人工的成本、速度、规模上限和一致性去换。\n\n更合理的判断方式是分层：\n\n1. **高风险内容继续人工审**\n   比如会导致封号、法律风险、重大客户损失的场景，3 个点可能非常重要，不能轻易自动化。\n\n2. **低风险、高重复内容让模型先审**\n   如果错误代价低、量大、规则稳定，模型即使低 3 个点，也可能因为速度、成本和稳定性更划算。\n\n3. **用模型做预审，不一定直接替代人工**\n   可以让模型先过滤明显通过/明显拒绝的部分，把灰区交给人工。目标不是“全自动”，而是减少人工处理量。\n\n4. **看错在哪里，而不是只看总准确率**\n   如果模型多错在低风险样本，问题不大；如果错在关键违规、误杀大客户、边界案例，那就要谨慎。\n\n所以更稳的结论应该是：\n\n> 目前不应直接全量自动审核，但可以做分层自动审核或模型预审；是否上线取决于错误类型、风险成本、审核量、人工成本和可回退机制，而不是只看人工高 3 个点。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-018-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-018-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-018-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-018-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "这个结论跳得太快。\n\n“人工审核准确率高 3 个点”只能说明在同一口径下，人工更准；不能直接推出“所以不上自动审核”。真正要比较的是：这 3 个点的准确率差，值不值得用人工的成本、速度、规模上限和一致性去换。\n\n更合理的判断方式是分层：\n\n1. **高风险内容继续人工审**\n   比如会导致封号、法律风险、重大客户损失的场景，3 个点可能非常重要，不能轻易自动化。\n\n2. **低风险、高重复内容让模型先审**\n   如果错误代价低、量大、规则稳定，模型即使低 3 个点，也可能因为速度、成本和稳定性更划算。\n\n3. **用模型做预审，不一定直接替代人工**\n   可以让模型先过滤明显通过/明显拒绝的部分，把灰区交给人工。目标不是“全自动”，而是减少人工处理量。\n\n4. **看错在哪里，而不是只看总准确率**\n   如果模型多错在低风险样本，问题不大；如果错在关键违规、误杀大客户、边界案例，那就要谨慎。\n\n所以更稳的结论应该是：\n\n> 目前不应直接全量自动审核，但可以做分层自动审核或模型预审；是否上线取决于错误类型、风险成本、审核量、人工成本和可回退机制，而不是只看人工高 3 个点。"
+      ],
+      "usage": {
+        "input_tokens": 16527,
+        "cached_input_tokens": 16256,
+        "output_tokens": 412,
+        "reasoning_output_tokens": 72
+      },
+      "user_prompt": "我们人工审核准确率比模型高3个点，所以不上自动审核。"
+    }
+  ],
+  "final_answer": "这个结论跳得太快。\n\n“人工审核准确率高 3 个点”只能说明在同一口径下，人工更准；不能直接推出“所以不上自动审核”。真正要比较的是：这 3 个点的准确率差，值不值得用人工的成本、速度、规模上限和一致性去换。\n\n更合理的判断方式是分层：\n\n1. **高风险内容继续人工审**\n   比如会导致封号、法律风险、重大客户损失的场景，3 个点可能非常重要，不能轻易自动化。\n\n2. **低风险、高重复内容让模型先审**\n   如果错误代价低、量大、规则稳定，模型即使低 3 个点，也可能因为速度、成本和稳定性更划算。\n\n3. **用模型做预审，不一定直接替代人工**\n   可以让模型先过滤明显通过/明显拒绝的部分，把灰区交给人工。目标不是“全自动”，而是减少人工处理量。\n\n4. **看错在哪里，而不是只看总准确率**\n   如果模型多错在低风险样本，问题不大；如果错在关键违规、误杀大客户、边界案例，那就要谨慎。\n\n所以更稳的结论应该是：\n\n> 目前不应直接全量自动审核，但可以做分层自动审核或模型预审；是否上线取决于错误类型、风险成本、审核量、人工成本和可回退机制，而不是只看人工高 3 个点。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:20:34.081686+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-031",
+  "case_number": 31,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e73-f7e4-70a3-b89c-6f20bf2505cd",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-031-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 18.804,
+      "thread_id": "019f3e73-f7e4-70a3-b89c-6f20bf2505cd",
+      "answer": "可以。请把这次 release 的改动发我，任选一种即可：\n\n1. PR / compare 链接  \n2. `git diff <上一版tag>..<本次tag>` 的输出  \n3. 变更文件列表 + 关键 diff  \n4. release notes / changelog\n\n我会按 code review / release audit 的方式看，重点查：\n\n- 线上行为回归、兼容性破坏\n- 数据迁移、配置、环境变量风险\n- 鉴权、权限、输入校验、安全问题\n- API / schema / 事件契约变化\n- 错误处理、重试、并发、幂等性\n- 性能、缓存、资源释放\n- 测试覆盖缺口和发布/回滚风险\n\n你把 diff 贴上来后，我会直接给出按严重程度排序的 findings，包括文件/位置、影响、建议修复方式。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-031-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-031-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-031-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-031-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "contamination_flags": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "agent_messages": [
+        "我会先确认可用的审查入口，然后基于当前信息给你一个可执行的 audit 方式。",
+        "可以。请把这次 release 的改动发我，任选一种即可：\n\n1. PR / compare 链接  \n2. `git diff <上一版tag>..<本次tag>` 的输出  \n3. 变更文件列表 + 关键 diff  \n4. release notes / changelog\n\n我会按 code review / release audit 的方式看，重点查：\n\n- 线上行为回归、兼容性破坏\n- 数据迁移、配置、环境变量风险\n- 鉴权、权限、输入校验、安全问题\n- API / schema / 事件契约变化\n- 错误处理、重试、并发、幂等性\n- 性能、缓存、资源释放\n- 测试覆盖缺口和发布/回滚风险\n\n你把 diff 贴上来后，我会直接给出按严重程度排序的 findings，包括文件/位置、影响、建议修复方式。"
+      ],
+      "usage": {
+        "input_tokens": 25975,
+        "cached_input_tokens": 21248,
+        "output_tokens": 589,
+        "reasoning_output_tokens": 290
+      },
+      "user_prompt": "帮我audit一下这次release的改动。"
+    }
+  ],
+  "final_answer": "可以。请把这次 release 的改动发我，任选一种即可：\n\n1. PR / compare 链接  \n2. `git diff <上一版tag>..<本次tag>` 的输出  \n3. 变更文件列表 + 关键 diff  \n4. release notes / changelog\n\n我会按 code review / release audit 的方式看，重点查：\n\n- 线上行为回归、兼容性破坏\n- 数据迁移、配置、环境变量风险\n- 鉴权、权限、输入校验、安全问题\n- API / schema / 事件契约变化\n- 错误处理、重试、并发、幂等性\n- 性能、缓存、资源释放\n- 测试覆盖缺口和发布/回滚风险\n\n你把 diff 贴上来后，我会直接给出按严重程度排序的 findings，包括文件/位置、影响、建议修复方式。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ]
+}

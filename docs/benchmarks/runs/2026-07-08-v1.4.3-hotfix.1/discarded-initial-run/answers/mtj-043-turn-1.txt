@@ -1,0 +1,13 @@
+可以。请把 CSV 内容贴上来，或告诉我文件名/路径。
+
+如果你想自己在终端排，通用命令是：
+
+```bash
+sort -t, -k2,2nr input.csv > sorted.csv
+```
+
+如果 CSV 有表头，用：
+
+```bash
+(head -n 1 input.csv && tail -n +2 input.csv | sort -t, -k2,2nr) > sorted.csv
+```

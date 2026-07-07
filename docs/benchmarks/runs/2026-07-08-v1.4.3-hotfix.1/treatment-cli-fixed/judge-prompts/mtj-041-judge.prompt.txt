@@ -1,0 +1,54 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-041
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 names dominant owner and proceeds, 1 partial, 0 method stack.
+pass_criteria: 在薄产物/控制边界/定框三个切面中明确主导者（先审‘换模型’这个打包结论），单线推进。
+fail_signal: 三个角度各说一段。
+
+Canonical single-line prompt:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Full executed transcript:
+User turn 1:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Assistant turn 1:
+不一定。先别急着换模型。
+
+“月报很完整但没人看”通常不是模型能力不够，而是月报没有服务到读者的真实决策场景。更强模型可能只会生成一份更长、更顺、更完整、但依然没人看的月报。
+
+你们应该先判断三件事：
+
+1. **谁必须看这份月报？**
+   是老板、业务负责人、销售、产品、运营，还是客户？不同人关心的不是同一件事。
+
+2. **看完之后要做什么决定？**
+   如果月报只是罗列“本月做了什么”，阅读价值很低。它应该回答类似：
+   - 哪个指标异常了？
+   - 哪件事值得继续加码？
+   - 哪个风险需要马上处理？
+   - 下个月最该盯什么？
+
+3. **现在的“完整”是不是反而成了负担？**
+   很多 AI 月报的问题是：信息很多，但优先级不清；结构很整齐，但没有判断；内容很像汇报材料，却不像决策材料。
+
+更实际的改法是：
+
+- 首页只放 **3 个最重要结论**
+- 每个结论后面配 **证据、影响、建议动作**
+- 把流水账放到附录，不放正文
+- 明确区分：事实、解释、风险、建议
+- 根据读者角色生成不同版本，而不是一份月报给所有人
+
+什么时候才该换模型？
+
+如果你们已经明确了读者、决策场景、输出结构，但模型仍然经常判断错、抓不住重点、无法稳定提炼洞察，那再考虑换更强模型。
+
+所以我的判断是：**先改月报的目标和信息结构，再评估模型。现在直接换模型，大概率是在优化错误问题。**

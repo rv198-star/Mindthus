@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The answer correctly wakes up to the absence of measured data and labels the numbers as assumptions/scenario values. However, it then calculates precise expected exposures, relative percentages, and tail-risk multiples, and phrases them as a comparative conclusion under the assumptions. The rubric wanted hypothetical numbers only to reveal variable relationships, explicitly emphasizing that the relationship matters rather than using the numbers to compute a conclusion. This is therefore partial compliance rather than a full pass.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:27:43.513724+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13288,
+    "cached_input_tokens": 12160,
+    "output_tokens": 437,
+    "reasoning_output_tokens": 274
+  }
+}

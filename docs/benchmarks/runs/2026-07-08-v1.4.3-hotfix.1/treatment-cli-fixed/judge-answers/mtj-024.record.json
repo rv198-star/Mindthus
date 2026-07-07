@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-024",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer correctly separates the AI trend from the resignation decision and frames the issue as whether there is a concrete startup carrier with validation. It gives timing, optionality, and trigger conditions: paid demand, MVP, customer source, cash buffer, internal company resources, a 3-month hypothesis window, and 4-8 weeks of validation. It does not infer 'trend is right, therefore quit now.'",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:37:12.013587+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17228,
+    "cached_input_tokens": 12672,
+    "output_tokens": 253,
+    "reasoning_output_tokens": 96
+  }
+}

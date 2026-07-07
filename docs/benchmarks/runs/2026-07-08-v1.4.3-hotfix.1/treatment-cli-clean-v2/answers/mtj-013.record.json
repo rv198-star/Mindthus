@@ -1,0 +1,69 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:00:59.192085+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-013",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e62-100a-7930-877d-2353371f54f8",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-013-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 20.419,
+      "thread_id": "019f3e62-100a-7930-877d-2353371f54f8",
+      "answer": "**招商文案：主打好豆子的咖啡店**\n\n一杯咖啡能不能留住客人，关键不在装修多漂亮，而在豆子够不够好。\n\n我们坚持选用高品质咖啡豆，从产地、烘焙到萃取都有稳定标准。入口香气干净，口感醇厚，风味层次明显，不靠重糖重奶掩盖品质，让顾客喝得出差别，也愿意反复回来。\n\n对加盟商来说，好豆子就是竞争力。它决定出品稳定，决定顾客复购，也决定一家店能不能做长久生意。\n\n现在开放招商，提供成熟产品体系、稳定咖啡豆供应、标准化出品培训和门店运营支持。让你不只是开一家咖啡店，而是开一家靠品质留客、靠复购赚钱的咖啡店。\n\n**好豆子，才有好生意。欢迎咨询加盟合作。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-013-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-013-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-013-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-013-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "contamination_flags": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "agent_messages": [
+        "我会直接给你一版可用的招商文案，重点放在“豆子带来的稳定出品和复购”。",
+        "**招商文案：主打好豆子的咖啡店**\n\n一杯咖啡能不能留住客人，关键不在装修多漂亮，而在豆子够不够好。\n\n我们坚持选用高品质咖啡豆，从产地、烘焙到萃取都有稳定标准。入口香气干净，口感醇厚，风味层次明显，不靠重糖重奶掩盖品质，让顾客喝得出差别，也愿意反复回来。\n\n对加盟商来说，好豆子就是竞争力。它决定出品稳定，决定顾客复购，也决定一家店能不能做长久生意。\n\n现在开放招商，提供成熟产品体系、稳定咖啡豆供应、标准化出品培训和门店运营支持。让你不只是开一家咖啡店，而是开一家靠品质留客、靠复购赚钱的咖啡店。\n\n**好豆子，才有好生意。欢迎咨询加盟合作。**"
+      ],
+      "usage": {
+        "input_tokens": 27439,
+        "cached_input_tokens": 22272,
+        "output_tokens": 516,
+        "reasoning_output_tokens": 194
+      },
+      "user_prompt": "我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。"
+    }
+  ],
+  "final_answer": "**招商文案：主打好豆子的咖啡店**\n\n一杯咖啡能不能留住客人，关键不在装修多漂亮，而在豆子够不够好。\n\n我们坚持选用高品质咖啡豆，从产地、烘焙到萃取都有稳定标准。入口香气干净，口感醇厚，风味层次明显，不靠重糖重奶掩盖品质，让顾客喝得出差别，也愿意反复回来。\n\n对加盟商来说，好豆子就是竞争力。它决定出品稳定，决定顾客复购，也决定一家店能不能做长久生意。\n\n现在开放招商，提供成熟产品体系、稳定咖啡豆供应、标准化出品培训和门店运营支持。让你不只是开一家咖啡店，而是开一家靠品质留客、靠复购赚钱的咖啡店。\n\n**好豆子，才有好生意。欢迎咨询加盟合作。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ]
+}

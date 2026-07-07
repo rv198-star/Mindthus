@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+长期看增长和留存都重要，但先后顺序取决于你是不是在往“漏桶”里倒水：**留存没过线，先做留存；留存已验证，优先放大增长。**
+
+简单判断：
+
+1. **先做留存**：用户来了很快走、核心行为没形成、复购/回访弱、增长一停数据就塌。  
+   这时做增长只是在买流失，越放大越浪费。
+
+2. **先做增长**：已有一小群用户稳定使用、愿意付费或反复回来、LTV 明显高于获客成本。  
+   这时问题不是产品没人要，而是触达不够。
+
+3. **早期最常见的正确动作**：不是“大留存”或“大增长”，而是先找到一个很窄的人群，让他们留得住，然后小规模加增长验证。
+
+一句话：**没有留存，增长是放大问题；有了留存，增长是放大价值。**

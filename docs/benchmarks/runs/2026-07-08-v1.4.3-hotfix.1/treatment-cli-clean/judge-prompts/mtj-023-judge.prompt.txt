@@ -1,0 +1,44 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-023
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认或限定主线，重点转到路径波动/现金流暴露/触发条件。
+fail_signal: 顺着趋势下单点结论。
+
+Canonical single-line prompt:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Full executed transcript:
+User turn 1:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Assistant turn 1:
+长期看涨可以支持“关注这个城市的房产”，但不能直接推出“现在加杠杆买第二套”。
+
+关键断点在这里：你买的不是“城市长期趋势”，而是一个具体房子、一个具体价格、一个具体贷款结构，以及未来几年你自己的现金流。即使长期房价上涨，中间也可能经历限售、利率上行、租金不及预期、政策变化、流动性变差、家庭收入波动。杠杆会把这些路径风险放大。
+
+更稳的判断方式是：
+
+1. 先验证“长期看涨”是不是已经反映在当前房价里  
+   如果大家都这么认为，价格可能已经透支了未来收益。
+
+2. 算现金流，而不是只看涨幅  
+   月供、税费、空置、维修、物业、机会成本，加起来后，租金是否能覆盖大部分持有成本？
+
+3. 压力测试  
+   假设房价 3 年不涨、租金下降 10%、家庭收入下降 20%、利率或还款压力上升，你还能不能不卖房地扛过去？
+
+4. 看第二套的流动性  
+   如果未来急用钱，这套房能不能在合理折价内卖掉？如果卖不掉，杠杆会变成锁死你的结构。
+
+5. 设定触发条件  
+   只有在首付不伤现金储备、月供占家庭稳定收入比例可控、房子价格不贵、租售比不太差、你能承受多年横盘时，才值得考虑。
+
+我的结论：可以继续研究，但“现在加杠杆买第二套”不应是默认动作。更合理的是先做现金流和压力测试；如果测试不过，哪怕城市长期看涨，也不该加杠杆。

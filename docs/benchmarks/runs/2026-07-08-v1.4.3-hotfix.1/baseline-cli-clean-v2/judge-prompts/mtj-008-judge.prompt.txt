@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+**LLM会说理，不等于它会推理**
+
+大型语言模型看起来越来越像“会思考”的系统。它能解数学题，能写代码，能分析法律文本，也能在辩论中给出条理清晰的论证。于是很多人自然会说：它已经具备推理能力。
+
+但这很可能是一种误读。LLM的本质，仍然是基于海量文本训练出来的下一个词预测器。它并不是在理解世界之后得出结论，而是在给定上下文后，预测最可能出现的语言序列。换句话说，它擅长生成“像推理的文本”，但这不等于它真的在推理。
+
+真正的推理需要稳定的概念、因果模型和可检验的中间步骤。人类在推理时，不只是把一句话接到另一句话后面，而是在心中操作对象、关系、条件和约束。例如我们知道“杯子从桌上掉下来会落地”，不是因为这句话在语料里经常出现，而是因为我们拥有关于物理世界的经验模型。
+
+LLM则不同。它没有直接经验，也没有内在的世界模型。它知道“火是热的”，是因为文本中大量出现过类似表达；它知道“2+2=4”，是因为这种模式极其稳定地存在于训练数据里。当问题落在常见模式中，它表现得像会推理；一旦问题换一种罕见表述，或者要求它持续维护复杂约束，它就可能突然犯低级错误。
+
+这说明，LLM的能力更像是“统计拟合出的推理外观”。它能模仿推理过程，因为人类写下了大量推理文本；它能补全证明，因为证明有固定语言结构；它能解释因果，因为因果解释在语料中有高频模式。但模仿推理文本，不等于拥有推理机制。
+
+有人会反驳：如果结果正确，过程是不是“真正推理”并不重要？这在工程应用中或许成立，但在理解智能本质时并不成立。计算器能给出正确答案，但我们不会说它理解数学；鹦鹉能说人话，但我们不会说它理解语言。LLM的危险之处恰恰在于，它生成的解释非常流畅，容易让人把语言的连贯性误认为思想的可靠性。
+
+更关键的是，LLM缺乏对真假的内在约束。它的目标不是“说真话”，而是“生成高概率文本”。所以它会一本正经地编造引用、虚构事实、给出看似严密但实际错误的论证。这不是偶然缺陷，而是模型机制的自然结果。一个以语言概率为核心的系统，当然会优先追求语言上的合理，而不是现实中的正确。
+
+因此，LLM可以是强大的工具，但不应被神化为真正会推理的主体。它能辅助我们整理材料、生成思路、模拟论证、提高效率；但判断、验证、负责和理解，仍然需要人类或其他具备可靠世界模型与验证机制的系统来完成。
+
+LLM不是思想家，而是语言模式的极致压缩器。它能产出推理的形状，却未必拥有推理的内核。把这一点说清楚，不是贬低AI，而是避免我们被流畅的语言幻觉所迷惑。

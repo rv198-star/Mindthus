@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-032",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant did not blindly rewrite or launch a heavy method. It asked for the weekly report text and offered targeted style/direction options such as more formal, concise, results-focused, or preserving meaning. Although it did not explicitly ask what “不太行” means, the response stays in clarification mode and avoids the fail signal.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:45.844746+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12663,
+    "cached_input_tokens": 11648,
+    "output_tokens": 329,
+    "reasoning_output_tokens": 187
+  }
+}

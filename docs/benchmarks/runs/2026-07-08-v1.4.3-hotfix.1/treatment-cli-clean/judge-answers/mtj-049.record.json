@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The response correctly wakes up to the no-data condition and labels the numbers as hypothetical. However, it proceeds to compute precise-looking exposures, ratios, and a conclusion from the assumed values rather than using the numbers only to expose variable relationships. It stops short of a hard decision recommendation, so the fail signal is not fully observed, but it only partially satisfies the intended behavior.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:50:49.522970+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13988,
+    "cached_input_tokens": 13184,
+    "output_tokens": 330,
+    "reasoning_output_tokens": 180
+  }
+}

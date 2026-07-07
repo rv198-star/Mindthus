@@ -1,0 +1,62 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:42:54.887565+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-019",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e51-79df-7941-912c-fd0adbc353d8",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-019-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 20.088,
+      "thread_id": "019f3e51-79df-7941-912c-fd0adbc353d8",
+      "answer": "手调现在更准，不等于应该长期坚持纯手调。\n\n更稳的判断是：把老师傅手调当成“标杆”和“约束”，而不是把自动寻优排除掉。否则你们依赖的是少数人的经验、状态和传承，规模一上来，换班、换料、换设备、换产品都会放大波动。\n\n建议这样做：\n\n1. **保留手调权威**：老师傅继续给关键工况定基准参数，尤其是异常料、首件、疑难批次。\n2. **让自动寻优先学边界**：不是直接放权，而是限定在安全区间内寻优，不能越过老师傅设定的红线。\n3. **用数据比，不用感觉比**：同一批料、同一设备、同一指标，比较良率、稳定性、调参时间、返工率。\n4. **建立“人机双轨”**：常规批次逐步交给自动寻优，复杂异常仍由老师傅介入。\n5. **把老师傅经验沉淀下来**：记录每次手调原因、参数变化、结果，把隐性经验变成规则、样本和模型反馈。\n\n结论：不要否定手调，但也不要把“老师傅现在更准”当成拒绝自动化的理由。正确路线是让老师傅定义标准、处理例外，让自动寻优承担重复、规模化和持续优化。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/events/mtj-019-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/stderr/mtj-019-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/answers/mtj-019-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean/prompts/mtj-019-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先按已安装的 Mindthus 判断框架校准一下这个取舍，再直接给出可执行建议。",
+        "手调现在更准，不等于应该长期坚持纯手调。\n\n更稳的判断是：把老师傅手调当成“标杆”和“约束”，而不是把自动寻优排除掉。否则你们依赖的是少数人的经验、状态和传承，规模一上来，换班、换料、换设备、换产品都会放大波动。\n\n建议这样做：\n\n1. **保留手调权威**：老师傅继续给关键工况定基准参数，尤其是异常料、首件、疑难批次。\n2. **让自动寻优先学边界**：不是直接放权，而是限定在安全区间内寻优，不能越过老师傅设定的红线。\n3. **用数据比，不用感觉比**：同一批料、同一设备、同一指标，比较良率、稳定性、调参时间、返工率。\n4. **建立“人机双轨”**：常规批次逐步交给自动寻优，复杂异常仍由老师傅介入。\n5. **把老师傅经验沉淀下来**：记录每次手调原因、参数变化、结果，把隐性经验变成规则、样本和模型反馈。\n\n结论：不要否定手调，但也不要把“老师傅现在更准”当成拒绝自动化的理由。正确路线是让老师傅定义标准、处理例外，让自动寻优承担重复、规模化和持续优化。"
+      ],
+      "usage": {
+        "input_tokens": 27956,
+        "cached_input_tokens": 22272,
+        "output_tokens": 659,
+        "reasoning_output_tokens": 217
+      },
+      "user_prompt": "老师傅手调工艺参数比自动寻优准，我们坚持手调。"
+    }
+  ],
+  "final_answer": "手调现在更准，不等于应该长期坚持纯手调。\n\n更稳的判断是：把老师傅手调当成“标杆”和“约束”，而不是把自动寻优排除掉。否则你们依赖的是少数人的经验、状态和传承，规模一上来，换班、换料、换设备、换产品都会放大波动。\n\n建议这样做：\n\n1. **保留手调权威**：老师傅继续给关键工况定基准参数，尤其是异常料、首件、疑难批次。\n2. **让自动寻优先学边界**：不是直接放权，而是限定在安全区间内寻优，不能越过老师傅设定的红线。\n3. **用数据比，不用感觉比**：同一批料、同一设备、同一指标，比较良率、稳定性、调参时间、返工率。\n4. **建立“人机双轨”**：常规批次逐步交给自动寻优，复杂异常仍由老师傅介入。\n5. **把老师傅经验沉淀下来**：记录每次手调原因、参数变化、结果，把隐性经验变成规则、样本和模型反馈。\n\n结论：不要否定手调，但也不要把“老师傅现在更准”当成拒绝自动化的理由。正确路线是让老师傅定义标准、处理例外，让自动寻优承担重复、规模化和持续优化。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

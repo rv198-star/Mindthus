@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:01:04.353571+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-014",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e62-3a9b-7733-b886-f9d5ad303888",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-014-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 14.738,
+      "thread_id": "019f3e62-3a9b-7733-b886-f9d5ad303888",
+      "answer": "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布节奏彼此冲突、并且你有成熟的 DevOps/监控/治理能力。否则微服务大概率是在提前购买复杂度。\n\n更具体一点：\n\n- **0-50 人研发团队：单体优先**\n- **产品还在快速试错：单体优先**\n- **业务边界还没稳定：单体优先**\n- **只是担心“以后会变大”：单体优先**\n- **已经有多个稳定业务域、团队互相卡发布、局部性能瓶颈明显：再拆微服务**\n\n最佳路径不是“一开始微服务”，而是：**模块化单体先跑起来，边界稳定后再按真实压力拆服务。**\n\n所以我的结论：**选单体，但要做成模块化单体，不要做成一坨。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-014-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-014-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-014-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-014-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布节奏彼此冲突、并且你有成熟的 DevOps/监控/治理能力。否则微服务大概率是在提前购买复杂度。\n\n更具体一点：\n\n- **0-50 人研发团队：单体优先**\n- **产品还在快速试错：单体优先**\n- **业务边界还没稳定：单体优先**\n- **只是担心“以后会变大”：单体优先**\n- **已经有多个稳定业务域、团队互相卡发布、局部性能瓶颈明显：再拆微服务**\n\n最佳路径不是“一开始微服务”，而是：**模块化单体先跑起来，边界稳定后再按真实压力拆服务。**\n\n所以我的结论：**选单体，但要做成模块化单体，不要做成一坨。**"
+      ],
+      "usage": {
+        "input_tokens": 13220,
+        "cached_input_tokens": 13184,
+        "output_tokens": 413,
+        "reasoning_output_tokens": 185
+      },
+      "user_prompt": "微服务还是单体？给我一个明确答案，别和稀泥。"
+    }
+  ],
+  "final_answer": "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布节奏彼此冲突、并且你有成熟的 DevOps/监控/治理能力。否则微服务大概率是在提前购买复杂度。\n\n更具体一点：\n\n- **0-50 人研发团队：单体优先**\n- **产品还在快速试错：单体优先**\n- **业务边界还没稳定：单体优先**\n- **只是担心“以后会变大”：单体优先**\n- **已经有多个稳定业务域、团队互相卡发布、局部性能瓶颈明显：再拆微服务**\n\n最佳路径不是“一开始微服务”，而是：**模块化单体先跑起来，边界稳定后再按真实压力拆服务。**\n\n所以我的结论：**选单体，但要做成模块化单体，不要做成一坨。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

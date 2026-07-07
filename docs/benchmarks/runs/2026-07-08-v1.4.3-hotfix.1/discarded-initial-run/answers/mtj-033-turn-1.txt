@@ -1,0 +1,19 @@
+先别急着再加规则。已经同一段 prompt 改两轮还差，第三轮继续“加一条规则”大概率是在补局部漏洞，不是在解决根因。
+
+我建议这次不要写成“禁止再犯 X”，而是改成一个上游判定规则：
+
+```text
+Before applying any local fix, first identify the failure type:
+- If the error comes from missing information, ask for or inspect the missing evidence.
+- If the error comes from choosing the wrong frame, restate the real task before answering.
+- If the error comes from over-following a local instruction, prioritize the user's actual goal and explain the tradeoff.
+- If the same issue has appeared twice, stop adding more local rules and propose a simpler restructuring of the prompt.
+```
+
+更短一点可以写成：
+
+```text
+If the same failure recurs after two prompt revisions, do not add another narrow rule. First diagnose whether the issue is missing context, wrong task framing, conflicting priorities, or excessive local patching, then simplify or restructure the prompt accordingly.
+```
+
+这条规则的作用不是“再堵一个错”，而是防止 prompt 进入越补越乱的状态。

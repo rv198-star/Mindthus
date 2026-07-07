@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-047",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative control: the assistant stayed in direct debugging mode. Since the executed transcript did not actually include the stack trace or code, it asked for the missing concrete artifacts needed to identify the null variable, without invoking a full problem-definition ritual or methodized workflow.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:27:30.231343+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12636,
+    "cached_input_tokens": 11648,
+    "output_tokens": 452,
+    "reasoning_output_tokens": 325
+  }
+}

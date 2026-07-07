@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the request as an evidence review: it stated it could not inspect the prior session, asked the user to paste the relevant output, and offered minimal criteria for checking whether a snapshot was present. It referenced MPG-AQM-related elements only as verification criteria, not as a reason to run an MPG process on the current conversation. No MPG workflow escalation or methodized judgment loop was applied.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:49:00.425974+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13700,
+    "cached_input_tokens": 2432,
+    "output_tokens": 259,
+    "reasoning_output_tokens": 104
+  }
+}

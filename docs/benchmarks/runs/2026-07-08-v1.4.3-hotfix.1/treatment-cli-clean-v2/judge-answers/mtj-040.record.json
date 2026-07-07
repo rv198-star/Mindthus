@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-040",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response does not give a symmetric 'both sides have merit' compromise. It establishes a dominant judgment: old code being hard to maintain does not justify a full backend rewrite by default; the main decision frame is evidence-based, staged replacement unless system-level defects make local remediation insufficient. Pro-rewrite considerations are demoted to constraints/trigger conditions, matching the expected aspect arbitration behavior.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:51.305618+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 40,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14050,
+    "cached_input_tokens": 12672,
+    "output_tokens": 379,
+    "reasoning_output_tokens": 227
+  }
+}

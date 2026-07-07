@@ -1,0 +1,27 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.1",
+  "generated_at_utc": "2026-07-07T20:40:19.129829+00:00",
+  "case_count": 1,
+  "positive_count": 1,
+  "negative_control_count": 0,
+  "positive_mean": 1.0,
+  "overall_mean": 1.0,
+  "negative_false_wakeup_rate": null,
+  "first_sentence_lock_rate": 0.0,
+  "verdict_commitment_anti_mush_rate": 1.0,
+  "over_forced_verdict_rate": 0.0,
+  "h_group_brake_rate": null,
+  "score_histogram": {
+    "0": 0,
+    "1": 1,
+    "2": 0
+  },
+  "failed_cases": [
+    {
+      "case_id": "mtj-048",
+      "case_number": 48,
+      "score": 1,
+      "rationale": "The answer rejects the framing and eventually gives the right main distinction: prompt engineering is closer to task/interface design than mere wording. However, the first sentence is only “不完全是,” not the corrected main judgment with definition ownership as required. It avoids a concessive “有道理但...” opening and is not a field-list opening, so this is partial rather than failure."
+    }
+  ]
+}

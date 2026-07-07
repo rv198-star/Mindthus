@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-001",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer immediately rejects the unproven premise that P99 latency is necessarily caused by missing indexes, requests slow-query/profiling evidence and execution plans, and then provides an index-design approach explicitly bounded by validation through Top SQL, EXPLAIN/ANALYZE, scan rows, write impact, and rollout metrics. It does not directly produce an unconditional indexing plan, so the fail signal is absent.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:17.138917+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17807,
+    "cached_input_tokens": 2432,
+    "output_tokens": 268,
+    "reasoning_output_tokens": 110
+  }
+}

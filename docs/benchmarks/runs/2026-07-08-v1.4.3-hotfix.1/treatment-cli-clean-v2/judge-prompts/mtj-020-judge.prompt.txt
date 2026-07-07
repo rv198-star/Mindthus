@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-020
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 把目标函数（增长）与局部优势（单条精致）分开，指出产能瓶颈。
+fail_signal: 只答“质量重要”。
+
+Canonical single-line prompt:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Full executed transcript:
+User turn 1:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Assistant turn 1:
+值得保留“手工精致”作为差异点，但不值得把账号做成“全手工生产”。
+
+一年 10 万粉，本质不是比谁单条视频更精致，而是比谁能持续产出、测试选题、复盘数据、放大爆款。全手工的问题是：你可能赢在质感，但输在频率、试错速度和体力。
+
+更合理的做法：
+
+1. **核心创意和关键镜头手工做**
+   你的审美、节奏、转场、叙事，是账号护城河。
+
+2. **重复部分模板化**
+   片头片尾、字幕样式、封面结构、BGM节奏、信息条、结尾引导，都应该半模板化。
+
+3. **把精致用在“爆点”上**
+   每条视频只需要 1-2 个明显高于同行的手工亮点，不需要每一秒都雕花。
+
+4. **先跑 60-90 天验证**
+   每周至少 4-7 条。看完播率、互动率、涨粉率、爆款率，而不是只看自己觉得精不精致。
+
+一个判断标准：
+
+- 如果你全手工后，一周只能发 1-2 条，不建议。
+- 如果你半模板化后，一周能发 5 条，而且仍明显比同行好，建议。
+- 如果手工精致能带来稳定高完播、高转粉，那再逐步加重制作投入。
+
+结论：**不要做“全手工账号”，要做“手工质感 + 工业化流程”的账号。**  
+目标 10 万粉，精致是加分项，持续迭代才是主线。

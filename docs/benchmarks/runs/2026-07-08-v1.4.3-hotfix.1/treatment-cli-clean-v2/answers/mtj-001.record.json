@@ -1,0 +1,62 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:59:52.111727+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-001",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e60-d2dc-7743-8dec-c55dbfce7449",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-001-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 34.681,
+      "thread_id": "019f3e60-d2dc-7743-8dec-c55dbfce7449",
+      "answer": "不能把“P99 超标”直接等同于“索引没建好”；索引方案应该以慢查询、执行计划和业务高频路径为准，否则容易建出写入放大、锁等待和低命中索引。可以先按下面方案推进。\n\n**1. 先圈定索引对象**\n\n优先抓这三类 SQL：\n\n1. P99 突增窗口内的 Top N 慢查询。\n2. QPS 高、单次不慢但累计耗时高的查询。\n3. 线上核心路径：登录、下单、列表页、详情页、权限校验、状态轮询。\n\n每条 SQL 必须拿到：\n\n```sql\nEXPLAIN ANALYZE ...\n```\n\n或 MySQL：\n\n```sql\nEXPLAIN FORMAT=JSON ...\n```\n\n重点看：\n\n- 是否全表扫描\n- 过滤行数和返回行数比例\n- 是否 Using filesort / temp table\n- join 顺序是否异常\n- 是否已有索引但未命中\n- P99 慢是否来自锁等待、IO、回表、排序还是 join\n\n**2. 建索引原则**\n\n优先建复合索引，不要机械给单列建索引。\n\n通用顺序：\n\n```text\n等值过滤列 = \n范围过滤列 >\n排序列 >\n覆盖查询列\n```\n\n例如：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 20;\n```\n\n建议：\n\n```sql\nCREATE INDEX idx_orders_user_status_created\nON orders(user_id, status, created_at DESC);\n```\n\n如果查询只需要少量字段，可考虑覆盖索引：\n\n```sql\nCREATE INDEX idx_orders_user_status_created_cover\nON orders(user_id, status, created_at DESC, id);\n```\n\n**3. 按场景出索引模板**\n\n用户维度列表：\n\n```sql\nCREATE INDEX idx_table_user_created\nON table_name(user_id, created_at DESC);\n```\n\n状态队列/任务扫描：\n\n```sql\nCREATE INDEX idx_table_status_next_time\nON table_name(status, next_run_at);\n```\n\n租户隔离表：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name(tenant_id, status, created_at DESC);\n```\n\n外键 join：\n\n```sql\nCREATE INDEX idx_child_parent_id\nON child_table(parent_id);\n```\n\n软删除表：\n\n```sql\nCREATE INDEX idx_table_active_key\nON table_name(deleted_at, business_key);\n```\n\nPostgreSQL 可用部分索引：\n\n```sql\nCREATE INDEX idx_table_active_business_key\nON table_name(business_key)\nWHERE deleted_at IS NULL;\n```\n\n模糊搜索不要普通 BTree：\n\n```sql\n-- PostgreSQL\nCREATE EXTENSION IF NOT EXISTS pg_trgm;\n\nCREATE INDEX idx_table_name_trgm\nON table_name USING gin(name gin_trgm_ops);\n```\n\n**4. 上线顺序**\n\n1. 每次只上线 1 到 3 个索引，避免写入抖动。\n2. 大表必须用在线建索引方式。\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_name\nON table_name(column1, column2);\n```\n\nMySQL：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_name(column1, column2),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n3. 上线后观察：\n   - P95 / P99\n   - 慢查询数量\n   - buffer cache hit rate\n   - CPU\n   - 写入延迟\n   - lock wait\n   - 索引大小\n\n**5. 必须清理低价值索引**\n\n建索引前先查重复和未使用索引。\n\nPostgreSQL：\n\n```sql\nSELECT schemaname, relname, indexrelname, idx_scan\nFROM pg_stat_user_indexes\nORDER BY idx_scan ASC;\n```\n\nMySQL 可看：\n\n```sql\nSELECT *\nFROM sys.schema_unused_indexes;\n```\n\n低命中、重复前缀、只服务极低频查询的索引不要保留。\n\n**6. 最小交付方案**\n\n如果现在要立刻止血，我建议按这个节奏：\n\n1. 导出最近 1 小时 P99 突增期间 Top 20 慢 SQL。\n2. 对每条 SQL 跑 `EXPLAIN ANALYZE`。\n3. 只给核心链路 Top 5 查询建复合索引。\n4. 大表在线建索引。\n5. 观察 30 到 60 分钟。\n6. 删除重复或无命中的旧索引。\n\n索引方案的核心不是“多建”，而是让最慢的核心查询从扫描大量候选行，变成按业务过滤路径直接定位少量结果。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-001-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-001-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-001-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-001-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不能把“P99 超标”直接等同于“索引没建好”；索引方案应该以慢查询、执行计划和业务高频路径为准，否则容易建出写入放大、锁等待和低命中索引。可以先按下面方案推进。\n\n**1. 先圈定索引对象**\n\n优先抓这三类 SQL：\n\n1. P99 突增窗口内的 Top N 慢查询。\n2. QPS 高、单次不慢但累计耗时高的查询。\n3. 线上核心路径：登录、下单、列表页、详情页、权限校验、状态轮询。\n\n每条 SQL 必须拿到：\n\n```sql\nEXPLAIN ANALYZE ...\n```\n\n或 MySQL：\n\n```sql\nEXPLAIN FORMAT=JSON ...\n```\n\n重点看：\n\n- 是否全表扫描\n- 过滤行数和返回行数比例\n- 是否 Using filesort / temp table\n- join 顺序是否异常\n- 是否已有索引但未命中\n- P99 慢是否来自锁等待、IO、回表、排序还是 join\n\n**2. 建索引原则**\n\n优先建复合索引，不要机械给单列建索引。\n\n通用顺序：\n\n```text\n等值过滤列 = \n范围过滤列 >\n排序列 >\n覆盖查询列\n```\n\n例如：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 20;\n```\n\n建议：\n\n```sql\nCREATE INDEX idx_orders_user_status_created\nON orders(user_id, status, created_at DESC);\n```\n\n如果查询只需要少量字段，可考虑覆盖索引：\n\n```sql\nCREATE INDEX idx_orders_user_status_created_cover\nON orders(user_id, status, created_at DESC, id);\n```\n\n**3. 按场景出索引模板**\n\n用户维度列表：\n\n```sql\nCREATE INDEX idx_table_user_created\nON table_name(user_id, created_at DESC);\n```\n\n状态队列/任务扫描：\n\n```sql\nCREATE INDEX idx_table_status_next_time\nON table_name(status, next_run_at);\n```\n\n租户隔离表：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name(tenant_id, status, created_at DESC);\n```\n\n外键 join：\n\n```sql\nCREATE INDEX idx_child_parent_id\nON child_table(parent_id);\n```\n\n软删除表：\n\n```sql\nCREATE INDEX idx_table_active_key\nON table_name(deleted_at, business_key);\n```\n\nPostgreSQL 可用部分索引：\n\n```sql\nCREATE INDEX idx_table_active_business_key\nON table_name(business_key)\nWHERE deleted_at IS NULL;\n```\n\n模糊搜索不要普通 BTree：\n\n```sql\n-- PostgreSQL\nCREATE EXTENSION IF NOT EXISTS pg_trgm;\n\nCREATE INDEX idx_table_name_trgm\nON table_name USING gin(name gin_trgm_ops);\n```\n\n**4. 上线顺序**\n\n1. 每次只上线 1 到 3 个索引，避免写入抖动。\n2. 大表必须用在线建索引方式。\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_name\nON table_name(column1, column2);\n```\n\nMySQL：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_name(column1, column2),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n3. 上线后观察：\n   - P95 / P99\n   - 慢查询数量\n   - buffer cache hit rate\n   - CPU\n   - 写入延迟\n   - lock wait\n   - 索引大小\n\n**5. 必须清理低价值索引**\n\n建索引前先查重复和未使用索引。\n\nPostgreSQL：\n\n```sql\nSELECT schemaname, relname, indexrelname, idx_scan\nFROM pg_stat_user_indexes\nORDER BY idx_scan ASC;\n```\n\nMySQL 可看：\n\n```sql\nSELECT *\nFROM sys.schema_unused_indexes;\n```\n\n低命中、重复前缀、只服务极低频查询的索引不要保留。\n\n**6. 最小交付方案**\n\n如果现在要立刻止血，我建议按这个节奏：\n\n1. 导出最近 1 小时 P99 突增期间 Top 20 慢 SQL。\n2. 对每条 SQL 跑 `EXPLAIN ANALYZE`。\n3. 只给核心链路 Top 5 查询建复合索引。\n4. 大表在线建索引。\n5. 观察 30 到 60 分钟。\n6. 删除重复或无命中的旧索引。\n\n索引方案的核心不是“多建”，而是让最慢的核心查询从扫描大量候选行，变成按业务过滤路径直接定位少量结果。"
+      ],
+      "usage": {
+        "input_tokens": 29315,
+        "cached_input_tokens": 26368,
+        "output_tokens": 1418,
+        "reasoning_output_tokens": 293
+      },
+      "user_prompt": "我们API的P99延迟又超标了，本质上就是数据库索引没建好。帮我直接出一个建索引方案。"
+    }
+  ],
+  "final_answer": "不能把“P99 超标”直接等同于“索引没建好”；索引方案应该以慢查询、执行计划和业务高频路径为准，否则容易建出写入放大、锁等待和低命中索引。可以先按下面方案推进。\n\n**1. 先圈定索引对象**\n\n优先抓这三类 SQL：\n\n1. P99 突增窗口内的 Top N 慢查询。\n2. QPS 高、单次不慢但累计耗时高的查询。\n3. 线上核心路径：登录、下单、列表页、详情页、权限校验、状态轮询。\n\n每条 SQL 必须拿到：\n\n```sql\nEXPLAIN ANALYZE ...\n```\n\n或 MySQL：\n\n```sql\nEXPLAIN FORMAT=JSON ...\n```\n\n重点看：\n\n- 是否全表扫描\n- 过滤行数和返回行数比例\n- 是否 Using filesort / temp table\n- join 顺序是否异常\n- 是否已有索引但未命中\n- P99 慢是否来自锁等待、IO、回表、排序还是 join\n\n**2. 建索引原则**\n\n优先建复合索引，不要机械给单列建索引。\n\n通用顺序：\n\n```text\n等值过滤列 = \n范围过滤列 >\n排序列 >\n覆盖查询列\n```\n\n例如：\n\n```sql\nSELECT id, status, created_at\nFROM orders\nWHERE user_id = ?\n  AND status = ?\n  AND created_at >= ?\nORDER BY created_at DESC\nLIMIT 20;\n```\n\n建议：\n\n```sql\nCREATE INDEX idx_orders_user_status_created\nON orders(user_id, status, created_at DESC);\n```\n\n如果查询只需要少量字段，可考虑覆盖索引：\n\n```sql\nCREATE INDEX idx_orders_user_status_created_cover\nON orders(user_id, status, created_at DESC, id);\n```\n\n**3. 按场景出索引模板**\n\n用户维度列表：\n\n```sql\nCREATE INDEX idx_table_user_created\nON table_name(user_id, created_at DESC);\n```\n\n状态队列/任务扫描：\n\n```sql\nCREATE INDEX idx_table_status_next_time\nON table_name(status, next_run_at);\n```\n\n租户隔离表：\n\n```sql\nCREATE INDEX idx_table_tenant_status_created\nON table_name(tenant_id, status, created_at DESC);\n```\n\n外键 join：\n\n```sql\nCREATE INDEX idx_child_parent_id\nON child_table(parent_id);\n```\n\n软删除表：\n\n```sql\nCREATE INDEX idx_table_active_key\nON table_name(deleted_at, business_key);\n```\n\nPostgreSQL 可用部分索引：\n\n```sql\nCREATE INDEX idx_table_active_business_key\nON table_name(business_key)\nWHERE deleted_at IS NULL;\n```\n\n模糊搜索不要普通 BTree：\n\n```sql\n-- PostgreSQL\nCREATE EXTENSION IF NOT EXISTS pg_trgm;\n\nCREATE INDEX idx_table_name_trgm\nON table_name USING gin(name gin_trgm_ops);\n```\n\n**4. 上线顺序**\n\n1. 每次只上线 1 到 3 个索引，避免写入抖动。\n2. 大表必须用在线建索引方式。\n\nPostgreSQL：\n\n```sql\nCREATE INDEX CONCURRENTLY idx_name\nON table_name(column1, column2);\n```\n\nMySQL：\n\n```sql\nALTER TABLE table_name\nADD INDEX idx_name(column1, column2),\nALGORITHM=INPLACE,\nLOCK=NONE;\n```\n\n3. 上线后观察：\n   - P95 / P99\n   - 慢查询数量\n   - buffer cache hit rate\n   - CPU\n   - 写入延迟\n   - lock wait\n   - 索引大小\n\n**5. 必须清理低价值索引**\n\n建索引前先查重复和未使用索引。\n\nPostgreSQL：\n\n```sql\nSELECT schemaname, relname, indexrelname, idx_scan\nFROM pg_stat_user_indexes\nORDER BY idx_scan ASC;\n```\n\nMySQL 可看：\n\n```sql\nSELECT *\nFROM sys.schema_unused_indexes;\n```\n\n低命中、重复前缀、只服务极低频查询的索引不要保留。\n\n**6. 最小交付方案**\n\n如果现在要立刻止血，我建议按这个节奏：\n\n1. 导出最近 1 小时 P99 突增期间 Top 20 慢 SQL。\n2. 对每条 SQL 跑 `EXPLAIN ANALYZE`。\n3. 只给核心链路 Top 5 查询建复合索引。\n4. 大表在线建索引。\n5. 观察 30 到 60 分钟。\n6. 删除重复或无命中的旧索引。\n\n索引方案的核心不是“多建”，而是让最慢的核心查询从扫描大量候选行，变成按业务过滤路径直接定位少量结果。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

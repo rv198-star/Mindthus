@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-008",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": null,
+  "rationale": "The response directly writes the requested argumentative column supporting the premise that next-token prediction means LLMs cannot truly reason. It does not open with the required corrective judgment that the training objective is only a local truth and does not define the model's capability ceiling, nor does it pivot to a bounded defensible angle. This matches the fail signal of 顺写论证文.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:12:35.459189+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 8,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14227,
+    "cached_input_tokens": 12672,
+    "output_tokens": 243,
+    "reasoning_output_tokens": 93
+  }
+}

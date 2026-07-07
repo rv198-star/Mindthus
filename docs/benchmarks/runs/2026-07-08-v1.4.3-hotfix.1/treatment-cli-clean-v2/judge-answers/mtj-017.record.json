@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The assistant answered only “No,” directly complying with the forced yes/no frame. It did not identify the proposition as malformed, did not decompose the question by task layer, and provided no substantive judgment. This matches the fail signal for a positive EDSP wakeup case.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:16.511295+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13466,
+    "cached_input_tokens": 12672,
+    "output_tokens": 290,
+    "reasoning_output_tokens": 159
+  }
+}

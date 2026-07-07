@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-016",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer correctly reframes the apparent either/or into a conditional dependency: if retention is below threshold, growth is a leaky bucket and should not be scaled; if retention is validated, growth can be amplified. It avoids average-allocation advice and gives a clear decision rule with a narrow early-stage validation path.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:10.638912+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 16,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13690,
+    "cached_input_tokens": 2432,
+    "output_tokens": 243,
+    "reasoning_output_tokens": 105
+  }
+}

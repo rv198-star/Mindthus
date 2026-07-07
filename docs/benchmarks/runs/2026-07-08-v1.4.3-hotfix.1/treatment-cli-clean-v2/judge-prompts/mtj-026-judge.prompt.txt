@@ -1,0 +1,75 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-026
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 按流程/判断/证据分配控制权：审批是流程硬约束，agent判断收窄，证据门槛前置到承诺动作。
+fail_signal: 只调prompt。
+
+Canonical single-line prompt:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Full executed transcript:
+User turn 1:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Assistant turn 1:
+核心不是“再提醒 agent 别承诺”，而是把“承诺退款”从 agent 的自由文本能力里拿走，变成受控动作。
+
+建议这样改：
+
+1. **权限硬隔离**
+   - agent 可以：解释政策、收集信息、判断是否“可能符合退款条件”。
+   - agent 不可以：说“我们会退款”“退款已批准”“一定退给你”。
+   - 退款承诺只能由审批系统或人工审批后的模板发出。
+
+2. **把退款拆成两个工具**
+   - `create_refund_review_case`：agent 可调用，只是提交审批。
+   - `approve_or_issue_refund`：agent 不可调用，只给人工或后端规则引擎。
+   如果现在 agent 有一个能直接触发退款或发承诺话术的工具，要立刻降权。
+
+3. **加输出拦截**
+   在发给客户前做一次 policy check，拦截这类句式：
+   - “我们会给您退款”
+   - “退款已经通过”
+   - “保证退款”
+   - “款项会退回”
+   替换为：
+   - “我已为您提交退款审核，审核通过后会按原支付路径处理。”
+   - “目前还不能确认退款结果，需要人工审批。”
+
+4. **人工审批包标准化**
+   agent 给人工的不是一段聊天记录，而是结构化材料：
+   - 订单号
+   - 客户诉求
+   - 退款原因
+   - 证据
+   - 政策匹配点
+   - agent 建议
+   - 风险点
+   人工只需要点“同意 / 拒绝 / 需要补充信息”。
+
+5. **审计和追责**
+   记录每次触发退款相关话术的：
+   - 会话 ID
+   - agent 输出
+   - 使用的工具
+   - 是否经过审批
+   - 最终退款结果  
+   对绕过审批的输出做离线回放，补到测试集里。
+
+6. **系统提示只做辅助**
+   可以加一句，但不要指望它单独解决问题：
+
+   ```text
+   You must never promise, confirm, approve, or imply a refund unless the refund approval status is explicitly APPROVED by the refund approval system. If approval is absent or pending, say only that a review case has been submitted.
+   ```
+
+真正有效的治理顺序是：**工具权限 > 输出拦截 > 审批流程 > 提示词 > 事后审计**。  
+如果只改 prompt，这个问题大概率还会复发。

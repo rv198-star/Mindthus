@@ -1,0 +1,34 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以，但我不建议直接“凭感觉再润一版”。
+
+现在只有一个主观信号：“好一点”。这不足以判断该往哪里迭代，继续改很容易变成换说法，而不是提升效果。
+
+你把这三样发我，我再迭代一轮会更稳：
+
+1. 当前版 prompt  
+2. 上一版 prompt，或至少说明改了什么  
+3. 你希望它变好的具体方向：例如更稳定、更少废话、更强约束、更适合某类任务、更容易执行、更少误判
+
+如果没有测试样本，最低限度也给我 2-3 个典型输入和你期待的输出标准。  
+我会先判断这版到底是“真的更好”，还是只是表达更顺，然后再做一轮有方向的改写。

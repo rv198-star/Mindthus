@@ -1,0 +1,1 @@
+{"case_id":"mtj-011","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答明确纠正了“RAG就是把文档塞进prompt”的表象理解，指出prompt只是最终上下文，前面还有检索、排序、过滤、去重、权限和版本控制等决定性环节。它也覆盖了规模、语义召回、更新、延迟、权限、成本等主控因素，并给出砍掉向量库后的具体后果/适用边界，没有顺着“砍库省钱”的方向误判。"}

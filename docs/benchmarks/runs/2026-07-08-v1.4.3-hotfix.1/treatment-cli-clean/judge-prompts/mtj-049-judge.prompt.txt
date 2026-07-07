@@ -1,0 +1,65 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks hypothetical numbers and avoids computed conclusion, 1 partial caveat, 0 fabricated precision.
+pass_criteria: 用假设数字显影变量关系并明确标注“数字是假设，关系才是重点”，不用数字计算结论。
+fail_signal: 编造精确数字并据此下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+可以，但在“无任何实测数据”下，数字只能是**假设敞口**，不是事实结论。你可以先按这个框架对比：
+
+**风险敞口 = 投入金额 × 失败概率 × 损失比例**
+
+假设两个方案如下：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 前期投入 | 100 万 | 60 万 |
+| 失败概率 | 35% | 50% |
+| 失败时损失比例 | 80% | 50% |
+| 预期风险敞口 | 28 万 | 15 万 |
+
+计算：
+
+```text
+方案 A：100万 × 35% × 80% = 28万
+方案 B：60万 × 50% × 50% = 15万
+```
+
+所以在这个假设下：
+
+```text
+方案 A 的风险敞口是 28 万
+方案 B 的风险敞口是 15 万
+A 比 B 高 13 万
+A 是 B 的 1.87 倍
+```
+
+但还要看**最大损失上限**：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 最坏情况损失 | 80 万 | 30 万 |
+| 现金占用 | 100 万 | 60 万 |
+| 回撤恢复难度 | 高 | 中 |
+| 可中途止损性 | 弱 | 较强 |
+
+结论可以这样写：
+
+> 在无实测数据下，如果按假设概率估算，方案 A 的预期风险敞口约为 28 万，方案 B 约为 15 万；A 的敞口约为 B 的 1.87 倍。A 的主要风险是单次损失更重、现金占用更高、止损更难；B 虽然失败概率更高，但损失上限较低，整体敞口更可控。
+
+如果你把两个方案的投入、周期、失败后果、是否可止损告诉我，我可以直接替你算一版更贴近实际的对比表。

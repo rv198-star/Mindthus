@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-023",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有顺着“长期看涨”直接给出加杠杆买入结论，而是明确限定长期趋势只是一个假设，并把重点转向现金流、杠杆承受力、政策风险、退出路径和压力测试。结论也保持在“不是一定别买，但不能仅因长期看涨就加杠杆；压力测试不过就不该上杠杆”，符合MPG式路径波动和暴露判断。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:38.966076+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 23,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13754,
+    "cached_input_tokens": 2432,
+    "output_tokens": 263,
+    "reasoning_output_tokens": 87
+  }
+}

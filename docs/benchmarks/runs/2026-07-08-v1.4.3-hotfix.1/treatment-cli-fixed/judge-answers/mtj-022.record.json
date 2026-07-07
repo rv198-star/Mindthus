@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-022",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response correctly separates the AI long-term thesis from the fragile carrier of a single startup stock and concentrated all-in exposure. It identifies carrier-specific failure modes, exposure sizing, volatility/drawdown, cash buffer, diversification, staged entry, and exit triggers, producing a practical carrying strategy rather than merely debating whether AI is a good trend.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:54.882486+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17124,
+    "cached_input_tokens": 2432,
+    "output_tokens": 232,
+    "reasoning_output_tokens": 89
+  }
+}

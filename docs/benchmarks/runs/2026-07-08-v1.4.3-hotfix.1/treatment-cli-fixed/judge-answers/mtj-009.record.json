@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-009",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The answer rejects the reduction, identifies Kubernetes as a container application cluster operating/orchestration/control system, and explicitly separates scheduling as one capability over Pods rather than ordinary processes. It also explains the locally true layer: scheduling is a rough intuition only for workload placement, while the whole object is declarative lifecycle and desired-state control across a cluster. It does not use the forbidden '可以这么理解' style concession.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:57.317317+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 9,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17137,
+    "cached_input_tokens": 2432,
+    "output_tokens": 262,
+    "reasoning_output_tokens": 104
+  }
+}

@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-031
+case_type: negative_control
+group_id: G
+expected_owner: release_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 object-specific review, 0 TVG over-trigger.
+pass_criteria: 按对象路由为 release review（改动清单/回归风险/验证证据）。
+fail_signal: 因“audit”词面进入产物强化循环。
+
+Canonical single-line prompt:
+帮我audit一下这次release的改动。
+
+Full executed transcript:
+User turn 1:
+帮我audit一下这次release的改动。
+
+Assistant turn 1:
+可以。请把这次 release 的改动发我，任选一种即可：
+
+1. PR / compare 链接  
+2. `git diff <上一版tag>..<本次tag>` 的输出  
+3. 变更文件列表 + 关键 diff  
+4. release notes / changelog
+
+我会按 code review / release audit 的方式看，重点查：
+
+- 线上行为回归、兼容性破坏
+- 数据迁移、配置、环境变量风险
+- 鉴权、权限、输入校验、安全问题
+- API / schema / 事件契约变化
+- 错误处理、重试、并发、幂等性
+- 性能、缓存、资源释放
+- 测试覆盖缺口和发布/回滚风险
+
+你把 diff 贴上来后，我会直接给出按严重程度排序的 findings，包括文件/位置、影响、建议修复方式。

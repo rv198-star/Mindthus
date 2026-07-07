@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:02:49.822684+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-025",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e63-d2b7-7172-8920-c29ba1bded8f",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-025-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.664,
+      "thread_id": "019f3e63-d2b7-7172-8920-c29ba1bded8f",
+      "answer": "我这边看不到“昨天那个会话”的内容，所以不能直接核对 agent 是否实际按 MPG-AQM 规范输出了显影快照。\n\n你可以把那段输出贴过来，我可以帮你逐项核对。快速自查标准是：\n\n1. 是否明确给出“显影快照”，而不是只做一般总结。\n2. 是否把主线判断、关键变量、载体/代理、稀缺资源暴露点、路径风险写清楚。\n3. 是否说明当前应采取的动作倾向，比如继续、持有、切换、退出或延迟。\n4. 是否有证据或依据支撑，而不是只给结论。\n5. 是否暴露不确定性、反向信号和下一步验证点。\n6. 是否避免空泛战略语言，能落到具体情境和决策压力上。\n\n如果原输出只是“结论 + 建议”，没有把上述结构显影出来，那通常不算合格的 MPG-AQM 显影快照。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-025-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-025-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-025-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-025-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我这边看不到“昨天那个会话”的内容，所以不能直接核对 agent 是否实际按 MPG-AQM 规范输出了显影快照。\n\n你可以把那段输出贴过来，我可以帮你逐项核对。快速自查标准是：\n\n1. 是否明确给出“显影快照”，而不是只做一般总结。\n2. 是否把主线判断、关键变量、载体/代理、稀缺资源暴露点、路径风险写清楚。\n3. 是否说明当前应采取的动作倾向，比如继续、持有、切换、退出或延迟。\n4. 是否有证据或依据支撑，而不是只给结论。\n5. 是否暴露不确定性、反向信号和下一步验证点。\n6. 是否避免空泛战略语言，能落到具体情境和决策压力上。\n\n如果原输出只是“结论 + 建议”，没有把上述结构显影出来，那通常不算合格的 MPG-AQM 显影快照。"
+      ],
+      "usage": {
+        "input_tokens": 13227,
+        "cached_input_tokens": 13184,
+        "output_tokens": 410,
+        "reasoning_output_tokens": 182
+      },
+      "user_prompt": "帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？"
+    }
+  ],
+  "final_answer": "我这边看不到“昨天那个会话”的内容，所以不能直接核对 agent 是否实际按 MPG-AQM 规范输出了显影快照。\n\n你可以把那段输出贴过来，我可以帮你逐项核对。快速自查标准是：\n\n1. 是否明确给出“显影快照”，而不是只做一般总结。\n2. 是否把主线判断、关键变量、载体/代理、稀缺资源暴露点、路径风险写清楚。\n3. 是否说明当前应采取的动作倾向，比如继续、持有、切换、退出或延迟。\n4. 是否有证据或依据支撑，而不是只给结论。\n5. 是否暴露不确定性、反向信号和下一步验证点。\n6. 是否避免空泛战略语言，能落到具体情境和决策压力上。\n\n如果原输出只是“结论 + 建议”，没有把上述结构显影出来，那通常不算合格的 MPG-AQM 显影快照。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

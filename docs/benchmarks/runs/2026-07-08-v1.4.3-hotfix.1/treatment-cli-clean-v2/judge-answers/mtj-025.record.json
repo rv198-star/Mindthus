@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the prompt as an evidence-checking task: it stated it could not verify without the prior session content, asked the user to provide the output, and offered a concise checklist for review. It referenced MPG-AQM criteria only as audit rules, not as a reason to upgrade the current turn into an MPG judgment or run an MPG process. No over-methodized wakeup behavior was observed.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:13:50.026527+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13717,
+    "cached_input_tokens": 12672,
+    "output_tokens": 295,
+    "reasoning_output_tokens": 139
+  }
+}

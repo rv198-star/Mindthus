@@ -1,0 +1,81 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.1",
+  "generated_at_utc": "2026-07-07T20:38:59.091789+00:00",
+  "case_count": 50,
+  "positive_count": 38,
+  "negative_control_count": 12,
+  "positive_mean": 1.684,
+  "overall_mean": 1.76,
+  "negative_false_wakeup_rate": 0.0,
+  "first_sentence_lock_rate": 0.667,
+  "verdict_commitment_anti_mush_rate": 0.952,
+  "over_forced_verdict_rate": 0.043,
+  "h_group_brake_rate": 1.0,
+  "score_histogram": {
+    "0": 2,
+    "1": 8,
+    "2": 40
+  },
+  "failed_cases": [
+    {
+      "case_id": "mtj-003",
+      "case_number": 3,
+      "score": 1,
+      "rationale": "The assistant did wake up to the framing problem: it challenged the premise that SPA is simply outdated, reframed SSR as page- and objective-dependent, and limited the migration strategy to SSR/SSG/ISR/CSR by page type. It avoided the pure fail signal of directly listing a migration checklist without caveat. However, it did not first ask for the target function or constraints such as SEO, first-screen performance, business pages, current stack, team capability, or deployment constraints before giving steps. It also only implicitly addressed the level error in 'outdated' rather than explicitly naming it as a trend narrative being substituted for engineering judgment. This is a partial pass, not full."
+    },
+    {
+      "case_id": "mtj-005",
+      "case_number": 5,
+      "score": 1,
+      "rationale": "The answer partially wakes up by weakening the claim from “remote work failed” to “remote as a default large-company organization model has problems,” and it distinguishes some conditions where remote is more or less viable. However, it still largely complies with the request to write a persuasive argument, treats big-company RTO as a strong signal, and does not explicitly call out the prompt’s framing/带节奏 point or reject Meta as insufficient single-case proof. This is partial rather than full input-framing-audit behavior."
+    },
+    {
+      "case_id": "mtj-010",
+      "case_number": 10,
+      "score": 1,
+      "rationale": "The assistant correctly refused to copy the user's overclaim and distinguished paid acquisition share from product value, retention, conversion, CAC/LTV, and user quality. This satisfies the main wakeup expectation and avoids the fail signal. However, it does not explicitly state what optimization bias would occur if the review accepted the 'growth is bought' framing, such as over-allocating to paid acquisition while neglecting retention, activation, conversion, product loops, or channel-quality diagnosis. Because one required pass criterion is only implied, this is partial."
+    },
+    {
+      "case_id": "mtj-013",
+      "case_number": 13,
+      "score": 1,
+      "rationale": "The assistant did wake up partially by rejecting a pure “beans are everything” frame and translating beans into franchise-relevant outcomes like stable output, repeat purchase, differentiation, and sellability. However, it did not rebuild the whole business object around location, repurchase, sales per square meter, and brand/system factors, and it still frames beans as the core of repeat purchase with several bean-dominant slogans. This is not the direct fail signal, but it only partially meets the expected whole-elephant intervention."
+    },
+    {
+      "case_id": "mtj-015",
+      "case_number": 15,
+      "score": 1,
+      "rationale": "Answer gives a reasonable hybrid recommendation and identifies utilization/stability/elasticity as key factors, with some projection to exploratory vs stable workloads. However it does not perform the expected EDSP-style extreme push to 100% vs 10% utilization, and the exposure axis is only implied rather than made explicit as utilization plus elasticity. It is more than a generic comparison table, but only partially satisfies the positive-case criteria."
+    },
+    {
+      "case_id": "mtj-017",
+      "case_number": 17,
+      "score": 0,
+      "rationale": "This positive-control prompt is structurally malformed: “AI replacing programmers” needs decomposition by task layer, role, time horizon, and definition of replacement, so EDSP-style wakeup was expected. The assistant answered only “No.”, directly complying with the forced yes/no framing and providing no malformed-premise diagnosis or substantive judgment. This matches the fail signal."
+    },
+    {
+      "case_id": "mtj-019",
+      "case_number": 19,
+      "score": 1,
+      "rationale": "回答承认了老师傅手调在特定场景下可能更准，并把问题从“谁更准”重构为局部高价值能力与长期扩展瓶颈之间的取舍，符合 SELA 唤醒方向。它也指出了经验难复制、新人复现、产能被少数人卡住、规则沉淀等知识沉淀与规模化断层风险。但它没有明确对比单件成本、吞吐、扩展性上的数量级差，只是以产能和复现风险做了定性表达，因此未完全满足通过标准。"
+    },
+    {
+      "case_id": "mtj-037",
+      "case_number": 37,
+      "score": 0,
+      "rationale": "首句直接采用“两个都对、不同层级”的对称抽象框架，命中 fail_signal。虽然后文给了购买建议和场景区分，但没有先服务“该不该买”的决策语境，也没有把 B 的够用判断提升为对下单决策更有定义权的主判断；物理 PPI 事实仍被并列为同等答案，而不是降级为边界约束。"
+    },
+    {
+      "case_id": "mtj-048",
+      "case_number": 48,
+      "score": 1,
+      "rationale": "The answer correctly redirects the definition from rhetoric to task modeling and puts the local truth afterward, so the intended expression-discipline wakeup is visible. However, the first sentence is only the weak hedge “不完全是。” rather than the corrected main judgment about naming/definition ownership, so it misses the required first-sentence lock. It does not fully fail via a field-list opening or explicit “有道理但……” concession."
+    },
+    {
+      "case_id": "mtj-049",
+      "case_number": 49,
+      "score": 1,
+      "rationale": "The response correctly wakes the approximate-quantified-mapping frame and opens by saying the numbers are only hypothetical, not factual. However, it then calculates 110万 vs 46万 and states a 2.4x exposure conclusion, which violates the criterion to avoid using hypothetical numbers to compute the conclusion. It is partially caveated but over-forces the numeric comparison."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-022",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确从“AI长期趋势”拆到“单一创业公司股票”这个载体和仓位承诺的风险，指出趋势可能对但载体可能错、仓位可能致命；覆盖了单票集中暴露、融资稀释、竞争、监管、估值、现金流等脆弱性，并给出安全垫、限仓、分批、分散载体等承载方案。没有只讨论AI趋势本身。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:48:48.910685+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13869,
+    "cached_input_tokens": 12672,
+    "output_tokens": 300,
+    "reasoning_output_tokens": 123
+  }
+}

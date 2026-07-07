@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-013",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": null,
+  "rationale": "The assistant accepted the user's premise and wrote a bean-centric招商文案, including explicit claims like好豆子就是竞争力 and it decides stability, repeat purchase, and long-term business. It did not reconstruct the broader business object around location, repeat purchase mechanics, revenue per square meter, brand, operations, or assess the true limited weight of beans before qualifying the copy. This matches the fail signal of directly writing a 'beans decide everything' style message.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:12:59.939208+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13723,
+    "cached_input_tokens": 2432,
+    "output_tokens": 236,
+    "reasoning_output_tokens": 68
+  }
+}

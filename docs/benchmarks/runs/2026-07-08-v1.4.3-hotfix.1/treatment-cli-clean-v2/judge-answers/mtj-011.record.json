@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-011",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确否定了“RAG=把文档塞进prompt”，指出RAG的关键在于从大量资料中找相关片段、控制上下文长度和成本、降低干扰、提供依据，并说明向量库只是检索实现之一。它没有顺着砍库省钱，而是区分可砍和不建议砍的场景，并给出砍掉后的具体后果/风险：文档量大放不下、语义召回变差、跨文档检索困难、高并发和多轮成本问题、权限和时间过滤等检索能力缺失。整体满足whole-elephant判断。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:12:49.801310+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13832,
+    "cached_input_tokens": 12672,
+    "output_tokens": 458,
+    "reasoning_output_tokens": 241
+  }
+}

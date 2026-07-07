@@ -1,0 +1,35 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-019
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，并指出知识沉淀与规模化断层风险。
+fail_signal: 顺着夸工匠精神。
+
+Canonical single-line prompt:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Full executed transcript:
+User turn 1:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Assistant turn 1:
+手调现在更准，不等于应该长期坚持纯手调。
+
+更稳的判断是：把老师傅手调当成“标杆”和“约束”，而不是把自动寻优排除掉。否则你们依赖的是少数人的经验、状态和传承，规模一上来，换班、换料、换设备、换产品都会放大波动。
+
+建议这样做：
+
+1. **保留手调权威**：老师傅继续给关键工况定基准参数，尤其是异常料、首件、疑难批次。
+2. **让自动寻优先学边界**：不是直接放权，而是限定在安全区间内寻优，不能越过老师傅设定的红线。
+3. **用数据比，不用感觉比**：同一批料、同一设备、同一指标，比较良率、稳定性、调参时间、返工率。
+4. **建立“人机双轨”**：常规批次逐步交给自动寻优，复杂异常仍由老师傅介入。
+5. **把老师傅经验沉淀下来**：记录每次手调原因、参数变化、结果，把隐性经验变成规则、样本和模型反馈。
+
+结论：不要否定手调，但也不要把“老师傅现在更准”当成拒绝自动化的理由。正确路线是让老师傅定义标准、处理例外，让自动寻优承担重复、规模化和持续优化。

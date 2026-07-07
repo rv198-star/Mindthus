@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-044
+case_type: negative_control
+group_id: K
+expected_owner: direct_answer
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct answer, 0 over-methodized.
+pass_criteria: 直接答。
+fail_signal: framing 分析。
+
+Canonical single-line prompt:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Full executed transcript:
+User turn 1:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Assistant turn 1:
+适合 6 岁孩子的，我会优先选这些：
+
+1. **科学工业城 Cité des sciences：Cité des enfants**
+   最推荐。官方有 **2-6岁** 和 **5-10岁** 两个儿童区，6岁可以按孩子状态选；偏动手、探索、玩中学。暑期还常有儿童展和活动。([cite-sciences.fr](https://www.cite-sciences.fr/fr/au-programme/expos-permanentes/cite-des-enfants))
+
+2. **Musée en Herbe 小草博物馆**
+   儿童友好的艺术博物馆，官方写明面向 **3到103岁**，有适合 **6-12岁** 的创作工作坊。规模不大，不容易累。([musee-en-herbe.com](https://www.musee-en-herbe.com/))
+
+3. **自然历史博物馆 / Jardin des Plantes 一带**
+   重点看 **Grande Galerie de l’Évolution** 或古生物馆。动物标本、骨架、恐龙感强，6岁通常很吃这一套。可以顺便逛植物园，节奏更松。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Grande_galerie_de_l%27%C3%89volution?utm_source=openai))
+
+4. **Musée des Arts Forains 露天游艺艺术博物馆**
+   复古游乐场、旋转木马、表演式导览，很有“玩”的感觉。注意官方说明通常需要预约参观。([arts-forains.com](https://arts-forains.com/))
+
+5. **Musée du quai Branly - Jacques Chirac**
+   如果孩子对面具、乐器、世界文化感兴趣，可以去。官方有家庭导览资料和“Mon p’tit guide”儿童小导览；也靠近埃菲尔铁塔，适合顺路。([quaibranly.fr](https://www.quaibranly.fr/fr/))
+
+6. **卢浮宫**
+   不是最轻松，但可以只看 45-60 分钟：埃及馆、拿破仑三世公寓、几件“寻宝式”作品。不要按成人路线硬逛。
+
+**我的排序：**  
+第一次带6岁孩子去巴黎博物馆：**Cité des enfants > Musée en Herbe > 自然历史博物馆 > Arts Forains > Quai Branly > 卢浮宫短线**。
+
+出发前建议查当天开放时间和是否要预约，巴黎很多亲子活动名额会满。

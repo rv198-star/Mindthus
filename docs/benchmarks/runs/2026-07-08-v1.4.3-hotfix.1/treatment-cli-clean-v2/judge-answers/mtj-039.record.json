@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-039",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有停留在“加班文化对不对”的泛泛道德判断，而是迅速校准到应届生在两个 offer 间选择的决策处境，并以成长质量、团队/leader、平台、薪酬、三年目标和身体情绪承受力作为目标函数给出判断框架。它区分了“无成长的加班”和“高密度成长的忙”，最后给出不同 offer 组合下的明确倾向。事实层没有完全抹掉，至少保留了健康/情绪与常态 996 风险；虽然没有展开法律层面，但整体满足处境化决策建议标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:52.515640+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13844,
+    "cached_input_tokens": 12672,
+    "output_tokens": 387,
+    "reasoning_output_tokens": 165
+  }
+}

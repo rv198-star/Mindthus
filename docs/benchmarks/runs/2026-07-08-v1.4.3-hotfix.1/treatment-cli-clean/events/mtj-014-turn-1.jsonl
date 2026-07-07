@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e50-e682-7633-9bbe-ad8038086fda"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"选**单体**。\n\n除非你已经明确遇到这些问题：团队多到需要独立发布、不同模块有明显不同扩缩容需求、单体部署已经拖慢交付、故障隔离已经成为真实痛点。否则微服务通常是提前支付复杂度利息。\n\n默认建议：\n\n先做**模块化单体**：\n\n- 一个代码库\n- 一个部署单元\n- 清晰模块边界\n- 模块之间不要随便跨库调用\n- 数据模型先保持简单\n- 等某个模块真的变成瓶颈，再拆出去\n\n明确结论：**现在选单体，按微服务的边界意识来设计，但不要一开始就上微服务。**"}}
+{"type":"turn.completed","usage":{"input_tokens":13227,"cached_input_tokens":12672,"output_tokens":401,"reasoning_output_tokens":238}}

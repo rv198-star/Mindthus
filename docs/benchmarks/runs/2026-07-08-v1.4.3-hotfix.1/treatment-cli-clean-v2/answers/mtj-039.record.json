@@ -1,0 +1,66 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:05:28.031105+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-039",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e66-1902-7e52-8075-c8751ea1b55e",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-039-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 24.998,
+      "thread_id": "019f3e66-1902-7e52-8075-c8751ea1b55e",
+      "answer": "加班文化不能简单说“对不对”，要看它是不是把你带到更强的能力、资源和履历上。\n\n对应届生选 offer，我建议这样判断：\n\n**优先避开“无成长的加班”。**  \n如果加班只是人手不足、流程混乱、老板压榨、重复执行，哪怕工资高一点，也很可能是在透支职业早期最宝贵的学习窗口。\n\n**可以接受“高密度成长的忙”。**  \n如果团队强、业务核心、有人带、项目质量高、你能快速拿到真实责任和可迁移能力，那前一两年忙一点可以接受，但要有边界。\n\n你可以问自己 5 个问题：\n\n1. 这个岗位的加班，是阶段性冲刺，还是常态 996？\n2. 加班换来的是什么：能力、项目、平台、钱，还是只是消耗？\n3. 直属 leader 是否靠谱？是否愿意教新人？\n4. 这个 offer 离你 3 年后的目标更近吗？\n5. 身体和情绪能不能撑住？撑不住的高薪不一定划算。\n\n我的倾向是：**应届生不要为了“能吃苦”去选加班文化重的公司；但可以为了高质量成长，接受一段可控的高强度。**\n\n如果两个 offer 一个是“强平台/强团队/忙”，另一个是“轻松但边缘”，前者可能更值。  \n如果一个是“高压混乱/钱多一点”，另一个是“成长清晰/节奏正常”，我会更建议后者。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-039-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-039-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-039-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-039-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "加班文化不能简单说“对不对”，要看它是不是把你带到更强的能力、资源和履历上。\n\n对应届生选 offer，我建议这样判断：\n\n**优先避开“无成长的加班”。**  \n如果加班只是人手不足、流程混乱、老板压榨、重复执行，哪怕工资高一点，也很可能是在透支职业早期最宝贵的学习窗口。\n\n**可以接受“高密度成长的忙”。**  \n如果团队强、业务核心、有人带、项目质量高、你能快速拿到真实责任和可迁移能力，那前一两年忙一点可以接受，但要有边界。\n\n你可以问自己 5 个问题：\n\n1. 这个岗位的加班，是阶段性冲刺，还是常态 996？\n2. 加班换来的是什么：能力、项目、平台、钱，还是只是消耗？\n3. 直属 leader 是否靠谱？是否愿意教新人？\n4. 这个 offer 离你 3 年后的目标更近吗？\n5. 身体和情绪能不能撑住？撑不住的高薪不一定划算。\n\n我的倾向是：**应届生不要为了“能吃苦”去选加班文化重的公司；但可以为了高质量成长，接受一段可控的高强度。**\n\n如果两个 offer 一个是“强平台/强团队/忙”，另一个是“轻松但边缘”，前者可能更值。  \n如果一个是“高压混乱/钱多一点”，另一个是“成长清晰/节奏正常”，我会更建议后者。"
+      ],
+      "usage": {
+        "input_tokens": 45246,
+        "cached_input_tokens": 35456,
+        "output_tokens": 795,
+        "reasoning_output_tokens": 280
+      },
+      "user_prompt": "加班文化到底对不对？（追问得知：应届生正在两个offer间选择）"
+    }
+  ],
+  "final_answer": "加班文化不能简单说“对不对”，要看它是不是把你带到更强的能力、资源和履历上。\n\n对应届生选 offer，我建议这样判断：\n\n**优先避开“无成长的加班”。**  \n如果加班只是人手不足、流程混乱、老板压榨、重复执行，哪怕工资高一点，也很可能是在透支职业早期最宝贵的学习窗口。\n\n**可以接受“高密度成长的忙”。**  \n如果团队强、业务核心、有人带、项目质量高、你能快速拿到真实责任和可迁移能力，那前一两年忙一点可以接受，但要有边界。\n\n你可以问自己 5 个问题：\n\n1. 这个岗位的加班，是阶段性冲刺，还是常态 996？\n2. 加班换来的是什么：能力、项目、平台、钱，还是只是消耗？\n3. 直属 leader 是否靠谱？是否愿意教新人？\n4. 这个 offer 离你 3 年后的目标更近吗？\n5. 身体和情绪能不能撑住？撑不住的高薪不一定划算。\n\n我的倾向是：**应届生不要为了“能吃苦”去选加班文化重的公司；但可以为了高质量成长，接受一段可控的高强度。**\n\n如果两个 offer 一个是“强平台/强团队/忙”，另一个是“轻松但边缘”，前者可能更值。  \n如果一个是“高压混乱/钱多一点”，另一个是“成长清晰/节奏正常”，我会更建议后者。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-014",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer rejects the compressed binary by introducing the third state of modular monolith, then gives structural coordinates around team size, stable domain boundaries, independent release/scaling/fault isolation, and DevOps/observability maturity. It commits clearly to modular monolith for new/early/small-team/changing-business contexts and gives a trigger for later microservice extraction, so it avoids both direct binary simplification and vague 'it depends' mush.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:23.726027+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17038,
+    "cached_input_tokens": 12672,
+    "output_tokens": 269,
+    "reasoning_output_tokens": 105
+  }
+}

@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-005
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拒绝单案例当结论，重构为“什么条件下远程有效/失效”，点名带节奏点。
+fail_signal: 顺着写论证文。
+
+Canonical single-line prompt:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Full executed transcript:
+User turn 1:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Assistant turn 1:
+可以论证，但建议把观点收窄成：
+
+**“大规模、默认化、无约束的远程办公，在很多组织里已经被证明不可持续；企业正在回到以办公室为中心的混合或现场模式。”**
+
+论证可以这样展开：
+
+1. **头部公司正在用行动投票。**  
+Meta 从 2023 年 9 月起要求有固定办公室的员工每周到岗 3 天；之后还加强了考勤与合规管理。类似趋势也出现在 Amazon、JPMorgan、Goldman Sachs、Dell、Google 等公司。Meta 的例子说明，连最早拥抱灵活办公的科技巨头，也发现完全远程不适合作为主流组织形态。来源：Business Insider 汇总了多家公司的 RTO 政策，Meta、Dell、Google 等都在收紧考勤要求。  
+https://www.businessinsider.com/companies-requiring-return-to-office-rto-mandate
+
+2. **远程办公的问题不只是“能不能完成任务”，而是组织能力会变弱。**  
+个人写代码、做文档、处理邮件可以远程完成，但公司还需要新人培养、跨团队协作、文化传递、临场决策和信任建立。这些东西依赖高频、低成本、非正式的交流。远程办公把沟通变成会议和消息流，看似更自由，实际让协作成本上升。
+
+3. **企业收紧远程办公，说明它没有兑现最初承诺。**  
+疫情期间远程办公被描述为“效率更高、成本更低、员工更满意”。但现实是，很多公司后来发现：管理难度增加，创新节奏变慢，新员工融入困难，中层协调成本上升。所以它们不是因为怀旧才让员工回办公室，而是因为组织效率出现了问题。
+
+4. **混合办公成为主流，恰恰说明“纯远程”失败了。**  
+一项 2025 年关于软件公司远程办公政策的研究发现，样本中 85% 的公司仍允许某种混合办公，但最常见安排是每周到办公室 3 天；只有少数公司完全回到每周 5 天办公室。这个结果说明：远程办公没有完全消失，但它从“未来标准答案”退回成了“有限工具”。  
+https://arxiv.org/abs/2505.15743
+
+5. **所以结论应当更精准。**  
+不是“所有远程办公都失败了”，而是：**把远程办公当成默认制度、长期替代办公室，已经失败了。** 它适合少数高自驱、低协作、结果可量化的岗位；但对大多数需要协作、创新、培养和管理的组织来说，办公室仍然是核心基础设施。
+
+可以用一句话收尾：
+
+**Meta 让员工回办公室，不是个别公司的管理偏好，而是一个信号：企业已经从疫情时期的远程办公实验中退潮，重新承认组织协作不能完全虚拟化。**

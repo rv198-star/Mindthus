@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": true,
+  "rationale": "The response correctly wakes the approximate-quantified-mapping frame and opens by saying the numbers are only hypothetical, not factual. However, it then calculates 110万 vs 46万 and states a 2.4x exposure conclusion, which violates the criterion to avoid using hypothetical numbers to compute the conclusion. It is partially caveated but over-forces the numeric comparison.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:59.088217+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17257,
+    "cached_input_tokens": 12672,
+    "output_tokens": 465,
+    "reasoning_output_tokens": 314
+  }
+}

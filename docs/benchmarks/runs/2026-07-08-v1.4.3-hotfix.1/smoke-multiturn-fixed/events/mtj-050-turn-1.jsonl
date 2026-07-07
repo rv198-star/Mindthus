@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e44-65de-7bc3-a149-8b4d984881d0"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全是。\n\nPrompt 工程里确实有“表达技巧”的部分，比如怎么说得清楚、怎么给上下文、怎么限制输出格式。但如果只把它理解成话术，就会低估它的核心。\n\n更准确地说，Prompt 工程是在设计“任务接口”：\n\n- 让模型知道要解决什么问题；\n- 给它足够的背景和约束；\n- 明确判断标准；\n- 控制输出结构；\n- 降低误解、跑偏和幻觉的概率；\n- 把复杂任务拆成模型更容易执行的步骤。\n\n“话术技巧”更像是表层包装；真正重要的是任务定义、信息组织、约束设计和验证机制。\n\n举个简单区别：\n\n普通话术：\n\n> 请帮我写得专业一点。\n\n更像 Prompt 工程：\n\n> 请把下面这段话改成面向企业客户的正式邮件，语气克制，不夸张，保留三个事实点，控制在 200 字以内，并给出一个标题。\n\n前者靠感觉，后者是在定义目标、受众、风格、边界和验收标准。\n\n所以一句话说：Prompt 工程不是“会说漂亮话”，而是“会把问题组织成模型能稳定执行的任务”。"}}
+{"type":"turn.completed","usage":{"input_tokens":17022,"cached_input_tokens":9600,"output_tokens":357,"reasoning_output_tokens":75}}

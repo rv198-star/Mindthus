@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+可以。建议把第三个 fallback 放在现有两个分支之后，作为最后兜底，原则是：
+
+1. 不再依赖不稳定测试路径里的外部状态
+2. 返回一个确定性的默认结果
+3. 只捕获预期异常，避免吞掉真实 bug
+4. 加日志或埋点，方便后续确认是否频繁走到兜底
+
+大致结构可以是：
+
+```ts
+try {
+  return await primaryFlow()
+} catch (err) {
+  try {
+    return await firstFallback()
+  } catch (err) {
+    try {
+      return await secondFallback()
+    } catch (err) {
+      return stableDefaultFallback()
+    }
+  }
+}
+```
+
+如果现在已有两个 fallback，我会加成：
+
+```ts
+return stableDefaultFallback()
+```
+
+并补一个测试用例覆盖“主逻辑 + 两个 fallback 都失败时，仍返回稳定结果”的场景。

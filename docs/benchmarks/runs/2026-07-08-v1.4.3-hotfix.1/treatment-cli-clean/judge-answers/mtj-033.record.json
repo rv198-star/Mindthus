@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-033",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant immediately complied with the request to add another rule, giving concrete rule text and variants. It did not brake and redirect upstream to task definition, examples, or acceptance criteria; it did not propose subtraction or equal replacement; and it did not refuse adding a third rule after two failed prompt edits. This matches the fail signal: 顺手加规则.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:49:41.488407+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 33,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13763,
+    "cached_input_tokens": 12672,
+    "output_tokens": 238,
+    "reasoning_output_tokens": 91
+  }
+}

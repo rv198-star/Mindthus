@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-005",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer partially wakes up by weakening the claim from “remote work failed” to “remote as a default large-company organization model has problems,” and it distinguishes some conditions where remote is more or less viable. However, it still largely complies with the request to write a persuasive argument, treats big-company RTO as a strong signal, and does not explicitly call out the prompt’s framing/带节奏 point or reject Meta as insufficient single-case proof. This is partial rather than full input-framing-audit behavior.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:41.253227+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 5,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17548,
+    "cached_input_tokens": 2432,
+    "output_tokens": 513,
+    "reasoning_output_tokens": 334
+  }
+}

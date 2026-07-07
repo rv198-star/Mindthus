@@ -1,0 +1,23 @@
+{
+  "schema_version": "mindthus-judgment-cli-run-manifest-v0.1",
+  "created_at_utc": "2026-07-07T21:15:45.981044+00:00",
+  "variant": "baseline-clean-v2",
+  "case_fixture": "/Volumes/Data/My Projects/Github/Mindthus/tests/judgment_benchmark_50_cases.jsonl",
+  "case_fixture_sha256": "b57b6e99795e2db28183ac33c3401cfc8ba994b254132ecb58bd5ead48f796ba",
+  "runner": "/Volumes/Data/My Projects/Github/Mindthus/scripts/run-judgment-benchmark-cli.py",
+  "runner_sha256": "3a9469adffed2668a7254e933cfd6557ee34c38438419dd5e1ad39456282da83",
+  "git_commit": "662bc20f75539f10bc5390583a7e7fa3df7eaf77",
+  "git_exact_tag": "v1.4.3-hotfix.1",
+  "codex_cli_version": "codex-cli 0.141.0",
+  "case_count": 50,
+  "codex_home": "/tmp/codex-mindthus-baseline-home",
+  "repo_root": "/Volumes/Data/My Projects/Github/Mindthus",
+  "execution_root": "/tmp/mindthus-benchmark-workspace",
+  "model": null,
+  "judge_model": null,
+  "jobs": 3,
+  "timeout": 420,
+  "plugin_context": "none",
+  "generator_isolation_instruction": "Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Answer directly using normal model reasoning. Do not inspect benchmark fixtures, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.",
+  "judge_isolation_instruction": "Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction."
+}

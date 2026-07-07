@@ -1,0 +1,68 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:16:11.646161+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e6f-e67c-7313-a3a6-832ba8e77d89",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 25.589,
+      "thread_id": "019f3e6f-e67c-7313-a3a6-832ba8e77d89",
+      "answer": "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么组织表达。但本质上更接近于**把任务、约束、上下文和评价标准清楚地转化成模型能执行的指令**。\n\n可以这么理解：\n\n- **话术技巧**：怎么说得更像样、更容易被接受。\n- **Prompt 工程**：怎么让模型稳定地产出你想要的结果。\n\n比如：\n\n> “帮我写一篇文章”\n\n这是普通提问。\n\n> “请用面向企业 CTO 的语气，写一篇 800 字文章，主题是 AI 降低研发成本，结构包括问题、方案、风险和落地建议，避免夸张营销语言。”\n\n这就更接近 prompt 工程，因为它明确了对象、语气、长度、结构、限制和目标。\n\n所以它不只是“会说话”，而是包含：\n\n- 任务拆解\n- 上下文提供\n- 约束设计\n- 输出格式控制\n- 示例引导\n- 结果评估与迭代\n\n一句话：**Prompt 工程不是单纯的话术，而是面向大模型的人机协作设计。话术只是其中很小的一部分。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-048-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "contamination_flags": [
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+      ],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么组织表达。但本质上更接近于**把任务、约束、上下文和评价标准清楚地转化成模型能执行的指令**。\n\n可以这么理解：\n\n- **话术技巧**：怎么说得更像样、更容易被接受。\n- **Prompt 工程**：怎么让模型稳定地产出你想要的结果。\n\n比如：\n\n> “帮我写一篇文章”\n\n这是普通提问。\n\n> “请用面向企业 CTO 的语气，写一篇 800 字文章，主题是 AI 降低研发成本，结构包括问题、方案、风险和落地建议，避免夸张营销语言。”\n\n这就更接近 prompt 工程，因为它明确了对象、语气、长度、结构、限制和目标。\n\n所以它不只是“会说话”，而是包含：\n\n- 任务拆解\n- 上下文提供\n- 约束设计\n- 输出格式控制\n- 示例引导\n- 结果评估与迭代\n\n一句话：**Prompt 工程不是单纯的话术，而是面向大模型的人机协作设计。话术只是其中很小的一部分。**"
+      ],
+      "usage": {
+        "input_tokens": 25916,
+        "cached_input_tokens": 21248,
+        "output_tokens": 519,
+        "reasoning_output_tokens": 173
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么组织表达。但本质上更接近于**把任务、约束、上下文和评价标准清楚地转化成模型能执行的指令**。\n\n可以这么理解：\n\n- **话术技巧**：怎么说得更像样、更容易被接受。\n- **Prompt 工程**：怎么让模型稳定地产出你想要的结果。\n\n比如：\n\n> “帮我写一篇文章”\n\n这是普通提问。\n\n> “请用面向企业 CTO 的语气，写一篇 800 字文章，主题是 AI 降低研发成本，结构包括问题、方案、风险和落地建议，避免夸张营销语言。”\n\n这就更接近 prompt 工程，因为它明确了对象、语气、长度、结构、限制和目标。\n\n所以它不只是“会说话”，而是包含：\n\n- 任务拆解\n- 上下文提供\n- 约束设计\n- 输出格式控制\n- 示例引导\n- 结果评估与迭代\n\n一句话：**Prompt 工程不是单纯的话术，而是面向大模型的人机协作设计。话术只是其中很小的一部分。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /Users/william/.codex/superpowers/skills/using-superpowers/SKILL.md\""
+  ]
+}

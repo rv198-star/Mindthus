@@ -1,0 +1,31 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-032
+case_type: negative_control
+group_id: G
+expected_owner: clarification
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative/boundary control; 2 asks targeted clarification, 0 blind rewrite or method loop.
+pass_criteria: 先澄清“不行”指什么（信息密度？说服力？），不盲目开强化。
+fail_signal: 直接盲目重写。
+
+Canonical single-line prompt:
+这份周报我感觉不太行，帮我改改。
+
+Full executed transcript:
+User turn 1:
+这份周报我感觉不太行，帮我改改。
+
+Assistant turn 1:
+可以。把周报正文发我，我会直接帮你改成可交付版本。
+
+如果你方便，也一起补这 3 点，我能改得更准：
+
+1. 这份周报给谁看：直属上级、项目组、客户，还是跨部门？
+2. 你希望它偏哪种效果：汇报进展、体现价值、暴露风险、争取资源，还是让领导放心？
+3. 有没有必须保留的事实、数据、项目名或敏感内容？
+
+你也可以直接贴原文，不用整理。我会先帮你判断它“不太行”主要是哪里出问题，再给一版改好的。

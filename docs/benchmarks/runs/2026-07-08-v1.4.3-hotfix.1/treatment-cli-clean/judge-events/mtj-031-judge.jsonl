@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e57-9907-7db2-b2f4-874a468787dd"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed with the object-specific release review route: it requested the release change set and named appropriate review dimensions such as regression risk, compatibility, migrations, config, testing, and rollback. It did not trigger a TVG/product-strengthening loop merely because of the word “audit,” so the negative-control stay-asleep behavior is satisfied.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13601,"cached_input_tokens":12672,"output_tokens":231,"reasoning_output_tokens":87}}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:29:36.952941+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e45-6b04-75d3-b0fc-7e55b0e1db5f",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 12.412,
+      "thread_id": "019f3e45-6b04-75d3-b0fc-7e55b0e1db5f",
+      "answer": "不完全是。\n\n如果只是把 Prompt 理解成“怎么把话说得更会讨好模型”，那确实像话术；但 Prompt 工程的核心不是修辞，而是**把任务、约束、上下文、判断标准和输出形式组织清楚**。\n\n更准确地说，它包含几层东西：\n\n1. **任务定义**\n   不是“帮我写一下”，而是说明要解决什么问题、服务谁、成功标准是什么。\n\n2. **上下文选择**\n   给模型哪些信息，不给哪些信息，信息之间的优先级是什么。\n\n3. **约束设计**\n   比如风格、格式、边界、禁止事项、证据要求、推理深度。\n\n4. **输出校准**\n   让结果可用、可检查、可复用，而不是只看起来顺滑。\n\n5. **工作流控制**\n   有些复杂任务不是一个 Prompt 解决，而是拆成提问、生成、审查、修正、验证几个步骤。\n\n所以，**话术是表层，任务建模才是本质**。\n\n一个简单判断标准是：  \n如果换个说法结果就好一点，那是话术；  \n如果你改变了模型理解问题、使用信息、判断取舍和交付结果的方式，那就是 Prompt 工程。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-048-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\n如果只是把 Prompt 理解成“怎么把话说得更会讨好模型”，那确实像话术；但 Prompt 工程的核心不是修辞，而是**把任务、约束、上下文、判断标准和输出形式组织清楚**。\n\n更准确地说，它包含几层东西：\n\n1. **任务定义**\n   不是“帮我写一下”，而是说明要解决什么问题、服务谁、成功标准是什么。\n\n2. **上下文选择**\n   给模型哪些信息，不给哪些信息，信息之间的优先级是什么。\n\n3. **约束设计**\n   比如风格、格式、边界、禁止事项、证据要求、推理深度。\n\n4. **输出校准**\n   让结果可用、可检查、可复用，而不是只看起来顺滑。\n\n5. **工作流控制**\n   有些复杂任务不是一个 Prompt 解决，而是拆成提问、生成、审查、修正、验证几个步骤。\n\n所以，**话术是表层，任务建模才是本质**。\n\n一个简单判断标准是：  \n如果换个说法结果就好一点，那是话术；  \n如果你改变了模型理解问题、使用信息、判断取舍和交付结果的方式，那就是 Prompt 工程。"
+      ],
+      "usage": {
+        "input_tokens": 16522,
+        "cached_input_tokens": 16256,
+        "output_tokens": 326,
+        "reasoning_output_tokens": 34
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\n如果只是把 Prompt 理解成“怎么把话说得更会讨好模型”，那确实像话术；但 Prompt 工程的核心不是修辞，而是**把任务、约束、上下文、判断标准和输出形式组织清楚**。\n\n更准确地说，它包含几层东西：\n\n1. **任务定义**\n   不是“帮我写一下”，而是说明要解决什么问题、服务谁、成功标准是什么。\n\n2. **上下文选择**\n   给模型哪些信息，不给哪些信息，信息之间的优先级是什么。\n\n3. **约束设计**\n   比如风格、格式、边界、禁止事项、证据要求、推理深度。\n\n4. **输出校准**\n   让结果可用、可检查、可复用，而不是只看起来顺滑。\n\n5. **工作流控制**\n   有些复杂任务不是一个 Prompt 解决，而是拆成提问、生成、审查、修正、验证几个步骤。\n\n所以，**话术是表层，任务建模才是本质**。\n\n一个简单判断标准是：  \n如果换个说法结果就好一点，那是话术；  \n如果你改变了模型理解问题、使用信息、判断取舍和交付结果的方式，那就是 Prompt 工程。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

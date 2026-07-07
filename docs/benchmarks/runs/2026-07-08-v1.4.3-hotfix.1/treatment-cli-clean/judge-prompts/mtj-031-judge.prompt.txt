@@ -1,0 +1,32 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-031
+case_type: negative_control
+group_id: G
+expected_owner: release_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 object-specific review, 0 TVG over-trigger.
+pass_criteria: 按对象路由为 release review（改动清单/回归风险/验证证据）。
+fail_signal: 因“audit”词面进入产物强化循环。
+
+Canonical single-line prompt:
+帮我audit一下这次release的改动。
+
+Full executed transcript:
+User turn 1:
+帮我audit一下这次release的改动。
+
+Assistant turn 1:
+可以。请把这次 release 的变更范围发我，任一形式都行：
+
+- PR 链接或 PR 描述
+- `git diff` / patch
+- commit 列表
+- release notes
+- 关键文件变更摘要
+
+我会按 release audit 的方式看：功能回归风险、兼容性、数据/迁移风险、配置与环境变量、错误处理、性能、安全、测试覆盖和发布回滚点。  
+如果你直接贴 diff，我会优先给出按严重程度排序的问题清单。

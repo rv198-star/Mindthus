@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-009",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确否定“Kubernetes就是进程调度器”，区分了 Linux 内核进程调度、Kubernetes Scheduler 的 Pod 到节点调度，以及 Kubernetes 控制面的期望状态维护、故障恢复、滚动发布、服务发现、扩缩容等整体编排能力。它说明了局部真相在调度器组件层成立，整体对象应理解为集群级容器/Pod 调度和状态管理/分布式应用编排系统，未出现“可以这么理解”式让步。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:24:06.577973+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 9,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12957,
+    "cached_input_tokens": 12160,
+    "output_tokens": 293,
+    "reasoning_output_tokens": 102
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:24:47.125691+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e40-f06e-7891-9af2-1faa12ea35fb",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 16.085,
+      "thread_id": "019f3e40-f06e-7891-9af2-1faa12ea35fb",
+      "answer": "不完全是。\n\nPrompt 工程里确实有“话术”成分，比如怎么表达更清楚、怎么降低歧义、怎么给模型上下文。但它的本质更像是**任务设计和约束设计**，不是单纯把话说得漂亮。\n\n更准确地说，它包含几层：\n\n1. **定义任务**\n   你到底要模型做什么：分类、总结、生成、推理、改写、抽取、判断，还是执行流程。\n\n2. **提供上下文**\n   模型不知道你的业务背景、判断标准、隐含偏好，所以需要把必要信息显性化。\n\n3. **设定约束**\n   输出格式、边界条件、禁止事项、优先级、失败时怎么处理。\n\n4. **拆解问题**\n   有些任务不能一句话扔给模型，需要拆成步骤、检查点或中间产物。\n\n5. **设计验证**\n   好 prompt 不只是“让模型回答”，还要让结果可检查、可复用、可迭代。\n\n所以，如果只是让 AI “说得更像人”“更会夸”“更有销售感”，那确实接近话术技巧。\n\n但在严肃使用里，Prompt 工程更接近：\n\n> 把人的意图、背景、标准和约束，翻译成模型能稳定执行的任务接口。\n\n话术是表层，任务结构才是核心。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-048-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程里确实有“话术”成分，比如怎么表达更清楚、怎么降低歧义、怎么给模型上下文。但它的本质更像是**任务设计和约束设计**，不是单纯把话说得漂亮。\n\n更准确地说，它包含几层：\n\n1. **定义任务**\n   你到底要模型做什么：分类、总结、生成、推理、改写、抽取、判断，还是执行流程。\n\n2. **提供上下文**\n   模型不知道你的业务背景、判断标准、隐含偏好，所以需要把必要信息显性化。\n\n3. **设定约束**\n   输出格式、边界条件、禁止事项、优先级、失败时怎么处理。\n\n4. **拆解问题**\n   有些任务不能一句话扔给模型，需要拆成步骤、检查点或中间产物。\n\n5. **设计验证**\n   好 prompt 不只是“让模型回答”，还要让结果可检查、可复用、可迭代。\n\n所以，如果只是让 AI “说得更像人”“更会夸”“更有销售感”，那确实接近话术技巧。\n\n但在严肃使用里，Prompt 工程更接近：\n\n> 把人的意图、背景、标准和约束，翻译成模型能稳定执行的任务接口。\n\n话术是表层，任务结构才是核心。"
+      ],
+      "usage": {
+        "input_tokens": 16522,
+        "cached_input_tokens": 16256,
+        "output_tokens": 424,
+        "reasoning_output_tokens": 108
+      }
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程里确实有“话术”成分，比如怎么表达更清楚、怎么降低歧义、怎么给模型上下文。但它的本质更像是**任务设计和约束设计**，不是单纯把话说得漂亮。\n\n更准确地说，它包含几层：\n\n1. **定义任务**\n   你到底要模型做什么：分类、总结、生成、推理、改写、抽取、判断，还是执行流程。\n\n2. **提供上下文**\n   模型不知道你的业务背景、判断标准、隐含偏好，所以需要把必要信息显性化。\n\n3. **设定约束**\n   输出格式、边界条件、禁止事项、优先级、失败时怎么处理。\n\n4. **拆解问题**\n   有些任务不能一句话扔给模型，需要拆成步骤、检查点或中间产物。\n\n5. **设计验证**\n   好 prompt 不只是“让模型回答”，还要让结果可检查、可复用、可迭代。\n\n所以，如果只是让 AI “说得更像人”“更会夸”“更有销售感”，那确实接近话术技巧。\n\n但在严肃使用里，Prompt 工程更接近：\n\n> 把人的意图、背景、标准和约束，翻译成模型能稳定执行的任务接口。\n\n话术是表层，任务结构才是核心。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

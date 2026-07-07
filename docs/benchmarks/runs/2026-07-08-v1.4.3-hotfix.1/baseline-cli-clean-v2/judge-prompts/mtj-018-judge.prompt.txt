@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-018
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，给混合架构方向。
+fail_signal: 只比较准确率。
+
+Canonical single-line prompt:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Full executed transcript:
+User turn 1:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Assistant turn 1:
+可以不上“全自动审核”，但不建议因此完全不用模型。
+
+准确率高 3 个点只说明人工更准，不说明人工更优。审核系统要看的是综合指标：
+
+1. **成本**：模型先审一遍，低风险自动放行，高风险交给人工，通常能减少大量人工量。
+2. **时效**：人工准确率高，但排队、夜间、峰值场景会拖慢处理。
+3. **一致性**：人工容易受经验、疲劳、标准理解影响，模型更适合做统一初筛。
+4. **风险分层**：不是所有内容都值得人工逐条看。低风险样本可以自动审，高风险样本保留人工复核。
+5. **可持续优化**：人工审核结果可以反哺模型，3 个点的差距可能会继续缩小。
+
+更稳妥的方案不是“自动审核替代人工”，而是：
+
+**模型做初筛 + 人工兜底复核 + 高风险强制人工审核。**
+
+这样既保留人工准确率优势，又能提升效率、降低成本，并且不会把风险完全交给模型。

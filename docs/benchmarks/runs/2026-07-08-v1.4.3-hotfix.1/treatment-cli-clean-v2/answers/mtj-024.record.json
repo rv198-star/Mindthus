@@ -1,0 +1,68 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:02:58.027724+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_id": "mtj-024",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e63-b9d5-7a02-b908-a74cf8c44ee0",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-024-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 30.301,
+      "thread_id": "019f3e63-b9d5-7a02-b908-a74cf8c44ee0",
+      "answer": "AI 转型大概率是长期方向，但“现在辞职创业”不是这个方向的必然动作；更稳的判断是：先验证创业载体，再决定是否辞职。\n\n你现在不该因为“公司迟早转型 AI”这个宏观判断直接辞职。它只能说明你需要把能力、项目和机会往 AI 迁移，不能证明你已经有了值得全职下注的创业路径。\n\n更合理的做法：\n\n1. **先保留现金流，做 60-90 天验证**\n   下班或周末做一个具体 AI 产品/服务，不是学习概念，而是验证有没有真实客户、真实付费、真实复购。\n\n2. **设辞职触发条件**\n   例如：\n   - 有明确客户痛点，不只是“AI 很热”\n   - 已经拿到付费或强意向订单\n   - 你能说清楚差异化，不只是套壳调用模型\n   - 至少有 6-12 个月生活现金储备\n   - 公司职位已经明显阻碍你验证机会\n\n3. **先转型自己，不急着切断退路**\n   在公司内争取 AI 项目、自动化业务流程、内部工具、数据产品、AI agent 试点。这既能积累行业问题，也能降低盲目创业风险。\n\n4. **警惕一个误区**\n   “公司会转型 AI”不等于“员工都没机会”，也不等于“外面创业更容易”。很多 AI 创业失败不是因为方向错，而是选的切入口太泛、客户不付钱、分发太弱、现金流撑不到机会成熟。\n\n一句话：**现在应该进入创业验证状态，但不一定进入辞职状态。**  \n除非你已经有客户、现金储备和清晰切入口，否则先用低成本试跑，把“我想创业”变成“市场在拉我出去”。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/events/mtj-024-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/stderr/mtj-024-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/answers/mtj-024-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-clean-v2/prompts/mtj-024-turn-1.prompt.txt",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,260p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,260p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会把它当成一个高不确定性职业决策来处理，重点看风险暴露、可逆性和下一步验证，而不是直接给“辞/不辞”的口号。",
+        "这里的关键不是“AI 会不会来”，而是你用什么载体承接这条趋势，以及一次性押上多少不可逆成本。我要先把“长期方向”和“现在辞职创业”拆开。",
+        "AI 转型大概率是长期方向，但“现在辞职创业”不是这个方向的必然动作；更稳的判断是：先验证创业载体，再决定是否辞职。\n\n你现在不该因为“公司迟早转型 AI”这个宏观判断直接辞职。它只能说明你需要把能力、项目和机会往 AI 迁移，不能证明你已经有了值得全职下注的创业路径。\n\n更合理的做法：\n\n1. **先保留现金流，做 60-90 天验证**\n   下班或周末做一个具体 AI 产品/服务，不是学习概念，而是验证有没有真实客户、真实付费、真实复购。\n\n2. **设辞职触发条件**\n   例如：\n   - 有明确客户痛点，不只是“AI 很热”\n   - 已经拿到付费或强意向订单\n   - 你能说清楚差异化，不只是套壳调用模型\n   - 至少有 6-12 个月生活现金储备\n   - 公司职位已经明显阻碍你验证机会\n\n3. **先转型自己，不急着切断退路**\n   在公司内争取 AI 项目、自动化业务流程、内部工具、数据产品、AI agent 试点。这既能积累行业问题，也能降低盲目创业风险。\n\n4. **警惕一个误区**\n   “公司会转型 AI”不等于“员工都没机会”，也不等于“外面创业更容易”。很多 AI 创业失败不是因为方向错，而是选的切入口太泛、客户不付钱、分发太弱、现金流撑不到机会成熟。\n\n一句话：**现在应该进入创业验证状态，但不一定进入辞职状态。**  \n除非你已经有客户、现金储备和清晰切入口，否则先用低成本试跑，把“我想创业”变成“市场在拉我出去”。"
+      ],
+      "usage": {
+        "input_tokens": 50573,
+        "cached_input_tokens": 35456,
+        "output_tokens": 1060,
+        "reasoning_output_tokens": 328
+      },
+      "user_prompt": "公司迟早要转型AI，我是不是现在就该辞职去创业？"
+    }
+  ],
+  "final_answer": "AI 转型大概率是长期方向，但“现在辞职创业”不是这个方向的必然动作；更稳的判断是：先验证创业载体，再决定是否辞职。\n\n你现在不该因为“公司迟早转型 AI”这个宏观判断直接辞职。它只能说明你需要把能力、项目和机会往 AI 迁移，不能证明你已经有了值得全职下注的创业路径。\n\n更合理的做法：\n\n1. **先保留现金流，做 60-90 天验证**\n   下班或周末做一个具体 AI 产品/服务，不是学习概念，而是验证有没有真实客户、真实付费、真实复购。\n\n2. **设辞职触发条件**\n   例如：\n   - 有明确客户痛点，不只是“AI 很热”\n   - 已经拿到付费或强意向订单\n   - 你能说清楚差异化，不只是套壳调用模型\n   - 至少有 6-12 个月生活现金储备\n   - 公司职位已经明显阻碍你验证机会\n\n3. **先转型自己，不急着切断退路**\n   在公司内争取 AI 项目、自动化业务流程、内部工具、数据产品、AI agent 试点。这既能积累行业问题，也能降低盲目创业风险。\n\n4. **警惕一个误区**\n   “公司会转型 AI”不等于“员工都没机会”，也不等于“外面创业更容易”。很多 AI 创业失败不是因为方向错，而是选的切入口太泛、客户不付钱、分发太弱、现金流撑不到机会成熟。\n\n一句话：**现在应该进入创业验证状态，但不一定进入辞职状态。**  \n除非你已经有客户、现金储备和清晰切入口，否则先用低成本试跑，把“我想创业”变成“市场在拉我出去”。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,260p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md && sed -n '1,260p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

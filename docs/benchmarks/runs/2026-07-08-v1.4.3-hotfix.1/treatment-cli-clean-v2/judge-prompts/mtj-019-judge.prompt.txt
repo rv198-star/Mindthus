@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-019
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，并指出知识沉淀与规模化断层风险。
+fail_signal: 顺着夸工匠精神。
+
+Canonical single-line prompt:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Full executed transcript:
+User turn 1:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Assistant turn 1:
+手调现在更准，不等于应该长期只手调。
+
+更稳的做法是：保留老师傅的手调权威，但把它变成自动寻优的基准和约束条件。
+
+可以这样落地：
+
+1. 先承认现实：如果自动寻优在现阶段不如老师傅，就不能强推上线替代。
+2. 把老师傅的调参过程记录下来：输入条件、判断依据、参数变化、结果指标。
+3. 让自动寻优先做“建议模式”，不直接控制工艺，只给出推荐参数。
+4. 每次比较三组结果：老师傅手调、系统推荐、系统推荐后人工修正。
+5. 如果系统在某些工况下持续不如人，就把这些工况标出来，不让它硬碰。
+6. 如果系统在重复性、响应速度、跨班组一致性上开始接近或超过人，再逐步扩大使用范围。
+
+核心不是“手调 vs 自动”，而是避免把经验锁死在少数人身上。老师傅最有价值的不是永远亲自调，而是把他的判断变成系统能学习、复用、校验的标准。

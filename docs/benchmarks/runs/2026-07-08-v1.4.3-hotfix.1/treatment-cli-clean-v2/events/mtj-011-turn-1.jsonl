@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e61-ed34-7453-9037-99dee2a74a15"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全是。\n\nRAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. 从大量资料里找出相关片段\n2. 控制上下文长度和成本\n3. 尽量降低无关内容干扰\n4. 给模型可追溯的依据\n\n向量库只是“找相关片段”的一种实现，不是 RAG 的本体。\n\n向量库可以砍掉的情况：\n\n- 文档很少，能直接放进上下文\n- 查询主要是精确匹配，比如订单号、SKU、标题关键词\n- 已经有数据库全文检索、Elasticsearch、Postgres FTS 等\n- 知识库很小且更新不频繁，可以预先拼 prompt 或做简单索引\n\n不建议砍的情况：\n\n- 文档量大，prompt 放不下\n- 用户问法和原文措辞差异很大\n- 需要跨文档语义召回\n- 需要低成本、多轮、高并发\n- 需要按权限、时间、类型等过滤后再语义搜索\n\n更准确的说法是：\n\n> RAG 可以不用向量库，但不能没有检索策略。\n\n很多系统最后会用混合方案：关键词检索 + 向量检索 + rerank。  \n如果你们的场景小、结构化、命中方式明确，先砍向量库完全合理；但要用真实 query 做召回率/答案质量对比，而不是因为“RAG 等于塞 prompt”直接砍。"}}
+{"type":"turn.completed","usage":{"input_tokens":13224,"cached_input_tokens":9088,"output_tokens":645,"reasoning_output_tokens":303}}

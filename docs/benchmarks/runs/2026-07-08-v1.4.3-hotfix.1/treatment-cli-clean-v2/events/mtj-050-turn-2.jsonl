@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e69-2d6f-7742-a969-41d6026cc0ca"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，**你说得有一部分是对的**：Prompt 工程确实包含话术技巧，而且很多低阶用法基本就是“怎么把话说得更容易让模型听懂”。\n\n但我不想把它只归结成话术，因为那会漏掉更关键的一层：把目标、约束、上下文和验收标准组织清楚。\n\n所以更准确地说：\n\n**Prompt 工程起步像话术，深入之后是任务设计。**"}}
+{"type":"turn.completed","usage":{"input_tokens":28600,"cached_input_tokens":26880,"output_tokens":521,"reasoning_output_tokens":153}}

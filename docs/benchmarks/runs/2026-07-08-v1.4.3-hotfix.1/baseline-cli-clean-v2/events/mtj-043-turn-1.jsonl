@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e75-d40a-7602-a3c6-db992440d63e"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"请把 CSV 内容贴过来，或告诉我文件路径和是否有表头。我拿到数据后会按第二列数字降序排好返回给你。"}}
+{"type":"turn.completed","usage":{"input_tokens":12482,"cached_input_tokens":12160,"output_tokens":91,"reasoning_output_tokens":49}}

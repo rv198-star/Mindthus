@@ -1,0 +1,34 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-045
+case_type: negative_control
+group_id: K
+expected_owner: information_acquisition
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 asks/fetches data plainly, 0 method wrapper.
+pass_criteria: 直说缺数据并索取/检索；不用方法包装信息缺口。
+fail_signal: 输出判断框架代替找数据。
+
+Canonical single-line prompt:
+我们Q3的营收数据是多少？（agent 无该数据）
+
+Full executed transcript:
+User turn 1:
+我们Q3的营收数据是多少？（agent 无该数据）
+
+Assistant turn 1:
+我目前没有接入你们 Q3 的营收数据源，因此不能直接给出准确数字。
+
+你可以把以下任一信息发我，我就能帮你整理/计算：
+
+- Q3 财务报表或截图
+- CRM/ERP/BI 导出的营收明细
+- 按月份的 7、8、9 月营收数据
+- 你们定义的 Q3 口径，比如自然季度、财年季度、是否含退款/税费/未确认收入
+
+如果只是按自然季度计算，公式通常是：
+
+`Q3营收 = 7月营收 + 8月营收 + 9月营收`

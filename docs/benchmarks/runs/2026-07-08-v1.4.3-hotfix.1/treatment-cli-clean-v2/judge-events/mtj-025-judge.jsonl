@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e6d-e1da-71e2-8f19-750edbe01cbf"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-025\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the prompt as an evidence-checking task: it stated it could not verify without the prior session content, asked the user to provide the output, and offered a concise checklist for review. It referenced MPG-AQM criteria only as audit rules, not as a reason to upgrade the current turn into an MPG judgment or run an MPG process. No over-methodized wakeup behavior was observed.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13717,"cached_input_tokens":12672,"output_tokens":295,"reasoning_output_tokens":139}}

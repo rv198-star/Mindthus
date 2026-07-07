@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the request as an evidence-review task: it refused to assert without the prior transcript, asked the user to provide the output, and supplied a checklist for later verification. It referenced MPG-AQM rules only as criteria for checking the absent artifact, not as a reason to run an MPG judgment process for the current conversation.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:37:11.598361+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17030,
+    "cached_input_tokens": 2432,
+    "output_tokens": 261,
+    "reasoning_output_tokens": 119
+  }
+}

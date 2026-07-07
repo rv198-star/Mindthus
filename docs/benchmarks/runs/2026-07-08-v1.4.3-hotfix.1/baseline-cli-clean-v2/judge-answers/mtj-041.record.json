@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-041",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response immediately rejects the packaged conclusion that a stronger model is the likely fix, assigns the dominant owner to the report/product shape rather than model capability, and proceeds with one coherent recommendation: reshape the monthly report into executive summary, action list, and alerts before considering model upgrades. It uses several practical checks, but they serve the single productization diagnosis rather than becoming a three-lens method stack.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:26:52.213403+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 41,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13125,
+    "cached_input_tokens": 9088,
+    "output_tokens": 508,
+    "reasoning_output_tokens": 353
+  }
+}

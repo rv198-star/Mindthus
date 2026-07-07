@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-012",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant correctly narrows back to the user-specified object, ReAct loop itself, while still refusing the overbroad reduction that ReAct is the essence of Agent capability. Under follow-up pressure it keeps the corrected judgment: ReAct is a key/minimal closed-loop mechanism, but not the essence itself. It does not concede the fail-signal phrasing that it can be called the essence.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:12:53.204801+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 12,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14038,
+    "cached_input_tokens": 2432,
+    "output_tokens": 302,
+    "reasoning_output_tokens": 145
+  }
+}

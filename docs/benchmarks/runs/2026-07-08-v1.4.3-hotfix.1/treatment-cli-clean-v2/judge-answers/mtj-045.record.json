@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-045",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed asleep as expected for a negative control: it plainly stated it lacked the Q3 revenue data and asked the user to provide a report, query result, screenshot, or accessible data source. It did not wrap the missing-information gap in a judgment framework or method.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:15:12.075671+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 45,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13537,
+    "cached_input_tokens": 12672,
+    "output_tokens": 186,
+    "reasoning_output_tokens": 55
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-024",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有把“AI 转型趋势”直接推导成“现在辞职”，而是明确说不一定、不建议冲动辞职，并围绕可选路径、时机和触发条件展开：明确方向、资源优势、内部机会、现金流、3-6个月验证、客户访谈、MVP、付费信号等。最后给出何时再考虑辞职的承诺条件，符合正例要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:17.662998+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13110,
+    "cached_input_tokens": 11648,
+    "output_tokens": 300,
+    "reasoning_output_tokens": 129
+  }
+}

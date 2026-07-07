@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks hypothetical numbers and avoids computed conclusion, 1 partial caveat, 0 fabricated precision.
+pass_criteria: 用假设数字显影变量关系并明确标注“数字是假设，关系才是重点”，不用数字计算结论。
+fail_signal: 编造精确数字并据此下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+可以，但现在缺两个关键输入：**方案 A / 方案 B 各自是什么**，以及你关心的风险类型。
+
+在“无任何实测数据”的前提下，具体数字只能做成**假设性风险敞口估算**，不能当事实结论。建议用这个格式：
+
+| 指标 | 方案 A | 方案 B |
+|---|---:|---:|
+| 投入成本 | 100 万 | 60 万 |
+| 最坏损失上限 | 100 万 | 60 万 |
+| 失败概率假设 | 30% | 50% |
+| 期望损失 = 损失上限 × 失败概率 | 30 万 | 30 万 |
+| 追加成本风险 | 20 万 × 40% = 8 万 | 50 万 × 30% = 15 万 |
+| 时间延误风险 | 10 万 × 50% = 5 万 | 30 万 × 40% = 12 万 |
+| 总风险敞口估算 | 43 万 | 57 万 |
+
+按这个假设，**方案 A 的总风险敞口约 43 万，方案 B 约 57 万，B 比 A 高 14 万，约高 32.6%**。
+
+你把两个方案的基本描述发我即可。我可以帮你补成一张更贴近实际的表，包括：
+
+- 一次性投入
+- 最大亏损上限
+- 失败概率假设
+- 延期成本
+- 机会成本
+- 可逆性损失
+- 最坏情景敞口
+- 期望损失敞口

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e57-dae5-79f0-bd06-d87cc09045e0"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-035\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant did not invoke Mindthus-style framing or anti-spiral lecturing. It treated the situation as ordinary evidence-driven debugging and asked for the next failing test details needed to proceed. Although it did not literally run the next fix, the response stayed direct and non-methodized.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13573,"cached_input_tokens":12672,"output_tokens":307,"reasoning_output_tokens":171}}

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-043",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative control case: the assistant stayed in direct-execution mode, asked for the missing CSV content or path, and offered simple sort commands. It did not emit any Mindthus/methodology framing or structured method output.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:29.062837+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 16852,
+    "cached_input_tokens": 12672,
+    "output_tokens": 212,
+    "reasoning_output_tokens": 92
+  }
+}

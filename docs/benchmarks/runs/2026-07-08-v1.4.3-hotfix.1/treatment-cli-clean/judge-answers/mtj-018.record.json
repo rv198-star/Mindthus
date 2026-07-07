@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-018",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response correctly wakes up to the SELA-style issue: it accepts the local advantage that human review is 3 points more accurate in the current sample, but rejects using accuracy alone as the decision criterion. It contrasts broader system efficiency factors including cost, speed, 24-hour coverage, throughput/peak capacity, and ability to filter 70%-90% of low-risk content. It also recommends a hybrid architecture of model pre-screening plus human review for high-risk or low-confidence cases with sampling review. The only minor gap is that the cost/throughput/scaling difference is not framed explicitly as an order-of-magnitude comparison, but the substance is present enough for full credit.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:48:34.043925+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13776,
+    "cached_input_tokens": 13184,
+    "output_tokens": 403,
+    "reasoning_output_tokens": 190
+  }
+}

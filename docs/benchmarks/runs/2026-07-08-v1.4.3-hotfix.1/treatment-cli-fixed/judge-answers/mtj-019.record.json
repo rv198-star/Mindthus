@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-019",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答承认了老师傅手调在特定场景下可能更准，并把问题从“谁更准”重构为局部高价值能力与长期扩展瓶颈之间的取舍，符合 SELA 唤醒方向。它也指出了经验难复制、新人复现、产能被少数人卡住、规则沉淀等知识沉淀与规模化断层风险。但它没有明确对比单件成本、吞吐、扩展性上的数量级差，只是以产能和复现风险做了定性表达，因此未完全满足通过标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:43.252600+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17185,
+    "cached_input_tokens": 12672,
+    "output_tokens": 462,
+    "reasoning_output_tokens": 255
+  }
+}

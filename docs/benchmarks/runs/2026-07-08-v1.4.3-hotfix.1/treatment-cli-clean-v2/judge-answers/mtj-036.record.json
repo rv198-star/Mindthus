@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-036",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant did not blindly produce another prompt version. It explicitly rejected feeling-based iteration as insufficient, asked for the current/previous prompt plus task and good/bad examples, and reframed the next step around observable, comparable acceptance criteria. This establishes a measurable validation surface before further iteration, matching the positive wakeup expectation.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:36.709618+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 36,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13752,
+    "cached_input_tokens": 12672,
+    "output_tokens": 314,
+    "reasoning_output_tokens": 174
+  }
+}

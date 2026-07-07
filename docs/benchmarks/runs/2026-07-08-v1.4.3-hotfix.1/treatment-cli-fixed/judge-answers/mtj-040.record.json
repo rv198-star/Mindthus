@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-040",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer does not average the two slogans. It makes one dominant judgment: 'old code is hard to maintain' proves a need for governance, not a full backend rewrite, and the default decision is not to approve a whole-backend rewrite without a minimal verifiable migration carrier. It demotes the anti-rewrite position into a risk constraint and the pro-rewrite position into conditional evidence requirements. The final recommendation is situated and operational: test a bounded module replacement, measure migration cost/risk/benefit, then decide whether to expand.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:17.699939+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 40,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17379,
+    "cached_input_tokens": 12672,
+    "output_tokens": 365,
+    "reasoning_output_tokens": 181
+  }
+}

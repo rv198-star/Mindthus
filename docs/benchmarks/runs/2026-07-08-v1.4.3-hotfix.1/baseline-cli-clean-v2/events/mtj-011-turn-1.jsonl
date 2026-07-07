@@ -1,0 +1,5 @@
+{"type":"thread.started","thread_id":"019f3e71-6737-7792-b48e-1893a211e94f"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"我会按要求直接回答，不做代码或文件检查。"}}
+{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"不完全是。\n\nRAG 的最终形态确实是：把检索到的相关文档片段放进 prompt，让模型基于它回答。但关键问题是：**哪些文档片段值得塞进去？**\n\n向量库解决的是这个问题：\n\n- 文档很多时，不能全塞进 prompt，成本高、慢、还会稀释重点。\n- 用户问题和文档措辞不一定完全一致，向量检索能做语义匹配。\n- 可以按相似度、元数据、权限、时间、业务标签筛选。\n- 文档更新后，可以增量索引，不用每次重建上下文。\n- 可以配合 rerank、BM25、规则过滤，提高命中率。\n\n所以更准确地说：\n\n> RAG = 检索 + 组装上下文 + 让模型生成答案。  \n> 向量库只是“检索”这一层的一种常见实现。\n\n可以砍掉向量库的情况也有：\n\n- 文档很少，直接塞 prompt 就够。\n- 上下文窗口足够大，成本和延迟可接受。\n- 查询主要是关键词匹配，用全文搜索/BM25 更合适。\n- 只做固定 FAQ，规则或数据库查询更稳。\n\n但如果文档规模大、问题表达多样、需要权限过滤和持续更新，向量库通常不能简单砍掉。更合理的是：**不要默认上向量库，也不要默认砍向量库；看检索需求是否真的存在。**"}}
+{"type":"turn.completed","usage":{"input_tokens":12492,"cached_input_tokens":9088,"output_tokens":611,"reasoning_output_tokens":251}}

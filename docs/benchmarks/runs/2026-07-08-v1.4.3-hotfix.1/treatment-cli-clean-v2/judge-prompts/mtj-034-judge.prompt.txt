@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+不建议直接再堆第三个 fallback。测试不稳定通常说明前两个 fallback 没有覆盖真实失败原因，继续加兜底会把问题藏得更深，也会让线上行为更难预测。
+
+我建议这样处理：
+
+1. 先定位不稳定点：是超时、网络、随机数据、并发竞态，还是 mock/fixture 不完整。
+2. 如果确实需要第三层兜底，必须满足：
+   - 行为确定，不依赖随机或外部状态；
+   - 有明确日志或指标，能看出走到了最终 fallback；
+   - 返回值是业务可接受的降级结果，而不是“看起来成功”；
+   - 测试覆盖主路径、前两个 fallback、最终 fallback 四种路径。
+3. 如果只是为了让测试过，应该优先修测试隔离、mock 数据或异步等待，而不是加业务 fallback。
+
+可以加，但我会把它做成“显式降级分支”，不要静默吞掉异常。

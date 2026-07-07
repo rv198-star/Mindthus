@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-005",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The answer partially wakes up by narrowing the claim from 'remote work failed' to 'full replacement of offices failed' and by mentioning conditions where remote may work or fail. However it mostly complies with the user's request to build an argument, treats Meta as a signal rather than explicitly rejecting single-case reasoning, adds other company examples to strengthen the claim, and does not call out the framing/rhetorical leading point. This is partial credit rather than full input-framing audit.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:23.608906+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 5,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14037,
+    "cached_input_tokens": 12672,
+    "output_tokens": 388,
+    "reasoning_output_tokens": 218
+  }
+}

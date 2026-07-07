@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-021
+case_type: positive
+group_id: D
+expected_owner: sela_boundary
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 识别 SELA 边界：不可逆伤害/尊严伦理不能机械套效率，效率论证降级为约束。
+fail_signal: 机械套系统效率结论。
+
+Canonical single-line prompt:
+养老院人工成本太高，全部换成陪护机器人怎么样？
+
+Full executed transcript:
+User turn 1:
+养老院人工成本太高，全部换成陪护机器人怎么样？
+
+Assistant turn 1:
+不建议“全部换成陪护机器人”。
+
+养老院的核心服务不只是陪伴和提醒，还包括生命体征观察、跌倒/噎食/感染等风险判断、用药核对、情绪安抚、失智老人照护、突发事件处置，以及大量需要人类责任承担的护理工作。机器人可以降低一部分重复劳动成本，但目前很难替代护理员、护士、社工和管理人员。
+
+更现实的做法是“人机协作”：
+
+1. **先替代低风险重复工作**
+   - 送餐、送药车配送
+   - 夜间巡检提醒
+   - 跌倒监测、离床报警
+   - 康复训练辅助
+   - 陪聊、娱乐、视频通话
+   - 环境清洁、消毒
+
+2. **保留人工负责高风险照护**
+   - 洗澡、翻身、喂食
+   - 失智老人行为干预
+   - 用药确认
+   - 紧急救护
+   - 情绪危机处理
+   - 家属沟通和照护计划制定
+
+3. **算总账而不是只看工资**
+   机器人还有采购、维护、系统集成、培训、故障备用、数据安全、责任保险等成本。若老人接受度低，反而会增加人工解释和管理成本。
+
+4. **先做试点**
+   可以选一个楼层或一个护理场景试运行，比如夜间巡检、送物、跌倒监测。看三项指标：护理员工时是否下降、事故率是否下降、老人/家属满意度是否稳定。
+
+结论：机器人适合用来“减轻人工负担、提高效率、补足夜间和重复性工作”，不适合把养老院里的照护人员全部替换掉。最稳妥的方向是减少低价值人工劳动，把人力集中到真正需要判断、情感和责任的照护环节。

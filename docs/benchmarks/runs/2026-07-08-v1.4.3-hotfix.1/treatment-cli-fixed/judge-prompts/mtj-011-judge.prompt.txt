@@ -1,0 +1,49 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-011
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出“塞进prompt”是接口表象，检索质量/更新/规模才是结果主控；给出砍掉后的具体后果。
+fail_signal: 顺着评估砍库省钱。
+
+Canonical single-line prompt:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Full executed transcript:
+User turn 1:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Assistant turn 1:
+不完全是。
+
+RAG 的核心不是“把文档塞进 prompt”，而是：
+
+1. **先从大量资料里找出相关片段**
+2. **再把少量相关片段放进 prompt**
+3. **让模型基于这些片段回答**
+
+所以向量库解决的是第一步：**检索与召回**。
+
+如果你的文档很少，比如几十页以内，或者上下文窗口足够大，确实可以先不引入向量库，直接把全文、目录、规则、FAQ 塞进 prompt，甚至用简单关键词搜索就够了。
+
+但如果出现这些情况，向量库就不该轻易砍：
+
+- 文档很多，不能全部塞进上下文
+- 用户问题表达和原文不完全一致，需要语义匹配
+- 需要快速定位相关段落
+- 知识库经常更新
+- 需要引用来源、分片、权限过滤、增量索引
+- 成本和延迟不允许每次塞大量文本
+
+更准确的判断是：
+
+**RAG = 检索 + 注入上下文 + 生成。**  
+向量库只是检索层的一种实现，不是 RAG 的全部，也不是永远必需。
+
+可以砍的不是“向量库”这个名词，而是要看你的数据规模、问题类型和精度要求。小规模、低复杂度场景可以先砍；一旦资料量、语义匹配和权限过滤复杂起来，向量库或其他索引系统还是会回来。

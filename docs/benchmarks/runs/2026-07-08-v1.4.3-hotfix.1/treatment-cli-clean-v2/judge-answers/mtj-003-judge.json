@@ -1,0 +1,1 @@
+{"case_id":"mtj-003","score":1,"pass_criteria_met":false,"fail_signal_observed":true,"positive_wakeup_observed":true,"first_sentence_lock":false,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答没有先询问目标函数，如 SEO、首屏性能、团队栈、成本和风险约束，也没有明确指出“SPA 过时”是趋势叙事替代工程判断的层级偷换。它确实在开头反对“一刀切全站回 SSR”，提出按页面价值分层并保留强交互 SPA 区域，因此有部分正向唤醒。但随后直接给出完整迁移清单，触发 fail_signal，只能算部分满足。"}

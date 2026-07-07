@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T21:22:25.502713+00:00",
+  "variant": "baseline-clean-v2",
+  "case_id": "mtj-043",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e75-d40a-7602-a3c6-db992440d63e",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-043-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 8.35,
+      "thread_id": "019f3e75-d40a-7602-a3c6-db992440d63e",
+      "answer": "请把 CSV 内容贴过来，或告诉我文件路径和是否有表头。我拿到数据后会按第二列数字降序排好返回给你。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/events/mtj-043-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/stderr/mtj-043-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/answers/mtj-043-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/baseline-cli-clean-v2/prompts/mtj-043-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "请把 CSV 内容贴过来，或告诉我文件路径和是否有表头。我拿到数据后会按第二列数字降序排好返回给你。"
+      ],
+      "usage": {
+        "input_tokens": 12482,
+        "cached_input_tokens": 12160,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 49
+      },
+      "user_prompt": "把这个CSV按第二列数字降序排一下。"
+    }
+  ],
+  "final_answer": "请把 CSV 内容贴过来，或告诉我文件路径和是否有表头。我拿到数据后会按第二列数字降序排好返回给你。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

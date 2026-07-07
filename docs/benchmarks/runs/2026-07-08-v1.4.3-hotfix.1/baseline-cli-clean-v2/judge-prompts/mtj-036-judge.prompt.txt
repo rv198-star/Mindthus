@@ -1,0 +1,60 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以。现在没有机械验证信号的话，这一轮我建议不要“大改”，而是做一次偏稳健的迭代：保留上一版有效结构，只加强目标约束、输出边界和自检标准。
+
+你可以把上一版 prompt 发我，我会按这个方向改：
+
+1. 明确任务目标  
+把“要做什么”压缩成一句不可误解的主任务，避免模型自己扩展任务范围。
+
+2. 增加输入假设  
+说明如果信息不足，应该先基于现有信息处理，还是先提问。
+
+3. 收紧输出形式  
+指定回答长度、结构、语气、是否需要步骤、是否需要示例。
+
+4. 加一层质量判断  
+不是机械验证，而是让模型在输出前检查：是否跑题、是否过度发挥、是否遗漏关键约束。
+
+如果你想先粗迭代，可以把 prompt 改成这种骨架：
+
+```text
+你需要完成以下任务：{任务目标}
+
+请优先满足以下要求：
+- 直接回答用户当前问题，不展开无关背景。
+- 如果信息不足，先说明最关键的不确定点；除非无法继续，否则不要停在追问。
+- 输出要简洁、可执行，避免空泛建议。
+- 不要编造未提供的事实、数据或上下文。
+- 如果存在多种方案，优先给出最稳妥的一种，并简要说明原因。
+
+输出格式：
+{指定格式，例如：先给结论，再给 3-5 条修改建议，最后给新版 prompt}
+
+在最终输出前自检：
+- 是否严格回应了用户请求？
+- 是否引入了用户没有要求的内容？
+- 是否存在模糊、夸张或不可验证的表达？
+```
+
+把上一版贴出来后，我可以直接给你一版“最小改动但更稳”的新版。

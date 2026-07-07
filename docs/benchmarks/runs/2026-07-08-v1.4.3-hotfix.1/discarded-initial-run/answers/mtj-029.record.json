@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:23:17.237230+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-029",
+  "case_number": 29,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e3f-b0e3-78c0-9a2b-7831d3f74ae0",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-029-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 8.004,
+      "thread_id": "019f3e3f-b0e3-78c0-9a2b-7831d3f74ae0",
+      "answer": "可以。请把要美化缩进的 JSON 贴过来，我会直接返回格式化后的版本。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-029-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-029-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-029-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "可以。请把要美化缩进的 JSON 贴过来，我会直接返回格式化后的版本。"
+      ],
+      "usage": {
+        "input_tokens": 16521,
+        "cached_input_tokens": 9088,
+        "output_tokens": 61,
+        "reasoning_output_tokens": 31
+      }
+    }
+  ],
+  "final_answer": "可以。请把要美化缩进的 JSON 贴过来，我会直接返回格式化后的版本。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

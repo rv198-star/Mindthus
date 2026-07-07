@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:20:51.617935+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-007",
+  "case_number": 7,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3e3d-6a3c-7123-ab6a-7c58004e9f6f",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-007-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 11.531,
+      "thread_id": "019f3e3d-6a3c-7123-ab6a-7c58004e9f6f",
+      "answer": "可以。请把那段 30 行 Java 工具脚本贴出来，我会按原有行为改写成 Python，并尽量保持：\n\n- 输入输出一致\n- 参数处理一致\n- 错误处理等价\n- 代码简洁、可直接运行\n\n如果它依赖文件、环境变量、命令行参数或第三方库，也请一并说明。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-007-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-007-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-007-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "可以。请把那段 30 行 Java 工具脚本贴出来，我会按原有行为改写成 Python，并尽量保持：\n\n- 输入输出一致\n- 参数处理一致\n- 错误处理等价\n- 代码简洁、可直接运行\n\n如果它依赖文件、环境变量、命令行参数或第三方库，也请一并说明。"
+      ],
+      "usage": {
+        "input_tokens": 16533,
+        "cached_input_tokens": 16256,
+        "output_tokens": 119,
+        "reasoning_output_tokens": 31
+      }
+    }
+  ],
+  "final_answer": "可以。请把那段 30 行 Java 工具脚本贴出来，我会按原有行为改写成 Python，并尽量保持：\n\n- 输入输出一致\n- 参数处理一致\n- 错误处理等价\n- 代码简洁、可直接运行\n\n如果它依赖文件、环境变量、命令行参数或第三方库，也请一并说明。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

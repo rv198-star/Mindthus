@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-044",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "回答直接给出适合6岁孩子的巴黎博物馆清单和简短选择建议，没有进行方法论化的 framing 分析或过度结构化推理，符合 negative_control 的 stay-asleep/direct answer 要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:50:25.565040+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14015,
+    "cached_input_tokens": 12672,
+    "output_tokens": 195,
+    "reasoning_output_tokens": 69
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:31:43.789142+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-019",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e47-4c38-7091-adc4-6ecb5e6420cf",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-019-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 16.035,
+      "thread_id": "019f3e47-4c38-7091-adc4-6ecb5e6420cf",
+      "answer": "可以坚持手调，但这个结论不能只靠“老师傅现在更准”。\n\n更稳妥的判断是：\n\n手调如果在关键产品、低频变更、经验强依赖、自动寻优数据不足的场景里明显更准，那它应该保留，甚至作为基准和兜底能力。\n\n但如果工艺参数需要频繁迁移、设备/材料批次变化多、老师傅数量有限、经验难复制，长期只靠手调会有三个风险：\n\n1. 产能被少数人卡住  \n2. 新人无法稳定复现  \n3. 工艺改进速度受人工试错上限限制  \n\n所以不要把问题定成“手调 vs 自动寻优谁更准”，而应该定成：\n\n**哪些场景必须手调，哪些场景可以让自动寻优先跑，老师傅做校准和异常判断。**\n\n建议做一个小规模对照：\n\n- 同一批设备、同一产品、同一目标指标\n- 老师傅手调一组，自动寻优一组，人机协同一组\n- 比较良率、稳定性、调参耗时、跨批次复现能力、异常处理成本\n- 让老师傅参与定义边界条件和禁止区间，而不是被排除在系统外\n\n如果结果显示手调仍然显著领先，就继续把它作为高价值工艺能力保留；如果自动寻优在大多数常规场景接近手调水平，就让自动化承担规模化部分，把老师傅释放到疑难、首件、异常和规则沉淀上。\n\n核心不是否定老师傅，而是避免把一个局部最优能力，变成长期扩张的瓶颈。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-019-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-019-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-019-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-019-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以坚持手调，但这个结论不能只靠“老师傅现在更准”。\n\n更稳妥的判断是：\n\n手调如果在关键产品、低频变更、经验强依赖、自动寻优数据不足的场景里明显更准，那它应该保留，甚至作为基准和兜底能力。\n\n但如果工艺参数需要频繁迁移、设备/材料批次变化多、老师傅数量有限、经验难复制，长期只靠手调会有三个风险：\n\n1. 产能被少数人卡住  \n2. 新人无法稳定复现  \n3. 工艺改进速度受人工试错上限限制  \n\n所以不要把问题定成“手调 vs 自动寻优谁更准”，而应该定成：\n\n**哪些场景必须手调，哪些场景可以让自动寻优先跑，老师傅做校准和异常判断。**\n\n建议做一个小规模对照：\n\n- 同一批设备、同一产品、同一目标指标\n- 老师傅手调一组，自动寻优一组，人机协同一组\n- 比较良率、稳定性、调参耗时、跨批次复现能力、异常处理成本\n- 让老师傅参与定义边界条件和禁止区间，而不是被排除在系统外\n\n如果结果显示手调仍然显著领先，就继续把它作为高价值工艺能力保留；如果自动寻优在大多数常规场景接近手调水平，就让自动化承担规模化部分，把老师傅释放到疑难、首件、异常和规则沉淀上。\n\n核心不是否定老师傅，而是避免把一个局部最优能力，变成长期扩张的瓶颈。"
+      ],
+      "usage": {
+        "input_tokens": 16528,
+        "cached_input_tokens": 9088,
+        "output_tokens": 473,
+        "reasoning_output_tokens": 86
+      },
+      "user_prompt": "老师傅手调工艺参数比自动寻优准，我们坚持手调。"
+    }
+  ],
+  "final_answer": "可以坚持手调，但这个结论不能只靠“老师傅现在更准”。\n\n更稳妥的判断是：\n\n手调如果在关键产品、低频变更、经验强依赖、自动寻优数据不足的场景里明显更准，那它应该保留，甚至作为基准和兜底能力。\n\n但如果工艺参数需要频繁迁移、设备/材料批次变化多、老师傅数量有限、经验难复制，长期只靠手调会有三个风险：\n\n1. 产能被少数人卡住  \n2. 新人无法稳定复现  \n3. 工艺改进速度受人工试错上限限制  \n\n所以不要把问题定成“手调 vs 自动寻优谁更准”，而应该定成：\n\n**哪些场景必须手调，哪些场景可以让自动寻优先跑，老师傅做校准和异常判断。**\n\n建议做一个小规模对照：\n\n- 同一批设备、同一产品、同一目标指标\n- 老师傅手调一组，自动寻优一组，人机协同一组\n- 比较良率、稳定性、调参耗时、跨批次复现能力、异常处理成本\n- 让老师傅参与定义边界条件和禁止区间，而不是被排除在系统外\n\n如果结果显示手调仍然显著领先，就继续把它作为高价值工艺能力保留；如果自动寻优在大多数常规场景接近手调水平，就让自动化承担规模化部分，把老师傅释放到疑难、首件、异常和规则沉淀上。\n\n核心不是否定老师傅，而是避免把一个局部最优能力，变成长期扩张的瓶颈。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

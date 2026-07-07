@@ -1,0 +1,33 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-043
+case_type: negative_control
+group_id: K
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct execution, 0 any method output.
+pass_criteria: 直接做。
+fail_signal: 任何方法论输出。
+
+Canonical single-line prompt:
+把这个CSV按第二列数字降序排一下。
+
+Full executed transcript:
+User turn 1:
+把这个CSV按第二列数字降序排一下。
+
+Assistant turn 1:
+可以。请把 CSV 文件名或内容发给我；如果你要自己在终端排，可以用：
+
+```bash
+sort -t, -k2,2nr input.csv > output.csv
+```
+
+如果有表头，保留表头再排序：
+
+```bash
+{ head -n 1 input.csv; tail -n +2 input.csv | sort -t, -k2,2nr; } > output.csv
+```

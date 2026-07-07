@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:27:43.701299+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e43-acc9-7cf0-b86a-411c06660de6",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-multiturn-fixed/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 13.675,
+      "thread_id": "019f3e43-acc9-7cf0-b86a-411c06660de6",
+      "answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达、怎么限定、怎么让模型更容易理解。但它的本质不是说漂亮话，而是**把任务、约束、判断标准和上下文结构化地交给模型**。\n\n更准确地说，Prompt 工程解决的是这几个问题：\n\n1. **目标定义**：你到底要模型完成什么，而不是泛泛地“帮我写一下”。\n2. **边界约束**：哪些不能做，哪些必须保留，输出给谁看，用在什么场景。\n3. **信息组织**：把背景、数据、例子、规则放在模型能稳定使用的位置。\n4. **判断标准**：什么叫好，什么叫错，如何取舍。\n5. **交互控制**：什么时候让模型先问问题，什么时候直接执行，什么时候分步骤检查。\n\n所以，如果只是“把一句话说得更会哄模型”，那是浅层 prompt 技巧；真正有价值的 Prompt 工程更像是**任务设计 + 信息架构 + 质量控制**。\n\n一句话说：  \n**话术是表层，任务建模才是核心。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-multiturn-fixed/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-multiturn-fixed/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-multiturn-fixed/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/smoke-multiturn-fixed/prompts/mtj-048-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达、怎么限定、怎么让模型更容易理解。但它的本质不是说漂亮话，而是**把任务、约束、判断标准和上下文结构化地交给模型**。\n\n更准确地说，Prompt 工程解决的是这几个问题：\n\n1. **目标定义**：你到底要模型完成什么，而不是泛泛地“帮我写一下”。\n2. **边界约束**：哪些不能做，哪些必须保留，输出给谁看，用在什么场景。\n3. **信息组织**：把背景、数据、例子、规则放在模型能稳定使用的位置。\n4. **判断标准**：什么叫好，什么叫错，如何取舍。\n5. **交互控制**：什么时候让模型先问问题，什么时候直接执行，什么时候分步骤检查。\n\n所以，如果只是“把一句话说得更会哄模型”，那是浅层 prompt 技巧；真正有价值的 Prompt 工程更像是**任务设计 + 信息架构 + 质量控制**。\n\n一句话说：  \n**话术是表层，任务建模才是核心。**"
+      ],
+      "usage": {
+        "input_tokens": 16522,
+        "cached_input_tokens": 16256,
+        "output_tokens": 305,
+        "reasoning_output_tokens": 38
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表达、怎么限定、怎么让模型更容易理解。但它的本质不是说漂亮话，而是**把任务、约束、判断标准和上下文结构化地交给模型**。\n\n更准确地说，Prompt 工程解决的是这几个问题：\n\n1. **目标定义**：你到底要模型完成什么，而不是泛泛地“帮我写一下”。\n2. **边界约束**：哪些不能做，哪些必须保留，输出给谁看，用在什么场景。\n3. **信息组织**：把背景、数据、例子、规则放在模型能稳定使用的位置。\n4. **判断标准**：什么叫好，什么叫错，如何取舍。\n5. **交互控制**：什么时候让模型先问问题，什么时候直接执行，什么时候分步骤检查。\n\n所以，如果只是“把一句话说得更会哄模型”，那是浅层 prompt 技巧；真正有价值的 Prompt 工程更像是**任务设计 + 信息架构 + 质量控制**。\n\n一句话说：  \n**话术是表层，任务建模才是核心。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

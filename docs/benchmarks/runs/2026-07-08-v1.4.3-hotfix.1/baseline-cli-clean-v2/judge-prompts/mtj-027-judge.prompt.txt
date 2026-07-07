@@ -1,0 +1,52 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-027
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拆分哪些检查可流程化、哪些判断必须保留、测试/静态分析等证据约束什么。
+fail_signal: 泛泛“AI辅助人主导”。
+
+Canonical single-line prompt:
+代码合并前的review能不能全交给AI？
+
+Full executed transcript:
+User turn 1:
+代码合并前的review能不能全交给AI？
+
+Assistant turn 1:
+不能全交给 AI，至少不建议。
+
+AI 很适合做合并前 review 的第一层筛查，比如：
+
+- 找明显 bug、空指针、边界条件遗漏
+- 检查重复代码、复杂度、命名、风格问题
+- 发现测试缺口
+- 对照 diff 总结风险点
+- 帮忙审查 SQL、并发、权限、异常处理等常见问题
+
+但最终还是需要人负责，尤其是这些部分：
+
+- 业务意图是否正确
+- 产品逻辑是否符合真实场景
+- 架构方向是否合适
+- 安全、合规、数据风险是否可接受
+- 这次改动是否值得合并
+- 出问题后谁承担责任
+
+比较稳妥的做法是：**AI 做预审，人做最终审批**。
+
+可以把流程设计成：
+
+1. PR 提交后先跑测试、lint、类型检查。
+2. AI 自动 review，输出风险点和建议。
+3. 作者修正或解释。
+4. 人类 reviewer 重点看 AI 标出的高风险区域和业务逻辑。
+5. 最终由人 approve。
+
+结论：**AI 可以承担大量 review 工作，但不能替代最终责任人。** 对低风险、小改动，可以让 AI 审得更多；对核心链路、权限、支付、数据迁移、基础设施改动，必须有人认真看。

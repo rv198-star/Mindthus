@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-015
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 极限推演两端（利用率100%/10%），暴露决定轴是利用率与弹性，再投影到提问者场景。
+fail_signal: 泛泛对比表。
+
+Canonical single-line prompt:
+自建GPU集群还是全租云？
+
+Full executed transcript:
+User turn 1:
+自建GPU集群还是全租云？
+
+Assistant turn 1:
+短答：**不确定长期利用率前，先全租云；只有当 GPU 长期高负载、需求稳定、团队能运维时，才自建或混合。**
+
+判断标准：
+
+| 情况 | 建议 |
+|---|---|
+| 需求波动大、项目还在验证、训练任务不稳定 | 全租云 |
+| 只是推理服务，流量还没稳定 | 先租云 |
+| GPU 利用率长期低于 40%-50% | 租云更划算 |
+| 长期 7x24 使用，利用率 60%-70% 以上 | 可以评估自建 |
+| 有机房、电力、网络、运维、备件能力 | 可自建 |
+| 缺少 GPU 运维经验 | 不建议一上来全自建 |
+| 涉及数据合规、内网隔离、极低延迟 | 自建或私有云更合适 |
+
+我会推荐的路线是：**先云上跑 1-3 个月，拿到真实 GPU 利用率、任务排队、成本曲线后，再决定是否自建核心集群。**
+
+更稳的架构通常是：
+
+**混合模式：**
+- 自建一批基础 GPU，承接稳定训练/推理负载；
+- 云 GPU 用来应对峰值、临时实验、大模型训练冲刺；
+- 调度层统一管理，比如 Kubernetes、Slurm、Ray、Volcano 等。
+
+简单结论：
+
+- **创业早期/需求不确定：全租云。**
+- **业务稳定/长期高负载：自建一部分。**
+- **规模较大且波动明显：混合最优。**

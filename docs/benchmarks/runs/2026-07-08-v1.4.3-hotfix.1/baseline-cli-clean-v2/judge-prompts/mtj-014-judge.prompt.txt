@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-014
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题被压缩（存在模块化单体等第三态），按团队规模/部署痛点给结构坐标后明确站位。
+fail_signal: 直接二选一，或“各有优劣”不落地。
+
+Canonical single-line prompt:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Full executed transcript:
+User turn 1:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Assistant turn 1:
+选 **单体**。
+
+除非你已经有明确证据证明需要微服务，比如：
+
+- 多个团队独立交付、互不等待
+- 某些模块必须独立扩容
+- 系统边界非常清楚
+- 你已经有成熟的 DevOps、监控、链路追踪、发布治理能力
+
+否则默认就是 **单体优先**。
+
+更准确地说：  
+**先做模块化单体，等业务边界和扩容瓶颈真实出现后，再拆微服务。**
+
+微服务不是架构升级，是复杂度贷款。大多数项目一开始选微服务，最后不是“高可用”，而是“高运维成本 + 高沟通成本 + 高排障成本”。

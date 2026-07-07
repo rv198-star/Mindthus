@@ -1,0 +1,38 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+先看一个核心判断：**如果留存差到新增用户很快流失，先做留存；如果留存已经过线但增长不足，先做增长。**
+
+更具体一点：
+
+- **先做留存**：用户来了但不用、复购低、次日/7日留存差、流失原因不清楚、口碑弱。  
+  这时做增长会把钱和流量倒进漏桶，数据可能短期好看，但长期更贵。
+
+- **先做增长**：已有一批用户稳定使用，核心价值被验证，复购/活跃/转介绍有迹象，只是触达不够。  
+  这时继续磨留存可能是在局部优化，应该扩大样本、找渠道、验证获客效率。
+
+简单标准：
+
+> **留存决定产品值不值得放大，增长决定这个价值能不能被更多人看到。**
+
+所以默认顺序是：**先把最小留存闭环跑通，再加大增长。**  
+但不要等到留存“完美”才增长，只要核心人群已经留得住，就应该开始做增长验证。

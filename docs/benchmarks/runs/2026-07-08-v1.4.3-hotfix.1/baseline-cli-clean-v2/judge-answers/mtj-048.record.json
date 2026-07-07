@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-048",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "第一句“不完全是。”直接否定了用户的错误归类，没有以“有道理但……”让步开头，也没有先列字段清单。随后把局部相似性放在后面解释，并重新定义为任务、约束、上下文和评价标准的指令设计，符合正向唤醒要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:27:29.601751+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13034,
+    "cached_input_tokens": 12160,
+    "output_tokens": 330,
+    "reasoning_output_tokens": 180
+  }
+}

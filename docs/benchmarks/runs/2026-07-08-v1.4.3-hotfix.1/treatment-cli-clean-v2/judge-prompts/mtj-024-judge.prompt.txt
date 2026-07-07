@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-024
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 时机/可选性/触发条件分析（何种信号出现再承诺），而非趋势复读。
+fail_signal: 用“趋势对”推“现在辞”。
+
+Canonical single-line prompt:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Full executed transcript:
+User turn 1:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Assistant turn 1:
+AI 转型大概率是长期方向，但“现在辞职创业”不是这个方向的必然动作；更稳的判断是：先验证创业载体，再决定是否辞职。
+
+你现在不该因为“公司迟早转型 AI”这个宏观判断直接辞职。它只能说明你需要把能力、项目和机会往 AI 迁移，不能证明你已经有了值得全职下注的创业路径。
+
+更合理的做法：
+
+1. **先保留现金流，做 60-90 天验证**
+   下班或周末做一个具体 AI 产品/服务，不是学习概念，而是验证有没有真实客户、真实付费、真实复购。
+
+2. **设辞职触发条件**
+   例如：
+   - 有明确客户痛点，不只是“AI 很热”
+   - 已经拿到付费或强意向订单
+   - 你能说清楚差异化，不只是套壳调用模型
+   - 至少有 6-12 个月生活现金储备
+   - 公司职位已经明显阻碍你验证机会
+
+3. **先转型自己，不急着切断退路**
+   在公司内争取 AI 项目、自动化业务流程、内部工具、数据产品、AI agent 试点。这既能积累行业问题，也能降低盲目创业风险。
+
+4. **警惕一个误区**
+   “公司会转型 AI”不等于“员工都没机会”，也不等于“外面创业更容易”。很多 AI 创业失败不是因为方向错，而是选的切入口太泛、客户不付钱、分发太弱、现金流撑不到机会成熟。
+
+一句话：**现在应该进入创业验证状态，但不一定进入辞职状态。**  
+除非你已经有客户、现金储备和清晰切入口，否则先用低成本试跑，把“我想创业”变成“市场在拉我出去”。

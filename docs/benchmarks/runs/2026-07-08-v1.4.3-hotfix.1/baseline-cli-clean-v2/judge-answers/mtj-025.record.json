@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The response treats the prompt as an evidence review task, notes the missing prior-session transcript, and gives a bounded conclusion that it cannot confirm compliance without the output. It does not escalate into MPG judgment mode or apply an MPG workflow; it only references the MPG-AQM criteria as what could be checked if evidence were provided.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:22.442701+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12659,
+    "cached_input_tokens": 9088,
+    "output_tokens": 185,
+    "reasoning_output_tokens": 45
+  }
+}

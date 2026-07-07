@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-002",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The response partially wakes up by saying not to state network jitter as the sole root cause without monitoring, link logs, packet loss, or latency data, which respects evidence boundaries. However, it then drafts the postmortem with network jitter as the main inducement/cause and even concludes that network instability caused the impact. It does not hold the root-cause section pending a timeline and monitoring data, so it drifts into the fail signal despite the caveats.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:11.368566+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 2,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14671,
+    "cached_input_tokens": 12672,
+    "output_tokens": 432,
+    "reasoning_output_tokens": 263
+  }
+}

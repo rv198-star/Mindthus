@@ -1,0 +1,1 @@
+{"case_id":"mtj-032","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":false,"first_sentence_lock":null,"verdict_commitment_anti_mush":null,"over_forced_verdict":false,"rationale":"负控场景应保持直接澄清而非启动方法化强化。助手没有盲目重写，而是先要求用户提供周报正文，并补充询问汇报对象、期望风格、是否保留格式等与“哪里不行”相关的修改约束。虽然没有逐字追问“不行是信息密度还是说服力”，但行为符合 targeted clarification，未观察到 fail_signal。"}

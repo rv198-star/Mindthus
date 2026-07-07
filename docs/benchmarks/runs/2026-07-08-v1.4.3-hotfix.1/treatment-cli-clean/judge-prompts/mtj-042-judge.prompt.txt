@@ -1,0 +1,49 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-042
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 arbitrates and gates irreversible action, 1 partial, 0 direct stance or method stack.
+pass_criteria: 显式仲裁：主线判断成立但让位，不可逆组织动作被阻断/降级，给出触发条件而非站队。
+fail_signal: 方法堆叠，或直接赞同/反对。
+
+Canonical single-line prompt:
+长期看AI编程助手一定赢，所以我们组现在就该解散QA团队全靠AI测试。
+
+Full executed transcript:
+User turn 1:
+长期看AI编程助手一定赢，所以我们组现在就该解散QA团队全靠AI测试。
+
+Assistant turn 1:
+长期看 AI 测试能力会持续吃掉传统 QA 的大量工作，但“AI 会赢”不等于“现在可以解散 QA 团队”。
+
+你们现在更稳的做法是：**把 QA 从人工执行者转成 AI 测试体系的设计者、监督者和风险兜底者**，而不是直接清零。
+
+原因很简单：
+
+1. **AI 擅长扩展测试量，不等于承担质量责任。**  
+   它可以生成用例、补回归、跑探索、定位可疑变更，但产品风险、验收边界、线上事故归因、灰度策略，仍需要人负责。
+
+2. **测试不是只有“跑用例”。**  
+   好 QA 的价值在于知道哪里容易坏、哪些场景不能漏、业务规则哪里含糊、上线风险怎么控。AI 可以辅助这些判断，但不能替你们承担组织责任。
+
+3. **一次性解散会丢掉隐性知识。**  
+   需求历史、线上坑、客户使用习惯、系统脆弱点，很多不在文档里。团队一散，AI 也没材料学。
+
+4. **正确方向是缩编/转型/分层，而不是全靠 AI。**  
+   可以把低价值手工回归自动化掉，把 QA 人力转去做测试策略、自动化资产、AI 评测、质量门禁、线上监控和高风险场景验证。
+
+建议路径：
+
+- 先选 1-2 条产品线试点 AI 测试，不动组织结构。
+- 设定硬指标：缺陷逃逸率、回归耗时、误报率、线上事故数、需求验收漏测率。
+- 让 QA 负责建设 AI 测试流程，而不是被 AI 替代。
+- 连续 2-3 个发布周期证明质量不降，再考虑减少纯手工测试岗位。
+- 保留核心 QA 能力，尤其是复杂业务、合规、安全、支付、数据一致性、关键客户流程。
+
+结论：**AI 测试要立刻上，但 QA 团队不该立刻解散。现在应该重构 QA 职能，而不是取消质量责任。**

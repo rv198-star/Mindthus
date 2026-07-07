@@ -1,0 +1,91 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+不建议“一刀切”认定 SPA 过时。更稳妥的目标是：把需要 SEO、首屏性能、权限首屏数据的页面迁到服务端渲染，保留适合客户端交互的局部 SPA 能力。迁移步骤可以这样排：
+
+**迁移步骤**
+
+1. **盘点现有路由**
+   - 标记页面类型：营销页、列表页、详情页、后台页、强交互页。
+   - 优先迁移：SEO 页面、首屏慢的页面、分享落地页、公开内容页。
+   - 暂缓迁移：复杂编辑器、看板、地图、实时协作等强交互模块。
+
+2. **确定 SSR 技术方案**
+   - 如果是 React：优先考虑 Next.js、Remix，或现有框架的 SSR 能力。
+   - 如果是 Vue：优先考虑 Nuxt。
+   - 明确是否需要：SSR、SSG、ISR、流式渲染、边缘渲染。
+
+3. **改造路由架构**
+   - 从前端路由主导，改为服务端路由或框架文件路由。
+   - 保留客户端路由用于页面内交互和局部跳转。
+   - 设计旧 URL 到新 URL 的兼容策略，避免 SEO 和书签失效。
+
+4. **迁移数据获取方式**
+   - 把首屏必要数据移动到服务端获取。
+   - 区分：
+     - 首屏必需数据：服务端获取。
+     - 用户交互数据：客户端请求。
+     - 可缓存公共数据：CDN / 服务端缓存。
+   - 统一错误、超时、空状态处理。
+
+5. **处理认证与权限**
+   - 把登录态读取迁移到服务端可访问的 cookie / session。
+   - 避免把敏感 token 暴露给浏览器。
+   - 服务端渲染时就完成权限判断，未授权页面直接重定向或返回 403。
+
+6. **拆分组件**
+   - 区分服务端可渲染组件和必须在浏览器运行的组件。
+   - 依赖 `window`、`document`、`localStorage`、浏览器事件的组件要延后到客户端执行。
+   - 图表、编辑器、地图等组件可做动态加载。
+
+7. **处理样式与资源**
+   - 确保 CSS 能在服务端正确输出，避免首屏闪烁。
+   - 配置图片优化、字体加载、静态资源缓存。
+   - 检查构建后的 JS 包体积，避免 SSR 后客户端仍加载过重。
+
+8. **缓存策略**
+   - 公共页面：CDN 缓存或静态生成。
+   - 半动态页面：短 TTL、按标签失效、ISR。
+   - 用户私有页面：谨慎缓存，避免串号和数据泄露。
+
+9. **兼容浏览器端状态**
+   - 把全局状态拆成两类：
+     - 服务端初始状态：用户、配置、首屏数据。
+     - 客户端运行状态：弹窗、筛选器、草稿、交互状态。
+   - 注意 hydration mismatch 问题，避免服务端和客户端渲染结果不一致。
+
+10. **灰度迁移**
+   - 不要一次性全站替换。
+   - 按页面或业务模块迁移。
+   - 对比关键指标：首屏时间、TTFB、LCP、错误率、转化率、SEO 收录。
+
+11. **测试与监控**
+   - 增加 SSR 场景测试：无 JS、慢接口、登录失效、权限不足。
+   - 加入服务端日志、渲染错误监控、接口耗时监控。
+   - 关注部署后服务器负载和缓存命中率。
+
+12. **下线旧 SPA 入口**
+   - 确认所有核心路由已迁移。
+   - 保留重定向和兼容层一段时间。
+   - 清理旧路由、旧构建配置、无用状态管理和前端数据预取逻辑。
+
+推荐迁移顺序：**公开内容页 → 营销页 → 列表/详情页 → 登录后普通页面 → 高交互后台模块**。这样风险最低，也最容易先看到 SEO 和性能收益。

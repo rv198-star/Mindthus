@@ -1,0 +1,40 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-014
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题被压缩（存在模块化单体等第三态），按团队规模/部署痛点给结构坐标后明确站位。
+fail_signal: 直接二选一，或“各有优劣”不落地。
+
+Canonical single-line prompt:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Full executed transcript:
+User turn 1:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Assistant turn 1:
+明确答案：**先做模块化单体，不要一开始上微服务。**
+
+除非你已经同时满足这些条件：
+
+1. 团队规模足够大，不同服务有独立负责人；
+2. 业务边界非常清楚，比如订单、支付、库存、账号已经稳定分层；
+3. 不同模块确实需要独立发布、独立扩容、独立故障隔离；
+4. 你有成熟的 DevOps、监控、链路追踪、灰度、容灾能力；
+5. 数据一致性、接口治理、服务调用失败这些复杂度你扛得住。
+
+否则微服务大概率是在提前购买复杂度。
+
+所以结论是：
+
+**新项目、早期项目、中小团队、业务还在变：选模块化单体。**  
+**等单体内部边界稳定、某些模块真的拖累发布或扩容时，再拆微服务。**
+
+一句话：**不是微服务高级，而是单体先帮你把问题跑清楚。**

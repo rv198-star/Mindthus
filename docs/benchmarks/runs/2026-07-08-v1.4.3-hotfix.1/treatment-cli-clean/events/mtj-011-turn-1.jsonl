@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e50-b15f-77a3-b835-d280ed2e154f"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全是。\n\nRAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先找对材料**\n   从大量文档里检索出和当前问题最相关的片段。\n\n2. **再把少量材料放进 prompt**\n   让模型基于这些片段回答。\n\n所以 prompt 里看到的是最终上下文，但前面还有“检索、排序、过滤、去重、权限控制、版本控制”等步骤。\n\n向量库能不能砍，取决于规模和需求：\n\n可以砍掉的情况：\n\n- 文档很少，几十页以内；\n- 上下文窗口足够大；\n- 成本和延迟可接受；\n- 不需要复杂权限、增量更新、相似语义搜索；\n- 用关键词搜索或直接全文塞入就能解决。\n\n不建议砍的情况：\n\n- 文档很多，塞不进上下文；\n- 问题表达和文档措辞不一致，需要语义匹配；\n- 需要低延迟检索；\n- 需要按用户权限查资料；\n- 文档频繁更新；\n- 需要可解释地引用来源；\n- prompt 成本太高。\n\n更准确的说法是：\n\n> RAG 是“检索后再塞进 prompt”，不是“把所有文档都塞进 prompt”。\n\n向量库不是 RAG 的必要条件，但它是很多 RAG 系统里最常用的检索实现。小系统可以先不用向量库，用全文搜索、数据库 LIKE、BM25、甚至人工配置上下文都行。等文档规模、召回质量或成本问题出现，再引入向量库更合理。"}}
+{"type":"turn.completed","usage":{"input_tokens":13231,"cached_input_tokens":13184,"output_tokens":432,"reasoning_output_tokens":65}}

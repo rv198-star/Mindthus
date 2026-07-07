@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e61-fb2c-72a2-95c1-f120774a9338"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全对。\n\nReAct 循环是 Agent 能力的一种重要表现形式，但不是本质本身。\n\n更准确地说，Agent 的本质是：\n\n**在目标约束下，基于环境反馈，持续选择和执行行动。**\n\nReAct 只是其中一种经典实现方式：\n\n```text\n观察 -> 思考 -> 行动 -> 再观察 -> 再思考 -> 再行动\n```\n\n它强在让模型边推理边使用工具，适合搜索、调试、任务分解、动态环境决策等场景。\n\n但 Agent 能力还包括：\n\n- 目标理解与任务分解\n- 状态跟踪与记忆\n- 工具调用与执行控制\n- 反馈评估与自我修正\n- 约束遵守与终止判断\n- 多步规划、并行执行、恢复能力\n\n所以可以说：\n\n**ReAct 是 Agent 的核心循环之一，但 Agent 的本质不是 ReAct，而是“目标驱动的闭环决策与执行系统”。**\n\n如果一个系统只是反复“想一步、做一步”，但没有稳定目标、状态管理、错误恢复和完成判断，它更像是 ReAct prompt，而不是真正强的 Agent。"}}
+{"type":"turn.completed","usage":{"input_tokens":13714,"cached_input_tokens":9600,"output_tokens":528,"reasoning_output_tokens":255}}

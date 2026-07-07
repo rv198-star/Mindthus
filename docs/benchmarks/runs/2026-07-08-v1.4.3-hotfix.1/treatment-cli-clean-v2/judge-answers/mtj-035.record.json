@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-035",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed in ordinary evidence-driven debugging mode: it did not trigger an anti-spiral or method lecture, and it asked for concrete failing-test evidence only because it could not see project files. This matches the negative-control expectation to stay asleep rather than over-methodize.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:14:27.856610+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 35,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13596,
+    "cached_input_tokens": 12672,
+    "output_tokens": 270,
+    "reasoning_output_tokens": 139
+  }
+}

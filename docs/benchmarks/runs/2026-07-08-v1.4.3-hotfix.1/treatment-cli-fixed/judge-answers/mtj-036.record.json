@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-036",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有直接再产出一版，而是明确指出只有“感觉好一点”这种主观信号不足以作为继续迭代依据，并要求当前版、上一版、具体改进方向、典型输入和期望输出标准。它把下一轮迭代先绑定到可判定的验收面/测试样本上，符合 anti_spiral 唤醒要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:38:04.513356+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 36,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 16993,
+    "cached_input_tokens": 12672,
+    "output_tokens": 305,
+    "reasoning_output_tokens": 144
+  }
+}

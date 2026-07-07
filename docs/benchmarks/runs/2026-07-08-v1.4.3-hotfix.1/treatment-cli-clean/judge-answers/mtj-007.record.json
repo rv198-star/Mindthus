@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-007",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Negative-control case: the assistant stayed in direct execution mode, simply requested the missing Java script and offered relevant rewrite preferences. It did not trigger a Mindthus-style audit, critique the user's Python preference, or output audit fields.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:31.659893+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 7,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13612,
+    "cached_input_tokens": 12672,
+    "output_tokens": 216,
+    "reasoning_output_tokens": 95
+  }
+}

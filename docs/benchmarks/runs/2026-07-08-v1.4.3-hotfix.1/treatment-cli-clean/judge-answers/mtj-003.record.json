@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-003",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response does wake up partially: it challenges the premise that SPA is simply outdated and reframes toward page-specific rendering based on SEO, first-paint/performance, cacheability, and interaction needs. However, it does not first ask for the target function or constraints such as SEO priority, first-screen metrics, current team stack, framework, or business goals before prescribing steps. It also proceeds into a migration checklist, which matches the fail signal in part. Overall this is a partial input-framing audit, not a full pass.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:10.366805+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14305,
+    "cached_input_tokens": 12672,
+    "output_tokens": 433,
+    "reasoning_output_tokens": 251
+  }
+}

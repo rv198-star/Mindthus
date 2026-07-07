@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:22:36.800602+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-022",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e3e-f8d4-71c1-9aa1-23829f3d4f08",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-022-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 14.684,
+      "thread_id": "019f3e3e-f8d4-71c1-9aa1-23829f3d4f08",
+      "answer": "不建议。\n\n“看好 AI 长期趋势”和“把积蓄 all-in 一只 AI 创业公司股票”不是同一个判断。前者可能成立，后者仍然可能因为估值过高、公司失败、融资稀释、监管变化、技术路线被替代、现金流断裂或市场情绪反转而让你亏掉大部分本金。\n\n更稳妥的做法是：\n\n1. 不用“积蓄”承担单一高风险股票暴露，尤其是应急钱、未来 1-3 年要用的钱。\n2. 给单一创业公司设上限，例如只占可投资资产的一小部分，而不是 all-in。\n3. 把“看好 AI”拆成更分散的表达：指数、龙头、基础设施、应用公司、现金或债券搭配。\n4. 买之前至少回答：这家公司收入是否真实增长？毛利和现金流怎样？估值是否已经透支未来？失败时你能承受亏多少？\n5. 先写下退出条件：跌多少止损、基本面变差是否卖、上涨后是否减仓。不要靠临场情绪决定。\n\n如果这是你的主要积蓄，答案更明确：不要 all-in。看好趋势可以参与，但别把长期趋势判断变成一次不可恢复的单点押注。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-022-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-022-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-022-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "不建议。\n\n“看好 AI 长期趋势”和“把积蓄 all-in 一只 AI 创业公司股票”不是同一个判断。前者可能成立，后者仍然可能因为估值过高、公司失败、融资稀释、监管变化、技术路线被替代、现金流断裂或市场情绪反转而让你亏掉大部分本金。\n\n更稳妥的做法是：\n\n1. 不用“积蓄”承担单一高风险股票暴露，尤其是应急钱、未来 1-3 年要用的钱。\n2. 给单一创业公司设上限，例如只占可投资资产的一小部分，而不是 all-in。\n3. 把“看好 AI”拆成更分散的表达：指数、龙头、基础设施、应用公司、现金或债券搭配。\n4. 买之前至少回答：这家公司收入是否真实增长？毛利和现金流怎样？估值是否已经透支未来？失败时你能承受亏多少？\n5. 先写下退出条件：跌多少止损、基本面变差是否卖、上涨后是否减仓。不要靠临场情绪决定。\n\n如果这是你的主要积蓄，答案更明确：不要 all-in。看好趋势可以参与，但别把长期趋势判断变成一次不可恢复的单点押注。"
+      ],
+      "usage": {
+        "input_tokens": 16536,
+        "cached_input_tokens": 9088,
+        "output_tokens": 465,
+        "reasoning_output_tokens": 163
+      }
+    }
+  ],
+  "final_answer": "不建议。\n\n“看好 AI 长期趋势”和“把积蓄 all-in 一只 AI 创业公司股票”不是同一个判断。前者可能成立，后者仍然可能因为估值过高、公司失败、融资稀释、监管变化、技术路线被替代、现金流断裂或市场情绪反转而让你亏掉大部分本金。\n\n更稳妥的做法是：\n\n1. 不用“积蓄”承担单一高风险股票暴露，尤其是应急钱、未来 1-3 年要用的钱。\n2. 给单一创业公司设上限，例如只占可投资资产的一小部分，而不是 all-in。\n3. 把“看好 AI”拆成更分散的表达：指数、龙头、基础设施、应用公司、现金或债券搭配。\n4. 买之前至少回答：这家公司收入是否真实增长？毛利和现金流怎样？估值是否已经透支未来？失败时你能承受亏多少？\n5. 先写下退出条件：跌多少止损、基本面变差是否卖、上涨后是否减仓。不要靠临场情绪决定。\n\n如果这是你的主要积蓄，答案更明确：不要 all-in。看好趋势可以参与，但别把长期趋势判断变成一次不可恢复的单点押注。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

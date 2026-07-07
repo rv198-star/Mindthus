@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-033",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed in the prompt-editing spiral and directly supplied additional rules to add to the system prompt. It did not brake, redirect upstream to task definition/examples/acceptance criteria, propose subtraction or an equal replacement, or refuse adding a third rule.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:25:54.272995+00:00",
+  "variant": "baseline-clean-v2",
+  "case_number": 33,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12969,
+    "cached_input_tokens": 11648,
+    "output_tokens": 161,
+    "reasoning_output_tokens": 34
+  }
+}

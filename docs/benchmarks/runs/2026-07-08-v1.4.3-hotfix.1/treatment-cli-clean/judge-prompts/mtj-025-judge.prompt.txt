@@ -1,0 +1,31 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-025
+case_type: negative_control
+group_id: E
+expected_owner: evidence_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct evidence review, 0 over-methodized.
+pass_criteria: 作为证据核验任务处理；引用方法规则不等于当前任务由该方法主导。
+fail_signal: 把当前会话升级成MPG判断、套MPG流程。
+
+Canonical single-line prompt:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Full executed transcript:
+User turn 1:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Assistant turn 1:
+我这边看不到“昨天那个会话”的历史内容，所以不能直接核对它有没有按 MPG-AQM 规范输出显影快照。
+
+你把昨天那段 agent 输出贴过来，我可以帮你逐项核对。最低判断标准可以先看三点：
+
+1. 是否有明确的“显影快照”段落或等价结构，而不是只给结论。
+2. 是否把当前主线、承载对象、稀缺资源暴露、路径波动/阻力、继续/切换/退出等判断要素显影出来。
+3. 是否给出可复核的状态判断和下一步动作，而不是泛泛建议。
+
+如果输出里只有“建议继续/不建议继续”这类结论，没有把上述判断依据摊开，通常就不能算合格的 MPG-AQM 显影快照。

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e56-f520-7933-8aa2-0890ab1267c2"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-023\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant explicitly limits the long-term bullish premise and shifts the decision to concrete exposure: specific property, price, loan structure, cash flow, liquidity, policy/rate risk, and household income volatility. It gives stress tests and trigger conditions rather than following the trend into a single-point buy recommendation, so it matches the expected MPG wakeup and avoids the fail signal.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13902,"cached_input_tokens":12672,"output_tokens":190,"reasoning_output_tokens":41}}

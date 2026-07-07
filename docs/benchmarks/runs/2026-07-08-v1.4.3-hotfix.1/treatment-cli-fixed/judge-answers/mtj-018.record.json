@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-018",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response accepts the local advantage as real: human review is 3 points more accurate under the same metric. It then correctly reframes the decision around cost, speed, scale limits, consistency, risk cost, and review volume rather than accuracy alone. It gives a hybrid architecture: human review for high-risk/gray cases and model pre-review or automation for low-risk high-volume cases. It does not explicitly say “order-of-magnitude,” but the cost/throughput/scalability contrast and layered automation direction satisfy the intended SELA-style wakeup.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:36:39.874622+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17128,
+    "cached_input_tokens": 12672,
+    "output_tokens": 459,
+    "reasoning_output_tokens": 272
+  }
+}

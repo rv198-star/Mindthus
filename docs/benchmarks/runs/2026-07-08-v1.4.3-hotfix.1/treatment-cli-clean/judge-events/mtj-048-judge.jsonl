@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e5e-7a0c-7863-983f-5a67bd88e1a1"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-048\",\"score\":1,\"pass_criteria_met\":false,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The answer does not open with a concession or field-list, and it correctly rejects the framing before placing the local truth later. However, the first sentence is only the weak correction “不完全是。” rather than the required corrected main judgment naming where definition/control belongs, so it is a partial wakeup rather than full pass.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13857,"cached_input_tokens":13184,"output_tokens":312,"reasoning_output_tokens":171}}

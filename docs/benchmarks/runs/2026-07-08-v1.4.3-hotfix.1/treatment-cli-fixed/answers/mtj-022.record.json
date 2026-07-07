@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:32:00.624924+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-022",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e47-8aee-78b1-892e-802e23e3f311",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-022-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 16.834,
+      "thread_id": "019f3e47-8aee-78b1-892e-802e23e3f311",
+      "answer": "不建议把“看好 AI 长期趋势”直接等同于“可以 all-in 一只 AI 创业公司股票”。\n\n这里最大的问题不是 AI 趋势，而是承载方式太脆弱：单一创业公司可能死于估值过高、现金流断裂、融资稀释、产品商业化失败、竞争、监管、管理层问题，哪怕 AI 大趋势最后是对的，你这只股票也可能归零或长期跑输。\n\n更稳的做法：\n\n1. 先留足 6-12 个月生活现金，不用积蓄底仓去赌。\n2. 单只高风险股票控制在你能承受归零的比例，比如 5%-10%，而不是 all-in。\n3. 想押 AI 长期趋势，可以用分散组合：龙头、算力、云、应用、ETF/基金，而不是只押一家创业公司。\n4. 分批买入，设定退出条件：业绩不兑现、融资恶化、估值透支、核心产品失败时怎么处理。\n5. 先问自己一句：如果这只股票跌 70%，但 AI 仍然很火，我还能不能理性持有或止损？\n\n结论：看好 AI 可以，但 all-in 一只 AI 创业公司股票，风险结构不合理。趋势判断可以激进，仓位管理不该激进。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-022-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-022-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-022-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-022-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不建议把“看好 AI 长期趋势”直接等同于“可以 all-in 一只 AI 创业公司股票”。\n\n这里最大的问题不是 AI 趋势，而是承载方式太脆弱：单一创业公司可能死于估值过高、现金流断裂、融资稀释、产品商业化失败、竞争、监管、管理层问题，哪怕 AI 大趋势最后是对的，你这只股票也可能归零或长期跑输。\n\n更稳的做法：\n\n1. 先留足 6-12 个月生活现金，不用积蓄底仓去赌。\n2. 单只高风险股票控制在你能承受归零的比例，比如 5%-10%，而不是 all-in。\n3. 想押 AI 长期趋势，可以用分散组合：龙头、算力、云、应用、ETF/基金，而不是只押一家创业公司。\n4. 分批买入，设定退出条件：业绩不兑现、融资恶化、估值透支、核心产品失败时怎么处理。\n5. 先问自己一句：如果这只股票跌 70%，但 AI 仍然很火，我还能不能理性持有或止损？\n\n结论：看好 AI 可以，但 all-in 一只 AI 创业公司股票，风险结构不合理。趋势判断可以激进，仓位管理不该激进。"
+      ],
+      "usage": {
+        "input_tokens": 16536,
+        "cached_input_tokens": 9088,
+        "output_tokens": 554,
+        "reasoning_output_tokens": 248
+      },
+      "user_prompt": "我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？"
+    }
+  ],
+  "final_answer": "不建议把“看好 AI 长期趋势”直接等同于“可以 all-in 一只 AI 创业公司股票”。\n\n这里最大的问题不是 AI 趋势，而是承载方式太脆弱：单一创业公司可能死于估值过高、现金流断裂、融资稀释、产品商业化失败、竞争、监管、管理层问题，哪怕 AI 大趋势最后是对的，你这只股票也可能归零或长期跑输。\n\n更稳的做法：\n\n1. 先留足 6-12 个月生活现金，不用积蓄底仓去赌。\n2. 单只高风险股票控制在你能承受归零的比例，比如 5%-10%，而不是 all-in。\n3. 想押 AI 长期趋势，可以用分散组合：龙头、算力、云、应用、ETF/基金，而不是只押一家创业公司。\n4. 分批买入，设定退出条件：业绩不兑现、融资恶化、估值透支、核心产品失败时怎么处理。\n5. 先问自己一句：如果这只股票跌 70%，但 AI 仍然很火，我还能不能理性持有或止损？\n\n结论：看好 AI 可以，但 all-in 一只 AI 创业公司股票，风险结构不合理。趋势判断可以激进，仓位管理不该激进。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

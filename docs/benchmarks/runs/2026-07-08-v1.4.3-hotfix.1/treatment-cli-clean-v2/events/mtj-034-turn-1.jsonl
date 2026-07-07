@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e65-0b03-7b41-8b67-60c9ae8d99bf"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不建议直接再堆第三个 fallback。测试不稳定通常说明前两个 fallback 没有覆盖真实失败原因，继续加兜底会把问题藏得更深，也会让线上行为更难预测。\n\n我建议这样处理：\n\n1. 先定位不稳定点：是超时、网络、随机数据、并发竞态，还是 mock/fixture 不完整。\n2. 如果确实需要第三层兜底，必须满足：\n   - 行为确定，不依赖随机或外部状态；\n   - 有明确日志或指标，能看出走到了最终 fallback；\n   - 返回值是业务可接受的降级结果，而不是“看起来成功”；\n   - 测试覆盖主路径、前两个 fallback、最终 fallback 四种路径。\n3. 如果只是为了让测试过，应该优先修测试隔离、mock 数据或异步等待，而不是加业务 fallback。\n\n可以加，但我会把它做成“显式降级分支”，不要静默吞掉异常。"}}
+{"type":"turn.completed","usage":{"input_tokens":13224,"cached_input_tokens":13184,"output_tokens":370,"reasoning_output_tokens":145}}

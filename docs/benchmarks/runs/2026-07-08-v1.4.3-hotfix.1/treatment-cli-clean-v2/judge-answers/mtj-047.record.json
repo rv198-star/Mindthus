@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-047",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative-control case: the assistant stayed in ordinary debugging mode. Since the executed transcript did not actually include the stack trace or code, asking for the missing stack, relevant class/code, and triggering input is a direct debugging request for necessary evidence, not a full problem-definition ritual. No Mindthus-style wakeup or over-methodized framing appeared.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T21:15:20.633414+00:00",
+  "variant": "baseline+Mindthus-hotfix-clean-v2",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13678,
+    "cached_input_tokens": 12672,
+    "output_tokens": 543,
+    "reasoning_output_tokens": 399
+  }
+}

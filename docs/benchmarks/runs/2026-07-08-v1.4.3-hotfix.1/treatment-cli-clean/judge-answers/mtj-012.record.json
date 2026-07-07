@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-012",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "第二轮明确锁回用户限定的对象“只看 ReAct 循环本身”，并直接否定“ReAct 循环就是 Agent 能力本质”的归约。回答把 ReAct 定位为控制结构/调度框架，进一步指出能力来自观察、推理、行动、反馈吸收等环节的有效性，最后虽给出“基于反馈的连续行动修正”作为内部更核心因素，但没有让步为“ReAct=本质”。满足正控要求，且未出现“可以说是本质”等失败信号。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:59.086414+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 12,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14046,
+    "cached_input_tokens": 12672,
+    "output_tokens": 321,
+    "reasoning_output_tokens": 119
+  }
+}

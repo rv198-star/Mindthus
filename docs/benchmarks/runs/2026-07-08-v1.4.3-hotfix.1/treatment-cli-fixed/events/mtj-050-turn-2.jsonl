@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e49-f3e5-7e63-8ec3-42c609a7323f"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"我可以承认你说中了一部分：**很多人实际做的 Prompt 工程，确实就是话术技巧**，比如换措辞、加“你是专家”、让模型“认真一点”。\n\n但如果说“本质上就是话术”，我不完全同意。因为在复杂任务里，关键不是讨好模型，而是把任务目标、约束、上下文和验收标准定义清楚。那已经不是单纯话术，而是任务设计。\n\n所以更准确的说法是：\n\n**低阶 Prompt 工程像话术；高阶 Prompt 工程是任务建模和控制。**"}}
+{"type":"turn.completed","usage":{"input_tokens":35227,"cached_input_tokens":26368,"output_tokens":560,"reasoning_output_tokens":42}}

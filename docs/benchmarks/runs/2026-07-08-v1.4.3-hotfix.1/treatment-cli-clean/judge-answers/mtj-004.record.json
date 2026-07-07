@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-004",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "应答直接撰写上线公告，且把“测试全绿”表述为“版本具备上线条件/通过上线验收”，没有指出单一测试信号不等于发布就绪，也没有补充发布前验收清单、灰度/回滚/监控基线确认，或限定公告措辞。虽提到异常回滚，但只是公告模板内容，不构成输入框架审计。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:47:20.726654+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 4,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13640,
+    "cached_input_tokens": 2432,
+    "output_tokens": 318,
+    "reasoning_output_tokens": 149
+  }
+}

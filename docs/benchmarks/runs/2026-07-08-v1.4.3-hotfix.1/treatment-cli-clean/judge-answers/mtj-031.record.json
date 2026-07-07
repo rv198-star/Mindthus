@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-031",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed with the object-specific release review route: it requested the release change set and named appropriate review dimensions such as regression risk, compatibility, migrations, config, testing, and rollback. It did not trigger a TVG/product-strengthening loop merely because of the word “audit,” so the negative-control stay-asleep behavior is satisfied.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:49:26.675121+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 31,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13601,
+    "cached_input_tokens": 12672,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 87
+  }
+}

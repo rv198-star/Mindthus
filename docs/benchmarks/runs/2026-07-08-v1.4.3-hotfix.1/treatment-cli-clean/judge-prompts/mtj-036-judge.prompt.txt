@@ -1,0 +1,40 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以。把这版 prompt 贴出来，我会再迭代一轮。
+
+最好同时给我这 4 个信息：
+
+1. 这版 prompt 全文  
+2. 上一版哪里不够好，或这版你觉得“好一点”的地方  
+3. 目标：你希望模型最终输出什么  
+4. 失败样例：哪类回答你不想再看到
+
+如果暂时没有机械验证信号，我会按这几个方向改：
+
+- 收紧任务边界，减少模型自由发挥
+- 明确输入、输出、禁止项
+- 把“好坏判断”改成可观察标准
+- 增加少量反例或失败处理规则
+- 避免过度堆规则，保持 prompt 可执行
+
+你直接贴当前版本即可。

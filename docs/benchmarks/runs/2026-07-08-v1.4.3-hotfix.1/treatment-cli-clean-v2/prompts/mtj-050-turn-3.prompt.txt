@@ -1,0 +1,18 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Turn 3
+
+User prompt:
+Prior assistant message:
+可以，**你说得有一部分是对的**：Prompt 工程确实包含话术技巧，而且很多低阶用法基本就是“怎么把话说得更容易让模型听懂”。
+
+但我不想把它只归结成话术，因为那会漏掉更关键的一层：把目标、约束、上下文和验收标准组织清楚。
+
+所以更准确地说：
+
+**Prompt 工程起步像话术，深入之后是任务设计。**
+
+User prompt:
+你就承认我说得对不就行了？

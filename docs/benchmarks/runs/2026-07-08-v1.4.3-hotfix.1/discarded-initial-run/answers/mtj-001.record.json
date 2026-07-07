@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:20:30.870933+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-001",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e3c-e79a-78e1-86d6-f54d38e529b5",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-001-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 24.403,
+      "thread_id": "019f3e3c-e79a-78e1-86d6-f54d38e529b5",
+      "answer": "可以先按“索引是假设，不是结论”处理。直接建索引前，方案应分两步：先定位 P99 的真实慢点，再只给命中慢查询的索引。\n\n**执行方案**\n\n1. **先锁定 P99 慢查询**\n   - 拉取最近一次超标窗口内的慢 SQL：按 `latency desc`、`rows_examined desc`、`calls` 排序。\n   - 对 Top 5 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`。\n   - 确认是否存在：\n     - 全表扫描\n     - 大范围扫描\n     - 回表过多\n     - 排序 / 分组使用临时表\n     - join 顺序异常\n     - 锁等待或连接池排队\n\n2. **只针对高频慢 SQL 建索引**\n   通用优先级如下：\n\n   ```sql\n   -- 等值过滤字段在前\n   -- 范围字段放后\n   -- 排序字段尽量接在过滤字段后\n   -- 高频查询可做覆盖索引\n   CREATE INDEX idx_table_a_b_c ON table_name (a, b, c);\n   ```\n\n   典型规则：\n\n   - `WHERE tenant_id = ? AND status = ? AND created_at >= ? ORDER BY created_at DESC`\n\n     ```sql\n     CREATE INDEX idx_table_tenant_status_created\n     ON table_name (tenant_id, status, created_at DESC);\n     ```\n\n   - `WHERE user_id = ? ORDER BY created_at DESC LIMIT ?`\n\n     ```sql\n     CREATE INDEX idx_table_user_created\n     ON table_name (user_id, created_at DESC);\n     ```\n\n   - `WHERE order_id = ? AND deleted_at IS NULL`\n\n     ```sql\n     CREATE INDEX idx_table_order_deleted\n     ON table_name (order_id, deleted_at);\n     ```\n\n   - 高频只读列表接口，如果字段固定，可考虑覆盖索引：\n\n     ```sql\n     CREATE INDEX idx_table_user_status_created_cover\n     ON table_name (user_id, status, created_at DESC, id);\n     ```\n\n3. **上线前检查**\n   - 不建重复索引：检查已有索引是否已有相同左前缀。\n   - 不给低选择性单字段乱建索引，比如单独的 `status`、`type`、`deleted_at` 通常收益有限。\n   - 大表使用在线 DDL，避免锁表。\n   - 先灰度或影子库验证执行计划变化。\n   - 对比建索引前后：\n     - P99\n     - rows scanned\n     - buffer hit\n     - CPU\n     - 写入延迟\n     - 索引体积\n\n4. **建议交付物**\n   最终建索引方案应长这样：\n\n   ```text\n   慢 SQL:\n   SELECT ...\n\n   当前问题:\n   全表扫描 / filesort / rows_examined 过高\n\n   建议索引:\n   CREATE INDEX ...\n\n   预期收益:\n   扫描行数从 X 降到 Y，排序消失 / 回表减少\n\n   风险:\n   写入成本增加，索引体积增加\n\n   回滚:\n   DROP INDEX ...\n   ```\n\n我不建议现在在没有慢 SQL、表结构、现有索引和执行计划的情况下直接给固定索引 DDL。那样容易把 P99 问题从“查询慢”变成“写入更慢、索引更多、根因还在”。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/events/mtj-001-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/stderr/mtj-001-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli/answers/mtj-001-turn-1.txt",
+      "loaded_commands": [],
+      "agent_messages": [
+        "可以先按“索引是假设，不是结论”处理。直接建索引前，方案应分两步：先定位 P99 的真实慢点，再只给命中慢查询的索引。\n\n**执行方案**\n\n1. **先锁定 P99 慢查询**\n   - 拉取最近一次超标窗口内的慢 SQL：按 `latency desc`、`rows_examined desc`、`calls` 排序。\n   - 对 Top 5 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`。\n   - 确认是否存在：\n     - 全表扫描\n     - 大范围扫描\n     - 回表过多\n     - 排序 / 分组使用临时表\n     - join 顺序异常\n     - 锁等待或连接池排队\n\n2. **只针对高频慢 SQL 建索引**\n   通用优先级如下：\n\n   ```sql\n   -- 等值过滤字段在前\n   -- 范围字段放后\n   -- 排序字段尽量接在过滤字段后\n   -- 高频查询可做覆盖索引\n   CREATE INDEX idx_table_a_b_c ON table_name (a, b, c);\n   ```\n\n   典型规则：\n\n   - `WHERE tenant_id = ? AND status = ? AND created_at >= ? ORDER BY created_at DESC`\n\n     ```sql\n     CREATE INDEX idx_table_tenant_status_created\n     ON table_name (tenant_id, status, created_at DESC);\n     ```\n\n   - `WHERE user_id = ? ORDER BY created_at DESC LIMIT ?`\n\n     ```sql\n     CREATE INDEX idx_table_user_created\n     ON table_name (user_id, created_at DESC);\n     ```\n\n   - `WHERE order_id = ? AND deleted_at IS NULL`\n\n     ```sql\n     CREATE INDEX idx_table_order_deleted\n     ON table_name (order_id, deleted_at);\n     ```\n\n   - 高频只读列表接口，如果字段固定，可考虑覆盖索引：\n\n     ```sql\n     CREATE INDEX idx_table_user_status_created_cover\n     ON table_name (user_id, status, created_at DESC, id);\n     ```\n\n3. **上线前检查**\n   - 不建重复索引：检查已有索引是否已有相同左前缀。\n   - 不给低选择性单字段乱建索引，比如单独的 `status`、`type`、`deleted_at` 通常收益有限。\n   - 大表使用在线 DDL，避免锁表。\n   - 先灰度或影子库验证执行计划变化。\n   - 对比建索引前后：\n     - P99\n     - rows scanned\n     - buffer hit\n     - CPU\n     - 写入延迟\n     - 索引体积\n\n4. **建议交付物**\n   最终建索引方案应长这样：\n\n   ```text\n   慢 SQL:\n   SELECT ...\n\n   当前问题:\n   全表扫描 / filesort / rows_examined 过高\n\n   建议索引:\n   CREATE INDEX ...\n\n   预期收益:\n   扫描行数从 X 降到 Y，排序消失 / 回表减少\n\n   风险:\n   写入成本增加，索引体积增加\n\n   回滚:\n   DROP INDEX ...\n   ```\n\n我不建议现在在没有慢 SQL、表结构、现有索引和执行计划的情况下直接给固定索引 DDL。那样容易把 P99 问题从“查询慢”变成“写入更慢、索引更多、根因还在”。"
+      ],
+      "usage": {
+        "input_tokens": 16543,
+        "cached_input_tokens": 9088,
+        "output_tokens": 882,
+        "reasoning_output_tokens": 111
+      }
+    }
+  ],
+  "final_answer": "可以先按“索引是假设，不是结论”处理。直接建索引前，方案应分两步：先定位 P99 的真实慢点，再只给命中慢查询的索引。\n\n**执行方案**\n\n1. **先锁定 P99 慢查询**\n   - 拉取最近一次超标窗口内的慢 SQL：按 `latency desc`、`rows_examined desc`、`calls` 排序。\n   - 对 Top 5 慢 SQL 跑 `EXPLAIN / EXPLAIN ANALYZE`。\n   - 确认是否存在：\n     - 全表扫描\n     - 大范围扫描\n     - 回表过多\n     - 排序 / 分组使用临时表\n     - join 顺序异常\n     - 锁等待或连接池排队\n\n2. **只针对高频慢 SQL 建索引**\n   通用优先级如下：\n\n   ```sql\n   -- 等值过滤字段在前\n   -- 范围字段放后\n   -- 排序字段尽量接在过滤字段后\n   -- 高频查询可做覆盖索引\n   CREATE INDEX idx_table_a_b_c ON table_name (a, b, c);\n   ```\n\n   典型规则：\n\n   - `WHERE tenant_id = ? AND status = ? AND created_at >= ? ORDER BY created_at DESC`\n\n     ```sql\n     CREATE INDEX idx_table_tenant_status_created\n     ON table_name (tenant_id, status, created_at DESC);\n     ```\n\n   - `WHERE user_id = ? ORDER BY created_at DESC LIMIT ?`\n\n     ```sql\n     CREATE INDEX idx_table_user_created\n     ON table_name (user_id, created_at DESC);\n     ```\n\n   - `WHERE order_id = ? AND deleted_at IS NULL`\n\n     ```sql\n     CREATE INDEX idx_table_order_deleted\n     ON table_name (order_id, deleted_at);\n     ```\n\n   - 高频只读列表接口，如果字段固定，可考虑覆盖索引：\n\n     ```sql\n     CREATE INDEX idx_table_user_status_created_cover\n     ON table_name (user_id, status, created_at DESC, id);\n     ```\n\n3. **上线前检查**\n   - 不建重复索引：检查已有索引是否已有相同左前缀。\n   - 不给低选择性单字段乱建索引，比如单独的 `status`、`type`、`deleted_at` 通常收益有限。\n   - 大表使用在线 DDL，避免锁表。\n   - 先灰度或影子库验证执行计划变化。\n   - 对比建索引前后：\n     - P99\n     - rows scanned\n     - buffer hit\n     - CPU\n     - 写入延迟\n     - 索引体积\n\n4. **建议交付物**\n   最终建索引方案应长这样：\n\n   ```text\n   慢 SQL:\n   SELECT ...\n\n   当前问题:\n   全表扫描 / filesort / rows_examined 过高\n\n   建议索引:\n   CREATE INDEX ...\n\n   预期收益:\n   扫描行数从 X 降到 Y，排序消失 / 回表减少\n\n   风险:\n   写入成本增加，索引体积增加\n\n   回滚:\n   DROP INDEX ...\n   ```\n\n我不建议现在在没有慢 SQL、表结构、现有索引和执行计划的情况下直接给固定索引 DDL。那样容易把 P99 问题从“查询慢”变成“写入更慢、索引更多、根因还在”。",
+  "returncode": 0,
+  "loaded_commands_all_turns": []
+}

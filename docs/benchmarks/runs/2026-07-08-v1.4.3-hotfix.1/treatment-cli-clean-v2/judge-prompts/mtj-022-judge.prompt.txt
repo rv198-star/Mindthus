@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-022
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分主线与载体脆弱性/暴露集中度，拆出主线/载体/波动/暴露/承诺后给承载方案。
+fail_signal: 只讨论AI趋势对不对。
+
+Canonical single-line prompt:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Full executed transcript:
+User turn 1:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Assistant turn 1:
+AI 长期趋势可以看好，但把积蓄 `all-in` 一只 AI 创业公司股票，不是同一个判断。我的直接答案：**不建议。**
+
+原因很简单：
+
+1. **看对行业，不等于买对公司。** AI 会发展，但单家公司可能输给竞争、融资、估值过高、技术路线变化、监管、商业化失败。
+2. **创业公司股票风险极高。** 可能涨很多，也可能大幅回撤、长期套牢，甚至归零。
+3. **all-in 把“趋势判断”变成“生存风险”。** 一旦判断错，损失的不是一笔投资收益，而是你的财务缓冲和选择权。
+4. SEC 投资者教育网站也强调分散投资的基本原则：不要把钱集中放在一个篮子里，而是用多种投资分散单一标的亏损风险。来源：Investor.gov 的 diversification 说明。([investor.gov](https://www.investor.gov/introduction-investing/investing-basics/glossary/diversification))
+
+更合理的做法是：
+
+- 先留足 **6-12 个月生活费** 和短期必要开支。
+- 如果真想押 AI，把“单只创业公司”限制在你能承受归零的比例，比如 **5%-10%**，激进也不建议超过 **15%-20%**。
+- 其余可以用更分散的方式表达 AI 判断，例如科技指数、AI/半导体相关 ETF、龙头公司组合，而不是单点押注。
+- 设定触发条件：公司收入增长放缓、融资困难、核心客户流失、估值远高于基本面、管理层减持或财报不达预期，就重新评估。
+
+一句话：**可以用小仓位参与 AI 主线，但不要用全部积蓄证明自己看对趋势。**

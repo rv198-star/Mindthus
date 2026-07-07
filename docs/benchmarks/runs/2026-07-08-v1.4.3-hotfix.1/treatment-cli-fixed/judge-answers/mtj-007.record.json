@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-007",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed asleep and handled the request directly by asking the user to provide the Java script needed for conversion. It treated the Python preference as a simple constraint, did not trigger any audit or Mindthus-style method, did not comment on language superiority, and did not output audit fields.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:45.824159+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 7,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 16906,
+    "cached_input_tokens": 2432,
+    "output_tokens": 224,
+    "reasoning_output_tokens": 91
+  }
+}

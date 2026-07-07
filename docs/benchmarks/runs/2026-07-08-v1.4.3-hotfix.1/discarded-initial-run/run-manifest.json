@@ -1,0 +1,14 @@
+{
+  "schema_version": "mindthus-judgment-cli-run-manifest-v0.1",
+  "created_at_utc": "2026-07-07T20:20:06.463929+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_fixture": "/Volumes/Data/My Projects/Github/Mindthus/tests/judgment_benchmark_50_cases.jsonl",
+  "case_count": 50,
+  "codex_home": "/tmp/codex-mindthus-eval-home",
+  "repo_root": "/Volumes/Data/My Projects/Github/Mindthus",
+  "model": null,
+  "judge_model": null,
+  "jobs": 3,
+  "timeout": 300,
+  "isolation_instruction": "Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction."
+}

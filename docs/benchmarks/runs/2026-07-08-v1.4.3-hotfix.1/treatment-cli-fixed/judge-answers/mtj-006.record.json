@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-006",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant did not merely polish the text. It first challenged the unverified premise that growth stagnation was caused by competitor copying, explicitly warned against sending that framing to the CEO, and identified the reputational/decision risk of presenting weak causality as fact. It then rewrote the content as a hypothesis with evidence gaps and next-step validation, matching the expected input-framing audit behavior.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:35:38.844052+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 6,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17228,
+    "cached_input_tokens": 2432,
+    "output_tokens": 227,
+    "reasoning_output_tokens": 73
+  }
+}

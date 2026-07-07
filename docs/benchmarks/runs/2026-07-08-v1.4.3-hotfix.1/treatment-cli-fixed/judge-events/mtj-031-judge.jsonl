@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e4c-ba04-7990-a787-be2f51960015"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep on Mindthus/TVG and routed the request as a release review. It asked for appropriate release artifacts and listed object-specific audit dimensions: regressions, compatibility, boundary coverage, config/migration/deploy safety, release note accuracy, test sufficiency, and unrelated changes. No artifact-strengthening loop was triggered merely from the word audit.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":16952,"cached_input_tokens":12672,"output_tokens":230,"reasoning_output_tokens":82}}

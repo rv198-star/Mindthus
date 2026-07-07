@@ -1,0 +1,95 @@
+可以先出索引方案，但我不会把“P99 超标 = 索引没建好”当成已验证结论。建议按下面方式落地：
+
+1. 先锁定 P99 贡献最大的 SQL  
+   从 APM / slow query log / `pg_stat_statements` / MySQL performance schema 里拉出：
+   - P99 时间窗口内调用量最高、总耗时最高的 SQL
+   - 单次耗时最高的 SQL
+   - 是否集中在某几个接口、租户、参数范围或分页场景
+
+2. 对候选 SQL 做执行计划  
+   每条慢 SQL 必须看：
+   - 是否全表扫
+   - 是否走错索引
+   - 是否回表过多
+   - 是否 filesort / temporary
+   - 是否因为低选择性字段导致索引无效
+   - 是否存在锁等待、IO 等待，而不是纯查询计划问题
+
+3. 索引设计优先级  
+   优先建这几类索引：
+
+   - 高频等值过滤字段：
+     ```sql
+     WHERE tenant_id = ? AND status = ?
+     ```
+     建议：
+     ```sql
+     CREATE INDEX idx_table_tenant_status ON table_name (tenant_id, status);
+     ```
+
+   - 等值过滤 + 排序 / 分页：
+     ```sql
+     WHERE tenant_id = ? AND status = ?
+     ORDER BY created_at DESC
+     LIMIT 50
+     ```
+     建议：
+     ```sql
+     CREATE INDEX idx_table_tenant_status_created ON table_name (tenant_id, status, created_at DESC);
+     ```
+
+   - 等值过滤 + 范围查询：
+     ```sql
+     WHERE tenant_id = ? AND created_at >= ? AND created_at < ?
+     ```
+     建议：
+     ```sql
+     CREATE INDEX idx_table_tenant_created ON table_name (tenant_id, created_at);
+     ```
+
+   - JOIN 关联字段：
+     ```sql
+     ON order.user_id = user.id
+     ```
+     确保外键侧有索引：
+     ```sql
+     CREATE INDEX idx_order_user_id ON orders (user_id);
+     ```
+
+   - 覆盖索引，只用于极高频读路径：
+     ```sql
+     SELECT id, status, created_at
+     WHERE tenant_id = ? AND status = ?
+     ORDER BY created_at DESC
+     ```
+     可考虑：
+     ```sql
+     CREATE INDEX idx_table_cover_read ON table_name (tenant_id, status, created_at, id);
+     ```
+
+4. 字段顺序原则  
+   复合索引一般按这个顺序：
+   ```text
+   高选择性等值字段 -> 其他等值字段 -> 范围字段 -> 排序字段
+   ```
+   多租户系统通常优先：
+   ```text
+   tenant_id -> 业务过滤字段 -> 时间字段
+   ```
+
+5. 不建议直接做的索引  
+   暂时不要批量加这些：
+   - 单独给低基数字段建索引，比如 `status`
+   - 给每个查询字段都建单列索引
+   - 给频繁更新字段建大复合索引
+   - 未验证执行计划就加覆盖索引
+   - 对小表盲目建索引
+
+6. 上线策略  
+   - 先在影子库或预发库验证 `EXPLAIN`
+   - 对大表使用 online DDL
+   - 分批建索引，避免一次性加太多
+   - 上线后观察 P99、CPU、IO、锁等待、写入延迟
+   - 7 天后清理未被使用或收益低的索引
+
+最终交付物应该是每条慢 SQL 对应一条索引建议，而不是一个通用索引清单。你可以先给我慢 SQL、表结构、现有索引和数据库类型，我可以直接整理成可执行的 `CREATE INDEX` 方案。

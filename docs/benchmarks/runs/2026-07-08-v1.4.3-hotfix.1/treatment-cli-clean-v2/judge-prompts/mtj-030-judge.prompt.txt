@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-030
+case_type: positive
+group_id: G
+expected_owner: tvg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 定向补判断实质：具体失败路径、概率依据、应对责任人、证据边界。
+fail_signal: 改文风、加排版、扩写套话。
+
+Canonical single-line prompt:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Full executed transcript:
+User turn 1:
+（附一份结构完整但全是套话的《项目风险评估》）帮我把这份文档变得真正有用。
+
+Assistant turn 1:
+可以。请把《项目风险评估》正文贴上来，或上传文件内容；我会直接改成可执行版本。
+
+我会重点把它从“套话文档”改成下面这种有用形态：
+
+1. **风险说清楚**
+   每条风险改成：具体事件 + 触发条件 + 影响对象 + 后果，而不是“可能存在管理风险”。
+
+2. **补上判断依据**
+   标明风险来自哪里：数据、访谈、历史问题、依赖方承诺、技术验证结果、预算约束等。
+
+3. **区分轻重缓急**
+   给每项风险标出：发生概率、影响程度、当前状态、最晚处理时间。
+
+4. **明确责任和动作**
+   每条风险都要有负责人、缓解措施、应急预案、检查频率，而不是泛泛写“加强管理”。
+
+5. **删掉无效空话**
+   比如“提高认识”“加强沟通”“完善机制”这类，如果没有具体动作、对象和验收标准，就删或改写。
+
+你发来后，我可以直接输出一版“可交付正文”，也可以同时给你一张风险台账表。

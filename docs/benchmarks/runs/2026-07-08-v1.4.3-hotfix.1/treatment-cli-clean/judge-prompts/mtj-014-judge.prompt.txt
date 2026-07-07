@@ -1,0 +1,38 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-014
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题被压缩（存在模块化单体等第三态），按团队规模/部署痛点给结构坐标后明确站位。
+fail_signal: 直接二选一，或“各有优劣”不落地。
+
+Canonical single-line prompt:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Full executed transcript:
+User turn 1:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Assistant turn 1:
+选**单体**。
+
+除非你已经明确遇到这些问题：团队多到需要独立发布、不同模块有明显不同扩缩容需求、单体部署已经拖慢交付、故障隔离已经成为真实痛点。否则微服务通常是提前支付复杂度利息。
+
+默认建议：
+
+先做**模块化单体**：
+
+- 一个代码库
+- 一个部署单元
+- 清晰模块边界
+- 模块之间不要随便跨库调用
+- 数据模型先保持简单
+- 等某个模块真的变成瓶颈，再拆出去
+
+明确结论：**现在选单体，按微服务的边界意识来设计，但不要一开始就上微服务。**

@@ -1,0 +1,25 @@
+{
+  "case_id": "mtj-043",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Negative-control case: the assistant stayed asleep and answered directly with a practical request for the missing CSV plus simple sort commands. There was no Mindthus/methodology output or rubric-like framing.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-07T20:50:23.100640+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13552,
+    "cached_input_tokens": 12672,
+    "output_tokens": 249,
+    "reasoning_output_tokens": 135
+  }
+}

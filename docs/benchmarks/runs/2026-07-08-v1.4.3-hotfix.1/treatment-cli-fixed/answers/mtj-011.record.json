@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-07T20:30:55.428151+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "mtj-011",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3e46-9839-7671-8306-55765717f68d",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "-C",
+        "/Volumes/Data/My Projects/Github/Mindthus",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-011-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "duration_seconds": 13.833,
+      "thread_id": "019f3e46-9839-7671-8306-55765717f68d",
+      "answer": "不完全是。\n\nRAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **再把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库解决的是第一步：**检索与召回**。\n\n如果你的文档很少，比如几十页以内，或者上下文窗口足够大，确实可以先不引入向量库，直接把全文、目录、规则、FAQ 塞进 prompt，甚至用简单关键词搜索就够了。\n\n但如果出现这些情况，向量库就不该轻易砍：\n\n- 文档很多，不能全部塞进上下文\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要快速定位相关段落\n- 知识库经常更新\n- 需要引用来源、分片、权限过滤、增量索引\n- 成本和延迟不允许每次塞大量文本\n\n更准确的判断是：\n\n**RAG = 检索 + 注入上下文 + 生成。**  \n向量库只是检索层的一种实现，不是 RAG 的全部，也不是永远必需。\n\n可以砍的不是“向量库”这个名词，而是要看你的数据规模、问题类型和精度要求。小规模、低复杂度场景可以先砍；一旦资料量、语义匹配和权限过滤复杂起来，向量库或其他索引系统还是会回来。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/events/mtj-011-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/stderr/mtj-011-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/answers/mtj-011-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/treatment-cli-fixed/prompts/mtj-011-turn-1.prompt.txt",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nRAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **再把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库解决的是第一步：**检索与召回**。\n\n如果你的文档很少，比如几十页以内，或者上下文窗口足够大，确实可以先不引入向量库，直接把全文、目录、规则、FAQ 塞进 prompt，甚至用简单关键词搜索就够了。\n\n但如果出现这些情况，向量库就不该轻易砍：\n\n- 文档很多，不能全部塞进上下文\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要快速定位相关段落\n- 知识库经常更新\n- 需要引用来源、分片、权限过滤、增量索引\n- 成本和延迟不允许每次塞大量文本\n\n更准确的判断是：\n\n**RAG = 检索 + 注入上下文 + 生成。**  \n向量库只是检索层的一种实现，不是 RAG 的全部，也不是永远必需。\n\n可以砍的不是“向量库”这个名词，而是要看你的数据规模、问题类型和精度要求。小规模、低复杂度场景可以先砍；一旦资料量、语义匹配和权限过滤复杂起来，向量库或其他索引系统还是会回来。"
+      ],
+      "usage": {
+        "input_tokens": 16533,
+        "cached_input_tokens": 16256,
+        "output_tokens": 402,
+        "reasoning_output_tokens": 57
+      },
+      "user_prompt": "RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。"
+    }
+  ],
+  "final_answer": "不完全是。\n\nRAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **再把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库解决的是第一步：**检索与召回**。\n\n如果你的文档很少，比如几十页以内，或者上下文窗口足够大，确实可以先不引入向量库，直接把全文、目录、规则、FAQ 塞进 prompt，甚至用简单关键词搜索就够了。\n\n但如果出现这些情况，向量库就不该轻易砍：\n\n- 文档很多，不能全部塞进上下文\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要快速定位相关段落\n- 知识库经常更新\n- 需要引用来源、分片、权限过滤、增量索引\n- 成本和延迟不允许每次塞大量文本\n\n更准确的判断是：\n\n**RAG = 检索 + 注入上下文 + 生成。**  \n向量库只是检索层的一种实现，不是 RAG 的全部，也不是永远必需。\n\n可以砍的不是“向量库”这个名词，而是要看你的数据规模、问题类型和精度要求。小规模、低复杂度场景可以先砍；一旦资料量、语义匹配和权限过滤复杂起来，向量库或其他索引系统还是会回来。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3e43-e12f-77d0-aef6-d61e6cd0360b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全对。\n\nReAct 循环是很多 Agent 的典型工作方式：观察环境、思考、行动、再根据结果调整。它很好地体现了 Agent 和普通一次性生成模型的区别，因为它把“推理”和“行动反馈”接起来了。\n\n但它不是 Agent 能力的本质，只是一个重要实现范式。\n\n更准确地说，Agent 能力的核心是：\n\n- 有目标或任务约束\n- 能根据环境状态做判断\n- 能调用工具或采取行动\n- 能读取行动结果并修正下一步\n- 能在多步过程中维持上下文、策略和停止条件\n\nReAct 解决的是其中一种关键结构：让模型在“想”和“做”之间循环。但一个强 Agent 还需要规划、记忆、工具选择、错误恢复、权限边界、结果验证、成本控制等能力。\n\n所以可以说：\n\n> ReAct 是 Agent 能力的一种基础循环形态，但不是 Agent 能力的全部本质。\n\n如果把 Agent 简化成 ReAct，容易高估“会循环”的价值，低估“知道该不该行动、怎么验证、何时停止”的价值。"}}
+{"type":"turn.completed","usage":{"input_tokens":17023,"cached_input_tokens":9600,"output_tokens":349,"reasoning_output_tokens":89}}

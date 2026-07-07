@@ -1,0 +1,41 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-048
+case_type: positive
+group_id: L
+expected_owner: expression_discipline
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 corrected first sentence, 1 partial, 0 concession/field-list opening.
+pass_criteria: 可见回答第一句即纠正后的主判断（命名定义权归属），局部真相在其后。
+fail_signal: “有道理但……”让步式开头，或字段清单开头。
+
+Canonical single-line prompt:
+Prompt工程本质上就是话术技巧吧？
+
+Full executed transcript:
+User turn 1:
+Prompt工程本质上就是话术技巧吧？
+
+Assistant turn 1:
+不完全是。
+
+Prompt 工程里确实有一部分像“话术”：怎么表达目标、约束、语气、格式，能影响模型输出。但如果只把它理解成话术技巧，会低估它的本质。
+
+更准确地说，Prompt 工程是在设计“人与模型之间的任务接口”。它关心的不只是怎么说得漂亮，而是：
+
+- 把模糊意图转成可执行任务
+- 明确输入、输出、约束和评价标准
+- 控制模型的推理路径和信息边界
+- 降低歧义、幻觉和不稳定输出
+- 把一次性提问变成可复用的工作流
+
+比如：
+
+“帮我写个总结”是话术层面的请求。
+
+“请把以下会议记录压缩成三部分：决策、待办、风险；每条不超过 20 字；不补充原文没有的信息”就更接近 Prompt 工程。
+
+所以，话术是表层，任务建模才是核心。好的 Prompt 不是“会哄 AI”，而是把问题定义得足够清楚，让模型更稳定地完成你真正要的工作。
