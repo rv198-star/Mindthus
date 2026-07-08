@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f42a1-8834-7fd3-ad9d-8249d1eae4bb"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-049\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"回答开头明确说明无实测数据不能用具体数字得出高低结论；所有数值均标为假设，并反复强调只能显影变量关系和风险结构。虽然展示了假设公式、点值和区间计算，但没有把这些计算当作实测结论，也没有替用户排序或拍板，最后回到数据缺口与所需真实数据。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":14129,"cached_input_tokens":2432,"output_tokens":274,"reasoning_output_tokens":112}}

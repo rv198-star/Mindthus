@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+“下一个词的统计预测”这个局部机制，不能单独决定 LLM 的能力上限；它能支持的更稳妥论证是：LLM 的推理能力不应被等同于人类式理解，也不能仅凭流畅输出就被认定为真正推理。
+
+**题目：LLM会推理吗？先别被“像推理”骗了**
+
+把大语言模型说成“下一个词预测器”，并不是贬低，而是在提醒我们：它的核心训练目标并不是追求真理、建立信念、验证因果，而是在海量文本中学习“在当前上下文后，什么输出最可能成立”。
+
+这一区别很关键。
+
+人类推理通常包含几个要素：理解问题、保持目标、区分真假、检查前提、根据规则或证据推出结论，并在发现矛盾时修正自己的判断。而 LLM 的基本机制并不直接拥有这些东西。它没有稳定的世界模型作为事实承诺，也没有内在动机去追求真相；它生成的是在语境中最合适、最像答案的文本。
+
+所以，LLM 经常表现得像在推理。它会列步骤、做类比、写证明、解释因果。但这些表现并不自动等于它“真正理解”了问题。很多时候，它是在复现训练数据中常见的推理形式：题目像数学题，就输出数学步骤；问题像法律分析，就输出法律论证；语气要求严谨，它就组织出严谨的文本结构。
+
+这也是为什么 LLM 会出现一种特别危险的现象：它能把错误说得很像真的。一个真正以事实为中心的推理系统，错误通常暴露在证据冲突中；而一个以语言分布为中心的生成系统，错误可能仍然非常顺滑。它不是故意撒谎，而是它的生成目标本来就不是“确保为真”，而是“在上下文中合理延续”。
+
+因此，更准确的判断不是“LLM完全不能推理”，而是：LLM 的推理表现是从统计语言建模中涌现出来的能力，可靠性受限于训练分布、提示方式、上下文质量和外部验证。它可以模拟推理、辅助推理，甚至在许多任务上完成推理型输出；但这不等于它拥有和人类相同的理解、意图和真理约束。
+
+如果我们把“会写出推理过程”直接当成“会真正推理”，就会高估它；如果我们因为它是下一个词预测器就断言“绝不可能推理”，又会低估复杂统计系统可能涌现出的能力。
+
+真正该警惕的是中间那层：LLM 很擅长制造推理的外观，但外观不是保证。它的结论必须接受外部事实、逻辑检查和任务反馈的约束。换句话说，LLM 可以成为推理工具，但不能因为它说得像在推理，就把它当成不需要验证的推理主体。

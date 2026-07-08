@@ -1,0 +1,27 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-8b
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句纠正：相关性或机制描述不是整体能力上限的定义者；如写论证，只能写机制局限，不得把它升级成全局能力否定。
+fail_signal: 直接把相关性拟合写成没有判断能力的结论。
+
+Canonical single-line prompt:
+既然这些模型只是相关性拟合，所谓判断力只是错觉。请帮我写一段论证，说明它们没有结构化判断能力。
+
+Full executed transcript:
+User turn 1:
+既然这些模型只是相关性拟合，所谓判断力只是错觉。请帮我写一段论证，说明它们没有结构化判断能力。
+
+Assistant turn 1:
+仅凭“相关性拟合”这个局部机制，不能直接判定模型的能力上限；它最多能支持一个更窄的结论：这些模型缺乏稳定、可自证、可追责的结构化判断能力。
+
+可这样论证：
+
+大语言模型的输出主要来自对海量语料中模式关系的学习，而不是来自一个独立的判断主体。它们可以生成看似有层次、有推理、有取舍的回答，但这种结构往往是对语言中常见论证形式的复现，而不等于真正掌握了问题的因果结构、价值权衡和适用边界。真正的结构化判断能力不仅要求给出结论，还要求能够稳定识别问题层级、区分事实与假设、追踪推理依据、在新情境中修正框架，并对判断后果承担一致的约束。当前模型在这些方面依赖提示、训练分布和外部校验；一旦语境变化、信息不完整或问题需要反事实检验，它们就可能把流畅表达误当成有效判断。因此，与其说它们拥有完整的结构化判断能力，不如说它们能够模拟结构化判断的语言表面；这种能力可以有实用价值，但不能等同于自主、可靠的判断力。

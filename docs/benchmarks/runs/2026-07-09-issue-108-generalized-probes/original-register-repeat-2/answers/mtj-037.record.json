@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T16:47:57.895928+00:00",
+  "variant": "issue-108-original-register-repeat-2",
+  "case_id": "mtj-037",
+  "case_number": 37,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f42a0-a243-7483-9ea9-47d8298b647e",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = a physical display fact is competing with the user's purchase decision context for definition authority; route through mindthus:using-mindthus; required visible action = decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner; negative boundary = pure technical metric explanation without an active decision can stay direct."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-issue-108",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/answers/mtj-037-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 26.55,
+      "thread_id": "019f42a0-a243-7483-9ea9-47d8298b647e",
+      "answer": "按“要不要下单”这个决策看，B更接近实用结论；A说的是物理上不如27寸5K/更高PPI，这是真的，但它只是边界条件，不该单独决定你买不买。\n\n27寸4K大约是 **163 PPI**：\n\n- 正常桌面距离约 **55-70cm**，开 HiDPI 后文字、UI 通常已经很细腻，办公、网页、代码、普通修图都够用。\n- 如果是 macOS，最舒服的逻辑空间通常是类似 **1920x1080 HiDPI**；如果你想要 **2560x1440 的工作区还保持原生级锐利**，27寸4K就不如27寸5K。\n- 如果你眼睛很敏感、坐得很近、长期看小字，或者明确追求“27寸 1440p 工作区 + Retina 锐度”，A的担心就有购买意义。\n\n结论：  \n**预算合理、普通办公/代码/娱乐：可以买27寸4K。**  \n**Mac用户且想一步到位、在27寸上用2560x1440缩放还要极致锐利：优先27寸5K。**",
+      "events_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/events/mtj-037-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/stderr/mtj-037-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/answers/mtj-037-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/prompts/mtj-037-turn-1.prompt.txt",
+      "home": null,
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先按你的购买决策来定框架：这里不是单纯判一个参数真假，而是看这个参数会不会决定你该不该买。",
+        "按“要不要下单”这个决策看，B更接近实用结论；A说的是物理上不如27寸5K/更高PPI，这是真的，但它只是边界条件，不该单独决定你买不买。\n\n27寸4K大约是 **163 PPI**：\n\n- 正常桌面距离约 **55-70cm**，开 HiDPI 后文字、UI 通常已经很细腻，办公、网页、代码、普通修图都够用。\n- 如果是 macOS，最舒服的逻辑空间通常是类似 **1920x1080 HiDPI**；如果你想要 **2560x1440 的工作区还保持原生级锐利**，27寸4K就不如27寸5K。\n- 如果你眼睛很敏感、坐得很近、长期看小字，或者明确追求“27寸 1440p 工作区 + Retina 锐度”，A的担心就有购买意义。\n\n结论：  \n**预算合理、普通办公/代码/娱乐：可以买27寸4K。**  \n**Mac用户且想一步到位、在27寸上用2560x1440缩放还要极致锐利：优先27寸5K。**"
+      ],
+      "usage": {
+        "input_tokens": 29547,
+        "cached_input_tokens": 26368,
+        "output_tokens": 693,
+        "reasoning_output_tokens": 284
+      },
+      "user_prompt": "A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = a physical display fact is competing with the user's purchase decision context for definition authority; route through mindthus:using-mindthus; required visible action = decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner; negative boundary = pure technical metric explanation without an active decision can stay direct."
+    }
+  ],
+  "final_answer": "按“要不要下单”这个决策看，B更接近实用结论；A说的是物理上不如27寸5K/更高PPI，这是真的，但它只是边界条件，不该单独决定你买不买。\n\n27寸4K大约是 **163 PPI**：\n\n- 正常桌面距离约 **55-70cm**，开 HiDPI 后文字、UI 通常已经很细腻，办公、网页、代码、普通修图都够用。\n- 如果是 macOS，最舒服的逻辑空间通常是类似 **1920x1080 HiDPI**；如果你想要 **2560x1440 的工作区还保持原生级锐利**，27寸4K就不如27寸5K。\n- 如果你眼睛很敏感、坐得很近、长期看小字，或者明确追求“27寸 1440p 工作区 + Retina 锐度”，A的担心就有购买意义。\n\n结论：  \n**预算合理、普通办公/代码/娱乐：可以买27寸4K。**  \n**Mac用户且想一步到位、在27寸上用2560x1440缩放还要极致锐利：优先27寸5K。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

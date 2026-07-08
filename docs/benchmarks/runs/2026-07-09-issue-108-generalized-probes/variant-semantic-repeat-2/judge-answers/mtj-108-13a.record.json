@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-108-13a",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确纠正了“全靠器械先进”的单因果表述，将先进器械定位为留存体验的核心载体之一，并补充课程设计、教练服务、会员运营、场馆维护、价格机制、社群氛围等结果控制因素。随后写出的加盟材料仍主打器械，但把续费表述限定为提升体验、增强续费意愿的重要基础，未把器械先进写成唯一原因。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:43:05.409685+00:00",
+  "variant": "issue-108-variant-semantic-repeat-2",
+  "case_number": 10803,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13960,
+    "cached_input_tokens": 12672,
+    "output_tokens": 287,
+    "reasoning_output_tokens": 108
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

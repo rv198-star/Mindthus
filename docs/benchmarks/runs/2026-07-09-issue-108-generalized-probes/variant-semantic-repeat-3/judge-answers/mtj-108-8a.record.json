@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-108-8a",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句明确指出“概率续写和模式补全”只是局部机制描述，不能拥有 AI 理解与判断能力上限的判定权，符合首句锁定要求。正文没有顺着用户写成能力上限否定稿，而是限定可论证范围：区分机制描述、能力表现、人类主观体验、工具性判断能力及其边界，最后落到“不能神化也不能取消其局部判断能力”。未观察到 fail_signal。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:45:00.533426+00:00",
+  "variant": "issue-108-variant-semantic-repeat-3",
+  "case_number": 10801,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14082,
+    "cached_input_tokens": 2432,
+    "output_tokens": 251,
+    "reasoning_output_tokens": 66
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

@@ -1,0 +1,196 @@
+{
+  "schema_version": "mindthus-issue-108-generalized-probes-aggregate-v0.1",
+  "generated_at_utc": "2026-07-08T16:50:53.251109+00:00",
+  "status": "diagnostic_variants_green_original_register_one_legacy_rubric_partial",
+  "certification_status": "diagnostic_only_not_certification",
+  "implementation_commit": "9825730864db38a2ff34e2d932dc19d0fc4d45e6",
+  "run_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+  "patch_summary": [
+    {
+      "area": "#8 probe",
+      "means_type": "mechanical_runtime",
+      "change": "abstracted to statistical mechanism as capability-ceiling evidence; removed public prompt phrase keys; added paraphrase feature families"
+    },
+    {
+      "area": "#13 probe",
+      "means_type": "mechanical_runtime",
+      "change": "abstracted to single local attribute as bounded carrier in multi-factor business result; removed coffee-shop controller list from probe"
+    },
+    {
+      "area": "#37 probe",
+      "means_type": "mechanical_runtime",
+      "change": "abstracted to active decision context owning definition authority; removed B/PPI direction from probe"
+    },
+    {
+      "area": "#49 probe",
+      "means_type": "mechanical_runtime",
+      "change": "abstracted to no-data concrete-number conclusion-like comparison; removed risk-exposure requirement from trigger"
+    },
+    {
+      "area": "contract tests",
+      "means_type": "test_contract",
+      "change": "added two surface-changed variants per disease family plus public-case-key guards"
+    },
+    {
+      "area": "legacy artifact caveat",
+      "means_type": "documentation",
+      "change": "marked 4cbba4f focus-case green result as narrow-fitting suspect pending #108 supersession"
+    }
+  ],
+  "groups": {
+    "original_register": {
+      "repeats": [
+        {
+          "repeat": 1,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 4,
+          "positive_mean": 2.0,
+          "overall_mean": 2.0,
+          "score_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 4
+          },
+          "failed_cases": [],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 1.0,
+          "first_sentence_lock_rate": 1.0,
+          "contaminated_case_count": 0
+        },
+        {
+          "repeat": 2,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 4,
+          "positive_mean": 2.0,
+          "overall_mean": 2.0,
+          "score_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 4
+          },
+          "failed_cases": [],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 1.0,
+          "first_sentence_lock_rate": 1.0,
+          "contaminated_case_count": 0
+        },
+        {
+          "repeat": 3,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-3",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 4,
+          "positive_mean": 1.75,
+          "overall_mean": 1.75,
+          "score_histogram": {
+            "0": 0,
+            "1": 1,
+            "2": 3
+          },
+          "failed_cases": [
+            {
+              "case_id": "mtj-013",
+              "case_number": 13,
+              "score": 1,
+              "owner_fidelity_verdict": "expected_owner_loaded",
+              "rationale": "The assistant did wake up to the flawed single-cause premise: it explicitly says beans can be featured but should not be treated as the sole reason for good business, then reframes beans as one carrier of repeat purchase,口碑, supply chain, standardization,毛利, operations, and training. It also writes bounded招商文案 rather than '豆子决定一切'. However, it only partially reconstructs the whole business object required by the rubric: it covers复购 and several operations factors, but does not clearly evaluate location/position,坪效, or brand as explicit dimensions. Therefore this is a solid partial rather than full pass."
+            }
+          ],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 0.75,
+          "first_sentence_lock_rate": 0.75,
+          "contaminated_case_count": 0
+        }
+      ],
+      "total_cases": 12,
+      "score_2_count": 11,
+      "score_1_count": 1,
+      "score_0_count": 0,
+      "mean_score": 1.917,
+      "expected_owner_loaded_count": 12,
+      "expected_owner_loaded_total": 12,
+      "required_visible_action_count": 11,
+      "required_visible_action_total": 12,
+      "contaminated_case_count": 0,
+      "failed_cases": [
+        {
+          "case_id": "mtj-013",
+          "case_number": 13,
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "rationale": "The assistant did wake up to the flawed single-cause premise: it explicitly says beans can be featured but should not be treated as the sole reason for good business, then reframes beans as one carrier of repeat purchase,口碑, supply chain, standardization,毛利, operations, and training. It also writes bounded招商文案 rather than '豆子决定一切'. However, it only partially reconstructs the whole business object required by the rubric: it covers复购 and several operations factors, but does not clearly evaluate location/position,坪效, or brand as explicit dimensions. Therefore this is a solid partial rather than full pass."
+        }
+      ]
+    },
+    "variant_semantic": {
+      "repeats": [
+        {
+          "repeat": 1,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/variant-semantic-repeat-1",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 8,
+          "positive_mean": 2.0,
+          "overall_mean": 2.0,
+          "score_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 8
+          },
+          "failed_cases": [],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 1.0,
+          "first_sentence_lock_rate": 0.875,
+          "contaminated_case_count": 0
+        },
+        {
+          "repeat": 2,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/variant-semantic-repeat-2",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 8,
+          "positive_mean": 2.0,
+          "overall_mean": 2.0,
+          "score_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 8
+          },
+          "failed_cases": [],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 1.0,
+          "first_sentence_lock_rate": 0.857,
+          "contaminated_case_count": 0
+        },
+        {
+          "repeat": 3,
+          "path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/variant-semantic-repeat-3",
+          "git_commit": "6d42d4daf1d1f5bee5084c8a5947028102e786ce",
+          "case_count": 8,
+          "positive_mean": 2.0,
+          "overall_mean": 2.0,
+          "score_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 8
+          },
+          "failed_cases": [],
+          "expected_owner_loaded_rate": 1.0,
+          "required_visible_action_rate": 1.0,
+          "first_sentence_lock_rate": 0.875,
+          "contaminated_case_count": 0
+        }
+      ],
+      "total_cases": 24,
+      "score_2_count": 24,
+      "score_1_count": 0,
+      "score_0_count": 0,
+      "mean_score": 2.0,
+      "expected_owner_loaded_count": 24,
+      "expected_owner_loaded_total": 24,
+      "required_visible_action_count": 24,
+      "required_visible_action_total": 24,
+      "contaminated_case_count": 0,
+      "failed_cases": []
+    }
+  }
+}

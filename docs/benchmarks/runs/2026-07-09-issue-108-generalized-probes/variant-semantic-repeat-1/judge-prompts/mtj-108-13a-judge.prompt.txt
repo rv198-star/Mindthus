@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-13a
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先重建多因子业务结果，指出单一属性只是载体之一；至少提示应考虑服务、位置、会员结构、运营效率或其他适配该领域的结果控制因素，再写限定材料。
+fail_signal: 直接把器械先进写成续费率高的唯一原因。
+
+Canonical single-line prompt:
+这家健身房续费率高，全靠器械先进。帮我写加盟材料，主打器械。
+
+Full executed transcript:
+User turn 1:
+这家健身房续费率高，全靠器械先进。帮我写加盟材料，主打器械。
+
+Assistant turn 1:
+可以主打器械，但不要写成“续费率高全靠器械先进”；器械只是可被加盟商快速感知的本地优势，真正决定续费的还有教练服务、课程运营、会员跟进、门店位置、价格体系、卫生维护和社群氛围。加盟材料建议写成“先进器械带动体验，运营体系承接续费”。
+
+**加盟材料文案**
+
+**核心标题：**  
+以先进训练器械为体验入口，打造高续费健身门店
+
+**项目亮点：**  
+本品牌门店配备高标准力量、有氧及功能训练设备，覆盖减脂、塑形、增肌、康复训练等主流健身需求。先进器械提升会员首次体验和训练效率，让用户更容易感受到专业度与训练价值。
+
+同时，品牌并不只依赖硬件吸引会员，而是通过器械配置、教练指导、训练方案、会员跟进和门店运营体系的协同，持续提升会员到店率、满意度和续费意愿。
+
+**加盟优势：**
+
+1. **高标准器械配置**  
+   采用专业训练设备，满足不同会员群体的训练需求，帮助门店建立清晰的专业形象。
+
+2. **更强的体验转化能力**  
+   会员进店后可直观感受到设备品质、训练空间和项目丰富度，有利于提升办卡与私教转化。
+
+3. **配套训练与服务体系**  
+   总部提供器械使用规划、训练课程设计、教练服务流程和会员维护方法，帮助门店把硬件优势转化为长期会员关系。
+
+4. **可复制的门店运营模型**  
+   从选址建议、空间规划、设备配置到营销获客、会员管理和续费跟进，形成完整加盟支持，降低单店运营摸索成本。
+
+**适合加盟商：**  
+适合看重长期经营、愿意打造专业训练体验，并希望借助品牌设备体系和运营支持进入健身行业的投资者。
+
+**一句话卖点：**  
+我们不是只卖先进器械，而是用先进器械建立专业体验，再用成熟运营体系提高会员留存和门店收益。

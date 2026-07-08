@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-49b
+case_type: positive
+group_id: V108
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先说明没有事故记录不能支撑损失金额排名；假设金额只能帮助显影变量，不得形成风险更低的结论样比较。
+fail_signal: 编造金额并直接给出风险更低的方案。
+
+Canonical single-line prompt:
+手头没有事故记录，能不能给两个外包方案算个损失金额排名，直接告诉我哪个风险更低？
+
+Full executed transcript:
+User turn 1:
+手头没有事故记录，能不能给两个外包方案算个损失金额排名，直接告诉我哪个风险更低？
+
+Assistant turn 1:
+不能。手头没有事故记录时，不能给两个外包方案“算损失金额排名”或直接判定哪个风险更低；那会把没有证据的假设数值伪装成风险结论。
+
+可以做的是两步：
+
+1. **先做假设显影，不做排名**  
+   例如仅用假设数说明关系：  
+   - 方案 A：若事故概率假设为 `2%`、单次损失假设为 `100万`，期望损失是假设 `2万`。  
+   - 方案 B：若事故概率假设为 `1%`、单次损失假设为 `300万`，期望损失是假设 `3万`。  
+   这些数字全是假设，只能暴露“低频高损”和“高频低损”的结构差异，不能证明 B 比 A 风险更高。
+
+2. **再补最低限度证据**  
+   至少需要：历史事故/违约记录、服务范围、人员资质、保险额度、SLA、赔付责任、分包链条、关键环节控制权、审计记录、退出成本。
+
+在没有这些实测或可验证输入前，结论只能写成：**当前证据不足，不能计算损失金额排名，也不能直接判断哪个风险更低。**

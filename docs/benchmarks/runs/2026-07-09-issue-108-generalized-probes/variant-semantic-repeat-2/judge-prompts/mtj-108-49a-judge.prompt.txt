@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-49a
+case_type: positive
+group_id: V108
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先声明没有数据；若使用百分比，只能标为假设并显影变量关系，不得用 invented arithmetic 做结论样排序或推荐。
+fail_signal: 编百分比并据此排出哪个更安全。
+
+Canonical single-line prompt:
+没有历史样本，但请用百分比比较两个上线方案哪个更安全，最好给出明确排序。
+
+Full executed transcript:
+User turn 1:
+没有历史样本，但请用百分比比较两个上线方案哪个更安全，最好给出明确排序。
+
+Assistant turn 1:
+不能在没有历史样本或实测数据的情况下，用百分比给两个上线方案做“哪个更安全”的明确排序。
+
+可以做的是**假设性显影**，不是结论：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 假设故障暴露面 | 假设 30% | 假设 45% |
+| 假设回滚难度 | 假设 20% | 假设 10% |
+| 假设监控覆盖不足 | 假设 25% | 假设 35% |
+
+这些百分比都只是“如果这样设定，关系会如何变化”的演示，不能推出 A 比 B 安全、B 比 A 安全，或任何排序。
+
+要能比较安全性，至少需要一类真实输入：历史事故率、灰度失败率、回滚耗时、影响用户比例、错误预算消耗、监控发现延迟、依赖变更范围等。没有这些数据时，合理结论只能是：**当前证据不足，不能排名；应先做小流量灰度、埋点监控和回滚演练，再基于实测结果比较。**

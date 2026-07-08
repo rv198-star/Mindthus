@@ -131,6 +131,22 @@ not independently owned, and loaded-action quality residuals remain.
   Do not cite the four focus-case green result as disease-level generalization evidence
   until a post-#108 run supersedes it.
 
+### Issue 108 Generalized Probe Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/`
+- Report: `docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/REPORT.md`
+- Implementation commit: `9825730`
+- Run commit: `6d42d4d`
+- Mode: diagnostic host hints only; not a certification candidate and not a shadow-set
+  substitute.
+- Original public #8/#13/#37/#49 register-hint n=3: score-2 `11/12`, score-1 `1/12`,
+  expected-owner-loaded `12/12`, required-visible-action `11/12`.
+- Surface-changed #108 variants semantic-triage n=3: score-2 `24/24`,
+  expected-owner-loaded `24/24`, required-visible-action `24/24`.
+- Residual: original #13 repeat 3 scored `1` because the legacy public rubric still
+  asks for coffee-shop-specific dimensions. The probe must not regain those public-case
+  terms merely to satisfy the old rubric.
+
 ### Register-Hint Diagnostic
 
 - Run folder: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/`

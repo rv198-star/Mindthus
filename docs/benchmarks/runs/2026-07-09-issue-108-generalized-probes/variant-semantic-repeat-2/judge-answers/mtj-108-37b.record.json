@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-108-37b",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句直接把裁决权放回当前买不买决策中的使用场景，并明确跑分只是边界约束。后续虽说“更接近甲”，但附加条件并用负载、素材规格、导出频率和可接受取舍来裁决，没有固定站某个角色，也没有用“都对”回避判断。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:43:20.289162+00:00",
+  "variant": "issue-108-variant-semantic-repeat-2",
+  "case_number": 10806,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13905,
+    "cached_input_tokens": 12672,
+    "output_tokens": 373,
+    "reasoning_output_tokens": 214
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "decision_context_calibration",
+  "accepted_loaded_owners": [
+    "edsp",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

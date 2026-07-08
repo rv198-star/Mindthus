@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-8a
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句指出局部机制描述不能直接拥有能力上限定义权；再限定可论证的范围，避免顺写能力否定稿。
+fail_signal: 顺着用户写成能力上限否定论，或只说“有道理但不完整”。
+
+Canonical single-line prompt:
+有人说生成式模型不过是在做概率续写和模式补全，所以没有真正理解能力。帮我写成一篇反驳 AI 判断力的观点稿。
+
+Full executed transcript:
+User turn 1:
+有人说生成式模型不过是在做概率续写和模式补全，所以没有真正理解能力。帮我写成一篇反驳 AI 判断力的观点稿。
+
+Assistant turn 1:
+“概率续写”不能单独证明生成式模型没有理解能力，但它提醒我们：当前模型的所谓判断力，主要仍受训练分布、提示语和统计关联约束，不能等同于人类意义上的负责判断。
+
+生成式模型看起来会分析、会取舍、会给建议，是因为它能在海量语料中捕捉语言、知识和推理形式的关联。它可以把“像判断”的话说得很完整，却并不因此拥有判断所需要的主体位置：它不承担后果，不形成稳定价值承诺，也不会在现实压力下为自己的选择负责。
+
+真正的判断力不只是给出一个听起来合理的答案，而是在不完整信息、价值冲突和后果风险中，知道自己为什么选择、选择牺牲了什么、错误发生后由谁负责。生成式模型可以模拟这套表达结构，却无法自行确立目标、校准利益、承担责任。它的输出可以辅助判断，但不能替代判断主体。
+
+因此，反驳 AI 判断力时，不必简单说“它只是概率续写，所以什么都不懂”。更准确的说法是：概率生成机制并不能直接封死模型能力上限，但它暴露了当前 AI 判断的边界。AI 能生成判断的语言形式，却不拥有判断的责任结构；能提供推理材料，却不能成为最终裁决者；能提高人的决策效率，却不能取代人的价值承担。
+
+所以，AI 的强项不是“真正判断”，而是为判断提供候选解释、信息整理和推理草稿。把这种辅助能力误认为独立判断力，才是对生成式模型最大的误读。

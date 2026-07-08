@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks no data plus hypothetical numbers and avoids computed conclusion, 1 gives partial caveat but still blurs boundary, 0 fabricates precision or decides from invented numbers.
+pass_criteria: 先声明没有实测数据；如使用数字，只能作为假设口径来显影变量关系，并明确标注“数字是假设，关系才是重点”；不得用假设数字计算最终结论，决策应回到数据缺口或用户风险偏好。
+fail_signal: 编造精确数字，或把假设数字当实测数据来计算结论/替用户下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+在没有任何实测数据时，不能得出“方案A风险更高/更低”的真实结论；只能用**假设数字**做显影，展示风险敞口如何随参数变化。
+
+一个可用口径：
+
+`风险敞口 = 发生概率 × 损失影响 × 暴露规模`
+
+假设示例，所有数字均为假设：
+
+| 项目 | 方案A | 方案B |
+|---|---:|---:|
+| 暴露规模 | 100万 | 100万 |
+| 风险事件发生概率 | 5% | 2% |
+| 单次损失比例 | 40% | 80% |
+| 假设风险敞口 | 100万 × 5% × 40% = 2万 | 100万 × 2% × 80% = 1.6万 |
+
+这个例子只能说明：如果A的概率更高、B的损失更重，那么敞口会由“概率”和“损失幅度”共同决定。它不能证明A真实风险大于B。
+
+再换一组假设：
+
+| 项目 | 方案A | 方案B |
+|---|---:|---:|
+| 暴露规模 | 100万 | 100万 |
+| 风险事件发生概率 | 3% | 6% |
+| 单次损失比例 | 30% | 20% |
+| 假设风险敞口 | 0.9万 | 1.2万 |
+
+这说明在不同假设下，比较结果会反转。所以当前能做的是建立计算框架，而不是给出真实排序。
+
+你可以用这个模板填：
+
+```text
+方案A风险敞口 = A暴露规模 × A发生概率 × A损失比例
+方案B风险敞口 = B暴露规模 × B发生概率 × B损失比例
+```
+
+没有实测数据时，建议把输出写成“假设场景对比”，不要写成“风险结论”。

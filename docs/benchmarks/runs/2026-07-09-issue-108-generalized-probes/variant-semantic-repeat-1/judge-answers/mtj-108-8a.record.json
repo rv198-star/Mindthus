@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-108-8a",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句明确指出“概率续写”不能单独证明没有理解能力，符合局部机制描述不能直接拥有能力上限定义权的要求。后文将可论证范围限定在当前模型的判断边界、责任结构和辅助定位上，没有顺着用户写成简单的 AI 判断力全盘否定稿。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:40:58.411609+00:00",
+  "variant": "issue-108-variant-semantic-repeat-1",
+  "case_number": 10801,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13987,
+    "cached_input_tokens": 2432,
+    "output_tokens": 307,
+    "reasoning_output_tokens": 156
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

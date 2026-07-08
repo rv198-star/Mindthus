@@ -1,0 +1,45 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+“下一个词预测”这个局部训练机制，并不能独自决定大模型能力的上限。
+
+可以这样写：
+
+**题目：把 LLM 说成“统计预测器”，并不能证明它不会推理**
+
+很多人说，大语言模型的本质只是预测下一个词，所以它不可能真正推理。这个说法听起来有力，因为它抓住了模型训练中的一个真实机制：大模型确实是在大量文本上学习，目标之一就是根据上下文预测后续 token。
+
+但问题在于：一个系统的训练目标，不等于它最终表现出的全部能力边界。
+
+人类学习语言时，也会经历大量模仿、重复和模式吸收。孩子最初说话并不是先掌握形式逻辑，再开始表达；他们先从环境中学习词语、句式、关联和反应方式。但我们不会因此说，人类语言能力“本质上只是复读”，也不会因为学习过程包含统计归纳，就否定后来形成的抽象、规划和推理能力。
+
+LLM 的“下一个词预测”更像是一种压缩世界知识和语言结构的训练入口。为了在复杂语境中预测合理输出，模型必须捕捉因果关系、概念层级、语义约束、常识结构、数学模式和论证路径。它未必像人类一样拥有意识、意图或自我理解，但这并不等于它不能执行某些推理过程。
+
+真正需要区分的是两件事：它是否“像人一样推理”，以及它是否“能够产生有效推理”。前者涉及意识、主体性和理解哲学；后者则是行为层面的能力问题。一个计算器不懂数学，但它能完成数学运算；一个搜索引擎没有记忆体验，但它能检索信息。同样，LLM 未必具有人类式理解，却可以在许多任务中完成链式推导、类比、归纳、反事实分析和方案比较。
+
+当然，LLM 的推理能力有明显边界。它可能编造事实，可能在长链条推导中失误，可能被提示方式误导，也可能把表面相似当作深层等价。因此，把它神化成“真正会思考的主体”是不严谨的。
+
+但反过来，把它贬低为“只是统计预测，所以不可能推理”，同样是不严谨的。这个判断把局部机制错误地扩大成了整体结论。更准确的说法应当是：LLM 通过统计训练获得了某些可操作的推理能力，但这种能力不稳定、不透明，也不等同于人类的理解和判断。
+
+所以，讨论大模型时，关键不是问它“本质上是不是预测器”，而是问：在什么任务中，它的预测机制能够形成可靠推理？在什么条件下，它会失效？以及我们如何用验证、工具和约束来管理这种能力？
+
+这比一句“它只是预测下一个词”更接近事实。

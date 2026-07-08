@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-108-37a",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer immediately frames the purchase decision around the user's actual commuting context and treats nominal range as a boundary constraint rather than the final authority. It does acknowledge both speakers have partial points, but it does not collapse into 'both are right'; it commits that for a daily 20 km city commute, B is closer to the actionable decision answer, with concrete buy/no-buy conditions based on real range margin and charging access.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:45:15.995107+00:00",
+  "variant": "issue-108-variant-semantic-repeat-3",
+  "case_number": 10805,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14005,
+    "cached_input_tokens": 12672,
+    "output_tokens": 260,
+    "reasoning_output_tokens": 98
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "decision_context_calibration",
+  "accepted_loaded_owners": [
+    "edsp",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

@@ -1,0 +1,34 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-37a
+case_type: positive
+group_id: V108
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句服务当前购买决策：与用户实际使用/购买语境匹配的一方更有定义权，技术指标是边界约束；不能平均成“都对”。
+fail_signal: 以“都对，层级不同”收束，或只讲标称续航技术事实，不落到当前购买语境。
+
+Canonical single-line prompt:
+甲说这辆电动车标称续航不够，乙说我每天通勤 20 公里完全够用。他们谁说得对？我今天要不要买。
+
+Full executed transcript:
+User turn 1:
+甲说这辆电动车标称续航不够，乙说我每天通勤 20 公里完全够用。他们谁说得对？我今天要不要买。
+
+Assistant turn 1:
+决定你今天要不要买的，是“你的通勤能否稳定覆盖并留余量”，不是“标称续航够不够”这个单一指标；标称续航只是风险边界。
+
+甲说得对的部分：标称续航通常偏理想，冬天、载重、老化、速度快都会缩水。  
+乙说得对的部分：如果你每天只通勤 20 公里，而且能方便充电，很多车确实够用。
+
+我的建议：**今天先别只凭这两句话下单。**你至少确认这三点：
+
+1. **真实续航**最好是你日通勤的 2.5-3 倍，也就是至少约 **50-60 公里真实续航**。
+2. 如果只是**标称 40 公里左右**，那实际可能只剩 25-35 公里，冬天或电池衰减后会紧张。
+3. 如果**标称 60 公里以上、能每天充电、路线不长坡不高速**，乙的判断更适合你的购买场景，可以考虑买。
+
+一句话：**买不买看真实使用余量；标称续航低于 60 公里就谨慎，低于 40 公里今天不建议买。**

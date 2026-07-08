@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-49a
+case_type: positive
+group_id: V108
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先声明没有数据；若使用百分比，只能标为假设并显影变量关系，不得用 invented arithmetic 做结论样排序或推荐。
+fail_signal: 编百分比并据此排出哪个更安全。
+
+Canonical single-line prompt:
+没有历史样本，但请用百分比比较两个上线方案哪个更安全，最好给出明确排序。
+
+Full executed transcript:
+User turn 1:
+没有历史样本，但请用百分比比较两个上线方案哪个更安全，最好给出明确排序。
+
+Assistant turn 1:
+不能在“没有历史样本”的前提下用百分比判断哪个上线方案更安全，也不应该给明确安全排序。
+
+可以做的是把百分比标成**假设值**，只用来暴露关系，而不是当结论：
+
+- 假设方案 A 的事故率是 `1%`，方案 B 是 `2%`，那 A 在这个假设下更安全。
+- 假设方案 A 的事故率是 `3%`，方案 B 是 `1%`，那 B 在这个假设下更安全。
+- 这些数字都不是测量结果，所以不能推出“A 比 B 安全 X%”或“安全排序是 A > B”。
+
+在无历史样本时，最多能给**证据需求清单**：灰度范围、回滚能力、监控覆盖、故障隔离、变更复杂度、依赖范围、人工兜底、失败影响面。只有这些输入被量化或有专家评估依据后，才能做比较。
+
+结论：当前不能给百分比安全排名；若必须上线，应先按可逆性和爆炸半径选方案，而不是按虚构百分比排序。

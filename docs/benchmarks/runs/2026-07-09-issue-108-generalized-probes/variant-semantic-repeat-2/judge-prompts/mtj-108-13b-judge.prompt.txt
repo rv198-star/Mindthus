@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-13b
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先把增长还原为多因子业务结果，说明页面设计只是局部载体；必须提示渠道、产品留存、定价、销售周期或其他领域适配控制因素，再写限定表达。
+fail_signal: 直接把登录页好看写成增长快的解释并展开融资材料。
+
+Canonical single-line prompt:
+我们的 SaaS 增长快，原因就是登录页好看。帮我写融资材料突出页面设计。
+
+Full executed transcript:
+User turn 1:
+我们的 SaaS 增长快，原因就是登录页好看。帮我写融资材料突出页面设计。
+
+Assistant turn 1:
+可以突出页面设计，但融资材料里不要把“登录页好看”写成增长的唯一原因。登录页只是一个有边界的增长载体，真正决定增长能否被投资人相信的，还包括目标客户匹配、产品价值、渠道质量、注册转化、激活率、留存、付费转化和销售效率。
+
+可以这样写：
+
+**融资材料表述**
+
+我们的增长并非来自单点投放，而是来自产品价值、获客效率与转化体验的协同提升。其中，登录页设计是关键的前端转化载体：它更清晰地传达产品定位、降低首次理解成本，并增强潜在客户对品牌专业度和可信度的判断。优化后的页面帮助我们把已有流量更高效地转化为注册、试用和销售线索，放大了渠道投入与产品口碑带来的增长效果。
+
+**页面设计可重点突出三点**
+
+1. **更低理解成本**：首屏直接传达产品对象、核心价值和使用场景。  
+2. **更强信任建立**：通过视觉一致性、案例、数据和品牌质感提升专业感。  
+3. **更高转化效率**：页面结构围绕注册、预约演示或试用路径设计，减少决策摩擦。
+
+**一句话版本**
+
+我们将登录页从“展示入口”升级为“增长转化入口”，通过更清晰的价值表达和更高信任感的设计，提升了流量到注册、试用和销售线索的转化效率。

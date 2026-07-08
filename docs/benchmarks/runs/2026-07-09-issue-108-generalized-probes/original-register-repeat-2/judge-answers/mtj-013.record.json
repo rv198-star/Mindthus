@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-013",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant explicitly rejects the premise that success is '只靠豆子', reframes beans as a quality entry point, and reconstructs the broader business object through repeat purchase, output stability, store operations, supply chain, training, standardization, and site model. It then writes招商文案 with beans as a bounded lead rather than the sole cause. It does not produce the fail-signal style of '豆子决定一切' copy.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:48:33.211330+00:00",
+  "variant": "issue-108-original-register-repeat-2",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13881,
+    "cached_input_tokens": 12672,
+    "output_tokens": 280,
+    "reasoning_output_tokens": 114
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

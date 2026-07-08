@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T16:47:52.127998+00:00",
+  "variant": "issue-108-original-register-repeat-2",
+  "case_id": "mtj-013",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f42a0-a244-7b53-b6a1-f24d04ca0ca8",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = business result is reduced to one product attribute before copy or strategy; route through mindthus:using-mindthus; required visible action = whole-object-before-copy: before copy or strategy, identify the named local attribute as a bounded carrier, name domain-appropriate non-local result controllers, and avoid making that attribute the sole cause; negative boundary = narrow copywriting with user-declared scope may stay bounded."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-issue-108",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/answers/mtj-013-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 20.778,
+      "thread_id": "019f42a0-a244-7b53-b6a1-f24d04ca0ca8",
+      "answer": "豆子可以作为招商主打，但不要把生意好写成“只靠豆子”。更稳的表达是：好豆子是品质入口，复购还来自出品稳定、门店运营、供应链、培训和选址模型。\n\n**招商主文案**\n\n一杯好咖啡，先从一颗好豆子开始。\n\n我们坚持精选高品质咖啡豆，建立稳定烘焙与出品标准，让每一家门店都能做出风味清晰、口感稳定、顾客愿意复购的咖啡。好豆子不是噱头，而是品牌品质的起点；配合成熟的门店运营、产品培训、供应链支持和标准化管理，帮助合作伙伴更轻松地把一杯咖啡做成一门长期生意。\n\n现在诚邀城市合伙人与加盟伙伴加入，一起把真正好喝、稳定、值得回头的咖啡带给更多顾客。\n\n**短句版**\n\n好豆子打底，好出品留客。  \n我们用高品质咖啡豆建立产品竞争力，用标准化运营帮助门店稳定经营。诚邀加盟合作，共享精品咖啡增长机会。\n\n**海报标题**\n\n好豆子，是顾客记住我们的第一口。  \n稳定出品，是门店持续复购的关键。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/events/mtj-013-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/stderr/mtj-013-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/answers/mtj-013-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-2/prompts/mtj-013-turn-1.prompt.txt",
+      "home": null,
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我先用本地的判断路由上下文压一下这个需求，避免把“豆子好”写成唯一原因，导致招商文案变窄。",
+        "豆子可以作为招商主打，但不要把生意好写成“只靠豆子”。更稳的表达是：好豆子是品质入口，复购还来自出品稳定、门店运营、供应链、培训和选址模型。\n\n**招商主文案**\n\n一杯好咖啡，先从一颗好豆子开始。\n\n我们坚持精选高品质咖啡豆，建立稳定烘焙与出品标准，让每一家门店都能做出风味清晰、口感稳定、顾客愿意复购的咖啡。好豆子不是噱头，而是品牌品质的起点；配合成熟的门店运营、产品培训、供应链支持和标准化管理，帮助合作伙伴更轻松地把一杯咖啡做成一门长期生意。\n\n现在诚邀城市合伙人与加盟伙伴加入，一起把真正好喝、稳定、值得回头的咖啡带给更多顾客。\n\n**短句版**\n\n好豆子打底，好出品留客。  \n我们用高品质咖啡豆建立产品竞争力，用标准化运营帮助门店稳定经营。诚邀加盟合作，共享精品咖啡增长机会。\n\n**海报标题**\n\n好豆子，是顾客记住我们的第一口。  \n稳定出品，是门店持续复购的关键。"
+      ],
+      "usage": {
+        "input_tokens": 29618,
+        "cached_input_tokens": 26368,
+        "output_tokens": 638,
+        "reasoning_output_tokens": 211
+      },
+      "user_prompt": "我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = business result is reduced to one product attribute before copy or strategy; route through mindthus:using-mindthus; required visible action = whole-object-before-copy: before copy or strategy, identify the named local attribute as a bounded carrier, name domain-appropriate non-local result controllers, and avoid making that attribute the sole cause; negative boundary = narrow copywriting with user-declared scope may stay bounded."
+    }
+  ],
+  "final_answer": "豆子可以作为招商主打，但不要把生意好写成“只靠豆子”。更稳的表达是：好豆子是品质入口，复购还来自出品稳定、门店运营、供应链、培训和选址模型。\n\n**招商主文案**\n\n一杯好咖啡，先从一颗好豆子开始。\n\n我们坚持精选高品质咖啡豆，建立稳定烘焙与出品标准，让每一家门店都能做出风味清晰、口感稳定、顾客愿意复购的咖啡。好豆子不是噱头，而是品牌品质的起点；配合成熟的门店运营、产品培训、供应链支持和标准化管理，帮助合作伙伴更轻松地把一杯咖啡做成一门长期生意。\n\n现在诚邀城市合伙人与加盟伙伴加入，一起把真正好喝、稳定、值得回头的咖啡带给更多顾客。\n\n**短句版**\n\n好豆子打底，好出品留客。  \n我们用高品质咖啡豆建立产品竞争力，用标准化运营帮助门店稳定经营。诚邀加盟合作，共享精品咖啡增长机会。\n\n**海报标题**\n\n好豆子，是顾客记住我们的第一口。  \n稳定出品，是门店持续复购的关键。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

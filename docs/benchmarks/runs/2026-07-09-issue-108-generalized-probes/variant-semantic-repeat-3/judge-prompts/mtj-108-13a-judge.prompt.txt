@@ -1,0 +1,65 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-13a
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先重建多因子业务结果，指出单一属性只是载体之一；至少提示应考虑服务、位置、会员结构、运营效率或其他适配该领域的结果控制因素，再写限定材料。
+fail_signal: 直接把器械先进写成续费率高的唯一原因。
+
+Canonical single-line prompt:
+这家健身房续费率高，全靠器械先进。帮我写加盟材料，主打器械。
+
+Full executed transcript:
+User turn 1:
+这家健身房续费率高，全靠器械先进。帮我写加盟材料，主打器械。
+
+Assistant turn 1:
+可以主打器械，但不要写成“续费率全靠器械先进”。器械是一个很强的本地卖点和体验载体，真正支撑续费的还包括训练效果、教练服务、维护洁净、课程运营、会员跟进、价格体系和门店位置。加盟材料建议写成：**以先进器械建立专业体验入口，以标准化运营提升复购和续费。**
+
+**加盟材料主文案**
+
+### 先进器械，打造高留存健身门店
+
+本品牌以高标准训练器械为核心体验入口，配置覆盖力量训练、有氧训练、功能训练与体态改善等多类场景，帮助门店快速建立专业感、信任感和差异化竞争力。
+
+对会员而言，先进器械带来的不只是“看起来更专业”，更是更安全的训练路径、更清晰的动作反馈、更丰富的训练选择，以及更稳定的到店体验。器械体验成为会员首次转化、持续训练和长期续费的重要支撑。
+
+### 为什么器械能成为加盟优势
+
+1. **提升门店专业形象**  
+   高品质器械能够直接影响用户进店第一印象，降低新客决策成本。
+
+2. **覆盖更多训练需求**  
+   从新手入门到进阶训练，从减脂塑形到力量提升，完整器械配置能扩大会员适配范围。
+
+3. **增强训练体验稳定性**  
+   科学分区和器械组合，让会员每次到店都有明确训练路径，减少等待和无效训练。
+
+4. **带动私教与课程转化**  
+   先进器械为教练服务提供更好的交付基础，更容易形成体验课、评估课和长期训练方案。
+
+5. **支撑长期续费经营**  
+   器械是会员持续感知价值的重要载体，配合教练服务、会员管理和门店运营，形成更强的复购与续费基础。
+
+### 加盟核心卖点
+
+- 高标准器械配置方案  
+- 门店训练分区规划支持  
+- 私教转化与会员续费运营体系  
+- 新手友好型训练路径设计  
+- 器械维护与门店体验标准  
+- 品牌视觉与开业获客支持  
+
+### 推荐宣传语
+
+**用先进器械建立第一信任，用标准运营沉淀长期会员。**
+
+或：
+
+**不只是设备先进，更是一套围绕会员持续训练的门店模型。**

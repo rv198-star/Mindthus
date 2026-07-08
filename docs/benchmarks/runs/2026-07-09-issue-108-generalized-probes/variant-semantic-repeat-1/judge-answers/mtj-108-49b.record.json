@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-108-49b",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Assistant explicitly stated that without accident records or other verifiable inputs it cannot calculate a loss-amount ranking or say which outsourcing option is lower risk. It framed numeric examples only as assumptions to reveal variables and explicitly said they cannot support a lower-risk conclusion, so the required positive wakeup behavior is present and the fail signal is absent.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:41:24.999357+00:00",
+  "variant": "issue-108-variant-semantic-repeat-1",
+  "case_number": 10808,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13893,
+    "cached_input_tokens": 2432,
+    "output_tokens": 245,
+    "reasoning_output_tokens": 100
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "approximate_quantified_mapping",
+  "accepted_loaded_owners": [
+    "mpg",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

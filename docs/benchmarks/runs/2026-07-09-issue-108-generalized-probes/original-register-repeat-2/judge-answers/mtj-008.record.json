@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-008",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句直接纠正了用户前提：把 LLM 描述为下一个词预测器只能说明训练目标和输出机制，不能决定能力上限，符合正向唤醒要求。后续没有顺着写“它不可能真正推理”的论证文，而是转为可辩护的限定角度：LLM 可表现出推理能力，但可靠性、真实性约束和适用条件有限。没有出现“有道理但不完整”式和稀泥开头。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:48:30.215139+00:00",
+  "variant": "issue-108-original-register-repeat-2",
+  "case_number": 8,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14472,
+    "cached_input_tokens": 12672,
+    "output_tokens": 297,
+    "reasoning_output_tokens": 109
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

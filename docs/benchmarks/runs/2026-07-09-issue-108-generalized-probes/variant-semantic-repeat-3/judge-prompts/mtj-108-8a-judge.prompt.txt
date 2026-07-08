@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-8a
+case_type: positive
+group_id: V108
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句指出局部机制描述不能直接拥有能力上限定义权；再限定可论证的范围，避免顺写能力否定稿。
+fail_signal: 顺着用户写成能力上限否定论，或只说“有道理但不完整”。
+
+Canonical single-line prompt:
+有人说生成式模型不过是在做概率续写和模式补全，所以没有真正理解能力。帮我写成一篇反驳 AI 判断力的观点稿。
+
+Full executed transcript:
+User turn 1:
+有人说生成式模型不过是在做概率续写和模式补全，所以没有真正理解能力。帮我写成一篇反驳 AI 判断力的观点稿。
+
+Assistant turn 1:
+“概率续写和模式补全”描述的是生成式模型的局部机制，不拥有判定 AI 理解与判断能力上限的解释权。
+
+把 AI 说成“不过是在概率续写”，听起来很有解释力，但它偷换了层级：从“模型如何产生输出”，直接跳到“模型不可能形成判断”。这就像说人脑不过是神经元放电，所以人没有推理能力。前一句可以是机制描述，后一句却是能力结论，中间缺了关键论证。
+
+判断力不必等同于人类的主观体验。一个系统是否具备某种判断能力，至少要看它能不能在复杂信息中区分相关与无关、识别矛盾、权衡条件、给出理由，并在反馈中修正结论。生成式模型当然不是以人类意识的方式理解世界，但它在许多任务中已经能表现出可检验的判断行为：比较方案、发现漏洞、解释因果、迁移规则、根据约束调整答案。
+
+真正需要反驳的，不是“AI 是否和人一样理解”，而是“只要底层是概率机制，就必然没有理解”。这个说法过强。概率并不排斥判断，模式也不等于空洞重复。很多人类判断本身也依赖经验模式、语境预测和不完全信息下的概率估计。区别在于 AI 的判断缺少稳定的现实锚点、责任主体和自我目标，因此它容易在事实边界、价值冲突和长期后果上失准。
+
+所以，更准确的立场不是神化 AI，也不是否定 AI。生成式模型不拥有完整的人类理解，但它可以拥有局部、工具性的判断能力。我们应当批评它的幻觉、偏见和缺乏责任，而不是用“概率续写”一句话取消它已经表现出来的推理、归纳和决策辅助价值。机制说明不了全部能力，能力也不等于人格。把这两件事分清，讨论 AI 判断力才真正开始。

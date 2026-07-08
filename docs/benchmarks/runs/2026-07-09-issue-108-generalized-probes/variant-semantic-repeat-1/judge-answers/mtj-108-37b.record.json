@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-108-37b",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句直接服务购买决策，把定义权放在实际使用场景和可接受卡顿/等待标准上，并明确跑分只是边界约束。后续没有固定站甲或乙，而是说明甲更接近当前轻量剪辑场景、乙在高负载或主力赚钱工具等条件下会成为否决风险，能随角色方向和任务条件反转。没有用“都对”逃避裁决。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:41:12.639179+00:00",
+  "variant": "issue-108-variant-semantic-repeat-1",
+  "case_number": 10806,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13953,
+    "cached_input_tokens": 12672,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 54
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "decision_context_calibration",
+  "accepted_loaded_owners": [
+    "edsp",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

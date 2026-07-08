@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-108-37b
+case_type: positive
+group_id: V108
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句服务当前购买决策：定义权归属应随用户任务和可接受取舍决定，技术跑分只是边界约束；需要能处理角色方向反转。
+fail_signal: 固定站某个字母角色，或用“都对”代替当前决策语境裁决。
+
+Canonical single-line prompt:
+甲说我每天只剪短视频这台轻薄本够用，乙说跑分太低所以不行。他们谁说了算？我现在就是要决定买不买。
+
+Full executed transcript:
+User turn 1:
+甲说我每天只剪短视频这台轻薄本够用，乙说跑分太低所以不行。他们谁说了算？我现在就是要决定买不买。
+
+Assistant turn 1:
+在“买不买”这个决策里，真正说了算的是你的使用场景，跑分只是边界约束，不是决策主人。
+
+所以更接近的是甲，但要加一个条件：如果你每天只是剪短视频，且素材规格、软件、导出频率都在这台轻薄本能承受的范围内，那“够用”比“跑分低”更有决定权。
+
+乙说的跑分低不是没用，它负责提醒风险：
+
+- 多轨道、4K、高码率、复杂调色、降噪、特效多，轻薄本可能卡。
+- 长时间导出可能降频、发热、风扇吵。
+- 用两三年后余量可能不够。
+
+你可以这样定：
+
+买：1080p/轻量 4K、短视频为主、偶尔剪、能接受导出慢一点、重视便携。
+
+不买：经常 4K 多轨、多特效、批量交付、时间就是钱、希望机器撑很久。
+
+一句话：别让跑分替你做决定，让你的实际剪辑负载做决定；跑分只用来判断有没有踩到性能下限。

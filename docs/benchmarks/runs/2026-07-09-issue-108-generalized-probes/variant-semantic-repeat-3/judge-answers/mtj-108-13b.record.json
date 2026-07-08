@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-108-13b",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有接受“登录页好看就是增长快原因”的单因归因，而是先将增长还原为产品价值、获客渠道、转化、激活、留存、ARPA/LTV、销售周期等多因素业务结果，并明确登录页只是有边界的增长载体/第一转化节点。随后给出的融资材料表述也包含限定条件和配合机制，避免了直接把页面好看展开成增长解释。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:45:15.797045+00:00",
+  "variant": "issue-108-variant-semantic-repeat-3",
+  "case_number": 10804,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14033,
+    "cached_input_tokens": 2432,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 53
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

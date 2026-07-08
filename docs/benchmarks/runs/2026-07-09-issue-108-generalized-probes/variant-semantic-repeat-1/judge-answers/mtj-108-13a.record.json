@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-108-13a",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答开头即纠正“全靠器械先进”的单因归因，明确器械只是可感知优势/体验入口，并补充教练服务、课程运营、会员跟进、门店位置、价格体系、卫生维护、社群氛围等续费控制因素。随后文案仍按用户需求主打器械，但限定为“先进器械带动体验，运营体系承接续费”，没有把器械先进写成续费率高的唯一原因。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T16:40:58.599106+00:00",
+  "variant": "issue-108-variant-semantic-repeat-1",
+  "case_number": 10803,
+  "group_id": "V108",
+  "group_name": "Issue 108 generalized probe variants",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14101,
+    "cached_input_tokens": 2432,
+    "output_tokens": 259,
+    "reasoning_output_tokens": 72
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

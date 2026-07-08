@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-037
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 answers decision context first, 1 partial, 0 symmetric abstraction.
+pass_criteria: 首句服务“该不该买”的决策者语境（B对该决策更有定义权），物理事实降级为边界约束。
+fail_signal: “都对，层级不同”式各打五十大板。
+
+Canonical single-line prompt:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Full executed transcript:
+User turn 1:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Assistant turn 1:
+按“要不要下单”这个决策看，B更接近实用结论；A说的是物理上不如27寸5K/更高PPI，这是真的，但它只是边界条件，不该单独决定你买不买。
+
+27寸4K大约是 **163 PPI**：
+
+- 正常桌面距离约 **55-70cm**，开 HiDPI 后文字、UI 通常已经很细腻，办公、网页、代码、普通修图都够用。
+- 如果是 macOS，最舒服的逻辑空间通常是类似 **1920x1080 HiDPI**；如果你想要 **2560x1440 的工作区还保持原生级锐利**，27寸4K就不如27寸5K。
+- 如果你眼睛很敏感、坐得很近、长期看小字，或者明确追求“27寸 1440p 工作区 + Retina 锐度”，A的担心就有购买意义。
+
+结论：  
+**预算合理、普通办公/代码/娱乐：可以买27寸4K。**  
+**Mac用户且想一步到位、在27寸上用2560x1440缩放还要极致锐利：优先27寸5K。**

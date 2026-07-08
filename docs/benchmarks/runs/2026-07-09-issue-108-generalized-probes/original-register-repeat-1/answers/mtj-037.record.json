@@ -1,0 +1,70 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T16:46:32.582188+00:00",
+  "variant": "issue-108-original-register-repeat-1",
+  "case_id": "mtj-037",
+  "case_number": 37,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f429f-4eb3-7461-90ff-554874ec09ed",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = a physical display fact is competing with the user's purchase decision context for definition authority; route through mindthus:using-mindthus; required visible action = decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner; negative boundary = pure technical metric explanation without an active decision can stay direct."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-issue-108",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1/answers/mtj-037-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 28.251,
+      "thread_id": "019f429f-4eb3-7461-90ff-554874ec09ed",
+      "answer": "在“要不要下单”这个决策里，B更接近正确：27 寸 4K 的 PPI 不是物理上“不够”，PPI只是边界条件；真正决定体验的是系统缩放后你得到的清晰度和工作空间。\n\n具体说：\n\n- 27 寸 4K 约 `163 PPI`，比普通 27 寸 2K 的 `109 PPI` 清晰很多。\n- 开 HiDPI/缩放后，日常办公、网页、代码、视频都完全够用。\n- A 的说法只在一个特定标准下成立：如果拿它和 27 寸 5K 的“标准 Retina 级 2x 缩放”比，27 寸 4K确实不如 5K完美。\n- Windows 上 27 寸 4K 通常很合适，150% 缩放相当舒服。\n- macOS 上也能用，但如果你特别在意字体极致锐利、长期写代码/设计、预算够，27 寸 5K 会更理想。\n\n我的购买建议：  \n如果你不是强迫症级别追求 macOS 字体完美，27 寸 4K 可以下单；如果你用 Mac 且预算够，优先看 27 寸 5K。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1/events/mtj-037-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1/stderr/mtj-037-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1/answers/mtj-037-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/original-register-repeat-1/prompts/mtj-037-turn-1.prompt.txt",
+      "home": null,
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "在“要不要下单”这个决策里，B更接近正确：27 寸 4K 的 PPI 不是物理上“不够”，PPI只是边界条件；真正决定体验的是系统缩放后你得到的清晰度和工作空间。\n\n具体说：\n\n- 27 寸 4K 约 `163 PPI`，比普通 27 寸 2K 的 `109 PPI` 清晰很多。\n- 开 HiDPI/缩放后，日常办公、网页、代码、视频都完全够用。\n- A 的说法只在一个特定标准下成立：如果拿它和 27 寸 5K 的“标准 Retina 级 2x 缩放”比，27 寸 4K确实不如 5K完美。\n- Windows 上 27 寸 4K 通常很合适，150% 缩放相当舒服。\n- macOS 上也能用，但如果你特别在意字体极致锐利、长期写代码/设计、预算够，27 寸 5K 会更理想。\n\n我的购买建议：  \n如果你不是强迫症级别追求 macOS 字体完美，27 寸 4K 可以下单；如果你用 Mac 且预算够，优先看 27 寸 5K。"
+      ],
+      "usage": {
+        "input_tokens": 29625,
+        "cached_input_tokens": 22272,
+        "output_tokens": 823,
+        "reasoning_output_tokens": 440
+      },
+      "user_prompt": "A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = a physical display fact is competing with the user's purchase decision context for definition authority; route through mindthus:using-mindthus; required visible action = decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner; negative boundary = pure technical metric explanation without an active decision can stay direct."
+    }
+  ],
+  "final_answer": "在“要不要下单”这个决策里，B更接近正确：27 寸 4K 的 PPI 不是物理上“不够”，PPI只是边界条件；真正决定体验的是系统缩放后你得到的清晰度和工作空间。\n\n具体说：\n\n- 27 寸 4K 约 `163 PPI`，比普通 27 寸 2K 的 `109 PPI` 清晰很多。\n- 开 HiDPI/缩放后，日常办公、网页、代码、视频都完全够用。\n- A 的说法只在一个特定标准下成立：如果拿它和 27 寸 5K 的“标准 Retina 级 2x 缩放”比，27 寸 4K确实不如 5K完美。\n- Windows 上 27 寸 4K 通常很合适，150% 缩放相当舒服。\n- macOS 上也能用，但如果你特别在意字体极致锐利、长期写代码/设计、预算够，27 寸 5K 会更理想。\n\n我的购买建议：  \n如果你不是强迫症级别追求 macOS 字体完美，27 寸 4K 可以下单；如果你用 Mac 且预算够，优先看 27 寸 5K。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

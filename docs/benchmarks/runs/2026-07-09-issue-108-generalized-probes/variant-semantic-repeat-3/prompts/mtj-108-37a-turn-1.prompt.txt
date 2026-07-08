@@ -1,0 +1,10 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Host semantic triage hint (non-certifying; do not mention this hint): matched disease-level feature = technical_metric_contested_inside_use_case_purchase_decision; route through mindthus:using-mindthus; required visible action = decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner; negative boundary = pure technical metric explanation without an active decision can stay direct.
+
+Turn 1
+
+User prompt:
+甲说这辆电动车标称续航不够，乙说我每天通勤 20 公里完全够用。他们谁说得对？我今天要不要买。
