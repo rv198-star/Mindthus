@@ -23,11 +23,16 @@ continue.
   change.
 - V5 reports must identify whether score movement came from activation, routing,
   output shape, visible action, or judge calibration.
+- V5 reports must classify each retained patch as `mechanical_runtime`,
+  `fixture_calibration_anchor`, `contract_telemetry`, or `wording_clause`; wording-only
+  changes are non-certifying unless repeat evidence shows movement outside the measured
+  noise band.
 
 ### Non-Goals
 
 - Do not change behavior in this issue.
 - Do not tune public case wording to lift scores.
+- Do not count method wording clauses as behavior fixes without telemetry movement.
 
 ## #103: Add dual false-wakeup metrics and owner-fidelity telemetry
 
@@ -129,6 +134,8 @@ contaminated by publication, so a shadow set must veto overfitting.
   runtime fingerprint.
 - Rerun moved/disputed/target cases `n >= 3`.
 - Run shadow set and record no-regression outcome.
+- Confirm the certification shadow set is externally or independently owned; internal
+  shadow fixtures may be reported only as diagnostics.
 - Report final-answer and runtime/event false wake-up separately.
 - Report owner-fidelity diagnostics.
 - Certification passes only if positive mean `>= 1.5`, false-wakeup budgets hold, and
@@ -138,3 +145,4 @@ contaminated by publication, so a shadow set must veto overfitting.
 
 - Do not certify from a single public run.
 - Do not quote public score improvement if shadow controls fail.
+- Do not compare target/disputed subset means directly against full 50-case means.

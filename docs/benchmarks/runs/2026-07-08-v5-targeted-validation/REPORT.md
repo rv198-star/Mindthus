@@ -94,6 +94,37 @@ Rejected change:
 
 - Broad Codex activation prompt containing `root-cause/release/trend/...` because it pushed runtime false wake-up to `3/12`.
 
+## External Audit Follow-Up
+
+External review accepted the gate decision and the report's failed-patch conclusion. It
+also tightened how this run should be interpreted:
+
+- The three target/disputed repeats measured the current noise band: positive mean
+  `0.467 / 0.600 / 0.667`. Public-run movements smaller than this band, including the
+  earlier V3-to-V4 `+0.052` movement, should be treated as unproven until repeated.
+- Target/disputed positive mean must not be quoted beside full 50-case positive mean as
+  the same scale. This 18-case set is intentionally harder and was selected for
+  problematic or disputed cases.
+- H-group brake `0.000` here is not a regression from the full-run `0.500` value. The
+  target set selected #33/#34, which were the failing H cases; the full-run passing H
+  cases are not present in this subset.
+
+Patch-type classification for future reports:
+
+| Patch Type | Examples From This Run | Certification Treatment |
+| --- | --- | --- |
+| Fixture / calibration anchor | five new calibration pairs | count only after repeat evidence and negative controls hold |
+| Mechanical / telemetry support | manifest action effects and owner anchors | count when runtime or judge telemetry shows movement |
+| Contract example | fidelity-contract visible-action examples | count only when visible-action metrics move |
+| Wording clause | 3L5S brake wording, EDSP anti-mush wording, SELA/MPG boundary wording | do not count as V5 progress by default |
+
+The wording-clause changes are retained as documentation cleanup, but this run gives no
+evidence that they moved behavior: H brake stayed `0.000`, loaded-required-visible-action
+stayed `0.000` in the postpatch targeted run, and the single postpatch positive mean
+`0.667` stayed inside the prepatch noise band. Future wording-only patches should be
+rejected as certification progress unless they are coupled to a mechanical hook,
+calibration anchor, runner change, host routing change, or repeatable telemetry movement.
+
 ## Disputed Case Notes
 
 - #32: machine final answers stayed clean, but initial targeted repeats showed runtime over-wake in 2/3. The final safe negative run had no runtime load.
@@ -106,6 +137,10 @@ Rejected change:
 
 No independent V5 shadow fixture was found in the repository. `tests/router_wakeup_weak_cue_holdout_cases.md`
 is not a valid certification shadow set because it is documented as a failed calibration pool.
+
+The certification shadow set must be held by an external or otherwise independent owner.
+A team-authored shadow set can be useful as a diagnostic fixture, but it cannot serve as
+the anti-overfitting veto for V5 certification.
 
 Certification language must therefore say:
 

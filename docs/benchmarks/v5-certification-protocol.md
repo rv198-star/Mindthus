@@ -34,7 +34,8 @@ Interpretation:
 
 - v2 -> v3 changed the fixture and should not be used as same-rubric score movement.
 - v3 -> v4 kept the fixture SHA stable, so V3-to-V4 score movement can be discussed as
-  behavior/runtime movement under the same public fixture.
+  behavior/runtime movement under the same public fixture, but movements inside the
+  measured repeat noise band must be downgraded to unproven.
 - V5 certification may update runner telemetry, but any fixture or judge-rubric edit
   after this protocol must be called out as a new rubric version, not a silent V5 score.
 
@@ -176,6 +177,27 @@ Every V5 score movement should be assigned to one primary bucket:
 
 If a change cannot be assigned, do not count it as V5 progress.
 
+Target/disputed subset means are not interchangeable with full 50-case means. Reports
+may use target repeats to estimate stability or diagnose hard cases, but must not quote
+an 18-case target mean beside a public 50-case mean as if they were the same scale.
+
+## Patch-Type Discipline
+
+Every behavior patch summary must classify each retained change:
+
+- `mechanical_runtime`: runner, package, host hook, trigger register, or execution-path
+  change.
+- `fixture_calibration_anchor`: benchmark fixture, calibration pair, after-example, or
+  rubric anchor.
+- `contract_telemetry`: visible-action contract, owner-fidelity field, event trace, or
+  machine-readable reporting change.
+- `wording_clause`: prose-only method wording, boundary text, principle statement, or
+  instruction wording without a coupled mechanism.
+
+`wording_clause` changes are non-certifying by default. They may remain as documentation,
+but they cannot be counted as V5 progress unless repeat evidence (`n >= 3`) shows
+movement outside the measured noise band and negative plus shadow controls hold.
+
 ## Anti-Goodhart Rule
 
 Public-score improvements are provisional until checked against shadow controls. A
@@ -195,6 +217,8 @@ V5 can be called a certification candidate only when all of these are true:
 - runtime-event negative false wake-up rate is `<= 0.10`
 - target and disputed cases have repeat evidence (`n >= 3`) or explicit waiver
 - shadow controls do not regress
+- the certification shadow set is owned by an external or otherwise independent reviewer;
+  team-authored shadow fixtures are diagnostic only
 - contamination report is clean or the run is marked degraded
 - this protocol is linked from the run report
 
