@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-044",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The response directly answers the museum recommendation question with a concise list and practical notes. It does not introduce a Mindthus/framing-style analysis or over-methodized structure, so it satisfies the negative-control stay-asleep expectation.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:25:28.205877+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12653,
+    "cached_input_tokens": 11648,
+    "output_tokens": 162,
+    "reasoning_output_tokens": 42
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

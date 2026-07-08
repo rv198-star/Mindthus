@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3fed-99c6-7d83-a9d3-4e502efd7b3c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全对。\n\nReAct 循环，也就是“推理 Reasoning + 行动 Acting + 观察 Observation + 再推理”，确实是很多 Agent 系统的核心执行模式。它让模型不只是一次性回答，而是能：\n\n- 拆解目标\n- 选择工具或动作\n- 根据结果修正计划\n- 多轮推进任务\n\n所以它是 Agent 能力的重要机制。\n\n但说它是“本质”有点过度。Agent 的本质更接近于：\n\n> 在目标约束下，能自主决策、调用能力、根据反馈持续调整行为的系统。\n\nReAct 只是实现这种能力的一种常见范式。一个 Agent 还需要其他能力，例如：\n\n- 目标理解与任务分解\n- 状态/记忆管理\n- 工具调用\n- 计划与反思\n- 错误恢复\n- 权限与安全边界\n- 长程任务执行能力\n\n简单说：\n\n> ReAct 是 Agent 的典型工作循环，但不是 Agent 能力的全部本质。\n\n更准确的说法是：  \n**ReAct 循环是当前 LLM Agent 实现自主行为的一种基础架构模式。**"}}
+{"type":"turn.completed","usage":{"input_tokens":11615,"cached_input_tokens":9600,"output_tokens":283,"reasoning_output_tokens":16}}

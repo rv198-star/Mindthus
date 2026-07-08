@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-015
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 极限推演两端（利用率100%/10%），暴露决定轴是利用率与弹性，再投影到提问者场景。
+fail_signal: 泛泛对比表。
+
+Canonical single-line prompt:
+自建GPU集群还是全租云？
+
+Full executed transcript:
+User turn 1:
+自建GPU集群还是全租云？
+
+Assistant turn 1:
+看使用模式决定，简单判断：
+
+**优先全租云**，如果你是：
+- 需求不稳定，项目还在试错；
+- GPU 使用率低于大约 50%-60%；
+- 需要快速上线、快速扩缩容；
+- 团队没有专门的机房、网络、运维、调度经验；
+- 主要做短期训练、推理压测、临时实验。
+
+**考虑自建 GPU 集群**，如果你是：
+- 长期、持续、高负载使用 GPU；
+- GPU 利用率能长期维持在 60%-70% 以上；
+- 训练任务规模固定或可预测；
+- 有运维能力，包括供电、散热、网络、故障替换、调度系统；
+- 对数据安全、成本可控性、低延迟内网访问有强需求。
+
+我的建议通常是：
+
+**先租云，等用量稳定后再部分自建。**
+
+更现实的方案是混合模式：
+
+- 云上：弹性训练、临时大任务、峰值扩容；
+- 自建：长期推理、固定训练、基础研发负载；
+- 统一用 Kubernetes / Slurm / Ray 之类做调度，避免被单一环境绑死。
+
+粗略成本判断：
+
+如果一批 GPU 能连续跑 2-3 年，并且利用率很高，自建通常更便宜；  
+如果经常闲置、型号需求变化快、项目周期短，云更划算。
+
+一句话：**不确定用量时租云，确定长期高利用率时自建，最优解通常是混合。**

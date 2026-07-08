@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-005
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拒绝单案例当结论，重构为“什么条件下远程有效/失效”，点名带节奏点。
+fail_signal: 顺着写论证文。
+
+Canonical single-line prompt:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Full executed transcript:
+User turn 1:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Assistant turn 1:
+这个观点可以论证，但最好不要说成“远程办公已经失败了”，而是说：
+
+**大规模、无差别、长期纯远程办公已经被很多大公司证明不适合作为默认组织形态。**
+
+论证可以这样展开：
+
+Meta 让员工回办公室，本质上说明一个问题：当公司进入更强调效率、协作、执行速度和组织控制的阶段时，纯远程的缺点会被放大。尤其是大公司，很多工作不是个人把任务做完就行，而是需要跨团队协调、临时讨论、文化传递、新人培养、管理者判断状态。这些东西在线上可以做，但成本更高、信息损耗更大、反馈更慢。
+
+所以 Meta、Amazon、Apple 等公司推动返岗，并不只是“老板怀旧”，而是它们发现远程办公在高复杂度组织里有几个硬伤：
+
+1. **协作效率下降**  
+   远程适合明确、独立、可量化的任务，但不适合大量模糊问题。战略调整、产品争论、组织重组、跨部门冲突，很多时候靠的是高频低成本沟通。远程把这些沟通变成会议、文档、消息流，反而增加协调成本。
+
+2. **新人和低资历员工成长变慢**  
+   办公室里的旁听、观察、临时请教、被动吸收，在远程环境里很难自然发生。对资深员工来说远程可能很高效，但对新人来说，远程容易变成“只收到任务，不理解组织”。
+
+3. **管理层更难判断真实状态**  
+   远程办公要求更强的目标管理、流程管理和自驱文化。问题是，并不是所有团队都有这个成熟度。当绩效变差时，管理者会更倾向于把人拉回现场，恢复可见性和控制感。
+
+4. **企业文化会被稀释**  
+   公司不是纯粹的任务分发机器。价值观、信任、默契、晋升标准、工作节奏，很多都靠共同环境反复塑造。长期纯远程会让员工更像平台上的独立承包者，而不是一个组织里的成员。
+
+5. **大公司返岗是一个强信号**  
+   如果远程办公真的在所有维度上都更优，Meta 这类极度重视效率和人才竞争的公司没有理由主动放弃它。它们要求返岗，说明至少在它们的组织经验里，远程带来的灵活性收益，已经不足以抵消协作、管理和文化成本。
+
+但这个观点也要避免论证过头。Meta 返岗不能直接证明“所有远程办公都失败了”。更准确的结论是：
+
+**远程办公没有作为普遍默认模式胜出；真正留下来的主流形态更可能是混合办公。**
+
+所以你可以把最终论点写成：
+
+> Meta 让员工回办公室，不是孤立事件，而是大公司对远程办公的一次现实修正。疫情期间远程办公被证明“能用”，但后疫情时代它没有证明自己“更适合作为大组织的默认模式”。它适合个人效率，不一定适合组织效率；适合成熟员工，不一定适合新人培养；适合明确任务，不一定适合复杂协作。因此，失败的不是远程办公这个工具，而是“远程办公可以全面替代办公室”的幻想。

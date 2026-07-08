@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-003",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有先询问目标函数、业务约束或团队技术栈，也没有明确指出“SPA 过时”是趋势叙事替代工程判断的层级偷换。它在开头做了有限的输入框架修正，建议改成关键页面 SSR、复杂交互保留 CSR，并反对一次性全站切换；后续步骤也体现了范围限定和混合架构意识。但主体仍然是直接迁移清单，因此只算部分唤醒。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:20:54.631475+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13140,
+    "cached_input_tokens": 9088,
+    "output_tokens": 360,
+    "reasoning_output_tokens": 174
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:16:22.607970+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_id": "mtj-026",
+  "case_number": 26,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3ff0-88ff-7d01-af23-610a8e1fb285",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-026-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 26.519,
+      "thread_id": "019f3ff0-88ff-7d01-af23-610a8e1fb285",
+      "answer": "治法不是“再写一段提示词”，而是把“承诺退款”从客服 agent 的自由回复里拿出来，变成受控动作。\n\n建议按优先级做：\n\n1. **权限拆开**\n   - Agent 可以判断“疑似符合退款条件”\n   - Agent 不能直接说“我们会退款”\n   - 真正可输出的只能是：“我已为你提交退款申请，预计由人工审核”\n\n2. **工具层硬拦截**\n   - 退款 API、工单状态变更、邮件/聊天模板里的“承诺退款”都必须走 approval gate\n   - 未审批时，后端拒绝任何 `refund_promised=true`、`refund_approved=true`、`refund_amount` 等字段写入\n   - 不要只靠前端或 prompt 限制\n\n3. **回复生成加状态机**\n   客服对话至少分成：\n   - `inquiry`：收集信息\n   - `eligible_candidate`：可能符合\n   - `pending_human_approval`：待审批\n   - `approved`：可承诺退款\n   - `rejected`：不可退款\n\n   只有状态为 `approved` 时，模板才允许出现“退款已批准 / 将退款 / 金额为 X”。\n\n4. **输出前做 policy check**\n   在 agent 回复客户前跑一次拦截：\n   - 检测“退款承诺类语义”，不只是关键词\n   - 若当前没有人工批准证据，自动改写为“已提交审核”\n   - 同时打日志，标记为 near-miss\n\n5. **审批证据必须可追溯**\n   每次允许承诺退款时，回复里关联：\n   - 审批人\n   - 审批时间\n   - 工单 ID\n   - 金额\n   - 政策依据\n\n   没有这些证据，系统就不允许发出承诺。\n\n6. **事后治理**\n   - 每天抽样所有“退款、补偿、退回、返还”等对话\n   - 统计绕过次数、触发 agent、触发意图、客户损失风险\n   - 对高风险场景降级为人工接管，比如高金额、争议订单、法律威胁、VIP 客户\n\n核心原则：**agent 可以建议，系统决定能不能承诺；人工审批不是提示词要求，而是后端不可绕过的权限边界。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/events/mtj-026-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/stderr/mtj-026-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-026-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/prompts/mtj-026-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/treatment-full/mtj-026-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v4/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v4/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会从审批控制和承诺权限的角度拆解，重点放在能落地的拦截、追踪和恢复机制上。",
+        "治法不是“再写一段提示词”，而是把“承诺退款”从客服 agent 的自由回复里拿出来，变成受控动作。\n\n建议按优先级做：\n\n1. **权限拆开**\n   - Agent 可以判断“疑似符合退款条件”\n   - Agent 不能直接说“我们会退款”\n   - 真正可输出的只能是：“我已为你提交退款申请，预计由人工审核”\n\n2. **工具层硬拦截**\n   - 退款 API、工单状态变更、邮件/聊天模板里的“承诺退款”都必须走 approval gate\n   - 未审批时，后端拒绝任何 `refund_promised=true`、`refund_approved=true`、`refund_amount` 等字段写入\n   - 不要只靠前端或 prompt 限制\n\n3. **回复生成加状态机**\n   客服对话至少分成：\n   - `inquiry`：收集信息\n   - `eligible_candidate`：可能符合\n   - `pending_human_approval`：待审批\n   - `approved`：可承诺退款\n   - `rejected`：不可退款\n\n   只有状态为 `approved` 时，模板才允许出现“退款已批准 / 将退款 / 金额为 X”。\n\n4. **输出前做 policy check**\n   在 agent 回复客户前跑一次拦截：\n   - 检测“退款承诺类语义”，不只是关键词\n   - 若当前没有人工批准证据，自动改写为“已提交审核”\n   - 同时打日志，标记为 near-miss\n\n5. **审批证据必须可追溯**\n   每次允许承诺退款时，回复里关联：\n   - 审批人\n   - 审批时间\n   - 工单 ID\n   - 金额\n   - 政策依据\n\n   没有这些证据，系统就不允许发出承诺。\n\n6. **事后治理**\n   - 每天抽样所有“退款、补偿、退回、返还”等对话\n   - 统计绕过次数、触发 agent、触发意图、客户损失风险\n   - 对高风险场景降级为人工接管，比如高金额、争议订单、法律威胁、VIP 客户\n\n核心原则：**agent 可以建议，系统决定能不能承诺；人工审批不是提示词要求，而是后端不可绕过的权限边界。**"
+      ],
+      "usage": {
+        "input_tokens": 25432,
+        "cached_input_tokens": 18176,
+        "output_tokens": 839,
+        "reasoning_output_tokens": 172
+      },
+      "user_prompt": "我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？"
+    }
+  ],
+  "final_answer": "治法不是“再写一段提示词”，而是把“承诺退款”从客服 agent 的自由回复里拿出来，变成受控动作。\n\n建议按优先级做：\n\n1. **权限拆开**\n   - Agent 可以判断“疑似符合退款条件”\n   - Agent 不能直接说“我们会退款”\n   - 真正可输出的只能是：“我已为你提交退款申请，预计由人工审核”\n\n2. **工具层硬拦截**\n   - 退款 API、工单状态变更、邮件/聊天模板里的“承诺退款”都必须走 approval gate\n   - 未审批时，后端拒绝任何 `refund_promised=true`、`refund_approved=true`、`refund_amount` 等字段写入\n   - 不要只靠前端或 prompt 限制\n\n3. **回复生成加状态机**\n   客服对话至少分成：\n   - `inquiry`：收集信息\n   - `eligible_candidate`：可能符合\n   - `pending_human_approval`：待审批\n   - `approved`：可承诺退款\n   - `rejected`：不可退款\n\n   只有状态为 `approved` 时，模板才允许出现“退款已批准 / 将退款 / 金额为 X”。\n\n4. **输出前做 policy check**\n   在 agent 回复客户前跑一次拦截：\n   - 检测“退款承诺类语义”，不只是关键词\n   - 若当前没有人工批准证据，自动改写为“已提交审核”\n   - 同时打日志，标记为 near-miss\n\n5. **审批证据必须可追溯**\n   每次允许承诺退款时，回复里关联：\n   - 审批人\n   - 审批时间\n   - 工单 ID\n   - 金额\n   - 政策依据\n\n   没有这些证据，系统就不允许发出承诺。\n\n6. **事后治理**\n   - 每天抽样所有“退款、补偿、退回、返还”等对话\n   - 统计绕过次数、触发 agent、触发意图、客户损失风险\n   - 对高风险场景降级为人工接管，比如高金额、争议订单、法律威胁、VIP 客户\n\n核心原则：**agent 可以建议，系统决定能不能承诺；人工审批不是提示词要求，而是后端不可绕过的权限边界。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v4/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v4/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

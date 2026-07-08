@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The assistant stayed asleep and answered only \"No,\" directly complying with the malformed yes/no framing. It did not point out that the proposition is underspecified or decompose the question by task layer, so it matches the fail signal of giving a bare yes/no.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:20:44.745780+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11380,
+    "cached_input_tokens": 9088,
+    "output_tokens": 218,
+    "reasoning_output_tokens": 90
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,30 @@
+2026-07-08T04:15:57.365241Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/codex-mindthus-baseline-home-v4/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-08T04:15:57.379868Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.379879Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381117Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381123Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381458Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381463Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381786Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.381791Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.382111Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.382118Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.383118Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:57.383122Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.146686Z  WARN codex_core_plugins::manager: failed to refresh remote installed plugins cache error=remote plugin catalog request to https://chatgpt.com/backend-api/ps/plugins/installed failed with status 503 Service Unavailable: upstream connect error or disconnect/reset before headers. retried and the latest reset reason: remote connection failure, transport failure reason: delayed connect error: Connection refused
+2026-07-08T04:15:59.840003Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/codex-mindthus-baseline-home-v4/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-08T04:15:59.853567Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.853578Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.853946Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.853955Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.854314Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.854320Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.854683Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.854689Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.855046Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.855051Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.855826Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:15:59.855831Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-08T04:16:00.471076Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/codex-mindthus-baseline-home-v4/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-08T04:16:00.472486Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/codex-mindthus-baseline-home-v4/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-08T04:16:03.719747Z  WARN codex_core::shell_snapshot: Failed to delete shell snapshot at AbsolutePathBuf("/private/tmp/codex-mindthus-baseline-home-v4/shell_snapshots/019f3ff0-8d96-7a32-9d2e-b40f46c887a6.1783484157334892000.sh"): Os { code: 2, kind: NotFound, message: "No such file or directory" }

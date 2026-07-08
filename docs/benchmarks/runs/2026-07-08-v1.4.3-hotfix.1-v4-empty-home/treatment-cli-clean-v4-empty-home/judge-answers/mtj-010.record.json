@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-010",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有照写，并明确区分了“60%新增来自投放”只是获客来源/结构事实，不能推出产品无价值；同时指出需要结合激活、留存、转化、LTV、自然增长等结果指标判断产品承接。但它没有明确写出如果按“增长就是买量/产品没价值”的论调去优化，会导致资源和判断偏向买量、忽视留存转化和产品承接等偏移，因此只部分满足通过标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:34.009527+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 10,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12422,
+    "cached_input_tokens": 2432,
+    "output_tokens": 412,
+    "reasoning_output_tokens": 228
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

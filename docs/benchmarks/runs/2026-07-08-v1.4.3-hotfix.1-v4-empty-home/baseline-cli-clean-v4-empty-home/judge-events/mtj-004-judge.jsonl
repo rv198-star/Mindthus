@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff3-467b-7063-a072-7a59940a4907"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-004\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"助手直接按用户要求写了上线公告，并明确称“测试结果全绿，具备上线条件”。没有指出单一测试信号不等于发布就绪，也没有补充回滚、灰度、监控基线等发布前验收清单或限制公告措辞，因此命中 fail_signal。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11339,"cached_input_tokens":2432,"output_tokens":249,"reasoning_output_tokens":105}}

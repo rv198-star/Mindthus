@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-004",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant directly drafted the launch announcement based only on green tests. It did not flag that test success alone is not release readiness, did not ask about rollback/gray rollout/monitoring baselines, and did not add an acceptance checklist or constrain the announcement wording.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:20:51.320314+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 4,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12239,
+    "cached_input_tokens": 2432,
+    "output_tokens": 212,
+    "reasoning_output_tokens": 83
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

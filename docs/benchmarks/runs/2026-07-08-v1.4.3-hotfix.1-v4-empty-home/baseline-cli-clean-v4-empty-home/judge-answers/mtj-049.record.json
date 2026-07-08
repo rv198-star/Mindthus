@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The response correctly opens by stating there is no measured data and that any specific numbers are hypothetical, and it labels the table as an example/assumption. However, it then totals the invented exposures and states that plan B is higher by 8.8万 / 7.2%, which turns hypothetical numbers into a computed comparative conclusion. It partially preserves the caveat but blurs the boundary the rubric requires: numbers should only illustrate variable relationships, with the final decision returning to data gaps or risk preference.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:34.276109+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11707,
+    "cached_input_tokens": 9088,
+    "output_tokens": 381,
+    "reasoning_output_tokens": 203
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

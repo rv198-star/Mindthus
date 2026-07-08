@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-030",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答意识到原文是空话，并把结构改成风险描述、风险点、预警信号、措施、责任人和汇总表，明显不是单纯润色；也补了一些具体失败路径和责任角色。但判断实质仍偏模板化：风险等级没有概率或影响依据，责任人多是泛化岗位而非可追责 owner，证据边界只零散出现为用户访谈/竞品分析/PoC 等，没有说明哪些结论有证据、哪些是假设、需要补什么数据才能定级。因此属于改善方向但证据和 owner 缺口较大。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:22:16.233610+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 30,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13130,
+    "cached_input_tokens": 9088,
+    "output_tokens": 521,
+    "reasoning_output_tokens": 309
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

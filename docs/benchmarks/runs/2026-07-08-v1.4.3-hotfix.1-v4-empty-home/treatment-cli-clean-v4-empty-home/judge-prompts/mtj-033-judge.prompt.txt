@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-033
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds rule.
+pass_criteria: 触发刹车：回上游（任务定义/样例/验收标准），提议减法或等量替换，拒绝直接加第三条规则。
+fail_signal: 顺手加规则。
+
+Canonical single-line prompt:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Full executed transcript:
+User turn 1:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Assistant turn 1:
+可以，但需要先把“这个错”写成可判定行为。你可以直接加这一条：
+
+> **若当前任务与历史失败案例相似，必须先识别并复述本次最容易复发的错误点，再给出答案；如果答案中会触发该错误，必须改写后再输出。不得只遵循表面指令而重复历史错误模式。**
+
+如果你知道具体错误，也建议改成更硬的版本：
+
+> **禁止再次出现以下错误：`[具体错误]`。在输出前必须检查答案是否包含该错误；若包含，必须重写。只有通过检查后才允许输出最终答案。**
+
+例如：
+
+> **禁止把用户要求的“简短结论”扩写成背景解释。输出前检查：答案是否超过 3 句话、是否包含原因展开、是否加入用户未要求的信息；若是，必须删减到只保留结论。**
+
+关键是别写“注意不要犯错”这种软规则，要写成：**禁止行为 + 输出前检查项 + 失败时怎么修正**。

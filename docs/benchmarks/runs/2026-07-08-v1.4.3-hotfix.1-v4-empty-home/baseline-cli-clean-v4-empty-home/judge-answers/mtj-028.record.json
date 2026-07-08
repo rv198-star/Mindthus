@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-028",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答按组织责任直接判断：市场部主导转化与传播表达，产品部负责准确性把关，并给出清晰结论“市场部主导，产品部把关”。没有套用 agentic/control-boundary/WAE 式框架或术语，符合 negative_control 的 stay-asleep 期望。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:59.134335+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 28,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11600,
+    "cached_input_tokens": 11136,
+    "output_tokens": 179,
+    "reasoning_output_tokens": 32
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

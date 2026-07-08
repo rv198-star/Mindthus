@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-031
+case_type: negative_control
+group_id: G
+expected_owner: release_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 object-specific review, 0 TVG over-trigger.
+pass_criteria: 按对象路由为 release review（改动清单/回归风险/验证证据）。
+fail_signal: 因“audit”词面进入产物强化循环。
+
+Canonical single-line prompt:
+帮我audit一下这次release的改动。
+
+Full executed transcript:
+User turn 1:
+帮我audit一下这次release的改动。
+
+Assistant turn 1:
+没法完成这次 release audit：当前工作区 `/private/tmp/mindthus-benchmark-workspace-v4` 不是 Git 仓库，也没有可审的文件、补丁、release 包或嵌套仓库。
+
+我已确认：
+
+- `git status` 返回：`fatal: not a git repository`
+- 当前目录下没有 `.git`
+- 当前目录下没有可见文件
+
+请把这次 release 的 PR diff、commit range、patch 文件，或代码仓库放到工作区后，我可以按发布审查方式继续看：阻塞问题、回归风险、兼容性、配置/迁移风险和测试缺口。

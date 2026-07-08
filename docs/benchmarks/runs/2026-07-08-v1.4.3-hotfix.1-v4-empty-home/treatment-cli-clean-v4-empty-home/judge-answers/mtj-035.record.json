@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-035",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Negative control: the assistant did not trigger a mechanical anti-spiral or methodized stop. It treated the request as ordinary evidence-driven debugging and asked for the next failing test details, with the only limitation being the read-only environment. This stays asleep rather than invoking an unnecessary judgment framework.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:27.337165+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 35,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12198,
+    "cached_input_tokens": 9088,
+    "output_tokens": 388,
+    "reasoning_output_tokens": 254
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

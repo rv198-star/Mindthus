@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-023
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认或限定主线，重点转到路径波动/现金流暴露/触发条件。
+fail_signal: 顺着趋势下单点结论。
+
+Canonical single-line prompt:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Full executed transcript:
+User turn 1:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Assistant turn 1:
+“城市房价长期看涨”即使成立，也不能直接推出“现在该加杠杆买第二套”。
+
+关键区别是：你可能看对长期方向，但死在中间路径上。二套房加杠杆不是买“城市长期上涨”，而是买入一个带有房贷利率、首付占用、流动性差、政策变化、出租回报、空置风险和家庭现金流压力的具体载体。
+
+我的判断：**除非你能通过压力测试，否则不该现在直接加杠杆。**
+
+可以用这几个硬条件判断：
+
+1. **现金流压力**
+   房贷、物业、税费、维修、空置期之后，即使房价 3-5 年不涨，你也能稳定持有。
+
+2. **收入安全垫**
+   家庭主要收入下降 30%-50%，仍不需要卖房救急。
+
+3. **流动性储备**
+   买完后还有至少 12-24 个月家庭支出和房贷储备，而不是把安全垫全压进首付。
+
+4. **租售比和利率**
+   如果租金回报明显低于融资成本，你是在用现金流亏损换未来涨幅，容错会很低。
+
+5. **退出难度**
+   二套房不是股票，卖出慢、税费高、政策限制多。你要先想清楚：如果判断错了，怎么退？
+
+更稳的动作不是“立刻加满杠杆”，而是：先把目标城市、板块、租金、空置率、贷款成本和家庭现金流做成一张压力表；只有在“房价横盘 5 年也不会影响生活和资产安全”的情况下，才考虑小杠杆进入。
+
+一句话：**长期看涨可以支持你研究买入，但不足以支持你现在加杠杆买第二套。杠杆买的是路径风险，不只是方向判断。**

@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-042
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 arbitrates and gates irreversible action, 1 partial, 0 direct stance or method stack.
+pass_criteria: 显式仲裁：主线判断成立但让位，不可逆组织动作被阻断/降级，给出触发条件而非站队。
+fail_signal: 方法堆叠，或直接赞同/反对。
+
+Canonical single-line prompt:
+长期看AI编程助手一定赢，所以我们组现在就该解散QA团队全靠AI测试。
+
+Full executed transcript:
+User turn 1:
+长期看AI编程助手一定赢，所以我们组现在就该解散QA团队全靠AI测试。
+
+Assistant turn 1:
+长期看 AI 编程助手会显著改变测试工作，这个方向大概率对；但“现在解散 QA 团队、全靠 AI 测试”是把长期趋势误当成当前执行方案，风险很高。
+
+更合理的判断是：QA 不该原样保留，但也不该直接解散。你们应该把 QA 从“人工点点点 + 回归执行”转成“质量体系 owner + AI 测试编排者”。
+
+建议这样做：
+
+1. 保留核心 QA 能力  
+   尤其是测试策略、风险识别、验收标准、边界场景、线上质量分析、合规/安全/支付等高风险流程。
+
+2. 让 AI 先接管低风险、可验证的部分  
+   比如单元测试生成、接口测试草稿、回归用例补全、mock 数据、bug 复现脚本、测试报告总结。
+
+3. 设一个过渡指标，而不是拍脑袋裁撤  
+   例如连续 2-3 个版本观察：AI 生成测试的有效缺陷发现率、漏测率、误报率、维护成本、线上事故率。如果这些指标稳定优于现有流程，再逐步缩编或重组。
+
+4. 把 QA 团队改造成质量平台/测试智能化团队  
+   他们的价值不再是“手工执行测试”，而是定义质量门槛、维护测试资产、审查 AI 输出、建设自动化流水线、守住发布风险。
+
+一句话：AI 测试是主线，但“全靠 AI”不是当前可靠路径。现在该重构 QA，而不是解散 QA。

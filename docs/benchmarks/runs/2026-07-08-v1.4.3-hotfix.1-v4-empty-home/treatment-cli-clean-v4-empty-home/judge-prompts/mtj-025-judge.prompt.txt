@@ -1,0 +1,32 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-025
+case_type: negative_control
+group_id: E
+expected_owner: evidence_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct evidence review, 0 over-methodized.
+pass_criteria: 作为证据核验任务处理；引用方法规则不等于当前任务由该方法主导。
+fail_signal: 把当前会话升级成MPG判断、套MPG流程。
+
+Canonical single-line prompt:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Full executed transcript:
+User turn 1:
+帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？
+
+Assistant turn 1:
+我现在看不到“昨天那个会话”的内容，所以不能直接核对它有没有按 MPG-AQM 规范输出“显影快照”。
+
+你把昨天 agent 的相关输出贴过来，尤其是它声称完成 MPG-AQM 的那一段，我可以帮你检查：
+
+- 有没有明确给出“显影快照”
+- 是否只是泛泛总结，还是有可核验的结构化显影
+- 是否覆盖关键判断、载体/代理、稀缺资源暴露、路径波动、成本/延迟/反力等要点
+- 是否把结论、证据、行动边界分清楚
+
+如果只贴一小段，我也可以先做快速判定：`合规 / 部分合规 / 不合规`。

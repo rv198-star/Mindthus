@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-035",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative control: the assistant stayed in normal evidence-driven debugging mode. It asked for the next failing test output and scoped the intended fix to that failure, without mechanically invoking an anti-spiral lecture or stopping because the same file had been edited multiple times.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:22:57.798431+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 35,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11267,
+    "cached_input_tokens": 9088,
+    "output_tokens": 307,
+    "reasoning_output_tokens": 180
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

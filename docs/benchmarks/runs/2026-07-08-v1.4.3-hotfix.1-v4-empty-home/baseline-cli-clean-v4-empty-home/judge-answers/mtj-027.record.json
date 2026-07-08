@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-027",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确否定“全交给 AI”，并把可流程化的部分拆成明显 bug、边界条件、重复代码、复杂度、命名格式、测试缺失、规范检查等；也列出必须保留人工判断的业务语义、需求理解、架构方向、真实场景性能安全兼容性、长期维护等。还提出 CI 中测试、lint、类型检查、安全扫描作为约束证据，虽然没有深入展开各类证据的边界，但已满足核心要求，不是泛泛的“AI辅助人主导”。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:49.167188+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 27,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11503,
+    "cached_input_tokens": 2432,
+    "output_tokens": 323,
+    "reasoning_output_tokens": 124
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,11 +1,11 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing; clean v3 execution recorded.
+Status: Not yet certified as passing; clean v4 diagnostic execution recorded.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
-baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v3 run fixes
-the v2 host-Superpowers contamination problem, but the treatment still misses the public
-positive-score threshold.
+baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
+the v3 isolation fix, adds strict Entry Triage runtime fingerprint coverage, and improves
+the treatment score, but still misses the public positive-score threshold.
 
 ## Current Case Set
 
@@ -40,30 +40,34 @@ Future certified reports should include:
 
 ## Latest Run
 
-- Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/`
-- Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/REPORT.md`
-- Manual problem-case audit: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/MANUAL_PROBLEM_CASE_AUDIT.md`
-- External audit handoff: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md`
-- Commit: `476303cba8288457381a7c40db284b34acd34341`
+- Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/`
+- Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/REPORT.md`
+- Human review packet: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md`
+- External audit handoff: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md`
+- Raw run commit: `c4ee0549327e4b70840781b503c0921ce839b314`
 - Tag: none; this run is after `v1.4.3-hotfix.1`
 - Fixture SHA-256: `ee3f348ba8a77089e0ef0d276195dfc33ea61b684c2601bd3fc6d77e57f0129c`
 - Runner SHA-256: `4e11d65054abf5ead1a1638570ad0e6264222f67243dfa8b09387e1d4c3f9773`
-- Baseline: `baseline-clean-v3-empty-home`
-- Treatment: `baseline+Mindthus-hotfix-v3-empty-home`
+- Baseline: `baseline-clean-v4-empty-home`
+- Treatment: `baseline+Mindthus-hotfix-v4-empty-home`
 - Cleanliness: generator and judge contamination were 0/50 for both variants.
-- Activation: treatment loaded Mindthus in 21/38 positive cases and 0/12 negative cases.
+- Activation: treatment loaded Mindthus in 18/38 positive cases and 0/12 negative cases.
+- Human-review caveat: #32 shows runtime/event-level Mindthus/3L5S over-wake even though
+  the final-answer judge false-wakeup rate is 0.000.
 
 ## Results
 
 | Variant | Positive mean | Negative false wake-up rate | First-sentence lock rate | Verdict-commitment / anti-mush rate | Over-forced verdict rate | H-group brake rate |
 | --- | --- | --- | --- | --- | --- | --- |
-| baseline v3 | 1.289 | 0.083 | 0.571 | 0.733 | 0.086 | 0.500 |
-| baseline+Mindthus hotfix v3 | 1.395 | 0.000 | 0.676 | 0.848 | 0.026 | 0.500 |
+| baseline v4 | 1.184 | 0.083 | 0.625 | 0.629 | 0.150 | 0.250 |
+| baseline+Mindthus hotfix v4 | 1.447 | 0.000 | 0.706 | 0.824 | 0.050 | 0.500 |
 
-Headline delta: positive mean `+0.106`, overall mean `+0.120`, first-sentence lock
-`+0.105`, verdict-commitment / anti-mush `+0.115`, over-forced verdict `-0.060`.
+Headline delta: positive mean `+0.263`, overall mean `+0.240`, first-sentence lock
+`+0.081`, verdict-commitment / anti-mush `+0.195`, over-forced verdict `-0.100`.
 
-Do not quote this as a passing benchmark. The v3 execution is clean, but the treatment
-positive mean is `1.395`, below the `1.5` public target.
+Do not quote this as a passing benchmark. The v4 execution is clean and directionally
+better, but the treatment positive mean is `1.447`, below the `1.5` public target.
+Also do not quote `0.000` false wake-up as zero runtime over-wake; it is a final-answer
+judge-field metric.
 
-Key remaining hard failures under treatment: #2, #4, #8, #13, #17, #33, #34, and #37.
+Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.

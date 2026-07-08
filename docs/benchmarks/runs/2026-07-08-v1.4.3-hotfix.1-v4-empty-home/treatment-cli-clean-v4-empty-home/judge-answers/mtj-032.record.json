@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-032",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed mostly asleep and did not blindly rewrite without the report text. However, it did not satisfy the expected clarification behavior: it asked the user to paste the weekly report, but did not first clarify what “不太行” means, such as whether the issue is information density, persuasiveness, professionalism, or structure. It also preselected improvement dimensions, which is mildly assumptive but not a full method loop or blind rewrite.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:07.737869+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12232,
+    "cached_input_tokens": 2432,
+    "output_tokens": 317,
+    "reasoning_output_tokens": 152
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-044
+case_type: negative_control
+group_id: K
+expected_owner: direct_answer
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct answer, 0 over-methodized.
+pass_criteria: 直接答。
+fail_signal: framing 分析。
+
+Canonical single-line prompt:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Full executed transcript:
+User turn 1:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Assistant turn 1:
+适合6岁孩子的话，我会优先选这些：
+
+1. **科学工业城 Cité des sciences et de l’industrie：Cité des enfants 5-10**
+   最推荐。专门给5-10岁儿童设计，有水、建造、感官、自然等互动区；每场约1小时30分钟，家长和孩子都要买票。适合精力旺盛、喜欢动手的孩子。  
+   来源：官方页面说明其面向5-10岁、含5个沉浸式互动空间。  
+   https://www.cite-sciences.fr/en/explore/permanent-exhibitions/cite-des-enfants/cite-des-enfants-5-10
+
+2. **Musée en Herbe 小小博物馆**
+   很适合第一次带孩子看艺术。展览和工作坊本来就是按儿童视角设计，官网写明适合“3到103岁”，还有6-12岁的工作坊。位置在卢浮宫附近。  
+   https://www.musee-en-herbe.com/
+
+3. **自然历史博物馆 / Jardin des Plantes：进化大廊 Grande Galerie de l’Évolution**
+   动物标本、恐龙/古生物相关展馆、植物园都在同一区域，6岁孩子通常很容易被吸引。可以和旁边的小动物园或花园一起安排半天。  
+   参考：Jardin des Plantes 内含进化大廊、古生物与比较解剖馆等展馆。  
+   https://en.wikipedia.org/wiki/Jardin_des_plantes
+
+4. **Musée des Arts Forains 游艺艺术博物馆**
+   复古旋转木马、游乐场装置、表演感很强，孩子会觉得“像玩具世界”。注意通常需要预约导览，不是随到随进。  
+   官方页面说明全年可预约导览参观。  
+   https://arts-forains.com/en/
+
+5. **奥赛博物馆 Musée d’Orsay**
+   如果想看经典艺术，比卢浮宫更适合孩子：建筑本身是老火车站，空间漂亮，印象派画作颜色明快。建议只看1小时左右，不要贪多。
+
+不太建议把**卢浮宫**作为6岁孩子的首选，除非孩子对木乃伊、雕塑或《蒙娜丽莎》特别感兴趣；它太大、人多，容易累。另：**蓬皮杜中心**巴黎主馆目前因翻修关闭至2030年前后，不建议按常规博物馆行程安排。

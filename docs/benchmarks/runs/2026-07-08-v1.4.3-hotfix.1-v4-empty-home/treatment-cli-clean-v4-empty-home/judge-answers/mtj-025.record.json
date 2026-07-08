@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the request as an evidence-review task: it stated it could not verify without the prior conversation and asked the user to provide the relevant output. It mentioned MPG-AQM criteria only as checklist items for later verification, not as a reason to run an MPG process on the current session. No MPG workflow escalation or methodized judgment was applied.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:26.294593+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12304,
+    "cached_input_tokens": 11648,
+    "output_tokens": 219,
+    "reasoning_output_tokens": 73
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

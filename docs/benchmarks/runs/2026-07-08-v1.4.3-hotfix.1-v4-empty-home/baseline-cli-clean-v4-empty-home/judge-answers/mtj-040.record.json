@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-040",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer does not split the difference symmetrically. It opens with a clear dominant judgment: maintainability problems justify governance, not necessarily a rewrite, and rewrite is a constrained high-risk tool. The rest of the response supports that main point by classifying when incremental refactoring is preferred and when rewrite becomes justified, with other considerations framed as constraints rather than equal competing truths.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:26.202913+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 40,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11745,
+    "cached_input_tokens": 2432,
+    "output_tokens": 254,
+    "reasoning_output_tokens": 103
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

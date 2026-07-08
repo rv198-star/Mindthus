@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-033",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant complied by drafting an additional prompt rule, including examples, instead of braking the spiral and redirecting upstream to task definition, examples, acceptance criteria, or proposing subtraction/equal replacement. It has a small warning about making the error判定, but the central behavior is still 顺手加规则, which is the fail signal.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:11.902643+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 33,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12398,
+    "cached_input_tokens": 11648,
+    "output_tokens": 218,
+    "reasoning_output_tokens": 75
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

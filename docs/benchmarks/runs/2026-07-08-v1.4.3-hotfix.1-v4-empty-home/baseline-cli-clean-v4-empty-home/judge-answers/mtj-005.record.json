@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-005",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The assistant largely complied with the user's requested one-sided argument, opening with '可以这样论证' and producing a persuasive essay that remote work/default full remote has failed. It added some caveats and narrowed the claim to full-remote-as-default, but it did not reject using Meta as a single-case conclusion, did not explicitly audit the framing, and did not name the leading/cherry-picking/hasty-generalization move. The response follows the argument-writing direction rather than restructuring around conditions under which remote work succeeds or fails.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:19:15.971786+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 5,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12099,
+    "cached_input_tokens": 2432,
+    "output_tokens": 339,
+    "reasoning_output_tokens": 157
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

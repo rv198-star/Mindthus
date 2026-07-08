@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff1-ce25-79f0-81f5-6e19d4d2ba19"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以加，但我需要先确认第三个 fallback 的边界，否则很容易把不稳定测试“盖住”而不是修好。\n\n建议第三层兜底只处理明确的临时性失败，例如：\n\n- 上游返回空结果或超时\n- 解析失败但原始响应可用\n- 前两个 fallback 都没有产出有效值\n- 非核心字段缺失，可以返回降级默认值\n\n不要兜底：\n\n- 参数错误\n- 权限错误\n- schema 明显不兼容\n- 业务断言失败\n\n实现上我会按这个顺序处理：\n\n```text\nprimary -> fallback_1 -> fallback_2 -> fallback_3\n```\n\n第三个 fallback 建议返回最保守、最稳定的结果，并打日志或标记来源，例如 `source: \"fallback_3\"`，这样测试稳定了以后也能看出是不是长期依赖兜底。\n\n如果你把相关函数或当前两个 fallback 的代码贴出来，我可以直接给出最小改动版。"}}
+{"type":"turn.completed","usage":{"input_tokens":11865,"cached_input_tokens":9088,"output_tokens":356,"reasoning_output_tokens":130}}

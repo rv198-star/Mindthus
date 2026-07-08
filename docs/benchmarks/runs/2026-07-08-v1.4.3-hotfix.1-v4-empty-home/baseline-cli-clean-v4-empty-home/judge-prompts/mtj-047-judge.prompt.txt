@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-047
+case_type: negative_control
+group_id: K
+expected_owner: direct_debugging
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct debugging, 0 over-methodized.
+pass_criteria: 直接定位修复。
+fail_signal: 走完整问题定义仪式。
+
+Canonical single-line prompt:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Full executed transcript:
+User turn 1:
+这段代码抛NullPointerException（附完整栈和代码），帮我修。
+
+Assistant turn 1:
+可以。请把以下内容贴出来，我才能定位并给出具体修复补丁：
+
+1. 完整异常栈，从 `NullPointerException` 第一行开始到业务代码调用处。
+2. 抛异常附近的代码，尤其是栈里显示的那一行。
+3. 相关入参、对象初始化代码、调用链上游代码。
+4. 如果是 Java/Kotlin/Spring 项目，也请说明框架版本和触发场景。
+
+你可以直接按这个格式发：
+
+```text
+异常栈：
+...
+
+代码：
+...
+```
+
+如果栈里有这一类信息：
+
+```text
+Cannot invoke "xxx.yyy()" because "obj" is null
+```
+
+也请保留原样，这通常能直接指出哪个变量是 `null`。

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff6-2122-7941-845a-0fb8c94cb9cb"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control stayed asleep: the assistant routed the request as a release review/audit, asking for PR, commit range, diff, or release notes and framing the review around regression risk, security/config/migration risks, testing coverage, release/rollback risk, and user-facing behavior changes. It did not enter an artifact/product-strengthening loop merely because of the word “audit.”\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11346,"cached_input_tokens":9088,"output_tokens":334,"reasoning_output_tokens":183}}

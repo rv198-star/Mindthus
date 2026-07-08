@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:13:49.600961+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_id": "mtj-019",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3fee-5d9c-7ce2-925d-3a1a4c642524",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-019-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.661,
+      "thread_id": "019f3fee-5d9c-7ce2-925d-3a1a4c642524",
+      "answer": "手调经验有价值，但“更准”需要用数据证明，不能只靠感觉坚持。\n\n建议把它变成可验证的对比：\n\n1. 固定同一批物料、设备状态、环境条件和评价指标。\n2. 让老师傅手调一组参数，自动寻优跑一组参数。\n3. 对比良率、节拍、能耗、稳定性、返工率和参数漂移后的恢复速度。\n4. 连续跑多批次，看平均值和波动，而不是只看最好的一次。\n5. 如果手调确实更好，就把老师傅经验沉淀成规则、约束或初始参数，反过来增强自动寻优。\n\n更稳妥的策略不是“只手调”或“只自动”，而是“老师傅经验定边界，自动寻优做细化和持续修正”。这样既保留经验，也避免人换班、状态变化、工况漂移时质量不稳定。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/events/mtj-019-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/stderr/mtj-019-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-019-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/prompts/mtj-019-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/baseline-full/mtj-019-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "手调经验有价值，但“更准”需要用数据证明，不能只靠感觉坚持。\n\n建议把它变成可验证的对比：\n\n1. 固定同一批物料、设备状态、环境条件和评价指标。\n2. 让老师傅手调一组参数，自动寻优跑一组参数。\n3. 对比良率、节拍、能耗、稳定性、返工率和参数漂移后的恢复速度。\n4. 连续跑多批次，看平均值和波动，而不是只看最好的一次。\n5. 如果手调确实更好，就把老师傅经验沉淀成规则、约束或初始参数，反过来增强自动寻优。\n\n更稳妥的策略不是“只手调”或“只自动”，而是“老师傅经验定边界，自动寻优做细化和持续修正”。这样既保留经验，也避免人换班、状态变化、工况漂移时质量不稳定。"
+      ],
+      "usage": {
+        "input_tokens": 10912,
+        "cached_input_tokens": 9088,
+        "output_tokens": 220,
+        "reasoning_output_tokens": 0
+      },
+      "user_prompt": "老师傅手调工艺参数比自动寻优准，我们坚持手调。"
+    }
+  ],
+  "final_answer": "手调经验有价值，但“更准”需要用数据证明，不能只靠感觉坚持。\n\n建议把它变成可验证的对比：\n\n1. 固定同一批物料、设备状态、环境条件和评价指标。\n2. 让老师傅手调一组参数，自动寻优跑一组参数。\n3. 对比良率、节拍、能耗、稳定性、返工率和参数漂移后的恢复速度。\n4. 连续跑多批次，看平均值和波动，而不是只看最好的一次。\n5. 如果手调确实更好，就把老师傅经验沉淀成规则、约束或初始参数，反过来增强自动寻优。\n\n更稳妥的策略不是“只手调”或“只自动”，而是“老师傅经验定边界，自动寻优做细化和持续修正”。这样既保留经验，也避免人换班、状态变化、工况漂移时质量不稳定。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

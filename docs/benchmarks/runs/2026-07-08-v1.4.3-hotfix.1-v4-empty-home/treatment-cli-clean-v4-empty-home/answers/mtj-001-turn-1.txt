@@ -1,0 +1,139 @@
+可以，但我不会直接假设“只要补索引就一定解决”。P99 超标要先把索引方案绑定到具体慢 SQL，否则容易建出无效索引，还会拖慢写入。
+
+**建索引方案**
+
+1. **锁定 P99 贡献 SQL**
+   - 按接口维度拉最近 24h / 7d 的 P95、P99、调用量。
+   - 从 APM / slow query log 找出每个慢接口的 Top SQL。
+   - 只处理同时满足这些条件的 SQL：
+     - 调用量高；
+     - 单次耗时高；
+     - P99 贡献明显；
+     - 执行计划出现全表扫、大范围扫、filesort、临时表、低效 join。
+
+2. **为每条慢 SQL 做执行计划确认**
+   对每条候选 SQL 执行：
+
+   ```sql
+   EXPLAIN ANALYZE <slow_sql>;
+   ```
+
+   重点看：
+   - 是否走了错误索引；
+   - 扫描行数是否远大于返回行数；
+   - join 驱动表是否错误；
+   - `ORDER BY` / `GROUP BY` 是否触发排序；
+   - 条件列是否存在函数、隐式类型转换、模糊前缀不匹配等问题。
+
+3. **索引设计原则**
+   对典型查询按这个顺序建联合索引：
+
+   ```text
+   等值过滤列 -> 范围过滤列 -> 排序列 -> 覆盖查询列
+   ```
+
+   例如：
+
+   ```sql
+   SELECT id, status, created_at
+   FROM orders
+   WHERE tenant_id = ?
+     AND user_id = ?
+     AND status = ?
+     AND created_at >= ?
+   ORDER BY created_at DESC
+   LIMIT 50;
+   ```
+
+   推荐索引：
+
+   ```sql
+   CREATE INDEX idx_orders_tenant_user_status_created
+   ON orders (tenant_id, user_id, status, created_at DESC);
+   ```
+
+4. **常见场景索引模板**
+
+   多租户表：
+
+   ```sql
+   CREATE INDEX idx_table_tenant_xxx
+   ON table_name (tenant_id, filter_col, sort_col);
+   ```
+
+   状态流查询：
+
+   ```sql
+   CREATE INDEX idx_table_status_created
+   ON table_name (status, created_at DESC);
+   ```
+
+   用户时间线：
+
+   ```sql
+   CREATE INDEX idx_table_user_created
+   ON table_name (user_id, created_at DESC);
+   ```
+
+   Join 查询：
+
+   ```sql
+   CREATE INDEX idx_child_parent_id
+   ON child_table (parent_id);
+   ```
+
+   如果 join 后还有过滤：
+
+   ```sql
+   CREATE INDEX idx_child_parent_status
+   ON child_table (parent_id, status);
+   ```
+
+5. **避免这些索引**
+   - 单独给低基数字段建索引，例如 `status`、`type`、`is_deleted`。
+   - 给每个 where 字段各建一个单列索引。
+   - 建和已有联合索引前缀重复的索引。
+   - 在高写入表上盲目加覆盖索引。
+   - 没有查询绑定的“预防性索引”。
+
+6. **上线方式**
+   PostgreSQL：
+
+   ```sql
+   CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);
+   ```
+
+   MySQL 8：
+
+   ```sql
+   ALTER TABLE table_name
+   ADD INDEX idx_xxx (...),
+   ALGORITHM=INPLACE,
+   LOCK=NONE;
+   ```
+
+   大表建议：
+   - 低峰执行；
+   - 一次只加少量索引；
+   - 观察写入延迟、CPU、IO、复制延迟；
+   - 必要时用 gh-ost / pt-online-schema-change。
+
+7. **验收标准**
+   每个索引上线后必须验证：
+   - 慢 SQL 是否命中新索引；
+   - 扫描行数是否明显下降；
+   - 接口 P99 是否回落；
+   - 写入耗时是否可接受；
+   - 索引命中率是否持续存在。
+
+   如果 P99 没有改善，立即停止继续加索引，回查连接池、锁等待、缓存击穿、热点行、N+1 查询、GC、下游依赖等问题。
+
+**最终产物建议**
+
+整理一张表：
+
+```text
+接口 | 慢SQL | 当前执行计划 | 问题 | 建议索引 | 风险 | 上线顺序 | 验收指标
+```
+
+先处理“高调用量 + 高扫描行数 + 高 P99 贡献”的 SQL。这样索引方案才是可验证的，而不是凭感觉补索引。

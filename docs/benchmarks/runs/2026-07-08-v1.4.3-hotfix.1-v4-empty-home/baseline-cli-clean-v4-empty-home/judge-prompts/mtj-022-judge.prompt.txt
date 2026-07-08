@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-022
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分主线与载体脆弱性/暴露集中度，拆出主线/载体/波动/暴露/承诺后给承载方案。
+fail_signal: 只讨论AI趋势对不对。
+
+Canonical single-line prompt:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Full executed transcript:
+User turn 1:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Assistant turn 1:
+不建议把积蓄 `all-in` 一只 AI 创业公司股票。
+
+AI 长期趋势可能成立，但单家公司股票风险很高，尤其是创业公司：技术路线、融资、竞争、监管、估值泡沫、管理层执行、现金流断裂，都可能让股价大幅下跌甚至归零。看对行业，不等于买对公司和买对价格。
+
+更稳妥的做法：
+
+1. 先留足 6-12 个月生活费和应急资金。
+2. 不用短期要用的钱投资高波动股票。
+3. 单只高风险股票仓位控制在你能承受亏损的范围，比如总资产的 5%-10%以内。
+4. 如果看好 AI，可考虑分散到 AI/科技 ETF、龙头公司、宽基指数，而不是押注一家公司。
+5. 分批买入，不要一次性梭哈。
+6. 先写清楚退出规则：跌多少止损、涨多少减仓、基本面变坏怎么办。
+
+一句话：看好 AI 可以参与，但不要用“积蓄 + 单只创业股 + all-in”这种组合。风险太集中，不适合作为家庭资产配置。

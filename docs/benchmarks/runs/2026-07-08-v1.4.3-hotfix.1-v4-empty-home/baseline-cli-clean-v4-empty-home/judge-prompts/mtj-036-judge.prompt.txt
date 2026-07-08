@@ -1,0 +1,59 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以。把这版 prompt 贴给我，我可以再帮你做一轮偏“人类评审/主观质量”导向的迭代。
+
+如果现在没有机械验证信号，我会重点看这几块：
+
+1. **目标是否更明确**
+   - 模型到底要优化什么：准确性、风格、结构、可执行性、简洁度，还是某种评审偏好。
+
+2. **约束是否可判断**
+   - 避免“更好”“更自然”“更专业”这种空泛要求，改成可观察的输出特征。
+
+3. **输出形态是否稳定**
+   - 明确格式、长度、语气、是否要分步骤、是否允许假设、是否需要指出不确定性。
+
+4. **减少过度机械化**
+   - 如果没有自动验证，prompt 不应写得像测试用例集合，而要更像给一个可靠助手的工作准则。
+
+5. **加入自检但不外显**
+   - 让模型在回答前内部检查遗漏、矛盾、过度发挥，但最终只输出用户需要的内容。
+
+你可以直接发：
+
+```text
+当前版本：
+...
+
+上一版如果有：
+...
+
+希望它更偏向：
+A. 更稳
+B. 更简洁
+C. 更像真人
+D. 更强执行
+E. 更适合评测
+```
+
+我拿到后会给你一版改写稿，并简要说明主要改动点。

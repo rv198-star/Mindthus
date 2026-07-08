@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-028
+case_type: negative_control
+group_id: F
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct judgment, 0 over-methodized.
+pass_criteria: 按组织责任直接判断；无 agentic system 不套控制边界框架。
+fail_signal: 用WAE式术语分析部门职责。
+
+Canonical single-line prompt:
+落地页文案该归市场部还是产品部管？
+
+Full executed transcript:
+User turn 1:
+落地页文案该归市场部还是产品部管？
+
+Assistant turn 1:
+通常不该简单归某一个部门“管”，而应按目标拆分责任：
+
+**市场部主责：**
+落地页的转化目标、受众定位、卖点表达、传播口径、标题、副标题、CTA、广告承接一致性。  
+如果这个页面主要用于投放、获客、活动报名、销售线索收集，市场部应当是 owner。
+
+**产品部主责：**
+产品能力是否准确、功能边界、使用场景、术语规范、定价/版本信息、避免过度承诺。  
+产品部不一定主写文案，但必须审核关键表述，确保不误导用户。
+
+**更合理的分工是：**
+市场部负责“怎么说更能转化”，产品部负责“说的是不是对的”，设计/增长/销售可参与优化。
+
+一句话：**落地页文案一般由市场部主导，产品部把关；如果是产品内页或功能介绍页，则产品部权重更高。**

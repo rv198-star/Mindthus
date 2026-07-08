@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-044",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答直接给出适合6岁孩子的巴黎博物馆清单，并补充简短理由与取舍建议。没有展开方法论、流程化分析或不必要的 framing，符合 negative_control 的直接回答预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:56.300379+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11877,
+    "cached_input_tokens": 9088,
+    "output_tokens": 201,
+    "reasoning_output_tokens": 75
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

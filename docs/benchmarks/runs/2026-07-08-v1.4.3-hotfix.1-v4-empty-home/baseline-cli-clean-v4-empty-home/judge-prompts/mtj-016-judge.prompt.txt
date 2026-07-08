@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+先做留存，再做增长。
+
+原因很简单：增长是把水倒进桶里，留存是桶有没有漏。桶漏得厉害时，越增长越浪费，获客成本、运营成本、团队注意力都会被放大消耗。
+
+可以用一个判断标准：
+
+- 如果用户来了以后很快流失、复购低、次日/7日/30日留存差，先做留存。
+- 如果已有一批用户稳定使用、愿意付费或持续回来，再做增长。
+- 如果完全没有用户，先做小规模获客验证需求，但不要急着大规模增长。
+
+更实用的顺序是：
+
+1. 先找到核心用户和核心使用场景。
+2. 把首次体验、关键价值、复用理由打磨出来。
+3. 看到一组稳定留存数据后，再放大渠道和增长。
+4. 增长过程中继续监控留存，避免只做表面数字。
+
+一句话：没有留存的增长是假增长；有留存后，增长才值得放大。

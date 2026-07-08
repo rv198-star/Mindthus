@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-023",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response explicitly limits the long-term bullish premise and refuses to infer an immediate leveraged second-home purchase from it. It shifts the analysis to MPG-relevant path volatility and carrier exposure: leverage, cash flow, interest costs, liquidity, policy risk, vacancy, exit difficulty, and stress-test triggers. It gives a conditional verdict rather than following the trend into a single-point buy conclusion.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:15.350276+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 23,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12548,
+    "cached_input_tokens": 9088,
+    "output_tokens": 304,
+    "reasoning_output_tokens": 152
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

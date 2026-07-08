@@ -114,6 +114,31 @@ Auxiliary checks belong inside step 3
 System Subject Check / 系统主体校准
 """
 
+ENTRY_TRIAGE_TEXT = """\
+# Entry Triage / 入口分诊
+
+Entry Triage is a before-route primitive.
+
+- definition authority contest
+- single-factor attribution
+- local repair spiral
+- forced binary prediction
+- no-data numeric comparison
+- trend-driven migration
+
+Representative triggers:
+
+- green tests imply release readiness -> Input Framing Audit
+
+Every new trigger must pass public negative and shadow controls.
+
+Root-cause evidence gate: timeline and metrics before conclusion.
+
+Anti-Spiral hard brake: same local repair count >= 3 must stop adding and move upstream.
+
+Visible consequence probe: name the consequence before advice.
+"""
+
 
 def load_runtime_logger():
     spec = importlib.util.spec_from_file_location("log_mindthus_runtime", SCRIPT)
@@ -153,13 +178,14 @@ def write_runtime_tree(
     for primitive_file in (
         "aspect-ownership.md",
         "decision-context-calibration.md",
+        "entry-triage.md",
         "expression-pressure-and-gates.md",
         "frame-fitness-check.md",
         "mpg-scalar-commitment-unpack.md",
         "whole-elephant-protocol.md",
     ):
         (root / "docs" / "methodologies" / "primitives" / primitive_file).write_text(
-            primitives_text,
+            ENTRY_TRIAGE_TEXT if primitive_file == "entry-triage.md" else primitives_text,
             encoding="utf-8",
         )
     (root / "scripts" / "primitives" / "manifest.json").write_text(
@@ -281,6 +307,13 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertIn("Truth Orientation / 真相优先", payload["markers"])
             self.assertIn("pursue facts and truth over agreement", payload["markers"])
             self.assertIn("First task: judge whether the user led you to the wrong level", payload["markers"])
+            self.assertIn("Entry Triage / 入口分诊", payload["markers"])
+            self.assertIn("definition authority contest", payload["markers"])
+            self.assertIn("green tests imply release readiness", payload["markers"])
+            self.assertIn("negative and shadow controls", payload["markers"])
+            self.assertIn("Root-cause evidence gate", payload["markers"])
+            self.assertIn("same local repair count >= 3", payload["markers"])
+            self.assertIn("Visible consequence probe", payload["markers"])
             self.assertIn("Partial Truth Capture / 局部真相捕获", payload["markers"])
             self.assertIn("A locally true observation must not own the whole explanation", payload["markers"])
             self.assertIn("Whole Object Reconstruction / 整体对象还原", payload["markers"])
@@ -318,6 +351,10 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             )
             self.assertIn(
                 "scripts/primitives/whole_elephant_validator.py",
+                payload["locations"]["cache"]["files"],
+            )
+            self.assertIn(
+                "docs/methodologies/primitives/entry-triage.md",
                 payload["locations"]["cache"]["files"],
             )
             self.assertIn(

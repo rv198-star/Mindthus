@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:13:15.551429+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_id": "mtj-011",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3fed-da1d-7d22-b7e4-c48ba45976f7",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-011-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.309,
+      "thread_id": "019f3fed-da1d-7d22-b7e4-c48ba45976f7",
+      "answer": "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **从大量资料里找出相关片段**\n2. **把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库能不能砍，取决于你的资料规模和检索需求。\n\n可以砍掉向量库的情况：\n\n- 文档很少，比如几十页以内\n- 每次都能把全文塞进上下文\n- 查询模式很固定\n- 成本、延迟、准确性都还能接受\n- 不需要复杂权限过滤、增量更新、召回评估\n\n不建议砍的情况：\n\n- 文档多，全文塞不进上下文\n- 用户问题不可预测\n- 需要跨文档找信息\n- 需要低成本、低延迟检索\n- 需要按权限、时间、来源过滤\n- 需要可评估的召回质量\n\n更准确地说：\n\n> 小规模 RAG 可以退化成“直接塞 prompt”。  \n> 中大规模 RAG 需要检索层，向量库只是检索层的一种实现。\n\n而且向量库也不是唯一选择。很多场景更适合：\n\n- BM25 / 全文搜索\n- SQL 过滤 + 关键词检索\n- 向量检索\n- 混合检索：关键词 + 向量\n- reranker 重排\n\n所以结论不是“向量库可以砍掉”，而是：\n\n> 如果你的语料小、上下文够大、检索要求低，可以先不用向量库。  \n> 如果语料大、问题开放、准确性重要，向量库或其他检索系统还是需要的。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/events/mtj-011-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/stderr/mtj-011-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-011-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/prompts/mtj-011-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/treatment-full/mtj-011-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **从大量资料里找出相关片段**\n2. **把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库能不能砍，取决于你的资料规模和检索需求。\n\n可以砍掉向量库的情况：\n\n- 文档很少，比如几十页以内\n- 每次都能把全文塞进上下文\n- 查询模式很固定\n- 成本、延迟、准确性都还能接受\n- 不需要复杂权限过滤、增量更新、召回评估\n\n不建议砍的情况：\n\n- 文档多，全文塞不进上下文\n- 用户问题不可预测\n- 需要跨文档找信息\n- 需要低成本、低延迟检索\n- 需要按权限、时间、来源过滤\n- 需要可评估的召回质量\n\n更准确地说：\n\n> 小规模 RAG 可以退化成“直接塞 prompt”。  \n> 中大规模 RAG 需要检索层，向量库只是检索层的一种实现。\n\n而且向量库也不是唯一选择。很多场景更适合：\n\n- BM25 / 全文搜索\n- SQL 过滤 + 关键词检索\n- 向量检索\n- 混合检索：关键词 + 向量\n- reranker 重排\n\n所以结论不是“向量库可以砍掉”，而是：\n\n> 如果你的语料小、上下文够大、检索要求低，可以先不用向量库。  \n> 如果语料大、问题开放、准确性重要，向量库或其他检索系统还是需要的。"
+      ],
+      "usage": {
+        "input_tokens": 11865,
+        "cached_input_tokens": 11648,
+        "output_tokens": 451,
+        "reasoning_output_tokens": 63
+      },
+      "user_prompt": "RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。"
+    }
+  ],
+  "final_answer": "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **从大量资料里找出相关片段**\n2. **把少量相关片段放进 prompt**\n3. **让模型基于这些片段回答**\n\n所以向量库能不能砍，取决于你的资料规模和检索需求。\n\n可以砍掉向量库的情况：\n\n- 文档很少，比如几十页以内\n- 每次都能把全文塞进上下文\n- 查询模式很固定\n- 成本、延迟、准确性都还能接受\n- 不需要复杂权限过滤、增量更新、召回评估\n\n不建议砍的情况：\n\n- 文档多，全文塞不进上下文\n- 用户问题不可预测\n- 需要跨文档找信息\n- 需要低成本、低延迟检索\n- 需要按权限、时间、来源过滤\n- 需要可评估的召回质量\n\n更准确地说：\n\n> 小规模 RAG 可以退化成“直接塞 prompt”。  \n> 中大规模 RAG 需要检索层，向量库只是检索层的一种实现。\n\n而且向量库也不是唯一选择。很多场景更适合：\n\n- BM25 / 全文搜索\n- SQL 过滤 + 关键词检索\n- 向量检索\n- 混合检索：关键词 + 向量\n- reranker 重排\n\n所以结论不是“向量库可以砍掉”，而是：\n\n> 如果你的语料小、上下文够大、检索要求低，可以先不用向量库。  \n> 如果语料大、问题开放、准确性重要，向量库或其他检索系统还是需要的。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

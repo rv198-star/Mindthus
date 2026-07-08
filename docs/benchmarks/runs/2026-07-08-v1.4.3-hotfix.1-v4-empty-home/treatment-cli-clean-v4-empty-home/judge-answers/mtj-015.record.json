@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-015",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response wakes up to the right qualitative structure: it rejects a simplistic binary, identifies utilization and elasticity/volatility as the decisive axes, and projects a default hybrid path for the user's likely scenario. However it does not perform the required explicit extreme deduction at both ends, especially the 100% utilization versus 10% utilization contrast. It is more of a pragmatic comparison plus recommendation than a full EDSP-style extreme-axis derivation. It also avoids the fail signal of a generic comparison table.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:22:13.934801+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 15,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12631,
+    "cached_input_tokens": 9088,
+    "output_tokens": 268,
+    "reasoning_output_tokens": 93
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:10:42.848011+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3feb-8d10-78f2-aee7-d275ee5fbb6a",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 13.629,
+      "thread_id": "019f3feb-8d10-78f2-aee7-d275ee5fbb6a",
+      "answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表述目标、限定范围、给出格式、减少歧义。但它的本质更接近**人机协作的任务设计**，不只是把话说漂亮。\n\n更准确地说，Prompt 工程包括：\n\n- **任务拆解**：把模糊需求变成模型能执行的步骤。\n- **上下文组织**：提供必要背景、数据、约束和示例。\n- **输出控制**：规定格式、风格、边界、禁止项。\n- **误差管理**：减少幻觉、偏题、遗漏和不稳定输出。\n- **评估迭代**：根据结果不断调整提示词、流程或工具调用。\n\n如果只是日常问答，确实像“提问技巧”。  \n但在实际产品、自动化流程、Agent、客服、代码生成、数据分析里，Prompt 工程更像是**用自然语言写接口和流程规范**。\n\n所以可以说：\n\n> 低阶 Prompt 工程像话术；高阶 Prompt 工程是任务建模、上下文工程和系统设计。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/prompts/mtj-048-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/baseline-full/mtj-048-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表述目标、限定范围、给出格式、减少歧义。但它的本质更接近**人机协作的任务设计**，不只是把话说漂亮。\n\n更准确地说，Prompt 工程包括：\n\n- **任务拆解**：把模糊需求变成模型能执行的步骤。\n- **上下文组织**：提供必要背景、数据、约束和示例。\n- **输出控制**：规定格式、风格、边界、禁止项。\n- **误差管理**：减少幻觉、偏题、遗漏和不稳定输出。\n- **评估迭代**：根据结果不断调整提示词、流程或工具调用。\n\n如果只是日常问答，确实像“提问技巧”。  \n但在实际产品、自动化流程、Agent、客服、代码生成、数据分析里，Prompt 工程更像是**用自然语言写接口和流程规范**。\n\n所以可以说：\n\n> 低阶 Prompt 工程像话术；高阶 Prompt 工程是任务建模、上下文工程和系统设计。"
+      ],
+      "usage": {
+        "input_tokens": 10906,
+        "cached_input_tokens": 9088,
+        "output_tokens": 272,
+        "reasoning_output_tokens": 14
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程里确实有一部分像“话术”：怎么表述目标、限定范围、给出格式、减少歧义。但它的本质更接近**人机协作的任务设计**，不只是把话说漂亮。\n\n更准确地说，Prompt 工程包括：\n\n- **任务拆解**：把模糊需求变成模型能执行的步骤。\n- **上下文组织**：提供必要背景、数据、约束和示例。\n- **输出控制**：规定格式、风格、边界、禁止项。\n- **误差管理**：减少幻觉、偏题、遗漏和不稳定输出。\n- **评估迭代**：根据结果不断调整提示词、流程或工具调用。\n\n如果只是日常问答，确实像“提问技巧”。  \n但在实际产品、自动化流程、Agent、客服、代码生成、数据分析里，Prompt 工程更像是**用自然语言写接口和流程规范**。\n\n所以可以说：\n\n> 低阶 Prompt 工程像话术；高阶 Prompt 工程是任务建模、上下文工程和系统设计。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-036",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Assistant explicitly states that subjective feeling is insufficient, reframes the next step around observable differences, comparison criteria, change rationale, residual risks, and test inputs. It does not blindly produce another prompt iteration; it asks for the prior/current prompts before proceeding, which establishes a判定/验收面.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:37.624594+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 36,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12465,
+    "cached_input_tokens": 9088,
+    "output_tokens": 333,
+    "reasoning_output_tokens": 197
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

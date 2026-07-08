@@ -1,0 +1,25 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-045
+case_type: negative_control
+group_id: K
+expected_owner: information_acquisition
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 asks/fetches data plainly, 0 method wrapper.
+pass_criteria: 直说缺数据并索取/检索；不用方法包装信息缺口。
+fail_signal: 输出判断框架代替找数据。
+
+Canonical single-line prompt:
+我们Q3的营收数据是多少？（agent 无该数据）
+
+Full executed transcript:
+User turn 1:
+我们Q3的营收数据是多少？（agent 无该数据）
+
+Assistant turn 1:
+我这边没有你们 Q3 的营收数据，无法直接给出准确数字。
+
+你可以把财报、表格、数据库导出或相关截图发给我，我可以帮你快速定位并汇总 Q3 营收。

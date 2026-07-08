@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-021
+case_type: positive
+group_id: D
+expected_owner: sela_boundary
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 识别 SELA 边界：不可逆伤害/尊严伦理不能机械套效率，效率论证降级为约束。
+fail_signal: 机械套系统效率结论。
+
+Canonical single-line prompt:
+养老院人工成本太高，全部换成陪护机器人怎么样？
+
+Full executed transcript:
+User turn 1:
+养老院人工成本太高，全部换成陪护机器人怎么样？
+
+Assistant turn 1:
+不建议“全部换成陪护机器人”；方向上可以大量引入机器人降本增效，但当前最稳妥的是“机器人做标准化、重复性工作，人保留照护判断、情绪陪伴和责任兜底”。
+
+可以这样分层：
+
+- **适合机器人替代/辅助**：夜间巡检、跌倒监测、生命体征提醒、送餐送药提醒、清洁消毒、物品搬运、康复动作提示、护理记录录入。
+- **不宜完全替代人工**：失能老人翻身移位、喂食防呛、认知症安抚、突发病情判断、临终关怀、家属沟通、护理风险责任承担。
+- **真正能省钱的路径**：先把机器人用于高频低判断工作，让一个护理员能覆盖更多老人，而不是直接裁掉全部陪护。
+
+更现实的方案是：先选一个楼层或夜班做 3-6 个月试点，盯四个指标：人均护理成本、跌倒/压疮/误服药等事故率、老人满意度、家属投诉率。只有这些指标稳定改善，再逐步扩大。
+
+一句话：**机器人可以替代一部分“劳力”，但不能替代养老院的“照护责任”。全部换掉风险太高，分阶段人机协作才是可落地的降本方案。**

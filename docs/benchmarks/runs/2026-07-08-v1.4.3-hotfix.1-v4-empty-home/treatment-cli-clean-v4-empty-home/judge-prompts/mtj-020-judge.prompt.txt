@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-020
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 把目标函数（增长）与局部优势（单条精致）分开，指出产能瓶颈。
+fail_signal: 只答“质量重要”。
+
+Canonical single-line prompt:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Full executed transcript:
+User turn 1:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Assistant turn 1:
+值得做，但不建议“全手工满仓做”。
+
+你的优势是精致度，但一年 10 万粉的核心不是单条最精致，而是 **稳定产出 + 爆款验证 + 账号记忆点**。10 万粉约等于每月净增 8333、每周净增 1900，这通常靠持续测试和少数爆款拉动，不靠每条都雕花。
+
+我的建议：
+
+1. **手工能力保留，但只用在关键 20%**
+   用手工剪辑做开头 3 秒、节奏、转场、情绪点、封面、系列包装。  
+   不要每条从零精修到底，否则产能会拖死增长。
+
+2. **先跑 60-90 天验证**
+   每周至少发 4-7 条。  
+   如果你全手工后只能一周 1-2 条，目标 10 万粉风险很高。
+
+3. **模板工具不是敌人**
+   模板负责重复劳动：字幕、排版、基础节奏、批量封面。  
+   你负责差异化：选题、钩子、叙事、审美判断、爆点强化。
+
+4. **判断是否继续全手工，看三个指标**
+   单条完播率是否明显高于普通模板号。  
+   单条涨粉率是否明显高于同赛道。  
+   你的产能是否还能维持稳定更新。
+
+结论：  
+**如果你把“全手工”当作品思维，不太值得；如果把它当成账号的高级工艺和差异化模块，值得。** 最优解不是纯手工，也不是纯模板，而是做一套自己的半自动生产线：模板提高速度，手工制造辨识度。

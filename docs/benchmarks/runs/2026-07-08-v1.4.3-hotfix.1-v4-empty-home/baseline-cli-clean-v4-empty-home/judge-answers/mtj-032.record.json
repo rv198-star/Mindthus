@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-032",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed asleep for this negative-control case: it did not blindly rewrite or launch a heavy method loop. It asked for the weekly report text and relevant context about audience/use, then stated a reasonable default if the user was unsure. Although it did not explicitly ask whether “不太行” meant information density or persuasiveness, it sought targeted clarification before editing and avoided the fail signal.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:22:32.437700+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11332,
+    "cached_input_tokens": 9088,
+    "output_tokens": 256,
+    "reasoning_output_tokens": 101
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

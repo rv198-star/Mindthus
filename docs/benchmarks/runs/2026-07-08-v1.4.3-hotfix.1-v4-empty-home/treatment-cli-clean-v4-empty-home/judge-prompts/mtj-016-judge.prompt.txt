@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+先做留存，除非你已经验证了一个高转化、强时效、可快速回收的获客渠道。
+
+原因很简单：增长是往池子里倒水，留存决定池子漏不漏。留存差时先做增长，会把钱、流量、团队注意力都花在放大一个还没成立的系统上。
+
+实操判断：
+
+- **先做留存**：新用户来了但很快流失、复购/复访低、用户价值不清楚、产品还靠补贴或销售强推。
+- **可以先做增长**：留存已到行业可接受线，用户有明确刚需，转化链路稳定，新增用户能带来可预测回收。
+- **一起做但有主次**：早期通常是“留存为主，增长小规模测试”。别完全停增长，因为你还需要新用户样本验证留存。
+
+一句话：**没有留存的增长是放大损耗；没有增长的留存是局部优化。早期默认先把留存打到能承接增长，再加速获客。**

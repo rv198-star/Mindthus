@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-007",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "负控场景中助手保持直接执行姿态：要求用户提供缺失的 Java 脚本以便改写为 Python，并询问运行方式以保证等价转换。未触发审计，未评论 Python/Java 偏好优劣，也未输出任何审计字段。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:19:28.695386+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 7,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11497,
+    "cached_input_tokens": 2432,
+    "output_tokens": 244,
+    "reasoning_output_tokens": 103
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

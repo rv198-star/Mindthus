@@ -1,0 +1,68 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-026
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 按流程/判断/证据分配控制权：审批是流程硬约束，agent判断收窄，证据门槛前置到承诺动作。
+fail_signal: 只调prompt。
+
+Canonical single-line prompt:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Full executed transcript:
+User turn 1:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Assistant turn 1:
+治法不是“再写一段提示词”，而是把“承诺退款”从客服 agent 的自由回复里拿出来，变成受控动作。
+
+建议按优先级做：
+
+1. **权限拆开**
+   - Agent 可以判断“疑似符合退款条件”
+   - Agent 不能直接说“我们会退款”
+   - 真正可输出的只能是：“我已为你提交退款申请，预计由人工审核”
+
+2. **工具层硬拦截**
+   - 退款 API、工单状态变更、邮件/聊天模板里的“承诺退款”都必须走 approval gate
+   - 未审批时，后端拒绝任何 `refund_promised=true`、`refund_approved=true`、`refund_amount` 等字段写入
+   - 不要只靠前端或 prompt 限制
+
+3. **回复生成加状态机**
+   客服对话至少分成：
+   - `inquiry`：收集信息
+   - `eligible_candidate`：可能符合
+   - `pending_human_approval`：待审批
+   - `approved`：可承诺退款
+   - `rejected`：不可退款
+
+   只有状态为 `approved` 时，模板才允许出现“退款已批准 / 将退款 / 金额为 X”。
+
+4. **输出前做 policy check**
+   在 agent 回复客户前跑一次拦截：
+   - 检测“退款承诺类语义”，不只是关键词
+   - 若当前没有人工批准证据，自动改写为“已提交审核”
+   - 同时打日志，标记为 near-miss
+
+5. **审批证据必须可追溯**
+   每次允许承诺退款时，回复里关联：
+   - 审批人
+   - 审批时间
+   - 工单 ID
+   - 金额
+   - 政策依据
+
+   没有这些证据，系统就不允许发出承诺。
+
+6. **事后治理**
+   - 每天抽样所有“退款、补偿、退回、返还”等对话
+   - 统计绕过次数、触发 agent、触发意图、客户损失风险
+   - 对高风险场景降级为人工接管，比如高金额、争议订单、法律威胁、VIP 客户
+
+核心原则：**agent 可以建议，系统决定能不能承诺；人工审批不是提示词要求，而是后端不可绕过的权限边界。**

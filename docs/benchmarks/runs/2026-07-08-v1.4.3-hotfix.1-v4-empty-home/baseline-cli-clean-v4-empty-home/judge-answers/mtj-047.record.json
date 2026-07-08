@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-047",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed asleep and did not invoke a formal problem-definition workflow, but it also did not directly locate or fix the NullPointerException as the pass criteria expected. Given the transcript contains no actual stack trace or code despite the prompt wording, asking for the missing stack/code is understandable, but the response expands into an intake checklist rather than a concrete debugging fix.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:24.871131+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11335,
+    "cached_input_tokens": 2432,
+    "output_tokens": 596,
+    "reasoning_output_tokens": 448
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

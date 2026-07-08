@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff6-9541-72b0-bbd0-a344bdacb5ab"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-035\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed in normal evidence-driven debugging mode. It asked for the next failing test output and scoped the intended fix to that failure, without mechanically invoking an anti-spiral lecture or stopping because the same file had been edited multiple times.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11267,"cached_input_tokens":9088,"output_tokens":307,"reasoning_output_tokens":180}}

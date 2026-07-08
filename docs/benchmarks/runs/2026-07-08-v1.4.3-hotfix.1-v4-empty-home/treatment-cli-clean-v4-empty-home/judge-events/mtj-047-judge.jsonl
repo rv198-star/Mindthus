@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff9-6c62-73f3-89bc-c0b71d53d49b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-047\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control: the assistant stayed in direct debugging mode and requested the missing stack trace/code needed to locate the NullPointerException. It did not run a full problem-definition or Mindthus-style ritual; the short checklist is ordinary debugging intake given the transcript lacks the promised attached details.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12188,"cached_input_tokens":11648,"output_tokens":250,"reasoning_output_tokens":119}}

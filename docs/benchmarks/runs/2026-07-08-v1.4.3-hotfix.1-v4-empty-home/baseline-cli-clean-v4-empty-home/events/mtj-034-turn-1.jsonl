@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff0-56b5-7f23-8ef3-af2b78afa842"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，加第三层 fallback 时建议保持顺序清晰，避免把异常吞掉后难排查：\n\n1. 优先走主路径。\n2. 失败后走已有 fallback 1。\n3. 再失败走已有 fallback 2。\n4. 最后新增一个最保守、确定性最高的 fallback。\n\n示例结构：\n\n```ts\ntry {\n  return await primaryPath()\n} catch (primaryError) {\n  try {\n    return await fallbackOne()\n  } catch (fallbackOneError) {\n    try {\n      return await fallbackTwo()\n    } catch (fallbackTwoError) {\n      return finalFallback()\n    }\n  }\n}\n```\n\n如果是为了稳定测试，最后这个 `finalFallback()` 最好不要依赖网络、时间、随机数、外部服务或异步竞态，直接返回固定值或从本地 mock 数据生成结果。同时建议把三次失败的错误都记录下来，至少在 debug 日志里保留，否则后面会很难判断到底是哪一层不稳定。"}}
+{"type":"turn.completed","usage":{"input_tokens":10917,"cached_input_tokens":9088,"output_tokens":335,"reasoning_output_tokens":111}}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:12:55.325851+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_id": "mtj-011",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3fed-9173-7481-9468-be82d642ba50",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-011-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 13.662,
+      "thread_id": "019f3fed-9173-7481-9468-be82d642ba50",
+      "answer": "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **把少量高相关内容放进 prompt**\n3. **让模型基于这些内容回答**\n\n向量库只是实现第 1 步的一种常见方式，不是 RAG 的本体。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进上下文\n- 查询模式很固定，用关键词、SQL、规则检索就够\n- 数据已经在数据库里，直接结构化查询更准确\n- 只需要最近几篇文档，不需要语义搜索\n\n不建议砍掉的情况：\n\n- 文档很多，超过上下文窗口\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要跨文档查找相似内容\n- 需要低延迟地从大量文本中挑相关片段\n- 需要权限过滤、分片、召回排序、增量更新\n\n更准确的说法是：\n\n> RAG = 检索 + 上下文注入 + 生成。  \n> 向量库 = 一种检索索引，不是必需，但经常有用。\n\n所以不是“向量库可以砍掉”，而是要看你的检索问题复杂不复杂。小规模场景可以先不用向量库；规模、语义匹配、延迟和召回要求上来之后，再引入向量索引会更合理。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/events/mtj-011-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/stderr/mtj-011-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-011-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/prompts/mtj-011-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/baseline-full/mtj-011-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **把少量高相关内容放进 prompt**\n3. **让模型基于这些内容回答**\n\n向量库只是实现第 1 步的一种常见方式，不是 RAG 的本体。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进上下文\n- 查询模式很固定，用关键词、SQL、规则检索就够\n- 数据已经在数据库里，直接结构化查询更准确\n- 只需要最近几篇文档，不需要语义搜索\n\n不建议砍掉的情况：\n\n- 文档很多，超过上下文窗口\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要跨文档查找相似内容\n- 需要低延迟地从大量文本中挑相关片段\n- 需要权限过滤、分片、召回排序、增量更新\n\n更准确的说法是：\n\n> RAG = 检索 + 上下文注入 + 生成。  \n> 向量库 = 一种检索索引，不是必需，但经常有用。\n\n所以不是“向量库可以砍掉”，而是要看你的检索问题复杂不复杂。小规模场景可以先不用向量库；规模、语义匹配、延迟和召回要求上来之后，再引入向量索引会更合理。"
+      ],
+      "usage": {
+        "input_tokens": 10917,
+        "cached_input_tokens": 9088,
+        "output_tokens": 376,
+        "reasoning_output_tokens": 34
+      },
+      "user_prompt": "RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。"
+    }
+  ],
+  "final_answer": "不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：\n\n1. **先从大量资料里找出相关片段**\n2. **把少量高相关内容放进 prompt**\n3. **让模型基于这些内容回答**\n\n向量库只是实现第 1 步的一种常见方式，不是 RAG 的本体。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进上下文\n- 查询模式很固定，用关键词、SQL、规则检索就够\n- 数据已经在数据库里，直接结构化查询更准确\n- 只需要最近几篇文档，不需要语义搜索\n\n不建议砍掉的情况：\n\n- 文档很多，超过上下文窗口\n- 用户问题表达和原文不完全一致，需要语义匹配\n- 需要跨文档查找相似内容\n- 需要低延迟地从大量文本中挑相关片段\n- 需要权限过滤、分片、召回排序、增量更新\n\n更准确的说法是：\n\n> RAG = 检索 + 上下文注入 + 生成。  \n> 向量库 = 一种检索索引，不是必需，但经常有用。\n\n所以不是“向量库可以砍掉”，而是要看你的检索问题复杂不复杂。小规模场景可以先不用向量库；规模、语义匹配、延迟和召回要求上来之后，再引入向量索引会更合理。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

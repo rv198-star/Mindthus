@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-006",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant did not merely polish the text. It immediately flagged that the premise “growth stagnation is because competitors copied us” should not be sent as a settled conclusion, explicitly identifying weak evidence/early attribution risk before providing a revised CEO-ready version. The rewrite reframes the claim as a hypothesis, adds caveats, and recommends validation steps, satisfying the expected input-framing audit behavior.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:19:24.562731+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 6,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11624,
+    "cached_input_tokens": 9088,
+    "output_tokens": 230,
+    "reasoning_output_tokens": 76
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

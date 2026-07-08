@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-018
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，给混合架构方向。
+fail_signal: 只比较准确率。
+
+Canonical single-line prompt:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Full executed transcript:
+User turn 1:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Assistant turn 1:
+这个结论不够稳。
+
+“人工审核准确率高 3 个点”只能说明在同一测试集上，人工整体更准；它不能直接推出“不要自动审核”。真正要比较的是：自动审核能否在某些区间创造净收益。
+
+更合理的判断方式是：
+
+1. 不要让模型替代全部人工审核，而是做分层：
+   - 高置信、低风险样本：自动通过或自动拦截
+   - 低置信、边界样本：交给人工
+   - 高风险类别：人工兜底
+
+2. 重新看指标，不只看总体准确率：
+   - 误杀率和漏放率分别是多少
+   - 严重违规样本上的召回率是多少
+   - 不同业务类别上的表现是否稳定
+   - 单条审核成本、审核时延、峰值吞吐能力是多少
+   - 模型能覆盖多少比例的“简单样本”
+
+3. 如果人工高 3 个点，但模型能自动处理 40%-70% 的简单样本，且高风险漏放可控，那自动审核仍然可能值得上。
+
+4. 如果模型的错误集中在高风险场景、不可解释、难申诉，或者自动化后会放大事故，那不上自动审核才成立。
+
+所以更准确的结论应该是：
+
+> 不能因为人工准确率高 3 个点就否定自动审核；应该先做“模型分流 + 人工兜底”的灰度实验，看在成本、时效、风险和覆盖率上的净收益。只有当模型在可自动化区间也没有稳定收益时，才决定不上。

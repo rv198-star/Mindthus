@@ -1,0 +1,13 @@
+可以。请把 CSV 内容贴出来，或告诉我文件名和是否有表头。
+
+如果你只是要命令行做法：
+
+```bash
+sort -t, -k2,2nr input.csv > output.csv
+```
+
+如果第一行是表头：
+
+```bash
+(head -n 1 input.csv && tail -n +2 input.csv | sort -t, -k2,2nr) > output.csv
+```

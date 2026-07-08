@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-041
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 names dominant owner and proceeds, 1 partial, 0 method stack.
+pass_criteria: 在薄产物/控制边界/定框三个切面中明确主导者（先审‘换模型’这个打包结论），单线推进。
+fail_signal: 三个角度各说一段。
+
+Canonical single-line prompt:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Full executed transcript:
+User turn 1:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Assistant turn 1:
+不一定。问题更像是“信息产品没人消费”，不一定是模型能力不够。
+
+先别急着换模型，建议先查 4 件事：
+
+1. **读者是谁**
+   月报是给老板、业务负责人、销售、产品，还是全员？不同人想看的不是“完整”，而是“和我有关”。
+
+2. **他们要拿它做什么决策**
+   如果月报只是罗列进展、数据、风险，读者可能觉得“看了也没法行动”。月报应该突出：本月发生了什么、影响什么、下月要谁拍板。
+
+3. **是不是太完整**
+   AI 很容易写成“面面俱到但没有重点”。没人看，常见原因不是内容少，而是结论埋得太深。
+
+4. **分发形式对不对**
+   很多人不会主动打开长文档。可以改成：
+   - 3 条管理层摘要
+   - 1 张关键指标图
+   - 3 个需要关注的问题
+   - 具体负责人和截止时间
+   - 原始完整月报作为附件
+
+更强模型可能会让文字更顺，但如果输入、结构、受众和场景没变，结果大概率还是“更漂亮的没人看”。
+
+我会优先做一个改版实验：把月报拆成 **一页决策版 + 附录完整版**，连续试两期，看打开率、转发率、评论数、会后引用次数有没有变化。若结构优化后仍然不行，再考虑模型、数据源或自动化深度。

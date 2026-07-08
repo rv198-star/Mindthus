@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-022",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确区分了“看好AI长期趋势”和“all-in单一AI创业公司股票”这个载体的脆弱性，指出选方向、选公司、估值、承受波动并不是同一件事。它覆盖了行业/公司/估值/个人财务风险、集中暴露和生存风险，并给出留应急金、用分散载体、限制单股仓位、分批买入、预设退出条件等承载方案。没有停留在AI趋势是否正确这一层。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:01.122425+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12534,
+    "cached_input_tokens": 11648,
+    "output_tokens": 349,
+    "reasoning_output_tokens": 154
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

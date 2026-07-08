@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff9-19d6-7363-aa50-3f1fb9ac1351"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-044\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The response directly answers the museum recommendation question with a concise list and practical notes. It does not introduce a Mindthus/framing-style analysis or over-methodized structure, so it satisfies the negative-control stay-asleep expectation.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12653,"cached_input_tokens":11648,"output_tokens":162,"reasoning_output_tokens":42}}

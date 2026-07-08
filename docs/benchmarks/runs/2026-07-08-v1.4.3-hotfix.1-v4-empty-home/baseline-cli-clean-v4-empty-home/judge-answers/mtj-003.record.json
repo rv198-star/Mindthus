@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-003",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": null,
+  "rationale": "Assistant directly provided an SSR migration checklist. It did not first ask for the target function such as SEO, first-screen performance, or team stack, and it did not challenge the premise that SPA being 'outdated' is a trend narrative being substituted for engineering criteria. The late caveat that full-site SSR may not be ideal is useful but insufficient because the response already accepted the framing and proceeded with migration steps.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:19:02.642406+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12170,
+    "cached_input_tokens": 2432,
+    "output_tokens": 228,
+    "reasoning_output_tokens": 70
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

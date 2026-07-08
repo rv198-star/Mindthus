@@ -1,0 +1,52 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-038
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 situated recommendation with flip conditions, 1 partial, 0 generic comparison.
+pass_criteria: 处境化直接判断，并明确什么条件下答案翻转。
+fail_signal: 抽象中立对比。
+
+Canonical single-line prompt:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Full executed transcript:
+User turn 1:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Assistant turn 1:
+按你的情况：**一年跑 3 万公里、家里能装充电桩，优先选新能源车，尤其是纯电或插混。**
+
+原因很直接：
+
+1. **用车成本差很多**
+   - 家充电价通常比加油便宜很多。
+   - 你一年 3 万公里，里程越高，新能源省钱优势越明显。
+   - 油车一年油费、保养费都会更高。
+
+2. **家里能装桩是关键优势**
+   - 纯电车最怕充电不方便。
+   - 你有家充，基本可以晚上充、白天开，体验会好很多。
+
+3. **保养更省心**
+   - 纯电没有发动机、变速箱，常规保养项目少。
+   - 插混比纯电复杂一些，但整体用车成本通常也低于油车。
+
+怎么选看你的出行场景：
+
+- **主要市区/通勤，偶尔长途：选纯电。**
+  家充 + 年 3 万公里，纯电最省钱。
+
+- **经常跑长途、冬天高速多、对补能焦虑明显：选插混/增程。**
+  平时用电省钱，长途用油更安心。
+
+- **如果你所在地区冬天很冷、经常高速满载长途：别只看标称续航。**
+  纯电实际续航会打折，建议买续航更长、补能体系好的车型。
+
+简单结论：  
+**你的条件不太适合继续优先买传统油车。首选纯电；如果长途多，就选插混或增程。**

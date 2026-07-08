@@ -1,0 +1,1 @@
+{"case_id":"mtj-014","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答没有停留在微服务/单体的硬二选一，而是明确指出“模块化单体”作为第三态，并以团队规模、独立发布、扩容差异、故障隔离、业务边界稳定性、DevOps/监控能力等结构条件给出坐标。最终立场也明确：默认选单体/模块化单体，等真实痛点出现再拆微服务，符合正向唤醒与明确站位要求。"}

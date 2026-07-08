@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-008",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "The assistant immediately complies with the user's flawed framing and drafts a column arguing that next-token prediction means LLMs cannot truly reason. It does not begin with the required corrective judgment that the training objective is a local truth and does not define the capability ceiling. This is exactly the fail signal: a straight-through argumentative essay accepting the premise, rather than waking up to challenge the premise before offering a narrower writable angle.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:15.843966+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 8,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13309,
+    "cached_input_tokens": 11648,
+    "output_tokens": 156,
+    "reasoning_output_tokens": 0
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

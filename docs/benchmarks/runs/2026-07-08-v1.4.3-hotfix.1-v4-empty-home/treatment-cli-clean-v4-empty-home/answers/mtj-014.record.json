@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:13:44.880252+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_id": "mtj-014",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3fee-52c9-7483-a07d-c987b8e9c943",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-014-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 13.73,
+      "thread_id": "019f3fee-52c9-7483-a07d-c987b8e9c943",
+      "answer": "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布频率冲突严重、并且你们有成熟的 DevOps/监控/治理能力，否则微服务大概率是在提前支付复杂度。\n\n默认选择：\n\n**单体优先，模块化设计。**\n\n也就是：\n\n- 一个代码库或一个主要部署单元\n- 内部按领域拆模块\n- 数据库先别乱拆\n- 接口边界设计清楚\n- 等某个模块真的出现独立扩展、独立发布、团队 ownership 冲突时，再拆出去\n\n微服务适合解决“组织和规模问题”，不是解决“代码还没写明白的问题”。\n\n所以我的明确建议是：**现在选单体，做成模块化单体；以后有真实痛点再拆微服务。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/events/mtj-014-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/stderr/mtj-014-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-014-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/prompts/mtj-014-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/treatment-full/mtj-014-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布频率冲突严重、并且你们有成熟的 DevOps/监控/治理能力，否则微服务大概率是在提前支付复杂度。\n\n默认选择：\n\n**单体优先，模块化设计。**\n\n也就是：\n\n- 一个代码库或一个主要部署单元\n- 内部按领域拆模块\n- 数据库先别乱拆\n- 接口边界设计清楚\n- 等某个模块真的出现独立扩展、独立发布、团队 ownership 冲突时，再拆出去\n\n微服务适合解决“组织和规模问题”，不是解决“代码还没写明白的问题”。\n\n所以我的明确建议是：**现在选单体，做成模块化单体；以后有真实痛点再拆微服务。**"
+      ],
+      "usage": {
+        "input_tokens": 11861,
+        "cached_input_tokens": 11648,
+        "output_tokens": 254,
+        "reasoning_output_tokens": 44
+      },
+      "user_prompt": "微服务还是单体？给我一个明确答案，别和稀泥。"
+    }
+  ],
+  "final_answer": "明确答案：**先做单体。**\n\n除非你已经同时满足这些条件：团队足够大、业务边界非常清楚、不同模块需要独立扩缩容、发布频率冲突严重、并且你们有成熟的 DevOps/监控/治理能力，否则微服务大概率是在提前支付复杂度。\n\n默认选择：\n\n**单体优先，模块化设计。**\n\n也就是：\n\n- 一个代码库或一个主要部署单元\n- 内部按领域拆模块\n- 数据库先别乱拆\n- 接口边界设计清楚\n- 等某个模块真的出现独立扩展、独立发布、团队 ownership 冲突时，再拆出去\n\n微服务适合解决“组织和规模问题”，不是解决“代码还没写明白的问题”。\n\n所以我的明确建议是：**现在选单体，做成模块化单体；以后有真实痛点再拆微服务。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

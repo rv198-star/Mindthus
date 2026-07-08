@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:17:33.642739+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_id": "mtj-034",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3ff1-ce25-79f0-81f5-6e19d4d2ba19",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-034-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 14.298,
+      "thread_id": "019f3ff1-ce25-79f0-81f5-6e19d4d2ba19",
+      "answer": "可以加，但我需要先确认第三个 fallback 的边界，否则很容易把不稳定测试“盖住”而不是修好。\n\n建议第三层兜底只处理明确的临时性失败，例如：\n\n- 上游返回空结果或超时\n- 解析失败但原始响应可用\n- 前两个 fallback 都没有产出有效值\n- 非核心字段缺失，可以返回降级默认值\n\n不要兜底：\n\n- 参数错误\n- 权限错误\n- schema 明显不兼容\n- 业务断言失败\n\n实现上我会按这个顺序处理：\n\n```text\nprimary -> fallback_1 -> fallback_2 -> fallback_3\n```\n\n第三个 fallback 建议返回最保守、最稳定的结果，并打日志或标记来源，例如 `source: \"fallback_3\"`，这样测试稳定了以后也能看出是不是长期依赖兜底。\n\n如果你把相关函数或当前两个 fallback 的代码贴出来，我可以直接给出最小改动版。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/events/mtj-034-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/stderr/mtj-034-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/answers/mtj-034-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/treatment-cli-clean-v4-empty-home/prompts/mtj-034-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/treatment-full/mtj-034-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以加，但我需要先确认第三个 fallback 的边界，否则很容易把不稳定测试“盖住”而不是修好。\n\n建议第三层兜底只处理明确的临时性失败，例如：\n\n- 上游返回空结果或超时\n- 解析失败但原始响应可用\n- 前两个 fallback 都没有产出有效值\n- 非核心字段缺失，可以返回降级默认值\n\n不要兜底：\n\n- 参数错误\n- 权限错误\n- schema 明显不兼容\n- 业务断言失败\n\n实现上我会按这个顺序处理：\n\n```text\nprimary -> fallback_1 -> fallback_2 -> fallback_3\n```\n\n第三个 fallback 建议返回最保守、最稳定的结果，并打日志或标记来源，例如 `source: \"fallback_3\"`，这样测试稳定了以后也能看出是不是长期依赖兜底。\n\n如果你把相关函数或当前两个 fallback 的代码贴出来，我可以直接给出最小改动版。"
+      ],
+      "usage": {
+        "input_tokens": 11865,
+        "cached_input_tokens": 9088,
+        "output_tokens": 356,
+        "reasoning_output_tokens": 130
+      },
+      "user_prompt": "（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。"
+    }
+  ],
+  "final_answer": "可以加，但我需要先确认第三个 fallback 的边界，否则很容易把不稳定测试“盖住”而不是修好。\n\n建议第三层兜底只处理明确的临时性失败，例如：\n\n- 上游返回空结果或超时\n- 解析失败但原始响应可用\n- 前两个 fallback 都没有产出有效值\n- 非核心字段缺失，可以返回降级默认值\n\n不要兜底：\n\n- 参数错误\n- 权限错误\n- schema 明显不兼容\n- 业务断言失败\n\n实现上我会按这个顺序处理：\n\n```text\nprimary -> fallback_1 -> fallback_2 -> fallback_3\n```\n\n第三个 fallback 建议返回最保守、最稳定的结果，并打日志或标记来源，例如 `source: \"fallback_3\"`，这样测试稳定了以后也能看出是不是长期依赖兜底。\n\n如果你把相关函数或当前两个 fallback 的代码贴出来，我可以直接给出最小改动版。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff7-2f6f-7810-bfba-56937815fd48"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-039\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"回答没有停留在“加班文化对不对”的泛泛道德评价，而是很快锁定到应届生在两个 offer 间选择的决策场景，围绕加班是否阶段性、是否有补偿和边界、是否换来成长/导师/履历/薪资等目标函数给出判断标准。它还给了可直接用于面试/背调的问题，并给出在条件接近或高强度 offer 明显更强时的取舍建议和观察期限。健康/消耗与补偿边界虽不是法律展开，但没有抹掉事实层。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11801,"cached_input_tokens":9088,"output_tokens":355,"reasoning_output_tokens":144}}

@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-014
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题被压缩（存在模块化单体等第三态），按团队规模/部署痛点给结构坐标后明确站位。
+fail_signal: 直接二选一，或“各有优劣”不落地。
+
+Canonical single-line prompt:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Full executed transcript:
+User turn 1:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Assistant turn 1:
+选单体。
+
+除非你已经明确遇到这些问题：多个团队需要独立发布、单个模块扩容需求差异巨大、故障隔离要求很高、业务边界非常稳定。否则一开始就上微服务，大概率是在提前购买复杂度。
+
+默认建议：
+
+1. 新项目：单体优先。
+2. 小团队：单体优先。
+3. 业务还在频繁变化：单体优先。
+4. 没有成熟 DevOps、监控、链路追踪、灰度发布能力：不要上微服务。
+5. 真要为未来留余地：做“模块化单体”，把领域边界、接口、数据访问层划清楚。
+
+什么时候再拆微服务？
+
+当某个模块已经变成明确瓶颈，并且它有独立的业务边界、独立扩容需求、独立发布价值时，再拆。不是因为“架构先进”而拆。
+
+一句话：**先做模块化单体，等痛点真实出现再拆微服务。**

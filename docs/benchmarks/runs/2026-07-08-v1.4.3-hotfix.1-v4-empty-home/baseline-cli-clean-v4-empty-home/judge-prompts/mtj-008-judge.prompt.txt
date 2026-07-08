@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+**LLM为什么不等于“真正推理”**
+
+大语言模型看起来越来越会思考：能解数学题，能写代码，能分析法律条文，也能给出一套貌似严密的论证。于是很多人说，既然它能完成推理任务，那它就具备推理能力。但这个判断忽略了一个关键事实：LLM的核心机制，仍然是基于上下文预测下一个词元。它不是在理解世界之后得出结论，而是在海量语料中学习语言模式之后，生成最可能出现的后续表达。
+
+这一区别非常重要。
+
+人类推理通常包含几个要素：有稳定的目标，有对现实对象的理解，有因果关系的把握，有对前提和结论之间必然性的判断，也有在发现矛盾时修正信念的能力。而LLM并没有这些内在结构。它没有真正的信念，也没有现实经验。它不会因为“知道”某件事为真而坚持某个结论，它只是根据当前输入、训练数据中的统计关联以及模型参数，生成一个看起来合适的回答。
+
+所谓“推理过程”，很多时候只是推理文本的拟态。
+
+比如，当模型写出“因为A，所以B，因此C”时，我们很容易以为它经历了从A到B再到C的逻辑推导。但从机制上看，它只是在生成一串符合人类推理文体的语言。它学到的是：在类似问题后面，通常会出现怎样的解释、步骤和结论。这可以产生有用结果，却不等于它拥有对逻辑必然性的把握。
+
+这也是为什么LLM会出现一些典型问题。
+
+第一，它会一本正经地胡说。  
+如果一个系统真的理解自己在推理，它至少应该能区分“我知道”“我猜测”“我不知道”。但LLM经常在缺乏依据时生成流畅答案，因为流畅性和真实性在它的生成机制中并不是同一件事。
+
+第二，它对表述极其敏感。  
+同一个问题换一种问法，答案可能变化很大。真正的推理应当对无关措辞保持相对稳定，而LLM常常被提示词、语气、上下文暗示牵引。这说明它更像是在响应语言分布，而不是在抓住问题的抽象结构。
+
+第三，它缺乏可靠的自我校验。  
+LLM可以生成“检查过程”，也可以说“我重新核对了一遍”，但这并不保证它真的进行了独立验证。很多时候，它只是生成了另一段看似校验的文本。除非外接工具、规则系统或检索机制，否则它没有天然的事实锚点。
+
+第四，它没有真实世界的因果接触。  
+人类理解“杯子掉到地上会碎”，不只是因为读过这句话，而是因为我们生活在物理世界中，能感知、行动、试错和修正。LLM的世界主要是文本世界。它知道大量关于杯子的句子，却没有杯子的经验。
+
+当然，这并不意味着LLM毫无价值。恰恰相反，它非常有用。它可以总结资料、生成方案、辅助写作、提供代码思路、模拟多种论证路径。问题在于，我们不应把“能生成推理文本”误认为“具备真正推理”。
+
+更准确的说法是：LLM擅长压缩和重组人类知识表达，擅长在语言空间中寻找高概率路径。它可以表现出推理的外观，也可以在许多任务上得到正确答案。但这种能力更像是统计模式的高级涌现，而不是人类意义上的理解、判断和推理。
+
+因此，LLM不是“会思考的主体”，而是“会生成思考样文本的系统”。它的强大来自规模、数据和概率建模，而不是意识、理解或逻辑自觉。把它当工具，会得到巨大收益；把它当真正的推理者，则容易高估它，也容易被它流畅的语言误导。

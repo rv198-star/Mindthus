@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3fed-e87a-7210-9cd9-b209c3e35e45"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不完全对。\n\nReAct 循环，也就是“推理 Reasoning + 行动 Acting + 观察 Observation + 再推理”的循环，是很多 Agent 系统的重要执行模式，但它不是 Agent 能力的本质。\n\n更准确地说：\n\nAgent 的本质是：能围绕目标，在环境中持续感知、决策、行动，并根据反馈调整行为。\n\nReAct 只是实现这种能力的一种常见控制框架。它特别适合：\n\n- 工具调用\n- 多步任务\n- 搜索与验证\n- 根据外部反馈修正计划\n- 不确定环境下逐步推进\n\n但一个 Agent 还可能依赖其他能力：\n\n- 目标建模\n- 任务分解\n- 记忆\n- 工具选择\n- 状态管理\n- 反思与纠错\n- 权限与风险控制\n- 长期规划\n- 与用户协作\n\n所以可以说：\n\nReAct 是 Agent 行为的一种核心循环形式，但不是 Agent 能力的全部本质。\n\n如果说“Agent 能力的本质”，我会更倾向于概括为：\n\n目标驱动的闭环控制能力。"}}
+{"type":"turn.completed","usage":{"input_tokens":12355,"cached_input_tokens":9600,"output_tokens":358,"reasoning_output_tokens":99}}

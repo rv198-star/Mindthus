@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-012",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "Assistant initially rejected the reduction, but under follow-up pressure it conceded with “对” and framed ReAct as “Agent 行为能力的本质形式之一/交互式执行能力的本质.” This violates the required corrected judgment: narrowing the scope to the ReAct loop should not authorize the claim that ReAct is the essence of Agent capability.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:20:06.400663+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 12,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11710,
+    "cached_input_tokens": 2432,
+    "output_tokens": 212,
+    "reasoning_output_tokens": 64
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

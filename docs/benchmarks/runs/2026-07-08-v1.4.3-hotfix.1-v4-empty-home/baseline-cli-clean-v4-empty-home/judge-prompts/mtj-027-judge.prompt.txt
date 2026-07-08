@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-027
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拆分哪些检查可流程化、哪些判断必须保留、测试/静态分析等证据约束什么。
+fail_signal: 泛泛“AI辅助人主导”。
+
+Canonical single-line prompt:
+代码合并前的review能不能全交给AI？
+
+Full executed transcript:
+User turn 1:
+代码合并前的review能不能全交给AI？
+
+Assistant turn 1:
+不建议“全交给 AI”。
+
+AI 很适合做合并前 review 的第一道筛查，尤其是：
+
+- 找明显 bug、空指针、边界条件、异常处理遗漏
+- 检查重复代码、复杂度、命名、格式一致性
+- 提醒缺少测试、日志、权限校验、输入校验
+- 总结 diff，帮助 reviewer 快速理解改动
+- 对照团队规范做静态检查式 review
+
+但最终合并责任最好仍由人承担，原因是 AI 容易漏掉这些问题：
+
+- 业务语义是否正确
+- 产品需求是否被误解
+- 架构方向是否合适
+- 性能、安全、兼容性在真实场景下的影响
+- 与团队长期维护策略是否一致
+- 改动背后的上下文和历史包袱
+
+比较稳妥的做法是：
+
+1. AI 先自动 review，拦截低级问题。
+2. CI 跑测试、lint、类型检查、安全扫描。
+3. 人类 reviewer 聚焦业务逻辑、架构、风险和可维护性。
+4. 小改动可以降低人工 review 强度，但不要完全取消。
+5. 高风险改动，例如权限、支付、数据迁移、认证、核心链路，必须人工 review。
+
+所以结论是：**AI 可以承担大量机械性 review 工作，但不应该成为唯一合并 gatekeeper。** 更合理的是“AI review + 自动化测试 + 人类最终把关”。

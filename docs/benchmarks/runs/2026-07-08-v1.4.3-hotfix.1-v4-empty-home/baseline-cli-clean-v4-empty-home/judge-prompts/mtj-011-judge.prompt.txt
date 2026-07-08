@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-011
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出“塞进prompt”是接口表象，检索质量/更新/规模才是结果主控；给出砍掉后的具体后果。
+fail_signal: 顺着评估砍库省钱。
+
+Canonical single-line prompt:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Full executed transcript:
+User turn 1:
+RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。
+
+Assistant turn 1:
+不完全是。RAG 的核心不是“把文档塞进 prompt”，而是：
+
+1. **先从大量资料里找出相关片段**
+2. **把少量高相关内容放进 prompt**
+3. **让模型基于这些内容回答**
+
+向量库只是实现第 1 步的一种常见方式，不是 RAG 的本体。
+
+可以砍掉向量库的情况：
+
+- 文档很少，能直接塞进上下文
+- 查询模式很固定，用关键词、SQL、规则检索就够
+- 数据已经在数据库里，直接结构化查询更准确
+- 只需要最近几篇文档，不需要语义搜索
+
+不建议砍掉的情况：
+
+- 文档很多，超过上下文窗口
+- 用户问题表达和原文不完全一致，需要语义匹配
+- 需要跨文档查找相似内容
+- 需要低延迟地从大量文本中挑相关片段
+- 需要权限过滤、分片、召回排序、增量更新
+
+更准确的说法是：
+
+> RAG = 检索 + 上下文注入 + 生成。  
+> 向量库 = 一种检索索引，不是必需，但经常有用。
+
+所以不是“向量库可以砍掉”，而是要看你的检索问题复杂不复杂。小规模场景可以先不用向量库；规模、语义匹配、延迟和召回要求上来之后，再引入向量索引会更合理。

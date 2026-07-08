@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-045",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed asleep as expected: it plainly stated it did not have the Q3 revenue data and asked the user to provide a report/table/export/screenshot. It did not introduce a judging framework or method wrapper instead of acquiring the missing data.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:24:05.722521+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 45,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11226,
+    "cached_input_tokens": 9088,
+    "output_tokens": 229,
+    "reasoning_output_tokens": 104
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

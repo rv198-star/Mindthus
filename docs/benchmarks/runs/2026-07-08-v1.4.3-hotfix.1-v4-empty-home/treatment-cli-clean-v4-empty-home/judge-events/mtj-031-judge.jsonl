@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff7-c169-72e0-bd6e-680b65015441"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control stayed routed to release review rather than triggering a TVG/product-strengthening loop from the word audit. The response identified the missing review object, reported concrete verification evidence from the workspace/git check, and framed the continuation around release-review concerns such as blocking issues, regression risk, compatibility, config/migration risk, and test gaps.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12247,"cached_input_tokens":11648,"output_tokens":231,"reasoning_output_tokens":88}}

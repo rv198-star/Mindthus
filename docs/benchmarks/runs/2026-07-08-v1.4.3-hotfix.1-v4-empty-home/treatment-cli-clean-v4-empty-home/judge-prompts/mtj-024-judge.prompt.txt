@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-024
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 时机/可选性/触发条件分析（何种信号出现再承诺），而非趋势复读。
+fail_signal: 用“趋势对”推“现在辞”。
+
+Canonical single-line prompt:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Full executed transcript:
+User turn 1:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Assistant turn 1:
+不建议只因为“公司迟早转型 AI”就现在辞职创业。AI 方向值得押能力，但“立刻辞职创业”是把收入、履历、现金流和试错空间一次性押到一个很脆弱的载体上。
+
+更稳的判断是：
+
+1. **该转向 AI，但不一定该辞职。**  
+   你现在最该做的是把自己变成“能用 AI 解决真实业务问题的人”，而不是先把身份换成创业者。
+
+2. **先验证创业命题，不要验证勇气。**  
+   辞职前至少要有：明确客户、真实痛点、有人愿意付钱、你有独特优势、能做出最小产品、现金流能撑 12 个月以上。
+
+3. **如果只是焦虑公司会变革，辞职大概率太早。**  
+   更好的动作是：在公司内抢 AI 项目、做自动化工具、接近业务场景、积累行业数据和客户洞察。很多创业机会来自这些缝隙。
+
+4. **可以设一个 90 天门槛。**  
+   下班后做一个 AI 小产品或服务，找 20 个潜在客户聊，拿到 3 个明确付费意向或 1 个真实付费客户，再考虑是否半职/辞职。
+
+一句话：**方向上要主动转 AI，行动上先小额下注；除非你已经有客户、现金缓冲和清晰切入点，否则现在辞职创业不是最优解。**

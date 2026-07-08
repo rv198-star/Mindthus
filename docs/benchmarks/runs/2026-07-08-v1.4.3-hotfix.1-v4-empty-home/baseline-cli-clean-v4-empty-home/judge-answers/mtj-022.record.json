@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-022",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有停留在“AI趋势对不对”，而是明确区分了长期AI主线可能成立与单一创业公司股票这一载体的公司、估值、现金流、竞争等脆弱性，并指出“看对行业不等于买对公司和价格”。同时识别了积蓄、all-in、单只股票带来的暴露集中和承诺风险，给出应急资金、短期资金隔离、单股仓位5%-10%、ETF/龙头/宽基分散、分批买入和退出规则等承载方案，符合正向唤醒标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:18.060225+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 22,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11477,
+    "cached_input_tokens": 9088,
+    "output_tokens": 374,
+    "reasoning_output_tokens": 161
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

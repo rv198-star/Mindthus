@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3fed-e87a-7210-9cd9-b209c3e35e45"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"如果只讨论 ReAct 循环本身，也不能说它“就是 Agent 能力的本质”。\n\n更准确地说：\n\nReAct 循环体现了 Agent 能力中的一个核心机制：在“思考、行动、观察反馈”之间形成闭环。\n\n它抓住的是 Agent 不同于一次性问答模型的关键特征：不是只生成答案，而是能边做边看结果，再调整下一步。\n\n但“本质”这个说法太强。因为 ReAct 描述的是一种行动控制循环，不等于能力本身。能力还包括循环里每一步的质量：怎么判断、怎么选动作、怎么理解观察结果、什么时候停止、怎么纠错。\n\n所以结论是：\n\nReAct 循环不是 Agent 能力的全部本质，但它是 Agent 能力最典型、最核心的表现形式之一。"}}
+{"type":"turn.completed","usage":{"input_tokens":25392,"cached_input_tokens":21760,"output_tokens":565,"reasoning_output_tokens":115}}

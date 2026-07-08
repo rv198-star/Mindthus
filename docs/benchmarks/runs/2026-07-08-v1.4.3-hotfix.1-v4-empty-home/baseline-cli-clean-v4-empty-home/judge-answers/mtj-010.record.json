@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-010",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有照写用户的错误结论，明确指出投放贡献高只说明付费获客依赖较高，不等于产品没价值，并把产品价值验证转向留存、复购、转介绍、活跃、转化等结果指标，体现了获客来源与后续结果指标的区分。但它没有写明如果按“增长本质是买来的/买量论”去优化会造成什么具体偏移，例如预算和归因过度向投放倾斜、忽视产品留存和转化、误判渠道用户质量等，因此只部分满足通过标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:19:55.246795+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 10,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11438,
+    "cached_input_tokens": 2432,
+    "output_tokens": 326,
+    "reasoning_output_tokens": 117
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-038",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答基于用户的一年3万公里和可装家充桩给出直接判断：优先新能源，首选纯电；并明确在经常长途、冬季高速多、补能焦虑或寒冷地区等条件下会转向插混/增程或谨慎选择纯电。不是抽象中立对比。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:12.947361+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 38,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11559,
+    "cached_input_tokens": 9088,
+    "output_tokens": 213,
+    "reasoning_output_tokens": 60
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-024",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "回答没有用“公司会转 AI”直接推出“现在辞职”，而是明确区分方向转向与载体承诺，分析了辞职创业会集中暴露现金流、履历和试错空间风险，并给出承诺前的触发条件：明确客户、真实痛点、付费意向/真实付费、MVP、独特优势、12 个月现金流，以及 90 天验证门槛。这符合 MPG 所要求的时机、可选性和何种信号出现再承诺的判断。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:15.891151+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12465,
+    "cached_input_tokens": 2432,
+    "output_tokens": 308,
+    "reasoning_output_tokens": 112
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

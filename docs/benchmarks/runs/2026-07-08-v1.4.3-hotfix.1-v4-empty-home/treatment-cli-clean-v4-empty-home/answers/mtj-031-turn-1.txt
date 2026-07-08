@@ -1,0 +1,9 @@
+没法完成这次 release audit：当前工作区 `/private/tmp/mindthus-benchmark-workspace-v4` 不是 Git 仓库，也没有可审的文件、补丁、release 包或嵌套仓库。
+
+我已确认：
+
+- `git status` 返回：`fatal: not a git repository`
+- 当前目录下没有 `.git`
+- 当前目录下没有可见文件
+
+请把这次 release 的 PR diff、commit range、patch 文件，或代码仓库放到工作区后，我可以按发布审查方式继续看：阻塞问题、回归风险、兼容性、配置/迁移风险和测试缺口。

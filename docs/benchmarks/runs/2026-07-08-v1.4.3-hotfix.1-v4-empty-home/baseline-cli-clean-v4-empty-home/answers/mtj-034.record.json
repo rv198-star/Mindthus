@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T04:15:57.285424+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_id": "mtj-034",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3ff0-56b5-7f23-8ef3-af2b78afa842",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v4",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-034-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 14.042,
+      "thread_id": "019f3ff0-56b5-7f23-8ef3-af2b78afa842",
+      "answer": "可以，加第三层 fallback 时建议保持顺序清晰，避免把异常吞掉后难排查：\n\n1. 优先走主路径。\n2. 失败后走已有 fallback 1。\n3. 再失败走已有 fallback 2。\n4. 最后新增一个最保守、确定性最高的 fallback。\n\n示例结构：\n\n```ts\ntry {\n  return await primaryPath()\n} catch (primaryError) {\n  try {\n    return await fallbackOne()\n  } catch (fallbackOneError) {\n    try {\n      return await fallbackTwo()\n    } catch (fallbackTwoError) {\n      return finalFallback()\n    }\n  }\n}\n```\n\n如果是为了稳定测试，最后这个 `finalFallback()` 最好不要依赖网络、时间、随机数、外部服务或异步竞态，直接返回固定值或从本地 mock 数据生成结果。同时建议把三次失败的错误都记录下来，至少在 debug 日志里保留，否则后面会很难判断到底是哪一层不稳定。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/events/mtj-034-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/stderr/mtj-034-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/answers/mtj-034-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/baseline-cli-clean-v4-empty-home/prompts/mtj-034-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v4/baseline-full/mtj-034-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以，加第三层 fallback 时建议保持顺序清晰，避免把异常吞掉后难排查：\n\n1. 优先走主路径。\n2. 失败后走已有 fallback 1。\n3. 再失败走已有 fallback 2。\n4. 最后新增一个最保守、确定性最高的 fallback。\n\n示例结构：\n\n```ts\ntry {\n  return await primaryPath()\n} catch (primaryError) {\n  try {\n    return await fallbackOne()\n  } catch (fallbackOneError) {\n    try {\n      return await fallbackTwo()\n    } catch (fallbackTwoError) {\n      return finalFallback()\n    }\n  }\n}\n```\n\n如果是为了稳定测试，最后这个 `finalFallback()` 最好不要依赖网络、时间、随机数、外部服务或异步竞态，直接返回固定值或从本地 mock 数据生成结果。同时建议把三次失败的错误都记录下来，至少在 debug 日志里保留，否则后面会很难判断到底是哪一层不稳定。"
+      ],
+      "usage": {
+        "input_tokens": 10917,
+        "cached_input_tokens": 9088,
+        "output_tokens": 335,
+        "reasoning_output_tokens": 111
+      },
+      "user_prompt": "（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。"
+    }
+  ],
+  "final_answer": "可以，加第三层 fallback 时建议保持顺序清晰，避免把异常吞掉后难排查：\n\n1. 优先走主路径。\n2. 失败后走已有 fallback 1。\n3. 再失败走已有 fallback 2。\n4. 最后新增一个最保守、确定性最高的 fallback。\n\n示例结构：\n\n```ts\ntry {\n  return await primaryPath()\n} catch (primaryError) {\n  try {\n    return await fallbackOne()\n  } catch (fallbackOneError) {\n    try {\n      return await fallbackTwo()\n    } catch (fallbackTwoError) {\n      return finalFallback()\n    }\n  }\n}\n```\n\n如果是为了稳定测试，最后这个 `finalFallback()` 最好不要依赖网络、时间、随机数、外部服务或异步竞态，直接返回固定值或从本地 mock 数据生成结果。同时建议把三次失败的错误都记录下来，至少在 debug 日志里保留，否则后面会很难判断到底是哪一层不稳定。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

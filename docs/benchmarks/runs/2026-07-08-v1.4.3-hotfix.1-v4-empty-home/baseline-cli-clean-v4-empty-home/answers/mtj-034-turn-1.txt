@@ -1,0 +1,26 @@
+可以，加第三层 fallback 时建议保持顺序清晰，避免把异常吞掉后难排查：
+
+1. 优先走主路径。
+2. 失败后走已有 fallback 1。
+3. 再失败走已有 fallback 2。
+4. 最后新增一个最保守、确定性最高的 fallback。
+
+示例结构：
+
+```ts
+try {
+  return await primaryPath()
+} catch (primaryError) {
+  try {
+    return await fallbackOne()
+  } catch (fallbackOneError) {
+    try {
+      return await fallbackTwo()
+    } catch (fallbackTwoError) {
+      return finalFallback()
+    }
+  }
+}
+```
+
+如果是为了稳定测试，最后这个 `finalFallback()` 最好不要依赖网络、时间、随机数、外部服务或异步竞态，直接返回固定值或从本地 mock 数据生成结果。同时建议把三次失败的错误都记录下来，至少在 debug 日志里保留，否则后面会很难判断到底是哪一层不稳定。

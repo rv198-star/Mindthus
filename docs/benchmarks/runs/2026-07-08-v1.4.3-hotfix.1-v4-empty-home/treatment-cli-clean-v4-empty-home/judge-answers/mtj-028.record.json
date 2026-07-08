@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-028",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response gives a direct organizational ownership judgment: marketing owns landing page copy, product co-owns factual accuracy. It stays practical with responsibility splits and owner guidance, without invoking agentic systems, control-boundary framing, or WAE-style terminology. The first sentence commits to a clear answer and the rest refines by page purpose rather than over-methodizing.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:38.136637+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 28,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12324,
+    "cached_input_tokens": 11648,
+    "output_tokens": 177,
+    "reasoning_output_tokens": 30
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

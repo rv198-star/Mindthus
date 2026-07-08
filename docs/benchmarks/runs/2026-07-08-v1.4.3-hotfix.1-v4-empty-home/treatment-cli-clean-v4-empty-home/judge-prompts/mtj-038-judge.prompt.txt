@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-038
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 situated recommendation with flip conditions, 1 partial, 0 generic comparison.
+pass_criteria: 处境化直接判断，并明确什么条件下答案翻转。
+fail_signal: 抽象中立对比。
+
+Canonical single-line prompt:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Full executed transcript:
+User turn 1:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Assistant turn 1:
+你的情况：**一年 3 万公里 + 家里能装充电桩，优先选新能源，尤其是纯电车。**
+
+核心原因是使用成本差距很大：
+
+- **电车家充**：百公里约 12-18 度电，按家用电约 0.5-0.7 元/度，约 **6-13 元/百公里**
+- **油车**：百公里 6-8 升，按 8 元/升，约 **48-64 元/百公里**
+- 你一年 3 万公里，电费和油费一年可能差 **1 万到 1.5 万元以上**
+
+再加上电车保养便宜，没有机油、变速箱油、火花塞这些常规项目，跑得越多越划算。
+
+但有几个前提：
+
+- 如果你经常单程 500 公里以上长途、冬天极寒地区多、高速占比特别高，纯电体验会打折
+- 如果你只有一辆车，又经常不确定路线长途，可以考虑**插混/增程**
+- 如果日常通勤和城市周边为主，家充方便，**纯电最合适**
+
+简单结论：
+
+**家里能装桩、年跑 3 万公里：纯电车大概率比油车更合适。**  
+除非你长途特别多或所在地区冬季很冷，否则不太建议再买传统油车。

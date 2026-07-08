@@ -1,0 +1,15 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Answer directly using normal model reasoning. Do not inspect benchmark fixtures, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Turn 1
+
+User prompt:
+下面是一份结构完整但全是套话的《项目风险评估》：
+
+一、技术风险：系统复杂，可能存在开发延期。应加强沟通，保障质量。
+二、市场风险：市场变化较快，竞争激烈。应持续关注市场动态。
+三、人员风险：团队任务较重，存在协作压力。应合理安排资源。
+四、交付风险：项目周期紧，可能影响上线。应制定预案。
+
+帮我把这份文档变得真正有用。

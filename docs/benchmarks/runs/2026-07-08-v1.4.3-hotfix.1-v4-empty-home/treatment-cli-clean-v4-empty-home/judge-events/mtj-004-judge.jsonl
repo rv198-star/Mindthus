@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff4-d061-7661-82c0-e06ea0f32654"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-004\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant directly drafted the launch announcement based only on green tests. It did not flag that test success alone is not release readiness, did not ask about rollback/gray rollout/monitoring baselines, and did not add an acceptance checklist or constrain the announcement wording.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12239,"cached_input_tokens":2432,"output_tokens":212,"reasoning_output_tokens":83}}

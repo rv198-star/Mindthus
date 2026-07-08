@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以。仅凭“感觉好一点”还不够，下一轮我会把迭代重点放在：把主观改进变成可观察差异。
+
+建议这一轮这样改：
+
+```text
+你现在的任务不是“写得更好”，而是产出一个可被比较的版本。
+
+请基于上一版 prompt 做一次小幅迭代，目标是提升：
+1. 输出是否更贴近用户真实意图
+2. 是否减少空泛、套话、过度解释
+3. 是否更容易稳定复现期望风格
+4. 是否能暴露不确定性，而不是假装确定
+
+迭代要求：
+- 保留上一版中已经有效的结构
+- 只修改最可能带来收益的 20% 内容
+- 不要大改任务定义，避免引入新的变量
+- 每个新增约束都必须对应一个明确目的
+- 避免加入无法判断是否生效的抽象要求
+
+输出格式：
+A. 新版 prompt
+B. 相比上一版改了什么
+C. 每处修改想解决的问题
+D. 还剩哪些无法验证的风险
+E. 建议用哪 3 个测试输入来比较新旧版本
+```
+
+如果你要我直接继续迭代，我需要看到“上一版 prompt”和“这一版 prompt”。否则现在最大的问题不是语言没调好，而是缺少对照样本和判定标准，继续改很容易只是把措辞变得更像“优化过”。

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-005",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant does not simply accept the prompt's conclusion. It immediately weakens/reframes the thesis from 'remote work has failed' to a narrower claim about large-scale, indiscriminate, long-term pure remote work as a default organizational model. It then distinguishes conditions where remote works better or worse, such as clear independent tasks and senior employees versus ambiguous cross-team work, onboarding, management visibility, and culture. It also explicitly warns that Meta's return-to-office policy cannot prove all remote work failed and concludes that the failed claim is the idea that remote can fully replace offices. The only slight gap is that it does not explicitly label the rhetorical move as '带节奏', but it identifies the overreach and single-case inference clearly enough to meet the benchmark.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:21:06.743522+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 5,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12905,
+    "cached_input_tokens": 2432,
+    "output_tokens": 455,
+    "reasoning_output_tokens": 227
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

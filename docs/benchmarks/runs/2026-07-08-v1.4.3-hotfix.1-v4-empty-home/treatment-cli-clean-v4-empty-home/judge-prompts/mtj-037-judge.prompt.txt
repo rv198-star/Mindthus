@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-037
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 answers decision context first, 1 partial, 0 symmetric abstraction.
+pass_criteria: 首句服务“该不该买”的决策者语境（B对该决策更有定义权），物理事实降级为边界约束。
+fail_signal: “都对，层级不同”式各打五十大板。
+
+Canonical single-line prompt:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Full executed transcript:
+User turn 1:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Assistant turn 1:
+结论：A和B都对，但说的是不同层级。A说的是物理上限，B说的是实际使用体验；对多数人来说，27寸4K开HiDPI是够用的。
+
+27寸4K大约是 **163 PPI**。这不算“视网膜级完美”，因为27寸真正理想的2x桌面通常是 **5K，约218 PPI**。所以如果你特别在意文字边缘、macOS字体渲染、设计排版，A的挑剔是成立的。
+
+但开HiDPI后，27寸4K在正常观看距离下已经很清楚。Windows用150%缩放，或者macOS用“看起来像2560×1440”，日常办公、写代码、网页、视频都完全能用。B说“够用”也成立。
+
+我的下单建议：
+
+- **Windows用户：可以买。** 27寸4K是很稳的选择。
+- **Mac用户：能接受“不是5K那种极致锐利”，可以买；如果你对字体非常敏感，优先27寸5K。**
+- **主要写代码/办公：可以买。**
+- **专业设计、长时间盯文字、近距离看屏：预算够就上5K。**
+- **想要最省心的27寸清晰桌面：5K > 4K；但性价比：4K通常更好。**
+
+一句话：别被“物理上不够”吓住。27寸4K不是完美解，但它是大多数人实际使用里很合理的解。

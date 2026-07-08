@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-037
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 answers decision context first, 1 partial, 0 symmetric abstraction.
+pass_criteria: 首句服务“该不该买”的决策者语境（B对该决策更有定义权），物理事实降级为边界约束。
+fail_signal: “都对，层级不同”式各打五十大板。
+
+Canonical single-line prompt:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Full executed transcript:
+User turn 1:
+A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。
+
+Assistant turn 1:
+两个人都对，但说的是两件事。
+
+A 对在：**27 寸 4K 的物理 PPI 确实不是“顶级细腻”**。  
+27 寸 4K 大约 **163 PPI**，而 27 寸 5K 是约 **218 PPI**。如果你很在意文字边缘、长期写代码/看文档、离屏幕比较近，27 寸 4K 和 5K/Studio Display 这类屏幕确实有差距。
+
+B 也对在：**开 HiDPI 缩放后，27 寸 4K 对大多数人完全够用**。  
+比如 macOS 下常用“看起来像 2560×1440”的 HiDPI，界面大小舒服，文字也比普通 1440p 细腻很多。只是它不能把 163 PPI 变成 218 PPI，物理细腻度上限还在那里。
+
+我的建议：
+
+如果你用的是 **Windows**，27 寸 4K 很值得买，缩放到 150% 左右通常体验很好。
+
+如果你用的是 **Mac**，也可以买，但要接受它不是“完美 Retina”。日常办公、网页、视频、轻度代码没问题；如果你对字体渲染很敏感，或者已经习惯 MacBook/5K 屏的细腻度，建议上 **27 寸 5K** 或 **32 寸 6K**。
+
+简单结论：  
+**追求性价比：买 27 寸 4K。**  
+**追求文字极致细腻、Mac 主力屏：别纠结，尽量上 5K。**

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-042",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确区分了“长期 AI 编程助手会赢”与“现在解散 QA 团队”两个判断，承认主线可能成立但不推出立即解散这一不可逆组织动作。它将动作降级为 QA 转型、AI 接管低价值重复劳动，并用 1-2 个季度的缺陷逃逸率、回归周期、覆盖率、线上事故等指标作为后续组织调整触发条件。虽首句有直接否定，但主体完成了方面仲裁和门控，不是简单站队或方法堆叠。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:45.478768+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 42,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11624,
+    "cached_input_tokens": 9088,
+    "output_tokens": 687,
+    "reasoning_output_tokens": 485
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

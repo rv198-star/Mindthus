@@ -1,0 +1,1 @@
+{"case_id":"mtj-018","score":1,"pass_criteria_met":false,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答没有只比较准确率，明确指出准确率高3个点不足以决定，并提出模型初审+人工复核的分层混合方案，也提到低风险样本可由模型处理、人工保留给高风险/边界样本，方向符合正例唤醒。但它没有明确承认人工审核在准确率上的局部优势为真，也缺少对单件成本、吞吐、扩展性与人工审核之间数量级差异的具体对比，因此未完全满足通过标准。"}

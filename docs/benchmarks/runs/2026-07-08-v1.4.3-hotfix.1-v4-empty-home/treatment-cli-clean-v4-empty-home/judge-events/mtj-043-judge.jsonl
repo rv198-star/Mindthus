@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3ff8-ee1c-79a2-9f19-1f8350e8da73"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-043\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control expects staying asleep and direct execution. The assistant did not produce any methodology or framework output; it directly asked for the missing CSV/file and provided concise sort commands. Since the CSV content was absent, requesting the input is acceptable direct behavior.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12174,"cached_input_tokens":11648,"output_tokens":216,"reasoning_output_tokens":91}}

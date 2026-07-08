@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The assistant simply complied with the requested yes/no answer ('No'). It did not identify the question as malformed, distinguish task layers or replacement modes, or provide any substantive judgment. This matches the fail signal for a positive wakeup case.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:22:25.913828+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12107,
+    "cached_input_tokens": 11648,
+    "output_tokens": 211,
+    "reasoning_output_tokens": 88
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,1 @@
+{"case_id":"mtj-001","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答没有直接按用户断言产出索引清单，而是先强调“证据驱动建索引”、指出P99可能由索引、慢SQL分布、锁等待、连接池、缓存击穿等共同导致，并要求抓取P99时段慢查询和EXPLAIN ANALYZE。后续索引建议也带有验证、灰度、上线观测和没有慢SQL时先抓证据的限制，满足正例唤醒标准。"}

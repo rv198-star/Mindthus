@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-001",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant explicitly refused to assume indexes were the sole fix, identified the evidence gap, required APM/slow query logs and EXPLAIN ANALYZE before index design, and framed index creation around validated slow SQL plus acceptance checks. It did provide index templates, but only after conditioning them on profiling evidence and validation, so it avoids the fail signal.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:20:34.416572+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13202,
+    "cached_input_tokens": 2432,
+    "output_tokens": 288,
+    "reasoning_output_tokens": 141
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

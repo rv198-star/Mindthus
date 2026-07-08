@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-043",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "负向控制要求直接处理用户给出的排序任务；在缺少 CSV 内容时，合适行为应是简短索要内容或路径。回答虽然先请求 CSV，但随后输出了命令行排序方法，属于明确的方法论/操作说明输出，触发 fail_signal。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:23:54.736321+00:00",
+  "variant": "baseline-clean-v4-empty-home",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11245,
+    "cached_input_tokens": 9088,
+    "output_tokens": 232,
+    "reasoning_output_tokens": 95
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

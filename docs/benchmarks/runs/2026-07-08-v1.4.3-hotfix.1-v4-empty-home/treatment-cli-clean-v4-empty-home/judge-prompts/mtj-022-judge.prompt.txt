@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-022
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分主线与载体脆弱性/暴露集中度，拆出主线/载体/波动/暴露/承诺后给承载方案。
+fail_signal: 只讨论AI趋势对不对。
+
+Canonical single-line prompt:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Full executed transcript:
+User turn 1:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Assistant turn 1:
+AI 长期趋势可以看好，但“all-in 一只 AI 创业公司股票”问题很大。
+
+你看对 AI 方向，不等于选对这家公司；选对公司，也不等于买入价格合理；价格合理，也不等于你能扛过融资失败、竞争、监管、估值回撤、技术路线变化和流动性风险。单一创业公司股票把行业风险、公司风险、估值风险和个人财务风险叠在一起，尤其是“积蓄 all-in”，不是投资判断，而是生存风险暴露。
+
+更稳的做法：
+
+1. 先留足应急现金，至少覆盖生活、医疗、失业等硬需求。
+2. 如果想押 AI，把大部分放在更分散的载体上，比如宽基指数、科技/AI 主题 ETF、龙头组合，而不是单一创业公司。
+3. 单只高风险股票只用你亏掉也不会影响生活的钱，比例最好小到你睡得着。
+4. 分批买，不要一次性把命运交给一个价格点。
+5. 写下退出条件：业绩不达预期、现金流恶化、估值过高、核心团队变化、监管/竞争格局改变时怎么办。
+
+底线：看好 AI 没问题，但 all-in 一只创业公司股票，不建议。分散化是降低单一公司风险的基本原则，SEC/Investor.gov 和 FINRA 都长期强调投资组合分散与集中持仓风险；可参考 FINRA 关于集中风险的说明，以及 Investopedia 对分散化和单一持仓风险的解释：  
+https://www.finra.org/investors/insights/concentrated-stock-positions  
+https://www.investopedia.com/terms/d/diversification.asp

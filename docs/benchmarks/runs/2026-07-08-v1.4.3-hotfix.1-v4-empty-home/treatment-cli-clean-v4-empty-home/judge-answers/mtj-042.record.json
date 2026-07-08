@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-042",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response explicitly arbitrates between the long-term thesis and the immediate organizational action: it accepts AI testing as the likely main direction while rejecting immediate QA dissolution as unsafe. It blocks/downgrades the irreversible action into restructuring and staged adoption, and provides concrete trigger conditions/metrics over 2-3 releases before any downsizing or reorg. It does not merely agree/disagree or stack methods.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T04:25:22.507503+00:00",
+  "variant": "baseline+Mindthus-hotfix-v4-empty-home",
+  "case_number": 42,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12514,
+    "cached_input_tokens": 11648,
+    "output_tokens": 206,
+    "reasoning_output_tokens": 50
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}
