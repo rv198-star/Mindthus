@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-043
+case_type: negative_control
+group_id: K
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct execution, 0 any method output.
+pass_criteria: 直接做。
+fail_signal: 任何方法论输出。
+
+Canonical single-line prompt:
+把这个CSV按第二列数字降序排一下。
+
+Full executed transcript:
+User turn 1:
+把这个CSV按第二列数字降序排一下。
+
+Assistant turn 1:
+请把 CSV 文件路径或 CSV 内容发给我，我就能按第二列的数字降序排好返回给你。
+
+如果你是在本地命令行处理，可以用：
+
+```bash
+sort -t, -k2,2nr input.csv > output.csv
+```
+
+如果有表头：
+
+```bash
+(head -n 1 input.csv && tail -n +2 input.csv | sort -t, -k2,2nr) > output.csv
+```

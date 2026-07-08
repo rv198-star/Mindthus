@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41b7-b7b8-7d30-9354-b65fd259b5c7"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-017\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The response explicitly rejects the malformed yes/no framing, distinguishes between replaceable task execution roles and broader engineering responsibility, and then gives a constrained answer. This matches the expected EDSP-style wakeup and satisfies the pass criteria without falling into a bare yes/no or disclaimer.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12222,"cached_input_tokens":12160,"output_tokens":178,"reasoning_output_tokens":49}}

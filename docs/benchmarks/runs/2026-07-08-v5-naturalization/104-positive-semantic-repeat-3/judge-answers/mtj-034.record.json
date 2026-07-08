@@ -1,0 +1,44 @@
+{
+  "case_id": "mtj-034",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant immediately refuses adding a third fallback, identifies the existing two-fallback state as a red flag, and redirects to root-cause isolation of the unstable test. It explicitly frames further fallback layering as hiding the real failure and demands logs/reproduction evidence before proceeding. Although it leaves a narrow future possibility for a new independent failure mode, the current requested action is rejected and the answer strongly satisfies the anti-spiral criterion.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:37:58.774012+00:00",
+  "variant": "v5-naturalization-104-positive-semantic-repeat-3",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12536,
+    "cached_input_tokens": 2432,
+    "output_tokens": 308,
+    "reasoning_output_tokens": 147
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "3l5s"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

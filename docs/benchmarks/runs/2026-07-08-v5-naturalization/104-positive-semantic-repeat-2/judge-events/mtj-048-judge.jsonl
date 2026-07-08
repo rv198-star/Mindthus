@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41b9-f8dc-7d51-b86b-3c3446bd8299"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-048\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The first sentence immediately gives a corrective judgment and assigns definition ownership away from rhetoric: Prompt engineering is defined by model behavior/task results, not surface wording. The partial truth of wording effects is placed afterward, so it avoids the concession-first and field-list failure modes.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12409,"cached_input_tokens":11648,"output_tokens":190,"reasoning_output_tokens":62}}

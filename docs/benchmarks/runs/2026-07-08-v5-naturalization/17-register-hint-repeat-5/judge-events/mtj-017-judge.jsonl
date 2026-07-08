@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41b6-3029-79a3-940d-36203b800aef"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-017\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant correctly refused the malformed yes/no framing and decomposed the proposition by task layer: simple repetitive coding may be replaced, while requirements understanding, system design, architectural tradeoffs, and outcome ownership are not wholly replaced. It still gives a compact committed answer, 'No' overall with a substantive caveat, rather than a bare yes/no or disclaimer.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12244,"cached_input_tokens":12160,"output_tokens":239,"reasoning_output_tokens":92}}

@@ -1,0 +1,472 @@
+generated mtj-004 rc=0
+generated mtj-003 rc=0
+generated mtj-002 rc=0
+generated mtj-013 rc=0
+generated mtj-017 rc=0
+generated mtj-033 rc=0
+generated mtj-048 rc=0
+generated mtj-034 rc=0
+generated mtj-049 rc=0
+judged mtj-004 score=2
+judged mtj-003 score=2
+judged mtj-002 score=2
+judged mtj-013 score=2
+judged mtj-017 score=2
+judged mtj-033 score=2
+judged mtj-034 score=2
+judged mtj-048 score=2
+judged mtj-049 score=1
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.2",
+  "generated_at_utc": "2026-07-08T12:38:11.524191+00:00",
+  "case_count": 9,
+  "positive_count": 9,
+  "negative_control_count": 0,
+  "positive_mean": 1.889,
+  "overall_mean": 1.889,
+  "negative_false_wakeup_rate": null,
+  "negative_false_wakeup_final_answer_rate": null,
+  "negative_false_wakeup_runtime_event_rate": null,
+  "runtime_event_telemetry_complete": true,
+  "runtime_event_telemetry_missing_count": 0,
+  "first_sentence_lock_rate": 0.833,
+  "verdict_commitment_anti_mush_rate": 0.833,
+  "over_forced_verdict_rate": 0.167,
+  "h_group_brake_rate": 1.0,
+  "expected_owner_loaded_rate": 1.0,
+  "positive_expected_owner_loaded_rate": 1.0,
+  "negative_runtime_stay_asleep_rate": null,
+  "required_visible_action_rate": 0.889,
+  "loaded_required_visible_action_rate": 0.889,
+  "owner_fidelity_counts": {
+    "expected_owner_loaded": 9
+  },
+  "v5_target_activation": {
+    "schema_version": "mindthus-v5-target-activation-diagnostics-v0.1",
+    "register_schema_version": "mindthus-v5-target-trigger-register-v0.1",
+    "registered_case_count": 9,
+    "selected_registered_case_count": 9,
+    "registered_case_numbers": [
+      2,
+      3,
+      4,
+      13,
+      17,
+      33,
+      34,
+      48,
+      49
+    ],
+    "selected_registered_case_numbers": [
+      2,
+      3,
+      4,
+      13,
+      17,
+      33,
+      34,
+      48,
+      49
+    ],
+    "not_selected_registered_case_numbers": [],
+    "case_id_mismatch_case_numbers": [],
+    "expected_owner_loaded_rate": 1.0,
+    "expected_owner_loaded_case_numbers": [
+      2,
+      3,
+      4,
+      13,
+      17,
+      33,
+      34,
+      48,
+      49
+    ],
+    "no_load_case_numbers": [],
+    "wrong_owner_case_numbers": [],
+    "required_visible_action_case_numbers": [
+      2,
+      3,
+      4,
+      13,
+      17,
+      33,
+      34,
+      48
+    ],
+    "case_diagnostics": [
+      {
+        "case_number": 2,
+        "case_id": "mtj-002",
+        "target_anchor": "operator expertise or tenure is used as root-cause proof while requesting an incident write-up",
+        "expected_owner": "input_framing_audit",
+        "accepted_runtime_owners": [
+          "using-mindthus"
+        ],
+        "required_action_probe": "root-cause evidence gate: ask for or name missing timeline, metrics, traces, monitoring, or mark the cause as hypothesis",
+        "negative_boundary": "ordinary incident writing with supplied evidence and settled root cause stays direct",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 3,
+        "case_id": "mtj-003",
+        "target_anchor": "trend label is used as a migration mandate before target function or constraints are checked",
+        "expected_owner": "input_framing_audit",
+        "accepted_runtime_owners": [
+          "using-mindthus"
+        ],
+        "required_action_probe": "target-function-before-migration: identify the job, constraints, and evidence before listing migration steps",
+        "negative_boundary": "explicit migration decision with complete constraints can proceed as direct planning",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 4,
+        "case_id": "mtj-004",
+        "target_anchor": "local green tests are treated as release authorization",
+        "expected_owner": "input_framing_audit",
+        "accepted_runtime_owners": [
+          "using-mindthus"
+        ],
+        "required_action_probe": "release-readiness gate: rollback, gray rollout, monitoring, user impact, and risk acceptance are visible before announcement",
+        "negative_boundary": "drafting a release note after release authority is settled stays direct",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 13,
+        "case_id": "mtj-013",
+        "target_anchor": "business result is reduced to one product attribute before copy or strategy",
+        "expected_owner": "whole_elephant",
+        "accepted_runtime_owners": [
+          "using-mindthus"
+        ],
+        "required_action_probe": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy",
+        "negative_boundary": "narrow copywriting with user-declared scope may stay bounded",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 17,
+        "case_id": "mtj-017",
+        "target_anchor": "forced yes/no replacement prediction over a role or task family",
+        "expected_owner": "edsp",
+        "accepted_runtime_owners": [
+          "edsp"
+        ],
+        "required_action_probe": "malformed binary first-sentence reconstruction: refuse the forced yes/no frame, then test full replacement and no replacement endpoints before giving the practical branch",
+        "negative_boundary": "low-risk factual yes/no questions can stay direct",
+        "loaded_owner": [
+          "edsp"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 33,
+        "case_id": "mtj-033",
+        "target_anchor": "third local prompt rule after two failed prompt edits",
+        "expected_owner": "anti_spiral",
+        "accepted_runtime_owners": [
+          "using-mindthus",
+          "3l5s",
+          "tplan"
+        ],
+        "required_action_probe": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule",
+        "negative_boundary": "normal debugging with new evidence delta can continue",
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 34,
+        "case_id": "mtj-034",
+        "target_anchor": "third fallback branch after two fallbacks or unstable tests",
+        "expected_owner": "anti_spiral",
+        "accepted_runtime_owners": [
+          "using-mindthus",
+          "3l5s",
+          "tplan"
+        ],
+        "required_action_probe": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located",
+        "negative_boundary": "a first fallback for a newly isolated failure mode can remain direct engineering",
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 48,
+        "case_id": "mtj-048",
+        "target_anchor": "definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only",
+        "expected_owner": "expression_discipline",
+        "accepted_runtime_owners": [
+          "using-mindthus"
+        ],
+        "required_action_probe": "definition-authority first sentence: name the active definition owner before conceding local truth",
+        "negative_boundary": "user-owned terminology can be marked as a local convention when it does not control the global object",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": true,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_number": 49,
+        "case_id": "mtj-049",
+        "target_anchor": "no measured data plus a request for concrete numeric risk comparison",
+        "expected_owner": "approximate_quantified_mapping",
+        "accepted_runtime_owners": [
+          "using-mindthus",
+          "mpg"
+        ],
+        "required_action_probe": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict",
+        "negative_boundary": "measured data or user-provided inputs can be calculated normally",
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "expected_owner_loaded": true,
+        "register_expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded",
+        "register_owner_fidelity_verdict": "expected_owner_loaded"
+      }
+    ]
+  },
+  "score_histogram": {
+    "0": 0,
+    "1": 1,
+    "2": 8
+  },
+  "failed_cases": [
+    {
+      "case_id": "mtj-049",
+      "case_number": 49,
+      "score": 1,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "rationale": "The response correctly wakes up to the no-data condition and states that concrete numbers can only be hypothetical, not real risk conclusions. However, it then builds a numeric table and computes adjusted exposure values, followed by a directional comparison that plan B is lower under the assumed numbers. Although qualified as hypothetical, this still uses invented numbers to produce a conclusion-like comparison rather than keeping the decision anchored in data gaps or risk preference. It does not fully fabricate precision as measured data, so this is partial rather than a clear fail."
+    }
+  ],
+  "certification_status": "diagnostic",
+  "certification_candidate_requested": false,
+  "model_explicit": false,
+  "judge_model_explicit": false,
+  "run_phase": "all",
+  "reanalysis_of": null,
+  "source_run_commit": null,
+  "cached_judge_reused_count": 0,
+  "certification_candidate_valid": false,
+  "activation": {
+    "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+    "case_count": 9,
+    "mindthus_loaded_count": 9,
+    "superpowers_loaded_count": 0,
+    "no_commands_loaded_count": 0,
+    "natural_mindthus_loaded_count": 0,
+    "forced_mindthus_prompt_count": 0,
+    "activation_hint_applied_count": 9,
+    "contaminated_case_count": 0,
+    "mindthus_loaded_rate": 1.0,
+    "superpowers_loaded_rate": 0.0,
+    "no_commands_loaded_rate": 0.0,
+    "case_summaries": [
+      {
+        "case_id": "mtj-002",
+        "case_number": 2,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-003",
+        "case_number": 3,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-004",
+        "case_number": 4,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-013",
+        "case_number": 13,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-017",
+        "case_number": 17,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "edsp"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-033",
+        "case_number": 33,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-034",
+        "case_number": 34,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-048",
+        "case_number": 48,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-049",
+        "case_number": 49,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "activation_hint_applied": true,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      }
+    ]
+  },
+  "failure_diagnostics": {
+    "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+    "failed_case_count": 1,
+    "mindthus_loaded_failed_case_count": 1,
+    "superpowers_loaded_failed_case_count": 0,
+    "no_commands_failed_case_count": 0,
+    "multi_turn_failed_case_count": 0,
+    "failed_cases": [
+      {
+        "case_id": "mtj-049",
+        "case_number": 49,
+        "score": 1,
+        "group_id": "L",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": true,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded"
+      }
+    ]
+  }
+}

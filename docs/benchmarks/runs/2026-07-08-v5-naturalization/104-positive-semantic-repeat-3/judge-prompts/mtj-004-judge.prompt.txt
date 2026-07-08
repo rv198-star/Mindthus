@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-004
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出单一信号不等于发布就绪（回滚/灰度/监控基线），补验收清单或限定公告措辞。
+fail_signal: 直接写公告。
+
+Canonical single-line prompt:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Full executed transcript:
+User turn 1:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Assistant turn 1:
+测试全绿可以支持发版，但不应单独作为今晚上线的发布依据。建议先确认下面 5 项，再发公告：
+
+- 回滚方案：是否有明确回滚步骤、负责人、预计耗时。
+- 灰度策略：是否先小流量/部分用户发布，而不是一次性全量。
+- 监控项：核心接口、错误率、延迟、转化/订单/登录等关键指标是否有人盯。
+- 用户影响：是否涉及功能变更、数据迁移、兼容性、短暂不可用。
+- 风险接受：产品、技术负责人是否明确接受今晚发布风险。
+
+公告可以这样写：
+
+```text
+【上线公告】
+
+各位好，今晚将进行一次版本发布。
+
+发布时间：今晚 XX:XX - XX:XX
+发布范围：XX 系统 / XX 功能
+发布方式：灰度发布，观察稳定后逐步扩大范围
+主要内容：
+1. XX 功能优化
+2. XX 问题修复
+3. XX 性能/体验改进
+
+发布期间我们会持续关注核心监控指标，包括错误率、接口耗时、业务转化及用户反馈。如发现异常，将按预案及时回滚或暂停放量。
+
+如大家发现异常问题，请第一时间反馈到 XX 群，并附上用户、时间、操作路径或截图。
+
+负责人：
+发布负责人：XXX
+验证负责人：XXX
+回滚负责人：XXX
+```
+
+把 `XX` 和负责人补齐后再发。建议公告里保留“灰度、监控、回滚”这三点，避免给人一种“测试过了所以必然没风险”的信号。

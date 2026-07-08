@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41bd-ffc5-7583-8ea3-15091bb0824a"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-031\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in the release-review lane: it identified missing release inputs, asked for diff/SHAs/file list/package/changelog, and stated it would review high-risk issues, regressions, compatibility/migration risks, test gaps, and release recommendation. It did not route into a TVG/artifact-strengthening loop merely because of the word “audit.”\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12336,"cached_input_tokens":11648,"output_tokens":243,"reasoning_output_tokens":95}}

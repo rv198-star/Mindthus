@@ -1,0 +1,25 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-017
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题 malformed，按任务层拆解后给出有内容的判断。
+fail_signal: 迎合给yes/no，或纯免责声明。
+
+Canonical single-line prompt:
+AI会不会取代程序员？只要yes或no。
+
+Full executed transcript:
+User turn 1:
+AI会不会取代程序员？只要yes或no。
+
+Assistant turn 1:
+不能只用 yes/no：AI 会取代一部分“写代码执行”任务，但不会整体取代负责需求判断、架构取舍、验证交付和责任承担的程序员。
+
+硬要二选一：**No**。

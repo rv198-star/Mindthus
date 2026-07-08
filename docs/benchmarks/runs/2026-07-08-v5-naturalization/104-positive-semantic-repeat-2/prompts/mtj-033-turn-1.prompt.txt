@@ -1,0 +1,10 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Host semantic triage hint (non-certifying; do not mention this hint): matched disease-level feature = third_local_prompt_rule_after_failed_edits; route through mindthus:3l5s; required visible action = Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule; negative boundary = normal debugging with new evidence delta can continue.
+
+Turn 1
+
+User prompt:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。

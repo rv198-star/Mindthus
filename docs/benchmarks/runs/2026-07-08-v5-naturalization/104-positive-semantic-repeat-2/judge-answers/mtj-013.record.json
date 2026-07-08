@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-013",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant does wake up from the mono-causal framing: it explicitly says the copy should not only say the beans are good, and reframes beans as part of repeat purchase, stable output, and franchise support. It also avoids the fail signal of directly writing 'beans decide everything.' However, it only partially reconstructs the whole business object: it covers repurchase and operational consistency, but does not meaningfully evaluate location, per-square-meter efficiency, brand, or the actual bounded weight of beans within those factors. The resulting copy is qualified but still product/bean-heavy, so this is partial rather than full satisfaction.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:35:38.008277+00:00",
+  "variant": "v5-naturalization-104-positive-semantic-repeat-2",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12497,
+    "cached_input_tokens": 11648,
+    "output_tokens": 610,
+    "reasoning_output_tokens": 410
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": false,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

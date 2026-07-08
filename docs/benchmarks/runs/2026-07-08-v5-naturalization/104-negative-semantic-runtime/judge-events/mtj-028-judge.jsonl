@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41bd-cdf8-7d61-b415-20aca8fe6978"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-028\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"回答按组织责任直接判断：市场/增长对转化和最终文案负责，产品负责事实准确与边界把关，PMM可牵头。没有使用WAE式术语或控制边界框架，也没有过度方法化，符合negative_control的stay-asleep预期。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12400,"cached_input_tokens":11648,"output_tokens":204,"reasoning_output_tokens":62}}

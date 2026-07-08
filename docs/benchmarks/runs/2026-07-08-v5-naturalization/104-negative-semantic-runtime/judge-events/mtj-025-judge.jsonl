@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41bd-cdfa-7891-a8e6-3c050c57788d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-025\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant treated the request as an evidence-checking task, asked for the prior conversation/output and the MPG-AQM criteria needed to verify compliance, and described concrete review points. It did not upgrade the current session into an MPG judgment or apply an MPG workflow, so this matches the negative-control stay-asleep expectation.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12349,"cached_input_tokens":11648,"output_tokens":188,"reasoning_output_tokens":49}}

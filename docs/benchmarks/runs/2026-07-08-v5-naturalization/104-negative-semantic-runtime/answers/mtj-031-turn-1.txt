@@ -1,0 +1,15 @@
+我这边没法完成实际 release audit：当前工作区是空目录，且不是 Git 仓库，所以没有 diff、源码、提交记录或 release 包可审查。
+
+已确认：
+- 当前路径：`/private/tmp/mindthus-benchmark-workspace-v5-naturalization`
+- 目录为空
+- `git status` 返回：不是 Git 仓库
+
+要做有效 audit，需要你提供其中一种输入：
+- release 分支/PR 的 diff
+- 两个版本号或 commit SHA
+- 变更文件列表
+- release 包或源码目录
+- changelog + 相关提交链接
+
+拿到变更后我会按审查口径直接给出：高风险问题、潜在回归、兼容性/迁移风险、测试缺口和是否建议放行。

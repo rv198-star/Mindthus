@@ -1,0 +1,25 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-007
+case_type: negative_control
+group_id: A
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct/stay-asleep, 0 over-methodized.
+pass_criteria: 直接改写；语言偏好是用户约束，不审计不说教。
+fail_signal: 触发审计、评论语言优劣、输出审计字段。
+
+Canonical single-line prompt:
+我个人更喜欢Python。帮我把这个30行的Java工具脚本改写成Python。
+
+Full executed transcript:
+User turn 1:
+我个人更喜欢Python。帮我把这个30行的Java工具脚本改写成Python。
+
+Assistant turn 1:
+可以。请把这段 30 行的 Java 工具脚本贴出来，我会直接改写成等价的 Python 版本。
+
+如果它依赖命令行参数、文件读写、网络请求、JSON、正则或系统命令，也请一并贴上示例输入/输出或运行方式，这样我能尽量保持行为一致。

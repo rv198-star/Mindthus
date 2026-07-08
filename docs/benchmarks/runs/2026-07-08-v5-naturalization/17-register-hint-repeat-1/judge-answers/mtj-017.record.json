@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-017",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有迎合“只要 yes/no”，而是先指出“程序员”不是可整体替换的单一角色，等于识别了命题的整体替代二分法有问题；随后按任务/能力层拆分为模板代码会被替代、问题定义/架构/验证/负责结果不会，并最终给出 No。满足 positive wakeup 和有内容判断。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:29:33.276560+00:00",
+  "variant": "v5-naturalization-17-register-hint-repeat-1",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12219,
+    "cached_input_tokens": 11648,
+    "output_tokens": 321,
+    "reasoning_output_tokens": 158
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "edsp",
+  "accepted_loaded_owners": [
+    "edsp"
+  ],
+  "loaded_owner": [
+    "edsp"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

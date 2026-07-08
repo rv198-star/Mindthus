@@ -1,0 +1,61 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+“单页应用过时”不能单独作为全站 SSR 迁移理由；正确目标应先定义为：我们要改善哪些业务结果，比如首屏、SEO、可维护性、稳定性、成本或合规，再决定哪些页面值得 SSR、哪些仍保留 SPA/CSR。
+
+建议按这个顺序推进：
+
+1. 明确迁移目标  
+   先列出要解决的问题：SEO 收录差、首屏慢、社媒分享差、低端设备体验差、监控困难、路由复杂、接口安全边界不清等。每个问题要有当前证据，比如 LCP、TTFB、转化率、爬虫覆盖、错误率、运维成本。
+
+2. 做页面分层  
+   把全站页面分成几类：  
+   - 强 SEO/公开内容页：优先 SSR/SSG  
+   - 登录后高交互后台：通常不必全 SSR  
+   - 半公开业务页：可 SSR 首屏，再客户端接管  
+   - 实时编辑器、复杂控制台：保留 SPA 更可能合理
+
+3. 选目标架构  
+   不要简单“全站改回传统 SSR”。更现实的是混合架构：SSR/SSG/ISR + 客户端交互。根据现有技术栈选择 Next.js、Nuxt、Remix、SvelteKit，或后端模板加前端 islands/hydration。
+
+4. 盘点现有 SPA 依赖  
+   梳理路由、状态管理、鉴权、数据请求、缓存、埋点、错误边界、国际化、权限控制、组件库。重点找出哪些代码依赖 `window`、`localStorage`、浏览器 API，这些是 SSR 改造高风险点。
+
+5. 先迁移一条低风险路径  
+   选一个公开、SEO 价值高、交互不复杂的页面做试点。目标不是“跑起来”，而是验证数据获取、鉴权、缓存、部署、监控、回滚链路都能闭环。
+
+6. 重构数据获取层  
+   把页面数据请求从纯客户端拉取改成服务端可调用的接口层。处理好 cookie/session、权限、缓存、错误状态、重定向、404/500 页面。
+
+7. 处理渲染边界  
+   把必须在浏览器运行的组件隔离成客户端组件，例如图表、编辑器、地图、富交互控件。避免为了 SSR 强行改写所有组件。
+
+8. 建立缓存策略  
+   明确哪些页面可以 CDN 缓存，哪些按用户缓存，哪些必须实时渲染。SSR 如果没有缓存策略，可能只是把客户端压力转移到服务器。
+
+9. 并行运行与灰度发布  
+   不要一次性切全站。按页面或路由灰度，保留旧 SPA 回滚入口。用真实指标比较迁移前后：LCP、INP、TTFB、错误率、转化率、服务器成本。
+
+10. 收敛旧架构  
+   当核心页面稳定后，再逐步迁移共享布局、导航、鉴权、埋点和错误处理。最后清理旧路由、旧构建链路和重复状态管理。
+
+一个更稳妥的迁移原则是：**不是“全站从 SPA 改 SSR”，而是“按页面目标选择服务端渲染、静态生成或客户端渲染”**。如果没有 SEO、首屏或运维证据支撑，全站迁移很可能会制造新的复杂度。

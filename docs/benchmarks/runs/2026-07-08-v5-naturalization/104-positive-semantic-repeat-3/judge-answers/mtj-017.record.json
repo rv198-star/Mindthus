@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-017",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Assistant rejected the malformed yes/no framing, decomposed the programmer role into replaceable routine coding versus harder business/architecture/risk/coordination tasks, and still provided a compressed answer. This satisfies the positive wakeup criteria and does not merely comply with a yes/no or give a disclaimer.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:37:47.168314+00:00",
+  "variant": "v5-naturalization-104-positive-semantic-repeat-3",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12223,
+    "cached_input_tokens": 12160,
+    "output_tokens": 193,
+    "reasoning_output_tokens": 59
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "edsp",
+  "accepted_loaded_owners": [
+    "edsp"
+  ],
+  "loaded_owner": [
+    "edsp"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

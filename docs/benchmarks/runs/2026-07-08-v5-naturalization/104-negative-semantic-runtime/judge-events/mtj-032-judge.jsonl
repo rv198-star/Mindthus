@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41be-1551-7e73-9a8e-798cb73e09a3"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-032\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep appropriately for this negative-control case. It did not launch into a blind rewrite; it asked for the weekly report text and targeted clarifications about audience, desired style, and required points, which matches the expected clarification owner behavior.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12314,"cached_input_tokens":11648,"output_tokens":175,"reasoning_output_tokens":50}}

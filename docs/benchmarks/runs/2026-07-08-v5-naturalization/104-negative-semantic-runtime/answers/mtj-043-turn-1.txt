@@ -1,0 +1,13 @@
+请把 CSV 文件路径或 CSV 内容发给我，我就能按第二列的数字降序排好返回给你。
+
+如果你是在本地命令行处理，可以用：
+
+```bash
+sort -t, -k2,2nr input.csv > output.csv
+```
+
+如果有表头：
+
+```bash
+(head -n 1 input.csv && tail -n +2 input.csv | sort -t, -k2,2nr) > output.csv
+```

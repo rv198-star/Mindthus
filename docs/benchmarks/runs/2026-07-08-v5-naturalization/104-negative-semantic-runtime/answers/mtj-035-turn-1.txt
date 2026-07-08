@@ -1,0 +1,9 @@
+我这边无法继续修：当前 workspace 是空目录，没有项目文件，也不是 git 仓库；同时当前权限是只读，不能写入补丁。
+
+我已经确认：
+
+```text
+/tmp/mindthus-benchmark-workspace-v5-naturalization
+```
+
+目录下没有可读的源码或测试文件。请把项目文件挂载到这个 workspace，或提供失败测试输出和相关文件内容，我就能继续定位下一个失败用例。

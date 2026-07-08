@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-004",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant explicitly states that green tests alone only indicate a release candidate, not final readiness for tonight's release or announcement. It adds concrete release gates including rollback, gray/canary release, monitoring/alerts, user impact, and risk acceptance, then provides constrained announcement wording that mentions planned release, gray rollout, monitoring, and rollback. It also warns not to phrase the announcement as if green tests alone justify release.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:35:18.081626+00:00",
+  "variant": "v5-naturalization-104-positive-semantic-repeat-2",
+  "case_number": 4,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12508,
+    "cached_input_tokens": 2432,
+    "output_tokens": 215,
+    "reasoning_output_tokens": 56
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

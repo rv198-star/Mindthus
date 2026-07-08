@@ -1,0 +1,93 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+核心判断：不要因为“SPA 过时”就全站迁 SSR，先确认目标函数；SSR 是为首屏性能、SEO、分享预览、合规可索引内容和弱设备体验服务的，不是天然替代 SPA 的总路线。
+
+迁移前先明确三件事：
+
+1. **要解决的工作**
+   - 是否要提升首屏 LCP/TTFB/可索引性？
+   - 是否有大量公开内容页、营销页、商品页、文档页？
+   - 是否只是后台系统、登录后工具、强交互编辑器？这类页面未必需要 SSR。
+
+2. **约束**
+   - 当前技术栈是否支持渐进 SSR，例如 Next.js、Nuxt、Remix、SvelteKit？
+   - 后端是否能承担渲染流量、缓存、会话、鉴权和部署复杂度？
+   - 现有前端状态管理、路由、鉴权、埋点、A/B 测试是否强依赖浏览器环境？
+   - 团队是否能维护同构代码、hydration 问题、缓存失效和边缘渲染策略？
+
+3. **证据**
+   - Lighthouse / Web Vitals：LCP、INP、CLS、TTFB。
+   - 搜索收录、分享卡片、首屏转化率、跳出率。
+   - 当前 SPA bundle 体积、路由级加载耗时、API 慢点。
+   - 页面分类：公开内容页、半公开页、登录后业务页、高交互页。
+
+建议迁移步骤：
+
+1. **页面分层**
+   - 公开内容页：优先 SSR/SSG。
+   - 详情页、列表页：SSR + 缓存或 ISR。
+   - 登录后仪表盘：默认保留 CSR，必要时只做 shell SSR。
+   - 高交互工具页：通常保留 SPA 模式。
+
+2. **选定目标架构**
+   - 如果是 React：优先评估 Next.js / Remix。
+   - 如果是 Vue：优先评估 Nuxt。
+   - 明确采用 SSR、SSG、ISR、CSR 混合，而不是“一刀切全 SSR”。
+
+3. **建立并行骨架**
+   - 新建 SSR 应用壳。
+   - 接入现有路由、布局、设计系统、API client。
+   - 先迁一个低风险公开页面作为样板。
+
+4. **处理数据获取**
+   - 把页面首屏数据改为服务端可取。
+   - 区分服务端 token、用户 session、浏览器 token。
+   - 建立缓存策略：页面缓存、接口缓存、CDN 缓存、用户态不缓存。
+
+5. **改造浏览器依赖**
+   - 清理直接访问 `window`、`document`、`localStorage` 的代码。
+   - 把浏览器专属逻辑放到客户端组件或 mounted/effect 阶段。
+   - 检查第三方 SDK 是否支持 SSR。
+
+6. **迁移状态与鉴权**
+   - 首屏状态由服务端注入或通过框架数据层传递。
+   - 客户端继续接管交互状态。
+   - 鉴权逻辑统一到 middleware / server loader / API 层，避免前后端规则分叉。
+
+7. **分批迁移**
+   - 第一批：营销页、落地页、文档页、SEO 页面。
+   - 第二批：内容详情页、商品页、搜索结果页。
+   - 第三批：登录后但首屏价值高的页面。
+   - 最后再评估是否迁高交互 SPA 页面。
+
+8. **验证与灰度**
+   - 每批迁移前后对比 Web Vitals、转化率、错误率、服务器成本。
+   - 用路由级灰度或反向代理切流。
+   - 保留回滚路径，不要一次性替换全站。
+
+9. **收尾**
+   - 删除旧 SPA 路由和重复构建链路。
+   - 统一监控、日志、错误上报和部署流程。
+   - 写清楚哪些页面 SSR、哪些 SSG、哪些 CSR，以及选择理由。
+
+更稳的结论是：做“按页面价值迁移到混合渲染”，而不是“全站改回服务端渲染”。这样能拿到 SSR 的收益，同时避免把后台工具和强交互页面迁出问题。

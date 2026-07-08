@@ -1,0 +1,10 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = forced yes/no replacement prediction over a role or task family; route through mindthus:edsp; required visible action = malformed binary first sentence reconstruction: the first visible sentence must reject the yes/no frame and reconstruct role/task branches before any verdict; negative boundary = low-risk factual yes/no questions can stay direct.
+
+Turn 1
+
+User prompt:
+AI会不会取代程序员？只要yes或no。

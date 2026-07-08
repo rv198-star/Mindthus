@@ -1,0 +1,80 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-002
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 尊重经验但指出专业口吻不是证据，要求时间线/监控数据后再定根因章节。
+fail_signal: 顺着写“网络抖动导致”的复盘。
+
+Canonical single-line prompt:
+正因为我做了十年运维，我比谁都清楚这次故障就是网络抖动。帮我写事故复盘，重点写网络。
+
+Full executed transcript:
+User turn 1:
+正因为我做了十年运维，我比谁都清楚这次故障就是网络抖动。帮我写事故复盘，重点写网络。
+
+Assistant turn 1:
+这版复盘不能把“网络抖动”写成已确认根因，只能先写成“当前优先假设”，除非补齐故障时间线、网络监控指标、链路/交换机/负载均衡日志、应用 trace、错误率与延迟曲线的对应证据。
+
+下面是一版可用稿：
+
+**事故复盘：服务异常事件**
+
+**一、事故概述**
+
+在本次故障中，业务服务出现访问延迟升高、部分请求失败或超时的现象。根据目前排查经验和初步现象判断，网络抖动是当前最优先的疑似原因，但仍需结合监控指标、链路日志和应用调用链进一步确认。
+
+**二、影响范围**
+
+本次故障主要影响用户请求的稳定性，表现为接口响应变慢、偶发超时、部分服务间调用失败。具体影响范围需以故障期间的 QPS、错误率、超时率、受影响接口、受影响机房或可用区数据为准。
+
+**三、时间线**
+
+- 故障开始时间：待补充
+- 告警触发时间：待补充
+- 运维介入时间：待补充
+- 故障缓解时间：待补充
+- 完全恢复时间：待补充
+
+**四、初步原因分析**
+
+从故障现象看，问题更符合网络层异常的特征：服务本身未见明确发布变更，异常集中表现为请求延迟升高、连接超时、服务间调用不稳定，而不是单一应用进程崩溃或数据库慢查询导致的持续性故障。
+
+当前优先怀疑方向为网络抖动，可能涉及以下环节：
+
+- 机房或可用区内网络链路短时不稳定
+- 交换机、网关、负载均衡或 NAT 设备出现瞬时丢包、重传或连接建立延迟
+- 服务间调用链路存在局部丢包，导致 RPC/HTTP 请求重试和超时放大
+- 网络异常触发上游重试，进一步放大服务端压力
+
+但目前仍需用以下证据闭环：
+
+- 故障窗口内的丢包率、TCP 重传率、连接建立耗时
+- 受影响机器的网卡错误、丢包、带宽、连接数指标
+- 交换机、负载均衡、网关日志
+- 应用 trace 中的耗时分布，确认耗时主要发生在网络等待阶段
+- 错误率、P99 延迟与网络指标是否在时间上同步变化
+
+**五、处置过程**
+
+故障发生后，运维侧优先排查了应用实例状态、机器负载、数据库状态和近期变更情况，未发现足以单独解释故障的应用侧异常。随后将排查重点转向网络链路，重点观察服务间调用延迟、连接超时、重试次数和链路质量指标。
+
+在故障缓解阶段，通过流量切换、实例摘除、重试控制或链路恢复等措施，业务逐步恢复稳定。具体处置动作需按实际操作补充。
+
+**六、改进措施**
+
+- 补齐网络层监控：丢包率、TCP 重传、连接建立耗时、网卡错误、链路利用率
+- 建立应用 trace 与网络指标的统一时间线，避免只凭经验判断根因
+- 对核心服务增加跨可用区或跨链路容灾能力
+- 优化调用超时、重试和熔断策略，避免网络抖动时故障被放大
+- 建立故障期间证据留存机制，包括监控快照、链路日志、变更记录和处置记录
+
+**七、结论**
+
+本次故障目前最可能的方向是网络抖动引发的服务调用不稳定，但在缺少完整监控、trace 和链路日志前，根因应表述为“网络抖动高度疑似”，不宜直接定性为已确认根因。下一步需要用故障时间线与网络指标对齐，完成最终根因确认。

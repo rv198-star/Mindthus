@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-049",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "The response correctly wakes up to the no-data condition and states that concrete numbers can only be hypothetical, not real risk conclusions. However, it then builds a numeric table and computes adjusted exposure values, followed by a directional comparison that plan B is lower under the assumed numbers. Although qualified as hypothetical, this still uses invented numbers to produce a conclusion-like comparison rather than keeping the decision anchored in data gaps or risk preference. It does not fully fabricate precision as measured data, so this is partial rather than a clear fail.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T12:38:11.521962+00:00",
+  "variant": "v5-naturalization-104-positive-semantic-repeat-3",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12698,
+    "cached_input_tokens": 11648,
+    "output_tokens": 343,
+    "reasoning_output_tokens": 164
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "approximate_quantified_mapping",
+  "accepted_loaded_owners": [
+    "mpg",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": false,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

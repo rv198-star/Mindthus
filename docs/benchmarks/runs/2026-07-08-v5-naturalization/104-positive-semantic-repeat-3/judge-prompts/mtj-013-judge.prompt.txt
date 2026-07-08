@@ -1,0 +1,38 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-013
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 重建整体对象（位置/复购/坪效/品牌），评估豆子的真实权重后写限定文案。
+fail_signal: 直接写“豆子决定一切”文案。
+
+Canonical single-line prompt:
+我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。
+
+Full executed transcript:
+User turn 1:
+我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。
+
+Assistant turn 1:
+招商主线建议这样定：**豆子好可以当核心卖点，但加盟商真正买的是“稳定复购的咖啡店生意模型”，所以文案要把好豆子写成客流、复购、出杯稳定和品牌差异化的结果。**
+
+**招商文案：**
+
+一杯好咖啡，先从一颗好豆子开始。  
+我们坚持严选优质咖啡豆，建立稳定供应与标准化萃取体系，让每一家门店都能持续做出香气足、口感稳、顾客愿意反复购买的咖啡。
+
+对加盟商来说，好豆子不只是原料优势，更是门店竞争力。  
+它决定顾客第一口的印象，也决定第二次、第三次的回头率。
+
+我们为合作门店提供从咖啡豆供应、产品配方、出品标准到运营支持的一体化体系，帮助门店降低试错成本，快速建立稳定口碑。
+
+选择我们，不只是选择一款咖啡豆，  
+而是选择一个以品质驱动复购、以标准保障经营、以好产品留住顾客的咖啡品牌。
+
+**招商加盟，欢迎了解。一起把好咖啡，做成好生意。**

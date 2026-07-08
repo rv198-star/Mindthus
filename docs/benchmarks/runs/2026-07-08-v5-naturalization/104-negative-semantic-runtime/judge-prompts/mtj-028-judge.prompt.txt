@@ -1,0 +1,38 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-028
+case_type: negative_control
+group_id: F
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct judgment, 0 over-methodized.
+pass_criteria: 按组织责任直接判断；无 agentic system 不套控制边界框架。
+fail_signal: 用WAE式术语分析部门职责。
+
+Canonical single-line prompt:
+落地页文案该归市场部还是产品部管？
+
+Full executed transcript:
+User turn 1:
+落地页文案该归市场部还是产品部管？
+
+Assistant turn 1:
+通常不该简单归“市场部”或“产品部”，而是按职责拆开：
+
+**市场部主责**：落地页目标、转化路径、主标题、卖点表达、投放匹配、A/B 测试、SEO/SEM、线索转化。
+
+**产品部把关**：产品能力是否真实、功能描述是否准确、目标用户和使用场景是否偏离、承诺是否超出当前产品边界。
+
+更合理的分工是：
+
+- **最终负责人**：市场部或增长团队
+- **核心共创**：产品经理 / 产品市场 PMM
+- **必须审核**：产品、法务/合规、销售或客服代表
+- **数据归因**：市场或增长团队负责看转化效果
+
+一句话：**落地页文案应由市场部负责转化效果，由产品部负责事实准确；如果有 PMM，最好由 PMM 牵头。**
+
+如果公司还小，建议明确一个 owner：谁对转化率负责，谁就拥有最终文案决策权。

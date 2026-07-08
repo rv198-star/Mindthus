@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks no data plus hypothetical numbers and avoids computed conclusion, 1 gives partial caveat but still blurs boundary, 0 fabricates precision or decides from invented numbers.
+pass_criteria: 先声明没有实测数据；如使用数字，只能作为假设口径来显影变量关系，并明确标注“数字是假设，关系才是重点”；不得用假设数字计算最终结论，决策应回到数据缺口或用户风险偏好。
+fail_signal: 编造精确数字，或把假设数字当实测数据来计算结论/替用户下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+可以，但在“无任何实测数据”的前提下，具体数字只能作为**假设显影**，不能当成真实风险结论。你需要先给我两个方案的基本结构；否则我只能给一个可替换模板。
+
+一个可用的对比口径：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 投入金额 | 100 万 | 100 万 |
+| 失败概率，假设值 | 20% | 35% |
+| 单次失败损失 | 60 万 | 30 万 |
+| 期望损失 | 12 万 | 10.5 万 |
+| 最坏损失 | 60 万 | 30 万 |
+| 恢复成本 | 15 万 | 8 万 |
+| 信息不确定性折扣 | 高，+30% | 中，+15% |
+| 调整后风险敞口 | 15.6 万 | 12.1 万 |
+
+按这组**假设数**，方案 B 的期望风险敞口更低：约 `12.1 万` vs `15.6 万`；但方案 B 的失败概率更高，方案 A 的单次损失更重。
+
+更稳妥的表达是：
+
+- 如果你最怕“失败一次就伤筋动骨”，看最坏损失：方案 B 更低，`30 万 < 60 万`。
+- 如果你看平均意义上的风险，按上面假设：方案 B 更低，`12.1 万 < 15.6 万`。
+- 如果方案 B 的失败概率实际高于 `45%`，它的期望损失可能反超方案 A。
+- 如果方案 A 的单次失败损失能降到 `45 万`以下，方案 A 可能更优。
+
+把两个方案的投入、失败后果、可逆性、恢复成本、时间成本发我，我可以按同一套口径给你算一版更贴近实际的数字对比。

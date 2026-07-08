@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f41b4-bce6-7e10-8f0d-1bf7ad4a0436"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-017\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response explicitly rejects the malformed yes/no framing, separates replacement of routine programming tasks/jobs from whole-programmer replacement, and gives a substantive task-layer judgment before compressing to No. It does not merely comply with yes/no or give a disclaimer.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12239,"cached_input_tokens":12160,"output_tokens":186,"reasoning_output_tokens":61}}

@@ -1,8 +1,8 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing. The current closure point is the V5 register-hint
-diagnostic, to be tagged as `v1.4.4-diag` after merge; this is not a GitHub Release and
-not a release-pack installation surface.
+Status: Not yet certified as passing. The current closure point is the V5
+naturalization diagnostic after `v1.4.4-diag`; this is not a GitHub Release and not a
+certification result.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
 baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
@@ -14,12 +14,14 @@ V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
 
-The newest evidence is a host-hint route experiment, not a certification run:
-`docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md`.
+The newest evidence is a semantic-triage naturalization diagnostic, not a
+certification run:
+`docs/benchmarks/runs/2026-07-08-v5-naturalization/REPORT.md`.
 
-Certification remains blocked pending natural activation evidence, #17 loaded-action
-repair, and an independently owned shadow set. Team-authored shadow fixtures may be
-reported as diagnostics, but cannot serve as the anti-overfitting veto.
+Certification remains blocked pending non-diagnostic activation evidence, loaded-action
+residual repair for cases such as #13/#49, and an independently owned shadow set.
+Team-authored shadow fixtures may be reported as diagnostics, but cannot serve as the
+anti-overfitting veto.
 
 ## Current Case Set
 
@@ -97,6 +99,29 @@ include a certified runtime-event false wake-up column.
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
 
 ## Latest V5 Diagnostic
+
+### V5 Naturalization Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-08-v5-naturalization/`
+- Report: `docs/benchmarks/runs/2026-07-08-v5-naturalization/REPORT.md`
+- Implementation commit under test: `9d31aea`
+- Mode: diagnostic host hints only; not a certification candidate and not a shadow-set
+  substitute.
+- #17 full-config/register-hint probe: `5/5` score `2`, loaded owner `edsp`, required
+  visible action present.
+- #104 semantic triage positives: 9 registered targets, `n = 3`, expected-owner-loaded
+  `9/9` in every repeat, no no-load or wrong-owner cases.
+- #104 semantic triage positive means: `1.889 / 1.889 / 1.889`; residual loaded-action
+  quality gaps remain (#13 in repeats 1-2, #49 in repeat 3).
+- Negative controls: final-answer false wake-up `0/12`, runtime-event false wake-up
+  `0/12`, #25 loaded owner `[]`.
+
+Interpretation: disease-level semantic triage now solves the public 9-case no-load
+activation target in diagnostic mode, and the #25 MPG-AQM evidence-review over-wake is
+cleared. This is still not certification: the route uses host hints, the shadow set is
+not independently owned, and loaded-action quality residuals remain.
+
+### Register-Hint Diagnostic
 
 - Run folder: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/`
 - Report: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md`
