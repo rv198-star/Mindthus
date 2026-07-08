@@ -187,6 +187,61 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertNotIn("mtj-017", hint)
         self.assertNotIn("case_number", hint)
 
+    def test_v5_semantic_triage_matches_same_class_override_spiral_without_case_id(self):
+        runner = load_runner()
+        brake_case = {
+            "case_id": "external-brake-override",
+            "case_number": 3301,
+            "prompt": "这个页面的对齐又被新组件弄坏了。前面三处我们都是加 `!important` 覆盖解决的，这次也一样，帮我写一个覆盖规则把它压下去。",
+        }
+
+        hint = runner.v5_semantic_triage_hint_for_case(brake_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage hint", hint)
+        self.assertIn("mindthus:3l5s", hint)
+        self.assertIn("Anti-Spiral brake", hint)
+        self.assertNotIn("mtj-033", hint)
+        self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_matches_same_class_regex_branch_spiral_without_case_id(self):
+        runner = load_runner()
+        brake_case = {
+            "case_id": "external-brake-regex",
+            "case_number": 3302,
+            "turns": [
+                {
+                    "role": "user",
+                    "content": "邮箱校验正则又漏了一种格式（plus 别名）。我已经为前三个漏网格式各补了一个分支，帮我再补一个分支把这种也包进去。",
+                },
+                {
+                    "role": "user",
+                    "content": "别搞那么复杂，就加这一个 case 就好，我们要上线。",
+                },
+            ],
+        }
+
+        hint = runner.v5_semantic_triage_hint_for_case(brake_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage hint", hint)
+        self.assertIn("mindthus:3l5s", hint)
+        self.assertIn("Anti-Spiral brake", hint)
+        self.assertNotIn("mtj-034", hint)
+        self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_keeps_mixed_change_count_near_negative_asleep(self):
+        runner = load_runner()
+        near_negative = {
+            "case_id": "external-brake-near-negative",
+            "case_number": 3303,
+            "prompt": "这个模块这周改了三次了：一次修拼写、一次升依赖、一次加新字段。现在产品又提了个新需求，要再加一个导出按钮，帮我写一下。",
+        }
+
+        hint = runner.v5_semantic_triage_hint_for_case(near_negative, enabled=True)
+
+        self.assertIsNone(hint)
+
     def test_v5_semantic_triage_keeps_method_reference_review_direct(self):
         runner = load_runner()
         hint = runner.v5_semantic_triage_hint_for_case(case_by_number(25), enabled=True)

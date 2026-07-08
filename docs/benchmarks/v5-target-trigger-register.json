@@ -213,6 +213,48 @@
             "新证据",
             "首次添加"
           ]
+        },
+        {
+          "feature_id": "same_class_override_after_three_prior_patches",
+          "match_all": [
+            "前面三",
+            "这次也一样"
+          ],
+          "match_any": [
+            "!important",
+            "覆盖规则",
+            "覆盖解决",
+            "把它压下去"
+          ],
+          "negative_any": [
+            "一次修拼写",
+            "一次升依赖",
+            "一次加新字段",
+            "新证据",
+            "已定位原因",
+            "首次"
+          ]
+        },
+        {
+          "feature_id": "same_class_branch_after_three_prior_patches",
+          "match_all": [
+            "前三",
+            "再补一个"
+          ],
+          "match_any": [
+            "分支",
+            "漏网格式",
+            "正则",
+            "case"
+          ],
+          "negative_any": [
+            "一次修拼写",
+            "一次升依赖",
+            "一次加新字段",
+            "新证据",
+            "已定位原因",
+            "首次"
+          ]
         }
       ],
       "hint_action": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule"
