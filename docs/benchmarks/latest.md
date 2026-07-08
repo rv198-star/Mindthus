@@ -1,19 +1,25 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing; clean v4 diagnostic execution plus V5
-register-hint diagnostic recorded.
+Status: Not yet certified as passing. The current closure point is the V5 register-hint
+diagnostic, to be tagged as `v1.4.4-diag` after merge; this is not a GitHub Release and
+not a release-pack installation surface.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
 baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
 the v3 isolation fix, adds strict Entry Triage runtime fingerprint coverage, and improves
-the treatment score, but still misses the public positive-score threshold.
+the treatment score, but still misses the public positive-score threshold:
+`1.447 < 1.5`.
 
 V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
 
-The newest post-V5 diagnostic is a host-hint route experiment, not a certification run:
+The newest evidence is a host-hint route experiment, not a certification run:
 `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md`.
+
+Certification remains blocked pending natural activation evidence, #17 loaded-action
+repair, and an independently owned shadow set. Team-authored shadow fixtures may be
+reported as diagnostics, but cannot serve as the anti-overfitting veto.
 
 ## Current Case Set
 
@@ -53,7 +59,7 @@ Future certified reports should include:
 - owner-fidelity verdict counts
 - headline delta: treatment - baseline
 
-## Latest Run
+## Latest Full 50-Case Run
 
 - Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/`
 - Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/REPORT.md`
@@ -108,6 +114,12 @@ Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37
 Interpretation: the host-hint register mechanically solves public no-load activation in
 diagnostic mode, but #17 remains a stable loaded-but-wrong-action failure. Certification
 remains blocked pending natural activation/shadow evidence.
+
+Wording-clause disposition: the retained 3L5S brake wording, EDSP anti-mush wording,
+SELA build-vs-rent boundary wording, and MPG method-reference boundary wording are
+non-certifying. They are retained only as documented, unverified wording cleanup and
+should be replaced or backed by mechanical hooks, calibration anchors, or repeatable
+telemetry before being counted as behavior progress.
 
 ## Next Plan
 

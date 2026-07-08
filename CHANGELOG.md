@@ -2,6 +2,43 @@
 
 ## Unreleased
 
+### v1.4.4-diag diagnostic milestone
+
+日期：2026-07-08
+
+说明：`v1.4.4-diag` 是诊断 tag，不是正式 GitHub Release；不发布 release asset，
+README 安装入口仍停留在 v1.4.3。本轮把 #91 之后的公开 50 场景基准、v2 -> v5
+热更新实测、V5 targeted validation、register-hints 诊断收束到 main，作为外部审计
+可复查的测量里程碑。
+
+本轮最重要的结果不是“过线”，而是把测量口径变硬：V4 公开 full 50-case treatment
+positive mean 为 `1.447`，仍低于 `1.5` 公共目标；target/disputed 三次重跑测出
+`0.467 / 0.600 / 0.667` 的噪声带，因此较小单轮波动不再被解释为已证实进步。
+V5 register-hints 诊断在 9 个 public no-load target 上以 host-style hint 达到
+expected-owner-loaded `1.000 / 1.000 / 1.000`，但这是干预式诊断，不是自然唤起，
+也不是 certification candidate。
+
+### 诊断与证据
+
+- 新增 public 50-case bidirectional judgment fixture、benchmark 文档、CLI runner
+  split generate/judge 记录，以及 v3/v4 空 HOME 运行 artifacts。
+- 新增 V5 certification protocol，强制区分 final-answer false wake-up 与
+  runtime-event false wake-up，并记录 owner-fidelity、required-visible-action、
+  first-sentence lock、anti-mush 与 over-forced-verdict 指标。
+- 新增 V5 target trigger register 与 `--v5-register-hints` 诊断模式，用于验证
+  register + host hint 是否可作为机械 activation carrier。
+- `docs/benchmarks/latest.md` 定格为：register-hints 是最新诊断证据；V4 full
+  50-case 仍未过线；certification blocked pending natural activation,
+  #17 loaded-action repair, and an independently owned shadow set.
+
+### 边界
+
+- `v1.4.4-diag` 不声明 Mindthus 已通过公共基准，不替代正式 release pack。
+- V5 中保留的 3L5S/EDSP/SELA/MPG wording clauses 标记为未验证、待机械化替代；
+  它们不计入 certification progress，除非后续 repeat telemetry 显示移动超出噪声带。
+- #91 按“部分交付”处理：题库、runner、artifacts、latest surface 已落地，但认证仍被
+  自然唤起、#17、独立 shadow set 阻断。
+
 ## v1.4.3
 
 发布日期：2026-07-06
