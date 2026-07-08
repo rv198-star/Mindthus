@@ -14,6 +14,14 @@ def compact(path: str) -> str:
     return " ".join(read(path).split())
 
 
+def read_jsonl(path: str) -> list[dict]:
+    return [
+        json.loads(line)
+        for line in read(path).splitlines()
+        if line.strip()
+    ]
+
+
 class V3AuditOptimizationContractTests(unittest.TestCase):
     def test_using_mindthus_has_thin_before_route_entry_triage_index(self):
         text = read("skills/using-mindthus/SKILL.md")
@@ -139,6 +147,75 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
         for feature in case_49_features:
             self.assertNotIn("风险敞口", feature.get("match_all", []))
         self.assertIn("conclusion-like comparison", flattened(49, "required_action_probe", "hint_action"))
+
+    def test_v5_brake_semantic_features_are_disease_level_not_implementation_keys(self):
+        register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))
+        cases = {case["case_number"]: case for case in register["cases"]}
+        feature_text = json.dumps(
+            {
+                "case_33": cases[33]["semantic_features"],
+                "case_34": cases[34]["semantic_features"],
+            },
+            ensure_ascii=False,
+        )
+        term_text = json.dumps(
+            [
+                {
+                    key: feature.get(key)
+                    for key in ("match_all", "match_any", "negative_any", "hint_action")
+                    if key in feature
+                }
+                for case_number in (33, 34)
+                for feature in cases[case_number]["semantic_features"]
+            ],
+            ensure_ascii=False,
+        )
+
+        for banned in (
+            "prompt",
+            "fallback",
+            "!important",
+            "覆盖",
+            "分支",
+            "正则",
+            "case",
+            "邮箱",
+            "漏网",
+            "兜底",
+            "规则",
+        ):
+            self.assertNotIn(banned, term_text)
+
+        for required in (
+            "same_class_local_patch",
+            "count_at_least_three",
+            "next_same_class_patch_request",
+        ):
+            self.assertIn(required, feature_text)
+
+    def test_brake_dev_fixture_contains_non_code_positive_and_near_negative_cases(self):
+        cases = read_jsonl("tests/brake_dev_cases.jsonl")
+        positives = [case for case in cases if case["case_type"] == "positive"]
+        negatives = [case for case in cases if case["case_type"] == "negative_control"]
+
+        self.assertGreaterEqual(len(positives), 2)
+        self.assertGreaterEqual(len(negatives), 1)
+        for case in positives:
+            prompt = case["prompt"]
+            self.assertIn("group_id", case)
+            self.assertEqual(case["group_id"], "H")
+            self.assertEqual(case["expected_owner"], "anti_spiral")
+            self.assertIn("三", prompt)
+            self.assertRegex(prompt, r"再[加补]一")
+            self.assertIn("same-class local repair", case["pass_criteria"])
+            self.assertNotIn("prompt", prompt.lower())
+            self.assertNotIn("fallback", prompt.lower())
+            self.assertNotIn("正则", prompt)
+
+        for case in negatives:
+            self.assertTrue(case["stay_asleep_expected"])
+            self.assertFalse(case["positive_wakeup_expected"])
+            self.assertIn("mixed unrelated prior changes", case["pass_criteria"])
 
     def test_manifest_exposes_entry_triage_to_primitive_activation(self):
         text = read("scripts/primitives/manifest.json")

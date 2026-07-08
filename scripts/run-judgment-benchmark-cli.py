@@ -34,9 +34,9 @@ METHOD_REFERENCE_REVIEW_RE = re.compile(
 )
 MIXED_CHANGE_COUNT_RE = re.compile(
     r"(?=.*(?:改了三次|三次改|这周改了三次|连续三次))"
-    r"(?=.*(?:修拼写|改拼写))"
-    r"(?=.*(?:升依赖|升级依赖))"
-    r"(?=.*(?:加新字段|新增字段))",
+    r"(?=.*(?:修拼写|改拼写|改通知文案|改文案))"
+    r"(?=.*(?:升依赖|升级依赖|换负责人|换责任人))"
+    r"(?=.*(?:加新字段|新增字段|补培训材料|补材料))",
     re.IGNORECASE,
 )
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)

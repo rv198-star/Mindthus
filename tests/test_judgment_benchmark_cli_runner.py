@@ -150,7 +150,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertIn("Host diagnostic activation hint", sent_prompts[0])
         self.assertIn("mindthus:3l5s", sent_prompts[0])
-        self.assertIn("Anti-Spiral brake before addition", sent_prompts[0])
+        self.assertIn("Anti-Spiral brake before the next same-class local repair", sent_prompts[0])
+        self.assertIn("repeated-failure evidence", sent_prompts[0])
         self.assertTrue(record["activation_hint_applied"])
         self.assertIn("mindthus:3l5s", record["activation_hints_all_turns"][0])
 
@@ -344,10 +345,40 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("semantic triage hint", hint)
         self.assertIn("mindthus:3l5s", hint)
         self.assertIn("Anti-Spiral brake", hint)
-        self.assertIn("validation library or parser", hint)
-        self.assertIn("replacement deadline", hint)
+        self.assertIn("same-class local repair", hint)
+        self.assertIn("repeated-failure evidence", hint)
+        self.assertNotIn("validation library or parser", hint)
         self.assertNotIn("mtj-034", hint)
         self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_matches_non_code_same_class_patch_spirals_without_case_id(self):
+        runner = load_runner()
+        variants = [
+            {
+                "case_id": "shadow-brake-org-review-loop",
+                "case_number": 3311,
+                "prompt": "客户升级件又卡住了。前面三个类似问题我们都是临时加一个复核点，这次也按同一类处理吧，再加一个复核点挡住。",
+            },
+            {
+                "case_id": "shadow-brake-doc-exception-loop",
+                "case_number": 3312,
+                "prompt": "说明文档又被问到一个边界情况。前三次同类反馈我们都是各补一段例外说明，这次也一样，帮我再补一段。",
+            },
+        ]
+
+        for case in variants:
+            with self.subTest(case_id=case["case_id"]):
+                hint = runner.v5_semantic_triage_hint_for_case(case, enabled=True)
+
+                self.assertIsNotNone(hint)
+                self.assertIn("semantic triage hint", hint)
+                self.assertIn("mindthus:3l5s", hint)
+                self.assertIn("Anti-Spiral brake", hint)
+                self.assertIn("same-class local repair", hint)
+                self.assertNotIn("validation library or parser", hint)
+                self.assertNotIn("mtj-033", hint)
+                self.assertNotIn("mtj-034", hint)
+                self.assertNotIn("case_number", hint)
 
     def test_v5_semantic_triage_keeps_mixed_change_count_near_negative_asleep(self):
         runner = load_runner()
@@ -363,6 +394,23 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("semantic triage stay-asleep hint", hint)
         self.assertIn("mixed unrelated prior changes", hint)
         self.assertIn("do not mention the prior change count", hint)
+        self.assertIn("ordinary new feature implementation request", hint)
+        self.assertIn("do not load Anti-Spiral or 3L5S", hint)
+        self.assertNotIn("mindthus:", hint)
+
+    def test_v5_semantic_triage_keeps_non_code_mixed_count_near_negative_asleep(self):
+        runner = load_runner()
+        near_negative = {
+            "case_id": "external-brake-non-code-near-negative",
+            "case_number": 3313,
+            "prompt": "这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。",
+        }
+
+        hint = runner.v5_semantic_triage_hint_for_case(near_negative, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage stay-asleep hint", hint)
+        self.assertIn("mixed unrelated prior changes", hint)
         self.assertIn("ordinary new feature implementation request", hint)
         self.assertIn("do not load Anti-Spiral or 3L5S", hint)
         self.assertNotIn("mindthus:", hint)

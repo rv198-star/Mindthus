@@ -289,75 +289,142 @@
         "tplan"
       ],
       "preferred_runtime_owner": "3l5s",
-      "required_action_probe": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule",
-      "negative_boundary": "normal debugging with new evidence delta can continue",
+      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix",
+      "negative_boundary": "new evidence for a distinct failure mode, mixed unrelated changes, or a first local repair can continue directly",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
-          "feature_id": "third_local_prompt_rule_after_failed_edits",
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_same_as_before",
           "match_all": [
-            "prompt",
-            "两轮",
-            "再帮我加一条规则"
-          ],
-          "match_any": [
-            "效果仍差",
-            "别再犯",
-            "同一段系统prompt",
-            "规则"
-          ],
-          "negative_any": [
-            "新的失败用例",
-            "新证据",
-            "首次添加"
-          ]
-        },
-        {
-          "feature_id": "same_class_override_after_three_prior_patches",
-          "match_all": [
-            "前面三",
             "这次也一样"
           ],
           "match_any": [
-            "!important",
-            "覆盖规则",
-            "覆盖解决",
-            "把它压下去"
+            "前面三",
+            "前三",
+            "前三次",
+            "前三个",
+            "连续三次",
+            "三次都",
+            "三个类似问题",
+            "三次同类",
+            "三轮",
+            "三版"
           ],
           "negative_any": [
-            "一次修拼写",
-            "一次升依赖",
-            "一次加新字段",
             "新证据",
             "已定位原因",
-            "首次"
+            "首次",
+            "第一次",
+            "不同类型",
+            "一次修",
+            "一次改",
+            "一次换",
+            "一次补",
+            "一次升",
+            "每次对应一个明确",
+            "逐个转绿"
           ]
         },
         {
-          "feature_id": "same_class_branch_after_three_prior_patches",
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_repeat_addition",
           "match_all": [
-            "前三",
-            "再补一个"
+            "再加一"
           ],
           "match_any": [
-            "分支",
-            "漏网格式",
-            "正则",
-            "case"
+            "前面三",
+            "前三",
+            "前三次",
+            "前三个",
+            "连续三次",
+            "三次都",
+            "三个类似问题",
+            "三次同类",
+            "三轮",
+            "三版"
           ],
           "negative_any": [
-            "一次修拼写",
-            "一次升依赖",
-            "一次加新字段",
             "新证据",
             "已定位原因",
-            "首次"
+            "首次",
+            "第一次",
+            "不同类型",
+            "一次修",
+            "一次改",
+            "一次换",
+            "一次补",
+            "一次升",
+            "每次对应一个明确",
+            "逐个转绿"
+          ]
+        },
+        {
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_repeat_insert",
+          "match_all": [
+            "再补一"
           ],
-          "hint_action": "Anti-Spiral brake before adding the fourth regex branch: do not add another branch; offer a mature email validation library or parser as the replacement path; any emergency patch must be marked as bounded debt with a replacement deadline"
+          "match_any": [
+            "前面三",
+            "前三",
+            "前三次",
+            "前三个",
+            "连续三次",
+            "三次都",
+            "三个类似问题",
+            "三次同类",
+            "三轮",
+            "三版"
+          ],
+          "negative_any": [
+            "新证据",
+            "已定位原因",
+            "首次",
+            "第一次",
+            "不同类型",
+            "一次修",
+            "一次改",
+            "一次换",
+            "一次补",
+            "一次升",
+            "每次对应一个明确",
+            "逐个转绿"
+          ]
+        },
+        {
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_same_category",
+          "match_all": [
+            "同一类",
+            "再加"
+          ],
+          "match_any": [
+            "前面三",
+            "前三",
+            "前三次",
+            "前三个",
+            "连续三次",
+            "三次都",
+            "三个类似问题",
+            "三次同类",
+            "三轮",
+            "三版"
+          ],
+          "negative_any": [
+            "新证据",
+            "已定位原因",
+            "首次",
+            "第一次",
+            "不同类型",
+            "一次修",
+            "一次改",
+            "一次换",
+            "一次补",
+            "一次升",
+            "每次对应一个明确",
+            "逐个转绿"
+          ]
         }
       ],
-      "hint_action": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule"
+      "hint_action": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix"
     },
     {
       "case_number": 34,
@@ -370,31 +437,46 @@
         "tplan"
       ],
       "preferred_runtime_owner": "3l5s",
-      "required_action_probe": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located",
-      "negative_boundary": "a first fallback for a newly isolated failure mode can remain direct engineering",
+      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located",
+      "negative_boundary": "a first local repair for a newly isolated failure mode can remain direct execution",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
-          "feature_id": "third_fallback_after_instability",
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_after_instability",
           "match_all": [
-            "fallback",
-            "不稳定"
+            "还是",
+            "再加"
           ],
           "match_any": [
-            "两个fallback",
-            "再加一个fallback",
-            "兜底",
-            "测试还是不稳定"
+            "前面三",
+            "前三",
+            "前三次",
+            "前三个",
+            "连续三次",
+            "三次都",
+            "三个类似问题",
+            "三次同类",
+            "三轮",
+            "三版"
           ],
           "negative_any": [
-            "首次fallback",
+            "新证据",
             "已定位原因",
-            "新增失败模式"
+            "首次",
+            "第一次",
+            "不同类型",
+            "一次修",
+            "一次改",
+            "一次换",
+            "一次补",
+            "一次升",
+            "每次对应一个明确",
+            "逐个转绿"
           ]
         }
       ],
-      "hint_action": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located"
+      "hint_action": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located"
     },
     {
       "case_number": 37,
