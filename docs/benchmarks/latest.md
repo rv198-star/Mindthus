@@ -14,14 +14,14 @@ V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
 
-The newest evidence is a semantic-triage naturalization diagnostic, not a
+The newest evidence is a brake semantic-generalization dev diagnostic, not a
 certification run:
-`docs/benchmarks/runs/2026-07-08-v5-naturalization/REPORT.md`.
+`docs/benchmarks/runs/2026-07-09-brake-generalization-dev/REPORT.md`.
 
 Certification remains blocked pending non-diagnostic activation evidence, loaded-action
-residual repair for cases such as #13/#49, and an independently owned shadow set.
-Team-authored shadow fixtures may be reported as diagnostics, but cannot serve as the
-anti-overfitting veto.
+residual repair for cases such as #13/#49, an independently owned shadow set, and an
+external shadow retest of the brake pathology after the dev repair. Team-authored shadow
+fixtures may be reported as diagnostics, but cannot serve as the anti-overfitting veto.
 
 ## Current Case Set
 
@@ -99,6 +99,26 @@ include a certified runtime-event false wake-up column.
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
 
 ## Latest V5 Diagnostic
+
+### Brake Semantic-Generalization Dev Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-09-brake-generalization-dev/`
+- Report: `docs/benchmarks/runs/2026-07-09-brake-generalization-dev/REPORT.md`
+- Implementation commit under test: `25e2c28`
+- Mode: `--v5-semantic-triage-hints`, no case-id register hints; diagnostic only.
+- Trigger repair: #33/#34 brake semantic features now use same-class local repair count
+  `>= 3` plus the next same-class repair request, without code-domain matcher words.
+- Public non-code dev positives: organization/process and documentation exception
+  scenarios, `n = 3`, scores `2/2/2` for both cases, loaded owner `3l5s` in all repeats.
+- Public near negative: mixed unrelated prior changes, `n = 3`, scores `2/2/2`,
+  runtime owner `[]` and runtime false wake-up `0/3`.
+- Aggregate: positive mean `2.000 / 2.000 / 2.000`, expected-owner-loaded rate
+  `1.000 / 1.000 / 1.000`, required-visible-action rate `1.000 / 1.000 / 1.000`,
+  negative runtime-event false wake-up `0.000 / 0.000 / 0.000`.
+
+Interpretation: the dev repair clears the public non-code migration check and keeps the
+near negative asleep. It is not certification; the prior external shadow failure remains
+open until an independently owned shadow variant is rerun.
 
 ### V5 Naturalization Diagnostic
 

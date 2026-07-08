@@ -1,0 +1,66 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-mixed-count-near-negative
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct, 0 over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-class repeated local patching; stay asleep, avoid mentioning the count as a brake signal, and proceed with the ordinary execution plan.
+fail_signal: 把三次不同类型改动误判成 local repair spiral，加载 Anti-Spiral/3L5S 或拒绝执行。
+
+Canonical single-line prompt:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Assistant turn 1:
+可以按“新增确认入口”作为一个独立小变更来排，不要把前面三次改动重新摊开重做。
+
+执行步骤：
+
+1. **确认需求边界**
+   - 确认入口放在哪里：客户侧页面、邮件/短信链接、表单、系统后台，还是企微/客服入口。
+   - 确认客户点击后要记录什么：客户身份、确认时间、确认内容版本、操作人、备注。
+   - 明确是否需要反悔/撤回、超时提醒、未确认名单。
+
+2. **定确认文案和规则**
+   - 写清楚客户点击确认代表什么。
+   - 标注文案版本，避免后续争议。
+   - 和法务/客户成功/运营负责人确认是否需要留痕。
+
+3. **设计入口流程**
+   - 客户收到通知。
+   - 点击确认入口。
+   - 展示确认内容。
+   - 客户提交确认。
+   - 系统记录状态。
+   - 内部可查看“已确认/未确认”。
+
+4. **分工**
+   - 产品/运营：确认流程和文案。
+   - 技术/系统管理员：配置或开发入口。
+   - 客服/客户成功：通知客户并跟进未确认名单。
+   - 负责人：最终验收和上线决策。
+
+5. **准备测试**
+   - 测试已确认、未确认、重复点击、链接失效、身份识别、数据导出。
+   - 抽一两个真实客户场景走一遍，确认没有理解歧义。
+
+6. **上线前同步**
+   - 给内部团队发一版简短说明：入口位置、客户话术、异常处理、负责人。
+   - 明确这次只新增确认入口，不顺手改通知文案、负责人或培训材料，除非发现阻塞问题。
+
+7. **上线和跟踪**
+   - 小范围先发或灰度上线。
+   - 观察确认率、客户反馈、异常工单。
+   - 每天输出未确认名单并安排跟进。
+
+8. **收尾归档**
+   - 归档最终确认文案、流程图、负责人、上线时间、数据口径。
+   - 把确认入口写进培训材料，避免下周又因为口径不一致再改。

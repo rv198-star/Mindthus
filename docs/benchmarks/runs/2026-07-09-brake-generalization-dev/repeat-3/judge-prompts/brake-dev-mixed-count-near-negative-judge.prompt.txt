@@ -1,0 +1,65 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-mixed-count-near-negative
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct, 0 over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-class repeated local patching; stay asleep, avoid mentioning the count as a brake signal, and proceed with the ordinary execution plan.
+fail_signal: 把三次不同类型改动误判成 local repair spiral，加载 Anti-Spiral/3L5S 或拒绝执行。
+
+Canonical single-line prompt:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Assistant turn 1:
+可以按“先定范围，再做入口，再闭环运营”的顺序排：
+
+1. **确认需求边界**
+   - 明确“确认入口”放在哪里：客户后台、邮件/短信链接、工单页、表单页，还是已有流程节点中。
+   - 明确谁来点确认：客户联系人、内部运营、负责人，还是双方都需要。
+   - 明确确认后代表什么：已阅读、已同意、已完成培训、已确认执行方案等。
+
+2. **梳理现有流程影响**
+   - 把本周三次改动合并进最新版流程：通知文案、负责人、培训材料。
+   - 标出新增确认入口要插入的节点。
+   - 检查是否会影响通知触发、负责人跟进、培训材料分发或客户交付时间。
+
+3. **设计确认入口内容**
+   - 页面/按钮文案：例如“确认已收到并了解流程安排”。
+   - 必填信息：确认人、公司/客户名、联系方式、确认时间。
+   - 可选信息：备注、问题反馈、是否需要补充培训。
+
+4. **确定记录与追踪方式**
+   - 确认记录落到哪里：CRM、工单系统、表单后台、表格或数据库。
+   - 字段至少包括：客户、确认人、确认时间、确认状态、负责人、备注。
+   - 给负责人一个可查看的确认状态列表。
+
+5. **调整通知与责任分工**
+   - 更新通知文案，加入确认入口链接和截止时间。
+   - 明确负责人收到哪些提醒：未确认提醒、客户备注提醒、异常反馈提醒。
+   - 如果客户未确认，设定跟进动作和时限。
+
+6. **补充培训材料**
+   - 在培训材料中加入“如何完成确认”的步骤截图或说明。
+   - 标注确认入口的位置、操作方式、常见问题。
+
+7. **测试一遍完整流程**
+   - 用一个测试客户跑通：收到通知 → 查看材料 → 点击确认 → 生成记录 → 负责人收到状态。
+   - 检查链接权限、移动端展示、数据是否正确记录。
+
+8. **发布与同步**
+   - 发出最新版流程说明。
+   - 同步内部负责人、客服/运营、客户联系人。
+   - 明确从哪一天开始按新版流程执行。
+
+9. **上线后跟踪**
+   - 第一天重点看确认率、客户反馈、异常记录。
+   - 收集问题后只做必要修正，避免继续零散改流程。

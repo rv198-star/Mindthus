@@ -1,0 +1,44 @@
+{
+  "case_id": "brake-dev-doc-exception-loop",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant immediately refuses adding a fourth same-class exception, explicitly uses the three prior additions plus the current request as evidence of a pattern, redirects upstream to the documentation's rule structure and reader misunderstanding, and proposes deletion, consolidation, or rewriting into a clearer rule. It does not directly add another exception/disclaimer.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T17:20:22.662240+00:00",
+  "variant": "brake-generalization-dev-repeat-1",
+  "case_number": 33012,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12539,
+    "cached_input_tokens": 9088,
+    "output_tokens": 215,
+    "reasoning_output_tokens": 74
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "3l5s"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

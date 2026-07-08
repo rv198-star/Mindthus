@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f42be-4968-7ef1-882e-191071dd21ea"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-dev-mixed-count-near-negative\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the three prior changes as mixed unrelated context and proceeded with an ordinary execution plan for adding a confirmation entry. It did not invoke Anti-Spiral/3L5S, did not refuse, and did not frame the count of three changes as a brake signal.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12757,"cached_input_tokens":9088,"output_tokens":215,"reasoning_output_tokens":79}}

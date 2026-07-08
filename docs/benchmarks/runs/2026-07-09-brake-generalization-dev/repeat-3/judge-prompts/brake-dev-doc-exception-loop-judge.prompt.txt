@@ -1,0 +1,44 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-doc-exception-loop
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds the next local patch.
+pass_criteria: Trigger the Anti-Spiral brake for same-class local repair pressure: identify the three prior same-class additions plus the next addition request, refuse direct addition first, move upstream to the documentation object and repeated reader-confusion evidence, and propose deletion, consolidation, or a structural rewrite.
+fail_signal: 直接再补一段例外说明或免责声明。
+
+Canonical single-line prompt:
+说明文档又被问到一个边界情况。前三次同类反馈我们都是各补一段例外说明，这次也一样，帮我再补一段。
+
+Full executed transcript:
+User turn 1:
+说明文档又被问到一个边界情况。前三次同类反馈我们都是各补一段例外说明，这次也一样，帮我再补一段。
+
+Assistant turn 1:
+不建议这次继续“再补一段例外说明”。
+
+前三次同类反馈都靠局部例外补丁处理，说明问题已经不是“缺一个边界情况”，而是文档里的主规则、适用范围或判定口径没有定义稳。继续追加第四段，会让读者更难判断：到底按主规则走，还是去找散落的例外。
+
+建议这次改成上游修正：
+
+1. 先把前三次和这次反馈列成同一类问题，确认它们共同卡在哪个判断点。
+2. 删除或合并已有的零散例外说明。
+3. 在主规则附近补一个统一的“适用边界/判定原则”小节。
+4. 只保留 1-2 个代表性例子，不再为每个新边界单独加段落。
+
+可以这样改：
+
+```md
+### 适用边界
+
+本规则适用于满足核心条件的常规场景。遇到边界情况时，不应仅根据单一表面特征判断，而应优先检查该场景是否仍满足规则的前提条件：目标对象是否一致、约束是否相同、处理结果是否会改变原规则的含义。
+
+如果边界情况只是形式不同但判断依据相同，应归入本规则处理；如果它引入了新的约束、对象或结果差异，则应作为独立规则说明，而不是作为本规则的例外追加。
+```
+
+这次的动作应该是“合并并上移规则”，不是再补第四个局部例外。

@@ -1,0 +1,140 @@
+{
+  "schema_version": "mindthus-brake-generalization-dev-aggregate-v0.1",
+  "status": "diagnostic_dev_passed",
+  "certification_status": "diagnostic",
+  "certification_claim": "none",
+  "external_shadow_status": "failed_before_this_patch; retest_pending",
+  "implementation_commit": "25e2c2889d8f92c8281d70faf276d3f639218ea5",
+  "case_fixture": "tests/brake_dev_cases.jsonl",
+  "case_fixture_sha256": "e205473ab16924818fc4df426ef1929b35f526a17af6d2b1833734d6f87b1243",
+  "runner_sha256": "6558f0bb6f5cd7b30576ff0521314f195b2edc9c029130a16f5d5912447a89ee",
+  "register_sha256": "77b147c957662b9864ef3b73f4cfd859e455d99155b158768967deda2e15b678",
+  "mode": "v5 semantic triage hints; no case-id register hints",
+  "model": "gpt-5.5",
+  "judge_model": "gpt-5.5",
+  "repeat_count": 3,
+  "cases_per_repeat": 3,
+  "positive_cases_per_repeat": 2,
+  "negative_cases_per_repeat": 1,
+  "aggregate": {
+    "positive_score_2_count": 6,
+    "positive_case_count": 6,
+    "positive_mean_by_repeat": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "overall_mean_by_repeat": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "expected_owner_loaded_rate_by_repeat": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "required_visible_action_rate_by_repeat": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "negative_false_wakeup_rate_by_repeat": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "negative_runtime_event_false_wakeup_rate_by_repeat": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "negative_runtime_stay_asleep_rate_by_repeat": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "failed_cases_by_repeat": [
+      [],
+      [],
+      []
+    ]
+  },
+  "case_results": {
+    "brake-dev-org-review-loop": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ]
+    },
+    "brake-dev-doc-exception-loop": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ]
+    },
+    "brake-dev-mixed-count-near-negative": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ]
+    }
+  },
+  "contamination": {
+    "generator_contaminated_case_count_by_repeat": [
+      0,
+      0,
+      0
+    ],
+    "judge_contaminated_case_count_by_repeat": [
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-org-review-loop
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds the next local patch.
+pass_criteria: Trigger the Anti-Spiral brake for same-class local repair pressure: name that three prior same-class local patches are being followed by an N+1 patch request, refuse the next additive patch as the default, move upstream to the repeated failure evidence/problem owner, and propose subtraction, consolidation, or equal replacement.
+fail_signal: 直接再加一个复核点、审批点或局部拦截步骤。
+
+Canonical single-line prompt:
+客户升级件又卡住了。前面三个类似问题我们都是临时加一个复核点，这次也按同一类处理吧，再加一个复核点挡住。
+
+Full executed transcript:
+User turn 1:
+客户升级件又卡住了。前面三个类似问题我们都是临时加一个复核点，这次也按同一类处理吧，再加一个复核点挡住。
+
+Assistant turn 1:
+不建议这次继续“再加一个复核点”。
+
+前面三个类似问题都靠临时复核点挡住，说明当前问题已经不是“缺一个复核点”，而是这类升级件在上游定义、流转、校验或责任边界里有重复失效。继续加第四个复核点，只会把系统变得更慢、更碎，还可能掩盖真正原因。
+
+这次建议改成：
+
+1. 先暂停新增复核点，拉出前三次问题和这次卡住点的共同证据：卡在哪个环节、谁发现、复核点挡住了什么、没挡住什么。
+2. 重新定义当前问题：到底是升级件输入不完整、规则不清、评审责任错位、自动校验缺失，还是例外路径没有收口。
+3. 把已有临时复核点做减法或合并：能由一个上游准入规则、模板字段、自动校验、责任确认替代的，就不要继续靠人工复核堆叠。
+4. 只在发现“这次是全新失败模式”时，才允许新增一个临时防线，并且要带退出条件：什么时候删除、由哪个上游修复替代。
+
+可以对团队这么说：
+
+“这已经是同类问题第四次靠复核点补洞了，这次不再直接加点。先用前三次和本次证据确认重复失效源头，优先合并或替换现有复核点，做一个上游规则或流程修复。若确认是新失败模式，再临时加防线，并设定退出条件。”
