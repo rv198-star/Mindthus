@@ -23,6 +23,10 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
+BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
+BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.1"
+BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
+BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.90
 CONTAMINATION_RE = re.compile(
     r"superpowers|judgment_benchmark_50_cases|docs/benchmarks|pass_criteria|fail_signal|judge notes",
     re.IGNORECASE,
@@ -82,6 +86,38 @@ OWNER_ACCEPTED_SKILLS = {
 
 
 DEFAULT_SUPERPOWERS_ROOT_LABEL = "$CODEX_HOME/superpowers"
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def extract_fenced_block_after_heading(text: str, heading: str, fence_info: str) -> str:
+    heading_index = text.index(heading)
+    fence_start = text.index(f"```{fence_info}\n", heading_index) + len(f"```{fence_info}\n")
+    fence_end = text.index("\n```", fence_start)
+    return text[fence_start:fence_end] + "\n"
+
+
+def extract_recorded_prompt_sha256(text: str) -> str:
+    match = re.search(r"^sha256 = ([0-9a-f]{64})$", text, re.MULTILINE)
+    if not match:
+        raise ValueError("canonical prompt fingerprint not found")
+    return match.group(1)
+
+
+def load_brake_semantic_triage_prompt_body() -> str:
+    text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
+    return extract_fenced_block_after_heading(text, "Proposed V0 prompt body:", "text")
+
+
+def load_brake_semantic_triage_prompt_sha256() -> str:
+    text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
+    return extract_recorded_prompt_sha256(text)
+
+
+BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY = load_brake_semantic_triage_prompt_body()
+BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256 = load_brake_semantic_triage_prompt_sha256()
 
 
 def superpowers_root_label(superpowers_root: str | Path | None = None) -> str:
@@ -394,6 +430,10 @@ def ensure_dirs(out_dir: Path) -> None:
         "judge-stderr",
         "judge-answers",
         "judge-prompts",
+        "triage-events",
+        "triage-stderr",
+        "triage-answers",
+        "triage-prompts",
     ):
         (out_dir / name).mkdir(parents=True, exist_ok=True)
 
@@ -459,6 +499,7 @@ def run_codex(
     resume_thread_id: str | None = None,
     persist_session: bool = False,
     output_schema: Path | None = None,
+    artifact_role: str = "generator",
 ) -> dict[str, Any]:
     env = os.environ.copy()
     env["CODEX_HOME"] = str(codex_home)
@@ -466,15 +507,23 @@ def run_codex(
         home.mkdir(parents=True, exist_ok=True)
         env["HOME"] = str(home)
 
-    last_path = out_dir / "answers" / f"{stem}.txt"
-    events_path = out_dir / "events" / f"{stem}.jsonl"
-    stderr_path = out_dir / "stderr" / f"{stem}.stderr.txt"
-    if output_schema is not None:
+    if artifact_role == "generator" and output_schema is not None:
+        artifact_role = "judge"
+
+    if artifact_role == "judge":
         last_path = out_dir / "judge-answers" / f"{stem}.json"
         events_path = out_dir / "judge-events" / f"{stem}.jsonl"
         stderr_path = out_dir / "judge-stderr" / f"{stem}.stderr.txt"
         prompt_path = out_dir / "judge-prompts" / f"{stem}.prompt.txt"
+    elif artifact_role == "triage":
+        last_path = out_dir / "triage-answers" / f"{stem}.json"
+        events_path = out_dir / "triage-events" / f"{stem}.jsonl"
+        stderr_path = out_dir / "triage-stderr" / f"{stem}.stderr.txt"
+        prompt_path = out_dir / "triage-prompts" / f"{stem}.prompt.txt"
     else:
+        last_path = out_dir / "answers" / f"{stem}.txt"
+        events_path = out_dir / "events" / f"{stem}.jsonl"
+        stderr_path = out_dir / "stderr" / f"{stem}.stderr.txt"
         prompt_path = out_dir / "prompts" / f"{stem}.prompt.txt"
 
     if resume_thread_id:
@@ -633,6 +682,236 @@ def generator_prompt(
     )
 
 
+def brake_semantic_triage_schema(path: Path) -> None:
+    schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "schema_version",
+            "is_repeated_local_repair",
+            "same_means_type",
+            "prior_repair_count",
+            "is_n_plus_1_request",
+            "pressure_present",
+            "confidence",
+            "evidence_spans",
+            "abstain_reason",
+        ],
+        "properties": {
+            "schema_version": {"type": "string"},
+            "is_repeated_local_repair": {"type": "boolean"},
+            "same_means_type": {"type": "boolean"},
+            "prior_repair_count": {"type": "integer", "minimum": 0},
+            "is_n_plus_1_request": {"type": "boolean"},
+            "pressure_present": {"type": "boolean"},
+            "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+            "evidence_spans": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["role", "turn_index", "span"],
+                    "properties": {
+                        "role": {"type": "string"},
+                        "turn_index": {"type": "integer", "minimum": 1},
+                        "span": {"type": "string"},
+                    },
+                },
+            },
+            "abstain_reason": {"type": "string"},
+        },
+    }
+    path.write_text(json.dumps(schema, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def validate_brake_semantic_triage_output(parsed: dict[str, Any]) -> dict[str, Any]:
+    required_types = {
+        "schema_version": str,
+        "is_repeated_local_repair": bool,
+        "same_means_type": bool,
+        "prior_repair_count": int,
+        "is_n_plus_1_request": bool,
+        "pressure_present": bool,
+        "confidence": (int, float),
+        "evidence_spans": list,
+        "abstain_reason": str,
+    }
+    for key, expected_type in required_types.items():
+        if key not in parsed:
+            raise ValueError(f"triage output missing {key}")
+        if not isinstance(parsed[key], expected_type):
+            raise ValueError(f"triage output field {key} has wrong type")
+    if parsed["schema_version"] != BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION:
+        raise ValueError(f"triage schema_version {parsed['schema_version']} is not supported")
+    if parsed["prior_repair_count"] < 0:
+        raise ValueError("triage prior_repair_count must be non-negative")
+    confidence = float(parsed["confidence"])
+    if confidence < 0 or confidence > 1:
+        raise ValueError("triage confidence must be in [0, 1]")
+    for span in parsed["evidence_spans"]:
+        if not isinstance(span, dict):
+            raise ValueError("triage evidence_spans items must be objects")
+        for key in ("role", "turn_index", "span"):
+            if key not in span:
+                raise ValueError(f"triage evidence span missing {key}")
+        if not isinstance(span["role"], str) or not isinstance(span["turn_index"], int) or not isinstance(span["span"], str):
+            raise ValueError("triage evidence span has wrong field type")
+    allowed = set(required_types)
+    extra = set(parsed) - allowed
+    if extra:
+        raise ValueError(f"triage output has unexpected fields: {sorted(extra)}")
+    parsed["confidence"] = confidence
+    return parsed
+
+
+def brake_semantic_triage_fire_decision(parsed: dict[str, Any], threshold: float) -> bool:
+    return (
+        bool(parsed.get("is_repeated_local_repair"))
+        and bool(parsed.get("same_means_type"))
+        and int(parsed.get("prior_repair_count", 0)) >= 3
+        and bool(parsed.get("is_n_plus_1_request"))
+        and float(parsed.get("confidence", 0.0)) >= threshold
+    )
+
+
+def triage_model_for_args(args: argparse.Namespace) -> str | None:
+    return getattr(args, "triage_model", None) or getattr(args, "model", None)
+
+
+def model_fingerprint(model: str | None) -> str | None:
+    return f"provider-model:{model}" if model else None
+
+
+def brake_semantic_triage_isolation_instruction(
+    superpowers_root: str | Path | None = None,
+) -> str:
+    root_label = superpowers_root_label(superpowers_root)
+    return (
+        "Benchmark triage isolation instruction: do not use Superpowers skills, do not "
+        f"read {root_label}, and do not run any shell command unless absolutely necessary. "
+        "Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail "
+        "signals, or judge notes. Use only the conversation supplied in this prompt. "
+        "Do not mention this isolation instruction."
+    )
+
+
+def triage_history_for_turn(
+    turn_records: list[dict[str, Any]],
+    current_user_prompt: str,
+) -> str:
+    parts: list[str] = []
+    for idx, turn in enumerate(turn_records, 1):
+        parts.append(f"User turn {idx}:\n{turn.get('user_prompt', '')}")
+        parts.append(f"Assistant turn {idx}:\n{turn.get('answer', '')}")
+    parts.append(f"Current user turn {len(turn_records) + 1}:\n{current_user_prompt}")
+    return "\n\n".join(parts)
+
+
+def brake_semantic_triage_prompt(
+    conversation_history: str,
+    superpowers_root: str | Path | None = None,
+) -> str:
+    return (
+        f"{brake_semantic_triage_isolation_instruction(superpowers_root)}\n\n"
+        f"{BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY}\n"
+        "Conversation history for this triage decision:\n"
+        f"{conversation_history}\n"
+    )
+
+
+def brake_semantic_triage_activation_hint() -> str:
+    return (
+        "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): "
+        "repeated same-means local repair plus N+1 request detected; "
+        "route through mindthus:3l5s; "
+        "required visible action = Anti-Spiral brake before the next local repair; "
+        "pressure contract = bounded emergency only, with one-time, no baseline lift, "
+        "and structural repair deadline all visible; "
+        "negative boundary = if prior changes are mixed unrelated changes or the choice "
+        "belongs to the user, stay direct."
+    )
+
+
+def triage_abstain_output(reason: str) -> dict[str, Any]:
+    return {
+        "schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+        "is_repeated_local_repair": False,
+        "same_means_type": False,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": False,
+        "pressure_present": False,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": reason,
+    }
+
+
+def run_brake_semantic_triage_subjudgment(
+    user_prompt: str,
+    turn_records: list[dict[str, Any]],
+    args: argparse.Namespace,
+    *,
+    case_id: str,
+    turn_index: int,
+) -> dict[str, Any]:
+    out_dir = Path(args.out_dir)
+    schema_path = out_dir / "triage-output-schema.json"
+    brake_semantic_triage_schema(schema_path)
+    model = triage_model_for_args(args)
+    threshold = float(getattr(args, "triage_threshold", BRAKE_SEMANTIC_TRIAGE_THRESHOLD))
+    result = run_codex(
+        brake_semantic_triage_prompt(
+            triage_history_for_turn(turn_records, user_prompt),
+            superpowers_root=getattr(args, "superpowers_root", None),
+        ),
+        out_dir,
+        f"{case_id}-triage-turn-{turn_index}",
+        Path(args.codex_home),
+        Path(args.repo_root),
+        Path(args.execution_root),
+        model,
+        args.timeout,
+        home=home_for_stem(args, f"{case_id}-triage-turn-{turn_index}"),
+        output_schema=schema_path,
+        artifact_role="triage",
+    )
+    error = ""
+    parsed: dict[str, Any]
+    if result.get("returncode") != 0:
+        error = f"triage subprocess returncode {result.get('returncode')}"
+        parsed = triage_abstain_output(error)
+    else:
+        try:
+            parsed = validate_brake_semantic_triage_output(json.loads(str(result.get("answer", ""))))
+        except json.JSONDecodeError:
+            error = "triage did not return parseable JSON"
+            parsed = triage_abstain_output(error)
+        except ValueError as exc:
+            error = f"triage output failed local validation: {exc}"
+            parsed = triage_abstain_output(error)
+    fired = False if error else brake_semantic_triage_fire_decision(parsed, threshold)
+    return {
+        "called": True,
+        "fired": fired,
+        "confidence": parsed.get("confidence"),
+        "output": parsed,
+        "error": error,
+        "prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+        "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+        "schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+        "threshold": threshold,
+        "model": model,
+        "model_sha256_or_provider_fingerprint": model_fingerprint(model),
+        "returncode": result.get("returncode"),
+        "usage": result.get("usage"),
+        "events_path": result.get("events_path"),
+        "stderr_path": result.get("stderr_path"),
+        "last_message_path": result.get("last_message_path"),
+        "prompt_path": result.get("prompt_path"),
+        "contamination_flags": result.get("contamination_flags", []),
+    }
+
+
 def run_case(
     case: dict[str, Any],
     args: argparse.Namespace,
@@ -649,10 +928,24 @@ def run_case(
     turn_records: list[dict[str, Any]] = []
     persist = len(prompts) > 1
     prior_turn_answer = ""
+    triage_activation_latched = False
     for idx, prompt in enumerate(prompts, 1):
         prompt = prompt.replace("{{prior_turn_answer}}", prior_turn_answer)
         activation_hint = None
-        if idx == 1:
+        triage_record: dict[str, Any] | None = None
+        if bool(getattr(args, "brake_semantic_triage_subjudgment", False)):
+            triage_record = run_brake_semantic_triage_subjudgment(
+                prompt,
+                turn_records,
+                args,
+                case_id=case_id,
+                turn_index=idx,
+            )
+            if triage_record.get("fired"):
+                triage_activation_latched = True
+            if triage_activation_latched:
+                activation_hint = brake_semantic_triage_activation_hint()
+        elif idx == 1:
             if bool(getattr(args, "v5_semantic_triage_hints", False)):
                 activation_hint = v5_semantic_triage_hint_for_case(case, enabled=True)
             elif bool(getattr(args, "v5_register_hints", False)):
@@ -681,6 +974,22 @@ def run_case(
         thread_id = result["thread_id"]
         result["user_prompt"] = prompt
         result["activation_hint"] = activation_hint
+        result["triage_called"] = bool(triage_record)
+        result["triage_fired"] = bool(triage_record and triage_record.get("fired"))
+        result["triage_confidence"] = triage_record.get("confidence") if triage_record else None
+        result["triage_output"] = triage_record.get("output") if triage_record else None
+        result["triage_error"] = triage_record.get("error") if triage_record else ""
+        result["triage_prompt_sha256"] = (
+            triage_record.get("prompt_sha256") if triage_record else None
+        )
+        result["triage_model"] = triage_record.get("model") if triage_record else None
+        result["triage_model_sha256_or_provider_fingerprint"] = (
+            triage_record.get("model_sha256_or_provider_fingerprint") if triage_record else None
+        )
+        result["triage_activation_active"] = bool(triage_activation_latched)
+        result["triage_contamination_flags"] = (
+            triage_record.get("contamination_flags", []) if triage_record else []
+        )
         turn_records.append(result)
         prior_turn_answer = result["answer"]
         if result["returncode"] != 0:
@@ -703,6 +1012,16 @@ def run_case(
             for turn in turn_records
             if turn.get("activation_hint")
         ],
+        "triage_called": [bool(turn.get("triage_called")) for turn in turn_records],
+        "triage_fired": [bool(turn.get("triage_fired")) for turn in turn_records],
+        "triage_confidence": [turn.get("triage_confidence") for turn in turn_records],
+        "triage_output": [turn.get("triage_output") for turn in turn_records],
+        "triage_error": [str(turn.get("triage_error") or "") for turn in turn_records],
+        "triage_prompt_sha256": [turn.get("triage_prompt_sha256") for turn in turn_records],
+        "triage_model": [turn.get("triage_model") for turn in turn_records],
+        "triage_activation_active": [
+            bool(turn.get("triage_activation_active")) for turn in turn_records
+        ],
         "turns": turn_records,
         "final_answer": turn_records[-1]["answer"] if turn_records else "",
         "returncode": turn_records[-1]["returncode"] if turn_records else 1,
@@ -711,6 +1030,9 @@ def run_case(
         ],
         "contamination_flags_all_turns": [
             command for turn in turn_records for command in turn.get("contamination_flags", [])
+        ],
+        "triage_contamination_flags_all_turns": [
+            command for turn in turn_records for command in turn.get("triage_contamination_flags", [])
         ],
     }
     answer_record_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -847,10 +1169,34 @@ def runtime_event_false_wakeup(
     *,
     mindthus_loaded: bool,
     superpowers_loaded: bool,
+    triage_fired: bool = False,
 ) -> bool:
     if not bool(case.get("stay_asleep_expected")):
         return False
-    return mindthus_loaded or superpowers_loaded
+    return mindthus_loaded or superpowers_loaded or triage_fired
+
+
+def response_triage_fired(response: dict[str, Any]) -> bool:
+    if any(bool(item) for item in response.get("triage_fired", [])):
+        return True
+    return any(bool(turn.get("triage_fired")) for turn in response.get("turns", []))
+
+
+def response_triage_error_count(response: dict[str, Any]) -> int:
+    errors = [str(item) for item in response.get("triage_error", []) if str(item)]
+    errors.extend(
+        str(turn.get("triage_error"))
+        for turn in response.get("turns", [])
+        if str(turn.get("triage_error") or "")
+    )
+    return len(errors)
+
+
+def first_non_empty(items: list[Any]) -> Any:
+    for item in items:
+        if item not in (None, ""):
+            return item
+    return None
 
 
 def owner_fidelity_for_case(
@@ -862,6 +1208,7 @@ def owner_fidelity_for_case(
     loaded_owner = loaded_owners_from_commands(commands)
     mindthus_loaded = bool(loaded_owner)
     superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+    triage_fired = response_triage_fired(response)
     accepted_owners = sorted(expected_owner_skills(case))
     stay_asleep = bool(case.get("stay_asleep_expected"))
     expected_owner = str(case.get("expected_owner", ""))
@@ -871,13 +1218,14 @@ def owner_fidelity_for_case(
         case,
         mindthus_loaded=mindthus_loaded,
         superpowers_loaded=superpowers_loaded,
+        triage_fired=triage_fired,
     )
     required_visible_action_present = (
         bool(score.get("pass_criteria_met")) if not stay_asleep else None
     )
 
     if stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
-        expected_owner_loaded = not mindthus_loaded and not superpowers_loaded
+        expected_owner_loaded = not mindthus_loaded and not superpowers_loaded and not triage_fired
         verdict = "runtime_over_wake" if false_runtime else "direct_stay_asleep"
     elif not accepted_owners:
         expected_owner_loaded = None
@@ -898,6 +1246,10 @@ def owner_fidelity_for_case(
         "loaded_owner": loaded_owner,
         "mindthus_loaded": mindthus_loaded,
         "superpowers_loaded": superpowers_loaded,
+        "triage_fired": triage_fired,
+        "triage_error_count": response_triage_error_count(response),
+        "triage_prompt_sha256": first_non_empty(response.get("triage_prompt_sha256", [])),
+        "triage_model": first_non_empty(response.get("triage_model", [])),
         "false_wakeup_final_answer": false_final,
         "false_wakeup_runtime_event": false_runtime,
         "expected_owner_loaded": expected_owner_loaded,
@@ -1000,12 +1352,17 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
             turn.get("activation_hint") for turn in response.get("turns", [])
         )
         loaded_owner = loaded_owners_from_commands(commands)
+        triage_called = any(bool(item) for item in response.get("triage_called", []))
+        triage_fired = response_triage_fired(response)
         case_summaries.append(
             {
                 "case_id": response.get("case_id"),
                 "case_number": response.get("case_number"),
                 "mindthus_loaded": mindthus_loaded,
                 "superpowers_loaded": superpowers_loaded,
+                "triage_called": triage_called,
+                "triage_fired": triage_fired,
+                "triage_error_count": response_triage_error_count(response),
                 "loaded_owner": loaded_owner,
                 "no_commands_loaded": not commands,
                 "forced_mindthus_prompt": forced_mindthus_prompt,
@@ -1030,6 +1387,8 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
         "natural_mindthus_loaded_count": count("natural_mindthus_loaded"),
         "forced_mindthus_prompt_count": count("forced_mindthus_prompt"),
         "activation_hint_applied_count": count("activation_hint_applied"),
+        "triage_called_count": count("triage_called"),
+        "triage_fired_count": count("triage_fired"),
         "contaminated_case_count": count("contaminated"),
         "mindthus_loaded_rate": round(count("mindthus_loaded") / case_count, 3) if case_count else None,
         "superpowers_loaded_rate": round(count("superpowers_loaded") / case_count, 3) if case_count else None,
@@ -1060,12 +1419,26 @@ def contamination_report(
         for score in scores or []
         if score.get("judge_contamination_flags")
     ]
+    triage_cases = [
+        {
+            "case_id": response.get("case_id"),
+            "case_number": response.get("case_number"),
+            "triage_contamination_flags_all_turns": response.get(
+                "triage_contamination_flags_all_turns",
+                [],
+            ),
+        }
+        for response in responses
+        if response.get("triage_contamination_flags_all_turns")
+    ]
     return {
-        "schema_version": "mindthus-judgment-cli-contamination-report-v0.1",
+        "schema_version": "mindthus-judgment-cli-contamination-report-v0.2",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "generator_contaminated_case_count": len(generator_cases),
+        "triage_contaminated_case_count": len(triage_cases),
         "judge_contaminated_case_count": len(judge_cases),
         "generator_cases": generator_cases,
+        "triage_cases": triage_cases,
         "judge_cases": judge_cases,
     }
 
@@ -1170,6 +1543,11 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
         s for s in negative if s.get("false_wakeup_runtime_event") is None
     ]
     runtime_false_wakes = [s for s in negative if s.get("false_wakeup_runtime_event") is True]
+    triage_scores = [s for s in scores if "triage_fired" in s]
+    triage_positive = [s for s in positive if "triage_fired" in s]
+    triage_negative = [s for s in negative if "triage_fired" in s]
+    triage_negative_false_fires = [s for s in triage_negative if s.get("triage_fired") is True]
+    triage_positive_abstains = [s for s in triage_positive if s.get("triage_fired") is False]
     owner_items = [s for s in scores if s.get("expected_owner_loaded") is not None]
     positive_owner_items = [s for s in positive if s.get("expected_owner_loaded") is not None]
     negative_owner_items = [s for s in negative if s.get("expected_owner_loaded") is not None]
@@ -1200,6 +1578,26 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
             round(len(runtime_false_wakes) / len(negative), 3)
             if negative and not runtime_missing
             else None
+        ),
+        "triage_fire_rate_positive": (
+            round(len([s for s in triage_positive if s.get("triage_fired") is True]) / len(triage_positive), 3)
+            if triage_positive
+            else None
+        ),
+        "triage_fire_rate_negative": (
+            round(len(triage_negative_false_fires) / len(triage_negative), 3)
+            if triage_negative
+            else None
+        ),
+        "triage_false_fire_count_negative": len(triage_negative_false_fires) if triage_negative else None,
+        "triage_abstain_count_positive": len(triage_positive_abstains) if triage_positive else None,
+        "triage_error_count": (
+            sum(int(s.get("triage_error_count", 0)) for s in triage_scores)
+            if triage_scores
+            else None
+        ),
+        "triage_prompt_sha256": first_non_empty(
+            [s.get("triage_prompt_sha256") for s in triage_scores]
         ),
         "runtime_event_telemetry_complete": not runtime_missing,
         "runtime_event_telemetry_missing_count": len(runtime_missing),
@@ -1237,6 +1635,12 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
         errors.append("--home and --empty-home-root cannot be used together")
     if getattr(args, "v5_register_hints", False) and getattr(args, "v5_semantic_triage_hints", False):
         errors.append("--v5-register-hints and --v5-semantic-triage-hints are mutually exclusive")
+    if getattr(args, "brake_semantic_triage_subjudgment", False) and (
+        getattr(args, "v5_register_hints", False) or getattr(args, "v5_semantic_triage_hints", False)
+    ):
+        errors.append(
+            "--brake-semantic-triage-subjudgment cannot be combined with --v5-register-hints or --v5-semantic-triage-hints"
+        )
     if args.certification_candidate:
         if not args.model:
             errors.append("--certification-candidate requires explicit --model")
@@ -1250,6 +1654,8 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
             errors.append("--certification-candidate cannot use --v5-register-hints")
         if getattr(args, "v5_semantic_triage_hints", False):
             errors.append("--certification-candidate cannot use --v5-semantic-triage-hints")
+        if getattr(args, "brake_semantic_triage_subjudgment", False):
+            errors.append("--certification-candidate cannot use --brake-semantic-triage-subjudgment")
     return errors
 
 
@@ -1307,6 +1713,22 @@ def main() -> int:
         help="Diagnostic only: inject V5 target hints by semantic feature match, without case-id routing. Disallowed for certification candidates.",
     )
     parser.add_argument(
+        "--brake-semantic-triage-subjudgment",
+        action="store_true",
+        help="Diagnostic only: run the brake semantic triage sub-judgment before each answer turn. Disallowed for certification candidates.",
+    )
+    parser.add_argument(
+        "--triage-model",
+        default=None,
+        help="Model for the brake semantic triage sub-judgment. Defaults to --model.",
+    )
+    parser.add_argument(
+        "--triage-threshold",
+        type=float,
+        default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
+        help="Confidence threshold for brake semantic triage firing. Reviewed v0 is 0.90.",
+    )
+    parser.add_argument(
         "--superpowers-root",
         default=None,
         help="Path label to include in benchmark isolation prompts; defaults to $CODEX_HOME/superpowers.",
@@ -1351,6 +1773,18 @@ def main() -> int:
         "fail_on_contamination": args.fail_on_contamination,
         "v5_register_hints": args.v5_register_hints,
         "v5_semantic_triage_hints": args.v5_semantic_triage_hints,
+        "brake_semantic_triage_subjudgment": args.brake_semantic_triage_subjudgment,
+        "triage_prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+        "triage_prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+        "triage_model": triage_model_for_args(args),
+        "triage_model_explicit": args.triage_model is not None,
+        "triage_model_sha256_or_provider_fingerprint": model_fingerprint(triage_model_for_args(args)),
+        "triage_schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+        "triage_threshold": args.triage_threshold,
+        "triage_enabled": args.brake_semantic_triage_subjudgment,
+        "triage_certification_mode": (
+            "diagnostic_only" if args.brake_semantic_triage_subjudgment else "disabled"
+        ),
         "v5_target_trigger_register": str(V5_TARGET_TRIGGER_REGISTER),
         "v5_target_trigger_register_sha256": sha256_file(V5_TARGET_TRIGGER_REGISTER),
         "certification_status": (
@@ -1407,7 +1841,7 @@ def main() -> int:
         write_activation_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
-            if report["generator_contaminated_case_count"]:
+            if report["generator_contaminated_case_count"] or report["triage_contaminated_case_count"]:
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
     else:
@@ -1419,7 +1853,7 @@ def main() -> int:
         write_activation_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
-            if report["generator_contaminated_case_count"]:
+            if report["generator_contaminated_case_count"] or report["triage_contaminated_case_count"]:
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
 
@@ -1469,7 +1903,11 @@ def main() -> int:
             return 2
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses, scores)
-            if report["generator_contaminated_case_count"] or report["judge_contaminated_case_count"]:
+            if (
+                report["generator_contaminated_case_count"]
+                or report["triage_contaminated_case_count"]
+                or report["judge_contaminated_case_count"]
+            ):
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
         print(json.dumps(summary, ensure_ascii=False, indent=2))

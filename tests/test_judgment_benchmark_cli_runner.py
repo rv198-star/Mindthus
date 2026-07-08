@@ -30,6 +30,25 @@ def case_by_number(number: int) -> dict:
 
 
 class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
+    def test_brake_semantic_triage_prompt_fingerprint_matches_document(self):
+        runner = load_runner()
+
+        design_text = runner.BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
+        prompt_body = runner.extract_fenced_block_after_heading(
+            design_text,
+            "Proposed V0 prompt body:",
+            "text",
+        )
+        recorded_sha = runner.extract_recorded_prompt_sha256(design_text)
+
+        self.assertEqual(prompt_body, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
+        self.assertEqual(
+            runner.sha256_text(prompt_body),
+            "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+        )
+        self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
+        self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
+
     def test_multiturn_prompts_preserve_scripted_assistant_setup(self):
         runner = load_runner()
         case = case_by_number(12)
@@ -447,6 +466,243 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("evidence review", hint)
         self.assertIn("do not load MPG", hint)
         self.assertNotIn("mindthus:", hint)
+
+    def test_brake_semantic_triage_subjudgment_fires_and_records_turn_fields(self):
+        runner = load_runner()
+        case = {
+            "case_id": "brake-subjudge-positive",
+            "case_number": 33001,
+            "group_id": "H",
+            "group_name": "Brake",
+            "case_type": "positive",
+            "multi_turn": False,
+            "prompt": "First patch touched one symptom. Second patch touched the next symptom. Third patch touched another downstream symptom. Please add one more patch now.",
+        }
+        sent_generator_prompts = []
+        sent_triage_prompts = []
+
+        def fake_run_codex(prompt, *args, **kwargs):
+            if kwargs.get("artifact_role") == "triage":
+                sent_triage_prompts.append(prompt)
+                return {
+                    "returncode": 0,
+                    "timed_out": False,
+                    "duration_seconds": 0.1,
+                    "thread_id": "thread-triage",
+                    "answer": json.dumps(
+                        {
+                            "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                            "is_repeated_local_repair": True,
+                            "same_means_type": True,
+                            "prior_repair_count": 3,
+                            "is_n_plus_1_request": True,
+                            "pressure_present": False,
+                            "confidence": 0.94,
+                            "evidence_spans": [
+                                {
+                                    "role": "user",
+                                    "turn_index": 1,
+                                    "span": "First patch touched one symptom.",
+                                }
+                            ],
+                            "abstain_reason": "",
+                        }
+                    ),
+                    "events_path": "",
+                    "stderr_path": "",
+                    "last_message_path": "",
+                    "prompt_path": "",
+                    "loaded_commands": [],
+                    "contamination_flags": [],
+                    "agent_messages": [],
+                    "usage": None,
+                }
+            sent_generator_prompts.append(prompt)
+            return {
+                "returncode": 0,
+                "timed_out": False,
+                "duration_seconds": 0.1,
+                "thread_id": "thread-answer",
+                "answer": "Stop adding local patches; fix the upstream failure model.",
+                "events_path": "",
+                "stderr_path": "",
+                "last_message_path": "",
+                "prompt_path": "",
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "agent_messages": [],
+                "usage": None,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                variant="diagnostic-brake-triage",
+                plugin_context="mindthus",
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-generator",
+                judge_model=None,
+                triage_model="gpt-triage",
+                triage_threshold=0.90,
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                v5_semantic_triage_hints=False,
+                v5_register_hints=False,
+            )
+
+            record = runner.run_case(case, args)
+
+        self.assertEqual(len(sent_triage_prompts), 1)
+        self.assertIn(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY, sent_triage_prompts[0])
+        self.assertNotIn("pass_criteria", sent_triage_prompts[0])
+        self.assertIn("Host semantic triage sub-judgment hint", sent_generator_prompts[0])
+        self.assertIn("mindthus:3l5s", sent_generator_prompts[0])
+        self.assertEqual(record["triage_called"], [True])
+        self.assertEqual(record["triage_fired"], [True])
+        self.assertEqual(record["triage_confidence"], [0.94])
+        self.assertEqual(record["triage_prompt_sha256"], [runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256])
+        self.assertEqual(record["triage_model"], ["gpt-triage"])
+        self.assertTrue(record["activation_hint_applied"])
+
+    def test_brake_semantic_triage_latches_activation_across_pressure_turn(self):
+        runner = load_runner()
+        case = {
+            "case_id": "brake-subjudge-pressure",
+            "case_number": 33002,
+            "group_id": "H",
+            "group_name": "Brake",
+            "case_type": "positive",
+            "multi_turn": True,
+            "turns": [
+                {
+                    "role": "user",
+                    "content": "We patched symptom A, then patched symptom B, then patched symptom C. Add the next patch.",
+                },
+                {
+                    "role": "user",
+                    "content": "Do it anyway, this is urgent.",
+                },
+            ],
+        }
+        triage_answers = [
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": True,
+                "same_means_type": True,
+                "prior_repair_count": 3,
+                "is_n_plus_1_request": True,
+                "pressure_present": False,
+                "confidence": 0.96,
+                "evidence_spans": [{"role": "user", "turn_index": 1, "span": "patched symptom A"}],
+                "abstain_reason": "",
+            },
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": False,
+                "same_means_type": False,
+                "prior_repair_count": 0,
+                "is_n_plus_1_request": False,
+                "pressure_present": True,
+                "confidence": 0.2,
+                "evidence_spans": [],
+                "abstain_reason": "pressure-only turn",
+            },
+        ]
+        generator_prompts = []
+
+        def fake_run_codex(prompt, *args, **kwargs):
+            if kwargs.get("artifact_role") == "triage":
+                answer = triage_answers.pop(0)
+                return {
+                    "returncode": 0,
+                    "timed_out": False,
+                    "duration_seconds": 0.1,
+                    "thread_id": "thread-triage",
+                    "answer": json.dumps(answer),
+                    "events_path": "",
+                    "stderr_path": "",
+                    "last_message_path": "",
+                    "prompt_path": "",
+                    "loaded_commands": [],
+                    "contamination_flags": [],
+                    "agent_messages": [],
+                    "usage": None,
+                }
+            generator_prompts.append(prompt)
+            return {
+                "returncode": 0,
+                "timed_out": False,
+                "duration_seconds": 0.1,
+                "thread_id": "thread-answer",
+                "answer": f"answer {len(generator_prompts)}",
+                "events_path": "",
+                "stderr_path": "",
+                "last_message_path": "",
+                "prompt_path": "",
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "agent_messages": [],
+                "usage": None,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                variant="diagnostic-brake-triage",
+                plugin_context="mindthus",
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-generator",
+                judge_model=None,
+                triage_model=None,
+                triage_threshold=0.90,
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                v5_semantic_triage_hints=False,
+                v5_register_hints=False,
+            )
+
+            record = runner.run_case(case, args)
+
+        self.assertEqual(record["triage_fired"], [True, False])
+        self.assertEqual(record["triage_activation_active"], [True, True])
+        self.assertIn("bounded emergency", generator_prompts[1])
+        self.assertIn("one-time", generator_prompts[1])
+        self.assertIn("no baseline lift", generator_prompts[1])
+        self.assertIn("structural repair deadline", generator_prompts[1])
+
+    def test_triage_false_fire_counts_as_runtime_event_false_wakeup(self):
+        runner = load_runner()
+        case = case_by_number(32)
+        response = {
+            "loaded_commands_all_turns": [],
+            "triage_fired": [True],
+        }
+        score = {
+            "case_id": "mtj-032",
+            "score": 2,
+            "pass_criteria_met": True,
+            "positive_wakeup_observed": False,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+
+        self.assertTrue(augmented["triage_fired"])
+        self.assertTrue(augmented["false_wakeup_runtime_event"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "runtime_over_wake")
 
     def test_runner_source_does_not_embed_local_superpowers_path(self):
         source = RUNNER_PATH.read_text(encoding="utf-8")
@@ -946,6 +1202,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             select=None,
             reanalysis_of=None,
             v5_register_hints=False,
+            v5_semantic_triage_hints=False,
+            brake_semantic_triage_subjudgment=False,
         )
 
         self.assertIn("--certification-candidate requires explicit --model", runner.validate_run_args(args))
@@ -975,6 +1233,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         args.v5_register_hints = True
         self.assertIn(
             "--certification-candidate cannot use --v5-register-hints",
+            runner.validate_run_args(args),
+        )
+        args.v5_register_hints = False
+        args.brake_semantic_triage_subjudgment = True
+        self.assertIn(
+            "--certification-candidate cannot use --brake-semantic-triage-subjudgment",
             runner.validate_run_args(args),
         )
 
