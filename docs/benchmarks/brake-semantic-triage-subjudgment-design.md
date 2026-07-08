@@ -129,6 +129,7 @@ Definitions:
 - pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
 
 Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
 Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
 Do not use the final user request alone when prior repair history is absent.
 ```
@@ -138,7 +139,7 @@ This prompt has no examples by design.
 Canonical prompt fingerprint:
 
 ```text
-sha256 = 5a68c4ead42eaf4666f69f86c12d067ae19a1605943f04afa2a795424af6fed7
+sha256 = e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d
 ```
 
 Hashing convention: exact prompt body in the fenced block above, LF line endings, one
@@ -426,12 +427,15 @@ runs are treated as meaningful.
 4. Add triage subprocess isolation and contamination coverage.
 5. Extend response, score, summary, aggregate, and shadow handoff fields.
 6. Add prompt/domain-word lint tests.
-7. Author calibration packet and dev fixture, then submit the text to external audit
+7. Add a canonical prompt fingerprint contract test: extract the repository prompt body
+   with LF line endings and one trailing newline, compute SHA-256, and assert it equals
+   the document's canonical fingerprint.
+8. Author calibration packet and dev fixture, then submit the text to external audit
    before running CLI diagnostics.
-8. After audit clears the text, run unit tests.
-9. Run dev `n >= 3`.
-10. If dev passes with negative fire `0`, request fourth external shadow retest.
-11. Keep main untouched until implementation, dev `n >= 3`, and audit verification all
+9. After audit clears the text, run unit tests.
+10. Run dev `n >= 3`.
+11. If dev passes with negative fire `0`, request fourth external shadow retest.
+12. Keep main untouched until implementation, dev `n >= 3`, and audit verification all
     pass.
 
 ## Non-Goals
