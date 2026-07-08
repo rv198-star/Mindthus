@@ -37,6 +37,7 @@ Allowed mechanisms:
 - rubric and judge calibration examples
 - executable benchmark telemetry
 - owner-fidelity fields
+- versioned V5 target-trigger register and runner diagnostics
 - targeted Entry Triage trigger probes
 - small calibration examples that anchor output shape
 - mechanical before-answer probes for required visible actions
@@ -114,10 +115,18 @@ Important split:
 
 Acceptance:
 
+- `docs/benchmarks/v5-target-trigger-register.json` lists the target anchors,
+  accepted runtime owners, required action probes, and negative boundaries
+- `summary["v5_target_activation"]` reports which registered targets were no-load,
+  wrong-owner, or expected-owner-loaded
 - each target case is rerun `n >= 3`
 - all target cases load the expected owner or an explicitly accepted owner
 - no public negative control gains a new runtime/event false wake-up
 - shadow negatives do not regress
+
+Implementation note: the register and summary diagnostics are mechanical_runtime
+support only. They do not certify behavior; they make the next host-hook or trigger
+register patch measurable before another full 50-case run is attempted.
 
 ### 4. Fix Loaded-But-Wrong-Action Cases
 

@@ -82,6 +82,7 @@ Report these metrics for both baseline and baseline+Mindthus:
 - required-visible-action rate
 - loaded-required-visible-action rate
 - owner-fidelity verdict counts
+- V5 target-trigger diagnostics when a versioned register is present
 
 `negative_false_wakeup_rate` is retained only as a backward-compatible alias for the
 final-answer judge-field rate. V5 reports must name the final-answer and runtime-event
@@ -126,6 +127,11 @@ must record:
 
 For stay-asleep cases, owner fidelity means direct handling: no Mindthus or Superpowers
 runtime load unless the case explicitly requires a tool or evidence step.
+
+When a versioned target-trigger register is present, reports should include a dedicated
+diagnostic block, such as `v5_target_activation`, that maps registered target anchors to
+no-load, wrong-owner, and expected-owner-loaded outcomes. This block is routing evidence,
+not semantic pass evidence.
 
 Allowed `owner_fidelity_verdict` values:
 

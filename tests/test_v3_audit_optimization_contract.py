@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -82,6 +83,22 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
         self.assertIn("Anti-Spiral hard brake", entry)
         self.assertIn("anti_spiral_brake_before_addition", contract)
         self.assertIn("loaded owners must put the case-critical action into visible prose", contract)
+
+    def test_v5_target_trigger_register_covers_no_load_cases(self):
+        register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))
+        expected_cases = {2, 3, 4, 13, 17, 33, 34, 48, 49}
+
+        cases = register["cases"]
+
+        self.assertEqual(register["schema_version"], "mindthus-v5-target-trigger-register-v0.1")
+        self.assertEqual({case["case_number"] for case in cases}, expected_cases)
+        for case in cases:
+            self.assertEqual(case["patch_type"], "mechanical_runtime")
+            self.assertIn("target_anchor", case)
+            self.assertIn("accepted_runtime_owners", case)
+            self.assertIn("required_action_probe", case)
+            self.assertIn("negative_boundary", case)
+            self.assertNotIn("wording", case["status"])
 
     def test_manifest_exposes_entry_triage_to_primitive_activation(self):
         text = read("scripts/primitives/manifest.json")

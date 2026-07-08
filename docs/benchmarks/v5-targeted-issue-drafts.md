@@ -75,6 +75,11 @@ direction. This is an activation stability problem, not just a missing rule.
 ### Acceptance Criteria
 
 - Add a versioned Entry Triage trigger register for the target cases.
+- The register lives at `docs/benchmarks/v5-target-trigger-register.json` and records
+  target anchors, accepted runtime owners, required action probes, negative boundaries,
+  and `patch_type: mechanical_runtime`.
+- Benchmark summaries include `v5_target_activation` diagnostics with registered-target
+  no-load, wrong-owner, and expected-owner-loaded case lists.
 - For each target case, identify whether failure is triage trigger, triage-to-owner
   routing, or owner load execution.
 - Each target case is rerun `n >= 3` and loads the expected owner or an accepted owner.
@@ -85,6 +90,8 @@ direction. This is an activation stability problem, not just a missing rule.
 
 - Do not add broad keyword triggers.
 - Do not count a single successful wake-up as fixed.
+- Do not treat the register or `v5_target_activation` diagnostics as certification
+  evidence without repeat runs, negative controls, and external shadow veto.
 
 ## #105: Add loaded-action anchors and mechanical before-answer probes
 

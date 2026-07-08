@@ -22,11 +22,11 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
+V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
 CONTAMINATION_RE = re.compile(
     r"superpowers|judgment_benchmark_50_cases|docs/benchmarks|pass_criteria|fail_signal|judge notes",
     re.IGNORECASE,
 )
-MINDTHUS_RE = re.compile(r"mindthus", re.IGNORECASE)
 SUPERPOWERS_RE = re.compile(r"superpowers", re.IGNORECASE)
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
@@ -118,6 +118,105 @@ def selected_cases(cases: list[dict[str, Any]], spec: str | None) -> list[dict[s
     return [case for case in cases if int(case["case_number"]) in wanted]
 
 
+def load_v5_target_trigger_register(path: Path | None = None) -> dict[str, Any]:
+    register_path = path or V5_TARGET_TRIGGER_REGISTER
+    return json.loads(register_path.read_text(encoding="utf-8"))
+
+
+def v5_target_activation_diagnostics(scores: list[dict[str, Any]]) -> dict[str, Any]:
+    register = load_v5_target_trigger_register()
+    registered_cases = {
+        int(case["case_number"]): case
+        for case in register.get("cases", [])
+    }
+    scores_by_number: dict[int, dict[str, Any]] = {}
+    case_id_mismatch_numbers: list[int] = []
+    for score in scores:
+        if "case_number" not in score:
+            continue
+        number = int(score["case_number"])
+        if number not in registered_cases:
+            continue
+        registered = registered_cases[number]
+        if str(score.get("case_id")) != str(registered.get("case_id")):
+            case_id_mismatch_numbers.append(number)
+            continue
+        scores_by_number[number] = score
+    selected_numbers = sorted(scores_by_number)
+    missing_numbers = sorted(set(registered_cases) - set(selected_numbers))
+    case_diagnostics: list[dict[str, Any]] = []
+    no_load_numbers: list[int] = []
+    wrong_owner_numbers: list[int] = []
+    expected_loaded_numbers: list[int] = []
+    required_action_numbers: list[int] = []
+
+    for number in selected_numbers:
+        registered = registered_cases[number]
+        score = scores_by_number[number]
+        loaded_owner = score.get("loaded_owner") or []
+        if isinstance(loaded_owner, str):
+            loaded_owner = [loaded_owner]
+        accepted_owners = set(str(owner) for owner in registered.get("accepted_runtime_owners", []))
+        superpowers_loaded = bool(score.get("superpowers_loaded"))
+        if any(owner in accepted_owners for owner in loaded_owner):
+            register_expected_loaded = True
+            register_verdict = "expected_owner_loaded"
+        elif loaded_owner or superpowers_loaded:
+            register_expected_loaded = False
+            register_verdict = "wrong_owner_loaded"
+        else:
+            register_expected_loaded = False
+            register_verdict = "no_load"
+
+        if register_verdict == "no_load":
+            no_load_numbers.append(number)
+        if register_verdict == "wrong_owner_loaded":
+            wrong_owner_numbers.append(number)
+        if register_expected_loaded is True:
+            expected_loaded_numbers.append(number)
+        if score.get("required_visible_action_present") is True:
+            required_action_numbers.append(number)
+
+        case_diagnostics.append(
+            {
+                "case_number": number,
+                "case_id": registered.get("case_id"),
+                "target_anchor": registered.get("target_anchor"),
+                "expected_owner": registered.get("expected_owner"),
+                "accepted_runtime_owners": registered.get("accepted_runtime_owners", []),
+                "required_action_probe": registered.get("required_action_probe"),
+                "negative_boundary": registered.get("negative_boundary"),
+                "loaded_owner": loaded_owner,
+                "expected_owner_loaded": score.get("expected_owner_loaded"),
+                "register_expected_owner_loaded": register_expected_loaded,
+                "required_visible_action_present": score.get("required_visible_action_present"),
+                "owner_fidelity_verdict": score.get("owner_fidelity_verdict"),
+                "register_owner_fidelity_verdict": register_verdict,
+            }
+        )
+
+    return {
+        "schema_version": "mindthus-v5-target-activation-diagnostics-v0.1",
+        "register_schema_version": register.get("schema_version"),
+        "registered_case_count": len(registered_cases),
+        "selected_registered_case_count": len(selected_numbers),
+        "registered_case_numbers": sorted(registered_cases),
+        "selected_registered_case_numbers": selected_numbers,
+        "not_selected_registered_case_numbers": missing_numbers,
+        "case_id_mismatch_case_numbers": sorted(set(case_id_mismatch_numbers)),
+        "expected_owner_loaded_rate": (
+            round(len(expected_loaded_numbers) / len(selected_numbers), 3)
+            if selected_numbers
+            else None
+        ),
+        "expected_owner_loaded_case_numbers": expected_loaded_numbers,
+        "no_load_case_numbers": no_load_numbers,
+        "wrong_owner_case_numbers": wrong_owner_numbers,
+        "required_visible_action_case_numbers": required_action_numbers,
+        "case_diagnostics": case_diagnostics,
+    }
+
+
 def ensure_dirs(out_dir: Path) -> None:
     for name in (
         "events",
@@ -155,6 +254,10 @@ def loaded_owners_from_commands(loaded_commands: list[str]) -> list[str]:
             if owner not in owners:
                 owners.append(owner)
     return owners
+
+
+def mindthus_loaded_from_commands(loaded_commands: list[str]) -> bool:
+    return bool(loaded_owners_from_commands(loaded_commands))
 
 
 def home_for_stem(args: argparse.Namespace, stem: str) -> Path | None:
@@ -558,7 +661,7 @@ def owner_fidelity_for_case(
 ) -> dict[str, Any]:
     commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
     loaded_owner = loaded_owners_from_commands(commands)
-    mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+    mindthus_loaded = bool(loaded_owner)
     superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
     accepted_owners = sorted(expected_owner_skills(case))
     stay_asleep = bool(case.get("stay_asleep_expected"))
@@ -691,7 +794,7 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
     for response in responses:
         commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
         prompt_text = "\n".join(str(turn.get("user_prompt", "")) for turn in response.get("turns", []))
-        mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+        mindthus_loaded = mindthus_loaded_from_commands(commands)
         superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
         forced_mindthus_prompt = bool(FORCED_MINDTHUS_RE.search(prompt_text))
         loaded_owner = loaded_owners_from_commands(commands)
@@ -794,7 +897,7 @@ def failure_diagnostics(
             continue
         response = response_by_case.get(score.get("case_id"), {})
         commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
-        mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+        mindthus_loaded = mindthus_loaded_from_commands(commands)
         superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
         loaded_owner = score.get("loaded_owner")
         if loaded_owner is None:
@@ -906,6 +1009,7 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
             loaded_action_items, "required_visible_action_present"
         ),
         "owner_fidelity_counts": owner_fidelity_counts,
+        "v5_target_activation": v5_target_activation_diagnostics(scores),
         "score_histogram": {str(i): sum(1 for s in scores if int(s["score"]) == i) for i in (0, 1, 2)},
         "failed_cases": [
             {

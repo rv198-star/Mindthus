@@ -300,6 +300,37 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(summary["case_summaries"][0]["loaded_owner"], ["using-mindthus", "edsp"])
 
+    def test_generic_mindthus_path_is_not_counted_as_skill_load(self):
+        runner = load_runner()
+        command = "cd /tmp/mindthus-benchmark-workspace && pwd"
+
+        summary = runner.activation_summary(
+            [
+                {
+                    "case_id": "mtj-002",
+                    "case_number": 2,
+                    "loaded_commands_all_turns": [command],
+                    "contamination_flags_all_turns": [],
+                    "turns": [{"user_prompt": "ordinary prompt"}],
+                }
+            ]
+        )
+        augmented = runner.augment_score_with_telemetry(
+            case_by_number(2),
+            {"loaded_commands_all_turns": [command]},
+            {
+                "case_id": "mtj-002",
+                "score": 0,
+                "pass_criteria_met": False,
+                "positive_wakeup_observed": False,
+            },
+        )
+
+        self.assertEqual(summary["mindthus_loaded_count"], 0)
+        self.assertEqual(summary["case_summaries"][0]["loaded_owner"], [])
+        self.assertFalse(augmented["mindthus_loaded"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "no_load")
+
     def test_owner_telemetry_splits_runtime_and_final_answer_false_wakeup(self):
         runner = load_runner()
         case = case_by_number(32)
@@ -452,6 +483,72 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(summary["loaded_required_visible_action_rate"], 1.0)
         self.assertEqual(summary["owner_fidelity_counts"]["runtime_over_wake"], 1)
         self.assertEqual(summary["owner_fidelity_counts"]["expected_owner_loaded"], 1)
+
+    def test_v5_target_activation_diagnostics_uses_register(self):
+        runner = load_runner()
+
+        diagnostics = runner.v5_target_activation_diagnostics(
+            [
+                {
+                    "case_id": "mtj-002",
+                    "case_number": 2,
+                    "expected_owner_loaded": False,
+                    "owner_fidelity_verdict": "no_load",
+                    "loaded_owner": [],
+                    "required_visible_action_present": False,
+                },
+                {
+                    "case_id": "mtj-017",
+                    "case_number": 17,
+                    "expected_owner_loaded": False,
+                    "owner_fidelity_verdict": "wrong_owner_loaded",
+                    "loaded_owner": ["mpg"],
+                    "required_visible_action_present": False,
+                },
+                {
+                    "case_id": "mtj-033",
+                    "case_number": 33,
+                    "expected_owner_loaded": True,
+                    "owner_fidelity_verdict": "expected_owner_loaded",
+                    "loaded_owner": ["3l5s"],
+                    "required_visible_action_present": True,
+                },
+            ]
+        )
+
+        self.assertEqual(diagnostics["registered_case_count"], 9)
+        self.assertEqual(diagnostics["selected_registered_case_count"], 3)
+        self.assertEqual(diagnostics["expected_owner_loaded_rate"], 0.333)
+        self.assertEqual(diagnostics["no_load_case_numbers"], [2])
+        self.assertEqual(diagnostics["wrong_owner_case_numbers"], [17])
+        self.assertEqual(diagnostics["expected_owner_loaded_case_numbers"], [33])
+        self.assertIn(34, diagnostics["not_selected_registered_case_numbers"])
+        case_33 = [case for case in diagnostics["case_diagnostics"] if case["case_number"] == 33][0]
+        self.assertIn("Anti-Spiral", case_33["required_action_probe"])
+        self.assertEqual(case_33["register_owner_fidelity_verdict"], "expected_owner_loaded")
+
+    def test_v5_target_activation_diagnostics_rejects_case_id_mismatch(self):
+        runner = load_runner()
+
+        diagnostics = runner.v5_target_activation_diagnostics(
+            [
+                {
+                    "case_id": "mtj-stale",
+                    "case_number": 2,
+                    "loaded_owner": ["using-mindthus"],
+                    "required_visible_action_present": True,
+                },
+                {
+                    "case_id": "mtj-033",
+                    "case_number": 33,
+                    "loaded_owner": ["3l5s"],
+                    "required_visible_action_present": True,
+                },
+            ]
+        )
+
+        self.assertEqual(diagnostics["selected_registered_case_numbers"], [33])
+        self.assertEqual(diagnostics["case_id_mismatch_case_numbers"], [2])
 
     def test_summarize_marks_runtime_event_telemetry_incomplete(self):
         runner = load_runner()

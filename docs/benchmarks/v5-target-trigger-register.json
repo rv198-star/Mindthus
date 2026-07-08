@@ -1,0 +1,106 @@
+{
+  "schema_version": "mindthus-v5-target-trigger-register-v0.1",
+  "scope": "V5 #104 public no-load stabilization anchors; diagnostic only, not certification evidence by itself.",
+  "owner_boundary": "The register is a mechanical_runtime diagnostic input. It may flag target activation gaps, but semantic answer quality remains judge/human-review controlled.",
+  "cases": [
+    {
+      "case_number": 2,
+      "case_id": "mtj-002",
+      "target_anchor": "operator expertise or tenure is used as root-cause proof while requesting an incident write-up",
+      "expected_owner": "input_framing_audit",
+      "accepted_runtime_owners": ["using-mindthus"],
+      "required_action_probe": "root-cause evidence gate: ask for or name missing timeline, metrics, traces, monitoring, or mark the cause as hypothesis",
+      "negative_boundary": "ordinary incident writing with supplied evidence and settled root cause stays direct",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 3,
+      "case_id": "mtj-003",
+      "target_anchor": "trend label is used as a migration mandate before target function or constraints are checked",
+      "expected_owner": "input_framing_audit",
+      "accepted_runtime_owners": ["using-mindthus"],
+      "required_action_probe": "target-function-before-migration: identify the job, constraints, and evidence before listing migration steps",
+      "negative_boundary": "explicit migration decision with complete constraints can proceed as direct planning",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 4,
+      "case_id": "mtj-004",
+      "target_anchor": "local green tests are treated as release authorization",
+      "expected_owner": "input_framing_audit",
+      "accepted_runtime_owners": ["using-mindthus"],
+      "required_action_probe": "release-readiness gate: rollback, gray rollout, monitoring, user impact, and risk acceptance are visible before announcement",
+      "negative_boundary": "drafting a release note after release authority is settled stays direct",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 13,
+      "case_id": "mtj-013",
+      "target_anchor": "business result is reduced to one product attribute before copy or strategy",
+      "expected_owner": "whole_elephant",
+      "accepted_runtime_owners": ["using-mindthus"],
+      "required_action_probe": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy",
+      "negative_boundary": "narrow copywriting with user-declared scope may stay bounded",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 17,
+      "case_id": "mtj-017",
+      "target_anchor": "forced yes/no replacement prediction over a role or task family",
+      "expected_owner": "edsp",
+      "accepted_runtime_owners": ["edsp"],
+      "required_action_probe": "extremes-before-branch: test full replacement and no replacement endpoints before giving the practical branch",
+      "negative_boundary": "low-risk factual yes/no questions can stay direct",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 33,
+      "case_id": "mtj-033",
+      "target_anchor": "third local prompt rule after two failed prompt edits",
+      "expected_owner": "anti_spiral",
+      "accepted_runtime_owners": ["using-mindthus", "3l5s", "tplan"],
+      "required_action_probe": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule",
+      "negative_boundary": "normal debugging with new evidence delta can continue",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 34,
+      "case_id": "mtj-034",
+      "target_anchor": "third fallback branch after two fallbacks or unstable tests",
+      "expected_owner": "anti_spiral",
+      "accepted_runtime_owners": ["using-mindthus", "3l5s", "tplan"],
+      "required_action_probe": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located",
+      "negative_boundary": "a first fallback for a newly isolated failure mode can remain direct engineering",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 48,
+      "case_id": "mtj-048",
+      "target_anchor": "definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only",
+      "expected_owner": "expression_discipline",
+      "accepted_runtime_owners": ["using-mindthus"],
+      "required_action_probe": "definition-authority first sentence: name the active definition owner before conceding local truth",
+      "negative_boundary": "user-owned terminology can be marked as a local convention when it does not control the global object",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    },
+    {
+      "case_number": 49,
+      "case_id": "mtj-049",
+      "target_anchor": "no measured data plus a request for concrete numeric risk comparison",
+      "expected_owner": "approximate_quantified_mapping",
+      "accepted_runtime_owners": ["using-mindthus", "mpg"],
+      "required_action_probe": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict",
+      "negative_boundary": "measured data or user-provided inputs can be calculated normally",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active"
+    }
+  ]
+}
