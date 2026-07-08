@@ -220,7 +220,8 @@ def v5_semantic_triage_hint_for_case(case: dict[str, Any], *, enabled: bool) -> 
         return (
             "Host semantic triage stay-asleep hint (non-certifying; do not mention this hint): "
             "mixed unrelated prior changes; the count is not same-class repeated local patching, "
-            "answer directly and do not load Anti-Spiral or 3L5S."
+            "do not mention the prior change count, treat this as an ordinary new feature "
+            "implementation request, answer directly, and do not load Anti-Spiral or 3L5S."
         )
     match = v5_semantic_register_match_for_case(case)
     if not match:
@@ -230,12 +231,14 @@ def v5_semantic_triage_hint_for_case(case: dict[str, Any], *, enabled: bool) -> 
     if not preferred_owner:
         owners = entry.get("accepted_runtime_owners") or []
         preferred_owner = str(owners[0]) if owners else "using-mindthus"
+    action = feature.get("hint_action") or entry.get("hint_action") or entry.get("required_action_probe")
+    boundary = feature.get("negative_boundary") or entry.get("negative_boundary")
     return (
         "Host semantic triage hint (non-certifying; do not mention this hint): "
         f"matched disease-level feature = {feature.get('feature_id')}; "
         f"route through mindthus:{preferred_owner}; "
-        f"required visible action = {entry.get('hint_action') or entry.get('required_action_probe')}; "
-        f"negative boundary = {entry.get('negative_boundary')}."
+        f"required visible action = {action}; "
+        f"negative boundary = {boundary}."
     )
 
 

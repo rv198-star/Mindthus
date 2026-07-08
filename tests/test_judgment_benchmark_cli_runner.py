@@ -227,6 +227,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("semantic triage hint", hint)
         self.assertIn("mindthus:3l5s", hint)
         self.assertIn("Anti-Spiral brake", hint)
+        self.assertIn("validation library or parser", hint)
+        self.assertIn("replacement deadline", hint)
         self.assertNotIn("mtj-034", hint)
         self.assertNotIn("case_number", hint)
 
@@ -243,6 +245,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIsNotNone(hint)
         self.assertIn("semantic triage stay-asleep hint", hint)
         self.assertIn("mixed unrelated prior changes", hint)
+        self.assertIn("do not mention the prior change count", hint)
+        self.assertIn("ordinary new feature implementation request", hint)
         self.assertIn("do not load Anti-Spiral or 3L5S", hint)
         self.assertNotIn("mindthus:", hint)
 
