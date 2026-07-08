@@ -71,3 +71,18 @@ Also do not quote `0.000` false wake-up as zero runtime over-wake; it is a final
 judge-field metric.
 
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
+
+## Next Plan
+
+V5 work is now tracked as targeted stabilization rather than broad prompt/rule repair:
+
+- Plan: `docs/benchmarks/v5-targeted-plan.md`
+- Issue drafts: `docs/benchmarks/v5-targeted-issue-drafts.md`
+- #102: freeze V5 rubric and certification protocol before behavior fixes
+- #103: add dual false-wakeup metrics and owner-fidelity telemetry
+- #104: stabilize Entry Triage no-load activation for V5 target cases
+- #105: add loaded-action anchors and mechanical before-answer probes
+- #106: run V5 certification candidate with repeats and shadow-set veto
+
+Order matters: #102 and #103 should land before behavior repairs are interpreted as
+score movement. #106 should not start until #102-#105 are resolved or explicitly waived.
