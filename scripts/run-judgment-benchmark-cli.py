@@ -862,7 +862,9 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
                 "no_commands_loaded": not commands,
                 "forced_mindthus_prompt": forced_mindthus_prompt,
                 "activation_hint_applied": activation_hint_applied,
-                "natural_mindthus_loaded": mindthus_loaded and not forced_mindthus_prompt,
+                "natural_mindthus_loaded": (
+                    mindthus_loaded and not forced_mindthus_prompt and not activation_hint_applied
+                ),
                 "contaminated": bool(response.get("contamination_flags_all_turns")),
             }
         )

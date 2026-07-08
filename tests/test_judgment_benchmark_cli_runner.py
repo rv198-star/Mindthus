@@ -308,15 +308,29 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                     "contamination_flags_all_turns": [],
                     "turns": [{"user_prompt": "$mindthus:using-mindthus answer this"}],
                 },
+                {
+                    "case_id": "mtj-033",
+                    "case_number": 33,
+                    "loaded_commands_all_turns": ["Read mindthus:3l5s"],
+                    "contamination_flags_all_turns": [],
+                    "activation_hint_applied": True,
+                    "turns": [
+                        {
+                            "user_prompt": "ordinary prompt",
+                            "activation_hint": "Host diagnostic activation hint: route through mindthus:3l5s",
+                        }
+                    ],
+                },
             ]
         )
 
-        self.assertEqual(summary["case_count"], 3)
-        self.assertEqual(summary["mindthus_loaded_count"], 1)
+        self.assertEqual(summary["case_count"], 4)
+        self.assertEqual(summary["mindthus_loaded_count"], 2)
         self.assertEqual(summary["natural_mindthus_loaded_count"], 1)
         self.assertEqual(summary["superpowers_loaded_count"], 1)
         self.assertEqual(summary["no_commands_loaded_count"], 1)
         self.assertEqual(summary["forced_mindthus_prompt_count"], 1)
+        self.assertEqual(summary["activation_hint_applied_count"], 1)
         self.assertEqual(summary["contaminated_case_count"], 1)
 
     def test_loaded_owner_detection_follows_skill_entrypoints(self):
