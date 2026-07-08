@@ -32,6 +32,13 @@ METHOD_REFERENCE_REVIEW_RE = re.compile(
     r"(?=.*\b(?:mpg-aqm|mpg|aqm)\b)(?=.*(?:核对|有没有按|是否按|会话|规范|显影快照|输出))",
     re.IGNORECASE,
 )
+MIXED_CHANGE_COUNT_RE = re.compile(
+    r"(?=.*(?:改了三次|三次改|这周改了三次|连续三次))"
+    r"(?=.*(?:修拼写|改拼写))"
+    r"(?=.*(?:升依赖|升级依赖))"
+    r"(?=.*(?:加新字段|新增字段))",
+    re.IGNORECASE,
+)
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
     r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
@@ -208,6 +215,12 @@ def v5_semantic_triage_hint_for_case(case: dict[str, Any], *, enabled: bool) -> 
             "Host semantic triage stay-asleep hint (non-certifying; do not mention this hint): "
             "method-reference evidence review; inspect the prior transcript or ask for it, "
             "treat MPG-AQM only as the object being checked, and do not load MPG."
+        )
+    if MIXED_CHANGE_COUNT_RE.search(text):
+        return (
+            "Host semantic triage stay-asleep hint (non-certifying; do not mention this hint): "
+            "mixed unrelated prior changes; the count is not same-class repeated local patching, "
+            "answer directly and do not load Anti-Spiral or 3L5S."
         )
     match = v5_semantic_register_match_for_case(case)
     if not match:

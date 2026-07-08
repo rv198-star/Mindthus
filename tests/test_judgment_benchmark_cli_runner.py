@@ -240,7 +240,11 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         hint = runner.v5_semantic_triage_hint_for_case(near_negative, enabled=True)
 
-        self.assertIsNone(hint)
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage stay-asleep hint", hint)
+        self.assertIn("mixed unrelated prior changes", hint)
+        self.assertIn("do not load Anti-Spiral or 3L5S", hint)
+        self.assertNotIn("mindthus:", hint)
 
     def test_v5_semantic_triage_keeps_method_reference_review_direct(self):
         runner = load_runner()
