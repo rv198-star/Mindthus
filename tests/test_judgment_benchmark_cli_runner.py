@@ -266,6 +266,266 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(summary["forced_mindthus_prompt_count"], 1)
         self.assertEqual(summary["contaminated_case_count"], 1)
 
+    def test_loaded_owner_detection_follows_skill_entrypoints(self):
+        runner = load_runner()
+
+        owners = runner.loaded_owners_from_commands(
+            [
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+                "Read mindthus:edsp",
+                "echo edsp is mentioned but not loaded",
+            ]
+        )
+
+        self.assertEqual(owners, ["using-mindthus", "edsp"])
+
+    def test_activation_summary_records_loaded_owner(self):
+        runner = load_runner()
+
+        summary = runner.activation_summary(
+            [
+                {
+                    "case_id": "mtj-037",
+                    "case_number": 37,
+                    "loaded_commands_all_turns": [
+                        "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+                        "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+                    ],
+                    "contamination_flags_all_turns": [],
+                    "turns": [{"user_prompt": "ordinary prompt"}],
+                }
+            ]
+        )
+
+        self.assertEqual(summary["case_summaries"][0]["loaded_owner"], ["using-mindthus", "edsp"])
+
+    def test_owner_telemetry_splits_runtime_and_final_answer_false_wakeup(self):
+        runner = load_runner()
+        case = case_by_number(32)
+        response = {
+            "loaded_commands_all_turns": [
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+            ]
+        }
+        score = {
+            "case_id": "mtj-032",
+            "score": 2,
+            "pass_criteria_met": True,
+            "positive_wakeup_observed": False,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+
+        self.assertFalse(augmented["false_wakeup_final_answer"])
+        self.assertTrue(augmented["false_wakeup_runtime_event"])
+        self.assertFalse(augmented["expected_owner_loaded"])
+        self.assertIsNone(augmented["required_visible_action_present"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "runtime_over_wake")
+
+    def test_owner_telemetry_marks_wrong_loaded_owner(self):
+        runner = load_runner()
+        case = case_by_number(15)
+        response = {
+            "loaded_commands_all_turns": [
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+                "/bin/zsh -lc \"sed -n '1,180p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+            ]
+        }
+        score = {
+            "case_id": "mtj-015",
+            "score": 1,
+            "pass_criteria_met": False,
+            "positive_wakeup_observed": True,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+
+        self.assertEqual(augmented["loaded_owner"], ["mpg", "sela"])
+        self.assertFalse(augmented["expected_owner_loaded"])
+        self.assertEqual(augmented["accepted_loaded_owners"], ["edsp"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "wrong_owner_loaded")
+
+    def test_owner_telemetry_marks_expected_owner_and_no_load(self):
+        runner = load_runner()
+        expected = runner.augment_score_with_telemetry(
+            case_by_number(37),
+            {
+                "loaded_commands_all_turns": [
+                    "Read /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md",
+                    "Read /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md",
+                ]
+            },
+            {
+                "case_id": "mtj-037",
+                "score": 2,
+                "pass_criteria_met": True,
+                "positive_wakeup_observed": True,
+            },
+        )
+        no_load = runner.augment_score_with_telemetry(
+            case_by_number(48),
+            {"loaded_commands_all_turns": []},
+            {
+                "case_id": "mtj-048",
+                "score": 0,
+                "pass_criteria_met": False,
+                "positive_wakeup_observed": False,
+            },
+        )
+
+        self.assertTrue(expected["expected_owner_loaded"])
+        self.assertEqual(expected["owner_fidelity_verdict"], "expected_owner_loaded")
+        self.assertFalse(no_load["expected_owner_loaded"])
+        self.assertEqual(no_load["owner_fidelity_verdict"], "no_load")
+
+    def test_summarize_reports_dual_false_wakeup_and_owner_rates(self):
+        runner = load_runner()
+        scores = [
+            {
+                "case_id": "mtj-032",
+                "case_number": 32,
+                "case_type": "negative_control",
+                "group_id": "G",
+                "score": 2,
+                "pass_criteria_met": True,
+                "positive_wakeup_observed": False,
+                "first_sentence_lock": None,
+                "verdict_commitment_anti_mush": None,
+                "over_forced_verdict": False,
+                "false_wakeup_final_answer": False,
+                "false_wakeup_runtime_event": True,
+                "expected_owner_loaded": False,
+                "required_visible_action_present": None,
+                "owner_fidelity_verdict": "runtime_over_wake",
+                "rationale": "",
+            },
+            {
+                "case_id": "mtj-043",
+                "case_number": 43,
+                "case_type": "negative_control",
+                "group_id": "K",
+                "score": 0,
+                "pass_criteria_met": False,
+                "positive_wakeup_observed": True,
+                "first_sentence_lock": None,
+                "verdict_commitment_anti_mush": None,
+                "over_forced_verdict": True,
+                "false_wakeup_final_answer": True,
+                "false_wakeup_runtime_event": False,
+                "expected_owner_loaded": True,
+                "required_visible_action_present": None,
+                "owner_fidelity_verdict": "direct_stay_asleep",
+                "rationale": "",
+            },
+            {
+                "case_id": "mtj-037",
+                "case_number": 37,
+                "case_type": "positive",
+                "group_id": "I",
+                "score": 2,
+                "pass_criteria_met": True,
+                "positive_wakeup_observed": True,
+                "first_sentence_lock": True,
+                "verdict_commitment_anti_mush": True,
+                "over_forced_verdict": False,
+                "false_wakeup_final_answer": False,
+                "false_wakeup_runtime_event": False,
+                "expected_owner_loaded": True,
+                "required_visible_action_present": True,
+                "owner_fidelity_verdict": "expected_owner_loaded",
+                "mindthus_loaded": True,
+                "superpowers_loaded": False,
+                "rationale": "",
+            },
+        ]
+
+        summary = runner.summarize(scores)
+
+        self.assertEqual(summary["negative_false_wakeup_rate"], 0.5)
+        self.assertEqual(summary["negative_false_wakeup_final_answer_rate"], 0.5)
+        self.assertEqual(summary["negative_false_wakeup_runtime_event_rate"], 0.5)
+        self.assertEqual(summary["expected_owner_loaded_rate"], 0.667)
+        self.assertEqual(summary["positive_expected_owner_loaded_rate"], 1.0)
+        self.assertEqual(summary["negative_runtime_stay_asleep_rate"], 0.5)
+        self.assertEqual(summary["required_visible_action_rate"], 1.0)
+        self.assertEqual(summary["loaded_required_visible_action_rate"], 1.0)
+        self.assertEqual(summary["owner_fidelity_counts"]["runtime_over_wake"], 1)
+        self.assertEqual(summary["owner_fidelity_counts"]["expected_owner_loaded"], 1)
+
+    def test_summarize_marks_runtime_event_telemetry_incomplete(self):
+        runner = load_runner()
+        summary = runner.summarize(
+            [
+                {
+                    "case_id": "mtj-043",
+                    "case_number": 43,
+                    "case_type": "negative_control",
+                    "group_id": "K",
+                    "score": 2,
+                    "pass_criteria_met": True,
+                    "positive_wakeup_observed": False,
+                    "first_sentence_lock": None,
+                    "verdict_commitment_anti_mush": None,
+                    "over_forced_verdict": False,
+                    "rationale": "",
+                }
+            ]
+        )
+
+        self.assertIsNone(summary["negative_false_wakeup_runtime_event_rate"])
+        self.assertFalse(summary["runtime_event_telemetry_complete"])
+        self.assertEqual(summary["runtime_event_telemetry_missing_count"], 1)
+
+    def test_certification_candidate_requires_explicit_models_and_full_set(self):
+        runner = load_runner()
+        args = SimpleNamespace(
+            home=None,
+            empty_home_root=None,
+            certification_candidate=True,
+            model=None,
+            judge_model="gpt-judge",
+            select=None,
+            reanalysis_of=None,
+        )
+
+        self.assertIn("--certification-candidate requires explicit --model", runner.validate_run_args(args))
+
+        args.model = "gpt-generator"
+        args.judge_model = None
+        self.assertIn(
+            "--certification-candidate requires explicit --judge-model",
+            runner.validate_run_args(args),
+        )
+
+        args.judge_model = "gpt-judge"
+        args.select = "1-10"
+        self.assertIn(
+            "--certification-candidate requires the full case set; omit --select",
+            runner.validate_run_args(args),
+        )
+
+        args.select = None
+        args.reanalysis_of = "v4"
+        self.assertIn(
+            "--certification-candidate cannot be combined with --reanalysis-of",
+            runner.validate_run_args(args),
+        )
+
+    def test_public_fixture_expected_owners_are_mapped(self):
+        runner = load_runner()
+        unmapped = []
+        for case in runner.load_cases(CASESET):
+            if case.get("stay_asleep_expected"):
+                continue
+            if runner.expected_owner_skills(case):
+                continue
+            if case["expected_owner"] in runner.DIRECT_EXPECTED_OWNERS:
+                continue
+            unmapped.append((case["case_id"], case["expected_owner"]))
+
+        self.assertEqual(unmapped, [])
+
     def test_contamination_report_separates_generator_and_judge_flags(self):
         runner = load_runner()
         report = runner.contamination_report(

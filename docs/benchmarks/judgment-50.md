@@ -37,6 +37,10 @@ Run both variants with the same model family, parameters, and repeat count:
 - `baseline`: no Mindthus skill pack/context.
 - `baseline+Mindthus`: hot-updated Mindthus install/context.
 
+A certified public result must newly generate and judge all 50 public cases for both
+variants. Target-case repeats and disputed-case repeats are additional stability
+evidence; they cannot replace the full 50-case run.
+
 Record the hot-updated Mindthus verification evidence before treatment runs. Acceptable
 evidence includes release-pack build/install details, plugin cache hash checks, or
 `scripts/log-mindthus-runtime.py --json --strict` output when that command is available.
@@ -74,12 +78,18 @@ quiet execution earns `2`; method over-triggering earns `0`.
 Report these metrics at minimum:
 
 - positive mean >= 1.5 / 2
-- negative false wake-up rate <= 10%
+- final-answer negative false wake-up rate <= 10%
+- runtime-event negative false wake-up rate <= 10%
 - first-sentence lock rate for B/L-group and definition-authority cases
 - verdict-commitment / anti-mush rate for Decision Context and Aspect Ownership cases
 - over-forced verdict rate for user-owned acceptable-tradeoff and negative-control cases
 - Anti-Spiral brake execution rate for H-group cases
+- expected-owner-loaded rate and owner-fidelity verdict counts
+- required-visible-action and loaded-required-visible-action rates for positive cases
 - public headline as `treatment - baseline`, with both raw scores shown
+
+`negative_false_wakeup_rate` in older reports is a final-answer judge-field metric. V5
+and later reports must separately name final-answer and runtime-event false wake-up.
 
 ## Anti-Overfitting Rule
 

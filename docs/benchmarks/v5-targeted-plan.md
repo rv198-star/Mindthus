@@ -1,7 +1,8 @@
 # Mindthus V5 Targeted Stabilization Plan
 
 Status: planning handoff for the post-V4 targeted repair stage. This is not a passing
-certification record.
+certification record. The V5 measuring stick is frozen in
+`docs/benchmarks/v5-certification-protocol.md`.
 
 ## Objective
 
@@ -69,6 +70,8 @@ Acceptance:
 - case calibration examples are linked from the V5 run report
 - fixture diff notes cover v2 -> v3 and confirm v3 -> v4 fixture SHA stability
 
+Protocol: `docs/benchmarks/v5-certification-protocol.md`.
+
 ### 2. Add Measurement That Can See the Real Failure
 
 Add fields that separate "loaded" from "loaded the right thing and did the visible
@@ -90,6 +93,13 @@ Acceptance:
 - `mindthus_loaded=true` no longer hides wrong-lens cases such as #15
 - `over_forced_verdict_rate` is described as a strict judge-field rate, with #49 tracked
   as a separate AQM boundary risk if its field is null
+
+Implementation note: `scripts/run-judgment-benchmark-cli.py` now emits these fields in
+score records and summary output, with machine-readable `diagnostic` vs
+`certification_candidate` run status. A no-writeback reanalysis of the V4 treatment artifacts
+classifies #32 as `runtime_over_wake`, #15 as `wrong_owner_loaded`, and #48 as `no_load`.
+The same reanalysis gives final-answer negative false wake-up `0.000` and runtime-event
+negative false wake-up `0.083`; this is diagnostic attribution, not a new certified run.
 
 ### 3. Stabilize No-Load Cases
 

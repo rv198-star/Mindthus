@@ -29,6 +29,37 @@ CONTAMINATION_RE = re.compile(
 MINDTHUS_RE = re.compile(r"mindthus", re.IGNORECASE)
 SUPERPOWERS_RE = re.compile(r"superpowers", re.IGNORECASE)
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
+MINDTHUS_SKILL_RE = re.compile(
+    r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
+    re.IGNORECASE,
+)
+
+DIRECT_EXPECTED_OWNERS = {
+    "clarification",
+    "direct_answer",
+    "direct_debugging",
+    "direct_execution",
+    "direct_judgment",
+    "evidence_review",
+    "information_acquisition",
+    "release_review",
+}
+
+OWNER_ACCEPTED_SKILLS = {
+    "input_framing_audit": {"using-mindthus"},
+    "whole_elephant": {"using-mindthus"},
+    "edsp": {"edsp"},
+    "sela": {"sela"},
+    "sela_boundary": {"sela"},
+    "mpg": {"mpg"},
+    "wae": {"wae"},
+    "tvg": {"tvg"},
+    "anti_spiral": {"using-mindthus", "3l5s", "tplan"},
+    "decision_context_calibration": {"using-mindthus", "edsp"},
+    "aspect_arbitration": {"using-mindthus"},
+    "expression_discipline": {"using-mindthus"},
+    "approximate_quantified_mapping": {"using-mindthus", "mpg"},
+}
 
 
 ISOLATION_INSTRUCTION = (
@@ -114,6 +145,16 @@ def command_text(args: list[str]) -> str:
 
 def contamination_flags_for(loaded_commands: list[str]) -> list[str]:
     return [command for command in loaded_commands if CONTAMINATION_RE.search(command)]
+
+
+def loaded_owners_from_commands(loaded_commands: list[str]) -> list[str]:
+    owners: list[str] = []
+    for command in loaded_commands:
+        for match in MINDTHUS_SKILL_RE.finditer(str(command)):
+            owner = match.group(1).lower()
+            if owner not in owners:
+                owners.append(owner)
+    return owners
 
 
 def home_for_stem(args: argparse.Namespace, stem: str) -> Path | None:
@@ -480,6 +521,97 @@ def judge_prompt(case: dict[str, Any], response: dict[str, Any]) -> str:
     )
 
 
+def expected_owner_skills(case: dict[str, Any]) -> set[str]:
+    if bool(case.get("stay_asleep_expected")):
+        return set()
+    owner = str(case.get("expected_owner", ""))
+    if owner in DIRECT_EXPECTED_OWNERS:
+        return set()
+    if owner in OWNER_ACCEPTED_SKILLS:
+        return set(OWNER_ACCEPTED_SKILLS[owner])
+    if owner in {"using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}:
+        return {owner}
+    return set()
+
+
+def final_answer_false_wakeup(case: dict[str, Any], score: dict[str, Any]) -> bool:
+    if not bool(case.get("stay_asleep_expected")):
+        return False
+    return bool(score.get("positive_wakeup_observed")) or int(score.get("score", 0)) == 0
+
+
+def runtime_event_false_wakeup(
+    case: dict[str, Any],
+    *,
+    mindthus_loaded: bool,
+    superpowers_loaded: bool,
+) -> bool:
+    if not bool(case.get("stay_asleep_expected")):
+        return False
+    return mindthus_loaded or superpowers_loaded
+
+
+def owner_fidelity_for_case(
+    case: dict[str, Any],
+    response: dict[str, Any],
+    score: dict[str, Any],
+) -> dict[str, Any]:
+    commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
+    loaded_owner = loaded_owners_from_commands(commands)
+    mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
+    superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+    accepted_owners = sorted(expected_owner_skills(case))
+    stay_asleep = bool(case.get("stay_asleep_expected"))
+    expected_owner = str(case.get("expected_owner", ""))
+
+    false_final = final_answer_false_wakeup(case, score)
+    false_runtime = runtime_event_false_wakeup(
+        case,
+        mindthus_loaded=mindthus_loaded,
+        superpowers_loaded=superpowers_loaded,
+    )
+    required_visible_action_present = (
+        bool(score.get("pass_criteria_met")) if not stay_asleep else None
+    )
+
+    if stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
+        expected_owner_loaded = not mindthus_loaded and not superpowers_loaded
+        verdict = "runtime_over_wake" if false_runtime else "direct_stay_asleep"
+    elif not accepted_owners:
+        expected_owner_loaded = None
+        verdict = "unknown_expected_owner"
+    elif any(owner in accepted_owners for owner in loaded_owner):
+        expected_owner_loaded = True
+        verdict = "expected_owner_loaded"
+    elif mindthus_loaded or superpowers_loaded:
+        expected_owner_loaded = False
+        verdict = "wrong_owner_loaded"
+    else:
+        expected_owner_loaded = False
+        verdict = "no_load"
+
+    return {
+        "expected_owner": expected_owner,
+        "accepted_loaded_owners": accepted_owners,
+        "loaded_owner": loaded_owner,
+        "mindthus_loaded": mindthus_loaded,
+        "superpowers_loaded": superpowers_loaded,
+        "false_wakeup_final_answer": false_final,
+        "false_wakeup_runtime_event": false_runtime,
+        "expected_owner_loaded": expected_owner_loaded,
+        "required_visible_action_present": required_visible_action_present,
+        "owner_fidelity_verdict": verdict,
+    }
+
+
+def augment_score_with_telemetry(
+    case: dict[str, Any],
+    response: dict[str, Any],
+    score: dict[str, Any],
+) -> dict[str, Any]:
+    return {**score, **owner_fidelity_for_case(case, response, score)}
+
+
 def judge_case(
     case: dict[str, Any],
     response: dict[str, Any],
@@ -490,7 +622,9 @@ def judge_case(
     out_dir = Path(args.out_dir)
     score_path = out_dir / "judge-answers" / f"{case_id}.record.json"
     if score_path.exists() and not args.force:
-        return json.loads(score_path.read_text(encoding="utf-8"))
+        cached = json.loads(score_path.read_text(encoding="utf-8"))
+        cached["cached_judge_reused"] = True
+        return augment_score_with_telemetry(case, response, cached)
 
     result = run_codex(
         judge_prompt(case, response),
@@ -533,7 +667,7 @@ def judge_case(
         }
     record = {
         **parsed,
-        "schema_version": "mindthus-judgment-cli-score-v0.1",
+        "schema_version": "mindthus-judgment-cli-score-v0.2",
         "judged_at_utc": datetime.now(timezone.utc).isoformat(),
         "variant": args.variant,
         "case_id": case_id,
@@ -545,7 +679,9 @@ def judge_case(
         "judge_usage": result.get("usage"),
         "judge_loaded_commands": result.get("loaded_commands", []),
         "judge_contamination_flags": result.get("contamination_flags", []),
+        "cached_judge_reused": False,
     }
+    record = augment_score_with_telemetry(case, response, record)
     score_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     return record
 
@@ -558,12 +694,14 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
         mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
         superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
         forced_mindthus_prompt = bool(FORCED_MINDTHUS_RE.search(prompt_text))
+        loaded_owner = loaded_owners_from_commands(commands)
         case_summaries.append(
             {
                 "case_id": response.get("case_id"),
                 "case_number": response.get("case_number"),
                 "mindthus_loaded": mindthus_loaded,
                 "superpowers_loaded": superpowers_loaded,
+                "loaded_owner": loaded_owner,
                 "no_commands_loaded": not commands,
                 "forced_mindthus_prompt": forced_mindthus_prompt,
                 "natural_mindthus_loaded": mindthus_loaded and not forced_mindthus_prompt,
@@ -576,7 +714,7 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
 
     case_count = len(case_summaries)
     return {
-        "schema_version": "mindthus-judgment-cli-activation-summary-v0.1",
+        "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
         "case_count": case_count,
         "mindthus_loaded_count": count("mindthus_loaded"),
         "superpowers_loaded_count": count("superpowers_loaded"),
@@ -658,6 +796,9 @@ def failure_diagnostics(
         commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
         mindthus_loaded = any(MINDTHUS_RE.search(command) for command in commands)
         superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+        loaded_owner = score.get("loaded_owner")
+        if loaded_owner is None:
+            loaded_owner = loaded_owners_from_commands(commands)
         failed_cases.append(
             {
                 "case_id": score.get("case_id"),
@@ -667,10 +808,16 @@ def failure_diagnostics(
                 "multi_turn": bool(response.get("multi_turn")),
                 "mindthus_loaded": mindthus_loaded,
                 "superpowers_loaded": superpowers_loaded,
+                "loaded_owner": loaded_owner,
                 "no_commands_loaded": not commands,
                 "first_sentence_lock": score.get("first_sentence_lock"),
                 "verdict_commitment_anti_mush": score.get("verdict_commitment_anti_mush"),
                 "over_forced_verdict": score.get("over_forced_verdict"),
+                "false_wakeup_final_answer": score.get("false_wakeup_final_answer"),
+                "false_wakeup_runtime_event": score.get("false_wakeup_runtime_event"),
+                "expected_owner_loaded": score.get("expected_owner_loaded"),
+                "required_visible_action_present": score.get("required_visible_action_present"),
+                "owner_fidelity_verdict": score.get("owner_fidelity_verdict"),
             }
         )
 
@@ -678,7 +825,7 @@ def failure_diagnostics(
         return sum(1 for item in failed_cases if item[key])
 
     return {
-        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.1",
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
         "failed_case_count": len(failed_cases),
         "mindthus_loaded_failed_case_count": count("mindthus_loaded"),
         "superpowers_loaded_failed_case_count": count("superpowers_loaded"),
@@ -704,34 +851,90 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
             return None
         return round(sum(1 for s in items if s.get(key) is positive_value) / len(items), 3)
 
-    false_wakes = [
-        s for s in negative if bool(s.get("positive_wakeup_observed")) or int(s.get("score", 0)) == 0
+    def final_false_wakeup_from_score(score: dict[str, Any]) -> bool:
+        if "false_wakeup_final_answer" in score:
+            return bool(score.get("false_wakeup_final_answer"))
+        return bool(score.get("positive_wakeup_observed")) or int(score.get("score", 0)) == 0
+
+    final_false_wakes = [s for s in negative if final_false_wakeup_from_score(s)]
+    runtime_missing = [
+        s for s in negative if s.get("false_wakeup_runtime_event") is None
     ]
+    runtime_false_wakes = [s for s in negative if s.get("false_wakeup_runtime_event") is True]
+    owner_items = [s for s in scores if s.get("expected_owner_loaded") is not None]
+    positive_owner_items = [s for s in positive if s.get("expected_owner_loaded") is not None]
+    negative_owner_items = [s for s in negative if s.get("expected_owner_loaded") is not None]
+    action_items = [s for s in scores if s.get("required_visible_action_present") is not None]
+    loaded_action_items = [
+        s
+        for s in positive
+        if s.get("required_visible_action_present") is not None
+        and (s.get("mindthus_loaded") is True or s.get("superpowers_loaded") is True)
+    ]
+    owner_fidelity_counts = {
+        verdict: sum(1 for s in scores if s.get("owner_fidelity_verdict") == verdict)
+        for verdict in sorted({str(s.get("owner_fidelity_verdict")) for s in scores if s.get("owner_fidelity_verdict")})
+    }
     return {
-        "schema_version": "mindthus-judgment-cli-summary-v0.1",
+        "schema_version": "mindthus-judgment-cli-summary-v0.2",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "case_count": len(scores),
         "positive_count": len(positive),
         "negative_control_count": len(negative),
         "positive_mean": avg(positive),
         "overall_mean": avg(scores),
-        "negative_false_wakeup_rate": round(len(false_wakes) / len(negative), 3) if negative else None,
+        "negative_false_wakeup_rate": round(len(final_false_wakes) / len(negative), 3) if negative else None,
+        "negative_false_wakeup_final_answer_rate": (
+            round(len(final_false_wakes) / len(negative), 3) if negative else None
+        ),
+        "negative_false_wakeup_runtime_event_rate": (
+            round(len(runtime_false_wakes) / len(negative), 3)
+            if negative and not runtime_missing
+            else None
+        ),
+        "runtime_event_telemetry_complete": not runtime_missing,
+        "runtime_event_telemetry_missing_count": len(runtime_missing),
         "first_sentence_lock_rate": rate(first_lock, "first_sentence_lock"),
         "verdict_commitment_anti_mush_rate": rate(anti_mush, "verdict_commitment_anti_mush"),
         "over_forced_verdict_rate": rate(over_forced, "over_forced_verdict"),
         "h_group_brake_rate": rate(h_group, "pass_criteria_met"),
+        "expected_owner_loaded_rate": rate(owner_items, "expected_owner_loaded"),
+        "positive_expected_owner_loaded_rate": rate(positive_owner_items, "expected_owner_loaded"),
+        "negative_runtime_stay_asleep_rate": rate(negative_owner_items, "expected_owner_loaded"),
+        "required_visible_action_rate": rate(action_items, "required_visible_action_present"),
+        "loaded_required_visible_action_rate": rate(
+            loaded_action_items, "required_visible_action_present"
+        ),
+        "owner_fidelity_counts": owner_fidelity_counts,
         "score_histogram": {str(i): sum(1 for s in scores if int(s["score"]) == i) for i in (0, 1, 2)},
         "failed_cases": [
             {
                 "case_id": s["case_id"],
                 "case_number": s["case_number"],
                 "score": s["score"],
+                "owner_fidelity_verdict": s.get("owner_fidelity_verdict"),
                 "rationale": s.get("rationale", ""),
             }
             for s in scores
             if int(s["score"]) < 2
         ],
     }
+
+
+def validate_run_args(args: argparse.Namespace) -> list[str]:
+    errors: list[str] = []
+    if args.home and args.empty_home_root:
+        errors.append("--home and --empty-home-root cannot be used together")
+    if args.certification_candidate:
+        if not args.model:
+            errors.append("--certification-candidate requires explicit --model")
+        if not args.judge_model:
+            errors.append("--certification-candidate requires explicit --judge-model")
+        if args.select:
+            errors.append("--certification-candidate requires the full case set; omit --select")
+        if args.reanalysis_of:
+            errors.append("--certification-candidate cannot be combined with --reanalysis-of")
+    return errors
 
 
 def main() -> int:
@@ -758,13 +961,29 @@ def main() -> int:
     parser.add_argument("--phase", choices=("generate", "judge", "all"), default="all")
     parser.add_argument("--force", action="store_true")
     parser.add_argument(
+        "--certification-candidate",
+        action="store_true",
+        help="Mark this as a V5 certification candidate. Requires explicit models and the full case set.",
+    )
+    parser.add_argument(
+        "--reanalysis-of",
+        default=None,
+        help="Identifier or path of the source run when reinterpreting archived artifacts.",
+    )
+    parser.add_argument(
+        "--source-run-commit",
+        default=None,
+        help="Original source-run commit for diagnostic reanalysis artifacts.",
+    )
+    parser.add_argument(
         "--fail-on-contamination",
         action="store_true",
         help="Exit nonzero if a generator or judge subprocess loads forbidden benchmark or host-skill context.",
     )
     args = parser.parse_args()
-    if args.home and args.empty_home_root:
-        parser.error("--home and --empty-home-root cannot be used together")
+    errors = validate_run_args(args)
+    if errors:
+        parser.error("; ".join(errors))
 
     ensure_dirs(args.out_dir)
     all_cases = load_cases(args.cases)
@@ -791,10 +1010,21 @@ def main() -> int:
         "execution_root": str(args.execution_root),
         "model": args.model,
         "judge_model": args.judge_model or args.model,
+        "model_explicit": args.model is not None,
+        "judge_model_explicit": args.judge_model is not None,
         "jobs": args.jobs,
         "timeout": args.timeout,
+        "phase": args.phase,
+        "force": args.force,
         "plugin_context": args.plugin_context,
         "fail_on_contamination": args.fail_on_contamination,
+        "certification_status": (
+            "certification_candidate" if args.certification_candidate else "diagnostic"
+        ),
+        "certification_candidate_requested": args.certification_candidate,
+        "reanalysis_of": args.reanalysis_of,
+        "source_run_commit": args.source_run_commit,
+        "cached_judge_reuse_allowed": not args.force,
         "contamination_patterns": CONTAMINATION_RE.pattern,
         "generator_isolation_instruction": isolation_instruction(args.plugin_context),
         "judge_isolation_instruction": JUDGE_ISOLATION_INSTRUCTION,
@@ -870,12 +1100,32 @@ def main() -> int:
         scores.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "score-records.jsonl", scores)
         summary = summarize(scores)
+        cached_judge_reused_count = sum(1 for score in scores if score.get("cached_judge_reused"))
+        summary["certification_status"] = manifest["certification_status"]
+        summary["certification_candidate_requested"] = args.certification_candidate
+        summary["model_explicit"] = manifest["model_explicit"]
+        summary["judge_model_explicit"] = manifest["judge_model_explicit"]
+        summary["run_phase"] = args.phase
+        summary["reanalysis_of"] = args.reanalysis_of
+        summary["source_run_commit"] = args.source_run_commit
+        summary["cached_judge_reused_count"] = cached_judge_reused_count
+        summary["certification_candidate_valid"] = (
+            args.certification_candidate
+            and cached_judge_reused_count == 0
+            and summary.get("runtime_event_telemetry_complete") is True
+        )
         summary["activation"] = activation_summary(responses)
         summary["failure_diagnostics"] = failure_diagnostics(responses, scores)
         (args.out_dir / "summary.json").write_text(
             json.dumps(summary, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
+        if args.certification_candidate and cached_judge_reused_count:
+            print(
+                "certification candidate cannot reuse cached judge records; rerun with --force",
+                flush=True,
+            )
+            return 2
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses, scores)
             if report["generator_contaminated_case_count"] or report["judge_contaminated_case_count"]:

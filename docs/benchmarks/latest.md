@@ -7,6 +7,10 @@ baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run
 the v3 isolation fix, adds strict Entry Triage runtime fingerprint coverage, and improves
 the treatment score, but still misses the public positive-score threshold.
 
+V5 certification candidates must follow
+`docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
+score movement.
+
 ## Current Case Set
 
 - Fixture: `tests/judgment_benchmark_50_cases.jsonl`
@@ -31,11 +35,18 @@ Future certified reports should include:
 - judge model and blind-grading setup
 - human spot-check sample and disagreement handling
 - positive mean score
-- negative false wake-up rate
+- final-answer negative false wake-up rate
+- runtime-event negative false wake-up rate
 - first-sentence lock rate
 - verdict-commitment / anti-mush rate
 - over-forced verdict rate
 - Anti-Spiral brake execution rate
+- expected-owner-loaded rate
+- positive expected-owner-loaded rate
+- negative runtime stay-asleep rate
+- required-visible-action rate
+- loaded-required-visible-action rate
+- owner-fidelity verdict counts
 - headline delta: treatment - baseline
 
 ## Latest Run
@@ -57,7 +68,7 @@ Future certified reports should include:
 
 ## Results
 
-| Variant | Positive mean | Negative false wake-up rate | First-sentence lock rate | Verdict-commitment / anti-mush rate | Over-forced verdict rate | H-group brake rate |
+| Variant | Positive mean | Final-answer negative false wake-up rate | First-sentence lock rate | Verdict-commitment / anti-mush rate | Over-forced verdict rate | H-group brake rate |
 | --- | --- | --- | --- | --- | --- | --- |
 | baseline v4 | 1.184 | 0.083 | 0.625 | 0.629 | 0.150 | 0.250 |
 | baseline+Mindthus hotfix v4 | 1.447 | 0.000 | 0.706 | 0.824 | 0.050 | 0.500 |
@@ -70,6 +81,9 @@ better, but the treatment positive mean is `1.447`, below the `1.5` public targe
 Also do not quote `0.000` false wake-up as zero runtime over-wake; it is a final-answer
 judge-field metric.
 
+The archived V4 result table predates V5 runtime-event telemetry and therefore does not
+include a certified runtime-event false wake-up column.
+
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
 
 ## Next Plan
@@ -77,6 +91,7 @@ Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37
 V5 work is now tracked as targeted stabilization rather than broad prompt/rule repair:
 
 - Plan: `docs/benchmarks/v5-targeted-plan.md`
+- Certification protocol: `docs/benchmarks/v5-certification-protocol.md`
 - Issue drafts: `docs/benchmarks/v5-targeted-issue-drafts.md`
 - #102: freeze V5 rubric and certification protocol before behavior fixes
 - #103: add dual false-wakeup metrics and owner-fidelity telemetry
@@ -86,3 +101,7 @@ V5 work is now tracked as targeted stabilization rather than broad prompt/rule r
 
 Order matters: #102 and #103 should land before behavior repairs are interpreted as
 score movement. #106 should not start until #102-#105 are resolved or explicitly waived.
+
+Runner note: V5 telemetry now separates final-answer false wake-up from runtime-event
+false wake-up and records owner fidelity. Historical V4 reports remain archived under
+their original runner SHA; reinterpreted V4 telemetry is diagnostic only.
