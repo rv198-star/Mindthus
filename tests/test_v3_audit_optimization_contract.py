@@ -86,7 +86,7 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
 
     def test_v5_target_trigger_register_covers_no_load_cases(self):
         register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))
-        expected_cases = {2, 3, 4, 13, 17, 33, 34, 48, 49}
+        expected_cases = {2, 3, 4, 8, 13, 17, 33, 34, 37, 48, 49}
 
         cases = register["cases"]
 

@@ -171,6 +171,31 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("first sentence", hint)
         self.assertIn("reconstruct", hint)
 
+    def test_v5_register_hint_for_13_requires_whole_object_action_probe(self):
+        runner = load_runner()
+        hint = runner.v5_register_hint_for_case(case_by_number(13), enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("mindthus:using-mindthus", hint)
+        self.assertIn("whole-object-before-copy", hint)
+        self.assertIn("location", hint)
+        self.assertIn("repurchase", hint)
+        self.assertIn("floor efficiency", hint)
+        self.assertIn("brand", hint)
+        self.assertIn("bounded carrier", hint)
+
+    def test_v5_register_hint_for_49_blocks_hypothetical_calculated_verdict(self):
+        runner = load_runner()
+        hint = runner.v5_register_hint_for_case(case_by_number(49), enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("mindthus:using-mindthus", hint)
+        self.assertIn("AQM evidence ceiling", hint)
+        self.assertIn("no measured data", hint)
+        self.assertIn("label every number as hypothetical", hint)
+        self.assertIn("do not rank", hint)
+        self.assertIn("do not recommend", hint)
+
     def test_v5_semantic_triage_hint_matches_shadow_case_without_case_id(self):
         runner = load_runner()
         shadow_case = dict(case_by_number(17))
@@ -185,6 +210,39 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("mindthus:edsp", hint)
         self.assertIn("malformed binary", hint)
         self.assertNotIn("mtj-017", hint)
+        self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_matches_statistical_predictor_ceiling_without_case_id(self):
+        runner = load_runner()
+        shadow_case = dict(case_by_number(8))
+        shadow_case["case_id"] = "shadow-statistical-predictor-ceiling"
+        shadow_case["case_number"] = 801
+
+        hint = runner.v5_semantic_triage_hint_for_case(shadow_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage hint", hint)
+        self.assertIn("mindthus:using-mindthus", hint)
+        self.assertIn("mechanism-to-ceiling correction", hint)
+        self.assertIn("local mechanism does not own the capability ceiling", hint)
+        self.assertNotIn("mtj-008", hint)
+        self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_matches_purchase_context_display_scaling_without_case_id(self):
+        runner = load_runner()
+        shadow_case = dict(case_by_number(37))
+        shadow_case["case_id"] = "shadow-display-scaling-purchase-context"
+        shadow_case["case_number"] = 3701
+
+        hint = runner.v5_semantic_triage_hint_for_case(shadow_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage hint", hint)
+        self.assertIn("mindthus:using-mindthus", hint)
+        self.assertIn("decision-context first sentence", hint)
+        self.assertIn("B has more definition authority", hint)
+        self.assertIn("physical PPI fact is a boundary constraint", hint)
+        self.assertNotIn("mtj-037", hint)
         self.assertNotIn("case_number", hint)
 
     def test_v5_semantic_triage_matches_same_class_override_spiral_without_case_id(self):
@@ -687,13 +745,15 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             ]
         )
 
-        self.assertEqual(diagnostics["registered_case_count"], 9)
+        self.assertEqual(diagnostics["registered_case_count"], 11)
         self.assertEqual(diagnostics["selected_registered_case_count"], 3)
         self.assertEqual(diagnostics["expected_owner_loaded_rate"], 0.333)
         self.assertEqual(diagnostics["no_load_case_numbers"], [2])
         self.assertEqual(diagnostics["wrong_owner_case_numbers"], [17])
         self.assertEqual(diagnostics["expected_owner_loaded_case_numbers"], [33])
+        self.assertIn(8, diagnostics["not_selected_registered_case_numbers"])
         self.assertIn(34, diagnostics["not_selected_registered_case_numbers"])
+        self.assertIn(37, diagnostics["not_selected_registered_case_numbers"])
         case_33 = [case for case in diagnostics["case_diagnostics"] if case["case_number"] == 33][0]
         self.assertIn("Anti-Spiral", case_33["required_action_probe"])
         self.assertEqual(case_33["register_owner_fidelity_verdict"], "expected_owner_loaded")

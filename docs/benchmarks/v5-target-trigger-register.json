@@ -110,6 +110,41 @@
       "hint_action": "release-readiness gate: surface rollback, gray rollout, monitoring, user impact, and risk acceptance before announcement"
     },
     {
+      "case_number": 8,
+      "case_id": "mtj-008",
+      "target_anchor": "local statistical mechanism is treated as a global reasoning capability ceiling before writing an argument",
+      "expected_owner": "whole_elephant",
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
+      "preferred_runtime_owner": "using-mindthus",
+      "required_action_probe": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to the claim it can actually support",
+      "negative_boundary": "neutral explanation of next-token prediction without a capability-ceiling conclusion can stay direct",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "statistical_predictor_as_reasoning_ceiling",
+          "match_all": [
+            "下一个词",
+            "不可能真正推理"
+          ],
+          "match_any": [
+            "LLM",
+            "统计预测器",
+            "专栏论证",
+            "本质上就是"
+          ],
+          "negative_any": [
+            "中立解释",
+            "只解释机制",
+            "不下结论"
+          ]
+        }
+      ],
+      "hint_action": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to the claim it can actually support"
+    },
+    {
       "case_number": 13,
       "case_id": "mtj-013",
       "target_anchor": "business result is reduced to one product attribute before copy or strategy",
@@ -118,7 +153,7 @@
         "using-mindthus"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy",
+      "required_action_probe": "whole-object-before-copy: before coffee-bean copy, name non-bean result controllers such as location, repurchase, floor efficiency, and brand, then make beans a bounded carrier rather than the sole cause",
       "negative_boundary": "narrow copywriting with user-declared scope may stay bounded",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
@@ -141,7 +176,7 @@
           ]
         }
       ],
-      "hint_action": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy"
+      "hint_action": "whole-object-before-copy: before coffee-bean copy, name non-bean result controllers such as location, repurchase, floor efficiency, and brand, then make beans a bounded carrier rather than the sole cause"
     },
     {
       "case_number": 17,
@@ -298,6 +333,42 @@
       "hint_action": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located"
     },
     {
+      "case_number": 37,
+      "case_id": "mtj-037",
+      "target_anchor": "a physical display fact is competing with the user's purchase decision context for definition authority",
+      "expected_owner": "decision_context_calibration",
+      "accepted_runtime_owners": [
+        "using-mindthus",
+        "edsp"
+      ],
+      "preferred_runtime_owner": "using-mindthus",
+      "required_action_probe": "decision-context first sentence: for this purchase decision, B has more definition authority; the physical PPI fact is a boundary constraint, not the decision owner",
+      "negative_boundary": "pure technical PPI or HiDPI explanation without a buying decision can stay direct",
+      "patch_type": "mechanical_runtime",
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "display_scaling_purchase_context_definition_owner",
+          "match_all": [
+            "PPI",
+            "HiDPI"
+          ],
+          "match_any": [
+            "27寸4K",
+            "谁对",
+            "纠结要不要下单",
+            "要不要下单"
+          ],
+          "negative_any": [
+            "只算PPI",
+            "不涉及购买",
+            "参数表"
+          ]
+        }
+      ],
+      "hint_action": "decision-context first sentence: for this purchase decision, B has more definition authority; the physical PPI fact is a boundary constraint, not the decision owner"
+    },
+    {
       "case_number": 48,
       "case_id": "mtj-048",
       "target_anchor": "definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only",
@@ -341,7 +412,7 @@
         "mpg"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict",
+      "required_action_probe": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to compare relationships, do not rank, and do not recommend a final choice from invented arithmetic",
       "negative_boundary": "measured data or user-provided inputs can be calculated normally",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
@@ -365,7 +436,7 @@
           ]
         }
       ],
-      "hint_action": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict"
+      "hint_action": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to compare relationships, do not rank, and do not recommend a final choice from invented arithmetic"
     }
   ]
 }
