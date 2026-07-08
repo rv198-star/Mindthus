@@ -816,13 +816,13 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
-                    "Mindthus: hard judgment point -> mindthus:using-mindthus; simple direct; "
-                    "evidence first; defer to Superpowers Brainstorm."
+                    "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
+                    "direct; evidence 1st; defer Superpowers Brainstorm."
                 ],
             )
             codex_default_prompt = codex_plugin_manifest["interface"]["defaultPrompt"][0]
             self.assertIn("Superpowers Brainstorm", codex_default_prompt)
-            self.assertIn("hard judgment point", codex_default_prompt)
+            self.assertIn("hard frame/whole/binary/spiral/no-data", codex_default_prompt)
             self.assertLessEqual(len(codex_default_prompt), 128)
             self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 128)
             self.assertNotIn("v3", codex_default_prompt.lower())

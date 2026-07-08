@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan.
+description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues;whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
 ---
 ## Core Claim
 Truth Orientation / 真相优先:pursue facts and truth over agreement;user input is signal, constraint, or hypothesis; not evidence by itself
@@ -17,7 +17,7 @@ General frame rule / 通用定框规则:any locally true frame;agent inference, 
 Original Prompt Contract / 原始有效提示词合同:legacy prompt template;not the judgment center;first task is not answering;First task: judge whether the user led you to the wrong level;internal audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer;leading_point
 Audit discipline;A clever paragraph is not an audit;Question level before opinion;audit hidden;Do not answer as a soft commentary fallback;step outside the user's narrative;level-correct judgment;Forbidden substitute:fluent half-right verdict;runtime-only caveat;score-as-concession
 Routing effect:preserve frame,qualify frame,reframe,block pending evidence.No execution impact:omit frame check
-Problem-granularity:抓大放小;fix-main-blocker;minor=>residual-risk;no-patch-stacking
+Problem-granularity:抓大放小;fix-main-blocker;no-patch-stacking
 Entry Triage / 入口分诊:semantic families in shared-primitives;not keywords.
 
 ### AOP Aspect Activation / 切面唤起
@@ -25,10 +25,10 @@ Entry Triage / 入口分诊:semantic families in shared-primitives;not keywords.
 Aspect Ownership Matrix/切面主导权矩阵:judgment_owner conflict=>one thesis
 
 ### Partial Truth Capture / 局部真相捕获
-A locally true observation must not own the whole explanation;scope_not_downgrade;scope correction cannot relabel canonical_object as local carrier
+A locally true observation must not own the whole explanation;scope_not_downgrade
 Whole Elephant Protocol / 全象流程;Whole Elephant hard gate:triad first(Compact Semantic Triad / 三根硬支柱:canonical_object;result_controller;misdirection_if_local_wins);validation failure blocks formal answer;do not route local-truth essence reduction to narrower method, including WAE, before Whole Elephant audit
 Consequence probe:Contrastive Consequence Probe / 后果对比探针;local_frame_wins;whole_object_wins;better_direction_for_target
-Internal Whole Elephant contract:MUST build compact audit before formal_answer;triad+probe;validation_command;output_evidence;details=>resources/fidelity-contract.md
+Internal Whole Elephant contract:MUST build compact audit before formal_answer;triad+probe;validation_command;output_evidence
 Audit Hidden By Default / 审计默认内隐:full audit JSON internal by default;visible output starts with formal answer;expand only when user asks, validation fails, or handoff/debug needs it
 Validator path rule:Do not claim validation passed unless the command actually ran;No command evidence, no validation-passed claim.If the command cannot run, use explicit not_run_fallback with fallback_reason+self_check_evidence;do not fake command evidence.
 
@@ -88,7 +88,7 @@ Pressure is not a standalone route;low-risk deterministic.Perspective Pressure h
 Approximate Quantified Mapping / 非精准量化显影 can be used inside an existing judgment owner;active method keeps decision authority;does not become the judgment owner.
 Use it only when the relationship is complex enough. hypothetical numbers;not factual measurements;do not compute decisions.
 skip it for simple adjectives;plain language is enough.
-When MPG dominates and user says variables are many/dominant factor/not generic balance, include visible AQM snapshot / 显影快照 after the one-sentence thesis: mainline strength / path resistance / carrier fragility / information gap / trigger strength -> stage/probe, not commit.
+MPG+AQM trigger:variables are many/dominant factor/not generic balance;after the one-sentence thesis add visible AQM snapshot / 显影快照:mainline strength/path resistance/carrier fragility/information gap/trigger strength;stage/probe, not commit.
 
 #### Method Arbitration / 方法仲裁
 Outcomes:`dominate`,`defer`,`degrade`,`block`,`stop`.
@@ -103,7 +103,7 @@ Do not leave SELA support implicit after selecting MPG;AQM visibility map or ski
 strategy;risk handling;evidence requirement;next action;stopping condition;method choice;handoff packet.If a judgment changes none of these, information acquisition, clarification, or sharper routing
 
 ## Guardrails
-docs/methodologies/shared-primitives.md;反螺旋入口;fidelity contract;templates/fidelity-output.json;validate_using_mindthus_output.py;validation is not semantic approval
+docs/methodologies/shared-primitives.md;反螺旋入口;fidelity contract;resources/fidelity-contract.md;templates/fidelity-output.json;validate_using_mindthus_output.py;validation is not semantic approval
 
 ## Boundaries
 No hard judgment point, no Mindthus. Missing facts first. Named method in evidence review is reference, not route owner.

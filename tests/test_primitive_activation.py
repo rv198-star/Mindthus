@@ -204,6 +204,7 @@ class PrimitiveActivationTests(unittest.TestCase):
                 "whole_elephant_protocol",
                 "core_thesis_extraction",
                 "first_sentence_stress_test",
+                "required_visible_action_probe",
                 "essence_wording_guard",
             ],
         )
@@ -215,6 +216,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertIn("do_not_average_aspect_outputs", report["required_agent_checks"])
         self.assertIn("start_formal_answer_with_core_thesis", report["required_agent_checks"])
         self.assertIn("ensure_no_second_question_gap", report["required_agent_checks"])
+        self.assertIn("ensure_required_visible_action_appears_in_prose", report["required_agent_checks"])
 
         decision_context = next(
             item for item in report["active_primitives"] if item["id"] == "decision_context_calibration"
@@ -240,6 +242,17 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertIn("deny-local-definition-authority", first_sentence["action_effect"])
         self.assertIn("translate-definition-authority-to-final-say", first_sentence["action_effect"])
         self.assertIn("name-controller-inversion-when-variants-differ", first_sentence["action_effect"])
+
+        required_action = next(
+            item for item in report["active_primitives"] if item["id"] == "required_visible_action_probe"
+        )
+        self.assertEqual(required_action["aspect_role"], "constraint")
+        self.assertEqual(required_action["ownership_scope"], ["output_shape", "visible_action"])
+        self.assertIn("visible-audit-field-list", required_action["not_a"])
+        self.assertIn("visible_optimization_consequence", required_action["action_effect"])
+        self.assertIn("edsp_extreme_endpoints_visible", required_action["action_effect"])
+        self.assertIn("sela_order_of_magnitude_contrast_visible", required_action["action_effect"])
+        self.assertIn("anti_spiral_brake_before_addition", required_action["action_effect"])
 
     def test_before_route_activates_frame_fitness_shape_only_reminder(self) -> None:
         result = run_check("--event", "before-route", "--method", "using-mindthus", "--json")

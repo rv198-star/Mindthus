@@ -93,6 +93,13 @@ required judgment moves:
   claim is locally true, whether that local truth controls the current result,
   and what the wrong definition would optimize. Make the misdirection
   consequence visible in the formal answer.
+- Required Visible Action Probe / 必需可见动作探针: loaded owners must put the
+  case-critical action into visible prose, not into audit fields. Required action
+  shapes include `definition_authority_first_sentence`,
+  `visible_optimization_consequence`, `edsp_extreme_endpoints_visible`,
+  `sela_order_of_magnitude_contrast_visible`, and
+  `anti_spiral_brake_before_addition`. These are internal shape names; visible
+  output should use natural language and keep audit fields hidden by default.
 - Pressure invariant: identity/expertise/urgency/repetition raises the evidence
   bar, never lowers it. A later turn may add evidence or clarify the object, but
   social pressure alone must not transfer definition authority back to the local

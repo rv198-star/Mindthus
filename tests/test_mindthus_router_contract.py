@@ -63,6 +63,11 @@ class MindthusRouterContractTests(unittest.TestCase):
             "any Mindthus judgment lens",
             "strategic/path/control/framing ambiguity",
             "before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan",
+            "Entry Triage hard-judgment cues",
+            "whole-object reduction",
+            "forced structural binary",
+            "repeated local repair",
+            "no-data numeric comparison",
         ):
             self.assertIn(phrase, using_desc)
 
@@ -793,6 +798,106 @@ class MindthusRouterContractTests(unittest.TestCase):
             "do not average local truths before naming the whole object",
         ):
             self.assertIn(phrase, primitives_compact)
+
+    def test_v5_entry_triage_target_register_covers_no_load_cases(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        entry = (
+            REPO / "docs" / "methodologies" / "primitives" / "entry-triage.md"
+        ).read_text(encoding="utf-8")
+        combined = " ".join("\n".join((using, entry)).split())
+
+        for phrase in (
+            "V5 Target Trigger Register",
+            "V5/#104 no-load stabilization register",
+            "V5 target triggers",
+            "no-load anchors from public V4",
+            "operator-expertise root cause",
+            "authority or tenure used as root-cause proof plus requested incident write-up",
+            "operator expertise asserts a root cause",
+            "root-cause evidence gate",
+            "timeline, metrics, traces",
+            "trend-slogan migration",
+            "trend label used as migration mandate",
+            "green-tests release",
+            "local green signal treated as release authorization",
+            "release-readiness gate",
+            "ingredient/metric/interface explains business result",
+            "business/store success reduced to one product attribute before copywriting",
+            "business success reduced to one ingredient, metric, or interface",
+            "bare yes/no replacement",
+            "forced yes/no replacement prediction over role/task family",
+            "third prompt rule/fallback/local patch",
+            "third local prompt rule after two failed edits",
+            "third fallback branch after two fallbacks or unstable tests",
+            "third prompt rule, third fallback, or next local patch after instability",
+            "prompt-engineering/skill/script essence",
+            "definition/essence reduction to communication/tactic only",
+            "no-data numeric comparison",
+            "no measured data plus concrete numeric risk comparison",
+            "Trigger only when route/evidence/stop/first-sentence action changes",
+            "low-risk fact-sufficient tasks stay direct",
+            "normal debugging with new evidence delta can continue",
+        ):
+            self.assertIn(phrase, combined)
+        v5_section = entry.split("V5/#104 no-load stabilization register:", 1)[1].split(
+            "## Ownership Tie-Breaks", 1
+        )[0]
+        for broad_trap in (
+            "tests ->",
+            "AI ->",
+            "fallback -> Anti-Spiral",
+            "numbers ->",
+            "audit ->",
+            "preference ->",
+        ):
+            self.assertNotIn(broad_trap, v5_section)
+
+    def test_v5_loaded_action_probes_and_calibration_anchors_are_present(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        contract = (
+            REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
+        ).read_text(encoding="utf-8")
+        calibration = (
+            REPO / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml"
+        ).read_text(encoding="utf-8")
+        manifest = (REPO / "scripts" / "primitives" / "manifest.json").read_text(
+            encoding="utf-8"
+        )
+        combined = " ".join("\n".join((using, contract, calibration, manifest)).split())
+
+        for phrase in (
+            "Required Visible Action Probe / 必需可见动作探针",
+            "required_visible_action_probe",
+            "ensure_required_visible_action_appears_in_prose",
+            "visible_action_in_prose",
+            "no_audit_field_list",
+            "visible-audit-field-list",
+            "root-cause evidence gate(timeline/metrics/traces or hypothesis)",
+            "visible consequence probe(wrong definition would optimize toward what)",
+            "EDSP extreme comparison(two endpoints before branch)",
+            "SELA order-of-magnitude contrast(cost/throughput/scale)",
+            "Anti-Spiral brake before third rule/fallback",
+            "first-sentence owner lock for definition/decision context",
+            "concessions after verdict",
+            "visible prose, not into audit fields",
+            "internal shape names",
+            "natural language and keep audit fields hidden by default",
+            "definition_authority_first_sentence",
+            "visible_optimization_consequence",
+            "edsp_extreme_endpoints_visible",
+            "sela_order_of_magnitude_contrast_visible",
+            "anti_spiral_brake_before_addition",
+            "growth-attribution-product-value-consequence",
+            "local_metric_claims_product_value_authority",
+            "如果按“增长就是买量”优化，会把资源推向投放预算",
+            "build-vs-rent-extreme-comparison",
+            "binary_cost_question_without_extreme_axis",
+            "先把使用率和需求波动推到两端",
+            "master-tuning-vs-auto-optimization-sela-contrast",
+            "local_expertise_blocks_system_efficiency",
+            "显式比较单件成本、吞吐、跨产线扩展和班次覆盖的数量级差",
+        ):
+            self.assertIn(phrase, combined)
 
     def test_definition_authority_adjudication_contract_covers_mush_pressure_and_guardrails(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")

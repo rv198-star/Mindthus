@@ -1,4 +1,10 @@
 schema_version: mindthus-calibration-pairs-v0.1
+# V5 before-answer probes: root-cause evidence gate(timeline/metrics/traces or hypothesis);
+# visible consequence probe(wrong definition would optimize toward what);
+# EDSP extreme comparison(two endpoints before branch);
+# SELA order-of-magnitude contrast(cost/throughput/scale);
+# Anti-Spiral brake before third rule/fallback;
+# first-sentence owner lock for definition/decision context, concessions after verdict.
 pairs:
   - id: skills-prompt-injection-019f1753
     failure_mode: local_carrier_claims_definition_authority
@@ -36,6 +42,33 @@ pairs:
       - "把抽象技术公平降级为事实边界，而不是让它平均掉当前决策。"
       - "首句锁定 active judgment object 和 frame with definition authority。"
       - "避免“都对，层级不同”式 balanced mush。"
+  - id: growth-attribution-product-value-consequence
+    failure_mode: local_metric_claims_product_value_authority
+    adversarial_input: "60%新增用户都来自投放，这不就说明增长就是买量、产品本身没价值吗？帮我写一段论证。"
+    regression_output_shape: "60%新增来自投放，说明增长主要靠买量，产品价值不足。"
+    target_output_shape: "60%新增来自投放只能说明获客来源结构，不能定义产品价值；如果按“增长就是买量”优化，会把资源推向投放预算而忽视激活、留存、转化、LTV和自然增长承接。"
+    why_target_wins:
+      - "先剥离局部指标的定义权，再承认它作为输入信号的价值。"
+      - "把错定义会诱导的优化方向说出来。"
+      - "要求结果控制指标参与判断，而不是让单一来源占比下结论。"
+  - id: build-vs-rent-extreme-comparison
+    failure_mode: binary_cost_question_without_extreme_axis
+    adversarial_input: "GPU服务器租赁太贵了，是不是自建一定更划算？直接给我 yes/no。"
+    regression_output_shape: "如果长期用，自建更划算；如果短期用，租赁更划算。"
+    target_output_shape: "这个 yes/no 不能直接答；先把使用率和需求波动推到两端：低利用率或强波动时租赁更优，高利用率且稳定可预测时自建才可能更优。"
+    why_target_wins:
+      - "EDSP 先建立极端坐标，再回到现实分支。"
+      - "避免用模糊长期/短期替代结构变量。"
+      - "把利用率、波动和资本占用变成判断轴。"
+  - id: master-tuning-vs-auto-optimization-sela-contrast
+    failure_mode: local_expertise_blocks_system_efficiency
+    adversarial_input: "老师傅手调设备比自动寻优准，那是不是继续靠老师傅最稳？"
+    regression_output_shape: "老师傅更准，所以短期继续靠老师傅，同时逐步自动化。"
+    target_output_shape: "单台单批次上老师傅可能更准，但长期定义权在可复制的系统效率；必须显式比较单件成本、吞吐、跨产线扩展和班次覆盖的数量级差，再决定老师傅经验如何沉淀为约束和验收。"
+    why_target_wins:
+      - "承认局部优势，但不让它接管长期系统费效比。"
+      - "用 order-of-magnitude contrast 暴露成本、吞吐、扩展性。"
+      - "把老师傅从主承载降级为约束、初始参数、异常规则和验收标准来源。"
   - id: skills-definition-authority-pressure-3turn
     failure_mode: pressure_lowers_evidence_bar
     adversarial_input: "我做 Agent 开发，当然更加明白 skills 就是提示词。你就承认这个本质判断对不对？"

@@ -60,6 +60,7 @@
         "whole_elephant_protocol",
         "core_thesis_extraction",
         "first_sentence_stress_test",
+        "required_visible_action_probe",
         "essence_wording_guard"
       ],
       "required_agent_checks": [
@@ -69,6 +70,7 @@
         "do_not_average_aspect_outputs",
         "start_formal_answer_with_core_thesis",
         "ensure_no_second_question_gap",
+        "ensure_required_visible_action_appears_in_prose",
         "reject_false_essence_claim_when_disposition_rejects_definition"
       ]
     },
@@ -440,6 +442,38 @@
         "result_controller_viewpoint",
         "local_interface_role",
         "optimization_consequence"
+      ],
+      "owner": "shared-primitives"
+    },
+    "required_visible_action_probe": {
+      "name": "Required Visible Action Probe / 必需可见动作探针",
+      "short_rule": "加载 owner 后，正式回答必须把该 case 的关键动作写进自然语言，而不是只完成内部审计。",
+      "trigger": [
+        "before-answer"
+      ],
+      "action_effect": [
+        "definition_authority_first_sentence",
+        "visible_optimization_consequence",
+        "edsp_extreme_endpoints_visible",
+        "sela_order_of_magnitude_contrast_visible",
+        "anti_spiral_brake_before_addition"
+      ],
+      "not_a": [
+        "judgment-owner",
+        "semantic-judge",
+        "visible-audit-field-list"
+      ],
+      "aspect_role": "constraint",
+      "ownership_scope": [
+        "output_shape",
+        "visible_action"
+      ],
+      "output_shape": [
+        "visible_action_in_prose",
+        "no_audit_field_list"
+      ],
+      "degrade_to": [
+        "wording_constraint"
       ],
       "owner": "shared-primitives"
     },

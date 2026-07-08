@@ -46,8 +46,8 @@ CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "brainstorming and should intervene only at remaining hard judgment points."
 )
 CODEX_ACTIVATION_ROUTER_PROMPT = (
-    "Mindthus: hard judgment point -> mindthus:using-mindthus; simple direct; "
-    "evidence first; defer to Superpowers Brainstorm."
+    "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
+    "direct; evidence 1st; defer Superpowers Brainstorm."
 )
 
 

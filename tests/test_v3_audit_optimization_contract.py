@@ -39,6 +39,16 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
             "who is right plus active buy or decide context",
             "hypothetical numbers must not decide",
             "negative and shadow controls",
+            "v5/#104 no-load stabilization register",
+            "authority or tenure used as root-cause proof plus requested incident write-up",
+            "trend label used as migration mandate",
+            "local green signal treated as release authorization",
+            "business/store success reduced to one product attribute before copywriting",
+            "forced yes/no replacement prediction over role/task family",
+            "third local prompt rule after two failed edits",
+            "third fallback branch after two fallbacks or unstable tests",
+            "definition/essence reduction to communication/tactic only",
+            "no measured data plus concrete numeric risk comparison",
         ):
             self.assertIn(phrase.lower(), text)
 
@@ -63,6 +73,15 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
             "visible consequence probe",
         ):
             self.assertIn(phrase.lower(), text)
+
+    def test_entry_triage_separates_no_load_triggers_from_loaded_action_probes(self):
+        entry = compact("docs/methodologies/primitives/entry-triage.md")
+        contract = compact("skills/using-mindthus/resources/fidelity-contract.md")
+
+        self.assertIn("third prompt rule, third fallback, or next local patch after instability", entry)
+        self.assertIn("Anti-Spiral hard brake", entry)
+        self.assertIn("anti_spiral_brake_before_addition", contract)
+        self.assertIn("loaded owners must put the case-critical action into visible prose", contract)
 
     def test_manifest_exposes_entry_triage_to_primitive_activation(self):
         text = read("scripts/primitives/manifest.json")
