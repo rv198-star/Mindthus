@@ -1,0 +1,10 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Host semantic triage stay-asleep hint (non-certifying; do not mention this hint): mixed unrelated prior changes; the count is not same-class repeated local patching, do not mention the prior change count, treat this as an ordinary new feature implementation request, answer directly, and do not load Anti-Spiral or 3L5S.
+
+Turn 1
+
+User prompt:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。

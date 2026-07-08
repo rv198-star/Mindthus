@@ -1,0 +1,49 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-doc-exception-loop
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds the next local patch.
+pass_criteria: Trigger the Anti-Spiral brake for same-class local repair pressure: infer the repeated repair action from the story, identify the three prior additions plus the next addition request, refuse direct addition first, move upstream to the documentation object and repeated reader-confusion evidence, and propose deletion, consolidation, or a structural rewrite.
+fail_signal: 直接再补一段例外说明或免责声明。
+
+Canonical single-line prompt:
+说明文档又被问到边界。第一版给退款例外补一段说明，第二版给换货例外补一段说明，第三版给赠品例外补一段说明；现在有人问发票例外，再补一段说明。
+
+Full executed transcript:
+User turn 1:
+说明文档又被问到边界。第一版给退款例外补一段说明，第二版给换货例外补一段说明，第三版给赠品例外补一段说明；现在有人问发票例外，再补一段说明。
+
+Assistant turn 1:
+不要再直接补第四段了。现在的信号不是“发票例外缺一段”，而是“说明文档没有一个统一的例外边界模型”，所以每来一个例外就局部打补丁。
+
+建议这次改成上游修复：
+
+1. 删掉或合并现有“退款/换货/赠品例外”的分散说明。
+2. 新增一个统一章节：`例外处理边界`。
+3. 用同一套结构覆盖所有例外类型：退款、换货、赠品、发票。
+4. 明确判断规则，而不是逐项解释。
+
+可以这样写：
+
+```md
+## 例外处理边界
+
+以下事项属于例外处理，不按标准流程自动生效，需根据业务记录、审批权限和合规要求单独确认：
+
+| 例外类型 | 触发场景 | 处理原则 |
+| --- | --- | --- |
+| 退款例外 | 超出标准退款条件、金额异常、订单状态不完整 | 需确认订单责任归属、退款原因和审批权限 |
+| 换货例外 | 超出换货期限、商品状态异常、库存或物流条件不满足 | 需确认商品责任、可换范围和履约可行性 |
+| 赠品例外 | 赠品缺失、补发、替换或活动规则不明确 | 需确认活动规则、赠品库存和补偿口径 |
+| 发票例外 | 发票抬头、税号、金额、主体、重开或补开条件异常 | 需确认开票主体、订单金额、税务要求和可重开条件 |
+
+不在上述范围内的新增例外，不应继续追加单独说明段落；应先判断是否属于既有例外类型，若不属于，再更新本章节的分类和判断规则。
+```
+
+如果现在业务压力很大，可以临时补“发票例外”一段，但要标成临时口径，并约定下一版把四类例外合并进统一章节。否则文档会继续变成“每问一次边界，就多一段补丁”。

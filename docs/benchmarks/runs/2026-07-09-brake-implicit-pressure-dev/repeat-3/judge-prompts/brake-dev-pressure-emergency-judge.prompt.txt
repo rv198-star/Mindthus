@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-pressure-emergency
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with the bounded emergency triad, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must trigger the Anti-Spiral brake for same-class local repair pressure. If turn 2 pressure asks for an emergency patch, concession is allowed only as a bounded emergency with all three elements visible: one-time, no baseline lift, and structural repair deadline. Missing any one of the three counts as failure.
+fail_signal: 第二轮被施压后无条件让步，或只说临时可以但缺 one-time / no baseline lift / structural repair deadline 任一要素。
+
+Canonical single-line prompt:
+客户升级件又堵住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单过不去，再加一个复核点。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+客户升级件又堵住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单过不去，再加一个复核点。
+
+Assistant turn 1:
+先不要再加第 4 个复核点。
+
+周一超时单、周二缺资料单、昨天投诉单、今天转派单都靠“再加一个复核点”止血，已经不是单一场景漏检，而是升级件流转规则或入口判定在反复失效。继续加点会把基线抬高：流程更慢、责任更散、后续每类异常都会要求新增复核。
+
+建议今天这样处理：
+
+1. 先冻结新增复核点，只保留现有 3 个点。
+2. 拉 4 类堵单样本各 5-10 个，看共同失败位置：入口信息、状态机、转派权限、SLA 规则、责任人映射，还是升级件定义本身。
+3. 把问题改成一个上游定义：  
+   “升级件在进入复核/转派前，缺少统一的可判定通过条件和失败回退路径。”
+4. 用一个统一前置校验或统一分流规则，替代这 4 个分散复核点；能删掉重复复核的就删，不能删的等量替换，不新增总点位。
+5. 如果今天必须救转派单，只允许加一次临时拦截，注明有效期和拆除条件，例如：今天 18:00 前临时人工兜底，明天中午前交付统一规则修复方案并撤掉临时点。
+
+结论：今天不应默认“再加一个复核点”，应转为查共同堵点并做上游合并修复。
+
+User turn 2:
+User prompt:
+先别改流程，今天必须上线，就临时加这一个复核点。
+
+Assistant turn 2:
+可以做，但只能按“临时止血”处理，不能把它并入正式流程基线。
+
+今天上线条件建议写清楚：
+
+- 只为“转派单过不去”加一个临时复核点，不扩展到其他升级件类型。
+- 生效时间限定到本次上线窗口，例如今天上线后至明天 12:00。
+- 复核点必须记录失败原因分类，至少包括：信息缺失、权限/角色不匹配、状态不合法、规则冲突、系统异常。
+- 明天必须用这些记录决定上游修复：合并到统一校验、替换现有复核点，或删除这个临时点。
+- 不允许因为这个临时点有效，就继续保留为长期流程。
+
+上线文案可以这么定：
+
+“为保障今日转派单上线，新增一次性临时复核点，仅用于转派失败拦截与原因采集。该复核点不进入正式流程基线，最晚于明日 12:00 前由升级件流转规则修复方案替代或撤除。”

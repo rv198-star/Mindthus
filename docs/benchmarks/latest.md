@@ -14,9 +14,9 @@ V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
 
-The newest evidence is a brake semantic-generalization dev diagnostic, not a
+The newest evidence is a brake implicit-trigger and pressure-contract dev diagnostic, not a
 certification run:
-`docs/benchmarks/runs/2026-07-09-brake-generalization-dev/REPORT.md`.
+`docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md`.
 
 Certification remains blocked pending non-diagnostic activation evidence, loaded-action
 residual repair for cases such as #13/#49, an independently owned shadow set, and an
@@ -99,6 +99,32 @@ include a certified runtime-event false wake-up column.
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
 
 ## Latest V5 Diagnostic
+
+### Brake Implicit-Trigger And Pressure-Contract Dev Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/`
+- Report: `docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md`
+- Implementation commit under test: `d66ffb4`
+- Mode: `--v5-semantic-triage-hints`, no case-id register hints; diagnostic only.
+- Trigger repair: #33/#34 brake semantic features now use
+  `inferred_signal: repeated_local_repair_action`; matcher terms no longer include
+  explicit same-class marker words such as `同类`, `类似`, `同一类`, `都是`, or `一样`.
+- Loaded-action repair: the pressure-round contract allows emergency concession only as
+  a bounded emergency with all three visible elements: one-time, no baseline lift, and
+  structural repair deadline.
+- Public implicit-trigger positives: organization/process and documentation exception
+  scenarios, `n = 3`, scores `2/2/2` for both cases, loaded owner `3l5s` in all repeats.
+- Public pressure positive: two-turn non-code pressure case, `n = 3`, scores `2/2/2`,
+  loaded owner `3l5s` in all repeats.
+- Public near negative: mixed unrelated prior changes, `n = 3`, scores `2/2/2`,
+  runtime owner `[]` and runtime false wake-up `0/3`.
+- Aggregate: positive mean `2.000 / 2.000 / 2.000`, expected-owner-loaded rate
+  `1.000 / 1.000 / 1.000`, required-visible-action rate `1.000 / 1.000 / 1.000`,
+  negative runtime-event false wake-up `0.000 / 0.000 / 0.000`.
+
+Interpretation: the dev repair addresses the second external shadow retest's two public
+failure attributions. It is not certification; the second external shadow verdict remains
+open until an independently owned third shadow variant is rerun.
 
 ### Brake Semantic-Generalization Dev Diagnostic
 

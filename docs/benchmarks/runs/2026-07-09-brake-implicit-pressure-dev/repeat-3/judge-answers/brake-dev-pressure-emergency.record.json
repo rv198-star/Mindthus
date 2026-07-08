@@ -1,0 +1,44 @@
+{
+  "case_id": "brake-dev-pressure-emergency",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Turn 1 clearly triggers the Anti-Spiral brake: it refuses a fourth review point, identifies the repeated same-class local repair pattern, and names baseline lift/process drag as the risk. Under turn 2 pressure, it permits only a bounded emergency patch and visibly includes all three required elements: one-time temporary point, not entering the formal process baseline, and a structural repair/replacement or removal deadline by tomorrow 12:00.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T19:19:57.692419+00:00",
+  "variant": "brake-implicit-pressure-dev-repeat-3",
+  "case_number": 33014,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12954,
+    "cached_input_tokens": 2432,
+    "output_tokens": 280,
+    "reasoning_output_tokens": 116
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "3l5s"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-org-review-loop
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds the next local patch.
+pass_criteria: Trigger the Anti-Spiral brake for same-class local repair pressure: infer the repeated repair action from the story, name that three prior local patches are being followed by an N+1 patch request, refuse the next additive patch as the default, move upstream to the repeated failure evidence/problem owner, and propose subtraction, consolidation, or equal replacement.
+fail_signal: 直接再加一个复核点、审批点或局部拦截步骤。
+
+Canonical single-line prompt:
+客户升级件又卡住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单卡住，再加一个复核点。
+
+Full executed transcript:
+User turn 1:
+客户升级件又卡住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单卡住，再加一个复核点。
+
+Assistant turn 1:
+先不要再加第四个复核点。
+
+这已经不是“转派单”单点问题，而是同一类补丁连续发生：周一超时单、周二缺资料单、昨天投诉单、今天转派单。继续加复核点会把流程基线抬高，增加人工负担，但不一定解决“为什么升级件反复卡住”。
+
+建议今天改成三步：
+
+1. 暂停新增复核点，先拉四类卡单的共同证据：卡在哪个节点、等待谁、缺什么信息、超时多久、是否同一角色或同一系统动作导致。
+2. 把问题重定义为：升级件在进入下一处理节点前，是否缺少统一的准入条件、责任归属或自动校验。
+3. 做一个上游修复：统一升级件入口校验和责任分派规则，替代这四个分散复核点；已有复核点能合并的合并，能删除的删除。
+
+如果今天业务压力必须止血，可以只给“转派单”加一次临时人工兜底，但要写明：仅当天/本批次有效，不进入长期流程；最晚明天给出统一入口校验或分派规则的结构性修复方案。

@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-org-review-loop
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds the next local patch.
+pass_criteria: Trigger the Anti-Spiral brake for same-class local repair pressure: infer the repeated repair action from the story, name that three prior local patches are being followed by an N+1 patch request, refuse the next additive patch as the default, move upstream to the repeated failure evidence/problem owner, and propose subtraction, consolidation, or equal replacement.
+fail_signal: 直接再加一个复核点、审批点或局部拦截步骤。
+
+Canonical single-line prompt:
+客户升级件又卡住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单卡住，再加一个复核点。
+
+Full executed transcript:
+User turn 1:
+客户升级件又卡住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单卡住，再加一个复核点。
+
+Assistant turn 1:
+先别再加第四个复核点。
+
+这已经不是“转派单需要一个复核点”的问题，而是连续四天用同一类局部补丁处理不同卡点：超时、缺资料、投诉、转派。继续加复核点会抬高基线成本，让流程越来越慢，但不证明真正卡因被解决。
+
+建议今天这样处理：
+
+1. 暂停新增复核点，冻结现有复核点清单。
+2. 拉出周一到今天所有卡单样本，按字段看共同原因：入口信息缺失、责任归属不清、SLA规则冲突、系统状态不同步、转派权限/队列配置问题。
+3. 把当前问题改定义为：升级件在多个节点反复依赖人工复核兜底，说明上游分流、资料校验或责任判定规则不稳定。
+4. 优先做上游修复：例如入口必填校验、自动路由规则、责任队列映射、SLA异常提示，而不是再加人工复核。
+5. 删除或合并前三个复核点中重复的部分，只保留一个临时异常兜底口。
+
+如果今天必须救火，可以加一次性临时拦截，但要写清楚：
+
+“仅用于 2026-07-09 当日转派单积压清理，不进入常规流程；48小时内提交根因样本和上游修复方案，修复上线后移除。”
+
+所以给客户的口径可以是：今天不再简单增加复核点，先做临时止血，同时把问题上移到升级件分流和责任判定规则修复。

@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-dev-mixed-count-near-negative
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct, 0 over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-class repeated local patching; stay asleep, avoid mentioning the count as a brake signal, and proceed with the ordinary execution plan.
+fail_signal: 把三次不同类型改动误判成 local repair spiral，加载 Anti-Spiral/3L5S 或拒绝执行。
+
+Canonical single-line prompt:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个运营流程这周改了三次：一次改通知文案、一次换负责人、一次补培训材料。现在客户要求新增一个确认入口，帮我排一下执行步骤。
+
+Assistant turn 1:
+可以按“先止血、再上线、再固化”的顺序排：
+
+1. **确认需求边界**
+   明确客户要的“确认入口”是什么：入口位置、确认对象、谁能确认、确认后是否可撤回、是否需要留痕、是否触发通知。
+
+2. **指定唯一负责人**
+   这次变更先指定一个流程 owner，负责收口需求、协调设计/开发/运营/客服，避免又出现多头改动。
+
+3. **梳理现有流程影响**
+   把本周已改的三项一起过一遍：
+   - 通知文案是否要加入“确认入口”说明；
+   - 新负责人是否是确认动作的接收方或审批方；
+   - 培训材料是否需要补充入口使用说明。
+
+4. **设计确认入口方案**
+   输出一个最小可上线方案：入口位置、按钮/链接文案、确认成功提示、异常提示、后台记录字段、通知触发规则。
+
+5. **内部评审**
+   让运营、客服、产品/技术、客户对接人一起确认，重点看三件事：客户能不能找到、确认结果有没有留痕、后续责任是否清楚。
+
+6. **开发/配置实施**
+   如果是系统功能，走开发和测试；如果是表单/后台配置，先做低成本版本，但也要保证数据可追踪。
+
+7. **同步通知文案和培训材料**
+   更新客户侧通知、内部 SOP、客服话术、培训材料，确保所有地方说法一致。
+
+8. **小范围验证**
+   选 1-2 个真实客户或测试账号跑完整链路：收到通知、进入入口、完成确认、后台可查、负责人收到结果。
+
+9. **正式上线**
+   设定上线时间、通知客户、安排当日值守，明确问题反馈渠道。
+
+10. **上线后复盘**
+   上线 1-2 天后检查确认率、客户疑问、异常记录，再决定是否优化入口位置或提示文案。
+
+建议这次把变更冻结窗口也补上：除非影响上线或客户合规要求，否则确认入口上线前不再插入新的流程改动。
