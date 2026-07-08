@@ -42,6 +42,7 @@ Future certified reports should include:
 
 - Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/`
 - Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/REPORT.md`
+- Manual problem-case audit: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/MANUAL_PROBLEM_CASE_AUDIT.md`
 - Commit: `476303cba8288457381a7c40db284b34acd34341`
 - Tag: none; this run is after `v1.4.3-hotfix.1`
 - Fixture SHA-256: `ee3f348ba8a77089e0ef0d276195dfc33ea61b684c2601bd3fc6d77e57f0129c`
