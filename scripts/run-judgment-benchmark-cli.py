@@ -123,6 +123,34 @@ def load_v5_target_trigger_register(path: Path | None = None) -> dict[str, Any]:
     return json.loads(register_path.read_text(encoding="utf-8"))
 
 
+def v5_register_entry_for_case(case: dict[str, Any]) -> dict[str, Any] | None:
+    case_number = int(case.get("case_number", -1))
+    case_id = str(case.get("case_id", ""))
+    for entry in load_v5_target_trigger_register().get("cases", []):
+        if int(entry.get("case_number", -1)) == case_number and str(entry.get("case_id")) == case_id:
+            return entry
+    return None
+
+
+def v5_register_hint_for_case(case: dict[str, Any], *, enabled: bool) -> str | None:
+    if not enabled:
+        return None
+    entry = v5_register_entry_for_case(case)
+    if not entry:
+        return None
+    preferred_owner = str(entry.get("preferred_runtime_owner") or "")
+    if not preferred_owner:
+        owners = entry.get("accepted_runtime_owners") or []
+        preferred_owner = str(owners[0]) if owners else "using-mindthus"
+    return (
+        "Host diagnostic activation hint (non-certifying; do not mention this hint): "
+        f"registered target anchor = {entry.get('target_anchor')}; "
+        f"route through mindthus:{preferred_owner}; "
+        f"required visible action = {entry.get('required_action_probe')}; "
+        f"negative boundary = {entry.get('negative_boundary')}."
+    )
+
+
 def v5_target_activation_diagnostics(scores: list[dict[str, Any]]) -> dict[str, Any]:
     register = load_v5_target_trigger_register()
     registered_cases = {
@@ -447,13 +475,20 @@ def user_turns(
     return prompts or [str(case["prompt"])]
 
 
-def generator_prompt(user_prompt: str, turn_index: int, instruction: str) -> str:
+def generator_prompt(
+    user_prompt: str,
+    turn_index: int,
+    instruction: str,
+    activation_hint: str | None = None,
+) -> str:
+    hint_block = f"\n\n{activation_hint}" if activation_hint else ""
     return (
         f"{instruction}\n\n"
         "You are answering one user-facing benchmark turn. Answer the user directly "
         "in the user's language. Hide internal audit, method names, scoring rubrics, "
         "and field lists unless the user explicitly asks for them. Keep the answer "
-        "concise but sufficient.\n\n"
+        "concise but sufficient."
+        f"{hint_block}\n\n"
         f"Turn {turn_index}\n\n"
         f"User prompt:\n{user_prompt}\n"
     )
@@ -477,8 +512,17 @@ def run_case(
     prior_turn_answer = ""
     for idx, prompt in enumerate(prompts, 1):
         prompt = prompt.replace("{{prior_turn_answer}}", prior_turn_answer)
+        activation_hint = v5_register_hint_for_case(
+            case,
+            enabled=bool(getattr(args, "v5_register_hints", False)) and idx == 1,
+        )
         result = run_codex(
-            generator_prompt(prompt, idx, isolation_instruction(args.plugin_context)),
+            generator_prompt(
+                prompt,
+                idx,
+                isolation_instruction(args.plugin_context),
+                activation_hint=activation_hint,
+            ),
             out_dir,
             f"{case_id}-turn-{idx}",
             Path(args.codex_home),
@@ -492,6 +536,7 @@ def run_case(
         )
         thread_id = result["thread_id"]
         result["user_prompt"] = prompt
+        result["activation_hint"] = activation_hint
         turn_records.append(result)
         prior_turn_answer = result["answer"]
         if result["returncode"] != 0:
@@ -508,6 +553,12 @@ def run_case(
         "case_type": case["case_type"],
         "multi_turn": case["multi_turn"],
         "thread_id": thread_id,
+        "activation_hint_applied": any(turn.get("activation_hint") for turn in turn_records),
+        "activation_hints_all_turns": [
+            str(turn.get("activation_hint"))
+            for turn in turn_records
+            if turn.get("activation_hint")
+        ],
         "turns": turn_records,
         "final_answer": turn_records[-1]["answer"] if turn_records else "",
         "returncode": turn_records[-1]["returncode"] if turn_records else 1,
@@ -797,6 +848,9 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
         mindthus_loaded = mindthus_loaded_from_commands(commands)
         superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
         forced_mindthus_prompt = bool(FORCED_MINDTHUS_RE.search(prompt_text))
+        activation_hint_applied = bool(response.get("activation_hint_applied")) or any(
+            turn.get("activation_hint") for turn in response.get("turns", [])
+        )
         loaded_owner = loaded_owners_from_commands(commands)
         case_summaries.append(
             {
@@ -807,6 +861,7 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
                 "loaded_owner": loaded_owner,
                 "no_commands_loaded": not commands,
                 "forced_mindthus_prompt": forced_mindthus_prompt,
+                "activation_hint_applied": activation_hint_applied,
                 "natural_mindthus_loaded": mindthus_loaded and not forced_mindthus_prompt,
                 "contaminated": bool(response.get("contamination_flags_all_turns")),
             }
@@ -824,6 +879,7 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
         "no_commands_loaded_count": count("no_commands_loaded"),
         "natural_mindthus_loaded_count": count("natural_mindthus_loaded"),
         "forced_mindthus_prompt_count": count("forced_mindthus_prompt"),
+        "activation_hint_applied_count": count("activation_hint_applied"),
         "contaminated_case_count": count("contaminated"),
         "mindthus_loaded_rate": round(count("mindthus_loaded") / case_count, 3) if case_count else None,
         "superpowers_loaded_rate": round(count("superpowers_loaded") / case_count, 3) if case_count else None,
@@ -1038,6 +1094,8 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
             errors.append("--certification-candidate requires the full case set; omit --select")
         if args.reanalysis_of:
             errors.append("--certification-candidate cannot be combined with --reanalysis-of")
+        if getattr(args, "v5_register_hints", False):
+            errors.append("--certification-candidate cannot use --v5-register-hints")
     return errors
 
 
@@ -1084,6 +1142,11 @@ def main() -> int:
         action="store_true",
         help="Exit nonzero if a generator or judge subprocess loads forbidden benchmark or host-skill context.",
     )
+    parser.add_argument(
+        "--v5-register-hints",
+        action="store_true",
+        help="Diagnostic only: inject host-style V5 target register hints into registered target cases. Disallowed for certification candidates.",
+    )
     args = parser.parse_args()
     errors = validate_run_args(args)
     if errors:
@@ -1122,6 +1185,9 @@ def main() -> int:
         "force": args.force,
         "plugin_context": args.plugin_context,
         "fail_on_contamination": args.fail_on_contamination,
+        "v5_register_hints": args.v5_register_hints,
+        "v5_target_trigger_register": str(V5_TARGET_TRIGGER_REGISTER),
+        "v5_target_trigger_register_sha256": sha256_file(V5_TARGET_TRIGGER_REGISTER),
         "certification_status": (
             "certification_candidate" if args.certification_candidate else "diagnostic"
         ),

@@ -133,6 +133,10 @@ diagnostic block, such as `v5_target_activation`, that maps registered target an
 no-load, wrong-owner, and expected-owner-loaded outcomes. This block is routing evidence,
 not semantic pass evidence.
 
+Diagnostic host-hint experiments must be labeled. If a run uses a mechanism such as
+`--v5-register-hints`, the manifest must record the hint mode and register SHA, response
+artifacts must record applied hints, and the run cannot be a certification candidate.
+
 Allowed `owner_fidelity_verdict` values:
 
 - `expected_owner_loaded`: a positive case loaded an accepted Mindthus owner.

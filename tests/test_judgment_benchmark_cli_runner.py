@@ -108,6 +108,59 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertNotIn("{{prior_turn_answer}}", sent_prompts[2])
         self.assertIn("answer-turn-2", record["turns"][2]["user_prompt"])
 
+    def test_run_case_can_apply_v5_register_hint_diagnostic_mode(self):
+        runner = load_runner()
+        case = case_by_number(33)
+        sent_prompts = []
+
+        def fake_run_codex(prompt, *args, **kwargs):
+            sent_prompts.append(prompt)
+            return {
+                "returncode": 0,
+                "timed_out": False,
+                "duration_seconds": 0.1,
+                "thread_id": "thread-v5-hint",
+                "answer": "stop adding rules; move upstream first",
+                "events_path": "",
+                "stderr_path": "",
+                "last_message_path": "",
+                "prompt_path": "",
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "agent_messages": [],
+                "usage": None,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                variant="diagnostic-v5-register-hints",
+                plugin_context="mindthus",
+                codex_home=Path(tmp),
+                repo_root=REPO,
+                execution_root=Path(tmp),
+                model=None,
+                timeout=1,
+                v5_register_hints=True,
+            )
+
+            record = runner.run_case(case, args)
+
+        self.assertIn("Host diagnostic activation hint", sent_prompts[0])
+        self.assertIn("mindthus:3l5s", sent_prompts[0])
+        self.assertIn("Anti-Spiral brake before addition", sent_prompts[0])
+        self.assertTrue(record["activation_hint_applied"])
+        self.assertIn("mindthus:3l5s", record["activation_hints_all_turns"][0])
+
+    def test_v5_register_hint_is_case_id_matched(self):
+        runner = load_runner()
+        case = dict(case_by_number(33))
+        case["case_id"] = "mtj-stale"
+
+        self.assertIsNone(runner.v5_register_hint_for_case(case, enabled=True))
+
     def test_judge_prompt_includes_complete_multiturn_transcript(self):
         runner = load_runner()
         case = case_by_number(12)
@@ -584,6 +637,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             judge_model="gpt-judge",
             select=None,
             reanalysis_of=None,
+            v5_register_hints=False,
         )
 
         self.assertIn("--certification-candidate requires explicit --model", runner.validate_run_args(args))
@@ -606,6 +660,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         args.reanalysis_of = "v4"
         self.assertIn(
             "--certification-candidate cannot be combined with --reanalysis-of",
+            runner.validate_run_args(args),
+        )
+
+        args.reanalysis_of = None
+        args.v5_register_hints = True
+        self.assertIn(
+            "--certification-candidate cannot use --v5-register-hints",
             runner.validate_run_args(args),
         )
 

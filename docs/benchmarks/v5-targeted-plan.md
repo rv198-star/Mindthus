@@ -119,6 +119,8 @@ Acceptance:
   accepted runtime owners, required action probes, and negative boundaries
 - `summary["v5_target_activation"]` reports which registered targets were no-load,
   wrong-owner, or expected-owner-loaded
+- the runner exposes `--v5-register-hints` for a diagnostic host-hint experiment and
+  rejects that mode for certification candidates
 - each target case is rerun `n >= 3`
 - all target cases load the expected owner or an explicitly accepted owner
 - no public negative control gains a new runtime/event false wake-up
@@ -126,7 +128,10 @@ Acceptance:
 
 Implementation note: the register and summary diagnostics are mechanical_runtime
 support only. They do not certify behavior; they make the next host-hook or trigger
-register patch measurable before another full 50-case run is attempted.
+register patch measurable before another full 50-case run is attempted. The
+`--v5-register-hints` mode injects host-style route hints into registered target cases,
+records those hints in response artifacts, and must be reported as diagnostic
+intervention, not natural activation.
 
 ### 4. Fix Loaded-But-Wrong-Action Cases
 

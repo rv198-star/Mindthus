@@ -140,6 +140,40 @@ python3 -m unittest tests.test_v3_audit_optimization_contract tests.test_judgmen
 
 Expected: OK.
 
+### Task 4: Add Diagnostic Host-Hint Experiment Switch
+
+**Files:**
+- Modify: `scripts/run-judgment-benchmark-cli.py`
+- Modify: `tests/test_judgment_benchmark_cli_runner.py`
+- Modify: `docs/benchmarks/v5-target-trigger-register.json`
+- Modify: `docs/benchmarks/v5-targeted-plan.md`
+- Modify: `docs/benchmarks/v5-targeted-issue-drafts.md`
+- Modify: `docs/benchmarks/v5-certification-protocol.md`
+
+**Interfaces:**
+- Consumes: `preferred_runtime_owner` from the V5 target-trigger register.
+- Produces: `--v5-register-hints`, response-level `activation_hint_applied`,
+  `activation_hints_all_turns`, and manifest fields for hint mode and register SHA.
+
+- [x] **Step 1: Write failing tests**
+
+Tests cover diagnostic hint injection, strict `case_id` matching, and certification
+candidate rejection.
+
+- [x] **Step 2: Implement minimal diagnostic switch**
+
+The runner injects a host-style route hint only for matched registered target cases and
+only in diagnostic mode.
+
+- [x] **Step 3: Update docs**
+
+The protocol and targeted plan state that host-hint results are diagnostic and cannot
+be marketed as natural activation or certification evidence.
+
+- [x] **Step 4: Run final verification**
+
+Run focused and full regression after all edits.
+
 - [x] **Step 3: Run full regression**
 
 Run:
