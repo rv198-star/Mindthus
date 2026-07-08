@@ -817,14 +817,15 @@ class PackagingDocsTests(unittest.TestCase):
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
                     "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-                    "direct; evidence 1st; defer Superpowers Brainstorm."
+                    "method-ref review direct; direct; evidence 1st; defer Superpowers."
                 ],
             )
             codex_default_prompt = codex_plugin_manifest["interface"]["defaultPrompt"][0]
-            self.assertIn("Superpowers Brainstorm", codex_default_prompt)
+            self.assertIn("Superpowers", codex_default_prompt)
+            self.assertIn("method-ref review direct", codex_default_prompt)
             self.assertIn("hard frame/whole/binary/spiral/no-data", codex_default_prompt)
-            self.assertLessEqual(len(codex_default_prompt), 128)
-            self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 128)
+            self.assertLessEqual(len(codex_default_prompt), 192)
+            self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 192)
             self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())

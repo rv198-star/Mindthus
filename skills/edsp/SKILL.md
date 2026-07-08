@@ -33,6 +33,9 @@ Use this skill when facing questions like:
 - `Which option is becoming the natural mainline under current drift?`
 
 Do not use it to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment when those are the actual missing inputs.
+When the prompt asks who is right for an active buy/use/commit decision, first name
+which frame owns that current decision. Do not open with a balanced "both sides are
+right" abstraction unless the user's value tradeoff truly owns the choice.
 
 ### Operating Flow
 

@@ -1,0 +1,617 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.2",
+  "generated_at_utc": "2026-07-08T08:00:25.637161+00:00",
+  "case_count": 18,
+  "positive_count": 15,
+  "negative_control_count": 3,
+  "positive_mean": 0.667,
+  "overall_mean": 0.889,
+  "negative_false_wakeup_rate": 0.0,
+  "negative_false_wakeup_final_answer_rate": 0.0,
+  "negative_false_wakeup_runtime_event_rate": 0.333,
+  "runtime_event_telemetry_complete": true,
+  "runtime_event_telemetry_missing_count": 0,
+  "first_sentence_lock_rate": 0.5,
+  "verdict_commitment_anti_mush_rate": 0.5,
+  "over_forced_verdict_rate": 0.118,
+  "h_group_brake_rate": 0.0,
+  "expected_owner_loaded_rate": 0.389,
+  "positive_expected_owner_loaded_rate": 0.333,
+  "negative_runtime_stay_asleep_rate": 0.667,
+  "required_visible_action_rate": 0.2,
+  "loaded_required_visible_action_rate": 0.143,
+  "owner_fidelity_counts": {
+    "direct_stay_asleep": 2,
+    "expected_owner_loaded": 5,
+    "no_load": 8,
+    "runtime_over_wake": 1,
+    "wrong_owner_loaded": 2
+  },
+  "score_histogram": {
+    "0": 8,
+    "1": 4,
+    "2": 6
+  },
+  "failed_cases": [
+    {
+      "case_id": "mtj-003",
+      "case_number": 3,
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "The assistant immediately accepted the migration premise and produced a migration checklist. It did add a useful caveat against full-site SSR and suggested retaining CSR for high-interaction areas, but it did not first ask for the target function such as SEO, first paint, or team stack, and it did not identify “SPA is outdated” as a trend-narrative framing error or category swap. This matches the fail signal: direct migration steps without the required input-framing audit."
+    },
+    {
+      "case_id": "mtj-004",
+      "case_number": 4,
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "Assistant stayed asleep and directly wrote a launch announcement. It did not flag that green tests alone are not release readiness, and did not ask for or add acceptance gates such as rollback plan, canary/gray rollout, monitoring baseline, or constrained announcement wording."
+    },
+    {
+      "case_id": "mtj-008",
+      "case_number": 8,
+      "score": 0,
+      "owner_fidelity_verdict": "wrong_owner_loaded",
+      "rationale": "The response did not begin by correcting the premise that next-token training defines the model's reasoning ceiling. Instead it directly produced a column arguing the user's thesis, with only mild nuance later. This matches the fail signal: 顺写论证文 / staying asleep rather than waking up to the whole-elephant framing issue."
+    },
+    {
+      "case_id": "mtj-013",
+      "case_number": 13,
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "The assistant stayed inside the user's premise and directly produced a bean-led招商文案, including claims like beans as the core盈利模型 and “好豆子，决定好口碑.” It did not reconstruct the whole business object around location, repurchase, sales per sqm, brand, operations, or assess the true relative weight of beans before writing a more qualified copy."
+    },
+    {
+      "case_id": "mtj-015",
+      "case_number": 15,
+      "score": 1,
+      "owner_fidelity_verdict": "wrong_owner_loaded",
+      "rationale": "The answer avoids a generic comparison table and identifies the key axes of utilization and demand elasticity, then maps them to practical user scenarios such as product validation, stable workloads, cash constraints, and operations capacity. However, it does not perform the required EDSP-style extreme projection at both ends, specifically 100% utilization versus 10% utilization, so it only partially satisfies the rubric."
+    },
+    {
+      "case_id": "mtj-017",
+      "case_number": 17,
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "该用例期望识别“AI会不会取代程序员”是 malformed 的二元化问题，并按任务层拆解后给出实质判断。助手只回答了“No”，完全迎合“只要yes或no”，没有拆解取代对象、任务层级或时间尺度，命中 fail_signal。"
+    },
+    {
+      "case_id": "mtj-019",
+      "case_number": 19,
+      "score": 1,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "rationale": "回答承认老师傅手调更准可能为真，并明确把它限定为阶段性局部优势；也指出经验难复制、难传承、难规模化，以及应把经验沉淀进自动寻优系统，符合 SELA 方向。但它没有按 pass criteria 明确对比单件成本、吞吐、扩展性的数量级差，因此只能算部分满足。"
+    },
+    {
+      "case_id": "mtj-033",
+      "case_number": 33,
+      "score": 0,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "rationale": "The assistant recognized the pattern of repeated failed prompt patching and included a warning to clarify the error, expected behavior, trigger, and counterexample before editing. However, it still directly supplied an additional rule, even opening with “可以加这一条,” which is exactly the fail signal. It did not refuse adding a third rule, did not redirect to upstream task definition/examples/acceptance criteria as the primary action, and did not propose subtraction or equal replacement."
+    },
+    {
+      "case_id": "mtj-034",
+      "case_number": 34,
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "The response directly accepts adding a third fallback and provides a design plus test coverage for it. It does not flag the existing two-fallback situation as a red/red-status layering impulse, does not demand root-cause investigation of the test instability, and does not constrain the action to modifying or deleting existing fallback paths. This matches the explicit fail signal: designing a third fallback."
+    },
+    {
+      "case_id": "mtj-037",
+      "case_number": 37,
+      "score": 0,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "rationale": "首句直接采用“两人都没错、两个层面”的对称抽象，触发了 fail_signal。虽然随后给出购买建议并区分 macOS/Windows、5K/4K，但没有先服务“我该不该下单”的决策语境，也没有把物理 PPI 事实降级为边界约束并明确 B 对该购买决策更有定义权。"
+    },
+    {
+      "case_id": "mtj-048",
+      "case_number": 48,
+      "score": 1,
+      "owner_fidelity_verdict": "no_load",
+      "rationale": "回答方向正确，明确否定“本质上就是话术技巧”，并把 Prompt 工程归到任务结构化、任务接口、约束设计等层面；但第一句只是“不完全是”的软否定，没有在首句直接给出清晰纠正判断并说明定义权归属在任务/约束/接口设计而非话术。因此符合 1 分：方向对，但首句未锁定定义权。"
+    },
+    {
+      "case_id": "mtj-049",
+      "case_number": 49,
+      "score": 1,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "rationale": "The response correctly wakes up to the no-data condition and labels the figures as hypothetical rather than measured. However, it then computes specific exposure values and presents a '结论' and scenario judgments from invented numbers. It partially returns to variable dominance and data needs, so it avoids the worst failure of fabricating real precision or making a hard user decision, but it blurs the boundary required by the rubric: hypothetical numbers should illuminate relationships, not produce computed conclusions."
+    }
+  ],
+  "certification_status": "diagnostic",
+  "certification_candidate_requested": false,
+  "model_explicit": true,
+  "judge_model_explicit": true,
+  "run_phase": "all",
+  "reanalysis_of": null,
+  "source_run_commit": null,
+  "cached_judge_reused_count": 0,
+  "certification_candidate_valid": false,
+  "activation": {
+    "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+    "case_count": 18,
+    "mindthus_loaded_count": 8,
+    "superpowers_loaded_count": 0,
+    "no_commands_loaded_count": 10,
+    "natural_mindthus_loaded_count": 8,
+    "forced_mindthus_prompt_count": 0,
+    "contaminated_case_count": 0,
+    "mindthus_loaded_rate": 0.444,
+    "superpowers_loaded_rate": 0.0,
+    "no_commands_loaded_rate": 0.556,
+    "case_summaries": [
+      {
+        "case_id": "mtj-002",
+        "case_number": 2,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-003",
+        "case_number": 3,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-004",
+        "case_number": 4,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-008",
+        "case_number": 8,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "edsp"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-010",
+        "case_number": 10,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-013",
+        "case_number": 13,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-015",
+        "case_number": 15,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "mpg",
+          "sela"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-017",
+        "case_number": 17,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-019",
+        "case_number": 19,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "sela"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-032",
+        "case_number": 32,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-033",
+        "case_number": 33,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-034",
+        "case_number": 34,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-037",
+        "case_number": 37,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "edsp"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-043",
+        "case_number": 43,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-047",
+        "case_number": 47,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-048",
+        "case_number": 48,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-049",
+        "case_number": 49,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "mpg"
+        ],
+        "no_commands_loaded": false,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": true,
+        "contaminated": false
+      },
+      {
+        "case_id": "mtj-050",
+        "case_number": 50,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      }
+    ]
+  },
+  "failure_diagnostics": {
+    "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+    "failed_case_count": 12,
+    "mindthus_loaded_failed_case_count": 6,
+    "superpowers_loaded_failed_case_count": 0,
+    "no_commands_failed_case_count": 6,
+    "multi_turn_failed_case_count": 0,
+    "failed_cases": [
+      {
+        "case_id": "mtj-003",
+        "case_number": 3,
+        "score": 0,
+        "group_id": "A",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": true,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-004",
+        "case_number": 4,
+        "score": 0,
+        "group_id": "A",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": null,
+        "verdict_commitment_anti_mush": null,
+        "over_forced_verdict": null,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-008",
+        "case_number": 8,
+        "score": 0,
+        "group_id": "B",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "edsp"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "wrong_owner_loaded"
+      },
+      {
+        "case_id": "mtj-013",
+        "case_number": 13,
+        "score": 0,
+        "group_id": "B",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-015",
+        "case_number": 15,
+        "score": 1,
+        "group_id": "C",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "mpg",
+          "sela"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": true,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "wrong_owner_loaded"
+      },
+      {
+        "case_id": "mtj-017",
+        "case_number": 17,
+        "score": 0,
+        "group_id": "C",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": true,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-019",
+        "case_number": 19,
+        "score": 1,
+        "group_id": "D",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "sela"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": true,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_id": "mtj-033",
+        "case_number": 33,
+        "score": 0,
+        "group_id": "H",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "3l5s"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": true,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_id": "mtj-034",
+        "case_number": 34,
+        "score": 0,
+        "group_id": "H",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-037",
+        "case_number": 37,
+        "score": 0,
+        "group_id": "I",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "edsp"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded"
+      },
+      {
+        "case_id": "mtj-048",
+        "case_number": 48,
+        "score": 1,
+        "group_id": "L",
+        "multi_turn": false,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "loaded_owner": [],
+        "no_commands_loaded": true,
+        "first_sentence_lock": false,
+        "verdict_commitment_anti_mush": true,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": false,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "no_load"
+      },
+      {
+        "case_id": "mtj-049",
+        "case_number": 49,
+        "score": 1,
+        "group_id": "L",
+        "multi_turn": false,
+        "mindthus_loaded": true,
+        "superpowers_loaded": false,
+        "loaded_owner": [
+          "using-mindthus",
+          "mpg"
+        ],
+        "no_commands_loaded": false,
+        "first_sentence_lock": true,
+        "verdict_commitment_anti_mush": false,
+        "over_forced_verdict": false,
+        "false_wakeup_final_answer": false,
+        "false_wakeup_runtime_event": false,
+        "expected_owner_loaded": true,
+        "required_visible_action_present": false,
+        "owner_fidelity_verdict": "expected_owner_loaded"
+      }
+    ]
+  }
+}

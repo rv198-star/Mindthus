@@ -40,6 +40,10 @@ Use SELA before major decisions involving:
 - premium/small-market advantage vs mass-market efficiency
 - long-term trend judgment where local strengths are real but hard to scale
 
+For a bare build-versus-rent or A/B cost choice without local-expertise versus
+system-efficiency pressure, let EDSP expose the decisive axes first; SELA may support
+only if a real long-term efficiency/local-advantage direction pressure remains.
+
 ### Three Questions
 
 1. Is the comparison fair, or is it `best A` vs `average B`?

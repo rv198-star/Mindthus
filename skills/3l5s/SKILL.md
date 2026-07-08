@@ -127,6 +127,7 @@ Short rule:
 - If the problem is unclear: do not start by fixing; use 3L5S to define the problem first.
 - If the problem is too large: do not start by doing; use the 5S operator to break it into tasks first.
 - If execution repeatedly loops or reworks: return to `Baseline -> Target -> Gap -> Strategy -> Breakdown` and check whether problem definition or task decomposition failed to close.
+- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, brake before adding: restate the upstream problem, find the instability/root-cause evidence, and prefer deletion or equal replacement. Clear failing tests with new evidence can continue as ordinary debugging.
 
 ### Script Assistance Boundary / 脚本辅助边界
 

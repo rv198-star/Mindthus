@@ -1,6 +1,6 @@
 ---
 name: mpg
-description: Use when a plausible mainline or strategic direction meets a concrete carrier/proxy, concentrated scarce-resource exposure, or continue/commit/hold/exit/switch decision under path volatility, costs, delays, fragility, or counter-forces.
+description: Use when a plausible mainline or strategic direction meets a concrete carrier/proxy, concentrated scarce-resource exposure, or continue/commit/hold/exit/switch decision under path volatility, costs, delays, fragility, or counter-forces; not for method-reference evidence review.
 ---
 
 # MPG / Mainline-Path Game
@@ -65,6 +65,10 @@ Use MPG only when all three conditions are present:
    mainline resolves.
 3. A real actor must configure carrier, exposure, timing, optionality, authority, or
    vehicle before the mainline is realized.
+
+If the user is only asking whether a prior answer followed MPG or MPG-AQM rules, treat
+the method name as review scope and inspect the transcript/evidence directly. Do not
+load MPG as the current judgment owner for that evidence-review task.
 
 Structural trigger:
 

@@ -90,6 +90,18 @@ upstream or equal-replace; subtraction is allowed.
 Visible consequence probe: if a wrong definition would redirect optimization, name
 that consequence explicitly before advice.
 
+Loaded-action probes:
+
+- Input Framing Audit must withhold root-cause/release authority until evidence,
+  rollback, gray rollout, monitoring, or risk acceptance is visible.
+- Whole Elephant must name the whole object and the result controller before writing
+  copy, strategy, or essence claims.
+- EDSP must show the two decisive extremes before the practical branch.
+- SELA must show cost, throughput, and scale contrast when local excellence is real.
+- Anti-Spiral must refuse the third additive rule/fallback before proposing repair.
+- AQM may use hypothetical numbers only to expose relationships, not to compute the
+  final verdict.
+
 ## Boundary
 
 Entry Triage only changes the route, evidence requirement, stopping condition, or first

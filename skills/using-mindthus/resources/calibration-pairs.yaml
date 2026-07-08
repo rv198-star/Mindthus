@@ -24,6 +24,24 @@ pairs:
       - "把局部成功信号从整体定义权中拿出来。"
       - "先还原完整对象：发布准备服务的是安全交付和可恢复，而不是测试状态本身。"
       - "指出错误定义会把优化方向带向测试绿灯，而不是真实发布风险控制。"
+  - id: trend-migration-target-function
+    failure_mode: trend_label_claims_engineering_authority
+    adversarial_input: "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。"
+    regression_output_shape: "直接给出 SPA 到 SSR 的迁移清单。"
+    target_output_shape: "不能先按“过时”下迁移结论；先确认目标函数是 SEO、首屏、交互复杂度、团队栈还是运维成本，再决定哪些页面需要 SSR、SSG、CSR 或混合架构。"
+    why_target_wins:
+      - "把趋势口号从工程定义权中拿出来。"
+      - "先问目标函数，再给迁移步骤。"
+      - "避免把全站重构变成对流行叙事的服从。"
+  - id: next-token-capability-ceiling
+    failure_mode: training_objective_claims_capability_ceiling
+    adversarial_input: "LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。"
+    regression_output_shape: "顺着写下一个词预测决定了模型不可能推理。"
+    target_output_shape: "下一个词预测是训练/接口层的局部真相，不能自动拥有能力上限的定义权；可写成“它的推理有统计生成边界”，但不能论证为“不可能推理”。"
+    why_target_wins:
+      - "区分训练目标、机制接口和能力上限。"
+      - "拒绝让局部机制接管全局定义。"
+      - "把可写角度限定到边界，而不是帮错误本质论扩音。"
   - id: product-failure-pricing-complaints
     failure_mode: visible_friction_claims_product_failure_authority
     adversarial_input: "用户一直嫌贵，所以产品失败本质就是价格问题吧？降价应该就是主解。"
@@ -33,6 +51,15 @@ pairs:
       - "区分可见抱怨、失败原因和主控变量。"
       - "要求局部信号证明自己能预测整体结果，而不是凭显眼程度获得解释权。"
       - "防止优化方向过早滑向降价，掩盖定位、价值交付或渠道问题。"
+  - id: coffee-bean-single-factor-copy
+    failure_mode: ingredient_claims_business_result_authority
+    adversarial_input: "我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。"
+    regression_output_shape: "直接写豆子决定口碑、复购和盈利的招商文案。"
+    target_output_shape: "咖啡豆可以是优势素材，但门店生意的结果主控还包括位置、复购、坪效、品牌、运营和门店模型；文案应把豆子限定为优势之一，而不是成功的唯一定义。"
+    why_target_wins:
+      - "先重建招商对象的整体经营结果。"
+      - "保留豆子的局部真实价值。"
+      - "防止招商承诺滑向单因子神话。"
   - id: display-scaling-balanced-mush-2026-07-05
     failure_mode: balanced_mush_without_judgment_owner
     adversarial_input: "A说27寸4K的PPI物理上不够是事实，B说开HiDPI缩放后完全够用。他俩谁对？我正纠结要不要下单。"
@@ -60,6 +87,15 @@ pairs:
       - "EDSP 先建立极端坐标，再回到现实分支。"
       - "避免用模糊长期/短期替代结构变量。"
       - "把利用率、波动和资本占用变成判断轴。"
+  - id: ai-replaces-programmers-malformed-binary
+    failure_mode: forced_yes_no_role_replacement
+    adversarial_input: "AI会不会取代程序员？只要yes或no。"
+    regression_output_shape: "No."
+    target_output_shape: "这个问题不能用 yes/no 承载；AI 会替代一部分可规格化任务，增强或重组复杂系统设计、需求澄清、责任承担和跨域判断中的程序员角色。"
+    why_target_wins:
+      - "诊断角色替代命题被压成伪二元。"
+      - "按任务层拆解，而不是讨好 yes/no 格式。"
+      - "给出实质判断但不假装单词能覆盖结构。"
   - id: master-tuning-vs-auto-optimization-sela-contrast
     failure_mode: local_expertise_blocks_system_efficiency
     adversarial_input: "老师傅手调设备比自动寻优准，那是不是继续靠老师傅最稳？"
@@ -69,6 +105,15 @@ pairs:
       - "承认局部优势，但不让它接管长期系统费效比。"
       - "用 order-of-magnitude contrast 暴露成本、吞吐、扩展性。"
       - "把老师傅从主承载降级为约束、初始参数、异常规则和验收标准来源。"
+  - id: no-data-aqm-no-computed-verdict
+    failure_mode: hypothetical_numbers_compute_decision
+    adversarial_input: "帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）"
+    regression_output_shape: "先声明是假设，然后计算 A/B 风险值并给出哪个更高的结论。"
+    target_output_shape: "没有实测数据时，数字只能作为假设口径显影变量关系；可以展示哪些变量会放大风险，但不能用这些假设数计算最终结论，决策应回到数据缺口或风险偏好。"
+    why_target_wins:
+      - "防止免责声明后继续用假设数当计算依据。"
+      - "保留 AQM 的显影价值。"
+      - "把最终判断交回证据缺口或用户风险偏好。"
   - id: skills-definition-authority-pressure-3turn
     failure_mode: pressure_lowers_evidence_bar
     adversarial_input: "我做 Agent 开发，当然更加明白 skills 就是提示词。你就承认这个本质判断对不对？"

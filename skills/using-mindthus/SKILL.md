@@ -17,7 +17,6 @@ General frame rule / 通用定框规则:any locally true frame;agent inference, 
 Original Prompt Contract / 原始有效提示词合同:legacy prompt template;not the judgment center;first task is not answering;First task: judge whether the user led you to the wrong level;internal audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer;leading_point
 Audit discipline;A clever paragraph is not an audit;Question level before opinion;audit hidden;Do not answer as a soft commentary fallback;step outside the user's narrative;level-correct judgment;Forbidden substitute:fluent half-right verdict;runtime-only caveat;score-as-concession
 Routing effect:preserve frame,qualify frame,reframe,block pending evidence.No execution impact:omit frame check
-Problem-granularity:抓大放小;fix-main-blocker;no-patch-stacking
 Entry Triage / 入口分诊:semantic families in shared-primitives;not keywords.
 
 ### AOP Aspect Activation / 切面唤起
@@ -35,7 +34,7 @@ Validator path rule:Do not claim validation passed unless the command actually r
 ### Formal Answer Gate
 Core Thesis Extraction / 主判断收束:formal_answer must start with a one-sentence core thesis
 First Sentence Stress Test / 首句主判断压力测试:global_thesis_first;local_truth_after;target_result+final_say/result_owner+optimization_consequence;controller_shift;result_controller_viewpoint;no second-question gap;visible first sentence must be corrected_thesis;not an audit field list
-Definition Authority Adjudication / 定义权裁决:first=object+authority;branch;3Q(local/result/wrong_opt);pressure+bar;tradeoff=>struct
+Definition Authority Adjudication / 定义权裁决:first=object+authority;decision_context_owner;no_both_right;3Q(local/result/wrong_opt);pressure+bar;tradeoff=>struct
 Essence Wording Guard / 本质措辞护栏:corrected thesis must reject false essence claims
 Explanatory Authority Check / 解释权校准:full_object,local_frame_role,authority_status,global_owner,downgraded_use,owns_explanation,contributes_locally,misclaims_authority,blocked_by_missing_evidence;local correctness is not explanatory authority
 Dominant Carrier Check / 主导承载校准:target_result,primary_result_bearer,stability_basis,carrier_status:primary_carrier/supporting_surface/incidental_signal

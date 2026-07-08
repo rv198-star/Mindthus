@@ -47,7 +47,7 @@ CLAUDE_ACTIVATION_ROUTER_PROMPT = (
 )
 CODEX_ACTIVATION_ROUTER_PROMPT = (
     "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-    "direct; evidence 1st; defer Superpowers Brainstorm."
+    "method-ref review direct; direct; evidence 1st; defer Superpowers."
 )
 
 

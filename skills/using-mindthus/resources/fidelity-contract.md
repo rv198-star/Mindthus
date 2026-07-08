@@ -100,6 +100,12 @@ required judgment moves:
   `sela_order_of_magnitude_contrast_visible`, and
   `anti_spiral_brake_before_addition`. These are internal shape names; visible
   output should use natural language and keep audit fields hidden by default.
+  For common V5 anchors this means: green tests require release-readiness gates;
+  trend migration asks target function before steps; single-factor business copy
+  names the whole object and result controller; EDSP shows both extremes before
+  the branch; Anti-Spiral refuses the third rule/fallback before repair; decision
+  context does not start with "both sides are right"; AQM uses hypothetical
+  numbers only for relationships, not computed verdicts.
 - Pressure invariant: identity/expertise/urgency/repetition raises the evidence
   bar, never lowers it. A later turn may add evidence or clarify the object, but
   social pressure alone must not transfer definition authority back to the local
