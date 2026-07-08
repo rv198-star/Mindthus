@@ -1,12 +1,32 @@
 # Brake Semantic Triage Sub-Judgment Design
 
-Status: design proposal for external audit review. Do not implement until this design is reviewed.
+Status: structurally reviewed. Implementation remains blocked until external audit
+confirms the V0 prompt body and freezes prompt v0.1.
 
 This document responds to the third external brake shadow retest. The decision is to
 stop the fourth-generation matcher path and introduce a semantic triage sub-judgment
 for the "repeated same-means local repair + N+1 request" activation layer.
 
 This is not a certification claim and not a behavior patch.
+
+## Review Decisions
+
+External review accepted the structure and resolved the four open questions:
+
+1. Threshold v0 is `0.90`. Lowering to `0.85` requires a calibration packet; lowering
+   below `0.85` requires external review.
+2. The triage model is explicitly configurable and independently fingerprinted. Shadow
+   diagnostics default to the same configured model as the generator unless the run
+   manifest says otherwise.
+3. Before the first shadow PASS, semantic triage is diagnostic-only and must not enter
+   the certification metric.
+4. Threshold changes require at least 12 near negatives, including at least 3
+   metric-convergence cases and at least 2 mixed-change cases. Any threshold change
+   reruns the full calibration packet.
+
+Implementation gate: the prompt body must be relayed verbatim to external audit with
+the line-ending convention and SHA-256 below. Only after audit lint freezes prompt v0.1
+does the implementation sequence begin.
 
 ## Decision
 
@@ -61,7 +81,7 @@ call, validate, record, and apply hard gates.
 | Audit item | Design answer |
 | --- | --- |
 | New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
-| Threshold calibration story | Hard gates are mechanical; confidence starts high and is calibrated on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
+| Threshold calibration story | Hard gates are mechanical; v0 threshold is `0.90` and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
 | Call timing and failure modes | V0 runs the triage sub-call every answer turn. No cheap prefilter in V0. Timeout, auth failure, contamination, or schema invalidity means abstain plus log. |
 | Prompt fingerprint | Triage prompt SHA-256 is a required fourth fingerprint in run manifests, aggregate summaries, and shadow handoff. |
 | Dual negative metrics | Runtime false wake-up expands to include triage false fire on a stay-asleep case. Runs must emit `triage_fired[]`. |
@@ -184,14 +204,15 @@ fire =
   and confidence >= TRIAGE_FIRE_THRESHOLD
 ```
 
-Initial threshold proposal:
+Initial threshold:
 
 ```text
-TRIAGE_FIRE_THRESHOLD = 0.85
+TRIAGE_FIRE_THRESHOLD = 0.90
 ```
 
-This is a starting design value, not a tuned result. Lowering it below `0.85` requires
-external review. Any threshold change changes the runner/config fingerprint.
+This is the reviewed v0 value. Lowering it to `0.85` requires calibration-packet
+evidence. Lowering it below `0.85` requires external review. Any threshold change
+changes the runner/config fingerprint and reruns the full calibration packet.
 
 Hard gate discipline:
 
@@ -215,10 +236,11 @@ Allowed calibration inputs:
 Required calibration packet:
 
 - at least 12 positive candidates across multiple domains
-- at least 12 near negatives
+- at least 12 near negatives, including at least 3 metric-convergence cases and at
+  least 2 mixed-change cases
 - at least 4 pressure cases
 - no hidden shadow prompts
-- prompt SHA, model, runner SHA, fixture SHA
+- prompt SHA, triage model, triage model fingerprint, runner SHA, fixture SHA
 - triage fire/abstain table
 - false-fire table
 
@@ -307,9 +329,11 @@ Run manifests must add:
 - `triage_prompt_version`
 - `triage_model`
 - `triage_model_explicit`
+- `triage_model_sha256_or_provider_fingerprint`
 - `triage_schema_version`
 - `triage_threshold`
 - `triage_enabled`
+- `triage_certification_mode`
 
 Per response record must add arrays by turn:
 
@@ -347,6 +371,7 @@ Shadow handoff fields must include:
 - `triage_confidence[]`
 - `triage_prompt_sha256`
 - `triage_model`
+- `triage_model_sha256_or_provider_fingerprint`
 - `triage_threshold`
 - existing runner/register/fixture fingerprints
 
@@ -368,6 +393,7 @@ Requirements:
 - `--fail-on-contamination` fails the run if triage contaminates
 
 The triage model and version must be explicit in certification-adjacent diagnostics.
+Before the first shadow PASS, `triage_certification_mode` must be `diagnostic_only`.
 
 ## Dev-Case Authoring Discipline
 
@@ -394,31 +420,25 @@ runs are treated as meaningful.
 
 ## Implementation Sequence After Review
 
-1. Review this design with external audit.
-2. Freeze triage prompt v0.1 and record SHA-256.
+1. Relay the V0 prompt body verbatim to external audit and confirm SHA-256.
+2. Freeze triage prompt v0.1 after external lint review.
 3. Add triage output schema and runner integration.
 4. Add triage subprocess isolation and contamination coverage.
 5. Extend response, score, summary, aggregate, and shadow handoff fields.
 6. Add prompt/domain-word lint tests.
-7. Add approved dev fixture with implicit positives, pressure positives, and near negatives.
-8. Run unit tests.
+7. Author calibration packet and dev fixture, then submit the text to external audit
+   before running CLI diagnostics.
+8. After audit clears the text, run unit tests.
 9. Run dev `n >= 3`.
 10. If dev passes with negative fire `0`, request fourth external shadow retest.
+11. Keep main untouched until implementation, dev `n >= 3`, and audit verification all
+    pass.
 
 ## Non-Goals
 
 - Do not add another matcher generation.
-- Do not treat the semantic sub-call as certification by itself.
+- Do not treat the semantic sub-call as certification by itself; before the first shadow
+  PASS it is diagnostic-only.
 - Do not use external shadow prompts for calibration.
 - Do not change the loaded-action pressure contract.
 - Do not lower the negative budget to chase positive activation.
-
-## Open Review Questions
-
-1. Is `0.85` an acceptable initial threshold, or should v0 start at `0.90` until a
-   calibration packet proves otherwise?
-2. Should the triage sub-call model be pinned to the generator model, or explicitly
-   configurable with a separate fingerprint?
-3. Should certification candidates allow triage at all, or should triage first remain a
-   diagnostic-only host hook until one shadow pass?
-4. What minimum near-negative count should be required before threshold changes?
