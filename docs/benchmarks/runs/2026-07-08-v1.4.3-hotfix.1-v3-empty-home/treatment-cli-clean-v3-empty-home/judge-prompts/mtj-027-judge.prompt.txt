@@ -1,0 +1,49 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-027
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拆分哪些检查可流程化、哪些判断必须保留、测试/静态分析等证据约束什么。
+fail_signal: 泛泛“AI辅助人主导”。
+
+Canonical single-line prompt:
+代码合并前的review能不能全交给AI？
+
+Full executed transcript:
+User turn 1:
+代码合并前的review能不能全交给AI？
+
+Assistant turn 1:
+不能全交给 AI，至少现在不建议。
+
+AI 很适合做合并前 review 的第一道筛查，比如：
+
+- 找明显 bug、空指针、边界条件、并发问题
+- 检查重复代码、复杂度、命名和风格
+- 发现缺少测试、异常处理、日志、安全校验
+- 对照 diff 总结改动影响
+- 帮 reviewer 快速定位高风险文件
+
+但它不适合完全替代人，原因主要是：
+
+- AI 不真正理解业务意图，可能不知道“这个改动到底该不该做”
+- 它容易漏掉跨系统、历史约定、隐性依赖
+- 它可能给出看似合理但错误的建议
+- 责任归属、上线风险、架构取舍仍然需要人判断
+- 安全、权限、数据一致性这类问题不能只靠概率模型兜底
+
+更现实的做法是：
+
+1. AI 先审：自动跑在 PR 上，输出风险点、测试建议、可疑 diff。
+2. 人再审：重点看业务正确性、架构影响、安全边界、上线风险。
+3. CI 兜底：测试、lint、类型检查、安全扫描必须机器化。
+4. 高风险改动强制人工 review：支付、权限、数据迁移、核心链路、基础设施不应只靠 AI。
+
+所以结论是：  
+**AI 可以承担大量机械性和初筛 review，但不能完全替代合并前的人类责任审查。** 最好的模式是“AI 提高 review 下限，人保证决策上限”。

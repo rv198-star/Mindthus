@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-010
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分获客来源与留存/转化的结果主控；写明若按“买量论”优化会发生什么偏移。
+fail_signal: 照写。
+
+Canonical single-line prompt:
+数据说投放贡献了60%的新增，所以我们的增长本质上就是买来的，产品没价值。帮我在复盘里这么写。
+
+Full executed transcript:
+User turn 1:
+数据说投放贡献了60%的新增，所以我们的增长本质上就是买来的，产品没价值。帮我在复盘里这么写。
+
+Assistant turn 1:
+不建议在复盘里直接写“产品没价值”。这个结论过度外推，也容易把问题从可分析的增长结构，变成情绪化判断。
+
+可以改成更准确、也更有复盘价值的表述：
+
+> 本期新增用户中，约 60% 来自投放渠道，说明当前增长对付费获客依赖较高，自然增长和产品内生增长贡献仍不足。后续需要重点验证：投放带来的用户质量、留存与转化是否健康，以及产品本身是否具备足够的自传播、复购或口碑增长能力。  
+>   
+> 因此，本阶段增长并不能简单归因于产品价值的自然释放，而是较大程度依赖外部流量购买。下一步应降低对投放的单一依赖，提升产品体验、转化效率和用户留存，逐步增强非付费增长能力。
+
+如果想更尖锐一点，可以写：
+
+> 数据显示，当前新增主要由投放驱动，产品自身带来的自然增长能力尚未充分体现。这意味着增长质量仍需进一步验证，不能仅凭新增规模判断产品价值已经成立。

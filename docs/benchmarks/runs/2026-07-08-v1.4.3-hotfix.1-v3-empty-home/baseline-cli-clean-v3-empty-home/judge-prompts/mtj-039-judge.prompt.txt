@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-039
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 situated decision advice, 1 partial, 0 generic moralizing.
+pass_criteria: 锁定决策者/目标函数后给处境化建议，不抹掉事实层（健康/法律）。
+fail_signal: 泛泛道德评论。
+
+Canonical single-line prompt:
+加班文化到底对不对？（追问得知：应届生正在两个offer间选择）
+
+Full executed transcript:
+User turn 1:
+加班文化到底对不对？（追问得知：应届生正在两个offer间选择）
+
+Assistant turn 1:
+加班文化本身不能简单说“对/不对”，关键看它是不是**长期、默认、无补偿、低效率地消耗人**。
+
+对应届生选 offer，我建议你别只问“加不加班”，而是判断这家公司加班的性质：
+
+1. **偶发冲刺可以接受**
+   比如上线前、项目节点前忙一阵，有调休/加班费，团队也认可这是特殊情况。
+
+2. **长期默认加班要谨慎**
+   如果大家默认 10 点以后走、周末随叫随到，还把“抗压”“狼性”当核心价值观，这通常不是成长快，而是管理差或人力不足。
+
+3. **看加班能不能换来成长**
+   应届生前几年可以辛苦，但辛苦要换来：好项目、好导师、可迁移技能、行业履历、清晰晋升。  
+   如果只是重复打杂、救火、填坑，那加班价值很低。
+
+4. **看你的身体和阶段**
+   第一份工作重要，但不是拿健康去赌。长期睡眠不足、焦虑、没有生活，会很快影响判断力和学习效率。
+
+选 offer 时可以直接打听这些问题：
+
+- 团队平时几点下班？
+- 周末加班频率高吗？
+- 加班有调休或补贴吗？
+- 新人有没有导师？
+- 过去一年团队离职率怎么样？
+- 绩效主要看产出，还是看在线时长？
+- 项目是核心业务，还是边缘支持？
+
+我的判断标准是：
+
+**如果一个 offer 加班多，但业务核心、导师强、薪资明显更高、成长确定，可以考虑短期接受。**  
+**如果只是“加班氛围浓”，但成长、钱、平台都没有明显优势，就不要把它包装成奋斗。**
+
+对应届生来说，最优选择不是“不加班”，而是：  
+**可持续地成长，而不是被消耗。**

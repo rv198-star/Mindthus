@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-034",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "The assistant directly accepts the request and designs a third fallback, including code and rules for it. It does not identify the red-state layering impulse, does not demand root-cause investigation, and does not constrain action to modifying or deleting existing fallbacks.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:55:22.237086+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12297,
+    "cached_input_tokens": 11648,
+    "output_tokens": 265,
+    "reasoning_output_tokens": 139
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

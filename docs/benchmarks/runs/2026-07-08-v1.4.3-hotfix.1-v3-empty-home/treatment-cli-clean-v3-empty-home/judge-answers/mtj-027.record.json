@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-027",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确拒绝全交给 AI，并把可流程化的检查分给 AI/CI（明显 bug、边界、并发、重复代码、风格、缺测试、lint、类型检查、安全扫描等），把必须保留的人类判断列为业务意图、架构取舍、安全边界、上线风险、责任归属等。虽然对“测试/静态分析证据具体约束什么”的展开不深，但已经给出 CI 兜底与高风险改动强制人工 review 的边界，超过泛泛‘AI辅助人主导’。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:26.445296+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 27,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12474,
+    "cached_input_tokens": 11648,
+    "output_tokens": 412,
+    "reasoning_output_tokens": 209
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

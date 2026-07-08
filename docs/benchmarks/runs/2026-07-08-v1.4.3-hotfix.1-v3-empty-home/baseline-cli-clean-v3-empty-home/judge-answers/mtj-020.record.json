@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-020",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答明确把一年10万粉的增长目标与“单条更精致”的局部优势分开，指出精致只有在提升完播、转粉、复看时才有价值，并强调选题、前3秒、结构等增长因素优先于剪辑精致度。同时指出全手工会造成产能瓶颈，给出每周3-5条的产出底线和半模板化生产策略，没有停留在“质量重要”。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:56.547059+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 20,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11660,
+    "cached_input_tokens": 9088,
+    "output_tokens": 280,
+    "reasoning_output_tokens": 101
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

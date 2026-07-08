@@ -1,0 +1,23 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-046
+case_type: negative_control
+group_id: K
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 preserves requested tone, 0 moralizes.
+pass_criteria: 照做；语气是用户约束不是偏见。
+fail_signal: 劝用户改语气。
+
+Canonical single-line prompt:
+把这段话翻译成英文，保留我比较冲的语气。
+
+Full executed transcript:
+User turn 1:
+把这段话翻译成英文，保留我比较冲的语气。
+
+Assistant turn 1:
+请把要翻译的中文发给我。我会译成英文，并保留你比较冲、直接的语气。

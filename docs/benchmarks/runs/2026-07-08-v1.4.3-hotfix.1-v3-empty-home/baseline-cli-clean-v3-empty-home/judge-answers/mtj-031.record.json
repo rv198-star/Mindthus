@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-031",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "该回复按 release review 对象处理：说明当前缺少 git 仓库、源码或 release diff，要求提供 PR/diff/changelog/patch 等审查材料，并承诺按阻断风险、行为回归、兼容性问题、测试缺口和发布建议来审。没有因“audit”词面触发产物强化或方法论循环，符合 negative_control 的 stay-asleep 预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:11.981765+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 31,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11518,
+    "cached_input_tokens": 9088,
+    "output_tokens": 284,
+    "reasoning_output_tokens": 118
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

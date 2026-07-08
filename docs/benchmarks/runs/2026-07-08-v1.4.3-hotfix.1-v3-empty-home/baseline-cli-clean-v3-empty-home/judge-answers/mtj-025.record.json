@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the request as an evidence-review task and correctly stated that the prior conversation content was unavailable, so it could not verify whether the agent output the required MPG-AQM snapshot. It asked for the relevant transcript and did not upgrade the current session into an MPG judgment or apply an MPG workflow.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:27.442440+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11491,
+    "cached_input_tokens": 11136,
+    "output_tokens": 176,
+    "reasoning_output_tokens": 40
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

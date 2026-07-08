@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-018",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有只比较准确率，能识别“模型低 3 个点不等于不上自动审核”的决策问题，并提出高置信自动、低置信/高风险人工、抽样质检的混合架构方向。它也触及覆盖量、成本、效率和灰度比例。但没有明确承认人工审核局部优势为真，也没有按单件成本、吞吐、扩展性给出数量级差异对比，因此只部分满足正例唤醒要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:44.927399+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11504,
+    "cached_input_tokens": 2432,
+    "output_tokens": 342,
+    "reasoning_output_tokens": 155
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

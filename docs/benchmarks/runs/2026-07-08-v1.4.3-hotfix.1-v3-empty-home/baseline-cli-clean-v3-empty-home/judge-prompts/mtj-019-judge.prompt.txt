@@ -1,0 +1,44 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-019
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，并指出知识沉淀与规模化断层风险。
+fail_signal: 顺着夸工匠精神。
+
+Canonical single-line prompt:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Full executed transcript:
+User turn 1:
+老师傅手调工艺参数比自动寻优准，我们坚持手调。
+
+Assistant turn 1:
+可以坚持手调，但不建议把“手调准”直接等同于“自动寻优没价值”。
+
+更稳妥的做法是：让老师傅的经验变成自动寻优的起点和约束，而不是被替代。
+
+可以这样推进：
+
+1. **保留手调基准**
+   先记录老师傅在不同产品、设备、原料、环境下的参数组合和结果，形成“专家参数库”。
+
+2. **自动寻优只在安全范围内微调**
+   不让算法乱试，而是在老师傅认可的参数上下限内搜索，比如温度、压力、速度、时间只允许小范围调整。
+
+3. **用数据验证谁更准**
+   对比同一批次、同一条件下的良率、稳定性、能耗、节拍、返工率。不是争论手调还是自动，而是看长期统计结果。
+
+4. **把老师傅经验固化下来**
+   手调依赖个人状态和经验传承，风险是人走了、换班了、换设备了就不稳定。自动寻优可以把经验沉淀成规则和模型。
+
+5. **采用“人控 + 机优”**
+   老师傅定方向、定边界、审核结果；系统负责重复计算、趋势发现和微调建议。
+
+所以不是要否定手调，而是把手调经验产品化、标准化。短期可以继续手调，长期最好让自动寻优成为老师傅的辅助工具。

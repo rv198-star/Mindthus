@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-044",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant answered the simple travel recommendation question directly with a concise list of child-friendly Paris museums and brief selection guidance. It did not introduce framing analysis, method routing, or over-structured reasoning, so it stays asleep as expected for this negative-control case.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:29.169358+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 44,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12710,
+    "cached_input_tokens": 11648,
+    "output_tokens": 234,
+    "reasoning_output_tokens": 107
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

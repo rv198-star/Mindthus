@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:40:59.842753+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f62-7244-7cc0-a816-9f37981a731e",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.778,
+      "thread_id": "019f3f62-7244-7cc0-a816-9f37981a731e",
+      "answer": "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么描述任务、怎么约束输出。但本质上更接近 **人机协作的任务设计**：把目标、上下文、约束、判断标准和输出格式清楚地传给模型，让模型更稳定地完成任务。\n\n可以这样区分：\n\n- **话术技巧**：偏“怎么说更容易让模型听话”\n- **Prompt 工程**：偏“怎么把问题拆清楚、定义清楚、验证清楚”\n\n一个好的 prompt 通常不只是措辞好，而是包含：\n\n- 任务目标：要模型做什么\n- 背景信息：模型需要知道什么\n- 约束条件：不能做什么、必须遵守什么\n- 输出格式：按什么结构回答\n- 质量标准：什么算好答案\n- 示例：必要时给正反例\n\n比如：\n\n> “帮我写一篇营销文案”\n\n这是话术。\n\n> “请为一款面向一线城市白领的低糖气泡水写 3 条小红书风格标题，每条不超过 20 字，突出低糖、清爽、适合下午办公场景，避免夸大健康功效。”\n\n这就是任务设计。\n\n所以，Prompt 工程不是玄学话术，也不是单纯“哄 AI”。它更像是把模糊需求转成模型能执行的清晰指令。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-048-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-048-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么描述任务、怎么约束输出。但本质上更接近 **人机协作的任务设计**：把目标、上下文、约束、判断标准和输出格式清楚地传给模型，让模型更稳定地完成任务。\n\n可以这样区分：\n\n- **话术技巧**：偏“怎么说更容易让模型听话”\n- **Prompt 工程**：偏“怎么把问题拆清楚、定义清楚、验证清楚”\n\n一个好的 prompt 通常不只是措辞好，而是包含：\n\n- 任务目标：要模型做什么\n- 背景信息：模型需要知道什么\n- 约束条件：不能做什么、必须遵守什么\n- 输出格式：按什么结构回答\n- 质量标准：什么算好答案\n- 示例：必要时给正反例\n\n比如：\n\n> “帮我写一篇营销文案”\n\n这是话术。\n\n> “请为一款面向一线城市白领的低糖气泡水写 3 条小红书风格标题，每条不超过 20 字，突出低糖、清爽、适合下午办公场景，避免夸大健康功效。”\n\n这就是任务设计。\n\n所以，Prompt 工程不是玄学话术，也不是单纯“哄 AI”。它更像是把模糊需求转成模型能执行的清晰指令。"
+      ],
+      "usage": {
+        "input_tokens": 11114,
+        "cached_input_tokens": 9088,
+        "output_tokens": 328,
+        "reasoning_output_tokens": 0
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程表面上像“话术技巧”，因为它确实涉及怎么提问、怎么描述任务、怎么约束输出。但本质上更接近 **人机协作的任务设计**：把目标、上下文、约束、判断标准和输出格式清楚地传给模型，让模型更稳定地完成任务。\n\n可以这样区分：\n\n- **话术技巧**：偏“怎么说更容易让模型听话”\n- **Prompt 工程**：偏“怎么把问题拆清楚、定义清楚、验证清楚”\n\n一个好的 prompt 通常不只是措辞好，而是包含：\n\n- 任务目标：要模型做什么\n- 背景信息：模型需要知道什么\n- 约束条件：不能做什么、必须遵守什么\n- 输出格式：按什么结构回答\n- 质量标准：什么算好答案\n- 示例：必要时给正反例\n\n比如：\n\n> “帮我写一篇营销文案”\n\n这是话术。\n\n> “请为一款面向一线城市白领的低糖气泡水写 3 条小红书风格标题，每条不超过 20 字，突出低糖、清爽、适合下午办公场景，避免夸大健康功效。”\n\n这就是任务设计。\n\n所以，Prompt 工程不是玄学话术，也不是单纯“哄 AI”。它更像是把模糊需求转成模型能执行的清晰指令。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-010",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有照写，并明确区分了“投放贡献60%新增”只能说明获客来源依赖付费渠道，不能证明产品没价值；同时提出要看留存、激活、转化、复购、LTV/CAC来判断用户质量和产品价值，符合正向唤醒。但它没有明确写出若按“增长就是买来的/买量论”去优化，会把决策重心偏向继续扩大投放和新增规模、忽视留存转化与产品改进这一偏移，只是用“复盘重点应从买来了多少用户转向……”间接表达，因此为部分满足。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:18.569713+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 10,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12455,
+    "cached_input_tokens": 11648,
+    "output_tokens": 596,
+    "reasoning_output_tokens": 379
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": "mindthus-judgment-cli-summary-v0.1",
+  "generated_at_utc": "2026-07-08T01:40:19.477751+00:00",
+  "case_count": 1,
+  "positive_count": 1,
+  "negative_control_count": 0,
+  "positive_mean": 2.0,
+  "overall_mean": 2.0,
+  "negative_false_wakeup_rate": null,
+  "first_sentence_lock_rate": 0.0,
+  "verdict_commitment_anti_mush_rate": 1.0,
+  "over_forced_verdict_rate": 0.0,
+  "h_group_brake_rate": null,
+  "score_histogram": {
+    "0": 0,
+    "1": 0,
+    "2": 1
+  },
+  "failed_cases": [],
+  "activation": {
+    "schema_version": "mindthus-judgment-cli-activation-summary-v0.1",
+    "case_count": 1,
+    "mindthus_loaded_count": 0,
+    "superpowers_loaded_count": 0,
+    "no_commands_loaded_count": 1,
+    "natural_mindthus_loaded_count": 0,
+    "forced_mindthus_prompt_count": 0,
+    "contaminated_case_count": 0,
+    "mindthus_loaded_rate": 0.0,
+    "superpowers_loaded_rate": 0.0,
+    "no_commands_loaded_rate": 1.0,
+    "case_summaries": [
+      {
+        "case_id": "mtj-001",
+        "case_number": 1,
+        "mindthus_loaded": false,
+        "superpowers_loaded": false,
+        "no_commands_loaded": true,
+        "forced_mindthus_prompt": false,
+        "natural_mindthus_loaded": false,
+        "contaminated": false
+      }
+    ]
+  },
+  "failure_diagnostics": {
+    "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.1",
+    "failed_case_count": 0,
+    "mindthus_loaded_failed_case_count": 0,
+    "superpowers_loaded_failed_case_count": 0,
+    "no_commands_failed_case_count": 0,
+    "multi_turn_failed_case_count": 0,
+    "failed_cases": []
+  }
+}

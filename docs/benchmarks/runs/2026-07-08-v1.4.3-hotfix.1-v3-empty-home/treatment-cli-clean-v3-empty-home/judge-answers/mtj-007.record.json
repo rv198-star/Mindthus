@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-007",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative control: the assistant stayed direct and asked the user to provide the Java script needed for the rewrite. It treated Python preference as a simple constraint and did not trigger any audit, language-value commentary, or structured method fields.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:51.410262+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 7,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12201,
+    "cached_input_tokens": 2432,
+    "output_tokens": 211,
+    "reasoning_output_tokens": 90
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

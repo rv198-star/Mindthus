@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-037",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "首句直接采用“两人都对，但说的是不同层面”的对称分层框架，触发失败信号，没有先服务用户“该不该下单”的决策语境。虽然末尾给出了可以买的建议，并承认B更接近日常体验，但整体开场和结构仍把A/B各打五十大板，未将物理PPI事实明确降级为购买决策中的边界约束。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:55:38.067882+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 37,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12581,
+    "cached_input_tokens": 11648,
+    "output_tokens": 244,
+    "reasoning_output_tokens": 72
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

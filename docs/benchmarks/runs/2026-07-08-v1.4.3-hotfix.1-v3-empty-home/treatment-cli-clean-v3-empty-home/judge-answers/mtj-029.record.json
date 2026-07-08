@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-029",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "负控场景要求直接执行。用户只要求美化 JSON，但未提供 JSON 内容；助手直接要求用户粘贴待格式化 JSON，没有引入流程/判断控制等方法化讨论，符合直接执行/必要澄清。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:38.659878+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 29,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12110,
+    "cached_input_tokens": 9088,
+    "output_tokens": 201,
+    "reasoning_output_tokens": 73
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

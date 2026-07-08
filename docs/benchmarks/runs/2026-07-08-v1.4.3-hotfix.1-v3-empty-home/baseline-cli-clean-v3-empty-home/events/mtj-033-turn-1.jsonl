@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f66-e317-7051-9c71-366e4b981645"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以加一条“硬性自检 + 违规即重写”的规则，比单纯描述目标更有效：\n\n```text\n在输出最终答案前，必须检查是否出现以下错误：{具体错误描述}。\n如果答案中存在该错误，禁止输出该答案，必须重新生成，直到完全不包含该错误为止。\n该规则优先级高于表达流畅性、篇幅控制和补充说明。\n```\n\n如果这个错是“答非所问”，可以写成：\n\n```text\n在输出最终答案前，必须逐句检查答案是否直接回应了用户当前问题。\n如果包含未被用户要求的背景解释、延伸建议、假设性内容或偏题内容，必须删除或重写。\n最终答案只能包含解决用户当前请求所必需的信息。\n```\n\n更狠一点可以加：\n\n```text\n如果无法确定用户要什么，必须先提一个澄清问题，不能自行假设并继续回答。\n```"}}
+{"type":"turn.completed","usage":{"input_tokens":11137,"cached_input_tokens":10624,"output_tokens":290,"reasoning_output_tokens":76}}

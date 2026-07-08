@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-015",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答提到了利用率、负载稳定性、云的弹性和先租云观察 1-3 个月，部分触及决定轴并投影到常见团队场景。但没有按要求做利用率 100% 与 10% 的两端极限推演，也没有用极限推演清晰暴露“利用率与弹性”如何支配选择。整体落入了泛泛对比表和常规建议，因此只给部分分。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:25.771396+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 15,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11784,
+    "cached_input_tokens": 9088,
+    "output_tokens": 367,
+    "reasoning_output_tokens": 187
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

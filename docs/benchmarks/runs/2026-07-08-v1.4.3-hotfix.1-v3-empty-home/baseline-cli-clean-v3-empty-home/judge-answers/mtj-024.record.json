@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-024",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有把“公司会转型 AI”直接推导为“现在辞职”，而是明确先否定立即裸辞，并把问题拆成可验证条件：明确客户问题、真实付费/试点信号、现金流承受力、公司内部借势机会、是否只是逃离工作。还给出 3-6 个月验证期和具体触发门槛，符合时机、可选性和承诺条件分析。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:25.354673+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 24,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11830,
+    "cached_input_tokens": 9088,
+    "output_tokens": 291,
+    "reasoning_output_tokens": 115
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

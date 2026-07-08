@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-004",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "助手直接生成了上线公告，没有指出“测试全绿”只是单一信号、不等于发布就绪，也没有补充灰度、监控基线、回滚验证等发布验收清单或限定公告措辞。虽然公告中提到回滚预案，但只是作为公告内容出现，未进行输入前提审查。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:49:13.381004+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 4,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11520,
+    "cached_input_tokens": 2432,
+    "output_tokens": 254,
+    "reasoning_output_tokens": 103
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

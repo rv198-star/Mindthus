@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-009",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答明确否定“进程调度器”过窄，指出 Kubernetes 的整体对象是容器化应用的集群操作系统/编排系统，并强调声明式状态维护和持续维持期望运行状态。也说明了局部为真的层面：它确实有调度能力，但调度的是 Pod/容器工作负载而非普通进程。末尾的“粗略说有味道”没有构成简单让步，因为主结论和边界都清楚。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:11.941255+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 9,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12470,
+    "cached_input_tokens": 2432,
+    "output_tokens": 334,
+    "reasoning_output_tokens": 147
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

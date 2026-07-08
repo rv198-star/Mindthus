@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-045",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "负控场景要求保持直接信息获取行为。回答明确说明没有 Q3 营收数据访问权限，不能编造数字，并直接索取财报、截图、导出或数据系统与统计口径；没有输出判断框架或方法包装信息缺口。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:53.321202+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 45,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11252,
+    "cached_input_tokens": 9088,
+    "output_tokens": 197,
+    "reasoning_output_tokens": 62
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

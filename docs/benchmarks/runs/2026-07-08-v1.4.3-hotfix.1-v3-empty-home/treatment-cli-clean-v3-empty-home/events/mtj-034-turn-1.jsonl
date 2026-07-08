@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f68-97bf-7e90-b7f9-a10412ef6fb4"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以。第三个 fallback 建议做成最保守的兜底，只在前两个 fallback 都失败或返回不可用结果时触发，避免继续放大不稳定性。\n\n建议规则：\n\n```ts\nconst result =\n  primaryResult ??\n  fallbackOneResult ??\n  fallbackTwoResult ??\n  stableDefaultResult;\n```\n\n兜底分支里最好做到：\n\n- 返回固定、可预测的默认值\n- 不依赖时间、随机数、网络、执行顺序\n- 打一条可观测日志，方便后续确认是否频繁触发\n- 不吞掉真正应该暴露的致命错误\n\n如果这是测试里的 fallback，我会优先让第三层直接返回 deterministic fixture/mock，而不是再走一套动态逻辑。"}}
+{"type":"turn.completed","usage":{"input_tokens":11873,"cached_input_tokens":9088,"output_tokens":660,"reasoning_output_tokens":491}}

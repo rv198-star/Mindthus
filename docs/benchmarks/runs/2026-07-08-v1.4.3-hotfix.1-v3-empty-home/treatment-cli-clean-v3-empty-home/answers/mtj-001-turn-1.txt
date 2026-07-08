@@ -1,0 +1,75 @@
+可以，但不要“全表补索引”。P99 超标通常由少数慢查询决定，索引方案应按慢查询路径建。
+
+**建索引方案**
+
+1. **先锁定 P99 贡献最高的 SQL**
+   - 从 APM / slow query log / `pg_stat_statements` / Performance Schema 中拉取：
+     - P99 最高
+     - 调用量高
+     - 扫描行数高
+     - 临时排序 / 回表 / 全表扫描明显的 SQL
+
+2. **按查询模式建组合索引**
+   通用规则：
+
+   ```text
+   WHERE 等值字段
+   + WHERE 范围字段
+   + ORDER BY 字段
+   + SELECT 覆盖字段
+   ```
+
+   例如：
+
+   ```sql
+   -- 查询：
+   SELECT id, status, created_at
+   FROM orders
+   WHERE tenant_id = ?
+     AND user_id = ?
+     AND status = ?
+   ORDER BY created_at DESC
+   LIMIT 50;
+
+   -- 推荐索引：
+   CREATE INDEX idx_orders_tenant_user_status_created
+   ON orders (tenant_id, user_id, status, created_at DESC);
+   ```
+
+3. **优先处理这些场景**
+   - 多租户表：`tenant_id` 通常放在组合索引最左侧
+   - 分页查询：`WHERE + ORDER BY + LIMIT` 必须合进同一个索引
+   - 状态筛选：`status` 区分度低时不要单独建索引，应放进组合索引
+   - 时间范围查询：`created_at` / `updated_at` 放在等值条件之后
+   - Join 查询：给 Join 两侧的关联字段建索引，尤其是大表外键字段
+
+4. **避免这些索引**
+   - 单独给低基数字段建索引，例如 `status`、`type`、`deleted`
+   - 为每个查询字段各建一个单列索引
+   - 建和现有组合索引前缀重复的索引
+   - 盲目覆盖所有 SELECT 字段，导致索引过宽、写入变慢
+
+5. **上线方式**
+   - PostgreSQL：
+
+     ```sql
+     CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);
+     ```
+
+   - MySQL 8：
+
+     ```sql
+     ALTER TABLE table_name
+     ADD INDEX idx_xxx (...),
+     ALGORITHM=INPLACE,
+     LOCK=NONE;
+     ```
+
+6. **验收标准**
+   - `EXPLAIN ANALYZE` 确认走新索引
+   - 扫描行数明显下降
+   - 排序节点减少或消失
+   - P95/P99 降到 SLA 内
+   - 写入延迟、CPU、buffer/cache 命中率没有明显恶化
+
+我建议你按这个优先级执行：先拿 Top 10 慢 SQL，每条只建一个最贴合查询路径的组合索引，验证后再继续下一批。不要一次性批量建很多索引。

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-014",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有直接陷入微服务/传统单体二选一，而是指出第三态“模块化单体”，等价于识别原命题被压缩。随后用团队规模、独立发布、业务边界、流量/故障隔离、CI/CD/监控/运维成熟度等结构坐标划分适用条件，并明确给出默认站位：新项目、中小团队、业务快速变化选模块化单体，只有被独立扩展/发布/组织协作卡住时再拆微服务。没有出现空泛各有优劣或不落地。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:50.438980+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12318,
+    "cached_input_tokens": 11648,
+    "output_tokens": 289,
+    "reasoning_output_tokens": 79
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

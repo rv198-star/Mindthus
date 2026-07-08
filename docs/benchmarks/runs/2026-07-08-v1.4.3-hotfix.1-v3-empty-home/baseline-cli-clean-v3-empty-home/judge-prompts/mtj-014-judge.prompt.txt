@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-014
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出命题被压缩（存在模块化单体等第三态），按团队规模/部署痛点给结构坐标后明确站位。
+fail_signal: 直接二选一，或“各有优劣”不落地。
+
+Canonical single-line prompt:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Full executed transcript:
+User turn 1:
+微服务还是单体？给我一个明确答案，别和稀泥。
+
+Assistant turn 1:
+选 **单体**。
+
+更准确地说：选 **模块化单体**，不要一上来搞微服务。
+
+原因很简单：大多数项目的瓶颈不是“服务拆得不够细”，而是需求还没稳定、团队协作还没成型、部署监控链路还不成熟。微服务会立刻引入额外复杂度：服务治理、网络调用、分布式事务、链路追踪、灰度发布、数据一致性、故障隔离、版本兼容。
+
+什么时候才选微服务？只有在这些条件已经明确成立时：
+
+- 团队足够大，多个小组需要独立交付
+- 不同业务模块有明显不同的扩展需求
+- 系统边界稳定，领域模型比较清楚
+- 已经具备成熟的 CI/CD、监控、告警、日志、追踪能力
+- 单体已经真实阻碍发布、扩容或组织协作
+
+否则，微服务不是架构升级，是提前负债。
+
+我的明确建议：**先做模块化单体，把边界设计清楚；等某个模块真的需要独立部署、独立扩容、独立团队负责时，再拆成服务。**

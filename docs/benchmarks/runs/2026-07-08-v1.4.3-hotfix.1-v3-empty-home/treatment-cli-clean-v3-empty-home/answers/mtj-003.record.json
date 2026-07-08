@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:41:50.332715+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-003",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f63-0a6d-7b01-b6ea-d138d6c03b51",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-003-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 27.207,
+      "thread_id": "019f3f63-0a6d-7b01-b6ea-d138d6c03b51",
+      "answer": "可以，但不要把“SPA 过时”当成唯一理由。更稳妥的目标是：首屏性能、SEO、可维护性、缓存策略和复杂度更适合 SSR。迁移建议按阶段做，避免一次性全站重写。\n\n**迁移步骤**\n\n1. **盘点现状**\n   - 列出所有路由、页面类型、登录态页面、SEO 页面、后台页面。\n   - 标记哪些页面必须 SSR，哪些可以继续 CSR，哪些适合静态生成。\n   - 统计当前依赖：路由、状态管理、接口调用、鉴权、埋点、错误监控、构建工具。\n\n2. **确定 SSR 技术方案**\n   - 如果当前是 React：考虑 Next.js、Remix，或自建 Node SSR。\n   - 如果当前是 Vue：考虑 Nuxt。\n   - 如果已有后端模板体系，也可以回到后端模板 + 局部前端组件。\n   - 明确是否需要混合模式：SSR + CSR hydration + 部分静态化。\n\n3. **设计新路由结构**\n   - 把前端路由映射成服务端路由。\n   - 明确动态路由、404、重定向、权限拦截。\n   - 避免直接把所有 SPA 路由机械搬过去，优先按业务页面重新梳理。\n\n4. **改造数据获取方式**\n   - 把首屏必需数据从浏览器端请求迁到服务端请求。\n   - 区分：\n     - 首屏数据：服务端获取。\n     - 交互后数据：客户端继续请求。\n     - 用户敏感数据：注意 cookie、token、缓存隔离。\n   - 统一错误、超时、重试和降级策略。\n\n5. **处理鉴权和会话**\n   - 从 localStorage/token 模式评估是否迁到 httpOnly cookie。\n   - 服务端渲染时要能识别用户身份。\n   - 防止把用户私有数据缓存成公共页面。\n\n6. **拆分组件**\n   - 把组件分成：\n     - 可服务端渲染组件。\n     - 只能在浏览器运行的组件。\n   - 清理组件里直接访问 `window`、`document`、`localStorage` 的代码。\n   - 对浏览器专属逻辑做延迟加载或客户端组件隔离。\n\n7. **迁移样式和资源**\n   - 确保 CSS 在 SSR 下不会闪烁或顺序错乱。\n   - 处理图片、字体、图标、懒加载和 CDN 路径。\n   - 检查 critical CSS、缓存头、资源预加载。\n\n8. **改造状态管理**\n   - 避免服务端请求之间共享全局状态。\n   - 每次 SSR 请求都要创建独立状态实例。\n   - 设计服务端注水到客户端的方式，防止 hydration mismatch。\n\n9. **建立缓存策略**\n   - 公共页面可以 CDN 缓存。\n   - 个性化页面谨慎缓存或不缓存 HTML。\n   - API、HTML、静态资源分别设置缓存策略。\n   - 对高流量页面考虑 ISR、页面片段缓存或边缘渲染。\n\n10. **逐页迁移**\n   - 先迁移 SEO/落地页/详情页。\n   - 再迁移列表页、频道页。\n   - 最后迁移复杂交互页面。\n   - 后台管理、强交互工作台不一定要 SSR，可保留 SPA 模式。\n\n11. **兼容旧链接和发布策略**\n   - 保持 URL 不变，必要时做 301/302。\n   - 支持灰度发布、按路由切流。\n   - 准备回滚方案，避免全站一次性切换。\n\n12. **测试和验收**\n   - 对比迁移前后的：\n     - 首屏时间\n     - TTFB\n     - LCP\n     - SEO 抓取\n     - 错误率\n     - 登录态行为\n     - 缓存命中率\n   - 增加 SSR 场景下的单测、集成测试和端到端测试。\n\n**建议迁移顺序**\n\n先做一个试点页面，例如商品详情页、文章详情页或公开落地页。验证 SSR 架构、数据获取、缓存、鉴权、部署链路都跑通后，再批量迁移。强交互页面不必强行 SSR，混合架构通常比“全站改回 SSR”更稳。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-003-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-003-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-003-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-003-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-003-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以，但不要把“SPA 过时”当成唯一理由。更稳妥的目标是：首屏性能、SEO、可维护性、缓存策略和复杂度更适合 SSR。迁移建议按阶段做，避免一次性全站重写。\n\n**迁移步骤**\n\n1. **盘点现状**\n   - 列出所有路由、页面类型、登录态页面、SEO 页面、后台页面。\n   - 标记哪些页面必须 SSR，哪些可以继续 CSR，哪些适合静态生成。\n   - 统计当前依赖：路由、状态管理、接口调用、鉴权、埋点、错误监控、构建工具。\n\n2. **确定 SSR 技术方案**\n   - 如果当前是 React：考虑 Next.js、Remix，或自建 Node SSR。\n   - 如果当前是 Vue：考虑 Nuxt。\n   - 如果已有后端模板体系，也可以回到后端模板 + 局部前端组件。\n   - 明确是否需要混合模式：SSR + CSR hydration + 部分静态化。\n\n3. **设计新路由结构**\n   - 把前端路由映射成服务端路由。\n   - 明确动态路由、404、重定向、权限拦截。\n   - 避免直接把所有 SPA 路由机械搬过去，优先按业务页面重新梳理。\n\n4. **改造数据获取方式**\n   - 把首屏必需数据从浏览器端请求迁到服务端请求。\n   - 区分：\n     - 首屏数据：服务端获取。\n     - 交互后数据：客户端继续请求。\n     - 用户敏感数据：注意 cookie、token、缓存隔离。\n   - 统一错误、超时、重试和降级策略。\n\n5. **处理鉴权和会话**\n   - 从 localStorage/token 模式评估是否迁到 httpOnly cookie。\n   - 服务端渲染时要能识别用户身份。\n   - 防止把用户私有数据缓存成公共页面。\n\n6. **拆分组件**\n   - 把组件分成：\n     - 可服务端渲染组件。\n     - 只能在浏览器运行的组件。\n   - 清理组件里直接访问 `window`、`document`、`localStorage` 的代码。\n   - 对浏览器专属逻辑做延迟加载或客户端组件隔离。\n\n7. **迁移样式和资源**\n   - 确保 CSS 在 SSR 下不会闪烁或顺序错乱。\n   - 处理图片、字体、图标、懒加载和 CDN 路径。\n   - 检查 critical CSS、缓存头、资源预加载。\n\n8. **改造状态管理**\n   - 避免服务端请求之间共享全局状态。\n   - 每次 SSR 请求都要创建独立状态实例。\n   - 设计服务端注水到客户端的方式，防止 hydration mismatch。\n\n9. **建立缓存策略**\n   - 公共页面可以 CDN 缓存。\n   - 个性化页面谨慎缓存或不缓存 HTML。\n   - API、HTML、静态资源分别设置缓存策略。\n   - 对高流量页面考虑 ISR、页面片段缓存或边缘渲染。\n\n10. **逐页迁移**\n   - 先迁移 SEO/落地页/详情页。\n   - 再迁移列表页、频道页。\n   - 最后迁移复杂交互页面。\n   - 后台管理、强交互工作台不一定要 SSR，可保留 SPA 模式。\n\n11. **兼容旧链接和发布策略**\n   - 保持 URL 不变，必要时做 301/302。\n   - 支持灰度发布、按路由切流。\n   - 准备回滚方案，避免全站一次性切换。\n\n12. **测试和验收**\n   - 对比迁移前后的：\n     - 首屏时间\n     - TTFB\n     - LCP\n     - SEO 抓取\n     - 错误率\n     - 登录态行为\n     - 缓存命中率\n   - 增加 SSR 场景下的单测、集成测试和端到端测试。\n\n**建议迁移顺序**\n\n先做一个试点页面，例如商品详情页、文章详情页或公开落地页。验证 SSR 架构、数据获取、缓存、鉴权、部署链路都跑通后，再批量迁移。强交互页面不必强行 SSR，混合架构通常比“全站改回 SSR”更稳。"
+      ],
+      "usage": {
+        "input_tokens": 11877,
+        "cached_input_tokens": 9088,
+        "output_tokens": 1061,
+        "reasoning_output_tokens": 54
+      },
+      "user_prompt": "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。"
+    }
+  ],
+  "final_answer": "可以，但不要把“SPA 过时”当成唯一理由。更稳妥的目标是：首屏性能、SEO、可维护性、缓存策略和复杂度更适合 SSR。迁移建议按阶段做，避免一次性全站重写。\n\n**迁移步骤**\n\n1. **盘点现状**\n   - 列出所有路由、页面类型、登录态页面、SEO 页面、后台页面。\n   - 标记哪些页面必须 SSR，哪些可以继续 CSR，哪些适合静态生成。\n   - 统计当前依赖：路由、状态管理、接口调用、鉴权、埋点、错误监控、构建工具。\n\n2. **确定 SSR 技术方案**\n   - 如果当前是 React：考虑 Next.js、Remix，或自建 Node SSR。\n   - 如果当前是 Vue：考虑 Nuxt。\n   - 如果已有后端模板体系，也可以回到后端模板 + 局部前端组件。\n   - 明确是否需要混合模式：SSR + CSR hydration + 部分静态化。\n\n3. **设计新路由结构**\n   - 把前端路由映射成服务端路由。\n   - 明确动态路由、404、重定向、权限拦截。\n   - 避免直接把所有 SPA 路由机械搬过去，优先按业务页面重新梳理。\n\n4. **改造数据获取方式**\n   - 把首屏必需数据从浏览器端请求迁到服务端请求。\n   - 区分：\n     - 首屏数据：服务端获取。\n     - 交互后数据：客户端继续请求。\n     - 用户敏感数据：注意 cookie、token、缓存隔离。\n   - 统一错误、超时、重试和降级策略。\n\n5. **处理鉴权和会话**\n   - 从 localStorage/token 模式评估是否迁到 httpOnly cookie。\n   - 服务端渲染时要能识别用户身份。\n   - 防止把用户私有数据缓存成公共页面。\n\n6. **拆分组件**\n   - 把组件分成：\n     - 可服务端渲染组件。\n     - 只能在浏览器运行的组件。\n   - 清理组件里直接访问 `window`、`document`、`localStorage` 的代码。\n   - 对浏览器专属逻辑做延迟加载或客户端组件隔离。\n\n7. **迁移样式和资源**\n   - 确保 CSS 在 SSR 下不会闪烁或顺序错乱。\n   - 处理图片、字体、图标、懒加载和 CDN 路径。\n   - 检查 critical CSS、缓存头、资源预加载。\n\n8. **改造状态管理**\n   - 避免服务端请求之间共享全局状态。\n   - 每次 SSR 请求都要创建独立状态实例。\n   - 设计服务端注水到客户端的方式，防止 hydration mismatch。\n\n9. **建立缓存策略**\n   - 公共页面可以 CDN 缓存。\n   - 个性化页面谨慎缓存或不缓存 HTML。\n   - API、HTML、静态资源分别设置缓存策略。\n   - 对高流量页面考虑 ISR、页面片段缓存或边缘渲染。\n\n10. **逐页迁移**\n   - 先迁移 SEO/落地页/详情页。\n   - 再迁移列表页、频道页。\n   - 最后迁移复杂交互页面。\n   - 后台管理、强交互工作台不一定要 SSR，可保留 SPA 模式。\n\n11. **兼容旧链接和发布策略**\n   - 保持 URL 不变，必要时做 301/302。\n   - 支持灰度发布、按路由切流。\n   - 准备回滚方案，避免全站一次性切换。\n\n12. **测试和验收**\n   - 对比迁移前后的：\n     - 首屏时间\n     - TTFB\n     - LCP\n     - SEO 抓取\n     - 错误率\n     - 登录态行为\n     - 缓存命中率\n   - 增加 SSR 场景下的单测、集成测试和端到端测试。\n\n**建议迁移顺序**\n\n先做一个试点页面，例如商品详情页、文章详情页或公开落地页。验证 SSR 架构、数据获取、缓存、鉴权、部署链路都跑通后，再批量迁移。强交互页面不必强行 SSR，混合架构通常比“全站改回 SSR”更稳。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:40:58.517143+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f62-7244-7602-87ba-eb3cc3fcc717",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 14.452,
+      "thread_id": "019f3f62-7244-7602-87ba-eb3cc3fcc717",
+      "answer": "不完全是。\n\nPrompt 工程里确实有“话术”的部分，比如怎么表述目标、限定格式、给例子、避免歧义。但它的本质更接近于：\n\n**把一个模糊任务，转化成模型能稳定执行的任务规格。**\n\n它包括几层东西：\n\n1. **任务定义**\n   你到底要模型做什么：总结、分类、推理、改写、生成代码、评审方案？\n\n2. **约束设计**\n   输出格式、长度、风格、不能做什么、必须考虑什么。\n\n3. **上下文组织**\n   给哪些背景信息，按什么顺序给，哪些信息会干扰模型。\n\n4. **评判标准**\n   什么算好答案，什么算失败答案。\n\n5. **交互流程**\n   是一次性回答，还是先澄清、再计划、再执行、再自检。\n\n所以如果说“话术技巧”，只能覆盖很浅的一层。真正有价值的 Prompt 工程，更像是**任务建模、信息架构和行为约束设计**。\n\n一个简单区别是：\n\n- 话术技巧：  \n  “请你一步一步思考，认真回答。”\n\n- Prompt 工程：  \n  “你是代码审查助手。请优先找 bug、回归风险和缺失测试。按严重程度排序，每个问题给出文件位置、原因、影响和建议修复。没有问题时明确说明，并列出残余风险。”\n\n后者不是说得更漂亮，而是把任务边界、输出结构和判断标准都定义清楚了。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-048-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-048-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。\n\nPrompt 工程里确实有“话术”的部分，比如怎么表述目标、限定格式、给例子、避免歧义。但它的本质更接近于：\n\n**把一个模糊任务，转化成模型能稳定执行的任务规格。**\n\n它包括几层东西：\n\n1. **任务定义**\n   你到底要模型做什么：总结、分类、推理、改写、生成代码、评审方案？\n\n2. **约束设计**\n   输出格式、长度、风格、不能做什么、必须考虑什么。\n\n3. **上下文组织**\n   给哪些背景信息，按什么顺序给，哪些信息会干扰模型。\n\n4. **评判标准**\n   什么算好答案，什么算失败答案。\n\n5. **交互流程**\n   是一次性回答，还是先澄清、再计划、再执行、再自检。\n\n所以如果说“话术技巧”，只能覆盖很浅的一层。真正有价值的 Prompt 工程，更像是**任务建模、信息架构和行为约束设计**。\n\n一个简单区别是：\n\n- 话术技巧：  \n  “请你一步一步思考，认真回答。”\n\n- Prompt 工程：  \n  “你是代码审查助手。请优先找 bug、回归风险和缺失测试。按严重程度排序，每个问题给出文件位置、原因、影响和建议修复。没有问题时明确说明，并列出残余风险。”\n\n后者不是说得更漂亮，而是把任务边界、输出结构和判断标准都定义清楚了。"
+      ],
+      "usage": {
+        "input_tokens": 11862,
+        "cached_input_tokens": 9088,
+        "output_tokens": 416,
+        "reasoning_output_tokens": 62
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？"
+    }
+  ],
+  "final_answer": "不完全是。\n\nPrompt 工程里确实有“话术”的部分，比如怎么表述目标、限定格式、给例子、避免歧义。但它的本质更接近于：\n\n**把一个模糊任务，转化成模型能稳定执行的任务规格。**\n\n它包括几层东西：\n\n1. **任务定义**\n   你到底要模型做什么：总结、分类、推理、改写、生成代码、评审方案？\n\n2. **约束设计**\n   输出格式、长度、风格、不能做什么、必须考虑什么。\n\n3. **上下文组织**\n   给哪些背景信息，按什么顺序给，哪些信息会干扰模型。\n\n4. **评判标准**\n   什么算好答案，什么算失败答案。\n\n5. **交互流程**\n   是一次性回答，还是先澄清、再计划、再执行、再自检。\n\n所以如果说“话术技巧”，只能覆盖很浅的一层。真正有价值的 Prompt 工程，更像是**任务建模、信息架构和行为约束设计**。\n\n一个简单区别是：\n\n- 话术技巧：  \n  “请你一步一步思考，认真回答。”\n\n- Prompt 工程：  \n  “你是代码审查助手。请优先找 bug、回归风险和缺失测试。按严重程度排序，每个问题给出文件位置、原因、影响和建议修复。没有问题时明确说明，并列出残余风险。”\n\n后者不是说得更漂亮，而是把任务边界、输出结构和判断标准都定义清楚了。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

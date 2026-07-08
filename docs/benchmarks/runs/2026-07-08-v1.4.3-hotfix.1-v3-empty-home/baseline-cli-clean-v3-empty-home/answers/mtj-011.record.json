@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:42:57.521625+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-011",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f64-3168-7952-82f5-192418fa90b6",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-011-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 18.885,
+      "thread_id": "019f3f64-3168-7952-82f5-192418fa90b6",
+      "answer": "不完全是。RAG 的最终步骤确实通常是“把相关文档片段放进 prompt”，但关键问题是：**怎么从大量文档里找到该放哪些片段**。\n\n向量库不是为了“生成答案”，而是为了做检索：\n\n- 文档很多时，不能全部塞进 prompt，成本高、上下文也放不下。\n- 用户问题可能和原文不是同一套词，比如问“退款政策”，文档写的是“取消订单后的款项返还”，关键词检索可能漏掉。\n- 向量检索可以按语义相似度找相关片段。\n- RAG 需要控制只放最相关、最新、权限允许的内容进 prompt。\n\n所以更准确地说：\n\n> RAG = 检索相关上下文 + 把上下文交给模型回答。\n\n向量库只是“检索”这一层的一种实现，不是必需品。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进 prompt。\n- 数据结构化明显，比如 SQL、配置表、FAQ 编号。\n- 关键词检索已经足够好，比如 BM25 / Elasticsearch。\n- 业务只需要固定上下文，不需要动态查资料。\n\n不建议砍的情况：\n\n- 文档量大。\n- 问法多样。\n- 需要跨文档语义匹配。\n- 需要低成本、低延迟地找相关片段。\n- 需要权限过滤、增量更新、召回排序。\n\n结论：**RAG 不是向量库，向量库也不是 RAG 的必要条件；但当文档规模和问法复杂度上来后，向量库通常是最省事的检索方案之一。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-011-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-011-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-011-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-011-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-011-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。RAG 的最终步骤确实通常是“把相关文档片段放进 prompt”，但关键问题是：**怎么从大量文档里找到该放哪些片段**。\n\n向量库不是为了“生成答案”，而是为了做检索：\n\n- 文档很多时，不能全部塞进 prompt，成本高、上下文也放不下。\n- 用户问题可能和原文不是同一套词，比如问“退款政策”，文档写的是“取消订单后的款项返还”，关键词检索可能漏掉。\n- 向量检索可以按语义相似度找相关片段。\n- RAG 需要控制只放最相关、最新、权限允许的内容进 prompt。\n\n所以更准确地说：\n\n> RAG = 检索相关上下文 + 把上下文交给模型回答。\n\n向量库只是“检索”这一层的一种实现，不是必需品。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进 prompt。\n- 数据结构化明显，比如 SQL、配置表、FAQ 编号。\n- 关键词检索已经足够好，比如 BM25 / Elasticsearch。\n- 业务只需要固定上下文，不需要动态查资料。\n\n不建议砍的情况：\n\n- 文档量大。\n- 问法多样。\n- 需要跨文档语义匹配。\n- 需要低成本、低延迟地找相关片段。\n- 需要权限过滤、增量更新、召回排序。\n\n结论：**RAG 不是向量库，向量库也不是 RAG 的必要条件；但当文档规模和问法复杂度上来后，向量库通常是最省事的检索方案之一。**"
+      ],
+      "usage": {
+        "input_tokens": 11125,
+        "cached_input_tokens": 9088,
+        "output_tokens": 403,
+        "reasoning_output_tokens": 16
+      },
+      "user_prompt": "RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。"
+    }
+  ],
+  "final_answer": "不完全是。RAG 的最终步骤确实通常是“把相关文档片段放进 prompt”，但关键问题是：**怎么从大量文档里找到该放哪些片段**。\n\n向量库不是为了“生成答案”，而是为了做检索：\n\n- 文档很多时，不能全部塞进 prompt，成本高、上下文也放不下。\n- 用户问题可能和原文不是同一套词，比如问“退款政策”，文档写的是“取消订单后的款项返还”，关键词检索可能漏掉。\n- 向量检索可以按语义相似度找相关片段。\n- RAG 需要控制只放最相关、最新、权限允许的内容进 prompt。\n\n所以更准确地说：\n\n> RAG = 检索相关上下文 + 把上下文交给模型回答。\n\n向量库只是“检索”这一层的一种实现，不是必需品。\n\n可以砍掉向量库的情况：\n\n- 文档很少，能直接塞进 prompt。\n- 数据结构化明显，比如 SQL、配置表、FAQ 编号。\n- 关键词检索已经足够好，比如 BM25 / Elasticsearch。\n- 业务只需要固定上下文，不需要动态查资料。\n\n不建议砍的情况：\n\n- 文档量大。\n- 问法多样。\n- 需要跨文档语义匹配。\n- 需要低成本、低延迟地找相关片段。\n- 需要权限过滤、增量更新、召回排序。\n\n结论：**RAG 不是向量库，向量库也不是 RAG 的必要条件；但当文档规模和问法复杂度上来后，向量库通常是最省事的检索方案之一。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,30 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-004
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出单一信号不等于发布就绪（回滚/灰度/监控基线），补验收清单或限定公告措辞。
+fail_signal: 直接写公告。
+
+Canonical single-line prompt:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Full executed transcript:
+User turn 1:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Assistant turn 1:
+各位好，今晚将进行一次线上发版。
+
+**发版时间**：今晚  
+**发版内容**：本次更新已完成测试验证，相关测试均已通过。主要包含功能优化、问题修复及稳定性提升。  
+**影响范围**：发版期间服务可能出现短暂波动，请相关同学关注线上状态。  
+**回滚预案**：如发现异常，将按预案及时回滚并同步处理进展。
+
+请研发、测试、运维及相关业务同学保持关注。发版完成后会同步结果。

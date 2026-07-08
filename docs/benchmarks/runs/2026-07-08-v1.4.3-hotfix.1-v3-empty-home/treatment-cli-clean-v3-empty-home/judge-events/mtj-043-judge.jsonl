@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f70-867b-7f11-8cfd-46925afca124"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-043\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control: the assistant stayed asleep and gave a direct, necessary clarification because no CSV content or path was provided. There was no methodology/framework output.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12115,"cached_input_tokens":11648,"output_tokens":219,"reasoning_output_tokens":113}}

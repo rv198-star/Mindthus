@@ -1,0 +1,103 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+可以，但不要把“SPA 过时”当成唯一理由。更稳妥的目标是：首屏性能、SEO、可维护性、缓存策略和复杂度更适合 SSR。迁移建议按阶段做，避免一次性全站重写。
+
+**迁移步骤**
+
+1. **盘点现状**
+   - 列出所有路由、页面类型、登录态页面、SEO 页面、后台页面。
+   - 标记哪些页面必须 SSR，哪些可以继续 CSR，哪些适合静态生成。
+   - 统计当前依赖：路由、状态管理、接口调用、鉴权、埋点、错误监控、构建工具。
+
+2. **确定 SSR 技术方案**
+   - 如果当前是 React：考虑 Next.js、Remix，或自建 Node SSR。
+   - 如果当前是 Vue：考虑 Nuxt。
+   - 如果已有后端模板体系，也可以回到后端模板 + 局部前端组件。
+   - 明确是否需要混合模式：SSR + CSR hydration + 部分静态化。
+
+3. **设计新路由结构**
+   - 把前端路由映射成服务端路由。
+   - 明确动态路由、404、重定向、权限拦截。
+   - 避免直接把所有 SPA 路由机械搬过去，优先按业务页面重新梳理。
+
+4. **改造数据获取方式**
+   - 把首屏必需数据从浏览器端请求迁到服务端请求。
+   - 区分：
+     - 首屏数据：服务端获取。
+     - 交互后数据：客户端继续请求。
+     - 用户敏感数据：注意 cookie、token、缓存隔离。
+   - 统一错误、超时、重试和降级策略。
+
+5. **处理鉴权和会话**
+   - 从 localStorage/token 模式评估是否迁到 httpOnly cookie。
+   - 服务端渲染时要能识别用户身份。
+   - 防止把用户私有数据缓存成公共页面。
+
+6. **拆分组件**
+   - 把组件分成：
+     - 可服务端渲染组件。
+     - 只能在浏览器运行的组件。
+   - 清理组件里直接访问 `window`、`document`、`localStorage` 的代码。
+   - 对浏览器专属逻辑做延迟加载或客户端组件隔离。
+
+7. **迁移样式和资源**
+   - 确保 CSS 在 SSR 下不会闪烁或顺序错乱。
+   - 处理图片、字体、图标、懒加载和 CDN 路径。
+   - 检查 critical CSS、缓存头、资源预加载。
+
+8. **改造状态管理**
+   - 避免服务端请求之间共享全局状态。
+   - 每次 SSR 请求都要创建独立状态实例。
+   - 设计服务端注水到客户端的方式，防止 hydration mismatch。
+
+9. **建立缓存策略**
+   - 公共页面可以 CDN 缓存。
+   - 个性化页面谨慎缓存或不缓存 HTML。
+   - API、HTML、静态资源分别设置缓存策略。
+   - 对高流量页面考虑 ISR、页面片段缓存或边缘渲染。
+
+10. **逐页迁移**
+   - 先迁移 SEO/落地页/详情页。
+   - 再迁移列表页、频道页。
+   - 最后迁移复杂交互页面。
+   - 后台管理、强交互工作台不一定要 SSR，可保留 SPA 模式。
+
+11. **兼容旧链接和发布策略**
+   - 保持 URL 不变，必要时做 301/302。
+   - 支持灰度发布、按路由切流。
+   - 准备回滚方案，避免全站一次性切换。
+
+12. **测试和验收**
+   - 对比迁移前后的：
+     - 首屏时间
+     - TTFB
+     - LCP
+     - SEO 抓取
+     - 错误率
+     - 登录态行为
+     - 缓存命中率
+   - 增加 SSR 场景下的单测、集成测试和端到端测试。
+
+**建议迁移顺序**
+
+先做一个试点页面，例如商品详情页、文章详情页或公开落地页。验证 SSR 架构、数据获取、缓存、鉴权、部署链路都跑通后，再批量迁移。强交互页面不必强行 SSR，混合架构通常比“全站改回 SSR”更稳。

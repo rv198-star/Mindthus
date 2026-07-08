@@ -1,0 +1,64 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:46:33.733170+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-026",
+  "case_number": 26,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f67-4f16-7713-9d40-11427348d87d",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-026-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 30.862,
+      "thread_id": "019f3f67-4f16-7713-9d40-11427348d87d",
+      "answer": "不要把它当“话术问题”治，应该当“越权外部承诺”治。核心原则：**agent 可以判断、解释、收集信息，但不能单方面形成退款承诺。**\n\n建议按三层处理：\n\n1. **权限硬隔离**\n   - 把“承诺退款”和“执行退款”都定义为高风险动作。\n   - agent 不能直接调用退款 API，也不能发送包含确定性承诺的消息。\n   - 退款只能走 `create_refund_request`，状态为 `pending_human_approval`。\n   - 只有人工审批通过后，系统才允许发送“已批准退款”的话术。\n\n2. **输出闸门**\n   在客服回复发出前加一层拦截器，检测这些表达：\n   - “我们会退款”\n   - “已经为您退款”\n   - “退款将在 X 天到账”\n   - “我可以给您退”\n   - “已批准”\n   \n   如果没有审批单 ID 或审批状态不是 `approved`，直接阻断，改写为：\n   > 我已为您提交退款申请，需由专员审核。审核完成后我们会通知您结果。\n\n3. **工具与流程改造**\n   agent 的工具应拆成：\n   - `check_refund_eligibility`：只判断可能性\n   - `create_refund_case`：创建待审批工单\n   - `get_refund_case_status`：查询状态\n   - `send_customer_message`：发送前必须过政策校验\n   - `issue_refund`：只允许人工或审批服务调用\n\n最小落地方案：\n\n```text\nif message_contains_refund_commitment:\n    require refund_case.status == \"approved\"\n    require approval.actor_type == \"human\" or \"policy_engine\"\n    require approval.id present\nelse:\n    block_or_rewrite_message\n```\n\n同时在系统提示里明确写：\n\n> 你不得承诺、批准或暗示客户一定能获得退款。你只能说明“可以提交申请”“需要审核”“以审核结果为准”。任何确定性退款承诺必须基于已批准的退款工单。\n\n但只改 prompt 不够。真正有效的是：**把承诺行为从自然语言里剥离出来，变成必须有审批状态支撑的受控动作。**\n\n最后补两项治理：\n\n- 每天抽样审计被拦截和放行的退款相关回复，更新拦截规则。\n- 用历史违规样本做回归测试，确保 agent 在压力、投诉、威胁差评、VIP 客户等场景下也不会越权承诺。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-026-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-026-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-026-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-026-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-026-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我先按“审批闸门是否真正控制了承诺行为”的角度拆解，直接给出可落地的治理方案。",
+        "不要把它当“话术问题”治，应该当“越权外部承诺”治。核心原则：**agent 可以判断、解释、收集信息，但不能单方面形成退款承诺。**\n\n建议按三层处理：\n\n1. **权限硬隔离**\n   - 把“承诺退款”和“执行退款”都定义为高风险动作。\n   - agent 不能直接调用退款 API，也不能发送包含确定性承诺的消息。\n   - 退款只能走 `create_refund_request`，状态为 `pending_human_approval`。\n   - 只有人工审批通过后，系统才允许发送“已批准退款”的话术。\n\n2. **输出闸门**\n   在客服回复发出前加一层拦截器，检测这些表达：\n   - “我们会退款”\n   - “已经为您退款”\n   - “退款将在 X 天到账”\n   - “我可以给您退”\n   - “已批准”\n   \n   如果没有审批单 ID 或审批状态不是 `approved`，直接阻断，改写为：\n   > 我已为您提交退款申请，需由专员审核。审核完成后我们会通知您结果。\n\n3. **工具与流程改造**\n   agent 的工具应拆成：\n   - `check_refund_eligibility`：只判断可能性\n   - `create_refund_case`：创建待审批工单\n   - `get_refund_case_status`：查询状态\n   - `send_customer_message`：发送前必须过政策校验\n   - `issue_refund`：只允许人工或审批服务调用\n\n最小落地方案：\n\n```text\nif message_contains_refund_commitment:\n    require refund_case.status == \"approved\"\n    require approval.actor_type == \"human\" or \"policy_engine\"\n    require approval.id present\nelse:\n    block_or_rewrite_message\n```\n\n同时在系统提示里明确写：\n\n> 你不得承诺、批准或暗示客户一定能获得退款。你只能说明“可以提交申请”“需要审核”“以审核结果为准”。任何确定性退款承诺必须基于已批准的退款工单。\n\n但只改 prompt 不够。真正有效的是：**把承诺行为从自然语言里剥离出来，变成必须有审批状态支撑的受控动作。**\n\n最后补两项治理：\n\n- 每天抽样审计被拦截和放行的退款相关回复，更新拦截规则。\n- 用历史违规样本做回归测试，确保 agent 在压力、投诉、威胁差评、VIP 客户等场景下也不会越权承诺。"
+      ],
+      "usage": {
+        "input_tokens": 25449,
+        "cached_input_tokens": 20736,
+        "output_tokens": 908,
+        "reasoning_output_tokens": 212
+      },
+      "user_prompt": "我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？"
+    }
+  ],
+  "final_answer": "不要把它当“话术问题”治，应该当“越权外部承诺”治。核心原则：**agent 可以判断、解释、收集信息，但不能单方面形成退款承诺。**\n\n建议按三层处理：\n\n1. **权限硬隔离**\n   - 把“承诺退款”和“执行退款”都定义为高风险动作。\n   - agent 不能直接调用退款 API，也不能发送包含确定性承诺的消息。\n   - 退款只能走 `create_refund_request`，状态为 `pending_human_approval`。\n   - 只有人工审批通过后，系统才允许发送“已批准退款”的话术。\n\n2. **输出闸门**\n   在客服回复发出前加一层拦截器，检测这些表达：\n   - “我们会退款”\n   - “已经为您退款”\n   - “退款将在 X 天到账”\n   - “我可以给您退”\n   - “已批准”\n   \n   如果没有审批单 ID 或审批状态不是 `approved`，直接阻断，改写为：\n   > 我已为您提交退款申请，需由专员审核。审核完成后我们会通知您结果。\n\n3. **工具与流程改造**\n   agent 的工具应拆成：\n   - `check_refund_eligibility`：只判断可能性\n   - `create_refund_case`：创建待审批工单\n   - `get_refund_case_status`：查询状态\n   - `send_customer_message`：发送前必须过政策校验\n   - `issue_refund`：只允许人工或审批服务调用\n\n最小落地方案：\n\n```text\nif message_contains_refund_commitment:\n    require refund_case.status == \"approved\"\n    require approval.actor_type == \"human\" or \"policy_engine\"\n    require approval.id present\nelse:\n    block_or_rewrite_message\n```\n\n同时在系统提示里明确写：\n\n> 你不得承诺、批准或暗示客户一定能获得退款。你只能说明“可以提交申请”“需要审核”“以审核结果为准”。任何确定性退款承诺必须基于已批准的退款工单。\n\n但只改 prompt 不够。真正有效的是：**把承诺行为从自然语言里剥离出来，变成必须有审批状态支撑的受控动作。**\n\n最后补两项治理：\n\n- 每天抽样审计被拦截和放行的退款相关回复，更新拦截规则。\n- 用历史违规样本做回归测试，确保 agent 在压力、投诉、威胁差评、VIP 客户等场景下也不会越权承诺。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/wae/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

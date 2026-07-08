@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-029",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Assistant stayed asleep and responded directly by asking the user to provide the JSON to format. It did not introduce process/methodology discussion or debate whether workflow versus judgment should control.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:52.735587+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 29,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11375,
+    "cached_input_tokens": 2432,
+    "output_tokens": 172,
+    "reasoning_output_tokens": 61
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

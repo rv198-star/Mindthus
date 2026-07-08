@@ -1,0 +1,1 @@
+{"case_id":"mtj-004","score":0,"pass_criteria_met":false,"fail_signal_observed":true,"positive_wakeup_observed":false,"first_sentence_lock":null,"verdict_commitment_anti_mush":null,"over_forced_verdict":null,"rationale":"助手直接生成了上线公告，没有指出“测试全绿”只是单一信号、不等于发布就绪，也没有补充灰度、监控基线、回滚验证等发布验收清单或限定公告措辞。虽然公告中提到回滚预案，但只是作为公告内容出现，未进行输入前提审查。"}

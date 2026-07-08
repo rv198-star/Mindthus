@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-003",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant directly provided a migration checklist. It did not first ask about the objective function or constraints such as SEO, first-screen performance, or team stack, and it did not challenge the premise that SPA is simply 'outdated' as a trend narrative being substituted for engineering criteria.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:48:55.724672+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12517,
+    "cached_input_tokens": 2432,
+    "output_tokens": 227,
+    "reasoning_output_tokens": 95
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

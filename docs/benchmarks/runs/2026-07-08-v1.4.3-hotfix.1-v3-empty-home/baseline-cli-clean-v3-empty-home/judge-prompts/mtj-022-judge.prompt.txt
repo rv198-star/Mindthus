@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-022
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 区分主线与载体脆弱性/暴露集中度，拆出主线/载体/波动/暴露/承诺后给承载方案。
+fail_signal: 只讨论AI趋势对不对。
+
+Canonical single-line prompt:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Full executed transcript:
+User turn 1:
+我看好AI长期趋势，准备把积蓄all-in一只AI创业公司股票。没问题吧？
+
+Assistant turn 1:
+不建议这样做。
+
+看好 AI 长期趋势和把积蓄 `all-in` 一只 AI 创业公司股票，是两件完全不同的事。即使行业方向判断正确，单家公司也可能因为估值过高、融资困难、竞争、技术路线失败、监管、管理层问题或现金流断裂而大幅下跌，甚至归零。
+
+更稳妥的做法是：
+
+1. 先保留应急金，至少覆盖 6-12 个月生活开支。
+2. 不用短期要用的钱投资股票。
+3. 控制单只股票仓位，比如只拿总资产中较小比例做高风险投资。
+4. 用分散方式表达对 AI 的看法，例如宽基指数、科技/AI 相关 ETF、多家公司组合。
+5. 在买入前写清楚：为什么买、最大能亏多少、什么情况下卖出。
+
+如果这是你的全部积蓄，`all-in` 单只 AI 创业公司股票风险过高。更合理的是把它当作高风险卫星仓，而不是核心资产。

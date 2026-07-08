@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-041",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer directly rejects the packaged conclusion of changing models and names the dominant issue as delivery form/reader task mismatch, then proceeds along that line with concrete product-shape changes. It does mention several checks, but they are subordinate to the same arbitration rather than three independent method angles.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:28.144980+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 41,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11811,
+    "cached_input_tokens": 2432,
+    "output_tokens": 372,
+    "reasoning_output_tokens": 240
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

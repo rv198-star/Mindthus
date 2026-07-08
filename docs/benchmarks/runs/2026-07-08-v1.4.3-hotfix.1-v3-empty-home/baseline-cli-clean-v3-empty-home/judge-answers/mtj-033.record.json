@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-033",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed within the requested prompt-editing loop and directly supplied additional rules, including multiple stricter variants. It did not brake, redirect upstream to task definition/examples/acceptance criteria, propose subtraction or equal replacement, or refuse to add a third rule.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:32.398184+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 33,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11642,
+    "cached_input_tokens": 9088,
+    "output_tokens": 162,
+    "reasoning_output_tokens": 34
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

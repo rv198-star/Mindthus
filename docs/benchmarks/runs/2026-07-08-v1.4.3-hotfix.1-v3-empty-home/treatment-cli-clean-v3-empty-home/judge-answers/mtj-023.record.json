@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-023",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant explicitly limits the long-term bullish premise and rejects a direct leverage conclusion. It shifts the decision to cash-flow resilience, leverage cost, vacancy, rate/monthly payment changes, income decline, drawdown tolerance, forced-sale risk, and alternative actions. This matches the expected MPG wakeup: path volatility and exposure conditions dominate the trend premise.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:57.638819+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 23,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12495,
+    "cached_input_tokens": 2432,
+    "output_tokens": 263,
+    "reasoning_output_tokens": 118
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

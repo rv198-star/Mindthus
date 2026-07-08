@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f70-ddc5-7e12-8fa8-3e5601cb3414"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-047\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control case: the assistant stayed in direct debugging mode. Because the transcript did not actually include the stack trace or code, it asked only for the minimal missing artifacts needed to locate the NullPointerException, without running a problem-definition ritual or invoking a broader method framework.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12232,"cached_input_tokens":9088,"output_tokens":264,"reasoning_output_tokens":134}}

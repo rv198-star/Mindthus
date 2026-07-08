@@ -1,0 +1,10 @@
+我现在没法完成有效 audit：`/tmp/mindthus-benchmark-workspace-v3` 不是 git 仓库，而且工作区里没有可读取的源码文件或 release diff。
+
+请提供以下任意一种材料，我就可以继续审：
+
+- release 分支相对上一版的 diff / PR 链接
+- `git diff <上一版tag>..<当前release>` 输出
+- changelog 加对应提交列表
+- 打包后的源码目录或 patch 文件
+
+拿到改动后我会按 code review 方式给你列：阻断风险、行为回归、兼容性问题、测试缺口和发布前建议。

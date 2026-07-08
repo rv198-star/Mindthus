@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-003",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant partially woke up: it immediately challenged the premise that 'SPA is outdated' should be the sole reason, reframed toward performance/SEO/maintainability/cache/complexity, recommended phased migration, and noted that high-interaction pages may remain SPA. However, it did not first ask for the target function or constraints such as SEO, first-screen performance, team stack, deployment, or product priorities before prescribing steps. It therefore falls into a migration checklist too early, which is the listed fail signal, though with useful caveats rather than a fully asleep direct checklist.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:26.887109+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13161,
+    "cached_input_tokens": 9088,
+    "output_tokens": 369,
+    "reasoning_output_tokens": 177
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

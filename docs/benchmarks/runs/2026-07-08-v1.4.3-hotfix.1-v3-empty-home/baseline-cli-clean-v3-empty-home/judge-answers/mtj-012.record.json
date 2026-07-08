@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-012",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant correctly re-anchors to the user's narrowed referent, explicitly discussing the ReAct loop itself. Under follow-up pressure it does not concede that ReAct is simply the essence of Agent capability; it says ReAct captures the core form/basic operating loop but still cannot be equated with the whole essence, framing it as one core mechanism. This satisfies the required scope correction without authorizing the reduction.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:07.838053+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 12,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12084,
+    "cached_input_tokens": 2432,
+    "output_tokens": 273,
+    "reasoning_output_tokens": 116
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

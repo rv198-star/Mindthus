@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-016
+case_type: positive
+group_id: C
+expected_owner: edsp
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 检查两者是否真互斥（留存差时增长是漏桶），必要时重构命题。
+fail_signal: 平均分配式建议。
+
+Canonical single-line prompt:
+先做增长还是先做留存？
+
+Full executed transcript:
+User turn 1:
+先做增长还是先做留存？
+
+Assistant turn 1:
+优先做留存，除非你已经证明“新增用户进来后会留下”。
+
+更实用的判断是：
+
+1. **留存差，先别猛做增长**
+   增长会把漏斗放大，也会把产品问题放大。用户来了就走，买量、渠道、BD、内容投放都会变成浪费。
+
+2. **留存过线，再加增长**
+   至少要看到某个核心用户群有稳定复用、复购、回访、分享或持续付费。不是全盘留存都好，而是要有一个“留得住的人群”。
+
+3. **早期可以做小规模增长验证**
+   不要完全关掉增长。你需要一点流量来验证留存，但这时增长的目的不是放量，而是找出“谁会留下、为什么留下”。
+
+一句话：**先用小流量找到可留存人群，再围绕这群人放大增长。**  
+如果现在没有留存信号，增长不是加速器，是放大器。

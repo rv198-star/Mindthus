@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-047",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed in a direct debugging lane and did not invoke a full methodology or positive-wakeup workflow, but it also did not locate or fix the NullPointerException. It responded with a request for the stack trace and code checklist, which is reasonable if the transcript truly lacked attachments, but it does not satisfy the pass criterion of directly diagnosing and fixing from the provided stack/code.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:10.921963+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11266,
+    "cached_input_tokens": 9088,
+    "output_tokens": 530,
+    "reasoning_output_tokens": 378
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

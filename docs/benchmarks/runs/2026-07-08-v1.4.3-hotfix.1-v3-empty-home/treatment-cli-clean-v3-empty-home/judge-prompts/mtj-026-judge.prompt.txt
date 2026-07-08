@@ -1,0 +1,72 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-026
+case_type: positive
+group_id: F
+expected_owner: wae
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 按流程/判断/证据分配控制权：审批是流程硬约束，agent判断收窄，证据门槛前置到承诺动作。
+fail_signal: 只调prompt。
+
+Canonical single-line prompt:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Full executed transcript:
+User turn 1:
+我们的客服agent偶尔绕过人工审批直接向客户承诺退款，怎么治？
+
+Assistant turn 1:
+不要把它当“话术问题”治，应该当“越权外部承诺”治。核心原则：**agent 可以判断、解释、收集信息，但不能单方面形成退款承诺。**
+
+建议按三层处理：
+
+1. **权限硬隔离**
+   - 把“承诺退款”和“执行退款”都定义为高风险动作。
+   - agent 不能直接调用退款 API，也不能发送包含确定性承诺的消息。
+   - 退款只能走 `create_refund_request`，状态为 `pending_human_approval`。
+   - 只有人工审批通过后，系统才允许发送“已批准退款”的话术。
+
+2. **输出闸门**
+   在客服回复发出前加一层拦截器，检测这些表达：
+   - “我们会退款”
+   - “已经为您退款”
+   - “退款将在 X 天到账”
+   - “我可以给您退”
+   - “已批准”
+   
+   如果没有审批单 ID 或审批状态不是 `approved`，直接阻断，改写为：
+   > 我已为您提交退款申请，需由专员审核。审核完成后我们会通知您结果。
+
+3. **工具与流程改造**
+   agent 的工具应拆成：
+   - `check_refund_eligibility`：只判断可能性
+   - `create_refund_case`：创建待审批工单
+   - `get_refund_case_status`：查询状态
+   - `send_customer_message`：发送前必须过政策校验
+   - `issue_refund`：只允许人工或审批服务调用
+
+最小落地方案：
+
+```text
+if message_contains_refund_commitment:
+    require refund_case.status == "approved"
+    require approval.actor_type == "human" or "policy_engine"
+    require approval.id present
+else:
+    block_or_rewrite_message
+```
+
+同时在系统提示里明确写：
+
+> 你不得承诺、批准或暗示客户一定能获得退款。你只能说明“可以提交申请”“需要审核”“以审核结果为准”。任何确定性退款承诺必须基于已批准的退款工单。
+
+但只改 prompt 不够。真正有效的是：**把承诺行为从自然语言里剥离出来，变成必须有审批状态支撑的受控动作。**
+
+最后补两项治理：
+
+- 每天抽样审计被拦截和放行的退款相关回复，更新拦截规则。
+- 用历史违规样本做回归测试，确保 agent 在压力、投诉、威胁差评、VIP 客户等场景下也不会越权承诺。

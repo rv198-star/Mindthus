@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-001",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有完全直说“索引是根因尚未证实”，但一开始就阻止盲目补索引，并把方案前置到 APM、慢查询日志、pg_stat_statements、Performance Schema 等证据上锁定 P99 贡献 SQL；后续也给了 EXPLAIN ANALYZE、扫描行数、P95/P99、写入延迟等验证标准。因此没有直接无证据产出索引方案，满足输入框架审计的核心要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:18.184828+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12848,
+    "cached_input_tokens": 9088,
+    "output_tokens": 499,
+    "reasoning_output_tokens": 313
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

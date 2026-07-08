@@ -1,0 +1,225 @@
+可以，先按“止血 + 验证 + 长期治理”出方案。没有具体表结构和慢 SQL 的情况下，下面是可直接落地的索引建设框架。
+
+**1. 先锁定 P99 慢查询**
+
+优先从这几类 SQL 下手：
+
+```sql
+-- PostgreSQL
+SELECT query, calls, mean_exec_time, max_exec_time
+FROM pg_stat_statements
+ORDER BY max_exec_time DESC
+LIMIT 20;
+```
+
+或查看应用侧最近 P99 慢 SQL，重点关注：
+
+- 高频接口里的 `WHERE`
+- `JOIN ON`
+- `ORDER BY`
+- `GROUP BY`
+- 分页查询
+- 状态筛选 + 时间范围查询
+
+---
+
+**2. 索引设计原则**
+
+优先建联合索引，不要盲目给单列都建索引。
+
+常见模式如下。
+
+### 场景一：按用户查列表
+
+SQL：
+
+```sql
+SELECT *
+FROM orders
+WHERE user_id = ?
+  AND status = ?
+ORDER BY created_at DESC
+LIMIT 20;
+```
+
+索引：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_orders_user_status_created
+ON orders (user_id, status, created_at DESC);
+```
+
+适合接口：
+
+- 用户订单列表
+- 用户消息列表
+- 用户流水列表
+
+---
+
+### 场景二：后台按状态 + 时间范围查
+
+SQL：
+
+```sql
+SELECT *
+FROM orders
+WHERE status = ?
+  AND created_at >= ?
+  AND created_at < ?
+ORDER BY created_at DESC
+LIMIT 100;
+```
+
+索引：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_orders_status_created
+ON orders (status, created_at DESC);
+```
+
+---
+
+### 场景三：详情页按唯一业务键查
+
+SQL：
+
+```sql
+SELECT *
+FROM orders
+WHERE order_no = ?;
+```
+
+索引：
+
+```sql
+CREATE UNIQUE INDEX CONCURRENTLY uk_orders_order_no
+ON orders (order_no);
+```
+
+---
+
+### 场景四：JOIN 慢
+
+SQL：
+
+```sql
+SELECT *
+FROM order_items oi
+JOIN orders o ON oi.order_id = o.id
+WHERE o.user_id = ?;
+```
+
+索引：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_order_items_order_id
+ON order_items (order_id);
+
+CREATE INDEX CONCURRENTLY idx_orders_user_id
+ON orders (user_id);
+```
+
+原则：`JOIN` 两边的关联字段都要有索引，尤其是子表外键字段。
+
+---
+
+### 场景五：软删除表
+
+SQL：
+
+```sql
+SELECT *
+FROM products
+WHERE tenant_id = ?
+  AND deleted_at IS NULL
+  AND status = ?
+ORDER BY updated_at DESC;
+```
+
+PostgreSQL 推荐部分索引：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_products_active_tenant_status_updated
+ON products (tenant_id, status, updated_at DESC)
+WHERE deleted_at IS NULL;
+```
+
+MySQL 可用联合索引：
+
+```sql
+CREATE INDEX idx_products_tenant_deleted_status_updated
+ON products (tenant_id, deleted_at, status, updated_at);
+```
+
+---
+
+**3. 建索引优先级**
+
+建议按这个顺序执行：
+
+1. 给 P99 最高的 3 到 5 条慢 SQL 建索引。
+2. 优先覆盖核心读接口，不先处理低频后台查询。
+3. 优先建联合索引，避免多个单列索引堆叠。
+4. 所有新索引上线前必须跑 `EXPLAIN`。
+5. 上线后观察写入延迟、锁等待、索引膨胀、P99 是否下降。
+
+---
+
+**4. 上线方式**
+
+PostgreSQL：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);
+```
+
+MySQL 8：
+
+```sql
+ALTER TABLE table_name
+ADD INDEX idx_xxx (...),
+ALGORITHM=INPLACE,
+LOCK=NONE;
+```
+
+大表建议低峰期执行，并提前评估磁盘空间，至少预留索引体积 1.5 到 2 倍空间。
+
+---
+
+**5. 避免这些坑**
+
+不要这样建：
+
+```sql
+CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX idx_orders_created ON orders(created_at);
+CREATE INDEX idx_orders_user ON orders(user_id);
+```
+
+如果真实查询是：
+
+```sql
+WHERE user_id = ? AND status = ? ORDER BY created_at DESC
+```
+
+那应该建：
+
+```sql
+CREATE INDEX idx_orders_user_status_created
+ON orders(user_id, status, created_at DESC);
+```
+
+---
+
+**结论**
+
+先给核心慢 SQL 建复合索引，典型模板是：
+
+```sql
+-- 等值过滤字段在前，范围/排序字段在后
+CREATE INDEX CONCURRENTLY idx_table_a_b_time
+ON table_name (tenant_id, status, created_at DESC);
+```
+
+如果你把 P99 最高的 5 条 SQL 和数据库类型贴出来，我可以直接给你逐条生成最终索引 DDL，并判断哪些索引可以合并或删除。

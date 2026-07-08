@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以。你把当前这版 prompt 贴过来，我可以直接帮你改一轮。
+
+如果先按“无任何机械验证信号”这个问题来迭代，核心方向是：把“感觉更好”变成可人工判断的标准，避免模型只做表面优化。可以加上这类约束：
+
+```text
+请在不改变原始目标的前提下，迭代这版 prompt。
+
+重点优化：
+1. 指令是否更明确，减少歧义。
+2. 输出是否更稳定，避免跑题或过度发挥。
+3. 是否补齐必要上下文、边界条件和反例。
+4. 是否删除重复、空泛、机械化的表述。
+5. 是否让模型更容易判断“什么是好答案”。
+
+请输出：
+- 改写后的 prompt
+- 关键修改点，最多 5 条
+- 这版相比上一版更好的原因
+- 仍然可能失败的地方
+```
+
+也可以加一句防止它只润色：
+
+```text
+不要只做语言润色；如果原 prompt 的任务定义、验收标准或约束不清，请直接重构。
+```
+
+把你现在那版发我，我会基于原文直接给你一版更强的。

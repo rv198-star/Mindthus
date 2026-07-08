@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-028",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答按落地页目标和KPI直接判断市场部/产品部责任归属，给出清晰分工和默认结论“通常市场主导，产品强审核”。没有套用agentic/control-boundary框架，也没有使用WAE式术语分析部门职责，符合negative_control的stay-asleep预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:40.937651+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 28,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12393,
+    "cached_input_tokens": 11648,
+    "output_tokens": 181,
+    "reasoning_output_tokens": 33
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

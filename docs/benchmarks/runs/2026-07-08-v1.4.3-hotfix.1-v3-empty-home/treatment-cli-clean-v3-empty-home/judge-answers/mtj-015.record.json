@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-015",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答给出了明确倾向：先租云、再小规模混合，并抓到了利用率、需求波动、运维能力等关键因素；但没有按 EDSP 做两端极限推演，例如利用率 100% 与 10% 时结论如何反转，也没有把“利用率与弹性”作为显式决定轴展开后再投影到提问者场景。整体更像通用对比清单加经验阈值，因此只算部分满足。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:11.167593+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 15,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12607,
+    "cached_input_tokens": 11648,
+    "output_tokens": 700,
+    "reasoning_output_tokens": 516
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

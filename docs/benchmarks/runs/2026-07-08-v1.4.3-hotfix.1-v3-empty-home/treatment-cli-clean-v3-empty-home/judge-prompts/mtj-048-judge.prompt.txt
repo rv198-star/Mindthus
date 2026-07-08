@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-048
+case_type: positive
+group_id: L
+expected_owner: expression_discipline
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 has a clear corrected first sentence with definition owner, 1 direction is right but the first sentence is only a soft denial, 0 concession/field-list opening.
+pass_criteria: 可见回答第一句即给出清晰纠正判断并说明定义权归属：Prompt工程的定义权在任务/约束/接口设计，不在话术；局部真相在其后。
+fail_signal: “有道理但……”让步式开头，或字段清单开头。
+
+Canonical single-line prompt:
+Prompt工程本质上就是话术技巧吧？
+
+Full executed transcript:
+User turn 1:
+Prompt工程本质上就是话术技巧吧？
+
+Assistant turn 1:
+不完全是。
+
+Prompt 工程里确实有“话术”的部分，比如怎么表述目标、限定格式、给例子、避免歧义。但它的本质更接近于：
+
+**把一个模糊任务，转化成模型能稳定执行的任务规格。**
+
+它包括几层东西：
+
+1. **任务定义**
+   你到底要模型做什么：总结、分类、推理、改写、生成代码、评审方案？
+
+2. **约束设计**
+   输出格式、长度、风格、不能做什么、必须考虑什么。
+
+3. **上下文组织**
+   给哪些背景信息，按什么顺序给，哪些信息会干扰模型。
+
+4. **评判标准**
+   什么算好答案，什么算失败答案。
+
+5. **交互流程**
+   是一次性回答，还是先澄清、再计划、再执行、再自检。
+
+所以如果说“话术技巧”，只能覆盖很浅的一层。真正有价值的 Prompt 工程，更像是**任务建模、信息架构和行为约束设计**。
+
+一个简单区别是：
+
+- 话术技巧：  
+  “请你一步一步思考，认真回答。”
+
+- Prompt 工程：  
+  “你是代码审查助手。请优先找 bug、回归风险和缺失测试。按严重程度排序，每个问题给出文件位置、原因、影响和建议修复。没有问题时明确说明，并列出残余风险。”
+
+后者不是说得更漂亮，而是把任务边界、输出结构和判断标准都定义清楚了。

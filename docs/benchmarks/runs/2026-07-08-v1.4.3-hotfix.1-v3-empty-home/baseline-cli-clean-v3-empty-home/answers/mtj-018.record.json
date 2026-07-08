@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:43:49.810241+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-018",
+  "case_number": 18,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f65-0b6f-7040-ad5d-75d518113fca",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-018-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.34,
+      "thread_id": "019f3f65-0b6f-7040-ad5d-75d518113fca",
+      "answer": "高 3 个点不一定意味着“不上自动审核”。\n\n关键要看三件事：\n\n1. **覆盖量和成本**\n   如果人工准确率 93%，模型 90%，但模型能处理 80% 的低风险样本，人工只复核高风险和不确定样本，整体效率可能明显更高。\n\n2. **错误类型**\n   3 个点的差距要拆开看：\n   - 模型多错的是可接受的轻微误判？\n   - 还是会漏掉严重违规、造成业务风险？\n   如果主要差在高风险漏判，那确实不能直接自动化；如果差在边界样本，可以用人工兜底。\n\n3. **人机协同后的准确率**\n   自动审核不等于完全替代人工。更合理的是：\n   - 高置信通过/拒绝：模型自动处理\n   - 低置信、争议、重点类目：转人工\n   - 抽样质检：持续监控模型漂移\n\n所以结论不是“模型低 3 个点，所以不用”，而是：\n\n**如果模型在低风险样本上准确率稳定、能显著降本提效，就应该先做分层自动审核；只有高风险和低置信部分继续人工审核。**\n\n可以先灰度：让模型只自动处理最有把握的 30%-50% 样本，看整体误判率、漏判率和人工节省量，再决定是否扩大。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-018-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-018-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-018-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-018-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-018-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "高 3 个点不一定意味着“不上自动审核”。\n\n关键要看三件事：\n\n1. **覆盖量和成本**\n   如果人工准确率 93%，模型 90%，但模型能处理 80% 的低风险样本，人工只复核高风险和不确定样本，整体效率可能明显更高。\n\n2. **错误类型**\n   3 个点的差距要拆开看：\n   - 模型多错的是可接受的轻微误判？\n   - 还是会漏掉严重违规、造成业务风险？\n   如果主要差在高风险漏判，那确实不能直接自动化；如果差在边界样本，可以用人工兜底。\n\n3. **人机协同后的准确率**\n   自动审核不等于完全替代人工。更合理的是：\n   - 高置信通过/拒绝：模型自动处理\n   - 低置信、争议、重点类目：转人工\n   - 抽样质检：持续监控模型漂移\n\n所以结论不是“模型低 3 个点，所以不用”，而是：\n\n**如果模型在低风险样本上准确率稳定、能显著降本提效，就应该先做分层自动审核；只有高风险和低置信部分继续人工审核。**\n\n可以先灰度：让模型只自动处理最有把握的 30%-50% 样本，看整体误判率、漏判率和人工节省量，再决定是否扩大。"
+      ],
+      "usage": {
+        "input_tokens": 11119,
+        "cached_input_tokens": 10624,
+        "output_tokens": 354,
+        "reasoning_output_tokens": 24
+      },
+      "user_prompt": "我们人工审核准确率比模型高3个点，所以不上自动审核。"
+    }
+  ],
+  "final_answer": "高 3 个点不一定意味着“不上自动审核”。\n\n关键要看三件事：\n\n1. **覆盖量和成本**\n   如果人工准确率 93%，模型 90%，但模型能处理 80% 的低风险样本，人工只复核高风险和不确定样本，整体效率可能明显更高。\n\n2. **错误类型**\n   3 个点的差距要拆开看：\n   - 模型多错的是可接受的轻微误判？\n   - 还是会漏掉严重违规、造成业务风险？\n   如果主要差在高风险漏判，那确实不能直接自动化；如果差在边界样本，可以用人工兜底。\n\n3. **人机协同后的准确率**\n   自动审核不等于完全替代人工。更合理的是：\n   - 高置信通过/拒绝：模型自动处理\n   - 低置信、争议、重点类目：转人工\n   - 抽样质检：持续监控模型漂移\n\n所以结论不是“模型低 3 个点，所以不用”，而是：\n\n**如果模型在低风险样本上准确率稳定、能显著降本提效，就应该先做分层自动审核；只有高风险和低置信部分继续人工审核。**\n\n可以先灰度：让模型只自动处理最有把握的 30%-50% 样本，看整体误判率、漏判率和人工节省量，再决定是否扩大。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

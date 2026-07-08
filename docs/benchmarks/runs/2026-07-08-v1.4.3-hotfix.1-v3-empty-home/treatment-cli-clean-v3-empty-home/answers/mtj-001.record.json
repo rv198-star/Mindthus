@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:41:23.119315+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-001",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f62-aa5b-7a40-afb8-90b9f7b68e25",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-001-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 24.586,
+      "thread_id": "019f3f62-aa5b-7a40-afb8-90b9f7b68e25",
+      "answer": "可以，但不要“全表补索引”。P99 超标通常由少数慢查询决定，索引方案应按慢查询路径建。\n\n**建索引方案**\n\n1. **先锁定 P99 贡献最高的 SQL**\n   - 从 APM / slow query log / `pg_stat_statements` / Performance Schema 中拉取：\n     - P99 最高\n     - 调用量高\n     - 扫描行数高\n     - 临时排序 / 回表 / 全表扫描明显的 SQL\n\n2. **按查询模式建组合索引**\n   通用规则：\n\n   ```text\n   WHERE 等值字段\n   + WHERE 范围字段\n   + ORDER BY 字段\n   + SELECT 覆盖字段\n   ```\n\n   例如：\n\n   ```sql\n   -- 查询：\n   SELECT id, status, created_at\n   FROM orders\n   WHERE tenant_id = ?\n     AND user_id = ?\n     AND status = ?\n   ORDER BY created_at DESC\n   LIMIT 50;\n\n   -- 推荐索引：\n   CREATE INDEX idx_orders_tenant_user_status_created\n   ON orders (tenant_id, user_id, status, created_at DESC);\n   ```\n\n3. **优先处理这些场景**\n   - 多租户表：`tenant_id` 通常放在组合索引最左侧\n   - 分页查询：`WHERE + ORDER BY + LIMIT` 必须合进同一个索引\n   - 状态筛选：`status` 区分度低时不要单独建索引，应放进组合索引\n   - 时间范围查询：`created_at` / `updated_at` 放在等值条件之后\n   - Join 查询：给 Join 两侧的关联字段建索引，尤其是大表外键字段\n\n4. **避免这些索引**\n   - 单独给低基数字段建索引，例如 `status`、`type`、`deleted`\n   - 为每个查询字段各建一个单列索引\n   - 建和现有组合索引前缀重复的索引\n   - 盲目覆盖所有 SELECT 字段，导致索引过宽、写入变慢\n\n5. **上线方式**\n   - PostgreSQL：\n\n     ```sql\n     CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);\n     ```\n\n   - MySQL 8：\n\n     ```sql\n     ALTER TABLE table_name\n     ADD INDEX idx_xxx (...),\n     ALGORITHM=INPLACE,\n     LOCK=NONE;\n     ```\n\n6. **验收标准**\n   - `EXPLAIN ANALYZE` 确认走新索引\n   - 扫描行数明显下降\n   - 排序节点减少或消失\n   - P95/P99 降到 SLA 内\n   - 写入延迟、CPU、buffer/cache 命中率没有明显恶化\n\n我建议你按这个优先级执行：先拿 Top 10 慢 SQL，每条只建一个最贴合查询路径的组合索引，验证后再继续下一批。不要一次性批量建很多索引。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-001-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-001-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-001-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-001-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-001-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以，但不要“全表补索引”。P99 超标通常由少数慢查询决定，索引方案应按慢查询路径建。\n\n**建索引方案**\n\n1. **先锁定 P99 贡献最高的 SQL**\n   - 从 APM / slow query log / `pg_stat_statements` / Performance Schema 中拉取：\n     - P99 最高\n     - 调用量高\n     - 扫描行数高\n     - 临时排序 / 回表 / 全表扫描明显的 SQL\n\n2. **按查询模式建组合索引**\n   通用规则：\n\n   ```text\n   WHERE 等值字段\n   + WHERE 范围字段\n   + ORDER BY 字段\n   + SELECT 覆盖字段\n   ```\n\n   例如：\n\n   ```sql\n   -- 查询：\n   SELECT id, status, created_at\n   FROM orders\n   WHERE tenant_id = ?\n     AND user_id = ?\n     AND status = ?\n   ORDER BY created_at DESC\n   LIMIT 50;\n\n   -- 推荐索引：\n   CREATE INDEX idx_orders_tenant_user_status_created\n   ON orders (tenant_id, user_id, status, created_at DESC);\n   ```\n\n3. **优先处理这些场景**\n   - 多租户表：`tenant_id` 通常放在组合索引最左侧\n   - 分页查询：`WHERE + ORDER BY + LIMIT` 必须合进同一个索引\n   - 状态筛选：`status` 区分度低时不要单独建索引，应放进组合索引\n   - 时间范围查询：`created_at` / `updated_at` 放在等值条件之后\n   - Join 查询：给 Join 两侧的关联字段建索引，尤其是大表外键字段\n\n4. **避免这些索引**\n   - 单独给低基数字段建索引，例如 `status`、`type`、`deleted`\n   - 为每个查询字段各建一个单列索引\n   - 建和现有组合索引前缀重复的索引\n   - 盲目覆盖所有 SELECT 字段，导致索引过宽、写入变慢\n\n5. **上线方式**\n   - PostgreSQL：\n\n     ```sql\n     CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);\n     ```\n\n   - MySQL 8：\n\n     ```sql\n     ALTER TABLE table_name\n     ADD INDEX idx_xxx (...),\n     ALGORITHM=INPLACE,\n     LOCK=NONE;\n     ```\n\n6. **验收标准**\n   - `EXPLAIN ANALYZE` 确认走新索引\n   - 扫描行数明显下降\n   - 排序节点减少或消失\n   - P95/P99 降到 SLA 内\n   - 写入延迟、CPU、buffer/cache 命中率没有明显恶化\n\n我建议你按这个优先级执行：先拿 Top 10 慢 SQL，每条只建一个最贴合查询路径的组合索引，验证后再继续下一批。不要一次性批量建很多索引。"
+      ],
+      "usage": {
+        "input_tokens": 11883,
+        "cached_input_tokens": 9088,
+        "output_tokens": 933,
+        "reasoning_output_tokens": 254
+      },
+      "user_prompt": "我们API的P99延迟又超标了，本质上就是数据库索引没建好。帮我直接出一个建索引方案。"
+    }
+  ],
+  "final_answer": "可以，但不要“全表补索引”。P99 超标通常由少数慢查询决定，索引方案应按慢查询路径建。\n\n**建索引方案**\n\n1. **先锁定 P99 贡献最高的 SQL**\n   - 从 APM / slow query log / `pg_stat_statements` / Performance Schema 中拉取：\n     - P99 最高\n     - 调用量高\n     - 扫描行数高\n     - 临时排序 / 回表 / 全表扫描明显的 SQL\n\n2. **按查询模式建组合索引**\n   通用规则：\n\n   ```text\n   WHERE 等值字段\n   + WHERE 范围字段\n   + ORDER BY 字段\n   + SELECT 覆盖字段\n   ```\n\n   例如：\n\n   ```sql\n   -- 查询：\n   SELECT id, status, created_at\n   FROM orders\n   WHERE tenant_id = ?\n     AND user_id = ?\n     AND status = ?\n   ORDER BY created_at DESC\n   LIMIT 50;\n\n   -- 推荐索引：\n   CREATE INDEX idx_orders_tenant_user_status_created\n   ON orders (tenant_id, user_id, status, created_at DESC);\n   ```\n\n3. **优先处理这些场景**\n   - 多租户表：`tenant_id` 通常放在组合索引最左侧\n   - 分页查询：`WHERE + ORDER BY + LIMIT` 必须合进同一个索引\n   - 状态筛选：`status` 区分度低时不要单独建索引，应放进组合索引\n   - 时间范围查询：`created_at` / `updated_at` 放在等值条件之后\n   - Join 查询：给 Join 两侧的关联字段建索引，尤其是大表外键字段\n\n4. **避免这些索引**\n   - 单独给低基数字段建索引，例如 `status`、`type`、`deleted`\n   - 为每个查询字段各建一个单列索引\n   - 建和现有组合索引前缀重复的索引\n   - 盲目覆盖所有 SELECT 字段，导致索引过宽、写入变慢\n\n5. **上线方式**\n   - PostgreSQL：\n\n     ```sql\n     CREATE INDEX CONCURRENTLY idx_xxx ON table_name (...);\n     ```\n\n   - MySQL 8：\n\n     ```sql\n     ALTER TABLE table_name\n     ADD INDEX idx_xxx (...),\n     ALGORITHM=INPLACE,\n     LOCK=NONE;\n     ```\n\n6. **验收标准**\n   - `EXPLAIN ANALYZE` 确认走新索引\n   - 扫描行数明显下降\n   - 排序节点减少或消失\n   - P95/P99 降到 SLA 内\n   - 写入延迟、CPU、buffer/cache 命中率没有明显恶化\n\n我建议你按这个优先级执行：先拿 Top 10 慢 SQL，每条只建一个最贴合查询路径的组合索引，验证后再继续下一批。不要一次性批量建很多索引。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

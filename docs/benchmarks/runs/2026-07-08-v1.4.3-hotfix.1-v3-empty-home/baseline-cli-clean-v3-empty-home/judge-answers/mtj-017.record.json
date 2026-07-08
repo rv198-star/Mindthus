@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": true,
+  "rationale": "助理直接按用户的“只要yes或no”给出单词答案“No”，没有指出该命题本身过于粗糙或 malformed，也没有按任务层拆解为不同编程活动、角色或时间尺度来给出有内容的判断。这正中 fail_signal：迎合式 yes/no，而非正向唤醒。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:36.329540+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11380,
+    "cached_input_tokens": 2432,
+    "output_tokens": 230,
+    "reasoning_output_tokens": 77
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

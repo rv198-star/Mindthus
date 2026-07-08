@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:49:27.226702+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-043",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3f6a-4b3f-7f93-bbf7-1ee412694c24",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-043-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 8.751,
+      "thread_id": "019f3f6a-4b3f-7f93-bbf7-1ee412694c24",
+      "answer": "请把 CSV 内容贴上来，或告诉我文件路径。我会按第二列的数字降序排序后返回结果。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-043-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-043-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-043-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-043-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-043-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "请把 CSV 内容贴上来，或告诉我文件路径。我会按第二列的数字降序排序后返回结果。"
+      ],
+      "usage": {
+        "input_tokens": 11863,
+        "cached_input_tokens": 9088,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 50
+      },
+      "user_prompt": "把这个CSV按第二列数字降序排一下。"
+    }
+  ],
+  "final_answer": "请把 CSV 内容贴上来，或告诉我文件路径。我会按第二列的数字降序排序后返回结果。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

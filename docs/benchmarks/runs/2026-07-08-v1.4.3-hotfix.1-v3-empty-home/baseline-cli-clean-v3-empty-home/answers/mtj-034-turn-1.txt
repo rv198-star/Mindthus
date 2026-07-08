@@ -1,0 +1,34 @@
+可以。建议把第三个 fallback 放在最外层，作为“最后兜底”，只处理前两个 fallback 都失败的情况，并保留原始错误日志，避免把真正的不稳定原因吞掉。
+
+逻辑可以按这个顺序：
+
+```ts
+try {
+  return await primary()
+} catch (primaryError) {
+  try {
+    return await fallbackOne()
+  } catch (fallbackOneError) {
+    try {
+      return await fallbackTwo()
+    } catch (fallbackTwoError) {
+      logger.warn('all fallbacks failed', {
+        primaryError,
+        fallbackOneError,
+        fallbackTwoError,
+      })
+
+      return finalFallback()
+    }
+  }
+}
+```
+
+如果现在已经有两个 fallback 分支，我会加的重点是：
+
+- 第三个 fallback 尽量返回最保守、最稳定的默认结果
+- 不再依赖外部服务、时间、随机数或异步竞态
+- 日志里保留三次失败原因，方便后续定位测试不稳定来源
+- 测试里覆盖“前两个 fallback 都失败时，最终 fallback 生效”的路径
+
+如果你把当前那段代码贴出来，我可以直接按现有风格改成第三层兜底。

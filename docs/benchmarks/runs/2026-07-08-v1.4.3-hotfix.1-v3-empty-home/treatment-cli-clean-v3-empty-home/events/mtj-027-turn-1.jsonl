@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f67-6157-7c40-8ce9-f77a6f61a9a9"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不能全交给 AI，至少现在不建议。\n\nAI 很适合做合并前 review 的第一道筛查，比如：\n\n- 找明显 bug、空指针、边界条件、并发问题\n- 检查重复代码、复杂度、命名和风格\n- 发现缺少测试、异常处理、日志、安全校验\n- 对照 diff 总结改动影响\n- 帮 reviewer 快速定位高风险文件\n\n但它不适合完全替代人，原因主要是：\n\n- AI 不真正理解业务意图，可能不知道“这个改动到底该不该做”\n- 它容易漏掉跨系统、历史约定、隐性依赖\n- 它可能给出看似合理但错误的建议\n- 责任归属、上线风险、架构取舍仍然需要人判断\n- 安全、权限、数据一致性这类问题不能只靠概率模型兜底\n\n更现实的做法是：\n\n1. AI 先审：自动跑在 PR 上，输出风险点、测试建议、可疑 diff。\n2. 人再审：重点看业务正确性、架构影响、安全边界、上线风险。\n3. CI 兜底：测试、lint、类型检查、安全扫描必须机器化。\n4. 高风险改动强制人工 review：支付、权限、数据迁移、核心链路、基础设施不应只靠 AI。\n\n所以结论是：  \n**AI 可以承担大量机械性和初筛 review，但不能完全替代合并前的人类责任审查。** 最好的模式是“AI 提高 review 下限，人保证决策上限”。"}}
+{"type":"turn.completed","usage":{"input_tokens":11864,"cached_input_tokens":9088,"output_tokens":390,"reasoning_output_tokens":27}}

@@ -1,0 +1,1 @@
+{"case_id":"mtj-026","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":null,"verdict_commitment_anti_mush":null,"over_forced_verdict":null,"rationale":"回答明确没有只调 prompt，而是把退款治理拆到权限、流程、策略服务、人工审批、输出拦截、审计和回归测试。它把审批设为硬约束，将 agent 权限收窄为创建申请而非执行/承诺退款，并要求承诺动作前必须有审批通过记录，符合按流程/判断/证据分配控制权的预期。"}

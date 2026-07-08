@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-020",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答明确区分了目标函数是一年10万粉的增长系统，而不是单条视频的手工精致；把手工精致定位为差异化/关键环节优势，并建议模板化、批量化、复用化。也指出了产能瓶颈，包括每条从零剪、牺牲更新频率、耗时过长导致无法测试选题等。没有停留在“质量重要”。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:41.640249+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 20,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12550,
+    "cached_input_tokens": 2432,
+    "output_tokens": 260,
+    "reasoning_output_tokens": 89
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

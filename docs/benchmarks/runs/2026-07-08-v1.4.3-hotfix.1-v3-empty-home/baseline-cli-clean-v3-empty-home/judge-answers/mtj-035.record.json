@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-035",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "负控场景应继续证据驱动调试、不要机械触发反螺旋。助手没有说教或要求停止，而是指出缺少下一个 failing test 输出和只读环境限制，请用户提供测试名、断言和栈信息以继续给出最小修复，符合正常调试推进。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:44.421306+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 35,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11480,
+    "cached_input_tokens": 9088,
+    "output_tokens": 266,
+    "reasoning_output_tokens": 118
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

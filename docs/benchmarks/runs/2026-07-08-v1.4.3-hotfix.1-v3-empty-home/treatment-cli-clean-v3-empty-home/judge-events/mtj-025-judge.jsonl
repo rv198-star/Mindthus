@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f6e-8db2-7c30-88db-494cb99b5bb9"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-025\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the request as an evidence-review task: it stated it lacked the prior session transcript, requested the relevant output, and listed concrete items to check. It referenced MPG-AQM only as the rule set being audited, not as a reason to run an MPG judgment process in the current session. No over-methodized MPG workflow or current-session escalation was observed.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12330,"cached_input_tokens":11648,"output_tokens":206,"reasoning_output_tokens":57}}

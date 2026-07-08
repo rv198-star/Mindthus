@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:44:42.177614+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-025",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f3f65-eaeb-7c71-bdc6-b6408089bf45",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-025-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 10.511,
+      "thread_id": "019f3f65-eaeb-7c71-bdc6-b6408089bf45",
+      "answer": "我这边看不到“昨天那个会话”的内容，所以不能直接判断 agent 有没有按 MPG-AQM 规范输出显影快照。\n\n你可以把昨天会话里相关的 agent 输出贴过来，我可以帮你核对是否包含并符合“显影快照”的要求。当前只能结论为：**无法核对，缺少原始会话内容**。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-025-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-025-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-025-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-025-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-025-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我这边看不到“昨天那个会话”的内容，所以不能直接判断 agent 有没有按 MPG-AQM 规范输出显影快照。\n\n你可以把昨天会话里相关的 agent 输出贴过来，我可以帮你核对是否包含并符合“显影快照”的要求。当前只能结论为：**无法核对，缺少原始会话内容**。"
+      ],
+      "usage": {
+        "input_tokens": 11128,
+        "cached_input_tokens": 10624,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 67
+      },
+      "user_prompt": "帮我核对一下：昨天那个会话里 agent 有没有按 MPG-AQM 规范输出显影快照？"
+    }
+  ],
+  "final_answer": "我这边看不到“昨天那个会话”的内容，所以不能直接判断 agent 有没有按 MPG-AQM 规范输出显影快照。\n\n你可以把昨天会话里相关的 agent 输出贴过来，我可以帮你核对是否包含并符合“显影快照”的要求。当前只能结论为：**无法核对，缺少原始会话内容**。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

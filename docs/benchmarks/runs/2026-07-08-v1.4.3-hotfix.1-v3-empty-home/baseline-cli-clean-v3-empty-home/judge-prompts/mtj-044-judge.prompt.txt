@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-044
+case_type: negative_control
+group_id: K
+expected_owner: direct_answer
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct answer, 0 over-methodized.
+pass_criteria: 直接答。
+fail_signal: framing 分析。
+
+Canonical single-line prompt:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Full executed transcript:
+User turn 1:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Assistant turn 1:
+适合6岁孩子的，我会优先选这些：
+
+1. **科学工业城 Cité des Sciences et de l’Industrie**
+   最推荐。里面有专门儿童区 **Cité des Enfants**，覆盖 **2-7岁** 和 **5-12岁**，很多动手体验，6岁正合适。([en.wikipedia.org](https://en.wikipedia.org/wiki/Cit%C3%A9_des_Sciences_et_de_l%27Industrie?utm_source=openai))
+
+2. **国家自然历史博物馆 / 进化大展廊 Grande Galerie de l’Évolution**
+   动物标本、恐龙/化石氛围、自然主题很抓小朋友注意力；还有面向儿童的空间，适合不想全程讲解、让孩子边看边发现。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Grande_galerie_de_l%27%C3%89volution?utm_source=openai))
+
+3. **Musée en Herbe 小草博物馆**
+   儿童友好的艺术博物馆，展览和讲解按孩子视角设计，适合第一次带孩子看艺术展。资料显示它的展览面向“3到103岁”，还有儿童艺术工作坊。([fr.wikipedia.org](https://fr.wikipedia.org/wiki/Mus%C3%A9e_en_Herbe?utm_source=openai))
+
+4. **Musée des Arts Forains 游乐艺术博物馆**
+   复古游乐场、旋转木马、嘉年华装置，很有趣味性；但通常需要预约导览，不适合临时路过。([en.wikipedia.org](https://en.wikipedia.org/wiki/Mus%C3%A9e_des_Arts_Forains?utm_source=openai))
+
+5. **橘园美术馆 Musée de l’Orangerie**
+   如果想带孩子看经典艺术，比卢浮宫轻松很多。莫奈《睡莲》空间大、画面直观，参观时间也容易控制。([en.wikipedia.org](https://en.wikipedia.org/wiki/Mus%C3%A9e_de_l%27Orangerie?utm_source=openai))
+
+如果只能选两个：**科学工业城 + 进化大展廊**。如果孩子喜欢画画，再加 **Musée en Herbe**。出发前建议查当天开放时间和是否需预约。

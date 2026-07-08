@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-043",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Negative control: the assistant stayed asleep and gave a direct, necessary clarification because no CSV content or path was provided. There was no methodology/framework output.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:20.142497+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 43,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12115,
+    "cached_input_tokens": 11648,
+    "output_tokens": 219,
+    "reasoning_output_tokens": 113
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

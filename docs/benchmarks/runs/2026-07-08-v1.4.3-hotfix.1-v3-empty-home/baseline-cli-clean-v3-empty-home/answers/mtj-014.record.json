@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:43:23.661119+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-014",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f64-acc3-7791-bdce-24206835c073",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-014-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 13.442,
+      "thread_id": "019f3f64-acc3-7791-bdce-24206835c073",
+      "answer": "选 **单体**。\n\n更准确地说：选 **模块化单体**，不要一上来搞微服务。\n\n原因很简单：大多数项目的瓶颈不是“服务拆得不够细”，而是需求还没稳定、团队协作还没成型、部署监控链路还不成熟。微服务会立刻引入额外复杂度：服务治理、网络调用、分布式事务、链路追踪、灰度发布、数据一致性、故障隔离、版本兼容。\n\n什么时候才选微服务？只有在这些条件已经明确成立时：\n\n- 团队足够大，多个小组需要独立交付\n- 不同业务模块有明显不同的扩展需求\n- 系统边界稳定，领域模型比较清楚\n- 已经具备成熟的 CI/CD、监控、告警、日志、追踪能力\n- 单体已经真实阻碍发布、扩容或组织协作\n\n否则，微服务不是架构升级，是提前负债。\n\n我的明确建议：**先做模块化单体，把边界设计清楚；等某个模块真的需要独立部署、独立扩容、独立团队负责时，再拆成服务。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-014-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-014-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-014-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-014-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-014-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "选 **单体**。\n\n更准确地说：选 **模块化单体**，不要一上来搞微服务。\n\n原因很简单：大多数项目的瓶颈不是“服务拆得不够细”，而是需求还没稳定、团队协作还没成型、部署监控链路还不成熟。微服务会立刻引入额外复杂度：服务治理、网络调用、分布式事务、链路追踪、灰度发布、数据一致性、故障隔离、版本兼容。\n\n什么时候才选微服务？只有在这些条件已经明确成立时：\n\n- 团队足够大，多个小组需要独立交付\n- 不同业务模块有明显不同的扩展需求\n- 系统边界稳定，领域模型比较清楚\n- 已经具备成熟的 CI/CD、监控、告警、日志、追踪能力\n- 单体已经真实阻碍发布、扩容或组织协作\n\n否则，微服务不是架构升级，是提前负债。\n\n我的明确建议：**先做模块化单体，把边界设计清楚；等某个模块真的需要独立部署、独立扩容、独立团队负责时，再拆成服务。**"
+      ],
+      "usage": {
+        "input_tokens": 11121,
+        "cached_input_tokens": 9088,
+        "output_tokens": 312,
+        "reasoning_output_tokens": 37
+      },
+      "user_prompt": "微服务还是单体？给我一个明确答案，别和稀泥。"
+    }
+  ],
+  "final_answer": "选 **单体**。\n\n更准确地说：选 **模块化单体**，不要一上来搞微服务。\n\n原因很简单：大多数项目的瓶颈不是“服务拆得不够细”，而是需求还没稳定、团队协作还没成型、部署监控链路还不成熟。微服务会立刻引入额外复杂度：服务治理、网络调用、分布式事务、链路追踪、灰度发布、数据一致性、故障隔离、版本兼容。\n\n什么时候才选微服务？只有在这些条件已经明确成立时：\n\n- 团队足够大，多个小组需要独立交付\n- 不同业务模块有明显不同的扩展需求\n- 系统边界稳定，领域模型比较清楚\n- 已经具备成熟的 CI/CD、监控、告警、日志、追踪能力\n- 单体已经真实阻碍发布、扩容或组织协作\n\n否则，微服务不是架构升级，是提前负债。\n\n我的明确建议：**先做模块化单体，把边界设计清楚；等某个模块真的需要独立部署、独立扩容、独立团队负责时，再拆成服务。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

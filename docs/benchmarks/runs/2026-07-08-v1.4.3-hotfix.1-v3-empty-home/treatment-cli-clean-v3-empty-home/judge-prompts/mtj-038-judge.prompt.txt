@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-038
+case_type: positive
+group_id: I
+expected_owner: decision_context_calibration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 situated recommendation with flip conditions, 1 partial, 0 generic comparison.
+pass_criteria: 处境化直接判断，并明确什么条件下答案翻转。
+fail_signal: 抽象中立对比。
+
+Canonical single-line prompt:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Full executed transcript:
+User turn 1:
+新能源车和油车哪个好？我一年跑3万公里，家里能装充电桩。
+
+Assistant turn 1:
+按你的情况：**优先选新能源车，最好是纯电。**
+
+你一年跑 **3万公里**，里程足够高；家里还能装充电桩，这是纯电车最关键的使用条件。美国能源部资料也提到，电动车通常燃料成本更低，纯电车能耗效率明显高于燃油车，且维护项目更少。来源：DOE/AFDC、FuelEconomy.gov（DOE/EPA）([afdc.energy.gov](https://afdc.energy.gov/fuels/electricity-benefits)) ([fueleconomy.gov](https://www.fueleconomy.gov/feg/evtech.shtml))
+
+简单算一笔账：
+
+- 纯电：按 `15度/100km`、家充 `0.6元/度`，3万公里电费约 **2700元/年**
+- 油车：按 `7L/100km`、油价 `8元/L`，3万公里油费约 **16800元/年**
+- 一年能源差额大约 **1.4万元**
+
+再加上纯电少了机油、火花塞、变速箱油等维护项目，你这种高里程用户，纯电的经济性会更明显。
+
+但有几个前提：
+
+- 你日常通勤和固定路线为主：选纯电很合适
+- 经常长途、冬天高速多、对补能时间敏感：可以考虑插混/增程
+- 买车准备开 5 年以上：纯电更容易把差价跑回来
+- 如果只能买很冷门的小品牌纯电：不如选主流品牌油车/混动，保值和维修更稳
+
+我的建议：**如果预算允许，买主流品牌纯电；如果你经常跑跨省长途，就买插混/增程；不建议优先买纯油车。**

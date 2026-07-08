@@ -1,0 +1,43 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-013
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 重建整体对象（位置/复购/坪效/品牌），评估豆子的真实权重后写限定文案。
+fail_signal: 直接写“豆子决定一切”文案。
+
+Canonical single-line prompt:
+我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。
+
+Full executed transcript:
+User turn 1:
+我们咖啡店生意好，靠的就是咖啡豆好。帮我写招商文案主打豆子。
+
+Assistant turn 1:
+当然。下面是一版主打“咖啡豆品质”的招商文案：
+
+**好咖啡，先赢在豆子**
+
+一家咖啡店能不能留住顾客，关键不只是装修和位置，更是第一口咖啡的味道。
+
+我们坚持精选优质咖啡豆，从产地、烘焙到萃取层层把控，让每一杯咖啡都有稳定香气、醇厚口感和清晰风味。顾客喝得出差别，也更愿意反复回来。
+
+现在诚邀合作伙伴加入，共同经营一家真正靠产品说话的咖啡店。
+
+我们的优势：
+
+- **优质咖啡豆供应**：精选高品质豆源，风味稳定，品质有保障  
+- **成熟烘焙标准**：根据门店出杯需求定制烘焙曲线，减少口味波动  
+- **产品复购力强**：豆子好，咖啡才好喝，顾客自然愿意回头  
+- **品牌支持完善**：提供产品培训、门店运营、物料设计及营销支持  
+- **适合长期经营**：不靠噱头，靠一杯杯稳定好喝的咖啡积累口碑  
+
+我们相信，真正能让咖啡店走得远的，是一杯好咖啡。
+
+如果你正在寻找一个有品质、有口碑、有持续复购能力的咖啡项目，欢迎加入我们，一起把好豆子做成好生意。

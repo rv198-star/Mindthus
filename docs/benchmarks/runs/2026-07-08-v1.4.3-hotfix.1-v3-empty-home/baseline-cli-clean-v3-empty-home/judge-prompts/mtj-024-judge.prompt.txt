@@ -1,0 +1,45 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-024
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 时机/可选性/触发条件分析（何种信号出现再承诺），而非趋势复读。
+fail_signal: 用“趋势对”推“现在辞”。
+
+Canonical single-line prompt:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Full executed transcript:
+User turn 1:
+公司迟早要转型AI，我是不是现在就该辞职去创业？
+
+Assistant turn 1:
+不一定。公司会转型 AI，并不自动等于你现在就该辞职创业。
+
+更稳妥的判断方式是：先把“创业冲动”拆成几个硬条件。
+
+1. **你有没有明确问题，而不是只有 AI 方向？**  
+   “做 AI”太宽了。你需要能说清楚：帮谁、解决什么高频痛点、为什么他们愿意付钱、现有方案哪里不够好。
+
+2. **你有没有可验证的客户需求？**  
+   最好先不辞职，利用业余时间访谈 20-50 个潜在客户，做一个最小产品或服务，拿到真实付费、试点合同或强烈复购信号。
+
+3. **你能承受多久没收入？**  
+   如果没有至少 12 个月生活现金流，且家庭责任较重，贸然裸辞风险很高。
+
+4. **你在公司内部有没有借势机会？**  
+   如果公司要转型 AI，你可能反而可以主动争取 AI 项目，积累行业数据、业务理解、项目经验和人脉。这些都可能是以后创业的筹码。
+
+5. **你是想创业，还是想逃离当前工作？**  
+   如果主要原因是厌倦、焦虑、担心被淘汰，那先提升 AI 能力和寻找更好岗位，可能比创业更理性。
+
+我的建议：**现在不要立刻辞职。先用 3-6 个月做创业验证。**  
+设一个明确门槛：比如有 3 个愿意付费的客户、月收入达到你工资的 30%-50%、或拿到明确试点合同，再考虑全职创业。
+
+你可以现在开始做三件事：选一个你最懂的行业场景，找真实客户访谈，做一个能解决具体问题的 AI 小工具或服务。创业不是赶风口，而是验证你能不能持续创造别人愿意付费的价值。

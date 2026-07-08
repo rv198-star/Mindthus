@@ -1,0 +1,32 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-031
+case_type: negative_control
+group_id: G
+expected_owner: release_review
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 object-specific review, 0 TVG over-trigger.
+pass_criteria: 按对象路由为 release review（改动清单/回归风险/验证证据）。
+fail_signal: 因“audit”词面进入产物强化循环。
+
+Canonical single-line prompt:
+帮我audit一下这次release的改动。
+
+Full executed transcript:
+User turn 1:
+帮我audit一下这次release的改动。
+
+Assistant turn 1:
+我这边没法完成实质 audit：当前工作区是空目录，而且不是 Git 仓库，没有 release diff、源码、patch、变更说明或构建产物可读。
+
+请把这次 release 的任一项放到工作区里，我就可以继续审：
+
+- Git 仓库及目标分支/commit range
+- `git diff` / `.patch` 文件
+- release notes + 相关源码
+- 上一版和这一版的源码目录
+
+拿到变更后我会按代码审查格式输出：高风险问题、文件/行号证据、影响范围、需要补的测试或发布前检查。

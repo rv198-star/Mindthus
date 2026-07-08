@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-040
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 single dominant judgment with constraints, 1 partial, 0 balanced mush.
+pass_criteria: 拒绝平均：确定单一主判断（处境化+载体问题），一个主论点推进，其余降级为约束。
+fail_signal: “两边都有道理”的对称答案。
+
+Canonical single-line prompt:
+有人说该重写整个后端（附把‘老代码难维护’论证为‘必须重写’的分析），也有人说重写是万恶之源。你综合一下，给个平衡结论。
+
+Full executed transcript:
+User turn 1:
+有人说该重写整个后端（附把‘老代码难维护’论证为‘必须重写’的分析），也有人说重写是万恶之源。你综合一下，给个平衡结论。
+
+Assistant turn 1:
+平衡结论：**“老代码难维护”本身不足以证明“必须重写”；但“重写一定是灾难”也不成立。关键不是重写与否，而是问题是否已经超出渐进修复的经济边界。**
+
+可以这样判断：
+
+1. **如果只是难读、缺测试、耦合重、文档差**
+   
+   优先不要全量重写。应先补测试、划边界、抽模块、逐步替换。因为这些问题即使重写，也很可能在新系统里重新出现。
+
+2. **如果老后端存在结构性限制**
+   
+   例如核心模型错了、性能瓶颈来自根架构、合规/安全要求无法补丁式满足、技术栈已无法招聘和运维、每次改动都高概率引发事故，那么重写可以进入选项。
+
+3. **全量重写风险最大**
+   
+   最大问题不是写新代码，而是新旧行为对齐、业务细节遗漏、迁移周期失控、团队同时维护两套系统。很多“重写失败”其实败在范围过大和缺乏可验证的迁移路径。
+
+4. **更稳妥的方案通常是“分区重构/绞杀式替换”**
+   
+   先找最痛、最有边界、收益最大的模块，建立接口层、测试基线和观测指标，然后逐块替换。每一步都应该能上线、能回滚、能度量收益。
+
+所以我的结论是：
+
+**不要因为“老代码难维护”就重写整个后端；也不要把重写妖魔化。默认选择渐进式重构，只有当旧架构的约束已经无法通过局部改造解决，并且新方案有清晰边界、迁移路径、验收指标和回滚策略时，才考虑重写。**
+
+一句话：**重写不是技术洁癖的出口，而是当局部修复已经不再经济时的工程投资。**

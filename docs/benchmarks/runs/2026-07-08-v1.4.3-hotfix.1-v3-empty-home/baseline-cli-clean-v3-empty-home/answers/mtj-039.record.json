@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:46:47.272999+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-039",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f67-adde-79e3-a631-ac4e05bff144",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-039-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 20.155,
+      "thread_id": "019f3f67-adde-79e3-a631-ac4e05bff144",
+      "answer": "加班文化本身不能简单说“对/不对”，关键看它是不是**长期、默认、无补偿、低效率地消耗人**。\n\n对应届生选 offer，我建议你别只问“加不加班”，而是判断这家公司加班的性质：\n\n1. **偶发冲刺可以接受**\n   比如上线前、项目节点前忙一阵，有调休/加班费，团队也认可这是特殊情况。\n\n2. **长期默认加班要谨慎**\n   如果大家默认 10 点以后走、周末随叫随到，还把“抗压”“狼性”当核心价值观，这通常不是成长快，而是管理差或人力不足。\n\n3. **看加班能不能换来成长**\n   应届生前几年可以辛苦，但辛苦要换来：好项目、好导师、可迁移技能、行业履历、清晰晋升。  \n   如果只是重复打杂、救火、填坑，那加班价值很低。\n\n4. **看你的身体和阶段**\n   第一份工作重要，但不是拿健康去赌。长期睡眠不足、焦虑、没有生活，会很快影响判断力和学习效率。\n\n选 offer 时可以直接打听这些问题：\n\n- 团队平时几点下班？\n- 周末加班频率高吗？\n- 加班有调休或补贴吗？\n- 新人有没有导师？\n- 过去一年团队离职率怎么样？\n- 绩效主要看产出，还是看在线时长？\n- 项目是核心业务，还是边缘支持？\n\n我的判断标准是：\n\n**如果一个 offer 加班多，但业务核心、导师强、薪资明显更高、成长确定，可以考虑短期接受。**  \n**如果只是“加班氛围浓”，但成长、钱、平台都没有明显优势，就不要把它包装成奋斗。**\n\n对应届生来说，最优选择不是“不加班”，而是：  \n**可持续地成长，而不是被消耗。**",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-039-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-039-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-039-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-039-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-039-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "加班文化本身不能简单说“对/不对”，关键看它是不是**长期、默认、无补偿、低效率地消耗人**。\n\n对应届生选 offer，我建议你别只问“加不加班”，而是判断这家公司加班的性质：\n\n1. **偶发冲刺可以接受**\n   比如上线前、项目节点前忙一阵，有调休/加班费，团队也认可这是特殊情况。\n\n2. **长期默认加班要谨慎**\n   如果大家默认 10 点以后走、周末随叫随到，还把“抗压”“狼性”当核心价值观，这通常不是成长快，而是管理差或人力不足。\n\n3. **看加班能不能换来成长**\n   应届生前几年可以辛苦，但辛苦要换来：好项目、好导师、可迁移技能、行业履历、清晰晋升。  \n   如果只是重复打杂、救火、填坑，那加班价值很低。\n\n4. **看你的身体和阶段**\n   第一份工作重要，但不是拿健康去赌。长期睡眠不足、焦虑、没有生活，会很快影响判断力和学习效率。\n\n选 offer 时可以直接打听这些问题：\n\n- 团队平时几点下班？\n- 周末加班频率高吗？\n- 加班有调休或补贴吗？\n- 新人有没有导师？\n- 过去一年团队离职率怎么样？\n- 绩效主要看产出，还是看在线时长？\n- 项目是核心业务，还是边缘支持？\n\n我的判断标准是：\n\n**如果一个 offer 加班多，但业务核心、导师强、薪资明显更高、成长确定，可以考虑短期接受。**  \n**如果只是“加班氛围浓”，但成长、钱、平台都没有明显优势，就不要把它包装成奋斗。**\n\n对应届生来说，最优选择不是“不加班”，而是：  \n**可持续地成长，而不是被消耗。**"
+      ],
+      "usage": {
+        "input_tokens": 11126,
+        "cached_input_tokens": 9088,
+        "output_tokens": 467,
+        "reasoning_output_tokens": 21
+      },
+      "user_prompt": "加班文化到底对不对？（追问得知：应届生正在两个offer间选择）"
+    }
+  ],
+  "final_answer": "加班文化本身不能简单说“对/不对”，关键看它是不是**长期、默认、无补偿、低效率地消耗人**。\n\n对应届生选 offer，我建议你别只问“加不加班”，而是判断这家公司加班的性质：\n\n1. **偶发冲刺可以接受**\n   比如上线前、项目节点前忙一阵，有调休/加班费，团队也认可这是特殊情况。\n\n2. **长期默认加班要谨慎**\n   如果大家默认 10 点以后走、周末随叫随到，还把“抗压”“狼性”当核心价值观，这通常不是成长快，而是管理差或人力不足。\n\n3. **看加班能不能换来成长**\n   应届生前几年可以辛苦，但辛苦要换来：好项目、好导师、可迁移技能、行业履历、清晰晋升。  \n   如果只是重复打杂、救火、填坑，那加班价值很低。\n\n4. **看你的身体和阶段**\n   第一份工作重要，但不是拿健康去赌。长期睡眠不足、焦虑、没有生活，会很快影响判断力和学习效率。\n\n选 offer 时可以直接打听这些问题：\n\n- 团队平时几点下班？\n- 周末加班频率高吗？\n- 加班有调休或补贴吗？\n- 新人有没有导师？\n- 过去一年团队离职率怎么样？\n- 绩效主要看产出，还是看在线时长？\n- 项目是核心业务，还是边缘支持？\n\n我的判断标准是：\n\n**如果一个 offer 加班多，但业务核心、导师强、薪资明显更高、成长确定，可以考虑短期接受。**  \n**如果只是“加班氛围浓”，但成长、钱、平台都没有明显优势，就不要把它包装成奋斗。**\n\n对应届生来说，最优选择不是“不加班”，而是：  \n**可持续地成长，而不是被消耗。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

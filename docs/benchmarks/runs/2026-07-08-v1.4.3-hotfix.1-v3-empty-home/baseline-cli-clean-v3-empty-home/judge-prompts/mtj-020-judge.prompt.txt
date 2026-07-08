@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-020
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 把目标函数（增长）与局部优势（单条精致）分开，指出产能瓶颈。
+fail_signal: 只答“质量重要”。
+
+Canonical single-line prompt:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Full executed transcript:
+User turn 1:
+我自己剪的视频比模板工具精致，全手工做账号值得吗？目标一年10万粉。
+
+Assistant turn 1:
+值得，但不建议“全手工到底”。
+
+如果目标是一年 10 万粉，核心不是你剪得比模板精致，而是：**这种精致能不能稳定提高完播、转粉和复看**。如果只是画面更好看，但选题、节奏、信息密度、情绪钩子没明显优势，手工剪辑会变成高成本自嗨。
+
+更现实的策略是：
+
+1. **前期用手工建立差异化**
+   前 30-60 条可以精剪，打磨账号质感、找到风格、测试哪些剪法真的涨数据。
+
+2. **把手工流程模板化**
+   不是用平台模板，而是做你自己的模板：片头节奏、字幕样式、转场逻辑、音效库、封面规范、BGM 类型、爆点位置。这样保留精致感，但降低单条成本。
+
+3. **把精力优先放在选题和开头**
+   对涨粉来说，通常优先级是：
+   **选题 > 前 3 秒 > 内容结构 > 人设/观点 > 剪辑精致度**。
+   剪辑是放大器，不是发动机。
+
+4. **设一个产能底线**
+   一年 10 万粉，通常需要持续高频测试。建议至少做到每周 3-5 条。如果全手工导致一周只能发 1 条，除非内容极强，否则风险很大。
+
+5. **用数据决定是否继续精剪**
+   看这几个指标：
+   - 完播率是否明显高于同领域平均
+   - 关注转化率是否高
+   - 评论/收藏是否说明用户认可你的“质感”
+   - 同选题下，精剪版是否明显优于轻剪版
+
+结论：**手工剪辑值得作为账号的竞争力，但不值得成为账号的全部生产方式。**  
+你应该做的是“手工审美 + 半模板化生产”。一年 10 万粉更需要稳定产出、选题命中和可复制爆款，而不是每条都像作品集。

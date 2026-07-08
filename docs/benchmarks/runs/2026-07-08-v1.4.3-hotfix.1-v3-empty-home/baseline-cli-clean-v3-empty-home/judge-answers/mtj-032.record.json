@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-032",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant stayed asleep appropriately: it did not blindly rewrite or launch a heavy improvement workflow. It asked for the weekly report text and targeted clarifications about audience, desired style, and whether to preserve the structure, which satisfies the expected clarification behavior for an underspecified '不太行' request.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:21.726701+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 32,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11291,
+    "cached_input_tokens": 2432,
+    "output_tokens": 198,
+    "reasoning_output_tokens": 63
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

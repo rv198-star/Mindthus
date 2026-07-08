@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-035",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "Negative control: the assistant stayed in ordinary debugging mode, asking for the next failing test output and noting the read-only constraint. It did not mechanically trigger anti-spiral/methodology framing or stop to lecture; the behavior is evidence-seeking and directly aligned with continuing normal debugging.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:55:25.253384+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 35,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12202,
+    "cached_input_tokens": 9088,
+    "output_tokens": 385,
+    "reasoning_output_tokens": 252
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

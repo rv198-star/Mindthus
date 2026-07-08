@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-048",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Directionally correct: the answer rejects reducing prompt engineering to wording and reframes it as task specification, constraints, context, evaluation, and workflow design. However, the first sentence is only the soft denial “不完全是。” rather than a clear corrective first sentence assigning definition ownership to task/constraint/interface design over rhetoric. It does not open with the failing concession phrase or a field list, but it misses the first-sentence lock required for full credit.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:52.763761+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12509,
+    "cached_input_tokens": 11648,
+    "output_tokens": 263,
+    "reasoning_output_tokens": 96
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

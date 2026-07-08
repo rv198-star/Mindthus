@@ -1,0 +1,12 @@
+可以。请把以下两部分贴出来：
+
+1. 完整异常栈，尤其是第一段 `NullPointerException` 后面的 `at ...` 行  
+2. 相关代码，至少包含栈里指向的那个文件和行号附近 20 行
+
+我会先定位真正为空的对象，再给你最小修改版修复代码。如果你已经知道报错行号，也可以直接告诉我类似：
+
+```text
+NullPointerException at XxxService.java:42
+```
+
+并贴出 `XxxService.java` 第 30-55 行。

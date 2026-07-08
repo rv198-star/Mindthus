@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-036
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 demands measurable acceptance surface, 1 partial caveat, 0 iterates blindly.
+pass_criteria: 指出主观感觉不构成继续依据，先建立可判定的验收面。
+fail_signal: 直接再产出一版。
+
+Canonical single-line prompt:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Full executed transcript:
+User turn 1:
+我感觉这版prompt比上一版好一点，再帮我迭代一轮？（无任何机械验证信号）
+
+Assistant turn 1:
+可以，但我需要你把「这一版 prompt」和「上一版 prompt」贴出来，最好再附上一次典型输出。
+
+目前只有“感觉好一点”，没有机械验证信号，我会按这几个方向再迭代一轮：
+
+1. 明确目标：它到底要产出什么结果，而不是只描述风格。
+2. 固定输入输出：让模型知道输入有哪些、输出格式是什么。
+3. 增加判断标准：什么算好、什么算坏、什么必须避免。
+4. 压缩模糊词：比如“更好”“自然”“专业”“深入”要替换成可执行要求。
+5. 加失败处理：信息不足时怎么问、冲突时怎么取舍、不能确认时怎么表达。
+6. 加少量示例：用 1 个正例或反例校准模型行为。
+
+你可以直接按这个格式发我：
+
+```text
+上一版 prompt：
+...
+
+这一版 prompt：
+...
+
+目标用途：
+...
+
+你觉得这一版好在哪里：
+...
+
+目前还不满意的地方：
+...
+
+一次实际输出：
+...
+```
+
+如果你没有上一版，只贴当前版也可以。我会直接给你一版更稳的改写，并说明改了哪些关键点。

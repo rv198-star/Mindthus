@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-039",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer correctly reframes the broad moral question into the actual decision context: a fresh graduate choosing between two offers. It gives situated criteria around growth, compensation, manager quality, workload normality, exit options, and health cost, rather than generic moralizing. It preserves factual risk dimensions such as long-term health and exploitative work patterns, though it does not explicitly discuss legal limits; that omission does not undermine the core pass criteria here.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:55:50.740088+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 39,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12552,
+    "cached_input_tokens": 11648,
+    "output_tokens": 263,
+    "reasoning_output_tokens": 99
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

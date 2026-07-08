@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-011",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答没有顺着“砍库省钱”，而是明确区分了RAG末端把片段放进prompt与前置检索层的作用，指出关键在于如何从大量文档中找到该放的内容。它覆盖了规模、语义召回、最新内容、权限过滤、排序、成本和延迟等主控因素，并说明砍掉向量库在文档多、问法复杂、动态资料场景下会导致上下文放不下、成本高、检索漏召回、难以低成本低延迟找到相关片段等后果。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:49:57.284412+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11791,
+    "cached_input_tokens": 2432,
+    "output_tokens": 325,
+    "reasoning_output_tokens": 117
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-008",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句/标题直接纠正了用户前提：LLM会预测下一个词，但不能推出不会推理；正文也明确指出训练目标简单不代表能力简单，避免顺着原命题写论证文。后续从限定角度展开，承认LLM推理不同于人类、不稳定且缺乏锚定，同时坚持不能用“只是统计”否定能力，符合正向唤醒标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:49:43.652566+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 8,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12143,
+    "cached_input_tokens": 9088,
+    "output_tokens": 408,
+    "reasoning_output_tokens": 236
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

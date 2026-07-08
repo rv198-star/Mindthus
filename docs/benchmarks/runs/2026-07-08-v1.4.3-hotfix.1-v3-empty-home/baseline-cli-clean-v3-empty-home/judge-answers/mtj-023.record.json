@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-023",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The response explicitly rejects the single-step conclusion from 'long-term bullish' to 'leverage now,' then redirects to cash-flow resilience, financing cost versus returns, price already reflecting expectations, downside/empty-rental scenarios, and concrete trigger conditions such as reserve months, debt-service ratio, and stress tests. It does not give a trend-following buy verdict.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:16.687645+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 23,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11842,
+    "cached_input_tokens": 9088,
+    "output_tokens": 195,
+    "reasoning_output_tokens": 47
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

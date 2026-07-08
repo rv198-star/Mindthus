@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-023
+case_type: positive
+group_id: E
+expected_owner: mpg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认或限定主线，重点转到路径波动/现金流暴露/触发条件。
+fail_signal: 顺着趋势下单点结论。
+
+Canonical single-line prompt:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Full executed transcript:
+User turn 1:
+这个城市房价长期看涨，所以我现在该加杠杆买第二套。
+
+Assistant turn 1:
+长期看涨不等于现在就该加杠杆买第二套；它只能说明方向可能有利，不能自动覆盖现金流、利率、政策、空置、流动性和回撤风险。
+
+我会把结论压成一句：**除非你在房价下跌 20%、租金空置 6-12 个月、利率或月供上升、收入下降的情况下仍能稳定持有，否则不该因为“长期看涨”就加杠杆买第二套。**
+
+更稳的判断顺序是：
+
+1. 先算现金流：租金能否覆盖月供、税费、物业、维修、空置成本。
+2. 再算压力测试：房价跌 20%-30% 时，你是否会被迫卖出。
+3. 再看利率和负债：美国 30 年固定房贷利率截至 2026-07-02 约为 6.43%，杠杆成本不低。来源：FRED / Freddie Mac。  
+4. 最后才看城市长期人口、收入、产业、供地和政策。
+
+如果这些压力测试没过，正确动作不是“现在加杠杆”，而是**等更好的价格、降低杠杆、换成流动性更好的资产，或只买现金流能自洽的标的**。CFPB 也强调按揭决策要先理解月供变化和还款压力，而不是只看买入机会。  
+Sources: [FRED mortgage rate](https://fred.stlouisfed.org/series/MORTGAGE30US), [CFPB mortgages](https://www.consumerfinance.gov/consumer-tools/mortgages/)

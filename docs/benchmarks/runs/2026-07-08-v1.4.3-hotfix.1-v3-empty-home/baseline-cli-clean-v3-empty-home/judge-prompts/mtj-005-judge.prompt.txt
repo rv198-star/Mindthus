@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-005
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 拒绝单案例当结论，重构为“什么条件下远程有效/失效”，点名带节奏点。
+fail_signal: 顺着写论证文。
+
+Canonical single-line prompt:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Full executed transcript:
+User turn 1:
+帮我论证这个观点：远程办公已经失败了，你看Meta都让员工回办公室了。
+
+Assistant turn 1:
+可以这样论证，但建议把观点表述得更严谨一点：不是“远程办公完全失败”，而是“以大规模、长期、默认远程为核心的办公模式，已经被很多大公司证明难以持续”。
+
+论证思路：
+
+远程办公最初被看作效率革命，因为它减少通勤、扩大招聘范围，也给员工更多自由。但疫情后的几年证明，远程办公在短期应急中有效，在长期组织运转中却暴露出明显问题。
+
+首先，远程办公削弱了协作效率。很多复杂工作不是靠个人独立完成，而是靠快速沟通、临时讨论、跨部门协调来推进。线上会议可以替代一部分沟通，但很难替代办公室里的即时反馈、非正式交流和共同解决问题的氛围。时间一长，沟通成本反而上升。
+
+其次，远程办公不利于组织文化和新人培养。老员工也许可以靠既有经验自我管理，但新员工需要观察、模仿、请教和融入团队。完全远程会让新人更难建立关系，也更难理解公司的工作标准和隐性规则。组织文化不是靠邮件和会议软件建立的，而是在日常共同工作中形成的。
+
+第三，管理层越来越发现，远程办公会降低可见性和责任感。不是说员工都不自觉，而是当团队长期分散，管理者更难判断真实工作状态，也更难及时发现问题。结果就是更多流程、更多汇报、更多会议，反而抵消了远程办公所谓的灵活性。
+
+Meta让员工回办公室就是一个有代表性的信号。像Meta这样的科技公司本来是远程办公最有条件成功的企业：数字化程度高、工具完善、员工素质高。但即便如此，它也要求员工回到办公室，说明问题不只是技术工具不够，而是远程办公本身在协作、创新、管理和文化建设上存在结构性缺陷。
+
+因此，远程办公的失败不在于“不能用”，而在于它没有兑现当初“全面替代办公室”的承诺。未来更可能成为一种补充性福利，比如每周一两天远程，而不是公司运转的默认模式。大公司推动回办公室，说明企业最终还是认为面对面协作对效率、创新和组织控制更重要。

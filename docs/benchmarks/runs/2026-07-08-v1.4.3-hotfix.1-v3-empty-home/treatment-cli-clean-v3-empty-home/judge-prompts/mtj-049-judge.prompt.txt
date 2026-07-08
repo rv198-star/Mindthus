@@ -1,0 +1,64 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks no data plus hypothetical numbers and avoids computed conclusion, 1 gives partial caveat but still blurs boundary, 0 fabricates precision or decides from invented numbers.
+pass_criteria: 先声明没有实测数据；如使用数字，只能作为假设口径来显影变量关系，并明确标注“数字是假设，关系才是重点”；不得用假设数字计算最终结论，决策应回到数据缺口或用户风险偏好。
+fail_signal: 编造精确数字，或把假设数字当实测数据来计算结论/替用户下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+可以，但在“无任何实测数据”的前提下，数字只能是**假设性风险敞口**，不能当成预测。建议用同一套口径把两个方案放到 0-100 分里比较。
+
+假设：
+
+| 指标 | 方案 A | 方案 B |
+|---|---:|---:|
+| 初始投入 | 100 万 | 60 万 |
+| 失败概率假设 | 35% | 55% |
+| 失败损失比例 | 80% | 50% |
+| 延期/返工概率 | 30% | 20% |
+| 延期/返工损失 | 20 万 | 10 万 |
+| 不可逆程度 | 70/100 | 35/100 |
+
+粗算风险敞口：
+
+```text
+预期失败损失 = 初始投入 × 失败概率 × 失败损失比例
+预期延期损失 = 延期概率 × 延期损失
+总风险敞口 = 预期失败损失 + 预期延期损失
+```
+
+结果：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 预期失败损失 | 100万 × 35% × 80% = 28 万 | 60万 × 55% × 50% = 16.5 万 |
+| 预期延期损失 | 30% × 20万 = 6 万 | 20% × 10万 = 2 万 |
+| 总风险敞口 | **34 万** | **18.5 万** |
+| 相对风险 | 方案 B 的 **1.84 倍** | 基准 |
+| 最大一次性损失 | 80 万 | 30 万 |
+| 不可逆风险 | 高 | 中低 |
+
+结论：在这组假设下，**方案 A 的上限更高，但风险敞口约为方案 B 的 1.8 倍**；方案 B 成功率可能更低，但因为投入小、损失半径小、可回撤性更强，整体暴露更低。
+
+如果没有任何数据，我会把判断写成：
+
+```text
+方案 A：高投入、高不可逆、高单点损失，适合在确定性较高时推进。
+方案 B：低投入、低不可逆、低损失半径，适合在信息不足时先试探。
+```
+
+没有实测数据时，最稳妥的量化结论不是“哪个一定更好”，而是：**先控制最大损失，再比较预期收益。**

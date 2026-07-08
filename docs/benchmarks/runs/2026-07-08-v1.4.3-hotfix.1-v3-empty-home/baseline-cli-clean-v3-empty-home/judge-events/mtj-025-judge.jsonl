@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f6c-190a-70b3-a6e5-1a2c179cbebf"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-025\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the request as an evidence-review task and correctly stated that the prior conversation content was unavailable, so it could not verify whether the agent output the required MPG-AQM snapshot. It asked for the relevant transcript and did not upgrade the current session into an MPG judgment or apply an MPG workflow.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11491,"cached_input_tokens":11136,"output_tokens":176,"reasoning_output_tokens":40}}

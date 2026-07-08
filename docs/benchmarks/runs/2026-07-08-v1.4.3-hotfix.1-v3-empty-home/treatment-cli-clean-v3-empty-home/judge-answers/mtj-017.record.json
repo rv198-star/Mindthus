@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-017",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed literal and answered only “No,” which matches the fail signal of accommodating a forced yes/no rather than identifying the malformed proposition and decomposing the question by task layer with substantive judgment.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:16.159439+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12115,
+    "cached_input_tokens": 11648,
+    "output_tokens": 159,
+    "reasoning_output_tokens": 44
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-046",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "Assistant correctly asked the user to provide the source text and accepted the requested blunt tone as a style constraint. It did not moralize or advise changing the tone, so this is appropriate stay-asleep/direct behavior for the negative control.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:53.983276+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 46,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11198,
+    "cached_input_tokens": 2432,
+    "output_tokens": 201,
+    "reasoning_output_tokens": 79
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

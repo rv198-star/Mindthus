@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-045",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The assistant stayed asleep as expected for a negative-control information-acquisition case: it plainly stated it lacked the Q3 revenue source/context and asked the user to provide relevant data/files. It did not introduce a judgment framework or method wrapper.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:29.220207+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 45,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12173,
+    "cached_input_tokens": 11648,
+    "output_tokens": 154,
+    "reasoning_output_tokens": 31
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

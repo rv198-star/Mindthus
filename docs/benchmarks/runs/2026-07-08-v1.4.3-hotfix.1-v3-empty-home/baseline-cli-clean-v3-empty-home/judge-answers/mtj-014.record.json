@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-014",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有直接陷入微服务/单体二选一，而是明确提出“模块化单体”作为第三态，指出默认选单体但更准确是模块化单体。随后按团队规模、独立交付、扩展需求、边界稳定性、CI/CD与监控追踪、单体是否真实阻碍发布/扩容/协作等坐标给出判断条件，并最终明确站位为先做模块化单体，达到正向唤醒预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:19.870783+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11676,
+    "cached_input_tokens": 2432,
+    "output_tokens": 252,
+    "reasoning_output_tokens": 66
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

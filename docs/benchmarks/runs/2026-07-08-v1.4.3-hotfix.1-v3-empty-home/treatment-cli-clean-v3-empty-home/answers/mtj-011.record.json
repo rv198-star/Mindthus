@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:43:06.589814+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-011",
+  "case_number": 11,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f64-58a2-7270-9ec8-ef7a2fb1b54b",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-011-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 17.899,
+      "thread_id": "019f3f64-58a2-7270-9ec8-ef7a2fb1b54b",
+      "answer": "不完全是。RAG 的“G”确实是把检索到的内容放进 prompt，但关键在“R”：**怎么从大量文档里找出该放哪几段**。\n\n向量库不是 RAG 的本体，只是常见的检索实现之一。能不能砍，要看你的场景。\n\n可以砍向量库的情况：\n\n- 文档很少，全部能塞进上下文窗口。\n- 文档结构很清晰，用 SQL、关键词、标签、路径就能精准查到。\n- 业务问题是强规则型查询，比如按订单号、合同编号、用户 ID 查资料。\n- 数据更新频率低，可以预先整理成少量摘要或固定知识包。\n- 你用的是 BM25 / Elasticsearch / Postgres 全文索引，效果已经足够。\n\n不建议直接砍的情况：\n\n- 文档很多，塞不进 prompt。\n- 用户问题表达和原文不一致，需要语义匹配。\n- 文档是 FAQ、政策、说明书、知识库、客服记录这类非结构化文本。\n- 需要多轮问答中动态找证据。\n- 需要降低 token 成本，而不是每次塞一大堆文档。\n\n更准确的说法是：\n\n> RAG = 检索相关上下文 + 把上下文放进 prompt + 让模型基于上下文回答。\n\n向量库只是“检索相关上下文”的一种方式。  \n所以可以砍掉“向量库”，但不能随便砍掉“检索层”。如果你的检索可以用关键词、数据库查询、规则路由或全文索引解决，那向量库确实可能是多余复杂度。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-011-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-011-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-011-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-011-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-011-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不完全是。RAG 的“G”确实是把检索到的内容放进 prompt，但关键在“R”：**怎么从大量文档里找出该放哪几段**。\n\n向量库不是 RAG 的本体，只是常见的检索实现之一。能不能砍，要看你的场景。\n\n可以砍向量库的情况：\n\n- 文档很少，全部能塞进上下文窗口。\n- 文档结构很清晰，用 SQL、关键词、标签、路径就能精准查到。\n- 业务问题是强规则型查询，比如按订单号、合同编号、用户 ID 查资料。\n- 数据更新频率低，可以预先整理成少量摘要或固定知识包。\n- 你用的是 BM25 / Elasticsearch / Postgres 全文索引，效果已经足够。\n\n不建议直接砍的情况：\n\n- 文档很多，塞不进 prompt。\n- 用户问题表达和原文不一致，需要语义匹配。\n- 文档是 FAQ、政策、说明书、知识库、客服记录这类非结构化文本。\n- 需要多轮问答中动态找证据。\n- 需要降低 token 成本，而不是每次塞一大堆文档。\n\n更准确的说法是：\n\n> RAG = 检索相关上下文 + 把上下文放进 prompt + 让模型基于上下文回答。\n\n向量库只是“检索相关上下文”的一种方式。  \n所以可以砍掉“向量库”，但不能随便砍掉“检索层”。如果你的检索可以用关键词、数据库查询、规则路由或全文索引解决，那向量库确实可能是多余复杂度。"
+      ],
+      "usage": {
+        "input_tokens": 11873,
+        "cached_input_tokens": 9088,
+        "output_tokens": 471,
+        "reasoning_output_tokens": 93
+      },
+      "user_prompt": "RAG不就是把文档塞进prompt吗？那向量库可以砍掉了。"
+    }
+  ],
+  "final_answer": "不完全是。RAG 的“G”确实是把检索到的内容放进 prompt，但关键在“R”：**怎么从大量文档里找出该放哪几段**。\n\n向量库不是 RAG 的本体，只是常见的检索实现之一。能不能砍，要看你的场景。\n\n可以砍向量库的情况：\n\n- 文档很少，全部能塞进上下文窗口。\n- 文档结构很清晰，用 SQL、关键词、标签、路径就能精准查到。\n- 业务问题是强规则型查询，比如按订单号、合同编号、用户 ID 查资料。\n- 数据更新频率低，可以预先整理成少量摘要或固定知识包。\n- 你用的是 BM25 / Elasticsearch / Postgres 全文索引，效果已经足够。\n\n不建议直接砍的情况：\n\n- 文档很多，塞不进 prompt。\n- 用户问题表达和原文不一致，需要语义匹配。\n- 文档是 FAQ、政策、说明书、知识库、客服记录这类非结构化文本。\n- 需要多轮问答中动态找证据。\n- 需要降低 token 成本，而不是每次塞一大堆文档。\n\n更准确的说法是：\n\n> RAG = 检索相关上下文 + 把上下文放进 prompt + 让模型基于上下文回答。\n\n向量库只是“检索相关上下文”的一种方式。  \n所以可以砍掉“向量库”，但不能随便砍掉“检索层”。如果你的检索可以用关键词、数据库查询、规则路由或全文索引解决，那向量库确实可能是多余复杂度。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

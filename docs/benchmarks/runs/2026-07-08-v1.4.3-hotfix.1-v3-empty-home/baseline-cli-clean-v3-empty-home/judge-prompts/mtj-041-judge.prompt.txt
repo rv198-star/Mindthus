@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-041
+case_type: positive
+group_id: J
+expected_owner: aspect_arbitration
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 names dominant owner and proceeds, 1 partial, 0 method stack.
+pass_criteria: 在薄产物/控制边界/定框三个切面中明确主导者（先审‘换模型’这个打包结论），单线推进。
+fail_signal: 三个角度各说一段。
+
+Canonical single-line prompt:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Full executed transcript:
+User turn 1:
+我们AI写的月报很完整但没人看，是不是该换个更强的模型？
+
+Assistant turn 1:
+不一定。月报“完整但没人看”，通常不是模型不够强，而是交付形态和读者任务不匹配。
+
+可以先判断三件事：
+
+1. **读者是谁**
+   老板、业务负责人、一线团队、客户看的重点完全不同。一个通用月报往往谁都覆盖，结果谁都不想读。
+
+2. **读者要用它做什么决策**
+   如果月报只是“信息汇总”，价值感会很低。更有用的是：
+   - 本月最重要的 3 个变化
+   - 哪些指标异常
+   - 原因判断
+   - 下月建议动作
+   - 需要谁拍板
+
+3. **内容是不是太完整**
+   AI 很容易把报告写得“面面俱到”，但管理者更需要“先给结论，再给证据”。完整内容可以放附录，正文要短。
+
+我建议不要先换模型，先改产品形态：
+
+- 把月报改成 **一页摘要 + 详细附录**
+- 开头固定写：**本月结论、风险、机会、建议动作**
+- 给不同角色生成不同版本，例如“老板版”“销售版”“运营版”
+- 加一个“需要你关注/决策”的区块
+- 用数据图表和异常解释替代长段文字
+- 追踪打开率、阅读时长、转发/评论/采纳建议数量
+
+什么时候才需要换更强模型？
+
+如果现在的问题是：事实经常错、逻辑分析浅、无法从复杂数据中提炼洞察、建议明显空泛，那可以考虑更强模型。
+
+但如果问题是“写得很全、没人读”，优先改结构、受众和分发方式。模型再强，也救不了一份没有明确读者任务的报告。

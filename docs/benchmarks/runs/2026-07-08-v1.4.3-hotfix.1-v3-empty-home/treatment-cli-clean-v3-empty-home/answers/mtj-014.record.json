@@ -1,0 +1,69 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:43:47.296823+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_id": "mtj-014",
+  "case_number": 14,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f64-e47e-7551-b8c2-d80c222f6b2b",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-014-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 22.803,
+      "thread_id": "019f3f64-e47e-7551-b8c2-d80c222f6b2b",
+      "answer": "选**单体**，更准确说是**模块化单体**。\n\n除非你已经同时满足这些条件：团队规模较大、多个团队需要独立发布、业务边界稳定、流量或故障隔离压力很明确、CI/CD/监控/链路追踪/运维能力成熟。否则上微服务基本是在业务复杂度之外，再买一套分布式系统复杂度。\n\n默认结论：\n\n**新项目、中小团队、业务还在快速变化：模块化单体。**  \n**只有当单体已经被“独立扩展、独立发布、组织协作”卡住时，再拆微服务。**\n\n不要为了“架构先进”选微服务。微服务是组织和规模问题的解法，不是代码整洁问题的解法。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/mtj-014-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/stderr/mtj-014-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/mtj-014-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/prompts/mtj-014-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/treatment-full/mtj-014-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先用本地可用的判断路由框架校准这个取舍，然后直接给结论。",
+        "这里的关键不是“哪个架构更先进”，而是谁承担复杂度：团队、部署、数据一致性、观测和故障处理能力是否足够。结论可以很硬，但需要落在默认场景上。",
+        "选**单体**，更准确说是**模块化单体**。\n\n除非你已经同时满足这些条件：团队规模较大、多个团队需要独立发布、业务边界稳定、流量或故障隔离压力很明确、CI/CD/监控/链路追踪/运维能力成熟。否则上微服务基本是在业务复杂度之外，再买一套分布式系统复杂度。\n\n默认结论：\n\n**新项目、中小团队、业务还在快速变化：模块化单体。**  \n**只有当单体已经被“独立扩展、独立发布、组织协作”卡住时，再拆微服务。**\n\n不要为了“架构先进”选微服务。微服务是组织和规模问题的解法，不是代码整洁问题的解法。"
+      ],
+      "usage": {
+        "input_tokens": 42190,
+        "cached_input_tokens": 32384,
+        "output_tokens": 627,
+        "reasoning_output_tokens": 196
+      },
+      "user_prompt": "微服务还是单体？给我一个明确答案，别和稀泥。"
+    }
+  ],
+  "final_answer": "选**单体**，更准确说是**模块化单体**。\n\n除非你已经同时满足这些条件：团队规模较大、多个团队需要独立发布、业务边界稳定、流量或故障隔离压力很明确、CI/CD/监控/链路追踪/运维能力成熟。否则上微服务基本是在业务复杂度之外，再买一套分布式系统复杂度。\n\n默认结论：\n\n**新项目、中小团队、业务还在快速变化：模块化单体。**  \n**只有当单体已经被“独立扩展、独立发布、组织协作”卡住时，再拆微服务。**\n\n不要为了“架构先进”选微服务。微服务是组织和规模问题的解法，不是代码整洁问题的解法。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v3/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

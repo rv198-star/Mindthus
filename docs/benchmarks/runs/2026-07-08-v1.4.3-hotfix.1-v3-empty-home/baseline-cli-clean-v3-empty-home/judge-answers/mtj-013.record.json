@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-013",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "The response mostly accepts the user's premise and writes bean-led招商文案. It does add limited qualifiers such as not only decoration/location, and mentions复购、标准化、运营支持, so it is not a pure '豆子决定一切' failure. However, it does not reconstruct the whole business object around location, repeat purchase,坪效, brand, and operating model, nor does it evaluate the real weight of beans before producing a constrained positioning. This is partial at best.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:09.898998+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11455,
+    "cached_input_tokens": 2432,
+    "output_tokens": 305,
+    "reasoning_output_tokens": 130
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

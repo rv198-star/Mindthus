@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-025",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "The assistant treated the request as an evidence-review task: it stated it lacked the prior session transcript, requested the relevant output, and listed concrete items to check. It referenced MPG-AQM only as the rule set being audited, not as a reason to run an MPG judgment process in the current session. No over-methodized MPG workflow or current-session escalation was observed.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:09.988064+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 25,
+  "group_id": "E",
+  "group_name": "MPG mainline-path carrying",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12330,
+    "cached_input_tokens": 11648,
+    "output_tokens": 206,
+    "reasoning_output_tokens": 57
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

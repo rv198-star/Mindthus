@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f70-ab93-7a31-8682-7005956f4325"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-044\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant answered the simple travel recommendation question directly with a concise list of child-friendly Paris museums and brief selection guidance. It did not introduce framing analysis, method routing, or over-structured reasoning, so it stays asleep as expected for this negative-control case.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12710,"cached_input_tokens":11648,"output_tokens":234,"reasoning_output_tokens":107}}

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-026",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答明确没有只调 prompt，而是把退款治理拆到权限、流程、策略服务、人工审批、输出拦截、审计和回归测试。它把审批设为硬约束，将 agent 权限收窄为创建申请而非执行/承诺退款，并要求承诺动作前必须有审批通过记录，符合按流程/判断/证据分配控制权的预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:51:36.732453+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 26,
+  "group_id": "F",
+  "group_name": "WAE control boundary",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12081,
+    "cached_input_tokens": 9088,
+    "output_tokens": 213,
+    "reasoning_output_tokens": 49
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

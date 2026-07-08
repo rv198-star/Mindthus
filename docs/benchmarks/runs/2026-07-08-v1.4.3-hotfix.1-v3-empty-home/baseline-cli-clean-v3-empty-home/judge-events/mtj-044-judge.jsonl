@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f6e-1f24-7c51-9d57-c6f7224bd207"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-044\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"回答直接列出适合6岁孩子的巴黎博物馆，并给出简短理由和优先推荐；没有进行方法论化的 framing 分析或不必要的流程展开。符合 negative_control 的 stay-asleep/direct answer 预期。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":11870,"cached_input_tokens":2432,"output_tokens":201,"reasoning_output_tokens":71}}

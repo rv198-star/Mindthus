@@ -1,0 +1,226 @@
+可以。先按“止血 + 验证 + 长期治理”出方案，避免盲目建一堆索引把写入拖垮。
+
+**一、先定位 P99 慢查询**
+
+优先从最近 1-3 天的慢查询日志、APM、数据库 `pg_stat_statements` / MySQL slow log 里拉出：
+
+1. P99 请求对应的 SQL
+2. `WHERE` 条件
+3. `JOIN` 条件
+4. `ORDER BY`
+5. `GROUP BY`
+6. `LIMIT`
+7. 返回行数、扫描行数、执行计划
+
+目标不是“给表建索引”，而是“给具体查询路径建索引”。
+
+**二、索引建设原则**
+
+优先建这些索引：
+
+1. **高频等值过滤字段**
+   ```sql
+   WHERE tenant_id = ?
+   WHERE user_id = ?
+   WHERE status = ?
+   ```
+
+2. **等值条件 + 排序字段的联合索引**
+   常见于列表页、分页接口：
+   ```sql
+   WHERE tenant_id = ? AND status = ?
+   ORDER BY created_at DESC
+   LIMIT 20
+   ```
+
+   建议：
+   ```sql
+   CREATE INDEX idx_table_tenant_status_created
+   ON table_name (tenant_id, status, created_at DESC);
+   ```
+
+3. **JOIN 字段**
+   ```sql
+   ON orders.user_id = users.id
+   ```
+
+   建议：
+   ```sql
+   CREATE INDEX idx_orders_user_id ON orders(user_id);
+   ```
+
+4. **范围查询放在联合索引靠后**
+   例如：
+   ```sql
+   WHERE tenant_id = ?
+     AND status = ?
+     AND created_at >= ?
+   ORDER BY created_at DESC
+   ```
+
+   建议：
+   ```sql
+   CREATE INDEX idx_table_tenant_status_created
+   ON table_name (tenant_id, status, created_at DESC);
+   ```
+
+5. **覆盖索引用于极高频查询**
+   如果接口只读少量字段，可以让索引覆盖查询，减少回表。
+
+   MySQL：
+   ```sql
+   CREATE INDEX idx_order_list
+   ON orders (tenant_id, status, created_at DESC, id, amount);
+   ```
+
+   PostgreSQL：
+   ```sql
+   CREATE INDEX idx_order_list
+   ON orders (tenant_id, status, created_at DESC)
+   INCLUDE (id, amount);
+   ```
+
+**三、典型 API 索引模板**
+
+列表查询：
+
+```sql
+WHERE tenant_id = ?
+  AND status = ?
+ORDER BY created_at DESC
+LIMIT ?
+```
+
+索引：
+
+```sql
+CREATE INDEX idx_xxx_tenant_status_created
+ON xxx (tenant_id, status, created_at DESC);
+```
+
+详情查询：
+
+```sql
+WHERE tenant_id = ?
+  AND id = ?
+```
+
+索引：
+
+```sql
+CREATE INDEX idx_xxx_tenant_id
+ON xxx (tenant_id, id);
+```
+
+时间范围查询：
+
+```sql
+WHERE tenant_id = ?
+  AND created_at BETWEEN ? AND ?
+ORDER BY created_at DESC
+```
+
+索引：
+
+```sql
+CREATE INDEX idx_xxx_tenant_created
+ON xxx (tenant_id, created_at DESC);
+```
+
+状态统计：
+
+```sql
+WHERE tenant_id = ?
+GROUP BY status
+```
+
+索引：
+
+```sql
+CREATE INDEX idx_xxx_tenant_status
+ON xxx (tenant_id, status);
+```
+
+关联查询：
+
+```sql
+SELECT ...
+FROM orders o
+JOIN order_items i ON i.order_id = o.id
+WHERE o.tenant_id = ?
+ORDER BY o.created_at DESC
+```
+
+索引：
+
+```sql
+CREATE INDEX idx_orders_tenant_created
+ON orders (tenant_id, created_at DESC);
+
+CREATE INDEX idx_order_items_order_id
+ON order_items (order_id);
+```
+
+**四、不要建这些索引**
+
+暂时不要建：
+
+1. 低选择性单列索引，例如单独给 `status` 建索引，除非表很大且查询非常明确
+2. 很少使用的字段索引
+3. 与已有联合索引左前缀重复的索引
+4. 对频繁更新字段盲目建索引
+5. 一次性上线大量索引
+
+**五、上线策略**
+
+建议按优先级分批：
+
+1. 先处理 Top 5 慢 SQL
+2. 每条 SQL 只建 1 个最匹配的联合索引
+3. 建索引前后都跑 `EXPLAIN / EXPLAIN ANALYZE`
+4. 确认扫描行数下降、排序消失、回表减少
+5. 观察写入耗时、锁等待、CPU、buffer 命中率
+
+PostgreSQL 线上建索引用：
+
+```sql
+CREATE INDEX CONCURRENTLY idx_name ON table_name (...);
+```
+
+MySQL 线上建索引优先确认支持 online DDL：
+
+```sql
+ALTER TABLE table_name ADD INDEX idx_name (...), ALGORITHM=INPLACE, LOCK=NONE;
+```
+
+**六、最终交付建议**
+
+你们可以按这个格式整理索引变更：
+
+```text
+API: /api/orders
+慢 SQL: 按 tenant_id/status 查询订单列表，按 created_at 倒序
+现状: 扫描 120w 行，filesort
+新增索引: orders(tenant_id, status, created_at DESC)
+预期: 走索引范围扫描，消除排序，P99 降低
+风险: 写入 orders 时多维护一个索引
+验证: EXPLAIN + 压测 + 线上灰度观察
+```
+
+如果现在只能先止血，我会优先建：
+
+```sql
+-- 多租户列表查询
+CREATE INDEX idx_xxx_tenant_status_created
+ON xxx (tenant_id, status, created_at DESC);
+
+-- 详情查询
+CREATE INDEX idx_xxx_tenant_id
+ON xxx (tenant_id, id);
+
+-- 子表关联
+CREATE INDEX idx_xxx_parent_id
+ON child_table (parent_id);
+```
+
+核心原则：**围绕真实慢 SQL 建联合索引，字段顺序一般是等值过滤字段在前，范围/排序字段在后，JOIN 字段必须补齐。**

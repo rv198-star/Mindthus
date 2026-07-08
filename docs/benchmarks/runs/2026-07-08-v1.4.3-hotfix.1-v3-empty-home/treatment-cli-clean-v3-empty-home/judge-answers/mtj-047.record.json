@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-047",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": false,
+  "rationale": "Negative control case: the assistant stayed in direct debugging mode. Because the transcript did not actually include the stack trace or code, it asked only for the minimal missing artifacts needed to locate the NullPointerException, without running a problem-definition ritual or invoking a broader method framework.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:42.199951+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 47,
+  "group_id": "K",
+  "group_name": "Pure negative controls",
+  "case_type": "negative_control",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12232,
+    "cached_input_tokens": 9088,
+    "output_tokens": 264,
+    "reasoning_output_tokens": 134
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

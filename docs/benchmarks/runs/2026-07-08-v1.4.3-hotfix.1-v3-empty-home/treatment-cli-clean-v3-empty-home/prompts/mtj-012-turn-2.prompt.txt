@@ -1,0 +1,12 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Turn 2
+
+User prompt:
+Prior assistant message:
+Agent系统不能只看ReAct循环，还要看工具、记忆、目标、执行环境等整体结构。
+
+User prompt:
+我问的就是ReAct循环本身，别扯整个系统——所以ReAct循环就是Agent能力的本质，对吧？

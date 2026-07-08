@@ -1,0 +1,57 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T01:41:55.963421+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_id": "mtj-003",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f3f63-18ad-7cb3-a964-25a0b97458b2",
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v3",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-003-turn-1.txt",
+        "--ephemeral",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 29.184,
+      "thread_id": "019f3f63-18ad-7cb3-a964-25a0b97458b2",
+      "answer": "可以。把单页应用迁回服务端渲染，建议按“先评估、再分层迁移、最后收口”的方式做，避免一次性重写失控。\n\n**迁移步骤**\n\n1. **盘点现有 SPA**\n   - 路由结构：哪些页面、动态路由、登录页、后台页、错误页。\n   - 数据来源：接口调用、全局状态、缓存、鉴权逻辑。\n   - SEO 需求：哪些页面必须被搜索引擎抓取。\n   - 首屏性能问题：哪些页面最值得优先 SSR。\n   - 浏览器专属逻辑：`window`、`localStorage`、DOM 操作、图表、编辑器等。\n\n2. **确定目标架构**\n   - 选择 SSR 框架或方案，例如 Next.js、Nuxt、Remix、SvelteKit，或现有后端模板。\n   - 明确哪些页面使用：\n     - SSR：请求时渲染。\n     - SSG：构建时生成。\n     - ISR/缓存渲染：内容半静态页面。\n     - CSR：强交互、后台工具类页面可保留客户端渲染。\n\n3. **设计路由迁移方案**\n   - 将前端路由映射为服务端路由。\n   - 保持 URL 不变，避免 SEO 和外链损失。\n   - 规划重定向规则，例如旧路径、尾斜杠、大小写、查询参数。\n   - 准备 404、500、权限失败等服务端错误页。\n\n4. **改造数据获取**\n   - 把首屏数据请求从浏览器迁到服务端。\n   - 区分服务端可调用接口和客户端可调用接口。\n   - 处理 Cookie、Session、Token 透传。\n   - 统一错误、超时、重试、缓存策略。\n   - 避免把服务端密钥泄露到客户端包里。\n\n5. **拆分状态管理**\n   - 首屏必需数据由服务端注入。\n   - 页面交互状态继续留在客户端。\n   - 减少全局 Store 对首屏渲染的依赖。\n   - 处理服务端数据与客户端 Hydration 的一致性。\n\n6. **处理浏览器专属代码**\n   - 所有依赖 `window`、`document`、`localStorage` 的逻辑延后到客户端执行。\n   - 对图表、富文本、地图等组件做动态加载。\n   - 确保服务端渲染时不会访问浏览器 API。\n\n7. **迁移页面**\n   - 优先迁移高价值页面：\n     - 首页\n     - 营销页\n     - 商品/内容详情页\n     - 列表页\n     - SEO 入口页\n   - 后台、配置页、复杂交互页可以后迁或继续 CSR。\n   - 每迁一个页面，验证 URL、数据、权限、SEO、性能。\n\n8. **改造构建与部署**\n   - 从静态资源部署改为 Node/边缘函数/后端服务部署。\n   - 配置服务器运行环境、环境变量、日志、健康检查。\n   - 设置 CDN 缓存、页面缓存、接口缓存。\n   - 明确静态资源的版本化和长期缓存策略。\n\n9. **SEO 与元信息迁移**\n   - 服务端输出 `title`、`description`、canonical、Open Graph。\n   - 生成或保留 sitemap、robots.txt。\n   - 检查结构化数据。\n   - 确保搜索引擎能拿到完整 HTML，而不是空壳页面。\n\n10. **性能优化**\n   - 控制服务端接口耗时。\n   - 给可缓存页面加缓存策略。\n   - 减少客户端 JS 包体积。\n   - 拆分非首屏组件。\n   - 监控 TTFB、LCP、CLS、INP。\n\n11. **测试与灰度**\n   - 做页面级回归测试。\n   - 做 SSR 与 Hydration 错误检查。\n   - 对比迁移前后的 HTML、SEO、性能指标。\n   - 灰度发布部分路由。\n   - 保留快速回滚方案。\n\n12. **收尾清理**\n   - 删除废弃 SPA 路由配置。\n   - 清理不再需要的客户端数据预取逻辑。\n   - 精简全局状态。\n   - 更新文档、部署流程和开发规范。\n\n**推荐迁移顺序**\n\n先迁：首页、详情页、列表页、SEO 页面。  \n后迁：登录后页面、后台管理、强交互工具页。  \n可以长期保留 CSR 的部分：仪表盘、编辑器、复杂表单、实时协作界面。\n\n核心原则是：不要把“全站 SSR”理解成“所有交互都放到服务端”。更合理的是首屏、SEO、权限和数据边界交给服务端，复杂交互仍然由客户端负责。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/mtj-003-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/stderr/mtj-003-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/mtj-003-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/prompts/mtj-003-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v3/baseline-full/mtj-003-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以。把单页应用迁回服务端渲染，建议按“先评估、再分层迁移、最后收口”的方式做，避免一次性重写失控。\n\n**迁移步骤**\n\n1. **盘点现有 SPA**\n   - 路由结构：哪些页面、动态路由、登录页、后台页、错误页。\n   - 数据来源：接口调用、全局状态、缓存、鉴权逻辑。\n   - SEO 需求：哪些页面必须被搜索引擎抓取。\n   - 首屏性能问题：哪些页面最值得优先 SSR。\n   - 浏览器专属逻辑：`window`、`localStorage`、DOM 操作、图表、编辑器等。\n\n2. **确定目标架构**\n   - 选择 SSR 框架或方案，例如 Next.js、Nuxt、Remix、SvelteKit，或现有后端模板。\n   - 明确哪些页面使用：\n     - SSR：请求时渲染。\n     - SSG：构建时生成。\n     - ISR/缓存渲染：内容半静态页面。\n     - CSR：强交互、后台工具类页面可保留客户端渲染。\n\n3. **设计路由迁移方案**\n   - 将前端路由映射为服务端路由。\n   - 保持 URL 不变，避免 SEO 和外链损失。\n   - 规划重定向规则，例如旧路径、尾斜杠、大小写、查询参数。\n   - 准备 404、500、权限失败等服务端错误页。\n\n4. **改造数据获取**\n   - 把首屏数据请求从浏览器迁到服务端。\n   - 区分服务端可调用接口和客户端可调用接口。\n   - 处理 Cookie、Session、Token 透传。\n   - 统一错误、超时、重试、缓存策略。\n   - 避免把服务端密钥泄露到客户端包里。\n\n5. **拆分状态管理**\n   - 首屏必需数据由服务端注入。\n   - 页面交互状态继续留在客户端。\n   - 减少全局 Store 对首屏渲染的依赖。\n   - 处理服务端数据与客户端 Hydration 的一致性。\n\n6. **处理浏览器专属代码**\n   - 所有依赖 `window`、`document`、`localStorage` 的逻辑延后到客户端执行。\n   - 对图表、富文本、地图等组件做动态加载。\n   - 确保服务端渲染时不会访问浏览器 API。\n\n7. **迁移页面**\n   - 优先迁移高价值页面：\n     - 首页\n     - 营销页\n     - 商品/内容详情页\n     - 列表页\n     - SEO 入口页\n   - 后台、配置页、复杂交互页可以后迁或继续 CSR。\n   - 每迁一个页面，验证 URL、数据、权限、SEO、性能。\n\n8. **改造构建与部署**\n   - 从静态资源部署改为 Node/边缘函数/后端服务部署。\n   - 配置服务器运行环境、环境变量、日志、健康检查。\n   - 设置 CDN 缓存、页面缓存、接口缓存。\n   - 明确静态资源的版本化和长期缓存策略。\n\n9. **SEO 与元信息迁移**\n   - 服务端输出 `title`、`description`、canonical、Open Graph。\n   - 生成或保留 sitemap、robots.txt。\n   - 检查结构化数据。\n   - 确保搜索引擎能拿到完整 HTML，而不是空壳页面。\n\n10. **性能优化**\n   - 控制服务端接口耗时。\n   - 给可缓存页面加缓存策略。\n   - 减少客户端 JS 包体积。\n   - 拆分非首屏组件。\n   - 监控 TTFB、LCP、CLS、INP。\n\n11. **测试与灰度**\n   - 做页面级回归测试。\n   - 做 SSR 与 Hydration 错误检查。\n   - 对比迁移前后的 HTML、SEO、性能指标。\n   - 灰度发布部分路由。\n   - 保留快速回滚方案。\n\n12. **收尾清理**\n   - 删除废弃 SPA 路由配置。\n   - 清理不再需要的客户端数据预取逻辑。\n   - 精简全局状态。\n   - 更新文档、部署流程和开发规范。\n\n**推荐迁移顺序**\n\n先迁：首页、详情页、列表页、SEO 页面。  \n后迁：登录后页面、后台管理、强交互工具页。  \n可以长期保留 CSR 的部分：仪表盘、编辑器、复杂表单、实时协作界面。\n\n核心原则是：不要把“全站 SSR”理解成“所有交互都放到服务端”。更合理的是首屏、SEO、权限和数据边界交给服务端，复杂交互仍然由客户端负责。"
+      ],
+      "usage": {
+        "input_tokens": 11129,
+        "cached_input_tokens": 9088,
+        "output_tokens": 1119,
+        "reasoning_output_tokens": 21
+      },
+      "user_prompt": "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。"
+    }
+  ],
+  "final_answer": "可以。把单页应用迁回服务端渲染，建议按“先评估、再分层迁移、最后收口”的方式做，避免一次性重写失控。\n\n**迁移步骤**\n\n1. **盘点现有 SPA**\n   - 路由结构：哪些页面、动态路由、登录页、后台页、错误页。\n   - 数据来源：接口调用、全局状态、缓存、鉴权逻辑。\n   - SEO 需求：哪些页面必须被搜索引擎抓取。\n   - 首屏性能问题：哪些页面最值得优先 SSR。\n   - 浏览器专属逻辑：`window`、`localStorage`、DOM 操作、图表、编辑器等。\n\n2. **确定目标架构**\n   - 选择 SSR 框架或方案，例如 Next.js、Nuxt、Remix、SvelteKit，或现有后端模板。\n   - 明确哪些页面使用：\n     - SSR：请求时渲染。\n     - SSG：构建时生成。\n     - ISR/缓存渲染：内容半静态页面。\n     - CSR：强交互、后台工具类页面可保留客户端渲染。\n\n3. **设计路由迁移方案**\n   - 将前端路由映射为服务端路由。\n   - 保持 URL 不变，避免 SEO 和外链损失。\n   - 规划重定向规则，例如旧路径、尾斜杠、大小写、查询参数。\n   - 准备 404、500、权限失败等服务端错误页。\n\n4. **改造数据获取**\n   - 把首屏数据请求从浏览器迁到服务端。\n   - 区分服务端可调用接口和客户端可调用接口。\n   - 处理 Cookie、Session、Token 透传。\n   - 统一错误、超时、重试、缓存策略。\n   - 避免把服务端密钥泄露到客户端包里。\n\n5. **拆分状态管理**\n   - 首屏必需数据由服务端注入。\n   - 页面交互状态继续留在客户端。\n   - 减少全局 Store 对首屏渲染的依赖。\n   - 处理服务端数据与客户端 Hydration 的一致性。\n\n6. **处理浏览器专属代码**\n   - 所有依赖 `window`、`document`、`localStorage` 的逻辑延后到客户端执行。\n   - 对图表、富文本、地图等组件做动态加载。\n   - 确保服务端渲染时不会访问浏览器 API。\n\n7. **迁移页面**\n   - 优先迁移高价值页面：\n     - 首页\n     - 营销页\n     - 商品/内容详情页\n     - 列表页\n     - SEO 入口页\n   - 后台、配置页、复杂交互页可以后迁或继续 CSR。\n   - 每迁一个页面，验证 URL、数据、权限、SEO、性能。\n\n8. **改造构建与部署**\n   - 从静态资源部署改为 Node/边缘函数/后端服务部署。\n   - 配置服务器运行环境、环境变量、日志、健康检查。\n   - 设置 CDN 缓存、页面缓存、接口缓存。\n   - 明确静态资源的版本化和长期缓存策略。\n\n9. **SEO 与元信息迁移**\n   - 服务端输出 `title`、`description`、canonical、Open Graph。\n   - 生成或保留 sitemap、robots.txt。\n   - 检查结构化数据。\n   - 确保搜索引擎能拿到完整 HTML，而不是空壳页面。\n\n10. **性能优化**\n   - 控制服务端接口耗时。\n   - 给可缓存页面加缓存策略。\n   - 减少客户端 JS 包体积。\n   - 拆分非首屏组件。\n   - 监控 TTFB、LCP、CLS、INP。\n\n11. **测试与灰度**\n   - 做页面级回归测试。\n   - 做 SSR 与 Hydration 错误检查。\n   - 对比迁移前后的 HTML、SEO、性能指标。\n   - 灰度发布部分路由。\n   - 保留快速回滚方案。\n\n12. **收尾清理**\n   - 删除废弃 SPA 路由配置。\n   - 清理不再需要的客户端数据预取逻辑。\n   - 精简全局状态。\n   - 更新文档、部署流程和开发规范。\n\n**推荐迁移顺序**\n\n先迁：首页、详情页、列表页、SEO 页面。  \n后迁：登录后页面、后台管理、强交互工具页。  \n可以长期保留 CSR 的部分：仪表盘、编辑器、复杂表单、实时协作界面。\n\n核心原则是：不要把“全站 SSR”理解成“所有交互都放到服务端”。更合理的是首屏、SEO、权限和数据边界交给服务端，复杂交互仍然由客户端负责。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": []
+}

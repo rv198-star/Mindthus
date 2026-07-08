@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-030",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Assistant correctly wakes up to the core defect: the source has risk categories but no decision information, triggers, accountability, or escalation logic. The rewrite adds concrete failure paths, trigger signals, impact levels, owners, review cadence, and escalation rules. Probability basis is only approximate via risk levels and trigger indicators rather than explicit likelihood evidence, but the answer materially supplies judgment substance rather than just polishing style.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:54:52.226543+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 30,
+  "group_id": "G",
+  "group_name": "TVG thin artifact strengthening",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13169,
+    "cached_input_tokens": 11648,
+    "output_tokens": 371,
+    "reasoning_output_tokens": 216
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

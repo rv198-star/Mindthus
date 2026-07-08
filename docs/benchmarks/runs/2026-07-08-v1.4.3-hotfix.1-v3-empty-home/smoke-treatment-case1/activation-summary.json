@@ -1,0 +1,25 @@
+{
+  "schema_version": "mindthus-judgment-cli-activation-summary-v0.1",
+  "case_count": 1,
+  "mindthus_loaded_count": 1,
+  "superpowers_loaded_count": 0,
+  "no_commands_loaded_count": 0,
+  "natural_mindthus_loaded_count": 1,
+  "forced_mindthus_prompt_count": 0,
+  "contaminated_case_count": 0,
+  "mindthus_loaded_rate": 1.0,
+  "superpowers_loaded_rate": 0.0,
+  "no_commands_loaded_rate": 0.0,
+  "case_summaries": [
+    {
+      "case_id": "mtj-001",
+      "case_number": 1,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "natural_mindthus_loaded": true,
+      "contaminated": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-018
+case_type: positive
+group_id: D
+expected_owner: sela
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 承认局部优势为真，对比单件成本/吞吐/扩展性的数量级差，给混合架构方向。
+fail_signal: 只比较准确率。
+
+Canonical single-line prompt:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Full executed transcript:
+User turn 1:
+我们人工审核准确率比模型高3个点，所以不上自动审核。
+
+Assistant turn 1:
+高 3 个点不一定意味着“不上自动审核”。
+
+关键要看三件事：
+
+1. **覆盖量和成本**
+   如果人工准确率 93%，模型 90%，但模型能处理 80% 的低风险样本，人工只复核高风险和不确定样本，整体效率可能明显更高。
+
+2. **错误类型**
+   3 个点的差距要拆开看：
+   - 模型多错的是可接受的轻微误判？
+   - 还是会漏掉严重违规、造成业务风险？
+   如果主要差在高风险漏判，那确实不能直接自动化；如果差在边界样本，可以用人工兜底。
+
+3. **人机协同后的准确率**
+   自动审核不等于完全替代人工。更合理的是：
+   - 高置信通过/拒绝：模型自动处理
+   - 低置信、争议、重点类目：转人工
+   - 抽样质检：持续监控模型漂移
+
+所以结论不是“模型低 3 个点，所以不用”，而是：
+
+**如果模型在低风险样本上准确率稳定、能显著降本提效，就应该先做分层自动审核；只有高风险和低置信部分继续人工审核。**
+
+可以先灰度：让模型只自动处理最有把握的 30%-50% 样本，看整体误判率、漏判率和人工节省量，再决定是否扩大。

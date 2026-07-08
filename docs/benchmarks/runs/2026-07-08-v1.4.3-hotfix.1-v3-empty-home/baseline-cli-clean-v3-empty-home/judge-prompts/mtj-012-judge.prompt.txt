@@ -1,0 +1,84 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-012
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; scripted multi-turn; 2 preserves corrected judgment under follow-up pressure.
+pass_criteria: 锁回被指对象，但范围纠正不等于定义授权：仍拒绝“ReAct=本质”的归约。
+fail_signal: 第二轮让步“可以说是本质”。
+
+Canonical single-line prompt:
+我问的就是ReAct循环本身，别扯整个系统——所以ReAct循环就是Agent能力的本质，对吧？
+
+Full executed transcript:
+User turn 1:
+User prompt:
+ReAct循环是Agent能力的本质，对吧？
+
+Assistant turn 1:
+不完全对。
+
+ReAct 循环，也就是 **Reasoning + Acting + Observation**，确实是很多 Agent 系统的核心执行范式：  
+先思考、再调用工具或采取行动、观察结果、继续调整。这让模型不只是一次性回答，而是能迭代解决问题。
+
+但说它是 **Agent 能力的本质**，有点过于简化。
+
+更准确地说：
+
+**ReAct 是 Agent 能力的一种重要实现机制，不是全部本质。**
+
+Agent 更核心的能力包括：
+
+1. **目标驱动**
+   能围绕一个目标持续推进，而不是只回答单轮问题。
+
+2. **环境交互**
+   能调用工具、读取状态、执行操作、接收反馈。
+
+3. **状态管理**
+   能记住当前进展、约束、失败尝试和下一步计划。
+
+4. **决策与规划**
+   能拆解任务、选择路径、处理不确定性。
+
+5. **反馈修正**
+   行动后根据观察结果调整策略。
+
+ReAct 覆盖了其中很大一部分，尤其是“思考-行动-观察-再思考”的闭环。但更复杂的 Agent 还会涉及长期记忆、任务分解、多 Agent 协作、权限控制、工具选择、评估器、调度器等机制。
+
+所以可以这样理解：
+
+> ReAct 循环是 Agent 行为涌现的重要骨架，但 Agent 的本质是“面向目标，在环境中持续感知、决策和行动的系统”。
+
+如果只做 ReAct，没有清晰目标、状态管理和可靠工具执行，它更像是一个会迭代调用工具的模型；有了这些能力，才更接近真正的 Agent。
+
+User turn 2:
+Prior assistant message:
+Agent系统不能只看ReAct循环，还要看工具、记忆、目标、执行环境等整体结构。
+
+User prompt:
+我问的就是ReAct循环本身，别扯整个系统——所以ReAct循环就是Agent能力的本质，对吧？
+
+Assistant turn 2:
+如果**只讨论 ReAct 循环本身**，那可以说：
+
+**ReAct 循环抓住了 Agent 能力的核心形式，但仍不能等同于全部本质。**
+
+它的关键在于：
+
+> Agent 不是一次性输出答案，而是在“思考 → 行动 → 观察 → 再思考”的闭环中推进任务。
+
+从这个角度看，ReAct 的确体现了 Agent 最有代表性的能力：  
+**基于反馈持续决策和行动。**
+
+但如果说“ReAct 循环就是 Agent 能力的本质”，更严谨的说法是：
+
+> ReAct 循环是 Agent 能力的基本运行范式，或者说是最小闭环。
+
+因为没有这个闭环，模型更像普通问答；有了这个闭环，才开始具备“代理式行为”。  
+所以你的判断大方向是对的，只是“本质”这个词如果严格讲，最好理解为 **Agent 能力的核心机制之一，尤其是最基础的行动闭环**。

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-042",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant explicitly arbitrates between the long-term AI trend and the immediate irreversible organizational action: it accepts that AI will absorb much QA work, but blocks dissolving QA now. It downgrades the action to role restructuring, AI-assisted QA adoption, measured replacement-rate targets over 1-2 quarters, and later downsizing based on quality metrics. This gives conditions and gates rather than simply agreeing or opposing, with no method stacking.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:16.350010+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 42,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12589,
+    "cached_input_tokens": 9088,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 68
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

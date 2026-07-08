@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-042",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response explicitly arbitrates the premise: it accepts the long-term direction that AI will improve QA, but blocks the irreversible organizational action of dissolving QA now. It downgrades the action into QA transformation, AI-assisted testing adoption, measurement over 1-2 quarters, and gradual adjustment based on defect escape, automation coverage, incidents, and delivery metrics. This is not method stacking or simple agreement/disagreement.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:53:29.345150+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 42,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11962,
+    "cached_input_tokens": 2432,
+    "output_tokens": 235,
+    "reasoning_output_tokens": 76
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

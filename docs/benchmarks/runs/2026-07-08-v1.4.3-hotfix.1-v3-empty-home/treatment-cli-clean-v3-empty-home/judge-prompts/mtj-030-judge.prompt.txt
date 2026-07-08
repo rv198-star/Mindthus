@@ -1,0 +1,65 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-030
+case_type: positive
+group_id: G
+expected_owner: tvg
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 adds concrete judgment substance, 1 improves direction but leaves evidence/owner gaps, 0 only polishes wording.
+pass_criteria: 指出原文只有风险类别没有决策信息，并定向补判断实质：具体失败路径、概率依据、应对责任人、证据边界。
+fail_signal: 只改文风、加排版、扩写套话，仍不补风险判断实质。
+
+Canonical single-line prompt:
+下面是一份结构完整但全是套话的《项目风险评估》：
+
+一、技术风险：系统复杂，可能存在开发延期。应加强沟通，保障质量。
+二、市场风险：市场变化较快，竞争激烈。应持续关注市场动态。
+三、人员风险：团队任务较重，存在协作压力。应合理安排资源。
+四、交付风险：项目周期紧，可能影响上线。应制定预案。
+
+帮我把这份文档变得真正有用。
+
+Full executed transcript:
+User turn 1:
+下面是一份结构完整但全是套话的《项目风险评估》：
+
+一、技术风险：系统复杂，可能存在开发延期。应加强沟通，保障质量。
+二、市场风险：市场变化较快，竞争激烈。应持续关注市场动态。
+三、人员风险：团队任务较重，存在协作压力。应合理安排资源。
+四、交付风险：项目周期紧，可能影响上线。应制定预案。
+
+帮我把这份文档变得真正有用。
+
+Assistant turn 1:
+可以。原文的问题不是“风险少”，而是每条都无法判断、无法触发、无法追责。下面改成一版可用于项目例会和交付评审的《项目风险评估》。
+
+**项目风险评估**
+
+| 风险项 | 具体风险 | 触发信号 | 影响 | 等级 | 应对措施 | 责任人 | 检查频率 |
+|---|---|---|---|---|---|---|---|
+| 技术风险 | 核心模块复杂度高，接口、性能或稳定性问题可能导致开发返工 | 关键接口连续 2 次联调失败；核心功能延期超过 3 个工作日；压测指标低于目标 20% | 影响开发进度、测试周期和上线质量 | 高 | 1. 对核心模块做技术方案评审；2. 提前完成接口联调；3. 每周输出技术阻塞清单；4. 对高风险模块安排代码评审和压测 | 技术负责人 | 每周 2 次 |
+| 市场风险 | 用户需求、竞品动作或客户优先级变化，可能导致当前功能价值下降 | 客户提出重大需求变更；竞品上线同类功能；销售/运营反馈目标用户场景变化 | 影响产品定位、功能优先级和投入产出比 | 中 | 1. 产品每周收集客户和竞品信息；2. 对需求变更做影响评估；3. 非关键变更进入后续版本，不直接打断当前交付；4. 保留 10%-15% 需求缓冲 | 产品负责人 | 每周 |
+| 人员风险 | 关键成员负载过高或单点依赖明显，导致任务阻塞 | 单人承担超过 30% 核心任务；关键任务无人备份；成员连续加班或请假影响排期 | 影响研发效率、质量和团队稳定性 | 中高 | 1. 拆分关键任务，避免单人闭环；2. 建立主备负责人；3. 每日同步阻塞事项；4. 必要时减少低优先级需求或申请外部支持 | 项目经理 | 每日站会 |
+| 交付风险 | 项目周期紧，测试、验收、上线准备不足，可能导致延期或带缺陷上线 | 测试进入时间晚于计划 3 天；严重缺陷超过 5 个；上线前 2 天仍有 P0/P1 问题 | 影响上线时间、客户验收和线上稳定性 | 高 | 1. 固定需求冻结日期；2. 提前制定上线清单和回滚方案；3. 分阶段验收，不等到最后集中验收；4. 若触发延期条件，及时启动范围缩减或延期决策 | 项目经理 / 测试负责人 | 每日 |
+
+**升级规则**
+
+当出现以下任一情况，项目经理必须在 24 小时内组织专项评审：
+
+1. 关键里程碑延期超过 3 个工作日。
+2. 出现 P0/P1 缺陷且 1 个工作日内无法关闭。
+3. 核心人员不可用且无替代方案。
+4. 客户提出影响范围、成本或上线时间的重大变更。
+5. 风险等级从“中”升为“高”。
+
+**每周风险例会只回答四个问题**
+
+1. 本周新增了什么风险？
+2. 哪个风险已经触发？
+3. 哪个措施没有执行？
+4. 是否需要调整范围、资源或上线时间？
+
+这样改完后，这份文档不只是“提醒大家注意”，而是能用于判断项目是否失控、谁该处理、什么时候升级、采取什么动作。

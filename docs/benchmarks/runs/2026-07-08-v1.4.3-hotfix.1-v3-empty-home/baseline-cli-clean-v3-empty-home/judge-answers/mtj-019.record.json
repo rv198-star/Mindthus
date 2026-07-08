@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-019",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有顺着夸工匠精神，能承认手调经验的局部价值，并提出把老师傅经验转为自动寻优起点、约束和专家参数库；也指出了人走、换班、换设备导致经验无法稳定传承的知识沉淀风险。但它没有按通过标准要求明确对比手调与自动寻优在单件成本、吞吐、扩展性上的数量级差，也没有充分点出规模化断层风险，因此只能算部分满足。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:50:51.941346+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 19,
+  "group_id": "D",
+  "group_name": "SELA system efficiency vs local advantage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11727,
+    "cached_input_tokens": 2432,
+    "output_tokens": 412,
+    "reasoning_output_tokens": 224
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

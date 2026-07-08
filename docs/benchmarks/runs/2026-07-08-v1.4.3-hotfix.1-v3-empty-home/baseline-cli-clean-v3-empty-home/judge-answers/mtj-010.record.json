@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-010",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "回答没有照写用户的错误归因，明确拒绝了“产品没价值”的过度外推，并把60%投放新增表述为付费获客依赖，同时提到需要验证用户质量、留存与转化，部分区分了获客来源和后续结果。但它没有清楚写出留存/转化才是判断增长质量和产品价值的主控，也没有按要求说明如果按“买量论”优化会导致预算、归因、产品改进和留存转化关注点发生什么偏移，因此只部分满足通过标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:49:55.981525+00:00",
+  "variant": "baseline-clean-v3-empty-home",
+  "case_number": 10,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 11472,
+    "cached_input_tokens": 2432,
+    "output_tokens": 350,
+    "reasoning_output_tokens": 146
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

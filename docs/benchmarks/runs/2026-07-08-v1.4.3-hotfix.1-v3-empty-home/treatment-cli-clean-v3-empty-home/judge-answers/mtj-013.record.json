@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-013",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": null,
+  "verdict_commitment_anti_mush": null,
+  "over_forced_verdict": null,
+  "rationale": "The response stays inside the user's premise and writes a bean-led招商文案. It briefly mentions装修/位置 and brand support, but does not reconstruct the whole business object around location, repeat purchase, revenue per square meter, brand, operations, or assess the real weight of coffee beans before producing bounded copy. Several lines imply beans directly drive taste and repeat purchase, matching the fail signal of treating beans as the decisive factor.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:52:50.664682+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12495,
+    "cached_input_tokens": 9088,
+    "output_tokens": 299,
+    "reasoning_output_tokens": 138
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

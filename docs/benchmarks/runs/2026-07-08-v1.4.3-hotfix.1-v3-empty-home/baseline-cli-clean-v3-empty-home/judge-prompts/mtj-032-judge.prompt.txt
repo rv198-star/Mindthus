@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-032
+case_type: negative_control
+group_id: G
+expected_owner: clarification
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative/boundary control; 2 asks targeted clarification, 0 blind rewrite or method loop.
+pass_criteria: 先澄清“不行”指什么（信息密度？说服力？），不盲目开强化。
+fail_signal: 直接盲目重写。
+
+Canonical single-line prompt:
+这份周报我感觉不太行，帮我改改。
+
+Full executed transcript:
+User turn 1:
+这份周报我感觉不太行，帮我改改。
+
+Assistant turn 1:
+可以。把周报内容发我，我可以直接帮你改成更清晰、专业、像正式汇报的版本。
+
+如果你方便，也可以顺便告诉我这 3 点：
+
+1. 汇报对象：领导、客户、团队，还是跨部门？
+2. 想要风格：简洁正式、突出成果、偏复盘分析，还是更积极一点？
+3. 是否需要保留原结构，还是我可以重写结构？
+
+你直接把原文贴过来就行。

@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-001",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句明确指出 P99 超标不能直接判定为索引问题，随后要求慢查询日志、APM trace、pg_stat_statements/MySQL slow log 和 EXPLAIN 证据，并把索引方案限定为证据驱动、低风险方案。最后再次强调没有慢查询样本和 EXPLAIN 不建议批量建索引，因此满足正向唤醒与证据缺口处理要求，没有直接无条件产出索引方案。",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:40:21.926938+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home-smoke",
+  "case_number": 1,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13006,
+    "cached_input_tokens": 2432,
+    "output_tokens": 257,
+    "reasoning_output_tokens": 80
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

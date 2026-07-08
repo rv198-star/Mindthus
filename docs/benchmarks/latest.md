@@ -1,11 +1,11 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified; caveated empirical run recorded.
+Status: Not yet certified as passing; clean v3 execution recorded.
 
-The repository now contains the public 50-case input fixture and one real Codex CLI
-baseline vs baseline+Mindthus execution. The run is useful behavioral evidence, but it is
-not a certified clean causal benchmark because some generator turns still loaded host
-Superpowers from the user environment.
+The repository now contains the public 50-case input fixture and a clean Codex CLI
+baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v3 run fixes
+the v2 host-Superpowers contamination problem, but the treatment still misses the public
+positive-score threshold.
 
 ## Current Case Set
 
@@ -40,25 +40,28 @@ Future certified reports should include:
 
 ## Latest Run
 
-- Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/`
-- Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md`
-- Commit: `662bc20f75539f10bc5390583a7e7fa3df7eaf77`
-- Tag: `v1.4.3-hotfix.1`
-- Fixture SHA-256: `b57b6e99795e2db28183ac33c3401cfc8ba994b254132ecb58bd5ead48f796ba`
-- Treatment: `baseline+Mindthus-hotfix-clean-v2`
-- Baseline: `baseline-clean-v2`
-- Caveat: baseline loaded Superpowers in 20/50 records; treatment loaded Superpowers in
-  3/50 records and Mindthus in 19/50 records.
+- Run folder: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/`
+- Report: `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/REPORT.md`
+- Commit: `476303cba8288457381a7c40db284b34acd34341`
+- Tag: none; this run is after `v1.4.3-hotfix.1`
+- Fixture SHA-256: `ee3f348ba8a77089e0ef0d276195dfc33ea61b684c2601bd3fc6d77e57f0129c`
+- Runner SHA-256: `4e11d65054abf5ead1a1638570ad0e6264222f67243dfa8b09387e1d4c3f9773`
+- Baseline: `baseline-clean-v3-empty-home`
+- Treatment: `baseline+Mindthus-hotfix-v3-empty-home`
+- Cleanliness: generator and judge contamination were 0/50 for both variants.
+- Activation: treatment loaded Mindthus in 21/38 positive cases and 0/12 negative cases.
 
 ## Results
 
 | Variant | Positive mean | Negative false wake-up rate | First-sentence lock rate | Verdict-commitment / anti-mush rate | Over-forced verdict rate | H-group brake rate |
 | --- | --- | --- | --- | --- | --- | --- |
-| baseline v2 | 1.316 | 0.000 | 0.718 | 0.775 | 0.109 | 0.250 |
-| baseline+Mindthus hotfix v2 | 1.368 | 0.000 | 0.700 | 0.750 | 0.116 | 0.500 |
+| baseline v3 | 1.289 | 0.083 | 0.571 | 0.733 | 0.086 | 0.500 |
+| baseline+Mindthus hotfix v3 | 1.395 | 0.000 | 0.676 | 0.848 | 0.026 | 0.500 |
 
-Headline delta: positive mean `+0.052`, overall mean `+0.040`, H-group brake rate
-`+0.250`. First-sentence lock and anti-mush rates did not improve in this run.
+Headline delta: positive mean `+0.106`, overall mean `+0.120`, first-sentence lock
+`+0.105`, verdict-commitment / anti-mush `+0.115`, over-forced verdict `-0.060`.
 
-Do not quote these results as certified until a follow-up empty-HOME or otherwise
-Superpowers-isolated run is completed.
+Do not quote this as a passing benchmark. The v3 execution is clean, but the treatment
+positive mean is `1.395`, below the `1.5` public target.
+
+Key remaining hard failures under treatment: #2, #4, #8, #13, #17, #33, #34, and #37.

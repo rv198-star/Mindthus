@@ -1,0 +1,27 @@
+{
+  "case_id": "mtj-040",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant rejects averaging: it states that 'old code is hard to maintain' does not prove a full rewrite, sets the dominant judgment as default incremental refactoring/strangler replacement, and treats full rewrite only as a constrained option when local repair is no longer economically viable with clear boundaries, migration, metrics, and rollback. It does mention both sides, but not symmetrically; the rewrite side is demoted to conditions and constraints rather than given equal weight.",
+  "schema_version": "mindthus-judgment-cli-score-v0.1",
+  "judged_at_utc": "2026-07-08T01:56:04.724286+00:00",
+  "variant": "baseline+Mindthus-hotfix-v3-empty-home",
+  "case_number": 40,
+  "group_id": "J",
+  "group_name": "Aspect Ownership / Method Arbitration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12651,
+    "cached_input_tokens": 11648,
+    "output_tokens": 337,
+    "reasoning_output_tokens": 168
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": []
+}

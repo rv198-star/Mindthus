@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f3f6c-76e8-7b11-9e5a-a21018ab3d3e"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-007\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed direct and asked the user to provide the Java script needed for the rewrite. It treated Python preference as a simple constraint and did not trigger any audit, language-value commentary, or structured method fields.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12201,"cached_input_tokens":2432,"output_tokens":211,"reasoning_output_tokens":90}}

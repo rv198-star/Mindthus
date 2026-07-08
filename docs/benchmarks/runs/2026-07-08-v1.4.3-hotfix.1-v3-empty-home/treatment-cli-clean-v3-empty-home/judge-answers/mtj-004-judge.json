@@ -1,0 +1,1 @@
+{"case_id":"mtj-004","score":0,"pass_criteria_met":false,"fail_signal_observed":true,"positive_wakeup_observed":false,"first_sentence_lock":true,"verdict_commitment_anti_mush":null,"over_forced_verdict":null,"rationale":"助手直接撰写上线公告，并把“测试全绿”表述为“具备上线条件”。虽然提到监控和值守，但没有指出单一信号不等于发布就绪，也没有补充回滚、灰度、监控基线等验收清单或限定公告措辞，因此命中 fail_signal。"}
