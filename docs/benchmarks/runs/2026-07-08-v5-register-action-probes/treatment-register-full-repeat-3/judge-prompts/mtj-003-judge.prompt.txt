@@ -1,0 +1,91 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+不能因为“单页应用过时了”就直接全站迁回 SSR。正确顺序是：先确认网站的任务、约束和证据，再决定是否全站 SSR、局部 SSR、SSG、ISR，还是保留 SPA。
+
+**先确认三件事**
+
+1. **网站的核心任务**
+   - 是内容 SEO、转化页、后台系统、交易流程、实时协作，还是混合型？
+   - 哪些页面必须首屏快、可索引、可分享？
+   - 哪些页面高度交互，迁回 SSR 反而可能变复杂？
+
+2. **迁移约束**
+   - 当前框架：React/Vue/Angular/Next/Nuxt/自研？
+   - 是否依赖浏览器状态、LocalStorage、客户端路由、全局 store？
+   - 登录态、权限、缓存、CDN、API 聚合、监控、灰度发布是否支持服务端渲染？
+   - 团队是否能维护 SSR 的部署、缓存、错误处理和性能问题？
+
+3. **证据**
+   - 当前 SEO、LCP、TTFB、转化率、跳出率、爬虫覆盖率数据。
+   - 哪些页面真的因为 SPA 受损。
+   - SSR 预期能改善什么指标，是否有成本上限和回滚方案。
+
+**迁移步骤**
+
+1. **页面分级**
+   - 内容页、营销页、商品页、落地页：优先评估 SSR/SSG。
+   - 登录后工作台、复杂交互页面：通常不急着迁。
+   - 实时、编辑器、图表密集页面：谨慎 SSR，可能保留客户端渲染。
+
+2. **选目标架构**
+   - 静态内容优先用 SSG。
+   - 频繁变更但需要 SEO 的页面用 SSR 或 ISR。
+   - 登录后应用保留 SPA 或做混合渲染。
+   - 不建议默认“全站 SSR”。
+
+3. **搭建 SSR 基础设施**
+   - 路由层改造。
+   - 服务端数据加载。
+   - 登录态透传。
+   - API 聚合层。
+   - 错误页、重定向、缓存策略。
+   - 日志、链路追踪、性能监控。
+
+4. **先迁低风险页面**
+   - 首页、营销页、公开详情页、SEO 页面。
+   - 保持 URL 不变。
+   - 做 301/302、canonical、sitemap、meta、结构化数据校验。
+
+5. **处理状态和数据**
+   - 区分服务端可取数据和客户端专属状态。
+   - 避免 hydration mismatch。
+   - 把首屏关键数据放到服务端加载。
+   - 非关键交互继续客户端加载。
+
+6. **性能和缓存**
+   - CDN 缓存公开页面。
+   - 用户相关页面禁止错误缓存。
+   - 设置 stale-while-revalidate 或类似策略。
+   - 重点监控 TTFB、LCP、hydration 时间和服务端错误率。
+
+7. **灰度发布**
+   - 按页面、流量比例、用户群逐步切。
+   - 保留旧 SPA 回滚路径。
+   - 对比 SEO、转化、性能和错误率。
+
+8. **再决定是否扩大范围**
+   - 如果公开页面收益明显，再迁更多页面。
+   - 如果后台类页面没有收益，不必为了“趋势”迁。
+   - 最终形态大概率是混合渲染，而不是纯 SSR。
+
+一句话：先把“要解决什么问题”钉住，再迁最能产生收益的页面；“全站改回 SSR”应该是证据支持后的结论，不应该是起点。

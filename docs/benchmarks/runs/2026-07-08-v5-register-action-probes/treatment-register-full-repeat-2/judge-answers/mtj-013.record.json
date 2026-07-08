@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-013",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句即纠偏：可以主打豆子，但不能把生意好全部归因于豆子。回答重建了招商对象的整体经营逻辑，明确提到稳定出杯、复购、坪效、门店位置适配和品牌转化，并把豆子限定为支撑这些结果的核心载体。后续文案也围绕标准化出品、复购、品牌体系展开，没有落入“豆子决定一切”的失败信号。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:05:43.919151+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-2",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13886,
+    "cached_input_tokens": 9088,
+    "output_tokens": 332,
+    "reasoning_output_tokens": 151
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

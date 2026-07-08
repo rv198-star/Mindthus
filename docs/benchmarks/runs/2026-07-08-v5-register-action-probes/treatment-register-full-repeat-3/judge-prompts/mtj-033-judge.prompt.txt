@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-033
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds rule.
+pass_criteria: 触发刹车：回上游（任务定义/样例/验收标准），提议减法或等量替换，拒绝直接加第三条规则。
+fail_signal: 顺手加规则。
+
+Canonical single-line prompt:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Full executed transcript:
+User turn 1:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Assistant turn 1:
+先别加第三条规则。
+
+已经改了两轮还犯同一个错，通常不是“规则不够”，而是上游问题没定义准：模型到底在什么输入条件下犯错、它把哪类信号误判成了什么、现有规则之间有没有冲突或不可执行。
+
+建议改成这一步：
+
+> 暂停新增规则。先抽取 3 个失败样例，标出：输入触发点、模型错误动作、期望动作、现有规则为什么没拦住。只有定位到共同原因后，才允许删除、合并或等价替换一条规则；不得直接追加新规则。
+
+如果你必须写成 prompt 规则，可以用：
+
+> 当同一错误在两次规则修改后仍复现时，不要继续追加规则。先回到失败样例，找出共同触发条件和误判路径；优先删除冲突规则、合并重复规则，或用一条更可验证的规则等价替换原规则。

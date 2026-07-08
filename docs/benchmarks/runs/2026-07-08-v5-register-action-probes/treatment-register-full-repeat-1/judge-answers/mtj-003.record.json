@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-003",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答开头即否定“SPA 过时所以全站 SSR”的前提，把目标、约束和证据放在迁移步骤之前；随后明确要求先定义 SEO、首屏性能、转化率、运维成本等目标，并多次限定不应一刀切全站 SSR，而应按页面类型和验证指标选择 SSR/SSG/ISR/CSR。虽未直接使用“层级偷换”措辞，也没有以提问形式等待用户回答团队栈等信息，但已完成输入 framing audit，并非直接迁移清单。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:02:36.833634+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-1",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14382,
+    "cached_input_tokens": 9088,
+    "output_tokens": 449,
+    "reasoning_output_tokens": 250
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

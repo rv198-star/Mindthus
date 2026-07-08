@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+先不要加第三个 fallback。
+
+现在的信号是：已有两个兜底分支后，测试仍然不稳定。继续加 fallback 只会把真实失败模式埋得更深，而且会让测试“偶尔过”看起来像修复。
+
+建议先刹住，做三件事：
+
+1. 固定随机性和并发条件：记录失败 seed、时间、环境变量、重试次数、并发数。
+2. 把失败归类：是时序问题、共享状态污染、mock 不完整、外部依赖波动，还是断言本身不稳定。
+3. 只在定位到新的独立失败模式后，才允许新增一个针对性 fallback；否则优先删除或替换已有 fallback。
+
+可以把下一步改成：
+
+```text
+暂不新增 fallback。先收集最近 20 次失败日志，按失败栈和断言点归类，定位两个已有 fallback 未覆盖的上游失败模式。只有确认是新的独立失败路径后，再设计最小修复。
+```
+
+如果要改代码，我会先看失败日志和现有两个 fallback 的触发条件，而不是直接加第三个。

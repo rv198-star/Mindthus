@@ -1,0 +1,44 @@
+{
+  "case_id": "mtj-034",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答首句直接刹车拒绝第三个 fallback，并明确已有两个 fallback 后仍不稳定说明应定位上游失效模式。后续给出复现、对比失败/成功差异、检查现有 fallback 覆盖边界、修上游或替换现有 fallback 的根因路径，没有设计第三个 fallback。虽保留“定位到新的独立失败模式后才允许新增”的条件，但当前判定和行动方向足够符合 anti_spiral 唤醒。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:05:50.920374+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-2",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13825,
+    "cached_input_tokens": 9088,
+    "output_tokens": 327,
+    "reasoning_output_tokens": 143
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "3l5s"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

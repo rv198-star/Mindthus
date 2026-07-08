@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-037",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "首句直接锁定购买决策语境，明确 B 对“该不该买/够不够用”更有定义权，并把 A 的物理 PPI 判断降级为边界事实。后续给出可买/不买条件，没有落入“都对、层级不同”的对称抽象。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:08:56.787744+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-3",
+  "case_number": 37,
+  "group_id": "I",
+  "group_name": "Decision Context Calibration",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13988,
+    "cached_input_tokens": 12672,
+    "output_tokens": 242,
+    "reasoning_output_tokens": 95
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "decision_context_calibration",
+  "accepted_loaded_owners": [
+    "edsp",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

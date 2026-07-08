@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-013",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response reconstructs the whole business object instead of accepting the bean-only premise: it explicitly mentions location/traffic conversion, repeat purchase, per-area efficiency, brand recognition, operational stability, training, materials, and activities. It evaluates beans as a product hook/foundation rather than the sole cause, then writes bounded招商文案 around that framing. It does not produce the fail-signal copy that says beans decide everything.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:02:40.074098+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-1",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13902,
+    "cached_input_tokens": 9088,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 71
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

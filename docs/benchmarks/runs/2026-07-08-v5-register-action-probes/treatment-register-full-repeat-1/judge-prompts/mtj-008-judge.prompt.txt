@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+局部统计机制不能直接决定一个系统的能力上限；“LLM预测下一个词”最多说明它的训练与生成接口，不足以推出“它不可能推理”。
+
+下面是一篇可用的专栏稿：
+
+**别把“下一个词预测”误当成智能的天花板**
+
+很多人说，大语言模型本质上只是“下一个词的统计预测器”，所以它不可能真正推理。这个说法听起来锋利，但问题在于：它把一个局部机制，误当成了整个系统的能力边界。
+
+没错，从技术实现看，语言模型在生成文本时确实是在根据上下文预测下一个 token。可是，“系统如何产生一个步骤”和“系统最终能否形成某种能力”不是同一个问题。人脑的神经元也只是电化学信号传递，但我们不会因此说人类只是“电脉冲反射器”，所以不可能写诗、证明定理或制定战略。底层机制可以很简单，组合后的行为却可能非常复杂。
+
+真正该讨论的不是“它是不是预测下一个词”，而是：这种预测是否能在足够大规模、足够丰富训练、足够强上下文建模下，形成可复用的抽象、计划、类比、演绎和自我修正能力。经验上，LLM确实能完成许多带有推理结构的任务：解题、写代码、归纳规则、比较方案、发现矛盾。它们并不总是稳定，也常会犯错，但“不稳定的推理”不等于“没有推理”。
+
+更准确的批评应该是：LLM的推理不是人类式的、可靠内省式的、具备真实世界锚定的推理。它缺少持续目标、身体经验、因果互动和严格的事实校验机制。它可以在语言空间里模拟推理链条，也能在很多任务上得到正确结论，但它并不天然保证结论真实。它更像一种从海量语言与符号结构中学出的推理近似器，而不是一个自带真理约束的理性主体。
+
+因此，“LLM只是下一个词预测器，所以不可能推理”这个论断太强。合理的说法应当是：LLM的生成机制是统计预测，但这种机制可以承载某些推理行为；它的短板不在于绝对不能推理，而在于推理缺乏稳定的事实 grounding、目标连续性和可靠验证。
+
+把LLM贬成“词语接龙机器”，会低估它已经表现出的能力；把它神化成“真正理解世界的智能体”，又会高估它的可靠性。更成熟的判断是：LLM不是因为预测下一个词而无法推理，而是因为它的推理仍受制于训练分布、上下文质量、验证机制和外部工具。它能推理，但它的推理需要被约束、检查和校准。

@@ -1,0 +1,168 @@
+{
+  "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+  "case_count": 11,
+  "mindthus_loaded_count": 10,
+  "superpowers_loaded_count": 0,
+  "no_commands_loaded_count": 1,
+  "natural_mindthus_loaded_count": 0,
+  "forced_mindthus_prompt_count": 0,
+  "activation_hint_applied_count": 11,
+  "contaminated_case_count": 0,
+  "mindthus_loaded_rate": 0.909,
+  "superpowers_loaded_rate": 0.0,
+  "no_commands_loaded_rate": 0.091,
+  "case_summaries": [
+    {
+      "case_id": "mtj-002",
+      "case_number": 2,
+      "mindthus_loaded": false,
+      "superpowers_loaded": false,
+      "loaded_owner": [],
+      "no_commands_loaded": true,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-003",
+      "case_number": 3,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-004",
+      "case_number": 4,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-008",
+      "case_number": 8,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-013",
+      "case_number": 13,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-017",
+      "case_number": 17,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "edsp"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-033",
+      "case_number": 33,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "3l5s"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-034",
+      "case_number": 34,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "3l5s"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-037",
+      "case_number": 37,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-048",
+      "case_number": 48,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "mtj-049",
+      "case_number": 49,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    }
+  ]
+}

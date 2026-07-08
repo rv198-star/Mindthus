@@ -1,0 +1,70 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T14:07:41.052717+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-3",
+  "case_id": "mtj-034",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f420e-0098-7f80-99ac-f1b2f14a9e74",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-register-action",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3/answers/mtj-034-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 19.349,
+      "thread_id": "019f420e-0098-7f80-99ac-f1b2f14a9e74",
+      "answer": "先不要加第三个 fallback。\n\n现在的信号是：已有两个兜底分支后，测试仍然不稳定。继续加 fallback 只会把真实失败模式埋得更深，而且会让测试“偶尔过”看起来像修复。\n\n建议先刹住，做三件事：\n\n1. 固定随机性和并发条件：记录失败 seed、时间、环境变量、重试次数、并发数。\n2. 把失败归类：是时序问题、共享状态污染、mock 不完整、外部依赖波动，还是断言本身不稳定。\n3. 只在定位到新的独立失败模式后，才允许新增一个针对性 fallback；否则优先删除或替换已有 fallback。\n\n可以把下一步改成：\n\n```text\n暂不新增 fallback。先收集最近 20 次失败日志，按失败栈和断言点归类，定位两个已有 fallback 未覆盖的上游失败模式。只有确认是新的独立失败路径后，再设计最小修复。\n```\n\n如果要改代码，我会先看失败日志和现有两个 fallback 的触发条件，而不是直接加第三个。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3/events/mtj-034-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3/stderr/mtj-034-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3/answers/mtj-034-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3/prompts/mtj-034-turn-1.prompt.txt",
+      "home": null,
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "先不要加第三个 fallback。\n\n现在的信号是：已有两个兜底分支后，测试仍然不稳定。继续加 fallback 只会把真实失败模式埋得更深，而且会让测试“偶尔过”看起来像修复。\n\n建议先刹住，做三件事：\n\n1. 固定随机性和并发条件：记录失败 seed、时间、环境变量、重试次数、并发数。\n2. 把失败归类：是时序问题、共享状态污染、mock 不完整、外部依赖波动，还是断言本身不稳定。\n3. 只在定位到新的独立失败模式后，才允许新增一个针对性 fallback；否则优先删除或替换已有 fallback。\n\n可以把下一步改成：\n\n```text\n暂不新增 fallback。先收集最近 20 次失败日志，按失败栈和断言点归类，定位两个已有 fallback 未覆盖的上游失败模式。只有确认是新的独立失败路径后，再设计最小修复。\n```\n\n如果要改代码，我会先看失败日志和现有两个 fallback 的触发条件，而不是直接加第三个。"
+      ],
+      "usage": {
+        "input_tokens": 28762,
+        "cached_input_tokens": 18176,
+        "output_tokens": 447,
+        "reasoning_output_tokens": 103
+      },
+      "user_prompt": "（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+    }
+  ],
+  "final_answer": "先不要加第三个 fallback。\n\n现在的信号是：已有两个兜底分支后，测试仍然不稳定。继续加 fallback 只会把真实失败模式埋得更深，而且会让测试“偶尔过”看起来像修复。\n\n建议先刹住，做三件事：\n\n1. 固定随机性和并发条件：记录失败 seed、时间、环境变量、重试次数、并发数。\n2. 把失败归类：是时序问题、共享状态污染、mock 不完整、外部依赖波动，还是断言本身不稳定。\n3. 只在定位到新的独立失败模式后，才允许新增一个针对性 fallback；否则优先删除或替换已有 fallback。\n\n可以把下一步改成：\n\n```text\n暂不新增 fallback。先收集最近 20 次失败日志，按失败栈和断言点归类，定位两个已有 fallback 未覆盖的上游失败模式。只有确认是新的独立失败路径后，再设计最小修复。\n```\n\n如果要改代码，我会先看失败日志和现有两个 fallback 的触发条件，而不是直接加第三个。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

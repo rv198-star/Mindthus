@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T14:04:32.886040+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-2",
+  "case_id": "mtj-034",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f420b-1fb6-7bf1-bf22-f7c808f1cec1",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-register-action",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2/answers/mtj-034-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 19.825,
+      "thread_id": "019f420b-1fb6-7bf1-bf22-f7c808f1cec1",
+      "answer": "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失效模式没有被定位。继续加 fallback 会把真实故障吞掉，让测试从“不稳定”变成“看起来偶尔能过但不可解释”。\n\n建议先做这个刹车：\n\n1. 固定不稳定测试的最小复现条件：随机种子、时间、并发、网络、缓存、测试顺序。\n2. 对比两次失败与一次成功的差异：输入、mock、状态残留、异步等待、外部依赖。\n3. 明确当前两个 fallback 分别覆盖什么失败模式，是否有重叠或掩盖异常。\n4. 只有定位到一个新的、独立的失败模式后，才允许新增 fallback。\n5. 如果新失败模式其实来自同一个上游原因，应修上游或替换现有 fallback，而不是继续叠加。\n\n结论：先拒绝第三个 fallback，定位上游不稳定来源；找到新的独立失败模式后，再决定是修根因、替换 fallback，还是新增一个有明确边界的 fallback。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2/events/mtj-034-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2/stderr/mtj-034-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2/answers/mtj-034-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2/prompts/mtj-034-turn-1.prompt.txt",
+      "home": null,
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会按问题收敛处理：这里已经出现连续 fallback，先把不稳定的上游失效点定位出来，再决定是否需要新的兜底。",
+        "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失效模式没有被定位。继续加 fallback 会把真实故障吞掉，让测试从“不稳定”变成“看起来偶尔能过但不可解释”。\n\n建议先做这个刹车：\n\n1. 固定不稳定测试的最小复现条件：随机种子、时间、并发、网络、缓存、测试顺序。\n2. 对比两次失败与一次成功的差异：输入、mock、状态残留、异步等待、外部依赖。\n3. 明确当前两个 fallback 分别覆盖什么失败模式，是否有重叠或掩盖异常。\n4. 只有定位到一个新的、独立的失败模式后，才允许新增 fallback。\n5. 如果新失败模式其实来自同一个上游原因，应修上游或替换现有 fallback，而不是继续叠加。\n\n结论：先拒绝第三个 fallback，定位上游不稳定来源；找到新的独立失败模式后，再决定是修根因、替换 fallback，还是新增一个有明确边界的 fallback。"
+      ],
+      "usage": {
+        "input_tokens": 28782,
+        "cached_input_tokens": 22272,
+        "output_tokens": 471,
+        "reasoning_output_tokens": 81
+      },
+      "user_prompt": "（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+    }
+  ],
+  "final_answer": "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失效模式没有被定位。继续加 fallback 会把真实故障吞掉，让测试从“不稳定”变成“看起来偶尔能过但不可解释”。\n\n建议先做这个刹车：\n\n1. 固定不稳定测试的最小复现条件：随机种子、时间、并发、网络、缓存、测试顺序。\n2. 对比两次失败与一次成功的差异：输入、mock、状态残留、异步等待、外部依赖。\n3. 明确当前两个 fallback 分别覆盖什么失败模式，是否有重叠或掩盖异常。\n4. 只有定位到一个新的、独立的失败模式后，才允许新增 fallback。\n5. 如果新失败模式其实来自同一个上游原因，应修上游或替换现有 fallback，而不是继续叠加。\n\n结论：先拒绝第三个 fallback，定位上游不稳定来源；找到新的独立失败模式后，再决定是修根因、替换 fallback，还是新增一个有明确边界的 fallback。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-naturalization/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

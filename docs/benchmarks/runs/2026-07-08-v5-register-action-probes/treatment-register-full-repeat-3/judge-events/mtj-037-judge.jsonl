@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f420f-2cab-7600-b6c7-62d5a6c18f0b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-037\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"首句直接锁定购买决策语境，明确 B 对“该不该买/够不够用”更有定义权，并把 A 的物理 PPI 判断降级为边界事实。后续给出可买/不买条件，没有落入“都对、层级不同”的对称抽象。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":13988,"cached_input_tokens":12672,"output_tokens":242,"reasoning_output_tokens":95}}

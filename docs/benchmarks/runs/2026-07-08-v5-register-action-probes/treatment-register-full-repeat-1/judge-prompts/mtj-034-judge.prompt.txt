@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+先不要加第三个 fallback。
+
+已有两个 fallback 后测试仍不稳定，说明当前问题大概率不是“兜底不够”，而是上游失败模式没有被定位。继续加兜底会让测试更难解释：失败被吞掉、路径变多、真实原因更晚暴露。
+
+我建议先做这个刹车动作：
+
+1. 固定不再新增 fallback。
+2. 把不稳定测试连续跑到复现，记录失败分支、输入、随机种子、时间依赖、并发状态或 mock 状态。
+3. 判断两个现有 fallback 分别覆盖的失败模式是否重复、过宽或互相掩盖。
+4. 找到真正的上游失败点后，只做一种处理：
+   - 修上游原因；
+   - 删除一个无效 fallback；
+   - 或用一个更窄、更可验证的 fallback 替换现有兜底。
+
+只有在确认这是“新的、独立的失败模式”，并且有日志或复现证据支持时，才值得加新的 fallback。当前状态下我会拒绝直接加第三层兜底。

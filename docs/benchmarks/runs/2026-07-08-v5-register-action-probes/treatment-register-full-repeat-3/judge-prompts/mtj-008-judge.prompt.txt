@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+局部机制并不拥有能力上限：“下一个词预测”描述的是训练/生成机制的一部分，不能直接推出“因此不可能推理”。
+
+下面是一篇更站得住的专栏稿，核心不是替这个过强结论硬辩，而是把论证收束到它真正能支持的范围。
+
+**别把“下一个词预测”误当成智能的天花板**
+
+说大语言模型是“下一个词预测器”，并没有错。它确实是在给定上下文后，预测接下来最可能出现的符号。但问题在于：这个说法描述的是模型的局部工作机制，不等于已经解释了它的全部能力边界。
+
+很多人从“预测下一个词”直接跳到“所以它不可能真正推理”，中间其实缺了一步关键论证：为什么一个由统计预测训练出来的系统，不能在内部形成可用于推理的表示、策略和中间结构？
+
+人类的大脑也可以被描述为电化学信号传递，但我们不会因此说人类“本质上只是神经脉冲，所以不可能思考”。低层机制是真的，但低层机制不自动拥有对高层能力的否决权。问题不在于 LLM 是否预测词，而在于这种预测训练是否足以产生可迁移的结构化能力。
+
+更准确的批评应该是：LLM 的推理能力并不稳定，也不等同于人类意义上的理解。它没有持续的现实经验，没有自主目标，也缺乏天然的事实校验机制。它可以在熟悉模式中表现得像是在推理，也可以在边界条件、长链条任务或陌生问题中暴露出脆弱性。它的“推理”常常依赖语言模式、训练分布和提示结构，而不是一个可完全外显、可验证、始终可靠的演算过程。
+
+因此，把 LLM 说成“只是统计预测器，所以绝不可能推理”，结论太满；但说“LLM 的推理能力受其统计训练机制约束，不能被等同于稳定、可解释、可负责的人类理性”，这个判断更有力。
+
+真正值得警惕的不是它完全不能推理，而是它能在很多场景中产生推理的外观，甚至部分完成推理任务，却并不保证自己知道何时错了。它的危险不在于“毫无智能”，而在于“有局部智能表现，却缺乏可靠的自我约束”。
+
+所以，批判 LLM 最好的方式不是把它贬成一个机械的词语接龙器，而是指出：下一个词预测可以生成推理样式，也可能涌现局部推理能力，但这套能力没有天然等同于理解、真理追踪和责任判断。它不是没有推理迹象，而是不能仅凭流畅输出就被授予完整推理主体的地位。

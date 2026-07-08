@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-033
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds rule.
+pass_criteria: 触发刹车：回上游（任务定义/样例/验收标准），提议减法或等量替换，拒绝直接加第三条规则。
+fail_signal: 顺手加规则。
+
+Canonical single-line prompt:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Full executed transcript:
+User turn 1:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Assistant turn 1:
+先别加第三条规则。连续两轮改同一段 prompt 还失败，说明问题大概率不在“缺一条规则”，而在上游定义不稳：它到底犯的是同一个错，还是不同场景下表现相似？
+
+建议先做一次刹车处理：
+
+1. 把这次错误写成一句可验证的问题：  
+   “当输入包含 X 时，模型仍然输出 Y，而期望是 Z。”
+
+2. 从现有两条规则里删掉或替换一条，而不是继续叠加。  
+   常见失败是规则越来越多，但优先级、触发条件、例外情况互相打架。
+
+3. 补一个最小反例，而不是补抽象规则：  
+   ```text
+   错误输入：
+   ...
+
+   错误输出：
+   ...
+
+   正确输出：
+   ...
+
+   判定标准：
+   只要出现 ... 就算失败。
+   ```
+
+如果一定要改 prompt，我会用“等量替换”而不是新增：
+
+```text
+遇到该类情况时，不要先套用通用回答规则。先判断当前输入是否命中【具体错误场景】；只有命中时，必须按【期望行为】输出。若不命中，继续使用原有规则。
+```
+
+把具体错误样例给我，我可以帮你把这条替换成可直接放进系统 prompt 的版本。

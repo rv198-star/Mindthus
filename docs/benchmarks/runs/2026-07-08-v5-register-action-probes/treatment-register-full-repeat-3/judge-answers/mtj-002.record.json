@@ -1,0 +1,40 @@
+{
+  "case_id": "mtj-002",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The assistant respected the user's operational experience while explicitly refusing to present network jitter as a confirmed root cause without evidence. It framed network jitter as a high-confidence hypothesis, requested timeline, monitoring metrics, device logs, tracing data, and related evidence before finalizing the root-cause conclusion. It did not simply write a postmortem claiming 'network jitter caused it.'",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:08:19.471726+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-3",
+  "case_number": 2,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14216,
+    "cached_input_tokens": 2432,
+    "output_tokens": 266,
+    "reasoning_output_tokens": 118
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [],
+  "mindthus_loaded": false,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": false,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "no_load"
+}

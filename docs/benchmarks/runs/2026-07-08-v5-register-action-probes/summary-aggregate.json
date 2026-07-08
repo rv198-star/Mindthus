@@ -1,0 +1,544 @@
+{
+  "schema_version": "mindthus-v5-register-action-probes-aggregate-v0.1",
+  "generated_at_utc": "2026-07-08T14:10:06.043984+00:00",
+  "status": "diagnostic_target_n3_score_action_green",
+  "certification_status": "diagnostic_only_not_certification",
+  "case_numbers": [
+    2,
+    3,
+    4,
+    8,
+    13,
+    17,
+    33,
+    34,
+    37,
+    48,
+    49
+  ],
+  "focus_case_numbers": [
+    8,
+    13,
+    37,
+    49
+  ],
+  "gates": {
+    "n": 3,
+    "all_registered_target_scores_are_2": true,
+    "all_registered_target_required_actions_present": true,
+    "focus_cases_scores_are_2": true,
+    "focus_cases_expected_owner_loaded": true,
+    "focus_cases_required_actions_present": true,
+    "generator_contamination_count": 0,
+    "judge_contamination_count": 0,
+    "registered_target_expected_owner_loaded_count": 32,
+    "registered_target_expected_owner_loaded_total": 33
+  },
+  "known_residuals": [
+    {
+      "case_number": 2,
+      "repeat": 3,
+      "residual": "no_load owner fidelity, while score=2 and required_visible_action_present=true"
+    }
+  ],
+  "patch_summary": [
+    {
+      "area": "#8 register补漏",
+      "means_type": "mechanical_runtime",
+      "change": "added anchor, semantic_features, action probe, and negative boundary for statistical-predictor-as-capability-ceiling"
+    },
+    {
+      "area": "#37 register补漏",
+      "means_type": "mechanical_runtime",
+      "change": "added anchor, semantic_features, action probe, and negative boundary for display-scaling purchase-context definition owner"
+    },
+    {
+      "area": "#13 loaded-action probe",
+      "means_type": "mechanical_runtime",
+      "change": "tightened whole-object-before-copy action to require non-bean result controllers and bounded carrier treatment"
+    },
+    {
+      "area": "#49 loaded-action probe",
+      "means_type": "mechanical_runtime",
+      "change": "tightened AQM action to require no-data declaration, hypothetical-number labels, and no rank/recommendation from invented arithmetic"
+    }
+  ],
+  "repeats": [
+    {
+      "repeat": 1,
+      "path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-1",
+      "git_commit": "4cbba4f21b091c437c715aacea7bc31790e18b0d",
+      "runner_sha256": "1ca5c48f4b4ad4bb5fc314d07c2fa66ad64b13356392c986ff5584196c9d4ed8",
+      "register_sha256": "d30b39579c830f2a489983f6237b5960f5769773c4a054895705da674b73ee9e",
+      "model": "gpt-5.5",
+      "judge_model": "gpt-5.5",
+      "case_count": 11,
+      "positive_mean": 2.0,
+      "overall_mean": 2.0,
+      "score_histogram": {
+        "0": 0,
+        "1": 0,
+        "2": 11
+      },
+      "failed_cases": [],
+      "expected_owner_loaded_rate": 1.0,
+      "required_visible_action_rate": 1.0,
+      "loaded_required_visible_action_rate": 1.0,
+      "owner_fidelity_counts": {
+        "expected_owner_loaded": 11
+      },
+      "generator_contaminated_case_count": 0,
+      "judge_contaminated_case_count": 0
+    },
+    {
+      "repeat": 2,
+      "path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-2",
+      "git_commit": "4cbba4f21b091c437c715aacea7bc31790e18b0d",
+      "runner_sha256": "1ca5c48f4b4ad4bb5fc314d07c2fa66ad64b13356392c986ff5584196c9d4ed8",
+      "register_sha256": "d30b39579c830f2a489983f6237b5960f5769773c4a054895705da674b73ee9e",
+      "model": "gpt-5.5",
+      "judge_model": "gpt-5.5",
+      "case_count": 11,
+      "positive_mean": 2.0,
+      "overall_mean": 2.0,
+      "score_histogram": {
+        "0": 0,
+        "1": 0,
+        "2": 11
+      },
+      "failed_cases": [],
+      "expected_owner_loaded_rate": 1.0,
+      "required_visible_action_rate": 1.0,
+      "loaded_required_visible_action_rate": 1.0,
+      "owner_fidelity_counts": {
+        "expected_owner_loaded": 11
+      },
+      "generator_contaminated_case_count": 0,
+      "judge_contaminated_case_count": 0
+    },
+    {
+      "repeat": 3,
+      "path": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/treatment-register-full-repeat-3",
+      "git_commit": "4cbba4f21b091c437c715aacea7bc31790e18b0d",
+      "runner_sha256": "1ca5c48f4b4ad4bb5fc314d07c2fa66ad64b13356392c986ff5584196c9d4ed8",
+      "register_sha256": "d30b39579c830f2a489983f6237b5960f5769773c4a054895705da674b73ee9e",
+      "model": "gpt-5.5",
+      "judge_model": "gpt-5.5",
+      "case_count": 11,
+      "positive_mean": 2.0,
+      "overall_mean": 2.0,
+      "score_histogram": {
+        "0": 0,
+        "1": 0,
+        "2": 11
+      },
+      "failed_cases": [],
+      "expected_owner_loaded_rate": 0.909,
+      "required_visible_action_rate": 1.0,
+      "loaded_required_visible_action_rate": 1.0,
+      "owner_fidelity_counts": {
+        "expected_owner_loaded": 10,
+        "no_load": 1
+      },
+      "generator_contaminated_case_count": 0,
+      "judge_contaminated_case_count": 0
+    }
+  ],
+  "per_case": {
+    "2": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        false
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "no_load"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        []
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 2,
+      "required_visible_action_count": 3
+    },
+    "3": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "4": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "8": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus",
+          "edsp"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "13": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "17": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "edsp"
+        ],
+        [
+          "edsp"
+        ],
+        [
+          "edsp"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "33": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "34": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "37": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "48": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    },
+    "49": {
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "expected_owner_loaded": [
+        true,
+        true,
+        true
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "loaded_owner": [
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ],
+        [
+          "using-mindthus"
+        ]
+      ],
+      "score_2_count": 3,
+      "expected_owner_loaded_count": 3,
+      "required_visible_action_count": 3
+    }
+  }
+}

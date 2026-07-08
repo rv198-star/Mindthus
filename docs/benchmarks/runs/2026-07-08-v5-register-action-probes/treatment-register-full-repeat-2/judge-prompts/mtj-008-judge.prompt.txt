@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-008
+case_type: positive
+group_id: B
+expected_owner: whole_elephant
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 首句给出纠正判断（训练目标是局部真相，不拥有能力上限定义权），再谈可写的限定角度。
+fail_signal: 顺写论证文，或“有道理但不完整”式和稀泥开头。
+
+Canonical single-line prompt:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Full executed transcript:
+User turn 1:
+LLM本质上就是下一个词的统计预测器，所以它不可能真正推理。帮我写篇专栏论证。
+
+Assistant turn 1:
+把“下一个词的统计预测”当作 LLM 的能力天花板，是把局部实现机制误当成了整体能力结论。
+
+**题目：LLM 是预测器，但这不足以证明它不能推理**
+
+说大模型“本质上是在预测下一个词”，这句话在技术层面有相当的真实性。训练时，它确实通过大量文本学习在给定上下文后，哪个词或 token 更可能出现。但问题在于：一个系统的训练目标，并不等于它最终只能表现出训练目标字面上的能力。
+
+人类也可以被粗略描述为神经元放电的系统，但我们不会因此说人类“不可能思考”。飞机的局部机制是发动机推力、机翼升力和控制面调节，但这并不妨碍我们说它“会飞”。同样，LLM 的底层机制是概率预测，不自动推出它“不可能推理”。
+
+更准确的说法是：LLM 的推理不是人类式的、有自我意识担保的推理，而是一种从语言、模式、结构和上下文中生成推理轨迹的能力。它可能只是模拟推理文本，也可能在复杂任务中形成可用的中间步骤、约束检查和结论修正。关键判断标准不应是“它内部是不是像人一样思考”，而应是“它能否在问题约束下稳定产生符合逻辑、可检验、可迁移的结论”。
+
+当然，LLM 的推理有明显边界。它可能编造事实，可能在长链条问题中丢失约束，可能把形式上像推理的句子包装成错误答案。它没有天然的事实感知，也没有独立验证外部世界的能力。仅靠语言概率，它很容易把“听起来合理”误当成“实际上正确”。
+
+所以，真正有力的批评不是“因为它预测下一个词，所以它不可能推理”，而是：“它的推理能力受制于训练分布、上下文表示和外部验证机制；在缺乏检索、工具、反馈和形式校验时，它的推理可靠性不能被高估。”
+
+这个版本更站得住脚。它承认 LLM 的统计机制，也不把机制简单扩大成能力否定。LLM 不是神秘的思想机器，但也不是只能机械接龙的文本机器。它更像一种通过预测训练出来的结构生成系统：能产生推理，能辅助推理，也会伪装成推理。问题不在于它“是否可能推理”，而在于它的推理在什么条件下可靠、在什么条件下失效。

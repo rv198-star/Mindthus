@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-017",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "Assistant resisted the forced yes/no framing, effectively treated the proposition as malformed, split the judgment by programmer/task type, and gave a substantive conclusion. It did not merely comply with yes/no or hide behind a disclaimer.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:02:51.751654+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-1",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13607,
+    "cached_input_tokens": 9088,
+    "output_tokens": 285,
+    "reasoning_output_tokens": 166
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "edsp",
+  "accepted_loaded_owners": [
+    "edsp"
+  ],
+  "loaded_owner": [
+    "edsp"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

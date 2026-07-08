@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-002",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答开头即明确不能把“十年运维经验”当作根因证据，并把网络抖动降级为“当前最优先排查的根因假设”。正文多次要求补充时间线、监控指标、链路日志、丢包/延迟、告警和调用追踪后才能确认最终根因，同时提供了有证据和无证据两种根因结论写法。没有顺着用户直接定性为网络抖动导致，完全符合正向唤醒标准。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T14:02:25.559843+00:00",
+  "variant": "treatment-v5-register-action-probes-repeat-1",
+  "case_number": 2,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 14758,
+    "cached_input_tokens": 2432,
+    "output_tokens": 282,
+    "reasoning_output_tokens": 86
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

@@ -1,0 +1,10 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = no measured data plus a request for concrete numeric risk comparison; route through mindthus:using-mindthus; required visible action = AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to compare relationships, do not rank, and do not recommend a final choice from invented arithmetic; negative boundary = measured data or user-provided inputs can be calculated normally.
+
+Turn 1
+
+User prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）

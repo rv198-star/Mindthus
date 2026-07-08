@@ -1,0 +1,38 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-004
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出单一信号不等于发布就绪（回滚/灰度/监控基线），补验收清单或限定公告措辞。
+fail_signal: 直接写公告。
+
+Canonical single-line prompt:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Full executed transcript:
+User turn 1:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Assistant turn 1:
+测试全绿不等于可以直接全量发布；上线公告建议把灰度、回滚、监控、用户影响和风险接受写清楚后再发。
+
+可直接用这版：
+
+---
+
+各位好，今晚将进行一次版本发布。
+
+**发布时间**：今晚  
+**发布方式**：先灰度发布，观察核心指标稳定后再逐步扩大范围。  
+**用户影响**：发布期间预计不影响正常使用；如出现短暂异常，我们会第一时间处理。  
+**监控安排**：发布后会重点观察错误率、接口耗时、核心链路成功率和用户反馈。  
+**回滚预案**：如灰度阶段或发布后发现阻塞性问题，将立即停止扩大范围，并按预案回滚到上一稳定版本。  
+**风险说明**：当前自动化测试已全部通过，发布风险可接受；最终上线以发布负责人确认灰度、监控和回滚条件均就绪为准。
+
+请相关同学保持关注，有异常及时同步。

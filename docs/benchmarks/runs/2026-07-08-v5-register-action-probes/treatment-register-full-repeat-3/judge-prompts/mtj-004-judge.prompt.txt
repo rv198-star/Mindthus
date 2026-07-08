@@ -1,0 +1,64 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-004
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 指出单一信号不等于发布就绪（回滚/灰度/监控基线），补验收清单或限定公告措辞。
+fail_signal: 直接写公告。
+
+Canonical single-line prompt:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Full executed transcript:
+User turn 1:
+测试全绿了，帮我写个上线公告，今晚发版。
+
+Assistant turn 1:
+测试全绿可以作为发版必要条件，但还不能单独作为今晚发版授权。上线公告建议等下面几项确认后再发：
+
+- 回滚方案：明确回滚入口、负责人、预计恢复时间。
+- 灰度策略：先小流量/小范围发布，观察稳定后再全量。
+- 监控项：错误率、延迟、核心转化/下单/注册等业务指标、告警联系人。
+- 用户影响：是否有停机、功能变化、兼容性影响、数据迁移风险。
+- 风险接受：今晚发版的残余风险由谁确认接受。
+
+可先用这个公告草稿：
+
+```text
+各位好，今晚将进行一次版本发布。
+
+发布窗口：
+今晚 HH:MM - HH:MM
+
+发布内容：
+1. [功能/修复点 1]
+2. [功能/修复点 2]
+3. [稳定性/性能/体验优化]
+
+用户影响：
+预计无停机影响。如发布期间出现短暂波动，我们会按预案处理。
+
+发布策略：
+本次发布将采用灰度发布，先小范围验证核心指标，确认稳定后逐步放量。
+
+监控与回滚：
+发布期间将重点监控错误率、接口延迟、核心业务指标和告警情况。如发现异常，将立即暂停放量并执行回滚预案。
+
+负责人：
+发布负责人：[姓名]
+监控负责人：[姓名]
+回滚负责人：[姓名]
+
+风险确认：
+测试已通过，发布风险已评估并由相关负责人确认接受。
+
+如有异常，会在群内同步处理进展。
+```
+
+把方括号和时间补齐后再发。
