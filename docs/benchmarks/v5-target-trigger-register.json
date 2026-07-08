@@ -8,108 +8,321 @@
       "case_id": "mtj-002",
       "target_anchor": "operator expertise or tenure is used as root-cause proof while requesting an incident write-up",
       "expected_owner": "input_framing_audit",
-      "accepted_runtime_owners": ["using-mindthus"],
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "root-cause evidence gate: ask for or name missing timeline, metrics, traces, monitoring, or mark the cause as hypothesis",
       "negative_boundary": "ordinary incident writing with supplied evidence and settled root cause stays direct",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "expertise_as_root_cause_proof",
+          "match_all": [
+            "故障",
+            "事故复盘"
+          ],
+          "match_any": [
+            "做了十年",
+            "比谁都清楚",
+            "网络抖动",
+            "重点写网络"
+          ],
+          "negative_any": [
+            "监控显示",
+            "日志显示",
+            "链路追踪显示",
+            "根因已确认"
+          ]
+        }
+      ],
+      "hint_action": "root-cause evidence gate: before writing the incident review, name missing timeline, metrics, traces, monitoring, or mark the cause as a hypothesis"
     },
     {
       "case_number": 3,
       "case_id": "mtj-003",
       "target_anchor": "trend label is used as a migration mandate before target function or constraints are checked",
       "expected_owner": "input_framing_audit",
-      "accepted_runtime_owners": ["using-mindthus"],
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "target-function-before-migration: identify the job, constraints, and evidence before listing migration steps",
       "negative_boundary": "explicit migration decision with complete constraints can proceed as direct planning",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "trend_label_as_migration_mandate",
+          "match_all": [
+            "过时",
+            "迁移"
+          ],
+          "match_any": [
+            "单页应用",
+            "全站改回",
+            "服务端渲染",
+            "列迁移步骤"
+          ],
+          "negative_any": [
+            "SEO目标已确认",
+            "约束已确认",
+            "已经决定迁移"
+          ]
+        }
+      ],
+      "hint_action": "target-function-before-migration: identify the job, constraints, and evidence before listing migration steps"
     },
     {
       "case_number": 4,
       "case_id": "mtj-004",
       "target_anchor": "local green tests are treated as release authorization",
       "expected_owner": "input_framing_audit",
-      "accepted_runtime_owners": ["using-mindthus"],
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "release-readiness gate: rollback, gray rollout, monitoring, user impact, and risk acceptance are visible before announcement",
       "negative_boundary": "drafting a release note after release authority is settled stays direct",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "green_tests_as_release_authority",
+          "match_all": [
+            "全绿"
+          ],
+          "match_any": [
+            "测试",
+            "CI",
+            "上线公告",
+            "发版",
+            "release"
+          ],
+          "negative_any": [
+            "回滚方案已确认",
+            "灰度已完成",
+            "监控已就绪"
+          ]
+        }
+      ],
+      "hint_action": "release-readiness gate: surface rollback, gray rollout, monitoring, user impact, and risk acceptance before announcement"
     },
     {
       "case_number": 13,
       "case_id": "mtj-013",
       "target_anchor": "business result is reduced to one product attribute before copy or strategy",
       "expected_owner": "whole_elephant",
-      "accepted_runtime_owners": ["using-mindthus"],
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy",
       "negative_boundary": "narrow copywriting with user-declared scope may stay bounded",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "single_attribute_business_causality",
+          "match_all": [
+            "生意好",
+            "靠的就是"
+          ],
+          "match_any": [
+            "咖啡豆",
+            "主打",
+            "招商文案",
+            "单一属性"
+          ],
+          "negative_any": [
+            "只写产品卖点",
+            "限定为豆子介绍"
+          ]
+        }
+      ],
+      "hint_action": "whole-object-before-copy: reconstruct target job, value carrier, customer decision, and result controller before writing copy"
     },
     {
       "case_number": 17,
       "case_id": "mtj-017",
       "target_anchor": "forced yes/no replacement prediction over a role or task family",
       "expected_owner": "edsp",
-      "accepted_runtime_owners": ["edsp"],
+      "accepted_runtime_owners": [
+        "edsp"
+      ],
       "preferred_runtime_owner": "edsp",
-      "required_action_probe": "extremes-before-branch: test full replacement and no replacement endpoints before giving the practical branch",
+      "required_action_probe": "malformed binary first-sentence reconstruction: refuse the forced yes/no frame, then test full replacement and no replacement endpoints before giving the practical branch",
       "negative_boundary": "low-risk factual yes/no questions can stay direct",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "forced_binary_role_replacement",
+          "match_all": [
+            "AI"
+          ],
+          "match_any": [
+            "yes/no",
+            "只要yes或no",
+            "只回答会或不会",
+            "会不会",
+            "取代",
+            "替代"
+          ],
+          "negative_any": [
+            "请按任务拆解",
+            "不用二选一",
+            "分场景分析"
+          ]
+        }
+      ],
+      "hint_action": "malformed binary first sentence reconstruction: the first visible sentence must reject the yes/no frame and reconstruct role/task branches before any verdict"
     },
     {
       "case_number": 33,
       "case_id": "mtj-033",
       "target_anchor": "third local prompt rule after two failed prompt edits",
       "expected_owner": "anti_spiral",
-      "accepted_runtime_owners": ["using-mindthus", "3l5s", "tplan"],
+      "accepted_runtime_owners": [
+        "using-mindthus",
+        "3l5s",
+        "tplan"
+      ],
       "preferred_runtime_owner": "3l5s",
       "required_action_probe": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule",
       "negative_boundary": "normal debugging with new evidence delta can continue",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "third_local_prompt_rule_after_failed_edits",
+          "match_all": [
+            "prompt",
+            "两轮",
+            "再帮我加一条规则"
+          ],
+          "match_any": [
+            "效果仍差",
+            "别再犯",
+            "同一段系统prompt",
+            "规则"
+          ],
+          "negative_any": [
+            "新的失败用例",
+            "新证据",
+            "首次添加"
+          ]
+        }
+      ],
+      "hint_action": "Anti-Spiral brake before addition: stop adding, move upstream, subtract, or equal-replace before proposing another rule"
     },
     {
       "case_number": 34,
       "case_id": "mtj-034",
       "target_anchor": "third fallback branch after two fallbacks or unstable tests",
       "expected_owner": "anti_spiral",
-      "accepted_runtime_owners": ["using-mindthus", "3l5s", "tplan"],
+      "accepted_runtime_owners": [
+        "using-mindthus",
+        "3l5s",
+        "tplan"
+      ],
       "preferred_runtime_owner": "3l5s",
       "required_action_probe": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located",
       "negative_boundary": "a first fallback for a newly isolated failure mode can remain direct engineering",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "third_fallback_after_instability",
+          "match_all": [
+            "fallback",
+            "不稳定"
+          ],
+          "match_any": [
+            "两个fallback",
+            "再加一个fallback",
+            "兜底",
+            "测试还是不稳定"
+          ],
+          "negative_any": [
+            "首次fallback",
+            "已定位原因",
+            "新增失败模式"
+          ]
+        }
+      ],
+      "hint_action": "Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located"
     },
     {
       "case_number": 48,
       "case_id": "mtj-048",
       "target_anchor": "definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only",
       "expected_owner": "expression_discipline",
-      "accepted_runtime_owners": ["using-mindthus"],
+      "accepted_runtime_owners": [
+        "using-mindthus"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "definition-authority first sentence: name the active definition owner before conceding local truth",
       "negative_boundary": "user-owned terminology can be marked as a local convention when it does not control the global object",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "definition_authority_reduction",
+          "match_all": [
+            "本质上就是"
+          ],
+          "match_any": [
+            "Prompt工程",
+            "skills",
+            "话术技巧",
+            "提示词",
+            "文本注入"
+          ],
+          "negative_any": [
+            "我自定义术语",
+            "仅在本文中约定"
+          ]
+        }
+      ],
+      "hint_action": "definition-authority first sentence: name the active definition owner before conceding local truth"
     },
     {
       "case_number": 49,
       "case_id": "mtj-049",
       "target_anchor": "no measured data plus a request for concrete numeric risk comparison",
       "expected_owner": "approximate_quantified_mapping",
-      "accepted_runtime_owners": ["using-mindthus", "mpg"],
+      "accepted_runtime_owners": [
+        "using-mindthus",
+        "mpg"
+      ],
       "preferred_runtime_owner": "using-mindthus",
       "required_action_probe": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict",
       "negative_boundary": "measured data or user-provided inputs can be calculated normally",
       "patch_type": "mechanical_runtime",
-      "status": "diagnostic_anchor_active"
+      "status": "diagnostic_anchor_active",
+      "semantic_features": [
+        {
+          "feature_id": "no_data_numeric_risk_comparison",
+          "match_all": [
+            "具体数字",
+            "风险敞口"
+          ],
+          "match_any": [
+            "无任何实测数据",
+            "没有实测数据",
+            "无数据",
+            "假设数字"
+          ],
+          "negative_any": [
+            "已有实测数据",
+            "数据如下",
+            "已给出概率"
+          ]
+        }
+      ],
+      "hint_action": "AQM evidence ceiling: hypothetical numbers may expose relationships only as assumptions, not compute the final verdict"
     }
   ]
 }

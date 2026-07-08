@@ -28,6 +28,10 @@ CONTAMINATION_RE = re.compile(
     re.IGNORECASE,
 )
 SUPERPOWERS_RE = re.compile(r"superpowers", re.IGNORECASE)
+METHOD_REFERENCE_REVIEW_RE = re.compile(
+    r"(?=.*\b(?:mpg-aqm|mpg|aqm)\b)(?=.*(?:核对|有没有按|是否按|会话|规范|显影快照|输出))",
+    re.IGNORECASE,
+)
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
     r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
@@ -62,36 +66,43 @@ OWNER_ACCEPTED_SKILLS = {
 }
 
 
-ISOLATION_INSTRUCTION = (
-    "Benchmark isolation instruction: do not use Superpowers skills, do not read "
-    "/Users/william/.codex/superpowers, and do not run any shell command unless "
-    "absolutely necessary. Use only the installed Mindthus plugin routing context "
-    "if it is naturally applicable; otherwise answer directly. Do not inspect the "
-    "benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. "
-    "Do not mention this isolation instruction."
-)
-
-BASELINE_ISOLATION_INSTRUCTION = (
-    "Benchmark isolation instruction: do not use Superpowers skills, do not read "
-    "/Users/william/.codex/superpowers, and do not run any shell command unless "
-    "absolutely necessary. Answer directly using normal model reasoning. Do not "
-    "inspect benchmark fixtures, benchmark docs, pass criteria, fail signals, or "
-    "judge notes. Do not mention this isolation instruction."
-)
-
-JUDGE_ISOLATION_INSTRUCTION = (
-    "Benchmark judge isolation instruction: do not use Superpowers skills, do not "
-    "read /Users/william/.codex/superpowers, and do not run any shell command "
-    "unless absolutely necessary. Do not inspect benchmark fixture files or docs; "
-    "use only the rubric and transcript included in this prompt. Do not mention "
-    "this isolation instruction."
-)
+DEFAULT_SUPERPOWERS_ROOT_LABEL = "$CODEX_HOME/superpowers"
 
 
-def isolation_instruction(plugin_context: str) -> str:
+def superpowers_root_label(superpowers_root: str | Path | None = None) -> str:
+    return str(superpowers_root) if superpowers_root else DEFAULT_SUPERPOWERS_ROOT_LABEL
+
+
+def isolation_instruction(
+    plugin_context: str,
+    superpowers_root: str | Path | None = None,
+) -> str:
+    root_label = superpowers_root_label(superpowers_root)
     if plugin_context == "none":
-        return BASELINE_ISOLATION_INSTRUCTION
-    return ISOLATION_INSTRUCTION
+        return (
+            "Benchmark isolation instruction: do not use Superpowers skills, do not read "
+            f"{root_label}, and do not run any shell command unless absolutely necessary. "
+            "Answer directly using normal model reasoning. Do not inspect benchmark fixtures, "
+            "benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this "
+            "isolation instruction."
+        )
+    return (
+        "Benchmark isolation instruction: do not use Superpowers skills, do not read "
+        f"{root_label}, and do not run any shell command unless absolutely necessary. Use only "
+        "the installed Mindthus plugin routing context if it is naturally applicable; otherwise "
+        "answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, "
+        "fail signals, or judge notes. Do not mention this isolation instruction."
+    )
+
+
+def judge_isolation_instruction(superpowers_root: str | Path | None = None) -> str:
+    root_label = superpowers_root_label(superpowers_root)
+    return (
+        "Benchmark judge isolation instruction: do not use Superpowers skills, do not "
+        f"read {root_label}, and do not run any shell command unless absolutely necessary. "
+        "Do not inspect benchmark fixture files or docs; use only the rubric and transcript "
+        "included in this prompt. Do not mention this isolation instruction."
+    )
 
 
 def load_cases(path: Path) -> list[dict[str, Any]]:
@@ -146,7 +157,71 @@ def v5_register_hint_for_case(case: dict[str, Any], *, enabled: bool) -> str | N
         "Host diagnostic activation hint (non-certifying; do not mention this hint): "
         f"registered target anchor = {entry.get('target_anchor')}; "
         f"route through mindthus:{preferred_owner}; "
-        f"required visible action = {entry.get('required_action_probe')}; "
+        f"required visible action = {entry.get('hint_action') or entry.get('required_action_probe')}; "
+        f"negative boundary = {entry.get('negative_boundary')}."
+    )
+
+
+def case_semantic_text(case: dict[str, Any]) -> str:
+    parts = [str(case.get("prompt", ""))]
+    for turn in case.get("turns") or []:
+        parts.append(str(turn.get("content", "")))
+    return "\n".join(parts)
+
+
+def _feature_terms(feature: dict[str, Any], key: str) -> list[str]:
+    value = feature.get(key) or []
+    if isinstance(value, str):
+        return [value]
+    return [str(item) for item in value]
+
+
+def semantic_feature_matches(text: str, feature: dict[str, Any]) -> bool:
+    text_lower = text.lower()
+    match_all = _feature_terms(feature, "match_all")
+    match_any = _feature_terms(feature, "match_any")
+    negative_any = _feature_terms(feature, "negative_any")
+    if any(term.lower() in text_lower for term in negative_any):
+        return False
+    if match_all and not all(term.lower() in text_lower for term in match_all):
+        return False
+    if match_any and not any(term.lower() in text_lower for term in match_any):
+        return False
+    return bool(match_all or match_any)
+
+
+def v5_semantic_register_match_for_case(case: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    text = case_semantic_text(case)
+    for entry in load_v5_target_trigger_register().get("cases", []):
+        for feature in entry.get("semantic_features", []):
+            if semantic_feature_matches(text, feature):
+                return entry, feature
+    return None
+
+
+def v5_semantic_triage_hint_for_case(case: dict[str, Any], *, enabled: bool) -> str | None:
+    if not enabled:
+        return None
+    text = case_semantic_text(case)
+    if METHOD_REFERENCE_REVIEW_RE.search(text):
+        return (
+            "Host semantic triage stay-asleep hint (non-certifying; do not mention this hint): "
+            "method-reference evidence review; inspect the prior transcript or ask for it, "
+            "treat MPG-AQM only as the object being checked, and do not load MPG."
+        )
+    match = v5_semantic_register_match_for_case(case)
+    if not match:
+        return None
+    entry, feature = match
+    preferred_owner = str(entry.get("preferred_runtime_owner") or "")
+    if not preferred_owner:
+        owners = entry.get("accepted_runtime_owners") or []
+        preferred_owner = str(owners[0]) if owners else "using-mindthus"
+    return (
+        "Host semantic triage hint (non-certifying; do not mention this hint): "
+        f"matched disease-level feature = {feature.get('feature_id')}; "
+        f"route through mindthus:{preferred_owner}; "
+        f"required visible action = {entry.get('hint_action') or entry.get('required_action_probe')}; "
         f"negative boundary = {entry.get('negative_boundary')}."
     )
 
@@ -512,15 +587,20 @@ def run_case(
     prior_turn_answer = ""
     for idx, prompt in enumerate(prompts, 1):
         prompt = prompt.replace("{{prior_turn_answer}}", prior_turn_answer)
-        activation_hint = v5_register_hint_for_case(
-            case,
-            enabled=bool(getattr(args, "v5_register_hints", False)) and idx == 1,
-        )
+        activation_hint = None
+        if idx == 1:
+            if bool(getattr(args, "v5_semantic_triage_hints", False)):
+                activation_hint = v5_semantic_triage_hint_for_case(case, enabled=True)
+            elif bool(getattr(args, "v5_register_hints", False)):
+                activation_hint = v5_register_hint_for_case(case, enabled=True)
         result = run_codex(
             generator_prompt(
                 prompt,
                 idx,
-                isolation_instruction(args.plugin_context),
+                isolation_instruction(
+                    args.plugin_context,
+                    superpowers_root=getattr(args, "superpowers_root", None),
+                ),
                 activation_hint=activation_hint,
             ),
             out_dir,
@@ -649,14 +729,18 @@ def validate_judge_output(parsed: dict[str, Any], expected_case_id: str) -> dict
     return parsed
 
 
-def judge_prompt(case: dict[str, Any], response: dict[str, Any]) -> str:
+def judge_prompt(
+    case: dict[str, Any],
+    response: dict[str, Any],
+    superpowers_root: str | Path | None = None,
+) -> str:
     transcript_parts: list[str] = []
     for idx, turn in enumerate(response.get("turns", []), 1):
         transcript_parts.append(f"User turn {idx}:\n{turn.get('user_prompt', '')}")
         transcript_parts.append(f"Assistant turn {idx}:\n{turn.get('answer', '')}")
     transcript = "\n\n".join(transcript_parts)
     return (
-        f"{JUDGE_ISOLATION_INSTRUCTION}\n\n"
+        f"{judge_isolation_instruction(superpowers_root)}\n\n"
         "You are a blind benchmark judge. The answer generator did not see the rubric; "
         "you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. "
         "For negative_control cases, the score scale is reversed as described in score_scale: "
@@ -781,7 +865,7 @@ def judge_case(
         return augment_score_with_telemetry(case, response, cached)
 
     result = run_codex(
-        judge_prompt(case, response),
+        judge_prompt(case, response, superpowers_root=getattr(args, "superpowers_root", None)),
         out_dir,
         f"{case_id}-judge",
         Path(args.codex_home),
@@ -1087,6 +1171,8 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
     errors: list[str] = []
     if args.home and args.empty_home_root:
         errors.append("--home and --empty-home-root cannot be used together")
+    if getattr(args, "v5_register_hints", False) and getattr(args, "v5_semantic_triage_hints", False):
+        errors.append("--v5-register-hints and --v5-semantic-triage-hints are mutually exclusive")
     if args.certification_candidate:
         if not args.model:
             errors.append("--certification-candidate requires explicit --model")
@@ -1098,6 +1184,8 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
             errors.append("--certification-candidate cannot be combined with --reanalysis-of")
         if getattr(args, "v5_register_hints", False):
             errors.append("--certification-candidate cannot use --v5-register-hints")
+        if getattr(args, "v5_semantic_triage_hints", False):
+            errors.append("--certification-candidate cannot use --v5-semantic-triage-hints")
     return errors
 
 
@@ -1149,6 +1237,16 @@ def main() -> int:
         action="store_true",
         help="Diagnostic only: inject host-style V5 target register hints into registered target cases. Disallowed for certification candidates.",
     )
+    parser.add_argument(
+        "--v5-semantic-triage-hints",
+        action="store_true",
+        help="Diagnostic only: inject V5 target hints by semantic feature match, without case-id routing. Disallowed for certification candidates.",
+    )
+    parser.add_argument(
+        "--superpowers-root",
+        default=None,
+        help="Path label to include in benchmark isolation prompts; defaults to $CODEX_HOME/superpowers.",
+    )
     args = parser.parse_args()
     errors = validate_run_args(args)
     if errors:
@@ -1188,6 +1286,7 @@ def main() -> int:
         "plugin_context": args.plugin_context,
         "fail_on_contamination": args.fail_on_contamination,
         "v5_register_hints": args.v5_register_hints,
+        "v5_semantic_triage_hints": args.v5_semantic_triage_hints,
         "v5_target_trigger_register": str(V5_TARGET_TRIGGER_REGISTER),
         "v5_target_trigger_register_sha256": sha256_file(V5_TARGET_TRIGGER_REGISTER),
         "certification_status": (
@@ -1198,8 +1297,14 @@ def main() -> int:
         "source_run_commit": args.source_run_commit,
         "cached_judge_reuse_allowed": not args.force,
         "contamination_patterns": CONTAMINATION_RE.pattern,
-        "generator_isolation_instruction": isolation_instruction(args.plugin_context),
-        "judge_isolation_instruction": JUDGE_ISOLATION_INSTRUCTION,
+        "superpowers_root": args.superpowers_root,
+        "generator_isolation_instruction": isolation_instruction(
+            args.plugin_context,
+            superpowers_root=args.superpowers_root,
+        ),
+        "judge_isolation_instruction": judge_isolation_instruction(
+            superpowers_root=args.superpowers_root,
+        ),
     }
     (args.out_dir / "run-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2),

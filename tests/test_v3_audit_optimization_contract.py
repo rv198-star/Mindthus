@@ -95,10 +95,13 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
         for case in cases:
             self.assertEqual(case["patch_type"], "mechanical_runtime")
             self.assertIn("target_anchor", case)
+            self.assertIn("semantic_features", case)
+            self.assertGreaterEqual(len(case["semantic_features"]), 1)
             self.assertIn("accepted_runtime_owners", case)
             self.assertIn("preferred_runtime_owner", case)
             self.assertIn(case["preferred_runtime_owner"], case["accepted_runtime_owners"])
             self.assertIn("required_action_probe", case)
+            self.assertIn("hint_action", case)
             self.assertIn("negative_boundary", case)
             self.assertNotIn("wording", case["status"])
 

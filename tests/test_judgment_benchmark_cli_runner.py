@@ -161,6 +161,47 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertIsNone(runner.v5_register_hint_for_case(case, enabled=True))
 
+    def test_v5_register_hint_for_17_forces_malformed_binary_reconstruction(self):
+        runner = load_runner()
+        hint = runner.v5_register_hint_for_case(case_by_number(17), enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("mindthus:edsp", hint)
+        self.assertIn("malformed binary", hint)
+        self.assertIn("first sentence", hint)
+        self.assertIn("reconstruct", hint)
+
+    def test_v5_semantic_triage_hint_matches_shadow_case_without_case_id(self):
+        runner = load_runner()
+        shadow_case = dict(case_by_number(17))
+        shadow_case["case_id"] = "shadow-role-replacement"
+        shadow_case["case_number"] = 1701
+        shadow_case["prompt"] = "AI 到底会不会替代设计师？只回答会或不会。"
+
+        hint = runner.v5_semantic_triage_hint_for_case(shadow_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage hint", hint)
+        self.assertIn("mindthus:edsp", hint)
+        self.assertIn("malformed binary", hint)
+        self.assertNotIn("mtj-017", hint)
+        self.assertNotIn("case_number", hint)
+
+    def test_v5_semantic_triage_keeps_method_reference_review_direct(self):
+        runner = load_runner()
+        hint = runner.v5_semantic_triage_hint_for_case(case_by_number(25), enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("semantic triage stay-asleep hint", hint)
+        self.assertIn("evidence review", hint)
+        self.assertIn("do not load MPG", hint)
+        self.assertNotIn("mindthus:", hint)
+
+    def test_runner_source_does_not_embed_local_superpowers_path(self):
+        source = RUNNER_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn("/Users/william/.codex/superpowers", source)
+
     def test_judge_prompt_includes_complete_multiturn_transcript(self):
         runner = load_runner()
         case = case_by_number(12)
