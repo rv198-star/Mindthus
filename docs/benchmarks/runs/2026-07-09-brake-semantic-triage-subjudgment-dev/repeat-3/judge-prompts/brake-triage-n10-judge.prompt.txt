@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以把这三起投诉先不要归成“某个人没做好”，而是按链路拆主因和责任边界：
+
+**初步主因**
+
+1. **配送迟到**
+   - 直接原因：履约时效未达标。
+   - 可能主因：配送排班、承运商能力、出库交接、异常预警机制不足。
+   - 需要补数据：承诺送达时间、实际送达时间、是否仓库晚出、是否承运商延误、是否提前通知客户。
+
+2. **包装破损**
+   - 直接原因：商品到达客户前包装失效。
+   - 可能主因：包装材料强度不足、打包标准执行不到位、运输装卸不规范。
+   - 需要补数据：破损照片、商品类型、包装方式、是否同类商品多发、破损发生在仓内还是运输中。
+
+3. **客服回访慢**
+   - 直接原因：客户问题处理闭环超时。
+   - 可能主因：客服工单分配不及时、SLA不清晰、跨部门反馈慢、缺少超时提醒。
+   - 需要补数据：客户首次反馈时间、工单创建时间、首次响应时间、最终回访时间、卡在哪个环节。
+
+**责任边界**
+
+- **仓储/打包团队**：负责按标准完成包装、复核、出库交接；如果包装材料不合规或打包动作不到位，责任在仓储/包装。
+- **物流/配送团队或承运商**：负责运输时效和运输过程保护；如果准时出库但运输延误或装卸导致破损，责任在物流侧。
+- **客服团队**：负责响应、回访、安抚和工单闭环；如果客户反馈后未及时跟进，责任在客服侧。
+- **运营/管理侧**：负责规则、SLA、预警机制和跨部门协同；如果没有明确时效标准、异常升级机制或质量监控，属于管理机制责任。
+
+**复盘结论可以这样写**
+
+本月三起投诉分别发生在配送、包装、售后回访三个环节，表面看是独立问题，但共同暴露出履约链路的异常预警和闭环管理不足。配送迟到和包装破损主要集中在交付质量，客服回访慢则说明异常发生后补救机制不够及时。责任不宜简单归因到单个岗位，应按“出库前、运输中、客户反馈后”三个阶段划分责任，并补齐数据后确认最终主因。
+
+**建议整改**
+
+- 建立配送超时预警，临近超时提前通知客户。
+- 复查高风险商品包装标准，抽检包装质量。
+- 设置客服回访SLA，例如投诉后2小时内首次响应、24小时内明确处理方案。
+- 每周汇总投诉原因，区分个人执行问题和流程机制问题。

@@ -1,0 +1,58 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+followed by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可以按一个统一“口径透明化”改动落地：
+
+1. 报表页顶部新增“口径定义栏”
+   - 位置：报表标题下方、筛选区上方。
+   - 内容：周报统计周期、数据范围、去重规则、环比/同比定义、异常数据处理规则。
+   - 默认展开核心定义，支持收起查看完整释义。
+
+2. 标题区嵌入“更新时间框”
+   - 示例：`数据更新时间：2026-07-09 09:30`
+   - 同时标明刷新频率，例如：`每日 09:30 刷新` 或 `每小时刷新`。
+   - 若数据刷新失败，显示最近成功更新时间。
+
+3. 导出文件补充字段释义
+   - 在导出 Excel 中新增 `字段释义` Sheet，或在表头批注中写入定义。
+   - 字段释义至少包含：字段名、业务含义、计算口径、数据来源、更新时间/统计周期。
+   - 导出列顺序与页面展示保持一致。
+
+4. 图表下方增加“口径字段”
+   - 位置：涉及“今天环比数”的图表下方。
+   - 内容示例：
+     - `今日值：截至当前刷新时间的累计值`
+     - `环比基准：昨日同时间点累计值`
+     - `环比公式：(今日值 - 昨日同时间点值) / 昨日同时间点值`
+     - `统计周期：自然日`
+     - `数据更新时间：YYYY-MM-DD HH:mm`
+
+验收口径：用户在页面内无需询问即可看到“周报怎么算、数据何时刷新、导出字段是什么意思、今天环比跟谁比”。
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

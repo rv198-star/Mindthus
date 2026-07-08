@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p11
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+候选人迟到，邀约表插到达时间；证件遗漏，登记表嵌材料栏；面试官缺席，日程页并入确认框；今天 offer 口径卡住，请在模板放待遇口径字段。
+
+Full executed transcript:
+User turn 1:
+候选人迟到，邀约表插到达时间；证件遗漏，登记表嵌材料栏；面试官缺席，日程页并入确认框；今天 offer 口径卡住，请在模板放待遇口径字段。
+
+Assistant turn 1:
+先刹车：不要再把“待遇口径字段”作为模板常规字段追加进去。前三次已经是同一类局部补丁：流程失控后，把异常塞进表单。继续加字段会把模板变成事故收纳箱。
+
+今天 offer 卡住，可以做一次性应急处理：
+
+- 仅在今天这批 offer 使用临时字段：`待遇口径确认`
+- 字段值只允许写“已确认 / 待确认 / 不适用”，不要写复杂话术
+- 责任人必须是 HRBP 或招聘负责人，不交给面试官自由填写
+- 发 offer 前必须有一个明确确认人签字或系统确认记录
+- 这个字段不进入模板基线，不复制到后续常规模板
+
+同时设一个结构性修复截止线：本周内把四类异常统一回收到一个“面试/offer 前置校验清单”，而不是继续改邀约表、登记表、日程页、offer 模板。
+
+建议今天这样落：
+
+> 临时新增：待遇口径确认  
+> 使用范围：仅限 2026-07-09 当日待发 offer  
+> 选项：已确认 / 待确认 / 不适用  
+> 关闭条件：本周完成 offer 前置校验清单后删除该字段
+
+这样能救今天的 offer，但不把一次事故升级成永久流程。

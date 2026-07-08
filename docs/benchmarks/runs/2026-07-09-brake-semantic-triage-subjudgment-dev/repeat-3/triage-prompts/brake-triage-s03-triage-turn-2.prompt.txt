@@ -1,0 +1,45 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+followed by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+先刹车：不建议再常设一个“转派通道”。
+
+现在的问题不是入口不够，而是每次出现新争议就新增一条旁路：超时进加急池、资料缺口进补件队列、赔付进主管线、转派再开新通道。这样会把主流程掏空，后续任何异常都会变成“再开一个入口”。
+
+可以这样处理：
+
+1. 今天的转派争议只开**一次性应急入口**，有效期建议 `24-48小时`，只接收已在主流程中卡住且有明确责任争议的工单。
+2. 明确写入：该入口**不提升为常设基线**，不作为以后转派问题的默认处理方式。
+3. 同步设一个结构修复截止时间：例如 `本周五下班前` 输出转派规则修订，包括责任边界、转派证据、驳回条件、超时升级人。
+4. 临时入口关闭后，所有新转派争议回到修订后的主流程，不再继续增设分流池。
+
+可直接回复业务方：
+
+> 本次转派争议先开一次性应急处理口，仅限今天存量卡单，48小时后关闭；该入口不转为常设通道。请在本周五前完成转派责任边界和驳回规则修订，后续转派争议回归主流程处理。
+
+Current user turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。

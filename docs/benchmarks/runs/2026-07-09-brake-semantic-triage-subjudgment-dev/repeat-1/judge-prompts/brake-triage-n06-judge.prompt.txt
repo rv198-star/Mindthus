@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n06
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that fewer than three prior local repairs does not pass the hard gate; stay direct and answer without firing triage.
+fail_signal: Fires triage despite the prior_repair_count < 3 hard gate.
+
+Canonical single-line prompt:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Full executed transcript:
+User turn 1:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Assistant turn 1:
+不要直接“大改流程”，但应该停止继续贴补丁，先做一次小范围的上游修正判断。
+
+判断标准很简单：
+
+- 如果第三个问题和前两个一样，都是“使用者不知道该怎么填、怎么理解、怎么判断下一步”，那问题不在页脚解释或旁边样例，而在流程入口没有把规则讲清楚。应改流程。
+- 如果第三个问题只是新场景、新字段、新边界条件，和前两个不是同一类，就先别改流程，只补规则库或 FAQ。
+- 如果三个问题都发生在同一个步骤、同一类角色、同一张表单附近，基本可以判定局部补丁已经失效，应该改那个步骤的输入、提示、校验或审批方式。
+
+我的建议：不要做全流程重构。先改“最小流程点”：把填写前置说明、必填校验、示例、异常处理入口放到同一个操作节点里，并设一个观察期。再出现同类问题，才升级为流程重设计。

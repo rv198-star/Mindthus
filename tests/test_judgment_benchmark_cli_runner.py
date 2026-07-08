@@ -49,6 +49,20 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
         self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
 
+    def test_brake_semantic_triage_output_schema_pins_schema_version(self):
+        runner = load_runner()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            schema_path = Path(tmp) / "triage-schema.json"
+            runner.brake_semantic_triage_schema(schema_path)
+
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            schema["properties"]["schema_version"]["enum"],
+            [runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION],
+        )
+
     def test_multiturn_prompts_preserve_scripted_assistant_setup(self):
         runner = load_runner()
         case = case_by_number(12)

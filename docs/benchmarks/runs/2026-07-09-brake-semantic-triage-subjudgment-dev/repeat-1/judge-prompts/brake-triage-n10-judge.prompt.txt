@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样定性：不要把三起投诉拆成三个孤立事故，主因更像是“履约链路的承诺、交接、异常反馈没有闭环”。
+
+**主因判断**
+
+1. **配送迟到**
+主因：配送时效管理不足。可能包括出库延迟、运力排班不足、配送节点预警不及时。
+责任边界：  
+- 仓配/物流负责实际履约时效、异常预警、延误补救。  
+- 运营负责活动量、订单峰值、承诺时效是否合理。  
+- 客服不承担迟到本身责任，但承担是否及时告知客户的责任。
+
+2. **包装破损**
+主因：包装标准或仓内质检不到位，也可能是运输搬运破坏。
+责任边界：  
+- 仓库负责包装材料、打包规范、出库前检查。  
+- 物流负责运输过程中的搬运和破损控制。  
+- 采购/供应链若包装材料强度不足，也需承担标准制定和材料选型责任。  
+- 客服只负责售后处理，不应背破损源头责任。
+
+3. **客服回访慢**
+主因：售后响应机制不清晰，投诉分级、派单、回访时限没有被强约束。
+责任边界：  
+- 客服团队负责回访及时性、话术、记录和升级。  
+- 主管负责排班、人手、SLA监控。  
+- 若客服拿不到物流/仓库反馈，相关协同部门也要承担信息响应责任。
+
+**复盘结论可以写成**
+
+本月三起投诉表面分别发生在配送、包装和客服环节，但共同暴露出履约异常的前置预警、过程交接和售后闭环不足。主责应按问题发生源头划分，客服不应成为所有投诉的兜底责任方；但客服需要对客户感知和响应时效负责。后续应建立配送延误预警、包装出库抽检、投诉分级回访时限和跨部门响应SLA。

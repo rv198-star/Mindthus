@@ -1,0 +1,52 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+followed by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+已按你的口径整理成报表页改动项：
+
+1. 报表页新增「定义栏」，放在核心指标/报表说明附近，明确周报统计口径，避免被误读。
+2. 标题区新增「更新时间」框，展示本页数据最近刷新时间。
+3. 导出字段补充释义：将字段表合并到释义格中，确保导出列含义可查。
+4. 图表下方新增「口径字段」，说明“今天环比数”的计算口径、对比周期和字段来源。
+
+建议文案可用：
+
+```text
+数据更新时间：YYYY-MM-DD HH:mm
+
+口径说明：
+周报按自然周统计，统计周期为周一 00:00 至周日 23:59:59。
+
+今天环比：
+今天环比 = 今日当前累计值 与 昨日同时间点累计值 的变化比例。
+
+导出字段释义：
+导出文件中的字段含义以本页释义格为准。
+```
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

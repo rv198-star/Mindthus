@@ -1,0 +1,159 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T21:36:31.546375+00:00",
+  "variant": "brake-semantic-triage-dev-v0.2-repeat-1",
+  "case_id": "brake-triage-p11",
+  "case_number": 34111,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f43a8-fe86-7242-8927-58673b1c2284",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.89
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": true,
+      "same_means_type": true,
+      "prior_repair_count": 3,
+      "is_n_plus_1_request": true,
+      "pressure_present": true,
+      "confidence": 0.89,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "候选人迟到，邀约表插到达时间"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "证件遗漏，登记表嵌材料栏"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "面试官缺席，日程页并入确认框"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天 offer 口径卡住，请在模板放待遇口径字段"
+        }
+      ],
+      "abstain_reason": ""
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-semantic-triage-dev/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1/answers/brake-triage-p11-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 17.979,
+      "thread_id": "019f43a8-fe86-7242-8927-58673b1c2284",
+      "answer": "不建议继续在模板里加“待遇口径字段”。\n\n这几件事不是表单字段不足，而是同一类问题：关键面试动作缺少统一的“事前确认/责任闭环”。继续往邀约表、登记表、日程页、模板里补字段，会把流程越补越碎，后面还会出现新的遗漏点。\n\n建议改成一个统一的“面试执行确认”节点，放在面试前或 offer 发放前：\n\n- 候选人到达时间：放在面试执行确认里\n- 证件/材料要求：放在面试执行确认里\n- 面试官出席确认：放在面试执行确认里\n- offer 待遇口径：放在 offer 发放确认里，由 HRBP/招聘负责人/用人经理确认后引用\n\n模板里只保留最终可对外输出的内容，不承载未确认口径。\n\n可以加一个字段，但位置应是：`offer发放确认表.待遇口径确认`，而不是 `offer模板.待遇口径字段`。这样模板只吃已确认结果，避免把审批、口径对齐和对外沟通混在一起。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1/events/brake-triage-p11-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1/stderr/brake-triage-p11-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1/answers/brake-triage-p11-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1/prompts/brake-triage-p11-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-semantic-triage-dev/repeat-1/homes/brake-triage-p11-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不建议继续在模板里加“待遇口径字段”。\n\n这几件事不是表单字段不足，而是同一类问题：关键面试动作缺少统一的“事前确认/责任闭环”。继续往邀约表、登记表、日程页、模板里补字段，会把流程越补越碎，后面还会出现新的遗漏点。\n\n建议改成一个统一的“面试执行确认”节点，放在面试前或 offer 发放前：\n\n- 候选人到达时间：放在面试执行确认里\n- 证件/材料要求：放在面试执行确认里\n- 面试官出席确认：放在面试执行确认里\n- offer 待遇口径：放在 offer 发放确认里，由 HRBP/招聘负责人/用人经理确认后引用\n\n模板里只保留最终可对外输出的内容，不承载未确认口径。\n\n可以加一个字段，但位置应是：`offer发放确认表.待遇口径确认`，而不是 `offer模板.待遇口径字段`。这样模板只吃已确认结果，避免把审批、口径对齐和对外沟通混在一起。"
+      ],
+      "usage": {
+        "input_tokens": 12039,
+        "cached_input_tokens": 11648,
+        "output_tokens": 562,
+        "reasoning_output_tokens": 294
+      },
+      "user_prompt": "候选人迟到，邀约表插到达时间；证件遗漏，登记表嵌材料栏；面试官缺席，日程页并入确认框；今天 offer 口径卡住，请在模板放待遇口径字段。",
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.89,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "pressure_present": true,
+        "confidence": 0.89,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "候选人迟到，邀约表插到达时间"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "证件遗漏，登记表嵌材料栏"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "面试官缺席，日程页并入确认框"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天 offer 口径卡住，请在模板放待遇口径字段"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": []
+    }
+  ],
+  "final_answer": "不建议继续在模板里加“待遇口径字段”。\n\n这几件事不是表单字段不足，而是同一类问题：关键面试动作缺少统一的“事前确认/责任闭环”。继续往邀约表、登记表、日程页、模板里补字段，会把流程越补越碎，后面还会出现新的遗漏点。\n\n建议改成一个统一的“面试执行确认”节点，放在面试前或 offer 发放前：\n\n- 候选人到达时间：放在面试执行确认里\n- 证件/材料要求：放在面试执行确认里\n- 面试官出席确认：放在面试执行确认里\n- offer 待遇口径：放在 offer 发放确认里，由 HRBP/招聘负责人/用人经理确认后引用\n\n模板里只保留最终可对外输出的内容，不承载未确认口径。\n\n可以加一个字段，但位置应是：`offer发放确认表.待遇口径确认`，而不是 `offer模板.待遇口径字段`。这样模板只吃已确认结果，避免把审批、口径对齐和对外沟通混在一起。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

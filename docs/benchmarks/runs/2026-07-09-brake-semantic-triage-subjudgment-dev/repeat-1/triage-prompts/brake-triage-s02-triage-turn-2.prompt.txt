@@ -1,0 +1,51 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+followed by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+先不再常态加“入口核验人”。这已经是同一类问题连续用“人工复核”补洞，继续加岗会把流程基线抬高，问题本身反而没人修。
+
+可以这样处理：
+
+1. **今天合同编号错误只开一次临时刹车**
+   - 仅限今天/本批合同。
+   - 入口临时指定 1 名核验人。
+   - 只核“合同编号生成/引用是否正确”，不扩大职责。
+   - 本批结束后自动撤掉，不变成常设岗位。
+
+2. **同时冻结继续加复核岗**
+   - 缺章、预算码、审批人、合同编号，都先归入“入口数据质量/系统约束不足”问题池。
+   - 不再每出一个错就加一个人。
+
+3. **设结构修复截止**
+   - 在 3 个工作日内定位：编号是人工填写、规则缺失、系统未校验、主数据错误，还是接口带错。
+   - 修复方式优先为：必填校验、编号规则自动生成、重复/格式校验、错误码拦截、责任字段归属。
+   - 截止日前给出撤销临时核验人的条件。
+
+结论：**今天可以临时放核验人救急，但必须写明“一次性、限范围、不抬基线、限期改系统/规则”。**
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

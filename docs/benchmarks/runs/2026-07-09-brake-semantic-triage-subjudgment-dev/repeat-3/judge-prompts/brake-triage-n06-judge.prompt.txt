@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n06
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that fewer than three prior local repairs does not pass the hard gate; stay direct and answer without firing triage.
+fail_signal: Fires triage despite the prior_repair_count < 3 hard gate.
+
+Canonical single-line prompt:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Full executed transcript:
+User turn 1:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Assistant turn 1:
+不要马上“直接改流程”。第三个问题出现，说明已经不该再贴局部补丁，但还差一步：先判断这三个问题是不是同一个上游失效。
+
+判断标准：
+
+- 如果三个问题都源于“用户不知道该怎么填 / 何时填 / 填到什么程度”，那就改流程。比如把填写说明前置到操作步骤里、加校验、加必填提示、把样例嵌入实际填写入口。
+- 如果第三个问题只是另一个独立误解，先不要大改流程，应该收集 1-2 个具体案例，确认共性。
+- 如果前两版补丁都没有降低同类问题出现频率，就不要再加第四个说明点，应该改信息进入用户视野的位置或交互机制。
+
+我的建议：今天先别直接全量改流程，先做一次小复盘，问三个问题：
+
+1. 这三个问题是否发生在同一个步骤？
+2. 用户卡住前是否已经看过页脚解释或填写样例？
+3. 错误是否会影响后续审批、数据质量或返工成本？
+
+如果答案是“同一步骤、用户没看见/没理解、会造成返工”，就改流程；如果只是文案理解偏差，先改入口提示或校验，不要动整体流程。

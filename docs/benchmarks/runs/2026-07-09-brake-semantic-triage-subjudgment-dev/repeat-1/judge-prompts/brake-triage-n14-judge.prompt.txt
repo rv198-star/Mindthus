@@ -1,0 +1,67 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+先刹车：不建议把“价格权重”当作第四轮继续局部拧参数。前三轮已经是同一种手段连续修补，满意度从 61% 到 72%，但每次收益在变小；如果直接追 75%，很容易把模型调成对短期点击满意度过拟合。
+
+可以这样做：
+
+1. **先冻结基线**
+   - 固定当前第三轮版本：满意度 72%。
+   - 记录当前库存、新品、噪声、价格权重。
+   - 不要同时改其他权重。
+
+2. **设定一次性应急目标**
+   - 本轮只允许尝试“价格权重”。
+   - 目标是验证是否能从 72% 提到 75%。
+   - 这是一次性应急调整，不把 75% 当作新的长期基线。
+
+3. **做小步 A/B，而不是直接上线**
+   - 设 3 个实验组：
+     - A：当前价格权重不变。
+     - B：价格权重小幅上调，例如 +5%。
+     - C：价格权重中幅上调，例如 +10%。
+   - 其他权重保持不变。
+
+4. **加保护指标**
+   除满意度外，必须同时看：
+   - 转化率是否下降。
+   - 客单价是否异常下降。
+   - 毛利是否被压低。
+   - 新品曝光是否被价格信号挤掉。
+   - 低库存商品是否被重新推高。
+
+5. **设置止损线**
+   - 如果满意度未提升到至少 73.5%，停止本轮。
+   - 如果满意度提升但毛利、转化、新品曝光明显恶化，不上线。
+   - 只有在满意度接近或达到 75%，且保护指标无明显损伤时，才允许短期灰度。
+
+6. **灰度上线**
+   - 先放 5%-10% 流量。
+   - 观察至少一个完整业务周期。
+   - 不要全量直接推。
+
+7. **结构性修复截止线**
+   - 本轮价格权重调整最多做一次。
+   - 如果还没到 75%，下一步不要继续加第五个局部权重。
+   - 截止到本轮实验结束后，必须回到排序目标函数本身：拆分满意度来源、价格敏感人群、商品层级、场景差异，重新设计权重学习或分层策略。
+
+简版执行顺序：冻结当前 72% 版本 → 只改价格权重 → 小步 A/B → 加保护指标 → 达标才灰度 → 本轮后停止局部修补，进入结构性重建。

@@ -698,7 +698,10 @@ def brake_semantic_triage_schema(path: Path) -> None:
             "abstain_reason",
         ],
         "properties": {
-            "schema_version": {"type": "string"},
+            "schema_version": {
+                "type": "string",
+                "enum": [BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION],
+            },
             "is_repeated_local_repair": {"type": "boolean"},
             "same_means_type": {"type": "boolean"},
             "prior_repair_count": {"type": "integer", "minimum": 0},

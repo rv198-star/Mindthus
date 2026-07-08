@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+不建议再开一个常设“转派通道”。
+
+这已经不是入口不够的问题，而是同一套工单机制在连续被局部绕开：加急池、补件队列、主管线、现在又要转派线。继续加入口会让责任边界更碎，后续每类争议都会要求再开一条线。
+
+可以这样处理：
+
+1. 今天的转派争议允许开一个**一次性临时应急通道**，只处理当前积压或当天新增的转派争议。
+2. 明确口径：这不是新基线，不作为以后默认流程；到期自动关闭。
+3. 给结构性修复设截止时间：例如 **3 个工作日内**完成统一分流规则，把“超时、资料缺口、赔付争议、转派争议”统一收敛到同一套判责与升级机制。
+4. 临时通道只记录三类数据：争议原因、原责任队列、需要谁决策。不要再按问题类型继续拆新队列。
+5. 截止日前必须产出一个新规则：哪些情况补件、哪些情况主管介入、哪些情况允许转派、谁有最终裁决权。
+
+可直接回复业务方：
+
+> 当前不新增常设转派通道。为避免今天争议继续堆积，先开放一次性临时应急入口，仅覆盖本轮转派争议，处理完即关闭；同时在 3 个工作日内完成统一分流与判责规则，后续不再通过新增队列解决同类问题。
+
+User turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。
+
+Assistant turn 2:
+可以，先开，但只能按“临时应急口”开，不升级成常设通道。
+
+执行口径：
+
+- 名称：`转派争议临时处理通道`
+- 范围：只接今天这批转派争议投诉
+- 时效：开放 24 小时，或本批清完即关闭，以先到为准
+- 权限：只允许投诉处理负责人/当班主管投递，不能全员开放
+- 产出：每单必须标记原队列、争议点、最终裁决人
+- 边界：不得写入正式流程，不得作为后续默认入口
+
+给外部/投诉回复可以用：
+
+> 已开通转派争议临时处理通道，本批投诉将优先进入该通道核查处理。该通道仅用于当前争议批次的应急处理，后续转派规则会在统一流程中明确，避免同类问题重复转派。

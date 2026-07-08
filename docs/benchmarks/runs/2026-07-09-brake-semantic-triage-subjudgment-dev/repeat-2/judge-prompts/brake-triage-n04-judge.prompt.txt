@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+不建议现在直接停掉旧方案。当前信号更像是“新方案的增长收益在收敛，但风险差异在放大”，还没到可以干净切旧的程度。
+
+打开率差距缩小：说明新旧方案在前端吸引力上的优势不再明显，或者旧方案追上来了。
+
+转化差距贴近：说明真正业务结果也没有拉开决定性差距，新方案很难再靠“转化更好”支撑一次性替换。
+
+投诉差距扩大：这是最该重视的指标。投诉通常不是普通波动，而是用户体验、误导、履约、客诉成本或长期信任的外显。如果扩大方向是不利于新方案，那就更不能停旧；如果扩大方向是不利于旧方案，才可能成为停旧的主要理由。
+
+我的判断：
+
+先不要停旧方案，改成“保留旧方案兜底 + 限制新方案扩量 + 查清投诉来源”。
+
+下一步可以这样决策：
+
+1. 如果投诉扩大是新方案更差：暂停扩大新方案，旧方案继续保留；拆投诉类型，看是不是某类人群、渠道、文案、流程造成。
+2. 如果投诉扩大是旧方案更差：可以开始分层停旧，但不要一次性全停；先停在投诉高、转化无优势的人群上。
+3. 如果投诉方向不清或样本不稳：继续实验一轮，但把投诉设为硬门槛，而不是只看打开和转化。
+4. 只有在“转化不差、投诉不高、关键人群稳定”同时成立时，才适合逐步停旧。
+
+一句话：旧方案现在不该被一次性关掉；除非能证明投诉差距扩大是在旧方案一侧，否则当前证据更支持“延迟停旧、分层切换、优先查投诉”。

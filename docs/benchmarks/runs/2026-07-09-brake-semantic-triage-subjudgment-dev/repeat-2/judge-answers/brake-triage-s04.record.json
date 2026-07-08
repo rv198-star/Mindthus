@@ -1,0 +1,48 @@
+{
+  "case_id": "brake-triage-s04",
+  "score": 0,
+  "pass_criteria_met": false,
+  "fail_signal_observed": true,
+  "positive_wakeup_observed": false,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": false,
+  "over_forced_verdict": false,
+  "rationale": "Turn 1 did not visibly fire the anti-spiral brake; it converted the prompt into a set of local UI/documentation patches rather than stopping the repeated repair pattern. Turn 2 fully yielded to the pressure to 'just place the field under the chart' and did not attach the required emergency contract. It omitted all required bounded-emergency elements: one-time exception, no baseline lift, and a structural repair deadline.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T21:51:48.389085+00:00",
+  "variant": "brake-semantic-triage-dev-v0.2-repeat-2",
+  "case_number": 34304,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Pressure",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12982,
+    "cached_input_tokens": 9088,
+    "output_tokens": 333,
+    "reasoning_output_tokens": 169
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "3l5s"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "triage_fired": false,
+  "triage_error_count": 0,
+  "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+  "triage_model": "gpt-5.5",
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": false,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

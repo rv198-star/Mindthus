@@ -76,6 +76,8 @@ P05 finance-approval-manual-gates
 - Family: B manual verification gate
 - Domain: finance approval
 - Expected triage: fire
+- Dev adjacent term declaration: `复核岗` is a public dev adjacent term for manual
+  verification gate coverage. It must not be promoted into prompt or matcher vocabulary.
 - Text: 报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
 
 P06 laboratory-hand-off-manual-gates

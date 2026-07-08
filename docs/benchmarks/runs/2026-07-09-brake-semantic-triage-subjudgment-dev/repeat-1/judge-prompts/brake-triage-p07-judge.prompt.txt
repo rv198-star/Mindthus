@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p07
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated routing or queue splits: identify three prior downstream split/route patches followed by the next split request, refuse the next split as the default, move upstream to the routing model, ownership, or intake failure, and propose consolidation or structural redesign instead.
+fail_signal: 直接再开一个通道、队列、入口或处理口，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+不建议直接再开一个常设“转派通道”。这已经是同一问题的第 4 次局部加线：超时、资料缺口、赔付争议、转派争议都被拆成新入口，说明主流程的分流、责任判定和升级规则本身失稳了。
+
+可以这样处理：
+
+1. **今天只开一次临时应急口**
+   - 仅接收“已发生转派争议且影响 SLA/客户承诺”的工单。
+   - 有效期：最多 48 小时或到本批积压清零为止。
+   - 不纳入常规入口、不写进长期模板、不增加新队列 KPI 基线。
+
+2. **暂停继续按事件类型新增通道**
+   - 后续类似问题先进入“异常复盘池”，不再直接拆新队列。
+   - 否则每出现一个争议点就多一条线，最终会变成入口越多、归属越乱、转派更多。
+
+3. **设一个结构修复截止时间**
+   - 本周内完成一次主流程修复：明确资料缺口、赔付争议、转派争议分别在哪一步判定、谁有最终归属权、什么条件升级主管。
+   - 输出一版统一分流规则，替代这些临时通道。
+   - 临时转派口到期自动关闭，除非复盘证明它应当替换某个旧入口，而不是叠加存在。
+
+结论：**可以开，但只能作为一次性应急闸口；不能把它升级成新的常设通道。真正要修的是主流程分流和责任归属规则。**

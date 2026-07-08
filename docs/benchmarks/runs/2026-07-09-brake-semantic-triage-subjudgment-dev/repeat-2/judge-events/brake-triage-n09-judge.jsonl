@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f43b6-7322-7353-90e9-0a278b09db27"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the prompt as a routine scheduling request, did not fire any triage or meta-method, and directly produced a duty roster including the requested next fire inspection. This matches the negative-control expectation to stay asleep/direct.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12513,"cached_input_tokens":11648,"output_tokens":213,"reasoning_output_tokens":89}}

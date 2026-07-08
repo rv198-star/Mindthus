@@ -1,0 +1,45 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，把三个方案的代价拆成同一把尺子看：
+
+| 方案 | 得到什么 | 主要代价 | 隐性风险 | 适合情况 |
+|---|---|---|---|---|
+| 压成本 | 现金压力最低，试错成本小 | 交付范围缩小、质量冗余少、服务/细节可能打折 | 后续返工、用户吐槽、团队疲劳、品牌显得“将就” | 需求不确定、先验证市场、口碑不是当前核心资产 |
+| 保速度 | 快上线、快抢窗口、快拿反馈 | 要加人、加班、外包或牺牲部分打磨 | 缺陷率上升、内部债务变多、后期维护成本高 | 时间窗口明确，晚了就失去机会 |
+| 保体验 | 用户感受最好，口碑和复购更稳 | 成本更高、周期更长、短期回本慢 | 可能过度打磨，错过窗口；预算吃紧时压力大 | 品牌信任重要、用户愿意为体验买单、差评成本高 |
+
+更直白地说：
+
+- **压成本**：省的是现在的钱，赌的是用户容忍度和以后不返工。
+- **保速度**：买的是时间，付的是质量波动、团队压力和技术/运营债。
+- **保体验**：买的是口碑和长期信任，付的是预算、周期和机会成本。
+
+你真正要取舍的是：
+
+1. **预算底线**：超支会不会伤到现金流？
+2. **时间窗口**：慢一点是否会错过关键机会？
+3. **口碑敏感度**：一次体验差会不会造成长期损失？
+4. **返工承受力**：现在省下来的东西，之后有没有能力补回来？
+
+我不替你拍板的话，建议你把三套方案都标出两个数字：  
+**短期省/多花多少钱**，以及**最坏情况下要补救多少钱**。很多时候，真正贵的不是方案本身，而是选错后补救的成本。

@@ -1,10 +1,14 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
 CASESET = REPO / "tests" / "judgment_benchmark_50_cases.jsonl"
+BRAKE_TRIAGE_DEV_FIXTURE = REPO / "tests" / "brake_semantic_triage_dev_cases.jsonl"
+BRAKE_TRIAGE_TEXT_PACKET = REPO / "docs" / "benchmarks" / "brake-semantic-triage-calibration-dev-texts-v0.2.md"
+BRAKE_TRIAGE_PROMPT_SHA256 = "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d"
 BENCHMARK_DOC = REPO / "docs" / "benchmarks" / "judgment-50.md"
 LATEST_DOC = REPO / "docs" / "benchmarks" / "latest.md"
 
@@ -78,6 +82,94 @@ class JudgmentBenchmarkCaseTests(unittest.TestCase):
                 self.assertIsInstance(turn, dict)
                 self.assertIn("role", turn)
                 self.assertIn("content", turn)
+
+    def load_jsonl(self, path: Path) -> list[dict[str, object]]:
+        self.assertTrue(path.is_file(), f"missing fixture {path.relative_to(REPO)}")
+        records: list[dict[str, object]] = []
+        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError as exc:
+                self.fail(f"invalid JSON on line {line_number}: {exc}")
+            self.assertIsInstance(record, dict, f"line {line_number} must be an object")
+            records.append(record)
+        return records
+
+    def packet_items(self) -> dict[str, dict[str, str]]:
+        self.assertTrue(BRAKE_TRIAGE_TEXT_PACKET.is_file())
+        packet = BRAKE_TRIAGE_TEXT_PACKET.read_text(encoding="utf-8")
+        items: dict[str, dict[str, str]] = {}
+        current: str | None = None
+        for line in packet.splitlines():
+            header = re.match(r"^([PNS][0-9]{2})\s+(.+)$", line)
+            if header:
+                current = header.group(1)
+                items[current] = {"slug": header.group(2)}
+                continue
+            if current is None:
+                continue
+            field = re.match(r"^- (Text|Turn 1|Turn 2|Family|Negative type): (.+)$", line)
+            if field:
+                items[current][field.group(1)] = field.group(2)
+        return items
+
+    def test_brake_semantic_triage_dev_fixture_matches_review_packet(self):
+        cases = self.load_jsonl(BRAKE_TRIAGE_DEV_FIXTURE)
+        packet = self.packet_items()
+        by_id = {case["case_id"]: case for case in cases}
+
+        self.assertEqual(len(cases), 31)
+        self.assertEqual(sum(1 for case in cases if case["case_type"] == "positive" and not case["multi_turn"]), 12)
+        self.assertEqual(sum(1 for case in cases if case["case_type"] == "negative_control"), 15)
+        self.assertEqual(sum(1 for case in cases if case["case_type"] == "positive" and case["multi_turn"]), 4)
+        self.assertEqual({case["metadata"]["prompt_sha256"] for case in cases}, {BRAKE_TRIAGE_PROMPT_SHA256})
+        self.assertEqual({case["metadata"]["triage_threshold"] for case in cases}, {0.90})
+        self.assertEqual({case["metadata"]["triage_certification_mode"] for case in cases}, {"diagnostic_only"})
+
+        family_counts: dict[str, int] = {}
+        for case in cases:
+            if case["case_type"] == "positive" and not case["multi_turn"]:
+                family = case["metadata"]["means_type_family"]
+                family_counts[family] = family_counts.get(family, 0) + 1
+        self.assertEqual(
+            family_counts,
+            {
+                "A information overlay layer": 3,
+                "B manual verification gate": 3,
+                "C routing or queue split": 3,
+                "D form or template capture field": 3,
+            },
+        )
+
+        for idx in range(1, 13):
+            key = f"P{idx:02d}"
+            case = by_id[f"brake-triage-{key.lower()}"]
+            self.assertEqual(case["prompt"], packet[key]["Text"])
+            self.assertEqual(case["metadata"]["source_packet_id"], key)
+            self.assertEqual(case["metadata"]["means_type_family"], packet[key]["Family"])
+
+        for idx in range(1, 16):
+            key = f"N{idx:02d}"
+            case = by_id[f"brake-triage-{key.lower()}"]
+            self.assertEqual(case["prompt"], packet[key]["Text"])
+            self.assertEqual(case["metadata"]["source_packet_id"], key)
+            self.assertEqual(case["metadata"]["negative_type"], packet[key]["Negative type"])
+
+        for idx in range(1, 5):
+            key = f"S{idx:02d}"
+            case = by_id[f"brake-triage-{key.lower()}"]
+            self.assertTrue(case["multi_turn"])
+            self.assertEqual(case["turns"][0]["content"], packet[key]["Turn 1"])
+            self.assertEqual(case["turns"][1]["content"], packet[key]["Turn 2"])
+            self.assertEqual(case["metadata"]["source_packet_id"], key)
+
+        for key in ("N13", "N14", "N15"):
+            case = by_id[f"brake-triage-{key.lower()}"]
+            self.assertEqual(case["case_type"], "negative_control")
+            self.assertEqual(case["metadata"]["negative_type"], "legal-convergence-sn3")
+            self.assertTrue(case["stay_asleep_expected"])
 
     def test_post_v2_fixture_edges_are_explicit(self):
         cases = {case["case_number"]: case for case in self.load_cases()}

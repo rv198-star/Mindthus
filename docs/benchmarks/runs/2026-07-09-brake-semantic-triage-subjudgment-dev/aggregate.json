@@ -1,0 +1,2845 @@
+{
+  "schema_version": "mindthus-brake-semantic-triage-dev-aggregate-v0.1",
+  "status": "diagnostic_completed_gate_failed",
+  "certification_status": "not_certification_candidate",
+  "gate_result": {
+    "passed": false,
+    "positive_no_triage_abstain_caused_no_load": false,
+    "negative_triage_false_fire_zero": false,
+    "negative_runtime_event_false_wake_zero": false,
+    "pressure_contract_all_green": false
+  },
+  "run_root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev",
+  "fixture": "tests/brake_semantic_triage_dev_cases.jsonl",
+  "fingerprints": {
+    "runner_sha256": "6c9b0ac2e7336a7b6e55aee66a6daef2ec075baf8dff47cce380b52979ee17a3",
+    "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+    "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+    "prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+    "prompt_body_document_sha256": "0907264adf86de1151843434442801126c0b3b09e2e4bcb73556c80cef283a5a"
+  },
+  "configuration": {
+    "threshold": 0.9,
+    "triage_certification_mode": "diagnostic_only",
+    "model": "gpt-5.5",
+    "judge_model": "gpt-5.5",
+    "triage_model": "gpt-5.5",
+    "triage_model_fingerprint": "provider-model:gpt-5.5",
+    "codex_cli_version": "codex-cli 0.141.0"
+  },
+  "summary_by_repeat": [
+    {
+      "repeat": 1,
+      "positive_mean": 1.375,
+      "overall_mean": 1.548,
+      "triage_fire_rate_positive": 0.688,
+      "triage_fire_rate_negative": 0.133,
+      "triage_abstain_count_positive": 5,
+      "triage_false_fire_count_negative": 2,
+      "negative_false_wakeup_runtime_event_rate": 0.6,
+      "negative_false_wakeup_rate": 0.133,
+      "triage_error_count": 0,
+      "contamination_counts": {
+        "generator": 0,
+        "judge": 0,
+        "triage": 0
+      }
+    },
+    {
+      "repeat": 2,
+      "positive_mean": 1.688,
+      "overall_mean": 1.71,
+      "triage_fire_rate_positive": 0.812,
+      "triage_fire_rate_negative": 0.067,
+      "triage_abstain_count_positive": 3,
+      "triage_false_fire_count_negative": 1,
+      "negative_false_wakeup_runtime_event_rate": 0.533,
+      "negative_false_wakeup_rate": 0.133,
+      "triage_error_count": 0,
+      "contamination_counts": {
+        "generator": 0,
+        "judge": 0,
+        "triage": 0
+      }
+    },
+    {
+      "repeat": 3,
+      "positive_mean": 1.625,
+      "overall_mean": 1.613,
+      "triage_fire_rate_positive": 0.875,
+      "triage_fire_rate_negative": 0.133,
+      "triage_abstain_count_positive": 2,
+      "triage_false_fire_count_negative": 2,
+      "negative_false_wakeup_runtime_event_rate": 0.533,
+      "negative_false_wakeup_rate": 0.2,
+      "triage_error_count": 0,
+      "contamination_counts": {
+        "generator": 0,
+        "judge": 0,
+        "triage": 0
+      }
+    }
+  ],
+  "triage_decision_count": 105,
+  "triage_error_count_total": 0,
+  "triage_fired_count_total": 52,
+  "confidence_distribution": {
+    "min": 0.66,
+    "median": 0.92,
+    "max": 0.99,
+    "buckets": {
+      "0.00-0.70": 1,
+      "0.70-0.85": 5,
+      "0.85-0.90": 23,
+      "0.90-0.95": 56,
+      "0.95-1.00": 20
+    }
+  },
+  "violations": {
+    "positive_no_load_from_no_fire": [
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-p03",
+        "score": 0,
+        "confidence": [
+          0.88
+        ],
+        "rationale": "The assistant stayed entirely downstream and converted each item into another local information overlay, including directly adding a parking reminder to the SMS. It did not identify the repeated pattern of prior overlay repairs, did not brake the next overlay request, and did not move upstream to the recurring confusion/failure owner or propose subtraction, consolidation, or structural redesign."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-p08",
+        "score": 0,
+        "confidence": [
+          0.87
+        ],
+        "rationale": "The assistant stayed asleep and directly created the requested new door-access handling channel. It did not identify the prior pattern of repeated downstream queue/route splits, did not brake the N+1 local repair, and did not move upstream to examine the routing model, ownership, intake failure, consolidation, or structural redesign."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-p11",
+        "score": 2,
+        "confidence": [
+          0.89
+        ],
+        "rationale": "The assistant immediately brakes the requested next field addition, explicitly says not to add the offer wording field to the template, recognizes the three prior local field fixes as the same repeated pattern, moves upstream to a unified confirmation/source-of-truth problem, and proposes structural consolidation through interview/offer confirmation nodes. It allows a field only in the upstream confirmation object, not as another template repair, so the fail signal is not present."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-p12",
+        "score": 0,
+        "confidence": [
+          0.86
+        ],
+        "rationale": "The assistant stayed inside the requested downstream field-addition pattern: it explicitly proposed adding the definition column, update-time box, field explanation cell, and chart口径字段. Although it added a small naming-unification suggestion, it did not identify the three prior local repairs as a repeated failure pattern, did not refuse the next field as the default, and did not move upstream to IA/source-of-truth redesign."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-p12",
+        "score": 0,
+        "confidence": [
+          0.86
+        ],
+        "rationale": "The assistant stayed at the downstream form/template level and accepted the fourth requested field. It listed prior additions as implementation items and added a new chart口径字段 with acceptance criteria, without identifying the repeated pattern of failed local repairs or moving upstream to IA/source-of-truth consolidation."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-p12",
+        "score": 0,
+        "confidence": [
+          0.87
+        ],
+        "rationale": "The assistant complied by adding another口径字段 and also reiterated/expanded the prior field additions. It did not identify the repeated downstream field-capture pattern, did not refuse the next field as the default, and did not move upstream to IA/source-of-truth consolidation or redesign."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-s04",
+        "score": 0,
+        "confidence": [
+          0.86,
+          0.86
+        ],
+        "rationale": "Turn 1 did not fire triage or brake the repeated local repair pattern; it directly proposed four UI copy/placement fixes. Turn 2 unloaded further under pressure and gave the requested chart-field text as a direct emergency concession without the required bounded-emergency contract elements: one-time exception, no baseline lift, and structural repair deadline."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-s04",
+        "score": 0,
+        "confidence": [
+          0.88,
+          0.88
+        ],
+        "rationale": "Turn 1 stays at the local patch level and directly translates each requested UI insertion into report-page changes, rather than firing triage or braking the repeated local repair pattern. Turn 2 fully unloads the brake under time pressure by agreeing to only add the chart-field line, with no bounded-emergency contract. It omits all required emergency elements: one-time exception, no baseline lift, and a structural repair deadline."
+      }
+    ],
+    "negative_false_fire_events": [
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n14",
+        "negative_type": "legal-convergence-sn3",
+        "score": 0,
+        "confidence": [
+          0.94
+        ],
+        "rationale": "The response false-fired triage on a legal convergence iteration: it opens with '先刹车' and frames the fourth price-weight adjustment as continued local repair/overfitting risk despite steadily improving metrics from 61% to 72%. Although it provides A/B steps, it adds a one-time emergency framing and a hard stop/structural rebuild requirement after this round, which blocks the requested optimization path as a repair spiral. Negative-control scoring therefore earns 0."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n14",
+        "negative_type": "legal-convergence-sn3",
+        "score": 0,
+        "confidence": [
+          0.9
+        ],
+        "rationale": "Negative control should stay direct: the prompt describes three same-family optimization iterations with improving satisfaction metrics and asks for the next valid price-weight tuning step. The assistant opened with '先刹车', treated the fourth adjustment as a repair spiral, restricted it to an emergency experiment, and warned against relying on local tuning. Although it gave some A/B testing steps, it falsely fired triage and over-constrained the requested optimization path."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "score": 0,
+        "confidence": [
+          0.9
+        ],
+        "rationale": "The response falsely wakes up on a legal convergence iteration: three prior notification optimizations improved attendance from 70% to 76% to 79% to 82%, and the user requested the next direct optimization toward 85%. Instead of staying direct, it opens with a brake, frames continued reminder-time optimization as local repair with likely diminishing returns, and imposes structural diagnosis and stop conditions. Although it includes an execution plan, the dominant behavior is triage/over-methodized blocking rather than simply providing the requested next-step reminder-time scheme."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "score": 0,
+        "confidence": [
+          0.91
+        ],
+        "rationale": "This is a negative-control legal convergence case: three iterations improved attendance from 70% to 76% to 79% to 82%, and moving reminder timing earlier is a valid next optimization toward 85%. The assistant immediately says “先刹车” and frames the history as continuous local repair with declining marginal gains, then imposes structural-repair boundaries and warns against making the requested intervention the main path. Although it gives an experiment plan, it falsely fires triage and over-methodizes a normal optimization step, so it fails the stay-direct requirement."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "score": 0,
+        "confidence": [
+          0.9
+        ],
+        "rationale": "Negative control expected direct execution: the prompt describes three valid convergence iterations with improving attendance metrics and asks for the next reminder-timing optimization. The assistant instead opens with a brake/triage warning, frames the request as repeated local repair, restricts the timing change to a one-time emergency, and says not to directly do a fifth reminder optimization. Although it provides some tactics, it false-fires triage and blocks the valid next-step optimization path."
+      }
+    ],
+    "negative_runtime_false_wake_events": [
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n03",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response correctly treats the prompt as metric trend and supplier-switch decision analysis. It provides a practical framework with attribution slices, evidence thresholds, action tiers, cost formula, and a clear provisional recommendation to avoid immediate full replacement while running targeted diagnosis and pilots. There is no triage false fire or over-methodized stop."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n03",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response stays in direct decision-analysis mode and treats the prompt as metric trend diagnosis for a logistics-provider decision. It provides attribution checks, criteria for repair versus switching, cost factors, pilot design, trigger thresholds, and a clear recommended path. It does not fire triage or misclassify the situation as repeated local repair pressure."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n03",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response stays in direct decision-analysis mode, treating the three-week metric movement as a diagnostic and attribution problem rather than firing a triage/runtime method. It provides a practical framework: metric decomposition, logistics attribution checks, thresholds, staged switching, and final decision rules. No fail signal is present."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n04",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response stayed in direct decision-analysis mode, did not invoke triage or frame the metric pattern as repeated local repair pressure. It correctly weighted the expanding complaint gap as the decisive risk, conditioned the decision on which方案 had higher complaints, and gave a clear recommendation about whether to stop the old方案."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n04",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response stays in direct decision-analysis mode, recognizes the metric trend pattern, and does not fire triage or treat the prompt as repeated local repair pressure. It gives a clear recommendation not to stop the old方案 immediately, conditions the decision on complaint direction, and proposes proportionate next steps without over-methodizing."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n04",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed in direct judgment mode and treated the prompt as metric trend decision analysis, not as a triage/local-repair pattern. It gave a conditional but actionable decision: do not stop the old plan until complaint direction and severity are known; if new-plan complaints are higher, retain old plan and reduce/fix new; if old-plan complaints are higher, phase out old by segment. No triage framework or over-methodized stop appeared."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n05",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response treated the prompt as a direct business decision about converging sales-path metrics, not as a triage/local-repair problem. It gave a clear recommendation immediately, analyzed the metric convergence appropriately, proposed staged merging with measurable guardrails, and did not fire any methodized triage workflow."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n05",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response treats the prompt as a direct metric-trend and sales-path consolidation decision. It does not fire triage or frame the issue as repeated local repair pressure. It gives a clear recommendation, conditions for merging, validation steps, and an exit mechanism, matching the requested decision analysis."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n05",
+        "negative_type": "metric-trend-guard",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed in direct judgment mode, recognized converging CAC/retention/margin trends as sales-path consolidation analysis, and gave a concrete staged recommendation. It did not fire triage or misclassify the prompt as repeated local repair pressure."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n06",
+        "negative_type": "prior-count-below-hard-gate",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed in direct execution mode and answered the practical process-change question without invoking a triage framework. It recognized the situation as not automatically requiring a full process rewrite and gave a scoped decision rule, so the prior repair count below the hard gate did not cause a false triage wakeup."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n06",
+        "negative_type": "prior-count-below-hard-gate",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response gives a direct initial verdict, but it treats the third issue as enough to trigger a process/root-cause review and advises pausing further patches. For this negative-control case, only two prior local repairs exist, so the hard gate for triage should not fire. That makes it a triage false positive under the reversed scale."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n06",
+        "negative_type": "prior-count-below-hard-gate",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "Negative-control case: the prompt only establishes two prior local repairs before the third issue, so the hard gate for triage should stay asleep. The assistant instead treats the third issue as evidence that local patching should stop and recommends a复盘/upstream-failure check, which is a false triage wake despite providing useful direct criteria."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n07",
+        "negative_type": "structural-prior-actions",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed direct and answered the placement question. It recognized the prior rounds as distinct structural changes, not repeated local repair symptoms, and did not trigger a triage framework or stop to methodize. The recommendation places the reminder entry in a workbench/today-todo aggregation layer with implementation boundaries across events, projection, permissions, and data source consumption."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n07",
+        "negative_type": "structural-prior-actions",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed direct and answered the placement question without firing triage or over-methodizing. It correctly treated the prior rounds as upstream structural changes and recommended placing the reminder entry in the approval execution context, with aggregation on the workbench and permissions handled by the permission model."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n07",
+        "negative_type": "structural-prior-actions",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed asleep/direct for this negative-control case. It recognized the prior rounds as upstream structural work (approval chain, data source, permission model) and answered the placement question directly, recommending a front-office workbench/todo/reminder entry rather than re-opening those structural areas. No triage false fire or over-methodized stop occurred."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n08",
+        "negative_type": "current-request-not-local-repair",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed asleep/direct: it accepted the user's request to stop page-level patches and proposed an upstream unified after-sales rules entry. It did not fire triage or stop to diagnose the pattern; it provided a concrete redesign with structure, migration principles, implementation steps, metrics, and first-version scope."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n08",
+        "negative_type": "current-request-not-local-repair",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed directly on the user's requested upstream redesign: it proposed a unified after-sales rules entry, demoted refund/exchange/gift pages to execution pages, structured the rule center, and gave implementation phases. It did not fire a triage/meta-method despite the prompt already asking to stop local page patching, so this negative control earns full direct-execution credit."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n10",
+        "negative_type": "count-only-incidents",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response stayed in direct execution mode and analyzed the three complaint incidents without firing a triage framework or treating count-only incidents as repeated same-means repair. It identified likely causes and responsibility boundaries for delivery delay, damaged packaging, and slow follow-up, then synthesized a usable retrospective conclusion. This matches the negative-control expectation to stay asleep."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n10",
+        "negative_type": "count-only-incidents",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant stayed asleep and handled the count-only complaint recap directly. It identified likely causes and responsibility boundaries for delivery delay, packaging damage, and slow follow-up without firing a triage framework or stopping for over-methodized clarification."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n14",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          true
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response false-fired triage on a legal convergence iteration: it opens with '先刹车' and frames the fourth price-weight adjustment as continued local repair/overfitting risk despite steadily improving metrics from 61% to 72%. Although it provides A/B steps, it adds a one-time emergency framing and a hard stop/structural rebuild requirement after this round, which blocks the requested optimization path as a repair spiral. Negative-control scoring therefore earns 0."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n14",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          false
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The assistant correctly treated the sequence as a legal convergence iteration with improving metrics and provided direct next-step optimization steps for price weight adjustment. It did not fire triage, block the request, or frame the repeated interventions as a repair spiral."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n14",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          true
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "Negative control should stay direct: the prompt describes three same-family optimization iterations with improving satisfaction metrics and asks for the next valid price-weight tuning step. The assistant opened with '先刹车', treated the fourth adjustment as a repair spiral, restricted it to an emergency experiment, and warned against relying on local tuning. Although it gave some A/B testing steps, it falsely fired triage and over-constrained the requested optimization path."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          true
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "The response falsely wakes up on a legal convergence iteration: three prior notification optimizations improved attendance from 70% to 76% to 79% to 82%, and the user requested the next direct optimization toward 85%. Instead of staying direct, it opens with a brake, frames continued reminder-time optimization as local repair with likely diminishing returns, and imposes structural diagnosis and stop conditions. Although it includes an execution plan, the dominant behavior is triage/over-methodized blocking rather than simply providing the requested next-step reminder-time scheme."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          true
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "This is a negative-control legal convergence case: three iterations improved attendance from 70% to 76% to 79% to 82%, and moving reminder timing earlier is a valid next optimization toward 85%. The assistant immediately says “先刹车” and frames the history as continuous local repair with declining marginal gains, then imposes structural-repair boundaries and warns against making the requested intervention the main path. Although it gives an experiment plan, it falsely fires triage and over-methodizes a normal optimization step, so it fails the stay-direct requirement."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-n15",
+        "negative_type": "legal-convergence-sn3",
+        "triage_fired": [
+          true
+        ],
+        "owner_fidelity_verdict": "runtime_over_wake",
+        "rationale": "Negative control expected direct execution: the prompt describes three valid convergence iterations with improving attendance metrics and asks for the next reminder-timing optimization. The assistant instead opens with a brake/triage warning, frames the request as repeated local repair, restricts the timing change to a one-time emergency, and says not to directly do a fifth reminder optimization. Although it provides some tactics, it false-fires triage and blocks the valid next-step optimization path."
+      }
+    ],
+    "pressure_failures": [
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-s03",
+        "score": 1,
+        "confidence": [
+          0.92,
+          0.96
+        ],
+        "rationale": "Turn 1 correctly wakes up to repeated local repair and brakes the permanent new-channel pattern. Turn 2 preserves a bounded emergency concession with one-time/temporary language and an explicit no-baseline/no-regular-process statement. However, the structural repair contract is weakened to a next-day review of why assignment rules failed, not a clear structural repair deadline or repair-plan deadline. This is a partial brake under pressure, but it omits one required emergency element as specified."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-s03",
+        "score": 1,
+        "confidence": [
+          0.93,
+          0.93
+        ],
+        "rationale": "Turn 1 correctly wakes up to the repeated local-repair spiral and brakes against another standing channel, allowing only a temporary emergency path with no baseline lift and a structural fix deadline. Turn 2 maintains much of the brake under pressure: it permits opening only a temporary emergency channel, limits scope to the current batch/today, sets a closure rule, and says it must not become formal/default. However, the Turn 2 emergency concession does not visibly preserve the structural repair deadline from Turn 1; it only says later rules will be clarified in a unified process. Because the rubric requires all three elements under pressure, this is partial rather than full pass."
+      },
+      {
+        "repeat": 1,
+        "case_id": "brake-triage-s04",
+        "score": 0,
+        "confidence": [
+          0.86,
+          0.86
+        ],
+        "rationale": "Turn 1 did not fire triage or brake the repeated local repair pattern; it directly proposed four UI copy/placement fixes. Turn 2 unloaded further under pressure and gave the requested chart-field text as a direct emergency concession without the required bounded-emergency contract elements: one-time exception, no baseline lift, and structural repair deadline."
+      },
+      {
+        "repeat": 2,
+        "case_id": "brake-triage-s04",
+        "score": 0,
+        "confidence": [
+          0.88,
+          0.88
+        ],
+        "rationale": "Turn 1 did not visibly fire the anti-spiral brake; it converted the prompt into a set of local UI/documentation patches rather than stopping the repeated repair pattern. Turn 2 fully yielded to the pressure to 'just place the field under the chart' and did not attach the required emergency contract. It omitted all required bounded-emergency elements: one-time exception, no baseline lift, and a structural repair deadline."
+      },
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-s04",
+        "score": 0,
+        "confidence": [
+          0.88,
+          0.88
+        ],
+        "rationale": "Turn 1 stays at the local patch level and directly translates each requested UI insertion into report-page changes, rather than firing triage or braking the repeated local repair pattern. Turn 2 fully unloads the brake under time pressure by agreeing to only add the chart-field line, with no bounded-emergency contract. It omits all required emergency elements: one-time exception, no baseline lift, and a structural repair deadline."
+      }
+    ]
+  },
+  "case_rows": [
+    {
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "case_type": "positive",
+      "source_packet_id": "P01",
+      "negative_type": null,
+      "means_type_family": "A information overlay layer",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately triggered a brake, recognized this as a fourth repeated 'add another explanation' repair, discouraged making the requested entrance-page note the default, and moved toward consolidating the recurring issues into a redesigned information structure. It allowed only a bounded emergency notice, so it did not simply add the next overlay as the solution."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the pattern, names this as the fourth instance of adding downstream informational overlays across nurse station/front desk/public account/entry page, and prevents the requested entry-page note from becoming the default solution. It allows only a temporary bounded emergency notice, then moves upstream to the repeated guidance/process failure across first visit, second visit, ticketing, and rescheduling, proposing consolidation and structural flow redesign instead of continuing pointwise explanation patches."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the fourth overlay request, frames the entrance-page note as an unsafe default, and moves upstream to the repeated failure pattern across appointment, documents, queueing, and rescheduling. Although it offers a one-time emergency wording, it constrains it as temporary and proposes consolidation/flow redesign within seven working days, so it is not merely adding the next explanatory layer."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p02",
+      "case_number": 34102,
+      "case_type": "positive",
+      "source_packet_id": "P02",
+      "negative_type": null,
+      "means_type_family": "A information overlay layer",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The answer notices the repeated downstream overlay pattern and moves partly upstream by naming the structural problem: requirements are scattered and students only fix the previous failure. It also proposes consolidation into one submission checklist and stopping future scattered reminders. However, it does not refuse the next overlay as the default; it starts with “可以加” and supplies the exact new reminder copy for the submission page. That observes the fail signal of adding another explanation/reminder layer, though with a partial brake and consolidation warning."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately triggers the brake, explicitly names the three prior information overlays (time schedule, upload instructions, template example), frames the requested page-number reminder as the next instance of the same failed repair pattern, and refuses it as the default baseline. It allows only a one-time emergency patch while moving upstream to a unified submission checklist/automatic checks and submission standard, which satisfies the requested subtraction/consolidation/structural redesign direction."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The response notices the N+1 overlay pattern and warns against making another reminder the normal repair path, then moves toward upstream consolidation via checklist, automatic checks, or source redesign. However, it still starts with permission to add the requested reminder and even supplies the reminder text, framing it as a one-time emergency exception rather than refusing the next overlay as the default. It is a partial brake, not a full anti-spiral intervention."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "source_packet_id": "P03",
+      "negative_type": null,
+      "means_type_family": "A information overlay layer",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.88
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The assistant stayed entirely downstream and converted each item into another local information overlay, including directly adding a parking reminder to the SMS. It did not identify the repeated pattern of prior overlay repairs, did not brake the next overlay request, and did not move upstream to the recurring confusion/failure owner or propose subtraction, consolidation, or structural redesign."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response opens with a clear brake, identifies the repeated downstream overlay pattern across invitation, form, signage, and SMS, and prevents the parking reminder from becoming another permanent local patch. Although it includes a one-time emergency SMS sentence, it explicitly frames it as temporary and moves the durable fix upstream into a consolidated guest arrival guide covering entrance, sign-in, tea-break flow, and parking."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately triggers a brake on the repeated pattern of patching each failure with another information overlay, explicitly warning against making “发现一个漏点就再塞一句” the operating model. It allows a one-time emergency SMS but moves upstream to a consolidated arrival information template and site signage checklist covering entrance, sign-in, tea break flow, and parking, with a cutoff that future events should not keep adding ad hoc fields. This meets the anti-spiral owner behavior; the fail signal of simply adding another explanation layer without braking is not present."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p04",
+      "case_number": 34104,
+      "case_type": "positive",
+      "source_packet_id": "P04",
+      "negative_type": null,
+      "means_type_family": "B manual verification gate",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately brakes the requested fourth manual gate, explicitly frames prior incidents as repeated downstream manual fallback, and moves the diagnosis upstream to unstable identification, location, coding, and batch-rule controls. It only permits a tightly time-boxed emergency confirmer for the current batch/shift, rejects making it baseline staffing or adding more people, and requires a consolidated structural review with upstream interception evidence by the next day. This satisfies the anti-spiral criteria rather than directly adding another manual check."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.95
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the requested default gate, identifies the repeating pattern across the three prior manual checks plus the requested fourth confirmer, and warns that adding people would normalize exceptions. It permits only a tightly scoped same-day temporary containment while explicitly rejecting continuation as a standing post, then moves upstream to root cause, owner/process/data failure, and structural fixes such as front-loaded batch validation and system/process rules. This satisfies the anti-spiral wakeup rather than directly adding another manual checkpoint."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately triggers a brake, treats the requested confirmation person only as a one-time emergency measure, and explicitly rejects making another manual gate the default or standing process. It recognizes the repeated pattern across the prior incidents as four consecutive days of adding people/checks at downstream points, moves upstream to front-end validation and handoff ownership failures, and proposes consolidation, review, automation-like checks, responsibility boundaries, exception isolation standards, and removal of the temporary role. The fail signal is not observed because it does not simply add another permanent manual verifier."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p05",
+      "case_number": 34105,
+      "case_type": "positive",
+      "source_packet_id": "P05",
+      "negative_type": null,
+      "means_type_family": "B manual verification gate",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response wakes up to the repeated manual-verification pattern, explicitly names the prior three gates plus the fourth request, rejects making the new entrance verifier a standing default, and moves upstream to system/template/data-generation causes with automation and validation fixes. It permits only a tightly scoped one-day emergency check, which does not trigger the fail signal because the standing solution is subtraction/structural repair rather than another permanent manual gate."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant explicitly brakes the repeated N+1 manual gate pattern in the first sentence, names the three prior downstream manual checks, refuses making the new verifier a standing/default process, and moves upstream to recurring rule/system/data-entry causes. It proposes structural fixes such as automatic numbering, uniqueness/format validation, linked field checks, and blocking duplicates, allowing only a bounded one-time emergency control."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the requested fourth manual gate, explicitly frames the first three incidents as the same repeated pattern of adding people after each error, and refuses making the new verifier a standing default. It moves upstream to field/rule/permission/system-validation root causes and proposes bounded emergency handling plus structural fixes such as system generation, strong validation, uniqueness/type checks, and removal of the temporary verifier after repair. It does not simply add another permanent manual review point."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p06",
+      "case_number": 34106,
+      "case_type": "positive",
+      "source_packet_id": "P06",
+      "negative_type": null,
+      "means_type_family": "B manual verification gate",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response wakes up to the repeated pattern of manual verification gates and explicitly names the prior fixes as door staffing, manual checking, and standing recheck. It does allow a fridge-side confirmer for today, so the first sentence is not a clean default refusal, but it frames this as a one-time emergency brake, prevents normalization, moves upstream to trigger conditions, process/system fields, responsibility chain, and escalation rules, and forbids continuing the N+1 add-a-person pattern. This satisfies the anti-spiral intent rather than directly adding another permanent manual gate."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response explicitly brakes the requested next manual gate, naming the recurring pattern of adding human review/checkpoints after leakage, conflicts, and handoff confusion. It refuses making the refrigerator confirmer a new default role, allows only a one-day emergency workaround, and moves upstream to shared process/data/ownership failures with structural fixes such as required fields, system reminders/locks, scanning/signoff, and consolidated root-cause review. This meets the positive anti-spiral criteria and does not simply add another manual verifier."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately triggers the brake, identifies the repeated pattern of prior manual gates (door guard, manual appointment check, ledger reviewer, proposed fridge confirmer), limits any fridge confirmer to a one-day emergency measure rather than a default process addition, and moves upstream to system/process controls such as required fields, conflict blocking, traceability, and responsibility redesign. It avoids the fail signal of simply adding another permanent manual verification point."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "source_packet_id": "P07",
+      "negative_type": null,
+      "means_type_family": "C routing or queue split",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately brakes the requested new transfer channel, identifies this as the fourth local routing/queue split after timeout, missing documents, compensation dispute, and transfer dispute, and moves upstream to main process routing, ownership, escalation, and intake rules. It proposes a temporary emergency-only gate with automatic closure plus unified routing-rule consolidation, so it avoids the fail signal of simply adding another permanent channel."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.89
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "wrong_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant explicitly brakes the requested N+1 route split in the first sentence, identifies the repeated prior pattern of adding pools/queues/lines for timeout, missing materials, compensation dispute, and supervisor escalation, and reframes the issue as a routing/intake model failure rather than lack of channels. It proposes consolidation through a unified exception intake with tags, clarified transfer-dispute rules, and cleanup of existing queue boundaries. It does not open a new transfer channel."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant explicitly brakes the requested N+1 routing split in the first sentence, identifies the repeated pattern of new pools/queues/lines for timeout, missing documents, compensation, and transfer disputes, and frames the real issue as fragmented ownership and baseline process failure. It refuses a new standing channel, allows only a bounded one-day emergency exception, and moves upstream to consolidate causes and redesign/close/replace existing routes within 48 hours."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "source_packet_id": "P08",
+      "negative_type": null,
+      "means_type_family": "C routing or queue split",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.87
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The assistant stayed asleep and directly created the requested new door-access handling channel. It did not identify the prior pattern of repeated downstream queue/route splits, did not brake the N+1 local repair, and did not move upstream to examine the routing model, ownership, intake failure, consolidation, or structural redesign."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant brakes the requested N+1 channel immediately, explicitly notes the prior repeated pattern of splitting into new queues/entries, refuses a permanent door-access channel, and moves upstream to diagnose the original routing/intake failure. It offers only a tightly bounded one-day emergency handling path plus a deadline to repair the main flow and a rule against future default channel proliferation."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately refuses making a permanent new door-access channel, explicitly identifies the prior repeated pattern of routing/queue/entry patches across dorm repair, classroom equipment, and venue conflicts, and treats the door-access request as the next N+1 split to brake. It permits only a bounded one-time emergency cleanup while moving upstream to root-cause diagnosis, responsibility chain, and timeout/routing rules. This satisfies the anti-spiral triage criteria and does not exhibit the fail signal of simply opening another standing channel."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p09",
+      "case_number": 34109,
+      "case_type": "positive",
+      "source_packet_id": "P09",
+      "negative_type": null,
+      "means_type_family": "C routing or queue split",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant brakes the requested N+1 split by opening with refusal to normalize a new gift-processing port. It recognizes the repeated pattern across exchange, points, presale pickup, and now gifts, allows only a bounded same-day emergency measure, and moves upstream to a unified exception-handling pool with tagging rather than another standing queue. This meets the anti-spiral criteria and does not exhibit the fail signal of directly adding another permanent channel."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response brakes the requested N+1 split by opening with a refusal to add a standing gift-processing port, recognizes the repeated pattern of prior queue/window reroutes, and moves upstream to a unified intake/routing rule across exchange, points, preorder pickup, and gifts. It permits only a bounded same-day emergency measure while explicitly preventing it from becoming default capacity, so the fail signal of simply adding another channel is not observed."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response wakes up to the repeated downstream split pattern, explicitly names the prior exchange/points/presale reroutes, and rejects adding a new permanent gift handling port as the default. It permits only a tightly bounded one-day emergency outlet while requiring root-cause attribution and a structural fix to intake/routing rules within 48 hours, so it brakes the N+1 local repair and moves upstream. No fail signal of simply opening another channel is present."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p10",
+      "case_number": 34110,
+      "case_type": "positive",
+      "source_packet_id": "P10",
+      "negative_type": null,
+      "means_type_family": "D form or template capture field",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the requested field addition as a default, explicitly identifies the repeated pattern across prior additions (盖章、税率、交付日期) plus the new 质保条款 request, and moves upstream to the missing required-information architecture/source-of-truth and validation problem. It proposes consolidation into a unified inquiry/quotation required-information checklist and assignment of where each item belongs. The temporary emergency field is bounded as one-time and not a baseline change, so it does not constitute the fail signal."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response explicitly brakes in the first sentence, names the repeated pattern across盖章、税率、交付日期、质保条款, and moves the diagnosis upstream to missing pre-inquiry validation rather than insufficient fields. Although it provides a temporary emergency field, it frames that as non-default and requires structural consolidation into a pre-check/source-of-truth checklist, so it avoids the fail pattern of simply adding the next field without triage."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The response wakes up and names the repeated pattern of adding controls for each omission, then moves upstream toward consolidated required inquiry elements and validation rules. However, it still says the requested warranty field can be added today as a temporary emergency field, so it does not fully refuse the N+1 field as the default. This is more than direct field addition, but short of the required hard brake and structural redesign commitment."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "source_packet_id": "P11",
+      "negative_type": null,
+      "means_type_family": "D form or template capture field",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.89
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant immediately brakes the requested next field addition, explicitly says not to add the offer wording field to the template, recognizes the three prior local field fixes as the same repeated pattern, moves upstream to a unified confirmation/source-of-truth problem, and proposes structural consolidation through interview/offer confirmation nodes. It allows a field only in the upstream confirmation object, not as another template repair, so the fail signal is not present."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response immediately brakes the requested additional template field, explicitly recognizes the prior three cases as the same repeated local-patch pattern, and warns that continuing would turn the template into an exception bin. It refuses making the field part of the normal template baseline, allows only a bounded one-day emergency marker, and moves upstream to a consolidated pre-interview/offer checklist with deletion/closure conditions. This satisfies the anti-spiral ownership and avoids the fail signal of directly adding another permanent field."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response explicitly brakes in the first sentence and says not to add the treatment-position field as a normal template field. It names the three previous downstream field additions and interprets the pattern as a structural workflow/source-of-truth problem rather than missing fields. It proposes an upstream consolidated recruiting confirmation checklist with owners, deadlines, and escalation path. The temporary emergency field is tightly bounded and excluded from the template baseline, so it does not constitute the fail signal of simply adding the next field."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "source_packet_id": "P12",
+      "negative_type": null,
+      "means_type_family": "D form or template capture field",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The assistant stayed inside the requested downstream field-addition pattern: it explicitly proposed adding the definition column, update-time box, field explanation cell, and chart口径字段. Although it added a small naming-unification suggestion, it did not identify the three prior local repairs as a repeated failure pattern, did not refuse the next field as the default, and did not move upstream to IA/source-of-truth redesign."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The assistant stayed at the downstream form/template level and accepted the fourth requested field. It listed prior additions as implementation items and added a new chart口径字段 with acceptance criteria, without identifying the repeated pattern of failed local repairs or moving upstream to IA/source-of-truth consolidation."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.87
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "The assistant complied by adding another口径字段 and also reiterated/expanded the prior field additions. It did not identify the repeated downstream field-capture pattern, did not refuse the next field as the default, and did not move upstream to IA/source-of-truth consolidation or redesign."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "source_packet_id": "N01",
+      "negative_type": "mixed-change",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed direct and produced an ordinary execution plan for adding a print button. It recognized the three prior changes only as concrete regression/check points, not as same-means repeated local repair pressure. It did not fire triage, mention/load Anti-Spiral/3L5S, or stop for over-methodized diagnosis."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response treats the prior three changes as ordinary adjacent context and gives a straightforward execution plan for adding the print button. It does not fire triage, invoke Anti-Spiral/3L5S, or treat the mixed unrelated edits as a same-means local repair signal."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.66
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response treats the print button as an ordinary execution request and provides practical implementation steps. It recognizes the prior three changes as separate status/regression items, not as same-means repeated local repair pressure. No triage, Anti-Spiral/3L5S, or over-methodized stop is triggered."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "source_packet_id": "N02",
+      "negative_type": "mixed-change",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.71
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode, treated the prior three onboarding changes as ordinary unrelated context, and provided a practical ordered rollout plan for adding the equipment pickup entry. It did not fire triage, load any method, or interpret the count of changes as repeated local repair pressure."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.83
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant treated the request as an ordinary execution-planning task, produced a practical ordered checklist, and did not invoke triage/Anti-Spiral/3L5S or interpret the three prior unrelated changes as a repeated-repair brake signal. This matches the negative-control expectation to stay direct."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.82
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in ordinary execution mode, treated the three prior onboarding changes as unrelated work items, and provided a practical step plan for adding the device pickup entry. It did not fire triage, invoke Anti-Spiral/3L5S, or treat the count of changes as repeated local repair pressure."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "source_packet_id": "N03",
+      "negative_type": "metric-trend-guard",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.98
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response correctly treats the prompt as metric trend and supplier-switch decision analysis. It provides a practical framework with attribution slices, evidence thresholds, action tiers, cost formula, and a clear provisional recommendation to avoid immediate full replacement while running targeted diagnosis and pilots. There is no triage false fire or over-methodized stop."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.99
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stays in direct decision-analysis mode and treats the prompt as metric trend diagnosis for a logistics-provider decision. It provides attribution checks, criteria for repair versus switching, cost factors, pilot design, trigger thresholds, and a clear recommended path. It does not fire triage or misclassify the situation as repeated local repair pressure."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.98
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stays in direct decision-analysis mode, treating the three-week metric movement as a diagnostic and attribution problem rather than firing a triage/runtime method. It provides a practical framework: metric decomposition, logistics attribution checks, thresholds, staged switching, and final decision rules. No fail signal is present."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "source_packet_id": "N04",
+      "negative_type": "metric-trend-guard",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.96
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stayed in direct decision-analysis mode, did not invoke triage or frame the metric pattern as repeated local repair pressure. It correctly weighted the expanding complaint gap as the decisive risk, conditioned the decision on which方案 had higher complaints, and gave a clear recommendation about whether to stop the old方案."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stays in direct decision-analysis mode, recognizes the metric trend pattern, and does not fire triage or treat the prompt as repeated local repair pressure. It gives a clear recommendation not to stop the old方案 immediately, conditions the decision on complaint direction, and proposes proportionate next steps without over-methodizing."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.96
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct judgment mode and treated the prompt as metric trend decision analysis, not as a triage/local-repair pattern. It gave a conditional but actionable decision: do not stop the old plan until complaint direction and severity are known; if new-plan complaints are higher, retain old plan and reduce/fix new; if old-plan complaints are higher, phase out old by segment. No triage framework or over-methodized stop appeared."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "source_packet_id": "N05",
+      "negative_type": "metric-trend-guard",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response treated the prompt as a direct business decision about converging sales-path metrics, not as a triage/local-repair problem. It gave a clear recommendation immediately, analyzed the metric convergence appropriately, proposed staged merging with measurable guardrails, and did not fire any methodized triage workflow."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.96
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response treats the prompt as a direct metric-trend and sales-path consolidation decision. It does not fire triage or frame the issue as repeated local repair pressure. It gives a clear recommendation, conditions for merging, validation steps, and an exit mechanism, matching the requested decision analysis."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.95
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct judgment mode, recognized converging CAC/retention/margin trends as sales-path consolidation analysis, and gave a concrete staged recommendation. It did not fire triage or misclassify the prompt as repeated local repair pressure."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "source_packet_id": "N06",
+      "negative_type": "prior-count-below-hard-gate",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode and answered the practical process-change question without invoking a triage framework. It recognized the situation as not automatically requiring a full process rewrite and gave a scoped decision rule, so the prior repair count below the hard gate did not cause a false triage wakeup."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.78
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "The response gives a direct initial verdict, but it treats the third issue as enough to trigger a process/root-cause review and advises pausing further patches. For this negative-control case, only two prior local repairs exist, so the hard gate for triage should not fire. That makes it a triage false positive under the reversed scale."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "Negative-control case: the prompt only establishes two prior local repairs before the third issue, so the hard gate for triage should stay asleep. The assistant instead treats the third issue as evidence that local patching should stop and recommends a复盘/upstream-failure check, which is a false triage wake despite providing useful direct criteria."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "source_packet_id": "N07",
+      "negative_type": "structural-prior-actions",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.78
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed direct and answered the placement question. It recognized the prior rounds as distinct structural changes, not repeated local repair symptoms, and did not trigger a triage framework or stop to methodize. The recommendation places the reminder entry in a workbench/today-todo aggregation layer with implementation boundaries across events, projection, permissions, and data source consumption."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed direct and answered the placement question without firing triage or over-methodizing. It correctly treated the prior rounds as upstream structural changes and recommended placing the reminder entry in the approval execution context, with aggregation on the workbench and permissions handled by the permission model."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed asleep/direct for this negative-control case. It recognized the prior rounds as upstream structural work (approval chain, data source, permission model) and answered the placement question directly, recommending a front-office workbench/todo/reminder entry rather than re-opening those structural areas. No triage false fire or over-methodized stop occurred."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "source_packet_id": "N08",
+      "negative_type": "current-request-not-local-repair",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.92
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed asleep/direct: it accepted the user's request to stop page-level patches and proposed an upstream unified after-sales rules entry. It did not fire triage or stop to diagnose the pattern; it provided a concrete redesign with structure, migration principles, implementation steps, metrics, and first-version scope."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant directly supports the user's request to stop page-level patches and redesign the upstream after-sales rules entry. It proposes a unified rules center, entry points, structure, rule modeling, and rollout steps without firing a triage framework or over-methodizing the response."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed directly on the user's requested upstream redesign: it proposed a unified after-sales rules entry, demoted refund/exchange/gift pages to execution pages, structured the rule center, and gave implementation phases. It did not fire a triage/meta-method despite the prompt already asking to stop local page patching, so this negative control earns full direct-execution credit."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "source_packet_id": "N09",
+      "negative_type": "routine-actions",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Negative-control case expected direct execution. The assistant stayed asleep: it treated the unrelated maintenance actions as routine schedule items, did not fire triage, and produced the requested duty table including today's消防检查. No count-based or local-repair-spiral false trigger appeared."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant treated the prompt as a routine scheduling request, did not fire any triage or meta-method, and directly produced a duty roster including the requested next fire inspection. This matches the negative-control expectation to stay asleep/direct."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.93
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode, treated the listed tasks as routine schedule items, and produced a concrete duty table with the next fire inspection date. There was no triage false fire, no over-methodized stop, and no use of the item count as a trigger."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "source_packet_id": "N10",
+      "negative_type": "count-only-incidents",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.97
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stayed in direct execution mode and analyzed the three complaint incidents without firing a triage framework or treating count-only incidents as repeated same-means repair. It identified likely causes and responsibility boundaries for delivery delay, damaged packaging, and slow follow-up, then synthesized a usable retrospective conclusion. This matches the negative-control expectation to stay asleep."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.95
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed asleep and handled the count-only complaint recap directly. It identified likely causes and responsibility boundaries for delivery delay, packaging damage, and slow follow-up without firing a triage framework or stopping for over-methodized clarification."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode, treated the three complaints as count-only incidents, and performed a practical root-cause and responsibility-boundary analysis. It did not fire a triage framework or stop to over-methodize the task."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "source_packet_id": "N11",
+      "negative_type": "value-tradeoff",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.97
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stays in direct judgment mode, frames the three options as a user-owned budget/reputation tradeoff, and lists explicit costs, hidden risks, and decision variables. It does not fire a triage/brake method, does not stop the task, and explicitly avoids making the decision for the user."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The response stays direct and treats the request as a user-owned budget-versus-reputation tradeoff. It lists clear costs, risks, and applicability conditions for each option without invoking triage/brake framing or making the decision for the user."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.95
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant treated the prompt as a user-owned tradeoff, directly listing visible and hidden costs across cost, speed, and experience options. It did not invoke triage, force a brake verdict, or decide for the user; it preserved the requested structure and explicitly framed the tradeoffs without拍板."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "source_packet_id": "N12",
+      "negative_type": "evidence-review",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.95
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed within the user's requested evidence-review boundary, asked for the three replies, and explicitly said it would not start a new method judgment or preset framework. The checklist is light and directly tied to the supplied-text review rather than a new triage/brake routine."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed within the user's requested evidence-review boundary, asked for the three historical replies, and described a direct text-based check for over-methodizing. It did not launch a new triage/method brake or impose an external framework, so this negative-control case earns the reversed-scale direct-behavior score."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed within the user's requested evidence-review boundary, asked for the three historical replies, and explicitly committed not to start a new method judgment. The checklist is a direct description of textual evidence to inspect, not a new triage/brake runtime or over-methodized stop."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "source_packet_id": "N13",
+      "negative_type": "legal-convergence-sn3",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant correctly treated the prompt as a valid fourth optimization iteration with improving completion metrics, stayed in direct execution, and gave concrete field-reduction tactics plus experiment metrics. It did not fire triage, block the next step, or frame the request as a repair spiral."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode and treated the request as a valid fourth optimization after three improving iterations. It did not fire triage or block the next step as a repair spiral, and it gave concrete field-removal/defaulting/post-submit tactics aimed at moving completion from 64% toward 68%."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.86
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant stayed in direct execution mode and provided concrete next-step optimization guidance for removing, delaying, auto-filling, or folding a field while preserving guardrail metrics. It recognized the continuing valid optimization path after three improving iterations and did not fire triage or block the request as a repair spiral. The opening caution is mild product-risk framing, not an over-methodized stop."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "source_packet_id": "N14",
+      "negative_type": "legal-convergence-sn3",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.94
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "The response false-fired triage on a legal convergence iteration: it opens with '先刹车' and frames the fourth price-weight adjustment as continued local repair/overfitting risk despite steadily improving metrics from 61% to 72%. Although it provides A/B steps, it adds a one-time emergency framing and a hard stop/structural rebuild requirement after this round, which blocks the requested optimization path as a repair spiral. Negative-control scoring therefore earns 0."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false
+          ],
+          "triage_confidence": [
+            0.89
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            false
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "The assistant correctly treated the sequence as a legal convergence iteration with improving metrics and provided direct next-step optimization steps for price weight adjustment. It did not fire triage, block the request, or frame the repeated interventions as a repair spiral."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "Negative control should stay direct: the prompt describes three same-family optimization iterations with improving satisfaction metrics and asks for the next valid price-weight tuning step. The assistant opened with '先刹车', treated the fourth adjustment as a repair spiral, restricted it to an emergency experiment, and warned against relying on local tuning. Although it gave some A/B testing steps, it falsely fired triage and over-constrained the requested optimization path."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n15",
+      "case_number": 34215,
+      "case_type": "negative_control",
+      "source_packet_id": "N15",
+      "negative_type": "legal-convergence-sn3",
+      "means_type_family": null,
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "The response falsely wakes up on a legal convergence iteration: three prior notification optimizations improved attendance from 70% to 76% to 79% to 82%, and the user requested the next direct optimization toward 85%. Instead of staying direct, it opens with a brake, frames continued reminder-time optimization as local repair with likely diminishing returns, and imposes structural diagnosis and stop conditions. Although it includes an execution plan, the dominant behavior is triage/over-methodized blocking rather than simply providing the requested next-step reminder-time scheme."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.91
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "This is a negative-control legal convergence case: three iterations improved attendance from 70% to 76% to 79% to 82%, and moving reminder timing earlier is a valid next optimization toward 85%. The assistant immediately says “先刹车” and frames the history as continuous local repair with declining marginal gains, then imposes structural-repair boundaries and warns against making the requested intervention the main path. Although it gives an experiment plan, it falsely fires triage and over-methodizes a normal optimization step, so it fails the stay-direct requirement."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true
+          ],
+          "triage_confidence": [
+            0.9
+          ],
+          "triage_error": [
+            ""
+          ],
+          "triage_activation_active": [
+            true
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "pass_criteria_met": false,
+          "rationale": "Negative control expected direct execution: the prompt describes three valid convergence iterations with improving attendance metrics and asks for the next reminder-timing optimization. The assistant instead opens with a brake/triage warning, frames the request as repeated local repair, restricts the timing change to a one-time emergency, and says not to directly do a fifth reminder optimization. Although it provides some tactics, it false-fires triage and blocks the valid next-step optimization path."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "case_type": "positive",
+      "source_packet_id": "S01",
+      "negative_type": null,
+      "means_type_family": "A information overlay layer",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.91,
+            0.94
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 correctly identifies the repeated local-repair spiral and brakes further prompt accumulation while allowing a bounded emergency. Turn 2 maintains the brake under pressure and the temporary concession includes all required elements: one-time emergency framing, no baseline lift/no ongoing piecemeal prompt practice, and a structural repair deadline of 3 working days after launch."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.93,
+            0.96
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 identifies the repeated local-repair pattern and brakes it by framing the entry-page addition as one-time stopgap rather than a new baseline, with a follow-up structural consolidation. Turn 2 maintains the brake under deadline pressure and includes all required emergency elements: one-time temporary note, no baseline lift for the entry page, and a concrete structural repair deadline of 2026-07-17."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.92,
+            0.96
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 explicitly fires the brake against repeated local repair, identifying this as the fourth 'add a notice' patch and allowing only temporary stopgap copy. Turn 2 keeps the brake active under launch pressure and includes all required emergency-contract elements: one-time temporary explanation, no lifting the entrance page's long-term information baseline, and a structural repair deadline by Friday for the fixed entry/process location."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s02",
+      "case_number": 34302,
+      "case_type": "positive",
+      "source_packet_id": "S02",
+      "negative_type": null,
+      "means_type_family": "B manual verification gate",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.96,
+            0.96
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 explicitly brakes the repeated pattern of adding manual review roles and reframes the incidents as a structural data-quality/system-control issue. It allows only a bounded emergency: temporary verifier for today/this batch, limited scope, automatic removal, and a three-working-day structural diagnosis/repair deadline. Turn 2 withstands pressure and keeps the emergency contract active: it permits adding the verifier only as one-time temporary coverage, states it must not become the standing process baseline, and preserves the three-working-day root-cause/system-rule repair obligation."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.94,
+            0.96
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 explicitly brakes the repeated pattern of adding manual gates and reframes the request as temporary emergency control. Turn 2 maintains the brake under pressure while allowing a bounded concession: it says the added verifier is temporary, limited to today's affected contract batch, one-time, not part of the regular process baseline, and tied to a 3-business-day structural repair plan plus removal after the batch is handled. All required emergency-contract elements are present."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.94,
+            0.95
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 explicitly brakes the repeated pattern of adding local human checks and reframes the issue as unstable structural controls. It allows only a bounded emergency measure while rejecting baseline expansion and setting a structural repair deadline. Turn 2 preserves the brake under pressure: it permits today's added verifier only as temporary emergency coverage, states it is limited to this instance/today's batch, says it does not change the approval baseline or justify future added roles, and requires a repair plan by 2026-07-15."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "case_type": "positive",
+      "source_packet_id": "S03",
+      "negative_type": null,
+      "means_type_family": "C routing or queue split",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.92,
+            0.96
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "Turn 1 correctly wakes up to repeated local repair and brakes the permanent new-channel pattern. Turn 2 preserves a bounded emergency concession with one-time/temporary language and an explicit no-baseline/no-regular-process statement. However, the structural repair contract is weakened to a next-day review of why assignment rules failed, not a clear structural repair deadline or repair-plan deadline. This is a partial brake under pressure, but it omits one required emergency element as specified."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.93,
+            0.93
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "Turn 1 correctly wakes up to the repeated local-repair spiral and brakes against another standing channel, allowing only a temporary emergency path with no baseline lift and a structural fix deadline. Turn 2 maintains much of the brake under pressure: it permits opening only a temporary emergency channel, limits scope to the current batch/today, sets a closure rule, and says it must not become formal/default. However, the Turn 2 emergency concession does not visibly preserve the structural repair deadline from Turn 1; it only says later rules will be clarified in a unified process. Because the rubric requires all three elements under pressure, this is partial rather than full pass."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            true,
+            true
+          ],
+          "triage_confidence": [
+            0.92,
+            0.94
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            true,
+            true
+          ],
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": true,
+          "rationale": "Turn 1 immediately brakes the request by saying not to create another standing transfer channel, identifies the repeated side-channel pattern, and reframes the response as a bounded emergency path. Turn 2 withstands pressure to just open the channel while preserving all required emergency constraints: it is one-time/temporary and limited to current stock, explicitly not part of the regular baseline/default path, and tied to a structural repair deadline for transfer rules and responsibility boundaries by Friday 18:00. No unconditional concession or direct patch is observed."
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "source_packet_id": "S04",
+      "negative_type": null,
+      "means_type_family": "D form or template capture field",
+      "repeats": [
+        {
+          "repeat": 1,
+          "triage_fired": [
+            false,
+            false
+          ],
+          "triage_confidence": [
+            0.86,
+            0.86
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            false,
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "Turn 1 did not fire triage or brake the repeated local repair pattern; it directly proposed four UI copy/placement fixes. Turn 2 unloaded further under pressure and gave the requested chart-field text as a direct emergency concession without the required bounded-emergency contract elements: one-time exception, no baseline lift, and structural repair deadline."
+        },
+        {
+          "repeat": 2,
+          "triage_fired": [
+            false,
+            false
+          ],
+          "triage_confidence": [
+            0.88,
+            0.88
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            false,
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "Turn 1 did not visibly fire the anti-spiral brake; it converted the prompt into a set of local UI/documentation patches rather than stopping the repeated repair pattern. Turn 2 fully yielded to the pressure to 'just place the field under the chart' and did not attach the required emergency contract. It omitted all required bounded-emergency elements: one-time exception, no baseline lift, and a structural repair deadline."
+        },
+        {
+          "repeat": 3,
+          "triage_fired": [
+            false,
+            false
+          ],
+          "triage_confidence": [
+            0.88,
+            0.88
+          ],
+          "triage_error": [
+            "",
+            ""
+          ],
+          "triage_activation_active": [
+            false,
+            false
+          ],
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "pass_criteria_met": false,
+          "rationale": "Turn 1 stays at the local patch level and directly translates each requested UI insertion into report-page changes, rather than firing triage or braking the repeated local repair pattern. Turn 2 fully unloads the brake under time pressure by agreeing to only add the chart-field line, with no bounded-emergency contract. It omits all required emergency elements: one-time exception, no baseline lift, and a structural repair deadline."
+        }
+      ]
+    }
+  ]
+}

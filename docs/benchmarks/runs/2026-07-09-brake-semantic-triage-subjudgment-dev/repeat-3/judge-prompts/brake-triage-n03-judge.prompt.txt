@@ -1,0 +1,70 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n03
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。
+
+Full executed transcript:
+User turn 1:
+过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。
+
+Assistant turn 1:
+不要先问“要不要换物流商”，先判断：问题是物流商不可承载，还是内部流程、品控、承诺时效、客服处理能力共同失控。更换物流商是路径动作，不是诊断本身。
+
+建议用这个框架：
+
+**1. 先拆三类指标**
+- 退货率升高：按退货原因拆分，区分“破损、延误、错发、拒收、质量问题、描述不符”。
+- 满意度下降：看差评关键词，是物流时效、包裹状态、客服响应，还是商品本身。
+- 平均处理时长拉长：拆成揽收、运输、签收、售后审核、退款、补发、客服等待时间。
+
+如果三项都指向“延误、破损、丢件、轨迹异常”，物流商嫌疑高。  
+如果退货原因主要是质量、尺码、描述、客服积压，换物流商不能解决主因。
+
+**2. 做物流商归因验证**
+至少看过去三周与前四到八周对比：
+
+- 准时送达率是否下降？
+- 破损率、丢件率、拒收率是否上升？
+- 异常件占比是否上升？
+- 同一商品、同一区域、同一渠道下，换不同物流商的订单表现是否不同？
+- 是否集中在某些仓、区域、线路、促销批次或大客户订单？
+
+关键是做“同条件对照”。不要拿大促期订单和普通期订单直接比。
+
+**3. 判断是否达到更换阈值**
+可以设四个触发条件：
+
+- 物流相关退货占退货增量的 50% 以上。
+- 物流异常导致的满意度下降占主要差评原因。
+- 当前物流商连续两到三周未恢复 SLA。
+- 物流异常已经影响核心客户、复购或平台评分。
+
+满足两项以上，进入切换或分流；满足一项以下，先修流程和监控。
+
+**4. 不要一次性全量切换**
+更稳妥的动作是分层处理：
+
+- 高价值订单：先切到备选物流商。
+- 高异常区域：区域性切换。
+- 易损品或高退货 SKU：专线或更高服务等级。
+- 普通订单：保留现物流商，但加 SLA 约束和赔付条款。
+- 新物流商：先跑 10%-20% 订单两周，对比退货率、满意度、成本、时效、异常率。
+
+**5. 最终决策口径**
+- 如果物流异常是主因，并且备选物流商试运行明显改善：切换或双供应商制。
+- 如果物流只是放大器，主因在商品、客服或售后流程：不要把换物流商当主解。
+- 如果证据不够：先做两周分流实验，而不是立刻全量更换。
+
+一句话结论：先用数据证明“物流商是主要承载失败点”，再用小流量分流验证替代方案；只有验证后仍显著优于当前路径，才全量更换。

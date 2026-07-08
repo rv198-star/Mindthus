@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f43b4-54a6-7452-9c9c-0ebfa8bf222b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"先只放图表下方口径字段，别扩成治理方案。\n\n建议文案：\n\n```text\n口径：今日环比 = 截至当前刷新时间的今日累计值，对比昨日同时间点累计值。\n今日值：自然日内累计，截止至数据更新时间。\n对比值：昨日同时间点累计值。\n公式：(今日值 - 对比值) / 对比值。\n数据更新时间：YYYY-MM-DD HH:mm。\n```\n\n如果空间很紧，压缩成一行：\n\n```text\n口径：今日环比按“今日截至当前刷新时间累计值”对比“昨日同时间点累计值”计算，数据更新时间：YYYY-MM-DD HH:mm。\n```"}}
+{"type":"turn.completed","usage":{"input_tokens":42518,"cached_input_tokens":35968,"output_tokens":913,"reasoning_output_tokens":229}}

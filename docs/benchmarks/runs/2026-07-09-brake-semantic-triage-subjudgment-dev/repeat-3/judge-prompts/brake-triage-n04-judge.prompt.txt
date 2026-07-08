@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+不能只因为打开率和转化率差距贴近就停掉旧方案。现在的信号更像是：收益优势在变小，但风险差异在变大；决策权应从“增长指标”转向“投诉质量和归因”。
+
+我的判断：
+
+如果投诉差距扩大是新方案投诉更多，暂时不要停旧方案。  
+打开率差距缩小、转化差距贴近，说明新方案的增长收益已经不足以覆盖更高投诉风险。此时应保留旧方案作为兜底，暂停扩大新方案流量，拆投诉来源：误触、内容不匹配、频控、承诺落差、客诉严重等级。只有确认投诉可修复，并且修复后连续实验不再恶化，才考虑继续替换。
+
+如果投诉差距扩大是旧方案投诉更多，可以考虑逐步停旧方案。  
+因为打开率和转化率已经接近，说明停旧方案不会明显损失增长，而投诉侧反而提供了切换理由。但也不建议一刀切，应按人群、渠道、场景分层下线，先停投诉高发分层，保留低风险分层观察。
+
+当前最稳妥的动作是：
+
+1. 不立即全量停旧方案。
+2. 先确认投诉差距的方向、严重等级和是否集中在特定人群。
+3. 若新方案投诉更高：旧方案继续保留，新方案降流或修复后复测。
+4. 若旧方案投诉更高：旧方案分层下线，新方案逐步接管。
+5. 设置硬触发线：只要投诉率或严重投诉继续扩大，即使转化持平也不能继续扩大风险方案。
+
+一句话：打开率和转化率告诉你“收益差不多了”，投诉差距告诉你“谁更危险”。是否停旧方案，主要看投诉扩大的方向；在没确认前，不该直接停。

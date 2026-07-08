@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f43a8-fe86-7242-8927-58673b1c2284"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"不建议继续在模板里加“待遇口径字段”。\n\n这几件事不是表单字段不足，而是同一类问题：关键面试动作缺少统一的“事前确认/责任闭环”。继续往邀约表、登记表、日程页、模板里补字段，会把流程越补越碎，后面还会出现新的遗漏点。\n\n建议改成一个统一的“面试执行确认”节点，放在面试前或 offer 发放前：\n\n- 候选人到达时间：放在面试执行确认里\n- 证件/材料要求：放在面试执行确认里\n- 面试官出席确认：放在面试执行确认里\n- offer 待遇口径：放在 offer 发放确认里，由 HRBP/招聘负责人/用人经理确认后引用\n\n模板里只保留最终可对外输出的内容，不承载未确认口径。\n\n可以加一个字段，但位置应是：`offer发放确认表.待遇口径确认`，而不是 `offer模板.待遇口径字段`。这样模板只吃已确认结果，避免把审批、口径对齐和对外沟通混在一起。"}}
+{"type":"turn.completed","usage":{"input_tokens":12039,"cached_input_tokens":11648,"output_tokens":562,"reasoning_output_tokens":294}}

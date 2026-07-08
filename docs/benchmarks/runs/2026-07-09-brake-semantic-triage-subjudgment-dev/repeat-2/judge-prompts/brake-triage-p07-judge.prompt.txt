@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p07
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated routing or queue splits: identify three prior downstream split/route patches followed by the next split request, refuse the next split as the default, move upstream to the routing model, ownership, or intake failure, and propose consolidation or structural redesign instead.
+fail_signal: 直接再开一个通道、队列、入口或处理口，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+不建议再开“转派通道”。
+
+你们现在的问题不是入口不够，而是每次出现新争议都用“新队列/新入口/新线路”兜底，结果会把同一张工单按事件切碎：超时、补件、赔付、主管、转派各走一套，后续更难判断责任、优先级和闭环状态。
+
+建议这样处理：
+
+1. 暂停新增独立通道  
+   今天的转派争议先进入现有加急池或主管线，由主管做一次性裁决。
+
+2. 建一个统一“异常工单入口”  
+   不按事件新开通道，只在工单上打标签：`超时`、`资料缺口`、`赔付争议`、`转派争议`、`需主管裁决`。
+
+3. 明确转派争议规则  
+   只定义三件事：谁有转派权、什么条件可拒收、争议超过多久自动升级。
+
+4. 清理现有队列边界  
+   加急池处理时效风险，补件队列处理资料缺口，主管线处理裁决；转派争议不应成为第四套长期入口。
+
+一句话口径：**不开新通道，改为统一异常入口加“转派争议”标签，并由主管线限时裁决。**

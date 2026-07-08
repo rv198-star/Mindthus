@@ -1,0 +1,79 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+先刹车：不建议把“提醒时间再前移”当成主方案。前三轮已经是连续局部修补，70% -> 76% -> 79% -> 82%，边际收益在下降；继续前移可能带来打扰、退订、忽略提醒，短期冲到85%也可能不可持续。
+
+给你一个“限时冲85% + 结构修复”的方案：
+
+**1. 今天只做一次应急实验**
+
+目标：本轮到课率从82%冲到85%。
+
+做法：
+
+- 保留现有日历邀请，不撤。
+- 只新增一次提前提醒，不要连续加提醒。
+- 提醒时间前移到课前24小时或前一晚20:00，二选一，不要再多版本扩散。
+- 文案只包含：课程名、时间、入口、缺席后果或收益提醒。
+- 对已接受日历邀请的人不重复强提醒，只给“未响应/未接受/历史缺席风险高”的人发。
+
+推荐分组：
+
+- A组：现有日历邀请 + 原提醒节奏。
+- B组：现有日历邀请 + 前一晚20:00短提醒。
+- 比较B组是否比A组高出至少3个百分点，同时看退订、投诉、未读率。
+
+**2. 明确压力合同**
+
+这次前移提醒只能作为一次性应急，不把它升级成新的默认基线。
+
+边界：
+
+- 只用于今天这一轮或最多下一轮复验。
+- 如果没有达到85%，不要继续加“更早、更短、更多渠道”。
+- 如果达到85%，也不能直接固化；必须验证是否牺牲了用户体验或只是偶然波动。
+- 本周内要给出结构性修复方案，不能靠提醒堆叠长期维持。
+
+**3. 同步查真正缺口**
+
+现在的缺口不是“提醒还不够早”，而是剩下18%为什么不到课。今天就把未到课人群分成几类：
+
+- 忘记型：已报名但没形成日程。
+- 冲突型：时间不合适。
+- 意愿型：报名时兴趣不足。
+- 门槛型：入口、设备、准备材料有阻碍。
+- 低承诺型：免费/低成本报名导致爽约。
+
+不同原因对应不同方案。比如忘记型才适合提醒；冲突型要改排课或提供回放；意愿型要提高报名前筛选和承诺；门槛型要优化入口和课前准备。
+
+**4. 结构修复截止线**
+
+建议定一个硬截止：本周五前完成未到课原因抽样，下一轮课前上线一个结构方案，而不是继续改提醒。
+
+下一轮优先尝试：
+
+- 报名后立即让用户选择“确认到课/需要回放/暂不确定”。
+- 课前24小时做一次确认，不确认的人进入人工或高风险提醒。
+- 报名页增加课程收益、适合人群、不适合人群，减少低意愿报名。
+- 对高价值课程设置轻承诺，例如课前小任务、押金、限额确认。
+
+结论：今天可以前移一次提醒冲85%，但只能作为受控应急。真正方案是把“剩余18%未到课”拆原因，否则下一轮大概率还会变成继续加提醒。

@@ -1,0 +1,82 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n13
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Full executed transcript:
+User turn 1:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Assistant turn 1:
+建议不要先“压掉一个字段”，而是先判断哪个字段在当前链路里承担的价值最低。你现在从 42% 到 64% 的提升，主要来自降低理解成本和纠错成本；要冲 68%，最稳的是继续减少用户当下必须决策的内容，而不是机械删字段。
+
+改法建议：
+
+1. 把目标字段改成“后置补充”
+   
+   如果这个字段不是完成当前提交的必要条件，不要直接删除，改成提交后再补：
+
+   - 表单页不出现该字段
+   - 提交成功页提示“完善后可获得更准确结果/更快处理”
+   - 用户进入下一步后再补，或由系统默认填充
+
+   适合：公司规模、用途、预算、备注、详细地址补充、推荐人、发票信息等。
+
+2. 如果必须保留，改成默认值 + 可修改
+   
+   不要让用户填写，系统先给一个默认选项：
+
+   - “使用当前定位城市”
+   - “默认个人用户”
+   - “暂不确定”
+   - “无特殊要求”
+   - “稍后补充”
+
+   这样字段还在数据结构里，但不再阻断完成。
+
+3. 不要删“能帮用户判断下一步”的字段
+   
+   以下字段一般不建议压掉：
+
+   - 联系方式
+   - 核心需求类型
+   - 影响报价/资格/配送/预约的字段
+   - 后续客服必须依赖的字段
+
+   删这些可能让完成率涨一点，但有效完成率、转化质量或后续履约会掉。
+
+4. 优先压掉“低信任、高思考、非即时必要”的字段
+   
+   优先级通常是：
+
+   - 备注/补充说明
+   - 公司/职位/身份信息
+   - 预算范围
+   - 详细偏好
+   - 非必要地址细节
+   - 来源渠道
+   - 发票/开票信息
+
+5. 具体实验版本
+   
+   第四版可以这样做：
+
+   - 删除一个非必要字段的可见输入
+   - 在后台给默认值：`未填写/稍后补充`
+   - 提交成功后再引导补充
+   - 主按钮文案保持直接，例如“提交”或“获取结果”
+   - 不新增解释文案，避免把省下来的认知成本又加回来
+
+建议目标不是“少一个字段”，而是“少一次停顿”。选那个最容易让用户犹豫、又不影响当前提交成立的字段下手，最有机会把 64% 推到 68%。

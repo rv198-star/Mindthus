@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+建议放在 **“今日待办/工作台”的聚合层**，不要再塞进审批链、数据源迁移或权限模型里。
+
+理由很简单：
+
+- 审批链负责“流程怎么走”
+- 数据源负责“数据从哪里来”
+- 权限模型负责“谁能看、谁能操作”
+- 提醒入口负责“今天谁该处理什么”
+
+所以它应该是一个 **任务/提醒投影层**：
+
+```text
+审批事件 / 业务事件 / 到期时间
+        ↓
+提醒任务生成或聚合
+        ↓
+权限过滤
+        ↓
+今日提醒入口 / 待办入口
+```
+
+具体落点我会这样放：
+
+1. **前端入口**：放在首页、工作台或“今日待办”旁边，和“待审批 / 待处理 / 已逾期”同级，不放进某条审批链详情里。
+2. **后端能力**：做成独立的 `Reminder` / `Todo` / `TaskProjection` 模块，订阅审批节点、业务状态、到期时间等变化。
+3. **权限处理**：提醒本身不定义权限，只在查询时复用第三轮权限模型做过滤。
+4. **数据来源**：可以消费第二轮迁移后的新数据源，但不要让提醒逻辑散落在各个数据源查询里。
+
+一句话：**入口放在“今日工作台/待办聚合层”，实现上做成独立提醒投影，审批链只产事件，权限模型只做过滤。**

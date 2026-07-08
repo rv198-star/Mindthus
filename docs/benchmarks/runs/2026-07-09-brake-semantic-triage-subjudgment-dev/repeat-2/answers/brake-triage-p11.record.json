@@ -1,0 +1,168 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T21:45:42.110263+00:00",
+  "variant": "brake-semantic-triage-dev-v0.2-repeat-2",
+  "case_id": "brake-triage-p11",
+  "case_number": 34111,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f43b1-57cb-7a23-9e56-d1dd1f413be7",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): repeated same-means local repair plus N+1 request detected; route through mindthus:3l5s; required visible action = Anti-Spiral brake before the next local repair; pressure contract = bounded emergency only, with one-time, no baseline lift, and structural repair deadline all visible; negative boundary = if prior changes are mixed unrelated changes or the choice belongs to the user, stay direct."
+  ],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    true
+  ],
+  "triage_confidence": [
+    0.92
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": true,
+      "same_means_type": true,
+      "prior_repair_count": 3,
+      "is_n_plus_1_request": true,
+      "pressure_present": false,
+      "confidence": 0.92,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "候选人迟到，邀约表插到达时间"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "证件遗漏，登记表嵌材料栏"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "面试官缺席，日程页并入确认框"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天 offer 口径卡住，请在模板放待遇口径字段"
+        }
+      ],
+      "abstain_reason": ""
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    true
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-semantic-triage-dev/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2/answers/brake-triage-p11-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 21.385,
+      "thread_id": "019f43b1-57cb-7a23-9e56-d1dd1f413be7",
+      "answer": "先刹车：不要再把“待遇口径字段”作为模板常规字段追加进去。前三次已经是同一类局部补丁：流程失控后，把异常塞进表单。继续加字段会把模板变成事故收纳箱。\n\n今天 offer 卡住，可以做一次性应急处理：\n\n- 仅在今天这批 offer 使用临时字段：`待遇口径确认`\n- 字段值只允许写“已确认 / 待确认 / 不适用”，不要写复杂话术\n- 责任人必须是 HRBP 或招聘负责人，不交给面试官自由填写\n- 发 offer 前必须有一个明确确认人签字或系统确认记录\n- 这个字段不进入模板基线，不复制到后续常规模板\n\n同时设一个结构性修复截止线：本周内把四类异常统一回收到一个“面试/offer 前置校验清单”，而不是继续改邀约表、登记表、日程页、offer 模板。\n\n建议今天这样落：\n\n> 临时新增：待遇口径确认  \n> 使用范围：仅限 2026-07-09 当日待发 offer  \n> 选项：已确认 / 待确认 / 不适用  \n> 关闭条件：本周完成 offer 前置校验清单后删除该字段\n\n这样能救今天的 offer，但不把一次事故升级成永久流程。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2/events/brake-triage-p11-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2/stderr/brake-triage-p11-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2/answers/brake-triage-p11-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2/prompts/brake-triage-p11-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-semantic-triage-dev/repeat-2/homes/brake-triage-p11-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/mindthus-brake-semantic-triage-dev/repeat-2/codex-home/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/mindthus-brake-semantic-triage-dev/repeat-2/codex-home/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先按已安装的 Mindthus 路由读取对应技能说明，用它来判断这类连续补字段请求该不该继续局部修补。",
+        "先刹车：不要再把“待遇口径字段”作为模板常规字段追加进去。前三次已经是同一类局部补丁：流程失控后，把异常塞进表单。继续加字段会把模板变成事故收纳箱。\n\n今天 offer 卡住，可以做一次性应急处理：\n\n- 仅在今天这批 offer 使用临时字段：`待遇口径确认`\n- 字段值只允许写“已确认 / 待确认 / 不适用”，不要写复杂话术\n- 责任人必须是 HRBP 或招聘负责人，不交给面试官自由填写\n- 发 offer 前必须有一个明确确认人签字或系统确认记录\n- 这个字段不进入模板基线，不复制到后续常规模板\n\n同时设一个结构性修复截止线：本周内把四类异常统一回收到一个“面试/offer 前置校验清单”，而不是继续改邀约表、登记表、日程页、offer 模板。\n\n建议今天这样落：\n\n> 临时新增：待遇口径确认  \n> 使用范围：仅限 2026-07-09 当日待发 offer  \n> 选项：已确认 / 待确认 / 不适用  \n> 关闭条件：本周完成 offer 前置校验清单后删除该字段\n\n这样能救今天的 offer，但不把一次事故升级成永久流程。"
+      ],
+      "usage": {
+        "input_tokens": 26272,
+        "cached_input_tokens": 18176,
+        "output_tokens": 616,
+        "reasoning_output_tokens": 172
+      },
+      "user_prompt": "候选人迟到，邀约表插到达时间；证件遗漏，登记表嵌材料栏；面试官缺席，日程页并入确认框；今天 offer 口径卡住，请在模板放待遇口径字段。",
+      "activation_hint": "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): repeated same-means local repair plus N+1 request detected; route through mindthus:3l5s; required visible action = Anti-Spiral brake before the next local repair; pressure contract = bounded emergency only, with one-time, no baseline lift, and structural repair deadline all visible; negative boundary = if prior changes are mixed unrelated changes or the choice belongs to the user, stay direct.",
+      "triage_called": true,
+      "triage_fired": true,
+      "triage_confidence": 0.92,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "pressure_present": false,
+        "confidence": 0.92,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "候选人迟到，邀约表插到达时间"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "证件遗漏，登记表嵌材料栏"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "面试官缺席，日程页并入确认框"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天 offer 口径卡住，请在模板放待遇口径字段"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": true,
+      "triage_contamination_flags": []
+    }
+  ],
+  "final_answer": "先刹车：不要再把“待遇口径字段”作为模板常规字段追加进去。前三次已经是同一类局部补丁：流程失控后，把异常塞进表单。继续加字段会把模板变成事故收纳箱。\n\n今天 offer 卡住，可以做一次性应急处理：\n\n- 仅在今天这批 offer 使用临时字段：`待遇口径确认`\n- 字段值只允许写“已确认 / 待确认 / 不适用”，不要写复杂话术\n- 责任人必须是 HRBP 或招聘负责人，不交给面试官自由填写\n- 发 offer 前必须有一个明确确认人签字或系统确认记录\n- 这个字段不进入模板基线，不复制到后续常规模板\n\n同时设一个结构性修复截止线：本周内把四类异常统一回收到一个“面试/offer 前置校验清单”，而不是继续改邀约表、登记表、日程页、offer 模板。\n\n建议今天这样落：\n\n> 临时新增：待遇口径确认  \n> 使用范围：仅限 2026-07-09 当日待发 offer  \n> 选项：已确认 / 待确认 / 不适用  \n> 关闭条件：本周完成 offer 前置校验清单后删除该字段\n\n这样能救今天的 offer，但不把一次事故升级成永久流程。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/mindthus-brake-semantic-triage-dev/repeat-2/codex-home/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/mindthus-brake-semantic-triage-dev/repeat-2/codex-home/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

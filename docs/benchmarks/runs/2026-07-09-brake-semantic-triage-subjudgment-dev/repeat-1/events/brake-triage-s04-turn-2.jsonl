@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f43ac-193b-70c3-b59c-2e1b6b93eb19"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"先放图表下这一段即可，不展开：\n\n**口径字段**\n- 今日数：今日 00:00 至当前更新时间的累计数据\n- 昨日同期：昨日 00:00 至同一时刻的累计数据\n- 上周同期：上周同日 00:00 至同一时刻的累计数据\n- 今日环比：今日数 ÷ 昨日同期 - 1\n- 周环比：今日数 ÷ 上周同期 - 1\n\n短版也可以用：\n\n`口径：今日数为今日截至当前更新时间的累计值；环比按昨日同期计算，周环比按上周同日同期计算。`"}}
+{"type":"turn.completed","usage":{"input_tokens":25970,"cached_input_tokens":21760,"output_tokens":807,"reasoning_output_tokens":281}}

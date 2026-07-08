@@ -1,0 +1,54 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+followed by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可以，建议按这四处改：
+
+1. **报表页新增「口径定义」栏**
+   - 放在筛选区下方、核心图表上方。
+   - 展示本页关键指标定义、统计范围、计算公式。
+   - 文案示例：`本周数据按自然周统计，环比为本周截至当前时间与上周同期对比。`
+
+2. **标题区嵌入「更新时间」框**
+   - 放在页面标题右侧或标题下方。
+   - 格式统一为：`数据更新时间：2026-07-09 10:30`
+   - 如有延迟，补充：`数据每日 10:00 后刷新，可能存在 5-10 分钟延迟。`
+
+3. **导出字段释义并入释义格**
+   - 导出文件增加或保留「字段释义」区域。
+   - 每个字段包含：字段名、含义、统计口径、示例值。
+   - 避免只导出列名，导致业务方无法判断字段含义。
+
+4. **图表下方补充「口径字段」**
+   - 放在今日环比图表下。
+   - 明确今日数、昨日数、上周同期、环比计算公式。
+   - 文案示例：`今日环比 = 今日截至当前时间数据 / 昨日同期数据 - 1；周环比 = 今日截至当前时间数据 / 上周同日同期数据 - 1。`
+
+这样能把「定义、刷新时间、导出字段、今日环比口径」都固定在页面可见位置，减少误读和反复解释。
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

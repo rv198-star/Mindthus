@@ -1,0 +1,57 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+先刹车：不建议直接把“提醒时间再前移”当成主方案。前三轮都是在改通知形式，已经从 70% 拉到 82%，继续同一类局部修补，边际收益大概率变小；85% 这 3 个点，可能已经不是“没看到/忘了”的问题，而是意愿、时间冲突、课程价值感或承诺机制的问题。
+
+方案如下：
+
+**今天可以做一次应急动作，但设边界**
+
+- 仅本轮使用：提醒时间前移一次，比如从课前 2 小时改为课前 24 小时 + 课前 2 小时短提醒。
+- 明确不作为长期基线：如果本轮到课率到 85%，也不能直接固化为标准流程。
+- 同时记录分组数据：已确认但未到、未确认未到、临时请假、完全无响应。
+
+**本轮目标不是只看 85%，而是判断缺口来源**
+
+把 82% 到 85% 的缺口拆成三类：
+
+1. 忘记型：日历邀请、短提醒、课前二次提醒能解决。
+2. 冲突型：时间不合适、临时安排、家长/学生排期冲突，提醒再早也有限。
+3. 低承诺型：报名但不重视、课程价值感不足、缺少到课后果或承诺动作。
+
+**推荐执行版**
+
+- T-24 小时：发送日历邀请 + 一句话价值提醒 + “确认到课/请假”按钮。
+- T-3 小时：只提醒未确认人群，正文极短。
+- T-30 分钟：只提醒已确认但未签到人群。
+- 课后 2 小时内：统计未到原因，必须归因到“忘记/冲突/低承诺/其他”。
+
+**结构性修复期限**
+
+给自己一个截止线：最多再用 1 轮验证提醒链路。若下一轮仍低于 85%，停止继续改通知时间，转向结构修复：
+
+- 报名前增加明确承诺动作。
+- 课前确认未响应者进入人工触达或候补机制。
+- 对连续缺席用户做降权、改约或释放名额。
+- 优化课程时间段或报名筛选，而不是继续加提醒。
+
+一句话：今天可以前移，但只能作为一次应急实验；真正的方案是把“提醒优化”升级为“确认、分层触达、缺席归因、承诺机制”的到课管理闭环。

@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+长期方向可能在新方案，但当前不该直接停掉旧方案；投诉差距扩大是硬约束信号，优先级高于打开率和转化率的小幅贴近。
+
+判断：
+
+1. **打开率差距缩小**  
+   说明新旧方案在入口吸引力上趋同，旧方案的优势或劣势都在变小，单看这个指标不足以决定淘汰。
+
+2. **转化差距贴近**  
+   说明核心业务结果也没有拉开明显距离。若新方案转化只是“接近旧方案”，而不是稳定超过旧方案，停旧方案的收益并不强。
+
+3. **投诉差距扩大**  
+   这是关键。投诉通常代表用户伤害、信任损耗、客服成本或合规风险。只要扩大方向是“新方案投诉更高”，就不应停旧方案；这不是优化不足，而是路径风险正在放大。
+
+建议决策：
+
+- 如果是**新方案投诉更高且差距扩大**：不要停旧方案。继续灰度，限制新方案流量，拆解投诉来源，设定投诉阈值；只有投诉回到可接受区间，并且转化稳定不低于旧方案，再考虑替换。
+- 如果是**旧方案投诉更高且差距扩大**：可以准备停旧方案，但仍建议分批迁移，保留短期回滚窗口。
+- 如果投诉方向不清楚：先不要做停旧方案决策，必须把“谁的投诉更高、投诉类型是否严重、是否集中在特定人群或场景”查清楚。
+
+一句话结论：**除非投诉扩大是旧方案更差，否则现在不该停旧方案；最多是继续推进新方案，但旧方案必须作为 fallback 保留。**

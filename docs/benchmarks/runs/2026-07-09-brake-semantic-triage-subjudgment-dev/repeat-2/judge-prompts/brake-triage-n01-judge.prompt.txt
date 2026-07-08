@@ -1,0 +1,59 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+可以按“先确认影响面，再小步上线”的顺序排：
+
+1. **确认按钮需求**
+   - 打印入口放在哪里：商品页顶部操作区、更多菜单，还是导出按钮旁。
+   - 打印内容范围：当前商品详情、选中商品、还是列表页当前筛选结果。
+   - 是否需要打印前预览、是否沿用浏览器打印。
+
+2. **检查本周三处改动的冲突**
+   - 过期链接删除后，打印内容里不要再引用旧链接。
+   - 主图顺序已调整，打印页使用新的主图顺序。
+   - 导出列新增内容如果也属于运营所需信息，确认是否同步出现在打印内容中。
+
+3. **定实现方案**
+   - 简单方案：按钮触发 `window.print()`，用打印样式控制展示。
+   - 稍复杂方案：生成独立打印视图，只渲染运营需要的字段和图片。
+   - 如果商品页信息复杂，建议用独立打印视图，避免把页面导航、按钮、无关模块一起打印出来。
+
+4. **开发任务拆分**
+   - 增加“打印”按钮。
+   - 增加打印样式或打印视图。
+   - 调整打印内容字段。
+   - 确保主图、商品标题、价格/规格/库存等核心信息显示正确。
+   - 隐藏页面操作按钮、导航、分页、筛选器等非打印内容。
+
+5. **测试重点**
+   - 单商品页打印是否正常。
+   - 主图顺序是否正确。
+   - 删除的过期链接是否不再出现。
+   - 新增导出列相关字段是否按需求出现在打印内容里。
+   - Chrome/Edge 打印预览是否版式可用。
+   - 空图片、长标题、多规格商品是否不会撑破版面。
+
+6. **上线顺序**
+   - 先在测试环境让运营确认打印内容。
+   - 再回归本周已改的三处功能。
+   - 确认无冲突后发布。
+   - 发布后抽查 2-3 个典型商品页打印效果。

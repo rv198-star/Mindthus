@@ -1,0 +1,43 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p12
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可以按这 4 处补齐口径说明：
+
+1. 报表页新增「定义栏」
+   - 放在筛选区下方或表格上方。
+   - 内容说明核心指标定义、统计范围、排除项。
+
+2. 标题区嵌入「更新时间」
+   - 示例：`数据更新时间：2026-07-09 09:30`
+   - 若有刷新频率可补：`每日 09:30 刷新` 或 `每小时刷新一次`。
+
+3. 导出字段并入释义格
+   - 在字段表中增加「字段释义」列。
+   - 导出文件同步包含字段名、字段含义、计算口径。
+
+4. 图表下方增加「口径字段」
+   - 针对“今天环比数”补充说明：
+   - `今日数据口径：统计当日 00:00 至当前更新时间的数据`
+   - `环比口径：与上一周期同口径时间段对比`
+   - `环比 = 今日值 / 对比周期值 - 1`
+
+建议统一命名为「口径说明」，避免页面里同时出现“定义、释义、说明”等多个叫法导致再次误读。

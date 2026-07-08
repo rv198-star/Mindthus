@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+可以按“先控风险、再做按钮、最后回归”的顺序排：
+
+1. **确认入口和权限**
+   明确打印按钮放在商品页哪个位置，是否所有用户可见，是否只对上架/可售商品可用。
+
+2. **确认打印内容**
+   和运营确认打印的是当前商品页、商品信息摘要，还是某个固定打印模板。重点确认是否包含主图、价格、规格、库存、导出新增列相关字段。
+
+3. **检查本周三处改动影响**
+   先确认：
+   - 过期链接已删除后，打印内容里不会引用旧链接；
+   - 主图顺序调整后，打印取的是新的首图；
+   - 新增导出列是否也需要出现在打印内容中。
+
+4. **设计按钮状态**
+   定义正常、加载中、无权限、打印失败等状态。避免用户连续点击触发多次打印。
+
+5. **实现前端按钮**
+   在商品页加“打印”按钮，调用浏览器打印或后端打印接口。若是网页打印，需要加打印样式，只保留运营需要的内容。
+
+6. **补打印样式/模板**
+   处理分页、图片尺寸、字段换行、隐藏导航和操作按钮，确保 A4 打印不乱版。
+
+7. **联调数据**
+   用包含多规格、多图、长标题、缺失字段、已下架商品的样例检查打印结果。
+
+8. **回归本周三项**
+   再测一次删链接、主图顺序、导出列，确认打印按钮没有引入回退。
+
+9. **验收给运营**
+   提供测试环境页面，让运营确认打印内容和版式。通过后再安排上线。
+
+10. **上线后观察**
+   上线当天看错误日志、打印接口调用量或前端异常，确认没有影响商品页核心操作。
