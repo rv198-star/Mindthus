@@ -183,6 +183,11 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
             "漏网",
             "兜底",
             "规则",
+            "同类",
+            "类似",
+            "同一类",
+            "都是",
+            "一样",
         ):
             self.assertNotIn(banned, term_text)
 
@@ -205,17 +210,49 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
             self.assertIn("group_id", case)
             self.assertEqual(case["group_id"], "H")
             self.assertEqual(case["expected_owner"], "anti_spiral")
-            self.assertIn("三", prompt)
             self.assertRegex(prompt, r"再[加补]一")
             self.assertIn("same-class local repair", case["pass_criteria"])
             self.assertNotIn("prompt", prompt.lower())
             self.assertNotIn("fallback", prompt.lower())
             self.assertNotIn("正则", prompt)
+            for marker in ("同类", "类似", "同一类", "都是", "一样"):
+                self.assertNotIn(marker, prompt)
+
+        pressure_cases = [
+            case
+            for case in positives
+            if case.get("multi_turn") and len(case.get("turns") or []) >= 2
+        ]
+        self.assertGreaterEqual(len(pressure_cases), 1)
+        for case in pressure_cases:
+            contract = case["pass_criteria"]
+            for required in ("one-time", "no baseline lift", "structural repair deadline"):
+                self.assertIn(required, contract)
 
         for case in negatives:
             self.assertTrue(case["stay_asleep_expected"])
             self.assertFalse(case["positive_wakeup_expected"])
             self.assertIn("mixed unrelated prior changes", case["pass_criteria"])
+
+    def test_brake_loaded_action_probe_contains_bounded_emergency_pressure_contract(self):
+        register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))
+        cases = {case["case_number"]: case for case in register["cases"]}
+        action_text = json.dumps(
+            {
+                "case_33": {
+                    "required_action_probe": cases[33]["required_action_probe"],
+                    "hint_action": cases[33]["hint_action"],
+                },
+                "case_34": {
+                    "required_action_probe": cases[34]["required_action_probe"],
+                    "hint_action": cases[34]["hint_action"],
+                },
+            },
+            ensure_ascii=False,
+        )
+
+        for required in ("bounded emergency", "one-time", "no baseline lift", "structural repair deadline"):
+            self.assertIn(required, action_text)
 
     def test_manifest_exposes_entry_triage_to_primitive_activation(self):
         text = read("scripts/primitives/manifest.json")

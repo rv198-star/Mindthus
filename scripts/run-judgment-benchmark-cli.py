@@ -39,6 +39,14 @@ MIXED_CHANGE_COUNT_RE = re.compile(
     r"(?=.*(?:加新字段|新增字段|补培训材料|补材料))",
     re.IGNORECASE,
 )
+REPAIR_ACTION_RE = re.compile(
+    r"(?P<verb>新增|添加|设置|加|补|设)"
+    r"(?:了|上|入|进)?"
+    r"(?P<unit>一个|一条|一段|一道|个|条|段)?"
+    r"(?P<object>[\u4e00-\u9fffA-Za-z]{0,8})",
+    re.IGNORECASE,
+)
+PATCH_SEGMENT_RE = re.compile(r"(?P<verb>补)(?P<unit>一段|段)(?P<object>[\u4e00-\u9fffA-Za-z]{0,4})")
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
     r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
@@ -190,11 +198,51 @@ def semantic_feature_matches(text: str, feature: dict[str, Any]) -> bool:
     negative_any = _feature_terms(feature, "negative_any")
     if any(term.lower() in text_lower for term in negative_any):
         return False
+    inferred_signal = str(feature.get("inferred_signal") or "")
+    if inferred_signal == "repeated_local_repair_action":
+        return repeated_local_repair_action_signal(text)
     if match_all and not all(term.lower() in text_lower for term in match_all):
         return False
     if match_any and not any(term.lower() in text_lower for term in match_any):
         return False
     return bool(match_all or match_any)
+
+
+def repeated_local_repair_action_signal(text: str) -> bool:
+    counts: dict[str, int] = {}
+    seen_spans: set[tuple[int, int]] = set()
+    for match in REPAIR_ACTION_RE.finditer(text):
+        signature = _repair_action_signature(match.group("verb"), match.group("unit"), match.group("object"))
+        if not signature:
+            continue
+        seen_spans.add(match.span())
+        counts[signature] = counts.get(signature, 0) + 1
+    for match in PATCH_SEGMENT_RE.finditer(text):
+        if match.span() in seen_spans:
+            continue
+        signature = _repair_action_signature(match.group("verb"), match.group("unit"), match.group("object"))
+        if not signature:
+            continue
+        counts[signature] = counts.get(signature, 0) + 1
+    return any(count >= 4 for count in counts.values())
+
+
+def _repair_action_signature(verb: str, unit: str | None, obj: str | None) -> str | None:
+    action = "add" if verb in {"新增", "添加", "设置", "加", "设"} else "patch"
+    obj = (obj or "").strip()
+    for suffix in ("挡住", "处理", "解决", "兜住", "包进去", "一下", "就好", "即可", "上线"):
+        if obj.endswith(suffix):
+            obj = obj[: -len(suffix)]
+    if not obj:
+        if unit in {"一段", "段"}:
+            obj = "段"
+        elif unit in {"一条", "条"}:
+            obj = "条"
+        else:
+            return None
+    if len(obj) > 4:
+        obj = obj[:4]
+    return f"{action}:{obj.lower()}"
 
 
 def v5_semantic_register_match_for_case(case: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]] | None:

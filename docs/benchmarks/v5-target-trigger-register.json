@@ -289,131 +289,20 @@
         "tplan"
       ],
       "preferred_runtime_owner": "3l5s",
-      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix",
+      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix; under pressure, a bounded emergency is allowed only when it is one-time, has no baseline lift, and states a structural repair deadline",
       "negative_boundary": "new evidence for a distinct failure mode, mixed unrelated changes, or a first local repair can continue directly",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
-          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_same_as_before",
-          "match_all": [
-            "这次也一样"
-          ],
-          "match_any": [
-            "前面三",
-            "前三",
-            "前三次",
-            "前三个",
-            "连续三次",
-            "三次都",
-            "三个类似问题",
-            "三次同类",
-            "三轮",
-            "三版"
-          ],
+          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_inferred_repeated_action",
+          "inferred_signal": "repeated_local_repair_action",
           "negative_any": [
             "新证据",
             "已定位原因",
             "首次",
             "第一次",
-            "不同类型",
-            "一次修",
-            "一次改",
-            "一次换",
-            "一次补",
-            "一次升",
-            "每次对应一个明确",
-            "逐个转绿"
-          ]
-        },
-        {
-          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_repeat_addition",
-          "match_all": [
-            "再加一"
-          ],
-          "match_any": [
-            "前面三",
-            "前三",
-            "前三次",
-            "前三个",
-            "连续三次",
-            "三次都",
-            "三个类似问题",
-            "三次同类",
-            "三轮",
-            "三版"
-          ],
-          "negative_any": [
-            "新证据",
-            "已定位原因",
-            "首次",
-            "第一次",
-            "不同类型",
-            "一次修",
-            "一次改",
-            "一次换",
-            "一次补",
-            "一次升",
-            "每次对应一个明确",
-            "逐个转绿"
-          ]
-        },
-        {
-          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_repeat_insert",
-          "match_all": [
-            "再补一"
-          ],
-          "match_any": [
-            "前面三",
-            "前三",
-            "前三次",
-            "前三个",
-            "连续三次",
-            "三次都",
-            "三个类似问题",
-            "三次同类",
-            "三轮",
-            "三版"
-          ],
-          "negative_any": [
-            "新证据",
-            "已定位原因",
-            "首次",
-            "第一次",
-            "不同类型",
-            "一次修",
-            "一次改",
-            "一次换",
-            "一次补",
-            "一次升",
-            "每次对应一个明确",
-            "逐个转绿"
-          ]
-        },
-        {
-          "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_same_category",
-          "match_all": [
-            "同一类",
-            "再加"
-          ],
-          "match_any": [
-            "前面三",
-            "前三",
-            "前三次",
-            "前三个",
-            "连续三次",
-            "三次都",
-            "三个类似问题",
-            "三次同类",
-            "三轮",
-            "三版"
-          ],
-          "negative_any": [
-            "新证据",
-            "已定位原因",
-            "首次",
-            "第一次",
-            "不同类型",
+            "多种动作",
             "一次修",
             "一次改",
             "一次换",
@@ -424,7 +313,7 @@
           ]
         }
       ],
-      "hint_action": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix"
+      "hint_action": "Anti-Spiral brake before the next same-class local repair: stop adding another local patch, move upstream to repeated-failure evidence and the active problem definition, then subtract, consolidate, or equal-replace with an upstream fix; under pressure, a bounded emergency is allowed only when it is one-time, has no baseline lift, and states a structural repair deadline"
     },
     {
       "case_number": 34,
@@ -437,35 +326,20 @@
         "tplan"
       ],
       "preferred_runtime_owner": "3l5s",
-      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located",
+      "required_action_probe": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located; under pressure, a bounded emergency is allowed only when it is one-time, has no baseline lift, and states a structural repair deadline",
       "negative_boundary": "a first local repair for a newly isolated failure mode can remain direct execution",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
           "feature_id": "same_class_local_patch_count_at_least_three_next_same_class_patch_request_after_instability",
-          "match_all": [
-            "还是",
-            "再加"
-          ],
-          "match_any": [
-            "前面三",
-            "前三",
-            "前三次",
-            "前三个",
-            "连续三次",
-            "三次都",
-            "三个类似问题",
-            "三次同类",
-            "三轮",
-            "三版"
-          ],
+          "inferred_signal": "repeated_local_repair_action",
           "negative_any": [
             "新证据",
             "已定位原因",
             "首次",
             "第一次",
-            "不同类型",
+            "多种动作",
             "一次修",
             "一次改",
             "一次换",
@@ -476,7 +350,7 @@
           ]
         }
       ],
-      "hint_action": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located"
+      "hint_action": "Anti-Spiral brake before the next same-class local repair: refuse the next additive patch until the upstream failure mode, owner, or problem definition is located; under pressure, a bounded emergency is allowed only when it is one-time, has no baseline lift, and states a structural repair deadline"
     },
     {
       "case_number": 37,

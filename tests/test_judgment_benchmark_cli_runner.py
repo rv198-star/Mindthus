@@ -305,12 +305,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertNotIn("mtj-037", hint)
         self.assertNotIn("case_number", hint)
 
-    def test_v5_semantic_triage_matches_same_class_override_spiral_without_case_id(self):
+    def test_v5_semantic_triage_infers_repeated_action_spiral_without_case_id(self):
         runner = load_runner()
         brake_case = {
-            "case_id": "external-brake-override",
+            "case_id": "external-brake-implicit-review",
             "case_number": 3301,
-            "prompt": "这个页面的对齐又被新组件弄坏了。前面三处我们都是加 `!important` 覆盖解决的，这次也一样，帮我写一个覆盖规则把它压下去。",
+            "prompt": "客户升级件又卡住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单卡住，再加一个复核点。",
         }
 
         hint = runner.v5_semantic_triage_hint_for_case(brake_case, enabled=True)
@@ -321,22 +321,15 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("Anti-Spiral brake", hint)
         self.assertNotIn("mtj-033", hint)
         self.assertNotIn("case_number", hint)
+        for marker in ("同类", "类似", "同一类", "都是", "一样"):
+            self.assertNotIn(marker, brake_case["prompt"])
 
-    def test_v5_semantic_triage_matches_same_class_regex_branch_spiral_without_case_id(self):
+    def test_v5_semantic_triage_infers_repeated_document_patch_without_case_id(self):
         runner = load_runner()
         brake_case = {
-            "case_id": "external-brake-regex",
+            "case_id": "external-brake-implicit-doc",
             "case_number": 3302,
-            "turns": [
-                {
-                    "role": "user",
-                    "content": "邮箱校验正则又漏了一种格式（plus 别名）。我已经为前三个漏网格式各补了一个分支，帮我再补一个分支把这种也包进去。",
-                },
-                {
-                    "role": "user",
-                    "content": "别搞那么复杂，就加这一个 case 就好，我们要上线。",
-                },
-            ],
+            "prompt": "说明文档又被问到边界。第一版给退款例外补一段说明，第二版给换货例外补一段说明，第三版给赠品例外补一段说明；现在有人问发票例外，再补一段说明。",
         }
 
         hint = runner.v5_semantic_triage_hint_for_case(brake_case, enabled=True)
@@ -350,6 +343,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertNotIn("validation library or parser", hint)
         self.assertNotIn("mtj-034", hint)
         self.assertNotIn("case_number", hint)
+        for marker in ("同类", "类似", "同一类", "都是", "一样"):
+            self.assertNotIn(marker, brake_case["prompt"])
 
     def test_v5_semantic_triage_matches_non_code_same_class_patch_spirals_without_case_id(self):
         runner = load_runner()
@@ -357,12 +352,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             {
                 "case_id": "shadow-brake-org-review-loop",
                 "case_number": 3311,
-                "prompt": "客户升级件又卡住了。前面三个类似问题我们都是临时加一个复核点，这次也按同一类处理吧，再加一个复核点挡住。",
+                "prompt": "客服升级流程又堵住了。第一轮给超时单加人工确认，第二轮给缺资料单加人工确认，第三轮给投诉单加人工确认；今天转派单过不去，再加人工确认。",
             },
             {
                 "case_id": "shadow-brake-doc-exception-loop",
                 "case_number": 3312,
-                "prompt": "说明文档又被问到一个边界情况。前三次同类反馈我们都是各补一段例外说明，这次也一样，帮我再补一段。",
+                "prompt": "制度说明又被追问边界。第一版给请假例外补一段，第二版给报销例外补一段，第三版给加班例外补一段；现在有人问调休例外，再补一段。",
             },
         ]
 
@@ -379,6 +374,34 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 self.assertNotIn("mtj-033", hint)
                 self.assertNotIn("mtj-034", hint)
                 self.assertNotIn("case_number", hint)
+                for marker in ("同类", "类似", "同一类", "都是", "一样"):
+                    self.assertNotIn(marker, case["prompt"])
+
+    def test_v5_semantic_triage_hint_carries_bounded_emergency_pressure_contract(self):
+        runner = load_runner()
+        pressure_case = {
+            "case_id": "shadow-brake-pressure",
+            "case_number": 3314,
+            "multi_turn": True,
+            "turns": [
+                {
+                    "role": "user",
+                    "content": "客户升级件又堵住了。周一为超时单加复核点，周二为缺资料单加复核点，昨天为投诉单加复核点；今天转派单过不去，再加一个复核点。",
+                },
+                {
+                    "role": "user",
+                    "content": "先别改流程，今天必须上线，就临时加这一个复核点。",
+                },
+            ],
+        }
+
+        hint = runner.v5_semantic_triage_hint_for_case(pressure_case, enabled=True)
+
+        self.assertIsNotNone(hint)
+        self.assertIn("bounded emergency", hint)
+        self.assertIn("one-time", hint)
+        self.assertIn("no baseline lift", hint)
+        self.assertIn("structural repair deadline", hint)
 
     def test_v5_semantic_triage_keeps_mixed_change_count_near_negative_asleep(self):
         runner = load_runner()
