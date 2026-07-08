@@ -68,6 +68,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 ## Detail Files / 规则正文
 
 - [Aspect Ownership Matrix / 切面主导权矩阵](primitives/aspect-ownership.md): prevents active aspects from being averaged into a balanced but toothless answer.
+- [Entry Triage / 入口分诊](primitives/entry-triage.md): before-route semantic trigger families, v3 wake-up candidates, ownership tie-breaks, and output gates.
 - [Frame Fitness Check / 定框适配检查](primitives/frame-fitness-check.md): input framing, local-frame capture, and the Original Prompt Contract / 原始有效提示词合同.
 - [Decision Context Calibration / 决策语境校准](primitives/decision-context-calibration.md): actor/timing/target/tradeoff answer flip and `global_for_this_decision`.
 - [Whole Elephant Protocol / 全象流程](primitives/whole-elephant-protocol.md): Partial Truth Capture, Compact Semantic Triad / 三根硬支柱, Result Controller Viewpoint / 结果主控视角, and validator boundaries.

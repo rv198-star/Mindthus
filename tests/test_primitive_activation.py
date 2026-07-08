@@ -252,12 +252,17 @@ class PrimitiveActivationTests(unittest.TestCase):
             [item["id"] for item in report["active_primitives"]],
             [
                 "minimal_sufficient_lens",
+                "entry_triage",
                 "frame_fitness_check",
                 "mpg_scalar_commitment_unpack",
                 "decision_context_calibration",
                 "whole_elephant_protocol",
                 "evidence_claim_ceiling",
             ],
+        )
+        self.assertIn(
+            "which_entry_triage_family_if_any",
+            report["required_agent_checks"],
         )
         self.assertIn(
             "does_scalar_commitment_hide_mainline_carrier_path_exposure_commitment",

@@ -32,6 +32,7 @@
       "description": "Before selecting a Mindthus method.",
       "active_primitives": [
         "minimal_sufficient_lens",
+        "entry_triage",
         "frame_fitness_check",
         "mpg_scalar_commitment_unpack",
         "decision_context_calibration",
@@ -41,6 +42,7 @@
       "required_agent_checks": [
         "is_this_clear_low_risk_direct_execution",
         "is_input_a_question_or_packed_conclusion",
+        "which_entry_triage_family_if_any",
         "does_scalar_commitment_hide_mainline_carrier_path_exposure_commitment",
         "is_a_local_frame_claiming_global_authority",
         "does_answer_flip_by_actor_timing_target_or_tradeoff",
@@ -144,6 +146,46 @@
         "evidence-substitute"
       ],
       "owner": "WAE"
+    },
+    "entry_triage": {
+      "name": "Entry Triage / 入口分诊",
+      "short_rule": "Before route, detect semantic disease families; wake methods only when a hard judgment point exists.",
+      "trigger": [
+        "before-route"
+      ],
+      "action_effect": [
+        "direct-execute",
+        "route",
+        "audit-input-framing",
+        "activate-whole-elephant",
+        "activate-decision-context",
+        "activate-anti-spiral",
+        "apply-evidence-ceiling"
+      ],
+      "not_a": [
+        "keyword-router",
+        "mandatory-workflow",
+        "semantic-judge"
+      ],
+      "output_shape": [
+        "disease_family",
+        "hard_judgment_point",
+        "route_candidate",
+        "negative_control_risk"
+      ],
+      "owns_when": [
+        "definition authority contest",
+        "single-factor attribution",
+        "local repair spiral",
+        "forced binary prediction",
+        "no-data numeric comparison",
+        "trend-driven migration"
+      ],
+      "degrade_to": [
+        "direct_execution",
+        "information_acquisition"
+      ],
+      "owner": "using-mindthus"
     },
     "frame_fitness_check": {
       "name": "Frame Fitness Check / 定框适配检查",

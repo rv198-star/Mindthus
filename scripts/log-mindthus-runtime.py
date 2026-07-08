@@ -9,7 +9,7 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 
 VERSION = "1.4.3"
@@ -266,7 +266,7 @@ def print_human(report: dict[str, Any]) -> None:
         print(f"  {status} {marker}")
 
 
-def main() -> int:
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     codex_home = default_codex_home()
     parser = argparse.ArgumentParser(
         description=__doc__,
@@ -279,13 +279,13 @@ def main() -> int:
     parser.add_argument("--repo-root", default=repo_root(), type=Path, help="Mindthus repository root.")
     parser.add_argument(
         "--marketplace-root",
-        default=default_marketplace_root(codex_home),
+        default=None,
         type=Path,
         help="Installed local marketplace plugin root.",
     )
     parser.add_argument(
         "--cache-root",
-        default=default_cache_root(codex_home),
+        default=None,
         type=Path,
         help="Codex plugin cache root.",
     )
@@ -296,8 +296,21 @@ def main() -> int:
         action="store_true",
         help="Exit 1 on missing tracked files, missing markers, or hash mismatch.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+    args.codex_home = Path(args.codex_home).expanduser()
+    if args.marketplace_root is None:
+        args.marketplace_root = default_marketplace_root(args.codex_home)
+    else:
+        args.marketplace_root = Path(args.marketplace_root).expanduser()
+    if args.cache_root is None:
+        args.cache_root = default_cache_root(args.codex_home)
+    else:
+        args.cache_root = Path(args.cache_root).expanduser()
+    return args
 
+
+def main() -> int:
+    args = parse_args()
     report = build_report(args)
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))

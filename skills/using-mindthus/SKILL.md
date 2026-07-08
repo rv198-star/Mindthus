@@ -1,12 +1,12 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; method routing, frame-risk audit, or strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan.
+description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan.
 ---
 ## Core Claim
 Truth Orientation / 真相优先:pursue facts and truth over agreement;user input is signal, constraint, or hypothesis; not evidence by itself
 
 ## Mainline
-Premise Calibration / 前置校准不是独立方法论;只帮助选择;真实对象;底层约束;目标函数
+Premise Calibration / 前置校准:不是独立方法论;只帮助选择;真实对象;底层约束;目标函数
 
 ### Input Framing Audit / 输入定框审计
 强约束入口协议:When frame-risk exists,在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级
@@ -18,6 +18,7 @@ Original Prompt Contract / 原始有效提示词合同:legacy prompt template;no
 Audit discipline;A clever paragraph is not an audit;Question level before opinion;audit hidden;Do not answer as a soft commentary fallback;step outside the user's narrative;level-correct judgment;Forbidden substitute:fluent half-right verdict;runtime-only caveat;score-as-concession
 Routing effect:preserve frame,qualify frame,reframe,block pending evidence.No execution impact:omit frame check
 Problem-granularity:抓大放小;fix-main-blocker;minor=>residual-risk;no-patch-stacking
+Entry Triage / 入口分诊:semantic families in shared-primitives;not keywords.
 
 ### AOP Aspect Activation / 切面唤起
 `scripts/primitives/check.py`:shape reminder;not semantic judge;before-route/before-answer;Auxiliary checks belong inside step 3;never become a new judgment center
@@ -66,7 +67,7 @@ False binary or structural ambiguity;A/B 都像对;Extreme Deduction
 #### `wae`
 Agentic-system control-boundary mismatch -> `wae`;Workflow / Agentic / Evidence;控制权;No agentic system, no WAE.No controller mismatch, no WAE
 #### `tvg`
-Bounded artifact with thin practical value;结构完整但实质浅薄;bounded artifact;TVG requires a bounded artifact whose practical value is thin and whose expected value can be named;vague dissatisfaction or ordinary writing quality;No bounded artifact value-gain target, no TVG.No active TVG loop, no TVG audit
+Bounded artifact with thin practical value;结构完整但实质浅薄;TVG requires a bounded artifact whose practical value is thin and whose expected value can be named;vague dissatisfaction or ordinary writing quality;No bounded artifact value-gain target, no TVG.No active TVG loop, no TVG audit
 
 #### Wake-Up Probes / 唤醒探针
 strategic, path-bearing, or structurally ambiguous:`SELA` wake-up;`MPG` wake-up;`EDSP` wake-up.
@@ -102,7 +103,7 @@ Do not leave SELA support implicit after selecting MPG;AQM visibility map or ski
 strategy;risk handling;evidence requirement;next action;stopping condition;method choice;handoff packet.If a judgment changes none of these, information acquisition, clarification, or sharper routing
 
 ## Guardrails
-docs/methodologies/shared-primitives.md;反螺旋入口;fidelity contract;resources/fidelity-contract.md;templates/fidelity-output.json;validate_using_mindthus_output.py;validation is not semantic approval
+docs/methodologies/shared-primitives.md;反螺旋入口;fidelity contract;templates/fidelity-output.json;validate_using_mindthus_output.py;validation is not semantic approval
 
 ## Boundaries
 No hard judgment point, no Mindthus. Missing facts first. Named method in evidence review is reference, not route owner.

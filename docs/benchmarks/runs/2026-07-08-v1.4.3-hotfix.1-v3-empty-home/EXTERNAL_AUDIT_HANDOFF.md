@@ -171,6 +171,15 @@ Please return a concise review with:
 5. Highest-priority repair sequence before the next benchmark run.
 6. Any evidence gap that blocks confidence.
 
+## V4 Measurement Follow-Up Requested By Audit
+
+- Add judge calibration examples for `mtj-032`, `mtj-013`, and `mtj-048`; do not change public case prompts in this pass.
+- Repeat-run moved or borderline cases with `n >= 3` for `mtj-008`, `mtj-013`, and `mtj-050`.
+- Add fixture diff explanation for the v2 fixture hash to v3 fixture hash transition before making longitudinal claims.
+- Record judge model and blind-grading setup in every certified report.
+- Record the identity of any baseline loaded command, even when it is non-Mindthus and non-contaminating.
+- Treat shadow-set regression as a certification veto even if the public score crosses the threshold.
+
 ## Non-Goals
 
 This handoff does not ask the external audit team to:

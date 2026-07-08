@@ -1,3 +1,4 @@
+import importlib.util
 import json
 import subprocess
 import tempfile
@@ -114,6 +115,14 @@ System Subject Check / 系统主体校准
 """
 
 
+def load_runtime_logger():
+    spec = importlib.util.spec_from_file_location("log_mindthus_runtime", SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
+
+
 def write_runtime_tree(
     root: Path,
     using_text: str = USING_TEXT,
@@ -200,6 +209,41 @@ class LogMindthusRuntimeTests(unittest.TestCase):
         self.assertIn("does not prove model behavior", help_text)
         self.assertIn("semantic judgment quality", help_text)
         self.assertIn("runtime activation correctness", help_text)
+
+    def test_parse_args_derives_cache_root_from_explicit_codex_home(self):
+        logger = load_runtime_logger()
+        codex_home = Path("/tmp/example-codex-home")
+
+        args = logger.parse_args(["--codex-home", str(codex_home)])
+
+        self.assertEqual(args.codex_home, codex_home)
+        self.assertEqual(
+            args.cache_root,
+            codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / logger.VERSION,
+        )
+        self.assertEqual(
+            args.marketplace_root,
+            codex_home / "local-marketplaces" / f"mindthus-v{logger.VERSION}" / "codex-plugin" / "mindthus",
+        )
+
+    def test_parse_args_preserves_explicit_roots(self):
+        logger = load_runtime_logger()
+        cache_root = Path("/tmp/explicit-cache")
+        marketplace_root = Path("/tmp/explicit-marketplace")
+
+        args = logger.parse_args(
+            [
+                "--codex-home",
+                "/tmp/example-codex-home",
+                "--cache-root",
+                str(cache_root),
+                "--marketplace-root",
+                str(marketplace_root),
+            ]
+        )
+
+        self.assertEqual(args.cache_root, cache_root)
+        self.assertEqual(args.marketplace_root, marketplace_root)
 
     def test_reports_matching_runtime_fingerprints_and_markers_as_json(self):
         with tempfile.TemporaryDirectory() as tmp:
