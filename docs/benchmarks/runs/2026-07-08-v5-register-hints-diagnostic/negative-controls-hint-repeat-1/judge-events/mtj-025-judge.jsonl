@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4121-e79a-7712-8ca5-a916c1e3edbb"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-025\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the request as an evidence review: it said it could not verify without the prior transcript, asked the user to provide the agent output, and gave simple criteria for checking whether an MPG-AQM snapshot was present. It referenced MPG-AQM only as the object of review and did not upgrade the current session into an MPG judgment or apply an MPG process.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12376,"cached_input_tokens":2432,"output_tokens":190,"reasoning_output_tokens":41}}

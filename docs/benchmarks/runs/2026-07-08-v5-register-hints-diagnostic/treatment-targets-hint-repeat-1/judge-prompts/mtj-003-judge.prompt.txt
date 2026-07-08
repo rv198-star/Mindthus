@@ -1,0 +1,67 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+SPA 不等于“已经过时”，是否迁 SSR 要先看目标函数：你们到底是为了 SEO、首屏性能、可观测性、合规、缓存成本、弱网体验，还是为了降低前端复杂度。迁移步骤应在这些约束确认后制定，否则容易把“技术趋势判断”误当成“架构决策”。
+
+建议先按这个顺序做：
+
+1. 明确迁移目标  
+   列出必须改善的指标：SEO 收录、LCP/TTFB、转化率、可访问性、缓存命中率、运维成本、开发效率等。给每项设基线和目标值。
+
+2. 盘点现有 SPA  
+   梳理路由、数据获取、鉴权、状态管理、埋点、错误边界、动态渲染页面、静态页面、登录后页面。先标出哪些页面真的需要 SSR。
+
+3. 选择渲染策略  
+   不要默认“全站 SSR”。通常应拆成：
+   - 静态页面：SSG/ISR
+   - SEO 或首屏关键页面：SSR
+   - 登录后复杂交互页面：继续 CSR 或混合渲染
+   - 高实时页面：客户端渲染为主
+
+4. 选目标框架和运行环境  
+   例如 Next.js、Nuxt、Remix、SvelteKit，或现有后端模板方案。同步确认部署平台、Node 运行时、边缘渲染、缓存、日志和监控能力。
+
+5. 设计数据获取边界  
+   把客户端 `fetch`、全局 store 初始化、鉴权态、cookie/session、API 聚合逻辑重新分层。SSR 最大风险通常在这里，不在页面改写本身。
+
+6. 先做试点页面  
+   选 1 到 3 个高价值页面迁移，覆盖典型问题：公开 SEO 页面、需要登录的页面、复杂交互页面。用试点验证性能、缓存、鉴权、回滚和开发体验。
+
+7. 建立兼容路由  
+   让新 SSR 路由和旧 SPA 并存。通过网关、反向代理或应用内路由逐步切流，避免一次性重写全站。
+
+8. 迁移共享组件  
+   检查组件是否依赖 `window`、`document`、浏览器 API、副作用、客户端时间、随机数。把纯 UI、服务端安全组件、客户端专用组件分开。
+
+9. 处理状态和水合问题  
+   规范服务端初始数据注入、客户端 hydration、缓存失效、重复请求、闪烁、登录态错配等问题。
+
+10. 补齐工程设施  
+   加 SSR 错误监控、服务端日志、性能指标、缓存观测、灰度发布、回滚开关、端到端测试和视觉回归测试。
+
+11. 分批迁移  
+   按业务价值和风险排序：公开流量页优先，低价值后台页靠后。每批迁移后比较指标，不达标就停下来修正策略。
+
+12. 清理旧 SPA 架构  
+   等主要路由稳定后，再删除旧路由、旧状态初始化、旧构建入口和无用客户端数据层。
+
+关键点：先证明“哪些页面需要 SSR”，再迁移。更稳妥的目标通常不是“全站改回 SSR”，而是“按页面选择 SSR、SSG、ISR、CSR 的混合渲染架构”。

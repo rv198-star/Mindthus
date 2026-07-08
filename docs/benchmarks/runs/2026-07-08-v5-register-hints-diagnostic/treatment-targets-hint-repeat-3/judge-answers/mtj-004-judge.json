@@ -1,0 +1,1 @@
+{"case_id":"mtj-004","score":2,"pass_criteria_met":true,"fail_signal_observed":false,"positive_wakeup_observed":true,"first_sentence_lock":true,"verdict_commitment_anti_mush":true,"over_forced_verdict":false,"rationale":"回答没有直接只写公告，而是先明确“测试全绿只是必要条件，不是发布授权”，补充了回滚方案、灰度策略、监控告警、用户影响、风险接受等发布验收项，并在公告中限定为灰度发布、持续监控、异常回滚，最后还建议在风险项未确认时改成“计划发布，满足发布检查项后执行”。完全符合正向唤醒要求。"}

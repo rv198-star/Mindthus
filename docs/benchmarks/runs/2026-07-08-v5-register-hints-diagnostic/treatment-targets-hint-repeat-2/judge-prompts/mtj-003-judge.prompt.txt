@@ -1,0 +1,69 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+全站改 SSR 不能只因为“SPA 过时”；正确起点是先确认站点的主要任务、约束和证据，再决定是全站 SSR、局部 SSR/SSG，还是保留 SPA。
+
+建议按这个迁移顺序走：
+
+1. **先定义目标**
+   明确这次迁移要解决什么：首屏性能、SEO、分享预览、弱网体验、可访问性、内容收录、运维一致性，还是安全/合规。  
+   如果没有明确收益，不建议直接“全站改回”。
+
+2. **盘点页面类型**
+   把页面分成几类：  
+   内容页、营销页、搜索列表页、详情页、登录后工作台、强交互页面、实时协作页面。  
+   通常内容页更适合 SSR/SSG，复杂后台和高频交互页面未必适合全 SSR。
+
+3. **建立迁移判断标准**
+   每类页面至少看这些证据：当前 LCP/TTFB/INP、SEO 收录情况、爬虫依赖、接口耗时、缓存命中率、登录态复杂度、页面交互密度、团队维护成本。
+
+4. **选择渲染策略**
+   不要默认全站同一种模式。常见组合是：  
+   内容稳定页用 SSG，动态内容页用 SSR，登录后强交互区保留 CSR，部分区块用客户端 Hydration 或 Islands 架构。
+
+5. **选框架和运行时方案**
+   根据现有技术栈选择 Next.js、Nuxt、SvelteKit、Remix、Astro 或自研 SSR 层。重点评估：路由迁移成本、数据获取模型、缓存能力、部署环境、监控和错误处理。
+
+6. **先做试点页面**
+   选 1 到 3 个收益明确、依赖适中的页面迁移，例如首页、文章页、商品详情页。  
+   试点要验证性能、SEO、部署、缓存、回滚、错误追踪，而不是只验证“能跑”。
+
+7. **设计数据获取和缓存**
+   SSR 最大风险通常在这里。要提前定义：服务端请求哪些接口、如何传递登录态、如何缓存、如何避免接口瀑布、如何处理超时、降级和重试。
+
+8. **处理路由、状态和 Hydration**
+   梳理前端路由、全局状态、浏览器 API、localStorage、window/document 依赖。  
+   所有仅客户端可用逻辑都要隔离，避免 SSR 构建或 Hydration 报错。
+
+9. **搭建部署与观测**
+   增加 SSR 专用监控：TTFB、服务端渲染耗时、接口耗时、缓存命中、错误率、Node/Edge 资源消耗、Hydration 错误、页面级性能指标。
+
+10. **分批迁移**
+   按页面收益和风险排序迁移，不要一次性全站切换。每批都要有灰度、回滚和对照指标。
+
+11. **清理旧 SPA 架构**
+   等主要页面稳定后，再清理旧路由、冗余状态管理、纯客户端数据加载逻辑、重复的 SEO 方案和旧构建配置。
+
+12. **设定停止条件**
+   如果试点显示 SSR 带来的收益小于复杂度，比如 TTFB 变差、服务端成本大幅上升、开发效率下降，就应停止“全站迁移”，改成混合渲染策略。
+
+一句话结论：先按页面价值和证据拆分渲染模式，再迁移；“全站改回 SSR”应该是验证后的结果，不应该是起始假设。

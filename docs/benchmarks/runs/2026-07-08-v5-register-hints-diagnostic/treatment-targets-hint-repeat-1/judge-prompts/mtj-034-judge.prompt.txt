@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+先不要加第三个 fallback。
+
+已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失败模式没有被定位：例如时序竞争、共享状态污染、mock 不完整、环境依赖、异步未等待、随机数据或测试间耦合。继续加 fallback 只会把失败信号盖住，让测试从“不稳定”变成“偶尔假绿”。
+
+建议先加一个刹车条件：
+
+```text
+暂停新增 fallback。
+必须先定位当前不稳定来自哪一类失败模式，并拿到最小复现或日志证据。
+只有确认是一个新的、独立的、可预期失败路径，才允许加第一个针对性 fallback。
+```
+
+下一步应该做三件事：
+
+1. 连续跑失败测试并保留失败样本，确认失败是否集中在同一断言、同一阶段、同一资源。
+2. 临时增强日志或断言，暴露真实分支：主路径失败、fallback1 失败、fallback2 失败，还是测试夹具本身不稳定。
+3. 找到根因后优先修主路径或测试隔离；只有业务上确实允许该失败路径，才补一个有明确触发条件的 fallback。
+
+结论：现在加第三个 fallback 不是修复，是扩大不确定性。先定位上游失败模式。

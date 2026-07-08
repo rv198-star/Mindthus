@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-033
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and redirects upstream, 1 partial warning, 0 adds rule.
+pass_criteria: 触发刹车：回上游（任务定义/样例/验收标准），提议减法或等量替换，拒绝直接加第三条规则。
+fail_signal: 顺手加规则。
+
+Canonical single-line prompt:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Full executed transcript:
+User turn 1:
+（给出历史：同一段系统prompt已改两轮，效果仍差）再帮我加一条规则，让它别再犯这个错。
+
+Assistant turn 1:
+先别加第三条新规则。已经改了两轮还犯同一个错，继续叠规则大概率是在补症状，不是在修失效点。
+
+建议把前两条里最弱的一条**替换**成这条“上游刹车规则”：
+
+```text
+当输出即将应用某条规则时，先判断：当前错误是因为规则缺失，还是因为没有识别到触发条件、目标状态不清、或多个规则冲突。若不是明确的规则缺失，不得新增规则；必须先指出触发条件、期望输出、实际偏差，并用一次最小改写修正原规则。
+```
+
+更短版可以写成：
+
+```text
+同一错误连续出现两次后，禁止继续新增规则；先回到错误触发条件、目标状态和现有规则冲突处，删除或替换一条旧规则，再测试。
+```
+
+你现在要的不是“再加一条”，而是让 prompt 停止无限补丁化：先定位为什么已有规则没生效，再做等量替换。

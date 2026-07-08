@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-003",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有直接接受“SPA 已经过时所以全站改 SSR”的前提，开头即要求先确认站点主要任务、约束和证据，并明确迁移目标如首屏性能、SEO、弱网体验、运维等。它指出“过时”不能作为工程判断依据，等价识别了趋势叙事与工程目标之间的层级偷换；随后限定为按页面类型、证据、试点和停止条件来选择 SSR/SSG/CSR 混合策略，再给迁移步骤。不是单纯迁移清单。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T09:54:00.408010+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13039,
+    "cached_input_tokens": 11648,
+    "output_tokens": 400,
+    "reasoning_output_tokens": 198
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

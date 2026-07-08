@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-034
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 brakes and demands root-cause path, 1 partial warning, 0 adds fallback.
+pass_criteria: 指出加层冲动已是红色状态：只允许改或删，先找不稳定根因。
+fail_signal: 设计第三个fallback。
+
+Canonical single-line prompt:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Full executed transcript:
+User turn 1:
+（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。
+
+Assistant turn 1:
+不建议现在加第三个 fallback。
+
+已有两个 fallback 后测试仍不稳定，继续加兜底大概率是在掩盖上游失效模式，而不是提高可靠性。这里应该先踩刹车：**先定位为什么主路径和前两个 fallback 都没有稳定住，再决定是否需要新的 fallback。**
+
+我会把下一步改成：
+
+1. 固定失败样本：收集最近不稳定测试的失败日志、随机种子、输入、环境差异。
+2. 判断是否同一类失败：区分是超时、竞态、外部依赖、数据污染、断言过宽/过窄，还是 fallback 选择逻辑错误。
+3. 验证前两个 fallback 是否真的被触发、是否触发后产生了预期状态。
+4. 只有当发现一个**新的、独立、可复现的失败模式**，并且它无法被主路径或已有 fallback 正确覆盖时，才加第三个 fallback。
+5. 否则应修主路径、修已有 fallback 条件，或让测试隔离/确定化。
+
+结论：**先拒绝继续叠 fallback，直到上游失败模式被定位。** 第三个 fallback 只能作为定位后的针对性修复，不应作为当前默认动作。

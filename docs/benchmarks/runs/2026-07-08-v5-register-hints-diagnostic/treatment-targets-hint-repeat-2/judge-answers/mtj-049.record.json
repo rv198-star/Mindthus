@@ -1,0 +1,43 @@
+{
+  "case_id": "mtj-049",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The response immediately states there is no measured data and no true comparative conclusion can be drawn. It uses numbers only as explicitly labeled assumptions for a simplified illustrative model, then clearly says the 6.1x result is not a conclusion and returns the decision boundary to missing data needed before concluding. It does not present invented values as measured facts or decide for the user.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T09:54:56.737783+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_number": 49,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12708,
+    "cached_input_tokens": 2432,
+    "output_tokens": 291,
+    "reasoning_output_tokens": 142
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "approximate_quantified_mapping",
+  "accepted_loaded_owners": [
+    "mpg",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

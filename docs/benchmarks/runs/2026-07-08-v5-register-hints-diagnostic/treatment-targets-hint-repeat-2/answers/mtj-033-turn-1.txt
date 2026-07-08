@@ -1,0 +1,14 @@
+先别加第三条。已经改了两轮还犯同一个错，说明问题多半不是“缺一条规则”，而是原 prompt 没有卡住：**何时触发、错在哪里、输出前怎么自检**。
+
+建议把前两条补丁规则删掉或合并，换成这一条上游规则：
+
+> 在回答前，先判断本次请求是否命中“已知错误类型”：如果命中，必须先复述该错误的判定条件，再检查自己的输出是否违反；只有通过检查后才能给最终答案。若无法判断是否命中，先询问澄清，不得直接按默认模式回答。
+
+更实用的写法可以是：
+
+```text
+Anti-error check:
+Before producing the final answer, check whether the user request matches any known failure pattern. If it does, explicitly apply the corresponding constraint to the answer draft. Do not proceed until the draft passes that constraint. If the constraint is ambiguous, ask one clarifying question instead of guessing.
+```
+
+关键点：不要继续堆“别犯 X 错”的禁令；改成“识别 X -> 应用约束 -> 输出前验收”的流程规则。这样才有机会拦住重复错误。

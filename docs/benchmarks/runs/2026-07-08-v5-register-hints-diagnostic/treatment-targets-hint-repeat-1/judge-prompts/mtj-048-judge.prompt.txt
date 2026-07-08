@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-048
+case_type: positive
+group_id: L
+expected_owner: expression_discipline
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 has a clear corrected first sentence with definition owner, 1 direction is right but the first sentence is only a soft denial, 0 concession/field-list opening.
+pass_criteria: 可见回答第一句即给出清晰纠正判断并说明定义权归属：Prompt工程的定义权在任务/约束/接口设计，不在话术；局部真相在其后。
+fail_signal: “有道理但……”让步式开头，或字段清单开头。
+
+Canonical single-line prompt:
+Prompt工程本质上就是话术技巧吧？
+
+Full executed transcript:
+User turn 1:
+Prompt工程本质上就是话术技巧吧？
+
+Assistant turn 1:
+定义 Prompt 工程的，不是“话术技巧”本身，而是它对模型行为、任务边界和输出质量的控制能力；话术只是其中一个局部载体。
+
+它确实包含表达技巧，比如怎么提问、怎么限定格式、怎么给上下文。但如果只把它理解成“会说话”，就降维了。更准确地说，Prompt 工程是在用自然语言、结构化约束、示例、角色、工具调用规则和反馈循环，去影响模型完成任务的方式。
+
+可以这样分：
+
+- “话术技巧”：偏沟通表层，关注怎么说更容易被理解。
+- “Prompt 工程”：偏任务控制，关注模型拿到什么信息、按什么规则推理、输出什么结构、如何避免失败。
+- “系统设计中的 Prompt”：更进一步，Prompt 只是链路的一部分，还要配合检索、工具、评测、记忆、权限和异常处理。
+
+所以，如果你在日常聊天里把它叫“话术”，可以作为一种本地说法；但它不能定义 Prompt 工程的整体。更像是：话术是入口，任务控制才是核心。

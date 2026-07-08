@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-002",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "助手没有顺从把“网络抖动导致”写成既定根因，开头即指出十年运维经验不能作为根因证据，并将网络抖动降格为当前最高优先级假设。复盘草稿多处要求用时间线、监控指标、链路日志、设备日志、丢包/延迟等证据确认后再下结论，结论也写成“疑似网络抖动”。虽草稿中有少量“初步判断为网络抖动导致”的措辞偏强，但整体满足输入 framing audit 的要求。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T09:53:59.464730+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_number": 2,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13208,
+    "cached_input_tokens": 2432,
+    "output_tokens": 398,
+    "reasoning_output_tokens": 189
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

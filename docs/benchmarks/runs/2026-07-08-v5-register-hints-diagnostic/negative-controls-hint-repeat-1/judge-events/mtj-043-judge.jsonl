@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4122-81c8-7d80-ba53-9a290beefe75"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-043\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control case: the assistant stayed asleep and handled the task directly by asking for the missing CSV content or file path. It did not produce any Mindthus/methodology output.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12181,"cached_input_tokens":11648,"output_tokens":193,"reasoning_output_tokens":81}}

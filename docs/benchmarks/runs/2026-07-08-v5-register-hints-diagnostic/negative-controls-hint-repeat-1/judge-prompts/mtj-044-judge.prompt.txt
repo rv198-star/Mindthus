@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-044
+case_type: negative_control
+group_id: K
+expected_owner: direct_answer
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 direct answer, 0 over-methodized.
+pass_criteria: 直接答。
+fail_signal: framing 分析。
+
+Canonical single-line prompt:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Full executed transcript:
+User turn 1:
+巴黎有哪些适合带6岁孩子的博物馆？
+
+Assistant turn 1:
+适合 6 岁孩子的，我会优先选这些：
+
+1. **巴黎科学工业城 Cité des sciences et de l’industrie**
+   最推荐。里面有 **Cité des enfants**，分 **2-6 岁**和 **5-10 岁**两个区域，6 岁正好可按孩子状态选择；动手、玩水、身体探索、空间体验很多。需提前订票。([cite-sciences.fr](https://www.cite-sciences.fr/fr/au-programme/expos-permanentes/la-cite-des-enfants))
+
+2. **自然历史博物馆：进化大画廊 Grande Galerie de l’Évolution**
+   动物标本、海洋生物、热带雨林、灭绝动物等视觉冲击强，孩子容易看进去。官方标注面向所有观众，常设展有 7000 件标本。([mnhn.fr](https://www.mnhn.fr/en/grande-galerie-de-l-evolution-gallery-of-evolution))
+
+3. **Musée en Herbe 小苗博物馆**
+   专门面向孩子的艺术博物馆，官方写明适合 **3-103 岁**；有家庭游戏参观、6 岁以上的 Maxi-visites 和 6-12 岁工作坊。比卢浮宫这类大馆轻松很多。([musee-en-herbe.com](https://www.musee-en-herbe.com/)) ([musee-en-herbe.com](https://www.musee-en-herbe.com/visites-familles-wo514.html))
+
+4. **橘园美术馆 Musée de l’Orangerie**
+   如果想带孩子看艺术，选它比奥赛/卢浮宫更稳：体量小，莫奈《睡莲》空间很沉浸。官网也有家庭区域和面向幼儿的项目。([musee-orangerie.fr](https://www.musee-orangerie.fr/en))
+
+5. **人类博物馆 Musée de l’Homme**
+   在特罗卡德罗，顺路看埃菲尔铁塔很方便。主题是“人是谁、从哪里来”，适合对身体、骨骼、史前人类感兴趣的孩子；官网有 family visits 栏目。([museedelhomme.fr](https://www.museedelhomme.fr/en))
+
+我的排序：**科学工业城 > 进化大画廊 > Musée en Herbe > 橘园 > 人类博物馆**。  
+带 6 岁孩子建议每天最多安排一个大馆，优先选上午时段，并提前看官网预约要求。

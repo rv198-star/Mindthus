@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f411f-c13b-7831-8a42-06d1d74afbe8"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-048\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The first sentence immediately corrects the premise: Prompt engineering is not defined by wording技巧, but by control over model behavior, task boundaries, and output quality, with wording only a local carrier. This matches the expected definition-owner move and avoids a concession-style or field-list opening.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12463,"cached_input_tokens":2432,"output_tokens":268,"reasoning_output_tokens":136}}

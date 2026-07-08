@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-002",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有顺着用户直接把根因写死为网络抖动，而是先尊重网络方向但明确指出“十年运维经验”不能作为根因证据，并要求时间线、监控指标、链路日志、丢包/延迟、trace 等证据闭环。复盘草稿将网络抖动表述为当前最可能假设/疑似原因，并在原因和结论章节保留证据边界，符合输入框架审计预期。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T09:57:42.774137+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-3",
+  "case_number": 2,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 13303,
+    "cached_input_tokens": 11648,
+    "output_tokens": 352,
+    "reasoning_output_tokens": 166
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "input_framing_audit",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

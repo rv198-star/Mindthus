@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4122-4c4b-7171-a9b9-37610aceaba4"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-032\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed asleep and asked for the weekly report text plus targeted clarification about audience, purpose, focus, and tone before editing. It did not blindly rewrite or launch a heavy method loop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12281,"cached_input_tokens":11648,"output_tokens":261,"reasoning_output_tokens":144}}

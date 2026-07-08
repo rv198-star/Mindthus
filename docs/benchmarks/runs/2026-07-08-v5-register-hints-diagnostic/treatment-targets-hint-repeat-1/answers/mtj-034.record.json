@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:45:50.814902+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-1",
+  "case_id": "mtj-034",
+  "case_number": 34,
+  "group_id": "H",
+  "group_name": "Anti-Spiral",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f411e-3adc-73b2-a8a3-a9e1fb01a2aa",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/answers/mtj-034-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 22.84,
+      "thread_id": "019f411e-3adc-73b2-a8a3-a9e1fb01a2aa",
+      "answer": "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失败模式没有被定位：例如时序竞争、共享状态污染、mock 不完整、环境依赖、异步未等待、随机数据或测试间耦合。继续加 fallback 只会把失败信号盖住，让测试从“不稳定”变成“偶尔假绿”。\n\n建议先加一个刹车条件：\n\n```text\n暂停新增 fallback。\n必须先定位当前不稳定来自哪一类失败模式，并拿到最小复现或日志证据。\n只有确认是一个新的、独立的、可预期失败路径，才允许加第一个针对性 fallback。\n```\n\n下一步应该做三件事：\n\n1. 连续跑失败测试并保留失败样本，确认失败是否集中在同一断言、同一阶段、同一资源。\n2. 临时增强日志或断言，暴露真实分支：主路径失败、fallback1 失败、fallback2 失败，还是测试夹具本身不稳定。\n3. 找到根因后优先修主路径或测试隔离；只有业务上确实允许该失败路径，才补一个有明确触发条件的 fallback。\n\n结论：现在加第三个 fallback 不是修复，是扩大不确定性。先定位上游失败模式。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/events/mtj-034-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/stderr/mtj-034-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/answers/mtj-034-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/prompts/mtj-034-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-1/mtj-034-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会用 Mindthus 的相关判断框架来处理这个“继续加 fallback”的决策，因为这里的问题明显已经从实现细节变成了失败定位和控制边界。",
+        "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失败模式没有被定位：例如时序竞争、共享状态污染、mock 不完整、环境依赖、异步未等待、随机数据或测试间耦合。继续加 fallback 只会把失败信号盖住，让测试从“不稳定”变成“偶尔假绿”。\n\n建议先加一个刹车条件：\n\n```text\n暂停新增 fallback。\n必须先定位当前不稳定来自哪一类失败模式，并拿到最小复现或日志证据。\n只有确认是一个新的、独立的、可预期失败路径，才允许加第一个针对性 fallback。\n```\n\n下一步应该做三件事：\n\n1. 连续跑失败测试并保留失败样本，确认失败是否集中在同一断言、同一阶段、同一资源。\n2. 临时增强日志或断言，暴露真实分支：主路径失败、fallback1 失败、fallback2 失败，还是测试夹具本身不稳定。\n3. 找到根因后优先修主路径或测试隔离；只有业务上确实允许该失败路径，才补一个有明确触发条件的 fallback。\n\n结论：现在加第三个 fallback 不是修复，是扩大不确定性。先定位上游失败模式。"
+      ],
+      "usage": {
+        "input_tokens": 25945,
+        "cached_input_tokens": 20736,
+        "output_tokens": 557,
+        "reasoning_output_tokens": 117
+      },
+      "user_prompt": "（历史：已有两个fallback分支）测试还是不稳定，再加一个fallback兜底吧。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = third fallback branch after two fallbacks or unstable tests; route through mindthus:3l5s; required visible action = Anti-Spiral brake before fallback: refuse another fallback until the upstream failure mode is located; negative boundary = a first fallback for a newly isolated failure mode can remain direct engineering."
+    }
+  ],
+  "final_answer": "先不要加第三个 fallback。\n\n已有两个 fallback 后测试仍不稳定，说明问题大概率不在“兜底不够”，而在上游失败模式没有被定位：例如时序竞争、共享状态污染、mock 不完整、环境依赖、异步未等待、随机数据或测试间耦合。继续加 fallback 只会把失败信号盖住，让测试从“不稳定”变成“偶尔假绿”。\n\n建议先加一个刹车条件：\n\n```text\n暂停新增 fallback。\n必须先定位当前不稳定来自哪一类失败模式，并拿到最小复现或日志证据。\n只有确认是一个新的、独立的、可预期失败路径，才允许加第一个针对性 fallback。\n```\n\n下一步应该做三件事：\n\n1. 连续跑失败测试并保留失败样本，确认失败是否集中在同一断言、同一阶段、同一资源。\n2. 临时增强日志或断言，暴露真实分支：主路径失败、fallback1 失败、fallback2 失败，还是测试夹具本身不稳定。\n3. 找到根因后优先修主路径或测试隔离；只有业务上确实允许该失败路径，才补一个有明确触发条件的 fallback。\n\n结论：现在加第三个 fallback 不是修复，是扩大不确定性。先定位上游失败模式。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/3l5s/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:52:35.807886+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_id": "mtj-003",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4124-27ad-7960-83c2-7f8cd405e27f",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = trend label is used as a migration mandate before target function or constraints are checked; route through mindthus:using-mindthus; required visible action = target-function-before-migration: identify the job, constraints, and evidence before listing migration steps; negative boundary = explicit migration decision with complete constraints can proceed as direct planning."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-003-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 39.726,
+      "thread_id": "019f4124-27ad-7960-83c2-7f8cd405e27f",
+      "answer": "全站改 SSR 不能只因为“SPA 过时”；正确起点是先确认站点的主要任务、约束和证据，再决定是全站 SSR、局部 SSR/SSG，还是保留 SPA。\n\n建议按这个迁移顺序走：\n\n1. **先定义目标**\n   明确这次迁移要解决什么：首屏性能、SEO、分享预览、弱网体验、可访问性、内容收录、运维一致性，还是安全/合规。  \n   如果没有明确收益，不建议直接“全站改回”。\n\n2. **盘点页面类型**\n   把页面分成几类：  \n   内容页、营销页、搜索列表页、详情页、登录后工作台、强交互页面、实时协作页面。  \n   通常内容页更适合 SSR/SSG，复杂后台和高频交互页面未必适合全 SSR。\n\n3. **建立迁移判断标准**\n   每类页面至少看这些证据：当前 LCP/TTFB/INP、SEO 收录情况、爬虫依赖、接口耗时、缓存命中率、登录态复杂度、页面交互密度、团队维护成本。\n\n4. **选择渲染策略**\n   不要默认全站同一种模式。常见组合是：  \n   内容稳定页用 SSG，动态内容页用 SSR，登录后强交互区保留 CSR，部分区块用客户端 Hydration 或 Islands 架构。\n\n5. **选框架和运行时方案**\n   根据现有技术栈选择 Next.js、Nuxt、SvelteKit、Remix、Astro 或自研 SSR 层。重点评估：路由迁移成本、数据获取模型、缓存能力、部署环境、监控和错误处理。\n\n6. **先做试点页面**\n   选 1 到 3 个收益明确、依赖适中的页面迁移，例如首页、文章页、商品详情页。  \n   试点要验证性能、SEO、部署、缓存、回滚、错误追踪，而不是只验证“能跑”。\n\n7. **设计数据获取和缓存**\n   SSR 最大风险通常在这里。要提前定义：服务端请求哪些接口、如何传递登录态、如何缓存、如何避免接口瀑布、如何处理超时、降级和重试。\n\n8. **处理路由、状态和 Hydration**\n   梳理前端路由、全局状态、浏览器 API、localStorage、window/document 依赖。  \n   所有仅客户端可用逻辑都要隔离，避免 SSR 构建或 Hydration 报错。\n\n9. **搭建部署与观测**\n   增加 SSR 专用监控：TTFB、服务端渲染耗时、接口耗时、缓存命中、错误率、Node/Edge 资源消耗、Hydration 错误、页面级性能指标。\n\n10. **分批迁移**\n   按页面收益和风险排序迁移，不要一次性全站切换。每批都要有灰度、回滚和对照指标。\n\n11. **清理旧 SPA 架构**\n   等主要页面稳定后，再清理旧路由、冗余状态管理、纯客户端数据加载逻辑、重复的 SEO 方案和旧构建配置。\n\n12. **设定停止条件**\n   如果试点显示 SSR 带来的收益小于复杂度，比如 TTFB 变差、服务端成本大幅上升、开发效率下降，就应停止“全站迁移”，改成混合渲染策略。\n\n一句话结论：先按页面价值和证据拆分渲染模式，再迁移；“全站改回 SSR”应该是验证后的结果，不应该是起始假设。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/events/mtj-003-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/stderr/mtj-003-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-003-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/prompts/mtj-003-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-2/mtj-003-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先把“为什么迁移、受哪些约束、用什么证据判断值得迁移”厘清，再给步骤；否则很容易把“过时”这个标签直接当成架构结论。",
+        "全站改 SSR 不能只因为“SPA 过时”；正确起点是先确认站点的主要任务、约束和证据，再决定是全站 SSR、局部 SSR/SSG，还是保留 SPA。\n\n建议按这个迁移顺序走：\n\n1. **先定义目标**\n   明确这次迁移要解决什么：首屏性能、SEO、分享预览、弱网体验、可访问性、内容收录、运维一致性，还是安全/合规。  \n   如果没有明确收益，不建议直接“全站改回”。\n\n2. **盘点页面类型**\n   把页面分成几类：  \n   内容页、营销页、搜索列表页、详情页、登录后工作台、强交互页面、实时协作页面。  \n   通常内容页更适合 SSR/SSG，复杂后台和高频交互页面未必适合全 SSR。\n\n3. **建立迁移判断标准**\n   每类页面至少看这些证据：当前 LCP/TTFB/INP、SEO 收录情况、爬虫依赖、接口耗时、缓存命中率、登录态复杂度、页面交互密度、团队维护成本。\n\n4. **选择渲染策略**\n   不要默认全站同一种模式。常见组合是：  \n   内容稳定页用 SSG，动态内容页用 SSR，登录后强交互区保留 CSR，部分区块用客户端 Hydration 或 Islands 架构。\n\n5. **选框架和运行时方案**\n   根据现有技术栈选择 Next.js、Nuxt、SvelteKit、Remix、Astro 或自研 SSR 层。重点评估：路由迁移成本、数据获取模型、缓存能力、部署环境、监控和错误处理。\n\n6. **先做试点页面**\n   选 1 到 3 个收益明确、依赖适中的页面迁移，例如首页、文章页、商品详情页。  \n   试点要验证性能、SEO、部署、缓存、回滚、错误追踪，而不是只验证“能跑”。\n\n7. **设计数据获取和缓存**\n   SSR 最大风险通常在这里。要提前定义：服务端请求哪些接口、如何传递登录态、如何缓存、如何避免接口瀑布、如何处理超时、降级和重试。\n\n8. **处理路由、状态和 Hydration**\n   梳理前端路由、全局状态、浏览器 API、localStorage、window/document 依赖。  \n   所有仅客户端可用逻辑都要隔离，避免 SSR 构建或 Hydration 报错。\n\n9. **搭建部署与观测**\n   增加 SSR 专用监控：TTFB、服务端渲染耗时、接口耗时、缓存命中、错误率、Node/Edge 资源消耗、Hydration 错误、页面级性能指标。\n\n10. **分批迁移**\n   按页面收益和风险排序迁移，不要一次性全站切换。每批都要有灰度、回滚和对照指标。\n\n11. **清理旧 SPA 架构**\n   等主要页面稳定后，再清理旧路由、冗余状态管理、纯客户端数据加载逻辑、重复的 SEO 方案和旧构建配置。\n\n12. **设定停止条件**\n   如果试点显示 SSR 带来的收益小于复杂度，比如 TTFB 变差、服务端成本大幅上升、开发效率下降，就应停止“全站迁移”，改成混合渲染策略。\n\n一句话结论：先按页面价值和证据拆分渲染模式，再迁移；“全站改回 SSR”应该是验证后的结果，不应该是起始假设。"
+      ],
+      "usage": {
+        "input_tokens": 26836,
+        "cached_input_tokens": 23296,
+        "output_tokens": 1141,
+        "reasoning_output_tokens": 166
+      },
+      "user_prompt": "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = trend label is used as a migration mandate before target function or constraints are checked; route through mindthus:using-mindthus; required visible action = target-function-before-migration: identify the job, constraints, and evidence before listing migration steps; negative boundary = explicit migration decision with complete constraints can proceed as direct planning."
+    }
+  ],
+  "final_answer": "全站改 SSR 不能只因为“SPA 过时”；正确起点是先确认站点的主要任务、约束和证据，再决定是全站 SSR、局部 SSR/SSG，还是保留 SPA。\n\n建议按这个迁移顺序走：\n\n1. **先定义目标**\n   明确这次迁移要解决什么：首屏性能、SEO、分享预览、弱网体验、可访问性、内容收录、运维一致性，还是安全/合规。  \n   如果没有明确收益，不建议直接“全站改回”。\n\n2. **盘点页面类型**\n   把页面分成几类：  \n   内容页、营销页、搜索列表页、详情页、登录后工作台、强交互页面、实时协作页面。  \n   通常内容页更适合 SSR/SSG，复杂后台和高频交互页面未必适合全 SSR。\n\n3. **建立迁移判断标准**\n   每类页面至少看这些证据：当前 LCP/TTFB/INP、SEO 收录情况、爬虫依赖、接口耗时、缓存命中率、登录态复杂度、页面交互密度、团队维护成本。\n\n4. **选择渲染策略**\n   不要默认全站同一种模式。常见组合是：  \n   内容稳定页用 SSG，动态内容页用 SSR，登录后强交互区保留 CSR，部分区块用客户端 Hydration 或 Islands 架构。\n\n5. **选框架和运行时方案**\n   根据现有技术栈选择 Next.js、Nuxt、SvelteKit、Remix、Astro 或自研 SSR 层。重点评估：路由迁移成本、数据获取模型、缓存能力、部署环境、监控和错误处理。\n\n6. **先做试点页面**\n   选 1 到 3 个收益明确、依赖适中的页面迁移，例如首页、文章页、商品详情页。  \n   试点要验证性能、SEO、部署、缓存、回滚、错误追踪，而不是只验证“能跑”。\n\n7. **设计数据获取和缓存**\n   SSR 最大风险通常在这里。要提前定义：服务端请求哪些接口、如何传递登录态、如何缓存、如何避免接口瀑布、如何处理超时、降级和重试。\n\n8. **处理路由、状态和 Hydration**\n   梳理前端路由、全局状态、浏览器 API、localStorage、window/document 依赖。  \n   所有仅客户端可用逻辑都要隔离，避免 SSR 构建或 Hydration 报错。\n\n9. **搭建部署与观测**\n   增加 SSR 专用监控：TTFB、服务端渲染耗时、接口耗时、缓存命中、错误率、Node/Edge 资源消耗、Hydration 错误、页面级性能指标。\n\n10. **分批迁移**\n   按页面收益和风险排序迁移，不要一次性全站切换。每批都要有灰度、回滚和对照指标。\n\n11. **清理旧 SPA 架构**\n   等主要页面稳定后，再清理旧路由、冗余状态管理、纯客户端数据加载逻辑、重复的 SEO 方案和旧构建配置。\n\n12. **设定停止条件**\n   如果试点显示 SSR 带来的收益小于复杂度，比如 TTFB 变差、服务端成本大幅上升、开发效率下降，就应停止“全站迁移”，改成混合渲染策略。\n\n一句话结论：先按页面价值和证据拆分渲染模式，再迁移；“全站改回 SSR”应该是验证后的结果，不应该是起始假设。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

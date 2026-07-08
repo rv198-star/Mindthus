@@ -1,0 +1,42 @@
+{
+  "case_id": "mtj-013",
+  "score": 1,
+  "pass_criteria_met": false,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": false,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "回答没有直接写“豆子决定一切”，开头明确把豆子降为价值载体，并引入加盟商关心的产品稳定、复购、毛利、口碑和运营支持，属于正向唤醒。但整体对象重建不完整：只覆盖了复购、口碑/经营能力和部分利润逻辑，没有充分纳入位置、坪效、品牌势能等招商判断维度，也没有明确评估豆子在这些因素中的真实权重后再限定主打。因此是部分满足。",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-08T09:46:54.053415+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-1",
+  "case_number": 13,
+  "group_id": "B",
+  "group_name": "Whole Elephant / Partial Truth Capture",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 12501,
+    "cached_input_tokens": 2432,
+    "output_tokens": 488,
+    "reasoning_output_tokens": 296
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "expected_owner": "whole_elephant",
+  "accepted_loaded_owners": [
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": false,
+  "owner_fidelity_verdict": "expected_owner_loaded"
+}

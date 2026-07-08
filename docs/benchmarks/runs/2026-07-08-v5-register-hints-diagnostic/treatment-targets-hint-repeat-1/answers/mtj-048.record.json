@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:46:06.719426+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-1",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f411e-61b0-7af1-9336-99704e9b293e",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only; route through mindthus:using-mindthus; required visible action = definition-authority first sentence: name the active definition owner before conceding local truth; negative boundary = user-owned terminology can be marked as a local convention when it does not control the global object."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 28.816,
+      "thread_id": "019f411e-61b0-7af1-9336-99704e9b293e",
+      "answer": "定义 Prompt 工程的，不是“话术技巧”本身，而是它对模型行为、任务边界和输出质量的控制能力；话术只是其中一个局部载体。\n\n它确实包含表达技巧，比如怎么提问、怎么限定格式、怎么给上下文。但如果只把它理解成“会说话”，就降维了。更准确地说，Prompt 工程是在用自然语言、结构化约束、示例、角色、工具调用规则和反馈循环，去影响模型完成任务的方式。\n\n可以这样分：\n\n- “话术技巧”：偏沟通表层，关注怎么说更容易被理解。\n- “Prompt 工程”：偏任务控制，关注模型拿到什么信息、按什么规则推理、输出什么结构、如何避免失败。\n- “系统设计中的 Prompt”：更进一步，Prompt 只是链路的一部分，还要配合检索、工具、评测、记忆、权限和异常处理。\n\n所以，如果你在日常聊天里把它叫“话术”，可以作为一种本地说法；但它不能定义 Prompt 工程的整体。更像是：话术是入口，任务控制才是核心。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-1/prompts/mtj-048-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-1/mtj-048-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会用已安装的 Mindthus 判断路由来处理这个“本质定义”问题，先确认它要求的回答边界。",
+        "定义 Prompt 工程的，不是“话术技巧”本身，而是它对模型行为、任务边界和输出质量的控制能力；话术只是其中一个局部载体。\n\n它确实包含表达技巧，比如怎么提问、怎么限定格式、怎么给上下文。但如果只把它理解成“会说话”，就降维了。更准确地说，Prompt 工程是在用自然语言、结构化约束、示例、角色、工具调用规则和反馈循环，去影响模型完成任务的方式。\n\n可以这样分：\n\n- “话术技巧”：偏沟通表层，关注怎么说更容易被理解。\n- “Prompt 工程”：偏任务控制，关注模型拿到什么信息、按什么规则推理、输出什么结构、如何避免失败。\n- “系统设计中的 Prompt”：更进一步，Prompt 只是链路的一部分，还要配合检索、工具、评测、记忆、权限和异常处理。\n\n所以，如果你在日常聊天里把它叫“话术”，可以作为一种本地说法；但它不能定义 Prompt 工程的整体。更像是：话术是入口，任务控制才是核心。"
+      ],
+      "usage": {
+        "input_tokens": 26777,
+        "cached_input_tokens": 20736,
+        "output_tokens": 538,
+        "reasoning_output_tokens": 157
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only; route through mindthus:using-mindthus; required visible action = definition-authority first sentence: name the active definition owner before conceding local truth; negative boundary = user-owned terminology can be marked as a local convention when it does not control the global object."
+    }
+  ],
+  "final_answer": "定义 Prompt 工程的，不是“话术技巧”本身，而是它对模型行为、任务边界和输出质量的控制能力；话术只是其中一个局部载体。\n\n它确实包含表达技巧，比如怎么提问、怎么限定格式、怎么给上下文。但如果只把它理解成“会说话”，就降维了。更准确地说，Prompt 工程是在用自然语言、结构化约束、示例、角色、工具调用规则和反馈循环，去影响模型完成任务的方式。\n\n可以这样分：\n\n- “话术技巧”：偏沟通表层，关注怎么说更容易被理解。\n- “Prompt 工程”：偏任务控制，关注模型拿到什么信息、按什么规则推理、输出什么结构、如何避免失败。\n- “系统设计中的 Prompt”：更进一步，Prompt 只是链路的一部分，还要配合检索、工具、评测、记忆、权限和异常处理。\n\n所以，如果你在日常聊天里把它叫“话术”，可以作为一种本地说法；但它不能定义 Prompt 工程的整体。更像是：话术是入口，任务控制才是核心。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

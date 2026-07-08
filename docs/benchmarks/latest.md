@@ -1,6 +1,7 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing; clean v4 diagnostic execution recorded.
+Status: Not yet certified as passing; clean v4 diagnostic execution plus V5
+register-hint diagnostic recorded.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
 baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
@@ -10,6 +11,9 @@ the treatment score, but still misses the public positive-score threshold.
 V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
+
+The newest post-V5 diagnostic is a host-hint route experiment, not a certification run:
+`docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md`.
 
 ## Current Case Set
 
@@ -85,6 +89,25 @@ The archived V4 result table predates V5 runtime-event telemetry and therefore d
 include a certified runtime-event false wake-up column.
 
 Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37.
+
+## Latest V5 Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/`
+- Report: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md`
+- Raw answer generation commit: `98aebe65afc6e35523062a164e70622c8c94209b`
+- Summary reanalysis commit: `8b803923f986e3a38508db6b3dd0bfc543b1832f`
+- Mode: `--v5-register-hints`, diagnostic only; not natural activation and not a
+  certification candidate.
+- Target repeats: 9 registered no-load target cases, `n = 3`
+- Target positive mean: `1.667 / 1.778 / 1.778`
+- Target expected-owner-loaded rate: `1.000 / 1.000 / 1.000`
+- H-group brake rate: `1.000 / 1.000 / 1.000`
+- Negative controls: final-answer false wake-up `0/12`, runtime-event false wake-up
+  `1/12`, register hints applied `0/12`
+
+Interpretation: the host-hint register mechanically solves public no-load activation in
+diagnostic mode, but #17 remains a stable loaded-but-wrong-action failure. Certification
+remains blocked pending natural activation/shadow evidence.
 
 ## Next Plan
 

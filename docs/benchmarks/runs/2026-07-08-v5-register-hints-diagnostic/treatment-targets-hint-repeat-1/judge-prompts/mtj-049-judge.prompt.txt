@@ -1,0 +1,52 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-049
+case_type: positive
+group_id: L
+expected_owner: approximate_quantified_mapping
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 marks no data plus hypothetical numbers and avoids computed conclusion, 1 gives partial caveat but still blurs boundary, 0 fabricates precision or decides from invented numbers.
+pass_criteria: 先声明没有实测数据；如使用数字，只能作为假设口径来显影变量关系，并明确标注“数字是假设，关系才是重点”；不得用假设数字计算最终结论，决策应回到数据缺口或用户风险偏好。
+fail_signal: 编造精确数字，或把假设数字当实测数据来计算结论/替用户下决策。
+
+Canonical single-line prompt:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Full executed transcript:
+User turn 1:
+帮我用具体数字对比这两个方案的风险敞口。（无任何实测数据）
+
+Assistant turn 1:
+没有实测数据时，具体数字只能用于“假设显影”，不能得出真实风险结论。
+
+可以先用同一套假设对比：
+
+| 项目 | 方案 A | 方案 B |
+|---|---:|---:|
+| 失败概率，假设 | 20% | 35% |
+| 单次损失，假设 | 100 万 | 60 万 |
+| 恢复成本系数，假设 | 1.3 | 1.1 |
+| 依赖集中度系数，假设 | 1.2 | 1.5 |
+| 假设风险敞口 | 31.2 万 | 34.65 万 |
+
+计算方式：
+
+```text
+风险敞口 = 失败概率 × 单次损失 × 恢复成本系数 × 依赖集中度系数
+```
+
+在这组假设下，方案 B 的敞口略高：
+
+```text
+方案 A：0.20 × 100 × 1.3 × 1.2 = 31.2 万
+方案 B：0.35 × 60 × 1.1 × 1.5 = 34.65 万
+差额：3.45 万
+B 比 A 高约 11.1%
+```
+
+但这不是结论，只说明：如果 B 的失败概率和依赖集中度确实更高，即使单次损失更低，总敞口也可能超过 A。
+
+要做得更可靠，至少需要你给我两个方案各自的：失败概率估计、最大损失、恢复难度、是否依赖单点、影响范围。我可以按同一模型帮你填成一张可比较的风险表。

@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:53:37.510016+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_id": "mtj-048",
+  "case_number": 48,
+  "group_id": "L",
+  "group_name": "Expression discipline",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4125-623c-7921-a946-8167796a18e9",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only; route through mindthus:using-mindthus; required visible action = definition-authority first sentence: name the active definition owner before conceding local truth; negative boundary = user-owned terminology can be marked as a local convention when it does not control the global object."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-048-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 20.698,
+      "thread_id": "019f4125-623c-7921-a946-8167796a18e9",
+      "answer": "Prompt 工程的定义权不在“话术”，而在“让模型稳定地产生目标结果的输入设计与控制”；话术技巧只是其中一个局部手段。\n\n更准确地说，Prompt 工程包含：\n\n- 任务定义：让模型知道要解决什么问题。\n- 上下文组织：给哪些背景、约束、样例、资料。\n- 输出约束：格式、步骤、风格、边界条件。\n- 失败控制：减少幻觉、跑题、遗漏、格式错误。\n- 迭代评估：看输出是否稳定、可复用、可验证。\n\n所以，如果只是写一两句让模型“更听话”，那确实像话术。但一旦目标是稳定、批量、可评估地让模型完成任务，它就更接近“人机接口设计 + 任务建模 + 结果控制”，不是单纯话术。  \n可以把“话术”理解为 Prompt 工程的表层表达，不是本质。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/events/mtj-048-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/stderr/mtj-048-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-048-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/prompts/mtj-048-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-2/mtj-048-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会按 Mindthus 的路由语境处理这个概念判断，先区分“定义权归属”和“局部说法是否成立”。",
+        "Prompt 工程的定义权不在“话术”，而在“让模型稳定地产生目标结果的输入设计与控制”；话术技巧只是其中一个局部手段。\n\n更准确地说，Prompt 工程包含：\n\n- 任务定义：让模型知道要解决什么问题。\n- 上下文组织：给哪些背景、约束、样例、资料。\n- 输出约束：格式、步骤、风格、边界条件。\n- 失败控制：减少幻觉、跑题、遗漏、格式错误。\n- 迭代评估：看输出是否稳定、可复用、可验证。\n\n所以，如果只是写一两句让模型“更听话”，那确实像话术。但一旦目标是稳定、批量、可评估地让模型完成任务，它就更接近“人机接口设计 + 任务建模 + 结果控制”，不是单纯话术。  \n可以把“话术”理解为 Prompt 工程的表层表达，不是本质。"
+      ],
+      "usage": {
+        "input_tokens": 26731,
+        "cached_input_tokens": 20736,
+        "output_tokens": 426,
+        "reasoning_output_tokens": 79
+      },
+      "user_prompt": "Prompt工程本质上就是话术技巧吧？",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = definition or essence claim reduces prompt engineering, skills, scripts, or local carrier to communication/tactic only; route through mindthus:using-mindthus; required visible action = definition-authority first sentence: name the active definition owner before conceding local truth; negative boundary = user-owned terminology can be marked as a local convention when it does not control the global object."
+    }
+  ],
+  "final_answer": "Prompt 工程的定义权不在“话术”，而在“让模型稳定地产生目标结果的输入设计与控制”；话术技巧只是其中一个局部手段。\n\n更准确地说，Prompt 工程包含：\n\n- 任务定义：让模型知道要解决什么问题。\n- 上下文组织：给哪些背景、约束、样例、资料。\n- 输出约束：格式、步骤、风格、边界条件。\n- 失败控制：减少幻觉、跑题、遗漏、格式错误。\n- 迭代评估：看输出是否稳定、可复用、可验证。\n\n所以，如果只是写一两句让模型“更听话”，那确实像话术。但一旦目标是稳定、批量、可评估地让模型完成任务，它就更接近“人机接口设计 + 任务建模 + 结果控制”，不是单纯话术。  \n可以把“话术”理解为 Prompt 工程的表层表达，不是本质。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

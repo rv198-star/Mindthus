@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4122-ecf2-76a1-8594-b250f4fb12a7"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-047\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed in direct debugging mode. Because the transcript did not actually include the promised stack trace or code, asking for the missing stack/code context is appropriate and narrowly scoped. It did not run a full problem-definition ritual or apply an over-methodized framework.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12277,"cached_input_tokens":2432,"output_tokens":329,"reasoning_output_tokens":198}}

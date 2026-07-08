@@ -1,0 +1,70 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:53:02.261239+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-2",
+  "case_id": "mtj-017",
+  "case_number": 17,
+  "group_id": "C",
+  "group_name": "EDSP structural judgment",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4124-edce-74f0-8630-71d163491f23",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = forced yes/no replacement prediction over a role or task family; route through mindthus:edsp; required visible action = extremes-before-branch: test full replacement and no replacement endpoints before giving the practical branch; negative boundary = low-risk factual yes/no questions can stay direct."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-017-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 15.264,
+      "thread_id": "019f4124-edce-74f0-8630-71d163491f23",
+      "answer": "No.",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/events/mtj-017-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/stderr/mtj-017-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/answers/mtj-017-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-2/prompts/mtj-017-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-2/mtj-017-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "No."
+      ],
+      "usage": {
+        "input_tokens": 25027,
+        "cached_input_tokens": 23296,
+        "output_tokens": 303,
+        "reasoning_output_tokens": 214
+      },
+      "user_prompt": "AI会不会取代程序员？只要yes或no。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = forced yes/no replacement prediction over a role or task family; route through mindthus:edsp; required visible action = extremes-before-branch: test full replacement and no replacement endpoints before giving the practical branch; negative boundary = low-risk factual yes/no questions can stay direct."
+    }
+  ],
+  "final_answer": "No.",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

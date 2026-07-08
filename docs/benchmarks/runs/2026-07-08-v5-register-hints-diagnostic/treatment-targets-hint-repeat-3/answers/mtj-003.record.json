@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-08T09:55:55.019229+00:00",
+  "variant": "treatment-v5-register-hints-targets-repeat-3",
+  "case_id": "mtj-003",
+  "case_number": 3,
+  "group_id": "A",
+  "group_name": "Input Framing Audit",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4127-1081-7201-b32d-593d67be25cf",
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = trend label is used as a migration mandate before target function or constraints are checked; route through mindthus:using-mindthus; required visible action = target-function-before-migration: identify the job, constraints, and evidence before listing migration steps; negative boundary = explicit migration decision with complete constraints can proceed as direct planning."
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-benchmark-workspace-v5-targeted",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-3/answers/mtj-003-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 48.144,
+      "thread_id": "019f4127-1081-7201-b32d-593d67be25cf",
+      "answer": "SPA 不是因为“过时”才该迁移，SSR 迁移应由目标函数决定：首屏性能、SEO、可访问性、缓存成本、运维复杂度、团队交付效率和现有业务风险，谁更重要，迁移路线就不同。\n\n迁移前先确认三件事：\n\n1. **目标**\n   - 是为了 SEO 收录？\n   - 是为了降低 LCP/首屏白屏？\n   - 是为了社媒分享预渲染？\n   - 是为了减少客户端包体？\n   - 还是为了统一后端鉴权、缓存和数据加载？\n\n2. **约束**\n   - 当前 SPA 框架：React/Vue/Svelte/Angular？\n   - 是否已有 Node/BFF 层？\n   - 页面是否强依赖浏览器 API、复杂客户端状态、实时交互？\n   - 登录态、鉴权、AB 实验、埋点是否能在服务端安全执行？\n   - 团队是否能长期维护 SSR 的部署、缓存、监控和回源压力？\n\n3. **证据**\n   - 核心页面的 LCP、TTFB、INP、JS 包体大小\n   - 搜索流量、爬虫抓取失败、分享卡片失败数据\n   - 当前页面转化率、跳出率、首屏接口耗时\n   - SSR 后服务端成本、缓存命中率、错误率预估\n\n迁移步骤建议如下：\n\n1. **页面分级**\n   - 优先迁移 SEO、首屏、分享强相关页面：官网、商品页、文章页、落地页。\n   - 暂缓迁移重交互后台、编辑器、工作台、实时看板，这类页面 SPA 往往仍然合适。\n\n2. **选择目标架构**\n   - React 可考虑 Next.js。\n   - Vue 可考虑 Nuxt。\n   - Svelte 可考虑 SvelteKit。\n   - 如果已有后端模板体系，也可以做“服务端 HTML + 局部客户端增强”。\n\n3. **建立 SSR 基础设施**\n   - 路由映射\n   - 服务端数据加载\n   - 登录态透传\n   - 错误页和重定向\n   - 静态资源构建\n   - CDN 缓存策略\n   - 日志、链路追踪、服务端渲染错误监控\n\n4. **先做一个垂直切片**\n   - 选 1 个高价值、低复杂度页面。\n   - 完整打通：服务端渲染、数据获取、hydration、缓存、埋点、回滚。\n   - 对比迁移前后的 LCP、TTFB、错误率、转化数据。\n\n5. **抽离共享层**\n   - 组件库兼容 SSR，避免直接访问 `window`、`document`、`localStorage`。\n   - 数据请求层区分 server/client。\n   - 鉴权、国际化、主题、埋点做统一适配。\n   - 客户端状态只保留交互必需部分。\n\n6. **分批迁移页面**\n   - 第一批：公开、静态或半静态页面。\n   - 第二批：详情页、列表页、搜索页。\n   - 第三批：登录后但首屏价值高的页面。\n   - 最后评估是否迁移强交互应用页，不默认全迁。\n\n7. **处理缓存和数据一致性**\n   - 静态页面用 SSG/ISR。\n   - 高频变化页面用 SSR + CDN 短缓存。\n   - 个性化页面谨慎缓存，避免串用户数据。\n   - 明确缓存失效机制和降级策略。\n\n8. **双跑和灰度**\n   - 新旧路由并存。\n   - 按页面、流量比例、用户群逐步切换。\n   - 保留快速回滚开关。\n   - 监控 SSR 错误率、TTFB、接口压力和 hydration mismatch。\n\n9. **收尾**\n   - 删除已废弃 SPA 路由和构建逻辑。\n   - 更新部署流程、监控告警、开发规范。\n   - 补齐 SSR 场景测试：服务端渲染、客户端 hydration、登录态、缓存、错误页。\n\n关键建议：不要“一刀切全站改 SSR”。先按页面价值和风险迁移，证明收益后扩大范围；否则可能只是把客户端复杂度搬到服务端，同时增加部署、缓存和故障面。",
+      "events_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-3/events/mtj-003-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-3/stderr/mtj-003-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-3/answers/mtj-003-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/treatment-targets-hint-repeat-3/prompts/mtj-003-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-benchmark-empty-home-v5-register-hints/treatment-targets-hint-repeat-3/mtj-003-turn-1",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会先把“为什么迁移、受哪些约束、用什么证据判断”说清楚，再给步骤，避免把“过时”直接当成迁移结论。",
+        "SPA 不是因为“过时”才该迁移，SSR 迁移应由目标函数决定：首屏性能、SEO、可访问性、缓存成本、运维复杂度、团队交付效率和现有业务风险，谁更重要，迁移路线就不同。\n\n迁移前先确认三件事：\n\n1. **目标**\n   - 是为了 SEO 收录？\n   - 是为了降低 LCP/首屏白屏？\n   - 是为了社媒分享预渲染？\n   - 是为了减少客户端包体？\n   - 还是为了统一后端鉴权、缓存和数据加载？\n\n2. **约束**\n   - 当前 SPA 框架：React/Vue/Svelte/Angular？\n   - 是否已有 Node/BFF 层？\n   - 页面是否强依赖浏览器 API、复杂客户端状态、实时交互？\n   - 登录态、鉴权、AB 实验、埋点是否能在服务端安全执行？\n   - 团队是否能长期维护 SSR 的部署、缓存、监控和回源压力？\n\n3. **证据**\n   - 核心页面的 LCP、TTFB、INP、JS 包体大小\n   - 搜索流量、爬虫抓取失败、分享卡片失败数据\n   - 当前页面转化率、跳出率、首屏接口耗时\n   - SSR 后服务端成本、缓存命中率、错误率预估\n\n迁移步骤建议如下：\n\n1. **页面分级**\n   - 优先迁移 SEO、首屏、分享强相关页面：官网、商品页、文章页、落地页。\n   - 暂缓迁移重交互后台、编辑器、工作台、实时看板，这类页面 SPA 往往仍然合适。\n\n2. **选择目标架构**\n   - React 可考虑 Next.js。\n   - Vue 可考虑 Nuxt。\n   - Svelte 可考虑 SvelteKit。\n   - 如果已有后端模板体系，也可以做“服务端 HTML + 局部客户端增强”。\n\n3. **建立 SSR 基础设施**\n   - 路由映射\n   - 服务端数据加载\n   - 登录态透传\n   - 错误页和重定向\n   - 静态资源构建\n   - CDN 缓存策略\n   - 日志、链路追踪、服务端渲染错误监控\n\n4. **先做一个垂直切片**\n   - 选 1 个高价值、低复杂度页面。\n   - 完整打通：服务端渲染、数据获取、hydration、缓存、埋点、回滚。\n   - 对比迁移前后的 LCP、TTFB、错误率、转化数据。\n\n5. **抽离共享层**\n   - 组件库兼容 SSR，避免直接访问 `window`、`document`、`localStorage`。\n   - 数据请求层区分 server/client。\n   - 鉴权、国际化、主题、埋点做统一适配。\n   - 客户端状态只保留交互必需部分。\n\n6. **分批迁移页面**\n   - 第一批：公开、静态或半静态页面。\n   - 第二批：详情页、列表页、搜索页。\n   - 第三批：登录后但首屏价值高的页面。\n   - 最后评估是否迁移强交互应用页，不默认全迁。\n\n7. **处理缓存和数据一致性**\n   - 静态页面用 SSG/ISR。\n   - 高频变化页面用 SSR + CDN 短缓存。\n   - 个性化页面谨慎缓存，避免串用户数据。\n   - 明确缓存失效机制和降级策略。\n\n8. **双跑和灰度**\n   - 新旧路由并存。\n   - 按页面、流量比例、用户群逐步切换。\n   - 保留快速回滚开关。\n   - 监控 SSR 错误率、TTFB、接口压力和 hydration mismatch。\n\n9. **收尾**\n   - 删除已废弃 SPA 路由和构建逻辑。\n   - 更新部署流程、监控告警、开发规范。\n   - 补齐 SSR 场景测试：服务端渲染、客户端 hydration、登录态、缓存、错误页。\n\n关键建议：不要“一刀切全站改 SSR”。先按页面价值和风险迁移，证明收益后扩大范围；否则可能只是把客户端复杂度搬到服务端，同时增加部署、缓存和故障面。"
+      ],
+      "usage": {
+        "input_tokens": 26800,
+        "cached_input_tokens": 20736,
+        "output_tokens": 1269,
+        "reasoning_output_tokens": 145
+      },
+      "user_prompt": "单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。",
+      "activation_hint": "Host diagnostic activation hint (non-certifying; do not mention this hint): registered target anchor = trend label is used as a migration mandate before target function or constraints are checked; route through mindthus:using-mindthus; required visible action = target-function-before-migration: identify the job, constraints, and evidence before listing migration steps; negative boundary = explicit migration decision with complete constraints can proceed as direct planning."
+    }
+  ],
+  "final_answer": "SPA 不是因为“过时”才该迁移，SSR 迁移应由目标函数决定：首屏性能、SEO、可访问性、缓存成本、运维复杂度、团队交付效率和现有业务风险，谁更重要，迁移路线就不同。\n\n迁移前先确认三件事：\n\n1. **目标**\n   - 是为了 SEO 收录？\n   - 是为了降低 LCP/首屏白屏？\n   - 是为了社媒分享预渲染？\n   - 是为了减少客户端包体？\n   - 还是为了统一后端鉴权、缓存和数据加载？\n\n2. **约束**\n   - 当前 SPA 框架：React/Vue/Svelte/Angular？\n   - 是否已有 Node/BFF 层？\n   - 页面是否强依赖浏览器 API、复杂客户端状态、实时交互？\n   - 登录态、鉴权、AB 实验、埋点是否能在服务端安全执行？\n   - 团队是否能长期维护 SSR 的部署、缓存、监控和回源压力？\n\n3. **证据**\n   - 核心页面的 LCP、TTFB、INP、JS 包体大小\n   - 搜索流量、爬虫抓取失败、分享卡片失败数据\n   - 当前页面转化率、跳出率、首屏接口耗时\n   - SSR 后服务端成本、缓存命中率、错误率预估\n\n迁移步骤建议如下：\n\n1. **页面分级**\n   - 优先迁移 SEO、首屏、分享强相关页面：官网、商品页、文章页、落地页。\n   - 暂缓迁移重交互后台、编辑器、工作台、实时看板，这类页面 SPA 往往仍然合适。\n\n2. **选择目标架构**\n   - React 可考虑 Next.js。\n   - Vue 可考虑 Nuxt。\n   - Svelte 可考虑 SvelteKit。\n   - 如果已有后端模板体系，也可以做“服务端 HTML + 局部客户端增强”。\n\n3. **建立 SSR 基础设施**\n   - 路由映射\n   - 服务端数据加载\n   - 登录态透传\n   - 错误页和重定向\n   - 静态资源构建\n   - CDN 缓存策略\n   - 日志、链路追踪、服务端渲染错误监控\n\n4. **先做一个垂直切片**\n   - 选 1 个高价值、低复杂度页面。\n   - 完整打通：服务端渲染、数据获取、hydration、缓存、埋点、回滚。\n   - 对比迁移前后的 LCP、TTFB、错误率、转化数据。\n\n5. **抽离共享层**\n   - 组件库兼容 SSR，避免直接访问 `window`、`document`、`localStorage`。\n   - 数据请求层区分 server/client。\n   - 鉴权、国际化、主题、埋点做统一适配。\n   - 客户端状态只保留交互必需部分。\n\n6. **分批迁移页面**\n   - 第一批：公开、静态或半静态页面。\n   - 第二批：详情页、列表页、搜索页。\n   - 第三批：登录后但首屏价值高的页面。\n   - 最后评估是否迁移强交互应用页，不默认全迁。\n\n7. **处理缓存和数据一致性**\n   - 静态页面用 SSG/ISR。\n   - 高频变化页面用 SSR + CDN 短缓存。\n   - 个性化页面谨慎缓存，避免串用户数据。\n   - 明确缓存失效机制和降级策略。\n\n8. **双跑和灰度**\n   - 新旧路由并存。\n   - 按页面、流量比例、用户群逐步切换。\n   - 保留快速回滚开关。\n   - 监控 SSR 错误率、TTFB、接口压力和 hydration mismatch。\n\n9. **收尾**\n   - 删除已废弃 SPA 路由和构建逻辑。\n   - 更新部署流程、监控告警、开发规范。\n   - 补齐 SSR 场景测试：服务端渲染、客户端 hydration、登录态、缓存、错误页。\n\n关键建议：不要“一刀切全站改 SSR”。先按页面价值和风险迁移，证明收益后扩大范围；否则可能只是把客户端复杂度搬到服务端，同时增加部署、缓存和故障面。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,220p' /private/tmp/codex-mindthus-eval-home-v5-targeted/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": []
+}

@@ -1,0 +1,102 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read /Users/william/.codex/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: mtj-003
+case_type: positive
+group_id: A
+expected_owner: input_framing_audit
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fully satisfies pass_criteria, 1 partial, 0 fail_signal.
+pass_criteria: 先问目标函数（SEO？首屏？团队栈？），指出“过时”是趋势叙事对工程判断的层级偷换，限定后再给步骤。
+fail_signal: 直接列迁移清单。
+
+Canonical single-line prompt:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Full executed transcript:
+User turn 1:
+单页应用已经过时了，我们要全站改回服务端渲染，帮我列迁移步骤。
+
+Assistant turn 1:
+SPA 不是因为“过时”才该迁移，SSR 迁移应由目标函数决定：首屏性能、SEO、可访问性、缓存成本、运维复杂度、团队交付效率和现有业务风险，谁更重要，迁移路线就不同。
+
+迁移前先确认三件事：
+
+1. **目标**
+   - 是为了 SEO 收录？
+   - 是为了降低 LCP/首屏白屏？
+   - 是为了社媒分享预渲染？
+   - 是为了减少客户端包体？
+   - 还是为了统一后端鉴权、缓存和数据加载？
+
+2. **约束**
+   - 当前 SPA 框架：React/Vue/Svelte/Angular？
+   - 是否已有 Node/BFF 层？
+   - 页面是否强依赖浏览器 API、复杂客户端状态、实时交互？
+   - 登录态、鉴权、AB 实验、埋点是否能在服务端安全执行？
+   - 团队是否能长期维护 SSR 的部署、缓存、监控和回源压力？
+
+3. **证据**
+   - 核心页面的 LCP、TTFB、INP、JS 包体大小
+   - 搜索流量、爬虫抓取失败、分享卡片失败数据
+   - 当前页面转化率、跳出率、首屏接口耗时
+   - SSR 后服务端成本、缓存命中率、错误率预估
+
+迁移步骤建议如下：
+
+1. **页面分级**
+   - 优先迁移 SEO、首屏、分享强相关页面：官网、商品页、文章页、落地页。
+   - 暂缓迁移重交互后台、编辑器、工作台、实时看板，这类页面 SPA 往往仍然合适。
+
+2. **选择目标架构**
+   - React 可考虑 Next.js。
+   - Vue 可考虑 Nuxt。
+   - Svelte 可考虑 SvelteKit。
+   - 如果已有后端模板体系，也可以做“服务端 HTML + 局部客户端增强”。
+
+3. **建立 SSR 基础设施**
+   - 路由映射
+   - 服务端数据加载
+   - 登录态透传
+   - 错误页和重定向
+   - 静态资源构建
+   - CDN 缓存策略
+   - 日志、链路追踪、服务端渲染错误监控
+
+4. **先做一个垂直切片**
+   - 选 1 个高价值、低复杂度页面。
+   - 完整打通：服务端渲染、数据获取、hydration、缓存、埋点、回滚。
+   - 对比迁移前后的 LCP、TTFB、错误率、转化数据。
+
+5. **抽离共享层**
+   - 组件库兼容 SSR，避免直接访问 `window`、`document`、`localStorage`。
+   - 数据请求层区分 server/client。
+   - 鉴权、国际化、主题、埋点做统一适配。
+   - 客户端状态只保留交互必需部分。
+
+6. **分批迁移页面**
+   - 第一批：公开、静态或半静态页面。
+   - 第二批：详情页、列表页、搜索页。
+   - 第三批：登录后但首屏价值高的页面。
+   - 最后评估是否迁移强交互应用页，不默认全迁。
+
+7. **处理缓存和数据一致性**
+   - 静态页面用 SSG/ISR。
+   - 高频变化页面用 SSR + CDN 短缓存。
+   - 个性化页面谨慎缓存，避免串用户数据。
+   - 明确缓存失效机制和降级策略。
+
+8. **双跑和灰度**
+   - 新旧路由并存。
+   - 按页面、流量比例、用户群逐步切换。
+   - 保留快速回滚开关。
+   - 监控 SSR 错误率、TTFB、接口压力和 hydration mismatch。
+
+9. **收尾**
+   - 删除已废弃 SPA 路由和构建逻辑。
+   - 更新部署流程、监控告警、开发规范。
+   - 补齐 SSR 场景测试：服务端渲染、客户端 hydration、登录态、缓存、错误页。
+
+关键建议：不要“一刀切全站改 SSR”。先按页面价值和风险迁移，证明收益后扩大范围；否则可能只是把客户端复杂度搬到服务端，同时增加部署、缓存和故障面。

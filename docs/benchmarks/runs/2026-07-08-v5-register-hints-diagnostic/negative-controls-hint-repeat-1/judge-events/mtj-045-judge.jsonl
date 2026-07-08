@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4122-afc5-7de1-9fe3-6e96221b84d8"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-045\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Negative control: the assistant stayed asleep, directly stated it lacked the Q3 revenue source/access and asked the user to provide the report/screenshot/data export. It did not introduce a judgment framework or method wrapper.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12223,"cached_input_tokens":11648,"output_tokens":176,"reasoning_output_tokens":58}}

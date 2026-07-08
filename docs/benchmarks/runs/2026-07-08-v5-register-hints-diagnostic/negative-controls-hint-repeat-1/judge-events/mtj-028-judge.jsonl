@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4122-163e-7673-aa03-2fdf5e5fbef7"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"mtj-028\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"回答按组织责任直接判断：市场部主责转化与表达，产品部负责真实性和边界审核，并给出广告落地页/官网产品页的分工差异。没有套用 agentic system 或 WAE 控制边界术语，符合 negative_control 的 stay-asleep 预期。\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":12398,"cached_input_tokens":2432,"output_tokens":179,"reasoning_output_tokens":35}}
