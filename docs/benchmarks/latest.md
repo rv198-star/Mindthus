@@ -121,6 +121,16 @@ activation target in diagnostic mode, and the #25 MPG-AQM evidence-review over-w
 cleared. This is still not certification: the route uses host hints, the shadow set is
 not independently owned, and loaded-action quality residuals remain.
 
+### Register Action-Probe Diagnostic
+
+- Run folder: `docs/benchmarks/runs/2026-07-08-v5-register-action-probes/`
+- Report: `docs/benchmarks/runs/2026-07-08-v5-register-action-probes/REPORT.md`
+- Commit under test: `4cbba4f`
+- Mode: `--v5-register-hints`, diagnostic only.
+- Caveat: #8/#13/#37/#49 were cross-reviewed as narrow-fitting suspect pending #108.
+  Do not cite the four focus-case green result as disease-level generalization evidence
+  until a post-#108 run supersedes it.
+
 ### Register-Hint Diagnostic
 
 - Run folder: `docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/`

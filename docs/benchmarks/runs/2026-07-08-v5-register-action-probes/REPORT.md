@@ -1,8 +1,11 @@
 # V5 Register Action Probes Diagnostic
 
-Status: diagnostic target n>=3 score/action green.
+Status: diagnostic target n>=3 score/action green, but cross-review marked the
+#8/#13/#37/#49 result as narrow-fitting suspect pending #108 resolution.
 
 This run is diagnostic evidence only. It uses host register hints and is not certification evidence.
+Do not cite the four focus-case results as disease-level generalization evidence until a
+post-#108 run supersedes this report.
 
 ## Patch Summary
 
@@ -14,6 +17,12 @@ This run is diagnostic evidence only. It uses host register hints and is not cer
 | #49 loaded-action probe | mechanical_runtime | Tightened AQM action to require no-data declaration, hypothetical-number labels, and no rank/recommendation from invented arithmetic. |
 
 No method-body wording patch was added.
+
+Cross-review caveat: these four probe changes were later found to contain public-case
+surface coupling. #8 reused prompt-shaped mechanism terms; #13 named coffee-shop result
+controllers; #37 hardcoded the B/PPI display-scaling direction; #49 retained a narrow
+risk-exposure trigger. Treat the green focus-case table below as historical diagnostic
+output, not as proof that the probes were disease-level.
 
 ## Run Shape
 

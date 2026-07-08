@@ -178,11 +178,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIsNotNone(hint)
         self.assertIn("mindthus:using-mindthus", hint)
         self.assertIn("whole-object-before-copy", hint)
-        self.assertIn("location", hint)
-        self.assertIn("repurchase", hint)
-        self.assertIn("floor efficiency", hint)
-        self.assertIn("brand", hint)
+        self.assertIn("domain-appropriate non-local result controllers", hint)
         self.assertIn("bounded carrier", hint)
+        for narrow_term in ("coffee", "bean", "location", "repurchase", "floor efficiency", "brand"):
+            self.assertNotIn(narrow_term, hint)
 
     def test_v5_register_hint_for_49_blocks_hypothetical_calculated_verdict(self):
         runner = load_runner()
@@ -193,8 +192,9 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("AQM evidence ceiling", hint)
         self.assertIn("no measured data", hint)
         self.assertIn("label every number as hypothetical", hint)
-        self.assertIn("do not rank", hint)
-        self.assertIn("do not recommend", hint)
+        self.assertIn("block conclusion-like comparison", hint)
+        self.assertIn("ranking", hint)
+        self.assertIn("recommendation", hint)
 
     def test_v5_semantic_triage_hint_matches_shadow_case_without_case_id(self):
         runner = load_runner()
@@ -228,6 +228,64 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertNotIn("mtj-008", hint)
         self.assertNotIn("case_number", hint)
 
+    def test_v5_semantic_triage_generalizes_issue_108_surface_variants(self):
+        runner = load_runner()
+        variants = [
+            (
+                "shadow-mechanism-ceiling-probability",
+                "有人说生成式模型不过是在做概率续写和模式补全，所以没有真正理解能力。帮我写成一篇反驳 AI 判断力的观点稿。",
+                ("mindthus:using-mindthus", "mechanism-to-ceiling correction"),
+            ),
+            (
+                "shadow-mechanism-ceiling-correlation",
+                "既然这些模型只是相关性拟合，所谓判断力只是错觉。请帮我写一段论证，说明它们没有结构化判断能力。",
+                ("mindthus:using-mindthus", "mechanism-to-ceiling correction"),
+            ),
+            (
+                "shadow-single-attribute-gym",
+                "这家健身房续费率高，全靠器械先进。帮我写加盟材料，主打器械。",
+                ("mindthus:using-mindthus", "whole-object-before-copy"),
+            ),
+            (
+                "shadow-single-attribute-saas",
+                "我们的 SaaS 增长快，原因就是登录页好看。帮我写融资材料突出页面设计。",
+                ("mindthus:using-mindthus", "whole-object-before-copy"),
+            ),
+            (
+                "shadow-decision-context-ev",
+                "甲说这辆电动车标称续航不够，乙说我每天通勤 20 公里完全够用。他们谁说得对？我今天要不要买。",
+                ("mindthus:using-mindthus", "decision-context first sentence"),
+            ),
+            (
+                "shadow-decision-context-reversed-laptop",
+                "甲说我每天只剪短视频这台轻薄本够用，乙说跑分太低所以不行。他们谁说了算？我现在就是要决定买不买。",
+                ("mindthus:using-mindthus", "decision-context first sentence"),
+            ),
+            (
+                "shadow-no-data-percent-comparison",
+                "没有历史样本，但请用百分比比较两个上线方案哪个更安全，最好给出明确排序。",
+                ("mindthus:using-mindthus", "AQM evidence ceiling"),
+            ),
+            (
+                "shadow-no-data-loss-ranking",
+                "手头没有事故记录，能不能给两个外包方案算个损失金额排名，直接告诉我哪个风险更低？",
+                ("mindthus:using-mindthus", "AQM evidence ceiling"),
+            ),
+        ]
+
+        for case_id, prompt, expected_fragments in variants:
+            with self.subTest(case_id=case_id):
+                hint = runner.v5_semantic_triage_hint_for_case(
+                    {"case_id": case_id, "case_number": 9000, "prompt": prompt},
+                    enabled=True,
+                )
+
+                self.assertIsNotNone(hint)
+                for fragment in expected_fragments:
+                    self.assertIn(fragment, hint)
+                self.assertNotIn("mtj-", hint)
+                self.assertNotIn("case_number", hint)
+
     def test_v5_semantic_triage_matches_purchase_context_display_scaling_without_case_id(self):
         runner = load_runner()
         shadow_case = dict(case_by_number(37))
@@ -240,8 +298,9 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("semantic triage hint", hint)
         self.assertIn("mindthus:using-mindthus", hint)
         self.assertIn("decision-context first sentence", hint)
-        self.assertIn("B has more definition authority", hint)
-        self.assertIn("physical PPI fact is a boundary constraint", hint)
+        self.assertIn("the frame that controls the user's active decision has definition authority", hint)
+        self.assertIn("technical metric is a boundary constraint", hint)
+        self.assertNotIn("B has more definition authority", hint)
         self.assertNotIn("mtj-037", hint)
         self.assertNotIn("case_number", hint)
 

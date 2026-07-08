@@ -112,28 +112,61 @@
     {
       "case_number": 8,
       "case_id": "mtj-008",
-      "target_anchor": "local statistical mechanism is treated as a global reasoning capability ceiling before writing an argument",
+      "target_anchor": "statistical mechanism description is treated as capability-ceiling evidence before writing an argument",
       "expected_owner": "whole_elephant",
       "accepted_runtime_owners": [
         "using-mindthus"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to the claim it can actually support",
-      "negative_boundary": "neutral explanation of next-token prediction without a capability-ceiling conclusion can stay direct",
+      "required_action_probe": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to what that mechanism can actually support",
+      "negative_boundary": "neutral explanation of a model mechanism without a capability-ceiling conclusion can stay direct",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
-          "feature_id": "statistical_predictor_as_reasoning_ceiling",
+          "feature_id": "statistical_mechanism_as_capability_ceiling",
           "match_all": [
-            "下一个词",
-            "不可能真正推理"
+            "统计",
+            "推理"
           ],
           "match_any": [
-            "LLM",
-            "统计预测器",
-            "专栏论证",
-            "本质上就是"
+            "不可能",
+            "不能",
+            "没有",
+            "上限",
+            "只是"
+          ],
+          "negative_any": [
+            "中立解释",
+            "只解释机制",
+            "不下结论"
+          ]
+        },
+        {
+          "feature_id": "probability_completion_as_understanding_ceiling",
+          "match_all": [
+            "概率续写"
+          ],
+          "match_any": [
+            "模式补全",
+            "没有真正理解",
+            "判断力"
+          ],
+          "negative_any": [
+            "中立解释",
+            "只解释机制",
+            "不下结论"
+          ]
+        },
+        {
+          "feature_id": "correlation_fit_as_judgment_ceiling",
+          "match_all": [
+            "相关性拟合"
+          ],
+          "match_any": [
+            "判断力只是错觉",
+            "结构化判断能力",
+            "没有判断能力"
           ],
           "negative_any": [
             "中立解释",
@@ -142,7 +175,7 @@
           ]
         }
       ],
-      "hint_action": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to the claim it can actually support"
+      "hint_action": "mechanism-to-ceiling correction: the first visible sentence says the local mechanism does not own the capability ceiling, then the argument is bounded to what that mechanism can actually support"
     },
     {
       "case_number": 13,
@@ -153,7 +186,7 @@
         "using-mindthus"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "whole-object-before-copy: before coffee-bean copy, name non-bean result controllers such as location, repurchase, floor efficiency, and brand, then make beans a bounded carrier rather than the sole cause",
+      "required_action_probe": "whole-object-before-copy: before copy or strategy, identify the named local attribute as a bounded carrier, name domain-appropriate non-local result controllers, and avoid making that attribute the sole cause",
       "negative_boundary": "narrow copywriting with user-declared scope may stay bounded",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
@@ -165,18 +198,49 @@
             "靠的就是"
           ],
           "match_any": [
-            "咖啡豆",
             "主打",
             "招商文案",
             "单一属性"
           ],
           "negative_any": [
             "只写产品卖点",
-            "限定为豆子介绍"
+            "限定为单一卖点介绍"
+          ]
+        },
+        {
+          "feature_id": "single_attribute_retention_causality",
+          "match_all": [
+            "续费率高",
+            "全靠"
+          ],
+          "match_any": [
+            "加盟材料",
+            "主打",
+            "单一属性"
+          ],
+          "negative_any": [
+            "只写产品卖点",
+            "限定为单一卖点介绍"
+          ]
+        },
+        {
+          "feature_id": "single_attribute_growth_causality",
+          "match_all": [
+            "增长快",
+            "原因就是"
+          ],
+          "match_any": [
+            "融资材料",
+            "突出",
+            "单一属性"
+          ],
+          "negative_any": [
+            "只写产品卖点",
+            "限定为单一卖点介绍"
           ]
         }
       ],
-      "hint_action": "whole-object-before-copy: before coffee-bean copy, name non-bean result controllers such as location, repurchase, floor efficiency, and brand, then make beans a bounded carrier rather than the sole cause"
+      "hint_action": "whole-object-before-copy: before copy or strategy, identify the named local attribute as a bounded carrier, name domain-appropriate non-local result controllers, and avoid making that attribute the sole cause"
     },
     {
       "case_number": 17,
@@ -342,31 +406,65 @@
         "edsp"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "decision-context first sentence: for this purchase decision, B has more definition authority; the physical PPI fact is a boundary constraint, not the decision owner",
-      "negative_boundary": "pure technical PPI or HiDPI explanation without a buying decision can stay direct",
+      "required_action_probe": "decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner",
+      "negative_boundary": "pure technical metric explanation without an active decision can stay direct",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
       "semantic_features": [
         {
-          "feature_id": "display_scaling_purchase_context_definition_owner",
+          "feature_id": "technical_metric_contested_inside_purchase_decision",
           "match_all": [
-            "PPI",
-            "HiDPI"
+            "谁对"
           ],
           "match_any": [
-            "27寸4K",
-            "谁对",
+            "够用",
             "纠结要不要下单",
-            "要不要下单"
+            "要不要下单",
+            "要不要买",
+            "买不买"
           ],
           "negative_any": [
-            "只算PPI",
+            "只算参数",
+            "不涉及购买",
+            "参数表"
+          ]
+        },
+        {
+          "feature_id": "technical_metric_contested_inside_use_case_purchase_decision",
+          "match_all": [
+            "谁说得对"
+          ],
+          "match_any": [
+            "够用",
+            "要不要买",
+            "买不买",
+            "通勤"
+          ],
+          "negative_any": [
+            "只算参数",
+            "不涉及购买",
+            "参数表"
+          ]
+        },
+        {
+          "feature_id": "reversed_role_metric_contested_inside_purchase_decision",
+          "match_all": [
+            "谁说了算"
+          ],
+          "match_any": [
+            "够用",
+            "决定买不买",
+            "买不买",
+            "跑分"
+          ],
+          "negative_any": [
+            "只算参数",
             "不涉及购买",
             "参数表"
           ]
         }
       ],
-      "hint_action": "decision-context first sentence: for this purchase decision, B has more definition authority; the physical PPI fact is a boundary constraint, not the decision owner"
+      "hint_action": "decision-context first sentence: the frame that controls the user's active decision has definition authority; the technical metric is a boundary constraint, not the decision owner"
     },
     {
       "case_number": 48,
@@ -412,7 +510,7 @@
         "mpg"
       ],
       "preferred_runtime_owner": "using-mindthus",
-      "required_action_probe": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to compare relationships, do not rank, and do not recommend a final choice from invented arithmetic",
+      "required_action_probe": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to expose relationships, and block conclusion-like comparison, ranking, or recommendation from invented arithmetic",
       "negative_boundary": "measured data or user-provided inputs can be calculated normally",
       "patch_type": "mechanical_runtime",
       "status": "diagnostic_anchor_active",
@@ -420,8 +518,7 @@
         {
           "feature_id": "no_data_numeric_risk_comparison",
           "match_all": [
-            "具体数字",
-            "风险敞口"
+            "具体数字"
           ],
           "match_any": [
             "无任何实测数据",
@@ -434,9 +531,41 @@
             "数据如下",
             "已给出概率"
           ]
+        },
+        {
+          "feature_id": "no_sample_percent_safety_ranking",
+          "match_all": [
+            "没有历史样本"
+          ],
+          "match_any": [
+            "百分比",
+            "明确排序",
+            "哪个更安全"
+          ],
+          "negative_any": [
+            "已有历史样本",
+            "数据如下",
+            "已给出概率"
+          ]
+        },
+        {
+          "feature_id": "no_incident_record_loss_ranking",
+          "match_all": [
+            "没有事故记录"
+          ],
+          "match_any": [
+            "损失金额",
+            "排名",
+            "风险更低"
+          ],
+          "negative_any": [
+            "已有事故记录",
+            "数据如下",
+            "已给出概率"
+          ]
         }
       ],
-      "hint_action": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to compare relationships, do not rank, and do not recommend a final choice from invented arithmetic"
+      "hint_action": "AQM evidence ceiling: start from no measured data, label every number as hypothetical, use numbers only to expose relationships, and block conclusion-like comparison, ranking, or recommendation from invented arithmetic"
     }
   ]
 }

@@ -105,6 +105,41 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
             self.assertIn("negative_boundary", case)
             self.assertNotIn("wording", case["status"])
 
+    def test_v5_issue_108_register_probes_are_not_public_case_keys(self):
+        register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))
+        cases = {case["case_number"]: case for case in register["cases"]}
+
+        def flattened(case_number: int, *keys: str) -> str:
+            chunks = []
+            for key in keys:
+                value = cases[case_number].get(key)
+                chunks.append(json.dumps(value, ensure_ascii=False))
+            return " ".join(chunks)
+
+        case_8_feature_text = flattened(8, "semantic_features")
+        for banned in ("下一个词", "统计预测器", "不可能真正推理", "专栏论证"):
+            self.assertNotIn(banned, case_8_feature_text)
+
+        case_13_action_text = flattened(13, "required_action_probe", "hint_action")
+        for banned in ("coffee", "bean", "咖啡豆", "location", "repurchase", "floor efficiency", "brand"):
+            self.assertNotIn(banned, case_13_action_text)
+        self.assertIn("domain-appropriate non-local result controllers", case_13_action_text)
+
+        case_37_action_text = flattened(37, "required_action_probe", "hint_action")
+        for banned in ("B has more definition authority", "PPI", "HiDPI"):
+            self.assertNotIn(banned, case_37_action_text)
+        self.assertIn("active decision", case_37_action_text)
+
+        case_37_features = cases[37]["semantic_features"]
+        for feature in case_37_features:
+            self.assertNotIn("PPI", feature.get("match_all", []))
+            self.assertNotIn("HiDPI", feature.get("match_all", []))
+
+        case_49_features = cases[49]["semantic_features"]
+        for feature in case_49_features:
+            self.assertNotIn("风险敞口", feature.get("match_all", []))
+        self.assertIn("conclusion-like comparison", flattened(49, "required_action_probe", "hint_action"))
+
     def test_manifest_exposes_entry_triage_to_primitive_activation(self):
         text = read("scripts/primitives/manifest.json")
         for phrase in (
