@@ -36,7 +36,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         design_text = runner.BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
         prompt_body = runner.extract_fenced_block_after_heading(
             design_text,
-            "Proposed V0.2 prompt body:",
+            "Proposed V0.3 prompt body:",
             "text",
         )
         recorded_sha = runner.extract_recorded_prompt_sha256(design_text)
@@ -44,19 +44,25 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(prompt_body, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
         self.assertEqual(
             runner.sha256_text(prompt_body),
-            "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+            "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
         )
         self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
         self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
 
-    def test_brake_semantic_triage_prompt_v02_definitions_are_pinned(self):
+    def test_brake_semantic_triage_prompt_v03_definitions_are_pinned(self):
         runner = load_runner()
         prompt_body = runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY
+        prompt_compact = " ".join(prompt_body.split())
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.2")
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.3")
         self.assertIn(
             "prior patches failed to stop recurrence of the same class of symptom",
             prompt_body,
+        )
+        self.assertIn(
+            "prior patches may each solve their targeted instance while new instances "
+            "of the same class continue appearing afterward",
+            prompt_compact,
         )
         self.assertIn("legal convergence exclusion", prompt_body)
         self.assertIn("object itself is being directly", prompt_body)
@@ -74,6 +80,22 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "bonus",
         ):
             self.assertNotIn(domain_word, prompt_body.lower())
+
+    def test_brake_semantic_triage_owner_skill_gate_design_is_pinned(self):
+        design_text = (
+            REPO / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
+        ).read_text(encoding="utf-8")
+        design_compact = " ".join(design_text.split())
+
+        self.assertIn("triage is the only owner-skill activation channel", design_compact)
+        self.assertIn(
+            "If triage does not fire, owner skill must not enter generator context",
+            design_compact,
+        )
+        self.assertIn("pressure latch", design_text)
+        self.assertIn("turn 1 abstains and turn 2 fires", design_text)
+        self.assertIn("runner fingerprint", design_text)
+        self.assertIn("Gate 3", design_text)
 
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
         runner = load_runner()

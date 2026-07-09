@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
 BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
-BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.2"
+BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.3"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.90
 CONTAMINATION_RE = re.compile(
@@ -108,7 +108,7 @@ def extract_recorded_prompt_sha256(text: str) -> str:
 
 def load_brake_semantic_triage_prompt_body() -> str:
     text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
-    return extract_fenced_block_after_heading(text, "Proposed V0.2 prompt body:", "text")
+    return extract_fenced_block_after_heading(text, "Proposed V0.3 prompt body:", "text")
 
 
 def load_brake_semantic_triage_prompt_sha256() -> str:
@@ -1729,7 +1729,7 @@ def main() -> int:
         "--triage-threshold",
         type=float,
         default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-        help="Confidence threshold for brake semantic triage firing. Reviewed v0.2 is 0.90.",
+        help="Confidence threshold for brake semantic triage firing. Reviewed v0.3 is 0.90.",
     )
     parser.add_argument(
         "--superpowers-root",

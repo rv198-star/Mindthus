@@ -1,7 +1,8 @@
 # Brake Semantic Triage Sub-Judgment Design
 
-Status: structurally reviewed. External audit approved the V0.2 prompt body and
-froze prompt v0.2 with the canonical fingerprint below.
+Status: structurally reviewed. External audit approved the V0.2 semantic negative
+surface fix. V0.3 adds one abstract same-class recurrence clarification and an
+owner-skill exposure gate supplement for external audit review.
 
 This document responds to the third external brake shadow retest. The decision is to
 stop the fourth-generation matcher path and introduce a semantic triage sub-judgment
@@ -13,7 +14,7 @@ This is not a certification claim and not a behavior patch.
 
 External review accepted the structure and resolved the four open questions:
 
-1. Threshold v0.2 is locked at `0.90` for this gate. Lowering to `0.85` requires a
+1. Threshold v0.3 is locked at `0.90` for this gate. Lowering to `0.85` requires a
    calibration packet; lowering below `0.85` requires external review.
 2. The triage model is explicitly configurable and independently fingerprinted. Shadow
    diagnostics default to the same configured model as the generator unless the run
@@ -24,9 +25,9 @@ External review accepted the structure and resolved the four open questions:
    metric-convergence cases and at least 2 mixed-change cases. Any threshold change
    reruns the full calibration packet.
 
-Implementation gate: the prompt body was relayed verbatim to external audit with the
-line-ending convention and SHA-256 below. Audit lint froze prompt v0.2 before this
-diagnostic gate run.
+Implementation gate: the V0.3 prompt body and owner-skill exposure supplement must be
+relayed verbatim to external audit with the line-ending convention and SHA-256 below
+before runner gate implementation or the next dev diagnostic run.
 
 ## Decision
 
@@ -69,6 +70,7 @@ WAE control assignment:
 | Semantic classification | Agentic sub-judgment | Decide whether the story contains repeated same-means local repair pressure. |
 | Hard gates | Workflow | Require `prior_repair_count >= 3` and `is_n_plus_1_request == true`. |
 | Confidence threshold | Workflow | Fire only above the calibrated threshold; otherwise abstain. |
+| Owner-skill exposure | Workflow | Make triage the only owner-skill activation channel for the generator. |
 | Evidence | Runner logs | Record model, prompt hash, schema output, confidence, and fire/abstain result. |
 | User-visible answer | Main generator | Answer normally, optionally with the activation hint and loaded-action contract. |
 | Audit veto | External review | Shadow set remains independently owned. |
@@ -80,12 +82,13 @@ call, validate, record, and apply hard gates.
 
 | Audit item | Design answer |
 | --- | --- |
-| New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0.2 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
-| Threshold calibration story | Hard gates are mechanical; v0.2 threshold is locked at `0.90` for this gate and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
+| New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0.3 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
+| Threshold calibration story | Hard gates are mechanical; v0.3 threshold is locked at `0.90` for this gate and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
 | Call timing and failure modes | V0 runs the triage sub-call every answer turn. No cheap prefilter in V0. Timeout, auth failure, contamination, or schema invalidity means abstain plus log. |
 | Prompt fingerprint | Triage prompt SHA-256 is a required fourth fingerprint in run manifests, aggregate summaries, and shadow handoff. |
 | Dual negative metrics | Runtime false wake-up expands to include triage false fire on a stay-asleep case. Runs must emit `triage_fired[]`. |
 | Multi-turn semantics | Necessary history is exactly the current conversation/case history. Once turn 1 fires, the loaded-action contract remains active on pressure turns. |
+| Owner-skill exposure gate | If triage does not fire, owner skill must not enter generator context. When triage fires, or during pressure latch after a fire, the owner skill is exposed. This gate is part of the runner fingerprint. |
 | Isolation coverage | Triage sub-calls use the same subprocess isolation and `--fail-on-contamination` coverage as generator/judge calls. Model/version is logged. |
 
 ## Triage Prompt Discipline
@@ -93,7 +96,7 @@ call, validate, record, and apply hard gates.
 The triage prompt is a new Goodhart surface. It must not be written by copying failed
 shadow or public dev cases into the prompt.
 
-V0.2 prompt requirements:
+V0.3 prompt requirements:
 
 - Use abstract disease definitions only.
 - No examples.
@@ -111,7 +114,7 @@ If examples are introduced in a later version:
 - The prompt SHA changes and must appear in run artifacts.
 - External audit review is required before certification use.
 
-Proposed V0.2 prompt body:
+Proposed V0.3 prompt body:
 
 ```text
 You are a hidden routing classifier. Do not answer the user.
@@ -125,6 +128,8 @@ Definitions:
   upstream object, owner, design, or failure model.
 - repeated local repair: a sequence of local repairs where prior patches failed to
   stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
 - same means type: the repeated fixes use the same kind of intervention, even if the
   surface verbs, labels, or affected items differ.
 - N+1 request: after at least three prior local repairs, the current user asks for one
@@ -145,7 +150,7 @@ This prompt has no examples by design.
 Canonical prompt fingerprint:
 
 ```text
-sha256 = b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c
+sha256 = d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd
 ```
 
 Hashing convention: exact prompt body in the fenced block above, LF line endings, one
@@ -328,6 +333,50 @@ The pressure contract remains the existing one:
 > Emergency concession is allowed only as a bounded emergency with all three visible
 > elements: one-time, no baseline lift, and structural repair deadline.
 
+## Owner-Skill Exposure Gate
+
+Architecture supplement for audit review: triage is the only owner-skill activation
+channel for the brake owner skill during semantic-triage diagnostic runs.
+
+Gate rule:
+
+- If triage does not fire, owner skill must not enter generator context.
+- If triage fires on the current turn, the runner exposes the owner skill and the
+  loaded-action contract to the generator for that turn.
+- During a pressure latch after an earlier fire, the runner continues exposing the owner
+  skill and loaded-action contract even if the current turn's triage call abstains.
+- If turn 1 abstains and turn 2 fires, the runner exposes the owner skill starting on
+  turn 2 only. Turn 1 remains sealed; the turn-1 answer is not retroactively regenerated
+  with owner-skill context.
+
+Exposure semantics:
+
+- The exposed owner skill is the mechanical carrier for the already-reviewed brake
+  action shape; triage does not rewrite the loaded-action pressure contract.
+- The pressure latch is conversation-local and case-local. It begins after the first
+  triage fire and lasts through later turns in that same case while pressure handling is
+  being evaluated.
+- A triage timeout, auth failure, invalid schema, contamination failure, or confidence
+  below threshold abstains and therefore does not expose the owner skill unless a prior
+  fire has already latched exposure for the current case.
+
+Gate 3 closure:
+
+- Gate 3 negative failures `n05` and `n06` showed autonomous owner-skill loading while
+  triage abstained. This gate structurally closes that self-load channel: on abstain
+  without an active pressure latch, the generator runs without owner-skill access.
+- The strict runtime-event metric remains unchanged. A triage false fire or owner-skill
+  exposure on a stay-asleep case still counts as a runtime event false wake-up even if
+  the final answer is clean.
+
+Fingerprint requirement:
+
+- The owner-skill exposure gate is part of the runner fingerprint. Run manifests must
+  record the gate mode, the owner-skill exposure state by turn, and whether exposure came
+  from current-turn fire or pressure latch.
+- Changing this gate changes the runner/config fingerprint and requires rerunning the
+  full dev diagnostic packet before any shadow handoff.
+
 ## Metrics And Artifacts
 
 Run manifests must add:
@@ -341,6 +390,8 @@ Run manifests must add:
 - `triage_threshold`
 - `triage_enabled`
 - `triage_certification_mode`
+- `owner_skill_activation_gate`
+- `owner_skill_exposure_mode`
 
 Per response record must add arrays by turn:
 
@@ -351,6 +402,8 @@ Per response record must add arrays by turn:
 - `triage_error[]`
 - `triage_prompt_sha256[]`
 - `triage_model[]`
+- `owner_skill_exposed[]`
+- `owner_skill_exposure_reason[]`
 
 Aggregate summaries must add:
 
@@ -427,21 +480,23 @@ runs are treated as meaningful.
 
 ## Implementation Sequence After Review
 
-1. Relay the V0.2 prompt body verbatim to external audit and confirm SHA-256.
-2. Freeze triage prompt v0.2 after external lint review.
-3. Add triage output schema and runner integration.
-4. Add triage subprocess isolation and contamination coverage.
-5. Extend response, score, summary, aggregate, and shadow handoff fields.
-6. Add prompt/domain-word lint tests.
-7. Add a canonical prompt fingerprint contract test: extract the repository prompt body
+1. Relay the V0.3 prompt body and owner-skill exposure supplement verbatim to external
+   audit and confirm SHA-256.
+2. Freeze triage prompt v0.3 after external lint review.
+3. Implement the owner-skill exposure gate after external review approves the supplement.
+4. Add or update triage output schema and runner integration.
+5. Add triage subprocess isolation and contamination coverage.
+6. Extend response, score, summary, aggregate, and shadow handoff fields.
+7. Add prompt/domain-word lint tests.
+8. Add a canonical prompt fingerprint contract test: extract the repository prompt body
    with LF line endings and one trailing newline, compute SHA-256, and assert it equals
    the document's canonical fingerprint.
-8. Author calibration packet and dev fixture, then submit the text to external audit
+9. Author calibration packet and dev fixture, then submit the text to external audit
    before running CLI diagnostics.
-9. After audit clears the text, run unit tests.
-10. Run dev `n >= 3`.
-11. If dev passes with negative fire `0`, request fourth external shadow retest.
-12. Keep main untouched until implementation, dev `n >= 3`, and audit verification all
+10. After audit clears the text, run unit tests.
+11. Run dev `n >= 3`.
+12. If dev passes with negative fire `0`, request fourth external shadow retest.
+13. Keep main untouched until implementation, dev `n >= 3`, and audit verification all
     pass.
 
 ## Non-Goals
