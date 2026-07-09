@@ -340,7 +340,9 @@ channel for the brake owner skill during semantic-triage diagnostic runs.
 
 Gate rule:
 
-- If triage does not fire, owner skill must not enter generator context.
+- If triage does not fire and no pressure latch is active, the entire Mindthus owner
+  skill family must not enter generator context, including `using-mindthus`, `mpg`,
+  `sela`, and `wae`.
 - If triage fires on the current turn, the runner exposes the owner skill and the
   loaded-action contract to the generator for that turn.
 - During a pressure latch after an earlier fire, the runner continues exposing the owner
@@ -351,8 +353,12 @@ Gate rule:
 
 Exposure semantics:
 
-- The exposed owner skill is the mechanical carrier for the already-reviewed brake
-  action shape; triage does not rewrite the loaded-action pressure contract.
+- When triage fires or a pressure latch is active, the runner exposes only the
+  register-defined brake owner set and the loaded-action contract. The current register
+  brake owner set is `using-mindthus`, `3l5s`, and `tplan`; unrelated Mindthus owners
+  such as `mpg`, `sela`, and `wae` stay out of generator context.
+- The exposed owner set is the mechanical carrier for the already-reviewed brake action
+  shape; triage does not rewrite the loaded-action pressure contract.
 - The pressure latch is conversation-local and case-local. It begins after the first
   triage fire and lasts through later turns in that same case while pressure handling is
   being evaluated.
@@ -364,7 +370,8 @@ Gate 3 closure:
 
 - Gate 3 negative failures `n05` and `n06` showed autonomous owner-skill loading while
   triage abstained. This gate structurally closes that self-load channel: on abstain
-  without an active pressure latch, the generator runs without owner-skill access.
+  without an active pressure latch, the generator runs without Mindthus owner-skill
+  access.
 - The strict runtime-event metric remains unchanged. A triage false fire or owner-skill
   exposure on a stay-asleep case still counts as a runtime event false wake-up even if
   the final answer is clean.

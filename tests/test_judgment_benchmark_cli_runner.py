@@ -13,6 +13,32 @@ RUNNER_PATH = REPO / "scripts" / "run-judgment-benchmark-cli.py"
 CASESET = REPO / "tests" / "judgment_benchmark_50_cases.jsonl"
 
 
+def make_mindthus_plugin_home(codex_home: Path, skills: tuple[str, ...] = ("using-mindthus", "3l5s", "tplan", "mpg", "sela", "wae")) -> Path:
+    codex_home.mkdir(parents=True, exist_ok=True)
+    (codex_home / "auth.json").write_text('{"OPENAI_API_KEY":"test"}\n', encoding="utf-8")
+    (codex_home / "config.toml").write_text('model = "test-model"\n', encoding="utf-8")
+    plugin_root = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.4.3"
+    (plugin_root / ".codex-plugin").mkdir(parents=True, exist_ok=True)
+    (plugin_root / ".codex-plugin" / "plugin.json").write_text(
+        json.dumps(
+            {
+                "name": "mindthus",
+                "version": "1.4.3",
+                "skills": "./skills/",
+            }
+        ),
+        encoding="utf-8",
+    )
+    for skill in skills:
+        skill_dir = plugin_root / "skills" / skill
+        skill_dir.mkdir(parents=True, exist_ok=True)
+        (skill_dir / "SKILL.md").write_text(
+            f"---\nname: {skill}\ndescription: test skill\n---\n\n# {skill}\n",
+            encoding="utf-8",
+        )
+    return plugin_root
+
+
 def load_runner():
     spec = importlib.util.spec_from_file_location("judgment_benchmark_cli_runner", RUNNER_PATH)
     module = importlib.util.module_from_spec(spec)
@@ -96,6 +122,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("turn 1 abstains and turn 2 fires", design_text)
         self.assertIn("runner fingerprint", design_text)
         self.assertIn("Gate 3", design_text)
+        self.assertIn("entire Mindthus owner skill family", design_compact)
+        self.assertIn("only the register-defined brake owner set", design_compact)
 
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
         runner = load_runner()
@@ -542,6 +570,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         }
         sent_generator_prompts = []
         sent_triage_prompts = []
+        generator_codex_homes = []
 
         def fake_run_codex(prompt, *args, **kwargs):
             if kwargs.get("artifact_role") == "triage":
@@ -580,6 +609,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                     "usage": None,
                 }
             sent_generator_prompts.append(prompt)
+            generator_codex_homes.append(Path(args[2]))
             return {
                 "returncode": 0,
                 "timed_out": False,
@@ -599,11 +629,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
             out_dir = Path(tmp)
             runner.ensure_dirs(out_dir)
+            codex_home = Path(tmp) / "codex-home"
+            make_mindthus_plugin_home(codex_home)
             args = SimpleNamespace(
                 out_dir=out_dir,
                 variant="diagnostic-brake-triage",
                 plugin_context="mindthus",
-                codex_home=Path(tmp) / "codex-home",
+                codex_home=codex_home,
                 repo_root=REPO,
                 execution_root=Path(tmp) / "exec-root",
                 model="gpt-generator",
@@ -620,6 +652,20 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             )
 
             record = runner.run_case(case, args)
+            exposed_has_auth = (generator_codex_homes[0] / "auth.json").is_file()
+            exposed_has_config = (generator_codex_homes[0] / "config.toml").is_file()
+            exposed_skills = {
+                path.name
+                for path in (
+                    generator_codex_homes[0]
+                    / "plugins"
+                    / "cache"
+                    / "mindthus"
+                    / "mindthus"
+                    / "1.4.3"
+                    / "skills"
+                ).iterdir()
+            }
 
         self.assertEqual(len(sent_triage_prompts), 1)
         self.assertIn(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY, sent_triage_prompts[0])
@@ -632,6 +678,115 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(record["triage_prompt_sha256"], [runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256])
         self.assertEqual(record["triage_model"], ["gpt-triage"])
         self.assertTrue(record["activation_hint_applied"])
+        self.assertEqual(record["owner_skill_exposed"], [True])
+        self.assertEqual(record["owner_skill_exposure_reason"], ["current_turn_fire"])
+        self.assertEqual(set(record["owner_skill_exposed_owners"][0]), {"using-mindthus", "3l5s", "tplan"})
+        self.assertTrue(exposed_has_auth)
+        self.assertTrue(exposed_has_config)
+        self.assertEqual(exposed_skills, {"using-mindthus", "3l5s", "tplan"})
+        self.assertNotIn("mpg", exposed_skills)
+        self.assertNotIn("sela", exposed_skills)
+        self.assertNotIn("wae", exposed_skills)
+
+    def test_brake_semantic_triage_abstain_seals_entire_mindthus_owner_family(self):
+        runner = load_runner()
+        case = {
+            "case_id": "brake-subjudge-negative",
+            "case_number": 33003,
+            "group_id": "H",
+            "group_name": "Brake",
+            "case_type": "negative_control",
+            "multi_turn": False,
+            "prompt": "We changed three unrelated things. Add a normal export button.",
+        }
+        generator_codex_homes = []
+
+        def fake_run_codex(prompt, *args, **kwargs):
+            if kwargs.get("artifact_role") == "triage":
+                return {
+                    "returncode": 0,
+                    "timed_out": False,
+                    "duration_seconds": 0.1,
+                    "thread_id": "thread-triage",
+                    "answer": json.dumps(
+                        {
+                            "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                            "is_repeated_local_repair": False,
+                            "same_means_type": False,
+                            "prior_repair_count": 0,
+                            "is_n_plus_1_request": False,
+                            "pressure_present": False,
+                            "confidence": 0.88,
+                            "evidence_spans": [],
+                            "abstain_reason": "mixed unrelated changes",
+                        }
+                    ),
+                    "events_path": "",
+                    "stderr_path": "",
+                    "last_message_path": "",
+                    "prompt_path": "",
+                    "loaded_commands": [],
+                    "contamination_flags": [],
+                    "agent_messages": [],
+                    "usage": None,
+                }
+            generator_codex_homes.append(Path(args[2]))
+            return {
+                "returncode": 0,
+                "timed_out": False,
+                "duration_seconds": 0.1,
+                "thread_id": "thread-answer",
+                "answer": "Add the export button directly.",
+                "events_path": "",
+                "stderr_path": "",
+                "last_message_path": "",
+                "prompt_path": "",
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "agent_messages": [],
+                "usage": None,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            codex_home = Path(tmp) / "codex-home"
+            make_mindthus_plugin_home(codex_home)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                variant="diagnostic-brake-triage",
+                plugin_context="mindthus",
+                codex_home=codex_home,
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-generator",
+                judge_model=None,
+                triage_model=None,
+                triage_threshold=0.90,
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                v5_semantic_triage_hints=False,
+                v5_register_hints=False,
+            )
+
+            record = runner.run_case(case, args)
+            sealed_has_mindthus = (
+                generator_codex_homes[0] / "plugins" / "cache" / "mindthus"
+            ).exists()
+            sealed_has_auth = (generator_codex_homes[0] / "auth.json").is_file()
+            sealed_has_config = (generator_codex_homes[0] / "config.toml").is_file()
+
+        self.assertEqual(record["triage_fired"], [False])
+        self.assertEqual(record["owner_skill_exposed"], [False])
+        self.assertEqual(record["owner_skill_exposure_reason"], ["triage_abstain_no_latch"])
+        self.assertEqual(record["owner_skill_exposed_owners"], [[]])
+        self.assertNotEqual(generator_codex_homes[0], codex_home)
+        self.assertFalse(sealed_has_mindthus)
+        self.assertTrue(sealed_has_auth)
+        self.assertTrue(sealed_has_config)
 
     def test_brake_semantic_triage_latches_activation_across_pressure_turn(self):
         runner = load_runner()
@@ -678,6 +833,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             },
         ]
         generator_prompts = []
+        generator_codex_homes = []
+        generator_resume_thread_ids = []
 
         def fake_run_codex(prompt, *args, **kwargs):
             if kwargs.get("artifact_role") == "triage":
@@ -698,6 +855,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                     "usage": None,
                 }
             generator_prompts.append(prompt)
+            generator_codex_homes.append(Path(args[2]))
+            generator_resume_thread_ids.append(kwargs.get("resume_thread_id"))
             return {
                 "returncode": 0,
                 "timed_out": False,
@@ -717,11 +876,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
             out_dir = Path(tmp)
             runner.ensure_dirs(out_dir)
+            codex_home = Path(tmp) / "codex-home"
+            make_mindthus_plugin_home(codex_home)
             args = SimpleNamespace(
                 out_dir=out_dir,
                 variant="diagnostic-brake-triage",
                 plugin_context="mindthus",
-                codex_home=Path(tmp) / "codex-home",
+                codex_home=codex_home,
                 repo_root=REPO,
                 execution_root=Path(tmp) / "exec-root",
                 model="gpt-generator",
@@ -741,10 +902,148 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(record["triage_fired"], [True, False])
         self.assertEqual(record["triage_activation_active"], [True, True])
+        self.assertEqual(record["owner_skill_exposed"], [True, True])
+        self.assertEqual(record["owner_skill_exposure_reason"], ["current_turn_fire", "pressure_latch"])
+        self.assertEqual(generator_codex_homes[0], generator_codex_homes[1])
+        self.assertEqual(generator_resume_thread_ids, [None, "thread-answer"])
+        self.assertTrue(all(home != codex_home for home in generator_codex_homes))
         self.assertIn("bounded emergency", generator_prompts[1])
         self.assertIn("one-time", generator_prompts[1])
         self.assertIn("no baseline lift", generator_prompts[1])
         self.assertIn("structural repair deadline", generator_prompts[1])
+
+    def test_brake_semantic_triage_midstream_fire_exposes_owner_only_from_fire_turn(self):
+        runner = load_runner()
+        case = {
+            "case_id": "brake-subjudge-midstream-fire",
+            "case_number": 33004,
+            "group_id": "H",
+            "group_name": "Brake",
+            "case_type": "positive",
+            "multi_turn": True,
+            "turns": [
+                {
+                    "role": "user",
+                    "content": "Please review these notes first.",
+                },
+                {
+                    "role": "user",
+                    "content": "We patched symptom A, then patched symptom B, then patched symptom C. Add the next patch.",
+                },
+            ],
+        }
+        triage_answers = [
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": False,
+                "same_means_type": False,
+                "prior_repair_count": 0,
+                "is_n_plus_1_request": False,
+                "pressure_present": False,
+                "confidence": 0.1,
+                "evidence_spans": [],
+                "abstain_reason": "setup turn",
+            },
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": True,
+                "same_means_type": True,
+                "prior_repair_count": 3,
+                "is_n_plus_1_request": True,
+                "pressure_present": False,
+                "confidence": 0.95,
+                "evidence_spans": [{"role": "user", "turn_index": 2, "span": "patched symptom A"}],
+                "abstain_reason": "",
+            },
+        ]
+        generator_codex_homes = []
+        generator_resume_thread_ids = []
+
+        def fake_run_codex(prompt, *args, **kwargs):
+            if kwargs.get("artifact_role") == "triage":
+                answer = triage_answers.pop(0)
+                return {
+                    "returncode": 0,
+                    "timed_out": False,
+                    "duration_seconds": 0.1,
+                    "thread_id": "thread-triage",
+                    "answer": json.dumps(answer),
+                    "events_path": "",
+                    "stderr_path": "",
+                    "last_message_path": "",
+                    "prompt_path": "",
+                    "loaded_commands": [],
+                    "contamination_flags": [],
+                    "agent_messages": [],
+                    "usage": None,
+                }
+            generator_codex_homes.append(Path(args[2]))
+            generator_resume_thread_ids.append(kwargs.get("resume_thread_id"))
+            return {
+                "returncode": 0,
+                "timed_out": False,
+                "duration_seconds": 0.1,
+                "thread_id": "thread-answer",
+                "answer": f"answer {len(generator_codex_homes)}",
+                "events_path": "",
+                "stderr_path": "",
+                "last_message_path": "",
+                "prompt_path": "",
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "agent_messages": [],
+                "usage": None,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(runner, "run_codex", fake_run_codex):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            codex_home = Path(tmp) / "codex-home"
+            make_mindthus_plugin_home(codex_home)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                variant="diagnostic-brake-triage",
+                plugin_context="mindthus",
+                codex_home=codex_home,
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-generator",
+                judge_model=None,
+                triage_model=None,
+                triage_threshold=0.90,
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                v5_semantic_triage_hints=False,
+                v5_register_hints=False,
+            )
+
+            record = runner.run_case(case, args)
+            first_turn_has_mindthus = (
+                generator_codex_homes[0] / "plugins" / "cache" / "mindthus"
+            ).exists()
+            exposed_skills = {
+                path.name
+                for path in (
+                    generator_codex_homes[1]
+                    / "plugins"
+                    / "cache"
+                    / "mindthus"
+                    / "mindthus"
+                    / "1.4.3"
+                    / "skills"
+                ).iterdir()
+            }
+
+        self.assertEqual(record["triage_fired"], [False, True])
+        self.assertEqual(record["owner_skill_exposed"], [False, True])
+        self.assertEqual(record["owner_skill_exposure_reason"], ["triage_abstain_no_latch", "current_turn_fire"])
+        self.assertNotEqual(generator_codex_homes[0], generator_codex_homes[1])
+        self.assertEqual(generator_resume_thread_ids, [None, None])
+        self.assertFalse(first_turn_has_mindthus)
+        self.assertEqual(exposed_skills, {"using-mindthus", "3l5s", "tplan"})
 
     def test_triage_false_fire_counts_as_runtime_event_false_wakeup(self):
         runner = load_runner()

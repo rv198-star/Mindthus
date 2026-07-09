@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import time
 from datetime import datetime, timezone
@@ -27,6 +28,8 @@ BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-tr
 BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.3"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.90
+OWNER_SKILL_GATE_MODE = "brake_semantic_triage_owner_skill_gate_v0.1"
+OWNER_SKILL_EXPOSURE_MODE = "triage_fire_or_pressure_latch"
 CONTAMINATION_RE = re.compile(
     r"superpowers|judgment_benchmark_50_cases|docs/benchmarks|pass_criteria|fail_signal|judge notes",
     re.IGNORECASE,
@@ -86,6 +89,23 @@ OWNER_ACCEPTED_SKILLS = {
 
 
 DEFAULT_SUPERPOWERS_ROOT_LABEL = "$CODEX_HOME/superpowers"
+MINDTHUS_OWNER_SKILL_FAMILY = (
+    "using-mindthus",
+    "3l5s",
+    "edsp",
+    "sela",
+    "mpg",
+    "wae",
+    "tvg",
+    "tplan",
+)
+CODEX_RUNTIME_CREDENTIAL_FILES = (
+    "auth.json",
+    "config.toml",
+    "models_cache.json",
+    "version.json",
+    "installation_id",
+)
 
 
 def sha256_text(text: str) -> str:
@@ -467,6 +487,175 @@ def mindthus_loaded_from_commands(loaded_commands: list[str]) -> bool:
     return bool(loaded_owners_from_commands(loaded_commands))
 
 
+def brake_owner_skill_set_from_register(register_path: Path = V5_TARGET_TRIGGER_REGISTER) -> tuple[str, ...]:
+    data = json.loads(register_path.read_text(encoding="utf-8"))
+    owners: list[str] = []
+    for case in data.get("cases", []):
+        if case.get("expected_owner") != "anti_spiral":
+            continue
+        for owner in case.get("accepted_runtime_owners", []):
+            owner = str(owner)
+            if owner not in owners:
+                owners.append(owner)
+    return tuple(owners)
+
+
+BRAKE_OWNER_SKILLS = brake_owner_skill_set_from_register()
+
+
+def find_mindthus_plugin_root(codex_home: Path) -> Path:
+    plugin_cache = codex_home / "plugins" / "cache" / "mindthus"
+    for manifest in sorted(plugin_cache.rglob(".codex-plugin/plugin.json")):
+        try:
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if data.get("name") == "mindthus":
+            return manifest.parent.parent
+    raise FileNotFoundError(f"Mindthus plugin root not found under {codex_home}")
+
+
+def reset_directory(path: Path) -> None:
+    if path.exists():
+        shutil.rmtree(path)
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def copy_codex_runtime_credentials(source_codex_home: Path, target_codex_home: Path) -> None:
+    for name in CODEX_RUNTIME_CREDENTIAL_FILES:
+        source = source_codex_home / name
+        if source.is_file():
+            shutil.copy2(source, target_codex_home / name)
+
+
+def prepare_sealed_owner_codex_home(
+    source_codex_home: Path,
+    gate_root: Path,
+    case_id: str,
+    turn_index: int,
+) -> Path:
+    sealed_home = gate_root / f"{case_id}-owner-sealed"
+    if sealed_home.exists():
+        return sealed_home
+    reset_directory(sealed_home)
+    copy_codex_runtime_credentials(source_codex_home, sealed_home)
+    (sealed_home / "gate-manifest.json").write_text(
+        json.dumps(
+            {
+                "owner_skill_activation_gate": OWNER_SKILL_GATE_MODE,
+                "owner_skill_exposed": False,
+                "sealed_owner_skill_family": list(MINDTHUS_OWNER_SKILL_FAMILY),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return sealed_home
+
+
+def prepare_brake_owner_codex_home(
+    source_codex_home: Path,
+    gate_root: Path,
+    case_id: str,
+    turn_index: int,
+    owners: tuple[str, ...] = BRAKE_OWNER_SKILLS,
+) -> Path:
+    gated_home = gate_root / f"{case_id}-brake-owner"
+    if gated_home.exists():
+        return gated_home
+    reset_directory(gated_home)
+    copy_codex_runtime_credentials(source_codex_home, gated_home)
+    source_plugin = find_mindthus_plugin_root(source_codex_home)
+    target_plugin = (
+        gated_home
+        / "plugins"
+        / "cache"
+        / "mindthus"
+        / "mindthus"
+        / source_plugin.name
+    )
+    target_plugin.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source_plugin / ".codex-plugin", target_plugin / ".codex-plugin")
+    for owner in owners:
+        source_skill = source_plugin / "skills" / owner
+        if not source_skill.is_dir():
+            raise FileNotFoundError(f"Mindthus owner skill {owner} not found in {source_plugin}")
+        shutil.copytree(source_skill, target_plugin / "skills" / owner)
+    (gated_home / "gate-manifest.json").write_text(
+        json.dumps(
+            {
+                "owner_skill_activation_gate": OWNER_SKILL_GATE_MODE,
+                "owner_skill_exposed": True,
+                "exposed_owner_skills": list(owners),
+                "excluded_owner_skill_family": [
+                    owner for owner in MINDTHUS_OWNER_SKILL_FAMILY if owner not in owners
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return gated_home
+
+
+def owner_skill_gate_root(args: argparse.Namespace, out_dir: Path) -> Path:
+    empty_home_root = getattr(args, "empty_home_root", None)
+    if empty_home_root:
+        return Path(empty_home_root).parent / "codex-home-gates"
+    return out_dir / "codex-home-gates"
+
+
+def owner_skill_exposure_for_turn(
+    *,
+    args: argparse.Namespace,
+    out_dir: Path,
+    case_id: str,
+    turn_index: int,
+    triage_enabled: bool,
+    triage_fired_current_turn: bool,
+    triage_activation_latched: bool,
+) -> dict[str, Any]:
+    if not triage_enabled:
+        return {
+            "codex_home": Path(args.codex_home),
+            "owner_skill_exposed": False,
+            "owner_skill_exposure_reason": "gate_disabled",
+            "owner_skill_exposed_owners": [],
+            "owner_skill_gate_mode": "disabled",
+        }
+    if triage_fired_current_turn:
+        reason = "current_turn_fire"
+    elif triage_activation_latched:
+        reason = "pressure_latch"
+    else:
+        return {
+            "codex_home": prepare_sealed_owner_codex_home(
+                Path(args.codex_home),
+                owner_skill_gate_root(args, out_dir),
+                case_id,
+                turn_index,
+            ),
+            "owner_skill_exposed": False,
+            "owner_skill_exposure_reason": "triage_abstain_no_latch",
+            "owner_skill_exposed_owners": [],
+            "owner_skill_gate_mode": OWNER_SKILL_GATE_MODE,
+        }
+    return {
+        "codex_home": prepare_brake_owner_codex_home(
+            Path(args.codex_home),
+            owner_skill_gate_root(args, out_dir),
+            case_id,
+            turn_index,
+        ),
+        "owner_skill_exposed": True,
+        "owner_skill_exposure_reason": reason,
+        "owner_skill_exposed_owners": list(BRAKE_OWNER_SKILLS),
+        "owner_skill_gate_mode": OWNER_SKILL_GATE_MODE,
+    }
+
+
 def home_for_stem(args: argparse.Namespace, stem: str) -> Path | None:
     explicit_home = getattr(args, "home", None)
     empty_home_root = getattr(args, "empty_home_root", None)
@@ -618,6 +807,7 @@ def run_codex(
         "last_message_path": str(last_path),
         "prompt_path": str(prompt_path),
         "home": str(home) if home is not None else None,
+        "codex_home": str(codex_home),
         "loaded_commands": loaded_commands,
         "contamination_flags": contamination_flags,
         "agent_messages": agent_messages,
@@ -932,11 +1122,14 @@ def run_case(
     persist = len(prompts) > 1
     prior_turn_answer = ""
     triage_activation_latched = False
+    previous_generator_codex_home: Path | None = None
     for idx, prompt in enumerate(prompts, 1):
         prompt = prompt.replace("{{prior_turn_answer}}", prior_turn_answer)
         activation_hint = None
         triage_record: dict[str, Any] | None = None
-        if bool(getattr(args, "brake_semantic_triage_subjudgment", False)):
+        triage_enabled = bool(getattr(args, "brake_semantic_triage_subjudgment", False))
+        triage_fired_current_turn = False
+        if triage_enabled:
             triage_record = run_brake_semantic_triage_subjudgment(
                 prompt,
                 turn_records,
@@ -944,7 +1137,8 @@ def run_case(
                 case_id=case_id,
                 turn_index=idx,
             )
-            if triage_record.get("fired"):
+            triage_fired_current_turn = bool(triage_record.get("fired"))
+            if triage_fired_current_turn:
                 triage_activation_latched = True
             if triage_activation_latched:
                 activation_hint = brake_semantic_triage_activation_hint()
@@ -953,6 +1147,21 @@ def run_case(
                 activation_hint = v5_semantic_triage_hint_for_case(case, enabled=True)
             elif bool(getattr(args, "v5_register_hints", False)):
                 activation_hint = v5_register_hint_for_case(case, enabled=True)
+        owner_skill_exposure = owner_skill_exposure_for_turn(
+            args=args,
+            out_dir=out_dir,
+            case_id=case_id,
+            turn_index=idx,
+            triage_enabled=triage_enabled,
+            triage_fired_current_turn=triage_fired_current_turn,
+            triage_activation_latched=triage_activation_latched,
+        )
+        generator_codex_home = Path(owner_skill_exposure["codex_home"])
+        resume_thread_id = (
+            thread_id
+            if idx > 1 and previous_generator_codex_home == generator_codex_home
+            else None
+        )
         result = run_codex(
             generator_prompt(
                 prompt,
@@ -965,17 +1174,19 @@ def run_case(
             ),
             out_dir,
             f"{case_id}-turn-{idx}",
-            Path(args.codex_home),
+            generator_codex_home,
             Path(args.repo_root),
             Path(args.execution_root),
             args.model,
             args.timeout,
             home=home_for_stem(args, f"{case_id}-turn-{idx}"),
-            resume_thread_id=thread_id if idx > 1 else None,
+            resume_thread_id=resume_thread_id,
             persist_session=persist,
         )
         thread_id = result["thread_id"]
+        previous_generator_codex_home = generator_codex_home
         result["user_prompt"] = prompt
+        result["generator_resume_thread_id"] = resume_thread_id
         result["activation_hint"] = activation_hint
         result["triage_called"] = bool(triage_record)
         result["triage_fired"] = bool(triage_record and triage_record.get("fired"))
@@ -993,6 +1204,10 @@ def run_case(
         result["triage_contamination_flags"] = (
             triage_record.get("contamination_flags", []) if triage_record else []
         )
+        result["owner_skill_exposed"] = bool(owner_skill_exposure["owner_skill_exposed"])
+        result["owner_skill_exposure_reason"] = str(owner_skill_exposure["owner_skill_exposure_reason"])
+        result["owner_skill_exposed_owners"] = list(owner_skill_exposure["owner_skill_exposed_owners"])
+        result["owner_skill_gate_mode"] = str(owner_skill_exposure["owner_skill_gate_mode"])
         turn_records.append(result)
         prior_turn_answer = result["answer"]
         if result["returncode"] != 0:
@@ -1024,6 +1239,18 @@ def run_case(
         "triage_model": [turn.get("triage_model") for turn in turn_records],
         "triage_activation_active": [
             bool(turn.get("triage_activation_active")) for turn in turn_records
+        ],
+        "owner_skill_exposed": [
+            bool(turn.get("owner_skill_exposed")) for turn in turn_records
+        ],
+        "owner_skill_exposure_reason": [
+            str(turn.get("owner_skill_exposure_reason") or "") for turn in turn_records
+        ],
+        "owner_skill_exposed_owners": [
+            list(turn.get("owner_skill_exposed_owners") or []) for turn in turn_records
+        ],
+        "owner_skill_gate_mode": [
+            str(turn.get("owner_skill_gate_mode") or "") for turn in turn_records
         ],
         "turns": turn_records,
         "final_answer": turn_records[-1]["answer"] if turn_records else "",
@@ -1779,6 +2006,8 @@ def main() -> int:
         "brake_semantic_triage_subjudgment": args.brake_semantic_triage_subjudgment,
         "triage_prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         "triage_prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+        "brake_semantic_triage_design": str(BRAKE_SEMANTIC_TRIAGE_DESIGN),
+        "brake_semantic_triage_design_sha256": sha256_file(BRAKE_SEMANTIC_TRIAGE_DESIGN),
         "triage_model": triage_model_for_args(args),
         "triage_model_explicit": args.triage_model is not None,
         "triage_model_sha256_or_provider_fingerprint": model_fingerprint(triage_model_for_args(args)),
@@ -1787,6 +2016,18 @@ def main() -> int:
         "triage_enabled": args.brake_semantic_triage_subjudgment,
         "triage_certification_mode": (
             "diagnostic_only" if args.brake_semantic_triage_subjudgment else "disabled"
+        ),
+        "owner_skill_activation_gate": (
+            OWNER_SKILL_GATE_MODE if args.brake_semantic_triage_subjudgment else "disabled"
+        ),
+        "owner_skill_exposure_mode": (
+            OWNER_SKILL_EXPOSURE_MODE if args.brake_semantic_triage_subjudgment else "disabled"
+        ),
+        "owner_skill_exposed_owners": (
+            list(BRAKE_OWNER_SKILLS) if args.brake_semantic_triage_subjudgment else []
+        ),
+        "mindthus_owner_skill_family_sealed_on_abstain": (
+            list(MINDTHUS_OWNER_SKILL_FAMILY) if args.brake_semantic_triage_subjudgment else []
         ),
         "v5_target_trigger_register": str(V5_TARGET_TRIGGER_REGISTER),
         "v5_target_trigger_register_sha256": sha256_file(V5_TARGET_TRIGGER_REGISTER),
