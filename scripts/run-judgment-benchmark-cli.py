@@ -28,6 +28,7 @@ BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-tr
 BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.3"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.85
+JUDGE_PARSE_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
     "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
@@ -1519,6 +1520,33 @@ def augment_score_with_telemetry(
     return {**score, **owner_fidelity_for_case(case, response, score)}
 
 
+def judge_attempt_stem(case_id: str, attempt: int) -> str:
+    if attempt == 1:
+        return f"{case_id}-judge"
+    return f"{case_id}-judge-retry-{attempt}"
+
+
+def judge_attempt_record(
+    *,
+    attempt: int,
+    stem: str,
+    result: dict[str, Any],
+    parse_status: str,
+    error: str = "",
+) -> dict[str, Any]:
+    return {
+        "attempt": attempt,
+        "stem": stem,
+        "returncode": result.get("returncode"),
+        "parse_status": parse_status,
+        "error": error,
+        "last_message_path": result.get("last_message_path"),
+        "events_path": result.get("events_path"),
+        "stderr_path": result.get("stderr_path"),
+        "prompt_path": result.get("prompt_path"),
+    }
+
+
 def judge_case(
     case: dict[str, Any],
     response: dict[str, Any],
@@ -1533,45 +1561,83 @@ def judge_case(
         cached["cached_judge_reused"] = True
         return augment_score_with_telemetry(case, response, cached)
 
-    result = run_codex(
-        judge_prompt(case, response, superpowers_root=getattr(args, "superpowers_root", None)),
-        out_dir,
-        f"{case_id}-judge",
-        Path(args.codex_home),
-        Path(args.repo_root),
-        Path(args.execution_root),
-        args.judge_model or args.model,
-        args.timeout,
-        home=home_for_stem(args, f"{case_id}-judge"),
-        output_schema=schema_path,
-    )
-    try:
-        parsed = json.loads(result["answer"])
-        parsed = validate_judge_output(parsed, case_id)
-    except json.JSONDecodeError:
-        parsed = {
-            "case_id": case_id,
-            "score": 0,
-            "pass_criteria_met": False,
-            "fail_signal_observed": True,
-            "positive_wakeup_observed": None,
-            "first_sentence_lock": None,
-            "verdict_commitment_anti_mush": None,
-            "over_forced_verdict": None,
-            "rationale": "Judge did not return parseable JSON.",
-        }
-    except ValueError as exc:
-        parsed = {
-            "case_id": case_id,
-            "score": 0,
-            "pass_criteria_met": False,
-            "fail_signal_observed": True,
-            "positive_wakeup_observed": None,
-            "first_sentence_lock": None,
-            "verdict_commitment_anti_mush": None,
-            "over_forced_verdict": None,
-            "rationale": f"Judge output failed local validation: {exc}",
-        }
+    attempts: list[dict[str, Any]] = []
+    result: dict[str, Any] = {}
+    parsed: dict[str, Any] | None = None
+    for attempt in range(1, JUDGE_PARSE_MAX_ATTEMPTS + 1):
+        stem = judge_attempt_stem(case_id, attempt)
+        result = run_codex(
+            judge_prompt(case, response, superpowers_root=getattr(args, "superpowers_root", None)),
+            out_dir,
+            stem,
+            Path(args.codex_home),
+            Path(args.repo_root),
+            Path(args.execution_root),
+            args.judge_model or args.model,
+            args.timeout,
+            home=home_for_stem(args, stem),
+            output_schema=schema_path,
+        )
+        try:
+            parsed = json.loads(result["answer"])
+            parsed = validate_judge_output(parsed, case_id)
+            attempts.append(
+                judge_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    parse_status="valid",
+                )
+            )
+            break
+        except json.JSONDecodeError as exc:
+            attempts.append(
+                judge_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    parse_status="json_decode_error",
+                    error=str(exc),
+                )
+            )
+            if attempt < JUDGE_PARSE_MAX_ATTEMPTS:
+                continue
+            parsed = {
+                "case_id": case_id,
+                "score": 0,
+                "pass_criteria_met": False,
+                "fail_signal_observed": True,
+                "positive_wakeup_observed": None,
+                "first_sentence_lock": None,
+                "verdict_commitment_anti_mush": None,
+                "over_forced_verdict": None,
+                "rationale": "Judge did not return parseable JSON after retry.",
+            }
+            break
+        except ValueError as exc:
+            attempts.append(
+                judge_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    parse_status="validation_error",
+                    error=str(exc),
+                )
+            )
+            parsed = {
+                "case_id": case_id,
+                "score": 0,
+                "pass_criteria_met": False,
+                "fail_signal_observed": True,
+                "positive_wakeup_observed": None,
+                "first_sentence_lock": None,
+                "verdict_commitment_anti_mush": None,
+                "over_forced_verdict": None,
+                "rationale": f"Judge output failed local validation: {exc}",
+            }
+            break
+    if parsed is None:
+        raise RuntimeError(f"judge produced no parse result for {case_id}")
     record = {
         **parsed,
         "schema_version": "mindthus-judgment-cli-score-v0.2",
@@ -1587,6 +1653,9 @@ def judge_case(
         "judge_loaded_commands": result.get("loaded_commands", []),
         "judge_contamination_flags": result.get("contamination_flags", []),
         "cached_judge_reused": False,
+        "judge_attempt_count": len(attempts),
+        "judge_retry_count": max(0, len(attempts) - 1),
+        "judge_attempts": attempts,
     }
     record = augment_score_with_telemetry(case, response, record)
     score_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -2114,7 +2183,7 @@ def main() -> int:
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
     else:
-        for path in sorted((args.out_dir / "answers").glob("mtj-*.record.json")):
+        for path in sorted((args.out_dir / "answers").glob("*.record.json")):
             record = json.loads(path.read_text(encoding="utf-8"))
             if record["case_id"] in case_by_id:
                 responses.append(record)

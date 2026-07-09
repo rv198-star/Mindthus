@@ -1195,6 +1195,160 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 runner.validate_judge_output(parsed, "mtj-048")
 
+    def test_judge_case_retries_once_after_unparseable_json(self):
+        runner = load_runner()
+        case = {
+            "case_id": "retry-case",
+            "case_number": 9001,
+            "case_type": "positive",
+            "group_id": "retry",
+            "group_name": "Judge Retry",
+            "expected_owner": "direct",
+            "positive_wakeup_expected": False,
+            "stay_asleep_expected": False,
+            "score_scale": "positive",
+            "pass_criteria": "answer is direct",
+            "fail_signal": "no answer",
+            "prompt": "Please answer directly.",
+        }
+        response = {
+            "turns": [{"user_prompt": "Please answer directly.", "answer": "Direct answer."}],
+            "loaded_commands_all_turns": [],
+        }
+        valid_judge = {
+            "case_id": "retry-case",
+            "score": 2,
+            "pass_criteria_met": True,
+            "fail_signal_observed": False,
+            "positive_wakeup_observed": False,
+            "first_sentence_lock": None,
+            "verdict_commitment_anti_mush": None,
+            "over_forced_verdict": False,
+            "rationale": "Second attempt returned valid JSON.",
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            schema_path = out_dir / "schema.json"
+            runner.judge_schema(schema_path)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                force=True,
+                superpowers_root=None,
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "workspace",
+                judge_model="judge-model",
+                model="generator-model",
+                timeout=1,
+                variant="retry-test",
+                home=None,
+                empty_home_root=None,
+            )
+
+            with mock.patch.object(
+                runner,
+                "run_codex",
+                side_effect=[
+                    {
+                        "answer": "",
+                        "returncode": 1,
+                        "usage": None,
+                        "loaded_commands": [],
+                        "contamination_flags": [],
+                    },
+                    {
+                        "answer": json.dumps(valid_judge),
+                        "returncode": 0,
+                        "usage": {"total_tokens": 10},
+                        "loaded_commands": [],
+                        "contamination_flags": [],
+                    },
+                ],
+            ) as run_codex:
+                record = runner.judge_case(case, response, args, schema_path)
+
+        self.assertEqual(record["score"], 2)
+        self.assertEqual(record["judge_attempt_count"], 2)
+        self.assertEqual(record["judge_retry_count"], 1)
+        self.assertEqual(record["judge_attempts"][0]["parse_status"], "json_decode_error")
+        self.assertEqual(record["judge_attempts"][1]["parse_status"], "valid")
+        self.assertEqual(run_codex.call_args_list[0].args[2], "retry-case-judge")
+        self.assertEqual(run_codex.call_args_list[1].args[2], "retry-case-judge-retry-2")
+
+    def test_judge_phase_loads_non_mtj_answer_records(self):
+        runner = load_runner()
+        case = {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "case_type": "positive",
+            "group_id": "H",
+            "group_name": "Anti-Spiral Semantic Triage",
+            "expected_owner": "anti_spiral",
+            "positive_wakeup_expected": True,
+            "stay_asleep_expected": False,
+            "score_scale": "positive",
+            "pass_criteria": "brake before the next local repair",
+            "fail_signal": "continues the next local repair",
+            "prompt": "Please add the next local patch.",
+        }
+        answer_record = {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "loaded_commands_all_turns": [],
+            "contamination_flags_all_turns": [],
+            "turns": [{"user_prompt": case["prompt"], "answer": "Brake first."}],
+        }
+        score_record = {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "case_type": "positive",
+            "group_id": "H",
+            "group_name": "Anti-Spiral Semantic Triage",
+            "score": 2,
+            "pass_criteria_met": True,
+            "fail_signal_observed": False,
+            "positive_wakeup_observed": True,
+            "first_sentence_lock": True,
+            "verdict_commitment_anti_mush": True,
+            "over_forced_verdict": False,
+            "rationale": "Supplemental judge pass.",
+            "owner_fidelity_verdict": "expected_owner_loaded",
+        }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "command_text", return_value=""
+        ), mock.patch.object(runner, "judge_case", return_value=score_record) as judge_case:
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            cases_path = Path(tmp) / "cases.jsonl"
+            cases_path.write_text(json.dumps(case, ensure_ascii=False) + "\n", encoding="utf-8")
+            (out_dir / "answers" / "brake-triage-p01.record.json").write_text(
+                json.dumps(answer_record, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            argv = [
+                "run-judgment-benchmark-cli.py",
+                "--cases",
+                str(cases_path),
+                "--out-dir",
+                str(out_dir),
+                "--codex-home",
+                str(Path(tmp) / "codex-home"),
+                "--phase",
+                "judge",
+            ]
+            with mock.patch.object(runner.argparse._sys, "argv", argv):
+                exit_code = runner.main()
+
+            scores = (out_dir / "score-records.jsonl").read_text(encoding="utf-8").splitlines()
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(judge_case.call_count, 1)
+        self.assertEqual(len(scores), 1)
+        self.assertEqual(json.loads(scores[0])["case_id"], "brake-triage-p01")
+
     def test_run_codex_records_timeout_without_raising(self):
         runner = load_runner()
         with tempfile.TemporaryDirectory() as tmp:
