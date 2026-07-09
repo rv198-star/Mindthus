@@ -205,6 +205,52 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
         )
 
+    def test_shadow_handoff_manifest_pins_clean_session_inputs(self):
+        runner = load_runner()
+        manifest_path = REPO / "docs" / "benchmarks" / "brake-shadow-handoff-manifest.json"
+
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        components = manifest["components"]
+
+        self.assertEqual(manifest["schema_version"], "mindthus-brake-shadow-handoff-v0.1")
+        self.assertIn("checkout", manifest["shadow_execution_requirement"].lower())
+        self.assertIn("codex/brake-semantic-triage-design", manifest["shadow_execution_requirement"])
+        self.assertTrue(manifest["owner_gate"]["enabled"])
+        self.assertEqual(
+            manifest["owner_gate"]["mode"],
+            runner.OWNER_SKILL_GATE_MODE,
+        )
+        self.assertEqual(
+            manifest["owner_gate"]["activation_channel"],
+            "triage_fire_or_pressure_latch",
+        )
+
+        runner_path = REPO / components["runner"]["path"]
+        register_path = REPO / components["register"]["path"]
+        prompt_path = REPO / components["prompt_v0_3"]["path"]
+        threshold_path = REPO / components["threshold_config"]["path"]
+
+        self.assertEqual(runner.sha256_file(runner_path), components["runner"]["sha256"])
+        self.assertEqual(components["runner"]["sha256"], "363c109f3fc3690b267662ce36d17e21cae93e698c195731d80450acac3d31e2")
+        self.assertEqual(runner.sha256_file(register_path), components["register"]["sha256"])
+        self.assertEqual(runner.sha256_file(prompt_path), components["prompt_v0_3"]["sha256"])
+        self.assertEqual(components["prompt_v0_3"]["sha256"], runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
+        self.assertEqual(prompt_path.read_text(encoding="utf-8"), runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
+        self.assertEqual(runner.sha256_file(threshold_path), components["threshold_config"]["sha256"])
+        self.assertEqual(
+            components["threshold_config"]["sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
+        )
+        self.assertEqual(
+            json.loads(threshold_path.read_text(encoding="utf-8")),
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
+        )
+        self.assertEqual(components["triage_model"]["explicit_config"], "gpt-5.5")
+        self.assertEqual(
+            components["triage_model"]["fingerprint"],
+            "provider-model:gpt-5.5",
+        )
+
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
         runner = load_runner()
 
