@@ -1,0 +1,46 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+一诊排队投诉，护士站贴提示；二诊漏带证件，前台补说明；三诊找不到取号口，公众号挂提醒；今天复诊改时间被问，请在入口页加一条说明。
+
+Assistant turn 1:
+先刹车：这已经不是“入口页缺一条说明”，而是就诊前信息被分散补丁化了。护士站、前台、公众号、入口页各补一块，会把问题固化成“每投诉一次就加一条提示”。
+
+今天可以只做一次临时应急，不抬高常态基线：
+
+> 复诊改约说明：如需调整复诊时间，请在原预约记录中操作改约；已到院、超过可改约时间或无法线上处理的，请到分诊台协助处理。
+
+同时加上有效期和责任边界：这条仅作为 2026-07-09 当日应急提示，不默认长期保留。7 月 12 日前应统一梳理“排队、证件、取号、改约”四类高频问题，合并成一份入口前置指引，并删除分散重复提示。
+
+Current user turn 2:
+User prompt:
+先别重做预约流程，明早就要上线；这次只要临时放这一条说明。

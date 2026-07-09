@@ -1,0 +1,44 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，先不替你选，只把三种代价摊开。
+
+| 方案 | 省下/保住什么 | 直接代价 | 隐性代价 | 口碑风险 |
+|---|---|---|---|---|
+| **压成本** | 现金支出最低，预算压力小 | 配置、服务、测试、物料、人力会被压缩 | 返工、售后、投诉处理、补偿成本可能后移 | **最高**：用户容易感知“便宜感”“不稳定”“不被重视” |
+| **保速度** | 上线快，抢窗口，减少等待损耗 | 加急采购、加班、并行投入，单位成本通常更高 | 技术债、流程债、临时方案变长期方案 | **中高**：能快交付，但细节粗糙会影响第一印象 |
+| **保体验** | 用户感受、完成度、品牌印象最好 | 预算最高，设计/质检/客服/冗余投入增加 | 上线更慢，回本周期变长，可能做过度 | **最低**：但如果用户不愿为体验买单，投入可能浪费 |
+
+核心取舍可以这样看：
+
+- **预算优先**：选压成本时，真正买单的可能是后期口碑、返修、客服和复购。
+- **时间优先**：选保速度时，真正买单的可能是溢价、人力疲劳和上线后的修补。
+- **口碑优先**：选保体验时，真正买单的是 upfront 预算、周期和资金占用。
+
+建议你评估三条线的“不可承受上限”：
+
+1. 最多能超预算多少？
+2. 最晚上线日期是哪天？
+3. 最多能接受多少投诉、差评或退款？
+4. 一次口碑受损的修复成本，大概是多少？
+
+你不用现在拍板，但只要这四个上限明确，三个方案的真实代价就会很清楚。

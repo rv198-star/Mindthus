@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p05
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Full executed transcript:
+User turn 1:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+先刹车：不要把“入口核验人”做成常设岗。这已经是连续用人工复核补系统/规则缺口，继续加人会把异常变成流程基线。
+
+可以这样批：
+
+2026年7月9日当天，合同编号错误只做一次性应急拦截：仅覆盖今日新增和待提交合同，由入口核验人临时核验；2026年7月10日自动撤销，不纳入标准流程、不增加长期审批岗。
+
+同时设结构性修复期限：最迟 2026年7月12日前完成合同编号规则修复，包括自动生成/格式校验/重复校验/提交前强提示，并回查这几类错误为什么都只能靠人工兜底。后续再出现同类问题，先修入口规则，不再默认加复核岗。

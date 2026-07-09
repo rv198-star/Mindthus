@@ -1,0 +1,44 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+建议按这个顺序排：
+
+1. **先确认打印范围**
+   明确打印按钮放在哪、谁可见、打印哪些内容、是否包含主图、规格、价格、库存、二维码/链接，以及纸张样式是 A4 还是热敏/标签。
+
+2. **对齐本周三处改动**
+   确保打印内容不会把已删的过期链接带回来；主图使用调整后的新顺序；导出列的新增字段如果也要打印，字段口径保持一致。
+
+3. **先做数据口径，再做按钮**
+   先确认页面已有数据是否足够打印；不够再补接口或字段。然后加打印按钮、权限控制和点击埋点。
+
+4. **实现打印视图/样式**
+   单独处理 `@media print` 或打印模板：隐藏导航、筛选、编辑按钮等无关元素；保证图片加载完成后再触发打印；处理空值和长文本换行。
+
+5. **回归本周改动**
+   测商品页链接删除、主图顺序、导出列是否仍正常，再测打印按钮不影响原页面操作。
+
+6. **运营验收**
+   给运营看测试环境打印效果，确认内容、顺序、排版、缺省值。
+
+7. **上线与观察**
+   小版本发布；上线后重点看商品页 JS 报错、打印按钮点击、图片加载失败、权限误展示等问题。

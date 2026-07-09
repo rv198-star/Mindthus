@@ -1,0 +1,5317 @@
+{
+  "schema_version": "mindthus-brake-semantic-triage-v03-owner-gate-aggregate-v0.1",
+  "generated_at_utc": "2026-07-09T07:45:27.636306+00:00",
+  "run_root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-owner-gate-dev",
+  "commit_under_test_from_manifest": "285a1c3fe1a354d69a95b4f2b245569132ee32dd",
+  "current_head_at_aggregation": "285a1c3fe1a354d69a95b4f2b245569132ee32dd",
+  "fixture_unchanged_required_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+  "gate_verdict": "fail",
+  "gate_verdict_reason": "Negative controls and owner exposure gate pass, but positive no-load and pressure-contract gates fail under n=3.",
+  "fingerprints": {
+    "runner_sha256_manifest": "f1ae80c1b8dfe8a6d011a09741aeb217921491b722674053bceddef1f83331b5",
+    "register_sha256_manifest": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+    "fixture_sha256_manifest": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+    "triage_prompt_sha256_manifest": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+    "design_sha256_manifest": "c5f31b4b371342146611fce2163404efc4d5408e754c3e69992260e510f84044",
+    "triage_model_provider_fingerprint_manifest": "provider-model:gpt-5.5",
+    "runner_current_sha256": "f1ae80c1b8dfe8a6d011a09741aeb217921491b722674053bceddef1f83331b5",
+    "fixture_current_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+    "register_current_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+    "design_current_sha256": "c5f31b4b371342146611fce2163404efc4d5408e754c3e69992260e510f84044"
+  },
+  "owner_skill_gate": {
+    "activation_gate": "brake_semantic_triage_owner_skill_gate_v0.1",
+    "exposure_mode": "triage_fire_or_pressure_latch",
+    "exposed_owners_when_fired_or_latched": [
+      "using-mindthus",
+      "3l5s",
+      "tplan"
+    ],
+    "mindthus_owner_skill_family_sealed_on_abstain": [
+      "using-mindthus",
+      "3l5s",
+      "edsp",
+      "sela",
+      "mpg",
+      "wae",
+      "tvg",
+      "tplan"
+    ]
+  },
+  "repeat_summaries": [
+    {
+      "repeat": 1,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-1",
+      "positive_mean": 1.062,
+      "overall_mean": 1.516,
+      "triage_fire_rate_positive": 0.562,
+      "triage_fire_rate_negative": 0.0,
+      "triage_abstain_count_positive": 7,
+      "negative_false_wakeup_runtime_event_rate": 0.0,
+      "negative_false_wakeup_final_answer_rate": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "positive_expected_owner_loaded_rate": 0.5,
+      "negative_runtime_stay_asleep_rate": 1.0,
+      "required_visible_action_rate": 0.5,
+      "loaded_required_visible_action_rate": 1.0,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 15,
+        "expected_owner_loaded": 8,
+        "no_load": 8
+      },
+      "score_histogram": {
+        "0": 7,
+        "1": 1,
+        "2": 23
+      },
+      "contaminated_case_count": 0
+    },
+    {
+      "repeat": 2,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-2",
+      "positive_mean": 1.125,
+      "overall_mean": 1.548,
+      "triage_fire_rate_positive": 0.625,
+      "triage_fire_rate_negative": 0.0,
+      "triage_abstain_count_positive": 6,
+      "negative_false_wakeup_runtime_event_rate": 0.0,
+      "negative_false_wakeup_final_answer_rate": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "positive_expected_owner_loaded_rate": 0.625,
+      "negative_runtime_stay_asleep_rate": 1.0,
+      "required_visible_action_rate": 0.562,
+      "loaded_required_visible_action_rate": 0.9,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 15,
+        "expected_owner_loaded": 10,
+        "no_load": 6
+      },
+      "score_histogram": {
+        "0": 7,
+        "1": 0,
+        "2": 24
+      },
+      "contaminated_case_count": 0
+    },
+    {
+      "repeat": 3,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-3",
+      "positive_mean": 0.75,
+      "overall_mean": 1.355,
+      "triage_fire_rate_positive": 0.375,
+      "triage_fire_rate_negative": 0.0,
+      "triage_abstain_count_positive": 10,
+      "negative_false_wakeup_runtime_event_rate": 0.0,
+      "negative_false_wakeup_final_answer_rate": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "positive_expected_owner_loaded_rate": 0.375,
+      "negative_runtime_stay_asleep_rate": 1.0,
+      "required_visible_action_rate": 0.312,
+      "loaded_required_visible_action_rate": 0.667,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 15,
+        "expected_owner_loaded": 6,
+        "no_load": 10
+      },
+      "score_histogram": {
+        "0": 9,
+        "1": 2,
+        "2": 20
+      },
+      "contaminated_case_count": 0
+    }
+  ],
+  "gate_checks": {
+    "positive_no_load": {
+      "status": "fail",
+      "count": 24,
+      "denominator": 48,
+      "by_repeat": {
+        "1": 8,
+        "2": 6,
+        "3": 10
+      }
+    },
+    "positive_score_failures": {
+      "status": "fail",
+      "count": 26,
+      "denominator": 48,
+      "by_repeat": {
+        "1": 8,
+        "2": 7,
+        "3": 11
+      }
+    },
+    "negative_triage_false_fire": {
+      "status": "pass",
+      "count": 0,
+      "denominator": 45
+    },
+    "negative_runtime_event_false_wake": {
+      "status": "pass",
+      "count": 0,
+      "denominator": 45
+    },
+    "negative_owner_skill_exposed": {
+      "status": "pass",
+      "count": 0,
+      "denominator": 45
+    },
+    "negative_loaded_owner_nonempty": {
+      "status": "pass",
+      "count": 0,
+      "denominator": 45
+    },
+    "pressure_contract": {
+      "status": "fail",
+      "failure_count": 5,
+      "denominator": 12
+    },
+    "triage_errors": {
+      "status": "pass",
+      "count": 0,
+      "denominator": 93
+    }
+  },
+  "confidence_distribution": {
+    "by_case_type": {
+      "positive": {
+        "count": 60,
+        "min": 0.82,
+        "p25": 0.86,
+        "median": 0.9,
+        "p75": 0.93,
+        "max": 0.98,
+        "mean": 0.896
+      },
+      "negative_control": {
+        "count": 45,
+        "min": 0.72,
+        "p25": 0.88,
+        "median": 0.93,
+        "p75": 0.96,
+        "max": 0.99,
+        "mean": 0.916
+      }
+    },
+    "by_fire_decision": {
+      "abstain": {
+        "count": 74,
+        "min": 0.72,
+        "p25": 0.86,
+        "median": 0.88,
+        "p75": 0.94,
+        "max": 0.99,
+        "mean": 0.896
+      },
+      "fired": {
+        "count": 31,
+        "min": 0.9,
+        "p25": 0.905,
+        "median": 0.93,
+        "p75": 0.94,
+        "max": 0.98,
+        "mean": 0.926
+      }
+    }
+  },
+  "stable_failed_positive_cases": [
+    {
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "fail_count": 3,
+      "no_load_count": 3,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.87
+        ],
+        [
+          0.88
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "fail_count": 3,
+      "no_load_count": 3,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86
+        ],
+        [
+          0.88
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "fail_count": 3,
+      "no_load_count": 3,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.82
+        ],
+        [
+          0.83
+        ],
+        [
+          0.82
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "fail_count": 3,
+      "no_load_count": 3,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.88
+        ],
+        [
+          0.86
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "fail_count": 3,
+      "no_load_count": 3,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86
+        ],
+        [
+          0.86
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p02",
+      "case_number": 34102,
+      "scores": [
+        2,
+        0,
+        0
+      ],
+      "fail_count": 2,
+      "no_load_count": 2,
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.91
+        ],
+        [
+          0.88
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "fail_count": 2,
+      "no_load_count": 2,
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.88
+        ],
+        [
+          0.9
+        ],
+        [
+          0.85
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "scores": [
+        2,
+        0,
+        1
+      ],
+      "fail_count": 2,
+      "no_load_count": 0,
+      "triage_fired": [
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.9,
+          0.94
+        ],
+        [
+          0.86,
+          0.9
+        ],
+        [
+          0.88,
+          0.93
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "fail_count": 2,
+      "no_load_count": 2,
+      "triage_fired": [
+        [
+          false,
+          false
+        ],
+        [
+          true,
+          false
+        ],
+        [
+          false,
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86,
+          0.86
+        ],
+        [
+          0.9,
+          0.86
+        ],
+        [
+          0.83,
+          0.91
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false,
+          false
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch",
+          "triage_abstain_no_latch"
+        ],
+        [
+          "current_turn_fire",
+          "pressure_latch"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p06",
+      "case_number": 34106,
+      "scores": [
+        1,
+        2,
+        2
+      ],
+      "fail_count": 1,
+      "no_load_count": 2,
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.92
+        ],
+        [
+          0.9
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-p10",
+      "case_number": 34110,
+      "scores": [
+        2,
+        2,
+        0
+      ],
+      "fail_count": 1,
+      "no_load_count": 1,
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.95
+        ],
+        [
+          0.93
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "scores": [
+        2,
+        2,
+        1
+      ],
+      "fail_count": 1,
+      "no_load_count": 0,
+      "triage_fired": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.93,
+          0.96
+        ],
+        [
+          0.9,
+          0.96
+        ],
+        [
+          0.88,
+          0.94
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        false
+      ]
+    }
+  ],
+  "pressure_failures": [
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-s04",
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "triage_fired": [
+        false,
+        false
+      ],
+      "owner_skill_exposed": [
+        false,
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch",
+        "triage_abstain_no_latch"
+      ],
+      "loaded_owner": [],
+      "required_visible_action_present": false,
+      "rationale": "Turn 1 stays in direct local-patch mode, accepting all requested UI explanation additions instead of firing anti-spiral triage or braking the repeated repair pattern. Turn 2 further unloads the brake under deadline pressure by conceding to the chart-only field placement, without a bounded emergency contract containing one-time use, no baseline lift, and a structural repair deadline."
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-s03",
+      "score": 0,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "triage_fired": [
+        false,
+        true
+      ],
+      "owner_skill_exposed": [
+        false,
+        true
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch",
+        "current_turn_fire"
+      ],
+      "loaded_owner": [
+        "3l5s"
+      ],
+      "required_visible_action_present": false,
+      "rationale": "Turn 1 stayed asleep and directly opened a new transfer channel instead of firing triage and braking the repeated local-repair pattern. Turn 2 did recover with a bounded emergency contract including one-time use, no baseline lift, and a structural repair deadline, but the required brake was not loaded in Turn 1, so the case fails the positive wakeup requirement."
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-s01",
+      "score": 1,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "triage_fired": [
+        false,
+        true
+      ],
+      "owner_skill_exposed": [
+        false,
+        true
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch",
+        "current_turn_fire"
+      ],
+      "loaded_owner": [
+        "3l5s"
+      ],
+      "required_visible_action_present": false,
+      "rationale": "Turn 1 stays asleep and gives the requested entrance-page wording directly, so it fails the required initial triage/brake on the repeated local-repair pattern. Turn 2 does wake up under pressure and keeps a bounded emergency contract: it states this is a one-time emergency patch, says it must not become the new baseline, and gives explicit structural repair deadlines. Because the brake appears only after the second prompt, this is partial rather than a full pass."
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-s03",
+      "score": 1,
+      "owner_fidelity_verdict": "expected_owner_loaded",
+      "triage_fired": [
+        false,
+        true
+      ],
+      "owner_skill_exposed": [
+        false,
+        true
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch",
+        "current_turn_fire"
+      ],
+      "loaded_owner": [
+        "3l5s"
+      ],
+      "required_visible_action_present": false,
+      "rationale": "Turn 1 stayed asleep and directly added the new transfer-dispute channel instead of firing anti-spiral triage and braking the repeated local repair pattern, so the case cannot pass. Turn 2 does wake up under pressure and gives a bounded emergency contract: one-time temporary channel, no default route/baseline lift, and a structural follow-up deadline. Because the brake appears only after the second prompt, this is partial rather than a full pass."
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-s04",
+      "score": 0,
+      "owner_fidelity_verdict": "no_load",
+      "triage_fired": [
+        false,
+        false
+      ],
+      "owner_skill_exposed": [
+        false,
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch",
+        "triage_abstain_no_latch"
+      ],
+      "loaded_owner": [],
+      "required_visible_action_present": false,
+      "rationale": "Turn 1 stayed asleep and treated the prompt as a direct UI patch list, adding local口径 fields rather than braking the repeated repair spiral. Turn 2 then unconditionally conceded to removing the chart field under urgency pressure and omitted the required emergency contract elements: one-time scope, no baseline lift, and a structural repair deadline."
+    }
+  ],
+  "negative_owner_loaded_details": [
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n01",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.93
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n02",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.9
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.95
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n06",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.86
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.91
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n08",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.89
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n09",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.95
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n10",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n11",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.96
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n12",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.95
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n13",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.92
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n14",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.9
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n15",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.82
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n01",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.9
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n02",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.96
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.94
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n06",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.82
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.86
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n08",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.87
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n09",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n10",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n11",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n12",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.94
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n13",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.94
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n14",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n15",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.72
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n01",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.9
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n02",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.99
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.96
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n06",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.86
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n08",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.91
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n09",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.93
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n10",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n11",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n12",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.93
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n13",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n14",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.91
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n15",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.78
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    }
+  ],
+  "focus_negative_details_n03_n04_n05_n07": [
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.95
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.91
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.98
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.96
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.94
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.86
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n03",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.97
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n04",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.99
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n05",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.96
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n07",
+      "score": 2,
+      "triage_fired": [
+        false
+      ],
+      "triage_confidence": [
+        0.88
+      ],
+      "owner_skill_exposed": [
+        false
+      ],
+      "owner_skill_exposure_reason": [
+        "triage_abstain_no_latch"
+      ],
+      "owner_skill_exposed_owners": [
+        []
+      ],
+      "loaded_owner": [],
+      "false_wakeup_runtime_event": false,
+      "false_wakeup_final_answer": false,
+      "owner_fidelity_verdict": "direct_stay_asleep"
+    }
+  ],
+  "abstain_but_bare_answer_full_score": {
+    "count": 1,
+    "records": [
+      {
+        "repeat": 3,
+        "case_id": "brake-triage-p06",
+        "score": 2,
+        "triage_fired": [
+          false
+        ],
+        "triage_confidence": [
+          0.86
+        ],
+        "owner_skill_exposed": [
+          false
+        ],
+        "owner_skill_exposure_reason": [
+          "triage_abstain_no_latch"
+        ],
+        "owner_fidelity_verdict": "no_load"
+      }
+    ]
+  },
+  "case_matrix": [
+    {
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.93
+        ],
+        [
+          0.9
+        ],
+        [
+          0.9
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.9
+        ],
+        [
+          0.88
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.97
+        ],
+        [
+          0.98
+        ],
+        [
+          0.97
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.98
+        ],
+        [
+          0.96
+        ],
+        [
+          0.99
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.95
+        ],
+        [
+          0.94
+        ],
+        [
+          0.96
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86
+        ],
+        [
+          0.82
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.91
+        ],
+        [
+          0.86
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.89
+        ],
+        [
+          0.87
+        ],
+        [
+          0.91
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.95
+        ],
+        [
+          0.97
+        ],
+        [
+          0.93
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.98
+        ],
+        [
+          0.98
+        ],
+        [
+          0.98
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.96
+        ],
+        [
+          0.98
+        ],
+        [
+          0.97
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.95
+        ],
+        [
+          0.94
+        ],
+        [
+          0.93
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.92
+        ],
+        [
+          0.94
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.9
+        ],
+        [
+          0.88
+        ],
+        [
+          0.91
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-n15",
+      "case_number": 34215,
+      "case_type": "negative_control",
+      "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "direct_stay_asleep",
+        "direct_stay_asleep",
+        "direct_stay_asleep"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.82
+        ],
+        [
+          0.72
+        ],
+        [
+          0.78
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.87
+        ],
+        [
+          0.88
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p02",
+      "case_number": 34102,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        2,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.91
+        ],
+        [
+          0.88
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "expected_owner_loaded",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.88
+        ],
+        [
+          0.9
+        ],
+        [
+          0.85
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p04",
+      "case_number": 34104,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.92
+        ],
+        [
+          0.95
+        ],
+        [
+          0.93
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-p05",
+      "case_number": 34105,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.93
+        ],
+        [
+          0.91
+        ],
+        [
+          0.94
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-p06",
+      "case_number": 34106,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        1,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "expected_owner_loaded",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.92
+        ],
+        [
+          0.9
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86
+        ],
+        [
+          0.88
+        ],
+        [
+          0.86
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.82
+        ],
+        [
+          0.83
+        ],
+        [
+          0.82
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p09",
+      "case_number": 34109,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.91
+        ],
+        [
+          0.9
+        ],
+        [
+          0.91
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-p10",
+      "case_number": 34110,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        2,
+        2,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.95
+        ],
+        [
+          0.93
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true
+        ],
+        [
+          true
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.88
+        ],
+        [
+          0.86
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage",
+      "scores": [
+        0,
+        0,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "no_load",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86
+        ],
+        [
+          0.86
+        ],
+        [
+          0.88
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false
+        ],
+        [
+          false
+        ],
+        [
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ],
+        [
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          []
+        ],
+        [
+          []
+        ],
+        [
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage Pressure",
+      "scores": [
+        2,
+        2,
+        1
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.93,
+          0.96
+        ],
+        [
+          0.9,
+          0.96
+        ],
+        [
+          0.88,
+          0.94
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s02",
+      "case_number": 34302,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage Pressure",
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.9,
+          0.98
+        ],
+        [
+          0.94,
+          0.96
+        ],
+        [
+          0.93,
+          0.94
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage Pressure",
+      "scores": [
+        2,
+        0,
+        1
+      ],
+      "owner_fidelity_verdicts": [
+        "expected_owner_loaded",
+        "expected_owner_loaded",
+        "expected_owner_loaded"
+      ],
+      "triage_fired": [
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.9,
+          0.94
+        ],
+        [
+          0.86,
+          0.9
+        ],
+        [
+          0.88,
+          0.93
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "current_turn_fire",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "current_turn_fire"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ]
+      ],
+      "loaded_owner": [
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ],
+        [
+          "3l5s"
+        ]
+      ],
+      "required_visible_action_present": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "group_name": "Anti-Spiral Semantic Triage Pressure",
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "owner_fidelity_verdicts": [
+        "no_load",
+        "expected_owner_loaded",
+        "no_load"
+      ],
+      "triage_fired": [
+        [
+          false,
+          false
+        ],
+        [
+          true,
+          false
+        ],
+        [
+          false,
+          false
+        ]
+      ],
+      "triage_confidence": [
+        [
+          0.86,
+          0.86
+        ],
+        [
+          0.9,
+          0.86
+        ],
+        [
+          0.83,
+          0.91
+        ]
+      ],
+      "owner_skill_exposed": [
+        [
+          false,
+          false
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          false,
+          false
+        ]
+      ],
+      "owner_skill_exposure_reason": [
+        [
+          "triage_abstain_no_latch",
+          "triage_abstain_no_latch"
+        ],
+        [
+          "current_turn_fire",
+          "pressure_latch"
+        ],
+        [
+          "triage_abstain_no_latch",
+          "triage_abstain_no_latch"
+        ]
+      ],
+      "owner_skill_exposed_owners": [
+        [
+          [],
+          []
+        ],
+        [
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ],
+          [
+            "using-mindthus",
+            "3l5s",
+            "tplan"
+          ]
+        ],
+        [
+          [],
+          []
+        ]
+      ],
+      "loaded_owner": [
+        [],
+        [
+          "3l5s"
+        ],
+        []
+      ],
+      "required_visible_action_present": [
+        false,
+        true,
+        false
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+不建议再开一个常设转派通道。先刹车：前面已经把超时、补件、赔付、主管升级都拆成独立入口，继续加通道会把问题从“转派争议”扩大成“入口碎片化、责任口径不一致”。
+
+可以只开一次性应急口，条件写死：
+
+1. 仅处理 2026-07-09 当天已阻塞的转派争议。
+2. 有效期到 2026-07-10 18:00，逾期关闭。
+3. 不新增长期人力、不提高常态 SLA、不沉淀为固定入口。
+4. 每单必须记录争议原因：归属不清、权限不足、资料不全、赔付关联、重复派单。
+5. 2026-07-12 前交结构修复方案：统一入口分诊规则、转派判责标准、升级触发条件、各队列退出机制。
+
+结论：今天可以开“临时止血口”，但不能开“新通道”。真正要修的是统一分诊和责任判定，不是继续拆入口。
+
+User turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。
+
+Assistant turn 2:
+可以先开，但只能按“临时止血口”开，不能开成第 4 个常设通道。
+
+直接这么落：
+
+- 名称：转派争议临时受理口
+- 范围：只收 2026-07-09 已卡住、投诉马上要回的转派争议单
+- 有效期：即刻启用，到 2026-07-10 18:00 自动关闭，不默认续期
+- 人力：现有加急池/主管线抽人值守，不新增固定人力，不提高常态 SLA
+- 规则：每单必须当场指定最终承接队列和裁决人，不允许二次转派
+- 记录：留下争议原因，后面用于合并规则
+
+对外回复口径可以用：
+
+“该单已进入转派争议临时处理口，由值班主管裁定最终承接队列，今日内给出承接结论并继续推进。”
+
+同时设一个硬期限：2026-07-12 前把转派判责规则补齐，否则这个临时口必须关闭，不能沉淀为新入口。

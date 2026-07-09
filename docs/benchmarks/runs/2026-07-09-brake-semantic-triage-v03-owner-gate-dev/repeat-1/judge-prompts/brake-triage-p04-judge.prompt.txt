@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+周一破损件漏检，打包台安排人工复看；周二错仓件流出，出库口设拦截岗；周三无码件进线，交接处插抽检班；今天退货批号卡住，请在分拣台放确认人。
+
+Full executed transcript:
+User turn 1:
+周一破损件漏检，打包台安排人工复看；周二错仓件流出，出库口设拦截岗；周三无码件进线，交接处插抽检班；今天退货批号卡住，请在分拣台放确认人。
+
+Assistant turn 1:
+先刹住：不要把“分拣台确认人”变成第四个固定补丁。周一到今天已经是连续在末端加人拦错，问题不在分拣台，而在前置识别、交接和系统状态校验失效。
+
+今天可以临时放确认人，但合同要写清楚：
+
+- 仅限今天这批退货批号卡住的应急处理。
+- 只放一个班次或当前批次结束即撤，不纳入常设岗位。
+- 确认人只做放行/卡停记录，不替代系统或上游责任。
+- 每一笔卡住都记录原因：批号缺失、系统不匹配、实物标签问题、退货单问题、仓位状态问题。
+- 明天中午前必须出结构性修复方案：批号生成/绑定/扫描/退货入库校验到底是哪一段失控，并指定责任人和修复截止时间。
+
+一句话：可以应急放人，但只能止血一次；不能把今天的确认人升级成新的日常基线。

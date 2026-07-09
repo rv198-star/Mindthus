@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+已更新：今天的“转派争议”单独开设“转派通道”。
+
+当前分流为：
+- 超时投诉：加急池
+- 资料缺口：补件队列
+- 赔付争议：主管线
+- 转派争议：转派通道
+
+User turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。
+
+Assistant turn 2:
+先刹一下：可以先开，但只按一次性应急通道处理，不把它升成新的默认基线。
+
+执行边界：
+
+- 只服务这次投诉回包，不扩服务架构。
+- 用配置开关/白名单开通，默认关闭。
+- 有效期到投诉处理完成，最长不超过 24 小时。
+- 不允许其他调用方顺手接入。
+- 必须记录开通时间、调用方、请求量、失败日志。
+- 结构性修复截止：北京时间 `2026-07-10 18:00` 前给出替换或关闭方案。
+
+可以先开这个通道，但同时建一个关闭项，避免临时口子变成长期债。

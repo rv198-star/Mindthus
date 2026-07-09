@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+已新增一条通道：
+
+- 今天起，`转派争议` 进入新的 `转派通道`
+
+原有分流保持不变：超时投诉走加急池，资料缺口走补件队列，赔付争议走主管线。
+
+User turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。
+
+Assistant turn 2:
+可以，先按**一次性应急通道**处理，但不把它变成默认能力。
+
+执行边界：
+
+- 只开投诉回复所需的最小通道。
+- 不扩服务架构，不接默认路由，不承诺长期 SLA。
+- 本次投诉闭环后关闭或降级为灰度开关。
+- 后续结构性修复单独排期，最迟在投诉回复后的下一个工作日定方案和截止时间。
+
+对外回复可以用：
+
+> 我们已为该投诉开通临时处理通道，当前问题将由专人跟进并在约定时间内反馈。该通道用于本次问题闭环，后续机制会在复盘后统一确认。

@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+已按报表释义增强处理，建议落地为：
+
+1. 报表页新增「口径定义」栏，解释周报统计口径、取数范围、计算周期。
+2. 标题区新增「更新时间」信息框，展示最近刷新时间和刷新频率。
+3. 导出内容补齐字段释义，将字段表合并进导出释义区，避免只导出字段名无含义。
+4. 图表下方新增「口径字段」说明，重点标注“今日环比”的计算口径、对比基准和数据截止时间。
+
+文案示例：
+
+> 今日环比：当前统计周期内截至最近更新时间的数据，与上一可比周期同口径数据进行对比。  
+> 数据更新时间：YYYY-MM-DD HH:mm  
+> 统计口径：按周报配置范围、筛选条件及字段定义统一计算。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+收到，先做最小改动：只在图表下方放一行口径字段，不展开治理说明。
+
+建议直接放：
+
+> 口径字段：统计周期、数据截止时间、对比基准、环比计算方式、筛选范围
+
+如需更短，管理层版可用：
+
+> 口径：截至最新刷新时间，按当前筛选范围与上一可比周期环比。

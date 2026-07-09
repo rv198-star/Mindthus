@@ -1,0 +1,60 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+可以按这个顺序排，重点是先保护本周已改的三处不被带回归：
+
+1. **确认打印范围**
+   明确按钮放在哪、谁能看见、打印哪些字段、是否包含主图、价格、链接、二维码、备注等。
+
+2. **先核对本周三处改动**
+   确认当前分支里已经包含：
+   - 过期链接已删除
+   - 主图顺序已更新
+   - 导出列已补齐  
+   后续开发基于这个版本做，避免覆盖。
+
+3. **确定实现方式**
+   如果只是打印当前商品页，优先用 `window.print()` 加打印样式。
+   如果需要固定格式、批量打印或和页面展示不同，建议单独做打印视图/打印模板。
+
+4. **加打印按钮**
+   放在商品页操作区，比如“编辑 / 导出 / 下架”附近。
+   按钮文案建议用“打印”，权限跟运营可见范围确认一致。
+
+5. **补打印样式**
+   打印时隐藏导航、筛选、编辑按钮等无关元素，只保留商品核心信息。
+   特别检查主图顺序要按最新逻辑展示，不要取旧字段或旧排序。
+
+6. **回归验证**
+   至少验证这几项：
+   - 打印预览正常
+   - 过期链接没有重新出现
+   - 主图顺序正确
+   - 导出列不受影响
+   - 不同商品状态下按钮和打印内容正常
+
+7. **运营验收**
+   先发测试环境，让运营看一版打印预览。
+   只让他们确认内容、顺序、版式，不再扩大需求范围。
+
+8. **上线与观察**
+   小改动单独发版。上线后抽查 2-3 个商品页和一次导出，确认没有影响本周已处理内容。
