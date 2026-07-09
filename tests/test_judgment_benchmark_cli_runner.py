@@ -107,6 +107,48 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         ):
             self.assertNotIn(domain_word, prompt_body.lower())
 
+    def test_brake_semantic_triage_v03_threshold_config_is_calibrated_to_085(self):
+        runner = load_runner()
+        parsed = {
+            "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+            "is_repeated_local_repair": True,
+            "same_means_type": True,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": True,
+            "pressure_present": False,
+            "confidence": 0.85,
+            "evidence_spans": [{"role": "user", "turn_index": 1, "span": "three prior local repairs"}],
+            "abstain_reason": "",
+        }
+
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD, 0.85)
+        self.assertTrue(
+            runner.brake_semantic_triage_fire_decision(
+                parsed,
+                runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
+            )
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["threshold"],
+            0.85,
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["calibration_evidence"],
+            "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates",
+        )
+        self.assertEqual(
+            runner.sha256_text(
+                json.dumps(
+                    runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+                + "\n"
+            ),
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
+        )
+
     def test_brake_semantic_triage_owner_skill_gate_design_is_pinned(self):
         design_text = (
             REPO / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
@@ -124,6 +166,44 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("Gate 3", design_text)
         self.assertIn("entire Mindthus owner skill family", design_compact)
         self.assertIn("only the register-defined brake owner set", design_compact)
+        self.assertIn("2026-07-09-brake-semantic-triage-abstain-hard-gates", design_text)
+        self.assertIn("TRIAGE_FIRE_THRESHOLD = 0.85", design_text)
+
+    def test_run_manifest_records_threshold_config_fingerprint(self):
+        runner = load_runner()
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "command_text", return_value=""
+        ):
+            out_dir = Path(tmp) / "run"
+            fixture = Path(tmp) / "empty.jsonl"
+            fixture.write_text("", encoding="utf-8")
+            argv = [
+                "run-judgment-benchmark-cli.py",
+                "--cases",
+                str(fixture),
+                "--out-dir",
+                str(out_dir),
+                "--codex-home",
+                str(Path(tmp) / "codex-home"),
+                "--phase",
+                "generate",
+            ]
+            with mock.patch.object(runner.argparse._sys, "argv", argv):
+                exit_code = runner.main()
+
+            manifest = json.loads((out_dir / "run-manifest.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(manifest["triage_threshold"], 0.85)
+        self.assertEqual(
+            manifest["triage_threshold_config"],
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
+        )
+        self.assertEqual(
+            manifest["triage_threshold_config_sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
+        )
 
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
         runner = load_runner()

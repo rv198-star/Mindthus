@@ -27,7 +27,19 @@ V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-r
 BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
 BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.3"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
-BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.90
+BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.85
+BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
+    "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
+    "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+    "threshold": BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
+    "previous_threshold": 0.90,
+    "calibration_evidence": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates",
+    "decision": "external-audit-conditional-branch-a",
+    "falsification_clause": (
+        "negative four hard gates true plus confidence >= 0.85 triggers rollback "
+        "to 0.90 and review"
+    ),
+}
 OWNER_SKILL_GATE_MODE = "brake_semantic_triage_owner_skill_gate_v0.1"
 OWNER_SKILL_EXPOSURE_MODE = "triage_fire_or_pressure_latch"
 CONTAMINATION_RE = re.compile(
@@ -110,6 +122,17 @@ CODEX_RUNTIME_CREDENTIAL_FILES = (
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def stable_config_sha256(config: dict[str, Any]) -> str:
+    return sha256_text(
+        json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+    )
+
+
+BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256 = stable_config_sha256(
+    BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG
+)
 
 
 def extract_fenced_block_after_heading(text: str, heading: str, fence_info: str) -> str:
@@ -1956,7 +1979,7 @@ def main() -> int:
         "--triage-threshold",
         type=float,
         default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-        help="Confidence threshold for brake semantic triage firing. Reviewed v0.3 is 0.90.",
+        help="Confidence threshold for brake semantic triage firing. Calibrated v0.3 is 0.85.",
     )
     parser.add_argument(
         "--superpowers-root",
@@ -2013,6 +2036,8 @@ def main() -> int:
         "triage_model_sha256_or_provider_fingerprint": model_fingerprint(triage_model_for_args(args)),
         "triage_schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
         "triage_threshold": args.triage_threshold,
+        "triage_threshold_config": BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
+        "triage_threshold_config_sha256": BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
         "triage_enabled": args.brake_semantic_triage_subjudgment,
         "triage_certification_mode": (
             "diagnostic_only" if args.brake_semantic_triage_subjudgment else "disabled"

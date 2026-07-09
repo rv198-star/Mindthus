@@ -1,8 +1,9 @@
 # Brake Semantic Triage Sub-Judgment Design
 
 Status: structurally reviewed. External audit approved the V0.2 semantic negative
-surface fix. V0.3 adds one abstract same-class recurrence clarification and an
-owner-skill exposure gate supplement for external audit review.
+surface fix, the V0.3 same-class recurrence clarification, and the owner-skill
+exposure gate. The active V0.3 threshold is calibrated to `0.85` from the archived
+abstain hard-gate packet.
 
 This document responds to the third external brake shadow retest. The decision is to
 stop the fourth-generation matcher path and introduce a semantic triage sub-judgment
@@ -14,8 +15,10 @@ This is not a certification claim and not a behavior patch.
 
 External review accepted the structure and resolved the four open questions:
 
-1. Threshold v0.3 is locked at `0.90` for this gate. Lowering to `0.85` requires a
-   calibration packet; lowering below `0.85` requires external review.
+1. Threshold v0.3 is `0.85` for this gate. This is limited to the prompt v0.3
+   lineage and is based on the archived calibration packet at
+   `docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates`.
+   Lowering below `0.85` requires external review.
 2. The triage model is explicitly configurable and independently fingerprinted. Shadow
    diagnostics default to the same configured model as the generator unless the run
    manifest says otherwise.
@@ -83,7 +86,7 @@ call, validate, record, and apply hard gates.
 | Audit item | Design answer |
 | --- | --- |
 | New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0.3 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
-| Threshold calibration story | Hard gates are mechanical; v0.3 threshold is locked at `0.90` for this gate and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
+| Threshold calibration story | Hard gates are mechanical; v0.3 threshold is `0.85` for this gate and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
 | Call timing and failure modes | V0 runs the triage sub-call every answer turn. No cheap prefilter in V0. Timeout, auth failure, contamination, or schema invalidity means abstain plus log. |
 | Prompt fingerprint | Triage prompt SHA-256 is a required fourth fingerprint in run manifests, aggregate summaries, and shadow handoff. |
 | Dual negative metrics | Runtime false wake-up expands to include triage false fire on a stay-asleep case. Runs must emit `triage_fired[]`. |
@@ -216,15 +219,31 @@ fire =
   and confidence >= TRIAGE_FIRE_THRESHOLD
 ```
 
-Initial threshold:
+Calibrated threshold:
 
 ```text
-TRIAGE_FIRE_THRESHOLD = 0.90
+TRIAGE_FIRE_THRESHOLD = 0.85
 ```
 
-This is the reviewed v0 value. Lowering it to `0.85` requires calibration-packet
-evidence. Lowering it below `0.85` requires external review. Any threshold change
-changes the runner/config fingerprint and reruns the full calibration packet.
+This value is the reviewed v0.3 threshold for the prompt v0.3 lineage. The calibration
+evidence is archived at
+`docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates`.
+
+Calibration facts from that packet:
+
+- Positive abstains: `65`.
+- Positive abstains with all four hard gates true: `63/65`.
+- Positive all-four-true abstains in the `0.85`-`0.89` band: `52`.
+- Positive boolean-layer failures: `2`, both `brake-triage-s04` turn 2.
+- Negative all-four-true abstains in `v0.3-owner-gate`: `0/45`.
+- The four negative all-four-true records are confined to `v0.1` before the V0.2
+  semantic negative-surface fix.
+
+Falsification clause: if the next same-fixture dev rerun produces any negative record
+with all four hard gates true and confidence `>= 0.85`, roll the threshold back to
+`0.90` and reopen threshold review. Lowering below `0.85` requires external review.
+Any threshold change changes the runner/config fingerprint and reruns the full
+calibration packet.
 
 Hard gate discipline:
 
@@ -395,6 +414,8 @@ Run manifests must add:
 - `triage_model_sha256_or_provider_fingerprint`
 - `triage_schema_version`
 - `triage_threshold`
+- `triage_threshold_config`
+- `triage_threshold_config_sha256`
 - `triage_enabled`
 - `triage_certification_mode`
 - `owner_skill_activation_gate`
