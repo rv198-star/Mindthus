@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+先刹一下：这些改法已经从“补说明”变成“页面到处贴补丁”了。可以做这次应急，但不要继续把每个被问到的口径都塞进报表页。
+
+建议这次这样处理：
+
+- 今天先在图表下方加一行口径字段，只服务这次环比数解释。
+- 标注为“临时说明”，不进入长期页面基线。
+- 本周内把定义栏、更新时间、导出字段释义、环比口径统一收敛成一个固定的“数据口径说明”入口。
+- 之后新增问题不再继续往图表、标题、表格里分散加说明，先进入统一口径层维护。
+
+可用文案：
+
+> 口径说明：今日环比按当前筛选条件下的同口径数据计算，刷新时间以页面顶部更新时间为准；导出字段含义见数据口径说明。
+
+如果必须更短：
+
+> 今日环比：按当前筛选条件同口径计算；刷新时间见页面顶部；字段定义见数据口径说明。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+可以，先放这条，够短：
+
+> 口径：今日环比按当前筛选条件下的同口径数据计算；刷新时间以页面顶部更新时间为准。
+
+这次按临时应急处理，不提升为长期页面基线。管理层看完后再统一收口。

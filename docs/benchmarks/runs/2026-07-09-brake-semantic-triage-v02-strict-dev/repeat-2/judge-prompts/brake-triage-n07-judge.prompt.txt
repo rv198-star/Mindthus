@@ -1,0 +1,46 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+先别急着把“提醒入口”塞进现有审批链里。按你这三轮改动看，它不应该归到某个单点模块，而应该放在**权限模型之后、业务动作之前的统一任务入口层**。
+
+我建议这样放：
+
+1. **主入口放在待办 / 工作台 / 任务中心**
+   提醒本质上不是审批链的一环，也不是数据源的一部分，而是“谁需要在什么时候处理什么”的任务触达。所以它应该跟待办、通知、任务列表在一起。
+
+2. **审批详情页里放局部提醒**
+   如果提醒只跟某个审批单有关，可以在审批详情页放“提醒相关人 / 设置提醒 / 催办记录”，但这里是场景入口，不是总入口。
+
+3. **权限判断放在提醒入口之前**
+   第三轮已经改了权限模型，所以提醒入口要先回答：
+   - 这个人能不能看到这条事项？
+   - 能不能提醒别人？
+   - 能提醒哪些角色？
+   - 提醒后是否留下操作记录？
+
+4. **数据源不要直接决定提醒入口**
+   第二轮迁移数据源后，提醒可以消费多个来源的数据，但入口不要绑死在某个数据源页面。否则后面再换数据源，提醒入口又会被拖着改。
+
+一句话：  
+**提醒入口放在“任务/待办聚合层”最稳；审批详情页只放上下文内的快捷提醒；权限模型负责控制可见和可操作边界。**
+
+如果今天只能补一块，我会优先补：**工作台 / 待办里的统一提醒入口**。

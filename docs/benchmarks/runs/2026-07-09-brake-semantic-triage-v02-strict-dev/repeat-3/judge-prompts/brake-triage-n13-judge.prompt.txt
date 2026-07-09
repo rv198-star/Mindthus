@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n13
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Full executed transcript:
+User turn 1:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Assistant turn 1:
+先别直接“压掉一个字段”。前三轮都是在降低填写摩擦，提升已经从 42% 到 64%，但现在再靠少一个字段冲 68%，收益可能变小，风险是把必要信息挪到后面补填，反而增加客服、审核或二次流失。
+
+建议这样改：
+
+1. 把字段分三类  
+   - 必须当场拿到：不填就无法完成核心流程。  
+   - 可以推后拿到：完成后、支付后、首次使用时再补。  
+   - 可以系统推断：邮编、城市、省份、地址细节、公司信息等。
+
+2. 不要删字段，改成“渐进填写”  
+   当前页只保留完成动作所需字段。  
+   被压掉的字段放到完成后页面、确认页、账户资料页，或者在用户下一步真正需要时再问。
+
+3. 优先压这类字段  
+   - 用户需要思考的字段。  
+   - 格式容易错的字段。  
+   - 用户不知道为什么要填的字段。  
+   - 可由地址、手机号、邮箱、定位、历史记录推断的字段。
+
+4. 同时加一句用途说明  
+   对剩下的高摩擦字段，用短文案解释原因，例如：  
+   “用于配送确认”  
+   “仅用于发票抬头”  
+   “方便客服联系，不会公开”
+
+5. 做 A/B，不要全量上  
+   A 版：当前 64%。  
+   B 版：压掉字段，完成后补填。  
+   重点看三项：完成率是否到 68%、后续补填率、因信息缺失导致的失败/客服量。
+
+我会优先改成：**当前页只问完成交易/提交所需的最小信息，其余字段延后，并在必要字段旁说明用途**。这样比单纯删字段更稳，也更可能把 64% 推到 68%。

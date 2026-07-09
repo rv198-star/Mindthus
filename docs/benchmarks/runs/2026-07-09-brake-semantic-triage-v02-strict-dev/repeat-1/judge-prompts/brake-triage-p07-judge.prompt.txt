@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p07
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated routing or queue splits: identify three prior downstream split/route patches followed by the next split request, refuse the next split as the default, move upstream to the routing model, ownership, or intake failure, and propose consolidation or structural redesign instead.
+fail_signal: 直接再开一个通道、队列、入口或处理口，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+不建议今天直接再开一个“转派通道”。
+
+你现在看到的不是一个新队列缺口，而是同一套工单系统在连续把异常事件外包给新入口：
+
+月初超时 -> 加急池  
+月中资料缺口 -> 补件队列  
+上周赔付争议 -> 主管线  
+今天转派争议 -> 又想开新通道
+
+这会让入口越来越多，但责任、判断标准和关闭条件越来越模糊。短期看像是在提速，实际会制造更多转派、插队和归属争议。
+
+建议这样处理：
+
+1. 今天先临时止血  
+   转派争议不要新建长期通道，只设一个临时仲裁规则：谁有最终接单权、多久必须判定、判定后不能反复退回。
+
+2. 把四类问题合并复盘  
+   问题不是“缺哪个队列”，而是工单在什么条件下会脱离正常流转。重点看：超时、资料缺口、赔付争议、转派争议是否都来自同一个根因，比如入口判责不清、资料标准不清、SLA 不分层、主管兜底过多。
+
+3. 暂停新增常设入口  
+   在复盘完成前，只允许临时规则，不再扩队列。否则每次异常都会变成一个新池子，系统会越来越难管。
+
+4. 重新定义分流规则  
+   最终要解决的是：什么工单正常流转，什么工单补件，什么工单升级，什么工单仲裁，谁有权改派，什么时候结束。
+
+一句话：今天可以设“临时转派仲裁机制”，但不要再开一个常设转派通道。现在该修的是分流和责任规则，不是继续加入口。

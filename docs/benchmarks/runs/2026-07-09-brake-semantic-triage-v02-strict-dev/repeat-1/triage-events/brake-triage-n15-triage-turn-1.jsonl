@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f452c-6bc6-7de2-96dc-04a43811e28e"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.92,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"目标85%，请给方案\"}],\"abstain_reason\":\"legal convergence exclusion: direct iteration on attendance intervention with measurable primary-metric improvement and no same-class recurrence shown\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":15854,"cached_input_tokens":15744,"output_tokens":401,"reasoning_output_tokens":219}}

@@ -1,0 +1,52 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可以，按这个口径改：
+
+1. 报表页新增“口径定义”栏，放在页面显眼位置，说明当前周报指标的统计范围、计算方式和使用限制。
+2. 标题区增加“数据更新时间”框，展示最近一次刷新时间，避免用户误以为是实时数据。
+3. 导出字段补充释义，把字段说明并入导出表的释义格，确保每一列都有清楚含义。
+4. 图表下方增加“口径字段”，尤其标明“今天环比数”的计算口径，例如对比对象、统计周期、是否包含未完成数据等。
+
+建议文案：
+
+“本页数据按周报统计口径汇总，今日环比为当前统计时点与上一可比周期同口径数据对比，结果受数据刷新时间影响。”
+
+更新时间展示：
+
+“数据更新时间：YYYY-MM-DD HH:mm”
+
+这样能同时解决口径误读、刷新时间不明、导出字段缺义，以及今天环比被追问的问题。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+先放最小版，贴在图表下方即可：
+
+**口径字段**  
+今日环比 = 当前统计时点数据 ÷ 上一可比周期同口径数据 - 1  
+数据范围：按周报口径汇总  
+刷新时间：以页面标题区显示时间为准  
+说明：当日数据可能未完全入库，环比仅反映当前刷新时点结果。

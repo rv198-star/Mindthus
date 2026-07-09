@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f453d-914f-7fa1-b801-8b678c4a739a"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s01\",\"score\":1,\"pass_criteria_met\":false,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"Turn 1 stayed in direct local-patch mode and did not triage or brake the repeated pattern, so the positive wakeup requirement was missed. Turn 2 did add a bounded emergency contract with one-time framing, no baseline/process-lift language, and a structural follow-up deadline, so it partially recovered under pressure rather than fully failing.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":15974,"cached_input_tokens":11648,"output_tokens":460,"reasoning_output_tokens":312}}

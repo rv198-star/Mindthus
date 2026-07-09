@@ -1,0 +1,63 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+先不要直接加按钮。这个商品页本周已经连续动了三处，今天再加“打印”属于同一页面继续叠功能，执行前先确认它不是在补一个更大的流程缺口。
+
+建议这样排：
+
+1. **先确认打印目标**
+   明确运营要打印什么：当前商品详情、商品列表、导出结果，还是选中商品。  
+   同时确认打印对象是否包含主图、价格、库存、规格、二维码、备注等字段。
+
+2. **确认入口位置**
+   看按钮放在哪里最自然：商品详情页顶部、列表工具栏、批量操作区，还是导出按钮旁边。  
+   如果是列表批量打印，要先确认是否支持多选。
+
+3. **确认打印版式**
+   不急着改页面 UI，先定打印输出：A4 / 标签纸、横版 / 竖版、是否分页、是否隐藏导航和操作按钮。
+
+4. **评估和本周改动的冲突**
+   重点检查三点：
+   - 主图顺序调整后，打印是否取新的第一张主图；
+   - 删除过期链接后，打印内容里是否还引用旧链接；
+   - 新增导出列是否也需要出现在打印内容里。
+
+5. **拆实现任务**
+   建议拆成：
+   - 增加打印按钮入口；
+   - 增加打印视图或打印样式；
+   - 接入当前商品数据；
+   - 处理批量/单条逻辑；
+   - 补空状态、无图、字段过长、分页等边界。
+
+6. **验收顺序**
+   先验数据正确，再验版式：
+   - 单个商品能打印；
+   - 图片顺序正确；
+   - 过期链接不出现；
+   - 导出新增字段是否按需求出现；
+   - 浏览器打印预览正常；
+   - 不影响原来的导出、主图展示和商品页操作。
+
+7. **上线前设一个停止点**
+   如果运营只是想临时拿纸质资料，优先考虑用现有导出文件打印，别急着上页面功能。  
+   只有确认这是会反复使用的操作，再开发打印按钮。

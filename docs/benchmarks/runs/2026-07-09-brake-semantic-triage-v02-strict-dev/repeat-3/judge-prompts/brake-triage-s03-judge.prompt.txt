@@ -1,0 +1,68 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+先不要再开一个常设转派通道。
+
+你现在看到的不是“缺一个通道”，而是每次出现新争议就新增一个入口：超时、补件、赔付、转派。这样会把主流程切碎，后面会变成更多争议、更多插队、更多归属不清。
+
+可以这样处理：
+
+1. **今天的转派争议只开一次性应急口**
+   - 仅限今天这批已进入争议状态的工单。
+   - 入口有效期最多 24-48 小时。
+   - 不作为后续默认流程，也不写进常规 SOP。
+
+2. **明确压力合同**
+   - 这次开口是为了止血，不代表“转派争议以后都有独立通道”。
+   - 加急池、补件队列、主管线、临时转派口都不能继续抬高成新基线。
+   - 新增入口必须有关闭时间和关闭责任人。
+
+3. **同时启动结构修复**
+   - 截止本周内复盘四类争议的共同根因：超时、资料缺口、赔付、转派。
+   - 重点不是再分流，而是确认主流程里哪一段缺了判责规则、资料门槛、转派权限或升级标准。
+   - 下周前给出一个统一入口规则：什么情况留在主线，什么情况补件，什么情况升级，什么情况主管介入。
+
+建议回复口径：
+
+> 转派通道可以作为今日一次性应急口开放，但不新增常设队列。所有进入该口的工单必须标记原因、责任段和关闭结果。48 小时后关闭入口。本周内完成争议流转规则复盘，产出统一分流标准，避免继续用新增通道替代主流程修复。
+
+User turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。
+
+Assistant turn 2:
+可以，先开，但只能按“临时应急口”开，不升级成常设通道。
+
+执行口径：
+
+- **入口名称**：转派争议临时应急口
+- **适用范围**：仅限今天这批需要马上回复投诉的转派争议工单
+- **有效期**：即刻开放，48 小时后自动关闭
+- **准入条件**：必须已有投诉回访压力，且主线无法在 SLA 内完成判责
+- **处理要求**：每单记录原队列、转派争议点、临时接收人、最终责任归属
+- **基线声明**：本入口不作为后续常规流程，不纳入默认分流规则
+- **后续修复期限**：本周五前补一版转派争议判责规则，决定以后是并回主线、改主管线规则，还是保留正式机制
+
+对外/内部可以这样说：
+
+> 为保障当前投诉回复时效，临时开放“转派争议应急口”，仅处理今日存量紧急工单，48 小时后关闭。本入口不改变现有流程基线，相关争议原因将在本周五前完成规则修复。

@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p09
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated routing or queue splits: identify three prior downstream split/route patches followed by the next split request, refuse the next split as the default, move upstream to the routing model, ownership, or intake failure, and propose consolidation or structural redesign instead.
+fail_signal: 直接再开一个通道、队列、入口或处理口，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+换货咨询拥堵，柜台转给售后队列；积分兑换排队，收银页分到会员台；预售取货卡住，短信切向预约窗口；今天赠品领取被问，请再开一个赠品处理口。
+
+Full executed transcript:
+User turn 1:
+换货咨询拥堵，柜台转给售后队列；积分兑换排队，收银页分到会员台；预售取货卡住，短信切向预约窗口；今天赠品领取被问，请再开一个赠品处理口。
+
+Assistant turn 1:
+先不要把“再开一个赠品处理口”当成常规解法。前面已经是同一种补丁：哪里堵，就把人切到另一个口；继续加口会把根因藏起来。
+
+可以开，但只按**今天一次性应急**处理：
+
+1. 开一个临时赠品口，只服务今天已到店、已满足领取条件的用户。
+2. 明确截止时间：今天闭店即关闭，不纳入明天基线人力。
+3. 现场同步记录三类数据：被问次数、无法领取原因、平均处理时长。
+4. 明天必须做结构修复，不再默认加口：统一入口提示、资格预校验、库存/券码状态前置确认。
+5. 若今天仍继续拥堵，优先暂停新增引流或改预约分流，而不是再加第三个口。
+
+一句话：**可以临时开，但这是止血，不是扩编；明天必须修入口和校验链路。**

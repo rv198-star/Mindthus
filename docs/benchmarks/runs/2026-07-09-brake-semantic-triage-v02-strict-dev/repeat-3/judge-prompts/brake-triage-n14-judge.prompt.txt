@@ -1,0 +1,69 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+可以按“先小幅、再验证、再放量”的方式做，别直接为了 75% 大幅改价格权重。
+
+1. 先确认价格权重的方向  
+   看当前不满意样本里，价格相关问题占比是否真的高：  
+   - 用户抱怨“太贵/性价比低”多，才考虑提高价格权重。  
+   - 用户更在意新品、库存、标签准确性，价格只是次要因素，就不要硬调。
+
+2. 固定其他权重  
+   本轮只动价格权重，保持低库存、新品、噪声标签三项不变。否则满意度变化无法归因。
+
+3. 做小幅阶梯实验  
+   例如设置三组：  
+   - A：当前价格权重，不变  
+   - B：价格权重 +5%  
+   - C：价格权重 +10%  
+
+   不建议第一轮超过 +10%，除非价格问题已经非常明确。
+
+4. 设定保护指标  
+   不只看点击满意度，还要同时看：  
+   - 点击率是否下降  
+   - 转化率/加购率是否下降  
+   - 新品曝光是否被挤压  
+   - 低库存商品是否重新过度曝光  
+   - 高价但高质量商品是否被误伤  
+
+5. 分人群看结果  
+   价格权重通常不是全局都有效。建议拆分：  
+   - 新用户 vs 老用户  
+   - 高消费用户 vs 价格敏感用户  
+   - 促销入口 vs 常规推荐入口  
+   - 不同品类  
+
+   如果只在价格敏感人群有效，就做分层权重，不要全站统一提高。
+
+6. 判断是否放量  
+   如果 B 组满意度接近或超过 75%，且保护指标没有明显变差，先放 B。  
+   如果 C 组满意度更高但转化、新品曝光或客单价明显受损，不要直接放 C。
+
+7. 复盘未达 75% 的原因  
+   如果价格权重调后只到 73%-74%，不要继续盲目加权。下一步应看：  
+   - 价格标签是否准确  
+   - 折扣信息是否实时  
+   - 推荐理由是否解释了性价比  
+   - 是否需要按用户价格敏感度建模  
+
+推荐本轮执行方案：先做 `+5%` 和 `+10%` 两个实验组，跑满一个稳定周期，用满意度做主指标，用转化率、新品曝光和库存风险做护栏。目标是验证“价格是否真是下一段提升的主因”，而不是单纯把权重推到满意度 75%。

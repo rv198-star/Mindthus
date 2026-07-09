@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n05
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并，请给建议。
+
+Full executed transcript:
+User turn 1:
+三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并，请给建议。
+
+Assistant turn 1:
+建议：**不要因为三个指标都在靠近就直接合并；先进入“有限合并 + 触发条件”阶段。**
+
+这三个信号说明两条销售路径的经济性差异正在缩小，但还不能证明它们已经是同一条路径。合并的关键不是“指标差距变小”，而是：
+
+1. **客户是否同质**
+   如果两条路径服务的是同一类客户、同一购买动机、同一决策链，才有合并基础。  
+   如果只是 CAC、留存、毛利变近，但客户画像、销售周期、成交理由不同，不宜合并。
+
+2. **销售动作是否可复用**
+   看获客渠道、话术、销售节奏、定价折扣、售后需求能否共用。  
+   如果合并后团队需要同时维护两套打法，只是组织上合并，实际成本可能上升。
+
+3. **差距收窄是否稳定**
+   三个季度是积极信号，但还要确认不是促销、渠道红利、样本结构变化或短期大客户影响。  
+   建议至少拆看 cohort、渠道、客单价、销售周期，而不是只看总表。
+
+4. **合并会不会损伤强路径**
+   如果其中一条路径虽然优势变小，但仍承担高质量客户、高毛利、高战略账户，就不要完全吞并。可以共享中后台，但前端打法保留。
+
+我的建议动作：
+
+- **先合并可共享部分**：线索评分、CRM、销售运营、培训、数据看板、部分售后流程。
+- **前端销售路径暂不完全合并**：继续保留两套入口或两种打法。
+- **设一个 1-2 个季度的合并试验**：选一部分区域、行业或客群做统一团队/统一流程测试。
+- **设硬触发条件**：如果试验组 CAC 不升、留存不降、毛利不降、销售周期不拉长，再扩大合并。
+- **设反向触发条件**：如果强路径的高价值客户转化率、客单价或续费质量下降，立即停止全面合并。
+
+结论：**现在适合“运营层合并、销售前台分阶段试合并”，不适合一次性组织合并。**三个季度的趋势足够支持试点，不足以支持彻底切换。

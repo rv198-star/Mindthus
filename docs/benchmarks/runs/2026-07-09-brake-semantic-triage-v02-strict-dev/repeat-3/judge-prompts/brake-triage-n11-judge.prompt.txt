@@ -1,0 +1,43 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以。先把三个方案的“代价”按预算、口碑、执行风险列清楚：
+
+| 方案 | 直接收益 | 主要代价 | 预算影响 | 口碑影响 | 隐性风险 |
+|---|---|---|---|---|---|
+| 压成本 | 花钱最少，短期现金压力低 | 质量、稳定性或服务细节容易被牺牲 | 最低 | 中到高风险，用户容易感到“变差了” | 后续返工、投诉、流失、品牌降级 |
+| 保速度 | 更快上线、更快验证、更快抢窗口 | 可能牺牲打磨、文档、流程和一部分体验 | 中等，可能因赶工产生额外成本 | 中等风险，取决于瑕疵是否被用户感知 | 技术债、运营补救、团队疲劳 |
+| 保体验 | 用户感受最好，口碑最稳 | 成本高，周期可能拉长 | 最高 | 最有利于口碑和复购 | 投入回收慢，预算被锁死，错过时机 |
+
+更直白地说：
+
+- **压成本**：你省的是当下的钱，赌的是用户不会强烈感知缩水。代价主要在口碑和后续补救。
+- **保速度**：你买的是时间窗口，代价是缺陷容忍度变低。适合“先占位/先验证”，但后面要准备修。
+- **保体验**：你买的是信任和长期印象，代价是现金、周期和机会成本。适合口碑敏感或高客单场景。
+
+如果只看“预算 vs 口碑”的取舍轴：
+
+- 预算最优：**压成本**
+- 口碑最优：**保体验**
+- 居中但波动最大：**保速度**
+
+真正需要你确认的是：这次损失一部分口碑是否可逆？如果可逆，速度或成本方案还有空间；如果不可逆，体验方案的权重会明显上升。

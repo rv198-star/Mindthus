@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+不建议现在直接停掉旧方案，除非“投诉差距扩大”是旧方案投诉更高。
+
+关键判断是：打开率和转化率差距正在收敛，说明新旧方案在增长收益上已经接近；但投诉差距扩大，说明用户伤害、信任损耗或后续成本正在变成主导变量。此时不能只看转化贴近就切旧方案。
+
+我的判断：
+
+1. 如果是新方案投诉更高  
+   暂缓停旧方案。新方案还没有证明自己是“同等转化、低风险替代”，更像是“收益接近但负反馈更大”。  
+   建议保留旧方案作为安全基线，把新方案降流或分层投放，先查投诉来源：文案误导、触达频率、目标人群、落地页承诺不一致，还是售后预期问题。
+
+2. 如果是旧方案投诉更高  
+   可以考虑逐步停旧方案，但不要一次性全停。因为打开率差距缩小、转化差距贴近，说明旧方案的优势已经不明显；如果投诉还更高，它继续存在的理由变弱。  
+   建议灰度收缩旧方案，设置回滚线：转化显著下降、核心人群异常、投诉未按预期下降时暂停。
+
+3. 如果投诉口径不清  
+   先不要做最终停旧决策。要拆清楚投诉率是按曝光、打开、转化用户，还是总量；投诉是否来自同一批用户；是否有渠道、人群、时间段偏差。否则“投诉差距扩大”可能被流量结构误导。
+
+结论：  
+当前决策权重应从“增长指标谁更高”转向“相近收益下谁的负反馈更低”。如果新方案投诉更高，先修新方案，不停旧方案；如果旧方案投诉更高，旧方案可以进入有保护线的退场流程。

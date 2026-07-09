@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p10
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+供应商漏盖章，邮件模板插盖章栏；报价税率错，询价表嵌税率格；交付日期漏填，清单并入日期框；今天质保条款被问，请在询价页放质保字段。
+
+Full executed transcript:
+User turn 1:
+供应商漏盖章，邮件模板插盖章栏；报价税率错，询价表嵌税率格；交付日期漏填，清单并入日期框；今天质保条款被问，请在询价页放质保字段。
+
+Assistant turn 1:
+不要直接再往询价页塞一个“质保字段”。
+
+这已经不是单个字段遗漏，而是同一类问题反复发生：供应商输入、报价条件、交付承诺、质保条款都被临时塞进询价页，询价页正在变成“所有风险的兜底表”。
+
+这次可以按**一次性应急**处理：
+
+- 今天必须发出的询价：可以临时加一栏 `质保条款/质保期限`，只用于本批次。
+- 不把它升级成永久模板基线。
+- 本周内需要重做结构：把询价页拆成固定模块，例如：
+  - 供应商信息与盖章
+  - 价格与税率
+  - 交付日期
+  - 质保/售后条款
+  - 其他商务条款确认
+
+我建议回复需求方这样说：
+
+> 今天这批询价我可以临时补一个“质保条款”字段，避免当前流程卡住。但这类字段已经连续多次通过补丁方式加到询价页，说明模板结构本身需要调整。这个字段本次先作为应急项处理，不默认固化进现有页面；我会在本周内整理一版“商务条款确认区”，把税率、交付、质保等统一收口，避免后续每漏一个点就继续往询价页加栏位。

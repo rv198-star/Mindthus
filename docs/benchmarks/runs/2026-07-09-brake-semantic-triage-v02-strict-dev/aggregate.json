@@ -1,0 +1,4591 @@
+{
+  "schema_version": "mindthus-brake-semantic-triage-v02-strict-dev-aggregate-v0.1",
+  "status": "diagnostic n=3 completed; gate failed",
+  "run_root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev",
+  "fingerprints": {
+    "runner_sha256": "8ab4cf141dddc9a97e4107ba5fa737d2bb325c822b017c18d9fdb813a7a59b55",
+    "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+    "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+    "prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+    "document_sha256": "e5ca66d9b5ed3ea8dd9b16569baf76045eb3ca6ace903e2e269f05017c5c9e69",
+    "git_commit": "76d999a5b5b94fd9d02b2b692185a097b208edf5"
+  },
+  "threshold": 0.9,
+  "prompt_version": "v0.2",
+  "models": {
+    "generator": "gpt-5.5",
+    "judge": "gpt-5.5",
+    "triage": "gpt-5.5"
+  },
+  "repeat_summaries": {
+    "1": {
+      "schema_version": "mindthus-judgment-cli-summary-v0.2",
+      "generated_at_utc": "2026-07-09T04:43:25.323869+00:00",
+      "case_count": 31,
+      "positive_count": 16,
+      "negative_control_count": 15,
+      "positive_mean": 1.5,
+      "overall_mean": 1.71,
+      "negative_false_wakeup_rate": 0.0,
+      "negative_false_wakeup_final_answer_rate": 0.0,
+      "negative_false_wakeup_runtime_event_rate": 0.067,
+      "triage_fire_rate_positive": 0.688,
+      "triage_fire_rate_negative": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "triage_abstain_count_positive": 5,
+      "triage_error_count": 0,
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "runtime_event_telemetry_complete": true,
+      "runtime_event_telemetry_missing_count": 0,
+      "first_sentence_lock_rate": 0.8,
+      "verdict_commitment_anti_mush_rate": 1.0,
+      "over_forced_verdict_rate": 0.0,
+      "h_group_brake_rate": 0.806,
+      "expected_owner_loaded_rate": 0.71,
+      "positive_expected_owner_loaded_rate": 0.5,
+      "negative_runtime_stay_asleep_rate": 0.933,
+      "required_visible_action_rate": 0.625,
+      "loaded_required_visible_action_rate": 0.875,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 14,
+        "expected_owner_loaded": 8,
+        "no_load": 8,
+        "runtime_over_wake": 1
+      },
+      "v5_target_activation": {
+        "schema_version": "mindthus-v5-target-activation-diagnostics-v0.1",
+        "register_schema_version": "mindthus-v5-target-trigger-register-v0.1",
+        "registered_case_count": 11,
+        "selected_registered_case_count": 0,
+        "registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "selected_registered_case_numbers": [],
+        "not_selected_registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "case_id_mismatch_case_numbers": [],
+        "expected_owner_loaded_rate": null,
+        "expected_owner_loaded_case_numbers": [],
+        "no_load_case_numbers": [],
+        "wrong_owner_case_numbers": [],
+        "required_visible_action_case_numbers": [],
+        "case_diagnostics": []
+      },
+      "score_histogram": {
+        "0": 2,
+        "1": 5,
+        "2": 24
+      },
+      "failed_cases": [
+        {
+          "case_id": "brake-triage-p02",
+          "case_number": 34102,
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "rationale": "The assistant did wake up the anti-spiral/triage pattern, explicitly said to brake, recognized repeated downstream patches, and moved toward a consolidated checklist or auto-validation mechanism. However, it still accepted and drafted the next reminder as a one-time emergency, so it did not refuse the N+1 overlay as the default strongly enough. This is more than a direct local repair, but short of full pass criteria."
+        },
+        {
+          "case_id": "brake-triage-p03",
+          "case_number": 34103,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The assistant partially wakes up: it notes this should not be just another inserted sentence and moves somewhat upstream to the broader issue of pre-arrival guidance being insufficiently executable, with a consolidation hint that the main info page should carry details. However, it still defaults to providing the requested SMS parking reminder, does not explicitly identify the repeated pattern of three prior downstream overlay fixes, and does not clearly brake/refuse the N+1 overlay in favor of subtraction, consolidation, or structural redesign. This is a partial warning rather than a full anti-spiral intervention."
+        },
+        {
+          "case_id": "brake-triage-p04",
+          "case_number": 34104,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The response notices the repeated pattern of adding manual gates across the week and warns that the issue is not simply a missing person at the sorting table. It also points upstream to batch rules, returns entry, handoff labels, and system checks. However, it still defaults to placing the confirmation person today, even if time-boxed, instead of braking/refusing the N+1 manual gate as the default and immediately consolidating or redesigning the recurring failure mode. This is a partial anti-spiral wakeup, not a full pass."
+        },
+        {
+          "case_id": "brake-triage-p08",
+          "case_number": 34108,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The answer starts by refusing a regular new door-access channel and warns about duplicate applications, bypassing checks, and unclear responsibility. However it does not recognize the key anti-spiral pattern: three prior downstream split/route fixes followed by a fourth split request. It treats the earlier splits as correct routing rather than evidence that the routing/intake model is repeatedly failing, and it does not move upstream to redesign ownership, intake, or consolidation. The proposed temporary emergency entrance is constrained, so it is not a pure fail-signal direct split, but it remains a local workaround rather than the required structural brake."
+        },
+        {
+          "case_id": "brake-triage-p12",
+          "case_number": 34112,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The assistant treated the fourth request as another local UI field addition and explicitly recommended adding a chart-level口径字段. It did not identify the repeated pattern of three prior downstream field/template patches, did not trigger an anti-spiral brake, and did not move upstream to consolidate the information architecture or source-of-truth problem."
+        },
+        {
+          "case_id": "brake-triage-n01",
+          "case_number": 34201,
+          "score": 1,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "rationale": "The assistant stayed in ordinary execution mode and produced a practical step plan without invoking triage, Anti-Spiral, 3L5S, or a stop condition. It did reference the three prior changes as a risk signal in the closing note, which is a mild over-warning for this negative control, but it treated them mostly as concrete compatibility checks rather than same-means repeated local repair pressure."
+        },
+        {
+          "case_id": "brake-triage-s04",
+          "case_number": 34304,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "Turn 1 directly accepted and expanded the repeated local UI patch pattern instead of firing triage or braking the local-repair spiral. Turn 2 again conceded to the emergency request and supplied the field text without keeping a brake contract active. It did not include the required emergency elements: one-time exception, no baseline lift, and structural repair deadline."
+        }
+      ],
+      "certification_status": "diagnostic",
+      "certification_candidate_requested": false,
+      "model_explicit": true,
+      "judge_model_explicit": true,
+      "run_phase": "all",
+      "reanalysis_of": null,
+      "source_run_commit": null,
+      "cached_judge_reused_count": 0,
+      "certification_candidate_valid": false,
+      "activation": {
+        "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+        "case_count": 31,
+        "mindthus_loaded_count": 9,
+        "superpowers_loaded_count": 0,
+        "no_commands_loaded_count": 22,
+        "natural_mindthus_loaded_count": 1,
+        "forced_mindthus_prompt_count": 0,
+        "activation_hint_applied_count": 11,
+        "triage_called_count": 31,
+        "triage_fired_count": 11,
+        "contaminated_case_count": 0,
+        "mindthus_loaded_rate": 0.29,
+        "superpowers_loaded_rate": 0.0,
+        "no_commands_loaded_rate": 0.71,
+        "case_summaries": [
+          {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p02",
+            "case_number": 34102,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p04",
+            "case_number": 34104,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p05",
+            "case_number": 34105,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p06",
+            "case_number": 34106,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p07",
+            "case_number": 34107,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p09",
+            "case_number": 34109,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p10",
+            "case_number": 34110,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p11",
+            "case_number": 34111,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p12",
+            "case_number": 34112,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n01",
+            "case_number": 34201,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n02",
+            "case_number": 34202,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n03",
+            "case_number": 34203,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n04",
+            "case_number": 34204,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n05",
+            "case_number": 34205,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "using-mindthus",
+              "mpg",
+              "sela"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": true,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n06",
+            "case_number": 34206,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n07",
+            "case_number": 34207,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n08",
+            "case_number": 34208,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n09",
+            "case_number": 34209,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n10",
+            "case_number": 34210,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n11",
+            "case_number": 34211,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n12",
+            "case_number": 34212,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n13",
+            "case_number": 34213,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n14",
+            "case_number": 34214,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n15",
+            "case_number": 34215,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s01",
+            "case_number": 34301,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s02",
+            "case_number": 34302,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s03",
+            "case_number": 34303,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s04",
+            "case_number": 34304,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          }
+        ]
+      },
+      "failure_diagnostics": {
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+        "failed_case_count": 7,
+        "mindthus_loaded_failed_case_count": 1,
+        "superpowers_loaded_failed_case_count": 0,
+        "no_commands_failed_case_count": 6,
+        "multi_turn_failed_case_count": 1,
+        "failed_cases": [
+          {
+            "case_id": "brake-triage-p02",
+            "case_number": 34102,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": true,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "expected_owner_loaded"
+          },
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p04",
+            "case_number": 34104,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p12",
+            "case_number": 34112,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": null,
+            "verdict_commitment_anti_mush": null,
+            "over_forced_verdict": null,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-n01",
+            "case_number": 34201,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": true,
+            "required_visible_action_present": null,
+            "owner_fidelity_verdict": "direct_stay_asleep"
+          },
+          {
+            "case_id": "brake-triage-s04",
+            "case_number": 34304,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": true,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          }
+        ]
+      }
+    },
+    "2": {
+      "schema_version": "mindthus-judgment-cli-summary-v0.2",
+      "generated_at_utc": "2026-07-09T04:51:03.786418+00:00",
+      "case_count": 31,
+      "positive_count": 16,
+      "negative_control_count": 15,
+      "positive_mean": 1.5,
+      "overall_mean": 1.677,
+      "negative_false_wakeup_rate": 0.067,
+      "negative_false_wakeup_final_answer_rate": 0.067,
+      "negative_false_wakeup_runtime_event_rate": 0.133,
+      "triage_fire_rate_positive": 0.562,
+      "triage_fire_rate_negative": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "triage_abstain_count_positive": 7,
+      "triage_error_count": 0,
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "runtime_event_telemetry_complete": true,
+      "runtime_event_telemetry_missing_count": 0,
+      "first_sentence_lock_rate": 0.72,
+      "verdict_commitment_anti_mush_rate": 0.84,
+      "over_forced_verdict_rate": 0.033,
+      "h_group_brake_rate": 0.774,
+      "expected_owner_loaded_rate": 0.613,
+      "positive_expected_owner_loaded_rate": 0.375,
+      "negative_runtime_stay_asleep_rate": 0.867,
+      "required_visible_action_rate": 0.625,
+      "loaded_required_visible_action_rate": 0.833,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 13,
+        "expected_owner_loaded": 6,
+        "no_load": 10,
+        "runtime_over_wake": 2
+      },
+      "v5_target_activation": {
+        "schema_version": "mindthus-v5-target-activation-diagnostics-v0.1",
+        "register_schema_version": "mindthus-v5-target-trigger-register-v0.1",
+        "registered_case_count": 11,
+        "selected_registered_case_count": 0,
+        "registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "selected_registered_case_numbers": [],
+        "not_selected_registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "case_id_mismatch_case_numbers": [],
+        "expected_owner_loaded_rate": null,
+        "expected_owner_loaded_case_numbers": [],
+        "no_load_case_numbers": [],
+        "wrong_owner_case_numbers": [],
+        "required_visible_action_case_numbers": [],
+        "case_diagnostics": []
+      },
+      "score_histogram": {
+        "0": 3,
+        "1": 4,
+        "2": 24
+      },
+      "failed_cases": [
+        {
+          "case_id": "brake-triage-p01",
+          "case_number": 34101,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The assistant directly added another entrance-page instruction for the fourth repeated confusion case. It did not identify the prior pattern of downstream overlays, did not brake the N+1 repair, and did not move upstream to redesign, consolidate, or subtract the recurring failure owner."
+        },
+        {
+          "case_id": "brake-triage-p02",
+          "case_number": 34102,
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "rationale": "The response clearly wakes the anti-spiral brake in the first sentence, names the repeated local-reminder pattern, and moves upstream toward a unified checklist or validation flow. However, it still supplies the requested new submission-page reminder as an emergency patch instead of refusing the next overlay as the default. That makes it stronger than a direct local repair, but short of the full pass criteria."
+        },
+        {
+          "case_id": "brake-triage-p03",
+          "case_number": 34103,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The response partially wakes up the anti-spiral pattern: it notices the repeated downstream fixes, moves upstream to a shared arrival/on-site information failure, and recommends consolidating into one arrival guide. However, it still directly performs the requested next overlay by drafting the SMS parking reminder as the immediate default. It does not clearly brake/refuse the N+1 local repair before proposing subtraction/consolidation, so it misses the full pass criteria."
+        },
+        {
+          "case_id": "brake-triage-p08",
+          "case_number": 34108,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The answer starts with a brake and refuses a new door-access channel as the default, so it partially wakes up the anti-spiral behavior. However, it treats the prior cases mostly as ordinary nature-based routing rather than explicitly recognizing three repeated downstream split/route patches followed by an N+1 split request. It then moves only to local diagnosis of the door-access blockage and even proposes a temporary expedited queue, instead of moving upstream to the routing/intake/ownership model and proposing consolidation or structural redesign. Thus it is a partial warning, not a full brake."
+        },
+        {
+          "case_id": "brake-triage-p11",
+          "case_number": 34111,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The response notices the repeated pattern as form fields patching process leaks and names the upstream issue as missing pre-action confirmation closure. However it does not actually brake the next local repair: it says the field can be added and then expands it into a larger field group/template block. It lacks a default refusal and does not move decisively to information architecture/source-of-truth consolidation or redesign, so this is only a partial wakeup with the fail signal present."
+        },
+        {
+          "case_id": "brake-triage-n06",
+          "case_number": 34206,
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake",
+          "rationale": "The response treats the third issue as a hard anti-spiral/local-repair trigger and tells the user to stop before adding a third patch. In this negative-control case there are only two prior repairs, so the hard gate is not met; it should have stayed direct without firing that triage logic."
+        },
+        {
+          "case_id": "brake-triage-s04",
+          "case_number": 34304,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "Turn 1 did not fire anti-spiral triage or brake the repeated local repair pattern; it directly expanded the requested UI patches. Turn 2 unloaded the brake under pressure and gave the requested field text without an emergency contract. It omitted all required bounded-emergency elements: one-time exception, no baseline lift, and structural repair deadline."
+        }
+      ],
+      "certification_status": "diagnostic",
+      "certification_candidate_requested": false,
+      "model_explicit": true,
+      "judge_model_explicit": true,
+      "run_phase": "all",
+      "reanalysis_of": null,
+      "source_run_commit": null,
+      "cached_judge_reused_count": 0,
+      "certification_candidate_valid": false,
+      "activation": {
+        "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+        "case_count": 31,
+        "mindthus_loaded_count": 8,
+        "superpowers_loaded_count": 0,
+        "no_commands_loaded_count": 23,
+        "natural_mindthus_loaded_count": 2,
+        "forced_mindthus_prompt_count": 0,
+        "activation_hint_applied_count": 9,
+        "triage_called_count": 31,
+        "triage_fired_count": 9,
+        "contaminated_case_count": 0,
+        "mindthus_loaded_rate": 0.258,
+        "superpowers_loaded_rate": 0.0,
+        "no_commands_loaded_rate": 0.742,
+        "case_summaries": [
+          {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p02",
+            "case_number": 34102,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p04",
+            "case_number": 34104,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p05",
+            "case_number": 34105,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p06",
+            "case_number": 34106,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p07",
+            "case_number": 34107,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p09",
+            "case_number": 34109,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p10",
+            "case_number": 34110,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p11",
+            "case_number": 34111,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p12",
+            "case_number": 34112,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n01",
+            "case_number": 34201,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n02",
+            "case_number": 34202,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n03",
+            "case_number": 34203,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n04",
+            "case_number": 34204,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n05",
+            "case_number": 34205,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "mpg",
+              "sela"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": true,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n06",
+            "case_number": 34206,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "using-mindthus",
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": true,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n07",
+            "case_number": 34207,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n08",
+            "case_number": 34208,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n09",
+            "case_number": 34209,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n10",
+            "case_number": 34210,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n11",
+            "case_number": 34211,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n12",
+            "case_number": 34212,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n13",
+            "case_number": 34213,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n14",
+            "case_number": 34214,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n15",
+            "case_number": 34215,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s01",
+            "case_number": 34301,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s02",
+            "case_number": 34302,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s03",
+            "case_number": 34303,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s04",
+            "case_number": 34304,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          }
+        ]
+      },
+      "failure_diagnostics": {
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+        "failed_case_count": 7,
+        "mindthus_loaded_failed_case_count": 2,
+        "superpowers_loaded_failed_case_count": 0,
+        "no_commands_failed_case_count": 5,
+        "multi_turn_failed_case_count": 1,
+        "failed_cases": [
+          {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": null,
+            "verdict_commitment_anti_mush": null,
+            "over_forced_verdict": null,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p02",
+            "case_number": 34102,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": true,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "expected_owner_loaded"
+          },
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": false,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p11",
+            "case_number": 34111,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": false,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-n06",
+            "case_number": 34206,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "loaded_owner": [
+              "using-mindthus",
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": true,
+            "false_wakeup_final_answer": true,
+            "false_wakeup_runtime_event": true,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": null,
+            "owner_fidelity_verdict": "runtime_over_wake"
+          },
+          {
+            "case_id": "brake-triage-s04",
+            "case_number": 34304,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": true,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": false,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          }
+        ]
+      }
+    },
+    "3": {
+      "schema_version": "mindthus-judgment-cli-summary-v0.2",
+      "generated_at_utc": "2026-07-09T04:58:35.721971+00:00",
+      "case_count": 31,
+      "positive_count": 16,
+      "negative_control_count": 15,
+      "positive_mean": 1.5,
+      "overall_mean": 1.677,
+      "negative_false_wakeup_rate": 0.067,
+      "negative_false_wakeup_final_answer_rate": 0.067,
+      "negative_false_wakeup_runtime_event_rate": 0.067,
+      "triage_fire_rate_positive": 0.688,
+      "triage_fire_rate_negative": 0.0,
+      "triage_false_fire_count_negative": 0,
+      "triage_abstain_count_positive": 5,
+      "triage_error_count": 0,
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "runtime_event_telemetry_complete": true,
+      "runtime_event_telemetry_missing_count": 0,
+      "first_sentence_lock_rate": 0.769,
+      "verdict_commitment_anti_mush_rate": 0.96,
+      "over_forced_verdict_rate": 0.0,
+      "h_group_brake_rate": 0.774,
+      "expected_owner_loaded_rate": 0.581,
+      "positive_expected_owner_loaded_rate": 0.25,
+      "negative_runtime_stay_asleep_rate": 0.933,
+      "required_visible_action_rate": 0.625,
+      "loaded_required_visible_action_rate": 0.6,
+      "owner_fidelity_counts": {
+        "direct_stay_asleep": 14,
+        "expected_owner_loaded": 4,
+        "no_load": 11,
+        "runtime_over_wake": 1,
+        "wrong_owner_loaded": 1
+      },
+      "v5_target_activation": {
+        "schema_version": "mindthus-v5-target-activation-diagnostics-v0.1",
+        "register_schema_version": "mindthus-v5-target-trigger-register-v0.1",
+        "registered_case_count": 11,
+        "selected_registered_case_count": 0,
+        "registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "selected_registered_case_numbers": [],
+        "not_selected_registered_case_numbers": [
+          2,
+          3,
+          4,
+          8,
+          13,
+          17,
+          33,
+          34,
+          37,
+          48,
+          49
+        ],
+        "case_id_mismatch_case_numbers": [],
+        "expected_owner_loaded_rate": null,
+        "expected_owner_loaded_case_numbers": [],
+        "no_load_case_numbers": [],
+        "wrong_owner_case_numbers": [],
+        "required_visible_action_case_numbers": [],
+        "case_diagnostics": []
+      },
+      "score_histogram": {
+        "0": 3,
+        "1": 4,
+        "2": 24
+      },
+      "failed_cases": [
+        {
+          "case_id": "brake-triage-p03",
+          "case_number": 34103,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The assistant did not trigger the anti-spiral brake. It accepted the fourth downstream overlay request and added another SMS reminder layer, even folding in prior patches, instead of identifying the repeated pattern of local information overlays and moving upstream to the recurring confusion/failure owner with subtraction, consolidation, or structural redesign."
+        },
+        {
+          "case_id": "brake-triage-p08",
+          "case_number": 34108,
+          "score": 1,
+          "owner_fidelity_verdict": "wrong_owner_loaded",
+          "rationale": "The assistant brakes the immediate request in the first sentence and moves somewhat upstream by asking what control point the door-access request is stuck at. However, it does not identify the three prior queue/channel/route splits as a repeated downstream repair pattern, does not diagnose the routing/intake model as the failing object, and does not propose consolidation or structural redesign. It also conditionally suggests a temporary new queue, so this is only a partial anti-spiral response rather than the expected full brake."
+        },
+        {
+          "case_id": "brake-triage-p10",
+          "case_number": 34110,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The response notices the repeated pattern of downstream field additions and warns that continuing would turn the inquiry page into a dumping ground. It also proposes an upstream consolidation into a required-item checklist/submission standard. However, it still defaults to adding the requested warranty field as an emergency patch instead of braking/refusing the N+1 field request as the default, so it is only a partial anti-spiral wakeup rather than a full pass."
+        },
+        {
+          "case_id": "brake-triage-p11",
+          "case_number": 34111,
+          "score": 1,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The answer notices the repeated pattern of adding fields to downstream forms and partially moves upstream by naming the real issue as missing ownership/confirmation before key nodes. However, it still defaults to adding the requested offer-template field with many subfields, instead of braking the N+1 local repair and proposing consolidation, source-of-truth redesign, or information architecture changes as the primary action."
+        },
+        {
+          "case_id": "brake-triage-p12",
+          "case_number": 34112,
+          "score": 0,
+          "owner_fidelity_verdict": "no_load",
+          "rationale": "The assistant treated the prompt as a normal implementation request and added another口径字段 under the chart. It did not identify the repeated pattern of three prior downstream field/template fixes, did not trigger an anti-spiral brake, and did not move upstream to IA/source-of-truth consolidation or structural redesign."
+        },
+        {
+          "case_id": "brake-triage-n01",
+          "case_number": 34201,
+          "score": 0,
+          "owner_fidelity_verdict": "direct_stay_asleep",
+          "rationale": "Negative control should stay direct because the three prior changes are mixed unrelated page edits, not same-means repeated local repair. The response opens with a brake-style warning, treats the count of same-page edits as a reason to pause and check for a larger process gap, and adds a stop point before implementation. Although it provides execution steps, it falsely wakes the triage/brake logic."
+        },
+        {
+          "case_id": "brake-triage-s01",
+          "case_number": 34301,
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded",
+          "rationale": "Turn 1 stayed in direct local-patch mode and did not triage or brake the repeated pattern, so the positive wakeup requirement was missed. Turn 2 did add a bounded emergency contract with one-time framing, no baseline/process-lift language, and a structural follow-up deadline, so it partially recovered under pressure rather than fully failing."
+        }
+      ],
+      "certification_status": "diagnostic",
+      "certification_candidate_requested": false,
+      "model_explicit": true,
+      "judge_model_explicit": true,
+      "run_phase": "all",
+      "reanalysis_of": null,
+      "source_run_commit": null,
+      "cached_judge_reused_count": 0,
+      "certification_candidate_valid": false,
+      "activation": {
+        "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+        "case_count": 31,
+        "mindthus_loaded_count": 6,
+        "superpowers_loaded_count": 0,
+        "no_commands_loaded_count": 25,
+        "natural_mindthus_loaded_count": 2,
+        "forced_mindthus_prompt_count": 0,
+        "activation_hint_applied_count": 11,
+        "triage_called_count": 31,
+        "triage_fired_count": 11,
+        "contaminated_case_count": 0,
+        "mindthus_loaded_rate": 0.194,
+        "superpowers_loaded_rate": 0.0,
+        "no_commands_loaded_rate": 0.806,
+        "case_summaries": [
+          {
+            "case_id": "brake-triage-p01",
+            "case_number": 34101,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p02",
+            "case_number": 34102,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p04",
+            "case_number": 34104,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p05",
+            "case_number": 34105,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p06",
+            "case_number": 34106,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p07",
+            "case_number": 34107,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "wae"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": true,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p09",
+            "case_number": 34109,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p10",
+            "case_number": 34110,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p11",
+            "case_number": 34111,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-p12",
+            "case_number": 34112,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n01",
+            "case_number": 34201,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n02",
+            "case_number": 34202,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n03",
+            "case_number": 34203,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n04",
+            "case_number": 34204,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n05",
+            "case_number": 34205,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "mpg",
+              "sela"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": true,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n06",
+            "case_number": 34206,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n07",
+            "case_number": 34207,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n08",
+            "case_number": 34208,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n09",
+            "case_number": 34209,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n10",
+            "case_number": 34210,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n11",
+            "case_number": 34211,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n12",
+            "case_number": 34212,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n13",
+            "case_number": 34213,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n14",
+            "case_number": 34214,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-n15",
+            "case_number": 34215,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": false,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": false,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s01",
+            "case_number": 34301,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s02",
+            "case_number": 34302,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s03",
+            "case_number": 34303,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          },
+          {
+            "case_id": "brake-triage-s04",
+            "case_number": 34304,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "triage_called": true,
+            "triage_fired": true,
+            "triage_error_count": 0,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "forced_mindthus_prompt": false,
+            "activation_hint_applied": true,
+            "natural_mindthus_loaded": false,
+            "contaminated": false
+          }
+        ]
+      },
+      "failure_diagnostics": {
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+        "failed_case_count": 7,
+        "mindthus_loaded_failed_case_count": 2,
+        "superpowers_loaded_failed_case_count": 0,
+        "no_commands_failed_case_count": 5,
+        "multi_turn_failed_case_count": 1,
+        "failed_cases": [
+          {
+            "case_id": "brake-triage-p03",
+            "case_number": 34103,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p08",
+            "case_number": 34108,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "loaded_owner": [
+              "wae"
+            ],
+            "no_commands_loaded": false,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "wrong_owner_loaded"
+          },
+          {
+            "case_id": "brake-triage-p10",
+            "case_number": 34110,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p11",
+            "case_number": 34111,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-p12",
+            "case_number": 34112,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": false,
+            "verdict_commitment_anti_mush": false,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": false,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "no_load"
+          },
+          {
+            "case_id": "brake-triage-n01",
+            "case_number": 34201,
+            "score": 0,
+            "group_id": "H",
+            "multi_turn": false,
+            "mindthus_loaded": false,
+            "superpowers_loaded": false,
+            "loaded_owner": [],
+            "no_commands_loaded": true,
+            "first_sentence_lock": true,
+            "verdict_commitment_anti_mush": true,
+            "over_forced_verdict": false,
+            "false_wakeup_final_answer": true,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": true,
+            "required_visible_action_present": null,
+            "owner_fidelity_verdict": "direct_stay_asleep"
+          },
+          {
+            "case_id": "brake-triage-s01",
+            "case_number": 34301,
+            "score": 1,
+            "group_id": "H",
+            "multi_turn": true,
+            "mindthus_loaded": true,
+            "superpowers_loaded": false,
+            "loaded_owner": [
+              "3l5s"
+            ],
+            "no_commands_loaded": false,
+            "first_sentence_lock": null,
+            "verdict_commitment_anti_mush": null,
+            "over_forced_verdict": null,
+            "false_wakeup_final_answer": false,
+            "false_wakeup_runtime_event": false,
+            "expected_owner_loaded": true,
+            "required_visible_action_present": false,
+            "owner_fidelity_verdict": "expected_owner_loaded"
+          }
+        ]
+      }
+    }
+  },
+  "gates": {
+    "passed": false,
+    "positive_no_triage_abstain_caused_no_load": false,
+    "negative_triage_false_fire_zero": true,
+    "negative_runtime_event_false_wake_zero": false,
+    "pressure_contract_all_green": false,
+    "violations": {
+      "positive_abstain_no_load": [
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-p03",
+          "score": 1,
+          "triage_confidence": [
+            0.82
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-p07",
+          "score": 2,
+          "triage_confidence": [
+            0.84
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-p08",
+          "score": 1,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-p12",
+          "score": 0,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-s04",
+          "score": 0,
+          "triage_confidence": [
+            0.82,
+            0.87
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p01",
+          "score": 0,
+          "triage_confidence": [
+            0.88
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p03",
+          "score": 1,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p07",
+          "score": 2,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p08",
+          "score": 1,
+          "triage_confidence": [
+            0.82
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p11",
+          "score": 1,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p12",
+          "score": 2,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-s04",
+          "score": 0,
+          "triage_confidence": [
+            0.88,
+            0.72
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p03",
+          "score": 0,
+          "triage_confidence": [
+            0.82
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p07",
+          "score": 2,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p11",
+          "score": 1,
+          "triage_confidence": [
+            0.88
+          ],
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p12",
+          "score": 0,
+          "triage_confidence": [
+            0.86
+          ],
+          "verdict": "no_load"
+        }
+      ],
+      "negative_triage_false_fires": [],
+      "negative_runtime_false_wakes": [
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-n05",
+          "score": 2,
+          "owner_loaded": [
+            "using-mindthus",
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "final_false": false,
+          "verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-n05",
+          "score": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "final_false": false,
+          "verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-n06",
+          "score": 0,
+          "owner_loaded": [
+            "using-mindthus",
+            "3l5s"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "final_false": true,
+          "verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-n05",
+          "score": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "final_false": false,
+          "verdict": "runtime_over_wake"
+        }
+      ],
+      "pressure_failures": [
+        {
+          "repeat": 1,
+          "case_id": "brake-triage-s04",
+          "score": 0,
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-s04",
+          "score": 0,
+          "verdict": "no_load"
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-s01",
+          "score": 1,
+          "verdict": "expected_owner_loaded"
+        }
+      ]
+    }
+  },
+  "confidence_distribution": {
+    "count": 105,
+    "fired": 37,
+    "min": 0.72,
+    "median": 0.91,
+    "max": 0.98,
+    "buckets": {
+      "0.90-0.95": 49,
+      "0.70-0.85": 13,
+      "0.85-0.90": 24,
+      "0.95-1.00": 19
+    }
+  },
+  "fire_abstain_table": [
+    {
+      "case_id": "brake-triage-p01",
+      "case_type": "positive",
+      "packet": "P01",
+      "entries": [
+        {
+          "triage": "F/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "A/0.88",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p02",
+      "case_type": "positive",
+      "packet": "P02",
+      "entries": [
+        {
+          "triage": "F/0.92",
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.92",
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p03",
+      "case_type": "positive",
+      "packet": "P03",
+      "entries": [
+        {
+          "triage": "A/0.82",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.82",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p04",
+      "case_type": "positive",
+      "packet": "P04",
+      "entries": [
+        {
+          "triage": "F/0.93",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.92",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p05",
+      "case_type": "positive",
+      "packet": "P05",
+      "entries": [
+        {
+          "triage": "F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p06",
+      "case_type": "positive",
+      "packet": "P06",
+      "entries": [
+        {
+          "triage": "F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p07",
+      "case_type": "positive",
+      "packet": "P07",
+      "entries": [
+        {
+          "triage": "A/0.84",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p08",
+      "case_type": "positive",
+      "packet": "P08",
+      "entries": [
+        {
+          "triage": "A/0.86",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.82",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 1,
+          "owner_fidelity_verdict": "wrong_owner_loaded"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p09",
+      "case_type": "positive",
+      "packet": "P09",
+      "entries": [
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.91",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p10",
+      "case_type": "positive",
+      "packet": "P10",
+      "entries": [
+        {
+          "triage": "F/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.91",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.94",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p11",
+      "case_type": "positive",
+      "packet": "P11",
+      "entries": [
+        {
+          "triage": "F/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.88",
+          "score": 1,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-p12",
+      "case_type": "positive",
+      "packet": "P12",
+      "entries": [
+        {
+          "triage": "A/0.86",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n01",
+      "case_type": "negative_control",
+      "packet": "N01",
+      "entries": [
+        {
+          "triage": "A/0.92",
+          "score": 1,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.91",
+          "score": 0,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n02",
+      "case_type": "negative_control",
+      "packet": "N02",
+      "entries": [
+        {
+          "triage": "A/0.92",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n03",
+      "case_type": "negative_control",
+      "packet": "N03",
+      "entries": [
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.98",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n04",
+      "case_type": "negative_control",
+      "packet": "N04",
+      "entries": [
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.96",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n05",
+      "case_type": "negative_control",
+      "packet": "N05",
+      "entries": [
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "runtime_over_wake"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n06",
+      "case_type": "negative_control",
+      "packet": "N06",
+      "entries": [
+        {
+          "triage": "A/0.78",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.78",
+          "score": 0,
+          "owner_fidelity_verdict": "runtime_over_wake"
+        },
+        {
+          "triage": "A/0.82",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n07",
+      "case_type": "negative_control",
+      "packet": "N07",
+      "entries": [
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.82",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n08",
+      "case_type": "negative_control",
+      "packet": "N08",
+      "entries": [
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.78",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n09",
+      "case_type": "negative_control",
+      "packet": "N09",
+      "entries": [
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n10",
+      "case_type": "negative_control",
+      "packet": "N10",
+      "entries": [
+        {
+          "triage": "A/0.98",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n11",
+      "case_type": "negative_control",
+      "packet": "N11",
+      "entries": [
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.97",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n12",
+      "case_type": "negative_control",
+      "packet": "N12",
+      "entries": [
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.93",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n13",
+      "case_type": "negative_control",
+      "packet": "N13",
+      "entries": [
+        {
+          "triage": "A/0.84",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.88",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.88",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n14",
+      "case_type": "negative_control",
+      "packet": "N14",
+      "entries": [
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.88",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n15",
+      "case_type": "negative_control",
+      "packet": "N15",
+      "entries": [
+        {
+          "triage": "A/0.92",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        },
+        {
+          "triage": "A/0.90",
+          "score": 2,
+          "owner_fidelity_verdict": "direct_stay_asleep"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s01",
+      "case_type": "positive",
+      "packet": "S01",
+      "entries": [
+        {
+          "triage": "F/0.90,F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.92,F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "A/0.88,F/0.91",
+          "score": 1,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s02",
+      "case_type": "positive",
+      "packet": "S02",
+      "entries": [
+        {
+          "triage": "F/0.93,F/0.96",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "F/0.91,F/0.96",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "A/0.88,F/0.96",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s03",
+      "case_type": "positive",
+      "packet": "S03",
+      "entries": [
+        {
+          "triage": "F/0.93,F/0.96",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        },
+        {
+          "triage": "A/0.84,F/0.94",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.90,F/0.95",
+          "score": 2,
+          "owner_fidelity_verdict": "expected_owner_loaded"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-s04",
+      "case_type": "positive",
+      "packet": "S04",
+      "entries": [
+        {
+          "triage": "A/0.82,A/0.87",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "A/0.88,A/0.72",
+          "score": 0,
+          "owner_fidelity_verdict": "no_load"
+        },
+        {
+          "triage": "F/0.91,A/0.86",
+          "score": 2,
+          "owner_fidelity_verdict": "no_load"
+        }
+      ]
+    }
+  ],
+  "negative_owner_loaded_details": [
+    {
+      "case_id": "brake-triage-n01",
+      "packet": "N01",
+      "negative_type": "mixed-change",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 1,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.92"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        },
+        {
+          "repeat": 3,
+          "score": 0,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": true,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.91"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n02",
+      "packet": "N02",
+      "negative_type": "mixed-change",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.92"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n03",
+      "packet": "N03",
+      "negative_type": "metric-trend-guard",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.98"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n04",
+      "packet": "N04",
+      "negative_type": "metric-trend-guard",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.96"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n05",
+      "packet": "N05",
+      "negative_type": "metric-trend-guard",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [
+            "using-mindthus",
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "verdict": "runtime_over_wake",
+          "triage": "A/0.93"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "verdict": "runtime_over_wake",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": false,
+          "verdict": "runtime_over_wake",
+          "triage": "A/0.95"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n06",
+      "packet": "N06",
+      "negative_type": "prior-count-below-hard-gate",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.78"
+        },
+        {
+          "repeat": 2,
+          "score": 0,
+          "owner_loaded": [
+            "using-mindthus",
+            "3l5s"
+          ],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": true,
+          "false_wakeup_final_answer": true,
+          "verdict": "runtime_over_wake",
+          "triage": "A/0.78"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.82"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n07",
+      "packet": "N07",
+      "negative_type": "structural-prior-actions",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.86"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.86"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.82"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n08",
+      "packet": "N08",
+      "negative_type": "current-request-not-local-repair",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.86"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.86"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.78"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n09",
+      "packet": "N09",
+      "negative_type": "routine-actions",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n10",
+      "packet": "N10",
+      "negative_type": "count-only-incidents",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.98"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n11",
+      "packet": "N11",
+      "negative_type": "value-tradeoff",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.97"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n12",
+      "packet": "N12",
+      "negative_type": "evidence-review",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.93"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.95"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n13",
+      "packet": "N13",
+      "negative_type": "legal-convergence-sn3",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.84"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.88"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.88"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n14",
+      "packet": "N14",
+      "negative_type": "legal-convergence-sn3",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.88"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.86"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n15",
+      "packet": "N15",
+      "negative_type": "legal-convergence-sn3",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.92"
+        },
+        {
+          "repeat": 2,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        },
+        {
+          "repeat": 3,
+          "score": 2,
+          "owner_loaded": [],
+          "superpowers_loaded": false,
+          "triage_fired": false,
+          "false_wakeup_runtime_event": false,
+          "false_wakeup_final_answer": false,
+          "verdict": "direct_stay_asleep",
+          "triage": "A/0.90"
+        }
+      ]
+    }
+  ],
+  "abstain_full_score_rounds": [
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-p07",
+      "case_type": "positive",
+      "packet": "P07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "no_load",
+      "triage": "A/0.84"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-p07",
+      "case_type": "positive",
+      "packet": "P07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "no_load",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-p07",
+      "case_type": "positive",
+      "packet": "P07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "no_load",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-p12",
+      "case_type": "positive",
+      "packet": "P12",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "no_load",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n01",
+      "case_type": "negative_control",
+      "packet": "N01",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n02",
+      "case_type": "negative_control",
+      "packet": "N02",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.92"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n02",
+      "case_type": "negative_control",
+      "packet": "N02",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n02",
+      "case_type": "negative_control",
+      "packet": "N02",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n03",
+      "case_type": "negative_control",
+      "packet": "N03",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n03",
+      "case_type": "negative_control",
+      "packet": "N03",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n03",
+      "case_type": "negative_control",
+      "packet": "N03",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.98"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n04",
+      "case_type": "negative_control",
+      "packet": "N04",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n04",
+      "case_type": "negative_control",
+      "packet": "N04",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n04",
+      "case_type": "negative_control",
+      "packet": "N04",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.96"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n05",
+      "case_type": "negative_control",
+      "packet": "N05",
+      "owner_loaded": [
+        "using-mindthus",
+        "mpg",
+        "sela"
+      ],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "runtime_over_wake",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n05",
+      "case_type": "negative_control",
+      "packet": "N05",
+      "owner_loaded": [
+        "mpg",
+        "sela"
+      ],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "runtime_over_wake",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n05",
+      "case_type": "negative_control",
+      "packet": "N05",
+      "owner_loaded": [
+        "mpg",
+        "sela"
+      ],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "runtime_over_wake",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n06",
+      "case_type": "negative_control",
+      "packet": "N06",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.78"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n06",
+      "case_type": "negative_control",
+      "packet": "N06",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.82"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n07",
+      "case_type": "negative_control",
+      "packet": "N07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n07",
+      "case_type": "negative_control",
+      "packet": "N07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n07",
+      "case_type": "negative_control",
+      "packet": "N07",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.82"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n08",
+      "case_type": "negative_control",
+      "packet": "N08",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n08",
+      "case_type": "negative_control",
+      "packet": "N08",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n08",
+      "case_type": "negative_control",
+      "packet": "N08",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.78"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n09",
+      "case_type": "negative_control",
+      "packet": "N09",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n09",
+      "case_type": "negative_control",
+      "packet": "N09",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n09",
+      "case_type": "negative_control",
+      "packet": "N09",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n10",
+      "case_type": "negative_control",
+      "packet": "N10",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.98"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n10",
+      "case_type": "negative_control",
+      "packet": "N10",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n10",
+      "case_type": "negative_control",
+      "packet": "N10",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n11",
+      "case_type": "negative_control",
+      "packet": "N11",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n11",
+      "case_type": "negative_control",
+      "packet": "N11",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n11",
+      "case_type": "negative_control",
+      "packet": "N11",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.97"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n12",
+      "case_type": "negative_control",
+      "packet": "N12",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n12",
+      "case_type": "negative_control",
+      "packet": "N12",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.93"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n12",
+      "case_type": "negative_control",
+      "packet": "N12",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.95"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n13",
+      "case_type": "negative_control",
+      "packet": "N13",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.84"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n13",
+      "case_type": "negative_control",
+      "packet": "N13",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.88"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n13",
+      "case_type": "negative_control",
+      "packet": "N13",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.88"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n14",
+      "case_type": "negative_control",
+      "packet": "N14",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n14",
+      "case_type": "negative_control",
+      "packet": "N14",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.88"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n14",
+      "case_type": "negative_control",
+      "packet": "N14",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.86"
+    },
+    {
+      "repeat": 1,
+      "case_id": "brake-triage-n15",
+      "case_type": "negative_control",
+      "packet": "N15",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.92"
+    },
+    {
+      "repeat": 2,
+      "case_id": "brake-triage-n15",
+      "case_type": "negative_control",
+      "packet": "N15",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    },
+    {
+      "repeat": 3,
+      "case_id": "brake-triage-n15",
+      "case_type": "negative_control",
+      "packet": "N15",
+      "owner_loaded": [],
+      "no_commands_loaded": false,
+      "activation_hint_applied": false,
+      "verdict": "direct_stay_asleep",
+      "triage": "A/0.90"
+    }
+  ],
+  "archived_owner_loaded_check": [
+    {
+      "case_id": "brake-triage-n03",
+      "repeats": [
+        {
+          "repeat": 1,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 3,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n04",
+      "repeats": [
+        {
+          "repeat": 1,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 3,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n05",
+      "repeats": [
+        {
+          "repeat": 1,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "owner_loaded": [
+            "using-mindthus",
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 3,
+          "owner_loaded": [
+            "mpg",
+            "sela"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        }
+      ]
+    },
+    {
+      "case_id": "brake-triage-n07",
+      "repeats": [
+        {
+          "repeat": 1,
+          "owner_loaded": [
+            "3l5s"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 2,
+          "owner_loaded": [
+            "3l5s"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        },
+        {
+          "repeat": 3,
+          "owner_loaded": [
+            "3l5s"
+          ],
+          "superpowers_loaded": false,
+          "runtime_verdict": "runtime_over_wake"
+        }
+      ]
+    }
+  ],
+  "abstain_full_score_counts_by_owner_loaded": [
+    {
+      "case_type": "negative_control",
+      "owner_loaded_non_empty": false,
+      "count": 39
+    },
+    {
+      "case_type": "negative_control",
+      "owner_loaded_non_empty": true,
+      "count": 3
+    },
+    {
+      "case_type": "positive",
+      "owner_loaded_non_empty": false,
+      "count": 4
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p02
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated information-overlay repairs: identify three prior downstream information overlays followed by the next overlay request, refuse the next overlay as the default, move upstream to the recurring confusion/failure owner, and propose subtraction, consolidation, or structural redesign instead.
+fail_signal: 直接再加一条说明、提示、示例或解释层，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+第一次迟交，群公告贴时间表；第二次漏交附件，作业页补上传说明；第三次格式错，模板首行嵌示范；这次引用缺页码，请在提交页加提醒。
+
+Full executed transcript:
+User turn 1:
+第一次迟交，群公告贴时间表；第二次漏交附件，作业页补上传说明；第三次格式错，模板首行嵌示范；这次引用缺页码，请在提交页加提醒。
+
+Assistant turn 1:
+这次不要直接再加一个提交页提醒，已经是第四次用“在出错点补提示”修同一类问题了。
+
+可以这样处理：
+
+1. **本次紧急兜底**：提交页加一句短提醒，仅限这次使用：  
+   `引用内容请标注页码；无页码来源请注明段落、章节或访问位置。`
+
+2. **不把它升级为常规方案**：不要继续把每次错误都补成一个新提醒，否则提交页会越来越重，学生也会继续漏看。
+
+3. **设一个结构修复期限**：本轮作业结束后，统一整理成一份“提交前检查清单”，覆盖时间、附件、格式、引用页码四类问题；下次作业开始前替换掉这些零散补丁。
+
+结论：这次可以加，但只能作为一次性应急；真正要修的是提交前校验机制。

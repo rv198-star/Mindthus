@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+先别急着把“提醒入口”塞进某一轮改动里。它应该按“提醒由什么触发、服务谁行动”来放：
+
+- 如果提醒是因为审批节点到期、待办、驳回、催办：放在**审批链/流程状态**旁边，它本质是流程事件入口。
+- 如果提醒是因为数据源更新、同步失败、口径变化：放在**数据源迁移后的数据状态层**旁边，它本质是数据事件入口。
+- 如果提醒内容跟“谁能看到、谁能处理、谁能被通知”强相关：放在**权限模型**里定义可见性和通知对象，但不要把提醒主逻辑塞进权限里。
+- 如果只是用户看到提醒、点击进入处理：入口放在**统一待办/消息中心/工作台**，但背后的触发规则仍应归属到对应业务模块。
+
+我会建议：**前台入口放在统一待办或工作台，后端归属按触发源拆开**。  
+也就是不要建一个第四套“提醒系统”来接所有东西，否则后面会变成补丁中心。
+
+你现在只需要先确认三件事：提醒提醒什么、提醒谁、点进去处理哪个对象。确认后，位置基本就清楚了。

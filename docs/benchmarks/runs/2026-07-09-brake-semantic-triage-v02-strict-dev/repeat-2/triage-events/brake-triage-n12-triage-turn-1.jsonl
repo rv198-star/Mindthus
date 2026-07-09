@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4533-3ed3-76e0-ba4f-39278db7924c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"想确认之前有没有过度套方法；请只按文本证据检查\"}],\"abstain_reason\":\"prior repair history is absent; supplied conversation contains no sequence of local repairs or N+1 request\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":15830,"cached_input_tokens":15744,"output_tokens":192,"reasoning_output_tokens":59}}

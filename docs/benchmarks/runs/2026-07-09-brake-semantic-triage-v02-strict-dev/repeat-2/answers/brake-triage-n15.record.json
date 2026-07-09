@@ -1,0 +1,159 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-09T04:47:59.856934+00:00",
+  "variant": "brake-semantic-triage-v0.2-strict-repeat-2",
+  "case_id": "brake-triage-n15",
+  "case_number": 34215,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4533-f4ed-7f53-acc2-d42a9e7fe42b",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.9
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": true,
+      "prior_repair_count": 3,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第一轮提前课前通知，到课率从70%到76%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第二轮缩短消息正文，到课率到79%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第三轮改成日历邀请，到课率到82%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天想把提醒时间再前移，目标85%"
+        }
+      ],
+      "abstain_reason": "legal convergence exclusion: prior iterations report measurable improvement on the primary metric and no same-class symptom recurrence or failed prior patches are shown"
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-semantic-triage-v02-strict-dev/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2/answers/brake-triage-n15-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 19.11,
+      "thread_id": "019f4533-f4ed-7f53-acc2-d42a9e7fe42b",
+      "answer": "不要直接全量前移。前三轮提升是 `+6、+3、+3`，已经像是在接近上限；“提醒时间更早”未必还能带来 3 个点，甚至可能因太早被遗忘。\n\n建议方案：\n\n1. **先做小流量 A/B**\n   - A 组：维持当前日历邀请方案。\n   - B 组：日历邀请不变，提醒时间提前。\n   - C 组：不只提前，而是“提前一次 + 临近一次”，例如课前 24 小时日历邀请，课前 2 小时短提醒。\n\n2. **不要只改时间，改提醒结构**\n   - 第一条：提前建立承诺，比如“已为你预留本节课时间”。\n   - 第二条：临近降低行动成本，比如直接给入口、时间、准备事项。\n   - 正文保持短，不回到第一轮长通知。\n\n3. **按人群分层**\n   - 过去稳定到课的人：少提醒，避免打扰。\n   - 偶尔缺席的人：提前 + 临近双提醒。\n   - 连续未到的人：单纯提醒可能无效，需要确认原因或人工触达。\n\n4. **目标设定**\n   - 本轮不要把 85% 当成必然结果，先验证“前移是否有效”。\n   - 判定标准：B/C 组相对 A 组至少提升 2 个点，且退订、投诉、忽略率没有明显上升。\n\n推荐执行版本：  \n**保留日历邀请作为主方案，新增课前 2 小时短提醒；提醒时间前移只做实验组，不全量上线。**  \n如果 C 组能到 84%-85%，再全量；如果只到 82%-83%，说明瓶颈可能不在提醒时间，而在课程吸引力、时间冲突或缺席成本。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2/events/brake-triage-n15-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2/stderr/brake-triage-n15-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2/answers/brake-triage-n15-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2/prompts/brake-triage-n15-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-semantic-triage-v02-strict-dev/repeat-2/homes/brake-triage-n15-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不要直接全量前移。前三轮提升是 `+6、+3、+3`，已经像是在接近上限；“提醒时间更早”未必还能带来 3 个点，甚至可能因太早被遗忘。\n\n建议方案：\n\n1. **先做小流量 A/B**\n   - A 组：维持当前日历邀请方案。\n   - B 组：日历邀请不变，提醒时间提前。\n   - C 组：不只提前，而是“提前一次 + 临近一次”，例如课前 24 小时日历邀请，课前 2 小时短提醒。\n\n2. **不要只改时间，改提醒结构**\n   - 第一条：提前建立承诺，比如“已为你预留本节课时间”。\n   - 第二条：临近降低行动成本，比如直接给入口、时间、准备事项。\n   - 正文保持短，不回到第一轮长通知。\n\n3. **按人群分层**\n   - 过去稳定到课的人：少提醒，避免打扰。\n   - 偶尔缺席的人：提前 + 临近双提醒。\n   - 连续未到的人：单纯提醒可能无效，需要确认原因或人工触达。\n\n4. **目标设定**\n   - 本轮不要把 85% 当成必然结果，先验证“前移是否有效”。\n   - 判定标准：B/C 组相对 A 组至少提升 2 个点，且退订、投诉、忽略率没有明显上升。\n\n推荐执行版本：  \n**保留日历邀请作为主方案，新增课前 2 小时短提醒；提醒时间前移只做实验组，不全量上线。**  \n如果 C 组能到 84%-85%，再全量；如果只到 82%-83%，说明瓶颈可能不在提醒时间，而在课程吸引力、时间冲突或缺席成本。"
+      ],
+      "usage": {
+        "input_tokens": 15408,
+        "cached_input_tokens": 9088,
+        "output_tokens": 599,
+        "reasoning_output_tokens": 170
+      },
+      "user_prompt": "第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。",
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.9,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.9,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%"
+          }
+        ],
+        "abstain_reason": "legal convergence exclusion: prior iterations report measurable improvement on the primary metric and no same-class symptom recurrence or failed prior patches are shown"
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": []
+    }
+  ],
+  "final_answer": "不要直接全量前移。前三轮提升是 `+6、+3、+3`，已经像是在接近上限；“提醒时间更早”未必还能带来 3 个点，甚至可能因太早被遗忘。\n\n建议方案：\n\n1. **先做小流量 A/B**\n   - A 组：维持当前日历邀请方案。\n   - B 组：日历邀请不变，提醒时间提前。\n   - C 组：不只提前，而是“提前一次 + 临近一次”，例如课前 24 小时日历邀请，课前 2 小时短提醒。\n\n2. **不要只改时间，改提醒结构**\n   - 第一条：提前建立承诺，比如“已为你预留本节课时间”。\n   - 第二条：临近降低行动成本，比如直接给入口、时间、准备事项。\n   - 正文保持短，不回到第一轮长通知。\n\n3. **按人群分层**\n   - 过去稳定到课的人：少提醒，避免打扰。\n   - 偶尔缺席的人：提前 + 临近双提醒。\n   - 连续未到的人：单纯提醒可能无效，需要确认原因或人工触达。\n\n4. **目标设定**\n   - 本轮不要把 85% 当成必然结果，先验证“前移是否有效”。\n   - 判定标准：B/C 组相对 A 组至少提升 2 个点，且退订、投诉、忽略率没有明显上升。\n\n推荐执行版本：  \n**保留日历邀请作为主方案，新增课前 2 小时短提醒；提醒时间前移只做实验组，不全量上线。**  \n如果 C 组能到 84%-85%，再全量；如果只到 82%-83%，说明瓶颈可能不在提醒时间，而在课程吸引力、时间冲突或缺席成本。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

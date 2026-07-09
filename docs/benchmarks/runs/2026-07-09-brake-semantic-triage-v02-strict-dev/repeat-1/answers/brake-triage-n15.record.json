@@ -1,0 +1,159 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-09T04:40:04.351704+00:00",
+  "variant": "brake-semantic-triage-v0.2-strict-repeat-1",
+  "case_id": "brake-triage-n15",
+  "case_number": 34215,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f452c-a6b2-7ab3-8a27-23a956d2adcc",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.92
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 0,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.92,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "到课率从70%到76%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "到课率到79%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "到课率到82%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "目标85%，请给方案"
+        }
+      ],
+      "abstain_reason": "legal convergence exclusion: direct iteration on attendance intervention with measurable primary-metric improvement and no same-class recurrence shown"
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-semantic-triage-v02-strict-dev/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1/answers/brake-triage-n15-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 22.402,
+      "thread_id": "019f452c-a6b2-7ab3-8a27-23a956d2adcc",
+      "answer": "可以做，但不要直接假设“再前移提醒时间”一定能把 82% 推到 85%。前几轮提升来自不同变量：提前通知、正文变短、日历邀请；现在只改提醒时间，边际收益可能变小。建议用小规模实验推进。\n\n方案如下：\n\n1. **保留日历邀请作为基线**\n   不要回退前面有效动作。继续使用：\n   - 日历邀请\n   - 简短正文\n   - 明确上课时间、入口、准备事项\n   - 一键加入/查看链接\n\n2. **做提醒时间 A/B/C 测试**\n   以当前 82% 的方案为对照组，新增两个实验组：\n\n   - A 组：维持当前提醒时间\n   - B 组：提醒时间提前 12 小时\n   - C 组：提醒时间提前 24 小时\n\n   不建议一上来全部前移，因为太早可能被忽略，反而降低临近记忆。\n\n3. **加一条临近提醒，而不是只前移**\n   更稳的组合是：\n\n   - 课前 24 小时：日历邀请/确认提醒\n   - 课前 2 小时：短提醒\n   - 课前 15 分钟：入口提醒\n\n   目标不是“更早通知”，而是覆盖三个场景：提前安排、临近想起、马上进入。\n\n4. **对未确认用户单独加提醒**\n   如果系统能看到谁没有接受日历邀请或没有点击入口，对这部分人加一条更直接的提醒：\n\n   > 今天有课，建议现在确认时间，避免临近冲突。入口会在课前再次发送。\n\n   不要给所有人加太多消息，避免打扰已经确认的人。\n\n5. **把目标拆成可验证指标**\n   不只看最终到课率，还看：\n\n   - 日历接受率\n   - 提醒打开率\n   - 入口点击率\n   - 迟到率\n   - 到课率\n\n   如果接受率高但到课没涨，问题可能不是提醒时间，而是临近冲突或课程吸引力。\n\n6. **本轮目标设定**\n   这轮不要承诺一定到 85%。更合理的判断是：\n\n   - 若 B/C 组达到 84% 以上，继续优化临近提醒，有机会冲 85%\n   - 若仍在 82%-83%，说明提醒时间不是主要瓶颈\n   - 若前移组下降，说明提醒过早造成遗忘或疲劳\n\n推荐执行版：\n\n> 保留日历邀请；新增“课前24小时确认 + 课前2小时短提醒 + 课前15分钟入口提醒”；对未接受日历邀请的人单独追加确认提醒；用 A/B/C 测试验证是否能从 82% 提升到 85%。",
+      "events_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1/events/brake-triage-n15-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1/stderr/brake-triage-n15-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1/answers/brake-triage-n15-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1/prompts/brake-triage-n15-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-semantic-triage-v02-strict-dev/repeat-1/homes/brake-triage-n15-turn-1",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以做，但不要直接假设“再前移提醒时间”一定能把 82% 推到 85%。前几轮提升来自不同变量：提前通知、正文变短、日历邀请；现在只改提醒时间，边际收益可能变小。建议用小规模实验推进。\n\n方案如下：\n\n1. **保留日历邀请作为基线**\n   不要回退前面有效动作。继续使用：\n   - 日历邀请\n   - 简短正文\n   - 明确上课时间、入口、准备事项\n   - 一键加入/查看链接\n\n2. **做提醒时间 A/B/C 测试**\n   以当前 82% 的方案为对照组，新增两个实验组：\n\n   - A 组：维持当前提醒时间\n   - B 组：提醒时间提前 12 小时\n   - C 组：提醒时间提前 24 小时\n\n   不建议一上来全部前移，因为太早可能被忽略，反而降低临近记忆。\n\n3. **加一条临近提醒，而不是只前移**\n   更稳的组合是：\n\n   - 课前 24 小时：日历邀请/确认提醒\n   - 课前 2 小时：短提醒\n   - 课前 15 分钟：入口提醒\n\n   目标不是“更早通知”，而是覆盖三个场景：提前安排、临近想起、马上进入。\n\n4. **对未确认用户单独加提醒**\n   如果系统能看到谁没有接受日历邀请或没有点击入口，对这部分人加一条更直接的提醒：\n\n   > 今天有课，建议现在确认时间，避免临近冲突。入口会在课前再次发送。\n\n   不要给所有人加太多消息，避免打扰已经确认的人。\n\n5. **把目标拆成可验证指标**\n   不只看最终到课率，还看：\n\n   - 日历接受率\n   - 提醒打开率\n   - 入口点击率\n   - 迟到率\n   - 到课率\n\n   如果接受率高但到课没涨，问题可能不是提醒时间，而是临近冲突或课程吸引力。\n\n6. **本轮目标设定**\n   这轮不要承诺一定到 85%。更合理的判断是：\n\n   - 若 B/C 组达到 84% 以上，继续优化临近提醒，有机会冲 85%\n   - 若仍在 82%-83%，说明提醒时间不是主要瓶颈\n   - 若前移组下降，说明提醒过早造成遗忘或疲劳\n\n推荐执行版：\n\n> 保留日历邀请；新增“课前24小时确认 + 课前2小时短提醒 + 课前15分钟入口提醒”；对未接受日历邀请的人单独追加确认提醒；用 A/B/C 测试验证是否能从 82% 提升到 85%。"
+      ],
+      "usage": {
+        "input_tokens": 15408,
+        "cached_input_tokens": 15232,
+        "output_tokens": 710,
+        "reasoning_output_tokens": 65
+      },
+      "user_prompt": "第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。",
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.92,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.92,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "目标85%，请给方案"
+          }
+        ],
+        "abstain_reason": "legal convergence exclusion: direct iteration on attendance intervention with measurable primary-metric improvement and no same-class recurrence shown"
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": []
+    }
+  ],
+  "final_answer": "可以做，但不要直接假设“再前移提醒时间”一定能把 82% 推到 85%。前几轮提升来自不同变量：提前通知、正文变短、日历邀请；现在只改提醒时间，边际收益可能变小。建议用小规模实验推进。\n\n方案如下：\n\n1. **保留日历邀请作为基线**\n   不要回退前面有效动作。继续使用：\n   - 日历邀请\n   - 简短正文\n   - 明确上课时间、入口、准备事项\n   - 一键加入/查看链接\n\n2. **做提醒时间 A/B/C 测试**\n   以当前 82% 的方案为对照组，新增两个实验组：\n\n   - A 组：维持当前提醒时间\n   - B 组：提醒时间提前 12 小时\n   - C 组：提醒时间提前 24 小时\n\n   不建议一上来全部前移，因为太早可能被忽略，反而降低临近记忆。\n\n3. **加一条临近提醒，而不是只前移**\n   更稳的组合是：\n\n   - 课前 24 小时：日历邀请/确认提醒\n   - 课前 2 小时：短提醒\n   - 课前 15 分钟：入口提醒\n\n   目标不是“更早通知”，而是覆盖三个场景：提前安排、临近想起、马上进入。\n\n4. **对未确认用户单独加提醒**\n   如果系统能看到谁没有接受日历邀请或没有点击入口，对这部分人加一条更直接的提醒：\n\n   > 今天有课，建议现在确认时间，避免临近冲突。入口会在课前再次发送。\n\n   不要给所有人加太多消息，避免打扰已经确认的人。\n\n5. **把目标拆成可验证指标**\n   不只看最终到课率，还看：\n\n   - 日历接受率\n   - 提醒打开率\n   - 入口点击率\n   - 迟到率\n   - 到课率\n\n   如果接受率高但到课没涨，问题可能不是提醒时间，而是临近冲突或课程吸引力。\n\n6. **本轮目标设定**\n   这轮不要承诺一定到 85%。更合理的判断是：\n\n   - 若 B/C 组达到 84% 以上，继续优化临近提醒，有机会冲 85%\n   - 若仍在 82%-83%，说明提醒时间不是主要瓶颈\n   - 若前移组下降，说明提醒过早造成遗忘或疲劳\n\n推荐执行版：\n\n> 保留日历邀请；新增“课前24小时确认 + 课前2小时短提醒 + 课前15分钟入口提醒”；对未接受日历邀请的人单独追加确认提醒；用 A/B/C 测试验证是否能从 82% 提升到 85%。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

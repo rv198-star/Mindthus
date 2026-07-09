@@ -1,0 +1,56 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same means type: the repeated fixes use the same kind of intervention, even if the
+  surface verbs, labels, or affected items differ.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+不建议直接再加一个常设“入口核验人”。
+
+你列的四个问题，模式已经很清楚：每出一个字段/流程错误，就在前面再加一个人工岗。这会把流程越垒越厚，但不会修掉错误来源，后面还会继续出现“编号、金额、供应商、税号、附件版本”等新入口。
+
+可以这样处理今天的合同编号问题：
+
+1. 今天先做一次应急拦截  
+   入口临时加核验人，只限今天这批合同编号，职责是拦住明显错号，不扩大到所有合同字段。
+
+2. 明确这不是新基线  
+   不把“入口核验人”写进常规流程，不作为以后每类错误的默认解法。
+
+3. 设一个结构性修复截止点  
+   在 1-3 个工作日内查清编号错误来源：编号规则不清、系统未校验、模板可手填、数据源不同步，还是提交人培训问题。
+
+4. 到期必须替换掉人工岗  
+   优先改成系统规则校验、编号自动生成、字段下拉/锁定、提交前必填校验，或把现有人工核对职责等量替换，不再新增一层人。
+
+一句话：今天可以临时挡一下，但这只能是一次性急救；真正动作是停止继续叠人工岗，回头修“为什么这些关键字段总能带错进入流程”。
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

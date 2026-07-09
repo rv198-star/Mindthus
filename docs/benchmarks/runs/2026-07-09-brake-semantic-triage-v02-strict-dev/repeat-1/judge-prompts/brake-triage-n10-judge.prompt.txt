@@ -1,0 +1,62 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样写复盘：先不要把三起投诉简单归为“某部门没做好”，更合理的判断是：**当前主因不是单点失误，而是履约链路的异常识别和闭环机制弱**。
+
+**主因判断**
+
+这三起投诉表面分别是：
+
+- 配送迟到：履约时效问题
+- 包装破损：出库/运输防护问题
+- 客服回访慢：售后响应问题
+
+但它们有一个共同点：**问题发生后，没有被足够早地发现、升级和补救**。
+
+所以主因可以分两层写：
+
+1. **直接原因**
+   - 配送迟到：配送节点可能存在排班、交接、路线或承运商时效异常。
+   - 包装破损：包装标准、质检或运输装卸环节存在缺口。
+   - 客服回访慢：客服工单分配、优先级识别或响应时限管理不到位。
+
+2. **共性主因**
+   - 缺少对异常订单的提前预警。
+   - 投诉发生后，跨部门协同慢。
+   - 客服没有足够清晰的升级机制和处理时限。
+   - 复盘口径偏事后解释，缺少事前拦截指标。
+
+**责任边界**
+
+责任不能只压给客服。客服是用户投诉入口，但不是所有问题的源头。
+
+可以这样划分：
+
+- **配送团队/承运商责任**：负责配送时效、异常报备、迟到预警和补救动作。
+- **仓储/包装团队责任**：负责包装标准、出库检查、易损品保护和破损率控制。
+- **客服团队责任**：负责投诉响应、回访时效、用户安抚、工单升级和闭环反馈。
+- **运营/流程负责人责任**：负责建立跨部门异常处理机制、指标监控和复盘改进。
+- **管理责任**：如果类似问题重复出现，说明不是员工单次执行问题，而是机制、标准或资源配置问题。
+
+**复盘结论可以这样写**
+
+本月三起投诉分别暴露了配送时效、包装质量和客服响应的问题。直接原因分布在配送、仓储和客服环节，但共性主因是异常订单缺少提前预警和跨部门闭环机制，导致问题在用户投诉后才被动处理。后续应明确各环节责任边界：配送负责时效与异常报备，仓储负责包装质量与出库检查，客服负责响应和闭环，运营负责流程监控和跨部门协调。责任认定不应停留在单个岗位失误，而应重点修复异常识别、升级和追踪机制。
