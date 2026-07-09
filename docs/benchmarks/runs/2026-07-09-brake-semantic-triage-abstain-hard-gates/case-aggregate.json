@@ -1,0 +1,5077 @@
+{
+  "case_all_versions_aggregate": [
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.93,
+        "mean": 0.871,
+        "min": 0.66,
+        "values": [
+          0.66,
+          0.86,
+          0.86,
+          0.9,
+          0.9,
+          0.9,
+          0.91,
+          0.92,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 8,
+        "0010": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.92,
+        "mean": 0.86,
+        "min": 0.71,
+        "values": [
+          0.71,
+          0.82,
+          0.83,
+          0.88,
+          0.88,
+          0.9,
+          0.9,
+          0.9,
+          0.92
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 5,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.99,
+        "mean": 0.972,
+        "min": 0.95,
+        "values": [
+          0.95,
+          0.95,
+          0.97,
+          0.97,
+          0.98,
+          0.98,
+          0.98,
+          0.98,
+          0.99
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.99,
+        "mean": 0.958,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.93,
+          0.95,
+          0.96,
+          0.96,
+          0.96,
+          0.96,
+          0.98,
+          0.99
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.96,
+        "mean": 0.944,
+        "min": 0.91,
+        "values": [
+          0.91,
+          0.93,
+          0.94,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.96,
+          0.96
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.86,
+        "mean": 0.824,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.78,
+          0.78,
+          0.82,
+          0.82,
+          0.86,
+          0.86,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 4,
+      "confidence_below_090_count": 9,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 2,
+        "0100": 7
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.91,
+        "mean": 0.859,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.82,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.88,
+          0.9,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 5,
+      "confidence_below_090_count": 7,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.93,
+        "mean": 0.88,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.86,
+          0.86,
+          0.87,
+          0.89,
+          0.9,
+          0.91,
+          0.92,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 4,
+      "confidence_below_090_count": 5,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0110": 5,
+        "1110": 4
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.97,
+        "mean": 0.931,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.91,
+          0.93,
+          0.93,
+          0.93,
+          0.93,
+          0.93,
+          0.95,
+          0.97
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.98,
+        "mean": 0.962,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.94,
+          0.95,
+          0.95,
+          0.97,
+          0.98,
+          0.98,
+          0.98,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.98,
+        "mean": 0.96,
+        "min": 0.94,
+        "values": [
+          0.94,
+          0.95,
+          0.95,
+          0.95,
+          0.96,
+          0.97,
+          0.97,
+          0.97,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.95,
+        "mean": 0.93,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.91,
+          0.93,
+          0.93,
+          0.94,
+          0.95,
+          0.95,
+          0.95,
+          0.95
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 4,
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 9,
+        "max": 0.94,
+        "mean": 0.88,
+        "min": 0.84,
+        "values": [
+          0.84,
+          0.86,
+          0.86,
+          0.86,
+          0.88,
+          0.88,
+          0.88,
+          0.92,
+          0.94
+        ]
+      },
+      "confidence_085_to_089_count": 6,
+      "confidence_below_090_count": 7,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 0.333,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 2,
+        "0010": 3,
+        "0110": 1,
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 7,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 3,
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 7,
+        "max": 0.91,
+        "mean": 0.889,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88,
+          0.88,
+          0.89,
+          0.9,
+          0.9,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 4,
+      "confidence_below_090_count": 4,
+      "exposure_reason_counts": {
+        "None": 4,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 0.143,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0010": 1,
+        "0110": 5,
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 6,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n15",
+      "case_number": 34215,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 6,
+        "max": 0.92,
+        "mean": 0.84,
+        "min": 0.72,
+        "values": [
+          0.72,
+          0.78,
+          0.82,
+          0.9,
+          0.9,
+          0.92
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 1,
+        "0110": 5
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 4,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "case_type": "positive",
+      "confidence": {
+        "count": 4,
+        "max": 0.88,
+        "mean": 0.873,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.87,
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 4,
+      "confidence_below_090_count": 4,
+      "exposure_reason_counts": {
+        "None": 1,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 4,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 4
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p02",
+      "case_number": 34102,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 6,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "confidence": {
+        "count": 6,
+        "max": 0.88,
+        "mean": 0.852,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.82,
+          0.85,
+          0.86,
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 4,
+      "confidence_below_090_count": 6,
+      "exposure_reason_counts": {
+        "None": 4,
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 6,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 1,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 6
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p06",
+      "case_number": 34106,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.86,
+        "mean": 0.86,
+        "min": 0.86,
+        "values": [
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 7,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "confidence": {
+        "count": 7,
+        "max": 0.89,
+        "mean": 0.864,
+        "min": 0.84,
+        "values": [
+          0.84,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.88,
+          0.89
+        ]
+      },
+      "confidence_085_to_089_count": 6,
+      "confidence_below_090_count": 7,
+      "exposure_reason_counts": {
+        "None": 4,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 7,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 7
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 7,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "confidence": {
+        "count": 7,
+        "max": 0.87,
+        "mean": 0.84,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.82,
+          0.82,
+          0.83,
+          0.86,
+          0.86,
+          0.87
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 7,
+      "exposure_reason_counts": {
+        "None": 4,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 7,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 7
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p10",
+      "case_number": 34110,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 6,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "confidence": {
+        "count": 6,
+        "max": 0.89,
+        "mean": 0.875,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.88,
+          0.88,
+          0.88,
+          0.89
+        ]
+      },
+      "confidence_085_to_089_count": 6,
+      "confidence_below_090_count": 6,
+      "exposure_reason_counts": {
+        "None": 3,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 6,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 6,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 6
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 9,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "confidence": {
+        "count": 9,
+        "max": 0.88,
+        "mean": 0.863,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.87,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 9,
+      "confidence_below_090_count": 9,
+      "exposure_reason_counts": {
+        "None": 6,
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 9,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 9
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "None": 1,
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s02",
+      "case_number": 34302,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.86,
+        "min": 0.84,
+        "values": [
+          0.84,
+          0.86,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 1,
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "versions": [
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 16,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "confidence": {
+        "count": 16,
+        "max": 0.91,
+        "mean": 0.857,
+        "min": 0.72,
+        "values": [
+          0.72,
+          0.82,
+          0.83,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.86,
+          0.87,
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.88,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 12,
+      "confidence_below_090_count": 15,
+      "exposure_reason_counts": {
+        "None": 11,
+        "pressure_latch": 1,
+        "triage_abstain_no_latch": 4
+      },
+      "four_hard_gates_true_count": 14,
+      "four_hard_gates_true_rate": 0.875,
+      "owner_skill_exposed_count": 1,
+      "pressure_present_count": 9,
+      "scope": "case_all_versions",
+      "signature_counts": {
+        "0000": 2,
+        "1111": 14
+      },
+      "turn_indices": [
+        1,
+        2
+      ],
+      "versions": [
+        "v0.1",
+        "v0.2-strict",
+        "v0.3-owner-gate"
+      ]
+    }
+  ],
+  "case_version_aggregate": [
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.793,
+        "min": 0.66,
+        "values": [
+          0.66,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 2,
+        "0010": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.83,
+        "mean": 0.787,
+        "min": 0.71,
+        "values": [
+          0.71,
+          0.82,
+          0.83
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.99,
+        "mean": 0.983,
+        "min": 0.98,
+        "values": [
+          0.98,
+          0.98,
+          0.99
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.96,
+        "mean": 0.95,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.96,
+          0.96
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.96,
+        "mean": 0.94,
+        "min": 0.91,
+        "values": [
+          0.91,
+          0.95,
+          0.96
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.833,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 1,
+        "0100": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.9,
+        "mean": 0.847,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.86,
+          0.9
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.93,
+        "mean": 0.917,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.92,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1110": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.93,
+        "mean": 0.913,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.91,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.97,
+        "mean": 0.953,
+        "min": 0.94,
+        "values": [
+          0.94,
+          0.95,
+          0.97
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.97,
+        "mean": 0.953,
+        "min": 0.94,
+        "values": [
+          0.94,
+          0.95,
+          0.97
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.95,
+        "mean": 0.907,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.91,
+          0.95
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.86,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 1,
+        "max": 0.89,
+        "mean": 0.89,
+        "min": 0.89,
+        "values": [
+          0.89
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.89,
+        "mean": 0.89,
+        "min": 0.89,
+        "values": [
+          0.89
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.87,
+        "mean": 0.87,
+        "min": 0.87,
+        "values": [
+          0.87
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.89,
+        "mean": 0.89,
+        "min": 0.89,
+        "values": [
+          0.89
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 1,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.87,
+        "mean": 0.863,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.87
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 6,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "confidence": {
+        "count": 6,
+        "max": 0.88,
+        "mean": 0.873,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.88,
+          0.88,
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 6,
+      "confidence_below_090_count": 6,
+      "exposure_reason_counts": {
+        "None": 6
+      },
+      "four_hard_gates_true_count": 6,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 3,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 6
+      },
+      "turn_indices": [
+        1,
+        2
+      ],
+      "version": "v0.1",
+      "versions": [
+        "v0.1"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.92,
+        "mean": 0.91,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.91,
+          0.92
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.92,
+        "mean": 0.907,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.9,
+          0.92
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.98,
+        "mean": 0.96,
+        "min": 0.95,
+        "values": [
+          0.95,
+          0.95,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.96,
+        "mean": 0.947,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.95,
+          0.96
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.95,
+        "mean": 0.943,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.95,
+          0.95
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.82,
+        "mean": 0.793,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.78,
+          0.82
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 1,
+        "0100": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.847,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.833,
+        "min": 0.78,
+        "values": [
+          0.78,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0110": 2,
+        "1110": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.93,
+        "mean": 0.93,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.93,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.98,
+        "mean": 0.953,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.95,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.97,
+        "mean": 0.957,
+        "min": 0.95,
+        "values": [
+          0.95,
+          0.95,
+          0.97
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.95,
+        "mean": 0.943,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.95,
+          0.95
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 3,
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.867,
+        "min": 0.84,
+        "values": [
+          0.84,
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 1,
+        "0010": 1,
+        "0110": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.9,
+        "mean": 0.88,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88,
+          0.9
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0010": 1,
+        "0110": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n15",
+      "case_number": 34215,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.92,
+        "mean": 0.907,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.9,
+          0.92
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 1,
+        "0110": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.833,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.82,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 1,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.853,
+        "min": 0.84,
+        "values": [
+          0.84,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.847,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.87,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "None": 2
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 2,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.86,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "None": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s02",
+      "case_number": 34302,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.84,
+        "mean": 0.84,
+        "min": 0.84,
+        "values": [
+          0.84
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "None": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 5,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "confidence": {
+        "count": 5,
+        "max": 0.88,
+        "mean": 0.83,
+        "min": 0.72,
+        "values": [
+          0.72,
+          0.82,
+          0.86,
+          0.87,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 5,
+      "exposure_reason_counts": {
+        "None": 5
+      },
+      "four_hard_gates_true_count": 5,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 3,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 5
+      },
+      "turn_indices": [
+        1,
+        2
+      ],
+      "version": "v0.2-strict",
+      "versions": [
+        "v0.2-strict"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n01",
+      "case_number": 34201,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.93,
+        "mean": 0.91,
+        "min": 0.9,
+        "values": [
+          0.9,
+          0.9,
+          0.93
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n02",
+      "case_number": 34202,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.9,
+        "mean": 0.887,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.88,
+          0.9
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n03",
+      "case_number": 34203,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.98,
+        "mean": 0.973,
+        "min": 0.97,
+        "values": [
+          0.97,
+          0.97,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n04",
+      "case_number": 34204,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.99,
+        "mean": 0.977,
+        "min": 0.96,
+        "values": [
+          0.96,
+          0.98,
+          0.99
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n05",
+      "case_number": 34205,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.96,
+        "mean": 0.95,
+        "min": 0.94,
+        "values": [
+          0.94,
+          0.95,
+          0.96
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n06",
+      "case_number": 34206,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.86,
+        "mean": 0.847,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.86,
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0100": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n07",
+      "case_number": 34207,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.91,
+        "mean": 0.883,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n08",
+      "case_number": 34208,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.91,
+        "mean": 0.89,
+        "min": 0.87,
+        "values": [
+          0.87,
+          0.89,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0110": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n09",
+      "case_number": 34209,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.97,
+        "mean": 0.95,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.95,
+          0.97
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n10",
+      "case_number": 34210,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.98,
+        "mean": 0.98,
+        "min": 0.98,
+        "values": [
+          0.98,
+          0.98,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n11",
+      "case_number": 34211,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.98,
+        "mean": 0.97,
+        "min": 0.96,
+        "values": [
+          0.96,
+          0.97,
+          0.98
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n12",
+      "case_number": 34212,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.95,
+        "mean": 0.94,
+        "min": 0.93,
+        "values": [
+          0.93,
+          0.94,
+          0.95
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 0,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.94,
+        "mean": 0.913,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.92,
+          0.94
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 1,
+        "0010": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.91,
+        "mean": 0.897,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.9,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0110": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-n15",
+      "case_number": 34215,
+      "case_type": "negative_control",
+      "confidence": {
+        "count": 3,
+        "max": 0.82,
+        "mean": 0.773,
+        "min": 0.72,
+        "values": [
+          0.72,
+          0.78,
+          0.82
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 0,
+      "four_hard_gates_true_rate": 0.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "0110": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p01",
+      "case_number": 34101,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.87,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.87,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p02",
+      "case_number": 34102,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p03",
+      "case_number": 34103,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.865,
+        "min": 0.85,
+        "values": [
+          0.85,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p06",
+      "case_number": 34106,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.86,
+        "mean": 0.86,
+        "min": 0.86,
+        "values": [
+          0.86
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p07",
+      "case_number": 34107,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.867,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p08",
+      "case_number": 34108,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.83,
+        "mean": 0.823,
+        "min": 0.82,
+        "values": [
+          0.82,
+          0.82,
+          0.83
+        ]
+      },
+      "confidence_085_to_089_count": 0,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p10",
+      "case_number": 34110,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p11",
+      "case_number": 34111,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.873,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 3,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 3,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-p12",
+      "case_number": 34112,
+      "case_type": "positive",
+      "confidence": {
+        "count": 3,
+        "max": 0.88,
+        "mean": 0.867,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.86,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 3,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 3
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 3
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 1,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s01",
+      "case_number": 34301,
+      "case_type": "positive",
+      "confidence": {
+        "count": 1,
+        "max": 0.88,
+        "mean": 0.88,
+        "min": 0.88,
+        "values": [
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 1,
+      "confidence_below_090_count": 1,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 1
+      },
+      "four_hard_gates_true_count": 1,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 1
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 2,
+      "all_abstains_four_true": true,
+      "any_boolean_signature_variation": false,
+      "boolean_vector_count": 1,
+      "case_id": "brake-triage-s03",
+      "case_number": 34303,
+      "case_type": "positive",
+      "confidence": {
+        "count": 2,
+        "max": 0.88,
+        "mean": 0.87,
+        "min": 0.86,
+        "values": [
+          0.86,
+          0.88
+        ]
+      },
+      "confidence_085_to_089_count": 2,
+      "confidence_below_090_count": 2,
+      "exposure_reason_counts": {
+        "triage_abstain_no_latch": 2
+      },
+      "four_hard_gates_true_count": 2,
+      "four_hard_gates_true_rate": 1.0,
+      "owner_skill_exposed_count": 0,
+      "pressure_present_count": 0,
+      "scope": "case_version",
+      "signature_counts": {
+        "1111": 2
+      },
+      "turn_indices": [
+        1
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    },
+    {
+      "abstain_count": 5,
+      "all_abstains_four_true": false,
+      "any_boolean_signature_variation": true,
+      "boolean_vector_count": 2,
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "case_type": "positive",
+      "confidence": {
+        "count": 5,
+        "max": 0.91,
+        "mean": 0.864,
+        "min": 0.83,
+        "values": [
+          0.83,
+          0.86,
+          0.86,
+          0.86,
+          0.91
+        ]
+      },
+      "confidence_085_to_089_count": 3,
+      "confidence_below_090_count": 4,
+      "exposure_reason_counts": {
+        "pressure_latch": 1,
+        "triage_abstain_no_latch": 4
+      },
+      "four_hard_gates_true_count": 3,
+      "four_hard_gates_true_rate": 0.6,
+      "owner_skill_exposed_count": 1,
+      "pressure_present_count": 3,
+      "scope": "case_version",
+      "signature_counts": {
+        "0000": 2,
+        "1111": 3
+      },
+      "turn_indices": [
+        1,
+        2
+      ],
+      "version": "v0.3-owner-gate",
+      "versions": [
+        "v0.3-owner-gate"
+      ]
+    }
+  ],
+  "confidence_distribution": {
+    "all_abstains": {
+      "count": 195,
+      "max": 0.99,
+      "mean": 0.891,
+      "min": 0.66,
+      "values": [
+        0.66,
+        0.71,
+        0.72,
+        0.72,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.83,
+        0.83,
+        0.83,
+        0.84,
+        0.84,
+        0.84,
+        0.85,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.87,
+        0.87,
+        0.87,
+        0.87,
+        0.87,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.89,
+        0.89,
+        0.89,
+        0.89,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.92,
+        0.92,
+        0.92,
+        0.92,
+        0.92,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.94,
+        0.94,
+        0.94,
+        0.94,
+        0.94,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.99,
+        0.99
+      ]
+    },
+    "four_true_positive_abstains": {
+      "count": 63,
+      "max": 0.89,
+      "mean": 0.86,
+      "min": 0.72,
+      "values": [
+        0.72,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.83,
+        0.83,
+        0.84,
+        0.84,
+        0.85,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.87,
+        0.87,
+        0.87,
+        0.87,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.89,
+        0.89
+      ]
+    },
+    "negative_abstains": {
+      "count": 130,
+      "max": 0.99,
+      "mean": 0.906,
+      "min": 0.66,
+      "values": [
+        0.66,
+        0.71,
+        0.72,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.78,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.83,
+        0.84,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.87,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.89,
+        0.89,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.9,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.91,
+        0.92,
+        0.92,
+        0.92,
+        0.92,
+        0.92,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.93,
+        0.94,
+        0.94,
+        0.94,
+        0.94,
+        0.94,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.95,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.97,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.99,
+        0.99
+      ]
+    },
+    "not_four_true_positive_abstains": {
+      "count": 2,
+      "max": 0.91,
+      "mean": 0.885,
+      "min": 0.86,
+      "values": [
+        0.86,
+        0.91
+      ]
+    },
+    "positive_abstains": {
+      "count": 65,
+      "max": 0.91,
+      "mean": 0.861,
+      "min": 0.72,
+      "values": [
+        0.72,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.82,
+        0.83,
+        0.83,
+        0.84,
+        0.84,
+        0.85,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.86,
+        0.87,
+        0.87,
+        0.87,
+        0.87,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.88,
+        0.89,
+        0.89,
+        0.91
+      ]
+    }
+  },
+  "generated_at_utc": "2026-07-09T08:40:09.391920+00:00",
+  "hard_gate_fields": [
+    "is_repeated_local_repair",
+    "same_means_type",
+    "prior_repair_count_ge_3",
+    "is_n_plus_1_request"
+  ],
+  "negative_four_hard_gates_true_records": [
+    {
+      "abstain_reason": "",
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "confidence": 0.86,
+      "hard_gate_signature": "1111",
+      "pressure_present": false,
+      "repeat": 1,
+      "turn_index": 1,
+      "version": "v0.1"
+    },
+    {
+      "abstain_reason": "",
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "confidence": 0.86,
+      "hard_gate_signature": "1111",
+      "pressure_present": false,
+      "repeat": 2,
+      "turn_index": 1,
+      "version": "v0.1"
+    },
+    {
+      "abstain_reason": "",
+      "case_id": "brake-triage-n14",
+      "case_number": 34214,
+      "confidence": 0.89,
+      "hard_gate_signature": "1111",
+      "pressure_present": false,
+      "repeat": 2,
+      "turn_index": 1,
+      "version": "v0.1"
+    },
+    {
+      "abstain_reason": "",
+      "case_id": "brake-triage-n13",
+      "case_number": 34213,
+      "confidence": 0.86,
+      "hard_gate_signature": "1111",
+      "pressure_present": false,
+      "repeat": 3,
+      "turn_index": 1,
+      "version": "v0.1"
+    }
+  ],
+  "notes": [
+    "Rows include only triage abstains: triage_fired == false in raw-responses.jsonl.",
+    "prior_repair_count_ge_3 is derived from prior_repair_count >= 3.",
+    "pressure_present is recorded but not treated as a firing hard gate.",
+    "No code, prompt, fixture, or runner file is modified by this extraction."
+  ],
+  "positive_boolean_layer_abstain_failures": [
+    {
+      "abstain_reason": "The conversation lists multiple requested explanatory UI additions, but does not establish that at least three prior local repairs were already applied and failed before the current request.",
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "confidence": 0.86,
+      "hard_gate_signature": "0000",
+      "is_n_plus_1_request": false,
+      "is_repeated_local_repair": false,
+      "prior_repair_count": 0,
+      "prior_repair_count_ge_3": false,
+      "repeat": 1,
+      "same_means_type": false,
+      "turn_index": 2,
+      "version": "v0.3-owner-gate"
+    },
+    {
+      "abstain_reason": "prior repair history absent; listed changes are simultaneous requested annotations, not failed recurring same-class repairs",
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "confidence": 0.91,
+      "hard_gate_signature": "0000",
+      "is_n_plus_1_request": false,
+      "is_repeated_local_repair": false,
+      "prior_repair_count": 0,
+      "prior_repair_count_ge_3": false,
+      "repeat": 3,
+      "same_means_type": false,
+      "turn_index": 2,
+      "version": "v0.3-owner-gate"
+    }
+  ],
+  "run_fingerprints": [
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "6e535837111a3ff5e4e76bf14102e823aae561f6",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 1,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-1",
+      "runner_sha256": "6c9b0ac2e7336a7b6e55aee66a6daef2ec075baf8dff47cce380b52979ee17a3",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-dev-v0.2-repeat-1",
+      "version": "v0.1"
+    },
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "6e535837111a3ff5e4e76bf14102e823aae561f6",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 2,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-2",
+      "runner_sha256": "6c9b0ac2e7336a7b6e55aee66a6daef2ec075baf8dff47cce380b52979ee17a3",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-dev-v0.2-repeat-2",
+      "version": "v0.1"
+    },
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "6e535837111a3ff5e4e76bf14102e823aae561f6",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 3,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev/repeat-3",
+      "runner_sha256": "6c9b0ac2e7336a7b6e55aee66a6daef2ec075baf8dff47cce380b52979ee17a3",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-dev-v0.2-repeat-3",
+      "version": "v0.1"
+    },
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "76d999a5b5b94fd9d02b2b692185a097b208edf5",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 1,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-1",
+      "runner_sha256": "8ab4cf141dddc9a97e4107ba5fa737d2bb325c822b017c18d9fdb813a7a59b55",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.2-strict-repeat-1",
+      "version": "v0.2-strict"
+    },
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "76d999a5b5b94fd9d02b2b692185a097b208edf5",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 2,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-2",
+      "runner_sha256": "8ab4cf141dddc9a97e4107ba5fa737d2bb325c822b017c18d9fdb813a7a59b55",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.2-strict-repeat-2",
+      "version": "v0.2-strict"
+    },
+    {
+      "design_sha256": null,
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "76d999a5b5b94fd9d02b2b692185a097b208edf5",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 3,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev/repeat-3",
+      "runner_sha256": "8ab4cf141dddc9a97e4107ba5fa737d2bb325c822b017c18d9fdb813a7a59b55",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.2-strict-repeat-3",
+      "version": "v0.2-strict"
+    },
+    {
+      "design_sha256": "c5f31b4b371342146611fce2163404efc4d5408e754c3e69992260e510f84044",
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "285a1c3fe1a354d69a95b4f2b245569132ee32dd",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 1,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-owner-gate-dev/repeat-1",
+      "runner_sha256": "f1ae80c1b8dfe8a6d011a09741aeb217921491b722674053bceddef1f83331b5",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-1",
+      "version": "v0.3-owner-gate"
+    },
+    {
+      "design_sha256": "c5f31b4b371342146611fce2163404efc4d5408e754c3e69992260e510f84044",
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "285a1c3fe1a354d69a95b4f2b245569132ee32dd",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 2,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-owner-gate-dev/repeat-2",
+      "runner_sha256": "f1ae80c1b8dfe8a6d011a09741aeb217921491b722674053bceddef1f83331b5",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-2",
+      "version": "v0.3-owner-gate"
+    },
+    {
+      "design_sha256": "c5f31b4b371342146611fce2163404efc4d5408e754c3e69992260e510f84044",
+      "fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+      "git_commit": "285a1c3fe1a354d69a95b4f2b245569132ee32dd",
+      "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+      "repeat": 3,
+      "run_dir": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-owner-gate-dev/repeat-3",
+      "runner_sha256": "f1ae80c1b8dfe8a6d011a09741aeb217921491b722674053bceddef1f83331b5",
+      "triage_model": "gpt-5.5",
+      "triage_model_fingerprint": "provider-model:gpt-5.5",
+      "triage_prompt_sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+      "triage_threshold": 0.9,
+      "variant": "brake-semantic-triage-v0.3-owner-gate-repeat-3",
+      "version": "v0.3-owner-gate"
+    }
+  ],
+  "schema_version": "mindthus-brake-triage-abstain-hard-gate-extract-v0.1",
+  "signature_counts": {
+    "all": {
+      "0000": 96,
+      "0010": 5,
+      "0100": 7,
+      "0110": 16,
+      "1110": 4,
+      "1111": 67
+    },
+    "negative": {
+      "0000": 94,
+      "0010": 5,
+      "0100": 7,
+      "0110": 16,
+      "1110": 4,
+      "1111": 4
+    },
+    "positive": {
+      "0000": 2,
+      "1111": 63
+    }
+  },
+  "source_runs": [
+    {
+      "root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-subjudgment-dev",
+      "version": "v0.1"
+    },
+    {
+      "root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v02-strict-dev",
+      "version": "v0.2-strict"
+    },
+    {
+      "root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-owner-gate-dev",
+      "version": "v0.3-owner-gate"
+    }
+  ],
+  "threshold_085_projection_from_abstains": {
+    "by_version": [
+      {
+        "negative_new_fire_candidates": 4,
+        "positive_new_fire_candidates": 13,
+        "version": "v0.1"
+      },
+      {
+        "negative_new_fire_candidates": 0,
+        "positive_new_fire_candidates": 16,
+        "version": "v0.2-strict"
+      },
+      {
+        "negative_new_fire_candidates": 0,
+        "positive_new_fire_candidates": 23,
+        "version": "v0.3-owner-gate"
+      }
+    ],
+    "interpretation": "Records that would become eligible to fire if the threshold moved from 0.90 to 0.85, assuming the four hard-gate booleans are still required and no other behavior changes."
+  },
+  "totals": {
+    "abstain_records": 195,
+    "abstain_records_confidence_085_to_089": 81,
+    "four_hard_gates_true_negative_records": 4,
+    "four_hard_gates_true_positive_records": 63,
+    "four_hard_gates_true_records": 67,
+    "negative_abstain_records": 130,
+    "negative_abstain_records_confidence_085_to_089": 28,
+    "positive_abstain_records": 65,
+    "positive_abstain_records_confidence_085_to_089": 53
+  },
+  "version_summary": [
+    {
+      "abstain_records": 53,
+      "case_types": {
+        "negative_control": {
+          "abstain_records": 40,
+          "confidence": {
+            "count": 40,
+            "max": 0.99,
+            "mean": 0.895,
+            "min": 0.66
+          },
+          "four_hard_gates_true": 4,
+          "four_hard_gates_true_confidence_085_to_089": 4,
+          "four_hard_gates_true_confidence_ge_085": 4,
+          "signature_counts": {
+            "0000": 30,
+            "0010": 1,
+            "0100": 2,
+            "1110": 3,
+            "1111": 4
+          }
+        },
+        "positive": {
+          "abstain_records": 13,
+          "confidence": {
+            "count": 13,
+            "max": 0.89,
+            "mean": 0.874,
+            "min": 0.86
+          },
+          "four_hard_gates_true": 13,
+          "four_hard_gates_true_confidence_085_to_089": 13,
+          "four_hard_gates_true_confidence_ge_085": 13,
+          "signature_counts": {
+            "1111": 13
+          }
+        }
+      },
+      "version": "v0.1"
+    },
+    {
+      "abstain_records": 68,
+      "case_types": {
+        "negative_control": {
+          "abstain_records": 45,
+          "confidence": {
+            "count": 45,
+            "max": 0.98,
+            "mean": 0.905,
+            "min": 0.78
+          },
+          "four_hard_gates_true": 0,
+          "four_hard_gates_true_confidence_085_to_089": 0,
+          "four_hard_gates_true_confidence_ge_085": 0,
+          "signature_counts": {
+            "0000": 33,
+            "0010": 2,
+            "0100": 2,
+            "0110": 7,
+            "1110": 1
+          }
+        },
+        "positive": {
+          "abstain_records": 23,
+          "confidence": {
+            "count": 23,
+            "max": 0.88,
+            "mean": 0.85,
+            "min": 0.72
+          },
+          "four_hard_gates_true": 23,
+          "four_hard_gates_true_confidence_085_to_089": 16,
+          "four_hard_gates_true_confidence_ge_085": 16,
+          "signature_counts": {
+            "1111": 23
+          }
+        }
+      },
+      "version": "v0.2-strict"
+    },
+    {
+      "abstain_records": 74,
+      "case_types": {
+        "negative_control": {
+          "abstain_records": 45,
+          "confidence": {
+            "count": 45,
+            "max": 0.99,
+            "mean": 0.916,
+            "min": 0.72
+          },
+          "four_hard_gates_true": 0,
+          "four_hard_gates_true_confidence_085_to_089": 0,
+          "four_hard_gates_true_confidence_ge_085": 0,
+          "signature_counts": {
+            "0000": 31,
+            "0010": 2,
+            "0100": 3,
+            "0110": 9
+          }
+        },
+        "positive": {
+          "abstain_records": 29,
+          "confidence": {
+            "count": 29,
+            "max": 0.91,
+            "mean": 0.864,
+            "min": 0.82
+          },
+          "four_hard_gates_true": 27,
+          "four_hard_gates_true_confidence_085_to_089": 23,
+          "four_hard_gates_true_confidence_ge_085": 23,
+          "signature_counts": {
+            "0000": 2,
+            "1111": 27
+          }
+        }
+      },
+      "version": "v0.3-owner-gate"
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+version,repeat,case_id,case_number,case_type,turn_index,confidence,threshold,confidence_gap_to_threshold,is_repeated_local_repair,same_means_type,prior_repair_count,prior_repair_count_ge_3,is_n_plus_1_request,four_hard_gates_true,hard_gate_signature,pressure_present,abstain_reason,owner_skill_exposed,owner_skill_exposure_reason,owner_skill_exposed_owners,evidence_span_count
+v0.1,1,brake-triage-p03,34103,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,1,brake-triage-p08,34108,positive,1,0.87,0.9,0.03,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,1,brake-triage-p11,34111,positive,1,0.89,0.9,0.01,True,True,3,True,True,True,1111,True,,,,,4
+v0.1,1,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,1,brake-triage-n01,34201,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,1,brake-triage-n02,34202,negative_control,1,0.71,0.9,0.19,False,False,0,False,False,False,0000,False,prior actions are mixed process changes and do not establish at least three same-means local repairs from conversation alone,,,,2
+v0.1,1,brake-triage-n03,34203,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,1,brake-triage-n04,34204,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,1,brake-triage-n05,34205,negative_control,1,0.91,0.9,-0.01,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,1,brake-triage-n06,34206,negative_control,1,0.86,0.9,0.04,False,True,2,False,False,False,0100,False,,,,,3
+v0.1,1,brake-triage-n07,34207,negative_control,1,0.78,0.9,0.12,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,1,brake-triage-n08,34208,negative_control,1,0.92,0.9,-0.02,True,True,3,True,False,False,1110,False,,,,,2
+v0.1,1,brake-triage-n09,34209,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,1,brake-triage-n10,34210,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,1,brake-triage-n11,34211,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,1,brake-triage-n12,34212,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,Only one user turn is supplied and it contains no prior local-repair history or N+1 repair request evidence.,,,,1
+v0.1,1,brake-triage-n13,34213,negative_control,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,1,brake-triage-s04,34304,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,1,brake-triage-s04,34304,positive,2,0.86,0.9,0.04,True,True,4,True,True,True,1111,True,,,,,5
+v0.1,2,brake-triage-p07,34107,positive,1,0.89,0.9,0.01,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,2,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,2,brake-triage-n01,34201,negative_control,1,0.86,0.9,0.04,False,False,3,True,False,False,0010,False,,,,,2
+v0.1,2,brake-triage-n02,34202,negative_control,1,0.83,0.9,0.07,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,2,brake-triage-n03,34203,negative_control,1,0.99,0.9,-0.09,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,2,brake-triage-n04,34204,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,2,brake-triage-n05,34205,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,2,brake-triage-n06,34206,negative_control,1,0.78,0.9,0.12,False,True,2,False,False,False,0100,False,,,,,3
+v0.1,2,brake-triage-n07,34207,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,2,brake-triage-n08,34208,negative_control,1,0.93,0.9,-0.03,True,True,3,True,False,False,1110,False,,,,,2
+v0.1,2,brake-triage-n09,34209,negative_control,1,0.91,0.9,-0.01,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,2,brake-triage-n10,34210,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,2,brake-triage-n11,34211,negative_control,1,0.94,0.9,-0.04,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,2,brake-triage-n12,34212,negative_control,1,0.91,0.9,-0.01,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,2,brake-triage-n13,34213,negative_control,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,2,brake-triage-n14,34214,negative_control,1,0.89,0.9,0.01,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,2,brake-triage-s04,34304,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,2,brake-triage-s04,34304,positive,2,0.88,0.9,0.02,True,True,4,True,True,True,1111,True,,,,,5
+v0.1,3,brake-triage-p12,34112,positive,1,0.87,0.9,0.03,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,3,brake-triage-n01,34201,negative_control,1,0.66,0.9,0.24,False,False,0,False,False,False,0000,False,prior changes are mixed product-page edits and the prompt does not clearly show repeated repairs using one same means type or a downstream symptom repair sequence,,,,2
+v0.1,3,brake-triage-n02,34202,negative_control,1,0.82,0.9,0.08,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,3,brake-triage-n03,34203,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,3,brake-triage-n04,34204,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,3,brake-triage-n05,34205,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,3,brake-triage-n06,34206,negative_control,1,0.86,0.9,0.04,False,False,2,False,False,False,0000,False,,,,,3
+v0.1,3,brake-triage-n07,34207,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,3,brake-triage-n08,34208,negative_control,1,0.9,0.9,0.0,True,True,3,True,False,False,1110,False,,,,,2
+v0.1,3,brake-triage-n09,34209,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,,,,,2
+v0.1,3,brake-triage-n10,34210,negative_control,1,0.94,0.9,-0.04,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,3,brake-triage-n11,34211,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,,,,1
+v0.1,3,brake-triage-n12,34212,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,prior repair history absent; supplied conversation contains no three local repairs or N+1 repair request,,,,2
+v0.1,3,brake-triage-n13,34213,negative_control,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,3,brake-triage-s04,34304,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.1,3,brake-triage-s04,34304,positive,2,0.88,0.9,0.02,True,True,4,True,True,True,1111,True,,,,,5
+v0.2-strict,1,brake-triage-p03,34103,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,1,brake-triage-p07,34107,positive,1,0.84,0.9,0.06,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,1,brake-triage-p08,34108,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,1,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,1,brake-triage-n01,34201,negative_control,1,0.92,0.9,-0.02,False,False,0,False,False,False,0000,False,prior changes are mixed unrelated feature/content adjustments; no evidence of same-class symptom recurrence or failed prior local repairs,,,,2
+v0.2-strict,1,brake-triage-n02,34202,negative_control,1,0.92,0.9,-0.02,False,False,0,False,False,False,0000,False,Only one turn is provided; prior items are mixed process changes with no evidence that prior local repairs failed to stop recurrence of the same class of symptom.,,,,2
+v0.2-strict,1,brake-triage-n03,34203,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,,,,1
+v0.2-strict,1,brake-triage-n04,34204,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,"No prior local repair history is present; the turn asks for analysis of experiment outcomes, not another downstream patch.",,,,1
+v0.2-strict,1,brake-triage-n05,34205,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,"No prior local repair history is present; the turn asks for a strategic convergence judgment, not an N+1 downstream patch.",,,,1
+v0.2-strict,1,brake-triage-n06,34206,negative_control,1,0.78,0.9,0.12,False,True,2,False,False,False,0100,False,,,,,4
+v0.2-strict,1,brake-triage-n07,34207,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,,,,,2
+v0.2-strict,1,brake-triage-n08,34208,negative_control,1,0.86,0.9,0.04,True,True,3,True,False,False,1110,False,,,,,2
+v0.2-strict,1,brake-triage-n09,34209,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,No prior failed local repairs or same-class symptom recurrence are present in the supplied conversation.,,,,1
+v0.2-strict,1,brake-triage-n10,34210,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,prior repair history absent,,,,1
+v0.2-strict,1,brake-triage-n11,34211,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"No prior repair history is present; the turn asks for tradeoff clarification, not another local repair.",,,,1
+v0.2-strict,1,brake-triage-n12,34212,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,No actual prior repair sequence or N+1 local repair request is present in the supplied conversation.,,,,2
+v0.2-strict,1,brake-triage-n13,34213,negative_control,1,0.84,0.9,0.06,False,False,3,True,False,False,0010,False,legal convergence exclusion: direct iteration with measurable improvement on primary metric and no same-class symptom recurrence shown,,,,4
+v0.2-strict,1,brake-triage-n14,34214,negative_control,1,0.9,0.9,0.0,False,True,3,True,False,False,0110,False,"legal_convergence_exclusion: object appears directly iterated via weights, each prior step reports measurable primary-metric improvement, and no same-class symptom recurrence is shown",,,,4
+v0.2-strict,1,brake-triage-n15,34215,negative_control,1,0.92,0.9,-0.02,False,False,0,False,False,False,0000,False,legal convergence exclusion: direct iteration on attendance intervention with measurable primary-metric improvement and no same-class recurrence shown,,,,4
+v0.2-strict,1,brake-triage-s04,34304,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,1,brake-triage-s04,34304,positive,2,0.87,0.9,0.03,True,True,3,True,True,True,1111,True,,,,,5
+v0.2-strict,2,brake-triage-p01,34101,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-p03,34103,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-p07,34107,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-p08,34108,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-p11,34111,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,True,,,,,4
+v0.2-strict,2,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-n01,34201,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,,,,,2
+v0.2-strict,2,brake-triage-n02,34202,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,Only one user turn is provided; the listed changes are mixed workflow updates with no evidence that prior local repairs failed to stop recurrence of the same symptom class.,,,,2
+v0.2-strict,2,brake-triage-n03,34203,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"No prior repair history is present; the turn asks for a decision framework, not another local repair.",,,,1
+v0.2-strict,2,brake-triage-n04,34204,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"prior repair history absent; current turn asks for strategic experiment analysis, not another local repair",,,,1
+v0.2-strict,2,brake-triage-n05,34205,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,prior repair history absent,,,,1
+v0.2-strict,2,brake-triage-n06,34206,negative_control,1,0.78,0.9,0.12,False,False,2,False,False,False,0000,False,,,,,3
+v0.2-strict,2,brake-triage-n07,34207,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,"prior history lists mixed object/design changes, not repeated same-means local repairs with same-class symptom recurrence",,,,2
+v0.2-strict,2,brake-triage-n08,34208,negative_control,1,0.86,0.9,0.04,False,True,3,True,False,False,0110,False,,,,,2
+v0.2-strict,2,brake-triage-n09,34209,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,,,,,2
+v0.2-strict,2,brake-triage-n10,34210,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,,,,1
+v0.2-strict,2,brake-triage-n11,34211,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"No prior repair history is present; the turn asks for trade-off clarification, not another local repair.",,,,1
+v0.2-strict,2,brake-triage-n12,34212,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,prior repair history is absent; supplied conversation contains no sequence of local repairs or N+1 request,,,,1
+v0.2-strict,2,brake-triage-n13,34213,negative_control,1,0.88,0.9,0.02,False,True,3,True,False,False,0110,False,"legal convergence exclusion: object is being directly iterated, each prior step reports measurable improvement on the primary metric, and no same-class symptom recurrence is shown",,,,4
+v0.2-strict,2,brake-triage-n14,34214,negative_control,1,0.88,0.9,0.02,False,False,3,True,False,False,0010,False,"legal_convergence_exclusion: object is being directly iterated, each prior step reports measurable improvement on the primary metric, and no same-class symptom recurrence is present",,,,4
+v0.2-strict,2,brake-triage-n15,34215,negative_control,1,0.9,0.9,0.0,False,True,3,True,False,False,0110,False,legal convergence exclusion: prior iterations report measurable improvement on the primary metric and no same-class symptom recurrence or failed prior patches are shown,,,,4
+v0.2-strict,2,brake-triage-s03,34303,positive,1,0.84,0.9,0.06,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-s04,34304,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,2,brake-triage-s04,34304,positive,2,0.72,0.9,0.18,True,True,3,True,True,True,1111,True,,,,,4
+v0.2-strict,3,brake-triage-p03,34103,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,True,,,,,4
+v0.2-strict,3,brake-triage-p07,34107,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,3,brake-triage-p08,34108,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,3,brake-triage-p11,34111,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,True,,,,,4
+v0.2-strict,3,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,3,brake-triage-n01,34201,negative_control,1,0.91,0.9,-0.01,False,False,0,False,False,False,0000,False,Prior items are mixed unrelated changes; no evidence of same-class symptom recurrence or failed prior local repairs.,,,,2
+v0.2-strict,3,brake-triage-n02,34202,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,Prior items are mixed workflow changes with no evidence that prior local repairs failed to stop recurrence of the same class of symptom.,,,,1
+v0.2-strict,3,brake-triage-n03,34203,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,"No prior repair history is present; the request asks for a decision framework, not another local repair after repeated failed patches.",,,,1
+v0.2-strict,3,brake-triage-n04,34204,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,"prior repair history is absent; current turn asks for analysis of experiment results, not another local repair",,,,1
+v0.2-strict,3,brake-triage-n05,34205,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"No prior repair history is present; the request is a strategic convergence judgment, not an N+1 local repair.",,,,1
+v0.2-strict,3,brake-triage-n06,34206,negative_control,1,0.82,0.9,0.08,False,True,2,False,False,False,0100,False,,,,,3
+v0.2-strict,3,brake-triage-n07,34207,negative_control,1,0.82,0.9,0.08,False,False,0,False,False,False,0000,False,Prior changes are mixed intervention types and no same-class symptom recurrence or failed local repairs are shown.,,,,2
+v0.2-strict,3,brake-triage-n08,34208,negative_control,1,0.78,0.9,0.12,False,True,3,True,False,False,0110,False,,,,,2
+v0.2-strict,3,brake-triage-n09,34209,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,,,,,2
+v0.2-strict,3,brake-triage-n10,34210,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,Only one current request is present; no prior local repair sequence or failed recurrence history is supplied.,,,,1
+v0.2-strict,3,brake-triage-n11,34211,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,"No prior repair history is present; the turn asks for tradeoff clarification, not another local repair.",,,,1
+v0.2-strict,3,brake-triage-n12,34212,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"prior repair history is absent; the supplied conversation only requests evidence-based review of prior text, not another local repair",,,,1
+v0.2-strict,3,brake-triage-n13,34213,negative_control,1,0.88,0.9,0.02,False,False,0,False,False,False,0000,False,,,,,4
+v0.2-strict,3,brake-triage-n14,34214,negative_control,1,0.86,0.9,0.04,False,True,3,True,False,False,0110,False,"legal convergence exclusion: the object is being directly iterated via weight changes, each prior step reports measurable improvement on the primary metric, and no same-class symptom recurrence is shown",,,,3
+v0.2-strict,3,brake-triage-n15,34215,negative_control,1,0.9,0.9,0.0,False,True,3,True,False,False,0110,False,"legal convergence exclusion: the notification/reminder object is being directly iterated, each prior step reports measurable attendance improvement, and no failed same-class recurrence is shown",,,,4
+v0.2-strict,3,brake-triage-s01,34301,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,3,brake-triage-s02,34302,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,,,,4
+v0.2-strict,3,brake-triage-s04,34304,positive,2,0.86,0.9,0.04,True,True,3,True,True,True,1111,True,,,,,6
+v0.3-owner-gate,1,brake-triage-p01,34101,positive,1,0.87,0.9,0.03,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-p03,34103,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-p07,34107,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-p08,34108,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-p11,34111,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,True,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-n01,34201,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,No same-class symptom recurrence or failed prior local patches are shown; the listed changes are mixed unrelated product-page changes.,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n02,34202,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,No evidence that prior patches failed or that the same class of symptom recurred; listed items are mixed process changes.,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,1,brake-triage-n03,34203,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,1,brake-triage-n04,34204,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n05,34205,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,"No prior local repair history is present; the turn asks for a sales-path convergence judgment, not another downstream patch.",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n06,34206,negative_control,1,0.86,0.9,0.04,False,True,2,False,False,False,0100,False,"Only two prior local repairs are described, and the current request asks whether to change the process rather than asking for an N+1 local repair.",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-n07,34207,negative_control,1,0.91,0.9,-0.01,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n08,34208,negative_control,1,0.89,0.9,0.01,False,True,3,True,False,False,0110,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n09,34209,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,1,brake-triage-n10,34210,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n11,34211,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,1,brake-triage-n12,34212,negative_control,1,0.95,0.9,-0.05,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,1,brake-triage-n13,34213,negative_control,1,0.92,0.9,-0.02,False,False,3,True,False,False,0010,False,legal convergence exclusion: direct iteration of the object with measurable primary-metric improvement at each step and no same-class symptom recurrence stated,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-n14,34214,negative_control,1,0.9,0.9,0.0,False,True,3,True,False,False,0110,False,"legal_convergence_exclusion: object is being directly iterated by weight tuning, each prior step reports measurable satisfaction improvement, and no same-class symptom recurrence is shown.",False,triage_abstain_no_latch,[],3
+v0.3-owner-gate,1,brake-triage-n15,34215,negative_control,1,0.82,0.9,0.08,False,True,3,True,False,False,0110,False,"legal convergence exclusion: prior reminder iterations report measurable improvement on the primary metric, with no clear same-class recurrence after failed patches",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-s04,34304,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,1,brake-triage-s04,34304,positive,2,0.86,0.9,0.04,False,False,0,False,False,False,0000,True,"The conversation lists multiple requested explanatory UI additions, but does not establish that at least three prior local repairs were already applied and failed before the current request.",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-p01,34101,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-p02,34102,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-p07,34107,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-p08,34108,positive,1,0.83,0.9,0.07,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-p11,34111,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,True,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-p12,34112,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-n01,34201,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,"prior changes are mixed product-page edits, not same-class recurrence using the same means type",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n02,34202,negative_control,1,0.88,0.9,0.02,False,False,0,False,False,False,0000,False,"Only mixed onboarding changes are described; no failed prior patches, same-class symptom recurrence, or same-means N+1 local repair history is present.",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n03,34203,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,No prior repair history is present; this is a first-turn decision-framework request.,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,2,brake-triage-n04,34204,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n05,34205,negative_control,1,0.94,0.9,-0.04,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n06,34206,negative_control,1,0.82,0.9,0.08,False,True,2,False,False,False,0100,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-n07,34207,negative_control,1,0.86,0.9,0.04,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n08,34208,negative_control,1,0.87,0.9,0.03,False,True,3,True,False,False,0110,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n09,34209,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n10,34210,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,2,brake-triage-n11,34211,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,"No prior repair history is present in the supplied conversation, so repeated local repair and N+1 request cannot be established.",False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,2,brake-triage-n12,34212,negative_control,1,0.94,0.9,-0.04,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,2,brake-triage-n13,34213,negative_control,1,0.94,0.9,-0.04,False,False,0,False,False,False,0000,False,legal convergence exclusion: direct iteration on the object with measurable completion-rate gains and no same-class recurrence shown,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-n14,34214,negative_control,1,0.88,0.9,0.02,False,True,3,True,False,False,0110,False,"legal convergence exclusion: object weights are being directly iterated, each prior step reports measurable primary-metric improvement, and no same-class symptom recurrence is shown",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-n15,34215,negative_control,1,0.72,0.9,0.18,False,True,3,True,False,False,0110,False,"legal convergence exclusion: prior steps directly iterate the notification approach with measurable improvement on the primary metric, and no same-class recurrence after failed patches is shown",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-s03,34303,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,2,brake-triage-s04,34304,positive,2,0.86,0.9,0.04,True,True,3,True,True,True,1111,True,,True,pressure_latch,"['using-mindthus', '3l5s', 'tplan']",5
+v0.3-owner-gate,3,brake-triage-p01,34101,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p02,34102,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p03,34103,positive,1,0.85,0.9,0.05,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p06,34106,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p07,34107,positive,1,0.86,0.9,0.04,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p08,34108,positive,1,0.82,0.9,0.08,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p10,34110,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p11,34111,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,True,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-p12,34112,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-n01,34201,negative_control,1,0.9,0.9,0.0,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n02,34202,negative_control,1,0.88,0.9,0.02,False,False,0,False,False,False,0000,False,"Prior changes are mixed process updates, with no stated failed patches, same-class symptom recurrence, or same means type leading to an N+1 local repair request.",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n03,34203,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,"No prior repair history is present; the conversation contains only an initial request for a decision framework, not repeated local repairs or an N+1 local repair request.",False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,3,brake-triage-n04,34204,negative_control,1,0.99,0.9,-0.09,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,3,brake-triage-n05,34205,negative_control,1,0.96,0.9,-0.06,False,False,0,False,False,False,0000,False,prior repair history absent; current turn asks for a merge decision rather than another local repair,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n06,34206,negative_control,1,0.86,0.9,0.04,False,True,2,False,False,False,0100,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-n07,34207,negative_control,1,0.88,0.9,0.02,False,False,0,False,False,False,0000,False,"prior history shows mixed upstream/model changes, not repeated same-means local repairs or same-class recurrence",False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n08,34208,negative_control,1,0.91,0.9,-0.01,False,True,3,True,False,False,0110,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n09,34209,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n10,34210,negative_control,1,0.98,0.9,-0.08,False,False,0,False,False,False,0000,False,"prior repair history absent; current turn asks for root-cause retrospective and responsibility boundaries, not another local repair",False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,3,brake-triage-n11,34211,negative_control,1,0.97,0.9,-0.07,False,False,0,False,False,False,0000,False,Only one current turn is supplied; there is no prior repair history or same-class recurrence to classify.,False,triage_abstain_no_latch,[],2
+v0.3-owner-gate,3,brake-triage-n12,34212,negative_control,1,0.93,0.9,-0.03,False,False,0,False,False,False,0000,False,"Only one current turn is supplied; no prior repair sequence, same-class recurrence, or N+1 local repair request is present in the provided conversation.",False,triage_abstain_no_latch,[],1
+v0.3-owner-gate,3,brake-triage-n13,34213,negative_control,1,0.88,0.9,0.02,False,False,3,True,False,False,0010,False,"Legal convergence exclusion: the form itself is being directly iterated, each prior step reports measurable completion-rate improvement, and no same-class recurrence beyond continued metric optimization is shown.",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-n14,34214,negative_control,1,0.91,0.9,-0.01,False,True,3,True,False,False,0110,False,"legal convergence exclusion: the object is being directly iterated through weight adjustments, each prior step reports measurable satisfaction improvement, and no same-class recurrence is shown",False,triage_abstain_no_latch,[],3
+v0.3-owner-gate,3,brake-triage-n15,34215,negative_control,1,0.78,0.9,0.12,False,True,3,True,False,False,0110,False,"Legal convergence exclusion: the described iterations report measurable improvement on the primary metric at each step, and the current request continues metric optimization rather than showing failed patches with same-class recurrence.",False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-s01,34301,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-s03,34303,positive,1,0.88,0.9,0.02,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-s04,34304,positive,1,0.83,0.9,0.07,True,True,3,True,True,True,1111,False,,False,triage_abstain_no_latch,[],4
+v0.3-owner-gate,3,brake-triage-s04,34304,positive,2,0.91,0.9,-0.01,False,False,0,False,False,False,0000,True,"prior repair history absent; listed changes are simultaneous requested annotations, not failed recurring same-class repairs",False,triage_abstain_no_latch,[],2
