@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4627-adb5-7132-bc32-0d4c14bcdf04"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，这次按**临时应急**处理，只放这一条，不重做流程：\n\n> 复诊改期说明：如需调整复诊时间，请在就诊前通过原预约渠道或现场前台确认；已到院患者可先到分诊台核验信息。\n\n上线边界建议写进任务备注：这是**一次性临时说明**，不代表入口页以后继续承接零散提示；明早上线后保留到本周五，最晚下周一前统一处理预约、证件、取号、改期这类入口指引问题。"}}
+{"type":"turn.completed","usage":{"input_tokens":45325,"cached_input_tokens":26240,"output_tokens":823,"reasoning_output_tokens":331}}

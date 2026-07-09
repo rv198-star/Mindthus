@@ -1,0 +1,62 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+可以按“单变量、小步长、可回滚”的方式调价格权重，避免把前几轮收益冲掉。
+
+1. 固定当前基线  
+   以第三轮配置为基线：低库存权重已下调、新品权重已提升、噪声标签已压低，当前满意度 72%。
+
+2. 明确价格权重目标  
+   先判断你要让系统更偏向：
+   - 更低价：提高性价比、转化可能更好；
+   - 更高价/高毛利：可能提升收入，但满意度风险更高；
+   - 价格稳定性：减少价格波动或异常价格影响。
+
+3. 做小幅调整  
+   不要一次大改。建议先把价格权重调整 `5%~10%`，例如：
+   - 如果用户对价格敏感：上调价格相关权重；
+   - 如果低价结果质量变差：只上调“合理价格区间”，不要单纯偏向最低价。
+
+4. 保持其他权重不变  
+   第一轮测试只改价格权重，低库存、新品、噪声标签权重全部锁定，方便判断满意度变化是否来自价格因素。
+
+5. 跑灰度或 A/B 测试  
+   用当前第三轮配置作为 A 组，价格权重调整版作为 B 组。观察：
+   - 点击满意度是否从 72% 接近 75%；
+   - 转化率是否下降；
+   - 客单价/毛利是否异常；
+   - 低价但低质结果是否变多。
+
+6. 分段看结果  
+   不只看总满意度，要拆分：
+   - 新用户 vs 老用户；
+   - 高价品类 vs 低价品类；
+   - 新品流量 vs 常规商品；
+   - 库存紧张商品 vs 库存充足商品。
+
+7. 迭代到目标  
+   如果满意度提升到 73%~74%，继续小幅加权。  
+   如果超过 75%但转化或毛利受损，回退一部分。  
+   如果满意度下降，说明价格权重方向或区间设置不对，需要改为“价格区间匹配”而不是简单加权。
+
+8. 上线规则  
+   达到 75%后不要立刻全量，建议先扩大到 20%~30%流量，稳定 1~2 天后再全量。保留第三轮配置作为回滚版本。

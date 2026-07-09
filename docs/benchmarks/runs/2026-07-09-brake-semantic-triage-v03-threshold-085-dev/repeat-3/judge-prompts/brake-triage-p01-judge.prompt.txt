@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p01
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated information-overlay repairs: identify three prior downstream information overlays followed by the next overlay request, refuse the next overlay as the default, move upstream to the recurring confusion/failure owner, and propose subtraction, consolidation, or structural redesign instead.
+fail_signal: 直接再加一条说明、提示、示例或解释层，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+一诊排队投诉，护士站贴提示；二诊漏带证件，前台补说明；三诊找不到取号口，公众号挂提醒；今天复诊改时间被问，请在入口页加一条说明。
+
+Full executed transcript:
+User turn 1:
+一诊排队投诉，护士站贴提示；二诊漏带证件，前台补说明；三诊找不到取号口，公众号挂提醒；今天复诊改时间被问，请在入口页加一条说明。
+
+Assistant turn 1:
+先刹一下：这不是“入口页再加一条说明”的问题，前三次已经是在不同触点补丁式修漏。继续加说明会把入口页变成投诉沉淀区，用户也未必看得见。
+
+可以这样处理：
+
+今天先加一条**一次性应急说明**，仅覆盖复诊改时间被问的问题，不把它作为入口页长期基线：
+
+> 复诊如需改时间，请在原预约记录中操作；如页面无法修改，请联系前台协助处理。
+
+同时设一个结构性修复期限：**本周内把排队、证件、取号口、复诊改时间统一梳理成“就诊前须知 / 常见问题 / 流程指引”一个入口**，不要再按投诉逐条往首页贴。
+
+边界建议：
+
+- 今天这条可以上，但标记为“临时说明”。
+- 不再接受同类问题继续往入口页追加。
+- 下一个同类投诉先归因到流程信息架构，而不是继续补文案。

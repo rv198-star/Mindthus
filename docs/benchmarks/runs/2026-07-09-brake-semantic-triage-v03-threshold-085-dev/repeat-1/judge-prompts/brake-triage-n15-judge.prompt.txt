@@ -1,0 +1,59 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+建议不要直接全量“再前移”，而是做一轮时间点实验，避免把提升误判成其他因素。
+
+**方案：第四轮只测试提醒时间**
+
+目标：到课率从 `82%` 提升到 `85%`。
+
+测试设计：
+
+| 组别 | 提醒方式 | 正文 | 时间 | 目的 |
+|---|---|---|---|---|
+| 对照组 A | 日历邀请 | 保持第三轮版本 | 维持当前时间 | 基准 82% |
+| 实验组 B | 日历邀请 | 保持第三轮版本 | 提前 2 小时 | 测试轻度前移 |
+| 实验组 C | 日历邀请 | 保持第三轮版本 | 提前 1 天上午 | 测试更早进入日程 |
+| 实验组 D | 日历邀请 + 当日短提醒 | 日历邀请不变，课前短提醒 | 提前 1 天 + 课前 2 小时 | 测试“提前占日程 + 临近唤醒” |
+
+推荐优先跑 **D 组**，因为只把提醒前移可能会提高认知，但也可能降低临场记忆；“前一天日历邀请 + 课前短提醒”更有机会冲到 85%。
+
+**执行节奏**
+
+1. 今天发前一天日历邀请，标题清楚写课程名、时间、入口。
+2. 课前 2 小时发一条极短提醒，只放三件事：课程名、开始时间、进入链接。
+3. 不改文案、不改渠道、不改目标人群，确保这轮只验证时间策略。
+4. 每组人数尽量均衡，至少跑满一个完整课次周期。
+5. 统计到课率，同时看退订率、投诉率、日历接受率、迟到率。
+
+**课前短提醒模板**
+
+> 你预约的《课程名》将在今天 HH:mm 开始。  
+> 入口：链接  
+> 建议提前 5 分钟进入。
+
+**判断标准**
+
+如果 D 组到课率达到或超过 `85%`，且退订/投诉没有明显上升，就全量采用：  
+**前一天日历邀请 + 课前 2 小时短提醒**。
+
+如果 B/C/D 都没到 85%，下一轮不要继续只调时间，应测试“提醒内容是否加入课程收益/缺席损失”或“是否增加确认到课按钮”。

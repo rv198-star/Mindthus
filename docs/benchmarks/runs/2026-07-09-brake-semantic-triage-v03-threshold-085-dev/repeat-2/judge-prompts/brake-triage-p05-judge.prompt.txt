@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p05
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Full executed transcript:
+User turn 1:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+先刹车：不要再把“入口核验人”作为第四个常设补丁加上去。前三个问题已经都是“出错后加人工岗”，继续加人会把流程变慢，但不一定降低错误率。
+
+可以这样处理：
+
+1. **今天临时放行**
+   - 仅限 **2026-07-09 当天新提交的合同**。
+   - 入口增加一次性人工核验，核验项只看：合同编号、预算码、审批人、票据章。
+   - 不调整正式流程 SLA，不新增长期岗位，不把临时核验写成常规制度。
+
+2. **明天起不默认加岗**
+   - 合同编号错误应优先改成入口系统校验：编号规则、重复号、空号、项目/主体不匹配直接拦截。
+   - 预算码、审批人、票据章也应合并进同一个入口校验清单，而不是每错一次就新增一个人工节点。
+
+3. **结构性修复期限**
+   - 在 **2026-07-10 下班前** 给出统一入口校验方案。
+   - 在 **2026-07-15 前** 上线最小版本：自动规则校验 + 异常提示 + 责任人修正，不再靠层层人工复核兜底。
+
+结论：今天可以临时加核验人，但只能作为一次性应急措施；正式方案应改入口规则和数据校验，不能继续堆人工审批岗。

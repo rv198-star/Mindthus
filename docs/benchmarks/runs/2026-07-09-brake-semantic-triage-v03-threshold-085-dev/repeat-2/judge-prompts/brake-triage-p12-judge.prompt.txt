@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p12
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+先刹一下：这批需求本质都是“口径解释缺失”的同一个问题，继续在每个位置补一块说明，会把页面越补越碎。
+
+可以按“应急一次性补丁”处理，但边界要明确：
+
+1. 本次只补 4 处：
+   - 报表页：新增“定义栏”
+   - 标题区：新增“更新时间”
+   - 导出字段：字段表并入释义格
+   - 图表下方：新增“口径字段”，解释“今天环比数”
+
+2. 这次不提升为长期页面规范，不默认以后所有图表都继续加局部说明。
+
+3. 本周内需要补一个统一结构：
+   - 统一口径字典
+   - 统一刷新时间展示规则
+   - 统一导出字段释义来源
+   - 图表只引用统一口径，不再各处手写
+
+可直接落地的文案口径：
+
+- `更新时间：数据截至 YYYY-MM-DD HH:mm，按系统最近一次成功刷新时间展示。`
+- `今天环比：今日当前累计值相较昨日同一时间累计值的变化比例。`
+- `口径字段：统计范围、时间口径、去重规则、计算公式以字段释义为准。`
+- `导出字段释义：字段名称、字段含义、计算方式、数据来源、更新时间。`
+
+结论：这次可以补，但只作为一次性应急修复；后续必须收敛到统一口径字典，否则页面会持续被同类问题拖着局部返工。

@@ -1,0 +1,157 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-09T08:54:28.393214+00:00",
+  "variant": "brake-semantic-triage-v0.3-threshold-085-repeat-1",
+  "case_id": "brake-triage-n02",
+  "case_number": 34202,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4615-5cb4-76b0-877e-efea74eb0c32",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.9
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 0,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天要放一个设备领取入口，请帮我排步骤。"
+        }
+      ],
+      "abstain_reason": ""
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-semantic-triage-v03-threshold-085-dev/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/answers/brake-triage-n02-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 35.505,
+      "thread_id": "019f4615-5cb4-76b0-877e-efea74eb0c32",
+      "answer": "建议按“今天上线入口优先，本周再清理配置”的顺序排：\n\n1. **先放设备领取入口**\n   - 确认入口放在入职流程的哪个节点。\n   - 命名建议用“设备领取”或“办公设备领取”。\n   - 配好跳转表单/页面、负责人、通知对象。\n   - 用一个测试员工走一遍，确认新员工能看到、IT/行政能收到。\n\n2. **补医保附件**\n   - 放在材料提交或社保信息节点。\n   - 标清附件要求，比如医保凭证、参保信息截图等。\n   - 测试必填/选填规则，避免卡住不适用员工。\n\n3. **换群管理员**\n   - 先加新管理员，再移除旧管理员。\n   - 确认新管理员能改公告、拉人、处理入群申请。\n   - 同步给 HR/行政/IT，避免入职群没人管。\n\n4. **移除旧表单**\n   - 最后处理，避免误删仍在使用的入口。\n   - 先确认没有流程、通知、二维码还指向旧表单。\n   - 下线后保留历史数据或导出备份。\n\n一句话版：**今天先上设备领取入口并测试；本周按“补医保附件 → 换群管理员 → 移除旧表单”收尾。**",
+      "events_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/events/brake-triage-n02-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/stderr/brake-triage-n02-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/answers/brake-triage-n02-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/prompts/brake-triage-n02-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-semantic-triage-v03-threshold-085-dev/repeat-1/homes/brake-triage-n02-turn-1",
+      "codex_home": "/tmp/mindthus-brake-semantic-triage-v03-threshold-085-dev/repeat-1/codex-home-gates/brake-triage-n02-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议按“今天上线入口优先，本周再清理配置”的顺序排：\n\n1. **先放设备领取入口**\n   - 确认入口放在入职流程的哪个节点。\n   - 命名建议用“设备领取”或“办公设备领取”。\n   - 配好跳转表单/页面、负责人、通知对象。\n   - 用一个测试员工走一遍，确认新员工能看到、IT/行政能收到。\n\n2. **补医保附件**\n   - 放在材料提交或社保信息节点。\n   - 标清附件要求，比如医保凭证、参保信息截图等。\n   - 测试必填/选填规则，避免卡住不适用员工。\n\n3. **换群管理员**\n   - 先加新管理员，再移除旧管理员。\n   - 确认新管理员能改公告、拉人、处理入群申请。\n   - 同步给 HR/行政/IT，避免入职群没人管。\n\n4. **移除旧表单**\n   - 最后处理，避免误删仍在使用的入口。\n   - 先确认没有流程、通知、二维码还指向旧表单。\n   - 下线后保留历史数据或导出备份。\n\n一句话版：**今天先上设备领取入口并测试；本周按“补医保附件 → 换群管理员 → 移除旧表单”收尾。**"
+      ],
+      "usage": {
+        "input_tokens": 12448,
+        "cached_input_tokens": 4480,
+        "output_tokens": 831,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。今天要放一个设备领取入口，请帮我排步骤。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.9,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.9,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天要放一个设备领取入口，请帮我排步骤。"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1"
+    }
+  ],
+  "final_answer": "建议按“今天上线入口优先，本周再清理配置”的顺序排：\n\n1. **先放设备领取入口**\n   - 确认入口放在入职流程的哪个节点。\n   - 命名建议用“设备领取”或“办公设备领取”。\n   - 配好跳转表单/页面、负责人、通知对象。\n   - 用一个测试员工走一遍，确认新员工能看到、IT/行政能收到。\n\n2. **补医保附件**\n   - 放在材料提交或社保信息节点。\n   - 标清附件要求，比如医保凭证、参保信息截图等。\n   - 测试必填/选填规则，避免卡住不适用员工。\n\n3. **换群管理员**\n   - 先加新管理员，再移除旧管理员。\n   - 确认新管理员能改公告、拉人、处理入群申请。\n   - 同步给 HR/行政/IT，避免入职群没人管。\n\n4. **移除旧表单**\n   - 最后处理，避免误删仍在使用的入口。\n   - 先确认没有流程、通知、二维码还指向旧表单。\n   - 下线后保留历史数据或导出备份。\n\n一句话版：**今天先上设备领取入口并测试；本周按“补医保附件 → 换群管理员 → 移除旧表单”收尾。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

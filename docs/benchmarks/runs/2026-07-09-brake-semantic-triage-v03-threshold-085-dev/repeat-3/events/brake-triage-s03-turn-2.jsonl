@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4627-f5b3-7bc0-af53-f7a919a15db6"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以开，但只能按**临时应急通道**开，不作为新流程。\n\n执行口径：\n\n- **范围**：只收今天这批“转派争议且投诉即将回访/回复”的工单。\n- **时限**：通道今天立即启用，**明天 18:00 自动关闭**。\n- **权限**：只允许值班主管派单，不开放全员自助转入。\n- **SLA**：不新增正式 SLA，只按加急池现有时限兜底。\n- **标记**：所有进入工单统一打标 `转派争议-临时兜底`，便于事后清点。\n- **限制**：不得写入常规模板，不得沉淀为固定入口。\n\n同时定一个硬截止：**本周五 18:00 前**必须回看这批工单，决定是调整原有分派规则，还是废止这个临时口。现在先救火，但不要把临时口变成第五条长期线。"}}
+{"type":"turn.completed","usage":{"input_tokens":45458,"cached_input_tokens":34432,"output_tokens":1046,"reasoning_output_tokens":340}}

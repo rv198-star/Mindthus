@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4615-7e58-7ca1-950c-e00044eb4ad5"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"No prior local repair sequence is present; the supplied turn asks for strategic analysis of experiment metrics, not another same-means local patch.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":18173,"cached_input_tokens":17280,"output_tokens":467,"reasoning_output_tokens":296}}

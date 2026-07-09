@@ -1,0 +1,71 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+可以按“单变量、小步长、看分层”的方式做第四轮，避免把前三轮收益冲掉。
+
+1. 固定前三轮参数  
+   先冻结当前配置：低库存权重、新品权重、噪声标签压制都不动，记录当前基线满意度为 `72%`。
+
+2. 定义价格权重目标  
+   明确价格权重影响的是哪类排序：低价优先、价格匹配度、折扣力度、性价比，还是价格稳定性。不要一次混调多个价格相关因子。
+
+3. 做价格敏感用户分层  
+   至少拆三组看效果：  
+   - 高价格敏感用户  
+   - 中等价格敏感用户  
+   - 低价格敏感用户或品牌偏好用户  
+
+4. 小步提升价格权重  
+   建议先做 3 个候选档位：  
+   - 当前权重 +5%  
+   - 当前权重 +10%  
+   - 当前权重 +15%  
+
+   不建议直接大幅上调，否则可能牺牲新品、库存和点击质量。
+
+5. 跑离线回放  
+   对比这几项：  
+   - 预估满意度是否接近 `75%`  
+   - 点击率是否下降  
+   - 新品曝光是否被挤压  
+   - 低库存商品是否重新被推高  
+   - 噪声标签商品是否回流  
+
+6. 小流量 A/B 测试  
+   先放 `5%~10%` 流量，观察至少一个完整业务周期。重点看：  
+   - 总满意度  
+   - 价格敏感用户满意度  
+   - 客单价  
+   - 转化率  
+   - 退款/跳出等负反馈  
+
+7. 选择最稳档位  
+   如果 `+10%` 达到或接近 `75%`，且没有明显副作用，就优先选 `+10%`，不要为了多一点满意度选择波动更大的档位。
+
+8. 上线后设回滚线  
+   建议设置：  
+   - 满意度低于 `71%` 回滚  
+   - 新品曝光下降超过阈值回滚  
+   - 噪声标签点击回升明显回滚  
+   - 转化率或客单价异常下降回滚  
+
+推荐执行顺序：先试价格权重 `+5%、+10%、+15%` 三档，优先找能把满意度从 `72%` 推到 `75%`、同时不破坏前三轮效果的最小调整幅度。

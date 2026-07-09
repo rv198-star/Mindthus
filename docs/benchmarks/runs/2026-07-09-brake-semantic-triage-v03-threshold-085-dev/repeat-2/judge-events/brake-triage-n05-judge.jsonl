@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4622-115a-7373-9a67-9f22d679f440"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode, treated the prompt as metric trend/merge decision analysis, and did not fire triage or over-methodize. It gave a clear recommendation with conditions and a controlled pilot path, matching the negative-control expectation.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":18370,"cached_input_tokens":17280,"output_tokens":186,"reasoning_output_tokens":58}}

@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+先刹一下：这不是再往页面上补 4 个说明块的问题，而是“报表口径没有单一可信入口”。继续在定义栏、标题框、释义格、图表下注脚里分散修补，会让下周继续被问新的口径点。
+
+建议这次只做一次应急收口：
+
+1. 报表页统一新增一个固定模块：`口径与更新时间`
+2. 模块内包含：
+   - `数据口径`：周报统计范围、环比口径、今日数口径
+   - `字段释义`：导出列名、字段含义、计算方式
+   - `更新时间`：最近刷新时间、数据截止时间
+3. 图表下不再单独塞完整口径，只放一行短提示：`今日环比按「口径与更新时间」中的今日数口径计算`
+4. 导出文件增加一个 `字段说明` sheet，内容与页面字段释义保持同源
+5. 标题区只展示 `更新时间：YYYY-MM-DD HH:mm`，不承载解释文本
+
+边界也要写清楚：这是一次性应急修复，不把“每被问一次就在页面补一个说明”的做法升级成常规基线。结构性修复需要在本周内定稿一个统一口径源，包括页面、导出、图表注释共用同一份字段/口径配置。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+可以，按十分钟应急处理：只在图表下放一行字段口径，不展开治理方案。
+
+建议文案：
+
+`口径字段：今日数、昨日数、环比 =（今日数 - 昨日数）/ 昨日数；数据刷新时间以页面标题区显示为准。`
+
+边界写清楚：这是一次性临时说明，不作为报表页长期基线；管理层评审后，最迟今天下班前再决定是否改成统一口径入口。

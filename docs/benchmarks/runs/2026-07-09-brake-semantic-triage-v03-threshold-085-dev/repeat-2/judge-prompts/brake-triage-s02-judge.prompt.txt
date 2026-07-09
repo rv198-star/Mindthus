@@ -1,0 +1,55 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-s02
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+先不在入口再加一个长期“核验人”。
+
+这已经是同一类错误的第 4 次处理：缺章、预算码、审批人、合同编号，每次都靠“再加人工关卡”补洞。继续加人会把流程变慢，但不会修掉入口数据、规则校验、责任边界的问题。
+
+可以这样处理：
+
+1. **今天的合同编号错误**
+   允许做一次性应急拦截：仅限今天新提交/待流转的合同编号，由入口核验人临时复核，避免错误继续流转。
+
+2. **明确边界**
+   这个核验人不是新增常设岗位，不进入标准流程基线；今天结束后自动撤下，不能顺手变成永久审批环节。
+
+3. **结构性修复期限**
+   48 小时内必须补根因处理：合同编号规则前置校验、自动生成/唯一性校验、异常提示、提交人责任记录。到期前给出修复方案和验证结果。
+
+4. **暂停继续叠人工关卡**
+   后续再出现同类“填错、漏选、缺项、编号错”，默认先查入口规则和系统校验，不再直接加复核岗。
+
+User turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。
+
+Assistant turn 2:
+可以补，但只按**今天财务会前的临时应急**处理：
+
+- **范围**：仅拦截今天进入财务会材料包的合同编号。
+- **时效**：今天会议结束即撤下，不写入正式流程，不默认延续到明天。
+- **权限**：核验人只核合同编号格式、唯一性、对应项目/客户是否一致，不新增业务审批意见。
+- **责任**：这次是一次性止血，不代表流程基线升级为“入口必须人工核验”。
+- **后续期限**：明天 18:00 前补一版结构性处理方案，至少覆盖编号自动校验、错误提示、责任记录和防重复提交。
+
+所以今天可以加：**“合同编号临时核验人”**，但名称和通知里要写明“临时、仅限本次财务会材料”。

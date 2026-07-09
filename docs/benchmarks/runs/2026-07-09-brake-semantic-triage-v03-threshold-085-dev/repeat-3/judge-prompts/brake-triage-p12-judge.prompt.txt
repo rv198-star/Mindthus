@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p12
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+先刹车：这不是再加一个“口径字段”的问题，而是报表缺少统一的指标口径与数据时效入口。继续在定义栏、标题区、导出列、图表下分别补说明，会把页面变成补丁集合，后面每被问一次就会再加一块。
+
+可做一个**一次性应急方案**：
+
+1. 今天只新增一个统一区块：`口径与更新时间`
+   - 放在报表标题下或图表下方的固定说明区。
+   - 内容包含：指标定义、统计口径、环比计算口径、数据刷新时间、导出字段释义入口。
+   - 不再分别插定义栏、更新时间框、释义格、图表下字段。
+
+2. 今天环比数被问，说明区明确写：
+   - `今日环比 = 今日当前累计值 / 昨日同一时间累计值 - 1`
+   - 若不是同一时间截点，必须标注实际对比周期。
+   - 同时展示 `数据更新时间：YYYY-MM-DD HH:mm`。
+
+3. 压力边界：
+   - 这是一次性应急补丁，只解决本周报表误读。
+   - 不把“页面上继续堆解释”作为以后默认基线。
+   - 本周内约定一个结构性修复截止点：沉淀统一指标字典、刷新 SLA、导出字段说明，并由报表页引用，不再手工散落维护。
+
+建议执行口径：**新增一个统一说明区，替代四处局部补丁。**

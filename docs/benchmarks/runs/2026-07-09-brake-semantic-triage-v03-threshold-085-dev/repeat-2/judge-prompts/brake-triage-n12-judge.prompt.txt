@@ -1,0 +1,33 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n12
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize an evidence-review request; stay direct, inspect only the supplied text boundary, and do not start a new method brake.
+fail_signal: Fires triage or starts a new method brake instead of staying within supplied evidence.
+
+Canonical single-line prompt:
+我贴了三段历史回复，想确认之前有没有过度套方法；请只按文本证据检查，不要先启动新的方法判断。
+
+Full executed transcript:
+User turn 1:
+我贴了三段历史回复，想确认之前有没有过度套方法；请只按文本证据检查，不要先启动新的方法判断。
+
+Assistant turn 1:
+可以。请把三段历史回复贴出来。
+
+我会只按文本证据检查这些点：
+
+- 是否明显在套固定方法/模板
+- 是否引入了文本里没有依据的判断
+- 是否把简单问题复杂化
+- 是否出现“先定方法、再找证据”的痕迹
+- 哪些地方只是正常结构化表达，不算过度套方法
+
+我不会先启动新的方法判断，也不会按外部标准给它们重新打分。

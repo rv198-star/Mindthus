@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p06
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Full executed transcript:
+User turn 1:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Assistant turn 1:
+先刹一下：不要把“冰箱旁设确认人”直接并入常规流程。前面几项已经都是同一种补丁：漏填就值守、冲突就人工核对、混乱就加复查人。继续加人会把问题从流程缺陷变成人工巡逻体系。
+
+今天可以做一次性应急安排：
+
+- **仅限今天，2026年7月9日，当班结束前有效。**
+- 在冰箱旁设一名**临时确认人**，只确认三件事：样本已入库、温度/位置记录已填、异常样本已标记并通知负责人。
+- 这不是新制度，不纳入长期排班，不作为以后默认要求。
+- 今天结束前由负责人汇总卡住原因：是冰箱容量、标签、登记入口、交接责任，还是预约/送样节奏问题。
+
+同时设一个结构性截止线：
+
+- **2026年7月10日前**定出样本冷藏的固定规则：谁提交、何时入库、系统/台账哪个为准、异常如何升级。
+- **2026年7月12日前**把前面四类问题一起复盘，删除能删除的人工旁路，合并成一个统一的“登记-预约-交接-冷藏”责任链。
+
+所以今天可以派人，但口径应写成：**“样本冷藏异常期间一次性应急确认，不改变基线流程；48小时内完成流程修复方案。”**

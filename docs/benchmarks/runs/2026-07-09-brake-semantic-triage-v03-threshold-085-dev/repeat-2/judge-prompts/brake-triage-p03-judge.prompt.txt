@@ -1,0 +1,31 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-p03
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated information-overlay repairs: identify three prior downstream information overlays followed by the next overlay request, refuse the next overlay as the default, move upstream to the recurring confusion/failure owner, and propose subtraction, consolidation, or structural redesign instead.
+fail_signal: 直接再加一条说明、提示、示例或解释层，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+嘉宾到场错门，邀请函加入口图；签到漏姓名，表格旁补填写样例；茶歇排队混乱，动线牌挂分流句；今天停车被问，请在短信里塞停车提醒。
+
+Full executed transcript:
+User turn 1:
+嘉宾到场错门，邀请函加入口图；签到漏姓名，表格旁补填写样例；茶歇排队混乱，动线牌挂分流句；今天停车被问，请在短信里塞停车提醒。
+
+Assistant turn 1:
+先刹一下：这已经是连续“哪里出问题就往哪里补一句”的修法了。今天可以救急，但只做一次性补丁，不把短信变成新的长期承载入口。
+
+今天短信可加：
+
+> 温馨提醒：会场停车请从【停车场入口/地址】进入，按现场指引停放；到场后请从【正确入口】入场并完成签到。
+
+边界建议：
+
+今天发这一条，覆盖停车和正确入口；不再继续往短信里塞更多现场规则。活动结束后最晚明天，把“入口、签到、停车、茶歇动线”合并成一版《到场指引》，以后邀请函/短信/现场牌统一引用同一份信息。

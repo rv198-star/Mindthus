@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+不建议现在直接停掉旧方案，除非“投诉差距扩大”是旧方案更差。
+
+目前三类信号含义不同：
+
+1. **打开率差距缩小**
+   说明新旧方案在触达吸引力上的差异变小，旧方案未明显落后，或者新方案优势在减弱。这个指标不能单独支持停旧。
+
+2. **转化差距贴近**
+   说明核心业务结果已经接近。若新方案没有稳定显著更高的转化，停旧的收益有限。
+
+3. **投诉差距扩大**
+   这是最关键的风险信号。投诉属于负向护栏指标，差距扩大说明用户体验或合规风险正在分化。
+
+决策要看投诉方向：
+
+- **如果新方案投诉更高，且差距持续扩大：不要停旧。**  
+  应暂停扩大新方案流量，排查投诉来源，例如人群、渠道、文案、频次、误触、售后承接等。
+
+- **如果旧方案投诉更高，且新方案转化不低于旧方案：可以逐步停旧。**  
+  但建议分阶段下线，而不是一次性全停，保留回滚窗口。
+
+- **如果投诉方向不明确或样本量不足：先不做停旧决策。**  
+  需要补充显著性、分人群表现、投诉类型、长期留存/退款/客服成本等信息。
+
+我的判断：**停旧的条件不是“打开率和转化差距贴近”，而是新方案在核心转化不劣的同时，负向指标不恶化。** 现在投诉差距扩大，应该先把它作为决策门槛处理。

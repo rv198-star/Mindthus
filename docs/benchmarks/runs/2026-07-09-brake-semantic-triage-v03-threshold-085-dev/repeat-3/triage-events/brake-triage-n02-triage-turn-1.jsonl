@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4625-2b8d-73a0-863c-321be3cefb8c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"prior items are mixed unrelated changes; no evidence of same-class recurrence or same means type\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":18173,"cached_input_tokens":17792,"output_tokens":281,"reasoning_output_tokens":118}}
