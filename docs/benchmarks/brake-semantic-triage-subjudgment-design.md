@@ -1,7 +1,7 @@
 # Brake Semantic Triage Sub-Judgment Design
 
-Status: structurally reviewed. Implementation remains blocked until external audit
-confirms the V0.2 prompt body and freezes prompt v0.2.
+Status: structurally reviewed. External audit approved the V0.2 prompt body and
+froze prompt v0.2 with the canonical fingerprint below.
 
 This document responds to the third external brake shadow retest. The decision is to
 stop the fourth-generation matcher path and introduce a semantic triage sub-judgment
@@ -24,9 +24,9 @@ External review accepted the structure and resolved the four open questions:
    metric-convergence cases and at least 2 mixed-change cases. Any threshold change
    reruns the full calibration packet.
 
-Implementation gate: the prompt body must be relayed verbatim to external audit with
-the line-ending convention and SHA-256 below. Only after audit lint freezes prompt v0.2
-does the implementation sequence begin.
+Implementation gate: the prompt body was relayed verbatim to external audit with the
+line-ending convention and SHA-256 below. Audit lint froze prompt v0.2 before this
+diagnostic gate run.
 
 ## Decision
 

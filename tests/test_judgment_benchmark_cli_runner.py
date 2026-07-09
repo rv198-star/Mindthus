@@ -986,7 +986,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertFalse(augmented["mindthus_loaded"])
         self.assertEqual(augmented["owner_fidelity_verdict"], "no_load")
 
-    def test_owner_telemetry_keeps_clean_method_load_runtime_asleep(self):
+    def test_owner_telemetry_counts_clean_method_load_as_runtime_event(self):
         runner = load_runner()
         case = case_by_number(32)
         response = {
@@ -1004,12 +1004,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         augmented = runner.augment_score_with_telemetry(case, response, score)
 
         self.assertFalse(augmented["false_wakeup_final_answer"])
-        self.assertFalse(augmented["false_wakeup_runtime_event"])
-        self.assertTrue(augmented["expected_owner_loaded"])
+        self.assertTrue(augmented["false_wakeup_runtime_event"])
+        self.assertFalse(augmented["expected_owner_loaded"])
         self.assertIsNone(augmented["required_visible_action_present"])
-        self.assertEqual(augmented["owner_fidelity_verdict"], "direct_stay_asleep")
+        self.assertEqual(augmented["owner_fidelity_verdict"], "runtime_over_wake")
 
-    def test_negative_hidden_method_load_with_clean_judgment_stays_runtime_asleep(self):
+    def test_negative_hidden_method_load_with_clean_judgment_counts_runtime_over_wake(self):
         runner = load_runner()
         case = {
             "case_id": "clean-metric-negative",
@@ -1036,9 +1036,9 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertTrue(augmented["mindthus_loaded"])
         self.assertFalse(augmented["false_wakeup_final_answer"])
-        self.assertFalse(augmented["false_wakeup_runtime_event"])
-        self.assertTrue(augmented["expected_owner_loaded"])
-        self.assertEqual(augmented["owner_fidelity_verdict"], "direct_stay_asleep")
+        self.assertTrue(augmented["false_wakeup_runtime_event"])
+        self.assertFalse(augmented["expected_owner_loaded"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "runtime_over_wake")
 
     def test_negative_method_load_with_visible_false_wakeup_counts_runtime_over_wake(self):
         runner = load_runner()

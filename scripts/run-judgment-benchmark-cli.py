@@ -1173,13 +1173,10 @@ def runtime_event_false_wakeup(
     mindthus_loaded: bool,
     superpowers_loaded: bool,
     triage_fired: bool = False,
-    visible_false_wakeup: bool = False,
 ) -> bool:
     if not bool(case.get("stay_asleep_expected")):
         return False
-    if triage_fired:
-        return True
-    return (mindthus_loaded or superpowers_loaded) and visible_false_wakeup
+    return mindthus_loaded or superpowers_loaded or triage_fired
 
 
 def response_triage_fired(response: dict[str, Any]) -> bool:
@@ -1225,7 +1222,6 @@ def owner_fidelity_for_case(
         mindthus_loaded=mindthus_loaded,
         superpowers_loaded=superpowers_loaded,
         triage_fired=triage_fired,
-        visible_false_wakeup=false_final,
     )
     required_visible_action_present = (
         bool(score.get("pass_criteria_met")) if not stay_asleep else None
