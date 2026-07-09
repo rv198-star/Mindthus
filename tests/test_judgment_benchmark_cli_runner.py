@@ -36,7 +36,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         design_text = runner.BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
         prompt_body = runner.extract_fenced_block_after_heading(
             design_text,
-            "Proposed V0 prompt body:",
+            "Proposed V0.2 prompt body:",
             "text",
         )
         recorded_sha = runner.extract_recorded_prompt_sha256(design_text)
@@ -44,10 +44,36 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(prompt_body, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
         self.assertEqual(
             runner.sha256_text(prompt_body),
-            "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d",
+            "b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c",
         )
         self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
         self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
+
+    def test_brake_semantic_triage_prompt_v02_definitions_are_pinned(self):
+        runner = load_runner()
+        prompt_body = runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY
+
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.2")
+        self.assertIn(
+            "prior patches failed to stop recurrence of the same class of symptom",
+            prompt_body,
+        )
+        self.assertIn("legal convergence exclusion", prompt_body)
+        self.assertIn("object itself is being directly", prompt_body)
+        self.assertIn("measurable improvement on the primary metric", prompt_body)
+        self.assertIn("no same-class symptom recurrence is present", prompt_body)
+        for domain_word in (
+            "clinic",
+            "finance",
+            "support",
+            "signup",
+            "search",
+            "attendance",
+            "coffee",
+            "remote",
+            "bonus",
+        ):
+            self.assertNotIn(domain_word, prompt_body.lower())
 
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
         runner = load_runner()
@@ -960,7 +986,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertFalse(augmented["mindthus_loaded"])
         self.assertEqual(augmented["owner_fidelity_verdict"], "no_load")
 
-    def test_owner_telemetry_splits_runtime_and_final_answer_false_wakeup(self):
+    def test_owner_telemetry_keeps_clean_method_load_runtime_asleep(self):
         runner = load_runner()
         case = case_by_number(32)
         response = {
@@ -978,9 +1004,70 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         augmented = runner.augment_score_with_telemetry(case, response, score)
 
         self.assertFalse(augmented["false_wakeup_final_answer"])
+        self.assertFalse(augmented["false_wakeup_runtime_event"])
+        self.assertTrue(augmented["expected_owner_loaded"])
+        self.assertIsNone(augmented["required_visible_action_present"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "direct_stay_asleep")
+
+    def test_negative_hidden_method_load_with_clean_judgment_stays_runtime_asleep(self):
+        runner = load_runner()
+        case = {
+            "case_id": "clean-metric-negative",
+            "case_number": 99001,
+            "case_type": "negative_control",
+            "expected_owner": "direct_judgment",
+            "stay_asleep_expected": True,
+        }
+        response = {
+            "loaded_commands_all_turns": [
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/mpg/SKILL.md\"",
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/sela/SKILL.md\"",
+            ],
+            "triage_fired": [False],
+        }
+        score = {
+            "case_id": "clean-metric-negative",
+            "score": 2,
+            "pass_criteria_met": True,
+            "positive_wakeup_observed": False,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+
+        self.assertTrue(augmented["mindthus_loaded"])
+        self.assertFalse(augmented["false_wakeup_final_answer"])
+        self.assertFalse(augmented["false_wakeup_runtime_event"])
+        self.assertTrue(augmented["expected_owner_loaded"])
+        self.assertEqual(augmented["owner_fidelity_verdict"], "direct_stay_asleep")
+
+    def test_negative_method_load_with_visible_false_wakeup_counts_runtime_over_wake(self):
+        runner = load_runner()
+        case = {
+            "case_id": "visible-brake-negative",
+            "case_number": 99002,
+            "case_type": "negative_control",
+            "expected_owner": "direct_execution",
+            "stay_asleep_expected": True,
+        }
+        response = {
+            "loaded_commands_all_turns": [
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+            ],
+            "triage_fired": [False],
+        }
+        score = {
+            "case_id": "visible-brake-negative",
+            "score": 0,
+            "pass_criteria_met": False,
+            "positive_wakeup_observed": False,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+
+        self.assertTrue(augmented["mindthus_loaded"])
+        self.assertTrue(augmented["false_wakeup_final_answer"])
         self.assertTrue(augmented["false_wakeup_runtime_event"])
         self.assertFalse(augmented["expected_owner_loaded"])
-        self.assertIsNone(augmented["required_visible_action_present"])
         self.assertEqual(augmented["owner_fidelity_verdict"], "runtime_over_wake")
 
     def test_owner_telemetry_marks_wrong_loaded_owner(self):

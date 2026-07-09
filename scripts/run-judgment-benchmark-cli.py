@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
 BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
-BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.1"
+BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.2"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.90
 CONTAMINATION_RE = re.compile(
@@ -108,7 +108,7 @@ def extract_recorded_prompt_sha256(text: str) -> str:
 
 def load_brake_semantic_triage_prompt_body() -> str:
     text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
-    return extract_fenced_block_after_heading(text, "Proposed V0 prompt body:", "text")
+    return extract_fenced_block_after_heading(text, "Proposed V0.2 prompt body:", "text")
 
 
 def load_brake_semantic_triage_prompt_sha256() -> str:
@@ -1173,10 +1173,13 @@ def runtime_event_false_wakeup(
     mindthus_loaded: bool,
     superpowers_loaded: bool,
     triage_fired: bool = False,
+    visible_false_wakeup: bool = False,
 ) -> bool:
     if not bool(case.get("stay_asleep_expected")):
         return False
-    return mindthus_loaded or superpowers_loaded or triage_fired
+    if triage_fired:
+        return True
+    return (mindthus_loaded or superpowers_loaded) and visible_false_wakeup
 
 
 def response_triage_fired(response: dict[str, Any]) -> bool:
@@ -1222,13 +1225,14 @@ def owner_fidelity_for_case(
         mindthus_loaded=mindthus_loaded,
         superpowers_loaded=superpowers_loaded,
         triage_fired=triage_fired,
+        visible_false_wakeup=false_final,
     )
     required_visible_action_present = (
         bool(score.get("pass_criteria_met")) if not stay_asleep else None
     )
 
     if stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
-        expected_owner_loaded = not mindthus_loaded and not superpowers_loaded and not triage_fired
+        expected_owner_loaded = not false_runtime
         verdict = "runtime_over_wake" if false_runtime else "direct_stay_asleep"
     elif not accepted_owners:
         expected_owner_loaded = None
@@ -1729,7 +1733,7 @@ def main() -> int:
         "--triage-threshold",
         type=float,
         default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-        help="Confidence threshold for brake semantic triage firing. Reviewed v0 is 0.90.",
+        help="Confidence threshold for brake semantic triage firing. Reviewed v0.2 is 0.90.",
     )
     parser.add_argument(
         "--superpowers-root",

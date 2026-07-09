@@ -1,7 +1,7 @@
 # Brake Semantic Triage Sub-Judgment Design
 
 Status: structurally reviewed. Implementation remains blocked until external audit
-confirms the V0 prompt body and freezes prompt v0.1.
+confirms the V0.2 prompt body and freezes prompt v0.2.
 
 This document responds to the third external brake shadow retest. The decision is to
 stop the fourth-generation matcher path and introduce a semantic triage sub-judgment
@@ -13,8 +13,8 @@ This is not a certification claim and not a behavior patch.
 
 External review accepted the structure and resolved the four open questions:
 
-1. Threshold v0 is `0.90`. Lowering to `0.85` requires a calibration packet; lowering
-   below `0.85` requires external review.
+1. Threshold v0.2 is locked at `0.90` for this gate. Lowering to `0.85` requires a
+   calibration packet; lowering below `0.85` requires external review.
 2. The triage model is explicitly configurable and independently fingerprinted. Shadow
    diagnostics default to the same configured model as the generator unless the run
    manifest says otherwise.
@@ -25,7 +25,7 @@ External review accepted the structure and resolved the four open questions:
    reruns the full calibration packet.
 
 Implementation gate: the prompt body must be relayed verbatim to external audit with
-the line-ending convention and SHA-256 below. Only after audit lint freezes prompt v0.1
+the line-ending convention and SHA-256 below. Only after audit lint freezes prompt v0.2
 does the implementation sequence begin.
 
 ## Decision
@@ -80,8 +80,8 @@ call, validate, record, and apply hard gates.
 
 | Audit item | Design answer |
 | --- | --- |
-| New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
-| Threshold calibration story | Hard gates are mechanical; v0 threshold is `0.90` and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
+| New Goodhart face: triage prompt | The prompt uses only disease-level definitions and no dev/shadow domain vocabulary. V0.2 contains no examples. If examples are ever added, each must be multi-domain, source-labeled, and reviewed as a prompt change. |
+| Threshold calibration story | Hard gates are mechanical; v0.2 threshold is locked at `0.90` for this gate and is calibrated only on non-shadow calibration/dev material. Abstention is asymmetric by design because false fires consume runtime-event negative budget. |
 | Call timing and failure modes | V0 runs the triage sub-call every answer turn. No cheap prefilter in V0. Timeout, auth failure, contamination, or schema invalidity means abstain plus log. |
 | Prompt fingerprint | Triage prompt SHA-256 is a required fourth fingerprint in run manifests, aggregate summaries, and shadow handoff. |
 | Dual negative metrics | Runtime false wake-up expands to include triage false fire on a stay-asleep case. Runs must emit `triage_fired[]`. |
@@ -93,7 +93,7 @@ call, validate, record, and apply hard gates.
 The triage prompt is a new Goodhart surface. It must not be written by copying failed
 shadow or public dev cases into the prompt.
 
-V0 prompt requirements:
+V0.2 prompt requirements:
 
 - Use abstract disease definitions only.
 - No examples.
@@ -111,21 +111,27 @@ If examples are introduced in a later version:
 - The prompt SHA changes and must appear in run artifacts.
 - External audit review is required before certification use.
 
-Proposed V0 prompt body:
+Proposed V0.2 prompt body:
 
 ```text
 You are a hidden routing classifier. Do not answer the user.
 
 Decide whether the conversation shows repeated local repairs using the same means type,
-followed by a request for the next local repair.
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
 
 Definitions:
 - local repair: an additive patch placed on a downstream symptom without changing the
   upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
 - same means type: the repeated fixes use the same kind of intervention, even if the
   surface verbs, labels, or affected items differ.
 - N+1 request: after at least three prior local repairs, the current user asks for one
   more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
 - pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
 
 Return JSON only. If uncertain, abstain.
@@ -139,7 +145,7 @@ This prompt has no examples by design.
 Canonical prompt fingerprint:
 
 ```text
-sha256 = e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d
+sha256 = b0b9a38e56f4afc3ef1326235d02c09fc9e4a6a7c66882b0501ad1ba19afd91c
 ```
 
 Hashing convention: exact prompt body in the fenced block above, LF line endings, one
@@ -421,8 +427,8 @@ runs are treated as meaningful.
 
 ## Implementation Sequence After Review
 
-1. Relay the V0 prompt body verbatim to external audit and confirm SHA-256.
-2. Freeze triage prompt v0.1 after external lint review.
+1. Relay the V0.2 prompt body verbatim to external audit and confirm SHA-256.
+2. Freeze triage prompt v0.2 after external lint review.
 3. Add triage output schema and runner integration.
 4. Add triage subprocess isolation and contamination coverage.
 5. Extend response, score, summary, aggregate, and shadow handoff fields.
