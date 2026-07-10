@@ -37,6 +37,7 @@ BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.82
 BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.2"
 BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.2"
 JUDGE_PARSE_MAX_ATTEMPTS = 2
+TRIAGE_VALIDATION_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
     "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
@@ -1151,6 +1152,36 @@ def triage_abstain_output(reason: str) -> dict[str, Any]:
     }
 
 
+def triage_attempt_stem(case_id: str, turn_index: int, attempt: int) -> str:
+    base = f"{case_id}-triage-turn-{turn_index}"
+    if attempt == 1:
+        return base
+    return f"{base}-retry-{attempt}"
+
+
+def triage_attempt_record(
+    *,
+    attempt: int,
+    stem: str,
+    result: dict[str, Any],
+    raw_model_output: str,
+    parse_status: str,
+    error: str = "",
+) -> dict[str, Any]:
+    return {
+        "attempt": attempt,
+        "stem": stem,
+        "returncode": result.get("returncode"),
+        "parse_status": parse_status,
+        "error": error,
+        "raw_model_output": raw_model_output,
+        "last_message_path": result.get("last_message_path"),
+        "events_path": result.get("events_path"),
+        "stderr_path": result.get("stderr_path"),
+        "prompt_path": result.get("prompt_path"),
+    }
+
+
 def run_brake_semantic_triage_subjudgment(
     user_prompt: str,
     turn_records: list[dict[str, Any]],
@@ -1163,36 +1194,91 @@ def run_brake_semantic_triage_subjudgment(
     schema_path = out_dir / "triage-output-schema.json"
     brake_semantic_triage_schema(schema_path)
     model = triage_model_for_args(args)
-    result = run_codex(
-        brake_semantic_triage_prompt(
-            triage_history_for_turn(turn_records, user_prompt),
-            superpowers_root=getattr(args, "superpowers_root", None),
-        ),
-        out_dir,
-        f"{case_id}-triage-turn-{turn_index}",
-        Path(args.codex_home),
-        Path(args.repo_root),
-        Path(args.execution_root),
-        model,
-        args.timeout,
-        home=home_for_stem(args, f"{case_id}-triage-turn-{turn_index}"),
-        output_schema=schema_path,
-        artifact_role="triage",
+    prompt = brake_semantic_triage_prompt(
+        triage_history_for_turn(turn_records, user_prompt),
+        superpowers_root=getattr(args, "superpowers_root", None),
     )
+    attempts: list[dict[str, Any]] = []
+    raw_model_outputs: list[str] = []
+    result: dict[str, Any] = {}
     error = ""
-    parsed: dict[str, Any]
-    if result.get("returncode") != 0:
-        error = f"triage subprocess returncode {result.get('returncode')}"
-        parsed = triage_abstain_output(error)
-    else:
+    parsed: dict[str, Any] | None = None
+    for attempt in range(1, TRIAGE_VALIDATION_MAX_ATTEMPTS + 1):
+        stem = triage_attempt_stem(case_id, turn_index, attempt)
+        result = run_codex(
+            prompt,
+            out_dir,
+            stem,
+            Path(args.codex_home),
+            Path(args.repo_root),
+            Path(args.execution_root),
+            model,
+            args.timeout,
+            home=home_for_stem(args, stem),
+            output_schema=schema_path,
+            artifact_role="triage",
+        )
+        raw_model_output = str(result.get("answer", ""))
+        raw_model_outputs.append(raw_model_output)
+        if result.get("returncode") != 0:
+            error = f"triage subprocess returncode {result.get('returncode')}"
+            parsed = triage_abstain_output(error)
+            attempts.append(
+                triage_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    raw_model_output=raw_model_output,
+                    parse_status="subprocess_error",
+                    error=error,
+                )
+            )
+            break
         try:
-            parsed = validate_brake_semantic_triage_output(json.loads(str(result.get("answer", ""))))
-        except json.JSONDecodeError:
+            parsed = validate_brake_semantic_triage_output(json.loads(raw_model_output))
+        except json.JSONDecodeError as exc:
             error = "triage did not return parseable JSON"
             parsed = triage_abstain_output(error)
+            attempts.append(
+                triage_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    raw_model_output=raw_model_output,
+                    parse_status="json_decode_error",
+                    error=str(exc),
+                )
+            )
+            break
         except ValueError as exc:
-            error = f"triage output failed local validation: {exc}"
+            attempt_error = f"triage output failed local validation: {exc}"
+            attempts.append(
+                triage_attempt_record(
+                    attempt=attempt,
+                    stem=stem,
+                    result=result,
+                    raw_model_output=raw_model_output,
+                    parse_status="validation_error",
+                    error=attempt_error,
+                )
+            )
+            if attempt < TRIAGE_VALIDATION_MAX_ATTEMPTS:
+                continue
+            error = attempt_error
             parsed = triage_abstain_output(error)
+            break
+        attempts.append(
+            triage_attempt_record(
+                attempt=attempt,
+                stem=stem,
+                result=result,
+                raw_model_output=raw_model_output,
+                parse_status="valid",
+            )
+        )
+        break
+    if parsed is None:
+        raise RuntimeError(f"triage produced no parse result for {case_id} turn {turn_index}")
     fired = False if error else brake_semantic_triage_fire_decision(parsed)
     return {
         "called": True,
@@ -1207,6 +1293,11 @@ def run_brake_semantic_triage_subjudgment(
         "model_sha256_or_provider_fingerprint": model_fingerprint(model),
         "returncode": result.get("returncode"),
         "usage": result.get("usage"),
+        "raw_model_output": raw_model_outputs[0] if raw_model_outputs else "",
+        "raw_model_outputs": raw_model_outputs,
+        "attempt_count": len(attempts),
+        "retry_count": max(0, len(attempts) - 1),
+        "attempts": attempts,
         "events_path": result.get("events_path"),
         "stderr_path": result.get("stderr_path"),
         "last_message_path": result.get("last_message_path"),
@@ -1610,6 +1701,15 @@ def run_case(
         result["triage_fired"] = bool(triage_record and triage_record.get("fired"))
         result["triage_confidence"] = triage_record.get("confidence") if triage_record else None
         result["triage_output"] = triage_record.get("output") if triage_record else None
+        result["triage_raw_model_output"] = (
+            triage_record.get("raw_model_output") if triage_record else None
+        )
+        result["triage_raw_model_outputs"] = (
+            triage_record.get("raw_model_outputs", []) if triage_record else []
+        )
+        result["triage_attempt_count"] = triage_record.get("attempt_count", 0) if triage_record else 0
+        result["triage_retry_count"] = triage_record.get("retry_count", 0) if triage_record else 0
+        result["triage_attempts"] = triage_record.get("attempts", []) if triage_record else []
         result["triage_negative_four_true_red_line"] = negative_four_true_red_line
         result["triage_error"] = triage_record.get("error") if triage_record else ""
         result["triage_prompt_sha256"] = (
@@ -1673,6 +1773,11 @@ def run_case(
         ],
         "triage_confidence": [turn.get("triage_confidence") for turn in turn_records],
         "triage_output": [turn.get("triage_output") for turn in turn_records],
+        "triage_raw_model_output": [turn.get("triage_raw_model_output") for turn in turn_records],
+        "triage_raw_model_outputs": [turn.get("triage_raw_model_outputs", []) for turn in turn_records],
+        "triage_attempt_count": [turn.get("triage_attempt_count", 0) for turn in turn_records],
+        "triage_retry_count": [turn.get("triage_retry_count", 0) for turn in turn_records],
+        "triage_attempts": [turn.get("triage_attempts", []) for turn in turn_records],
         "triage_error": [str(turn.get("triage_error") or "") for turn in turn_records],
         "triage_prompt_sha256": [turn.get("triage_prompt_sha256") for turn in turn_records],
         "triage_model": [turn.get("triage_model") for turn in turn_records],

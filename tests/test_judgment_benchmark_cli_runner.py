@@ -1301,6 +1301,196 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertIn("do not load MPG", hint)
         self.assertNotIn("mindthus:", hint)
 
+    def test_triage_validation_failure_retries_once_and_preserves_raw_outputs(self):
+        runner = load_runner()
+        invalid_raw = json.dumps(
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": False,
+                "same_means_type": False,
+                "prior_repair_count": 3,
+                "is_n_plus_1_request": False,
+                "pressure_present": False,
+                "confidence": 0.90,
+                "evidence_spans": [],
+                "abstain_reason": "",
+            }
+        )
+        valid_raw = json.dumps(
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": False,
+                "same_means_type": False,
+                "prior_repair_count": 3,
+                "is_n_plus_1_request": False,
+                "pressure_present": False,
+                "confidence": 0.90,
+                "evidence_spans": [],
+                "abstain_reason": "the request does not meet the hard gates",
+            }
+        )
+        stems = []
+
+        def fake_run_codex(_prompt, _out_dir, stem, *_args, **_kwargs):
+            stems.append(stem)
+            return {
+                "returncode": 0,
+                "answer": invalid_raw if len(stems) == 1 else valid_raw,
+                "usage": None,
+                "events_path": f"{stem}.events.jsonl",
+                "stderr_path": f"{stem}.stderr.txt",
+                "last_message_path": f"{stem}.json",
+                "prompt_path": f"{stem}.prompt.txt",
+                "contamination_flags": [],
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "run_codex", side_effect=fake_run_codex
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "execution-root",
+                model="gpt-generator",
+                triage_model="gpt-triage",
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+            )
+            record = runner.run_brake_semantic_triage_subjudgment(
+                "Please make the next local patch.",
+                [],
+                args,
+                case_id="triage-retry",
+                turn_index=1,
+            )
+
+        self.assertEqual(stems, ["triage-retry-triage-turn-1", "triage-retry-triage-turn-1-retry-2"])
+        self.assertEqual(record["error"], "")
+        self.assertEqual(record["attempt_count"], 2)
+        self.assertEqual(record["retry_count"], 1)
+        self.assertEqual(record["raw_model_output"], invalid_raw)
+        self.assertEqual(record["raw_model_outputs"], [invalid_raw, valid_raw])
+        self.assertEqual(record["attempts"][0]["parse_status"], "validation_error")
+        self.assertEqual(record["attempts"][1]["parse_status"], "valid")
+        self.assertEqual(record["output"]["abstain_reason"], "the request does not meet the hard gates")
+
+    def test_triage_validation_retry_fallback_preserves_each_raw_output(self):
+        runner = load_runner()
+        invalid_raw = json.dumps(
+            {
+                "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
+                "is_repeated_local_repair": False,
+                "same_means_type": False,
+                "prior_repair_count": 0,
+                "is_n_plus_1_request": False,
+                "pressure_present": False,
+                "confidence": 0.0,
+                "evidence_spans": [],
+                "abstain_reason": "",
+            }
+        )
+        stems = []
+
+        def fake_run_codex(_prompt, _out_dir, stem, *_args, **_kwargs):
+            stems.append(stem)
+            return {
+                "returncode": 0,
+                "answer": invalid_raw,
+                "usage": None,
+                "events_path": f"{stem}.events.jsonl",
+                "stderr_path": f"{stem}.stderr.txt",
+                "last_message_path": f"{stem}.json",
+                "prompt_path": f"{stem}.prompt.txt",
+                "contamination_flags": [],
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "run_codex", side_effect=fake_run_codex
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "execution-root",
+                model="gpt-generator",
+                triage_model="gpt-triage",
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+            )
+            record = runner.run_brake_semantic_triage_subjudgment(
+                "Please make the next local patch.",
+                [],
+                args,
+                case_id="triage-fallback",
+                turn_index=1,
+            )
+
+        self.assertEqual(stems, ["triage-fallback-triage-turn-1", "triage-fallback-triage-turn-1-retry-2"])
+        self.assertEqual(record["attempt_count"], 2)
+        self.assertEqual(record["retry_count"], 1)
+        self.assertIn("triage output failed local validation", record["error"])
+        self.assertEqual(record["raw_model_output"], invalid_raw)
+        self.assertEqual(record["raw_model_outputs"], [invalid_raw, invalid_raw])
+        self.assertEqual([attempt["parse_status"] for attempt in record["attempts"]], ["validation_error", "validation_error"])
+        self.assertEqual(record["output"]["abstain_reason"], record["error"])
+
+    def test_triage_parse_failure_does_not_retry(self):
+        runner = load_runner()
+        stems = []
+
+        def fake_run_codex(_prompt, _out_dir, stem, *_args, **_kwargs):
+            stems.append(stem)
+            return {
+                "returncode": 0,
+                "answer": "not JSON",
+                "usage": None,
+                "events_path": f"{stem}.events.jsonl",
+                "stderr_path": f"{stem}.stderr.txt",
+                "last_message_path": f"{stem}.json",
+                "prompt_path": f"{stem}.prompt.txt",
+                "contamination_flags": [],
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "run_codex", side_effect=fake_run_codex
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "execution-root",
+                model="gpt-generator",
+                triage_model="gpt-triage",
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+            )
+            record = runner.run_brake_semantic_triage_subjudgment(
+                "Please make the next local patch.",
+                [],
+                args,
+                case_id="triage-parse-failure",
+                turn_index=1,
+            )
+
+        self.assertEqual(stems, ["triage-parse-failure-triage-turn-1"])
+        self.assertEqual(record["attempt_count"], 1)
+        self.assertEqual(record["retry_count"], 0)
+        self.assertEqual(record["attempts"][0]["parse_status"], "json_decode_error")
+        self.assertEqual(record["raw_model_output"], "not JSON")
+
     def test_brake_semantic_triage_subjudgment_fires_and_records_turn_fields(self):
         runner = load_runner()
         case = {
@@ -1420,6 +1610,17 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(record["triage_confidence"], [0.94])
         self.assertEqual(record["triage_prompt_sha256"], [runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256])
         self.assertEqual(record["triage_model"], ["gpt-triage"])
+        self.assertEqual(record["triage_attempt_count"], [1])
+        self.assertEqual(record["triage_retry_count"], [0])
+        self.assertEqual(len(record["triage_raw_model_outputs"][0]), 1)
+        self.assertEqual(
+            record["triage_raw_model_output"][0],
+            record["triage_raw_model_outputs"][0][0],
+        )
+        self.assertEqual(
+            record["turns"][0]["triage_attempts"][0]["raw_model_output"],
+            record["triage_raw_model_output"][0],
+        )
         self.assertTrue(record["activation_hint_applied"])
         self.assertEqual(record["owner_skill_exposed"], [True])
         self.assertEqual(record["owner_skill_exposure_reason"], ["current_turn_fire"])
