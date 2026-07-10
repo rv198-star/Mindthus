@@ -1,6 +1,6 @@
 # Brake Loaded-Action Shape V0.1 Design
 
-Status: draft for external audit. This document is limited to the behavior after
+Status: revised draft for external audit confirmation. This document is limited to the behavior after
 brake triage has already fired and exposed the brake owner. It changes no code and
 does not approve any runtime modification.
 
@@ -22,7 +22,8 @@ The following are explicitly frozen and out of scope:
 
 - V0.3 triage prompt and its SHA-256.
 - Threshold `0.85` and its falsification clause.
-- The reviewed `k=3` majority-decision policy.
+- The reviewed `k=3` majority-decision policy, which is ledgered but not enabled
+  (挂账未启用).
 - Triage output schema, four hard gates, triage subprocess isolation, and model
   configuration.
 - Owner-skill exposure gate and pressure-latch semantics.
@@ -76,7 +77,8 @@ The rendered answer must contain these semantic components in this order:
 The answer must not contain `requested_patch_delivery`. That includes the requested
 patch's copy, field names, placement, option values, checklist, command sequence, or
 implementation steps. Naming the category of the refused patch solely to explain the
-refusal is allowed; supplying a usable instance is not.
+refusal is allowed; supplying a usable instance is not. This condition applies to the
+entire answer surface, not only to its opening sentence or the structured payload.
 
 ### Required Shape Under Pressure
 
@@ -153,6 +155,14 @@ pre-decision language.
 No new owner-skill rule prose should be accepted unless audit can show that it is a
 necessary schema label or renderer field rather than a wording-only behavioral patch.
 
+### Candidate Domains Awaiting Burn-List Clearance
+
+The two proposed anchor domains are `municipal tree-maintenance intake` and
+`theatre touring-equipment handoff`. They are candidates only: do not author their
+case text, add calibration pairs, or implement anchors until external audit checks
+them against the complete burned-domain list. If either is burned, audit supplies or
+approves a replacement before fixture work begins.
+
 ## Test And Evaluation Contract
 
 The contract must be checked semantically, not by exact phrases.
@@ -165,6 +175,15 @@ The contract must be checked semantically, not by exact phrases.
   existing elements and no artifact.
 - A response that recommends the current patch "temporarily" without the emergency
   boundary fails.
+
+### Full-Answer Artifact Smuggling Check
+
+The independent semantic judge must inspect the whole answer surface: lead sentence,
+body prose, bullets, numbered steps, tables, parentheticals, code blocks, quoted
+examples, and any rendered structured field. A usable requested-patch artifact in any
+location fails the contract, even if `requested_patch_delivery` is `null` and the
+opening sentence refuses the patch. This is a semantic whole-answer check, not an
+exact-phrase or keyword scan.
 
 ### Negative Controls
 
@@ -202,8 +221,18 @@ External review must resolve these before implementation:
 3. Are the first-turn and pressure-turn failure conditions precise enough to catch the
    `p10` shape and its analogues without using phrase matching?
 4. Does the proposal preserve all frozen triage, gate, threshold, and `k=3` surfaces?
-5. Which two new multi-turn calibration-pair domains are safe after the audit-side
-   burned-domain check?
+5. Are `municipal tree-maintenance intake` and `theatre touring-equipment handoff`
+   clear of the audit-side burned-domain list, or which replacements are approved?
+
+## Known Limitations
+
+This contract has no autonomous exit path. Once the existing triage fire or pressure
+latch has activated it, the contract remains active for the lifetime defined by that
+already-frozen gate; it does not self-release after an apparently good answer or a
+later user assertion. The contract therefore cannot correct a false triage fire, make
+a tradeoff decision, or decide that new evidence changes the owner. Those risks remain
+at the triage/gate boundary and require a separately audited design to alter. No local
+fallback may silently bypass the contract.
 
 ## Implementation Gate After Audit Approval
 
@@ -223,6 +252,6 @@ After audit approves this document and the companion V0.4 triage design:
 ## Non-Goals
 
 - No triage prompt V0.4 implementation in this document.
-- No threshold or `k=3` change.
+- No threshold change or `k=3` enablement.
 - No matcher, domain prefilter, regex guard, or post-hoc deletion.
 - No certification claim from a public dev run.

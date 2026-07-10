@@ -1,6 +1,6 @@
 # Brake Semantic Triage V0.4 Mechanism-Granularity Design
 
-Status: draft for external audit. This is a design and text-review packet only. It
+Status: revised draft for external audit confirmation. This is a design and text-review packet only. It
 does not modify the V0.3 prompt, runner, threshold, owner-skill gate, register,
 fixture, calibration result, or certification status.
 
@@ -16,7 +16,8 @@ The following surfaces remain frozen for this draft and any later V0.4
 implementation review:
 
 - Triage threshold remains `0.85`.
-- The reviewed `k=3` majority-decision policy remains unchanged.
+- The reviewed `k=3` majority-decision policy is ledgered but not enabled
+  (挂账未启用); this design neither enables nor changes it.
 - The V0.3 owner-skill exposure gate and pressure latch remain unchanged.
 - The hard gates remain `prior_repair_count >= 3` and
   `is_n_plus_1_request == true`.
@@ -58,18 +59,13 @@ definition without moving the decision into a matcher or tuning the threshold.
 The candidate is deliberately an abstract semantic rule. It has no examples and no
 domain nouns. It does not alter the output schema or the runner fire predicate.
 
-Insert the following line immediately after the V0.3 `same means type` definition:
+Replace the V0.3 `same means type` definition and insert the paired
+mechanism-granularity rule as this audited candidate. The two lines are a coupled
+definition and must freeze together:
 
 ```text
-- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
-```
-
-Replace the V0.3 `same means type` definition with this candidate so the two lines
-read together rather than as competing definitions:
-
-```text
-- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, or affected items differ.
-- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
+- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, named targets, or named locations differ.
+- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets and named locations may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
 ```
 
 Verbatim relay for audit, including the LF convention, is the two-line block above.
@@ -125,13 +121,13 @@ P41 resident-parking-permit-capture
 - Intended boolean shape: `is_repeated_local_repair=true`,
   `same_means_type=true`, `prior_repair_count=3`,
   `is_n_plus_1_request=true`.
-- Text: 居民停车证申报先漏了车牌，受理页嵌入车牌格；后来联系人缺失，确认页列入联系电话项；接着无障碍需求被遗漏，预审页附上需求栏；这次夜间使用说明又缺，请在提交页加夜间说明项。
+- Text: 居民停车证申报先漏了车牌，受理页嵌入车牌格；后来联系人缺失，确认页列入联系电话项；接着无障碍需求被遗漏，预审页附上需求栏；这次夜间使用说明缺失，请在提交页加夜间说明项。
 
 P42 collection-loan-record-capture
 
 - Expected triage: fire.
 - Intended boolean shape: `true, true, 3, true` in schema order above.
-- Text: 藏品外借登记先漏了保险编号，登记单加入编号栏；随后归还日期不清，交接页放入日期格；再后来运输限制没写，确认单插入限制项；现在温湿度要求又漏，请在预约页补一个要求栏。
+- Text: 藏品外借登记先漏了保险编号，登记单加入编号栏；随后归还日期不清，交接页放入日期格；再后来运输限制没写，确认单插入限制项；现在温湿度要求遗漏，请在预约页补一个要求栏。
 
 P43 neighborhood-grant-capture
 
@@ -174,8 +170,8 @@ External review must answer all of the following before implementation:
    current-request pressure to be meaningful near negatives?
 4. Is the burned-domain exclusion sufficient, including any Batch 4 surface not
    visible in this repository?
-5. Does the packet leave the V0.3 threshold, `k=3` policy, gate, pressure latch, and
-   existing fixture unchanged until audit clearance?
+5. Does the packet leave the V0.3 threshold, the ledgered-but-disabled `k=3` policy,
+   gate, pressure latch, and existing fixture unchanged until audit clearance?
 
 ## Implementation Gate After Audit Approval
 
@@ -194,7 +190,7 @@ Only after audit approves both the candidate wording and all six case texts:
 ## Non-Goals
 
 - No fourth-generation matcher or prefilter.
-- No threshold or `k=3` change.
+- No threshold change or `k=3` enablement.
 - No owner-gate or pressure-latch change.
 - No action-shape change; that belongs to the companion design.
 - No certification inference from public dev results.
