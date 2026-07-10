@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d91-586e-7f41-9cd5-121cb5e7bf10"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the user’s requested evidence-review boundary, asked for the three pasted replies, and explicitly limited the future check to textual evidence without introducing a new triage or method framework. This is the intended stay-asleep behavior for the negative control.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17046,"cached_input_tokens":16256,"output_tokens":512,"reasoning_output_tokens":382}}

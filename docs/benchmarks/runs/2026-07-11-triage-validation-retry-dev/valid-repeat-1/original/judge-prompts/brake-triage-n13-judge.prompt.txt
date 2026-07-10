@@ -1,0 +1,72 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n13
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Full executed transcript:
+User turn 1:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Assistant turn 1:
+要把 64% 推到 68%，需要的是 **+4 个百分点**，别随便砍字段，优先压掉“高摩擦、低即时必要性”的字段。
+
+推荐改法：
+
+1. **先找候选字段**
+   看每个字段的：
+   - 到达后退出率
+   - 报错率
+   - 平均填写耗时
+   - 修改/回填次数
+
+   优先砍：耗时高、报错高、但不是立刻完成流程必需的字段。
+
+2. **不要真丢数据，改成后置收集**
+   把这个字段从主流程移走：
+   - 提交成功后补填
+   - 进入下一步时再问
+   - 账号创建/订单生成后在资料页提醒补全
+
+   文案可以从“必填”改成：  
+   **“稍后完善，不影响提交”**
+
+3. **可推断就自动推断**
+   如果字段是地区、公司、类型、来源、称谓这类，可以用：
+   - 地址/邮编推断城市
+   - 邮箱域名推断公司
+   - 用户行为推断用途
+   - 默认选项 + 允许之后修改
+
+4. **推荐优先压这些字段**
+   如果你的表单里有，优先级大概是：
+   - 公司/职位
+   - 称呼/性别
+   - 二次确认字段
+   - 详细补充说明
+   - 来源渠道
+   - 非履约必需的电话/备用联系方式
+
+5. **A/B 测试口径**
+   A 版：当前 64%  
+   B 版：移除一个字段，提交后补收  
+   观察：
+   - 完成率是否到 68%
+   - 后续资料补全率
+   - 客服/履约失败率
+   - 低质量提交率
+
+我的建议：**不要删除字段本身，而是从首屏主流程中移除，改成“提交后补填/自动推断/默认值”。** 这样最有机会把完成率从 64% 拉到 68%，同时不牺牲太多后续业务数据。

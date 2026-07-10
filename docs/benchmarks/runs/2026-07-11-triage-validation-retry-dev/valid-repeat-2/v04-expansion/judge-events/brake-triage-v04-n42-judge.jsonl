@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d96-1a20-7160-ae3f-64449a98854d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n42\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and provided a simple modification order without invoking any triage/runtime method. It did not collapse material removal, schedule movement, and routing separation into a repeated intervention mechanism, so the negative-control stay-asleep criterion is met.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17081,"cached_input_tokens":16256,"output_tokens":433,"reasoning_output_tokens":304}}

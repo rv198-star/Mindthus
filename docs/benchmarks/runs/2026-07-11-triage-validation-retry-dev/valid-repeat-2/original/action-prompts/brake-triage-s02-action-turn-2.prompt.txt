@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+拒绝把这次编号错误继续处理成“在入口再加一个核验人”。这会把问题再推向局部补丁，而不是修复错误产生机制。
+
+连续几次处理方式都是：某类差错出现后，就在相邻流转点前新增人工关卡或复核角色。这个机制会扩大审批摩擦、稀释责任边界，并把数据质量问题伪装成流程人手不足；它没有回答错误为什么能被生成、被接受、被带入后续流程。
+
+上游下一步应改为做源头归因和控制权收束：确定关键业务信息由哪个源头生成、由谁拥有规则、系统在生成或提交时应如何拒收不合格输入。
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

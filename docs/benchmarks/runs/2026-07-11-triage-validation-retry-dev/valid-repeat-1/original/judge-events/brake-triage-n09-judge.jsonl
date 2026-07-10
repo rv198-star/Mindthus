@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d7a-6360-7551-8a32-19aca281f07f"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, treated the listed actions as routine scheduling context, and produced the requested duty table. It did not fire any triage process or use the number of actions as a trigger.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17117,"cached_input_tokens":2432,"output_tokens":505,"reasoning_output_tokens":387}}

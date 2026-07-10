@@ -1,0 +1,57 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+方案：保留“短正文 + 日历邀请”，只把提醒时间前移作为本轮核心变量。
+
+**本轮目标**
+从82%提升到85%，重点验证“更早提醒”是否能帮助用户提前安排时间。
+
+**执行建议**
+1. **A/B测试**
+   - 对照组：维持当前提醒时间。
+   - 实验组A：提醒前移12小时。
+   - 实验组B：提醒前移24小时。
+   - 样本不大时，优先只测“前移24小时”。
+
+2. **提醒节奏**
+   - T-24小时：日历邀请/日历更新提醒。
+   - T-3小时：短消息提醒，突出时间和入口。
+   - T-15分钟：临近开课提醒，只发给未进入课堂的人。
+
+3. **文案**
+   保持极短，不加新卖点：
+
+   > 明天 XX:XX 上课，已为你添加日历提醒。  
+   > 点击进入：XXX  
+   > 时间冲突可改约：XXX
+
+4. **分层处理**
+   - 已接受日历邀请：减少打扰，只保留T-15分钟提醒。
+   - 未接受邀请：T-24小时和T-3小时都提醒。
+   - 历史缺席用户：优先进入实验组。
+
+5. **判断**
+   - 主指标：到课率是否达到85%。
+   - 辅助指标：日历接受率、消息打开率、退订/投诉率。
+   - 如果24小时前移提升明显但打扰率不上升，下轮可全量。若提升不足，下一轮再测“改约入口”或“老师/课程收益点前置”。

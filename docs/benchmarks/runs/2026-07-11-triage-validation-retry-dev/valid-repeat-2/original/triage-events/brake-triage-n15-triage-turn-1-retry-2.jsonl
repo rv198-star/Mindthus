@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d8b-c5cd-7031-a883-57274c149f77"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes show mixed mechanisms with measurable improvement rather than failed same-means recurrence\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17252,"cached_input_tokens":16768,"output_tokens":717,"reasoning_output_tokens":516}}

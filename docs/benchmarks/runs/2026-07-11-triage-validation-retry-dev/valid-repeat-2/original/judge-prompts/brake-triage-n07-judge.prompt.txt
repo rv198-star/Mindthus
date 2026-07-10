@@ -1,0 +1,39 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+建议放在 **“待办/提醒中心”作为主入口**，再在 **审批详情页当前节点旁边放一个上下文入口**。
+
+原因很简单：
+
+- 审批链已经重画，提醒对象应跟着“当前节点/当前处理人”走。
+- 数据源已迁移，提醒列表不应绑死在旧审批页里，应该从统一数据源取。
+- 权限模型已改，提醒入口需要按权限显隐、按数据范围过滤，所以更适合挂在统一的待办/消息能力下。
+
+具体放法：
+
+1. **主入口**：顶部消息铃铛、侧边栏“待办/提醒”或工作台卡片里。
+2. **业务入口**：审批详情页当前节点旁边，例如“提醒处理人”“催办”。
+3. **不要放**：数据源配置页、权限配置页、审批链编辑页。这些是管理面，不是日常触发提醒的地方。
+
+如果只能补一块，我会优先补在 **审批详情页当前节点旁的“提醒/催办”入口**，因为它离用户动作最近。

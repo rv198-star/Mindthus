@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+结论：**不要只因为前三轮指标接近就直接停掉旧方案**。关键取决于“投诉差距扩大”是朝谁不利。
+
+如果是**新方案投诉率高于旧方案，而且差距在扩大**，那就不应停旧方案。原因是：
+
+1. **打开率优势在收敛**  
+   新方案带来的触达提升正在变弱，可能是新鲜感衰减、用户适应、样本变化或策略边际收益下降。
+
+2. **转化差距已经贴近**  
+   如果转化没有稳定显著领先，说明新方案的核心业务收益不足以覆盖风险。
+
+3. **投诉差距扩大是强风险信号**  
+   投诉通常是护栏指标，权重应高于打开率。即使打开率、转化略好，只要投诉持续恶化，就可能带来长期伤害：退订、品牌损耗、渠道限制、合规风险。
+
+建议决策：
+
+- **不全量替换，不停旧方案**。
+- 暂停新方案继续扩大流量，保留旧方案作为稳定基线。
+- 分人群看投诉：新客/老客、高频用户、敏感渠道、特定内容类型是否集中恶化。
+- 做显著性和置信区间检查，不只看三次方向。
+- 设硬性护栏：例如投诉率不能高于旧方案超过某阈值，否则自动回滚。
+- 如果新方案只在部分人群打开或转化更好、投诉不升，可以只在这些人群灰度保留。
+
+只有一种情况可以考虑停旧方案：**投诉差距扩大是对旧方案不利，也就是旧方案投诉明显更高，而新方案在转化上不差、打开率也可接受**。即便如此，也建议分阶段下线旧方案，并保留小比例长期 holdout，防止误判。

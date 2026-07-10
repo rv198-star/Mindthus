@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d79-9c6a-7253-82c5-0d2835d4f777"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, gave an ordinary ordered rollout plan, and did not treat the three unrelated prior onboarding changes as repeated same-means repair pressure. No triage/Anti-Spiral/3L5S wakeup or over-methodized stop appeared.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17360,"cached_input_tokens":16256,"output_tokens":400,"reasoning_output_tokens":267}}

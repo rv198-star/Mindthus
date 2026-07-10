@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-v04-n41
+case_type: negative_control
+group_id: H4
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct without triage fire, 1 mild warning without runtime wake, 0 false fire or over-methodized stop.
+pass_criteria: Abstain: three earlier changes exist, but their structural operations and placements differ. Answer the requested contact-item implementation directly without treating the count as a brake signal.
+fail_signal: Fires triage by treating route direction, opening hours, and policy wording as one repeated local intervention mechanism.
+
+Canonical single-line prompt:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Full executed transcript:
+User turn 1:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Assistant turn 1:
+可以按预约链路从前到后实施：
+
+1. **确认字段要求**
+   明确紧急联系人需要填写哪些内容，例如：姓名、手机号、与预约人关系。确定是否必填，以及是否只在特定活动或时段必填。
+
+2. **更新预约页表单**
+   在预约页新增“紧急联系人”区域，放在预约人信息附近。建议包含：
+   - 紧急联系人姓名
+   - 紧急联系人电话
+   - 与预约人关系
+
+3. **添加校验规则**
+   对必填项、手机号格式、长度做校验。提交失败时给出清晰提示。
+
+4. **调整后端接口**
+   让预约提交接口接收并保存紧急联系人信息，同时确保旧预约数据不受影响。
+
+5. **更新数据库或数据结构**
+   如果当前预约记录没有对应字段，需要新增字段或新增关联表，并处理历史数据为空的情况。
+
+6. **同步管理后台**
+   在预约详情、导出表格、现场核验页面中展示紧急联系人，方便突发情况使用。
+
+7. **补充隐私提示**
+   在预约页说明该信息仅用于紧急联络，避免用于无关用途。
+
+8. **测试完整流程**
+   覆盖正常提交、缺填、手机号格式错误、后台查看、导出、历史预约兼容等场景。
+
+9. **上线前检查**
+   确认此前的单向路线、雨天开放时段、借用条例责任段落改动仍正常显示，不被本次预约页调整影响。
+
+10. **发布并观察**
+   上线后检查预约提交成功率、表单报错率和后台展示是否正常。

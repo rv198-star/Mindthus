@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4d76-6716-7581-9b8e-8abea6b1198b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"默认拒绝把明早上线压力继续转成一次孤立的临时说明追加。即使时间很紧，继续补这一条也会把同一个结构问题延后到下一个触点爆出。\",\"mechanism_reframe\":\"重复机制是：每次前线被问到新问题，就把最近一次疼点贴到最近的可见位置；但患者信息并没有形成单一来源，变更也没有统一触发同步，所以护士站、前台、公众号、入口页会持续分叉，下一次仍会以“只补这一条”的形式回来。\",\"upstream_next_action\":\"明早上线前的上游动作应是指定复诊变更信息的唯一责任方和临时发布口径，让这次发布成为受控的统一口径发布，而不是新增一个孤立补丁。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
+{"type":"turn.completed","usage":{"input_tokens":14070,"cached_input_tokens":2432,"output_tokens":751,"reasoning_output_tokens":516}}

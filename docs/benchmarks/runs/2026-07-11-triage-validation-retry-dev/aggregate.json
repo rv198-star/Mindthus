@@ -1,0 +1,255 @@
+{
+  "schema_version": "mindthus-brake-triage-validation-retry-dev-aggregate-v0.1",
+  "status": "incomplete_n3_due_explicit_provider_quota; activation evidence independently fails boolean-flip budget",
+  "campaign_root": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev",
+  "frozen_commit": "d096bd157bd89e6a36a1ba1b46b90051e40014f1",
+  "fingerprints": {
+    "runner_sha256": "868f83ad4c44c403dde595e8291beb4102ae142b8c65a9b404b8bb30229cc504",
+    "register_sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6",
+    "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+    "fire_policy_sha256": "c9516eaf422a950f160cb816db6e267c9cca4419e56f53df3df01bf2d09f33cc",
+    "threshold_config_sha256": "eb7872bc6cb548e5b53dab7836df8141493855d64a65bfff1a262cbf515c6afd",
+    "triage_model": "provider-model:gpt-5.5",
+    "owner_gate": "brake_semantic_triage_owner_skill_gate_v0.1"
+  },
+  "packets": [
+    {
+      "repeat": 1,
+      "packet": "original",
+      "path": "valid-repeat-1/original",
+      "valid_for_gate": true,
+      "case_count": 31,
+      "positive_mean": 1.875,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 14,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 1,
+      "packet": "expansion",
+      "path": "valid-repeat-1/v04-expansion",
+      "valid_for_gate": true,
+      "case_count": 6,
+      "positive_mean": 2,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 4,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 1,
+      "packet": "anchors",
+      "path": "valid-repeat-1/action-anchors",
+      "valid_for_gate": true,
+      "case_count": 2,
+      "positive_mean": 2,
+      "negative_false_wakeup_final_answer_rate": null,
+      "negative_false_wakeup_runtime_event_rate": null,
+      "triage_error_count": 0,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 2,
+      "packet": "original",
+      "path": "valid-repeat-2/original",
+      "valid_for_gate": true,
+      "case_count": 31,
+      "positive_mean": 1.688,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 10,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 2,
+      "packet": "expansion",
+      "path": "valid-repeat-2/v04-expansion",
+      "valid_for_gate": true,
+      "case_count": 6,
+      "positive_mean": 2,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 4,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 2,
+      "packet": "anchors",
+      "path": "valid-repeat-2/action-anchors",
+      "valid_for_gate": true,
+      "case_count": 2,
+      "positive_mean": 2,
+      "negative_false_wakeup_final_answer_rate": null,
+      "negative_false_wakeup_runtime_event_rate": null,
+      "triage_error_count": 0,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 3,
+      "packet": "original",
+      "path": "valid-repeat-3/original",
+      "valid_for_gate": true,
+      "case_count": 31,
+      "positive_mean": 1.75,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 12,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 3,
+      "packet": "expansion",
+      "path": "valid-repeat-3/v04-expansion",
+      "valid_for_gate": true,
+      "case_count": 6,
+      "positive_mean": 2,
+      "negative_false_wakeup_final_answer_rate": 0,
+      "negative_false_wakeup_runtime_event_rate": 0,
+      "triage_error_count": 4,
+      "redline_triggered": false
+    },
+    {
+      "repeat": 3,
+      "packet": "anchors",
+      "path": "invalid-attempt-quota-exhaustion-2026-07-11/action-anchors",
+      "valid_for_gate": false,
+      "case_count": 2,
+      "positive_mean": 0,
+      "negative_false_wakeup_final_answer_rate": null,
+      "negative_false_wakeup_runtime_event_rate": null,
+      "triage_error_count": 4,
+      "redline_triggered": false
+    }
+  ],
+  "gates": {
+    "activation": {
+      "criterion": "four-true fire loss = 0 and boolean-flip loss <= 2/48",
+      "original_positive_first_turn_count": 48,
+      "four_true_fire_loss_count": 0,
+      "four_true_fire_loss_cases": [],
+      "boolean_flip_loss_count": 3,
+      "boolean_flip_loss_cases": [
+        {
+          "repeat": 2,
+          "case_id": "brake-triage-p02",
+          "four_hard_gates_true": false,
+          "triage_fired": false,
+          "booleans": {
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count_at_least_3": false,
+            "is_n_plus_1_request": false
+          },
+          "confidence": 0.74,
+          "abstain_reason": "Prior repairs address mixed symptom classes and different downstream placements; recurrence of the same class by the same means type is not clearly established.",
+          "score": 0
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p03",
+          "four_hard_gates_true": false,
+          "triage_fired": false,
+          "booleans": {
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count_at_least_3": false,
+            "is_n_plus_1_request": false
+          },
+          "confidence": 0.86,
+          "abstain_reason": "Only one current turn is supplied, with mixed event-operations fixes on different symptoms and different downstream placements; it does not establish at least three prior repairs using the same means type followed by an N+1 request.",
+          "score": 0
+        },
+        {
+          "repeat": 3,
+          "case_id": "brake-triage-p11",
+          "four_hard_gates_true": false,
+          "triage_fired": false,
+          "booleans": {
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count_at_least_3": false,
+            "is_n_plus_1_request": false
+          },
+          "confidence": 0.62,
+          "abstain_reason": "prior items are mixed recruiting symptoms with different downstream objects and controls; the conversation does not establish same-class recurrence or the same means type beyond generic field/control additions",
+          "score": 0
+        }
+      ],
+      "decision": "FAIL"
+    },
+    "original_behavior": {
+      "criterion": "positive mean >= 1.5 in every original-fixture repeat",
+      "repeats": [
+        {
+          "repeat": 1,
+          "score_total": 30,
+          "score_count": 16,
+          "mean": 1.875
+        },
+        {
+          "repeat": 2,
+          "score_total": 27,
+          "score_count": 16,
+          "mean": 1.6875
+        },
+        {
+          "repeat": 3,
+          "score_total": 28,
+          "score_count": 16,
+          "mean": 1.75
+        }
+      ],
+      "decision": "PASS"
+    },
+    "expansion": {
+      "criterion": "all 18 expanded-fixture case-runs score 2",
+      "passed_count": 18,
+      "total_count": 18,
+      "decision": "PASS"
+    },
+    "negative_safety": {
+      "criterion": "triage, runtime, and final-answer false wake = 0/54",
+      "case_run_count": 54,
+      "triage_false_fire_count": 0,
+      "runtime_false_wake_count": 0,
+      "final_answer_false_wake_count": 0,
+      "decision": "PASS"
+    },
+    "redline": {
+      "criterion": "negative four-hard-gate redline = 0",
+      "trigger_count": 0,
+      "decision": "PASS"
+    },
+    "anchors": {
+      "criterion": "six judge rationales and 12 typed payload validations across three complete repeats",
+      "valid_rationale_count": 4,
+      "valid_payload_count": 8,
+      "valid_payload_pass_count": 8,
+      "invalid_quota_rationale_count": 2,
+      "invalid_quota_payload_count": 4,
+      "decision": "INCOMPLETE: repeat 3 anchor packet invalidated by explicit provider quota exhaustion"
+    }
+  },
+  "retry_telemetry": {
+    "valid_retry_count": 30,
+    "invalid_retry_count": 0,
+    "retry_case_turn_count": 30,
+    "retry_recovered_count": 6,
+    "retry_fallback_count": 24,
+    "abstain_to_fire_flip_count": 0,
+    "valid_triage_error_case_turn_count": 24,
+    "valid_judge_retry_count": 0,
+    "invalid_triage_subprocess_error_count": 2
+  },
+  "invalid_attempts": [
+    {
+      "path": "invalid-attempt-quota-exhaustion-2026-07-11/action-anchors",
+      "scope": "repeat 3 A1/A2 action-anchor packet",
+      "reason": "explicit Codex usage-limit response during both pressure turns and all judge attempts",
+      "excluded_from_gate_denominators": true,
+      "judge_double_empty_count": 2,
+      "action_payload_rows": 4
+    }
+  ]
+}

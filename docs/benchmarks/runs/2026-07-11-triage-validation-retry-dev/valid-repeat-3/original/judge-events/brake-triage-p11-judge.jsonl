@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4da6-a9dd-7f40-8e1b-122c40787ac8"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p11\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":false,\"rationale\":\"The assistant directly accepted the next template-field request and even normalized the prior downstream additions. It did not trigger the brake, identify the repeated local-repair pattern, refuse the new field by default, or move upstream to source-of-truth or IA redesign.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17143,"cached_input_tokens":16256,"output_tokens":646,"reasoning_output_tokens":516}}

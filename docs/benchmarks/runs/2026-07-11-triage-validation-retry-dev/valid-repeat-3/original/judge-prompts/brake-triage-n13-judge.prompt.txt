@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n13
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Full executed transcript:
+User turn 1:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Assistant turn 1:
+改法：不要硬删核心字段，把一个“可后置、可推断、低校验价值”的字段从主流程里拿掉。
+
+优先压这类字段：
+
+1. **确认类字段**
+   - 如“确认邮箱”“确认手机号”“确认密码”
+   - 改成提交后校验或输入时即时校验
+
+2. **可推断字段**
+   - 如“邮编”“城市”“区县”“公司行业”
+   - 由地址、手机号、邮箱域名、定位或选项自动带出
+
+3. **低频使用字段**
+   - 如“公司名”“职位”“备注”“门牌补充”“推荐人”
+   - 放到完成后的补充页，不拦主提交
+
+推荐版本：
+
+> 删除主表单里的“邮编 / 公司名 / 备注”这类字段，改为提交成功后补充；如果系统需要，则后台自动推断或后续提醒补齐。
+
+交互上这样改：
+
+- 表单字段减少 1 个；
+- 提交按钮上方不要提示“之后可补充”，避免用户分心；
+- 成功页放一个轻量补充入口：`完善更多信息`；
+- 后台字段状态标记为 `missing_but_not_blocking`；
+- A/B 看主指标：完成率是否从 **64% → 68%**，同时监控后续转化和数据可用率。
+
+如果只能选一个字段，我会优先压掉：**用户需要停下来思考、但不是立即履约必需的字段**。这类字段最可能贡献那 4 个点。

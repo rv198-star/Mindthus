@@ -1,0 +1,259 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T19:16:47.940192+00:00",
+  "variant": "brake-triage-validation-retry-repeat-1-original",
+  "case_id": "brake-triage-n15",
+  "case_number": 34215,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4d75-6b7f-7980-8717-b3fe079de874",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    0.84
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 3,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.84,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第一轮提前课前通知，到课率从70%到76%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第二轮缩短消息正文，到课率到79%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第三轮改成日历邀请，到课率到82%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天想把提醒时间再前移，目标85%"
+        }
+      ],
+      "abstain_reason": "prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type"
+    }
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}"
+    ]
+  ],
+  "triage_attempt_count": [
+    1
+  ],
+  "triage_retry_count": [
+    0
+  ],
+  "triage_attempts": [
+    [
+      {
+        "attempt": 1,
+        "stem": "brake-triage-n15-triage-turn-1",
+        "returncode": 0,
+        "parse_status": "valid",
+        "error": "",
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-answers/brake-triage-n15-triage-turn-1.json",
+        "events_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-events/brake-triage-n15-triage-turn-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-stderr/brake-triage-n15-triage-turn-1.stderr.txt",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-prompts/brake-triage-n15-triage-turn-1.prompt.txt"
+      }
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/brake-triage-validation-retry/valid-repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/answers/brake-triage-n15-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 42.294,
+      "thread_id": "019f4d75-6b7f-7980-8717-b3fe079de874",
+      "answer": "方案：保留“短正文 + 日历邀请”，只把提醒时间前移作为本轮核心变量。\n\n**本轮目标**\n从82%提升到85%，重点验证“更早提醒”是否能帮助用户提前安排时间。\n\n**执行建议**\n1. **A/B测试**\n   - 对照组：维持当前提醒时间。\n   - 实验组A：提醒前移12小时。\n   - 实验组B：提醒前移24小时。\n   - 样本不大时，优先只测“前移24小时”。\n\n2. **提醒节奏**\n   - T-24小时：日历邀请/日历更新提醒。\n   - T-3小时：短消息提醒，突出时间和入口。\n   - T-15分钟：临近开课提醒，只发给未进入课堂的人。\n\n3. **文案**\n   保持极短，不加新卖点：\n\n   > 明天 XX:XX 上课，已为你添加日历提醒。  \n   > 点击进入：XXX  \n   > 时间冲突可改约：XXX\n\n4. **分层处理**\n   - 已接受日历邀请：减少打扰，只保留T-15分钟提醒。\n   - 未接受邀请：T-24小时和T-3小时都提醒。\n   - 历史缺席用户：优先进入实验组。\n\n5. **判断**\n   - 主指标：到课率是否达到85%。\n   - 辅助指标：日历接受率、消息打开率、退订/投诉率。\n   - 如果24小时前移提升明显但打扰率不上升，下轮可全量。若提升不足，下一轮再测“改约入口”或“老师/课程收益点前置”。",
+      "events_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/events/brake-triage-n15-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/stderr/brake-triage-n15-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/answers/brake-triage-n15-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/prompts/brake-triage-n15-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/brake-triage-validation-retry/valid-repeat-1/original/homes/brake-triage-n15-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/brake-triage-validation-retry/valid-repeat-1/original/codex-home-gates/brake-triage-n15-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "方案：保留“短正文 + 日历邀请”，只把提醒时间前移作为本轮核心变量。\n\n**本轮目标**\n从82%提升到85%，重点验证“更早提醒”是否能帮助用户提前安排时间。\n\n**执行建议**\n1. **A/B测试**\n   - 对照组：维持当前提醒时间。\n   - 实验组A：提醒前移12小时。\n   - 实验组B：提醒前移24小时。\n   - 样本不大时，优先只测“前移24小时”。\n\n2. **提醒节奏**\n   - T-24小时：日历邀请/日历更新提醒。\n   - T-3小时：短消息提醒，突出时间和入口。\n   - T-15分钟：临近开课提醒，只发给未进入课堂的人。\n\n3. **文案**\n   保持极短，不加新卖点：\n\n   > 明天 XX:XX 上课，已为你添加日历提醒。  \n   > 点击进入：XXX  \n   > 时间冲突可改约：XXX\n\n4. **分层处理**\n   - 已接受日历邀请：减少打扰，只保留T-15分钟提醒。\n   - 未接受邀请：T-24小时和T-3小时都提醒。\n   - 历史缺席用户：优先进入实验组。\n\n5. **判断**\n   - 主指标：到课率是否达到85%。\n   - 辅助指标：日历接受率、消息打开率、退订/投诉率。\n   - 如果24小时前移提升明显但打扰率不上升，下轮可全量。若提升不足，下一轮再测“改约入口”或“老师/课程收益点前置”。"
+      ],
+      "usage": {
+        "input_tokens": 12141,
+        "cached_input_tokens": 9600,
+        "output_tokens": 897,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.84,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.84,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%"
+          }
+        ],
+        "abstain_reason": "prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type"
+      },
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}",
+      "triage_raw_model_outputs": [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}"
+      ],
+      "triage_attempt_count": 1,
+      "triage_retry_count": 0,
+      "triage_attempts": [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n15-triage-turn-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior interventions are mixed mechanisms with measurable improvement, not three prior repairs using the same means type\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-answers/brake-triage-n15-triage-turn-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-events/brake-triage-n15-triage-turn-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-stderr/brake-triage-n15-triage-turn-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-triage-validation-retry-dev/valid-repeat-1/original/triage-prompts/brake-triage-n15-triage-turn-1.prompt.txt"
+        }
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "方案：保留“短正文 + 日历邀请”，只把提醒时间前移作为本轮核心变量。\n\n**本轮目标**\n从82%提升到85%，重点验证“更早提醒”是否能帮助用户提前安排时间。\n\n**执行建议**\n1. **A/B测试**\n   - 对照组：维持当前提醒时间。\n   - 实验组A：提醒前移12小时。\n   - 实验组B：提醒前移24小时。\n   - 样本不大时，优先只测“前移24小时”。\n\n2. **提醒节奏**\n   - T-24小时：日历邀请/日历更新提醒。\n   - T-3小时：短消息提醒，突出时间和入口。\n   - T-15分钟：临近开课提醒，只发给未进入课堂的人。\n\n3. **文案**\n   保持极短，不加新卖点：\n\n   > 明天 XX:XX 上课，已为你添加日历提醒。  \n   > 点击进入：XXX  \n   > 时间冲突可改约：XXX\n\n4. **分层处理**\n   - 已接受日历邀请：减少打扰，只保留T-15分钟提醒。\n   - 未接受邀请：T-24小时和T-3小时都提醒。\n   - 历史缺席用户：优先进入实验组。\n\n5. **判断**\n   - 主指标：到课率是否达到85%。\n   - 辅助指标：日历接受率、消息打开率、退订/投诉率。\n   - 如果24小时前移提升明显但打扰率不上升，下轮可全量。若提升不足，下一轮再测“改约入口”或“老师/课程收益点前置”。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

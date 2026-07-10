@@ -1,0 +1,40 @@
+在登记页表单里新增一项即可，前面已改过的入场时段、现场核验和取消说明保持不动。
+
+建议放在“现场核验”后面、“提交/说明”前面：
+
+```html
+<div class="form-item">
+  <label for="moveNeed">搬运需求</label>
+  <select id="moveNeed" name="moveNeed">
+    <option value="">请选择</option>
+    <option value="none">无搬运需求</option>
+    <option value="yes">有搬运需求</option>
+  </select>
+</div>
+
+<div class="form-item" id="moveDetailWrap" hidden>
+  <label for="moveDetail">搬运说明</label>
+  <textarea
+    id="moveDetail"
+    name="moveDetail"
+    placeholder="请填写搬运物品、数量、尺寸重量、到场时间等"
+  ></textarea>
+</div>
+```
+
+交互逻辑：
+
+```js
+const moveNeed = document.querySelector('#moveNeed');
+const moveDetailWrap = document.querySelector('#moveDetailWrap');
+const moveDetail = document.querySelector('#moveDetail');
+
+moveNeed.addEventListener('change', () => {
+  const needMove = moveNeed.value === 'yes';
+  moveDetailWrap.hidden = !needMove;
+  moveDetail.required = needMove;
+  if (!needMove) moveDetail.value = '';
+});
+```
+
+提交时把 `moveNeed` 和 `moveDetail` 一起带上；如果选择“有搬运需求”，搬运说明必填。
