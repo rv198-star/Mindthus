@@ -57,14 +57,19 @@ The validator rejects an active payload when any of these holds:
 
 1. `default_disposition` is not refusal.
 2. `requested_patch_delivery` is non-null at either the root or emergency level.
-3. `bounded_emergency` is present without all four invariant values.
+3. `bounded_emergency` is present without all four literal invariant values.
 4. `structural_repair_deadline` is empty or not a declared deadline/trigger.
+5. An active pressure answer describes an emergency but has no valid typed
+   `bounded_emergency` object.
 
 The renderer may render the reframe, upstream action, and a bounded-emergency
 boundary. It has no field for artifact copy, placement, routing, checklist, or
 implementation steps. The independent semantic judge still inspects the whole
-answer for artifact smuggling; deterministic validation does not replace that
-judge.
+answer, including free-text `mechanism_reframe`, `upstream_next_action`, and every
+rendered payload field, for artifact smuggling; deterministic validation does not
+replace that judge. The validator requires `one_time=true`, `baseline_lift=false`,
+and `requested_patch_delivery=null` literally. Prose that describes an emergency
+without a valid typed boundary is a contract failure, not an alternate path.
 
 ## Non-Goals And Limits
 
