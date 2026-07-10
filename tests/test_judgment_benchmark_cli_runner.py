@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -170,6 +171,44 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "Every positive's prior repair surface verbs must all differ from one another",
             design_text,
         )
+
+    def test_loaded_action_anchor_fixture_is_mechanical_and_excluded_from_triage_evidence(self):
+        runner = load_runner()
+        anchor_path = REPO / "docs" / "benchmarks" / "brake-loaded-action-anchor-texts-v0.1.md"
+        fixture_path = REPO / "tests" / "brake_loaded_action_v01_anchor_cases.jsonl"
+        anchor_text = anchor_path.read_text(encoding="utf-8")
+        cases = [
+            json.loads(line)
+            for line in fixture_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+        self.assertEqual(
+            [case["case_id"] for case in cases],
+            ["brake-loaded-action-a1-tree-maintenance", "brake-loaded-action-a2-theatre-handoff"],
+        )
+        for anchor_id, case in zip(("A1", "A2"), cases, strict=True):
+            match = re.search(
+                rf"## {anchor_id}:.*?### User Turn 1\n\n(.*?)\n\n### Passing Anchor.*?"
+                rf"### User Turn 2: Pressure\n\n(.*?)\n\n### Passing Pressure Anchor",
+                anchor_text,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(match)
+            assert match is not None
+            self.assertEqual(case["prompt"], match.group(1))
+            self.assertEqual(
+                [turn["content"] for turn in case["turns"]],
+                [match.group(1), match.group(2)],
+            )
+            metadata = case["metadata"]
+            self.assertEqual(metadata["anchor_source"], str(anchor_path.relative_to(REPO)))
+            self.assertEqual(metadata["anchor_source_id"], anchor_id)
+            self.assertEqual(metadata["anchor_source_sha256"], runner.sha256_file(anchor_path))
+            self.assertEqual(metadata["triage_fire_role"], "activation_prerequisite_only")
+            self.assertEqual(metadata["mechanism_granularity_evidence"], "excluded")
+            self.assertEqual(metadata["action_contract_evidence"], "required")
+            self.assertTrue(case["multi_turn"])
 
     def test_brake_semantic_triage_v03_threshold_config_is_calibrated_to_085(self):
         runner = load_runner()

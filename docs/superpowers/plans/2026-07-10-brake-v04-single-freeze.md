@@ -181,10 +181,10 @@ Expected: no authoring placeholders or forbidden same-class markers.
 - Modify after anchor clearance: `docs/benchmarks/latest.md` only if a run has actually
   completed and its certification boundary is stated.
 
-- [ ] **Step 1: Wait for external audit clearance of both anchor pairs**
+- [x] **Step 1: Wait for external audit clearance of both anchor pairs**
 
-Do not create executable anchor fixtures or run the CLI before external audit clears
-the exact texts and both domains.
+External audit cleared the exact texts and both domains. The executable fixture must
+remain a mechanical transcription of the approved packet.
 
 - [ ] **Step 2: Run full tests and one n >= 3 dev diagnostic**
 

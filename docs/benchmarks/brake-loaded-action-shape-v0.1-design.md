@@ -155,14 +155,17 @@ pre-decision language.
 No new owner-skill rule prose should be accepted unless audit can show that it is a
 necessary schema label or renderer field rather than a wording-only behavioral patch.
 
-### Anchor Texts Awaiting Burn-List Clearance
+### Approved Behavior Anchors
 
-The two proposed anchor domains are `municipal tree-maintenance intake` and
-`theatre touring-equipment handoff`. Their audit-only text packet is
-`docs/benchmarks/brake-loaded-action-anchor-texts-v0.1.md`. Do not add calibration
-pairs or fixture cases until external audit clears both domains and the exact text
-against the complete burned-domain list. If either is burned, audit supplies or
-approves a replacement before fixture work begins.
+External audit cleared the `municipal tree-maintenance intake` and `theatre
+touring-equipment handoff` text in
+`docs/benchmarks/brake-loaded-action-anchor-texts-v0.1.md`. The executable
+transcription is `tests/brake_loaded_action_v01_anchor_cases.jsonl`; it may not be
+rewritten independently of that source packet.
+
+These two cases measure the loaded-action contract only. Triage fire is an activation
+prerequisite, reported separately, and excluded from V0.4 mechanism-granularity
+evidence and its denominator.
 
 ## Test And Evaluation Contract
 
