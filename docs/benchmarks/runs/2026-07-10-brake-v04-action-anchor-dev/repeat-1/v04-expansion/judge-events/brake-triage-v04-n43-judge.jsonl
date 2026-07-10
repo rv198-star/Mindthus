@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a30-8962-7b01-8976-0c2005b31a3c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and answered the requested registration-page change. It treated the prior time-slot, on-site verification, and cancellation wording updates as separate already-completed changes, and did not fire triage or over-methodize the request.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":21900,"cached_input_tokens":20864,"output_tokens":444,"reasoning_output_tokens":316}}

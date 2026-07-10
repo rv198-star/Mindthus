@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, and any rendered structured field. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+case_id: brake-triage-p10
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+供应商漏盖章，邮件模板插盖章栏；报价税率错，询价表嵌税率格；交付日期漏填，清单并入日期框；今天质保条款被问，请在询价页放质保字段。
+
+Full executed transcript:
+User turn 1:
+供应商漏盖章，邮件模板插盖章栏；报价税率错，询价表嵌税率格；交付日期漏填，清单并入日期框；今天质保条款被问，请在询价页放质保字段。
+
+Assistant turn 1:
+拒绝继续把“质保字段”作为下一次局部补丁交付。
+
+这不是缺一个字段的问题，而是同一机制在反复出现：每次供应商或业务暴露一个漏项，就把漏项硬塞进当前询价页、邮件模板或清单里。盖章、税率、交付日期、质保条款看起来是不同字段，实际都是询价/报价前置约束没有被统一建模、校验和归责，导致页面不断吸收例外，流程仍然继续漏。
+
+先把询价入口提升为“供应商报价必备条件”的统一源头：定义哪些条款必须在发询价前收集、哪些由供应商确认、哪些由系统校验，并让后续邮件、询价表和交付清单从该源头派生。

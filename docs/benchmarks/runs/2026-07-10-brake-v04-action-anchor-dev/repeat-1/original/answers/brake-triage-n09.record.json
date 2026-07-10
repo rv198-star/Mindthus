@@ -1,0 +1,183 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T03:46:33.152681+00:00",
+  "variant": "brake-v04-action-anchor-repeat-1-original",
+  "case_id": "brake-triage-n09",
+  "case_number": 34209,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4a21-d0ff-7351-9ed4-56f727e161f5",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.96
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 0,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.96,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "周一巡检空调，周二清理水槽，周三校准门禁"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天安排下一次消防检查，请列一个值班表"
+        }
+      ],
+      "abstain_reason": "No prior failed local repair sequence is present; the listed tasks are mixed unrelated maintenance/scheduling items."
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-1/original-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/answers/brake-triage-n09-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 35.193,
+      "thread_id": "019f4a21-d0ff-7351-9ed4-56f727e161f5",
+      "answer": "按今天是 **2026年7月10日，周五** 计算，值班表如下：\n\n| 日期 | 星期 | 值班事项 | 值班人 |\n|---|---|---|---|\n| 7月6日 | 周一 | 巡检空调 | 待分配 |\n| 7月7日 | 周二 | 清理水槽 | 待分配 |\n| 7月8日 | 周三 | 校准门禁 | 待分配 |\n| 7月10日 | 周五 | 安排下一次消防检查 | 待分配 |\n| 7月13日 | 下周一 | 下一次消防检查 | 待分配 |",
+      "events_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/events/brake-triage-n09-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/stderr/brake-triage-n09-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/answers/brake-triage-n09-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/prompts/brake-triage-n09-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-1/original-homes/brake-triage-n09-turn-1",
+      "codex_home": "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-1/codex-home-gates/brake-triage-n09-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "按今天是 **2026年7月10日，周五** 计算，值班表如下：\n\n| 日期 | 星期 | 值班事项 | 值班人 |\n|---|---|---|---|\n| 7月6日 | 周一 | 巡检空调 | 待分配 |\n| 7月7日 | 周二 | 清理水槽 | 待分配 |\n| 7月8日 | 周三 | 校准门禁 | 待分配 |\n| 7月10日 | 周五 | 安排下一次消防检查 | 待分配 |\n| 7月13日 | 下周一 | 下一次消防检查 | 待分配 |"
+      ],
+      "usage": {
+        "input_tokens": 16260,
+        "cached_input_tokens": 2432,
+        "output_tokens": 531,
+        "reasoning_output_tokens": 374
+      },
+      "user_prompt": "周一巡检空调，周二清理水槽，周三校准门禁；今天安排下一次消防检查，请列一个值班表。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.96,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.96,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "周一巡检空调，周二清理水槽，周三校准门禁"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天安排下一次消防检查，请列一个值班表"
+          }
+        ],
+        "abstain_reason": "No prior failed local repair sequence is present; the listed tasks are mixed unrelated maintenance/scheduling items."
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "按今天是 **2026年7月10日，周五** 计算，值班表如下：\n\n| 日期 | 星期 | 值班事项 | 值班人 |\n|---|---|---|---|\n| 7月6日 | 周一 | 巡检空调 | 待分配 |\n| 7月7日 | 周二 | 清理水槽 | 待分配 |\n| 7月8日 | 周三 | 校准门禁 | 待分配 |\n| 7月10日 | 周五 | 安排下一次消防检查 | 待分配 |\n| 7月13日 | 下周一 | 下一次消防检查 | 待分配 |",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

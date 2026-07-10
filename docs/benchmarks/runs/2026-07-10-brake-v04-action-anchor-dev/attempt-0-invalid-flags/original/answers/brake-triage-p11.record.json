@@ -1,0 +1,142 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T03:28:54.595621+00:00",
+  "variant": "brake-v04-action-anchor-repeat-1-original",
+  "case_id": "brake-triage-p11",
+  "case_number": 34111,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4a11-556e-72f1-9218-496248b761b7",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    false
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    null
+  ],
+  "triage_output": [
+    null
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    null
+  ],
+  "triage_model": [
+    null
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "gate_disabled"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "disabled"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-1/original-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/answers/brake-triage-p11-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 56.856,
+      "thread_id": "019f4a11-556e-72f1-9218-496248b761b7",
+      "answer": "不建议只在 offer 模板里加字段。模板是输出物，卡住的是“发 offer 前谁确认待遇口径”的动作。\n\n建议这样改：\n\n在 `Offer 发起/审批表` 增加必填字段：`待遇口径确认`\n\n字段内容：\n- `薪资结构`\n- `试用期口径`\n- `奖金/提成/补贴`\n- `社保公积金/福利`\n- `特殊承诺`\n- `确认人`\n- `确认时间`\n- `口径状态：待确认 / 已确认 / 特批`\n\n模板里只放引用字段：`{{待遇口径}}`。\n\n规则：`口径状态` 不是“已确认”时，不能生成或发送 offer。这样不会把未决事项藏进模板里，而是卡在真正需要确认的节点。",
+      "events_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/events/brake-triage-p11-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/stderr/brake-triage-p11-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/answers/brake-triage-p11-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/prompts/brake-triage-p11-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-1/original-homes/brake-triage-p11-turn-1",
+      "codex_home": "/Users/william/.codex",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "我会直接处理成流程设计判断，不改任何本地文件。这个需求看起来不是单纯“加字段”，关键是字段应该放在哪个动作节点才不会继续把问题推到模板末端。",
+        "不建议只在 offer 模板里加字段。模板是输出物，卡住的是“发 offer 前谁确认待遇口径”的动作。\n\n建议这样改：\n\n在 `Offer 发起/审批表` 增加必填字段：`待遇口径确认`\n\n字段内容：\n- `薪资结构`\n- `试用期口径`\n- `奖金/提成/补贴`\n- `社保公积金/福利`\n- `特殊承诺`\n- `确认人`\n- `确认时间`\n- `口径状态：待确认 / 已确认 / 特批`\n\n模板里只放引用字段：`{{待遇口径}}`。\n\n规则：`口径状态` 不是“已确认”时，不能生成或发送 offer。这样不会把未决事项藏进模板里，而是卡在真正需要确认的节点。"
+      ],
+      "usage": {
+        "input_tokens": 21310,
+        "cached_input_tokens": 4480,
+        "output_tokens": 1792,
+        "reasoning_output_tokens": 1552
+      },
+      "user_prompt": "候选人迟到，邀约表插到达时间；证件遗漏，登记表嵌材料栏；面试官缺席，日程页并入确认框；今天 offer 口径卡住，请在模板放待遇口径字段。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": false,
+      "triage_fired": false,
+      "triage_confidence": null,
+      "triage_output": null,
+      "triage_error": "",
+      "triage_prompt_sha256": null,
+      "triage_model": null,
+      "triage_model_sha256_or_provider_fingerprint": null,
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "gate_disabled",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "disabled",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "不建议只在 offer 模板里加字段。模板是输出物，卡住的是“发 offer 前谁确认待遇口径”的动作。\n\n建议这样改：\n\n在 `Offer 发起/审批表` 增加必填字段：`待遇口径确认`\n\n字段内容：\n- `薪资结构`\n- `试用期口径`\n- `奖金/提成/补贴`\n- `社保公积金/福利`\n- `特殊承诺`\n- `确认人`\n- `确认时间`\n- `口径状态：待确认 / 已确认 / 特批`\n\n模板里只放引用字段：`{{待遇口径}}`。\n\n规则：`口径状态` 不是“已确认”时，不能生成或发送 offer。这样不会把未决事项藏进模板里，而是卡在真正需要确认的节点。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

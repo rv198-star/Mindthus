@@ -1,0 +1,36 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n06
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that fewer than three prior local repairs does not pass the hard gate; stay direct and answer without firing triage.
+fail_signal: Fires triage despite the prior_repair_count < 3 hard gate.
+
+Canonical single-line prompt:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Full executed transcript:
+User turn 1:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Assistant turn 1:
+如果今天第三个问题和前两次同源：同一环节、同一角色、同一类误解，就该改流程了，不要再继续补说明。
+
+前两版都是“解释层补丁”：页脚解释、旁边样例。第三次仍出问题，说明执行者在真正操作时没有被流程约束住，靠阅读材料已经不稳定。
+
+建议不是大改全流程，而是改关键控制点：
+
+1. 把容易错的字段改成强约束：下拉、单选、必填校验、格式限制。
+2. 在提交前加一次自动检查或人工确认，而不是事后解释。
+3. 把“看懂说明”改成“填错就过不了/会被当场提醒”。
+4. 保留手册和样例，但降级为辅助材料，不再让它承担主防线。
+
+一句话：第三次不是文案不够清楚的信号，而是流程没有把正确行为锁住的信号。

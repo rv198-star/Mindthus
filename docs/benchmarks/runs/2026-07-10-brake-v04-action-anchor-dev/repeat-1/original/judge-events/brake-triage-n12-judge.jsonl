@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a29-78ba-7ef3-8812-8dbeb05306fe"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the user's requested evidence-review boundary, did not start a new triage or method brake, and simply asked for the missing three texts. It also committed to judging only from quoted evidence with clear possible verdicts, so this is proper stay-asleep behavior for a negative control.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":21699,"cached_input_tokens":2432,"output_tokens":469,"reasoning_output_tokens":331}}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a49-f1e9-7790-9162-3c9238106042"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"No same-class recurrence or repeated same-means local repair sequence is present; the listed prior changes use mixed mechanisms.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":21843,"cached_input_tokens":21376,"output_tokens":673,"reasoning_output_tokens":516}}

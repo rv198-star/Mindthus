@@ -1,0 +1,68 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可按以下内容落位到报表页：
+
+1. 报表页新增「口径定义」栏  
+位置：筛选区下方、核心指标上方。  
+内容：
+- 周报周期：按自然周统计，周一 00:00 至周日 23:59:59。
+- 数据范围：以当前筛选条件为准。
+- 统计口径：指标按数据入库/业务发生时间取数，以页面说明为准。
+- 环比口径：与上一周期同口径数据对比。
+
+2. 标题区嵌入更新时间框  
+文案：
+`数据更新时间：{YYYY-MM-DD HH:mm}`  
+`刷新频率：{实时/每小时/每日}，数据可能存在延迟`
+
+3. 导出字段释义补齐  
+在导出说明中加入字段释义格，字段表并入释义区域：
+- 字段名
+- 字段含义
+- 计算规则
+- 单位
+- 空值/异常值说明
+
+4. 图表下方新增「今日环比口径」  
+文案：
+`今日环比 =（今日当前值 - 昨日同期值）/ 昨日同期值`  
+`今日当前值统计范围：今日 00:00 至当前数据更新时间`  
+`昨日同期值统计范围：昨日 00:00 至同一更新时间点`
+
+这样能同时解决周报口径、刷新时间、导出字段含义和今日环比解释不清的问题。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+收到，先不展开治理方案。
+
+图表下方的字段口径先撤掉，不放详细字段表。管理层版只保留一句短说明即可：
+
+`今日环比口径：今日截至当前更新时间 vs 昨日同期。`
+
+标题区保留更新时间框，避免继续被问刷新时间。

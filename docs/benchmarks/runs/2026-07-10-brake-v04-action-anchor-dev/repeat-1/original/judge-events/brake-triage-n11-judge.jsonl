@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a29-492f-7fb0-b977-7675737b50d7"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed direct, structured the budget-vs-reputation tradeoff across the three schemes, and did not force a brake verdict or triage frame. It respected the user's request not to decide for them.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":22108,"cached_input_tokens":20864,"output_tokens":640,"reasoning_output_tokens":516}}

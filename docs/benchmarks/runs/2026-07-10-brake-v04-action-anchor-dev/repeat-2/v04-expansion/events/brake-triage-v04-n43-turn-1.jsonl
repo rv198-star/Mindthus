@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a43-f806-7d51-84cb-d98ef4d834af"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"登记页改法：\n\n在登记表单中新增一项 **“搬运需求”**，建议放在 **“现场核验”之后、“取消说明”之前**，保持预约流程阅读顺序一致。\n\n页面文案可写为：\n\n**搬运需求**  \n是否需要现场协助搬运展品或物料\n\n控件建议用单选：\n\n- 不需要\n- 需要\n\n选择“需要”后展开补充输入框：\n\n**搬运说明**  \n请填写搬运物品、数量、预计到场时间及特殊要求\n\n提交时把该项随登记信息一起保存；未选择时默认按“不需要”处理。原有的入场时段、现场核验和新版取消说明不改动。"}}
+{"type":"turn.completed","usage":{"input_tokens":16283,"cached_input_tokens":14208,"output_tokens":683,"reasoning_output_tokens":516}}

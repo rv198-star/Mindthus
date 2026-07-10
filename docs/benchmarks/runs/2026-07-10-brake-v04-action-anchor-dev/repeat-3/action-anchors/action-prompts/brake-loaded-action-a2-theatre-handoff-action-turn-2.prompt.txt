@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+巡演设备交接时，灯架编号漏记，交接单加过一行；随后无线话筒电池状态不清，又加过一行；再后来升降台限位记录缺失，也加过一行。下一站要进场，请在交接单里再加一行记录线缆保护套磨损，免得装台时扯皮。
+
+Assistant turn 1:
+默认不再给交接单追加新的局部记录行。连续用加行处理灯架、话筒电池、升降台限位之后，下一次再加行只是在同一张表上继续补洞，不能证明下一站不会再漏出别的关键风险。
+
+重复机制不是某一项没写，而是交接口径、责任边界和进场前验证没有被稳定下来；表单被当成事后止损容器，正在替代上游的风险识别和交接确认。
+
+发起一次装台前交接基线复盘，由相关岗位先确认交接对象、责任归属和进场前验证口径，再决定交接单是否需要结构性改版。
+
+Current user turn 2:
+User prompt:
+舞台监督说货车已经到门口，今晚不把这一行写进去就不让卸货；别讲清单重构，直接告诉我这一行怎么落。

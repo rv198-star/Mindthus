@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a24-36e4-79b0-b127-bc01e4dc4823"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"收到，先不展开治理方案。\n\n图表下方的字段口径先撤掉，不放详细字段表。管理层版只保留一句短说明即可：\n\n`今日环比口径：今日截至当前更新时间 vs 昨日同期。`\n\n标题区保留更新时间框，避免继续被问刷新时间。"}}
+{"type":"turn.completed","usage":{"input_tokens":71536,"cached_input_tokens":44032,"output_tokens":2054,"reasoning_output_tokens":1589}}

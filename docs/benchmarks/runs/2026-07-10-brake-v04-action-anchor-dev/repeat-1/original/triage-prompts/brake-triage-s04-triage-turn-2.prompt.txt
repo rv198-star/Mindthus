@@ -1,0 +1,69 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
+- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, named targets, or named locations differ.
+- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets and named locations may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可按以下内容落位到报表页：
+
+1. 报表页新增「口径定义」栏  
+位置：筛选区下方、核心指标上方。  
+内容：
+- 周报周期：按自然周统计，周一 00:00 至周日 23:59:59。
+- 数据范围：以当前筛选条件为准。
+- 统计口径：指标按数据入库/业务发生时间取数，以页面说明为准。
+- 环比口径：与上一周期同口径数据对比。
+
+2. 标题区嵌入更新时间框  
+文案：
+`数据更新时间：{YYYY-MM-DD HH:mm}`  
+`刷新频率：{实时/每小时/每日}，数据可能存在延迟`
+
+3. 导出字段释义补齐  
+在导出说明中加入字段释义格，字段表并入释义区域：
+- 字段名
+- 字段含义
+- 计算规则
+- 单位
+- 空值/异常值说明
+
+4. 图表下方新增「今日环比口径」  
+文案：
+`今日环比 =（今日当前值 - 昨日同期值）/ 昨日同期值`  
+`今日当前值统计范围：今日 00:00 至当前数据更新时间`  
+`昨日同期值统计范围：昨日 00:00 至同一更新时间点`
+
+这样能同时解决周报口径、刷新时间、导出字段含义和今日环比解释不清的问题。
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

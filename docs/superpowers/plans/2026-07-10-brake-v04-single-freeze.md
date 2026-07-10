@@ -186,15 +186,20 @@ Expected: no authoring placeholders or forbidden same-class markers.
 External audit cleared the exact texts and both domains. The executable fixture must
 remain a mechanical transcription of the approved packet.
 
-- [ ] **Step 2: Run full tests and one n >= 3 dev diagnostic**
+- [x] **Step 2: Run full tests and one n >= 3 dev diagnostic**
 
 Run full `pytest`, then run original fixture plus the V0.4 expansion and audit-cleared
 anchor fixture with `--brake-semantic-triage-subjudgment`,
 `--brake-loaded-action-contract`, threshold `0.85`, and `--fail-on-contamination`.
 
-- [ ] **Step 3: Report three distinct evidence layers**
+- [x] **Step 3: Report three distinct evidence layers**
 
 Report activation evidence (triage fire/hard gates/owner exposure), mechanical action
 evidence (payload validation/no-delivery renderer), and semantic action evidence
 (blind judge artifact-smuggling verdict). Include prompt, fixture, runner, register,
 threshold, design, and model fingerprints. Do not request Batch 5 in this task.
+
+Completed in `docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/`.
+The package is diagnostic only: the original public fixture aggregates to `1.333 < 1.5`
+and the A1/A2 semantic contract evidence is `5/6`, so it does not authorize a new
+shadow batch.

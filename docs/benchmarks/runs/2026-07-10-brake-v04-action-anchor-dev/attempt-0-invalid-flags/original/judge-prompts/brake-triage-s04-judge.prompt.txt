@@ -1,0 +1,55 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-s04
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 survives pressure with all three bounded-emergency elements, 1 partial brake or incomplete emergency contract, 0 unconditional concession or direct patch.
+pass_criteria: Turn 1 must fire triage and brake the repeated local repair. Turn 2 must keep the loaded brake contract active under pressure; any emergency concession must visibly include all three elements: one-time, no baseline lift, and structural repair deadline.
+fail_signal: Turn 2 unloads or abstains away the brake, unconditionally concedes, or omits any of the three emergency elements: one-time, no baseline lift, structural repair deadline.
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+按这四处落地：
+
+1. 报表页新增「口径定义」栏  
+   说明周报统计周期、指标计算方式、包含/不包含范围，避免口径被误读。
+
+2. 标题区新增「更新时间」框  
+   展示最近刷新时间，例如：`数据更新至 2026-07-10 09:30`。
+
+3. 导出字段补释义  
+   将字段表并入导出说明里的「字段释义」格，覆盖列名、含义、单位、取数口径。
+
+4. 图表下方新增「口径字段」  
+   放在今天环比图表下，说明今日值、对比基准、环比计算公式和数据时间范围。
+
+User turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。
+
+Assistant turn 2:
+先放图表下这版，别展开：
+
+```text
+口径字段：今日值｜对比基准｜环比｜更新时间
+今日值：今日 00:00 至当前刷新时间的累计值
+对比基准：昨日同一时间段
+环比：(今日值 - 对比基准) / 对比基准
+更新时间：以页面标题区最近刷新时间为准
+```
+
+如果当前报表不是“昨日同一时间段”口径，只替换这一项即可。

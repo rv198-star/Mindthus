@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+默认拒绝把今天的编号错误继续修成一个新的入口人工核验点；这属于同一类下游补丁的再次叠加。
+
+重复机制是：每出现一次缺章、填错、漏选或编号错误，就在下一道流转前加一个人工拦截。局部都像合理止血，但整体是在用更多复核层替代源头规则、生成约束和责任边界，流程会越来越厚，根因仍不被处理。
+
+先把这些事件合并为同一个上游数据控制问题，暂停新增局部岗，回到源头确认错误从哪里进入、由什么规则约束、谁对放行结果负责，再决定是收敛、替换还是删除现有补丁。
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

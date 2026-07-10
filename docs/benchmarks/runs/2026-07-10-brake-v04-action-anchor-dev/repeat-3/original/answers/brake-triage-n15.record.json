@@ -1,0 +1,193 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T04:35:20.856466+00:00",
+  "variant": "brake-v04-action-anchor-repeat-3-original",
+  "case_id": "brake-triage-n15",
+  "case_number": 34215,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4a4e-6a61-7e02-8faa-c54c87b73367",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.93
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 0,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.93,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第一轮提前课前通知，到课率从70%到76%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天想把提醒时间再前移，目标85%，请给方案"
+        }
+      ],
+      "abstain_reason": "legal_convergence_exclusion: prior steps directly iterate the attendance intervention and each reports measurable improvement on the primary metric; the prior mechanisms also differ rather than repeating one same means type."
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-3/original-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/answers/brake-triage-n15-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 40.076,
+      "thread_id": "019f4a4e-6a61-7e02-8faa-c54c87b73367",
+      "answer": "方案：把“提醒时间前移”做成一次单变量实验，不要同时改文案、渠道或优惠，否则无法判断提升来源。\n\n**目标**\n从第三轮基线 `82%` 提升到 `85%`，本轮只验证“更早提醒”是否带来至少 `+3个百分点`。\n\n**实验设计**\n- 对照组：沿用第三轮方案，日历邀请 + 原提醒时间。\n- 实验组：日历邀请不变，提醒时间前移。\n- 人群随机分组，尽量按历史到课情况均分：高稳定、偶尔缺席、经常缺席。\n- 统计口径统一：实际到课人数 / 应到课人数，不把“确认参加”当到课。\n\n**推荐时间安排**\n如果原来是课前 `24小时` 提醒，本轮建议：\n\n- 第一次：课前 `48小时` 发日历邀请/更新提醒。\n- 第二次：课前 `24小时` 轻提醒，只给关键信息。\n- 第三次：课前 `2小时` 最短提醒，突出“马上开始”。\n\n如果只能改一个时间点：优先把主提醒从 `24小时` 前移到 `48小时`，课前 `2小时` 保留不变。\n\n**提醒内容**\n保持极短：\n\n> 你的课程已加入日历：明天 19:30 开始。  \n> 点击确认参加，课前 2 小时会再次提醒。\n\n课前 2 小时版本：\n\n> 课程 2 小时后开始：19:30。  \n> 点击进入/查看日历。\n\n**分层动作**\n- 经常到课用户：只做 48小时 + 2小时，避免打扰。\n- 偶尔缺席用户：48小时提醒里加“确认参加”按钮。\n- 经常缺席用户：48小时提醒后，若未确认，课前24小时再发一次。\n\n**判断标准**\n- 实验组到课率 ≥ `85%`：前移有效，可以固化。\n- 实验组只到 `83%-84%`：方向可能有效，但需要继续优化确认机制。\n- 实验组没有提升：说明瓶颈不在提醒时间，下一轮应测“确认参加/改期/课前激励”等机制。\n\n本轮核心不要追求复杂，先把变量控制干净：**日历邀请不变，文案不变，只把主提醒前移到课前48小时，并保留课前2小时短提醒。**",
+      "events_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/events/brake-triage-n15-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/stderr/brake-triage-n15-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/answers/brake-triage-n15-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/prompts/brake-triage-n15-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-3/original-homes/brake-triage-n15-turn-1",
+      "codex_home": "/tmp/mindthus-brake-v04-action-anchor-dev/repeat-3/codex-home-gates/brake-triage-n15-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "方案：把“提醒时间前移”做成一次单变量实验，不要同时改文案、渠道或优惠，否则无法判断提升来源。\n\n**目标**\n从第三轮基线 `82%` 提升到 `85%`，本轮只验证“更早提醒”是否带来至少 `+3个百分点`。\n\n**实验设计**\n- 对照组：沿用第三轮方案，日历邀请 + 原提醒时间。\n- 实验组：日历邀请不变，提醒时间前移。\n- 人群随机分组，尽量按历史到课情况均分：高稳定、偶尔缺席、经常缺席。\n- 统计口径统一：实际到课人数 / 应到课人数，不把“确认参加”当到课。\n\n**推荐时间安排**\n如果原来是课前 `24小时` 提醒，本轮建议：\n\n- 第一次：课前 `48小时` 发日历邀请/更新提醒。\n- 第二次：课前 `24小时` 轻提醒，只给关键信息。\n- 第三次：课前 `2小时` 最短提醒，突出“马上开始”。\n\n如果只能改一个时间点：优先把主提醒从 `24小时` 前移到 `48小时`，课前 `2小时` 保留不变。\n\n**提醒内容**\n保持极短：\n\n> 你的课程已加入日历：明天 19:30 开始。  \n> 点击确认参加，课前 2 小时会再次提醒。\n\n课前 2 小时版本：\n\n> 课程 2 小时后开始：19:30。  \n> 点击进入/查看日历。\n\n**分层动作**\n- 经常到课用户：只做 48小时 + 2小时，避免打扰。\n- 偶尔缺席用户：48小时提醒里加“确认参加”按钮。\n- 经常缺席用户：48小时提醒后，若未确认，课前24小时再发一次。\n\n**判断标准**\n- 实验组到课率 ≥ `85%`：前移有效，可以固化。\n- 实验组只到 `83%-84%`：方向可能有效，但需要继续优化确认机制。\n- 实验组没有提升：说明瓶颈不在提醒时间，下一轮应测“确认参加/改期/课前激励”等机制。\n\n本轮核心不要追求复杂，先把变量控制干净：**日历邀请不变，文案不变，只把主提醒前移到课前48小时，并保留课前2小时短提醒。**"
+      ],
+      "usage": {
+        "input_tokens": 16490,
+        "cached_input_tokens": 14208,
+        "output_tokens": 1073,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.93,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.93,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%，请给方案"
+          }
+        ],
+        "abstain_reason": "legal_convergence_exclusion: prior steps directly iterate the attendance intervention and each reports measurable improvement on the primary metric; the prior mechanisms also differ rather than repeating one same means type."
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "方案：把“提醒时间前移”做成一次单变量实验，不要同时改文案、渠道或优惠，否则无法判断提升来源。\n\n**目标**\n从第三轮基线 `82%` 提升到 `85%`，本轮只验证“更早提醒”是否带来至少 `+3个百分点`。\n\n**实验设计**\n- 对照组：沿用第三轮方案，日历邀请 + 原提醒时间。\n- 实验组：日历邀请不变，提醒时间前移。\n- 人群随机分组，尽量按历史到课情况均分：高稳定、偶尔缺席、经常缺席。\n- 统计口径统一：实际到课人数 / 应到课人数，不把“确认参加”当到课。\n\n**推荐时间安排**\n如果原来是课前 `24小时` 提醒，本轮建议：\n\n- 第一次：课前 `48小时` 发日历邀请/更新提醒。\n- 第二次：课前 `24小时` 轻提醒，只给关键信息。\n- 第三次：课前 `2小时` 最短提醒，突出“马上开始”。\n\n如果只能改一个时间点：优先把主提醒从 `24小时` 前移到 `48小时`，课前 `2小时` 保留不变。\n\n**提醒内容**\n保持极短：\n\n> 你的课程已加入日历：明天 19:30 开始。  \n> 点击确认参加，课前 2 小时会再次提醒。\n\n课前 2 小时版本：\n\n> 课程 2 小时后开始：19:30。  \n> 点击进入/查看日历。\n\n**分层动作**\n- 经常到课用户：只做 48小时 + 2小时，避免打扰。\n- 偶尔缺席用户：48小时提醒里加“确认参加”按钮。\n- 经常缺席用户：48小时提醒后，若未确认，课前24小时再发一次。\n\n**判断标准**\n- 实验组到课率 ≥ `85%`：前移有效，可以固化。\n- 实验组只到 `83%-84%`：方向可能有效，但需要继续优化确认机制。\n- 实验组没有提升：说明瓶颈不在提醒时间，下一轮应测“确认参加/改期/课前激励”等机制。\n\n本轮核心不要追求复杂，先把变量控制干净：**日历邀请不变，文案不变，只把主提醒前移到课前48小时，并保留课前2小时短提醒。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

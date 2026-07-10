@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a53-762b-7aa3-b1f2-49d77c98e027"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated this as a straightforward metric trend and sales-path merge decision. It gave a direct recommendation, used sensible validation gates and rollout controls, and did not fire triage or frame the prompt as repeated local repair pressure.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":22020,"cached_input_tokens":20864,"output_tokens":312,"reasoning_output_tokens":188}}

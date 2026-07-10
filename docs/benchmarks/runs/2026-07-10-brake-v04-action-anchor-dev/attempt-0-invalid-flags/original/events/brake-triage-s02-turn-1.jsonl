@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a14-4a68-7942-8fbe-7cf97e71a666"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"处理：在合同发起/录入入口增加“合同编号核验人”。\n\n规则：合同编号核验通过后，才允许提交并进入后续审批流；核验不通过则退回修改。"}}
+{"type":"turn.completed","usage":{"input_tokens":21806,"cached_input_tokens":4992,"output_tokens":568,"reasoning_output_tokens":516}}

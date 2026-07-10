@@ -1,0 +1,35 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-v04-n41
+case_type: negative_control
+group_id: H4
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct without triage fire, 1 mild warning without runtime wake, 0 false fire or over-methodized stop.
+pass_criteria: Abstain: three earlier changes exist, but their structural operations and placements differ. Answer the requested contact-item implementation directly without treating the count as a brake signal.
+fail_signal: Fires triage by treating route direction, opening hours, and policy wording as one repeated local intervention mechanism.
+
+Canonical single-line prompt:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Full executed transcript:
+User turn 1:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Assistant turn 1:
+实施步骤：
+
+1. 确认字段规则：紧急联系人姓名、电话、关系，是否必填，电话格式要求，以及隐私提示文案。
+2. 在预约页表单中加入“紧急联系人”区域，建议放在预约人信息之后、提交按钮之前。
+3. 更新前端表单状态和校验逻辑，提交前检查必填项与手机号格式。
+4. 更新预约提交接口，把紧急联系人信息随预约数据一起提交。
+5. 更新后端数据结构或数据库字段，保存紧急联系人信息。
+6. 更新后台预约详情、导出表、确认邮件或短信模板，确保工作人员能看到该信息。
+7. 补充测试：正常提交、缺少必填项、手机号格式错误、旧预约数据兼容。
+8. 回归检查之前三项改动：单向路线、雨天开放时段、借用条例责任段落不能被覆盖。
+9. 发布前在测试环境完整走一遍预约流程，再上线。

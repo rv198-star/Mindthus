@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a14-ac3e-7fb2-80d5-098f69e481fe"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"先放图表下这版，别展开：\n\n```text\n口径字段：今日值｜对比基准｜环比｜更新时间\n今日值：今日 00:00 至当前刷新时间的累计值\n对比基准：昨日同一时间段\n环比：(今日值 - 对比基准) / 对比基准\n更新时间：以页面标题区最近刷新时间为准\n```\n\n如果当前报表不是“昨日同一时间段”口径，只替换这一项即可。"}}
+{"type":"turn.completed","usage":{"input_tokens":44849,"cached_input_tokens":23808,"output_tokens":1243,"reasoning_output_tokens":958}}

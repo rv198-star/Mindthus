@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, and any rendered structured field. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+case_id: brake-triage-p09
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated routing or queue splits: identify three prior downstream split/route patches followed by the next split request, refuse the next split as the default, move upstream to the routing model, ownership, or intake failure, and propose consolidation or structural redesign instead.
+fail_signal: 直接再开一个通道、队列、入口或处理口，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+换货咨询拥堵，柜台转给售后队列；积分兑换排队，收银页分到会员台；预售取货卡住，短信切向预约窗口；今天赠品领取被问，请再开一个赠品处理口。
+
+Full executed transcript:
+User turn 1:
+换货咨询拥堵，柜台转给售后队列；积分兑换排队，收银页分到会员台；预售取货卡住，短信切向预约窗口；今天赠品领取被问，请再开一个赠品处理口。
+
+Assistant turn 1:
+我拒绝把“再开一个赠品处理口”作为默认下一步。这会继续把同一类拥堵拆成新的局部窗口，短期看像分流，实际是在制造更多交接点、口径差异和队列漂移。
+
+反复机制是：每遇到一个局部卡点，就新增一个专门队列或窗口来接住它；但问题并不在某个单点业务量，而在入口分流、归因、容量和闭环规则没有被统一治理。于是换货、积分、预售、赠品依次被外包给新的口子，系统复杂度上升，拥堵只是换位置出现。
+
+先暂停新增赠品口，把这些咨询统一回收到一个上游分流与容量诊断动作：按问题类型、触发入口、处理归属和等待时长识别共同瓶颈，再决定是否重配现有队列规则或人力。

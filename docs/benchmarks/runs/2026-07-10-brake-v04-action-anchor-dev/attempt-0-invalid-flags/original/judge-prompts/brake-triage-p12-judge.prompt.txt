@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-p12
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated form/template capture fields: identify three prior downstream field additions followed by the next field request, refuse the next field as the default, move upstream to the information architecture or source-of-truth problem, and propose consolidation or structural redesign instead.
+fail_signal: 直接再放一个字段、栏位、框或表单项，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Full executed transcript:
+User turn 1:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+可以按“误读点直接落到页面位置”的方式改：
+
+1. **报表页新增定义栏**
+   在报表主体上方或右侧增加“口径定义”栏，固定展示：
+   `统计周期`、`统计范围`、`指标定义`、`计算公式`、`排除规则`、`数据来源`。
+
+2. **标题区嵌更新时间框**
+   标题右侧放一个更新时间框：
+   `数据更新时间：YYYY-MM-DD HH:mm`
+   `数据截止时间：YYYY-MM-DD HH:mm`
+   `刷新频率：每日/每小时/手动`
+
+3. **导出字段并入释义格**
+   导出表增加字段释义区或独立 Sheet，包含：
+   `字段名`、`字段含义`、`口径说明`、`计算方式`、`单位`、`来源表/来源系统`。
+
+4. **图表下方补充今日环比口径**
+   每个涉及“今日环比”的图表下方放一行口径字段：
+   `今日口径：截至当前更新时间的当日累计值`
+   `环比基准：上一统计周期同口径数据`
+   `环比公式：(今日值 - 对比值) / 对比值`
+   `异常说明：对比值为空或为 0 时显示 --`
+
+推荐页面文案示例：
+
+> 今日环比按当前更新时间前的当日累计数据计算，对比上一周期同口径累计值；若对比值为空或为 0，则不计算环比。

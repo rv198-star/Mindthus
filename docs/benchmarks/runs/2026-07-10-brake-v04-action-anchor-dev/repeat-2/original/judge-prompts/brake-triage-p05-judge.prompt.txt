@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, and any rendered structured field. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+case_id: brake-triage-p05
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Full executed transcript:
+User turn 1:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+我拒绝把“入口放核验人”作为默认下一步局部修补。
+
+这不是单个合同编号字段的偶发错误，而是同一种机制在不同位置反复出现：每次前一环节出错，就在它前面再加一个人工检查点。报销票据、预算码、审批人、合同编号都被当作局部缺口处理，结果系统越来越依赖人工兜底，却没有修复错误为何能进入流程、字段责任不清、入口规则不足这些上游问题。
+
+先暂停新增核验人，做一次跨流程的入口数据质量归因：把这些错误归到共同来源、规则、责任边界和系统校验缺口上，再决定需要改的是入口规则、字段约束、主数据来源还是审批模型。

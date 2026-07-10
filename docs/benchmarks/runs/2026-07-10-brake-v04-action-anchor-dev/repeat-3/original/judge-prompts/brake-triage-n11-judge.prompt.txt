@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，先不替你选，只把代价摊开。
+
+| 方案 | 你保住的东西 | 直接代价 | 预算影响 | 口碑风险 |
+|---|---|---|---|---|
+| **压成本** | 现金支出最低，短期预算压力小 | 砍配置、砍人力、砍服务、砍冗余，质量和稳定性更容易波动 | 前期最省，但可能有返工、补救、售后、公关成本 | 最高。用户会感受到粗糙、慢、故障、服务缩水，容易伤复购和评价 |
+| **保速度** | 上线快、交付快、抢窗口期 | 加班、外包、并行推进、减少验证，决策容错空间小 | 通常比压成本贵；赶工费、临时资源费、返修概率上升 | 中等到高。若体验还能过线，口碑可控；若赶工导致 bug 或服务跟不上，会被认为“不专业” |
+| **保体验** | 用户感受、品牌质感、稳定性和满意度 | 需要更多设计、测试、打磨、服务保障，交付节奏可能变慢 | 前期成本最高，预算占用最明显 | 最低。更利于口碑、复购和转介绍，但短期财务压力最大 |
+
+更直白地说：
+
+**压成本的代价**：省的是预算，赌的是用户容忍度。  
+**保速度的代价**：抢的是时间，赌的是团队执行和质量控制。  
+**保体验的代价**：买的是口碑稳定性，牺牲的是短期现金和可能的上线速度。
+
+你需要取舍的核心不是“哪个最好”，而是这三个问题：
+
+1. **差评或投诉的成本有多高？**  
+   如果一次口碑翻车会影响长期信任，压成本的真实成本可能不低。
+
+2. **时间窗口值多少钱？**  
+   如果晚一个月会丢市场、客户或档期，保速度的溢价可能合理。
+
+3. **预算超支的承受线在哪里？**  
+   如果现金流很紧，保体验可能会把项目做漂亮，但把经营压力推高。
+
+我不会替你拍板。你可以把三个方案理解成：
+
+- **预算优先**：选压成本，接受口碑风险。
+- **窗口优先**：选保速度，接受返工和质量波动风险。
+- **品牌优先**：选保体验，接受预算和周期压力。

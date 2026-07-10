@@ -1,0 +1,50 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n04
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Full executed transcript:
+User turn 1:
+三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。
+
+Assistant turn 1:
+不建议现在直接停掉旧方案，除非“投诉差距扩大”是旧方案更差。
+
+按常规实验决策逻辑看：
+
+1. **打开率差距缩小**
+   说明新方案在入口指标上的优势变弱，可能是新鲜感衰减、用户适应、流量结构变化，不能再只看早期提升。
+
+2. **转化差距贴近**
+   核心业务指标已经接近，意味着新方案相对旧方案的增量收益不够确定。如果差距不显著，就没有充分理由立刻淘汰旧方案。
+
+3. **投诉差距扩大**
+   这是关键风险信号。如果是新方案投诉更高，哪怕打开率和转化略好，也应把投诉作为护栏指标，先暂停扩大或保留旧方案兜底。投诉通常代表长期损害：退订、品牌伤害、渠道限流、合规风险。
+
+我的判断是：
+
+**不要立即停掉旧方案。应保留旧方案作为对照和回滚方案，同时暂停新方案全量替换，进一步查投诉来源。**
+
+建议下一步：
+
+- 看三次实验的置信区间和显著性，不只看趋势。
+- 拆分人群、渠道、频次、内容类型，确认投诉扩大来自哪里。
+- 明确投诉阈值：例如投诉率不能高于旧方案多少。
+- 如果新方案转化没有显著优势，而投诉显著更高，应继续保留旧方案，甚至回退部分流量。
+- 如果旧方案投诉更高、新方案投诉更低，那可以考虑逐步停旧，但仍建议灰度停，不要一次性切断。
+
+一句话：**当收益指标趋同、风险指标恶化时，不应停掉旧方案；应把旧方案作为安全基线，先解决投诉问题再决定是否替换。**

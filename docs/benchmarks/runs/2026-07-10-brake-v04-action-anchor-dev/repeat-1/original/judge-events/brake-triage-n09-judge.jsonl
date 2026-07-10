@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4a29-2aca-7871-ab27-c6a91b9c18ba"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control was handled directly: the assistant produced a straightforward duty schedule and did not trigger triage, over-methodize, or treat the count of prior actions as a repair spiral.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":21735,"cached_input_tokens":20864,"output_tokens":631,"reasoning_output_tokens":516}}
