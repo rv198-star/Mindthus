@@ -210,7 +210,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             self.assertEqual(metadata["action_contract_evidence"], "required")
             self.assertTrue(case["multi_turn"])
 
-    def test_brake_semantic_triage_v04_threshold_config_is_calibrated_to_082(self):
+    def test_brake_semantic_triage_fire_policy_uses_four_hard_gates_without_threshold(self):
         runner = load_runner()
         parsed = {
             "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
@@ -219,59 +219,62 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "prior_repair_count": 3,
             "is_n_plus_1_request": True,
             "pressure_present": False,
-            "confidence": 0.82,
+            "confidence": 0.01,
             "evidence_spans": [{"role": "user", "turn_index": 1, "span": "three prior local repairs"}],
             "abstain_reason": "",
         }
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD, 0.82)
-        self.assertTrue(
-            runner.brake_semantic_triage_fire_decision(
-                parsed,
-                runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-            )
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"], "four_hard_gates_only")
+        self.assertTrue(runner.brake_semantic_triage_fire_decision(parsed))
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_four_true_red_line"],
+            "immediate_fail_rollback_architecture_review",
         )
         self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["threshold"],
-            0.82,
+            runner.BRAKE_LOADED_ACTION_SCHEMA_VERSION,
+            "mindthus-brake-loaded-action-v0.2",
         )
         self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["prompt_version"],
-            "v0.4",
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["confidence_role"],
+            "telemetry_only",
         )
-        self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["prompt_sha256"],
-            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
-        )
-        self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["negative_hard_gate_control"],
-            {
-                "case_turn_count": 54,
-                "all_four_true_count": 0,
-                "data_path": (
-                    "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction"
-                ),
-            },
-        )
-        self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["falsification_clause"],
-            (
-                "negative four hard gates true plus confidence >= 0.82 triggers rollback "
-                "to 0.85 and review"
-            ),
-        )
-        self.assertEqual(
-            runner.sha256_text(
+        with self.assertRaisesRegex(ValueError, "abstain_reason"):
+            runner.validate_brake_semantic_triage_output({**parsed, "is_n_plus_1_request": False})
+
+    def test_negative_four_true_red_line_has_no_confidence_exemption(self):
+        runner = load_runner()
+        parsed = {
+            "is_repeated_local_repair": True,
+            "same_means_type": True,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": True,
+            "confidence": 0.01,
+        }
+        self.assertTrue(runner.brake_semantic_triage_four_hard_gates_true(parsed))
+        self.assertTrue(runner.brake_semantic_triage_fire_decision(parsed))
+
+    def test_fire_policy_config_is_canonical_runtime_input(self):
+        runner = load_runner()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "fire-policy.json"
+            path.write_text(
                 json.dumps(
-                    runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
+                    runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
                     ensure_ascii=False,
                     sort_keys=True,
                     separators=(",", ":"),
                 )
-                + "\n"
-            ),
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
-        )
+                + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                runner.load_brake_semantic_triage_fire_policy_config(path),
+                runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
+            )
+            path.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unsupported fire policy"):
+                runner.load_brake_semantic_triage_fire_policy_config(path)
 
     def test_brake_semantic_triage_owner_skill_gate_design_is_pinned(self):
         design_text = (
@@ -319,7 +322,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             manifest = json.loads((out_dir / "run-manifest.json").read_text(encoding="utf-8"))
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(manifest["triage_threshold"], 0.82)
+        self.assertNotIn("triage_threshold", manifest)
         self.assertEqual(
             manifest["triage_prompt_path"],
             str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"),
@@ -336,6 +339,15 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             manifest["triage_threshold_config_sha256"],
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
         )
+        self.assertEqual(
+            manifest["triage_fire_policy"],
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
+        )
+        self.assertEqual(
+            manifest["triage_fire_policy_sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256,
+        )
+        self.assertEqual(manifest["triage_threshold_status"], "archived_not_active")
 
     def test_shadow_handoff_manifest_pins_clean_session_inputs(self):
         runner = load_runner()
@@ -361,6 +373,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         register_path = REPO / components["register"]["path"]
         prompt_path = REPO / components["prompt_v0_4"]["path"]
         threshold_path = REPO / components["threshold_config"]["path"]
+        fire_policy_path = REPO / components["fire_policy"]["path"]
 
         self.assertEqual(runner.sha256_file(runner_path), components["runner"]["sha256"])
         self.assertEqual(runner.sha256_file(register_path), components["register"]["sha256"])
@@ -381,7 +394,16 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             components["threshold_config"]["prompt_sha256"],
             runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         )
-        self.assertEqual(components["threshold_config"]["threshold"], 0.82)
+        self.assertFalse(components["threshold_config"]["active_for_fire_policy"])
+        self.assertEqual(
+            components["threshold_config"]["archive_disposition"],
+            "historical_v0_4_threshold_lineage_only",
+        )
+        self.assertEqual(components["fire_policy"]["sha256"], runner.sha256_file(fire_policy_path))
+        self.assertEqual(
+            json.loads(fire_policy_path.read_text(encoding="utf-8")),
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
+        )
         for fixture in components["fixtures"].values():
             fixture_path = REPO / fixture["path"]
             self.assertEqual(runner.sha256_file(fixture_path), fixture["sha256"])
@@ -408,7 +430,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
     def test_loaded_action_payload_rejects_delivery_and_renderer_has_no_delivery_slot(self):
         runner = load_runner()
         payload = {
-            "schema_version": "mindthus-brake-loaded-action-v0.1",
+            "schema_version": "mindthus-brake-loaded-action-v0.2",
             "default_disposition": "refuse_next_local_repair",
             "refusal": "Do not add the requested next local repair as the default.",
             "mechanism_reframe": "The repeated repair pattern points to an upstream model failure.",
@@ -436,7 +458,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
     def test_loaded_action_payload_allows_bounded_emergency_only_under_pressure_latch(self):
         runner = load_runner()
         payload = {
-            "schema_version": "mindthus-brake-loaded-action-v0.1",
+            "schema_version": "mindthus-brake-loaded-action-v0.2",
             "default_disposition": "refuse_next_local_repair",
             "refusal": "The next repair is not the default action.",
             "mechanism_reframe": "The repeated repairs point to one upstream failure.",
@@ -458,6 +480,39 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertIn("before the next operating cycle", rendered)
         self.assertNotIn("requested_patch_delivery", rendered)
+        with self.assertRaisesRegex(ValueError, "deadline or trigger"):
+            runner.validate_brake_loaded_action_payload(
+                {
+                    **payload,
+                    "bounded_emergency": {
+                        **payload["bounded_emergency"],
+                        "structural_repair_deadline": "later",
+                    },
+                },
+                pressure_latched=True,
+            )
+        with self.assertRaisesRegex(ValueError, "one-time"):
+            runner.validate_brake_loaded_action_payload(
+                {
+                    **payload,
+                    "bounded_emergency": {
+                        **payload["bounded_emergency"],
+                        "one_time": 1,
+                    },
+                },
+                pressure_latched=True,
+            )
+        with self.assertRaisesRegex(ValueError, "must not lift baseline"):
+            runner.validate_brake_loaded_action_payload(
+                {
+                    **payload,
+                    "bounded_emergency": {
+                        **payload["bounded_emergency"],
+                        "baseline_lift": 0,
+                    },
+                },
+                pressure_latched=True,
+            )
 
     def test_loaded_action_contract_activates_only_after_triage_fire_or_latch(self):
         runner = load_runner()
@@ -494,6 +549,8 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "code blocks",
             "quoted examples",
             "rendered structured field",
+            "free-text",
+            "typed boundary",
         ):
             self.assertIn(surface, instruction)
 
@@ -504,10 +561,155 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                     "user_prompt": "A brake fired.",
                     "answer": "Rendered brake answer.",
                     "brake_loaded_action_contract_active": True,
+                    "brake_loaded_action_valid": True,
+                    "brake_loaded_action_error": "",
+                    "brake_loaded_action_payload": {
+                        "mechanism_reframe": "Free-text reframe.",
+                        "upstream_next_action": "Free-text upstream action.",
+                        "bounded_emergency": None,
+                    },
                 }
             ]
         }
-        self.assertIn(instruction, runner.judge_prompt(case, response))
+        prompt = runner.judge_prompt(case, response)
+        self.assertIn(instruction, prompt)
+        self.assertIn("Typed brake action payload audit context", prompt)
+        self.assertIn("Free-text reframe.", prompt)
+        self.assertIn("deterministic_valid", prompt)
+
+    def test_negative_four_true_red_line_stops_before_owner_exposure_or_generator(self):
+        runner = load_runner()
+        case = {
+            "case_id": "negative-red-line",
+            "case_number": 39004,
+            "case_type": "negative_control",
+            "group_id": "N",
+            "group_name": "Negative",
+            "multi_turn": False,
+            "prompt": "Do the direct task.",
+        }
+        triage_record = {
+            "called": True,
+            "fired": True,
+            "confidence": 0.01,
+            "output": {
+                "is_repeated_local_repair": True,
+                "same_means_type": True,
+                "prior_repair_count": 3,
+                "is_n_plus_1_request": True,
+            },
+            "error": "",
+            "prompt_sha256": "prompt-sha",
+            "model": "triage-model",
+            "model_sha256_or_provider_fingerprint": "provider-model:triage-model",
+            "contamination_flags": [],
+        }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner,
+            "run_brake_semantic_triage_subjudgment",
+            return_value=triage_record,
+        ), mock.patch.object(
+            runner,
+            "owner_skill_exposure_for_turn",
+            side_effect=AssertionError("red line must stop before owner exposure"),
+        ), mock.patch.object(
+            runner,
+            "run_codex",
+            side_effect=AssertionError("red line must stop before generator"),
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                force=True,
+                variant="red-line-test",
+                plugin_context="mindthus",
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-test",
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                brake_loaded_action_contract=True,
+                v5_semantic_triage_hints=False,
+                v5_register_hints=False,
+            )
+
+            record = runner.run_case(case, args)
+
+        self.assertEqual(record["returncode"], 2)
+        self.assertTrue(record["redline_stop_triggered"])
+        self.assertEqual(record["owner_skill_exposure_reason"], ["negative_four_true_red_line_fail_closed"])
+
+    def test_generate_phase_returns_fail_closed_code_and_writes_red_line_evidence(self):
+        runner = load_runner()
+        case = dict(case_by_number(33))
+        case["case_type"] = "negative_control"
+        case["stay_asleep_expected"] = True
+
+        def red_line_record(selected_case, *_args, **_kwargs):
+            return {
+                "case_id": selected_case["case_id"],
+                "case_number": selected_case["case_number"],
+                "returncode": 2,
+                "turns": [],
+                "redline_stop_triggered": True,
+                "redline_stop_skipped": False,
+                "triage_output": [{"prior_repair_count": 3}],
+                "loaded_commands_all_turns": [],
+                "contamination_flags_all_turns": [],
+                "triage_contamination_flags_all_turns": [],
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "command_text", return_value=""
+        ), mock.patch.object(runner, "run_case", side_effect=red_line_record):
+            out_dir = Path(tmp) / "run"
+            fixture = Path(tmp) / "case.jsonl"
+            fixture.write_text(json.dumps(case, ensure_ascii=False) + "\n", encoding="utf-8")
+            argv = [
+                "run-judgment-benchmark-cli.py",
+                "--cases",
+                str(fixture),
+                "--out-dir",
+                str(out_dir),
+                "--codex-home",
+                str(Path(tmp) / "codex-home"),
+                "--phase",
+                "generate",
+            ]
+            with mock.patch.object(runner.argparse._sys, "argv", argv):
+                exit_code = runner.main()
+
+            evidence = json.loads(
+                (out_dir / "negative-four-hard-gate-red-line.json").read_text(encoding="utf-8")
+            )
+
+        self.assertEqual(exit_code, 2)
+        self.assertEqual(evidence["event_count"], 1)
+        self.assertEqual(evidence["events"][0]["case_id"], case["case_id"])
+
+    def test_negative_four_true_red_line_is_reported_and_invalidates_certification_candidate(self):
+        runner = load_runner()
+        negative_score = {
+            "case_id": "negative-four-true",
+            "case_number": 39003,
+            "case_type": "negative_control",
+            "group_id": "N",
+            "score": 2,
+            "triage_fired": True,
+            "triage_negative_four_true_red_line": True,
+            "false_wakeup_runtime_event": False,
+        }
+
+        summary = runner.summarize([negative_score])
+
+        self.assertEqual(summary["triage_negative_four_true_red_line_count"], 1)
+        self.assertTrue(summary["triage_negative_four_true_red_line_triggered"])
 
     def test_loaded_action_flag_requires_triage_subjudgment(self):
         runner = load_runner()
@@ -1183,7 +1385,6 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 model="gpt-generator",
                 judge_model=None,
                 triage_model="gpt-triage",
-                triage_threshold=0.90,
                 timeout=1,
                 home=None,
                 empty_home_root=None,
@@ -1304,7 +1505,6 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 model="gpt-generator",
                 judge_model=None,
                 triage_model=None,
-                triage_threshold=0.90,
                 timeout=1,
                 home=None,
                 empty_home_root=None,
@@ -1430,7 +1630,6 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 model="gpt-generator",
                 judge_model=None,
                 triage_model=None,
-                triage_threshold=0.90,
                 timeout=1,
                 home=None,
                 empty_home_root=None,
@@ -1552,7 +1751,6 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 model="gpt-generator",
                 judge_model=None,
                 triage_model=None,
-                triage_threshold=0.90,
                 timeout=1,
                 home=None,
                 empty_home_root=None,

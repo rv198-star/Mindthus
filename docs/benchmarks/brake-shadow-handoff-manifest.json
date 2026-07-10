@@ -7,7 +7,7 @@
   "components": {
     "runner": {
       "path": "scripts/run-judgment-benchmark-cli.py",
-      "sha256": "4a82cce5f3b9af5b2e76a898a6c8576318fa6efb18ed5ed9044de7e38374fb9d"
+      "sha256": "18f89800bfca867e1cfae94b85a92902fba96513dcf15fb1b9d6d62dd56ca720"
     },
     "register": {
       "path": "docs/benchmarks/v5-target-trigger-register.json",
@@ -26,8 +26,18 @@
       "prompt_version": "v0.4",
       "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
       "threshold": 0.82,
+      "active_for_fire_policy": false,
+      "archive_disposition": "historical_v0_4_threshold_lineage_only",
       "negative_hard_gate_control": "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction",
       "falsification_clause": "negative four hard gates true plus confidence >= 0.82 triggers rollback to 0.85 and review"
+    },
+    "fire_policy": {
+      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.1.json",
+      "sha256": "c9516eaf422a950f160cb816db6e267c9cca4419e56f53df3df01bf2d09f33cc",
+      "decision_rule": "four_hard_gates_only",
+      "confidence_role": "telemetry_only",
+      "negative_four_true_red_line": "immediate_fail_rollback_architecture_review",
+      "threshold_config_disposition": "archived_not_active"
     },
     "fixtures": {
       "v0_3_original": {

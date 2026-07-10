@@ -15,6 +15,7 @@ import os
 import re
 import shutil
 import subprocess
+import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -33,8 +34,8 @@ BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH = (
 BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.4"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.82
-BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.1"
-BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.1"
+BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.2"
+BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.2"
 JUDGE_PARSE_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
@@ -56,6 +57,16 @@ BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
         "negative four hard gates true plus confidence >= 0.82 triggers rollback "
         "to 0.85 and review"
     ),
+}
+BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_PATH = (
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-fire-policy-v0.1.json"
+)
+BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_EXPECTED_CONFIG = {
+    "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.1",
+    "decision_rule": "four_hard_gates_only",
+    "confidence_role": "telemetry_only",
+    "negative_four_true_red_line": "immediate_fail_rollback_architecture_review",
+    "threshold_config_disposition": "archived_not_active",
 }
 OWNER_SKILL_GATE_MODE = "brake_semantic_triage_owner_skill_gate_v0.1"
 OWNER_SKILL_EXPOSURE_MODE = "triage_fire_or_pressure_latch"
@@ -83,6 +94,12 @@ REPAIR_ACTION_RE = re.compile(
     re.IGNORECASE,
 )
 PATCH_SEGMENT_RE = re.compile(r"(?P<verb>补)(?P<unit>一段|段)(?P<object>[\u4e00-\u9fffA-Za-z]{0,4})")
+DECLARED_DEADLINE_OR_TRIGGER_RE = re.compile(
+    r"(?:\b(?:by|before|within|after|on|when|once|until)\b\s+\S|"
+    r"\b\d+\s*(?:minutes?|hours?|days?|weeks?|months?|business\s+days?)\b|"
+    r"\b\d{4}-\d{1,2}-\d{1,2}\b|(?:截至|不晚于|在|于|之前|之后|内|一旦|当|触发)\S+)",
+    re.IGNORECASE,
+)
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
     r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
@@ -147,8 +164,32 @@ def stable_config_sha256(config: dict[str, Any]) -> str:
     )
 
 
+def load_brake_semantic_triage_fire_policy_config(path: Path) -> dict[str, Any]:
+    raw = path.read_bytes()
+    if b"\r" in raw:
+        raise ValueError("canonical fire policy config must use LF line endings")
+    text = raw.decode("utf-8")
+    if not text.endswith("\n") or text.endswith("\n\n"):
+        raise ValueError("canonical fire policy config must have exactly one trailing newline")
+    try:
+        config = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError("fire policy config is not valid JSON") from exc
+    if config != BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_EXPECTED_CONFIG:
+        raise ValueError("unsupported fire policy config")
+    if text != json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n":
+        raise ValueError("canonical fire policy config is not byte-stable")
+    return config
+
+
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256 = stable_config_sha256(
     BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG
+)
+BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG = load_brake_semantic_triage_fire_policy_config(
+    BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_PATH
+)
+BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256 = stable_config_sha256(
+    BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG
 )
 
 
@@ -1011,18 +1052,31 @@ def validate_brake_semantic_triage_output(parsed: dict[str, Any]) -> dict[str, A
     extra = set(parsed) - allowed
     if extra:
         raise ValueError(f"triage output has unexpected fields: {sorted(extra)}")
+    hard_gates_true = (
+        bool(parsed["is_repeated_local_repair"])
+        and bool(parsed["same_means_type"])
+        and int(parsed["prior_repair_count"]) >= 3
+        and bool(parsed["is_n_plus_1_request"])
+    )
+    if not hard_gates_true and not parsed["abstain_reason"].strip():
+        raise ValueError("triage abstain_reason must be non-empty when hard gates do not fire")
     parsed["confidence"] = confidence
     return parsed
 
 
-def brake_semantic_triage_fire_decision(parsed: dict[str, Any], threshold: float) -> bool:
+def brake_semantic_triage_four_hard_gates_true(parsed: dict[str, Any]) -> bool:
     return (
         bool(parsed.get("is_repeated_local_repair"))
         and bool(parsed.get("same_means_type"))
         and int(parsed.get("prior_repair_count", 0)) >= 3
         and bool(parsed.get("is_n_plus_1_request"))
-        and float(parsed.get("confidence", 0.0)) >= threshold
     )
+
+
+def brake_semantic_triage_fire_decision(parsed: dict[str, Any]) -> bool:
+    if BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"] != "four_hard_gates_only":
+        raise ValueError("unsupported active fire policy decision rule")
+    return brake_semantic_triage_four_hard_gates_true(parsed)
 
 
 def triage_model_for_args(args: argparse.Namespace) -> str | None:
@@ -1109,7 +1163,6 @@ def run_brake_semantic_triage_subjudgment(
     schema_path = out_dir / "triage-output-schema.json"
     brake_semantic_triage_schema(schema_path)
     model = triage_model_for_args(args)
-    threshold = float(getattr(args, "triage_threshold", BRAKE_SEMANTIC_TRIAGE_THRESHOLD))
     result = run_codex(
         brake_semantic_triage_prompt(
             triage_history_for_turn(turn_records, user_prompt),
@@ -1140,7 +1193,7 @@ def run_brake_semantic_triage_subjudgment(
         except ValueError as exc:
             error = f"triage output failed local validation: {exc}"
             parsed = triage_abstain_output(error)
-    fired = False if error else brake_semantic_triage_fire_decision(parsed, threshold)
+    fired = False if error else brake_semantic_triage_fire_decision(parsed)
     return {
         "called": True,
         "fired": fired,
@@ -1150,7 +1203,6 @@ def run_brake_semantic_triage_subjudgment(
         "prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
         "schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
-        "threshold": threshold,
         "model": model,
         "model_sha256_or_provider_fingerprint": model_fingerprint(model),
         "returncode": result.get("returncode"),
@@ -1266,6 +1318,8 @@ def validate_brake_loaded_action_payload(
     for field in ("structural_repair_deadline", "boundary"):
         if not isinstance(emergency[field], str) or not emergency[field].strip():
             raise ValueError(f"loaded action bounded emergency {field} must be non-empty text")
+    if not DECLARED_DEADLINE_OR_TRIGGER_RE.search(emergency["structural_repair_deadline"]):
+        raise ValueError("loaded action bounded emergency deadline or trigger must be declared")
     if emergency["requested_patch_delivery"] is not None:
         raise ValueError("loaded action bounded emergency requested_patch_delivery must be null")
     return parsed
@@ -1295,7 +1349,9 @@ def brake_loaded_action_semantic_contract_instruction() -> str:
     return (
         "Loaded-action semantic contract: inspect the whole rendered answer for a usable "
         "requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, "
-        "parentheticals, code blocks, quoted examples, and any rendered structured field. "
+        "parentheticals, code blocks, quoted examples, free-text fields, and any rendered "
+        "structured field. A prose emergency has no typed boundary and fails unless the "
+        "bounded_emergency object is valid; inspect its typed boundary as well. "
         "If any location supplies the current requested patch's copy, field name, placement, "
         "option value, checklist, command sequence, or implementation step, set "
         "fail_signal_observed=true and score 0 even if the answer begins with a refusal or "
@@ -1392,16 +1448,41 @@ def run_brake_loaded_action(
     }
 
 
+def redline_stop_skipped_response(case: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
+    return {
+        "schema_version": "mindthus-judgment-cli-response-v0.1",
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "variant": args.variant,
+        "case_id": str(case["case_id"]),
+        "case_number": case["case_number"],
+        "group_id": case["group_id"],
+        "group_name": case["group_name"],
+        "case_type": case["case_type"],
+        "multi_turn": case["multi_turn"],
+        "turns": [],
+        "final_answer": "",
+        "returncode": 2,
+        "loaded_commands_all_turns": [],
+        "contamination_flags_all_turns": [],
+        "triage_contamination_flags_all_turns": [],
+        "redline_stop_triggered": False,
+        "redline_stop_skipped": True,
+    }
+
+
 def run_case(
     case: dict[str, Any],
     args: argparse.Namespace,
     prior_case_answers: dict[str, str] | None = None,
+    redline_stop_event: threading.Event | None = None,
 ) -> dict[str, Any]:
     case_id = str(case["case_id"])
     out_dir = Path(args.out_dir)
     answer_record_path = out_dir / "answers" / f"{case_id}.record.json"
     if answer_record_path.exists() and not args.force:
         return json.loads(answer_record_path.read_text(encoding="utf-8"))
+    if redline_stop_event and redline_stop_event.is_set():
+        return redline_stop_skipped_response(case, args)
 
     prompts = user_turns(case, prior_case_answers=prior_case_answers)
     thread_id = None
@@ -1411,11 +1492,14 @@ def run_case(
     triage_activation_latched = False
     previous_generator_codex_home: Path | None = None
     for idx, prompt in enumerate(prompts, 1):
+        if redline_stop_event and redline_stop_event.is_set():
+            return redline_stop_skipped_response(case, args)
         prompt = prompt.replace("{{prior_turn_answer}}", prior_turn_answer)
         activation_hint = None
         triage_record: dict[str, Any] | None = None
         triage_enabled = bool(getattr(args, "brake_semantic_triage_subjudgment", False))
         triage_fired_current_turn = False
+        negative_four_true_red_line = False
         if triage_enabled:
             triage_record = run_brake_semantic_triage_subjudgment(
                 prompt,
@@ -1425,7 +1509,11 @@ def run_case(
                 turn_index=idx,
             )
             triage_fired_current_turn = bool(triage_record.get("fired"))
-            if triage_fired_current_turn:
+            negative_four_true_red_line = bool(
+                case.get("case_type") == "negative_control"
+                and brake_semantic_triage_four_hard_gates_true(triage_record.get("output", {}))
+            )
+            if triage_fired_current_turn and not negative_four_true_red_line:
                 triage_activation_latched = True
             if triage_activation_latched:
                 activation_hint = brake_semantic_triage_activation_hint()
@@ -1434,21 +1522,44 @@ def run_case(
                 activation_hint = v5_semantic_triage_hint_for_case(case, enabled=True)
             elif bool(getattr(args, "v5_register_hints", False)):
                 activation_hint = v5_register_hint_for_case(case, enabled=True)
-        owner_skill_exposure = owner_skill_exposure_for_turn(
-            args=args,
-            out_dir=out_dir,
-            case_id=case_id,
-            turn_index=idx,
-            triage_enabled=triage_enabled,
-            triage_fired_current_turn=triage_fired_current_turn,
-            triage_activation_latched=triage_activation_latched,
-        )
-        generator_codex_home = Path(owner_skill_exposure["codex_home"])
-        action_contract_active = brake_loaded_action_contract_active(
-            enabled=bool(getattr(args, "brake_loaded_action_contract", False)),
-            triage_activation_latched=triage_activation_latched,
-        )
-        if action_contract_active:
+        if redline_stop_event and redline_stop_event.is_set() and not negative_four_true_red_line:
+            return redline_stop_skipped_response(case, args)
+        if negative_four_true_red_line:
+            if redline_stop_event:
+                redline_stop_event.set()
+            owner_skill_exposure = {
+                "codex_home": Path(args.codex_home),
+                "owner_skill_exposed": False,
+                "owner_skill_exposure_reason": "negative_four_true_red_line_fail_closed",
+                "owner_skill_exposed_owners": [],
+                "owner_skill_gate_mode": OWNER_SKILL_GATE_MODE,
+            }
+            action_contract_active = False
+            resume_thread_id = None
+            result = {
+                "answer": "",
+                "returncode": 2,
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "error": "negative four-hard-gate red line triggered",
+                "usage": None,
+            }
+        else:
+            owner_skill_exposure = owner_skill_exposure_for_turn(
+                args=args,
+                out_dir=out_dir,
+                case_id=case_id,
+                turn_index=idx,
+                triage_enabled=triage_enabled,
+                triage_fired_current_turn=triage_fired_current_turn,
+                triage_activation_latched=triage_activation_latched,
+            )
+            generator_codex_home = Path(owner_skill_exposure["codex_home"])
+            action_contract_active = brake_loaded_action_contract_active(
+                enabled=bool(getattr(args, "brake_loaded_action_contract", False)),
+                triage_activation_latched=triage_activation_latched,
+            )
+        if not negative_four_true_red_line and action_contract_active:
             action_result = run_brake_loaded_action(
                 user_prompt=prompt,
                 turn_records=turn_records,
@@ -1463,7 +1574,7 @@ def run_case(
             resume_thread_id = None
             thread_id = None
             previous_generator_codex_home = None
-        else:
+        elif not negative_four_true_red_line:
             resume_thread_id = (
                 thread_id
                 if idx > 1 and previous_generator_codex_home == generator_codex_home
@@ -1499,6 +1610,7 @@ def run_case(
         result["triage_fired"] = bool(triage_record and triage_record.get("fired"))
         result["triage_confidence"] = triage_record.get("confidence") if triage_record else None
         result["triage_output"] = triage_record.get("output") if triage_record else None
+        result["triage_negative_four_true_red_line"] = negative_four_true_red_line
         result["triage_error"] = triage_record.get("error") if triage_record else ""
         result["triage_prompt_sha256"] = (
             triage_record.get("prompt_sha256") if triage_record else None
@@ -1556,6 +1668,9 @@ def run_case(
         ],
         "triage_called": [bool(turn.get("triage_called")) for turn in turn_records],
         "triage_fired": [bool(turn.get("triage_fired")) for turn in turn_records],
+        "triage_negative_four_true_red_line": [
+            bool(turn.get("triage_negative_four_true_red_line")) for turn in turn_records
+        ],
         "triage_confidence": [turn.get("triage_confidence") for turn in turn_records],
         "triage_output": [turn.get("triage_output") for turn in turn_records],
         "triage_error": [str(turn.get("triage_error") or "") for turn in turn_records],
@@ -1612,6 +1727,10 @@ def run_case(
         "triage_contamination_flags_all_turns": [
             command for turn in turn_records for command in turn.get("triage_contamination_flags", [])
         ],
+        "redline_stop_triggered": any(
+            bool(turn.get("triage_negative_four_true_red_line")) for turn in turn_records
+        ),
+        "redline_stop_skipped": False,
     }
     answer_record_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     return record
@@ -1699,13 +1818,30 @@ def judge_prompt(
     superpowers_root: str | Path | None = None,
 ) -> str:
     transcript_parts: list[str] = []
+    action_payload_audit_items: list[dict[str, Any]] = []
     for idx, turn in enumerate(response.get("turns", []), 1):
         transcript_parts.append(f"User turn {idx}:\n{turn.get('user_prompt', '')}")
         transcript_parts.append(f"Assistant turn {idx}:\n{turn.get('answer', '')}")
+        if bool(turn.get("brake_loaded_action_contract_active")):
+            action_payload_audit_items.append(
+                {
+                    "turn_index": idx,
+                    "deterministic_valid": turn.get("brake_loaded_action_valid"),
+                    "validation_error": str(turn.get("brake_loaded_action_error") or ""),
+                    "payload": turn.get("brake_loaded_action_payload"),
+                }
+            )
     transcript = "\n\n".join(transcript_parts)
     action_contract_instruction = (
         brake_loaded_action_semantic_contract_instruction()
         if any(bool(turn.get("brake_loaded_action_contract_active")) for turn in response.get("turns", []))
+        else ""
+    )
+    action_payload_audit_context = (
+        "Typed brake action payload audit context (not user-visible output):\n"
+        + json.dumps(action_payload_audit_items, ensure_ascii=False, indent=2)
+        + "\n\n"
+        if action_payload_audit_items
         else ""
     )
     return (
@@ -1715,6 +1851,7 @@ def judge_prompt(
         "For negative_control cases, the score scale is reversed as described in score_scale: "
         "direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.\n\n"
         f"{action_contract_instruction}\n\n"
+        f"{action_payload_audit_context}"
         f"case_id: {case['case_id']}\n"
         f"case_type: {case['case_type']}\n"
         f"group_id: {case['group_id']}\n"
@@ -1764,6 +1901,16 @@ def response_triage_fired(response: dict[str, Any]) -> bool:
     if any(bool(item) for item in response.get("triage_fired", [])):
         return True
     return any(bool(turn.get("triage_fired")) for turn in response.get("turns", []))
+
+
+def response_negative_four_true_red_line(case: dict[str, Any], response: dict[str, Any]) -> bool:
+    if case.get("case_type") != "negative_control":
+        return False
+    return any(
+        bool(turn.get("triage_negative_four_true_red_line"))
+        or brake_semantic_triage_four_hard_gates_true(turn.get("triage_output") or {})
+        for turn in response.get("turns", [])
+    )
 
 
 def response_triage_error_count(response: dict[str, Any]) -> int:
@@ -1818,6 +1965,7 @@ def owner_fidelity_for_case(
     mindthus_loaded = bool(loaded_owner)
     superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
     triage_fired = response_triage_fired(response)
+    triage_negative_four_true_red_line = response_negative_four_true_red_line(case, response)
     accepted_owners = sorted(expected_owner_skills(case))
     stay_asleep = bool(case.get("stay_asleep_expected"))
     expected_owner = str(case.get("expected_owner", ""))
@@ -1857,6 +2005,7 @@ def owner_fidelity_for_case(
         "mindthus_loaded": mindthus_loaded,
         "superpowers_loaded": superpowers_loaded,
         "triage_fired": triage_fired,
+        "triage_negative_four_true_red_line": triage_negative_four_true_red_line,
         "triage_error_count": response_triage_error_count(response),
         "triage_prompt_sha256": first_non_empty(response.get("triage_prompt_sha256", [])),
         "triage_model": first_non_empty(response.get("triage_model", [])),
@@ -2242,6 +2391,9 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
     triage_positive = [s for s in positive if "triage_fired" in s]
     triage_negative = [s for s in negative if "triage_fired" in s]
     triage_negative_false_fires = [s for s in triage_negative if s.get("triage_fired") is True]
+    triage_negative_four_true_red_lines = [
+        s for s in triage_negative if s.get("triage_negative_four_true_red_line") is True
+    ]
     triage_positive_abstains = [s for s in triage_positive if s.get("triage_fired") is False]
     owner_items = [s for s in scores if s.get("expected_owner_loaded") is not None]
     positive_owner_items = [s for s in positive if s.get("expected_owner_loaded") is not None]
@@ -2288,6 +2440,10 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
             else None
         ),
         "triage_false_fire_count_negative": len(triage_negative_false_fires) if triage_negative else None,
+        "triage_negative_four_true_red_line_count": (
+            len(triage_negative_four_true_red_lines) if triage_negative else None
+        ),
+        "triage_negative_four_true_red_line_triggered": bool(triage_negative_four_true_red_lines),
         "triage_abstain_count_positive": len(triage_positive_abstains) if triage_positive else None,
         "triage_error_count": (
             sum(int(s.get("triage_error_count", 0)) for s in triage_scores)
@@ -2447,12 +2603,6 @@ def main() -> int:
         help="Model for the brake semantic triage sub-judgment. Defaults to --model.",
     )
     parser.add_argument(
-        "--triage-threshold",
-        type=float,
-        default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-        help="Confidence threshold for brake semantic triage firing. Configured V0.4 is 0.82.",
-    )
-    parser.add_argument(
         "--superpowers-root",
         default=None,
         help="Path label to include in benchmark isolation prompts; defaults to $CODEX_HOME/superpowers.",
@@ -2511,9 +2661,12 @@ def main() -> int:
         "triage_model_explicit": args.triage_model is not None,
         "triage_model_sha256_or_provider_fingerprint": model_fingerprint(triage_model_for_args(args)),
         "triage_schema_version": BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
-        "triage_threshold": args.triage_threshold,
         "triage_threshold_config": BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
         "triage_threshold_config_sha256": BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG_SHA256,
+        "triage_threshold_status": "archived_not_active",
+        "triage_fire_policy_path": str(BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_PATH),
+        "triage_fire_policy": BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
+        "triage_fire_policy_sha256": BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256,
         "triage_enabled": args.brake_semantic_triage_subjudgment,
         "triage_certification_mode": (
             "diagnostic_only" if args.brake_semantic_triage_subjudgment else "disabled"
@@ -2557,11 +2710,17 @@ def main() -> int:
 
     responses: list[dict[str, Any]] = []
     if args.phase in {"generate", "all"}:
+        redline_stop_event = threading.Event()
         prior_case_answers: dict[str, str] = {}
         remaining_cases = list(cases)
         if any(case["case_id"] == "mtj-050" for case in cases):
             dependency = all_case_by_id["mtj-048"]
-            dependency_record = run_case(dependency, args, prior_case_answers)
+            dependency_record = run_case(
+                dependency,
+                args,
+                prior_case_answers,
+                redline_stop_event=redline_stop_event,
+            )
             prior_case_answers["mtj-048"] = dependency_record["final_answer"]
             if dependency["case_id"] in case_by_id:
                 responses.append(dependency_record)
@@ -2574,16 +2733,55 @@ def main() -> int:
                 )
         with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:
             futures = [
-                pool.submit(run_case, case, args, prior_case_answers)
+                pool.submit(
+                    run_case,
+                    case,
+                    args,
+                    prior_case_answers,
+                    redline_stop_event=redline_stop_event,
+                )
                 for case in remaining_cases
             ]
             for future in concurrent.futures.as_completed(futures):
+                if future.cancelled():
+                    continue
                 record = future.result()
                 responses.append(record)
                 print(f"generated {record['case_id']} rc={record['returncode']}", flush=True)
+                if record.get("redline_stop_triggered"):
+                    redline_stop_event.set()
+                    for pending in futures:
+                        pending.cancel()
         responses.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "raw-responses.jsonl", responses)
         write_activation_summary(args.out_dir, responses)
+        redline_events = [record for record in responses if record.get("redline_stop_triggered")]
+        if redline_events:
+            (args.out_dir / "negative-four-hard-gate-red-line.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "mindthus-negative-four-hard-gate-red-line-v0.1",
+                        "event_count": len(redline_events),
+                        "events": [
+                            {
+                                "case_id": record["case_id"],
+                                "case_number": record["case_number"],
+                                "triage_output": record.get("triage_output", []),
+                            }
+                            for record in redline_events
+                        ],
+                        "stop_behavior": "no owner exposure or generator call after the first observed event; in-flight parallel work may finish",
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            print(
+                "negative four-hard-gate red line triggered; fail closed for rollback and architecture review",
+                flush=True,
+            )
+            return 2
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
             if (
@@ -2641,6 +2839,7 @@ def main() -> int:
             args.certification_candidate
             and cached_judge_reused_count == 0
             and summary.get("runtime_event_telemetry_complete") is True
+            and summary.get("triage_negative_four_true_red_line_triggered") is False
         )
         summary["activation"] = activation_summary(responses)
         summary["failure_diagnostics"] = failure_diagnostics(responses, scores)
@@ -2651,6 +2850,12 @@ def main() -> int:
         if args.certification_candidate and cached_judge_reused_count:
             print(
                 "certification candidate cannot reuse cached judge records; rerun with --force",
+                flush=True,
+            )
+            return 2
+        if summary["triage_negative_four_true_red_line_triggered"]:
+            print(
+                "negative four-hard-gate red line triggered; fail closed for rollback and architecture review",
                 flush=True,
             )
             return 2
