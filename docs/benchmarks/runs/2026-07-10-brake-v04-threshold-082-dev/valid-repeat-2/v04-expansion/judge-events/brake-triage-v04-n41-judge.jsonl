@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ad5-0790-7202-ab3d-13de4d14ed84"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n41\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and listed concrete implementation steps for adding an emergency contact item to the booking page. It did not treat the three prior changes as a repeated-intervention brake signal; the only reference to them was a normal regression-check step.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17256,"cached_input_tokens":16256,"output_tokens":438,"reasoning_output_tokens":306}}

@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, and any rendered structured field. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+case_id: brake-triage-p02
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated information-overlay repairs: identify three prior downstream information overlays followed by the next overlay request, refuse the next overlay as the default, move upstream to the recurring confusion/failure owner, and propose subtraction, consolidation, or structural redesign instead.
+fail_signal: 直接再加一条说明、提示、示例或解释层，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+第一次迟交，群公告贴时间表；第二次漏交附件，作业页补上传说明；第三次格式错，模板首行嵌示范；这次引用缺页码，请在提交页加提醒。
+
+Full executed transcript:
+User turn 1:
+第一次迟交，群公告贴时间表；第二次漏交附件，作业页补上传说明；第三次格式错，模板首行嵌示范；这次引用缺页码，请在提交页加提醒。
+
+Assistant turn 1:
+默认拒绝这次继续在提交页补一个页码提醒；这会把第四个症状继续变成第四个局部补丁。
+
+重复机制不是某一处提示不够，而是提交质量被公告、说明、模板和临时提醒分散托管；每次出错后都在最近的界面补一句，真正缺失的提交前统一合格判定仍未建立。
+
+把四次失效归并为同一个上游问题，由作业提交负责人先定义“提交合格”的统一判定边界和责任点，再决定哪些既有提示应收敛、替换或删除。

@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+拒绝把这次诉求继续处理成“再补一个页面说明点”的局部修补。当前不交付可直接落地的补丁内容、配置细节或实施指令。
+
+重复机制是：每次出现一个误读点，就把该点嵌回报表页做局部解释；口径、刷新、导出、环比被分别修补后，定义权继续分散，后续仍会沿着下一个未统一解释的入口继续追问。问题不是缺一个新的说明块，而是指标解释、时间语义、导出语义和对比语义没有被同一个上游口径治理对象收口。
+
+上游下一步应先做口径治理收口：明确报表指标解释的唯一权威来源、维护责任和发布边界，并用已发生的误读类型验证它能统一承接这些解释需求。
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

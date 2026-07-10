@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4acb-f6c5-7153-ac5d-9302319d93d3"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode, did not fire triage or frame the prompt as repeated local repair pressure, and gave a clear merge recommendation with practical conditions and a controlled pilot path. The structured criteria support the requested decision analysis without becoming an over-methodized stop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17467,"cached_input_tokens":16256,"output_tokens":408,"reasoning_output_tokens":275}}

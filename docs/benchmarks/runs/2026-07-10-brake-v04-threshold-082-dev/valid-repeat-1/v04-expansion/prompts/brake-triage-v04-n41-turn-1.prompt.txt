@@ -1,0 +1,8 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are answering one user-facing benchmark turn. Answer the user directly in the user's language. Hide internal audit, method names, scoring rubrics, and field lists unless the user explicitly asks for them. Keep the answer concise but sufficient.
+
+Turn 1
+
+User prompt:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。

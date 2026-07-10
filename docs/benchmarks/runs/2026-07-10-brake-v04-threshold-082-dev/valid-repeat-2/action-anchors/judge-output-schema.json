@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "score",
+    "pass_criteria_met",
+    "fail_signal_observed",
+    "positive_wakeup_observed",
+    "first_sentence_lock",
+    "verdict_commitment_anti_mush",
+    "over_forced_verdict",
+    "rationale"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "pass_criteria_met": {
+      "type": "boolean"
+    },
+    "fail_signal_observed": {
+      "type": "boolean"
+    },
+    "positive_wakeup_observed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "first_sentence_lock": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "verdict_commitment_anti_mush": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "over_forced_verdict": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "rationale": {
+      "type": "string"
+    }
+  }
+}

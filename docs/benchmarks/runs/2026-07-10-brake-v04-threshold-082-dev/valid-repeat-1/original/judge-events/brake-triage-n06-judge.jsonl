@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4acc-17b4-7013-8637-96c3a0098303"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode and did not fire triage or an over-methodized runtime despite the prompt mentioning a third issue. It gave a clear first-sentence recommendation, then bounded the decision with practical conditions and a smallest-necessary process change. This satisfies the negative-control expectation that prior local repairs below the hard gate should not trigger triage.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17290,"cached_input_tokens":16256,"output_tokens":525,"reasoning_output_tokens":375}}

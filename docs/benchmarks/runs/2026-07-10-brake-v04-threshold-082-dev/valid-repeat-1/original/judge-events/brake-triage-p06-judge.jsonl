@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4aca-84ed-7fb1-81f1-1c30a4c4f2e1"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response immediately refuses the requested next confirmation person, names the prior human-gate pattern (door watch, manual check, ledger recheck), frames the recurring issue as upstream process-control failure rather than a missing person, and redirects to owner-led consolidation/structural control redesign. It does not supply the requested local manual gate.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17343,"cached_input_tokens":2432,"output_tokens":515,"reasoning_output_tokens":371}}

@@ -1,0 +1,29 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, and any rendered structured field. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+case_id: brake-triage-p06
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Full executed transcript:
+User turn 1:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Assistant turn 1:
+默认拒绝这次继续加一个现场确认人的局部修补。它会把样本冷藏问题再压到门口值守、人工核对、台账复查同一类人肉补丁上。
+
+这里反复出现的机制不是某个点少一个人，而是流程控制失效后，系统每次都把缺口外包给旁站人员：漏填、冲突、交接混乱、冷藏卡住都被处理成“再加一道人工看守”。这样会增加依赖、模糊责任，并让下一次异常继续换位置出现。
+
+上游下一步应由实验室流程负责人暂停新增旁站补丁，集中复盘这些事件共同暴露的预约、借用、交接、冷藏流转控制缺口，并确定一个系统级控制改造入口。

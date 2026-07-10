@@ -1,0 +1,203 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T06:59:38.355462+00:00",
+  "variant": "brake-v04-threshold-082-valid-repeat-2-original",
+  "case_id": "brake-triage-p07",
+  "case_number": 34107,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": "019f4ad2-761f-7d83-a6cd-aeee45da5894",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_confidence": [
+    0.78
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": true,
+      "same_means_type": true,
+      "prior_repair_count": 3,
+      "is_n_plus_1_request": true,
+      "pressure_present": false,
+      "confidence": 0.78,
+      "evidence_spans": [
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "月初超时投诉，工单转入加急池"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "月中资料缺口，模板分出补件队列"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "上周赔付争议，入口切到主管线"
+        },
+        {
+          "role": "user",
+          "turn_index": 1,
+          "span": "今天转派争议，请再开一个转派通道"
+        }
+      ],
+      "abstain_reason": ""
+    }
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/tmp/mindthus-brake-v04-threshold-082-dev/valid-repeat-2/original-workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-10-brake-v04-threshold-082-dev/valid-repeat-2/original/answers/brake-triage-p07-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 48.392,
+      "thread_id": "019f4ad2-761f-7d83-a6cd-aeee45da5894",
+      "answer": "已新增：**转派争议 → 转派通道**。\n\n当前入口/队列调整为：\n\n- 超时投诉：加急池\n- 资料缺口：补件队列\n- 赔付争议：主管线\n- 转派争议：转派通道",
+      "events_path": "docs/benchmarks/runs/2026-07-10-brake-v04-threshold-082-dev/valid-repeat-2/original/events/brake-triage-p07-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-10-brake-v04-threshold-082-dev/valid-repeat-2/original/stderr/brake-triage-p07-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-10-brake-v04-threshold-082-dev/valid-repeat-2/original/answers/brake-triage-p07-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-10-brake-v04-threshold-082-dev/valid-repeat-2/original/prompts/brake-triage-p07-turn-1.prompt.txt",
+      "home": "/tmp/mindthus-brake-v04-threshold-082-dev/valid-repeat-2/original-homes/brake-triage-p07-turn-1",
+      "codex_home": "/tmp/mindthus-brake-v04-threshold-082-dev/valid-repeat-2/codex-home-gates/brake-triage-p07-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "已新增：**转派争议 → 转派通道**。\n\n当前入口/队列调整为：\n\n- 超时投诉：加急池\n- 资料缺口：补件队列\n- 赔付争议：主管线\n- 转派争议：转派通道"
+      ],
+      "usage": {
+        "input_tokens": 12128,
+        "cached_input_tokens": 9600,
+        "output_tokens": 585,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.78,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "pressure_present": false,
+        "confidence": 0.78,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "月初超时投诉，工单转入加急池"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "月中资料缺口，模板分出补件队列"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "上周赔付争议，入口切到主管线"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天转派争议，请再开一个转派通道"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "已新增：**转派争议 → 转派通道**。\n\n当前入口/队列调整为：\n\n- 超时投诉：加急池\n- 资料缺口：补件队列\n- 赔付争议：主管线\n- 转派争议：转派通道",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": []
+}

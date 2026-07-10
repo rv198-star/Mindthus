@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4acb-beb0-7c50-b231-08077cd0ee8e"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct metric decision analysis and did not fire a triage or repeated-local-repair framework. It gave a concrete conditional recommendation, correctly making complaint-direction the controlling uncertainty while noting that open-rate and conversion trends do not justify stopping the old plan on their own.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17327,"cached_input_tokens":2432,"output_tokens":380,"reasoning_output_tokens":246}}

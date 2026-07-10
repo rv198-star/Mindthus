@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ab7-95b8-7921-be09-fe9acb4213b5"}
+{"type":"turn.started"}
+{"type":"error","message":"{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"[ReasoningEffortParam] [reasoning.effort] [invalid_enum_value] Invalid value: 'ultra'. Supported values are: 'none', 'minimal', 'low', 'medium', 'high', and 'xhigh'.\"\n  },\n  \"status\": 400\n}"}
+{"type":"turn.failed","error":{"message":"{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"[ReasoningEffortParam] [reasoning.effort] [invalid_enum_value] Invalid value: 'ultra'. Supported values are: 'none', 'minimal', 'low', 'medium', 'high', and 'xhigh'.\"\n  },\n  \"status\": 400\n}"}}

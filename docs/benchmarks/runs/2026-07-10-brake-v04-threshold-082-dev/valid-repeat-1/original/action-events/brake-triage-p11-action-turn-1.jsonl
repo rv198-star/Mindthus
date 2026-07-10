@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ac1-0465-7141-a516-0ba904d41703"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.1\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"拒绝把今天的卡点继续处理成模板上的又一次局部补丁。当前请求看似只是补一个模板项，但它延续的是同一类失效模式。\",\"mechanism_reframe\":\"重复机制是：每出现一次流程失误，就把责任追补到离事故最近的表单、页面或模板里。这样会让模板越来越像事故备忘录，却没有解决信息归属、确认时点、决策权限和对外口径谁负责的问题。下一次换一种失误，仍会要求再补一个局部控件。\",\"upstream_next_action\":\"先上移到招聘流程的口径与责任门禁：明确哪些信息在进入下一环节前必须由谁确认，哪些对外表述由谁拍板，以及未确认时流程应停在哪里。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
+{"type":"turn.completed","usage":{"input_tokens":12713,"cached_input_tokens":9600,"output_tokens":747,"reasoning_output_tokens":516}}

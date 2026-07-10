@@ -1,0 +1,109 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n08
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that the current request asks to stop patching and redesign upstream; stay direct and support the upstream redesign.
+fail_signal: Fires triage despite the current request already asking to stop local patching and redesign upstream.
+
+Canonical single-line prompt:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Full executed transcript:
+User turn 1:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Assistant turn 1:
+可以。建议从“页面补丁”改成“统一售后规则入口 + 场景化规则判定”。
+
+**方案核心**
+
+把退款页、换货页、赠品页上的零散提示收拢成一个「售后规则中心」，页面只负责展示入口和当前订单的判定结果，不再各自维护说明文案。
+
+**入口设计**
+
+1. **订单详情页放主入口**
+   - 名称：`售后规则`
+   - 位置：售后按钮附近，和“申请退款 / 申请换货”并列或靠近。
+   - 展示简短状态：`支持退货`、`仅支持换货`、`赠品需随主品退回`、`已超过售后期`。
+
+2. **申请售后页放辅助入口**
+   - 在用户选择退款、退货、换货前，展示当前订单可用规则。
+   - 不再堆长文案，只展示命中结果和“查看完整规则”。
+
+3. **赠品、活动、组合商品不单独挂提醒**
+   - 统一进入规则中心处理。
+   - 页面只显示一句结果，例如：`该赠品随主商品售后处理`。
+
+**规则中心内容**
+
+分三层展示：
+
+1. **用户层**
+   - 这单能不能退、能不能换。
+   - 售后期限。
+   - 运费谁承担。
+   - 赠品是否需要退回。
+   - 活动、组合购、部分退款限制。
+   - 预计处理时效。
+
+2. **客服层**
+   - 命中的规则原因。
+   - 不可退 / 不可换的具体依据。
+   - 可复制给用户的话术。
+
+3. **运营层**
+   - 规则模板维护。
+   - 按品类、SKU、活动、订单状态、签收时间、地区配置。
+   - 文案统一管理，避免每个页面改一遍。
+
+**规则判定方式**
+
+建立一个统一规则接口：
+
+输入：
+- 订单信息
+- 商品信息
+- 售后类型
+- 签收时间
+- 活动类型
+- 是否赠品
+- 是否组合商品
+
+输出：
+- 可申请的售后类型
+- 不可申请原因
+- 截止时间
+- 需要退回的商品 / 赠品
+- 用户展示文案
+- 客服解释文案
+
+**页面改造节奏**
+
+1. **第一步：收口文案**
+   - 退款页、换货页、赠品页停止新增提示。
+   - 所有新增规则只进规则中心。
+
+2. **第二步：做统一入口**
+   - 订单详情页先上线「售后规则」入口。
+   - 申请售后页复用同一套规则结果。
+
+3. **第三步：迁移旧提示**
+   - 把现有退款、换货、赠品说明全部归类进规则中心。
+   - 页面上的旧提示逐步删除。
+
+4. **第四步：接运营配置**
+   - 先用固定规则上线。
+   - 再开放后台配置，减少后续开发介入。
+
+**最终效果**
+
+用户看到的是“这单具体怎么处理”，不是一堆通用说明；客服看到的是“为什么这么判”；运营改规则不用再找多个页面补丁。整体从页面提示治理，升级为售后规则治理。

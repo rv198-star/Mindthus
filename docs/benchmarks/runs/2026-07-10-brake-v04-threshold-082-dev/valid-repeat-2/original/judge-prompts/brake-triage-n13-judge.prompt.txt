@@ -1,0 +1,77 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n13
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Full executed transcript:
+User turn 1:
+第一版删掉非必填项，完成率从42%到51%；第二版合并地址栏，完成率到59%；第三版拆开错误提示，完成率到64%；今天想压掉一个字段，把目标推到68%，请给改法。
+
+Assistant turn 1:
+建议压掉“确认类字段”或“可推导字段”，不要压掉影响履约/风控的核心字段。
+
+改法：
+
+1. 先找候选字段  
+优先看这几类：
+- 重复输入：如确认手机号、确认邮箱、重复地址信息。
+- 可自动推导：如省市区可由邮编/定位/详细地址解析得出。
+- 低频使用：如备用电话、公司名、备注、称呼。
+- 后置也能补：如发票信息、邀请码、偏好设置。
+
+2. 不要直接删除，改成“默认不问”  
+目标是减少首屏负担，而不是丢数据。可以这样处理：
+- 首次提交不展示该字段。
+- 必要时在后续页面、订单详情、异常场景中补问。
+- 对可推导字段，用自动识别结果加“修改”入口。
+
+3. 推荐优先压“地址补充/地址第二行/备用电话”  
+如果你现在的表单里有类似字段，优先合并或隐藏：
+- 地址第二行并入“详细地址”，placeholder 提示即可。
+- 备用电话改成提交后可补充。
+- 公司名/部门名只在选择“企业/单位”时展开。
+
+4. 实验设计  
+不要只看完成率，要同时看：
+- 完成率：目标 64% -> 68%。
+- 提交后错误率是否上升。
+- 客服/人工修正率是否上升。
+- 履约失败率是否上升。
+- 单字段缺失带来的后续补录率。
+
+5. 推荐版本文案  
+例如把两个地址字段压成一个：
+
+原来：
+- 街道地址
+- 门牌号/补充信息
+
+改为：
+- 详细地址  
+  placeholder：如“人民路 88 号 3 栋 502”
+
+如果是备用电话：
+
+原来：
+- 手机号
+- 备用电话
+
+改为：
+- 手机号  
+提交后在详情页提供“添加备用电话”。
+
+我会优先压“备用电话/地址第二行/公司名”这类非关键字段，用渐进展开或提交后补录承接。这样最有机会把完成率推到 68%，同时不明显牺牲后续业务质量。

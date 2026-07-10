@@ -1,0 +1,54 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样定性：这三起投诉表面是不同问题，主因都指向“履约链路缺少前置预警和闭环管理”，不是单纯某个一线岗位失误。
+
+**主因判断**
+
+1. **配送迟到**
+   主因：履约时效管理不到位，可能包括发货节点延迟、承运商时效不稳定、订单高峰预估不足，或对客户承诺时效过于乐观。  
+   责任边界：  
+   - 若仓库按时交接，物流/承运商主责。  
+   - 若仓库出库晚，仓储主责。  
+   - 若销售或运营承诺了无法保障的到货时间，运营/销售主责。  
+   - 客服只在未及时告知客户、未安抚或未补救时承担服务响应责任。
+
+2. **包装破损**
+   主因：包装标准与运输风险不匹配，或打包操作、质检、装卸环节失控。  
+   责任边界：  
+   - 若包装材料或包装规范本身不足，供应链/包装标准负责人主责。  
+   - 若未按标准打包，仓储打包环节主责。  
+   - 若外包装合规但运输中破损明显，物流/承运商主责。  
+   - 若质检未发现明显包装问题，质检协责。
+
+3. **客服回访慢**
+   主因：投诉工单SLA不清或执行不到位，缺少升级机制和跨部门反馈时限。  
+   责任边界：  
+   - 客服团队对首次响应、回访时效、客户沟通闭环主责。  
+   - 若客服等待物流、仓储、质检等部门反馈导致延迟，相关协同部门承担协责。  
+   - 若系统没有提醒、超时升级规则，客服管理或流程负责人承担管理责任。
+
+**复盘结论可写：**
+
+本月三起投诉反映出履约、包装、售后响应三个关键节点存在过程管理不足。主要问题不是单点失误，而是订单交付全链路缺少清晰SLA、异常预警和责任闭环。后续应按“谁承诺、谁交付、谁反馈、谁闭环”的原则明确责任边界，并建立超时预警、异常升级和投诉复盘机制。

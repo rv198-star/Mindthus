@@ -1,0 +1,48 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+我建议把“提醒入口”放在**审批链/待办场景里**，不要放在数据源迁移页或权限模型页。
+
+最合适的位置：
+
+1. **审批详情页的审批链节点旁**
+   - 放在当前待处理节点、逾期节点或可提醒节点右侧。
+   - 文案可用“提醒”或“催办”。
+   - 优点是用户看到卡点时就能直接操作。
+
+2. **待办/我发起的列表行内操作**
+   - 对“我发起的审批”，在列表更多操作里放“提醒”。
+   - 适合批量查看时快速催办。
+
+3. **顶部提醒中心只做结果入口**
+   - 用来展示“谁被提醒了”“提醒是否成功”“对方是否已处理”。
+   - 不建议把发起提醒的主入口放这里，路径太绕。
+
+权限上建议按新权限模型控制：
+
+- 只有发起人、管理员、被授权协作者能提醒。
+- 已结束、已撤回、无待处理人的审批不显示入口。
+- 没权限时不要置灰，直接隐藏，避免误解。
+
+一句话：**主入口放审批详情页的审批链节点旁，列表里补一个快捷入口，提醒中心只承接通知结果。**
