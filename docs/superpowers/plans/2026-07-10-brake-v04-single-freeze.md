@@ -48,7 +48,7 @@ SHA-256 fingerprints.
   SHA, visible in runner manifests and handoff manifest.
 - Produces a six-line JSONL expansion with P41-P43/N41-N43 and a separate SHA.
 
-- [ ] **Step 1: Write failing prompt/fingerprint tests**
+- [x] **Step 1: Write failing prompt/fingerprint tests**
 
 ```python
 def test_v04_prompt_is_canonical_and_matches_the_audited_design():
@@ -70,13 +70,13 @@ def test_v04_expansion_is_additive_and_original_fixture_hash_is_unchanged():
                       "brake-triage-v04-n41", "brake-triage-v04-n42", "brake-triage-v04-n43"])
 ```
 
-- [ ] **Step 2: Run focused tests and observe RED**
+- [x] **Step 2: Run focused tests and observe RED**
 
 Run: `python3 -m pytest -q tests/test_judgment_benchmark_cli_runner.py -k 'v04_prompt or v04_expansion'`
 
 Expected: FAIL because the V0.4 file, constant, and expansion fixture do not exist.
 
-- [ ] **Step 3: Implement the minimal canonical freeze**
+- [x] **Step 3: Implement the minimal canonical freeze**
 
 - Add the audited full V0.4 body to the canonical text file and duplicate it exactly
   in the V0.4 design under a `Proposed V0.4 prompt body:` fenced block.
@@ -85,7 +85,7 @@ Expected: FAIL because the V0.4 file, constant, and expansion fixture do not exi
 - Record the same path/SHA/version in the handoff manifest.
 - Add the six reviewed JSONL cases mechanically without editing the existing fixture.
 
-- [ ] **Step 4: Run focused tests and observe GREEN**
+- [x] **Step 4: Run focused tests and observe GREEN**
 
 Run: `python3 -m pytest -q tests/test_judgment_benchmark_cli_runner.py -k 'v04_prompt or v04_expansion or shadow_handoff'`
 
@@ -106,7 +106,7 @@ Expected: PASS.
   generator path.
 - Generates `brake_loaded_action_semantic_contract_instruction()` for the judge.
 
-- [ ] **Step 1: Write failing action-contract tests**
+- [x] **Step 1: Write failing action-contract tests**
 
 ```python
 def test_loaded_action_payload_rejects_delivery_and_renders_no_delivery_slot():
@@ -128,13 +128,13 @@ def test_loaded_action_judge_instruction_scans_every_answer_surface():
         self.assertIn(surface, instruction)
 ```
 
-- [ ] **Step 2: Run focused tests and observe RED**
+- [x] **Step 2: Run focused tests and observe RED**
 
 Run: `python3 -m pytest -q tests/test_judgment_benchmark_cli_runner.py -k 'loaded_action_payload or loaded_action_judge_instruction'`
 
 Expected: FAIL because the schema, validator, renderer, and instruction do not exist.
 
-- [ ] **Step 3: Implement the smallest gated path**
+- [x] **Step 3: Implement the smallest gated path**
 
 - Add a JSON Schema whose only allowed disposition is `refuse_next_local_repair`, whose
   `requested_patch_delivery` field is JSON `null`, and whose pressure emergency is
@@ -145,7 +145,7 @@ Expected: FAIL because the schema, validator, renderer, and instruction do not e
 - Append the whole-answer artifact-smuggling instruction to the blind judge prompt only
   for turns carrying an active contract.
 
-- [ ] **Step 4: Run focused tests and observe GREEN**
+- [x] **Step 4: Run focused tests and observe GREEN**
 
 Run: `python3 -m pytest -q tests/test_judgment_benchmark_cli_runner.py -k 'loaded_action_payload or loaded_action_judge_instruction'`
 
@@ -161,14 +161,14 @@ Expected: PASS.
 - Produces two domain-separated, two-turn calibration-pair drafts and paired
   failure-shape responses for external audit only.
 
-- [ ] **Step 1: Add the two audit-only anchor drafts**
+- [x] **Step 1: Add the two audit-only anchor drafts**
 
 Write one pair for `municipal tree-maintenance intake` and one for `theatre
 touring-equipment handoff`. Each pair contains a fired turn, a pressure turn, a
 passing answer shape, and a failure answer that diagnoses the spiral then smuggles an
 N+1 artifact. Mark both domains and all texts `not executable pending audit`.
 
-- [ ] **Step 2: Check authoring boundaries**
+- [x] **Step 2: Check authoring boundaries**
 
 Run: `rg -n 'TODO|TBD|same class|同类|类似|一样' docs/benchmarks/brake-loaded-action-anchor-texts-v0.1.md`
 

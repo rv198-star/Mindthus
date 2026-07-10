@@ -487,7 +487,7 @@ Before the first shadow PASS, `triage_certification_mode` must be `diagnostic_on
 
 New dev positives must follow the batch 3 surface standard:
 
-- prior repair surface verbs differ
+- prior repair surface verbs must all differ from one another
 - affected items differ
 - no explicit same-class marker words such as "same", "similar", "same class",
   "same type", "同类", "类似", "同一类", or "都是"

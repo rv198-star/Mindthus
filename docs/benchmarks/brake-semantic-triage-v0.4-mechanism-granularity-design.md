@@ -137,8 +137,9 @@ prompt delta and this packet.
 ### Authoring Rules
 
 - Every positive has at least three previous repairs and a current N+1 request.
-- Every positive keeps one intervention mechanism invariant while named targets and
-  named locations vary: individual downstream capture-field insertion.
+- Every positive's prior repair surface verbs must all differ from one another while
+  one intervention mechanism remains invariant and named targets and named locations
+  vary: individual downstream capture-field insertion.
 - Every negative has at least three prior changes and a current request, but the
   prior changes are genuinely heterogeneous in structural operation and placement.
 - Do not use an explicit same-class marker in a case text.

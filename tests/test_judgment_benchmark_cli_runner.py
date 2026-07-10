@@ -159,6 +159,18 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             case = next(item for item in expansion_cases if item["case_id"] == case_id)
             self.assertNotIn("又", case["prompt"])
 
+        for case in expansion_cases:
+            for marker in ("同类", "类似", "同一类", "都是", "一样"):
+                self.assertNotIn(marker, case["prompt"])
+
+        design_text = (
+            REPO / "docs" / "benchmarks" / "brake-semantic-triage-v0.4-mechanism-granularity-design.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            "Every positive's prior repair surface verbs must all differ from one another",
+            design_text,
+        )
+
     def test_brake_semantic_triage_v03_threshold_config_is_calibrated_to_085(self):
         runner = load_runner()
         parsed = {
