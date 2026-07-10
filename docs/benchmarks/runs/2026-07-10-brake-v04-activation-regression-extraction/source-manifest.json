@@ -1,0 +1,137 @@
+{
+  "comparison": {
+    "model": "gpt-5.5",
+    "shared_original_fixture_sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+    "v03_085_pass_source_root": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev",
+    "v03_prompt_sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
+    "v03_runner_sha256": "1affd4ed0c3efd246bef14dca48e1feb9ce152419532bb83bda606a28d92a35c",
+    "v03_threshold": 0.85,
+    "v04_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+    "v04_runner_sha256": "989c28b4b11441585431e85311432b74bc98cc2b49c8b2c9e68acdd0a0bd1c7f",
+    "v04_source_root": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev",
+    "v04_threshold": 0.85
+  },
+  "frozen_surfaces_untouched": [
+    "docs/benchmarks/brake-semantic-triage-prompt-v0.4.txt",
+    "tests/brake_semantic_triage_dev_cases.jsonl",
+    "scripts/run-judgment-benchmark-cli.py"
+  ],
+  "no_benchmark_cli_run": true,
+  "output_rows": {
+    "fired-no-owner-load.jsonl": 8,
+    "lost-activation-v03-085-comparison.jsonl": 13,
+    "old-positive-case-turns.jsonl": 60
+  },
+  "schema_version": "mindthus-brake-v04-activation-regression-extraction-v0.1",
+  "source_files": [
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/raw-responses.jsonl",
+      "repeat": 1,
+      "role": "v04_raw",
+      "sha256": "cfafaa956c777742491de8a541dedade9e5f22cdefa36733795d374480544581"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/score-records.jsonl",
+      "repeat": 1,
+      "role": "v04_scores",
+      "sha256": "ea01c7b745aab238c2942c249baf58b9a86c78c05f151f1b84da1adc2a4fbfee"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/run-manifest.json",
+      "repeat": 1,
+      "role": "v04_manifest",
+      "sha256": "8ad7e036f42ba8bb2d02cc69c84b4927a54b72a439b56435f8908d550aadb8d3"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/raw-responses.jsonl",
+      "repeat": 1,
+      "role": "v03_raw",
+      "sha256": "e7c54e295c72d8628ea517111353b151ebb5d0dd66a84340efef147bd233eabf"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/score-records.jsonl",
+      "repeat": 1,
+      "role": "v03_scores",
+      "sha256": "9938c1ae1a6157da945301dd755037b9d8c52c4ed93a810175b164e57ba93022"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-1/run-manifest.json",
+      "repeat": 1,
+      "role": "v03_manifest",
+      "sha256": "703fb67efaeb6ab8d38990bc14fe4c37bbd0ac1c6e3e321241c3aaac85b25ce5"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/raw-responses.jsonl",
+      "repeat": 2,
+      "role": "v04_raw",
+      "sha256": "bb1fe0f5f48908e4cb5f208bda0776c4368362fa5eba666fbc9f5a2ebbe4e49d"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/score-records.jsonl",
+      "repeat": 2,
+      "role": "v04_scores",
+      "sha256": "02a364e3fcbf8504ef1d80a585ddf4dd9a8c0acb6025ec5a358df93f1a2375ec"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/run-manifest.json",
+      "repeat": 2,
+      "role": "v04_manifest",
+      "sha256": "5f4e2b7f55cf8b24116fef98997155e32403dd5d00272bed87c3da17bd1f8fd0"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-2/raw-responses.jsonl",
+      "repeat": 2,
+      "role": "v03_raw",
+      "sha256": "0949904f55b4cd2208fe0301ea80eb0108a4696846fc31d4724d8a1257448e08"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-2/score-records.jsonl",
+      "repeat": 2,
+      "role": "v03_scores",
+      "sha256": "40960ffd34558a2cb6f49874b2725f516b24c1410171d2301903de32e12c0cb3"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-2/run-manifest.json",
+      "repeat": 2,
+      "role": "v03_manifest",
+      "sha256": "5137f9e2cf1245d1fab2fee4f528cddac712beb525cd690ab6118d3093f992ef"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/raw-responses.jsonl",
+      "repeat": 3,
+      "role": "v04_raw",
+      "sha256": "97d89228d0f2b2c6db7a2cdecf00ee8fb4954850c63c0aaefa05132b9088d586"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/score-records.jsonl",
+      "repeat": 3,
+      "role": "v04_scores",
+      "sha256": "455a68833d0a5aa30be8d69e752b6674d67f319b0dac89f6d67205b26db0e2c7"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/run-manifest.json",
+      "repeat": 3,
+      "role": "v04_manifest",
+      "sha256": "ea50b3bd07db8697004a2d6b174934ac20ef7e4f567c8b56fb07a3d6ce0cd0f6"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-3/raw-responses.jsonl",
+      "repeat": 3,
+      "role": "v03_raw",
+      "sha256": "c07dd80d3686a89b2e10656bafb2fd2c805b7a92fe3c63d885b67c721d67d408"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-3/score-records.jsonl",
+      "repeat": 3,
+      "role": "v03_scores",
+      "sha256": "185542da88a6f72600cd715b011523cb8d916b49803876b28549daf373908669"
+    },
+    {
+      "path": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-v03-threshold-085-dev/repeat-3/run-manifest.json",
+      "repeat": 3,
+      "role": "v03_manifest",
+      "sha256": "565d28539292c7051f0ae70543b7ad5ff49e00381e350818c3c6b9bfb0ed7322"
+    }
+  ],
+  "status": "derived-data-only"
+}
