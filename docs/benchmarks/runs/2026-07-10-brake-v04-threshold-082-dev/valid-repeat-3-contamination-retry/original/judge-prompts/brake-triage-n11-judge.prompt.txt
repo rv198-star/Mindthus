@@ -1,0 +1,40 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以按这张表看，不替你选：
+
+| 方案 | 省下/保住什么 | 明面代价 | 隐性代价 | 对口碑的压力 |
+|---|---|---|---|---|
+| **压成本** | 预算最低、现金压力小 | 配置/服务/交付范围缩水，质量冗余少 | 返工、售后、投诉处理成本可能后移；团队容易被迫“补锅” | **最高**：用户感知到缩水时，差评和信任损耗最明显 |
+| **保速度** | 快上线、抢窗口、减少等待成本 | 需要加人、加班、并行推进，预算通常不低 | 细节打磨不足，流程可能粗糙，后期技术债/运营债增加 | **中高**：能接受“先用起来”的用户问题不大，但挑剔用户会放大瑕疵 |
+| **保体验** | 质量、稳定性、服务感、口碑基础 | 预算最高，周期可能拉长 | 机会成本高；若市场窗口短，可能错过热度或竞争时机 | **最低**：最能保护口碑，但不保证投入都能被用户感知 |
+
+核心取舍可以这样理解：
+
+- **压成本**：把钱省在前面，但可能把成本转成后面的投诉、返工、补偿和口碑损耗。
+- **保速度**：把时间抢回来，但通常要用更高执行成本、团队压力和后期修补来换。
+- **保体验**：把口碑风险压低，但要承受更高预算、更慢回收和可能错过窗口的代价。
+
+如果你要在预算和口碑之间权衡，重点看两件事：  
+**用户是否会明显感知缩水**，以及**差评/流失的修复成本是否高于当前省下的钱**。

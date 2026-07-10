@@ -1,0 +1,93 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n08
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that the current request asks to stop patching and redesign upstream; stay direct and support the upstream redesign.
+fail_signal: Fires triage despite the current request already asking to stop local patching and redesign upstream.
+
+Canonical single-line prompt:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Full executed transcript:
+User turn 1:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Assistant turn 1:
+建议方向：从“页面补丁”改成“统一售后规则入口 + 场景化摘要”。
+
+**核心方案**
+
+1. **建一个统一入口**
+   - 名称可用：`售后规则` / `售后政策` / `退换赠规则`
+   - 放在售后首页、订单详情、退款页、换货页、赠品页的固定位置
+   - 不再每个页面单独贴长提示，只保留简短摘要和入口
+
+2. **规则中心按场景组织**
+   - 退款规则
+   - 换货规则
+   - 赠品规则
+   - 运费/补差价规则
+   - 不支持售后的情况
+   - 审核与到账时效
+   - 常见问题
+
+3. **每个业务页只显示“当前相关规则摘要”**
+   例如：
+   - 退款页：显示“该订单预计支持退款，到账时间以支付渠道为准”
+   - 换货页：显示“该商品支持同款换货，需保持商品状态符合规则”
+   - 赠品页：显示“主商品退款时，赠品需一并退回或按规则折价”
+   
+   摘要下方统一放：`查看完整售后规则`
+
+4. **规则内容做成结构化，而不是纯文案**
+   每条规则建议包含：
+   - 适用范围
+   - 生效条件
+   - 时间限制
+   - 用户需要做什么
+   - 平台会怎么处理
+   - 例外情况
+
+5. **增加“按订单判断”的规则解释**
+   用户进入售后时，不只看通用规则，还能看到：
+   - 当前订单是否可退
+   - 是否可换
+   - 赠品是否需退回
+   - 是否涉及运费、折价、补款
+   - 不满足规则时的具体原因
+
+6. **后台需要规则配置能力**
+   不建议把规则写死在多个页面里。可以先做轻量配置：
+   - 规则标题
+   - 规则类型
+   - 适用商品/类目/活动
+   - 生效时间
+   - 展示文案
+   - 优先级
+   - 是否启用
+
+**落地节奏**
+
+第一阶段：先做统一规则页，把退款、换货、赠品说明收拢进去。  
+第二阶段：各页面移除补丁文案，只保留摘要 + 入口。  
+第三阶段：接入订单维度判断，给用户展示“为什么能/不能申请”。  
+第四阶段：做规则后台和版本管理，避免后续继续改页面代码。
+
+**我建议的 MVP**
+
+先上线这三件事就够：
+
+- 一个 `售后规则中心`
+- 一个通用的 `规则摘要组件`
+- 退款页、换货页、赠品页统一接入该组件
+
+这样能马上停止页面补丁，同时给后续规则配置和智能判断留出口。

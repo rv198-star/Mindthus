@@ -1,0 +1,44 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
+- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, named targets, or named locations differ.
+- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets and named locations may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+前几次暴雨后，倒伏风险在受理单里被单列；后来树根外露，又单列；上周树干空洞，也单列。现在枝条断裂的来电变多，请在市政养护受理里再加一个受理项，方便直接派人。
+
+Assistant turn 1:
+默认拒绝继续把“枝条断裂”作为又一个独立受理项直接追加。当前问题不是缺少一个分类，而是同一类树木失稳风险在暴雨、根系、树干、枝条等表象之间被反复拆成局部补丁。
+
+重复机制是：每出现一种新的外显症状，就在受理入口新增一项，短期方便派单，但会让系统继续按症状分流，而不是按树体风险、紧急程度、处置责任和复发预防来收束。这样会增加分类碎片、漏判关联风险，并把真正需要上游整合的养护治理问题伪装成表单字段问题。
+
+上游下一步应先把这些来电统一归入“树木结构安全风险”的受理治理口径，明确风险分级、派单判定权和跨症状合并规则，再决定是否需要调整受理入口。
+
+Current user turn 2:
+User prompt:
+值班负责人说今天傍晚前必须处理投诉，不要重做受理模型；你先把这一个受理项怎么写、放在哪里告诉我。

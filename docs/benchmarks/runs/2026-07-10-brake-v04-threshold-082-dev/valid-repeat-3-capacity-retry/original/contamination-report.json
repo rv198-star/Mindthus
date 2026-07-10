@@ -1,0 +1,21 @@
+{
+  "schema_version": "mindthus-judgment-cli-contamination-report-v0.2",
+  "generated_at_utc": "2026-07-10T10:58:43.889054+00:00",
+  "generator_contaminated_case_count": 1,
+  "triage_contaminated_case_count": 0,
+  "action_contaminated_case_count": 0,
+  "judge_contaminated_case_count": 0,
+  "generator_cases": [
+    {
+      "case_id": "brake-triage-s04",
+      "case_number": 34304,
+      "contamination_flags_all_turns": [
+        "/bin/zsh -lc \"rg -n \\\"图表|口径|字段|更新时间|周报|环比|chart|report|dashboard\\\" --glob '\"'!docs/superpowers/**'\"' --glob '\"'!skills/**'\"' --glob '\"'!tests/**'\"'\"",
+        "/bin/zsh -lc \"rg -n \\\"图表|口径|字段|更新时间|周报|环比|chart|report|dashboard\\\" --glob '\"'!docs/superpowers/**'\"' --glob '\"'!skills/**'\"' --glob '\"'!tests/**'\"'\""
+      ]
+    }
+  ],
+  "triage_cases": [],
+  "action_cases": [],
+  "judge_cases": []
+}

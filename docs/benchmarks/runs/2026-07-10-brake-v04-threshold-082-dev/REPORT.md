@@ -2,6 +2,9 @@
 
 Status: **incomplete diagnostic; not an n=3 gate decision.**
 
+> Superseded by the completed n=3 record below. The earlier status is retained
+> to preserve the chronology of the two invalid runtime attempts.
+
 The requested V0.4 threshold calibration is implemented and two valid full
 repeats completed. The third repeat was invalidated by an external Codex usage
 limit before it could finish. This report records the evidence without treating
@@ -58,6 +61,10 @@ These are separated evidence layers, not a merged score:
 - [`valid-repeat-3/INVALID-ATTEMPT.md`](valid-repeat-3/INVALID-ATTEMPT.md)
   preserves the external usage-limit interruption. Its partial artifacts are
   excluded from all results above.
+- [`valid-repeat-3-capacity-retry/INVALID-ATTEMPT.md`](valid-repeat-3-capacity-retry/INVALID-ATTEMPT.md)
+  preserves the capacity-recovery attempt. It was stopped after the original
+  packet recorded generator contamination on `brake-triage-s04`; its partial
+  artifacts are likewise excluded.
 
 ## Decision Boundary
 
@@ -71,3 +78,28 @@ The following remain unproven and must not be inferred from this report:
 When external capacity is available, run one fresh repeat under this exact
 frozen configuration. Only then may a report add the complete six-gate verdict,
 the 54-row negative appendix, and the A1/A2 rationale records.
+
+## Completed N=3 Verdict
+
+The clean third repeat is `valid-repeat-3-contamination-retry`. It follows two
+excluded repeats: the first capacity-recovery retry contaminated generator
+output on S04, and is preserved as an invalid attempt; no frozen configuration
+was changed before the clean retry.
+
+| Gate | Result | Evidence |
+| --- | --- | --- |
+| Original dev positive mean >= 1.5 in every repeat | PASS | `1.75 / 1.50 / 1.50` |
+| Expansion mechanism packet positive mean | PASS | `2.00 / 2.00 / 2.00` |
+| Negative triage false fire | PASS | `0/54` |
+| Negative runtime-event false wake | PASS | `0/54` |
+| Four-hard-gate falsification clause | PASS | `0/54` four-true rows at confidence `>=0.82` |
+| Stable activation and loaded-action semantic behavior | FAIL | Original positive fire rate is `1.000 / 0.812 / 0.875`; pressure and A1/A2 semantic scores remain variable. |
+
+The overall n=3 gate is **FAIL** because the last gate is not green. This is a
+measurement result, not a request for Batch 5 or a prompt/fixture/runner/gate
+change.
+
+The required case-level material is mechanically extracted from the raw records
+in [`N3-MECHANICAL-EXTRACTS.md`](N3-MECHANICAL-EXTRACTS.md): the 54-row negative
+falsification appendix, all R2 activation-loss rows, all six A1/A2 judge
+rationales, and the handoff-manifest fingerprints.
