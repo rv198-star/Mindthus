@@ -1,8 +1,7 @@
 # Brake Semantic Triage V0.4 Mechanism-Granularity Design
 
-Status: revised draft for external audit confirmation. This is a design and text-review packet only. It
-does not modify the V0.3 prompt, runner, threshold, owner-skill gate, register,
-fixture, calibration result, or certification status.
+Status: prompt V0.4 is frozen for diagnostic use. This document does not claim a
+passing dev run, external shadow pass, or certification status.
 
 ## Decision Boundary
 
@@ -69,10 +68,49 @@ definition and must freeze together:
 ```
 
 Verbatim relay for audit, including the LF convention, is the two-line block above.
-This is not frozen prompt text yet: do not assign a canonical SHA-256, update the
-prompt-file fingerprint, or add a fingerprint contract test until audit accepts the
-wording. The eventual frozen V0.4 body must use LF line endings and exactly one
-trailing newline.
+External audit cleared this wording for the single freeze. The canonical V0.4 body uses
+LF line endings and exactly one trailing newline.
+
+## Proposed V0.4 prompt body:
+
+The audit-approved V0.4 body is canonical at
+`docs/benchmarks/brake-semantic-triage-prompt-v0.4.txt`. This fenced copy must remain
+byte-equivalent after LF normalization and exactly one trailing newline.
+
+```text
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
+- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, named targets, or named locations differ.
+- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets and named locations may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+```
+
+Canonical prompt fingerprint:
+
+```text
+sha256 = cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1
+```
 
 ## Prompt Lint Requirements
 
@@ -99,8 +137,8 @@ prompt delta and this packet.
 ### Authoring Rules
 
 - Every positive has at least three previous repairs and a current N+1 request.
-- Every positive has heterogeneous named targets but one mechanism: individual
-  downstream capture-field insertion.
+- Every positive keeps one intervention mechanism invariant while named targets and
+  named locations vary: individual downstream capture-field insertion.
 - Every negative has at least three prior changes and a current request, but the
   prior changes are genuinely heterogeneous in structural operation and placement.
 - Do not use an explicit same-class marker in a case text.

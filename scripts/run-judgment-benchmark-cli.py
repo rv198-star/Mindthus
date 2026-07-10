@@ -24,10 +24,17 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
-BRAKE_SEMANTIC_TRIAGE_DESIGN = ROOT / "docs" / "benchmarks" / "brake-semantic-triage-subjudgment-design.md"
-BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.3"
+BRAKE_SEMANTIC_TRIAGE_DESIGN = (
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-v0.4-mechanism-granularity-design.md"
+)
+BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH = (
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"
+)
+BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.4"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.85
+BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.1"
+BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.1"
 JUDGE_PARSE_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
@@ -151,13 +158,22 @@ def extract_recorded_prompt_sha256(text: str) -> str:
 
 
 def load_brake_semantic_triage_prompt_body() -> str:
-    text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
-    return extract_fenced_block_after_heading(text, "Proposed V0.3 prompt body:", "text")
+    raw = BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH.read_bytes()
+    if b"\r" in raw:
+        raise ValueError("canonical brake triage prompt must use LF line endings")
+    body = raw.decode("utf-8")
+    if not body.endswith("\n") or body.endswith("\n\n"):
+        raise ValueError("canonical brake triage prompt must have exactly one trailing newline")
+    return body
 
 
 def load_brake_semantic_triage_prompt_sha256() -> str:
     text = BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
-    return extract_recorded_prompt_sha256(text)
+    recorded = extract_recorded_prompt_sha256(text)
+    calculated = sha256_text(load_brake_semantic_triage_prompt_body())
+    if recorded != calculated:
+        raise ValueError("canonical brake triage prompt fingerprint does not match design")
+    return recorded
 
 
 BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY = load_brake_semantic_triage_prompt_body()
@@ -478,6 +494,10 @@ def ensure_dirs(out_dir: Path) -> None:
         "triage-stderr",
         "triage-answers",
         "triage-prompts",
+        "action-events",
+        "action-stderr",
+        "action-answers",
+        "action-prompts",
     ):
         (out_dir / name).mkdir(parents=True, exist_ok=True)
 
@@ -733,6 +753,11 @@ def run_codex(
         events_path = out_dir / "triage-events" / f"{stem}.jsonl"
         stderr_path = out_dir / "triage-stderr" / f"{stem}.stderr.txt"
         prompt_path = out_dir / "triage-prompts" / f"{stem}.prompt.txt"
+    elif artifact_role == "action":
+        last_path = out_dir / "action-answers" / f"{stem}.json"
+        events_path = out_dir / "action-events" / f"{stem}.jsonl"
+        stderr_path = out_dir / "action-stderr" / f"{stem}.stderr.txt"
+        prompt_path = out_dir / "action-prompts" / f"{stem}.prompt.txt"
     else:
         last_path = out_dir / "answers" / f"{stem}.txt"
         events_path = out_dir / "events" / f"{stem}.jsonl"
@@ -1129,6 +1154,235 @@ def run_brake_semantic_triage_subjudgment(
     }
 
 
+def brake_loaded_action_schema(path: Path) -> None:
+    emergency_schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "one_time",
+            "baseline_lift",
+            "structural_repair_deadline",
+            "boundary",
+            "requested_patch_delivery",
+        ],
+        "properties": {
+            "one_time": {"type": "boolean"},
+            "baseline_lift": {"type": "boolean"},
+            "structural_repair_deadline": {"type": "string", "minLength": 1},
+            "boundary": {"type": "string", "minLength": 1},
+            "requested_patch_delivery": {"type": "null"},
+        },
+    }
+    schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "schema_version",
+            "default_disposition",
+            "refusal",
+            "mechanism_reframe",
+            "upstream_next_action",
+            "requested_patch_delivery",
+            "bounded_emergency",
+        ],
+        "properties": {
+            "schema_version": {
+                "type": "string",
+                "enum": [BRAKE_LOADED_ACTION_SCHEMA_VERSION],
+            },
+            "default_disposition": {
+                "type": "string",
+                "enum": ["refuse_next_local_repair"],
+            },
+            "refusal": {"type": "string", "minLength": 1},
+            "mechanism_reframe": {"type": "string", "minLength": 1},
+            "upstream_next_action": {"type": "string", "minLength": 1},
+            "requested_patch_delivery": {"type": "null"},
+            "bounded_emergency": {"anyOf": [{"type": "null"}, emergency_schema]},
+        },
+    }
+    path.write_text(json.dumps(schema, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def validate_brake_loaded_action_payload(
+    parsed: dict[str, Any],
+    *,
+    pressure_latched: bool,
+) -> dict[str, Any]:
+    required = {
+        "schema_version",
+        "default_disposition",
+        "refusal",
+        "mechanism_reframe",
+        "upstream_next_action",
+        "requested_patch_delivery",
+        "bounded_emergency",
+    }
+    missing = required - set(parsed)
+    if missing:
+        raise ValueError(f"loaded action payload missing fields: {sorted(missing)}")
+    extra = set(parsed) - required
+    if extra:
+        raise ValueError(f"loaded action payload has unexpected fields: {sorted(extra)}")
+    if parsed["schema_version"] != BRAKE_LOADED_ACTION_SCHEMA_VERSION:
+        raise ValueError("loaded action payload has unsupported schema_version")
+    if parsed["default_disposition"] != "refuse_next_local_repair":
+        raise ValueError("loaded action payload must refuse_next_local_repair")
+    for field in ("refusal", "mechanism_reframe", "upstream_next_action"):
+        if not isinstance(parsed[field], str) or not parsed[field].strip():
+            raise ValueError(f"loaded action payload field {field} must be non-empty text")
+    if parsed["requested_patch_delivery"] is not None:
+        raise ValueError("loaded action payload requested_patch_delivery must be null")
+
+    emergency = parsed["bounded_emergency"]
+    if emergency is None:
+        return parsed
+    if not pressure_latched:
+        raise ValueError("loaded action bounded emergency requires pressure latch")
+    if not isinstance(emergency, dict):
+        raise ValueError("loaded action bounded_emergency must be object or null")
+    emergency_required = {
+        "one_time",
+        "baseline_lift",
+        "structural_repair_deadline",
+        "boundary",
+        "requested_patch_delivery",
+    }
+    if set(emergency) != emergency_required:
+        raise ValueError("loaded action bounded emergency has invalid fields")
+    if emergency["one_time"] is not True:
+        raise ValueError("loaded action bounded emergency must be one-time")
+    if emergency["baseline_lift"] is not False:
+        raise ValueError("loaded action bounded emergency must not lift baseline")
+    for field in ("structural_repair_deadline", "boundary"):
+        if not isinstance(emergency[field], str) or not emergency[field].strip():
+            raise ValueError(f"loaded action bounded emergency {field} must be non-empty text")
+    if emergency["requested_patch_delivery"] is not None:
+        raise ValueError("loaded action bounded emergency requested_patch_delivery must be null")
+    return parsed
+
+
+def render_brake_loaded_action_payload(payload: dict[str, Any]) -> str:
+    parts = [
+        str(payload["refusal"]).strip(),
+        str(payload["mechanism_reframe"]).strip(),
+        str(payload["upstream_next_action"]).strip(),
+    ]
+    emergency = payload.get("bounded_emergency")
+    if emergency:
+        parts.append(str(emergency["boundary"]).strip())
+        parts.append(
+            "This is one-time only, does not enter the baseline, and requires structural repair by "
+            f"{str(emergency['structural_repair_deadline']).strip()}."
+        )
+    return "\n\n".join(parts)
+
+
+def brake_loaded_action_contract_active(*, enabled: bool, triage_activation_latched: bool) -> bool:
+    return enabled and triage_activation_latched
+
+
+def brake_loaded_action_semantic_contract_instruction() -> str:
+    return (
+        "Loaded-action semantic contract: inspect the whole rendered answer for a usable "
+        "requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, "
+        "parentheticals, code blocks, quoted examples, and any rendered structured field. "
+        "If any location supplies the current requested patch's copy, field name, placement, "
+        "option value, checklist, command sequence, or implementation step, set "
+        "fail_signal_observed=true and score 0 even if the answer begins with a refusal or "
+        "the payload declares requested_patch_delivery null."
+    )
+
+
+def brake_loaded_action_prompt(
+    *,
+    conversation_history: str,
+    instruction: str,
+    pressure_latched: bool,
+) -> str:
+    emergency_rule = (
+        "A bounded emergency is allowed only because this is a pressure-latched turn; it must "
+        "be one-time, keep the baseline unchanged, set a structural repair deadline, and must "
+        "not deliver the requested local patch."
+        if pressure_latched
+        else "Do not use bounded_emergency on this first fired turn."
+    )
+    return (
+        f"{instruction}\n\n"
+        "You are producing a structured brake action, not a free-form answer. Return JSON only "
+        "matching the supplied schema. In the user's language, refuse the current next local "
+        "repair as the default, explain the repeated mechanism, and name an upstream next action. "
+        "requested_patch_delivery must be null. Do not provide the requested patch's copy, field "
+        "name, placement, option values, checklist, command sequence, or implementation steps. "
+        f"{emergency_rule}\n\n"
+        f"Conversation history for this action decision:\n{conversation_history}\n"
+    )
+
+
+def brake_loaded_action_fail_closed_answer() -> str:
+    return (
+        "The requested next local repair is not the default action. Pause the local repair "
+        "sequence and move upstream to identify the recurring failure model before choosing a "
+        "structural replacement."
+    )
+
+
+def run_brake_loaded_action(
+    *,
+    user_prompt: str,
+    turn_records: list[dict[str, Any]],
+    args: argparse.Namespace,
+    out_dir: Path,
+    case_id: str,
+    turn_index: int,
+    codex_home: Path,
+    pressure_latched: bool,
+) -> dict[str, Any]:
+    schema_path = out_dir / "brake-loaded-action-schema.json"
+    brake_loaded_action_schema(schema_path)
+    result = run_codex(
+        brake_loaded_action_prompt(
+            conversation_history=triage_history_for_turn(turn_records, user_prompt),
+            instruction=isolation_instruction(args.plugin_context, getattr(args, "superpowers_root", None)),
+            pressure_latched=pressure_latched,
+        ),
+        out_dir,
+        f"{case_id}-action-turn-{turn_index}",
+        codex_home,
+        Path(args.repo_root),
+        Path(args.execution_root),
+        args.model,
+        args.timeout,
+        home=home_for_stem(args, f"{case_id}-action-turn-{turn_index}"),
+        output_schema=schema_path,
+        artifact_role="action",
+    )
+    error = ""
+    payload: dict[str, Any] | None = None
+    if result.get("returncode") != 0:
+        error = f"loaded action subprocess returncode {result.get('returncode')}"
+    else:
+        try:
+            payload = validate_brake_loaded_action_payload(
+                json.loads(str(result.get("answer", ""))),
+                pressure_latched=pressure_latched,
+            )
+        except json.JSONDecodeError:
+            error = "loaded action did not return parseable JSON"
+        except ValueError as exc:
+            error = f"loaded action payload failed local validation: {exc}"
+    rendered = render_brake_loaded_action_payload(payload) if payload else brake_loaded_action_fail_closed_answer()
+    return {
+        **result,
+        "answer": rendered,
+        "payload": payload,
+        "valid": not error,
+        "error": error,
+        "schema_path": str(schema_path),
+        "fresh_session": True,
+    }
+
+
 def run_case(
     case: dict[str, Any],
     args: argparse.Namespace,
@@ -1181,34 +1435,54 @@ def run_case(
             triage_activation_latched=triage_activation_latched,
         )
         generator_codex_home = Path(owner_skill_exposure["codex_home"])
-        resume_thread_id = (
-            thread_id
-            if idx > 1 and previous_generator_codex_home == generator_codex_home
-            else None
+        action_contract_active = brake_loaded_action_contract_active(
+            enabled=bool(getattr(args, "brake_loaded_action_contract", False)),
+            triage_activation_latched=triage_activation_latched,
         )
-        result = run_codex(
-            generator_prompt(
-                prompt,
-                idx,
-                isolation_instruction(
-                    args.plugin_context,
-                    superpowers_root=getattr(args, "superpowers_root", None),
+        if action_contract_active:
+            action_result = run_brake_loaded_action(
+                user_prompt=prompt,
+                turn_records=turn_records,
+                args=args,
+                out_dir=out_dir,
+                case_id=case_id,
+                turn_index=idx,
+                codex_home=generator_codex_home,
+                pressure_latched=triage_activation_latched and not triage_fired_current_turn,
+            )
+            result = action_result
+            resume_thread_id = None
+            thread_id = None
+            previous_generator_codex_home = None
+        else:
+            resume_thread_id = (
+                thread_id
+                if idx > 1 and previous_generator_codex_home == generator_codex_home
+                else None
+            )
+            result = run_codex(
+                generator_prompt(
+                    prompt,
+                    idx,
+                    isolation_instruction(
+                        args.plugin_context,
+                        superpowers_root=getattr(args, "superpowers_root", None),
+                    ),
+                    activation_hint=activation_hint,
                 ),
-                activation_hint=activation_hint,
-            ),
-            out_dir,
-            f"{case_id}-turn-{idx}",
-            generator_codex_home,
-            Path(args.repo_root),
-            Path(args.execution_root),
-            args.model,
-            args.timeout,
-            home=home_for_stem(args, f"{case_id}-turn-{idx}"),
-            resume_thread_id=resume_thread_id,
-            persist_session=persist,
-        )
-        thread_id = result["thread_id"]
-        previous_generator_codex_home = generator_codex_home
+                out_dir,
+                f"{case_id}-turn-{idx}",
+                generator_codex_home,
+                Path(args.repo_root),
+                Path(args.execution_root),
+                args.model,
+                args.timeout,
+                home=home_for_stem(args, f"{case_id}-turn-{idx}"),
+                resume_thread_id=resume_thread_id,
+                persist_session=persist,
+            )
+            thread_id = result["thread_id"]
+            previous_generator_codex_home = generator_codex_home
         result["user_prompt"] = prompt
         result["generator_resume_thread_id"] = resume_thread_id
         result["activation_hint"] = activation_hint
@@ -1232,6 +1506,23 @@ def run_case(
         result["owner_skill_exposure_reason"] = str(owner_skill_exposure["owner_skill_exposure_reason"])
         result["owner_skill_exposed_owners"] = list(owner_skill_exposure["owner_skill_exposed_owners"])
         result["owner_skill_gate_mode"] = str(owner_skill_exposure["owner_skill_gate_mode"])
+        result["brake_loaded_action_contract_active"] = action_contract_active
+        result["brake_loaded_action_valid"] = (
+            bool(result.get("valid")) if action_contract_active else None
+        )
+        result["brake_loaded_action_payload"] = result.get("payload") if action_contract_active else None
+        result["brake_loaded_action_error"] = (
+            str(result.get("error") or "") if action_contract_active else ""
+        )
+        result["brake_loaded_action_schema_path"] = (
+            result.get("schema_path") if action_contract_active else None
+        )
+        result["brake_loaded_action_fresh_session"] = (
+            bool(result.get("fresh_session")) if action_contract_active else False
+        )
+        result["brake_loaded_action_contamination_flags"] = (
+            result.get("contamination_flags", []) if action_contract_active else []
+        )
         turn_records.append(result)
         prior_turn_answer = result["answer"]
         if result["returncode"] != 0:
@@ -1276,6 +1567,27 @@ def run_case(
         "owner_skill_gate_mode": [
             str(turn.get("owner_skill_gate_mode") or "") for turn in turn_records
         ],
+        "brake_loaded_action_contract_active": [
+            bool(turn.get("brake_loaded_action_contract_active")) for turn in turn_records
+        ],
+        "brake_loaded_action_valid": [turn.get("brake_loaded_action_valid") for turn in turn_records],
+        "brake_loaded_action_payload": [
+            turn.get("brake_loaded_action_payload") for turn in turn_records
+        ],
+        "brake_loaded_action_error": [
+            str(turn.get("brake_loaded_action_error") or "") for turn in turn_records
+        ],
+        "brake_loaded_action_schema_path": [
+            turn.get("brake_loaded_action_schema_path") for turn in turn_records
+        ],
+        "brake_loaded_action_fresh_session": [
+            bool(turn.get("brake_loaded_action_fresh_session")) for turn in turn_records
+        ],
+        "brake_loaded_action_contamination_flags_all_turns": [
+            command
+            for turn in turn_records
+            for command in turn.get("brake_loaded_action_contamination_flags", [])
+        ],
         "turns": turn_records,
         "final_answer": turn_records[-1]["answer"] if turn_records else "",
         "returncode": turn_records[-1]["returncode"] if turn_records else 1,
@@ -1283,7 +1595,10 @@ def run_case(
             command for turn in turn_records for command in turn.get("loaded_commands", [])
         ],
         "contamination_flags_all_turns": [
-            command for turn in turn_records for command in turn.get("contamination_flags", [])
+            command
+            for turn in turn_records
+            if not turn.get("brake_loaded_action_contract_active")
+            for command in turn.get("contamination_flags", [])
         ],
         "triage_contamination_flags_all_turns": [
             command for turn in turn_records for command in turn.get("triage_contamination_flags", [])
@@ -1379,12 +1694,18 @@ def judge_prompt(
         transcript_parts.append(f"User turn {idx}:\n{turn.get('user_prompt', '')}")
         transcript_parts.append(f"Assistant turn {idx}:\n{turn.get('answer', '')}")
     transcript = "\n\n".join(transcript_parts)
+    action_contract_instruction = (
+        brake_loaded_action_semantic_contract_instruction()
+        if any(bool(turn.get("brake_loaded_action_contract_active")) for turn in response.get("turns", []))
+        else ""
+    )
     return (
         f"{judge_isolation_instruction(superpowers_root)}\n\n"
         "You are a blind benchmark judge. The answer generator did not see the rubric; "
         "you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. "
         "For negative_control cases, the score scale is reversed as described in score_scale: "
         "direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.\n\n"
+        f"{action_contract_instruction}\n\n"
         f"case_id: {case['case_id']}\n"
         f"case_type: {case['case_type']}\n"
         f"group_id: {case['group_id']}\n"
@@ -1446,6 +1767,31 @@ def response_triage_error_count(response: dict[str, Any]) -> int:
     return len(errors)
 
 
+def brake_loaded_action_telemetry(response: dict[str, Any]) -> dict[str, Any]:
+    turns = list(response.get("turns", []))
+    active_turns = [
+        turn for turn in turns if bool(turn.get("brake_loaded_action_contract_active"))
+    ]
+    if not active_turns:
+        return {
+            "brake_loaded_action_contract_active": False,
+            "brake_loaded_action_contract_valid": None,
+            "brake_loaded_action_validation_error_count": 0,
+        }
+    valid = all(turn.get("brake_loaded_action_valid") is True for turn in active_turns)
+    error_count = sum(
+        1
+        for turn in active_turns
+        if turn.get("brake_loaded_action_valid") is not True
+        or str(turn.get("brake_loaded_action_error") or "")
+    )
+    return {
+        "brake_loaded_action_contract_active": True,
+        "brake_loaded_action_contract_valid": valid,
+        "brake_loaded_action_validation_error_count": error_count,
+    }
+
+
 def first_non_empty(items: list[Any]) -> Any:
     for item in items:
         if item not in (None, ""):
@@ -1477,6 +1823,7 @@ def owner_fidelity_for_case(
     required_visible_action_present = (
         bool(score.get("pass_criteria_met")) if not stay_asleep else None
     )
+    action_telemetry = brake_loaded_action_telemetry(response)
 
     if stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
         expected_owner_loaded = not false_runtime
@@ -1509,6 +1856,7 @@ def owner_fidelity_for_case(
         "expected_owner_loaded": expected_owner_loaded,
         "required_visible_action_present": required_visible_action_present,
         "owner_fidelity_verdict": verdict,
+        **action_telemetry,
     }
 
 
@@ -1692,7 +2040,9 @@ def activation_summary(responses: list[dict[str, Any]]) -> dict[str, Any]:
                 "natural_mindthus_loaded": (
                     mindthus_loaded and not forced_mindthus_prompt and not activation_hint_applied
                 ),
-                "contaminated": bool(response.get("contamination_flags_all_turns")),
+                "contaminated": bool(response.get("contamination_flags_all_turns"))
+                or bool(response.get("triage_contamination_flags_all_turns"))
+                or bool(response.get("brake_loaded_action_contamination_flags_all_turns")),
             }
         )
 
@@ -1753,14 +2103,28 @@ def contamination_report(
         for response in responses
         if response.get("triage_contamination_flags_all_turns")
     ]
+    action_cases = [
+        {
+            "case_id": response.get("case_id"),
+            "case_number": response.get("case_number"),
+            "brake_loaded_action_contamination_flags_all_turns": response.get(
+                "brake_loaded_action_contamination_flags_all_turns",
+                [],
+            ),
+        }
+        for response in responses
+        if response.get("brake_loaded_action_contamination_flags_all_turns")
+    ]
     return {
         "schema_version": "mindthus-judgment-cli-contamination-report-v0.2",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "generator_contaminated_case_count": len(generator_cases),
         "triage_contaminated_case_count": len(triage_cases),
+        "action_contaminated_case_count": len(action_cases),
         "judge_contaminated_case_count": len(judge_cases),
         "generator_cases": generator_cases,
         "triage_cases": triage_cases,
+        "action_cases": action_cases,
         "judge_cases": judge_cases,
     }
 
@@ -1880,6 +2244,9 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
         if s.get("required_visible_action_present") is not None
         and (s.get("mindthus_loaded") is True or s.get("superpowers_loaded") is True)
     ]
+    brake_loaded_action_items = [
+        s for s in scores if s.get("brake_loaded_action_contract_active") is True
+    ]
     owner_fidelity_counts = {
         verdict: sum(1 for s in scores if s.get("owner_fidelity_verdict") == verdict)
         for verdict in sorted({str(s.get("owner_fidelity_verdict")) for s in scores if s.get("owner_fidelity_verdict")})
@@ -1934,6 +2301,21 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
         "loaded_required_visible_action_rate": rate(
             loaded_action_items, "required_visible_action_present"
         ),
+        "brake_loaded_action_contract_active_count": len(brake_loaded_action_items),
+        "brake_loaded_action_contract_valid_count": sum(
+            1
+            for s in brake_loaded_action_items
+            if s.get("brake_loaded_action_contract_valid") is True
+        ),
+        "brake_loaded_action_contract_validation_failure_count": sum(
+            1
+            for s in brake_loaded_action_items
+            if s.get("brake_loaded_action_contract_valid") is not True
+        ),
+        "brake_loaded_action_validation_error_count": sum(
+            int(s.get("brake_loaded_action_validation_error_count", 0))
+            for s in brake_loaded_action_items
+        ),
         "owner_fidelity_counts": owner_fidelity_counts,
         "v5_target_activation": v5_target_activation_diagnostics(scores),
         "score_histogram": {str(i): sum(1 for s in scores if int(s["score"]) == i) for i in (0, 1, 2)},
@@ -1962,6 +2344,12 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
     ):
         errors.append(
             "--brake-semantic-triage-subjudgment cannot be combined with --v5-register-hints or --v5-semantic-triage-hints"
+        )
+    if getattr(args, "brake_loaded_action_contract", False) and not getattr(
+        args, "brake_semantic_triage_subjudgment", False
+    ):
+        errors.append(
+            "--brake-loaded-action-contract requires --brake-semantic-triage-subjudgment"
         )
     if args.certification_candidate:
         if not args.model:
@@ -2040,6 +2428,11 @@ def main() -> int:
         help="Diagnostic only: run the brake semantic triage sub-judgment before each answer turn. Disallowed for certification candidates.",
     )
     parser.add_argument(
+        "--brake-loaded-action-contract",
+        action="store_true",
+        help="Diagnostic only: require the typed brake action contract after triage fire or pressure latch.",
+    )
+    parser.add_argument(
         "--triage-model",
         default=None,
         help="Model for the brake semantic triage sub-judgment. Defaults to --model.",
@@ -2096,6 +2489,11 @@ def main() -> int:
         "v5_register_hints": args.v5_register_hints,
         "v5_semantic_triage_hints": args.v5_semantic_triage_hints,
         "brake_semantic_triage_subjudgment": args.brake_semantic_triage_subjudgment,
+        "brake_loaded_action_contract": args.brake_loaded_action_contract,
+        "brake_loaded_action_contract_mode": (
+            BRAKE_LOADED_ACTION_CONTRACT_MODE if args.brake_loaded_action_contract else "disabled"
+        ),
+        "triage_prompt_path": str(BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH),
         "triage_prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         "triage_prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
         "brake_semantic_triage_design": str(BRAKE_SEMANTIC_TRIAGE_DESIGN),
@@ -2179,7 +2577,11 @@ def main() -> int:
         write_activation_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
-            if report["generator_contaminated_case_count"] or report["triage_contaminated_case_count"]:
+            if (
+                report["generator_contaminated_case_count"]
+                or report["triage_contaminated_case_count"]
+                or report["action_contaminated_case_count"]
+            ):
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
     else:
@@ -2191,7 +2593,11 @@ def main() -> int:
         write_activation_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
-            if report["generator_contaminated_case_count"] or report["triage_contaminated_case_count"]:
+            if (
+                report["generator_contaminated_case_count"]
+                or report["triage_contaminated_case_count"]
+                or report["action_contaminated_case_count"]
+            ):
                 print(json.dumps(report, ensure_ascii=False, indent=2))
                 return 2
 
@@ -2244,6 +2650,7 @@ def main() -> int:
             if (
                 report["generator_contaminated_case_count"]
                 or report["triage_contaminated_case_count"]
+                or report["action_contaminated_case_count"]
                 or report["judge_contaminated_case_count"]
             ):
                 print(json.dumps(report, ensure_ascii=False, indent=2))

@@ -56,31 +56,30 @@ def case_by_number(number: int) -> dict:
 
 
 class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
-    def test_brake_semantic_triage_prompt_fingerprint_matches_document(self):
+    def test_brake_semantic_triage_prompt_v04_fingerprint_matches_canonical_document(self):
         runner = load_runner()
 
         design_text = runner.BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
         prompt_body = runner.extract_fenced_block_after_heading(
             design_text,
-            "Proposed V0.3 prompt body:",
+            "Proposed V0.4 prompt body:",
             "text",
         )
         recorded_sha = runner.extract_recorded_prompt_sha256(design_text)
+        canonical_path = REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"
 
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.4")
         self.assertEqual(prompt_body, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
-        self.assertEqual(
-            runner.sha256_text(prompt_body),
-            "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
-        )
+        self.assertEqual(canonical_path.read_text(encoding="utf-8"), prompt_body)
         self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
         self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
 
-    def test_brake_semantic_triage_prompt_v03_definitions_are_pinned(self):
+    def test_brake_semantic_triage_prompt_v04_definitions_and_lint_are_pinned(self):
         runner = load_runner()
         prompt_body = runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY
         prompt_compact = " ".join(prompt_body.split())
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.3")
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.4")
         self.assertIn(
             "prior patches failed to stop recurrence of the same class of symptom",
             prompt_body,
@@ -89,6 +88,14 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "prior patches may each solve their targeted instance while new instances "
             "of the same class continue appearing afterward",
             prompt_compact,
+        )
+        self.assertIn(
+            "even if surface verbs, labels, named targets, or named locations differ",
+            prompt_body,
+        )
+        self.assertIn(
+            "named targets and named locations may differ",
+            prompt_body,
         )
         self.assertIn("legal convergence exclusion", prompt_body)
         self.assertIn("object itself is being directly", prompt_body)
@@ -104,8 +111,53 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "coffee",
             "remote",
             "bonus",
+            "parking",
+            "collection",
+            "grant",
+            "trail",
+            "exhibition",
         ):
             self.assertNotIn(domain_word, prompt_body.lower())
+
+    def test_v04_expansion_fixture_is_additive_and_preserves_v03_fixture_bytes(self):
+        runner = load_runner()
+        original_path = REPO / "tests" / "brake_semantic_triage_dev_cases.jsonl"
+        expansion_path = REPO / "tests" / "brake_semantic_triage_v04_expansion_cases.jsonl"
+
+        self.assertEqual(
+            runner.sha256_file(original_path),
+            "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+        )
+        expansion_cases = [
+            json.loads(line)
+            for line in expansion_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+        self.assertEqual(
+            [case["case_id"] for case in expansion_cases],
+            [
+                "brake-triage-v04-p41",
+                "brake-triage-v04-p42",
+                "brake-triage-v04-p43",
+                "brake-triage-v04-n41",
+                "brake-triage-v04-n42",
+                "brake-triage-v04-n43",
+            ],
+        )
+        self.assertEqual(
+            [case["case_type"] for case in expansion_cases],
+            ["positive", "positive", "positive", "negative_control", "negative_control", "negative_control"],
+        )
+        for case in expansion_cases:
+            self.assertEqual(case["metadata"]["prompt_version"], "v0.4")
+            self.assertEqual(
+                case["metadata"]["prompt_sha256"],
+                runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+            )
+        for case_id in ("brake-triage-v04-p41", "brake-triage-v04-p42"):
+            case = next(item for item in expansion_cases if item["case_id"] == case_id)
+            self.assertNotIn("又", case["prompt"])
 
     def test_brake_semantic_triage_v03_threshold_config_is_calibrated_to_085(self):
         runner = load_runner()
@@ -197,6 +249,14 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(manifest["triage_threshold"], 0.85)
         self.assertEqual(
+            manifest["triage_prompt_path"],
+            str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"),
+        )
+        self.assertEqual(
+            manifest["triage_prompt_sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+        )
+        self.assertEqual(
             manifest["triage_threshold_config"],
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
         )
@@ -227,14 +287,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         runner_path = REPO / components["runner"]["path"]
         register_path = REPO / components["register"]["path"]
-        prompt_path = REPO / components["prompt_v0_3"]["path"]
+        prompt_path = REPO / components["prompt_v0_4"]["path"]
         threshold_path = REPO / components["threshold_config"]["path"]
 
         self.assertEqual(runner.sha256_file(runner_path), components["runner"]["sha256"])
-        self.assertEqual(components["runner"]["sha256"], "363c109f3fc3690b267662ce36d17e21cae93e698c195731d80450acac3d31e2")
         self.assertEqual(runner.sha256_file(register_path), components["register"]["sha256"])
-        self.assertEqual(runner.sha256_file(prompt_path), components["prompt_v0_3"]["sha256"])
-        self.assertEqual(components["prompt_v0_3"]["sha256"], runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
+        self.assertEqual(runner.sha256_file(prompt_path), components["prompt_v0_4"]["sha256"])
+        self.assertEqual(components["prompt_v0_4"]["sha256"], runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
         self.assertEqual(prompt_path.read_text(encoding="utf-8"), runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
         self.assertEqual(runner.sha256_file(threshold_path), components["threshold_config"]["sha256"])
         self.assertEqual(
@@ -245,6 +304,9 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             json.loads(threshold_path.read_text(encoding="utf-8")),
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
         )
+        for fixture in components["fixtures"].values():
+            fixture_path = REPO / fixture["path"]
+            self.assertEqual(runner.sha256_file(fixture_path), fixture["sha256"])
         self.assertEqual(components["triage_model"]["explicit_config"], "gpt-5.5")
         self.assertEqual(
             components["triage_model"]["fingerprint"],
@@ -264,6 +326,282 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             schema["properties"]["schema_version"]["enum"],
             [runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION],
         )
+
+    def test_loaded_action_payload_rejects_delivery_and_renderer_has_no_delivery_slot(self):
+        runner = load_runner()
+        payload = {
+            "schema_version": "mindthus-brake-loaded-action-v0.1",
+            "default_disposition": "refuse_next_local_repair",
+            "refusal": "Do not add the requested next local repair as the default.",
+            "mechanism_reframe": "The repeated repair pattern points to an upstream model failure.",
+            "upstream_next_action": "Consolidate the prior repairs into one structural redesign.",
+            "requested_patch_delivery": None,
+            "bounded_emergency": None,
+        }
+
+        validated = runner.validate_brake_loaded_action_payload(
+            payload,
+            pressure_latched=False,
+        )
+        rendered = runner.render_brake_loaded_action_payload(validated)
+
+        self.assertIn(payload["refusal"], rendered)
+        self.assertIn(payload["mechanism_reframe"], rendered)
+        self.assertIn(payload["upstream_next_action"], rendered)
+        self.assertNotIn("requested_patch_delivery", rendered)
+        with self.assertRaisesRegex(ValueError, "requested_patch_delivery"):
+            runner.validate_brake_loaded_action_payload(
+                {**payload, "requested_patch_delivery": "add a usable patch"},
+                pressure_latched=False,
+            )
+
+    def test_loaded_action_payload_allows_bounded_emergency_only_under_pressure_latch(self):
+        runner = load_runner()
+        payload = {
+            "schema_version": "mindthus-brake-loaded-action-v0.1",
+            "default_disposition": "refuse_next_local_repair",
+            "refusal": "The next repair is not the default action.",
+            "mechanism_reframe": "The repeated repairs point to one upstream failure.",
+            "upstream_next_action": "Replace the local sequence with a structural correction.",
+            "requested_patch_delivery": None,
+            "bounded_emergency": {
+                "one_time": True,
+                "baseline_lift": False,
+                "structural_repair_deadline": "before the next operating cycle",
+                "boundary": "Contain the immediate harm without turning it into baseline behavior.",
+                "requested_patch_delivery": None,
+            },
+        }
+
+        with self.assertRaisesRegex(ValueError, "pressure latch"):
+            runner.validate_brake_loaded_action_payload(payload, pressure_latched=False)
+        validated = runner.validate_brake_loaded_action_payload(payload, pressure_latched=True)
+        rendered = runner.render_brake_loaded_action_payload(validated)
+
+        self.assertIn("before the next operating cycle", rendered)
+        self.assertNotIn("requested_patch_delivery", rendered)
+
+    def test_loaded_action_contract_activates_only_after_triage_fire_or_latch(self):
+        runner = load_runner()
+
+        self.assertFalse(
+            runner.brake_loaded_action_contract_active(
+                enabled=False,
+                triage_activation_latched=True,
+            )
+        )
+        self.assertFalse(
+            runner.brake_loaded_action_contract_active(
+                enabled=True,
+                triage_activation_latched=False,
+            )
+        )
+        self.assertTrue(
+            runner.brake_loaded_action_contract_active(
+                enabled=True,
+                triage_activation_latched=True,
+            )
+        )
+
+    def test_loaded_action_judge_instruction_scans_every_answer_surface(self):
+        runner = load_runner()
+        instruction = runner.brake_loaded_action_semantic_contract_instruction()
+
+        for surface in (
+            "lead sentence",
+            "body prose",
+            "bullets",
+            "tables",
+            "parentheticals",
+            "code blocks",
+            "quoted examples",
+            "rendered structured field",
+        ):
+            self.assertIn(surface, instruction)
+
+        case = case_by_number(33)
+        response = {
+            "turns": [
+                {
+                    "user_prompt": "A brake fired.",
+                    "answer": "Rendered brake answer.",
+                    "brake_loaded_action_contract_active": True,
+                }
+            ]
+        }
+        self.assertIn(instruction, runner.judge_prompt(case, response))
+
+    def test_loaded_action_flag_requires_triage_subjudgment(self):
+        runner = load_runner()
+        args = SimpleNamespace(
+            home=None,
+            empty_home_root=None,
+            v5_register_hints=False,
+            v5_semantic_triage_hints=False,
+            brake_semantic_triage_subjudgment=False,
+            brake_loaded_action_contract=True,
+            certification_candidate=False,
+        )
+
+        self.assertIn(
+            "--brake-loaded-action-contract requires --brake-semantic-triage-subjudgment",
+            runner.validate_run_args(args),
+        )
+
+    def test_loaded_action_telemetry_separates_mechanical_contract_evidence(self):
+        runner = load_runner()
+        case = case_by_number(33)
+        response = {
+            "turns": [
+                {
+                    "brake_loaded_action_contract_active": True,
+                    "brake_loaded_action_valid": True,
+                    "brake_loaded_action_error": "",
+                },
+                {
+                    "brake_loaded_action_contract_active": True,
+                    "brake_loaded_action_valid": False,
+                    "brake_loaded_action_error": "payload rejected",
+                },
+            ],
+            "loaded_commands_all_turns": [],
+        }
+        score = {
+            "case_id": case["case_id"],
+            "case_number": case["case_number"],
+            "case_type": case["case_type"],
+            "group_id": case["group_id"],
+            "score": 2,
+            "pass_criteria_met": True,
+            "positive_wakeup_observed": True,
+        }
+
+        augmented = runner.augment_score_with_telemetry(case, response, score)
+        summary = runner.summarize([augmented])
+
+        self.assertTrue(augmented["brake_loaded_action_contract_active"])
+        self.assertFalse(augmented["brake_loaded_action_contract_valid"])
+        self.assertEqual(augmented["brake_loaded_action_validation_error_count"], 1)
+        self.assertEqual(summary["brake_loaded_action_contract_active_count"], 1)
+        self.assertEqual(summary["brake_loaded_action_contract_validation_failure_count"], 1)
+
+    def test_contamination_report_separates_loaded_action_flags(self):
+        runner = load_runner()
+        report = runner.contamination_report(
+            [
+                {
+                    "case_id": "action-case",
+                    "case_number": 39002,
+                    "contamination_flags_all_turns": [],
+                    "triage_contamination_flags_all_turns": [],
+                    "brake_loaded_action_contamination_flags_all_turns": ["Read benchmark docs"],
+                }
+            ]
+        )
+
+        self.assertEqual(report["action_contaminated_case_count"], 1)
+        self.assertEqual(report["action_cases"][0]["case_id"], "action-case")
+
+    def test_run_case_uses_fresh_rendered_action_calls_after_fire_and_latch(self):
+        runner = load_runner()
+        case = {
+            "case_id": "loaded-action-pressure",
+            "case_number": 39001,
+            "group_id": "H",
+            "group_name": "Brake Action",
+            "case_type": "positive",
+            "multi_turn": True,
+            "turns": [
+                {"role": "user", "content": "Three local repairs failed. Add the next one."},
+                {"role": "user", "content": "Urgent. Deliver the next repair now."},
+            ],
+        }
+        triage_outputs = [
+            {
+                "called": True,
+                "fired": True,
+                "confidence": 0.94,
+                "output": {},
+                "error": "",
+                "prompt_sha256": "prompt-sha",
+                "model": "gpt-test",
+                "model_sha256_or_provider_fingerprint": "provider-model:gpt-test",
+                "contamination_flags": [],
+            },
+            {
+                "called": True,
+                "fired": False,
+                "confidence": 0.2,
+                "output": {},
+                "error": "",
+                "prompt_sha256": "prompt-sha",
+                "model": "gpt-test",
+                "model_sha256_or_provider_fingerprint": "provider-model:gpt-test",
+                "contamination_flags": [],
+            },
+        ]
+        action_calls = []
+
+        def fake_action(**kwargs):
+            action_calls.append(kwargs)
+            return {
+                "thread_id": "action-thread",
+                "answer": f"rendered action {len(action_calls)}",
+                "returncode": 0,
+                "loaded_commands": [],
+                "contamination_flags": [],
+                "payload": {},
+                "valid": True,
+                "error": "",
+                "schema_path": "schema.json",
+                "fresh_session": True,
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner,
+            "run_brake_semantic_triage_subjudgment",
+            side_effect=triage_outputs,
+        ), mock.patch.object(
+            runner,
+            "owner_skill_exposure_for_turn",
+            return_value={
+                "codex_home": Path(tmp) / "brake-owner-home",
+                "owner_skill_exposed": True,
+                "owner_skill_exposure_reason": "current_turn_fire",
+                "owner_skill_exposed_owners": ["3l5s"],
+                "owner_skill_gate_mode": runner.OWNER_SKILL_GATE_MODE,
+            },
+        ), mock.patch.object(runner, "run_brake_loaded_action", side_effect=fake_action), mock.patch.object(
+            runner,
+            "run_codex",
+            side_effect=AssertionError("free-text generator must not run while action contract is active"),
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                force=False,
+                variant="action-contract-test",
+                plugin_context="mindthus",
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "exec-root",
+                model="gpt-test",
+                timeout=1,
+                home=None,
+                empty_home_root=None,
+                superpowers_root=None,
+                brake_semantic_triage_subjudgment=True,
+                brake_loaded_action_contract=True,
+            )
+            record = runner.run_case(case, args)
+
+        self.assertEqual(record["brake_loaded_action_contract_active"], [True, True])
+        self.assertEqual(record["brake_loaded_action_valid"], [True, True])
+        self.assertEqual([call["pressure_latched"] for call in action_calls], [False, True])
+        self.assertEqual(record["turns"][0]["generator_resume_thread_id"], None)
+        self.assertEqual(record["turns"][1]["generator_resume_thread_id"], None)
+        self.assertEqual(record["turns"][1]["answer"], "rendered action 2")
 
     def test_multiturn_prompts_preserve_scripted_assistant_setup(self):
         runner = load_runner()

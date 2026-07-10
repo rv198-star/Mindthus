@@ -1,28 +1,38 @@
 {
   "schema_version": "mindthus-brake-shadow-handoff-v0.1",
-  "created_for": "batch-4-shadow-preflight",
+  "created_for": "brake-v0.4-diagnostic-preflight",
   "branch": "codex/brake-semantic-triage-design",
   "minimum_branch_commit": "d65c436c741552c2d13bed121529f413f4ba9ee5",
   "shadow_execution_requirement": "Shadow batch 4 must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, threshold, or owner-gate settings from memory.",
   "components": {
     "runner": {
       "path": "scripts/run-judgment-benchmark-cli.py",
-      "sha256": "363c109f3fc3690b267662ce36d17e21cae93e698c195731d80450acac3d31e2"
+      "sha256": "989c28b4b11441585431e85311432b74bc98cc2b49c8b2c9e68acdd0a0bd1c7f"
     },
     "register": {
       "path": "docs/benchmarks/v5-target-trigger-register.json",
       "sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6"
     },
-    "prompt_v0_3": {
-      "path": "docs/benchmarks/brake-semantic-triage-prompt-v0.3.txt",
-      "version": "v0.3",
-      "sha256": "d6086a6a6069ca6bdef5640187c205a75064df47f408794335c24bae23a1aebd",
-      "source_design_path": "docs/benchmarks/brake-semantic-triage-subjudgment-design.md"
+    "prompt_v0_4": {
+      "path": "docs/benchmarks/brake-semantic-triage-prompt-v0.4.txt",
+      "version": "v0.4",
+      "sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "source_design_path": "docs/benchmarks/brake-semantic-triage-v0.4-mechanism-granularity-design.md"
     },
     "threshold_config": {
       "path": "docs/benchmarks/brake-semantic-triage-threshold-config-v0.1.json",
-      "fingerprint": "d50a95e0a75948adc7fd545d3e00918ba123cb8e6d6af9ffc58e4ee1707b9110",
-      "sha256": "d50a95e0a75948adc7fd545d3e00918ba123cb8e6d6af9ffc58e4ee1707b9110"
+      "fingerprint": "a1761f9328adfd0d99a23d1f3aedc1947f1cc20117cee9bf222ab4f78acd1daa",
+      "sha256": "a1761f9328adfd0d99a23d1f3aedc1947f1cc20117cee9bf222ab4f78acd1daa"
+    },
+    "fixtures": {
+      "v0_3_original": {
+        "path": "tests/brake_semantic_triage_dev_cases.jsonl",
+        "sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13"
+      },
+      "v0_4_expansion": {
+        "path": "tests/brake_semantic_triage_v04_expansion_cases.jsonl",
+        "sha256": "591d785ea0a824f244162236d261790aa4ff4c68fbe593c7ddf98f37ffa890e3"
+      }
     },
     "triage_model": {
       "explicit_config": "gpt-5.5",

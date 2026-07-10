@@ -1,8 +1,8 @@
 # Brake Loaded-Action Shape V0.1 Design
 
-Status: revised draft for external audit confirmation. This document is limited to the behavior after
-brake triage has already fired and exposed the brake owner. It changes no code and
-does not approve any runtime modification.
+Status: runtime contract implemented behind an explicit diagnostic flag. The two
+behavior anchors remain external-audit text only and do not approve fixture conversion
+or a dev run.
 
 ## Decision Boundary
 
@@ -155,12 +155,13 @@ pre-decision language.
 No new owner-skill rule prose should be accepted unless audit can show that it is a
 necessary schema label or renderer field rather than a wording-only behavioral patch.
 
-### Candidate Domains Awaiting Burn-List Clearance
+### Anchor Texts Awaiting Burn-List Clearance
 
 The two proposed anchor domains are `municipal tree-maintenance intake` and
-`theatre touring-equipment handoff`. They are candidates only: do not author their
-case text, add calibration pairs, or implement anchors until external audit checks
-them against the complete burned-domain list. If either is burned, audit supplies or
+`theatre touring-equipment handoff`. Their audit-only text packet is
+`docs/benchmarks/brake-loaded-action-anchor-texts-v0.1.md`. Do not add calibration
+pairs or fixture cases until external audit clears both domains and the exact text
+against the complete burned-domain list. If either is burned, audit supplies or
 approves a replacement before fixture work begins.
 
 ## Test And Evaluation Contract
