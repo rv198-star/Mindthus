@@ -1,0 +1,151 @@
+{
+  "frozen_surfaces_untouched": [
+    "docs/benchmarks/brake-semantic-triage-prompt-v0.4.txt",
+    "tests/brake_semantic_triage_dev_cases.jsonl",
+    "scripts/run-judgment-benchmark-cli.py",
+    "docs/benchmarks/brake-semantic-triage-threshold-config.json"
+  ],
+  "no_benchmark_cli_run": true,
+  "output_rows": {
+    "negative-case-turns.jsonl": 54
+  },
+  "record_shape_reference": "docs/benchmarks/runs/2026-07-10-brake-v04-activation-regression-extraction/old-positive-case-turns.jsonl",
+  "schema_version": "mindthus-brake-v04-negative-hard-gate-extraction-v0.1",
+  "shared_v04_fingerprints": {
+    "model": "gpt-5.5",
+    "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+    "runner_sha256": "989c28b4b11441585431e85311432b74bc98cc2b49c8b2c9e68acdd0a0bd1c7f",
+    "threshold": 0.85,
+    "threshold_config_sha256": "a1761f9328adfd0d99a23d1f3aedc1947f1cc20117cee9bf222ab4f78acd1daa"
+  },
+  "source_files": [
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/raw-responses.jsonl",
+      "repeat": 1,
+      "role": "raw",
+      "sha256": "cfafaa956c777742491de8a541dedade9e5f22cdefa36733795d374480544581"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/score-records.jsonl",
+      "repeat": 1,
+      "role": "scores",
+      "sha256": "ea01c7b745aab238c2942c249baf58b9a86c78c05f151f1b84da1adc2a4fbfee"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/original/run-manifest.json",
+      "repeat": 1,
+      "role": "manifest",
+      "sha256": "8ad7e036f42ba8bb2d02cc69c84b4927a54b72a439b56435f8908d550aadb8d3"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/v04-expansion/raw-responses.jsonl",
+      "repeat": 1,
+      "role": "raw",
+      "sha256": "651775f0b49783a18199a9b6e207353517cd0cffee2b2892fa25f7b9bd9e0e50"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/v04-expansion/score-records.jsonl",
+      "repeat": 1,
+      "role": "scores",
+      "sha256": "4f2a804cf295ec3a22363474c9aa9f3f25c9574d1bafb68a5185741bf8263cf1"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-1/v04-expansion/run-manifest.json",
+      "repeat": 1,
+      "role": "manifest",
+      "sha256": "d3273040cbdefc191bcd364899d1dddbbb9b025b91020308091615ecdc906796"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/raw-responses.jsonl",
+      "repeat": 2,
+      "role": "raw",
+      "sha256": "bb1fe0f5f48908e4cb5f208bda0776c4368362fa5eba666fbc9f5a2ebbe4e49d"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/score-records.jsonl",
+      "repeat": 2,
+      "role": "scores",
+      "sha256": "02a364e3fcbf8504ef1d80a585ddf4dd9a8c0acb6025ec5a358df93f1a2375ec"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/original/run-manifest.json",
+      "repeat": 2,
+      "role": "manifest",
+      "sha256": "5f4e2b7f55cf8b24116fef98997155e32403dd5d00272bed87c3da17bd1f8fd0"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/v04-expansion/raw-responses.jsonl",
+      "repeat": 2,
+      "role": "raw",
+      "sha256": "db6d951863772bae12a853571ebd61ed8d6741b6f3d18a206895930e4a292391"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/v04-expansion/score-records.jsonl",
+      "repeat": 2,
+      "role": "scores",
+      "sha256": "f0fa872cbab311dce8b8f1c7c3cff7bfa61b448c63c5735de1821c43bf269bce"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-2/v04-expansion/run-manifest.json",
+      "repeat": 2,
+      "role": "manifest",
+      "sha256": "b84476d66a9ad1f1a601df2ebe9e49080ff8aa226c808026cc22c525e9e864b9"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/raw-responses.jsonl",
+      "repeat": 3,
+      "role": "raw",
+      "sha256": "97d89228d0f2b2c6db7a2cdecf00ee8fb4954850c63c0aaefa05132b9088d586"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/score-records.jsonl",
+      "repeat": 3,
+      "role": "scores",
+      "sha256": "455a68833d0a5aa30be8d69e752b6674d67f319b0dac89f6d67205b26db0e2c7"
+    },
+    {
+      "packet": "original",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/original/run-manifest.json",
+      "repeat": 3,
+      "role": "manifest",
+      "sha256": "ea50b3bd07db8697004a2d6b174934ac20ef7e4f567c8b56fb07a3d6ce0cd0f6"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/v04-expansion/raw-responses.jsonl",
+      "repeat": 3,
+      "role": "raw",
+      "sha256": "fefacc0da8e2acc98e083996a2d8dc3a6ef592b7100615e9abf50b7acd52e4f1"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/v04-expansion/score-records.jsonl",
+      "repeat": 3,
+      "role": "scores",
+      "sha256": "86a2dda4aa5d776b07a8e0d99e3184c1619b385f137c67a6a3d0265e470d6d14"
+    },
+    {
+      "packet": "v04-expansion",
+      "path": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev/repeat-3/v04-expansion/run-manifest.json",
+      "repeat": 3,
+      "role": "manifest",
+      "sha256": "0b95f682fa3652b2127df73b7637e24737622c839d8896c2e61310c6a255e8fd"
+    }
+  ],
+  "source_root": "docs/benchmarks/runs/2026-07-10-brake-v04-action-anchor-dev",
+  "status": "derived-data-only"
+}

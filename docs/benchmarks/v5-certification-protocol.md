@@ -121,6 +121,9 @@ must record:
 
 - `loaded_owner`: detected Mindthus skill owners loaded at runtime
 - `expected_owner_loaded`: whether the loaded owner is acceptable for the case
+- When a fired or latched turn receives a loaded-action contract, this field still means
+  an accepted owner actually loaded at runtime; exposure, contract activation, payload
+  validation, or answer quality do not substitute for that load.
 - `required_visible_action_present`: judge-derived proxy for whether the answer did the
   action that made the activation useful
 - `owner_fidelity_verdict`: compact status for routing and action fidelity
