@@ -2,7 +2,7 @@
   "schema_version": "mindthus-brake-shadow-handoff-v0.1",
   "created_for": "brake-v0.4-diagnostic-preflight",
   "branch": "codex/brake-semantic-triage-design",
-  "minimum_branch_commit": "d9d3d51fd0d40381411275e2a14c54efd6a8c54b",
+  "minimum_branch_commit": "a9811cb6d0fb9d35a5cba0a8606a9643acd11419",
   "shadow_execution_requirement": "Any external shadow run must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, threshold, or owner-gate settings from memory.",
   "components": {
     "runner": {
