@@ -32,20 +32,29 @@ BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH = (
 )
 BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.4"
 BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
-BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.85
+BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.82
 BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.1"
 BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.1"
 JUDGE_PARSE_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
     "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+    "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
     "threshold": BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-    "previous_threshold": 0.90,
-    "calibration_evidence": "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates",
-    "decision": "external-audit-conditional-branch-a",
+    "previous_threshold": 0.85,
+    "calibration_evidence": [
+        "docs/benchmarks/runs/2026-07-10-brake-v04-activation-regression-extraction",
+        "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction",
+    ],
+    "negative_hard_gate_control": {
+        "case_turn_count": 54,
+        "all_four_true_count": 0,
+        "data_path": "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction",
+    },
+    "decision": "external-audit-conditional-branch-b",
     "falsification_clause": (
-        "negative four hard gates true plus confidence >= 0.85 triggers rollback "
-        "to 0.90 and review"
+        "negative four hard gates true plus confidence >= 0.82 triggers rollback "
+        "to 0.85 and review"
     ),
 }
 OWNER_SKILL_GATE_MODE = "brake_semantic_triage_owner_skill_gate_v0.1"
@@ -2441,7 +2450,7 @@ def main() -> int:
         "--triage-threshold",
         type=float,
         default=BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
-        help="Confidence threshold for brake semantic triage firing. Calibrated v0.3 is 0.85.",
+        help="Confidence threshold for brake semantic triage firing. Configured V0.4 is 0.82.",
     )
     parser.add_argument(
         "--superpowers-root",

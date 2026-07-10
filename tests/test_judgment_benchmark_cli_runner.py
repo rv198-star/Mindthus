@@ -210,7 +210,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             self.assertEqual(metadata["action_contract_evidence"], "required")
             self.assertTrue(case["multi_turn"])
 
-    def test_brake_semantic_triage_v03_threshold_config_is_calibrated_to_085(self):
+    def test_brake_semantic_triage_v04_threshold_config_is_calibrated_to_082(self):
         runner = load_runner()
         parsed = {
             "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
@@ -219,12 +219,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "prior_repair_count": 3,
             "is_n_plus_1_request": True,
             "pressure_present": False,
-            "confidence": 0.85,
+            "confidence": 0.82,
             "evidence_spans": [{"role": "user", "turn_index": 1, "span": "three prior local repairs"}],
             "abstain_reason": "",
         }
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD, 0.85)
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD, 0.82)
         self.assertTrue(
             runner.brake_semantic_triage_fire_decision(
                 parsed,
@@ -233,11 +233,32 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         )
         self.assertEqual(
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["threshold"],
-            0.85,
+            0.82,
         )
         self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["calibration_evidence"],
-            "docs/benchmarks/runs/2026-07-09-brake-semantic-triage-abstain-hard-gates",
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["prompt_version"],
+            "v0.4",
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["prompt_sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["negative_hard_gate_control"],
+            {
+                "case_turn_count": 54,
+                "all_four_true_count": 0,
+                "data_path": (
+                    "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction"
+                ),
+            },
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG["falsification_clause"],
+            (
+                "negative four hard gates true plus confidence >= 0.82 triggers rollback "
+                "to 0.85 and review"
+            ),
         )
         self.assertEqual(
             runner.sha256_text(
@@ -298,7 +319,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             manifest = json.loads((out_dir / "run-manifest.json").read_text(encoding="utf-8"))
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(manifest["triage_threshold"], 0.85)
+        self.assertEqual(manifest["triage_threshold"], 0.82)
         self.assertEqual(
             manifest["triage_prompt_path"],
             str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"),
@@ -355,6 +376,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             json.loads(threshold_path.read_text(encoding="utf-8")),
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
         )
+        self.assertEqual(components["threshold_config"]["prompt_version"], "v0.4")
+        self.assertEqual(
+            components["threshold_config"]["prompt_sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+        )
+        self.assertEqual(components["threshold_config"]["threshold"], 0.82)
         for fixture in components["fixtures"].values():
             fixture_path = REPO / fixture["path"]
             self.assertEqual(runner.sha256_file(fixture_path), fixture["sha256"])
