@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ce1-406b-7223-b5c8-e5a5b318a80d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"no prior repair history is present; current request asks for analysis of complaints, not another local repair after repeated failed patches\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17228,"cached_input_tokens":2432,"output_tokens":438,"reasoning_output_tokens":281}}

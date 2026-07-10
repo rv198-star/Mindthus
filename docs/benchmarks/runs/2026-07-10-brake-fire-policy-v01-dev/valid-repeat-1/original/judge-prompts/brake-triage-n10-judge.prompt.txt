@@ -1,0 +1,37 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以按“直接原因、系统主因、责任边界”来写，避免变成单点追责。
+
+| 投诉类型 | 可能主因 | 责任边界 |
+|---|---|---|
+| 配送迟到 | 履约时效监控不足，异常订单未提前预警或升级；也可能是承运商运力/路线问题 | **物流/履约团队主责**：时效监控、承运商管理、异常升级。**客服协责**：及时告知客户进度。若承运商未按约履约，属于外部服务商责任，但内部仍需承担管理责任 |
+| 包装破损 | 包装标准不足、质检漏检，或运输环节暴力分拣导致破损 | **仓储/包装团队主责**：包装材料、打包规范、出库质检。**物流协责**：运输破损追责、承运商索赔。若包装合格但运输损坏，物流侧承担承运商管理责任 |
+| 客服回访慢 | 工单分派、SLA提醒或升级机制不清；客服排班/优先级管理不足 | **客服团队主责**：回访时效、工单闭环、客户安抚。**相关业务团队协责**：及时提供处理结论，避免客服无法回复 |
+
+复盘结论可以这样写：
+
+本月三起投诉表面分别发生在配送、包装和客服环节，但共同暴露出异常订单的前置预警、跨团队协同和闭环机制不足。配送迟到的主因在履约过程监控和异常升级不及时；包装破损的主因在包装标准、出库质检或承运商运输管理存在缺口；客服回访慢的主因在工单优先级、SLA提醒和跨部门反馈链路不够清晰。
+
+责任边界上，应按“谁负责标准、谁负责执行、谁负责监控、谁负责客户沟通”划分：仓储负责包装质量和出库检查，物流负责配送时效和承运商管理，客服负责客户响应和回访闭环，业务支持团队需在客服需要处理结论时按时反馈。跨环节问题不宜只归因于一线人员，应由对应流程负责人承担改进责任。

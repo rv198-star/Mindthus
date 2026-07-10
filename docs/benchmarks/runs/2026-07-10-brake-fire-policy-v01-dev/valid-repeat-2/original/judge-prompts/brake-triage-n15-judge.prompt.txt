@@ -1,0 +1,60 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+建议不要今天直接全量前移，先做一轮小流量实验，避免把已经有效的“日历邀请”机制打乱。
+
+**目标**
+把到课率从当前 82% 提到 85%，等于把缺席率从 18% 降到 15%，需要减少约 17% 的缺席。
+
+**实验方案**
+
+1. **保持不变的部分**
+   - 消息正文继续用第二轮的短文案。
+   - 继续使用第三轮的日历邀请。
+   - 只测试“提醒时间前移”这个变量。
+
+2. **分三组测试**
+   - A 组：现有提醒时间，作为对照组。
+   - B 组：提醒时间前移一档，例如从课前 2 小时改为课前 6 小时。
+   - C 组：提醒时间前移两档，例如课前 24 小时提醒。
+
+3. **推荐节奏**
+   - 课前 24 小时：发送日历邀请或确认提醒。
+   - 课前 2 小时：保留一条极短提醒。
+   - 课前 15 分钟：只对未确认或高风险用户补一条提醒，避免打扰所有人。
+
+4. **文案控制**
+   示例：
+   > 你预约的课程将在明天 19:00 开始，已为你保留席位。可直接通过日历提醒到课。
+
+   课前短提醒：
+   > 课程 2 小时后开始，点击日历即可进入。
+
+5. **判断标准**
+   - 主指标：实际到课率。
+   - 辅助指标：日历接受率、提醒打开率、迟到率、取消率、退订/投诉率。
+   - 至少跑满 1-2 个完整上课周期再判断，不要只看当天数据。
+
+**建议结论**
+优先测试“课前 24 小时确认 + 课前 2 小时短提醒”的组合。单纯把提醒大幅前移可能会被忘记，前移确认提醒，同时保留临近提醒，更有机会从 82% 推到 85%。

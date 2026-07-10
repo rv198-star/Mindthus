@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+拒绝继续在入口追加“核验人”作为默认修补。前面几个问题已经连续用人工核对、二审、复核岗来兜底；这次再加入口核验，只是在同一失效模式上继续叠人，不会消除合同编号出错的来源。
+
+重复机制不是“缺一个人看一眼”，而是关键单据字段在进入流程前缺少稳定来源、约束和自动阻断。每次出错后都加一道人工关口，会把流程变慢、责任切碎，并让上游生成规则继续失效。
+
+暂停新增人工关口，先把近期票据、预算码、审批人、合同编号错误合并为同一类入口数据质量问题，指定系统/规则负责人做源头校验与生成规则修复。
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

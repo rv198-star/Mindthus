@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4cce-d7b4-7161-9347-43bc0b6524c2"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stays direct, explicitly says it will not choose for the user, and structures the cost/speed/reputation tradeoffs clearly. It does not trigger triage, apply an external brake framework, or force a recommendation.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17384,"cached_input_tokens":16256,"output_tokens":404,"reasoning_output_tokens":280}}

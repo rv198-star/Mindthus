@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样写复盘口径：
+
+**共性主因**
+
+本月三起投诉表面分别是配送、包装、客服问题，但共同根因是：前端承诺、履约过程、异常反馈之间缺少稳定的 SLA 监控和闭环机制。问题发生后，用户感知到的不只是单点失误，而是“没有及时预警、没有及时补救、没有及时解释”。
+
+**单项主因与责任边界**
+
+| 投诉类型 | 主因判断 | 主责 | 协责 / 边界 |
+|---|---|---|---|
+| 配送迟到 | 配送时效管控不足，可能包括出库延迟、承运商履约不稳、异常件未提前预警 | 仓配 / 物流运营 | 仓库负责按时出库；承运商负责揽收和派送；客服只负责告知和安抚，不应承担实际延误主责，除非未及时通知用户 |
+| 包装破损 | 包装标准或执行不到位，也可能存在运输环节暴力分拣 | 仓储包装 / 供应链 | 仓库负责按标准包装和质检；采购/品控负责包装材料强度；物流商对运输损坏承担相应责任；需用照片、签收记录、破损位置判断边界 |
+| 客服回访慢 | 工单 SLA 不清晰或排班/优先级机制不足，导致投诉后响应滞后 | 客服团队 | 若客服等待仓配、物流、售后等部门反馈，相关部门需承担协同延迟责任；若系统流转异常，则由工具/流程负责人协责 |
+
+**复盘结论建议**
+
+这三起投诉不宜简单归因为个人失误，应归因为履约链路中的三个薄弱点：配送异常缺少提前预警、包装质量缺少过程校验、投诉工单缺少明确回访时限。责任边界上，应按“谁控制动作，谁承担主责；谁影响时效，谁承担协责”的原则划分，避免把所有问题都压到客服端。

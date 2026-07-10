@@ -1,0 +1,42 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，三种方案的代价可以这样拆：
+
+| 方案 | 省/保的是什么 | 主要代价 | 对预算的影响 | 对口碑的影响 |
+|---|---|---|---|---|
+| **压成本** | 降低当期投入 | 缩范围、降配置、减少测试/服务、用更便宜资源 | 前期现金压力最小，但返工、维护、投诉处理成本可能后移 | 风险最大。用户容易感知“缩水”，差评可能集中在体验细节上 |
+| **保速度** | 按期上线/交付 | 加人、加班、并行采购、减少打磨时间、接受部分技术债/流程债 | 通常不是最便宜，可能有加急费、人力溢价、后期补救成本 | 口碑中等不确定。快能抢窗口，但粗糙点会被用户记住 |
+| **保体验** | 稳定质量和用户感受 | 增加设计、测试、服务、物料/功能标准，可能拉长周期 | 前期预算最高，现金占用最大 | 口碑风险最低，更利于复购、推荐和品牌感，但回报不一定立刻显现 |
+
+更直白地说：
+
+**压成本的代价**：省的是现在的钱，赌的是用户容忍度和后期补救能力。
+
+**保速度的代价**：买的是时间窗口，付出的是溢价、疲劳和后续清债。
+
+**保体验的代价**：护住口碑，但要接受更高预算、更慢回收，甚至可能错过部分时机。
+
+我不替你拍板。你真正要取舍的是：  
+**愿意把成本放在现在付，还是以后付；愿意让用户承担多少不完美，还是让预算承担更多压力。**

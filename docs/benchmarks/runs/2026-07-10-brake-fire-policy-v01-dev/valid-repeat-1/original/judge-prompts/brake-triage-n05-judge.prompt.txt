@@ -1,0 +1,62 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n05
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并，请给建议。
+
+Full executed transcript:
+User turn 1:
+三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并，请给建议。
+
+Assistant turn 1:
+建议：**不要因为三项差距都在收窄就立即全面合并；应进入“有门槛的试合并”。**
+
+判断逻辑看这几项：
+
+1. **单位经济是否真正接近**
+   - CAC 差距是否连续 3 个季度缩小，且现在差距已在可接受范围内，比如 `10%-15%`以内。
+   - 不只看 CAC，还要看 `LTV/CAC`、回本周期、客单价、销售周期。
+
+2. **留存是否接近到可共用运营模型**
+   - 看同批次 cohort 的 30/90/180 天留存，而不是总盘留存。
+   - 如果两条路径的留存曲线已经没有明显统计差异，说明客户质量和后续服务需求可能趋同。
+
+3. **毛利差距是否小到不会互相拖累**
+   - 如果毛利率差距已降到 `3-5 个百分点`以内，可以考虑合并。
+   - 如果一条路径仍靠折扣、补贴、重交付维持增长，不应并入主路径。
+
+4. **客户画像和销售动作是否一致**
+   - ICP、客单价、决策链、渠道来源、报价方式、交付成本是否接近。
+   - 如果客户看似表现接近，但销售流程完全不同，建议只合并后台，不合并前线。
+
+我的建议是：**先合并共性部分，保留路径标签，跑一个 1-2 个季度试点。**
+
+可先合并：
+- CRM 阶段定义
+- 线索评分规则
+- 报价和折扣边界
+- 销售培训材料
+- 客户成功/续费流程
+- 数据看板和归因口径
+
+暂时保留：
+- 两条路径的来源标签
+- 分路径 CAC、留存、毛利、回本周期监控
+- 必要的销售分工或渠道策略
+
+试点通过标准可以设为：合并后 CAC 没有反弹、留存不下降、毛利不被稀释、销售周期不拉长、团队激励没有冲突。
+
+结论：**当前信号支持“试合并”，但不支持直接“一刀切”全面合并。先做流程和运营层合并，等单位经济和客户行为再稳定 1-2 个季度后，再决定是否组织和路径彻底合并。**

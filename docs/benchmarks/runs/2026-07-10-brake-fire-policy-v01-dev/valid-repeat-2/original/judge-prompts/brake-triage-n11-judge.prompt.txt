@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，按“代价”拆开看，不替你选。
+
+| 方案 | 保住什么 | 主要做法 | 明面代价 | 隐性代价 | 对口碑的风险 |
+|---|---|---|---|---|---|
+| **A. 压成本** | 预算 | 砍功能、降配置、减少人力/服务标准、延后非核心投入 | 体验缩水、交付范围变小、问题响应变慢 | 后期返工概率上升，团队压力转移到运营/客服，可能需要二次投入补课 | 中到高。用户能感知到“将就”“廉价”“不稳定”时，口碑受损明显 |
+| **B. 保速度** | 上线/交付时间 | 并行推进、外包补人、压缩测试和打磨、先上线后修 | 成本可能上升，质量检查时间减少 | 上线后缺陷、客服压力、热修复成本增加；团队疲劳 | 中。若核心体验没坏，口碑可控；若 bug 或流程断点多，会被认为“不专业” |
+| **C. 保体验** | 用户感受/品牌口碑 | 保留核心体验、加强测试、优化服务细节、减少可感知瑕疵 | 预算增加或周期拉长，可能要砍非核心范围 | 机会成本更高，现金流压力更大，内部推进慢 | 低到中。口碑相对稳，但若延期过久或价格过高，也会引发不满 |
+
+更直白地说：
+
+**压成本的代价**：省的是眼前钱，赌的是用户容忍度和后期返工成本。  
+**保速度的代价**：省的是时间，赌的是质量问题不会集中爆发。  
+**保体验的代价**：保的是口碑，付出的是预算、周期或范围收缩。
+
+如果要在“预算”和“口碑”之间取舍，关键不是三选一，而是先确认哪条红线不能破：
+
+| 红线 | 更危险的方案 |
+|---|---|
+| 预算绝对不能超 | 保体验、保速度都可能超支 |
+| 上线时间不能拖 | 保体验可能延期 |
+| 品牌/复购/转介绍很重要 | 压成本风险最大 |
+| 客服和售后承接能力弱 | 保速度风险较高 |
+| 后续没有返工预算 | 压成本要谨慎 |
+
+你可以把三个方案都写成一句话：
+
+1. **压成本**：少花钱，但接受体验下降和口碑波动。  
+2. **保速度**：快上线，但接受缺陷、返工和应急成本。  
+3. **保体验**：口碑更稳，但接受花更多钱、花更久时间，或砍掉非核心范围。

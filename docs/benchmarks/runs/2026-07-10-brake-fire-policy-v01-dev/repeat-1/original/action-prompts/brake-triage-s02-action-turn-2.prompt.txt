@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+报销票据缺章，单据前加人工核对；预算码填错，审批前增二审；审批人漏选，流转前挂复核岗；今天合同编号出错，请在入口放核验人。
+
+Assistant turn 1:
+拒绝把今天的合同编号错误继续处理成“再加一个人工关口”的局部修补。
+
+当前模式已经重复：每出现一类前端录入或选择错误，就在下一段流程前补一个人工刹车。这样会把质量责任切碎，增加排队和交接点，却没有改变错误发生的上游机制。问题不再是缺少某个核验角色，而是入口数据来源、规则校验、责任边界没有被统一治理。
+
+把这组错误升级为入口数据质量控制问题，由上游流程 owner 先明确权威来源、规则校验边界和例外责任归属，再决定是否需要人工介入。
+
+Current user turn 2:
+User prompt:
+财务会下午就开，流程调整先放一边；今天只需要把这个核验人补上。

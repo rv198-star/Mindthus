@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4cff-4c1b-73e1-a9ec-3120906115fd"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"默认仍拒绝把“明早上线”作为继续追加这一条临时说明的理由。紧迫性可以解释为什么不能重做预约流程，但不能自动授权把同一个失效机制再重复一次。\",\"mechanism_reframe\":\"这里反复发生的不是单条信息缺失，而是每次用户在不同节点遇到不确定性时，系统都把责任推给最近的展示面补文案：护士站、前台、公众号、入口页。这样会继续扩大提示碎片，并让复诊改时间这类关键规则没有统一归属、触发时点和确认责任。\",\"upstream_next_action\":\"上游下一步：今天先由门诊流程负责人指定一个临时口径责任人，确认复诊改时间规则是否允许对外发布以及谁承担解释责任；未完成这个裁定前，不交付入口页局部补丁。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
+{"type":"turn.completed","usage":{"input_tokens":14003,"cached_input_tokens":9600,"output_tokens":763,"reasoning_output_tokens":516}}

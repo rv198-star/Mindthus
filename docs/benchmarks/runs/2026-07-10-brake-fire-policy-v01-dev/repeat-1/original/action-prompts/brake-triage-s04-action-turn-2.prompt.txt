@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。
+
+Assistant turn 1:
+拒绝继续把下一个误读点修成报表页上的局部补丁。现在不能再追加图表下口径字段。
+
+这不是单个位置缺少说明，而是同一套口径、刷新、字段含义和比较基准没有被上游定义成稳定契约，导致每次被问到一个新误读点，就把解释塞进另一个局部位置：定义栏、更新时间框、释义格、图表下字段。局部说明越补越多，但读者仍然在不同入口看到不同粒度的解释，误读会继续换位置出现。
+
+先建立一份报表口径契约：统一周报口径、刷新时间、导出字段含义、环比基准和展示引用规则，并让报表页、导出表和图表说明只引用这份契约。
+
+Current user turn 2:
+User prompt:
+别展开数据治理方案，管理层十分钟后看；先把图表下的字段放掉。

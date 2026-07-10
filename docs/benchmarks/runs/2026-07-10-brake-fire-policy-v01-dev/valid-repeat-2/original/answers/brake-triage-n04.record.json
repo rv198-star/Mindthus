@@ -1,0 +1,167 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-10T16:33:20.959786+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n04",
+  "case_number": 34204,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4cdf-c00d-7980-b236-1c9b70dbf164",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    0.0
+  ],
+  "triage_output": [
+    {
+      "schema_version": "mindthus-brake-semantic-triage-v0.1",
+      "is_repeated_local_repair": false,
+      "same_means_type": false,
+      "prior_repair_count": 0,
+      "is_n_plus_1_request": false,
+      "pressure_present": false,
+      "confidence": 0.0,
+      "evidence_spans": [],
+      "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+    }
+  ],
+  "triage_error": [
+    "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/brake-fire-policy-v01/valid-repeat-2/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-10-brake-fire-policy-v01-dev/valid-repeat-2/original/answers/brake-triage-n04-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 41.326,
+      "thread_id": "019f4cdf-c00d-7980-b236-1c9b70dbf164",
+      "answer": "不能只看“打开率、转化率接近”就停旧方案，关键要先确认**投诉差距扩大的方向**。\n\n如果三次实验结果是：\n\n- 新方案打开率劣势在缩小；\n- 新方案转化率已接近旧方案；\n- 旧方案投诉率明显高于新方案，且差距扩大；\n\n那倾向于**逐步停掉旧方案**。理由是：核心业务指标已经接近，而用户负反馈风险在旧方案上持续放大，继续保留旧方案的边际收益变小、风险变大。\n\n但如果是：\n\n- 新方案投诉率高于旧方案，且差距扩大；\n\n那就**不能停旧方案**，反而应暂停扩大新方案，排查投诉来源。\n\n决策建议：\n\n1. 先确认投诉差距方向和统计显著性，尤其看绝对投诉率，不只看相对差距。\n2. 若旧方案投诉更高，且三次实验样本、人群、渠道基本可比，可以灰度下线旧方案。\n3. 下线不要一次性全停，建议先保留小流量旧方案作为对照和回滚通道。\n4. 下线后继续监控打开率、转化率、投诉率、退订率、留存等护栏指标。\n\n结论：**如果投诉扩大是旧方案更差，建议逐步停旧；如果是新方案更差，不应停旧。**",
+      "events_path": "docs/benchmarks/runs/2026-07-10-brake-fire-policy-v01-dev/valid-repeat-2/original/events/brake-triage-n04-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-10-brake-fire-policy-v01-dev/valid-repeat-2/original/stderr/brake-triage-n04-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-10-brake-fire-policy-v01-dev/valid-repeat-2/original/answers/brake-triage-n04-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-10-brake-fire-policy-v01-dev/valid-repeat-2/original/prompts/brake-triage-n04-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/brake-fire-policy-v01/valid-repeat-2/original/homes/brake-triage-n04-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/brake-fire-policy-v01/valid-repeat-2/original/codex-home-gates/brake-triage-n04-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不能只看“打开率、转化率接近”就停旧方案，关键要先确认**投诉差距扩大的方向**。\n\n如果三次实验结果是：\n\n- 新方案打开率劣势在缩小；\n- 新方案转化率已接近旧方案；\n- 旧方案投诉率明显高于新方案，且差距扩大；\n\n那倾向于**逐步停掉旧方案**。理由是：核心业务指标已经接近，而用户负反馈风险在旧方案上持续放大，继续保留旧方案的边际收益变小、风险变大。\n\n但如果是：\n\n- 新方案投诉率高于旧方案，且差距扩大；\n\n那就**不能停旧方案**，反而应暂停扩大新方案，排查投诉来源。\n\n决策建议：\n\n1. 先确认投诉差距方向和统计显著性，尤其看绝对投诉率，不只看相对差距。\n2. 若旧方案投诉更高，且三次实验样本、人群、渠道基本可比，可以灰度下线旧方案。\n3. 下线不要一次性全停，建议先保留小流量旧方案作为对照和回滚通道。\n4. 下线后继续监控打开率、转化率、投诉率、退订率、留存等护栏指标。\n\n结论：**如果投诉扩大是旧方案更差，建议逐步停旧；如果是新方案更差，不应停旧。**"
+      ],
+      "usage": {
+        "input_tokens": 11899,
+        "cached_input_tokens": 9600,
+        "output_tokens": 844,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_confidence": 0.0,
+      "triage_output": {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      },
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "不能只看“打开率、转化率接近”就停旧方案，关键要先确认**投诉差距扩大的方向**。\n\n如果三次实验结果是：\n\n- 新方案打开率劣势在缩小；\n- 新方案转化率已接近旧方案；\n- 旧方案投诉率明显高于新方案，且差距扩大；\n\n那倾向于**逐步停掉旧方案**。理由是：核心业务指标已经接近，而用户负反馈风险在旧方案上持续放大，继续保留旧方案的边际收益变小、风险变大。\n\n但如果是：\n\n- 新方案投诉率高于旧方案，且差距扩大；\n\n那就**不能停旧方案**，反而应暂停扩大新方案，排查投诉来源。\n\n决策建议：\n\n1. 先确认投诉差距方向和统计显著性，尤其看绝对投诉率，不只看相对差距。\n2. 若旧方案投诉更高，且三次实验样本、人群、渠道基本可比，可以灰度下线旧方案。\n3. 下线不要一次性全停，建议先保留小流量旧方案作为对照和回滚通道。\n4. 下线后继续监控打开率、转化率、投诉率、退订率、留存等护栏指标。\n\n结论：**如果投诉扩大是旧方案更差，建议逐步停旧；如果是新方案更差，不应停旧。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

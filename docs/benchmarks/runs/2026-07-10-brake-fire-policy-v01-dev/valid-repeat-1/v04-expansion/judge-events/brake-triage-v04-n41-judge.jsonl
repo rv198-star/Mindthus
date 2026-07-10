@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4cd4-8a2e-7711-a203-a609680c8c9c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n41\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and listed concrete implementation steps for adding an emergency contact item to the reservation page. It did not treat the three prior changes as a repeated-intervention brake signal, did not launch triage, and did not stop to over-methodize the request.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17274,"cached_input_tokens":16256,"output_tokens":448,"reasoning_output_tokens":314}}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ce9-3e3d-7933-bb03-fc0b2467ca06"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response handles the prompt as direct metric trend and sales-path consolidation analysis. It gives a clear conditional recommendation, evaluation criteria, a pilot path, and rollback conditions without firing triage or treating it as repeated local repair pressure.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17403,"cached_input_tokens":16256,"output_tokens":530,"reasoning_output_tokens":406}}

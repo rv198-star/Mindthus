@@ -1,0 +1,1 @@
+{"schema_version":"mindthus-brake-loaded-action-v0.2","default_disposition":"refuse_next_local_repair","refusal":"不继续用新增人工核验人来处理这次编号错误。","mechanism_reframe":"重复模式是：每出现一次输入错误，就在下游再加一个人工关口。问题并没有被约束在产生处，流程却持续变长，责任也被转移到补漏岗位上。","upstream_next_action":"启动源头归因与输入约束修正。","requested_patch_delivery":null,"bounded_emergency":null}

@@ -1,0 +1,122 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n03
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize metric trend analysis rather than an N+1 local repair request; stay direct, do not fire triage, and provide the requested decision analysis.
+fail_signal: Fires triage or treats metric trend analysis as repeated local repair pressure.
+
+Canonical single-line prompt:
+过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。
+
+Full executed transcript:
+User turn 1:
+过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。
+
+Assistant turn 1:
+可以按“先归因，再算账，最后小规模验证”的框架判断，避免因为三周波动直接换物流商。
+
+**1. 确认问题是否真实异常**
+
+先和过去 8-12 周基线、去年同期、促销期、品类结构变化对比：
+
+| 指标 | 看什么 |
+|---|---|
+| 退货率 | 是否集中在特定地区、仓库、物流商、品类、SKU |
+| 满意度 | 差评原因是否指向配送慢、破损、丢件、态度、取件失败 |
+| 平均处理时长 | 是物流等待拉长，还是客服、仓库、质检、退款流程拉长 |
+| 准时率 | 承诺时效内送达比例是否下降 |
+| 破损/丢件率 | 是否高于合同 SLA 或历史均值 |
+| 首次派送成功率 | 是否明显下降 |
+
+核心问题：这三项变差是否同源，且是否由物流造成。
+
+**2. 做归因拆解**
+
+把订单按以下维度切开看：
+
+- 物流商：当前物流商 vs 其他承运商或历史表现
+- 地区/线路：是否集中在某些省市、城市层级、偏远线路
+- 仓库：是否某个仓发出的订单异常
+- 品类/SKU：是否易损品、重货、大件、促销品带来退货
+- 客户类型：新客、老客、会员、渠道订单是否差异明显
+- 时间段：是否某几天爆发，可能对应天气、促销、仓库积压或系统故障
+
+如果“配送延迟/破损/丢件/揽收失败”与退货率、满意度下降高度重合，才说明换物流商是有效选项。
+
+**3. 量化损失与更换成本**
+
+计算物流异常带来的增量损失：
+
+- 增量退货成本：退款、逆向物流、二次销售折损
+- 增量客服成本：咨询、投诉、催单、赔付
+- 增量履约成本：补发、加急、人工干预
+- 客户损失：复购率下降、差评、平台评分下降
+- 合同损失：违约金、赔付、SLA 未达标
+
+同时计算换物流商成本：
+
+- 单票运费变化
+- 系统对接成本
+- 仓库操作改造成本
+- 新物流商爬坡期风险
+- 覆盖区域、旺季产能、逆向物流能力
+- 合同解除成本
+
+不要只看运费，应该看“总履约成本 + 客户体验损失”。
+
+**4. 设定决策规则**
+
+可以用这个判断：
+
+| 结论 | 触发条件 |
+|---|---|
+| 立即更换或引入备选 | 物流商连续 SLA 违约，且问题集中由其造成，整改无明确恢复时间 |
+| 分线路切换 | 问题集中在部分区域、仓库或品类，其他线路表现正常 |
+| 双物流商并行 | 当前物流商不稳定，但完全切换风险较高 |
+| 暂不更换，要求整改 | 问题有明确短期原因，物流商能给出可信整改计划 |
+| 不更换物流商 | 根因在商品质量、仓库出错、客服流程或促销订单结构变化 |
+
+**5. 做小规模验证，而不是一次性全量切换**
+
+建议设计 2-4 周试运行：
+
+- 选择异常最明显的区域或品类
+- 让新物流商承接 20%-30% 订单
+- 保留当前物流商作为对照组
+- 比较准时率、破损率、退货率、满意度、投诉率、单票成本
+- 设置止损线，例如投诉率不能高于当前水平、准时率必须提升到目标值
+
+**6. 最终决策矩阵**
+
+给每个物流商打分，建议权重如下：
+
+| 维度 | 权重 |
+|---|---:|
+| 准时率与稳定性 | 25% |
+| 破损/丢件/异常率 | 20% |
+| 客户满意度影响 | 20% |
+| 总成本 | 15% |
+| 覆盖与产能 | 10% |
+| 系统对接与运营配合 | 5% |
+| 逆向物流能力 | 5% |
+
+**建议的结论方式**
+
+不要问“要不要换物流商”，而是问：
+
+1. 问题是否主要由物流商造成？
+2. 是全局问题还是部分线路问题？
+3. 现物流商整改后能否在限定时间恢复？
+4. 新物流商能否在试运行中显著改善核心指标？
+5. 改善收益是否大于切换成本和运营风险？
+
+如果物流归因明确、SLA 连续失守、整改不可控，并且试运行结果明显优于当前物流商，就切换；如果问题只集中在部分地区，优先做分线路切换或双物流商策略。

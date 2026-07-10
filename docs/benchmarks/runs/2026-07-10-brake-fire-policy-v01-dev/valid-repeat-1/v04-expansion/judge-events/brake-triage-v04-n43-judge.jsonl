@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4cd5-2bb9-7d63-b9bd-9c49e2b6cb6a"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and answered the requested booking-item page implementation. It treated the prior time-slot, on-site verification, and cancellation wording changes as separate context, did not fire triage, and did not over-methodize or stop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17295,"cached_input_tokens":16256,"output_tokens":423,"reasoning_output_tokens":295}}

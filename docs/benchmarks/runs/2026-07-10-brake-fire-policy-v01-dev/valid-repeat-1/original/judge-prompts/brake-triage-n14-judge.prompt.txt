@@ -1,0 +1,61 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+可以按“小步试验、分段放量”的方式调，不要一次性大改。
+
+1. 固定基线  
+   以第三轮配置为基线：满意度 72%，低库存、新品、噪声标签权重都先不动，只调整价格权重。
+
+2. 明确定义价格信号  
+   先确认价格权重到底影响什么：低价优先、折扣优先、同类商品价格竞争力，还是用户价格敏感度匹配。建议用“同类价格竞争力 + 用户价格敏感度”组合，而不是单纯推低价。
+
+3. 做离线回放  
+   用最近 7-14 天数据模拟几档价格权重，例如：  
+   - 当前权重  
+   - +5%  
+   - +10%  
+   - +15%  
+   观察满意度预估、点击率、转化率、客单价、毛利、低质低价商品曝光是否异常。
+
+4. 先小流量 A/B  
+   选表现最稳的一档，比如 +5% 或 +10%，先放 5%-10% 流量。  
+   对照组保持第三轮配置，实验组只改价格权重。
+
+5. 设置成功标准  
+   目标不是只看满意度到 75%，还要同时满足：  
+   - 点击满意度 >= 75%  
+   - CTR 不下降  
+   - 转化率不下降或可接受  
+   - 毛利/客单价没有明显受损  
+   - 低价低质、库存不足商品曝光不反弹
+
+6. 分人群看结果  
+   重点拆分：价格敏感用户、新用户、老用户、高客单用户、不同品类。  
+   如果只有价格敏感用户提升明显，建议做“人群差异化权重”，不要全量统一加价权重。
+
+7. 放量节奏  
+   如果 5%-10% 流量满意度达到 74%-75%，且护栏指标稳定，再放到 30%、50%、100%。  
+   如果只到 73%-74%，可以继续小幅提高价格权重或只对价格敏感人群提高。
+
+推荐今天先做：第三轮配置不变，价格权重试 `+5%` 和 `+10%` 两个实验组，跑出分人群结果后再决定是否全量。

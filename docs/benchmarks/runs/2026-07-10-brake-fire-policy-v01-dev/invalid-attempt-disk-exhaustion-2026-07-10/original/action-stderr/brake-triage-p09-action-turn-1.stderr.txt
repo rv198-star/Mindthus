@@ -1,0 +1,131 @@
+2026-07-10T15:47:43.164664Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit
+2026-07-10T15:47:43.165519Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/.codex-plugin/plugin.json
+2026-07-10T15:47:43.170929Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/.codex-plugin/plugin.json
+2026-07-10T15:47:43.171035Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="browser@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/browser
+2026-07-10T15:47:43.171039Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="chrome@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/chrome
+2026-07-10T15:47:43.171041Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="computer-use@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/computer-use
+2026-07-10T15:47:43.171042Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="documents@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/documents
+2026-07-10T15:47:43.171045Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="lumithus@lumithus" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/lumithus/lumithus
+2026-07-10T15:47:43.171046Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="pdf@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/pdf
+2026-07-10T15:47:43.171047Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="presentations@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/presentations
+2026-07-10T15:47:43.171049Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="sites@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/sites
+2026-07-10T15:47:43.171050Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="spreadsheets@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/spreadsheets
+2026-07-10T15:47:43.171050Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="template-creator@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/template-creator
+2026-07-10T15:47:43.171051Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="visualize@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/visualize
+2026-07-10T15:47:43.171598Z  WARN codex_rmcp_client::oauth: failed to read OAuth tokens from keyring: Platform secure storage failure: A default keychain could not be found.
+2026-07-10T15:47:48.502923Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:47:48.503968Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:47:49.863738Z  WARN codex_rmcp_client::oauth: failed to read OAuth tokens from keyring: Platform secure storage failure: A default keychain could not be found.
+2026-07-10T15:47:57.933390Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:47:57.938835Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:47:57.957311Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.957332Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.957937Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.957944Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.958603Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.958609Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.959336Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.959343Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.960127Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.960217Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.963154Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:47:57.963167Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.682358Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:00.686817Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:00.701876Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.701896Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.702303Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.702311Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.702737Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.702744Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.703139Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.703145Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.703530Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.703535Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.705275Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:00.705282Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:01.104909Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/.codex-plugin/plugin.json
+2026-07-10T15:48:01.114946Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/.codex-plugin/plugin.json
+2026-07-10T15:48:01.147134Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="browser@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/browser
+2026-07-10T15:48:01.147144Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="chrome@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/chrome
+2026-07-10T15:48:01.147145Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="computer-use@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/computer-use
+2026-07-10T15:48:01.147146Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="documents@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/documents
+2026-07-10T15:48:01.147147Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="lumithus@lumithus" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/lumithus/lumithus
+2026-07-10T15:48:01.147148Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="pdf@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/pdf
+2026-07-10T15:48:01.147149Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="presentations@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/presentations
+2026-07-10T15:48:01.147149Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="sites@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/sites
+2026-07-10T15:48:01.147150Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="spreadsheets@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/spreadsheets
+2026-07-10T15:48:01.147151Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="template-creator@openai-primary-runtime" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-primary-runtime/template-creator
+2026-07-10T15:48:01.147152Z  WARN codex_core_plugins::loader: failed to load plugin: plugin is not installed plugin="visualize@openai-bundled" path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/plugins/cache/openai-bundled/visualize
+2026-07-10T15:48:15.644706Z  WARN codex_otel::events::session_telemetry: metrics counter [codex.skill.injected] failed: tag value contains invalid characters: mindthus:using-mindthus
+2026-07-10T15:48:15.701209Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:15.727419Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:15.744952Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.744977Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.745608Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.745615Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.746113Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.746120Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.746721Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.746726Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.747439Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.747444Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.748501Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:15.748507Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.060844Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:24.080298Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:24.097988Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.098000Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.098456Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.098462Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.098949Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.098956Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.099446Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.099451Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.099891Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.099897Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.101332Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:24.101338Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:27.941144Z  WARN codex_analytics::client: failed to send events request: error sending request for url (https://chatgpt.com/backend-api/codex/analytics-events/events)
+2026-07-10T15:48:28.799485Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:28.804120Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:28.816854Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.816866Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817187Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817194Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817535Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817541Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817872Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.817877Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.818191Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.818196Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.818889Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:28.818895Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.639127Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:32.643410Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:32.657713Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.657726Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.658315Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.658324Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.658715Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.658724Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.659110Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.659116Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.659482Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.659489Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.660274Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:32.660280Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.124161Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/Users/william/.codex/local-marketplaces/mindthus-v1.4.3/codex-plugin/mindthus/.codex-plugin/plugin.json
+2026-07-10T15:48:37.135984Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=/private/tmp/mindthus-brake-fire-policy-v01/valid-repeat-1/original/codex-home-gates/brake-triage-p09-brake-owner/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-07-10T15:48:37.151873Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.151888Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.152285Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.152293Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.152686Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.152692Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.153068Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.153074Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.153462Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.153468Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.154616Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-07-10T15:48:37.154621Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/

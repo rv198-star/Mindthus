@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4ccd-905b-7f23-9235-6cec44c1f2d8"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n03\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response treats the prompt as a straightforward logistics decision framework request, not as a triage/repeated-repair trigger. It gives a direct, structured analysis around attribution, metrics, quantification, limited trials, and decision thresholds, with no runtime over-wake or methodized stop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17909,"cached_input_tokens":2432,"output_tokens":446,"reasoning_output_tokens":310}}

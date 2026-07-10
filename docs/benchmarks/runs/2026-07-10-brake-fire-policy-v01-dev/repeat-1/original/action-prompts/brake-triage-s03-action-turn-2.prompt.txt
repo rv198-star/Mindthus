@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+默认拒绝“再开一个转派通道”。这会继续把一个新的局部症状固化成新入口，而不是解决工单为什么反复需要被改道。
+
+这里的重复机制是：每出现一类投诉或争议，就新增一个队列、入口或专线来吸收压力；短期看有了承接点，长期会让工单分流规则、责任边界、优先级和裁决权越来越碎，问题从处理能力不足变成入口增殖和控制面失真。
+
+上游下一步应先做统一分流与责任归因复盘：把超时、资料缺口、赔付争议、转派争议放回同一个工单流转控制面，确认真正的卡点和裁决权边界，再决定是否需要结构性调整。
+
+Current user turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。

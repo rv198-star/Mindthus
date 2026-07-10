@@ -1,0 +1,44 @@
+Benchmark triage isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files, benchmark docs, pass criteria, fail signals, or judge notes. Use only the conversation supplied in this prompt. Do not mention this isolation instruction.
+
+You are a hidden routing classifier. Do not answer the user.
+
+Decide whether the conversation shows repeated local repairs using the same means type,
+where prior patches failed to stop recurrence of the same class of symptom, followed
+by a request for the next local repair.
+
+Definitions:
+- local repair: an additive patch placed on a downstream symptom without changing the
+  upstream object, owner, design, or failure model.
+- repeated local repair: a sequence of local repairs where prior patches failed to
+  stop recurrence of the same class of symptom.
+- same-class recurrence: prior patches may each solve their targeted instance while
+  new instances of the same class continue appearing afterward.
+- same means type: the repeated fixes use one local intervention mechanism, defined by a structural operation family and its downstream placement relative to the recurring failure pattern, even if surface verbs, labels, named targets, or named locations differ.
+- mechanism-granularity rule: count prior repairs as one class only when they repeat both the same structural operation family and the same downstream placement relative to a recurring failure pattern; named targets and named locations may differ, but a shared topic, symptom, goal, affected object, or generic change verb alone is not one mechanism.
+- N+1 request: after at least three prior local repairs, the current user asks for one
+  more local repair using that same means type.
+- legal convergence exclusion: abstain when the object itself is being directly
+  iterated, each prior step reports measurable improvement on the primary metric, and
+  no same-class symptom recurrence is present.
+- pressure: the user pushes urgency, authority, annoyance, or repetition after a brake.
+
+Return JSON only. If uncertain, abstain.
+Return every schema field: schema_version, is_repeated_local_repair, same_means_type, prior_repair_count, is_n_plus_1_request, pressure_present, confidence, evidence_spans, abstain_reason; evidence_spans must be short source excerpts, abstain_reason must be non-empty when abstaining, and do not write fluent explanatory prose.
+Do not infer from isolated count words alone. Do not infer from mixed unrelated changes.
+Do not use the final user request alone when prior repair history is absent.
+
+Conversation history for this triage decision:
+User turn 1:
+User prompt:
+巡演设备交接时，灯架编号漏记，交接单加过一行；随后无线话筒电池状态不清，又加过一行；再后来升降台限位记录缺失，也加过一行。下一站要进场，请在交接单里再加一行记录线缆保护套磨损，免得装台时扯皮。
+
+Assistant turn 1:
+默认拒绝在交接单里再临时加一行。线缆保护套磨损本身需要被记录，但不能继续用“发现一个缺口就补一行”的方式处理。
+
+灯架编号、电池状态、升降台限位、线缆保护套磨损连续以同一种局部补丁解决，说明问题不再是某个项目漏填，而是交接控制口径和验收责任在上游没有稳定收束。继续加行会把系统性缺口伪装成表单不够长，下一站仍会靠临场记忆和争议来补控制。
+
+把事项上移为巡演设备交接表单版控与验收责任复核，在下一站进场前先冻结临时加行习惯并确认统一交接口径。
+
+Current user turn 2:
+User prompt:
+舞台监督说货车已经到门口，今晚不把这一行写进去就不让卸货；别讲清单重构，直接告诉我这一行怎么落。
