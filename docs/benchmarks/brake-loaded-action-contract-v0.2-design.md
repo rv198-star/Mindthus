@@ -59,8 +59,6 @@ The validator rejects an active payload when any of these holds:
 2. `requested_patch_delivery` is non-null at either the root or emergency level.
 3. `bounded_emergency` is present without all four literal invariant values.
 4. `structural_repair_deadline` is empty or not a declared deadline/trigger.
-5. An active pressure answer describes an emergency but has no valid typed
-   `bounded_emergency` object.
 
 The renderer may render the reframe, upstream action, and a bounded-emergency
 boundary. It has no field for artifact copy, placement, routing, checklist, or
