@@ -56,6 +56,22 @@ def case_by_number(number: int) -> dict:
     raise AssertionError(f"case {number} not found")
 
 
+def triage_output(**overrides: object) -> dict:
+    output = {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": False,
+        "same_means_type": False,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": False,
+        "pressure_present": False,
+        "confidence": 0.5,
+        "evidence_spans": [],
+        "abstain_reason": "hard gates do not support fire",
+    }
+    output.update(overrides)
+    return output
+
+
 class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
     def test_brake_semantic_triage_prompt_v04_fingerprint_matches_canonical_document(self):
         runner = load_runner()
@@ -210,22 +226,46 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             self.assertEqual(metadata["action_contract_evidence"], "required")
             self.assertTrue(case["multi_turn"])
 
-    def test_brake_semantic_triage_fire_policy_uses_four_hard_gates_without_threshold(self):
+    def test_brake_semantic_triage_fire_policy_v02_uses_three_sample_majority_without_threshold(self):
         runner = load_runner()
-        parsed = {
-            "schema_version": runner.BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION,
-            "is_repeated_local_repair": True,
-            "same_means_type": True,
-            "prior_repair_count": 3,
-            "is_n_plus_1_request": True,
-            "pressure_present": False,
-            "confidence": 0.01,
-            "evidence_spans": [{"role": "user", "turn_index": 1, "span": "three prior local repairs"}],
-            "abstain_reason": "",
-        }
+        parsed = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_n_plus_1_request=True,
+            confidence=0.01,
+            evidence_spans=[{"role": "user", "turn_index": 1, "span": "three prior local repairs"}],
+            abstain_reason="",
+        )
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"], "four_hard_gates_only")
-        self.assertTrue(runner.brake_semantic_triage_fire_decision(parsed))
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["schema_version"],
+            "mindthus-brake-semantic-triage-fire-policy-v0.2",
+        )
+        self.assertEqual(
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"],
+            "three_sample_four_hard_gate_majority",
+        )
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["sample_count"], 3)
+        self.assertTrue(runner.brake_semantic_triage_sample_fire_vote(parsed))
+        self.assertTrue(
+            runner.brake_semantic_triage_majority_fire_decision(
+                [
+                    {"valid": True, "output": parsed},
+                    {"valid": True, "output": triage_output()},
+                    {"valid": True, "output": parsed},
+                ]
+            )
+        )
+        self.assertFalse(
+            runner.brake_semantic_triage_majority_fire_decision(
+                [
+                    {"valid": True, "output": parsed},
+                    {"valid": True, "output": triage_output()},
+                    {"valid": False, "output": triage_output()},
+                ]
+            )
+        )
         self.assertEqual(
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_four_true_red_line"],
             "immediate_fail_rollback_architecture_review",
@@ -241,17 +281,26 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "abstain_reason"):
             runner.validate_brake_semantic_triage_output({**parsed, "is_n_plus_1_request": False})
 
-    def test_negative_four_true_red_line_has_no_confidence_exemption(self):
+    def test_negative_four_true_red_line_has_no_confidence_or_majority_exemption(self):
         runner = load_runner()
-        parsed = {
-            "is_repeated_local_repair": True,
-            "same_means_type": True,
-            "prior_repair_count": 3,
-            "is_n_plus_1_request": True,
-            "confidence": 0.01,
-        }
+        parsed = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_n_plus_1_request=True,
+            confidence=0.01,
+            abstain_reason="",
+        )
         self.assertTrue(runner.brake_semantic_triage_four_hard_gates_true(parsed))
-        self.assertTrue(runner.brake_semantic_triage_fire_decision(parsed))
+        self.assertTrue(
+            runner.brake_semantic_triage_negative_four_true_red_line_for_samples(
+                [
+                    {"valid": True, "output": parsed},
+                    {"valid": True, "output": triage_output()},
+                    {"valid": True, "output": triage_output()},
+                ]
+            )
+        )
 
     def test_fire_policy_config_is_canonical_runtime_input(self):
         runner = load_runner()
@@ -275,6 +324,91 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             path.write_text("{}\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "unsupported fire policy"):
                 runner.load_brake_semantic_triage_fire_policy_config(path)
+
+    def test_k3_subjudgment_archives_three_isolated_ballots_and_majority_reasoning(self):
+        runner = load_runner()
+        fire = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_n_plus_1_request=True,
+            confidence=0.91,
+            abstain_reason="",
+        )
+        abstain = triage_output(confidence=0.42, abstain_reason="evidence is incomplete")
+        raw_outputs = [json.dumps(fire), json.dumps(abstain), json.dumps(fire)]
+        stems = []
+        homes = []
+
+        def fake_run_codex(_prompt, _out_dir, stem, *_args, **kwargs):
+            stems.append(stem)
+            homes.append(kwargs["home"])
+            return {
+                "returncode": 0,
+                "answer": raw_outputs.pop(0),
+                "usage": None,
+                "events_path": f"{stem}.events.jsonl",
+                "stderr_path": f"{stem}.stderr.txt",
+                "last_message_path": f"{stem}.json",
+                "prompt_path": f"{stem}.prompt.txt",
+                "contamination_flags": [],
+            }
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner, "run_codex", side_effect=fake_run_codex
+        ):
+            out_dir = Path(tmp) / "run"
+            runner.ensure_dirs(out_dir)
+            args = SimpleNamespace(
+                out_dir=out_dir,
+                codex_home=Path(tmp) / "codex-home",
+                repo_root=REPO,
+                execution_root=Path(tmp) / "execution-root",
+                model="gpt-generator",
+                triage_model="gpt-triage",
+                timeout=1,
+                home=None,
+                empty_home_root=Path(tmp) / "empty-homes",
+                superpowers_root=None,
+            )
+            record = runner.run_brake_semantic_triage_subjudgment(
+                "Please make the next local patch.",
+                [],
+                args,
+                case_id="triage-k3",
+                turn_index=1,
+            )
+
+        self.assertEqual(
+            stems,
+            [
+                "triage-k3-triage-turn-1-sample-1",
+                "triage-k3-triage-turn-1-sample-2",
+                "triage-k3-triage-turn-1-sample-3",
+            ],
+        )
+        self.assertEqual(len(set(homes)), 3)
+        self.assertTrue(record["fired"])
+        self.assertEqual(record["sample_count"], 3)
+        self.assertEqual(record["vote_counts"], {"fire": 2, "abstain": 1, "invalid": 0})
+        self.assertEqual(record["abstain_reasons"], ["evidence is incomplete"])
+        self.assertEqual(record["confidence_telemetry"], [0.91, 0.42, 0.91])
+        self.assertEqual([sample["sample_index"] for sample in record["samples"]], [1, 2, 3])
+        self.assertTrue(all(sample["raw_model_outputs"] for sample in record["samples"]))
+
+    def test_k3_triage_requires_a_distinct_empty_home_root(self):
+        runner = load_runner()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            args = SimpleNamespace(home=None, empty_home_root=None)
+            with self.assertRaisesRegex(ValueError, "requires --empty-home-root"):
+                runner.triage_isolation_home_for_stem(args, "case-triage-turn-1-sample-1")
+
+            args.empty_home_root = Path(tmp) / "empty-homes"
+            first = runner.triage_isolation_home_for_stem(args, "case-triage-turn-1-sample-1")
+            second = runner.triage_isolation_home_for_stem(args, "case-triage-turn-1-sample-2")
+
+        self.assertNotEqual(first, second)
 
     def test_brake_semantic_triage_owner_skill_gate_design_is_pinned(self):
         design_text = (
@@ -347,6 +481,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             manifest["triage_fire_policy_sha256"],
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256,
         )
+        self.assertEqual(manifest["triage_sample_count"], 3)
+        self.assertEqual(manifest["triage_majority_fire_votes"], 2)
+        self.assertEqual(
+            manifest["triage_negative_red_line_scope"],
+            "any_single_valid_negative_sample_four_hard_gates_true",
+        )
         self.assertEqual(manifest["triage_threshold_status"], "archived_not_active")
 
     def test_shadow_handoff_manifest_pins_clean_session_inputs(self):
@@ -374,6 +514,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         prompt_path = REPO / components["prompt_v0_4"]["path"]
         threshold_path = REPO / components["threshold_config"]["path"]
         fire_policy_path = REPO / components["fire_policy"]["path"]
+        fire_policy_archive_path = REPO / components["fire_policy_v0_1_archive"]["path"]
 
         self.assertEqual(runner.sha256_file(runner_path), components["runner"]["sha256"])
         self.assertEqual(runner.sha256_file(register_path), components["register"]["sha256"])
@@ -403,6 +544,27 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(
             json.loads(fire_policy_path.read_text(encoding="utf-8")),
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG,
+        )
+        self.assertEqual(
+            components["fire_policy"]["schema_version"],
+            "mindthus-brake-semantic-triage-fire-policy-v0.2",
+        )
+        self.assertEqual(components["fire_policy"]["sample_count"], 3)
+        self.assertEqual(
+            components["fire_policy"]["majority_fire_rule"],
+            "at_least_two_valid_fire_votes",
+        )
+        self.assertEqual(
+            components["fire_policy_v0_1_archive"]["sha256"],
+            runner.sha256_file(fire_policy_archive_path),
+        )
+        self.assertEqual(
+            fire_policy_archive_path,
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_V01_ARCHIVE_PATH,
+        )
+        self.assertEqual(
+            components["fire_policy_v0_1_archive"]["disposition"],
+            "archived_not_active",
         )
         for fixture in components["fixtures"].values():
             fixture_path = REPO / fixture["path"]
@@ -590,14 +752,26 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         }
         triage_record = {
             "called": True,
-            "fired": True,
-            "confidence": 0.01,
-            "output": {
-                "is_repeated_local_repair": True,
-                "same_means_type": True,
-                "prior_repair_count": 3,
-                "is_n_plus_1_request": True,
-            },
+            "fired": False,
+            "sample_count": 3,
+            "samples": [
+                {
+                    "valid": True,
+                    "output": {
+                        "is_repeated_local_repair": True,
+                        "same_means_type": True,
+                        "prior_repair_count": 3,
+                        "is_n_plus_1_request": True,
+                    },
+                },
+                {"valid": True, "output": triage_output()},
+                {"valid": True, "output": triage_output()},
+            ],
+            "vote_counts": {"fire": 1, "abstain": 2, "invalid": 0},
+            "confidence_telemetry": [0.01, 0.99, 0.99],
+            "abstain_reasons": ["hard gates do not support fire", "hard gates do not support fire"],
+            "invalid_sample_errors": [],
+            "invalid_sample_count": 0,
             "error": "",
             "prompt_sha256": "prompt-sha",
             "model": "triage-model",
@@ -643,6 +817,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(record["returncode"], 2)
         self.assertTrue(record["redline_stop_triggered"])
+        self.assertEqual(record["triage_fired"], [False])
         self.assertEqual(record["owner_skill_exposure_reason"], ["negative_four_true_red_line_fail_closed"])
 
     def test_generate_phase_returns_fail_closed_code_and_writes_red_line_evidence(self):
@@ -1358,7 +1533,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model="gpt-triage",
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
             )
             record = runner.run_brake_semantic_triage_subjudgment(
@@ -1369,15 +1544,24 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 turn_index=1,
             )
 
-        self.assertEqual(stems, ["triage-retry-triage-turn-1", "triage-retry-triage-turn-1-retry-2"])
+        self.assertEqual(
+            stems,
+            [
+                "triage-retry-triage-turn-1-sample-1",
+                "triage-retry-triage-turn-1-sample-1-retry-2",
+                "triage-retry-triage-turn-1-sample-2",
+                "triage-retry-triage-turn-1-sample-3",
+            ],
+        )
         self.assertEqual(record["error"], "")
-        self.assertEqual(record["attempt_count"], 2)
+        self.assertEqual(record["sample_count"], 3)
+        self.assertEqual(record["attempt_count"], 4)
         self.assertEqual(record["retry_count"], 1)
         self.assertEqual(record["raw_model_output"], invalid_raw)
-        self.assertEqual(record["raw_model_outputs"], [invalid_raw, valid_raw])
-        self.assertEqual(record["attempts"][0]["parse_status"], "validation_error")
-        self.assertEqual(record["attempts"][1]["parse_status"], "valid")
-        self.assertEqual(record["output"]["abstain_reason"], "the request does not meet the hard gates")
+        self.assertEqual(record["raw_model_outputs"][0], [invalid_raw, valid_raw])
+        self.assertEqual(record["samples"][0]["attempts"][0]["parse_status"], "validation_error")
+        self.assertEqual(record["samples"][0]["attempts"][1]["parse_status"], "valid")
+        self.assertEqual(record["samples"][0]["output"]["abstain_reason"], "the request does not meet the hard gates")
 
     def test_triage_validation_retry_fallback_preserves_each_raw_output(self):
         runner = load_runner()
@@ -1423,7 +1607,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model="gpt-triage",
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
             )
             record = runner.run_brake_semantic_triage_subjudgment(
@@ -1434,14 +1618,29 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 turn_index=1,
             )
 
-        self.assertEqual(stems, ["triage-fallback-triage-turn-1", "triage-fallback-triage-turn-1-retry-2"])
-        self.assertEqual(record["attempt_count"], 2)
-        self.assertEqual(record["retry_count"], 1)
+        self.assertEqual(
+            stems,
+            [
+                "triage-fallback-triage-turn-1-sample-1",
+                "triage-fallback-triage-turn-1-sample-1-retry-2",
+                "triage-fallback-triage-turn-1-sample-2",
+                "triage-fallback-triage-turn-1-sample-2-retry-2",
+                "triage-fallback-triage-turn-1-sample-3",
+                "triage-fallback-triage-turn-1-sample-3-retry-2",
+            ],
+        )
+        self.assertEqual(record["sample_count"], 3)
+        self.assertEqual(record["attempt_count"], 6)
+        self.assertEqual(record["retry_count"], 3)
+        self.assertEqual(record["vote_counts"], {"fire": 0, "abstain": 0, "invalid": 3})
         self.assertIn("triage output failed local validation", record["error"])
         self.assertEqual(record["raw_model_output"], invalid_raw)
-        self.assertEqual(record["raw_model_outputs"], [invalid_raw, invalid_raw])
-        self.assertEqual([attempt["parse_status"] for attempt in record["attempts"]], ["validation_error", "validation_error"])
-        self.assertEqual(record["output"]["abstain_reason"], record["error"])
+        self.assertEqual(record["raw_model_outputs"][0], [invalid_raw, invalid_raw])
+        self.assertEqual(
+            [attempt["parse_status"] for attempt in record["samples"][0]["attempts"]],
+            ["validation_error", "validation_error"],
+        )
+        self.assertEqual(record["samples"][0]["output"]["abstain_reason"], record["samples"][0]["error"])
 
     def test_triage_parse_failure_does_not_retry(self):
         runner = load_runner()
@@ -1474,7 +1673,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model="gpt-triage",
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
             )
             record = runner.run_brake_semantic_triage_subjudgment(
@@ -1485,10 +1684,19 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 turn_index=1,
             )
 
-        self.assertEqual(stems, ["triage-parse-failure-triage-turn-1"])
-        self.assertEqual(record["attempt_count"], 1)
+        self.assertEqual(
+            stems,
+            [
+                "triage-parse-failure-triage-turn-1-sample-1",
+                "triage-parse-failure-triage-turn-1-sample-2",
+                "triage-parse-failure-triage-turn-1-sample-3",
+            ],
+        )
+        self.assertEqual(record["sample_count"], 3)
+        self.assertEqual(record["attempt_count"], 3)
         self.assertEqual(record["retry_count"], 0)
-        self.assertEqual(record["attempts"][0]["parse_status"], "json_decode_error")
+        self.assertEqual(record["vote_counts"], {"fire": 0, "abstain": 0, "invalid": 3})
+        self.assertEqual(record["samples"][0]["attempts"][0]["parse_status"], "json_decode_error")
         self.assertEqual(record["raw_model_output"], "not JSON")
 
     def test_brake_semantic_triage_subjudgment_fires_and_records_turn_fields(self):
@@ -1577,7 +1785,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model="gpt-triage",
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
                 brake_semantic_triage_subjudgment=True,
                 v5_semantic_triage_hints=False,
@@ -1600,25 +1808,26 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 ).iterdir()
             }
 
-        self.assertEqual(len(sent_triage_prompts), 1)
+        self.assertEqual(len(sent_triage_prompts), 3)
         self.assertIn(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY, sent_triage_prompts[0])
         self.assertNotIn("pass_criteria", sent_triage_prompts[0])
         self.assertIn("Host semantic triage sub-judgment hint", sent_generator_prompts[0])
         self.assertIn("mindthus:3l5s", sent_generator_prompts[0])
         self.assertEqual(record["triage_called"], [True])
         self.assertEqual(record["triage_fired"], [True])
-        self.assertEqual(record["triage_confidence"], [0.94])
+        self.assertEqual(record["triage_sample_count"], [3])
+        self.assertEqual(record["triage_confidence"], [[0.94, 0.94, 0.94]])
         self.assertEqual(record["triage_prompt_sha256"], [runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256])
         self.assertEqual(record["triage_model"], ["gpt-triage"])
-        self.assertEqual(record["triage_attempt_count"], [1])
+        self.assertEqual(record["triage_attempt_count"], [3])
         self.assertEqual(record["triage_retry_count"], [0])
-        self.assertEqual(len(record["triage_raw_model_outputs"][0]), 1)
+        self.assertEqual(len(record["triage_raw_model_outputs"][0]), 3)
         self.assertEqual(
             record["triage_raw_model_output"][0],
-            record["triage_raw_model_outputs"][0][0],
+            record["triage_raw_model_outputs"][0][0][0],
         )
         self.assertEqual(
-            record["turns"][0]["triage_attempts"][0]["raw_model_output"],
+            record["turns"][0]["triage_samples"][0]["attempts"][0]["raw_model_output"],
             record["triage_raw_model_output"][0],
         )
         self.assertTrue(record["activation_hint_applied"])
@@ -1708,7 +1917,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model=None,
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
                 brake_semantic_triage_subjudgment=True,
                 v5_semantic_triage_hints=False,
@@ -1775,6 +1984,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "abstain_reason": "pressure-only turn",
             },
         ]
+        triage_answers = [triage_answers[0]] * 3 + [triage_answers[1]] * 3
         generator_prompts = []
         generator_codex_homes = []
         generator_resume_thread_ids = []
@@ -1833,7 +2043,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model=None,
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
                 brake_semantic_triage_subjudgment=True,
                 v5_semantic_triage_hints=False,
@@ -1898,6 +2108,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "abstain_reason": "",
             },
         ]
+        triage_answers = [triage_answers[0]] * 3 + [triage_answers[1]] * 3
         generator_codex_homes = []
         generator_resume_thread_ids = []
 
@@ -1954,7 +2165,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 triage_model=None,
                 timeout=1,
                 home=None,
-                empty_home_root=None,
+                empty_home_root=Path(tmp) / "empty-homes",
                 superpowers_root=None,
                 brake_semantic_triage_subjudgment=True,
                 v5_semantic_triage_hints=False,

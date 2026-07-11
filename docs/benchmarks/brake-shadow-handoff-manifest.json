@@ -1,13 +1,13 @@
 {
   "schema_version": "mindthus-brake-shadow-handoff-v0.1",
-  "created_for": "brake-v0.4-diagnostic-preflight",
+  "created_for": "brake-k3-majority-diagnostic-preflight",
   "branch": "codex/brake-semantic-triage-design",
-  "minimum_branch_commit": "a9811cb6d0fb9d35a5cba0a8606a9643acd11419",
-  "shadow_execution_requirement": "Any external shadow run must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, threshold, or owner-gate settings from memory.",
+  "minimum_branch_commit": "438bf87bb738d1efc410d03468efa69efc52c079",
+  "shadow_execution_requirement": "Any external shadow run must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, active fire-policy, or owner-gate settings from memory.",
   "components": {
     "runner": {
       "path": "scripts/run-judgment-benchmark-cli.py",
-      "sha256": "868f83ad4c44c403dde595e8291beb4102ae142b8c65a9b404b8bb30229cc504"
+      "sha256": "481ca4da4ac7aacf749af0405409ac0ccd0ea6108bc6f14433343c874e9149dc"
     },
     "register": {
       "path": "docs/benchmarks/v5-target-trigger-register.json",
@@ -32,12 +32,24 @@
       "falsification_clause": "negative four hard gates true plus confidence >= 0.82 triggers rollback to 0.85 and review"
     },
     "fire_policy": {
-      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.1.json",
-      "sha256": "c9516eaf422a950f160cb816db6e267c9cca4419e56f53df3df01bf2d09f33cc",
-      "decision_rule": "four_hard_gates_only",
+      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.2.json",
+      "sha256": "7c4594ee35b14f7d60fa59fdc79cc5a7a745583ebf498aeb15e5944128a5c018",
+      "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.2",
+      "decision_rule": "three_sample_four_hard_gate_majority",
       "confidence_role": "telemetry_only",
       "negative_four_true_red_line": "immediate_fail_rollback_architecture_review",
+      "negative_red_line_scope": "any_single_valid_negative_sample_four_hard_gates_true",
+      "sample_count": 3,
+      "sample_isolation": "independent_empty_home_per_sample",
+      "sample_validation": "one_local_validation_retry_per_sample",
+      "valid_sample_fire_vote": "all_four_hard_gates_true",
+      "majority_fire_rule": "at_least_two_valid_fire_votes",
       "threshold_config_disposition": "archived_not_active"
+    },
+    "fire_policy_v0_1_archive": {
+      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.1.json",
+      "sha256": "c9516eaf422a950f160cb816db6e267c9cca4419e56f53df3df01bf2d09f33cc",
+      "disposition": "archived_not_active"
     },
     "fixtures": {
       "v0_3_original": {
