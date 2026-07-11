@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4faa-30eb-78c2-8a50-4d49f77ad543"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"拒绝把这次卡住继续处理成模板上的一个局部补丁。默认动作是暂停当前局部修表，不交付补丁内容。\",\"mechanism_reframe\":\"重复机制已经很清楚：每出现一次流程事故，就把事故痕迹塞进离它最近的表单或页面里。迟到、遗漏、缺席、口径不一致都被当成“缺一个位置记录”的问题，但实际是上游承诺、责任归属、确认时点和放行标准没有被统一管理。继续补模板只会让下游承载更多未决事项，下一次仍会换一个页面继续卡住。\",\"upstream_next_action\":\"把动作上移到 offer 决策口径的源头：由招聘负责人牵头，先确定谁拥有最终口径、何时完成确认、未确认时谁有权拦截发送，再决定模板是否需要承接已经稳定下来的结果。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
+{"type":"turn.completed","usage":{"input_tokens":12691,"cached_input_tokens":9600,"output_tokens":646,"reasoning_output_tokens":385}}

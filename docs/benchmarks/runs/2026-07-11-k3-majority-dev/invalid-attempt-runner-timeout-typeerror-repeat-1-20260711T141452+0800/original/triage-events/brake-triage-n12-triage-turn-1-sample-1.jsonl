@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4fbc-bf71-7cc1-bcae-a5ef93223a63"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"我贴了三段历史回复，想确认之前有没有过度套方法；请只按文本证据检查，不要先启动新的方法判断。\"}],\"abstain_reason\":\"Prior repair history is not supplied in the conversation text; the mention of three historical replies alone is insufficient evidence of repeated local repairs, same means type, recurrence, or an N+1 repair request.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17202,"cached_input_tokens":16768,"output_tokens":686,"reasoning_output_tokens":516}}

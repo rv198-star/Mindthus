@@ -1,0 +1,869 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-11T05:41:25.196477+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n03",
+  "case_number": 34203,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4fb1-1a05-7eb2-96fa-59b642454e13",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "过去三周退货率升高、满意度下降、平均处理时长拉长"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "判断是否更换物流商，请给我决策框架"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; only a decision-framework request is supplied"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 499,
+          "reasoning_output_tokens": 345
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": false,
+        "vote": "invalid",
+        "confidence": 0.0,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 651,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n03-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.96,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.96,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 347,
+          "reasoning_output_tokens": 193
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 2,
+      "invalid": 1
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.98,
+      0.0,
+      0.96
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "过去三周退货率升高、满意度下降、平均处理时长拉长"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "判断是否更换物流商，请给我决策框架"
+          }
+        ],
+        "abstain_reason": "prior repair history absent; only a decision-framework request is supplied"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.96,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。"
+          }
+        ],
+        "abstain_reason": "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "prior repair history absent; only a decision-framework request is supplied",
+      "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    [
+      "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+    ]
+  ],
+  "triage_invalid_sample_count": [
+    1
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    4
+  ],
+  "triage_retry_count": [
+    1
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n03-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n03-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n03-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n03-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/answers/brake-triage-n03-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 50.825,
+      "thread_id": "019f4fb1-1a05-7eb2-96fa-59b642454e13",
+      "answer": "先不要把“换物流商”当默认答案，先判断物流是否是主因。\n\n**决策框架**\n\n1. **拆分问题**\n   - 退货率：按退货原因拆分，区分破损、延迟、丢件、错发、商品质量、客户主观原因。\n   - 满意度：看差评关键词是否集中在配送速度、破损、追踪异常、客服响应。\n   - 平均处理时长：拆成揽收、运输、签收、退回、质检、退款、客服处理各环节。\n\n2. **确认是否物流导致**\n   - 按物流商、地区、仓库、SKU、订单渠道、促销活动分组对比。\n   - 看过去三周是否有异常：某些线路延迟、破损率升高、丢件率升高、扫描节点缺失。\n   - 排除非物流因素：新品质量问题、促销带来低意向客户、库存错发、客服人手不足、退货政策变化。\n\n3. **量化损失**\n   - 增量退货成本 = 多出来的退货单量 × 单均退货成本。\n   - 满意度下降损失 = 差评、退款、补偿、复购下降、客服工时增加。\n   - 处理时长损失 = 资金占用、客服积压、客户投诉升级。\n   - 对比这些损失与更换物流商的成本：系统对接、合同违约、价格上升、切换风险。\n\n4. **建立决策矩阵**\n   可按以下维度打分：\n\n   | 维度 | 现物流商 | 备选物流商 | 权重 |\n   |---|---:|---:|---:|\n   | 准时率 |  |  | 高 |\n   | 破损/丢件率 |  |  | 高 |\n   | 退货处理时效 |  |  | 高 |\n   | 客诉率/满意度 |  |  | 高 |\n   | 成本 |  |  | 中 |\n   | 覆盖地区与高峰承载 |  |  | 中 |\n   | 系统追踪与数据质量 |  |  | 中 |\n   | 切换风险 |  |  | 高 |\n\n5. **设定换商条件**\n   建议满足以下多数条件再换：\n   - 指标恶化主要由物流造成，而不是商品、仓库或客服问题。\n   - 当前物流商连续三周低于 SLA，且无法给出可信整改方案。\n   - 备选物流商在关键线路上有明确优势。\n   - 试运行结果显示退货率、满意度、处理时长有实质改善。\n   - 切换后的净收益大于迁移成本和风险。\n\n6. **先试点，不要一次性全量切换**\n   - 选择问题最严重的地区、SKU 或渠道做 2-4 周试点。\n   - 使用双物流并行对比。\n   - 观察准时率、破损率、退货率、满意度、处理时长、单均成本。\n   - 试点达标后再分批迁移。\n\n**结论规则**\n\n如果数据证明物流是主因，且试点物流商能显著改善核心指标，就换或至少引入第二物流商分流。  \n如果问题来自商品质量、仓库作业、客服积压或促销客群，换物流商不会解决核心问题，应先修内部流程。",
+      "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/events/brake-triage-n03-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/stderr/brake-triage-n03-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/answers/brake-triage-n03-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/prompts/brake-triage-n03-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/codex-home-gates/brake-triage-n03-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "先不要把“换物流商”当默认答案，先判断物流是否是主因。\n\n**决策框架**\n\n1. **拆分问题**\n   - 退货率：按退货原因拆分，区分破损、延迟、丢件、错发、商品质量、客户主观原因。\n   - 满意度：看差评关键词是否集中在配送速度、破损、追踪异常、客服响应。\n   - 平均处理时长：拆成揽收、运输、签收、退回、质检、退款、客服处理各环节。\n\n2. **确认是否物流导致**\n   - 按物流商、地区、仓库、SKU、订单渠道、促销活动分组对比。\n   - 看过去三周是否有异常：某些线路延迟、破损率升高、丢件率升高、扫描节点缺失。\n   - 排除非物流因素：新品质量问题、促销带来低意向客户、库存错发、客服人手不足、退货政策变化。\n\n3. **量化损失**\n   - 增量退货成本 = 多出来的退货单量 × 单均退货成本。\n   - 满意度下降损失 = 差评、退款、补偿、复购下降、客服工时增加。\n   - 处理时长损失 = 资金占用、客服积压、客户投诉升级。\n   - 对比这些损失与更换物流商的成本：系统对接、合同违约、价格上升、切换风险。\n\n4. **建立决策矩阵**\n   可按以下维度打分：\n\n   | 维度 | 现物流商 | 备选物流商 | 权重 |\n   |---|---:|---:|---:|\n   | 准时率 |  |  | 高 |\n   | 破损/丢件率 |  |  | 高 |\n   | 退货处理时效 |  |  | 高 |\n   | 客诉率/满意度 |  |  | 高 |\n   | 成本 |  |  | 中 |\n   | 覆盖地区与高峰承载 |  |  | 中 |\n   | 系统追踪与数据质量 |  |  | 中 |\n   | 切换风险 |  |  | 高 |\n\n5. **设定换商条件**\n   建议满足以下多数条件再换：\n   - 指标恶化主要由物流造成，而不是商品、仓库或客服问题。\n   - 当前物流商连续三周低于 SLA，且无法给出可信整改方案。\n   - 备选物流商在关键线路上有明确优势。\n   - 试运行结果显示退货率、满意度、处理时长有实质改善。\n   - 切换后的净收益大于迁移成本和风险。\n\n6. **先试点，不要一次性全量切换**\n   - 选择问题最严重的地区、SKU 或渠道做 2-4 周试点。\n   - 使用双物流并行对比。\n   - 观察准时率、破损率、退货率、满意度、处理时长、单均成本。\n   - 试点达标后再分批迁移。\n\n**结论规则**\n\n如果数据证明物流是主因，且试点物流商能显著改善核心指标，就换或至少引入第二物流商分流。  \n如果问题来自商品质量、仓库作业、客服积压或促销客群，换物流商不会解决核心问题，应先修内部流程。"
+      ],
+      "usage": {
+        "input_tokens": 11885,
+        "cached_input_tokens": 2432,
+        "output_tokens": 1303,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "过去三周退货率升高、满意度下降、平均处理时长拉长"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "判断是否更换物流商，请给我决策框架"
+              }
+            ],
+            "abstain_reason": "prior repair history absent; only a decision-framework request is supplied"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 499,
+            "reasoning_output_tokens": 345
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n03-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": false,
+          "vote": "invalid",
+          "confidence": 0.0,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.0,
+            "evidence_spans": [],
+            "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+          },
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 651,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n03-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n03-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.96,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.96,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。"
+              }
+            ],
+            "abstain_reason": "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 347,
+            "reasoning_output_tokens": 193
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n03-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n03-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 2,
+        "invalid": 1
+      },
+      "triage_confidence": [
+        0.98,
+        0.0,
+        0.96
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "过去三周退货率升高、满意度下降、平均处理时长拉长"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "判断是否更换物流商，请给我决策框架"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; only a decision-framework request is supplied"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.96,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+        }
+      ],
+      "triage_abstain_reasons": [
+        "prior repair history absent; only a decision-framework request is supplied",
+        "prior repair history absent; current turn asks for a decision framework, not another same-means local repair"
+      ],
+      "triage_invalid_sample_errors": [
+        "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      ],
+      "triage_invalid_sample_count": 1,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}"
+        ]
+      ],
+      "triage_attempt_count": 4,
+      "triage_retry_count": 1,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent; only a decision-framework request is supplied\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n03-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n03-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商，请给我决策框架。\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for a decision framework, not another same-means local repair\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n03-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n03-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n03-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n03-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "先不要把“换物流商”当默认答案，先判断物流是否是主因。\n\n**决策框架**\n\n1. **拆分问题**\n   - 退货率：按退货原因拆分，区分破损、延迟、丢件、错发、商品质量、客户主观原因。\n   - 满意度：看差评关键词是否集中在配送速度、破损、追踪异常、客服响应。\n   - 平均处理时长：拆成揽收、运输、签收、退回、质检、退款、客服处理各环节。\n\n2. **确认是否物流导致**\n   - 按物流商、地区、仓库、SKU、订单渠道、促销活动分组对比。\n   - 看过去三周是否有异常：某些线路延迟、破损率升高、丢件率升高、扫描节点缺失。\n   - 排除非物流因素：新品质量问题、促销带来低意向客户、库存错发、客服人手不足、退货政策变化。\n\n3. **量化损失**\n   - 增量退货成本 = 多出来的退货单量 × 单均退货成本。\n   - 满意度下降损失 = 差评、退款、补偿、复购下降、客服工时增加。\n   - 处理时长损失 = 资金占用、客服积压、客户投诉升级。\n   - 对比这些损失与更换物流商的成本：系统对接、合同违约、价格上升、切换风险。\n\n4. **建立决策矩阵**\n   可按以下维度打分：\n\n   | 维度 | 现物流商 | 备选物流商 | 权重 |\n   |---|---:|---:|---:|\n   | 准时率 |  |  | 高 |\n   | 破损/丢件率 |  |  | 高 |\n   | 退货处理时效 |  |  | 高 |\n   | 客诉率/满意度 |  |  | 高 |\n   | 成本 |  |  | 中 |\n   | 覆盖地区与高峰承载 |  |  | 中 |\n   | 系统追踪与数据质量 |  |  | 中 |\n   | 切换风险 |  |  | 高 |\n\n5. **设定换商条件**\n   建议满足以下多数条件再换：\n   - 指标恶化主要由物流造成，而不是商品、仓库或客服问题。\n   - 当前物流商连续三周低于 SLA，且无法给出可信整改方案。\n   - 备选物流商在关键线路上有明确优势。\n   - 试运行结果显示退货率、满意度、处理时长有实质改善。\n   - 切换后的净收益大于迁移成本和风险。\n\n6. **先试点，不要一次性全量切换**\n   - 选择问题最严重的地区、SKU 或渠道做 2-4 周试点。\n   - 使用双物流并行对比。\n   - 观察准时率、破损率、退货率、满意度、处理时长、单均成本。\n   - 试点达标后再分批迁移。\n\n**结论规则**\n\n如果数据证明物流是主因，且试点物流商能显著改善核心指标，就换或至少引入第二物流商分流。  \n如果问题来自商品质量、仓库作业、客服积压或促销客群，换物流商不会解决核心问题，应先修内部流程。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

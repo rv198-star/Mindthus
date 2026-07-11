@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n11
+case_type: negative_control
+group_id: H
+expected_owner: direct_judgment
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize a user-owned value tradeoff; stay direct and structure the tradeoff without forcing a brake verdict.
+fail_signal: Fires triage or forces a brake verdict where the correct action is a structured user-owned tradeoff.
+
+Canonical single-line prompt:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Full executed transcript:
+User turn 1:
+三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。
+
+Assistant turn 1:
+可以，先不替你选，只把取舍摊开：
+
+| 方案 | 保住什么 | 直接代价 | 隐性代价 | 口碑风险 |
+|---|---|---|---|---|
+| 压成本 | 预算、现金流、短期利润 | 人力、材料、测试、服务或功能被削减 | 返工率、售后压力、投诉处理成本可能上升 | 最高，用户容易感知“缩水” |
+| 保速度 | 交付时间、市场窗口、内部节奏 | 加班、外包、加急采购、管理成本上升 | 质量验证不足，后期补漏洞概率更高 | 中高，取决于问题是否暴露给用户 |
+| 保体验 | 用户满意度、品牌感知、复购/推荐 | 预算增加，周期可能拉长 | 内部资源被占用，其他项目让路 | 最低，但财务压力最大 |
+
+更直白地说：
+
+压成本的代价是把风险后移，省下的钱可能会以投诉、返工、口碑损耗的形式回来。
+
+保速度的代价是用钱和团队消耗换时间，容易出现“按时交了，但后面补课”的情况。
+
+保体验的代价是预算和周期压力最大，但它把口碑风险压得最低。
+
+如果你是在预算和口碑之间取舍，关键不是哪个最好，而是你能承受哪种损失：现金损失、时间损失，还是用户信任损失。

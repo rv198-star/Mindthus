@@ -1,0 +1,891 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-11T05:53:17.633504+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n10",
+  "case_number": 34210,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f4fbb-fd71-7010-a697-f510422a010c",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.99,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.99,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 601,
+          "reasoning_output_tokens": 443
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘"
+            }
+          ],
+          "abstain_reason": "prior repair history absent"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 643,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.95,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.95,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "现在要写复盘，请帮我找主因和责任边界。"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17206,
+          "cached_input_tokens": 16768,
+          "output_tokens": 402,
+          "reasoning_output_tokens": 231
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n10-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-3",
+          "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-3-retry-2"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.99,
+      0.98,
+      0.95
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.99,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。"
+          }
+        ],
+        "abstain_reason": "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘"
+          }
+        ],
+        "abstain_reason": "prior repair history absent"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.95,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "现在要写复盘，请帮我找主因和责任边界。"
+          }
+        ],
+        "abstain_reason": "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.",
+      "prior repair history absent",
+      "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    4
+  ],
+  "triage_retry_count": [
+    1
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n10-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n10-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n10-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n10-triage-turn-1-sample-3-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/answers/brake-triage-n10-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 49.92,
+      "thread_id": "019f4fbb-fd71-7010-a697-f510422a010c",
+      "answer": "基于现有信息，可以把复盘主线定为：**问题分属履约、仓储包装、客服闭环三条链路，但共同根因是异常预警和跨部门 SLA 不清晰，导致问题没有被提前发现、快速升级和闭环。**\n\n| 投诉 | 初步主因 | 责任边界 |\n|---|---|---|\n| 配送迟到 | 配送时效管控不足，可能是承运商延误、派单滞后或仓库交接晚 | 若仓库按时出库，主责在物流/承运商；若出库晚，仓储承担前段责任；客服只负责告知、安抚和补偿跟进，不承担配送原因责任 |\n| 包装破损 | 包装标准或装箱质检不到位，也可能是运输途中暴力分拣 | 若出库前包装不合格，仓储/包装岗主责；若交接时完好、有凭证，运输破损由物流/承运商承担；若包装方案本身不足，供应链/商品运营也需承担标准制定责任 |\n| 客服回访慢 | 工单跟进机制弱，缺少回访时限、提醒和升级规则 | 客服对首响、回访、客户同步负责；若需仓储/物流反馈但对方超时，则对应部门承担协同延误责任；系统无提醒或流程未定义，运营管理承担机制责任 |\n\n建议复盘口径：\n\n**主因：**  \n本月投诉不是单点失误，而是服务链路中的三个关键节点暴露出管理缺口：配送时效缺少过程监控，包装质量缺少出库前校验，客服回访缺少明确时限和升级机制。\n\n**责任边界：**  \n按“谁控制过程，谁承担主责；谁延误协同，谁承担对应责任；客服负责客户沟通闭环，但不替上游原因背责”的原则划分。\n\n**改进动作：**  \n1. 配送建立超时预警和承运商考核。  \n2. 包装增加出库拍照/抽检，明确破损判责凭证。  \n3. 客服设置首响、回访、升级 SLA，例如 2 小时首响、24 小时内回访、超时自动升级。",
+      "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/events/brake-triage-n10-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/stderr/brake-triage-n10-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/answers/brake-triage-n10-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/prompts/brake-triage-n10-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/codex-home-gates/brake-triage-n10-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "基于现有信息，可以把复盘主线定为：**问题分属履约、仓储包装、客服闭环三条链路，但共同根因是异常预警和跨部门 SLA 不清晰，导致问题没有被提前发现、快速升级和闭环。**\n\n| 投诉 | 初步主因 | 责任边界 |\n|---|---|---|\n| 配送迟到 | 配送时效管控不足，可能是承运商延误、派单滞后或仓库交接晚 | 若仓库按时出库，主责在物流/承运商；若出库晚，仓储承担前段责任；客服只负责告知、安抚和补偿跟进，不承担配送原因责任 |\n| 包装破损 | 包装标准或装箱质检不到位，也可能是运输途中暴力分拣 | 若出库前包装不合格，仓储/包装岗主责；若交接时完好、有凭证，运输破损由物流/承运商承担；若包装方案本身不足，供应链/商品运营也需承担标准制定责任 |\n| 客服回访慢 | 工单跟进机制弱，缺少回访时限、提醒和升级规则 | 客服对首响、回访、客户同步负责；若需仓储/物流反馈但对方超时，则对应部门承担协同延误责任；系统无提醒或流程未定义，运营管理承担机制责任 |\n\n建议复盘口径：\n\n**主因：**  \n本月投诉不是单点失误，而是服务链路中的三个关键节点暴露出管理缺口：配送时效缺少过程监控，包装质量缺少出库前校验，客服回访缺少明确时限和升级机制。\n\n**责任边界：**  \n按“谁控制过程，谁承担主责；谁延误协同，谁承担对应责任；客服负责客户沟通闭环，但不替上游原因背责”的原则划分。\n\n**改进动作：**  \n1. 配送建立超时预警和承运商考核。  \n2. 包装增加出库拍照/抽检，明确破损判责凭证。  \n3. 客服设置首响、回访、升级 SLA，例如 2 小时首响、24 小时内回访、超时自动升级。"
+      ],
+      "usage": {
+        "input_tokens": 11885,
+        "cached_input_tokens": 2432,
+        "output_tokens": 1009,
+        "reasoning_output_tokens": 484
+      },
+      "user_prompt": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.99,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.99,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。"
+              }
+            ],
+            "abstain_reason": "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 601,
+            "reasoning_output_tokens": 443
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n10-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘"
+              }
+            ],
+            "abstain_reason": "prior repair history absent"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 643,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n10-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.95,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.95,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "现在要写复盘，请帮我找主因和责任边界。"
+              }
+            ],
+            "abstain_reason": "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17206,
+            "cached_input_tokens": 16768,
+            "output_tokens": 402,
+            "reasoning_output_tokens": 231
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n10-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n10-triage-turn-1-sample-3-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-3",
+            "/Volumes/Data/MindthusRuntime/k3-majority-dev/repeat-1/original/homes/brake-triage-n10-triage-turn-1-sample-3-retry-2"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.99,
+        0.98,
+        0.95
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.99,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘"
+            }
+          ],
+          "abstain_reason": "prior repair history absent"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.95,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "这月有三起投诉：配送迟到、包装破损、客服回访慢。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "现在要写复盘，请帮我找主因和责任边界。"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+        }
+      ],
+      "triage_abstain_reasons": [
+        "No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.",
+        "prior repair history absent",
+        "No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair."
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}"
+        ]
+      ],
+      "triage_attempt_count": 4,
+      "triage_retry_count": 1,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the turn asks for analysis of complaints, not another local repair after repeated failed patches.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘\"}],\"abstain_reason\":\"prior repair history absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n10-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n10-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这月有三起投诉：配送迟到、包装破损、客服回访慢。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要写复盘，请帮我找主因和责任边界。\"}],\"abstain_reason\":\"No prior repair history is supplied; the user asks for root-cause and responsibility-boundary analysis rather than another local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-answers/brake-triage-n10-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-events/brake-triage-n10-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-stderr/brake-triage-n10-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-11-k3-majority-dev/repeat-1/original/triage-prompts/brake-triage-n10-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "基于现有信息，可以把复盘主线定为：**问题分属履约、仓储包装、客服闭环三条链路，但共同根因是异常预警和跨部门 SLA 不清晰，导致问题没有被提前发现、快速升级和闭环。**\n\n| 投诉 | 初步主因 | 责任边界 |\n|---|---|---|\n| 配送迟到 | 配送时效管控不足，可能是承运商延误、派单滞后或仓库交接晚 | 若仓库按时出库，主责在物流/承运商；若出库晚，仓储承担前段责任；客服只负责告知、安抚和补偿跟进，不承担配送原因责任 |\n| 包装破损 | 包装标准或装箱质检不到位，也可能是运输途中暴力分拣 | 若出库前包装不合格，仓储/包装岗主责；若交接时完好、有凭证，运输破损由物流/承运商承担；若包装方案本身不足，供应链/商品运营也需承担标准制定责任 |\n| 客服回访慢 | 工单跟进机制弱，缺少回访时限、提醒和升级规则 | 客服对首响、回访、客户同步负责；若需仓储/物流反馈但对方超时，则对应部门承担协同延误责任；系统无提醒或流程未定义，运营管理承担机制责任 |\n\n建议复盘口径：\n\n**主因：**  \n本月投诉不是单点失误，而是服务链路中的三个关键节点暴露出管理缺口：配送时效缺少过程监控，包装质量缺少出库前校验，客服回访缺少明确时限和升级机制。\n\n**责任边界：**  \n按“谁控制过程，谁承担主责；谁延误协同，谁承担对应责任；客服负责客户沟通闭环，但不替上游原因背责”的原则划分。\n\n**改进动作：**  \n1. 配送建立超时预警和承运商考核。  \n2. 包装增加出库拍照/抽检，明确破损判责凭证。  \n3. 客服设置首响、回访、升级 SLA，例如 2 小时首响、24 小时内回访、超时自动升级。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

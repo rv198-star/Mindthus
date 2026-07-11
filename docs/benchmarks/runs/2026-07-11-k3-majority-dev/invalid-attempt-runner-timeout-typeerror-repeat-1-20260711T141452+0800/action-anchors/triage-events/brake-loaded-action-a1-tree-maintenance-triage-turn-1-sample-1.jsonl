@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f4f94-f43f-7b50-a060-1f82d1af41e0"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"倒伏风险在受理单里被单列；后来树根外露，又单列；上周树干空洞，也单列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在枝条断裂的来电变多，请在市政养护受理里再加一个受理项\"}],\"abstain_reason\":\"\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17244,"cached_input_tokens":2432,"output_tokens":656,"reasoning_output_tokens":490}}

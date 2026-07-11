@@ -1,0 +1,65 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+建议按这个顺序执行：
+
+1. **确认打印需求**
+   - 打印按钮放在哪：商品页顶部、操作区，还是更多菜单里。
+   - 打印内容范围：当前商品信息、主图、规格、价格、链接、导出字段是否都要包含。
+   - 是否需要隐藏页面按钮、导航、运营操作控件，只保留打印内容。
+
+2. **先做影响面检查**
+   - 复查本周三处改动：
+     - 过期链接是否已彻底移除。
+     - 主图顺序是否按新规则展示。
+     - 导出列是否仍正常生成。
+   - 确认打印按钮不会复用或破坏这些逻辑。
+
+3. **设计打印方案**
+   - 优先用浏览器原生 `window.print()`。
+   - 单独补 `print` 样式：隐藏非打印元素，调整图片、表格、分页、边距。
+   - 如果商品页内容很多，确认是否需要分页样式或只打印指定区域。
+
+4. **开发实现**
+   - 增加“打印”按钮。
+   - 绑定点击事件。
+   - 给商品页主体加可打印容器标识。
+   - 编写 `@media print` 样式。
+
+5. **回归测试**
+   - 商品页正常展示。
+   - 过期链接不出现。
+   - 主图顺序正确。
+   - 导出列不受影响。
+   - 打印预览内容完整，图片、表格、文字不溢出。
+   - Chrome / Edge 至少各测一次打印预览。
+
+6. **运营验收**
+   - 给运营看打印预览，不必先真实打印。
+   - 确认字段、顺序、图片、页面干净程度是否满足使用场景。
+
+7. **上线与观察**
+   - 小版本上线。
+   - 上线后重点看商品页操作区、导出功能、图片展示是否有异常。
+   - 准备快速回滚方案：按钮和打印样式可单独关闭。
