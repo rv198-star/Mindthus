@@ -2445,6 +2445,39 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(result["returncode"], 124)
         self.assertIn("timed out", result["answer"])
 
+    def test_run_codex_records_byte_timeout_streams_without_raising(self):
+        runner = load_runner()
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            with mock.patch.object(
+                runner.subprocess,
+                "run",
+                side_effect=TimeoutExpired(
+                    ["codex"], timeout=1, output=b"partial", stderr=b"slow"
+                ),
+            ):
+                result = runner.run_codex(
+                    "prompt",
+                    out_dir,
+                    "mtj-byte-timeout",
+                    Path(tmp),
+                    REPO,
+                    Path(tmp),
+                    None,
+                    1,
+                )
+
+            events = (out_dir / "events" / "mtj-byte-timeout.jsonl").read_text(encoding="utf-8")
+            stderr = (out_dir / "stderr" / "mtj-byte-timeout.stderr.txt").read_text(
+                encoding="utf-8"
+            )
+
+        self.assertEqual(result["returncode"], 124)
+        self.assertEqual(events, "partial")
+        self.assertIn("slow", stderr)
+        self.assertIn("timed out", stderr)
+
     def test_run_codex_sets_home_override_and_records_it(self):
         runner = load_runner()
         captured_env = {}
