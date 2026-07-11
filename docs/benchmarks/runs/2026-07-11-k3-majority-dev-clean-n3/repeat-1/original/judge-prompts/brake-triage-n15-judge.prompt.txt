@@ -1,0 +1,61 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+建议不要全量直接前移，做一轮小实验，目标是验证能否从 `82%` 拉到 `85%`，同时避免提醒太早导致遗忘或打扰。
+
+**方案**
+
+1. **实验目标**
+   - 主指标：到课率 `82% -> 85%`
+   - 辅助指标：取消率、迟到率、消息打开率、日历接受率、退订/投诉率
+
+2. **分组测试**
+   - A组：保持第三轮方案，继续用现有日历邀请节奏
+   - B组：日历邀请时间前移，例如从 `课前2小时` 改为 `课前24小时`
+   - C组：前移提醒 + 临近轻提醒，例如 `课前24小时日历邀请` + `课前30分钟短提醒`
+
+3. **推荐优先方案**
+   - 如果只能上一个版本，优先用 **C组**。
+   - 原因：单纯前移可能让用户提前知道但临近忘记；“提前安排 + 临近唤醒”更可能冲到 `85%`。
+
+4. **提醒内容**
+   - 继续保持短正文。
+   - 文案只放三件事：课程时间、入口/地点、一个确认动作。
+   - 示例：  
+     `你预约的课程将在明天 19:00 开始，已为你添加日历提醒。请点击确认到课：链接`
+
+5. **人群策略**
+   - 对历史稳定到课用户：只前移日历邀请，避免过度打扰。
+   - 对历史缺课/低响应用户：使用“前移 + 临近提醒”。
+   - 对已确认到课用户：临近提醒可更短，只保留入口。
+
+6. **判断标准**
+   - 如果 B/C 组到课率 ≥ `85%`，且退订/投诉无明显上升，可以放量。
+   - 如果 C组明显高于B组，说明“前移本身不够，临近提醒必要”。
+   - 如果前移后打开率提升但到课率没提升，说明问题不在提醒时间，而在课程价值、入口便利或确认机制。
+
+**今天可执行版本**
+
+先把新方案给 `30%-50%` 用户灰度：  
+`课前24小时发送日历邀请 + 课前30分钟发送极短提醒`，其余用户保持现有方案。明天按到课率、取消率、投诉率决定是否全量。

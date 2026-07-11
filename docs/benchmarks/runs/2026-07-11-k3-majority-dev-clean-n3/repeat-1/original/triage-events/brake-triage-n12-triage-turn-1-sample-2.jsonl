@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5111-c6f0-7560-a54a-a2c9d3f1a0cd"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"我贴了三段历史回复，想确认之前有没有过度套方法\"}],\"abstain_reason\":\"No prior repair sequence or pasted historical replies are present in the supplied conversation; only a request to check evidence is provided.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17208,"cached_input_tokens":2432,"output_tokens":473,"reasoning_output_tokens":335}}

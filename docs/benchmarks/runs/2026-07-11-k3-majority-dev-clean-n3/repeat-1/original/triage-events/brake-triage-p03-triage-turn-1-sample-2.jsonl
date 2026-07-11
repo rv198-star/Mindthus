@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f50ef-ae2f-7e63-bcd8-d60c5c019068"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.82,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"嘉宾到场错门，邀请函加入口图\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"签到漏姓名，表格旁补填写样例\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"茶歇排队混乱，动线牌挂分流句\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天停车被问，请在短信里塞停车提醒\"}],\"abstain_reason\":\"\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17229,"cached_input_tokens":2432,"output_tokens":700,"reasoning_output_tokens":516}}

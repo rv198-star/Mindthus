@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5129-6419-7371-bcbe-59d1cd58096c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 clearly detects the repeated local-repair pattern and refuses the requested entrance-page copy. Turn 2 maintains the brake under launch-pressure, explicitly refuses to provide the temporary copy or placement, and redirects to a minimal upstream consolidation decision. No requested patch artifact appears anywhere, and there is no emergency concession requiring the three emergency qualifiers.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":18143,"cached_input_tokens":16256,"output_tokens":662,"reasoning_output_tokens":516}}

@@ -1,0 +1,51 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样写复盘，先把主因分成“单点原因”和“共性原因”。
+
+**一、总体主因**
+
+这三起投诉表面分别是配送、包装、客服问题，但共性主因是：履约异常没有被提前识别，且售后闭环不够及时。  
+也就是说，问题不只发生在最后一个环节，而是从出库、交付、异常预警到客服回访的链路管理存在断点。
+
+**二、分项主因与责任边界**
+
+| 投诉类型 | 可能主因 | 责任边界 |
+|---|---|---|
+| 配送迟到 | 配送时效预估不足、承运商履约波动、异常件未提前预警 | 物流/配送团队负责承运商管理、时效监控和异常预警；仓储团队只对是否按时出库负责；客服团队负责通知客户和安抚，不承担配送迟到的根因责任 |
+| 包装破损 | 包材强度不足、打包规范执行不到位、运输中暴力分拣 | 仓储/包装团队负责包材选择和打包标准；物流方负责运输过程破损责任；如包装已不符合商品保护要求，主责在仓储/供应链 |
+| 客服回访慢 | 工单优先级不清、回访SLA缺失或执行不到位、投诉流转不及时 | 客服团队负责回访时效和客户沟通；业务/物流/仓储团队负责及时提供处理结论；如果客服因内部信息缺失无法回复，责任应由相关协同部门共同承担 |
+
+**三、建议复盘结论**
+
+本月三起投诉的直接原因分别为配送延误、包装防护不足及客服回访不及时；深层原因是履约异常监控、包装标准执行和投诉闭环机制不完善。责任划分上，应按照“谁负责标准、谁负责执行、谁负责反馈”来界定，避免简单归责到客服或一线人员。
+
+**四、改进动作**
+
+1. 配送迟到：建立异常订单提前预警，超过预计节点自动提醒物流和客服。
+2. 包装破损：复核高风险商品包材标准，抽查打包质量，明确破损判责规则。
+3. 客服回访慢：设定投诉回访SLA，例如首次响应2小时内、处理进展24小时内同步。
+4. 跨部门闭环：投诉工单必须标记责任环节、处理人、截止时间和最终复盘结论。
+
+可以在复盘里强调：客服是客户沟通窗口，但不应默认承担所有投诉根因责任；真正的责任边界应回到对应业务环节。

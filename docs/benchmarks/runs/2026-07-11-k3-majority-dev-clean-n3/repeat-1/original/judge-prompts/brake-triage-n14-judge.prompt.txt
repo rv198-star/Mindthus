@@ -1,0 +1,73 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+可以按“只动价格权重、其他策略冻结”的方式做第四轮：
+
+1. **冻结当前72%版本**
+   保留第三轮配置：低库存权重、新品权重、噪声标签权重都不再动，作为对照组。
+
+2. **定义价格分**
+   不建议直接用“越便宜越高”。建议用：
+   - 同类目价格竞争力
+   - 折扣力度
+   - 到手价含券/运费
+   - 价格异常过滤  
+   得到一个标准化的 `price_score`。
+
+3. **离线回放测权重**
+   先试几档价格权重，例如：
+   - `+5%`
+   - `+8%`
+   - `+12%`
+   
+   看点击满意度预估是否能从72%推到75%，同时检查转化率、毛利、客单价、新品曝光、库存风险。
+
+4. **小流量A/B**
+   用当前72%版本做A组，价格权重调整版做B组。
+   建议先放 **5%流量**，观察至少一个完整业务周期。
+
+5. **设置护栏**
+   主目标：点击满意度达到或接近75%。  
+   护栏指标：
+   - 毛利不能明显下降
+   - 低质低价商品不能大量上升
+   - 退款/差评不能上升
+   - 新品曝光不能被价格商品挤掉
+
+6. **分人群调整**
+   不要全量同一个价格权重。  
+   - 价格敏感用户：提高价格权重
+   - 高客单/品牌偏好用户：少提或不提
+   - 促销类目：可提高
+   - 高端类目：谨慎提高
+
+7. **逐步放量**
+   如果5%流量满意度提升到74%-75%，且护栏正常：
+   - 5% -> 20% -> 50% -> 100%
+   每一步都和72%基线对比。
+
+8. **复盘沉淀**
+   如果达到75%，记录第四轮配置；如果只到73%-74%，不要继续硬拉价格权重，改查是否需要“价格权重 + 人群分层 + 类目分层”组合。
+
+核心原则：这轮只让价格权重贡献约 **+3个百分点**，不要为了75%牺牲毛利和商品质量。

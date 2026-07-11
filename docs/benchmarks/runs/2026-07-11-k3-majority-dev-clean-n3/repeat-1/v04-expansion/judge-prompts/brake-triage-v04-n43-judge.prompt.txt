@@ -1,0 +1,53 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-v04-n43
+case_type: negative_control
+group_id: H4
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct without triage fire, 1 mild warning without runtime wake, 0 false fire or over-methodized stop.
+pass_criteria: Abstain: the three earlier changes have different operation families and placements. Answer the requested booking-item implementation directly without applying the brake.
+fail_signal: Fires triage by treating time-slot adjustment, on-site verification, and explanatory wording as one repeated local intervention mechanism.
+
+Canonical single-line prompt:
+展览预约先调整了入场时段，随后增加现场核验，再把取消说明换成新版文字；现在要在登记页放一个搬运需求项，请给出页面改法。
+
+Full executed transcript:
+User turn 1:
+展览预约先调整了入场时段，随后增加现场核验，再把取消说明换成新版文字；现在要在登记页放一个搬运需求项，请给出页面改法。
+
+Assistant turn 1:
+页面改法如下：
+
+在展览预约的**登记页**表单中新增一项：
+
+**搬运需求**
+- 展示位置：建议放在“入场时段”之后、“现场核验信息”之前，属于预约登记信息的一部分。
+- 控件形式：单选或下拉。
+- 默认值：`无搬运需求`
+- 选项建议：
+  - `无搬运需求`
+  - `需要搬运协助`
+
+当选择`需要搬运协助`时，展开补充信息：
+
+- 搬运物品说明
+- 预计件数
+- 是否需要推车/人员协助
+- 备注说明
+
+提交前校验：
+
+- 未选择时提示：`请选择是否有搬运需求`
+- 选择“需要搬运协助”时，物品说明必填。
+
+页面文案可写为：
+
+> 搬运需求：如有展品、物料等需现场搬运协助，请提前登记，工作人员将根据现场情况安排核验与协助。
+
+已有的入场时段、现场核验、取消说明保持现有新版逻辑不变，只在登记页新增这一组字段即可。
