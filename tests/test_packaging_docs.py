@@ -468,6 +468,10 @@ class PackagingDocsTests(unittest.TestCase):
             Path("codex-plugin/mindthus/skills/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
+        binary_asset_allowlist = {
+            Path("codex-plugin/mindthus/assets/mindthus-icon.png"),
+            Path("codex-plugin/mindthus/assets/mindthus-logo.png"),
+        }
         jsonl_paths: set[Path] = set()
         binary_asset_paths: set[Path] = set()
 
@@ -490,7 +494,11 @@ class PackagingDocsTests(unittest.TestCase):
             jsonl_paths.issubset(jsonl_allowlist),
             f"release pack should only include allowlisted jsonl templates: {jsonl_paths - jsonl_allowlist}",
         )
-        self.assertEqual(binary_asset_paths, set(), "release packs should not carry binary images or media")
+        self.assertTrue(
+            binary_asset_paths.issubset(binary_asset_allowlist),
+            "release packs should only carry declared Codex plugin visual assets: "
+            f"{binary_asset_paths - binary_asset_allowlist}",
+        )
 
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
@@ -807,6 +815,12 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(codex_plugin_manifest["version"], "1.4.3")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
+            self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
+            self.assertEqual(
+                codex_plugin_manifest["interface"]["composerIcon"],
+                "./assets/mindthus-icon.png",
+            )
+            self.assertEqual(codex_plugin_manifest["interface"]["logo"], "./assets/mindthus-logo.png")
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertIn("SPDX AGPL-3.0-only", codex_plugin_manifest["interface"]["longDescription"])
             self.assertIn(
@@ -845,6 +859,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((codex_plugin_root / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "run-fidelity-judge.py").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "log-mindthus-runtime.py").exists())
+            self.assertTrue((codex_plugin_root / "assets" / "mindthus-icon.png").exists())
+            self.assertTrue((codex_plugin_root / "assets" / "mindthus-logo.png").exists())
             self.assertTrue(
                 (codex_plugin_root / "scripts" / "primitives" / "whole_elephant_validator.py").exists()
             )

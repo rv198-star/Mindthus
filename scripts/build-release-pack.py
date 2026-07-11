@@ -26,6 +26,10 @@ JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
+CODEX_PLUGIN_VISUAL_ASSETS = (
+    Path("assets/mindthus-icon.png"),
+    Path("assets/mindthus-logo.png"),
+)
 RELEASE_SCRIPT_PATHS = (
     Path("run-fidelity-judge.py"),
     Path("log-fidelity-usage.py"),
@@ -137,6 +141,11 @@ def write_json(path: Path, data: dict) -> None:
 def copy_license_files(root: Path, target: Path) -> None:
     for filename in LICENSE_FILES:
         copy_file_filtered(root / filename, target / filename)
+
+
+def copy_codex_plugin_visual_assets(repo: Path, plugin_root: Path) -> None:
+    for rel_path in CODEX_PLUGIN_VISUAL_ASSETS:
+        copy_file_filtered(repo / rel_path, plugin_root / rel_path)
 
 
 def copy_release_scripts(root: Path, target: Path) -> None:
@@ -300,6 +309,9 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
                 "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
                 "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
                 "defaultPrompt": [CODEX_ACTIVATION_ROUTER_PROMPT],
+                "brandColor": "#161614",
+                "composerIcon": "./assets/mindthus-icon.png",
+                "logo": "./assets/mindthus-logo.png",
             },
         },
     )
@@ -311,6 +323,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
         methodologies_dir,
         plugin_root / "docs" / "methodologies",
     )
+    copy_codex_plugin_visual_assets(repo, plugin_root)
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
 
