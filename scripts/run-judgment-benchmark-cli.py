@@ -2199,7 +2199,15 @@ def response_negative_four_true_red_line(case: dict[str, Any], response: dict[st
         return False
     return any(
         bool(turn.get("triage_negative_four_true_red_line"))
-        or brake_semantic_triage_four_hard_gates_true(turn.get("triage_output") or {})
+        or any(
+            brake_semantic_triage_four_hard_gates_true(output)
+            for output in (
+                turn.get("triage_output")
+                if isinstance(turn.get("triage_output"), list)
+                else [turn.get("triage_output")]
+            )
+            if isinstance(output, dict)
+        )
         for turn in response.get("turns", [])
     )
 

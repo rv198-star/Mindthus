@@ -302,6 +302,24 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             )
         )
 
+    def test_negative_four_true_red_line_accepts_per_turn_sample_output_list(self):
+        runner = load_runner()
+        parsed = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_n_plus_1_request=True,
+            confidence=0.01,
+            abstain_reason="",
+        )
+
+        self.assertTrue(
+            runner.response_negative_four_true_red_line(
+                {"case_type": "negative_control"},
+                {"turns": [{"triage_output": [triage_output(), parsed, triage_output()]}]},
+            )
+        )
+
     def test_fire_policy_config_is_canonical_runtime_input(self):
         runner = load_runner()
 
