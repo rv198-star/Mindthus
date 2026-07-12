@@ -36,6 +36,8 @@ BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.82
 BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.2"
 BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.2"
+BENCHMARK_REASONING_EFFORT = "xhigh"
+BENCHMARK_REASONING_EFFORT_CONFIG_KEY = "model_reasoning_effort"
 JUDGE_PARSE_MAX_ATTEMPTS = 2
 TRIAGE_VALIDATION_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
@@ -200,6 +202,9 @@ BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG = load_brake_semantic_triage_fire_polic
 )
 BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256 = stable_config_sha256(
     BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG
+)
+BENCHMARK_REASONING_EFFORT_FINGERPRINT = stable_config_sha256(
+    {BENCHMARK_REASONING_EFFORT_CONFIG_KEY: BENCHMARK_REASONING_EFFORT}
 )
 BRAKE_SEMANTIC_TRIAGE_SAMPLE_COUNT = int(
     BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["sample_count"]
@@ -845,6 +850,12 @@ def run_codex(
         cmd = ["codex", "exec", "resume", "--json", "-o", str(last_path)]
         if model:
             cmd.extend(["--model", model])
+        cmd.extend(
+            [
+                "--config",
+                f'{BENCHMARK_REASONING_EFFORT_CONFIG_KEY}="{BENCHMARK_REASONING_EFFORT}"',
+            ]
+        )
         if output_schema is not None:
             cmd.extend(["--output-schema", str(output_schema)])
         cmd.extend([resume_thread_id, "-"])
@@ -866,6 +877,12 @@ def run_codex(
             cmd.append("--ephemeral")
         if model:
             cmd.extend(["--model", model])
+        cmd.extend(
+            [
+                "--config",
+                f'{BENCHMARK_REASONING_EFFORT_CONFIG_KEY}="{BENCHMARK_REASONING_EFFORT}"',
+            ]
+        )
         if output_schema is not None:
             cmd.extend(["--output-schema", str(output_schema)])
         cmd.append("-")
@@ -2947,6 +2964,9 @@ def main() -> int:
         "execution_root": str(args.execution_root),
         "model": args.model,
         "judge_model": args.judge_model or args.model,
+        "reasoning_effort": BENCHMARK_REASONING_EFFORT,
+        "reasoning_effort_config_key": BENCHMARK_REASONING_EFFORT_CONFIG_KEY,
+        "reasoning_effort_fingerprint": BENCHMARK_REASONING_EFFORT_FINGERPRINT,
         "model_explicit": args.model is not None,
         "judge_model_explicit": args.judge_model is not None,
         "jobs": args.jobs,

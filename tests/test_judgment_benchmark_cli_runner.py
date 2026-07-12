@@ -475,6 +475,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         self.assertNotIn("triage_threshold", manifest)
+        self.assertEqual(manifest["reasoning_effort"], "xhigh")
+        self.assertEqual(manifest["reasoning_effort_config_key"], "model_reasoning_effort")
+        self.assertEqual(
+            manifest["reasoning_effort_fingerprint"],
+            runner.BENCHMARK_REASONING_EFFORT_FINGERPRINT,
+        )
         self.assertEqual(
             manifest["triage_prompt_path"],
             str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"),
@@ -591,6 +597,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(
             components["triage_model"]["fingerprint"],
             "provider-model:gpt-5.5",
+        )
+        self.assertEqual(components["reasoning_effort"]["config_key"], "model_reasoning_effort")
+        self.assertEqual(components["reasoning_effort"]["effective_request_field"], "reasoning.effort")
+        self.assertEqual(components["reasoning_effort"]["explicit_config"], "xhigh")
+        self.assertEqual(
+            components["reasoning_effort"]["fingerprint"],
+            runner.BENCHMARK_REASONING_EFFORT_FINGERPRINT,
         )
 
     def test_brake_semantic_triage_output_schema_pins_schema_version(self):
@@ -2499,9 +2512,11 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
     def test_run_codex_sets_home_override_and_records_it(self):
         runner = load_runner()
         captured_env = {}
+        captured_command = []
 
         def fake_run(*args, **kwargs):
             captured_env.update(kwargs["env"])
+            captured_command.extend(args[0])
             return SimpleNamespace(stdout="", stderr="", returncode=0)
 
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
@@ -2527,7 +2542,40 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(captured_env["HOME"], str(home))
         self.assertEqual(captured_env["CODEX_HOME"], str(Path(tmp) / "codex-home"))
+        self.assertIn("--config", captured_command)
+        self.assertIn('model_reasoning_effort="xhigh"', captured_command)
         self.assertEqual(result["home"], str(home))
+
+    def test_run_codex_pins_reasoning_effort_when_resuming(self):
+        runner = load_runner()
+        captured_command = []
+
+        def fake_run(*args, **_kwargs):
+            captured_command.extend(args[0])
+            return SimpleNamespace(stdout="", stderr="", returncode=0)
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            runner.subprocess,
+            "run",
+            side_effect=fake_run,
+        ):
+            out_dir = Path(tmp)
+            runner.ensure_dirs(out_dir)
+            runner.run_codex(
+                "prompt",
+                out_dir,
+                "mtj-resume-effort",
+                Path(tmp) / "codex-home",
+                REPO,
+                Path(tmp),
+                "gpt-5.5",
+                1,
+                resume_thread_id="thread-123",
+            )
+
+        self.assertIn("resume", captured_command)
+        self.assertIn("--config", captured_command)
+        self.assertIn('model_reasoning_effort="xhigh"', captured_command)
 
     def test_empty_home_root_allocates_one_empty_home_per_stem(self):
         runner = load_runner()

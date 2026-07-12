@@ -7,7 +7,7 @@
   "components": {
     "runner": {
       "path": "scripts/run-judgment-benchmark-cli.py",
-      "sha256": "183a34888d68042abf2427fe0f14e83a780fccbe85909c3ea32acc433fbbb6de"
+      "sha256": "abb704ec2983611ee45c17e4c520ca4f2b307e737462d75c74b243b4c99c1b81"
     },
     "register": {
       "path": "docs/benchmarks/v5-target-trigger-register.json",
@@ -65,6 +65,12 @@
       "explicit_config": "gpt-5.5",
       "fingerprint": "provider-model:gpt-5.5",
       "independent_from_generator": true
+    },
+    "reasoning_effort": {
+      "config_key": "model_reasoning_effort",
+      "effective_request_field": "reasoning.effort",
+      "explicit_config": "xhigh",
+      "fingerprint": "96497c9df09cfbece7931fcd775fd99580127d817717510f8b36ee47be3ab4d8"
     }
   },
   "owner_gate": {
