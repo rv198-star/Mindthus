@@ -48,8 +48,8 @@ V0.2 model output is classified into exactly one of these three states:
 
 | Validation state | Gate/reason condition | Vote and retry behavior |
 | --- | --- | --- |
-| `fire_candidate` | all normal hard gates are true and `abstain_reason` is blank | eligible for one fire vote |
-| `valid_abstain` | one or more normal hard gates are false and the reason is non-empty; **or** fields/types/ranges are valid but the declared abstain form contradicts the gate vector | abstain; no retry; preserve a contract-violation subtype when applicable |
+| `fire_candidate` | `sample_fire_candidate` is true through either the normal or bounded-emergency predicate, and `abstain_reason` is blank | eligible for one fire vote |
+| `valid_abstain` | neither candidate predicate is satisfied and the reason is non-empty; **or** fields/types/ranges are valid but the declared abstain form contradicts either candidate predicate | abstain; no retry; preserve a contract-violation subtype when applicable |
 | `malformed` | missing/wrong-type/unsupported-version/out-of-range/unexpected-field/non-JSON/subprocess failure | invalid; retain raw attempt, retry once, then synthetic fallback abstain |
 
 The table intentionally distinguishes the three semantic states requested for
@@ -60,13 +60,13 @@ The two V0.2 contract-violation codes are:
 
 | Code | Condition | Decision consequence |
 | --- | --- | --- |
-| `partial_gate_missing_abstain_reason` | one or more normal hard gates are false and the reason is blank | valid abstain; retain the emitted false gates |
-| `four_true_with_abstain_reason` | all normal hard gates are true and the reason is non-empty | valid abstain; retain the all-true gates and reason |
+| `no_candidate_path_missing_abstain_reason` | neither the normal nor bounded-emergency candidate predicate is satisfied, at least one predicate input is false, and the reason is blank | valid abstain; retain the emitted false gates |
+| `candidate_path_with_abstain_reason` | either the normal or bounded-emergency candidate predicate is satisfied and the reason is non-empty | valid abstain; retain the candidate gates and reason |
 
-This is fail-closed. A contradictory all-true abstain cannot become a positive fire
-vote merely because the booleans are true. Separately, the negative redline still
-examines the emitted candidate predicate before vote aggregation, so a negative
-all-true gate vector is never hidden by a reason string.
+This is fail-closed. A contradictory candidate-path abstain cannot become a positive
+fire vote merely because a path predicate is true. Separately, the negative redline still
+examines the emitted candidate predicate before vote aggregation, so a negative normal
+or emergency candidate is never hidden by a reason string.
 
 ### A.3 Output and record fields
 
@@ -81,7 +81,7 @@ For every V0.2 sample record, the implementation must write:
   "validation_state": "fire_candidate | valid_abstain | malformed",
   "vote": "fire | abstain | invalid",
   "contract_violation": {
-    "code": "partial_gate_missing_abstain_reason | four_true_with_abstain_reason | null",
+    "code": "no_candidate_path_missing_abstain_reason | candidate_path_with_abstain_reason | null",
     "emitted_abstain_reason": "verbatim model field",
     "emitted_normal_gate_vector": {
       "is_repeated_local_repair": false,
@@ -132,14 +132,18 @@ Implementation tests must cover:
 
 1. partial-gate/non-empty-reason -> `valid_abstain` with original gate vector;
 2. partial-gate/blank-reason -> `valid_abstain` with
-   `partial_gate_missing_abstain_reason`, no retry, and no all-false rewrite;
-3. all-true/blank-reason -> `fire_candidate`;
-4. all-true/non-empty-reason -> `valid_abstain` with
-   `four_true_with_abstain_reason`, never a fire vote;
+   `no_candidate_path_missing_abstain_reason`, no retry, and no all-false rewrite;
+3. normal-path or bounded-emergency-path candidate/blank-reason ->
+   `fire_candidate`;
+4. normal-path or bounded-emergency-path candidate/non-empty-reason ->
+   `valid_abstain` with `candidate_path_with_abstain_reason`, never a fire vote;
 5. malformed output -> one retry, retained raw attempts, then labelled fallback;
-6. a negative structurally valid all-true candidate -> immediate redline regardless
-   of reason, vote, majority result, or confidence; and
-7. backward archive reading of a V0.1 record without changing its recorded fields.
+6. a negative structurally valid normal-path or bounded-emergency-path candidate ->
+   immediate redline regardless of reason, vote, majority result, or confidence; and
+7. a bounded-emergency candidate with `is_n_plus_1_request=false` ->
+   `fire_candidate` when its emergency predicate is satisfied and the reason is blank;
+   its negative counterpart -> immediate redline; and
+8. backward archive reading of a V0.1 record without changing its recorded fields.
 
 ## B. Bounded-emergency candidate path
 
