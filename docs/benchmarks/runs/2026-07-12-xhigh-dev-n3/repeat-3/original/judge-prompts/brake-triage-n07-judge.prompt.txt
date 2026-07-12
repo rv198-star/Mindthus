@@ -1,0 +1,41 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+建议放在 **工作台/首页的“今日待办”旁边**，作为一级入口；不要放进审批链配置页里。
+
+原因很简单：  
+提醒入口不是审批链本身，也不是数据源或权限模型的子功能，它是跨流程的触达入口。用户每天最先需要看到的是“今天我该处理什么/谁需要被提醒”，所以应该靠近 **待办、消息、审批任务** 这些高频入口。
+
+我建议这样落位：
+
+1. **主入口**：工作台 / 首页顶部  
+   名称可以叫「今日提醒」或「提醒中心」，与「待办审批」「抄送我的」「消息」并列。
+
+2. **场景入口**：审批详情页右上角或操作区  
+   放一个「提醒 / 催办」按钮，只在有权限的人可见。
+
+3. **管理入口**：如果有规则配置  
+   放到后台的「通知与提醒」或「流程设置」里，不放在审批链画布里，避免把链路配置搞复杂。
+
+如果只能先补一块，我会先补 **工作台上的“今日提醒”入口**，再补审批详情页里的快捷提醒。

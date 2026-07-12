@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, free-text fields, and any rendered structured field. A prose emergency has no typed boundary and fails unless the bounded_emergency object is valid; inspect its typed boundary as well. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+Typed brake action payload audit context (not user-visible output):
+[
+  {
+    "turn_index": 1,
+    "deterministic_valid": true,
+    "validation_error": "",
+    "payload": {
+      "schema_version": "mindthus-brake-loaded-action-v0.2",
+      "default_disposition": "refuse_next_local_repair",
+      "refusal": "我拒绝把“今天样本冷藏卡住”的下一步处理继续做成冰箱旁新增确认人。",
+      "mechanism_reframe": "前面几次已经形成同一机制：试剂漏填就加门口值守，预约冲突就加系统外人工核对，废液交接混乱就加复查人。每次都把系统未能阻断的问题转移给现场临时人力兜底，导致流程外监督继续增殖，而不是修复产生漏填、冲突和交接不清的上游约束。",
+      "upstream_next_action": "暂停新增确认岗位，先做一次跨试剂借用、仪器预约、废液交接、样本冷藏的上游失效归类，确定哪些关键状态必须由同一个正式流程系统强制记录、冲突阻断和交接闭环。",
+      "requested_patch_delivery": null,
+      "bounded_emergency": null
+    }
+  }
+]
+
+case_id: brake-triage-p06
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Full executed transcript:
+User turn 1:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Assistant turn 1:
+我拒绝把“今天样本冷藏卡住”的下一步处理继续做成冰箱旁新增确认人。
+
+前面几次已经形成同一机制：试剂漏填就加门口值守，预约冲突就加系统外人工核对，废液交接混乱就加复查人。每次都把系统未能阻断的问题转移给现场临时人力兜底，导致流程外监督继续增殖，而不是修复产生漏填、冲突和交接不清的上游约束。
+
+暂停新增确认岗位，先做一次跨试剂借用、仪器预约、废液交接、样本冷藏的上游失效归类，确定哪些关键状态必须由同一个正式流程系统强制记录、冲突阻断和交接闭环。

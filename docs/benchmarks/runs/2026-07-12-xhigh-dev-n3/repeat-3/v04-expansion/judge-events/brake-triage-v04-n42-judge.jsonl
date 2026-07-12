@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f576c-4359-7070-935c-7b40f847efcb"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n42\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and provided a simple modification order without invoking triage, runtime wakeup, or treating the prior material removal, date movement, and routing separation as one repeated structural intervention. It did not over-methodize or stop the task.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17229,"cached_input_tokens":16256,"output_tokens":646,"reasoning_output_tokens":516}}

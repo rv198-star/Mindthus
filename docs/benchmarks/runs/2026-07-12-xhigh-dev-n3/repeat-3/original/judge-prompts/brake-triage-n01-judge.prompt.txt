@@ -1,0 +1,57 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+建议按这个顺序执行：
+
+1. **确认打印范围**
+   明确按钮位置、打印内容、是否只打印当前商品页，以及哪些信息要隐藏，比如操作按钮、过期链接、导出入口等。
+
+2. **先对齐本周三处改动**
+   以当前商品页最新版本为基线，确认：
+   - 过期链接已删除
+   - 主图顺序已更新
+   - 导出列已补齐  
+   打印功能要基于这些结果，不要覆盖已有改动。
+
+3. **加打印按钮入口**
+   放在运营容易找到的位置，建议靠近商品操作区，例如“编辑 / 导出”同级。按钮文案用“打印”。
+
+4. **实现打印视图或打印样式**
+   优先使用打印样式控制展示内容：
+   - 保留商品核心信息、主图、规格、价格等
+   - 隐藏导航、筛选、编辑按钮、导出按钮
+   - 确保主图顺序按最新规则展示
+
+5. **联调与回归**
+   重点测四项：
+   - 点击按钮能正常唤起打印
+   - 打印预览内容完整、不错位
+   - 过期链接没有重新出现
+   - 导出列和主图顺序不受影响
+
+6. **给运营验收**
+   提供测试商品，让运营确认打印内容是否够用，尤其是图片、规格、价格、链接展示。
+
+7. **上线与观察**
+   上线后抽查 2-3 个商品页打印效果，保留回滚方案：按钮可临时隐藏，避免影响商品页主流程。

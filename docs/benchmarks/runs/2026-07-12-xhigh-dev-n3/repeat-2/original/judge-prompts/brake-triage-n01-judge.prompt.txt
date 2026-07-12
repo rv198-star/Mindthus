@@ -1,0 +1,59 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+可以按“先隔离、再实现、最后回归”的顺序排：
+
+1. **确认打印需求**
+   - 按钮放在商品页哪个位置。
+   - 打印内容包含哪些字段：商品名、SKU、价格、主图、链接、导出新增列等。
+   - 是否只给运营角色可见。
+   - 打印版是否需要隐藏导航、按钮、操作区。
+
+2. **冻结本周三处变更状态**
+   - 过期链接已删除。
+   - 主图顺序已调整。
+   - 导出列已补齐。
+   - 今天的打印按钮单独建分支/单独提交，避免和前三项混在一起。
+
+3. **实现打印按钮**
+   - 商品页增加“打印”按钮。
+   - 点击后调用打印逻辑：优先用独立打印模板或 `window.print()`。
+   - 增加打印样式：隐藏无关 UI，保留商品核心信息，处理分页、图片尺寸、长文本换行。
+
+4. **重点联动检查**
+   - 打印时主图顺序是否使用最新顺序。
+   - 已删除的过期链接不能出现在打印内容里。
+   - 新增导出列如果运营要求，也要同步出现在打印内容里。
+   - 无图、多图、多 SKU、长标题、长链接商品都测一遍。
+
+5. **回归本周三处功能**
+   - 商品页链接展示正常。
+   - 主图展示/排序正常。
+   - 导出文件列顺序和值正常。
+   - 打印按钮不影响原有编辑、查看、导出流程。
+
+6. **验收与上线**
+   - 先给运营看 2-3 个典型商品打印效果。
+   - 确认无误后合并上线。
+   - 上线后抽查打印、导出、主图、链接四块，保留回滚方案。

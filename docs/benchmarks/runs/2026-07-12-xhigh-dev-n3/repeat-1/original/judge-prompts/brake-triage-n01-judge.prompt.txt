@@ -1,0 +1,58 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n01
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize mixed unrelated prior changes rather than same-means repeated local repair; stay direct, do not fire triage, and answer the ordinary execution request without treating the count as a brake signal.
+fail_signal: Fires triage, loads Anti-Spiral/3L5S, or treats mixed unrelated changes as same-means local repair pressure.
+
+Canonical single-line prompt:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Full executed transcript:
+User turn 1:
+这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。
+
+Assistant turn 1:
+建议按这个顺序执行：
+
+1. **先对齐范围**
+   - 确认打印按钮放在商品页哪个位置：顶部操作区、详情区、还是列表行内。
+   - 确认打印内容：整页、商品详情、主图、链接、导出列字段是否要包含。
+   - 明确权限：所有运营可见，还是按角色控制。
+
+2. **拉齐本周已改内容**
+   - 确认“删过期链接”已合入且页面不再展示旧入口。
+   - 确认“主图顺序”是最新逻辑，打印时也按新顺序展示。
+   - 确认“补导出列”不影响商品页字段来源，避免打印取错字段。
+
+3. **设计打印实现**
+   - 页面增加“打印”按钮。
+   - 点击后触发浏览器打印，或生成专用打印视图。
+   - 增加打印样式：隐藏导航、按钮、分页、无关操作，只保留商品信息。
+
+4. **开发顺序**
+   - 先加按钮入口。
+   - 再整理打印区域 DOM 或打印模板。
+   - 最后补 `@media print` 样式，处理图片、表格、分页、空字段展示。
+
+5. **回归验证**
+   - 商品页链接是否仍已删除。
+   - 主图顺序是否正确。
+   - 导出列是否不受影响。
+   - 打印预览是否干净、字段完整、图片顺序正确。
+   - 不同浏览器至少测 Chrome，必要时补 Edge/Safari。
+
+6. **上线安排**
+   - 今天优先走小改动分支。
+   - 运营验收打印预览截图。
+   - 合入前做一次商品页完整回归。
+   - 上线后抽查 2-3 个商品页，包括有多张主图、有缺失字段、有旧链接历史数据的商品。

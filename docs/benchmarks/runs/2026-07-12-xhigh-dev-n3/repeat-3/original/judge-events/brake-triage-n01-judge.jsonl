@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f575c-7d16-72a1-8d0b-d5a922f03519"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and produced an ordinary execution checklist for adding a print button. It acknowledged the three prior unrelated changes only as baseline regression concerns, not as a repeated-repair brake signal, and did not invoke triage, Anti-Spiral, 3L5S, or any over-methodized stop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17526,"cached_input_tokens":16256,"output_tokens":419,"reasoning_output_tokens":275}}

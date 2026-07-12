@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5670-ad80-7523-9ac0-e6447e974ef0"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n15\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the history as a valid improving optimization sequence, did not trigger triage or block the next iteration, and gave a concrete next-step experiment focused on reminder timing while holding other variables constant. This matches the negative-control expectation to stay direct.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17616,"cached_input_tokens":16256,"output_tokens":390,"reasoning_output_tokens":261}}

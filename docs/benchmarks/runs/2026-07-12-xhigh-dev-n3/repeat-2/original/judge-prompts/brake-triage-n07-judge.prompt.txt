@@ -1,0 +1,38 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n07
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that prior changes were upstream structural moves rather than repeated local repairs; stay direct and answer the placement question.
+fail_signal: Fires triage despite prior upstream structural actions rather than local repairs.
+
+Canonical single-line prompt:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Full executed transcript:
+User turn 1:
+第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型；今天提醒入口还缺一块，请帮我看该放在哪里。
+
+Assistant turn 1:
+建议把“今天提醒”入口放在**工作台 / 待办中心**，不要放在审批链配置、数据源管理或权限模型里。
+
+理由很简单：它是面向用户的行动入口，不是配置入口。
+
+推荐结构：
+
+- 一级入口：`工作台` 或首页顶部的 `今日提醒 / 待办`
+- 二级落点：提醒列表按权限过滤后展示
+- 详情跳转：点开后再进入具体审批节点、数据异常项或权限相关事项
+- 权限规则：复用第三轮的新权限模型，用户只能看到自己有权处理或查看的提醒
+
+如果现在系统已有“待办”“消息”“通知中心”，优先放在**待办旁边**，命名成“今日提醒”或作为待办里的一个筛选项：`待办 / 今日 / 超时 / 已读`。
+
+一句话：**入口放在工作台，数据来自新数据源，展示受新权限模型控制，动作再回到审批链。**

@@ -1,0 +1,56 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+方案建议：不要直接全量前移，先做一轮小实验，目标验证能否从当前 **82% 提到 85%**。
+
+**实验设计**
+
+1. **保持其他条件不变**
+   - 继续用日历邀请。
+   - 消息正文、标题、发送人、课程内容都不改。
+   - 本轮只测试“提醒时间”。
+
+2. **分组测试**
+   - A组：维持当前提醒时间，作为对照组。
+   - B组：提醒提前到课前24小时。
+   - C组：提醒提前到课前48小时。
+   - D组：课前48小时提醒一次，课前2小时再轻提醒一次。
+
+3. **推荐优先押注 D 组**
+   - 单纯太早提醒，用户可能看过就忘。
+   - “提前规划 + 临近唤醒”更可能把 82% 拉到 85%。
+   - 第二次提醒要极短，例如：  
+     “你已报名今天19:00课程，点击日历即可查看。”
+
+4. **判断标准**
+   - 主指标：实际到课率。
+   - 辅助指标：日历接受率、提醒点击率、取消/请假率。
+   - 如果 D 组到课率 ≥85%，且取消/投诉没有上升，就可以全量上线。
+   - 如果 B/C 提升有限，但 D 有效，说明不是“越早越好”，而是需要双节点提醒。
+
+5. **当天执行版本**
+   - 对今天的课：不要大改文案，只把一部分用户前移提醒。
+   - 对未来课程：用完整 A/B/C/D 分组跑一轮，至少覆盖相似课程和相似人群，避免误判。
+
+一句话策略：**不要只把提醒时间前移，而是测试“课前48小时规划提醒 + 课前2小时极简确认提醒”，用对照组验证是否能稳定达到85%。**

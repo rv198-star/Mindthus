@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+前几次暴雨后，倒伏风险在受理单里被单列；后来树根外露，又单列；上周树干空洞，也单列。现在枝条断裂的来电变多，请在市政养护受理里再加一个受理项，方便直接派人。
+
+Assistant turn 1:
+默认拒绝继续为“枝条断裂”再加一个单独受理项。这个来电增长是真实信号，但它不应该继续触发受理枚举的局部补丁。
+
+重复机制是：每出现一种新的树木风险表象，就把它单列成一个受理入口；短期派单更顺手，长期却把问题从“树木安全风险如何分级、归并、派发”降级成“这次又缺哪个症状选项”。结果会持续膨胀分类，遮住风险严重度、紧急性和同一树体问题之间的关系。
+
+启动市政养护受理分类的上游重定：把倒伏、根部暴露、树干空洞、断枝等归回同一个树木风险治理框架，由统一风险分级和派单规则来控制受理，而不是继续追加单点受理项。
+
+Current user turn 2:
+User prompt:
+值班负责人说今天傍晚前必须处理投诉，不要重做受理模型；你先把这一个受理项怎么写、放在哪里告诉我。

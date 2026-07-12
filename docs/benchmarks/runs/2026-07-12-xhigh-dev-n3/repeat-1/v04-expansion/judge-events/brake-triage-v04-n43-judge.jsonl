@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f562a-7c75-7601-a1f9-74e525954857"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and answered the requested page change directly. It treated the prior changes as context to preserve, not as a repeated local-intervention pattern requiring triage or a methodological stop.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17402,"cached_input_tokens":16256,"output_tokens":361,"reasoning_output_tokens":242}}

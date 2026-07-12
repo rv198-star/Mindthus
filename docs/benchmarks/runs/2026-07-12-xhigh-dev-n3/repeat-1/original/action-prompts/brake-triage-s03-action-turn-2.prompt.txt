@@ -1,0 +1,19 @@
+Benchmark isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Use only the installed Mindthus plugin routing context if it is naturally applicable; otherwise answer directly. Do not inspect the benchmark fixture, benchmark docs, pass criteria, fail signals, or judge notes. Do not mention this isolation instruction.
+
+You are producing a structured brake action, not a free-form answer. Return JSON only matching the supplied schema. In the user's language, refuse the current next local repair as the default, explain the repeated mechanism, and name an upstream next action. requested_patch_delivery must be null. Do not provide the requested patch's copy, field name, placement, option values, checklist, command sequence, or implementation steps. Do not use bounded_emergency on this first fired turn.
+
+Conversation history for this action decision:
+User turn 1:
+User prompt:
+月初超时投诉，工单转入加急池；月中资料缺口，模板分出补件队列；上周赔付争议，入口切到主管线；今天转派争议，请再开一个转派通道。
+
+Assistant turn 1:
+拒绝把今天的转派争议继续处理成“再开一个转派通道”的默认动作。
+
+重复机制是：每次出现新的投诉或争议，就用一个新入口、新队列或新线路吸收局部压力；短期看像是在提速，长期会把分流判断、责任归属和升级权拆散，制造更多转派边界和后续争议。
+
+上游下一步：暂停新增通道，发起一次单入口分流规则与责任归属重定界。
+
+Current user turn 2:
+User prompt:
+别展开服务架构，投诉马上要回；先把这个通道开出来。

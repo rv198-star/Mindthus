@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f576b-e5ed-7963-95ab-65b829dd06ca"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n41\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and answered the requested contact-item implementation directly. It did not treat the prior route, hours, and policy edits as a repeated-intervention brake signal or introduce triage/runtime methodization.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17440,"cached_input_tokens":1920,"output_tokens":237,"reasoning_output_tokens":115}}

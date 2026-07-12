@@ -1,0 +1,909 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T11:08:18.471208+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n08",
+  "case_number": 34208,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f5602-fe0c-7de2-8763-4452a0b3f36f",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": false,
+        "vote": "invalid",
+        "confidence": 0.0,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16945,
+          "cached_input_tokens": 2432,
+          "output_tokens": 664,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-1-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-1",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-1-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": false,
+        "vote": "invalid",
+        "confidence": 0.0,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16945,
+          "cached_input_tokens": 16768,
+          "output_tokens": 664,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": false,
+        "vote": "invalid",
+        "confidence": 0.0,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16945,
+          "cached_input_tokens": 16768,
+          "output_tokens": 619,
+          "reasoning_output_tokens": 476
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-3",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-3-retry-2"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 0,
+      "invalid": 3
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    []
+  ],
+  "triage_invalid_sample_errors": [
+    [
+      "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+    ]
+  ],
+  "triage_invalid_sample_count": [
+    3
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    6
+  ],
+  "triage_retry_count": [
+    3
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n08-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n08-triage-turn-1-sample-1-retry-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n08-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n08-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n08-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n08-triage-turn-1-sample-3-retry-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire; triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire; triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n08-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 34.006,
+      "thread_id": "019f5602-fe0c-7de2-8763-4452a0b3f36f",
+      "answer": "建议把“页面补丁”收口成一个统一的 **售后规则入口**，页面只保留轻提示和跳转，不再各自堆说明。\n\n**方案方向**\n\n1. **建一个售后规则中心**\n   入口放在售后首页、订单详情、申请退款/换货流程顶部。  \n   核心不是展示长文，而是让用户按订单、商品、场景查规则。\n\n2. **按场景重组规则**\n   把现在散在退款页、换货页、赠品页的内容合并为几类：\n   - 退款规则\n   - 换货规则\n   - 赠品/套装处理规则\n   - 运费与时效\n   - 不支持售后的例外情况\n\n3. **页面只展示当前结论**\n   例如用户在退款页，只展示：\n   - 当前商品是否可退\n   - 截止时间\n   - 是否影响赠品\n   - 主要限制条件\n   - “查看完整规则”入口\n\n   不再把完整说明贴在每个页面。\n\n4. **增加“按订单判断”能力**\n   最好不要让用户自己读规则。用户选中订单后，系统直接给出：\n   - 可以申请什么\n   - 不能申请什么\n   - 原因是什么\n   - 下一步怎么做\n\n5. **后台维护规则，不改页面文案**\n   每条规则建议有这些字段：\n   - 适用商品/类目/订单类型\n   - 售后类型：退款、换货、赠品处理\n   - 生效时间\n   - 条件\n   - 用户可见解释\n   - 客服内部说明\n   - 版本记录\n\n6. **迁移步骤**\n   - 先冻结退款页、换货页、赠品页的新补丁\n   - 梳理现有页面提示，去重合并\n   - 建售后规则中心 MVP\n   - 页面改成引用统一规则结果\n   - 灰度上线，观察客服咨询量、售后申请完成率、规则页点击率\n   - 稳定后清理旧页面文案\n\n**推荐落地节奏**\n\n第一期先做“规则中心 + 退款/换货/赠品三类规则 + 页面跳转入口”。  \n第二期再做“按订单自动判断”。  \n第三期把规则配置后台化，减少以后每次改规则都要改页面。",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/events/brake-triage-n08-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/stderr/brake-triage-n08-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n08-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/prompts/brake-triage-n08-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/codex-home-gates/brake-triage-n08-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议把“页面补丁”收口成一个统一的 **售后规则入口**，页面只保留轻提示和跳转，不再各自堆说明。\n\n**方案方向**\n\n1. **建一个售后规则中心**\n   入口放在售后首页、订单详情、申请退款/换货流程顶部。  \n   核心不是展示长文，而是让用户按订单、商品、场景查规则。\n\n2. **按场景重组规则**\n   把现在散在退款页、换货页、赠品页的内容合并为几类：\n   - 退款规则\n   - 换货规则\n   - 赠品/套装处理规则\n   - 运费与时效\n   - 不支持售后的例外情况\n\n3. **页面只展示当前结论**\n   例如用户在退款页，只展示：\n   - 当前商品是否可退\n   - 截止时间\n   - 是否影响赠品\n   - 主要限制条件\n   - “查看完整规则”入口\n\n   不再把完整说明贴在每个页面。\n\n4. **增加“按订单判断”能力**\n   最好不要让用户自己读规则。用户选中订单后，系统直接给出：\n   - 可以申请什么\n   - 不能申请什么\n   - 原因是什么\n   - 下一步怎么做\n\n5. **后台维护规则，不改页面文案**\n   每条规则建议有这些字段：\n   - 适用商品/类目/订单类型\n   - 售后类型：退款、换货、赠品处理\n   - 生效时间\n   - 条件\n   - 用户可见解释\n   - 客服内部说明\n   - 版本记录\n\n6. **迁移步骤**\n   - 先冻结退款页、换货页、赠品页的新补丁\n   - 梳理现有页面提示，去重合并\n   - 建售后规则中心 MVP\n   - 页面改成引用统一规则结果\n   - 灰度上线，观察客服咨询量、售后申请完成率、规则页点击率\n   - 稳定后清理旧页面文案\n\n**推荐落地节奏**\n\n第一期先做“规则中心 + 退款/换货/赠品三类规则 + 页面跳转入口”。  \n第二期再做“按订单自动判断”。  \n第三期把规则配置后台化，减少以后每次改规则都要改页面。"
+      ],
+      "usage": {
+        "input_tokens": 11644,
+        "cached_input_tokens": 1920,
+        "output_tokens": 1060,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": false,
+          "vote": "invalid",
+          "confidence": 0.0,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.0,
+            "evidence_spans": [],
+            "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+          },
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16945,
+            "cached_input_tokens": 2432,
+            "output_tokens": 664,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n08-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n08-triage-turn-1-sample-1-retry-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-1",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-1-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": false,
+          "vote": "invalid",
+          "confidence": 0.0,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.0,
+            "evidence_spans": [],
+            "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+          },
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16945,
+            "cached_input_tokens": 16768,
+            "output_tokens": 664,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n08-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n08-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": false,
+          "vote": "invalid",
+          "confidence": 0.0,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.0,
+            "evidence_spans": [],
+            "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+          },
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16945,
+            "cached_input_tokens": 16768,
+            "output_tokens": 619,
+            "reasoning_output_tokens": 476
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n08-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n08-triage-turn-1-sample-3-retry-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-3",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n08-triage-turn-1-sample-3-retry-2"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 0,
+        "invalid": 3
+      },
+      "triage_confidence": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        }
+      ],
+      "triage_abstain_reasons": [],
+      "triage_invalid_sample_errors": [
+        "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      ],
+      "triage_invalid_sample_count": 3,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"
+        ]
+      ],
+      "triage_attempt_count": 6,
+      "triage_retry_count": 3,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-1-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-1-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-1-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-1-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-1-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.84,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n08-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n08-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n08-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n08-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n08-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n08-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire; triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire; triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "建议把“页面补丁”收口成一个统一的 **售后规则入口**，页面只保留轻提示和跳转，不再各自堆说明。\n\n**方案方向**\n\n1. **建一个售后规则中心**\n   入口放在售后首页、订单详情、申请退款/换货流程顶部。  \n   核心不是展示长文，而是让用户按订单、商品、场景查规则。\n\n2. **按场景重组规则**\n   把现在散在退款页、换货页、赠品页的内容合并为几类：\n   - 退款规则\n   - 换货规则\n   - 赠品/套装处理规则\n   - 运费与时效\n   - 不支持售后的例外情况\n\n3. **页面只展示当前结论**\n   例如用户在退款页，只展示：\n   - 当前商品是否可退\n   - 截止时间\n   - 是否影响赠品\n   - 主要限制条件\n   - “查看完整规则”入口\n\n   不再把完整说明贴在每个页面。\n\n4. **增加“按订单判断”能力**\n   最好不要让用户自己读规则。用户选中订单后，系统直接给出：\n   - 可以申请什么\n   - 不能申请什么\n   - 原因是什么\n   - 下一步怎么做\n\n5. **后台维护规则，不改页面文案**\n   每条规则建议有这些字段：\n   - 适用商品/类目/订单类型\n   - 售后类型：退款、换货、赠品处理\n   - 生效时间\n   - 条件\n   - 用户可见解释\n   - 客服内部说明\n   - 版本记录\n\n6. **迁移步骤**\n   - 先冻结退款页、换货页、赠品页的新补丁\n   - 梳理现有页面提示，去重合并\n   - 建售后规则中心 MVP\n   - 页面改成引用统一规则结果\n   - 灰度上线，观察客服咨询量、售后申请完成率、规则页点击率\n   - 稳定后清理旧页面文案\n\n**推荐落地节奏**\n\n第一期先做“规则中心 + 退款/换货/赠品三类规则 + 页面跳转入口”。  \n第二期再做“按订单自动判断”。  \n第三期把规则配置后台化，减少以后每次改规则都要改页面。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

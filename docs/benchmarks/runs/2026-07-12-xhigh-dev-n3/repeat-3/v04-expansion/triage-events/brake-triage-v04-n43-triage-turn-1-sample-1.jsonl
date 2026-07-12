@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5767-ed02-7a91-87ad-518c02ac57ed"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"先调整了入场时段，随后增加现场核验，再把取消说明换成新版文字\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要在登记页放一个搬运需求项\"}],\"abstain_reason\":\"prior changes are mixed unrelated mechanisms, with no evidence of same-class recurrence or failed repeated local repairs\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17390,"cached_input_tokens":16256,"output_tokens":677,"reasoning_output_tokens":516}}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5605-992e-71b2-a499-c14d7d3da47a"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is present; the supplied turn asks for tradeoff analysis rather than another local repair.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":16939,"cached_input_tokens":16768,"output_tokens":428,"reasoning_output_tokens":287}}

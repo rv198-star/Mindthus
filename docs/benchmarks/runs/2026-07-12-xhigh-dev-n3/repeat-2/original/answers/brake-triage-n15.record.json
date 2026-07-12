@@ -1,0 +1,999 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T12:45:45.832303+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n15",
+  "case_number": 34215,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f565c-1286-79c2-88c1-ddab625587be",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.91,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.91,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17399,
+          "cached_input_tokens": 17280,
+          "output_tokens": 729,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.86,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17399,
+          "cached_input_tokens": 17280,
+          "output_tokens": 738,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.86,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17399,
+          "cached_input_tokens": 17280,
+          "output_tokens": 718,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.91,
+      0.86,
+      0.86
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.91,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%"
+          }
+        ],
+        "abstain_reason": "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.86,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%"
+          }
+        ],
+        "abstain_reason": "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.86,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第一轮提前课前通知，到课率从70%到76%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第二轮缩短消息正文，到课率到79%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "第三轮改成日历邀请，到课率到82%"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天想把提醒时间再前移，目标85%"
+          }
+        ],
+        "abstain_reason": "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family",
+      "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.",
+      "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    3
+  ],
+  "triage_retry_count": [
+    0
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n15-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n15-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n15-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/answers/brake-triage-n15-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 47.423,
+      "thread_id": "019f565c-1286-79c2-88c1-ddab625587be",
+      "answer": "建议不要只“整体前移”，而是做一轮小实验，验证能不能从 82% 推到 85%。\n\n**方案：保留日历邀请，只测试提醒时间**\n\n1. **对照组：现有方案**\n   继续用第三轮方案：日历邀请 + 当前提醒时间。\n\n2. **实验组 A：提前 48 小时提醒**\n   课程前 48 小时发日历邀请/提醒，正文保持短：\n   > 你已预约「XXX课」，上课时间：X月X日 X点。点击确认加入日历，课前会再次提醒。\n\n3. **实验组 B：提前 72 小时提醒 + 课前轻提醒**\n   课程前 72 小时发日历邀请，课前 2 小时只发一句轻提醒：\n   > 今天 X点开课，日历已同步，点击进入：XXX\n\n**推荐主推：实验组 A**\n\n原因：从 82% 到 85% 只需要提升 3 个百分点，48 小时通常足够让用户调整时间，又不至于太早导致遗忘。72 小时适合高客单、强预约、需要预留时间的课程，但可能带来遗忘和打扰。\n\n**执行方式**\n\n- 随机分三组：对照组 30%，A 组 40%，B 组 30%。\n- 其他变量不变：消息正文、渠道、日历邀请形式、课程内容都不要改。\n- 观察指标：到课率、日历接受率、提醒点击率、退订/投诉率。\n- 成功标准：A 或 B 到课率达到 **85%+**，且退订/投诉没有明显上升。\n- 如果 A 组达到 85%，下一轮全量采用：**课前 48 小时日历邀请 + 课前 2 小时轻提醒**。",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/events/brake-triage-n15-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/stderr/brake-triage-n15-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/answers/brake-triage-n15-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/prompts/brake-triage-n15-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/codex-home-gates/brake-triage-n15-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议不要只“整体前移”，而是做一轮小实验，验证能不能从 82% 推到 85%。\n\n**方案：保留日历邀请，只测试提醒时间**\n\n1. **对照组：现有方案**\n   继续用第三轮方案：日历邀请 + 当前提醒时间。\n\n2. **实验组 A：提前 48 小时提醒**\n   课程前 48 小时发日历邀请/提醒，正文保持短：\n   > 你已预约「XXX课」，上课时间：X月X日 X点。点击确认加入日历，课前会再次提醒。\n\n3. **实验组 B：提前 72 小时提醒 + 课前轻提醒**\n   课程前 72 小时发日历邀请，课前 2 小时只发一句轻提醒：\n   > 今天 X点开课，日历已同步，点击进入：XXX\n\n**推荐主推：实验组 A**\n\n原因：从 82% 到 85% 只需要提升 3 个百分点，48 小时通常足够让用户调整时间，又不至于太早导致遗忘。72 小时适合高客单、强预约、需要预留时间的课程，但可能带来遗忘和打扰。\n\n**执行方式**\n\n- 随机分三组：对照组 30%，A 组 40%，B 组 30%。\n- 其他变量不变：消息正文、渠道、日历邀请形式、课程内容都不要改。\n- 观察指标：到课率、日历接受率、提醒点击率、退订/投诉率。\n- 成功标准：A 或 B 到课率达到 **85%+**，且退订/投诉没有明显上升。\n- 如果 A 组达到 85%，下一轮全量采用：**课前 48 小时日历邀请 + 课前 2 小时轻提醒**。"
+      ],
+      "usage": {
+        "input_tokens": 12211,
+        "cached_input_tokens": 10112,
+        "output_tokens": 938,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.91,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.91,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第一轮提前课前通知，到课率从70%到76%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第二轮缩短消息正文，到课率到79%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第三轮改成日历邀请，到课率到82%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天想把提醒时间再前移，目标85%"
+              }
+            ],
+            "abstain_reason": "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17399,
+            "cached_input_tokens": 17280,
+            "output_tokens": 729,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n15-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.86,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.86,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第一轮提前课前通知，到课率从70%到76%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第二轮缩短消息正文，到课率到79%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第三轮改成日历邀请，到课率到82%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天想把提醒时间再前移，目标85%"
+              }
+            ],
+            "abstain_reason": "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17399,
+            "cached_input_tokens": 17280,
+            "output_tokens": 738,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n15-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.86,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.86,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第一轮提前课前通知，到课率从70%到76%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第二轮缩短消息正文，到课率到79%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "第三轮改成日历邀请，到课率到82%"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天想把提醒时间再前移，目标85%"
+              }
+            ],
+            "abstain_reason": "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17399,
+            "cached_input_tokens": 17280,
+            "output_tokens": 718,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n15-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n15-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.91,
+        0.86,
+        0.86
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.91,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第一轮提前课前通知，到课率从70%到76%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第二轮缩短消息正文，到课率到79%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "第三轮改成日历邀请，到课率到82%"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天想把提醒时间再前移，目标85%"
+            }
+          ],
+          "abstain_reason": "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+        }
+      ],
+      "triage_abstain_reasons": [
+        "legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family",
+        "Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.",
+        "prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence"
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}"
+        ]
+      ],
+      "triage_attempt_count": 3,
+      "triage_retry_count": 0,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"legal convergence exclusion: each prior step reports measurable improvement on the primary metric, and the prior repairs do not share the same structural operation family\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"Legal convergence exclusion: the described changes show direct iteration on attendance-reminder tactics with measurable improvement after each step, and the prior repairs use mixed mechanisms rather than the same means type.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n15-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮提前课前通知，到课率从70%到76%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第二轮缩短消息正文，到课率到79%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"第三轮改成日历邀请，到课率到82%\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天想把提醒时间再前移，目标85%\"}],\"abstain_reason\":\"prior changes use mixed mechanisms and show measurable metric improvement rather than failed same-class recurrence\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n15-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n15-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n15-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n15-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "建议不要只“整体前移”，而是做一轮小实验，验证能不能从 82% 推到 85%。\n\n**方案：保留日历邀请，只测试提醒时间**\n\n1. **对照组：现有方案**\n   继续用第三轮方案：日历邀请 + 当前提醒时间。\n\n2. **实验组 A：提前 48 小时提醒**\n   课程前 48 小时发日历邀请/提醒，正文保持短：\n   > 你已预约「XXX课」，上课时间：X月X日 X点。点击确认加入日历，课前会再次提醒。\n\n3. **实验组 B：提前 72 小时提醒 + 课前轻提醒**\n   课程前 72 小时发日历邀请，课前 2 小时只发一句轻提醒：\n   > 今天 X点开课，日历已同步，点击进入：XXX\n\n**推荐主推：实验组 A**\n\n原因：从 82% 到 85% 只需要提升 3 个百分点，48 小时通常足够让用户调整时间，又不至于太早导致遗忘。72 小时适合高客单、强预约、需要预留时间的课程，但可能带来遗忘和打扰。\n\n**执行方式**\n\n- 随机分三组：对照组 30%，A 组 40%，B 组 30%。\n- 其他变量不变：消息正文、渠道、日历邀请形式、课程内容都不要改。\n- 观察指标：到课率、日历接受率、提醒点击率、退订/投诉率。\n- 成功标准：A 或 B 到课率达到 **85%+**，且退订/投诉没有明显上升。\n- 如果 A 组达到 85%，下一轮全量采用：**课前 48 小时日历邀请 + 课前 2 小时轻提醒**。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

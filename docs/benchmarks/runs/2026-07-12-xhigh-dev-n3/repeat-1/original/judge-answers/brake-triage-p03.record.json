@@ -1,0 +1,67 @@
+{
+  "case_id": "brake-triage-p03",
+  "score": 2,
+  "pass_criteria_met": true,
+  "fail_signal_observed": false,
+  "positive_wakeup_observed": true,
+  "first_sentence_lock": true,
+  "verdict_commitment_anti_mush": true,
+  "over_forced_verdict": false,
+  "rationale": "The answer explicitly refuses to add the parking SMS reminder as another local patch, identifies the repeated pattern across entrance/sign-in/tea break/parking overlays, moves ownership upstream to a unified arrival-information source and validation point, and provides no requested SMS copy, placement, or implementation detail.",
+  "schema_version": "mindthus-judgment-cli-score-v0.2",
+  "judged_at_utc": "2026-07-12T11:27:09.566484+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_number": 34103,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage",
+  "case_type": "positive",
+  "judge_returncode": 0,
+  "judge_usage": {
+    "input_tokens": 17702,
+    "cached_input_tokens": 1920,
+    "output_tokens": 469,
+    "reasoning_output_tokens": 334
+  },
+  "judge_loaded_commands": [],
+  "judge_contamination_flags": [],
+  "cached_judge_reused": false,
+  "judge_attempt_count": 1,
+  "judge_retry_count": 0,
+  "judge_attempts": [
+    {
+      "attempt": 1,
+      "stem": "brake-triage-p03-judge",
+      "returncode": 0,
+      "parse_status": "valid",
+      "error": "",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/judge-answers/brake-triage-p03-judge.json",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/judge-events/brake-triage-p03-judge.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/judge-stderr/brake-triage-p03-judge.stderr.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/judge-prompts/brake-triage-p03-judge.prompt.txt"
+    }
+  ],
+  "expected_owner": "anti_spiral",
+  "accepted_loaded_owners": [
+    "3l5s",
+    "tplan",
+    "using-mindthus"
+  ],
+  "loaded_owner": [
+    "using-mindthus"
+  ],
+  "mindthus_loaded": true,
+  "superpowers_loaded": false,
+  "triage_fired": true,
+  "triage_negative_four_true_red_line": false,
+  "triage_error_count": 0,
+  "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+  "triage_model": "gpt-5.5",
+  "false_wakeup_final_answer": false,
+  "false_wakeup_runtime_event": false,
+  "expected_owner_loaded": true,
+  "required_visible_action_present": true,
+  "owner_fidelity_verdict": "expected_owner_loaded",
+  "brake_loaded_action_contract_active": true,
+  "brake_loaded_action_contract_valid": true,
+  "brake_loaded_action_validation_error_count": 0
+}

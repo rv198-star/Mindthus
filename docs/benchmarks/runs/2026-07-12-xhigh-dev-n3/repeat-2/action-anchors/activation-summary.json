@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-judgment-cli-activation-summary-v0.2",
+  "case_count": 2,
+  "mindthus_loaded_count": 2,
+  "superpowers_loaded_count": 0,
+  "no_commands_loaded_count": 0,
+  "natural_mindthus_loaded_count": 0,
+  "forced_mindthus_prompt_count": 0,
+  "activation_hint_applied_count": 2,
+  "triage_called_count": 2,
+  "triage_fired_count": 2,
+  "contaminated_case_count": 0,
+  "mindthus_loaded_rate": 1.0,
+  "superpowers_loaded_rate": 0.0,
+  "no_commands_loaded_rate": 0.0,
+  "case_summaries": [
+    {
+      "case_id": "brake-loaded-action-a1-tree-maintenance",
+      "case_number": 34601,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "triage_called": true,
+      "triage_fired": true,
+      "triage_error_count": 0,
+      "loaded_owner": [
+        "using-mindthus",
+        "3l5s"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    },
+    {
+      "case_id": "brake-loaded-action-a2-theatre-handoff",
+      "case_number": 34602,
+      "mindthus_loaded": true,
+      "superpowers_loaded": false,
+      "triage_called": true,
+      "triage_fired": true,
+      "triage_error_count": 0,
+      "loaded_owner": [
+        "using-mindthus"
+      ],
+      "no_commands_loaded": false,
+      "forced_mindthus_prompt": false,
+      "activation_hint_applied": true,
+      "natural_mindthus_loaded": false,
+      "contaminated": false
+    }
+  ]
+}

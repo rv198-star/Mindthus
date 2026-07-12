@@ -1,0 +1,873 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T11:01:40.993366+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n04",
+  "case_number": 34204,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f55fc-fce3-7ab2-97f6-2d6c1d7d45a4",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。"
+            }
+          ],
+          "abstain_reason": "prior repair history absent"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 654,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.93,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.93,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+            }
+          ],
+          "abstain_reason": "no prior local repair history is present in the supplied conversation"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16939,
+          "cached_input_tokens": 1920,
+          "output_tokens": 349,
+          "reasoning_output_tokens": 207
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n04-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.96,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.96,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16939,
+          "cached_input_tokens": 1920,
+          "output_tokens": 667,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.98,
+      0.93,
+      0.96
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。"
+          }
+        ],
+        "abstain_reason": "prior repair history absent"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.93,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+          }
+        ],
+        "abstain_reason": "no prior local repair history is present in the supplied conversation"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.96,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+          }
+        ],
+        "abstain_reason": "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "prior repair history absent",
+      "no prior local repair history is present in the supplied conversation",
+      "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    4
+  ],
+  "triage_retry_count": [
+    1
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n04-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n04-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n04-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n04-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n04-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 30.057,
+      "thread_id": "019f55fc-fce3-7ab2-97f6-2d6c1d7d45a4",
+      "answer": "不建议现在直接停掉旧方案。当前信号更像是“新旧方案业务收益趋同，但风险差异变大”。\n\n核心判断：\n\n1. **打开率差距缩小**\n   说明新方案在吸引点击/打开上的优势变弱，或者旧方案追上来了。这个指标不足以支持淘汰旧方案。\n\n2. **转化差距贴近**\n   如果转化已经接近，说明新方案的核心收益并不明显。停旧方案的业务增益可能有限。\n\n3. **投诉差距扩大**\n   这是最关键的风险信号。  \n   如果是**新方案投诉更高且差距扩大**，应暂停全面替换，保留旧方案作为兜底，并拆分人群、场景、渠道定位投诉来源。  \n   如果是**旧方案投诉更高且差距扩大**，那才构成停旧方案的强理由。\n\n建议决策：\n\n- **若投诉差距对新方案不利**：不要停旧方案；控制新方案流量，优先修投诉问题。\n- **若投诉差距对旧方案不利**：可以逐步停旧方案，但要分批切流，并保留回滚窗口。\n- **若投诉差距方向不明确或样本不足**：继续实验，不做一次性停用决策。\n\n一句话结论：  \n**业务指标没有拉开，投诉指标却拉开了，不能贸然停旧方案；先确认投诉差距方向和显著性，再决定是否替换。**",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/events/brake-triage-n04-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/stderr/brake-triage-n04-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n04-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/prompts/brake-triage-n04-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/codex-home-gates/brake-triage-n04-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "不建议现在直接停掉旧方案。当前信号更像是“新旧方案业务收益趋同，但风险差异变大”。\n\n核心判断：\n\n1. **打开率差距缩小**\n   说明新方案在吸引点击/打开上的优势变弱，或者旧方案追上来了。这个指标不足以支持淘汰旧方案。\n\n2. **转化差距贴近**\n   如果转化已经接近，说明新方案的核心收益并不明显。停旧方案的业务增益可能有限。\n\n3. **投诉差距扩大**\n   这是最关键的风险信号。  \n   如果是**新方案投诉更高且差距扩大**，应暂停全面替换，保留旧方案作为兜底，并拆分人群、场景、渠道定位投诉来源。  \n   如果是**旧方案投诉更高且差距扩大**，那才构成停旧方案的强理由。\n\n建议决策：\n\n- **若投诉差距对新方案不利**：不要停旧方案；控制新方案流量，优先修投诉问题。\n- **若投诉差距对旧方案不利**：可以逐步停旧方案，但要分批切流，并保留回滚窗口。\n- **若投诉差距方向不明确或样本不足**：继续实验，不做一次性停用决策。\n\n一句话结论：  \n**业务指标没有拉开，投诉指标却拉开了，不能贸然停旧方案；先确认投诉差距方向和显著性，再决定是否替换。**"
+      ],
+      "usage": {
+        "input_tokens": 11638,
+        "cached_input_tokens": 1920,
+        "output_tokens": 862,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。"
+              }
+            ],
+            "abstain_reason": "prior repair history absent"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 654,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n04-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.93,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.93,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+              }
+            ],
+            "abstain_reason": "no prior local repair history is present in the supplied conversation"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16939,
+            "cached_input_tokens": 1920,
+            "output_tokens": 349,
+            "reasoning_output_tokens": 207
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n04-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n04-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.96,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.96,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+              }
+            ],
+            "abstain_reason": "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16939,
+            "cached_input_tokens": 1920,
+            "output_tokens": 667,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n04-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n04-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.98,
+        0.93,
+        0.96
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。"
+            }
+          ],
+          "abstain_reason": "prior repair history absent"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.93,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+            }
+          ],
+          "abstain_reason": "no prior local repair history is present in the supplied conversation"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.96,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案"
+            }
+          ],
+          "abstain_reason": "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+        }
+      ],
+      "triage_abstain_reasons": [
+        "prior repair history absent",
+        "no prior local repair history is present in the supplied conversation",
+        "prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair"
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}"
+        ]
+      ],
+      "triage_attempt_count": 4,
+      "triage_retry_count": 1,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案，请分析。\"}],\"abstain_reason\":\"prior repair history absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案，请分析\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n04-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"no prior local repair history is present in the supplied conversation\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n04-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大；现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"prior repair history absent; current turn asks for analysis/decision, not an N+1 local repair\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n04-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n04-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n04-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n04-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "不建议现在直接停掉旧方案。当前信号更像是“新旧方案业务收益趋同，但风险差异变大”。\n\n核心判断：\n\n1. **打开率差距缩小**\n   说明新方案在吸引点击/打开上的优势变弱，或者旧方案追上来了。这个指标不足以支持淘汰旧方案。\n\n2. **转化差距贴近**\n   如果转化已经接近，说明新方案的核心收益并不明显。停旧方案的业务增益可能有限。\n\n3. **投诉差距扩大**\n   这是最关键的风险信号。  \n   如果是**新方案投诉更高且差距扩大**，应暂停全面替换，保留旧方案作为兜底，并拆分人群、场景、渠道定位投诉来源。  \n   如果是**旧方案投诉更高且差距扩大**，那才构成停旧方案的强理由。\n\n建议决策：\n\n- **若投诉差距对新方案不利**：不要停旧方案；控制新方案流量，优先修投诉问题。\n- **若投诉差距对旧方案不利**：可以逐步停旧方案，但要分批切流，并保留回滚窗口。\n- **若投诉差距方向不明确或样本不足**：继续实验，不做一次性停用决策。\n\n一句话结论：  \n**业务指标没有拉开，投诉指标却拉开了，不能贸然停旧方案；先确认投诉差距方向和显著性，再决定是否替换。**",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

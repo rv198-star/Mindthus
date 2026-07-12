@@ -1,0 +1,60 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n14
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Full executed transcript:
+User turn 1:
+第一轮下调低库存权重，点击满意度从61%到66%；第二轮提升新品权重，满意度到69%；第三轮压低噪声标签，满意度到72%；今天想调整价格权重，目标75%，请给步骤。
+
+Assistant turn 1:
+建议按“小步调权 + 分层验证”做，别直接冲到 75%。
+
+1. 固定当前基线  
+   以第三轮版本为基线：低库存权重已下调、新品权重已提升、噪声标签已压低，当前点击满意度 72%。
+
+2. 先判断价格权重方向  
+   分析低满意点击里是否集中在“价格偏高”“折扣弱”“同类商品不具价格优势”。  
+   如果是，优先上调价格竞争力权重；如果低价商品反而带来低满意，说明不能单纯提价权重，要加质量或转化约束。
+
+3. 做离线试算  
+   在当前模型上试几组价格权重，例如：  
+   - 当前权重  
+   - +5%  
+   - +10%  
+   - +15%  
+   - -5%  
+
+   观察点击满意度预测、低价劣质商品占比、新品曝光、库存风险是否异常。
+
+4. 小流量 A/B  
+   建议先用 5% 到 10% 流量测试最稳的 2 个版本：  
+   - A：当前第三轮版本  
+   - B：价格权重 +5%  
+   - C：价格权重 +10%  
+
+5. 设保护指标  
+   除了满意度目标 75%，同时盯住：点击率、转化率、退款/投诉、客单价、毛利、新品曝光、低库存商品曝光。
+
+6. 分人群看结果  
+   重点看价格敏感用户、新用户、复购用户、不同品类。价格权重通常不是全局都有效，可能只适合部分品类或价格敏感人群。
+
+7. 达标后再放量  
+   如果 B 或 C 能把满意度从 72% 拉到 74% 以上且保护指标不掉，再扩大到 30%、50%、100%。  
+   如果最高只到 73%，下一轮不要继续硬加价格权重，应考虑“价格 × 品质”“价格 × 库存”“价格 × 新品”的组合特征。
+
+推荐今天先做：当前版本对照、价格权重 +5%、价格权重 +10% 三组实验。目标是先验证能否稳定接近 75%，而不是一次性把权重调太大。

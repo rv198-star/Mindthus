@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5723-07f8-7822-ba7a-f19486c4fc0d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.69,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"邀请函加入口图；签到漏姓名，表格旁补填写样例；茶歇排队混乱，动线牌挂分流句；今天停车被问，请在短信里塞停车提醒\"}],\"abstain_reason\":\"mixed event-logistics fixes use different artifacts and placements; no clear same-class recurrence or prior failed same-means repairs shown\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17396,"cached_input_tokens":1920,"output_tokens":683,"reasoning_output_tokens":516}}

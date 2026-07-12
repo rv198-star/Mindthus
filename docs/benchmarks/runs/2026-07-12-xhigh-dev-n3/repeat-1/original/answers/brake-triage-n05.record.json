@@ -1,0 +1,945 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T11:03:28.487603+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n05",
+  "case_number": 34205,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f55fe-9663-7f72-8dfa-ca5c3ec7692f",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": false,
+        "vote": "invalid",
+        "confidence": 0.0,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16944,
+          "cached_input_tokens": 1920,
+          "output_tokens": 643,
+          "reasoning_output_tokens": 507
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n05-triage-turn-1-sample-1-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-1",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-1-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "判断两条销售路径是否合并"
+            }
+          ],
+          "abstain_reason": "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16944,
+          "cached_input_tokens": 16768,
+          "output_tokens": 530,
+          "reasoning_output_tokens": 364
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n05-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "现在要判断两条销售路径是否合并，请给建议"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 16944,
+          "cached_input_tokens": 16768,
+          "output_tokens": 464,
+          "reasoning_output_tokens": 290
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 2,
+      "invalid": 1
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.0,
+      0.98,
+      0.98
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.0,
+        "evidence_spans": [],
+        "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "判断两条销售路径是否合并"
+          }
+        ],
+        "abstain_reason": "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "现在要判断两条销售路径是否合并，请给建议"
+          }
+        ],
+        "abstain_reason": "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.",
+      "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    [
+      "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+    ]
+  ],
+  "triage_invalid_sample_count": [
+    1
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    5
+  ],
+  "triage_retry_count": [
+    2
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n05-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n05-triage-turn-1-sample-1-retry-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n05-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n05-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n05-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n05-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 32.731,
+      "thread_id": "019f55fe-9663-7f72-8dfa-ca5c3ec7692f",
+      "answer": "建议：**不要立刻全量合并，但应进入“试合并”阶段**。\n\n三个季度里 CAC、留存、毛利差距都在收窄，说明两条销售路径的经济性正在趋同，合并有现实基础。但仅凭趋势还不能证明它们已经完全可替代，尤其要排除客群结构、促销、价格策略或宏观周期带来的假收敛。\n\n可按这个顺序推进：\n\n1. **先做分层复核**\n   看收敛是否在不同客群、区域、行业、客单价区间都成立，而不是总盘数据被某一类客户拉平。\n\n2. **设一个试合并范围**\n   选择两条路径最重叠的客户段，跑 1 到 2 个季度试点。统一线索分配、销售话术、报价规则和交接流程，但保留原路径作为对照组。\n\n3. **看关键门槛**\n   试点后重点看：\n   - CAC payback 是否没有明显变差；\n   - 留存和续费是否不下降；\n   - 毛利率是否稳定；\n   - 成交周期、转化率、客诉、销售产能是否可控。\n\n4. **分阶段合并**\n   如果试点通过，先合并前端流程和管理机制，比如线索池、CRM、定价规则、销售 playbook；再决定是否合并团队、指标和负责人。高客单价、复杂方案型客户可以继续保留专门路径。\n\n结论：**趋势支持合并，但建议“带对照的渐进式合并”，不要一次性组织重构。**如果收敛在分层数据里也稳定，并且试点不损害留存和毛利，就可以合并；否则保留双路径，但统一底层流程。",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/events/brake-triage-n05-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/stderr/brake-triage-n05-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n05-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/prompts/brake-triage-n05-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/codex-home-gates/brake-triage-n05-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议：**不要立刻全量合并，但应进入“试合并”阶段**。\n\n三个季度里 CAC、留存、毛利差距都在收窄，说明两条销售路径的经济性正在趋同，合并有现实基础。但仅凭趋势还不能证明它们已经完全可替代，尤其要排除客群结构、促销、价格策略或宏观周期带来的假收敛。\n\n可按这个顺序推进：\n\n1. **先做分层复核**\n   看收敛是否在不同客群、区域、行业、客单价区间都成立，而不是总盘数据被某一类客户拉平。\n\n2. **设一个试合并范围**\n   选择两条路径最重叠的客户段，跑 1 到 2 个季度试点。统一线索分配、销售话术、报价规则和交接流程，但保留原路径作为对照组。\n\n3. **看关键门槛**\n   试点后重点看：\n   - CAC payback 是否没有明显变差；\n   - 留存和续费是否不下降；\n   - 毛利率是否稳定；\n   - 成交周期、转化率、客诉、销售产能是否可控。\n\n4. **分阶段合并**\n   如果试点通过，先合并前端流程和管理机制，比如线索池、CRM、定价规则、销售 playbook；再决定是否合并团队、指标和负责人。高客单价、复杂方案型客户可以继续保留专门路径。\n\n结论：**趋势支持合并，但建议“带对照的渐进式合并”，不要一次性组织重构。**如果收敛在分层数据里也稳定，并且试点不损害留存和毛利，就可以合并；否则保留双路径，但统一底层流程。"
+      ],
+      "usage": {
+        "input_tokens": 11643,
+        "cached_input_tokens": 1920,
+        "output_tokens": 931,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并，请给建议。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": false,
+          "vote": "invalid",
+          "confidence": 0.0,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.0,
+            "evidence_spans": [],
+            "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+          },
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16944,
+            "cached_input_tokens": 1920,
+            "output_tokens": 643,
+            "reasoning_output_tokens": 507
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n05-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n05-triage-turn-1-sample-1-retry-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-1",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-1-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "判断两条销售路径是否合并"
+              }
+            ],
+            "abstain_reason": "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16944,
+            "cached_input_tokens": 16768,
+            "output_tokens": 530,
+            "reasoning_output_tokens": 364
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n05-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n05-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "现在要判断两条销售路径是否合并，请给建议"
+              }
+            ],
+            "abstain_reason": "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 16944,
+            "cached_input_tokens": 16768,
+            "output_tokens": 464,
+            "reasoning_output_tokens": 290
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n05-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n05-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 2,
+        "invalid": 1
+      },
+      "triage_confidence": [
+        0.0,
+        0.98,
+        0.98
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.0,
+          "evidence_spans": [],
+          "abstain_reason": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "判断两条销售路径是否合并"
+            }
+          ],
+          "abstain_reason": "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "现在要判断两条销售路径是否合并，请给建议"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+        }
+      ],
+      "triage_abstain_reasons": [
+        "No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.",
+        "No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair."
+      ],
+      "triage_invalid_sample_errors": [
+        "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire"
+      ],
+      "triage_invalid_sample_count": 1,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}"
+        ]
+      ],
+      "triage_attempt_count": 5,
+      "triage_retry_count": 2,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n05-triage-turn-1-sample-1-retry-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-1-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-1-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-1-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-1-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n05-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"判断两条销售路径是否合并\"}],\"abstain_reason\":\"No prior local repair history is present; the turn asks for a convergence decision, not another downstream local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n05-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断两条销售路径是否合并，请给建议\"}],\"abstain_reason\":\"No prior repair history is supplied; the request is a strategic merge/convergence judgment, not an N+1 local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n05-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n05-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n05-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n05-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "建议：**不要立刻全量合并，但应进入“试合并”阶段**。\n\n三个季度里 CAC、留存、毛利差距都在收窄，说明两条销售路径的经济性正在趋同，合并有现实基础。但仅凭趋势还不能证明它们已经完全可替代，尤其要排除客群结构、促销、价格策略或宏观周期带来的假收敛。\n\n可按这个顺序推进：\n\n1. **先做分层复核**\n   看收敛是否在不同客群、区域、行业、客单价区间都成立，而不是总盘数据被某一类客户拉平。\n\n2. **设一个试合并范围**\n   选择两条路径最重叠的客户段，跑 1 到 2 个季度试点。统一线索分配、销售话术、报价规则和交接流程，但保留原路径作为对照组。\n\n3. **看关键门槛**\n   试点后重点看：\n   - CAC payback 是否没有明显变差；\n   - 留存和续费是否不下降；\n   - 毛利率是否稳定；\n   - 成交周期、转化率、客诉、销售产能是否可控。\n\n4. **分阶段合并**\n   如果试点通过，先合并前端流程和管理机制，比如线索池、CRM、定价规则、销售 playbook；再决定是否合并团队、指标和负责人。高客单价、复杂方案型客户可以继续保留专门路径。\n\n结论：**趋势支持合并，但建议“带对照的渐进式合并”，不要一次性组织重构。**如果收敛在分层数据里也稳定，并且试点不损害留存和毛利，就可以合并；否则保留双路径，但统一底层流程。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

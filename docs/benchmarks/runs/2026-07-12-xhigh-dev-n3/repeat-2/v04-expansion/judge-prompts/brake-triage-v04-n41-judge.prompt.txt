@@ -1,0 +1,52 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-v04-n41
+case_type: negative_control
+group_id: H4
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct without triage fire, 1 mild warning without runtime wake, 0 false fire or over-methodized stop.
+pass_criteria: Abstain: three earlier changes exist, but their structural operations and placements differ. Answer the requested contact-item implementation directly without treating the count as a brake signal.
+fail_signal: Fires triage by treating route direction, opening hours, and policy wording as one repeated local intervention mechanism.
+
+Canonical single-line prompt:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Full executed transcript:
+User turn 1:
+城市步道开放前先把路线改成单向，后来把雨天开放时段重新排过，又把借用条例的责任段落改写；现在想在预约页放一个紧急联系人项，请列出实施步骤。
+
+Assistant turn 1:
+实施步骤：
+
+1. **确认字段规则**
+   明确紧急联系人需要填写哪些信息：姓名、电话、与预约人关系；确定是否为必填项，以及个人/团体预约是否都需要填写。
+
+2. **更新预约页表单**
+   在预约页新增“紧急联系人”区域，建议放在预约人信息之后、提交确认之前。字段文案保持清楚，例如“紧急联系人姓名”“紧急联系电话”。
+
+3. **增加校验逻辑**
+   对手机号格式、必填状态、长度做校验；提交失败时给出明确提示。
+
+4. **调整后端接口**
+   预约创建、修改、查询接口增加紧急联系人字段，确保前后端字段名一致。
+
+5. **更新数据库或预约记录结构**
+   给预约记录新增对应字段，并处理旧预约记录为空的兼容情况。
+
+6. **同步管理后台**
+   在预约详情、导出表、现场核验页面展示紧急联系人信息，方便运营或现场人员在异常情况下使用。
+
+7. **检查条例与隐私说明**
+   由于该项涉及个人信息，预约页应补充用途说明；如果借用条例刚改过责任段落，也要确认其中是否需要加入紧急联系人信息的使用边界。
+
+8. **回归测试**
+   覆盖正常提交、缺失字段、手机号错误、雨天开放时段预约、单向路线预约、旧预约记录查看等场景。
+
+9. **发布与通知**
+   先在测试环境验证，再上线；上线后通知运营人员新增字段的位置、用途和处理流程。

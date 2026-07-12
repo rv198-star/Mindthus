@@ -1,0 +1,947 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T12:39:48.655902+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n11",
+  "case_number": 34211,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f5656-a7a2-7ad3-afc8-54c12fc37466",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 613,
+          "reasoning_output_tokens": 469
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.97,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.97,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+            }
+          ],
+          "abstain_reason": "prior_repair_history_absent"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 531,
+          "reasoning_output_tokens": 405
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n11-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.98,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "请把代价列清楚，不要替我拍板"
+            }
+          ],
+          "abstain_reason": "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 365,
+          "reasoning_output_tokens": 207
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n11-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-3",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-3-retry-2"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.98,
+      0.97,
+      0.98
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+          }
+        ],
+        "abstain_reason": "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.97,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+          }
+        ],
+        "abstain_reason": "prior_repair_history_absent"
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.98,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "三个方案分别压成本、保速度、保体验"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "请把代价列清楚，不要替我拍板"
+          }
+        ],
+        "abstain_reason": "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.",
+      "prior_repair_history_absent",
+      "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    5
+  ],
+  "triage_retry_count": [
+    2
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n11-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n11-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n11-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n11-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n11-triage-turn-1-sample-3-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/answers/brake-triage-n11-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 41.283,
+      "thread_id": "019f5656-a7a2-7ad3-afc8-54c12fc37466",
+      "answer": "可以，我只列取舍，不替你选。\n\n| 方案 | 省/保的是什么 | 直接代价 | 对口碑的代价 | 隐性风险 |\n|---|---|---|---|---|\n| **压成本** | 预算最低、现金压力小 | 人力、物料、测试、服务标准都会被压缩 | 体验不稳定，用户容易觉得“廉价”“不专业” | 后期返工、投诉处理、补救成本可能反噬预算 |\n| **保速度** | 上线快、抢窗口、尽快验证 | 可能要加人、加班、外包或牺牲部分细节 | 如果交付粗糙，口碑波动大；用户会记住明显瑕疵 | 技术债/流程债增加，后续维护成本高 |\n| **保体验** | 质量、稳定性、服务感、品牌感 | 预算最高，周期通常也更长 | 口碑风险最低，更利于复购、推荐和品牌溢价 | 可能错过时间窗口，且前期投入回收慢 |\n\n更直白地说：\n\n- **压成本**：省的是现在的钱，赌的是用户容忍度。\n- **保速度**：买的是时间，赌的是后期补救能力。\n- **保体验**：买的是口碑安全垫，牺牲的是预算和上线弹性。\n\n如果你要在**预算和口碑**之间取舍，关键不是哪个方案“最好”，而是你能不能承受对应后果：  \n预算不能超，就接受口碑波动；窗口不能丢，就接受返工风险；口碑不能伤，就接受更高投入。",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/events/brake-triage-n11-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/stderr/brake-triage-n11-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/answers/brake-triage-n11-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/prompts/brake-triage-n11-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/codex-home-gates/brake-triage-n11-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "可以，我只列取舍，不替你选。\n\n| 方案 | 省/保的是什么 | 直接代价 | 对口碑的代价 | 隐性风险 |\n|---|---|---|---|---|\n| **压成本** | 预算最低、现金压力小 | 人力、物料、测试、服务标准都会被压缩 | 体验不稳定，用户容易觉得“廉价”“不专业” | 后期返工、投诉处理、补救成本可能反噬预算 |\n| **保速度** | 上线快、抢窗口、尽快验证 | 可能要加人、加班、外包或牺牲部分细节 | 如果交付粗糙，口碑波动大；用户会记住明显瑕疵 | 技术债/流程债增加，后续维护成本高 |\n| **保体验** | 质量、稳定性、服务感、品牌感 | 预算最高，周期通常也更长 | 口碑风险最低，更利于复购、推荐和品牌溢价 | 可能错过时间窗口，且前期投入回收慢 |\n\n更直白地说：\n\n- **压成本**：省的是现在的钱，赌的是用户容忍度。\n- **保速度**：买的是时间，赌的是后期补救能力。\n- **保体验**：买的是口碑安全垫，牺牲的是预算和上线弹性。\n\n如果你要在**预算和口碑**之间取舍，关键不是哪个方案“最好”，而是你能不能承受对应后果：  \n预算不能超，就接受口碑波动；窗口不能丢，就接受返工风险；口碑不能伤，就接受更高投入。"
+      ],
+      "usage": {
+        "input_tokens": 12191,
+        "cached_input_tokens": 10112,
+        "output_tokens": 828,
+        "reasoning_output_tokens": 447
+      },
+      "user_prompt": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+              }
+            ],
+            "abstain_reason": "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 613,
+            "reasoning_output_tokens": 469
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n11-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.97,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.97,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+              }
+            ],
+            "abstain_reason": "prior_repair_history_absent"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 531,
+            "reasoning_output_tokens": 405
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n11-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n11-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.98,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.98,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "三个方案分别压成本、保速度、保体验"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "请把代价列清楚，不要替我拍板"
+              }
+            ],
+            "abstain_reason": "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 365,
+            "reasoning_output_tokens": 207
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n11-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n11-triage-turn-1-sample-3-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-3",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-2/original/homes/brake-triage-n11-triage-turn-1-sample-3-retry-2"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.98,
+        0.97,
+        0.98
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+            }
+          ],
+          "abstain_reason": "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.97,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍"
+            }
+          ],
+          "abstain_reason": "prior_repair_history_absent"
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.98,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "三个方案分别压成本、保速度、保体验"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "请把代价列清楚，不要替我拍板"
+            }
+          ],
+          "abstain_reason": "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+        }
+      ],
+      "triage_abstain_reasons": [
+        "No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.",
+        "prior_repair_history_absent",
+        "Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present."
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}"
+        ]
+      ],
+      "triage_attempt_count": 5,
+      "triage_retry_count": 2,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"No prior repair history is supplied; the current turn asks for trade-off clarification, not an N+1 local repair.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n11-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"prior_repair_history_absent\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n11-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n11-triage-turn-1-sample-3-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请把代价列清楚，不要替我拍板\"}],\"abstain_reason\":\"Only one supplied turn and no prior repair history; no sequence of repeated local repairs or N+1 request is present.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-answers/brake-triage-n11-triage-turn-1-sample-3-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-events/brake-triage-n11-triage-turn-1-sample-3-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-stderr/brake-triage-n11-triage-turn-1-sample-3-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-2/original/triage-prompts/brake-triage-n11-triage-turn-1-sample-3-retry-2.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "可以，我只列取舍，不替你选。\n\n| 方案 | 省/保的是什么 | 直接代价 | 对口碑的代价 | 隐性风险 |\n|---|---|---|---|---|\n| **压成本** | 预算最低、现金压力小 | 人力、物料、测试、服务标准都会被压缩 | 体验不稳定，用户容易觉得“廉价”“不专业” | 后期返工、投诉处理、补救成本可能反噬预算 |\n| **保速度** | 上线快、抢窗口、尽快验证 | 可能要加人、加班、外包或牺牲部分细节 | 如果交付粗糙，口碑波动大；用户会记住明显瑕疵 | 技术债/流程债增加，后续维护成本高 |\n| **保体验** | 质量、稳定性、服务感、品牌感 | 预算最高，周期通常也更长 | 口碑风险最低，更利于复购、推荐和品牌溢价 | 可能错过时间窗口，且前期投入回收慢 |\n\n更直白地说：\n\n- **压成本**：省的是现在的钱，赌的是用户容忍度。\n- **保速度**：买的是时间，赌的是后期补救能力。\n- **保体验**：买的是口碑安全垫，牺牲的是预算和上线弹性。\n\n如果你要在**预算和口碑**之间取舍，关键不是哪个方案“最好”，而是你能不能承受对应后果：  \n预算不能超，就接受口碑波动；窗口不能丢，就接受返工风险；口碑不能伤，就接受更高投入。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

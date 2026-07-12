@@ -1,0 +1,1 @@
+{"schema_version":"mindthus-brake-loaded-action-v0.2","default_disposition":"refuse_next_local_repair","refusal":"默认拒绝在分拣台继续增设确认人。当前问题不是缺一个复看点，而是异常每次流到下游后才被临时人工兜底。","mechanism_reframe":"周一到今天的处理模式相同：破损、错仓、无码、批号异常分别在不同末端暴露，然后用新的人工拦截补洞。这会把责任和发现压力持续后移，掩盖上游产生异常的共同控制失效。","upstream_next_action":"启动退货批号异常的源头归因与上游控制点裁决。","requested_patch_delivery":null,"bounded_emergency":null}

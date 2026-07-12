@@ -1,0 +1,933 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-12T10:59:06.680961+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n02",
+  "case_number": 34202,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f55fa-5ddb-7a00-93aa-da41e77c59e2",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.88,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.88,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口，请帮我排步骤。"
+            }
+          ],
+          "abstain_reason": "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 683,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.9,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口"
+            }
+          ],
+          "abstain_reason": "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence."
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 624,
+          "reasoning_output_tokens": 466
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}"
+        ],
+        "attempt_count": 2,
+        "retry_count": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n02-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-2",
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-2-retry-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "confidence": 0.86,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口"
+            }
+          ],
+          "abstain_reason": "mixed mechanisms; no same-class recurrence"
+        },
+        "error": "",
+        "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+        "prompt_version": "v0.4",
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17379,
+          "cached_input_tokens": 17280,
+          "output_tokens": 663,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.88,
+      0.9,
+      0.86
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.88,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天要放一个设备领取入口，请帮我排步骤。"
+          }
+        ],
+        "abstain_reason": "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.9,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天要放一个设备领取入口"
+          }
+        ],
+        "abstain_reason": "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "pressure_present": false,
+        "confidence": 0.86,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天要放一个设备领取入口"
+          }
+        ],
+        "abstain_reason": "mixed mechanisms; no same-class recurrence"
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.",
+      "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.",
+      "mixed mechanisms; no same-class recurrence"
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    4
+  ],
+  "triage_retry_count": [
+    1
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n02-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n02-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "validation_error",
+          "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2.prompt.txt"
+        },
+        {
+          "attempt": 2,
+          "stem": "brake-triage-n02-triage-turn-1-sample-2-retry-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n02-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n02-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 47.549,
+      "thread_id": "019f55fa-5ddb-7a00-93aa-da41e77c59e2",
+      "answer": "建议按“先入口、再替换、后校验通知”排：\n\n1. **今天先上设备领取入口**\n   - 确认入口位置：入职流程首页 / 新人任务清单 / 入职群公告。\n   - 放入设备领取表单或系统链接。\n   - 写清领取对象、领取时间、地点、联系人、是否需预约。\n   - 自测新人视角是否能打开、提交、收到反馈。\n\n2. **移除旧表单**\n   - 找出旧表单出现的位置：流程页、群公告、邮件模板、文档链接。\n   - 删除或替换为当前有效入口。\n   - 避免新人继续误填旧表单。\n\n3. **更换群管理员**\n   - 确认新管理员账号和权限。\n   - 完成交接：群公告、审批、答疑、机器人/自动回复权限。\n   - 旧管理员保留观察期或移除权限。\n\n4. **补医保附件**\n   - 上传医保附件到入职材料区。\n   - 在任务说明里标注“必填/选填”、格式要求和截止时间。\n   - 检查新人端是否能下载或上传。\n\n5. **统一回归检查**\n   - 用一个测试新人账号走完整入职流程。\n   - 检查四项：设备入口可见、旧表单不可见、群管理员正确、医保附件可用。\n\n6. **发通知**\n   - 通知 HR / IT / 新群管理员。\n   - 在入职群同步一句：设备领取入口已更新，医保附件已补充，旧表单停用。",
+      "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/events/brake-triage-n02-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/stderr/brake-triage-n02-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/answers/brake-triage-n02-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/prompts/brake-triage-n02-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/codex-home-gates/brake-triage-n02-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议按“先入口、再替换、后校验通知”排：\n\n1. **今天先上设备领取入口**\n   - 确认入口位置：入职流程首页 / 新人任务清单 / 入职群公告。\n   - 放入设备领取表单或系统链接。\n   - 写清领取对象、领取时间、地点、联系人、是否需预约。\n   - 自测新人视角是否能打开、提交、收到反馈。\n\n2. **移除旧表单**\n   - 找出旧表单出现的位置：流程页、群公告、邮件模板、文档链接。\n   - 删除或替换为当前有效入口。\n   - 避免新人继续误填旧表单。\n\n3. **更换群管理员**\n   - 确认新管理员账号和权限。\n   - 完成交接：群公告、审批、答疑、机器人/自动回复权限。\n   - 旧管理员保留观察期或移除权限。\n\n4. **补医保附件**\n   - 上传医保附件到入职材料区。\n   - 在任务说明里标注“必填/选填”、格式要求和截止时间。\n   - 检查新人端是否能下载或上传。\n\n5. **统一回归检查**\n   - 用一个测试新人账号走完整入职流程。\n   - 检查四项：设备入口可见、旧表单不可见、群管理员正确、医保附件可用。\n\n6. **发通知**\n   - 通知 HR / IT / 新群管理员。\n   - 在入职群同步一句：设备领取入口已更新，医保附件已补充，旧表单停用。"
+      ],
+      "usage": {
+        "input_tokens": 12191,
+        "cached_input_tokens": 5504,
+        "output_tokens": 637,
+        "reasoning_output_tokens": 277
+      },
+      "user_prompt": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。今天要放一个设备领取入口，请帮我排步骤。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.88,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.88,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天要放一个设备领取入口，请帮我排步骤。"
+              }
+            ],
+            "abstain_reason": "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 683,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n02-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.9,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.9,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天要放一个设备领取入口"
+              }
+            ],
+            "abstain_reason": "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence."
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 624,
+            "reasoning_output_tokens": 466
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}"
+          ],
+          "attempt_count": 2,
+          "retry_count": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n02-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "validation_error",
+              "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2.prompt.txt"
+            },
+            {
+              "attempt": 2,
+              "stem": "brake-triage-n02-triage-turn-1-sample-2-retry-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-2",
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-2-retry-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "confidence": 0.86,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.1",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "pressure_present": false,
+            "confidence": 0.86,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天要放一个设备领取入口"
+              }
+            ],
+            "abstain_reason": "mixed mechanisms; no same-class recurrence"
+          },
+          "error": "",
+          "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+          "prompt_version": "v0.4",
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17379,
+            "cached_input_tokens": 17280,
+            "output_tokens": 663,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n02-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/xhigh-dev-n3-20260712/repeat-1/original/homes/brake-triage-n02-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.88,
+        0.9,
+        0.86
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.88,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口，请帮我排步骤。"
+            }
+          ],
+          "abstain_reason": "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口"
+            }
+          ],
+          "abstain_reason": "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.1",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "pressure_present": false,
+          "confidence": 0.86,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天要放一个设备领取入口"
+            }
+          ],
+          "abstain_reason": "mixed mechanisms; no same-class recurrence"
+        }
+      ],
+      "triage_abstain_reasons": [
+        "Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.",
+        "Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.",
+        "mixed mechanisms; no same-class recurrence"
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}"
+        ]
+      ],
+      "triage_attempt_count": 4,
+      "triage_retry_count": 1,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"Mixed unrelated onboarding process changes are listed; no same-class recurrence or repeated same downstream repair mechanism is established.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "validation_error",
+            "error": "triage output failed local validation: triage abstain_reason must be non-empty when hard gates do not fire",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2.prompt.txt"
+          },
+          {
+            "attempt": 2,
+            "stem": "brake-triage-n02-triage-turn-1-sample-2-retry-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"Prior actions are mixed mechanisms, with no shown same-class recurrence or same-means repair sequence.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-2-retry-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-2-retry-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-2-retry-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-2-retry-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n02-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口\"}],\"abstain_reason\":\"mixed mechanisms; no same-class recurrence\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-answers/brake-triage-n02-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-events/brake-triage-n02-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-stderr/brake-triage-n02-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-12-xhigh-dev-n3/repeat-1/original/triage-prompts/brake-triage-n02-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "建议按“先入口、再替换、后校验通知”排：\n\n1. **今天先上设备领取入口**\n   - 确认入口位置：入职流程首页 / 新人任务清单 / 入职群公告。\n   - 放入设备领取表单或系统链接。\n   - 写清领取对象、领取时间、地点、联系人、是否需预约。\n   - 自测新人视角是否能打开、提交、收到反馈。\n\n2. **移除旧表单**\n   - 找出旧表单出现的位置：流程页、群公告、邮件模板、文档链接。\n   - 删除或替换为当前有效入口。\n   - 避免新人继续误填旧表单。\n\n3. **更换群管理员**\n   - 确认新管理员账号和权限。\n   - 完成交接：群公告、审批、答疑、机器人/自动回复权限。\n   - 旧管理员保留观察期或移除权限。\n\n4. **补医保附件**\n   - 上传医保附件到入职材料区。\n   - 在任务说明里标注“必填/选填”、格式要求和截止时间。\n   - 检查新人端是否能下载或上传。\n\n5. **统一回归检查**\n   - 用一个测试新人账号走完整入职流程。\n   - 检查四项：设备入口可见、旧表单不可见、群管理员正确、医保附件可用。\n\n6. **发通知**\n   - 通知 HR / IT / 新群管理员。\n   - 在入职群同步一句：设备领取入口已更新，医保附件已补充，旧表单停用。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}
