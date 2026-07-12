@@ -2,7 +2,7 @@
   "schema_version": "mindthus-brake-shadow-handoff-v0.1",
   "created_for": "brake-k3-majority-diagnostic-preflight",
   "branch": "codex/brake-semantic-triage-design",
-  "minimum_branch_commit": "438bf87bb738d1efc410d03468efa69efc52c079",
+  "minimum_branch_commit": "301d73d8bed7725802052ca2fce46fdfcc279e7a",
   "shadow_execution_requirement": "Any external shadow run must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, active fire-policy, or owner-gate settings from memory.",
   "components": {
     "runner": {
@@ -80,5 +80,5 @@
     "abstain_behavior": "when triage abstains and no pressure latch is active, the entire Mindthus owner skill family is excluded from generator context",
     "fire_or_latch_behavior": "when triage fires or pressure latch is active, expose only the register-defined brake owner set and loaded-action contract"
   },
-  "certification_status": "shadow-preflight-handoff-only"
+  "certification_status": "external-shadow-batch-6-ready"
 }
