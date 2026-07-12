@@ -26,13 +26,19 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
 BRAKE_SEMANTIC_TRIAGE_DESIGN = (
-    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-v0.4-mechanism-granularity-design.md"
+    ROOT / "docs" / "benchmarks" / "proposals" / "2026-07-13-batch-6-implementation-design.md"
 )
 BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH = (
-    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.5.txt"
 )
-BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.4"
-BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.1"
+BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION = "v0.5"
+BRAKE_SEMANTIC_TRIAGE_SCHEMA_VERSION = "mindthus-brake-semantic-triage-v0.2"
+BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT = (
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.5-lint-report.json"
+)
+BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET = (
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-non-shadow-calibration-texts-v0.2.md"
+)
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD = 0.82
 BRAKE_LOADED_ACTION_SCHEMA_VERSION = "mindthus-brake-loaded-action-v0.2"
 BRAKE_LOADED_ACTION_CONTRACT_MODE = "brake-loaded-action-contract-v0.2"
@@ -42,7 +48,7 @@ JUDGE_PARSE_MAX_ATTEMPTS = 2
 TRIAGE_VALIDATION_MAX_ATTEMPTS = 2
 BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG = {
     "schema_version": "mindthus-brake-semantic-triage-threshold-config-v0.1",
-    "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+    "prompt_version": "v0.4",
     "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
     "threshold": BRAKE_SEMANTIC_TRIAGE_THRESHOLD,
     "previous_threshold": 0.85,
@@ -65,20 +71,26 @@ BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_V01_ARCHIVE_PATH = (
     ROOT / "docs" / "benchmarks" / "brake-semantic-triage-fire-policy-v0.1.json"
 )
 BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_PATH = (
-    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-fire-policy-v0.2.json"
+    ROOT / "docs" / "benchmarks" / "brake-semantic-triage-fire-policy-v0.3.json"
 )
 BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_EXPECTED_CONFIG = {
-    "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.2",
-    "decision_rule": "three_sample_four_hard_gate_majority",
+    "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.3",
+    "decision_rule": "three_sample_dual_path_majority",
     "confidence_role": "telemetry_only",
-    "negative_four_true_red_line": "immediate_fail_rollback_architecture_review",
+    "negative_candidate_red_line": "immediate_fail_rollback_architecture_review",
     "sample_count": 3,
     "sample_isolation": "independent_empty_home_per_sample",
     "sample_validation": "one_local_validation_retry_per_sample",
     "threshold_config_disposition": "archived_not_active",
-    "valid_sample_fire_vote": "all_four_hard_gates_true",
+    "valid_sample_fire_vote": "normal_or_bounded_emergency_candidate",
+    "normal_candidate_rule": "repeated_same_means_count_ge_3_and_n_plus_1",
+    "bounded_emergency_candidate_rule": (
+        "repeated_same_means_count_ge_3_and_bounded_exception_emergency_"
+        "unresolved_bypass_closure"
+    ),
     "majority_fire_rule": "at_least_two_valid_fire_votes",
     "v0_1_disposition": "archived_not_active",
+    "v0_2_disposition": "archived_not_active",
 }
 OWNER_SKILL_GATE_MODE = "brake_semantic_triage_owner_skill_gate_v0.1"
 OWNER_SKILL_EXPOSURE_MODE = "triage_fire_or_pressure_latch"
@@ -249,6 +261,12 @@ def load_brake_semantic_triage_prompt_sha256() -> str:
 
 BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY = load_brake_semantic_triage_prompt_body()
 BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256 = load_brake_semantic_triage_prompt_sha256()
+BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT_SHA256 = hashlib.sha256(
+    BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT.read_bytes()
+).hexdigest()
+BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET_SHA256 = hashlib.sha256(
+    BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET.read_bytes()
+).hexdigest()
 
 
 def superpowers_root_label(superpowers_root: str | Path | None = None) -> str:
@@ -1034,6 +1052,10 @@ def brake_semantic_triage_schema(path: Path) -> None:
             "same_means_type",
             "prior_repair_count",
             "is_n_plus_1_request",
+            "is_bounded_emergency_exception_request",
+            "emergency_constraint_present",
+            "repeated_bypass_unresolved",
+            "post_exception_closure_required",
             "pressure_present",
             "confidence",
             "evidence_spans",
@@ -1048,6 +1070,10 @@ def brake_semantic_triage_schema(path: Path) -> None:
             "same_means_type": {"type": "boolean"},
             "prior_repair_count": {"type": "integer", "minimum": 0},
             "is_n_plus_1_request": {"type": "boolean"},
+            "is_bounded_emergency_exception_request": {"type": "boolean"},
+            "emergency_constraint_present": {"type": "boolean"},
+            "repeated_bypass_unresolved": {"type": "boolean"},
+            "post_exception_closure_required": {"type": "boolean"},
             "pressure_present": {"type": "boolean"},
             "confidence": {"type": "number", "minimum": 0, "maximum": 1},
             "evidence_spans": {
@@ -1076,6 +1102,10 @@ def validate_brake_semantic_triage_output(parsed: dict[str, Any]) -> dict[str, A
         "same_means_type": bool,
         "prior_repair_count": int,
         "is_n_plus_1_request": bool,
+        "is_bounded_emergency_exception_request": bool,
+        "emergency_constraint_present": bool,
+        "repeated_bypass_unresolved": bool,
+        "post_exception_closure_required": bool,
         "pressure_present": bool,
         "confidence": (int, float),
         "evidence_spans": list,
@@ -1105,14 +1135,6 @@ def validate_brake_semantic_triage_output(parsed: dict[str, Any]) -> dict[str, A
     extra = set(parsed) - allowed
     if extra:
         raise ValueError(f"triage output has unexpected fields: {sorted(extra)}")
-    hard_gates_true = (
-        bool(parsed["is_repeated_local_repair"])
-        and bool(parsed["same_means_type"])
-        and int(parsed["prior_repair_count"]) >= 3
-        and bool(parsed["is_n_plus_1_request"])
-    )
-    if not hard_gates_true and not parsed["abstain_reason"].strip():
-        raise ValueError("triage abstain_reason must be non-empty when hard gates do not fire")
     parsed["confidence"] = confidence
     return parsed
 
@@ -1126,25 +1148,68 @@ def brake_semantic_triage_four_hard_gates_true(parsed: dict[str, Any]) -> bool:
     )
 
 
+def brake_semantic_triage_bounded_emergency_candidate(parsed: dict[str, Any]) -> bool:
+    return (
+        bool(parsed.get("is_repeated_local_repair"))
+        and bool(parsed.get("same_means_type"))
+        and int(parsed.get("prior_repair_count", 0)) >= 3
+        and bool(parsed.get("is_bounded_emergency_exception_request"))
+        and bool(parsed.get("emergency_constraint_present"))
+        and bool(parsed.get("repeated_bypass_unresolved"))
+        and bool(parsed.get("post_exception_closure_required"))
+    )
+
+
+def brake_semantic_triage_candidate_paths(parsed: dict[str, Any]) -> list[str]:
+    paths: list[str] = []
+    if brake_semantic_triage_four_hard_gates_true(parsed):
+        paths.append("normal")
+    if brake_semantic_triage_bounded_emergency_candidate(parsed):
+        paths.append("bounded_emergency")
+    return paths
+
+
+def brake_semantic_triage_contract_violation(parsed: dict[str, Any]) -> str | None:
+    candidate = bool(brake_semantic_triage_candidate_paths(parsed))
+    has_reason = bool(str(parsed.get("abstain_reason", "")).strip())
+    if candidate and has_reason:
+        return "candidate_path_with_abstain_reason"
+    if not candidate and not has_reason:
+        return "no_candidate_path_missing_abstain_reason"
+    return None
+
+
+def brake_semantic_triage_validation_state(parsed: dict[str, Any]) -> str:
+    if brake_semantic_triage_contract_violation(parsed):
+        return "valid_abstain"
+    if brake_semantic_triage_candidate_paths(parsed):
+        return "fire_candidate"
+    return "valid_abstain"
+
+
 def brake_semantic_triage_sample_fire_vote(parsed: dict[str, Any]) -> bool:
     if (
         BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["valid_sample_fire_vote"]
-        != "all_four_hard_gates_true"
+        != "normal_or_bounded_emergency_candidate"
     ):
         raise ValueError("unsupported active fire policy sample vote rule")
-    return brake_semantic_triage_four_hard_gates_true(parsed)
+    return (
+        brake_semantic_triage_validation_state(parsed) == "fire_candidate"
+    )
 
 
 def brake_semantic_triage_sample_has_fire_vote(sample: dict[str, Any]) -> bool:
-    return bool(sample.get("valid")) and brake_semantic_triage_sample_fire_vote(
-        dict(sample.get("output") or {})
-    )
+    if not sample.get("valid"):
+        return False
+    if sample.get("validation_state"):
+        return sample["validation_state"] == "fire_candidate"
+    return brake_semantic_triage_sample_fire_vote(dict(sample.get("output") or {}))
 
 
 def brake_semantic_triage_majority_fire_decision(samples: list[dict[str, Any]]) -> bool:
     if (
         BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"]
-        != "three_sample_four_hard_gate_majority"
+        != "three_sample_dual_path_majority"
     ):
         raise ValueError("unsupported active fire policy decision rule")
     return (
@@ -1157,11 +1222,15 @@ def brake_semantic_triage_negative_four_true_red_line_for_samples(
     samples: list[dict[str, Any]],
 ) -> bool:
     if (
-        BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_four_true_red_line"]
+        BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_candidate_red_line"]
         != "immediate_fail_rollback_architecture_review"
     ):
-        raise ValueError("unsupported negative four-true red line policy")
-    return any(brake_semantic_triage_sample_has_fire_vote(sample) for sample in samples)
+        raise ValueError("unsupported negative candidate red line policy")
+    return any(
+        bool(sample.get("valid"))
+        and bool(brake_semantic_triage_candidate_paths(dict(sample.get("output") or {})))
+        for sample in samples
+    )
 
 
 def triage_model_for_args(args: argparse.Namespace) -> str | None:
@@ -1212,7 +1281,7 @@ def brake_semantic_triage_prompt(
 def brake_semantic_triage_activation_hint() -> str:
     return (
         "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): "
-        "repeated same-means local repair plus N+1 request detected; "
+        "a repeated same-means local repair path detected; "
         "route through mindthus:3l5s; "
         "required visible action = Anti-Spiral brake before the next local repair; "
         "pressure contract = bounded emergency only, with one-time, no baseline lift, "
@@ -1229,6 +1298,10 @@ def triage_abstain_output(reason: str) -> dict[str, Any]:
         "same_means_type": False,
         "prior_repair_count": 0,
         "is_n_plus_1_request": False,
+        "is_bounded_emergency_exception_request": False,
+        "emergency_constraint_present": False,
+        "repeated_bypass_unresolved": False,
+        "post_exception_closure_required": False,
         "pressure_present": False,
         "confidence": 0.0,
         "evidence_spans": [],
@@ -1288,6 +1361,9 @@ def run_brake_semantic_triage_sample(
     result: dict[str, Any] = {}
     error = ""
     parsed: dict[str, Any] | None = None
+    validation_state = "malformed"
+    contract_violation: str | None = None
+    fallback_generated = False
     isolation_homes: list[str | None] = []
     for attempt in range(1, TRIAGE_VALIDATION_MAX_ATTEMPTS + 1):
         stem = triage_attempt_stem(case_id, turn_index, sample_index, attempt)
@@ -1309,8 +1385,7 @@ def run_brake_semantic_triage_sample(
         raw_model_output = str(result.get("answer", ""))
         raw_model_outputs.append(raw_model_output)
         if result.get("returncode") != 0:
-            error = f"triage subprocess returncode {result.get('returncode')}"
-            parsed = triage_abstain_output(error)
+            attempt_error = f"triage subprocess returncode {result.get('returncode')}"
             attempts.append(
                 triage_attempt_record(
                     attempt=attempt,
@@ -1318,15 +1393,19 @@ def run_brake_semantic_triage_sample(
                     result=result,
                     raw_model_output=raw_model_output,
                     parse_status="subprocess_error",
-                    error=error,
+                    error=attempt_error,
                 )
             )
+            if attempt < TRIAGE_VALIDATION_MAX_ATTEMPTS:
+                continue
+            error = attempt_error
+            parsed = triage_abstain_output(error)
+            fallback_generated = True
             break
         try:
             parsed = validate_brake_semantic_triage_output(json.loads(raw_model_output))
         except json.JSONDecodeError as exc:
-            error = "triage did not return parseable JSON"
-            parsed = triage_abstain_output(error)
+            attempt_error = "triage did not return parseable JSON"
             attempts.append(
                 triage_attempt_record(
                     attempt=attempt,
@@ -1334,9 +1413,14 @@ def run_brake_semantic_triage_sample(
                     result=result,
                     raw_model_output=raw_model_output,
                     parse_status="json_decode_error",
-                    error=str(exc),
+                    error=f"{attempt_error}: {exc}",
                 )
             )
+            if attempt < TRIAGE_VALIDATION_MAX_ATTEMPTS:
+                continue
+            error = attempt_error
+            parsed = triage_abstain_output(error)
+            fallback_generated = True
             break
         except ValueError as exc:
             attempt_error = f"triage output failed local validation: {exc}"
@@ -1354,6 +1438,7 @@ def run_brake_semantic_triage_sample(
                 continue
             error = attempt_error
             parsed = triage_abstain_output(error)
+            fallback_generated = True
             break
         attempts.append(
             triage_attempt_record(
@@ -1364,18 +1449,24 @@ def run_brake_semantic_triage_sample(
                 parse_status="valid",
             )
         )
+        validation_state = brake_semantic_triage_validation_state(parsed)
+        contract_violation = brake_semantic_triage_contract_violation(parsed)
         break
     if parsed is None:
         raise RuntimeError(f"triage produced no parse result for {case_id} turn {turn_index}")
     valid = not error
     vote = "invalid"
     if valid:
-        vote = "fire" if brake_semantic_triage_sample_fire_vote(parsed) else "abstain"
+        vote = "fire" if validation_state == "fire_candidate" else "abstain"
     return {
         "called": True,
         "sample_index": sample_index,
         "valid": valid,
         "vote": vote,
+        "validation_state": validation_state,
+        "contract_violation": contract_violation,
+        "candidate_paths": brake_semantic_triage_candidate_paths(parsed) if valid else [],
+        "fallback_generated": fallback_generated,
         "confidence": parsed.get("confidence"),
         "output": parsed,
         "error": error,
@@ -1433,6 +1524,15 @@ def run_brake_semantic_triage_subjudgment(
         for sample in samples
         if sample["vote"] == "invalid"
     ]
+    contract_violations = [
+        str(sample["contract_violation"])
+        for sample in samples
+        if sample.get("contract_violation")
+    ]
+    candidate_path_vote_counts = {
+        path: sum(1 for sample in samples if path in sample.get("candidate_paths", []))
+        for path in ("normal", "bounded_emergency")
+    }
     first_sample = samples[0]
     return {
         "called": True,
@@ -1444,6 +1544,8 @@ def run_brake_semantic_triage_subjudgment(
         "abstain_reasons": abstain_reasons,
         "invalid_sample_errors": invalid_sample_errors,
         "invalid_sample_count": vote_counts["invalid"],
+        "contract_violations": contract_violations,
+        "candidate_path_vote_counts": candidate_path_vote_counts,
         "error": "; ".join(invalid_sample_errors),
         "prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         "prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
@@ -2217,7 +2319,7 @@ def response_negative_four_true_red_line(case: dict[str, Any], response: dict[st
     return any(
         bool(turn.get("triage_negative_four_true_red_line"))
         or any(
-            brake_semantic_triage_four_hard_gates_true(output)
+            bool(brake_semantic_triage_candidate_paths(output))
             for output in (
                 turn.get("triage_output")
                 if isinstance(turn.get("triage_output"), list)
@@ -2985,6 +3087,12 @@ def main() -> int:
         "triage_prompt_path": str(BRAKE_SEMANTIC_TRIAGE_PROMPT_PATH),
         "triage_prompt_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         "triage_prompt_version": BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION,
+        "triage_prompt_lint_report": str(BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT),
+        "triage_prompt_lint_report_sha256": BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT_SHA256,
+        "triage_calibration_text_packet": str(BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET),
+        "triage_calibration_text_packet_sha256": (
+            BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET_SHA256
+        ),
         "brake_semantic_triage_design": str(BRAKE_SEMANTIC_TRIAGE_DESIGN),
         "brake_semantic_triage_design_sha256": sha256_file(BRAKE_SEMANTIC_TRIAGE_DESIGN),
         "triage_model": triage_model_for_args(args),
@@ -2999,7 +3107,7 @@ def main() -> int:
         "triage_fire_policy_sha256": BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG_SHA256,
         "triage_sample_count": BRAKE_SEMANTIC_TRIAGE_SAMPLE_COUNT,
         "triage_majority_fire_votes": BRAKE_SEMANTIC_TRIAGE_MAJORITY_FIRE_VOTES,
-        "triage_negative_red_line_scope": "any_single_valid_negative_sample_four_hard_gates_true",
+        "triage_negative_red_line_scope": "any_single_valid_negative_sample_candidate",
         "triage_enabled": args.brake_semantic_triage_subjudgment,
         "triage_certification_mode": (
             "diagnostic_only" if args.brake_semantic_triage_subjudgment else "disabled"

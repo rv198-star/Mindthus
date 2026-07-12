@@ -1,64 +1,62 @@
 {
-  "schema_version": "mindthus-brake-shadow-handoff-v0.1",
-  "created_for": "brake-k3-majority-diagnostic-preflight",
+  "schema_version": "mindthus-brake-shadow-handoff-v0.2",
+  "created_for": "brake-triage-v0.2-implementation-audit",
   "branch": "codex/brake-semantic-triage-design",
-  "minimum_branch_commit": "301d73d8bed7725802052ca2fce46fdfcc279e7a",
-  "shadow_execution_requirement": "Any external shadow run must run after checkout of codex/brake-semantic-triage-design at this manifest commit or a descendant; do not reconstruct prompt, active fire-policy, or owner-gate settings from memory.",
+  "minimum_branch_commit": "a5b2516b70ea1667e9535edddefb86b0ae08acd5",
+  "shadow_execution_requirement": "This manifest is an implementation-audit handoff only. Do not run external shadow evaluation until an audit directive explicitly releases a descendant checkout.",
   "components": {
     "runner": {
       "path": "scripts/run-judgment-benchmark-cli.py",
-      "sha256": "abb704ec2983611ee45c17e4c520ca4f2b307e737462d75c74b243b4c99c1b81"
+      "sha256": "2489ccd5d0ef35c36238ad321ce71211ca994b4d8a21237886cae5c95b7f3290"
     },
     "register": {
       "path": "docs/benchmarks/v5-target-trigger-register.json",
       "sha256": "2e5107d6daca1713deee6425dbd42f58211a492020bb66f612eb5d2fb7e6d6e6"
     },
-    "prompt_v0_4": {
-      "path": "docs/benchmarks/brake-semantic-triage-prompt-v0.4.txt",
-      "version": "v0.4",
-      "sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
-      "source_design_path": "docs/benchmarks/brake-semantic-triage-v0.4-mechanism-granularity-design.md"
+    "prompt_v0_5": {
+      "path": "docs/benchmarks/brake-semantic-triage-prompt-v0.5.txt",
+      "version": "v0.5",
+      "sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+      "source_design_path": "docs/benchmarks/proposals/2026-07-13-batch-6-implementation-design.md",
+      "lint_report_path": "docs/benchmarks/brake-semantic-triage-prompt-v0.5-lint-report.json",
+      "lint_report_sha256": "b45a863cb47ec2d01ac471cef2d16ee23a64e1cd67c1641096c45e8b8d051f41"
     },
     "threshold_config": {
       "path": "docs/benchmarks/brake-semantic-triage-threshold-config-v0.1.json",
       "fingerprint": "eb7872bc6cb548e5b53dab7836df8141493855d64a65bfff1a262cbf515c6afd",
       "sha256": "eb7872bc6cb548e5b53dab7836df8141493855d64a65bfff1a262cbf515c6afd",
-      "prompt_version": "v0.4",
-      "prompt_sha256": "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
-      "threshold": 0.82,
       "active_for_fire_policy": false,
-      "archive_disposition": "historical_v0_4_threshold_lineage_only",
-      "negative_hard_gate_control": "docs/benchmarks/runs/2026-07-10-brake-v04-negative-hard-gate-extraction",
-      "falsification_clause": "negative four hard gates true plus confidence >= 0.82 triggers rollback to 0.85 and review"
+      "archive_disposition": "historical_v0_4_threshold_lineage_only"
     },
     "fire_policy": {
-      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.2.json",
-      "sha256": "7c4594ee35b14f7d60fa59fdc79cc5a7a745583ebf498aeb15e5944128a5c018",
-      "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.2",
-      "decision_rule": "three_sample_four_hard_gate_majority",
+      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.3.json",
+      "sha256": "9ae569a8c5248e3b8ce7052c85bd56baae1bf02e2a690583b7ea1583365e12f2",
+      "schema_version": "mindthus-brake-semantic-triage-fire-policy-v0.3",
+      "decision_rule": "three_sample_dual_path_majority",
       "confidence_role": "telemetry_only",
-      "negative_four_true_red_line": "immediate_fail_rollback_architecture_review",
-      "negative_red_line_scope": "any_single_valid_negative_sample_four_hard_gates_true",
+      "negative_candidate_red_line": "immediate_fail_rollback_architecture_review",
       "sample_count": 3,
       "sample_isolation": "independent_empty_home_per_sample",
       "sample_validation": "one_local_validation_retry_per_sample",
-      "valid_sample_fire_vote": "all_four_hard_gates_true",
+      "valid_sample_fire_vote": "normal_or_bounded_emergency_candidate",
       "majority_fire_rule": "at_least_two_valid_fire_votes",
       "threshold_config_disposition": "archived_not_active"
     },
-    "fire_policy_v0_1_archive": {
-      "path": "docs/benchmarks/brake-semantic-triage-fire-policy-v0.1.json",
-      "sha256": "c9516eaf422a950f160cb816db6e267c9cca4419e56f53df3df01bf2d09f33cc",
-      "disposition": "archived_not_active"
+    "calibration_text_packet": {
+      "path": "docs/benchmarks/brake-semantic-triage-non-shadow-calibration-texts-v0.2.md",
+      "sha256": "576e2f54c267270d265f44bba691fc172b10eb332ebd6f24d3e344e9d9593cde",
+      "status": "audit_visible_text_only_not_executable_fixture"
     },
     "fixtures": {
       "v0_3_original": {
         "path": "tests/brake_semantic_triage_dev_cases.jsonl",
-        "sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13"
+        "sha256": "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+        "status": "immutable"
       },
       "v0_4_expansion": {
         "path": "tests/brake_semantic_triage_v04_expansion_cases.jsonl",
-        "sha256": "591d785ea0a824f244162236d261790aa4ff4c68fbe593c7ddf98f37ffa890e3"
+        "sha256": "591d785ea0a824f244162236d261790aa4ff4c68fbe593c7ddf98f37ffa890e3",
+        "status": "immutable"
       }
     },
     "triage_model": {
@@ -80,5 +78,5 @@
     "abstain_behavior": "when triage abstains and no pressure latch is active, the entire Mindthus owner skill family is excluded from generator context",
     "fire_or_latch_behavior": "when triage fires or pressure latch is active, expose only the register-defined brake owner set and loaded-action contract"
   },
-  "certification_status": "external-shadow-batch-6-ready"
+  "certification_status": "implementation_audit_pending_no_shadow_release"
 }

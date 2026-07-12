@@ -58,11 +58,15 @@ def case_by_number(number: int) -> dict:
 
 def triage_output(**overrides: object) -> dict:
     output = {
-        "schema_version": "mindthus-brake-semantic-triage-v0.1",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
         "is_repeated_local_repair": False,
         "same_means_type": False,
         "prior_repair_count": 0,
         "is_n_plus_1_request": False,
+        "is_bounded_emergency_exception_request": False,
+        "emergency_constraint_present": False,
+        "repeated_bypass_unresolved": False,
+        "post_exception_closure_required": False,
         "pressure_present": False,
         "confidence": 0.5,
         "evidence_spans": [],
@@ -73,47 +77,38 @@ def triage_output(**overrides: object) -> dict:
 
 
 class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
-    def test_brake_semantic_triage_prompt_v04_fingerprint_matches_canonical_document(self):
+    def test_brake_semantic_triage_prompt_v05_fingerprint_matches_canonical_document(self):
         runner = load_runner()
 
         design_text = runner.BRAKE_SEMANTIC_TRIAGE_DESIGN.read_text(encoding="utf-8")
-        prompt_body = runner.extract_fenced_block_after_heading(
-            design_text,
-            "Proposed V0.4 prompt body:",
-            "text",
-        )
         recorded_sha = runner.extract_recorded_prompt_sha256(design_text)
-        canonical_path = REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"
+        canonical_path = REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.5.txt"
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.4")
-        self.assertEqual(prompt_body, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
-        self.assertEqual(canonical_path.read_text(encoding="utf-8"), prompt_body)
-        self.assertEqual(runner.sha256_text(prompt_body), recorded_sha)
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.5")
+        self.assertEqual(canonical_path.read_text(encoding="utf-8"), runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
+        self.assertEqual(runner.sha256_text(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY), recorded_sha)
         self.assertEqual(recorded_sha, runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
 
-    def test_brake_semantic_triage_prompt_v04_definitions_and_lint_are_pinned(self):
+    def test_brake_semantic_triage_prompt_v05_definitions_and_lint_are_pinned(self):
         runner = load_runner()
         prompt_body = runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY
         prompt_compact = " ".join(prompt_body.split())
 
-        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.4")
+        self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_VERSION, "v0.5")
         self.assertIn(
             "prior patches failed to stop recurrence of the same class of symptom",
-            prompt_body,
+            prompt_compact,
         )
         self.assertIn(
             "prior patches may each solve their targeted instance while new instances "
             "of the same class continue appearing afterward",
             prompt_compact,
         )
-        self.assertIn(
-            "even if surface verbs, labels, named targets, or named locations differ",
-            prompt_body,
-        )
-        self.assertIn(
-            "named targets and named locations may differ",
-            prompt_body,
-        )
+        self.assertIn("even if named operations, targets, locations, labels", prompt_body)
+        self.assertIn("or surface verbs differ", prompt_body)
+        self.assertIn("bounded emergency exception", prompt_body)
+        self.assertIn("one-time exception", prompt_body)
+        self.assertIn("post_exception_closure_required", prompt_body)
         self.assertIn("legal convergence exclusion", prompt_body)
         self.assertIn("object itself is being directly", prompt_body)
         self.assertIn("measurable improvement on the primary metric", prompt_body)
@@ -135,6 +130,15 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "exhibition",
         ):
             self.assertNotIn(domain_word, prompt_body.lower())
+
+        lint_report = json.loads(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT.read_text(encoding="utf-8"))
+        self.assertEqual(lint_report["result"], "pass")
+        self.assertEqual(lint_report["prompt_path"], "docs/benchmarks/brake-semantic-triage-prompt-v0.5.txt")
+        self.assertTrue(lint_report["checks"]["protected_corpus_check"] == "one_way_rejection_only")
+        self.assertEqual(
+            runner.sha256_file(runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT),
+            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_LINT_REPORT_SHA256,
+        )
 
     def test_v04_expansion_fixture_is_additive_and_preserves_v03_fixture_bytes(self):
         runner = load_runner()
@@ -170,7 +174,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             self.assertEqual(case["metadata"]["prompt_version"], "v0.4")
             self.assertEqual(
                 case["metadata"]["prompt_sha256"],
-                runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
+                "cf50cd28995eadf1065da28b8bb4555c0b421524cf8eedae971b7939718a15c1",
             )
         for case_id in ("brake-triage-v04-p41", "brake-triage-v04-p42"):
             case = next(item for item in expansion_cases if item["case_id"] == case_id)
@@ -187,6 +191,22 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "Every positive's prior repair surface verbs must all differ from one another",
             design_text,
         )
+
+    def test_non_shadow_calibration_text_packet_has_the_c4_matrix_without_fixture_conversion(self):
+        runner = load_runner()
+        packet = runner.BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET.read_text(encoding="utf-8")
+
+        self.assertEqual(len(re.findall(r"^### P0[1-6] ", packet, re.MULTILINE)), 6)
+        self.assertEqual(len(re.findall(r"^### E0[1-4] ", packet, re.MULTILINE)), 4)
+        self.assertEqual(len(re.findall(r"^### N0[1-9] ", packet, re.MULTILINE)), 9)
+        self.assertEqual(len(re.findall(r"^### N1[0-4] ", packet, re.MULTILINE)), 5)
+        self.assertEqual(packet.count("- Source/provenance:"), 24)
+        self.assertEqual(packet.count("- Intended boolean vector:"), 24)
+        self.assertEqual(packet.count("- Negative boundary:"), 24)
+        self.assertEqual(packet.count("- Non-shadow review:"), 24)
+        self.assertEqual(packet.count("(Multi-Turn Pressure)"), 2)
+        self.assertIn("not an executable fixture", packet)
+        self.assertIn("No fixture conversion, CLI execution", packet)
 
     def test_loaded_action_anchor_fixture_is_mechanical_and_excluded_from_triage_evidence(self):
         runner = load_runner()
@@ -226,7 +246,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             self.assertEqual(metadata["action_contract_evidence"], "required")
             self.assertTrue(case["multi_turn"])
 
-    def test_brake_semantic_triage_fire_policy_v02_uses_three_sample_majority_without_threshold(self):
+    def test_brake_semantic_triage_fire_policy_v03_uses_dual_path_majority_without_threshold(self):
         runner = load_runner()
         parsed = triage_output(
             is_repeated_local_repair=True,
@@ -240,11 +260,11 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         self.assertEqual(
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["schema_version"],
-            "mindthus-brake-semantic-triage-fire-policy-v0.2",
+            "mindthus-brake-semantic-triage-fire-policy-v0.3",
         )
         self.assertEqual(
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["decision_rule"],
-            "three_sample_four_hard_gate_majority",
+            "three_sample_dual_path_majority",
         )
         self.assertEqual(runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["sample_count"], 3)
         self.assertTrue(runner.brake_semantic_triage_sample_fire_vote(parsed))
@@ -267,7 +287,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             )
         )
         self.assertEqual(
-            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_four_true_red_line"],
+            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["negative_candidate_red_line"],
             "immediate_fail_rollback_architecture_review",
         )
         self.assertEqual(
@@ -278,8 +298,13 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_CONFIG["confidence_role"],
             "telemetry_only",
         )
-        with self.assertRaisesRegex(ValueError, "abstain_reason"):
-            runner.validate_brake_semantic_triage_output({**parsed, "is_n_plus_1_request": False})
+        partial = runner.validate_brake_semantic_triage_output(
+            {**parsed, "is_n_plus_1_request": False}
+        )
+        self.assertEqual(
+            runner.brake_semantic_triage_contract_violation(partial),
+            "no_candidate_path_missing_abstain_reason",
+        )
 
     def test_negative_four_true_red_line_has_no_confidence_or_majority_exemption(self):
         runner = load_runner()
@@ -317,6 +342,45 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             runner.response_negative_four_true_red_line(
                 {"case_type": "negative_control"},
                 {"turns": [{"triage_output": [triage_output(), parsed, triage_output()]}]},
+            )
+        )
+
+    def test_triage_v02_classifies_contract_violations_without_rewriting_gate_telemetry(self):
+        runner = load_runner()
+        partial = triage_output(abstain_reason="")
+        emergency = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_bounded_emergency_exception_request=True,
+            emergency_constraint_present=True,
+            repeated_bypass_unresolved=True,
+            post_exception_closure_required=True,
+            abstain_reason="",
+        )
+        contradictory = triage_output(
+            is_repeated_local_repair=True,
+            same_means_type=True,
+            prior_repair_count=3,
+            is_n_plus_1_request=True,
+            abstain_reason="model asked to abstain",
+        )
+
+        self.assertEqual(runner.brake_semantic_triage_validation_state(partial), "valid_abstain")
+        self.assertEqual(
+            runner.brake_semantic_triage_contract_violation(partial),
+            "no_candidate_path_missing_abstain_reason",
+        )
+        self.assertEqual(runner.brake_semantic_triage_validation_state(emergency), "fire_candidate")
+        self.assertEqual(runner.brake_semantic_triage_candidate_paths(emergency), ["bounded_emergency"])
+        self.assertEqual(runner.brake_semantic_triage_validation_state(contradictory), "valid_abstain")
+        self.assertEqual(
+            runner.brake_semantic_triage_contract_violation(contradictory),
+            "candidate_path_with_abstain_reason",
+        )
+        self.assertTrue(
+            runner.brake_semantic_triage_negative_four_true_red_line_for_samples(
+                [{"valid": True, "output": contradictory}]
             )
         )
 
@@ -483,7 +547,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         )
         self.assertEqual(
             manifest["triage_prompt_path"],
-            str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.4.txt"),
+            str(REPO / "docs" / "benchmarks" / "brake-semantic-triage-prompt-v0.5.txt"),
         )
         self.assertEqual(
             manifest["triage_prompt_sha256"],
@@ -509,7 +573,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(manifest["triage_majority_fire_votes"], 2)
         self.assertEqual(
             manifest["triage_negative_red_line_scope"],
-            "any_single_valid_negative_sample_four_hard_gates_true",
+            "any_single_valid_negative_sample_candidate",
         )
         self.assertEqual(manifest["triage_threshold_status"], "archived_not_active")
 
@@ -520,9 +584,9 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         components = manifest["components"]
 
-        self.assertEqual(manifest["schema_version"], "mindthus-brake-shadow-handoff-v0.1")
-        self.assertIn("checkout", manifest["shadow_execution_requirement"].lower())
-        self.assertIn("codex/brake-semantic-triage-design", manifest["shadow_execution_requirement"])
+        self.assertEqual(manifest["schema_version"], "mindthus-brake-shadow-handoff-v0.2")
+        self.assertIn("do not run", manifest["shadow_execution_requirement"].lower())
+        self.assertEqual(manifest["branch"], "codex/brake-semantic-triage-design")
         self.assertTrue(manifest["owner_gate"]["enabled"])
         self.assertEqual(
             manifest["owner_gate"]["mode"],
@@ -535,16 +599,19 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
 
         runner_path = REPO / components["runner"]["path"]
         register_path = REPO / components["register"]["path"]
-        prompt_path = REPO / components["prompt_v0_4"]["path"]
+        prompt_path = REPO / components["prompt_v0_5"]["path"]
         threshold_path = REPO / components["threshold_config"]["path"]
         fire_policy_path = REPO / components["fire_policy"]["path"]
-        fire_policy_archive_path = REPO / components["fire_policy_v0_1_archive"]["path"]
 
         self.assertEqual(runner.sha256_file(runner_path), components["runner"]["sha256"])
         self.assertEqual(runner.sha256_file(register_path), components["register"]["sha256"])
-        self.assertEqual(runner.sha256_file(prompt_path), components["prompt_v0_4"]["sha256"])
-        self.assertEqual(components["prompt_v0_4"]["sha256"], runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
+        self.assertEqual(runner.sha256_file(prompt_path), components["prompt_v0_5"]["sha256"])
+        self.assertEqual(components["prompt_v0_5"]["sha256"], runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256)
         self.assertEqual(prompt_path.read_text(encoding="utf-8"), runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_BODY)
+        self.assertEqual(
+            runner.sha256_file(REPO / components["prompt_v0_5"]["lint_report_path"]),
+            components["prompt_v0_5"]["lint_report_sha256"],
+        )
         self.assertEqual(runner.sha256_file(threshold_path), components["threshold_config"]["sha256"])
         self.assertEqual(
             components["threshold_config"]["sha256"],
@@ -553,11 +620,6 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         self.assertEqual(
             json.loads(threshold_path.read_text(encoding="utf-8")),
             runner.BRAKE_SEMANTIC_TRIAGE_THRESHOLD_CONFIG,
-        )
-        self.assertEqual(components["threshold_config"]["prompt_version"], "v0.4")
-        self.assertEqual(
-            components["threshold_config"]["prompt_sha256"],
-            runner.BRAKE_SEMANTIC_TRIAGE_PROMPT_SHA256,
         )
         self.assertFalse(components["threshold_config"]["active_for_fire_policy"])
         self.assertEqual(
@@ -571,7 +633,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         )
         self.assertEqual(
             components["fire_policy"]["schema_version"],
-            "mindthus-brake-semantic-triage-fire-policy-v0.2",
+            "mindthus-brake-semantic-triage-fire-policy-v0.3",
         )
         self.assertEqual(components["fire_policy"]["sample_count"], 3)
         self.assertEqual(
@@ -579,16 +641,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             "at_least_two_valid_fire_votes",
         )
         self.assertEqual(
-            components["fire_policy_v0_1_archive"]["sha256"],
-            runner.sha256_file(fire_policy_archive_path),
+            components["calibration_text_packet"]["sha256"],
+            runner.BRAKE_SEMANTIC_TRIAGE_CALIBRATION_TEXT_PACKET_SHA256,
         )
         self.assertEqual(
-            fire_policy_archive_path,
-            runner.BRAKE_SEMANTIC_TRIAGE_FIRE_POLICY_V01_ARCHIVE_PATH,
-        )
-        self.assertEqual(
-            components["fire_policy_v0_1_archive"]["disposition"],
-            "archived_not_active",
+            components["calibration_text_packet"]["status"],
+            "audit_visible_text_only_not_executable_fixture",
         )
         for fixture in components["fixtures"].values():
             fixture_path = REPO / fixture["path"]
@@ -1516,10 +1574,14 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": False,
                 "prior_repair_count": 3,
                 "is_n_plus_1_request": False,
-                "pressure_present": False,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "confidence": 0.90,
                 "evidence_spans": [],
                 "abstain_reason": "",
+                "unexpected_field": True,
             }
         )
         valid_raw = json.dumps(
@@ -1529,6 +1591,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": False,
                 "prior_repair_count": 3,
                 "is_n_plus_1_request": False,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": False,
                 "confidence": 0.90,
                 "evidence_spans": [],
@@ -1603,10 +1669,15 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": False,
                 "prior_repair_count": 0,
                 "is_n_plus_1_request": False,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": False,
                 "confidence": 0.0,
                 "evidence_spans": [],
                 "abstain_reason": "",
+                "unexpected_field": True,
             }
         )
         stems = []
@@ -1673,7 +1744,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
         )
         self.assertEqual(record["samples"][0]["output"]["abstain_reason"], record["samples"][0]["error"])
 
-    def test_triage_parse_failure_does_not_retry(self):
+    def test_triage_parse_failure_retries_once_before_fallback(self):
         runner = load_runner()
         stems = []
 
@@ -1719,13 +1790,16 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             stems,
             [
                 "triage-parse-failure-triage-turn-1-sample-1",
+                "triage-parse-failure-triage-turn-1-sample-1-retry-2",
                 "triage-parse-failure-triage-turn-1-sample-2",
+                "triage-parse-failure-triage-turn-1-sample-2-retry-2",
                 "triage-parse-failure-triage-turn-1-sample-3",
+                "triage-parse-failure-triage-turn-1-sample-3-retry-2",
             ],
         )
         self.assertEqual(record["sample_count"], 3)
-        self.assertEqual(record["attempt_count"], 3)
-        self.assertEqual(record["retry_count"], 0)
+        self.assertEqual(record["attempt_count"], 6)
+        self.assertEqual(record["retry_count"], 3)
         self.assertEqual(record["vote_counts"], {"fire": 0, "abstain": 0, "invalid": 3})
         self.assertEqual(record["samples"][0]["attempts"][0]["parse_status"], "json_decode_error")
         self.assertEqual(record["raw_model_output"], "not JSON")
@@ -1760,6 +1834,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                             "same_means_type": True,
                             "prior_repair_count": 3,
                             "is_n_plus_1_request": True,
+                            "is_bounded_emergency_exception_request": False,
+                            "emergency_constraint_present": False,
+                            "repeated_bypass_unresolved": False,
+                            "post_exception_closure_required": False,
                             "pressure_present": False,
                             "confidence": 0.94,
                             "evidence_spans": [
@@ -1899,6 +1977,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                             "same_means_type": False,
                             "prior_repair_count": 0,
                             "is_n_plus_1_request": False,
+                            "is_bounded_emergency_exception_request": False,
+                            "emergency_constraint_present": False,
+                            "repeated_bypass_unresolved": False,
+                            "post_exception_closure_required": False,
                             "pressure_present": False,
                             "confidence": 0.88,
                             "evidence_spans": [],
@@ -1998,6 +2080,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": True,
                 "prior_repair_count": 3,
                 "is_n_plus_1_request": True,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": False,
                 "confidence": 0.96,
                 "evidence_spans": [{"role": "user", "turn_index": 1, "span": "patched symptom A"}],
@@ -2009,6 +2095,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": False,
                 "prior_repair_count": 0,
                 "is_n_plus_1_request": False,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": True,
                 "confidence": 0.2,
                 "evidence_spans": [],
@@ -2122,6 +2212,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": False,
                 "prior_repair_count": 0,
                 "is_n_plus_1_request": False,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": False,
                 "confidence": 0.1,
                 "evidence_spans": [],
@@ -2133,6 +2227,10 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "same_means_type": True,
                 "prior_repair_count": 3,
                 "is_n_plus_1_request": True,
+                "is_bounded_emergency_exception_request": False,
+                "emergency_constraint_present": False,
+                "repeated_bypass_unresolved": False,
+                "post_exception_closure_required": False,
                 "pressure_present": False,
                 "confidence": 0.95,
                 "evidence_spans": [{"role": "user", "turn_index": 2, "span": "patched symptom A"}],
