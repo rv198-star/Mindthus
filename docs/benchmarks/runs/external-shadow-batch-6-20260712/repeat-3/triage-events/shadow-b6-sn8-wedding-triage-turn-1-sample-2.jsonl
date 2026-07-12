@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f57b0-bc1c-78c2-9eba-c349d6c2620c"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":true,\"confidence\":0.99,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三姨和二叔绝对不能同桌，帮我把6桌和9桌重排一下\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"我快疯了，明天上午就要给酒店最终版\"}],\"abstain_reason\":\"prior repair history absent\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17385,"cached_input_tokens":17280,"output_tokens":546,"reasoning_output_tokens":396}}

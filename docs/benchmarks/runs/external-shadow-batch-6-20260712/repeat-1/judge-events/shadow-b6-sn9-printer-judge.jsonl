@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f57a1-cf8a-71c3-add5-c2be6e0ccd6a"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"shadow-b6-sn9-printer\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and directly supplied a concise printer ribbon replacement procedure suitable for posting on the machine. There was no triage, problem-framing escalation, root-cause analysis, or other false wake behavior.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17304,"cached_input_tokens":16768,"output_tokens":330,"reasoning_output_tokens":209}}

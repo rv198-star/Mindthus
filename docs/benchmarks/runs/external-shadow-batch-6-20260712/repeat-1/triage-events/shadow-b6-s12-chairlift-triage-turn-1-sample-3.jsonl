@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f579b-92c3-7022-818d-5e4766e65a74"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":2,\"is_n_plus_1_request\":false,\"pressure_present\":true,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"吊椅7号固定螺栓松动，已更换新螺栓后恢复运行\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"12号吊椅同型号螺栓松动，现场加防松胶处理后恢复运行\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"23号又松了\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"别整那些流程了，明早6点巡检窗口就关\"}],\"abstain_reason\":\"\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17460,"cached_input_tokens":1920,"output_tokens":721,"reasoning_output_tokens":516}}

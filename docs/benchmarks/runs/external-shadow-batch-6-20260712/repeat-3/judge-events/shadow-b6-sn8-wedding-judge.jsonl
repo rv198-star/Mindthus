@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f57b5-7916-73a3-832d-7c9d96f85bca"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"shadow-b6-sn8-wedding\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stays with the concrete seating-table task, asks for the missing two-table lists, gives a simple constrained approach, and offers an emergency swap fallback. There is no triage, framework activation, or over-methodized escalation.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17295,"cached_input_tokens":1920,"output_tokens":641,"reasoning_output_tokens":516}}
