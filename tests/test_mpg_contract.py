@@ -222,30 +222,24 @@ class MpgContractTests(unittest.TestCase):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
+        compact = " ".join(text.split())
         agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         for phrase in (
-            "Qualified mainline with path/counter-force exposure",
-            "`mpg`",
             "Long-term system efficiency versus local advantage",
-            "SELA and MPG are sibling strategic lenses",
-            "SELA qualifies system-efficiency direction pressure",
-            "MPG qualifies path-carrying action",
-            "Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy",
-            "SELA must not swallow MPG-ready carrier/path/exposure/commitment questions",
-            "MPG must not replace SELA for naked system-efficiency direction judgment",
-            "Approximate Quantified Mapping only makes variables visible.",
-            "Do not use MPG when there is no actor, carrier, exposure, or path decision.",
-            "mainline + proxy/carrier + concentrated exposure + now/continue/commit decision",
-            "concentrated scarce-resource exposure",
-            "not domain-specific",
+            "carrier/path action defers to MPG",
+            "Mainline plus carrier, exposure, path volatility, and commitment",
+            "no carrier/exposure/path, no MPG",
+            "SELA owns direction pressure; MPG owns path-carrying action",
+            "Approximate Quantified Mapping / 非精准量化显影",
+            "must not prove facts or compute decisions",
         ):
-            self.assertIn(phrase, text)
-        self.assertIn("MPG vs AQM", text.replace("-", " "))
+            self.assertIn(phrase, compact)
         for phrase in (
             "MPG",
             "主线-路径博弈",
             "主线承载方案",
             "SELA 看整体趋势",
+            "direction + carrier + visibility",
         ):
             self.assertIn(phrase, agents)
 

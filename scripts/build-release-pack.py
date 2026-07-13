@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.4.3"
+VERSION = "1.4.5"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -38,6 +38,15 @@ RELEASE_SCRIPT_PATHS = (
     Path("primitives/validate_whole_elephant.py"),
     Path("primitives/whole_elephant_validator.py"),
     Path("primitives/manifest.json"),
+)
+USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
+    "frame-fitness-check.md",
+    "entry-triage.md",
+    "aspect-ownership.md",
+    "decision-context-calibration.md",
+    "whole-elephant-protocol.md",
+    "expression-pressure-and-gates.md",
+    "mpg-scalar-commitment-unpack.md",
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "遇事不要慌，先搞清楚情况再说。This is a light Mindthus activation router, not a mandatory workflow. "
@@ -153,6 +162,25 @@ def copy_release_scripts(root: Path, target: Path) -> None:
         copy_file_filtered(root / "scripts" / rel_path, target / "scripts" / rel_path)
 
 
+def copy_using_mindthus_conditional_primitives(
+    methodologies_dir: Path,
+    skill_dir: Path,
+    replacements: dict[str, str] | None = None,
+) -> None:
+    resource_replacements = {
+        "../../../skills/using-mindthus/resources/fidelity-contract.md": "../fidelity-contract.md",
+        **(replacements or {}),
+    }
+    source_dir = methodologies_dir / "primitives"
+    target_dir = skill_dir / "resources" / "primitives"
+    for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
+        copy_file_filtered(
+            source_dir / filename,
+            target_dir / filename,
+            resource_replacements,
+        )
+
+
 def write_claude_activation_hook(plugin_root: Path) -> None:
     write_json(
         plugin_root / "hooks" / "hooks.json",
@@ -226,6 +254,10 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
         },
     )
     copy_tree_filtered(skills_dir, plugin_root / "skills")
+    copy_using_mindthus_conditional_primitives(
+        methodologies_dir,
+        plugin_root / "skills" / "using-mindthus",
+    )
     copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
     copy_license_files(repo, plugin_root)
     copy_release_scripts(repo, plugin_root)
@@ -235,6 +267,10 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
 def build_claude_code_skills(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
     platform_root = root / "claude-code"
     copy_tree_filtered(skills_dir, platform_root / "skills")
+    copy_using_mindthus_conditional_primitives(
+        methodologies_dir,
+        platform_root / "skills" / "using-mindthus",
+    )
     copy_tree_filtered(methodologies_dir, platform_root / "docs" / "methodologies")
     copy_license_files(repo, platform_root)
     copy_release_scripts(repo, platform_root)
@@ -244,6 +280,11 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
     platform_root = root / "codex"
     replacements = skill_path_replacements("skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / "skills" / "mindthus", replacements)
+    copy_using_mindthus_conditional_primitives(
+        methodologies_dir,
+        platform_root / "skills" / "mindthus" / "using-mindthus",
+        replacements,
+    )
     copy_tree_filtered(
         methodologies_dir,
         platform_root / "docs" / "methodologies",
@@ -318,6 +359,10 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
     for skill_name in SKILL_NAMES:
         jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
         copy_tree_filtered(skills_dir / skill_name, plugin_root / "skills" / skill_name, jsonl_allowlist=jsonl_allowlist)
+    copy_using_mindthus_conditional_primitives(
+        methodologies_dir,
+        plugin_root / "skills" / "using-mindthus",
+    )
     copy_tree_filtered(skills_dir / "_runtime", plugin_root / "_runtime")
     copy_tree_filtered(
         methodologies_dir,
@@ -332,6 +377,11 @@ def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, 
     platform_root = root / "opencode"
     replacements = skill_path_replacements(".opencode/skills/mindthus")
     copy_tree_filtered(skills_dir, platform_root / ".opencode" / "skills" / "mindthus", replacements)
+    copy_using_mindthus_conditional_primitives(
+        methodologies_dir,
+        platform_root / ".opencode" / "skills" / "mindthus" / "using-mindthus",
+        replacements,
+    )
     copy_tree_filtered(
         methodologies_dir,
         platform_root / "docs" / "methodologies",

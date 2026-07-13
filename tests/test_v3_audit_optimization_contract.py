@@ -27,7 +27,7 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
         text = read("skills/using-mindthus/SKILL.md")
         for phrase in (
             "Entry Triage / 入口分诊",
-            "semantic families in shared-primitives",
+            "semantic-family index",
             "not keywords",
         ):
             self.assertIn(phrase, text)

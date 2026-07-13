@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # The tplan A/B simulator archives a pinned historical baseline commit.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
