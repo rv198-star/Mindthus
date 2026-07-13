@@ -8,6 +8,15 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
+USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
+    "frame-fitness-check.md",
+    "entry-triage.md",
+    "aspect-ownership.md",
+    "decision-context-calibration.md",
+    "whole-elephant-protocol.md",
+    "expression-pressure-and-gates.md",
+    "mpg-scalar-commitment-unpack.md",
+)
 
 
 def parse_frontmatter_mapping(text: str) -> dict[str, str]:
@@ -50,6 +59,31 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIsInstance(parsed, dict, f"{path} frontmatter must be a mapping")
         self.assertIn("name", parsed, f"{path} frontmatter missing name")
         self.assertIn("description", parsed, f"{path} frontmatter missing description")
+
+    def assert_packaged_using_mindthus_primitives(self, skill_dir: Path) -> None:
+        fidelity_contract = skill_dir / "resources" / "fidelity-contract.md"
+        self.assertTrue(
+            fidelity_contract.is_file(),
+            f"missing packaged fidelity contract: {fidelity_contract}",
+        )
+        for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
+            source = (
+                REPO / "docs" / "methodologies" / "primitives" / filename
+            ).read_text(encoding="utf-8")
+            expected = source.replace(
+                "../../../skills/using-mindthus/resources/fidelity-contract.md",
+                "../fidelity-contract.md",
+            )
+            packaged = skill_dir / "resources" / "primitives" / filename
+            self.assertTrue(packaged.is_file(), f"missing packaged primitive: {packaged}")
+            packaged_text = packaged.read_text(encoding="utf-8")
+            self.assertEqual(packaged_text, expected)
+            if "../fidelity-contract.md" in packaged_text:
+                linked_contract = packaged.parent / "../fidelity-contract.md"
+                self.assertTrue(
+                    linked_contract.resolve().is_file(),
+                    f"broken packaged fidelity link: {packaged} -> {linked_contract}",
+                )
 
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -377,12 +411,12 @@ class PackagingDocsTests(unittest.TestCase):
         )
 
     def test_using_mindthus_entrypoint_stays_thin_enough_for_attention(self):
-        budget_bytes = 11 * 1024
+        budget_bytes = 9 * 1024
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
         self.assertLessEqual(
             path.stat().st_size,
             budget_bytes,
-            "using-mindthus is the routing entrypoint; keep it under 11KiB and move long semantics to AOP primitives/scripts.",
+            "using-mindthus is the high-frequency routing entrypoint; keep it under 9KiB and move detailed semantics to conditional resources.",
         )
 
     def test_using_mindthus_entrypoint_stays_within_word_attention_budget(self):
@@ -390,9 +424,19 @@ class PackagingDocsTests(unittest.TestCase):
         word_count = len(path.read_text(encoding="utf-8").split())
         self.assertLessEqual(
             word_count,
-            1100,
-            "using-mindthus should stay under 1100 words; move detailed semantics to shared primitives, resources, or validators.",
+            900,
+            "using-mindthus should stay under 900 words; move detailed semantics to shared primitives, resources, or validators.",
         )
+
+    def test_using_mindthus_uses_progressive_disclosure_for_detail_contracts(self):
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("### Conditional Resources / Runtime Support", text)
+        self.assertIn("Do not preload every resource", text)
+        self.assertIn("Portable alias: `resources/primitives/`", text)
+        for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
+            self.assertIn(f"docs/methodologies/primitives/{filename}", text)
+        self.assertIn("resources/fidelity-contract.md", text)
 
     def test_using_mindthus_entrypoint_has_no_empty_markdown_headings(self):
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
@@ -713,6 +757,20 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assert_release_pack_excludes_runtime_artifacts(out)
+
+            for skill_dir in (
+                out / "claude-code" / "claude-plugin" / "skills" / "using-mindthus",
+                out / "claude-code" / "skills" / "using-mindthus",
+                out / "codex-plugin" / "mindthus" / "skills" / "using-mindthus",
+                out / "codex" / "skills" / "mindthus" / "using-mindthus",
+                out
+                / "opencode"
+                / ".opencode"
+                / "skills"
+                / "mindthus"
+                / "using-mindthus",
+            ):
+                self.assert_packaged_using_mindthus_primitives(skill_dir)
 
             marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
             plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"
