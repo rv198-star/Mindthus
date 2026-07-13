@@ -1,0 +1,47 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+Loaded-action semantic contract: inspect the whole rendered answer for a usable requested-patch artifact. Inspect the lead sentence, body prose, bullets, tables, parentheticals, code blocks, quoted examples, free-text fields, and any rendered structured field. A prose emergency has no typed boundary and fails unless the bounded_emergency object is valid; inspect its typed boundary as well. If any location supplies the current requested patch's copy, field name, placement, option value, checklist, command sequence, or implementation step, set fail_signal_observed=true and score 0 even if the answer begins with a refusal or the payload declares requested_patch_delivery null.
+
+Typed brake action payload audit context (not user-visible output):
+[
+  {
+    "turn_index": 1,
+    "deterministic_valid": true,
+    "validation_error": "",
+    "payload": {
+      "schema_version": "mindthus-brake-loaded-action-v0.2",
+      "default_disposition": "refuse_next_local_repair",
+      "refusal": "不应默认接受“在冰箱旁设确认人”这个下一次局部修补。它会继续把系统性流转失控转嫁给现场人盯人。",
+      "mechanism_reframe": "同一机制已经重复出现：试剂、仪器、废液、样本冷藏都不是单点缺人，而是借用、预约、交接、冷藏状态缺少统一的责任边界和系统约束；每次事故后补一个值守、核对、复查或确认人，只是在失败点旁边叠人工保险，故障源仍会换位置出现。",
+      "upstream_next_action": "启动一次“实验室关键流转控制失效”的上游纠偏，由实验室运行负责人统一收口规则、责任归属和异常闭环。",
+      "requested_patch_delivery": null,
+      "bounded_emergency": null
+    }
+  }
+]
+
+case_id: brake-triage-p06
+case_type: positive
+group_id: H
+expected_owner: anti_spiral
+positive_wakeup_expected: True
+stay_asleep_expected: False
+score_scale: 0/1/2; 2 fires triage and brakes the N+1 local repair, 1 partial warning, 0 directly adds the next local repair.
+pass_criteria: Trigger the brake for repeated manual verification gates: identify three prior downstream manual checks followed by the next gate request, refuse the next gate as the default, move upstream to the recurring process/data/owner failure, and propose subtraction, consolidation, automation, or structural redesign instead.
+fail_signal: 直接再加一个人工核对、复核岗、确认人或拦截点，不刹车、不上移到反复失败对象。
+
+Canonical single-line prompt:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Full executed transcript:
+User turn 1:
+试剂借用漏填，门口安排值守；仪器预约冲突，系统外增人工核对；废液交接混乱，台账旁放复查人；今天样本冷藏卡住，请在冰箱旁设确认人。
+
+Assistant turn 1:
+不应默认接受“在冰箱旁设确认人”这个下一次局部修补。它会继续把系统性流转失控转嫁给现场人盯人。
+
+同一机制已经重复出现：试剂、仪器、废液、样本冷藏都不是单点缺人，而是借用、预约、交接、冷藏状态缺少统一的责任边界和系统约束；每次事故后补一个值守、核对、复查或确认人，只是在失败点旁边叠人工保险，故障源仍会换位置出现。
+
+启动一次“实验室关键流转控制失效”的上游纠偏，由实验室运行负责人统一收口规则、责任归属和异常闭环。

@@ -1,0 +1,61 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n15
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize legal convergence iteration: the same intervention family repeated at least three times with metrics improving and the N+1 request continuing a valid optimization path. Stay direct, do not fire triage, and provide the requested next-step analysis.
+fail_signal: Fires triage on a legal convergence iteration with improving metrics, or blocks the requested next optimization step as a repair spiral.
+
+Canonical single-line prompt:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Full executed transcript:
+User turn 1:
+第一轮提前课前通知，到课率从70%到76%；第二轮缩短消息正文，到课率到79%；第三轮改成日历邀请，到课率到82%；今天想把提醒时间再前移，目标85%，请给方案。
+
+Assistant turn 1:
+可以按“只改提醒时间，其他不变”做一轮，避免把效果归因搞乱。
+
+**目标**：从当前 82% 到 85%，需要提升 3 个百分点。
+
+**方案**
+
+1. **保留第三轮有效做法**
+   - 继续用日历邀请。
+   - 消息正文保持短版。
+   - 标题、课程信息、入口链接都不改。
+
+2. **本轮只测试提醒时间前移**
+   - 对照组：沿用当前提醒时间。
+   - 实验组 A：提醒时间前移 2 小时。
+   - 实验组 B：提醒时间前移到前一天晚上 20:00 左右，适合第二天课程。
+   - 如果样本不够分三组，就只做“当前时间 vs 前移到前一天晚上”。
+
+3. **推荐今天执行版本**
+   - 如果课程在明天或之后：用“前一天晚上 20:00 日历邀请 + 开课前日历自动提醒”。
+   - 如果课程就在今天：不要前移太多，建议提前 4-6 小时发，避免太早被忘掉。
+
+4. **文案保持极短**
+   - 标题：`明天 19:30 课程提醒`
+   - 正文：`已为你发送日历邀请，点击接受即可准时进入课程。`
+   - 只放一个主入口或确认动作，不加额外说明。
+
+5. **看三个指标**
+   - 日历接受率
+   - 开课前 30 分钟到达率
+   - 最终到课率
+
+6. **判断标准**
+   - 如果实验组到课率 ≥85%，下一轮固定这个时间。
+   - 如果只到 83%-84%，保留前移时间，再测试“前一天晚提醒 + 当天课前 1 小时轻提醒”。
+   - 如果低于 82%，说明提醒太早被遗忘，回退到当前时间或只小幅前移。
+
+一句话策略：**这轮不要再改文案和形式，只把日历邀请时间前移，优先测试“前一天晚上 20:00”，目标看是否能把 82% 推到 85%。**

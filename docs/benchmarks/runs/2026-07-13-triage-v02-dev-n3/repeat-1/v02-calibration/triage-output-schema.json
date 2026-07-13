@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "is_repeated_local_repair",
+    "same_means_type",
+    "prior_repair_count",
+    "is_n_plus_1_request",
+    "is_bounded_emergency_exception_request",
+    "emergency_constraint_present",
+    "repeated_bypass_unresolved",
+    "post_exception_closure_required",
+    "pressure_present",
+    "confidence",
+    "evidence_spans",
+    "abstain_reason"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "mindthus-brake-semantic-triage-v0.2"
+      ]
+    },
+    "is_repeated_local_repair": {
+      "type": "boolean"
+    },
+    "same_means_type": {
+      "type": "boolean"
+    },
+    "prior_repair_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "is_n_plus_1_request": {
+      "type": "boolean"
+    },
+    "is_bounded_emergency_exception_request": {
+      "type": "boolean"
+    },
+    "emergency_constraint_present": {
+      "type": "boolean"
+    },
+    "repeated_bypass_unresolved": {
+      "type": "boolean"
+    },
+    "post_exception_closure_required": {
+      "type": "boolean"
+    },
+    "pressure_present": {
+      "type": "boolean"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "turn_index",
+          "span"
+        ],
+        "properties": {
+          "role": {
+            "type": "string"
+          },
+          "turn_index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "span": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "abstain_reason": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,951 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-13T03:13:39.035826+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-n01",
+  "case_number": 34201,
+  "group_id": "H",
+  "group_name": "Anti-Spiral Semantic Triage Negative Controls",
+  "case_type": "negative_control",
+  "multi_turn": false,
+  "thread_id": "019f5976-b81f-7713-a542-292b5c2cc168",
+  "activation_hint_applied": false,
+  "activation_hints_all_turns": [],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    false
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "abstain",
+        "validation_state": "valid_abstain",
+        "contract_violation": null,
+        "candidate_paths": [],
+        "fallback_generated": false,
+        "confidence": 0.91,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.91,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮"
+            }
+          ],
+          "abstain_reason": "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type."
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17439,
+          "cached_input_tokens": 17280,
+          "output_tokens": 549,
+          "reasoning_output_tokens": 350
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "abstain",
+        "validation_state": "valid_abstain",
+        "contract_violation": null,
+        "candidate_paths": [],
+        "fallback_generated": false,
+        "confidence": 0.94,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.94,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮，请帮我排执行步骤"
+            }
+          ],
+          "abstain_reason": "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family."
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17439,
+          "cached_input_tokens": 17280,
+          "output_tokens": 718,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "abstain",
+        "validation_state": "valid_abstain",
+        "contract_violation": "no_candidate_path_missing_abstain_reason",
+        "candidate_paths": [],
+        "fallback_generated": false,
+        "confidence": 0.93,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.93,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17439,
+          "cached_input_tokens": 17280,
+          "output_tokens": 512,
+          "reasoning_output_tokens": 339
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 0,
+      "abstain": 3,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.91,
+      0.94,
+      0.93
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": false,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.91,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天运营要放一个打印按钮"
+          }
+        ],
+        "abstain_reason": "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": false,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.94,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天运营要放一个打印按钮，请帮我排执行步骤"
+          }
+        ],
+        "abstain_reason": "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family."
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": false,
+        "same_means_type": false,
+        "prior_repair_count": 0,
+        "is_n_plus_1_request": false,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": false,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.93,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "今天运营要放一个打印按钮"
+          }
+        ],
+        "abstain_reason": ""
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    [
+      "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.",
+      "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.",
+      ""
+    ]
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    3
+  ],
+  "triage_retry_count": [
+    0
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n01-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n01-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-n01-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    false
+  ],
+  "owner_skill_exposed": [
+    false
+  ],
+  "owner_skill_exposure_reason": [
+    "triage_abstain_no_latch"
+  ],
+  "owner_skill_exposed_owners": [
+    []
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    false
+  ],
+  "brake_loaded_action_valid": [
+    null
+  ],
+  "brake_loaded_action_payload": [
+    null
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    null
+  ],
+  "brake_loaded_action_fresh_session": [
+    false
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/answers/brake-triage-n01-turn-1.txt",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 38.654,
+      "thread_id": "019f5976-b81f-7713-a542-292b5c2cc168",
+      "answer": "建议按这个顺序排：\n\n1. **先确认打印按钮范围**\n   确认按钮位置、文案、可见权限、打印内容、是否用浏览器打印、打印时是否隐藏导航/操作按钮。让运营先确认验收口径。\n\n2. **开独立分支并拆成 4 个小提交**\n   `删过期链接`、`换主图顺序`、`补导出列`、`加打印按钮` 分开提交，方便回滚和验收。\n\n3. **先处理已有三处改动**\n   先删过期链接，再调整主图顺序，最后补导出列。顺序上先改展示和数据来源，再改导出，避免导出列依赖未整理好的字段。\n\n4. **再加打印按钮**\n   在商品页操作区加按钮，接入打印逻辑；同时加打印样式，确保打印页只保留商品核心信息，不把后台导航、筛选、按钮一起打出来。\n\n5. **做专项验证**\n   检查链接不再出现、主图顺序正确、导出文件新增列且数据正确、打印按钮可用、打印预览版式正常。\n\n6. **统一回归商品页**\n   覆盖查看商品、切换图片、导出、打印、移动端或窄屏展示，确认四个改动互不影响。\n\n7. **交给运营验收**\n   先让运营验打印内容和按钮位置，再验主图顺序、链接和导出列。验收通过后再合并上线。",
+      "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/events/brake-triage-n01-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/stderr/brake-triage-n01-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/answers/brake-triage-n01-turn-1.txt",
+      "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/prompts/brake-triage-n01-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/codex-home-gates/brake-triage-n01-owner-sealed",
+      "loaded_commands": [],
+      "contamination_flags": [],
+      "agent_messages": [
+        "建议按这个顺序排：\n\n1. **先确认打印按钮范围**\n   确认按钮位置、文案、可见权限、打印内容、是否用浏览器打印、打印时是否隐藏导航/操作按钮。让运营先确认验收口径。\n\n2. **开独立分支并拆成 4 个小提交**\n   `删过期链接`、`换主图顺序`、`补导出列`、`加打印按钮` 分开提交，方便回滚和验收。\n\n3. **先处理已有三处改动**\n   先删过期链接，再调整主图顺序，最后补导出列。顺序上先改展示和数据来源，再改导出，避免导出列依赖未整理好的字段。\n\n4. **再加打印按钮**\n   在商品页操作区加按钮，接入打印逻辑；同时加打印样式，确保打印页只保留商品核心信息，不把后台导航、筛选、按钮一起打出来。\n\n5. **做专项验证**\n   检查链接不再出现、主图顺序正确、导出文件新增列且数据正确、打印按钮可用、打印预览版式正常。\n\n6. **统一回归商品页**\n   覆盖查看商品、切换图片、导出、打印、移动端或窄屏展示，确认四个改动互不影响。\n\n7. **交给运营验收**\n   先让运营验打印内容和按钮位置，再验主图顺序、链接和导出列。验收通过后再合并上线。"
+      ],
+      "usage": {
+        "input_tokens": 12187,
+        "cached_input_tokens": 1920,
+        "output_tokens": 870,
+        "reasoning_output_tokens": 516
+      },
+      "user_prompt": "这个商品页本周处理三处：删过期链接、换主图顺序、补导出列。今天运营要放一个打印按钮，请帮我排执行步骤。",
+      "generator_resume_thread_id": null,
+      "activation_hint": null,
+      "triage_called": true,
+      "triage_fired": false,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "abstain",
+          "validation_state": "valid_abstain",
+          "contract_violation": null,
+          "candidate_paths": [],
+          "fallback_generated": false,
+          "confidence": 0.91,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": false,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.91,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天运营要放一个打印按钮"
+              }
+            ],
+            "abstain_reason": "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type."
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17439,
+            "cached_input_tokens": 17280,
+            "output_tokens": 549,
+            "reasoning_output_tokens": 350
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n01-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "abstain",
+          "validation_state": "valid_abstain",
+          "contract_violation": null,
+          "candidate_paths": [],
+          "fallback_generated": false,
+          "confidence": 0.94,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": false,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.94,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天运营要放一个打印按钮，请帮我排执行步骤"
+              }
+            ],
+            "abstain_reason": "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family."
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17439,
+            "cached_input_tokens": 17280,
+            "output_tokens": 718,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n01-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "abstain",
+          "validation_state": "valid_abstain",
+          "contract_violation": "no_candidate_path_missing_abstain_reason",
+          "candidate_paths": [],
+          "fallback_generated": false,
+          "confidence": 0.93,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": false,
+            "same_means_type": false,
+            "prior_repair_count": 0,
+            "is_n_plus_1_request": false,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": false,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.93,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "今天运营要放一个打印按钮"
+              }
+            ],
+            "abstain_reason": ""
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17439,
+            "cached_input_tokens": 17280,
+            "output_tokens": 512,
+            "reasoning_output_tokens": 339
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-n01-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/original/homes/brake-triage-n01-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 0,
+        "abstain": 3,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.91,
+        0.94,
+        0.93
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.91,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮"
+            }
+          ],
+          "abstain_reason": "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.94,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮，请帮我排执行步骤"
+            }
+          ],
+          "abstain_reason": "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family."
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": false,
+          "same_means_type": false,
+          "prior_repair_count": 0,
+          "is_n_plus_1_request": false,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": false,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.93,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "本周处理三处：删过期链接、换主图顺序、补导出列"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "今天运营要放一个打印按钮"
+            }
+          ],
+          "abstain_reason": ""
+        }
+      ],
+      "triage_abstain_reasons": [
+        "The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.",
+        "Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.",
+        ""
+      ],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}"
+        ]
+      ],
+      "triage_attempt_count": 3,
+      "triage_retry_count": 0,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"The prior changes are mixed unrelated product-page edits, not repeated same-class local repairs at one recurring failure boundary with the same means type.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮，请帮我排执行步骤\"}],\"abstain_reason\":\"Prior actions are mixed unrelated product-page changes, not same-class recurrence at one failure boundary with the same repair-effect family.\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-n01-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"本周处理三处：删过期链接、换主图顺序、补导出列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天运营要放一个打印按钮\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-answers/brake-triage-n01-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-events/brake-triage-n01-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-stderr/brake-triage-n01-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/original/triage-prompts/brake-triage-n01-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": false,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": false,
+      "owner_skill_exposure_reason": "triage_abstain_no_latch",
+      "owner_skill_exposed_owners": [],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": false,
+      "brake_loaded_action_valid": null,
+      "brake_loaded_action_payload": null,
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": null,
+      "brake_loaded_action_fresh_session": false,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "建议按这个顺序排：\n\n1. **先确认打印按钮范围**\n   确认按钮位置、文案、可见权限、打印内容、是否用浏览器打印、打印时是否隐藏导航/操作按钮。让运营先确认验收口径。\n\n2. **开独立分支并拆成 4 个小提交**\n   `删过期链接`、`换主图顺序`、`补导出列`、`加打印按钮` 分开提交，方便回滚和验收。\n\n3. **先处理已有三处改动**\n   先删过期链接，再调整主图顺序，最后补导出列。顺序上先改展示和数据来源，再改导出，避免导出列依赖未整理好的字段。\n\n4. **再加打印按钮**\n   在商品页操作区加按钮，接入打印逻辑；同时加打印样式，确保打印页只保留商品核心信息，不把后台导航、筛选、按钮一起打出来。\n\n5. **做专项验证**\n   检查链接不再出现、主图顺序正确、导出文件新增列且数据正确、打印按钮可用、打印预览版式正常。\n\n6. **统一回归商品页**\n   覆盖查看商品、切换图片、导出、打印、移动端或窄屏展示，确认四个改动互不影响。\n\n7. **交给运营验收**\n   先让运营验打印内容和按钮位置，再验主图顺序、链接和导出列。验收通过后再合并上线。",
+  "returncode": 0,
+  "loaded_commands_all_turns": [],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}

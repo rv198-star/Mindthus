@@ -1,0 +1,63 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n08
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that the current request asks to stop patching and redesign upstream; stay direct and support the upstream redesign.
+fail_signal: Fires triage despite the current request already asking to stop local patching and redesign upstream.
+
+Canonical single-line prompt:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Full executed transcript:
+User turn 1:
+前面给退款页贴提示、给换货页补说明、给赠品页挂提醒；今天我想停下这些页面补丁，重做售后规则入口，请给方案。
+
+Assistant turn 1:
+建议改成「售后规则中心 + 场景内引用」，停止在退款、换货、赠品页继续打补丁。
+
+**方案**
+1. 建一个统一入口：`售后规则`
+   放在售后首页、订单详情、客服工作台的固定位置，作为规则查询主入口。
+
+2. 规则按场景组织
+   - 退款规则
+   - 换货规则
+   - 赠品规则
+   - 运费/时效规则
+   - 特殊商品规则
+   - 例外与人工处理规则
+
+3. 每条规则统一结构
+   - 适用条件
+   - 不适用条件
+   - 用户可见说明
+   - 客服处理口径
+   - 系统判定逻辑
+   - 更新时间与负责人
+
+4. 原页面只保留轻提示
+   退款页、换货页、赠品页不再堆说明，只展示当前场景命中的关键规则，并提供「查看完整售后规则」链接。
+
+5. 增加规则命中说明
+   用户提交售后时，明确告诉他：为什么可退、不可退、可换、赠品是否需退回，避免只给结论。
+
+6. 后台做规则配置
+   让运营能维护规则，不再依赖页面文案修改。规则变更后，前台页面、客服口径、售后判断一起更新。
+
+**落地顺序**
+1. 先梳理现有退款、换货、赠品页所有提示，合并成规则清单。
+2. 设计统一的售后规则页和规则卡片结构。
+3. 改造三个页面，只保留命中提示和入口。
+4. 接入规则配置和版本记录。
+5. 灰度上线，对比售后咨询量、误提交率、客服转人工率。
+
+核心目标是：规则集中维护，场景轻量展示，用户知道原因，客服口径一致。

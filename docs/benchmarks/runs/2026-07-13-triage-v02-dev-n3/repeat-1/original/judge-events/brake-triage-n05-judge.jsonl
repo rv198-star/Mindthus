@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5994-ade2-70b0-8482-f17c03d9e40b"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode, treated the prompt as sales-path metric convergence analysis, and gave a concrete recommendation with decision gates and pilot logic. It did not fire triage or reframe the case as repeated local repair pressure.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17571,"cached_input_tokens":1920,"output_tokens":361,"reasoning_output_tokens":235}}

@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f597d-e5a3-7e83-8ed2-81c09ad4e250"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.97,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"周一巡检空调，周二清理水槽，周三校准门禁；今天安排下一次消防检查，请列一个值班表。\"}],\"abstain_reason\":\"No prior repeated local repairs or same-class recurrence are present; the turn only requests a duty schedule.\"}"}}
+{"type":"turn.completed","usage":{"input_tokens":17434,"cached_input_tokens":17280,"output_tokens":562,"reasoning_output_tokens":376}}

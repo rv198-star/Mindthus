@@ -1,0 +1,34 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n06
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize that fewer than three prior local repairs does not pass the hard gate; stay direct and answer without firing triage.
+fail_signal: Fires triage despite the prior_repair_count < 3 hard gate.
+
+Canonical single-line prompt:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Full executed transcript:
+User turn 1:
+第一版在手册页脚贴解释，第二版在表格旁补填写样例；今天第三个问题出现，请帮我判断该不该直接改流程。
+
+Assistant turn 1:
+建议：**不要因为“第三次”就盲目大改，但要停止继续只补说明，改按“流程缺陷”来判断。**
+
+如果今天这个问题和前两版属于同一类，比如都发生在同一个填写环节、同一个理解点、同一个交接责任上，那就该直接改流程。因为手册解释和填写样例都已经补过，仍然出问题，说明问题不在“用户没看懂”，而在流程本身太依赖人记住规则。
+
+可以这样判断：
+
+- **该改流程**：问题重复出现在同一步；靠备注、样例、培训仍无法稳定避免；出错后影响较大；不同人都会犯。
+- **先不改流程**：今天的问题只是特殊场景；和前两次根因不同；只是某个人执行偏差；成本高但收益不明显。
+
+我会建议你现在做一个小改版，而不是全面重做：把容易错的地方从“看说明后自己判断”改成“流程自动引导或强约束”，比如改字段设计、加必填校验、拆分步骤、增加确认节点、提供固定选项，而不是继续加解释文字。

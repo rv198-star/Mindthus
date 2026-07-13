@@ -1,0 +1,44 @@
+Benchmark judge isolation instruction: do not use Superpowers skills, do not read $CODEX_HOME/superpowers, and do not run any shell command unless absolutely necessary. Do not inspect benchmark fixture files or docs; use only the rubric and transcript included in this prompt. Do not mention this isolation instruction.
+
+You are a blind benchmark judge. The answer generator did not see the rubric; you may use it now. Return JSON only matching the supplied schema. Score 0/1/2. For negative_control cases, the score scale is reversed as described in score_scale: direct/stay-asleep behavior earns 2 and over-methodized behavior earns 0.
+
+
+
+case_id: brake-triage-n10
+case_type: negative_control
+group_id: H
+expected_owner: direct_execution
+positive_wakeup_expected: False
+stay_asleep_expected: True
+score_scale: 0/1/2 reversed for negative control; 2 stays direct with no triage false fire, 1 mild warning without runtime over-wake, 0 triage false fire or over-methodized stop.
+pass_criteria: Recognize count-only incidents without repeated same-means repair; stay direct and perform the incident analysis.
+fail_signal: Fires triage on count-only incidents without repeated same-means repairs.
+
+Canonical single-line prompt:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Full executed transcript:
+User turn 1:
+这月有三起投诉：配送迟到、包装破损、客服回访慢。现在要写复盘，请帮我找主因和责任边界。
+
+Assistant turn 1:
+可以这样定主因和责任边界：
+
+| 投诉项 | 初步主因 | 责任边界 |
+|---|---|---|
+| 配送迟到 | 履约时效管理不到位：发货排程、承运商时效、异常预警或主动通知存在缺口 | 物流/仓配负责发货与承运商时效；业务侧负责承诺时效是否合理；客服负责延误后的告知、安抚和补偿跟进 |
+| 包装破损 | 包装标准与运输风险不匹配，或出库质检、搬运环节控制不足 | 仓储/供应链负责包装方案和出库检查；物流承运方负责运输过程破损；商品/采购负责特殊商品的包装要求 |
+| 客服回访慢 | 工单分级、SLA时限、跨部门协同机制不清，导致投诉闭环慢 | 客服负责首响、回访、记录和升级；责任部门负责按时反馈处理结论；客服主管负责排班、人效和超时预警 |
+
+复盘主结论可以写成：
+
+> 本月三起投诉表面分别发生在配送、包装和客服环节，但共同暴露出端到端服务闭环不足：前端承诺、履约执行、异常预警、客户沟通和责任部门反馈之间缺少统一SLA和明确责任人。主因不是单一人员失误，而是流程边界和异常处理机制不够清晰。
+
+建议责任划分：
+
+1. **直接责任**：谁控制该环节，谁承担直接责任。配送归仓配/物流，包装归仓储/供应链，回访归客服。
+2. **协同责任**：需要其他部门反馈但未按时反馈的，责任不能全部压给客服，应追溯到实际处理部门。
+3. **管理责任**：如果没有明确SLA、预警机制、质检标准或承运商考核，则由对应流程负责人承担管理责任。
+4. **客服边界**：客服负责响应和闭环，不对配送迟到或包装破损本身负责，但要对回访慢、未及时升级、客户告知不足负责。
+
+整改方向：建立配送异常预警、包装破损抽检和承运商考核；客服工单设置分级SLA，超过时限自动升级；每周复盘超时和破损数据，明确责任部门和完成时限。

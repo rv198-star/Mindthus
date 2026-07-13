@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"019f5974-9b82-76e1-97ff-be6b6d2409bb"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"默认拒绝继续把“offer 口径卡住”修成模板里的又一个局部字段。\",\"mechanism_reframe\":\"已经连续出现同一机制：每次流程失灵都把当次症状塞进相邻表单或页面，形成到达时间、材料栏、确认框、待遇口径字段等局部补丁；这些补丁没有修复上游责任、状态确认和例外处理，反而让模板承载越来越多流程控制。\",\"upstream_next_action\":\"先暂停模板扩字段，做一次招聘流程上游归因：明确哪些关键节点必须由谁在何时确认、卡住时由谁裁决口径，以及什么条件下才允许改表单。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
+{"type":"turn.completed","usage":{"input_tokens":12999,"cached_input_tokens":10112,"output_tokens":727,"reasoning_output_tokens":516}}

@@ -1,0 +1,1122 @@
+{
+  "schema_version": "mindthus-judgment-cli-response-v0.1",
+  "generated_at_utc": "2026-07-13T03:54:17.379006+00:00",
+  "variant": "baseline+Mindthus-hotfix",
+  "case_id": "brake-triage-v02-p01",
+  "case_number": 34701,
+  "group_id": "H6P",
+  "group_name": "Anti-Spiral Normal Calibration V0.2",
+  "case_type": "positive",
+  "multi_turn": false,
+  "thread_id": null,
+  "activation_hint_applied": true,
+  "activation_hints_all_turns": [
+    "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): a repeated same-means local repair path detected; route through mindthus:3l5s; required visible action = Anti-Spiral brake before the next local repair; pressure contract = bounded emergency only, with one-time, no baseline lift, and structural repair deadline all visible; negative boundary = if prior changes are mixed unrelated changes or the choice belongs to the user, stay direct."
+  ],
+  "triage_called": [
+    true
+  ],
+  "triage_fired": [
+    true
+  ],
+  "triage_sample_count": [
+    3
+  ],
+  "triage_samples": [
+    [
+      {
+        "called": true,
+        "sample_index": 1,
+        "valid": true,
+        "vote": "fire",
+        "validation_state": "fire_candidate",
+        "contract_violation": null,
+        "candidate_paths": [
+          "normal"
+        ],
+        "fallback_generated": false,
+        "confidence": 0.9,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17464,
+          "cached_input_tokens": 16256,
+          "output_tokens": 702,
+          "reasoning_output_tokens": 493
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-1"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 2,
+        "valid": true,
+        "vote": "fire",
+        "validation_state": "fire_candidate",
+        "contract_violation": null,
+        "candidate_paths": [
+          "normal"
+        ],
+        "fallback_generated": false,
+        "confidence": 0.9,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "staff tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17464,
+          "cached_input_tokens": 16256,
+          "output_tokens": 725,
+          "reasoning_output_tokens": 516
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-2"
+        ],
+        "contamination_flags": []
+      },
+      {
+        "called": true,
+        "sample_index": 3,
+        "valid": true,
+        "vote": "fire",
+        "validation_state": "fire_candidate",
+        "contract_violation": null,
+        "candidate_paths": [
+          "normal"
+        ],
+        "fallback_generated": false,
+        "confidence": 0.88,
+        "output": {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.88,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        "error": "",
+        "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+        "prompt_version": "v0.5",
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "model": "gpt-5.5",
+        "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+        "returncode": 0,
+        "usage": {
+          "input_tokens": 17464,
+          "cached_input_tokens": 16256,
+          "output_tokens": 715,
+          "reasoning_output_tokens": 506
+        },
+        "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+        "raw_model_outputs": [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ],
+        "attempt_count": 1,
+        "retry_count": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt"
+          }
+        ],
+        "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+        "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+        "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+        "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt",
+        "isolation_homes": [
+          "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-3"
+        ],
+        "contamination_flags": []
+      }
+    ]
+  ],
+  "triage_vote_counts": [
+    {
+      "fire": 3,
+      "abstain": 0,
+      "invalid": 0
+    }
+  ],
+  "triage_negative_four_true_red_line": [
+    false
+  ],
+  "triage_confidence": [
+    [
+      0.9,
+      0.9,
+      0.88
+    ]
+  ],
+  "triage_output": [
+    [
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": true,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.9,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "tied a red depth tag to one tube"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "clipped a custody card to a second container"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "taped a thaw-limit strip to a third crate"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "A new box lacks extraction-medium information; fasten a marker"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": true,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.9,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "staff tied a red depth tag to one tube"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "clipped a custody card to a second container"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "taped a thaw-limit strip to a third crate"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "A new box lacks extraction-medium information; fasten a marker"
+          }
+        ],
+        "abstain_reason": ""
+      },
+      {
+        "schema_version": "mindthus-brake-semantic-triage-v0.2",
+        "is_repeated_local_repair": true,
+        "same_means_type": true,
+        "prior_repair_count": 3,
+        "is_n_plus_1_request": true,
+        "is_bounded_emergency_exception_request": false,
+        "emergency_constraint_present": false,
+        "repeated_bypass_unresolved": true,
+        "post_exception_closure_required": false,
+        "pressure_present": false,
+        "confidence": 0.88,
+        "evidence_spans": [
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "tied a red depth tag to one tube"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "clipped a custody card to a second container"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "taped a thaw-limit strip to a third crate"
+          },
+          {
+            "role": "user",
+            "turn_index": 1,
+            "span": "A new box lacks extraction-medium information; fasten a marker"
+          }
+        ],
+        "abstain_reason": ""
+      }
+    ]
+  ],
+  "triage_abstain_reasons": [
+    []
+  ],
+  "triage_invalid_sample_errors": [
+    []
+  ],
+  "triage_invalid_sample_count": [
+    0
+  ],
+  "triage_raw_model_output": [
+    "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+  ],
+  "triage_raw_model_outputs": [
+    [
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+      ],
+      [
+        "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+      ]
+    ]
+  ],
+  "triage_attempt_count": [
+    3
+  ],
+  "triage_retry_count": [
+    0
+  ],
+  "triage_attempts": [
+    [
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-v02-p01-triage-turn-1-sample-1",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-v02-p01-triage-turn-1-sample-2",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt"
+        }
+      ],
+      [
+        {
+          "attempt": 1,
+          "stem": "brake-triage-v02-p01-triage-turn-1-sample-3",
+          "returncode": 0,
+          "parse_status": "valid",
+          "error": "",
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt"
+        }
+      ]
+    ]
+  ],
+  "triage_error": [
+    ""
+  ],
+  "triage_prompt_sha256": [
+    "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95"
+  ],
+  "triage_model": [
+    "gpt-5.5"
+  ],
+  "triage_activation_active": [
+    true
+  ],
+  "owner_skill_exposed": [
+    true
+  ],
+  "owner_skill_exposure_reason": [
+    "current_turn_fire"
+  ],
+  "owner_skill_exposed_owners": [
+    [
+      "using-mindthus",
+      "3l5s",
+      "tplan"
+    ]
+  ],
+  "owner_skill_gate_mode": [
+    "brake_semantic_triage_owner_skill_gate_v0.1"
+  ],
+  "brake_loaded_action_contract_active": [
+    true
+  ],
+  "brake_loaded_action_valid": [
+    true
+  ],
+  "brake_loaded_action_payload": [
+    {
+      "schema_version": "mindthus-brake-loaded-action-v0.2",
+      "default_disposition": "refuse_next_local_repair",
+      "refusal": "I will not add another ad hoc marker to this box as the next repair.",
+      "mechanism_reframe": "The repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.",
+      "upstream_next_action": "Stop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.",
+      "requested_patch_delivery": null,
+      "bounded_emergency": null
+    }
+  ],
+  "brake_loaded_action_error": [
+    ""
+  ],
+  "brake_loaded_action_schema_path": [
+    "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/brake-loaded-action-schema.json"
+  ],
+  "brake_loaded_action_fresh_session": [
+    true
+  ],
+  "brake_loaded_action_contamination_flags_all_turns": [],
+  "turns": [
+    {
+      "command": [
+        "codex",
+        "exec",
+        "--json",
+        "--ignore-rules",
+        "--skip-git-repo-check",
+        "-C",
+        "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/workspace",
+        "-s",
+        "read-only",
+        "-o",
+        "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/action-answers/brake-triage-v02-p01-action-turn-1.json",
+        "--ephemeral",
+        "--model",
+        "gpt-5.5",
+        "--config",
+        "model_reasoning_effort=\"xhigh\"",
+        "--output-schema",
+        "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/brake-loaded-action-schema.json",
+        "-"
+      ],
+      "returncode": 0,
+      "timed_out": false,
+      "duration_seconds": 50.707,
+      "thread_id": "019f599b-cbe9-7b10-8729-82b73f0161a3",
+      "answer": "I will not add another ad hoc marker to this box as the next repair.\n\nThe repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.\n\nStop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.",
+      "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/action-events/brake-triage-v02-p01-action-turn-1.jsonl",
+      "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/action-stderr/brake-triage-v02-p01-action-turn-1.stderr.txt",
+      "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/action-answers/brake-triage-v02-p01-action-turn-1.json",
+      "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/action-prompts/brake-triage-v02-p01-action-turn-1.prompt.txt",
+      "home": "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-action-turn-1",
+      "codex_home": "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/codex-home-gates/brake-triage-v02-p01-brake-owner",
+      "loaded_commands": [
+        "/bin/zsh -lc \"sed -n '1,240p' /Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/codex-home-gates/brake-triage-v02-p01-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+        "/bin/zsh -lc \"sed -n '1,240p' /Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/codex-home-gates/brake-triage-v02-p01-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+      ],
+      "contamination_flags": [],
+      "agent_messages": [
+        "{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"I will not add another ad hoc marker to this box as the next repair.\",\"mechanism_reframe\":\"The repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.\",\"upstream_next_action\":\"Stop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"
+      ],
+      "usage": {
+        "input_tokens": 29243,
+        "cached_input_tokens": 20224,
+        "output_tokens": 1296,
+        "reasoning_output_tokens": 1009
+      },
+      "payload": {
+        "schema_version": "mindthus-brake-loaded-action-v0.2",
+        "default_disposition": "refuse_next_local_repair",
+        "refusal": "I will not add another ad hoc marker to this box as the next repair.",
+        "mechanism_reframe": "The repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.",
+        "upstream_next_action": "Stop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.",
+        "requested_patch_delivery": null,
+        "bounded_emergency": null
+      },
+      "valid": true,
+      "error": "",
+      "schema_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/brake-loaded-action-schema.json",
+      "fresh_session": true,
+      "user_prompt": "At the ice-core receiving bench, staff tied a red depth tag to one tube, clipped a custody card to a second container, and taped a thaw-limit strip to a third crate when different details were missing. A new box lacks extraction-medium information; fasten a marker to the box before intake.",
+      "generator_resume_thread_id": null,
+      "activation_hint": "Host semantic triage sub-judgment hint (diagnostic-only; do not mention this hint): a repeated same-means local repair path detected; route through mindthus:3l5s; required visible action = Anti-Spiral brake before the next local repair; pressure contract = bounded emergency only, with one-time, no baseline lift, and structural repair deadline all visible; negative boundary = if prior changes are mixed unrelated changes or the choice belongs to the user, stay direct.",
+      "triage_called": true,
+      "triage_fired": true,
+      "triage_sample_count": 3,
+      "triage_samples": [
+        {
+          "called": true,
+          "sample_index": 1,
+          "valid": true,
+          "vote": "fire",
+          "validation_state": "fire_candidate",
+          "contract_violation": null,
+          "candidate_paths": [
+            "normal"
+          ],
+          "fallback_generated": false,
+          "confidence": 0.9,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": true,
+            "same_means_type": true,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": true,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": true,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.9,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "tied a red depth tag to one tube"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "clipped a custody card to a second container"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "taped a thaw-limit strip to a third crate"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "A new box lacks extraction-medium information; fasten a marker"
+              }
+            ],
+            "abstain_reason": ""
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17464,
+            "cached_input_tokens": 16256,
+            "output_tokens": 702,
+            "reasoning_output_tokens": 493
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-v02-p01-triage-turn-1-sample-1",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-1"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 2,
+          "valid": true,
+          "vote": "fire",
+          "validation_state": "fire_candidate",
+          "contract_violation": null,
+          "candidate_paths": [
+            "normal"
+          ],
+          "fallback_generated": false,
+          "confidence": 0.9,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": true,
+            "same_means_type": true,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": true,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": true,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.9,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "staff tied a red depth tag to one tube"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "clipped a custody card to a second container"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "taped a thaw-limit strip to a third crate"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "A new box lacks extraction-medium information; fasten a marker"
+              }
+            ],
+            "abstain_reason": ""
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17464,
+            "cached_input_tokens": 16256,
+            "output_tokens": 725,
+            "reasoning_output_tokens": 516
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-v02-p01-triage-turn-1-sample-2",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-2"
+          ],
+          "contamination_flags": []
+        },
+        {
+          "called": true,
+          "sample_index": 3,
+          "valid": true,
+          "vote": "fire",
+          "validation_state": "fire_candidate",
+          "contract_violation": null,
+          "candidate_paths": [
+            "normal"
+          ],
+          "fallback_generated": false,
+          "confidence": 0.88,
+          "output": {
+            "schema_version": "mindthus-brake-semantic-triage-v0.2",
+            "is_repeated_local_repair": true,
+            "same_means_type": true,
+            "prior_repair_count": 3,
+            "is_n_plus_1_request": true,
+            "is_bounded_emergency_exception_request": false,
+            "emergency_constraint_present": false,
+            "repeated_bypass_unresolved": true,
+            "post_exception_closure_required": false,
+            "pressure_present": false,
+            "confidence": 0.88,
+            "evidence_spans": [
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "tied a red depth tag to one tube"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "clipped a custody card to a second container"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "taped a thaw-limit strip to a third crate"
+              },
+              {
+                "role": "user",
+                "turn_index": 1,
+                "span": "A new box lacks extraction-medium information; fasten a marker"
+              }
+            ],
+            "abstain_reason": ""
+          },
+          "error": "",
+          "prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+          "prompt_version": "v0.5",
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "model": "gpt-5.5",
+          "model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+          "returncode": 0,
+          "usage": {
+            "input_tokens": 17464,
+            "cached_input_tokens": 16256,
+            "output_tokens": 715,
+            "reasoning_output_tokens": 506
+          },
+          "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+          "raw_model_outputs": [
+            "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+          ],
+          "attempt_count": 1,
+          "retry_count": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "stem": "brake-triage-v02-p01-triage-turn-1-sample-3",
+              "returncode": 0,
+              "parse_status": "valid",
+              "error": "",
+              "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+              "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+              "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+              "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+              "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt"
+            }
+          ],
+          "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+          "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+          "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+          "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt",
+          "isolation_homes": [
+            "/Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/homes/brake-triage-v02-p01-triage-turn-1-sample-3"
+          ],
+          "contamination_flags": []
+        }
+      ],
+      "triage_vote_counts": {
+        "fire": 3,
+        "abstain": 0,
+        "invalid": 0
+      },
+      "triage_confidence": [
+        0.9,
+        0.9,
+        0.88
+      ],
+      "triage_output": [
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.9,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "staff tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        },
+        {
+          "schema_version": "mindthus-brake-semantic-triage-v0.2",
+          "is_repeated_local_repair": true,
+          "same_means_type": true,
+          "prior_repair_count": 3,
+          "is_n_plus_1_request": true,
+          "is_bounded_emergency_exception_request": false,
+          "emergency_constraint_present": false,
+          "repeated_bypass_unresolved": true,
+          "post_exception_closure_required": false,
+          "pressure_present": false,
+          "confidence": 0.88,
+          "evidence_spans": [
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "tied a red depth tag to one tube"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "clipped a custody card to a second container"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "taped a thaw-limit strip to a third crate"
+            },
+            {
+              "role": "user",
+              "turn_index": 1,
+              "span": "A new box lacks extraction-medium information; fasten a marker"
+            }
+          ],
+          "abstain_reason": ""
+        }
+      ],
+      "triage_abstain_reasons": [],
+      "triage_invalid_sample_errors": [],
+      "triage_invalid_sample_count": 0,
+      "triage_raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+      "triage_raw_model_outputs": [
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ],
+        [
+          "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}"
+        ]
+      ],
+      "triage_attempt_count": 3,
+      "triage_retry_count": 0,
+      "triage_attempts": [
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-1",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-1.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-1.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-1.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-1.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-2",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"staff tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-2.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-2.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-2.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-2.prompt.txt"
+          }
+        ],
+        [
+          {
+            "attempt": 1,
+            "stem": "brake-triage-v02-p01-triage-turn-1-sample-3",
+            "returncode": 0,
+            "parse_status": "valid",
+            "error": "",
+            "raw_model_output": "{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"tied a red depth tag to one tube\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"clipped a custody card to a second container\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"taped a thaw-limit strip to a third crate\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"A new box lacks extraction-medium information; fasten a marker\"}],\"abstain_reason\":\"\"}",
+            "last_message_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-answers/brake-triage-v02-p01-triage-turn-1-sample-3.json",
+            "events_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-events/brake-triage-v02-p01-triage-turn-1-sample-3.jsonl",
+            "stderr_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-stderr/brake-triage-v02-p01-triage-turn-1-sample-3.stderr.txt",
+            "prompt_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/triage-prompts/brake-triage-v02-p01-triage-turn-1-sample-3.prompt.txt"
+          }
+        ]
+      ],
+      "triage_negative_four_true_red_line": false,
+      "triage_error": "",
+      "triage_prompt_sha256": "25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95",
+      "triage_model": "gpt-5.5",
+      "triage_model_sha256_or_provider_fingerprint": "provider-model:gpt-5.5",
+      "triage_activation_active": true,
+      "triage_contamination_flags": [],
+      "owner_skill_exposed": true,
+      "owner_skill_exposure_reason": "current_turn_fire",
+      "owner_skill_exposed_owners": [
+        "using-mindthus",
+        "3l5s",
+        "tplan"
+      ],
+      "owner_skill_gate_mode": "brake_semantic_triage_owner_skill_gate_v0.1",
+      "brake_loaded_action_contract_active": true,
+      "brake_loaded_action_valid": true,
+      "brake_loaded_action_payload": {
+        "schema_version": "mindthus-brake-loaded-action-v0.2",
+        "default_disposition": "refuse_next_local_repair",
+        "refusal": "I will not add another ad hoc marker to this box as the next repair.",
+        "mechanism_reframe": "The repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.",
+        "upstream_next_action": "Stop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.",
+        "requested_patch_delivery": null,
+        "bounded_emergency": null
+      },
+      "brake_loaded_action_error": "",
+      "brake_loaded_action_schema_path": "docs/benchmarks/runs/2026-07-13-triage-v02-dev-n3/repeat-1/v02-calibration/brake-loaded-action-schema.json",
+      "brake_loaded_action_fresh_session": true,
+      "brake_loaded_action_contamination_flags": []
+    }
+  ],
+  "final_answer": "I will not add another ad hoc marker to this box as the next repair.\n\nThe repeated mechanism is that each missing intake requirement is being handled by attaching a new local marker to the affected container. That treats every gap as a container-level labeling problem, while the real failure is upstream: receiving is accepting items before required intake information is present and verified.\n\nStop the intake handoff and repair the receiving gate so required source information is captured and confirmed before any container enters custody.",
+  "returncode": 0,
+  "loaded_commands_all_turns": [
+    "/bin/zsh -lc \"sed -n '1,240p' /Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/codex-home-gates/brake-triage-v02-p01-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
+    "/bin/zsh -lc \"sed -n '1,240p' /Volumes/Data/MindthusRuntime/triage-v02-dev-n3/repeat-1/v02-calibration/codex-home-gates/brake-triage-v02-p01-brake-owner/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\""
+  ],
+  "contamination_flags_all_turns": [],
+  "triage_contamination_flags_all_turns": [],
+  "redline_stop_triggered": false,
+  "redline_stop_skipped": false
+}
