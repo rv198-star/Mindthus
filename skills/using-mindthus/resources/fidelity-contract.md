@@ -66,6 +66,9 @@ required judgment moves:
   audit by default. whole_elephant_validation internal evidence by default.
   visible output starts with formal answer; expand only when user asks,
   validation fails, or handoff/debug needs it.
+- Runtime output rule: visible answer must not expose script stdout fields
+  `script_verdict`, `agentic_judgment_required`, or `script_must_not_decide`; use them
+  as internal evidence only. Do not output short audit by default.
 - visible audit is only for explicit/debug paths; never dump raw JSON/YAML unless
   the user asks for machine-readable output
 - `formal_answer` should name the canonical object first; do not let an umbrella

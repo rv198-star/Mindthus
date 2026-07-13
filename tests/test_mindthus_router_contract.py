@@ -387,7 +387,8 @@ class MindthusRouterContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
 
         using_compact = " ".join(using.split())
-        combined_compact = " ".join("\n".join((primitives, contract)).split())
+        primitives_compact = " ".join(primitives.split())
+        contract_compact = " ".join(contract.split())
         for phrase in (
             "Partial Truth Capture / 局部真相捕获",
             "A locally true observation must not own the whole explanation",
@@ -407,9 +408,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, using_compact)
 
         for phrase in (
-            "write a Whole Elephant audit JSON",
-            "run `python3 scripts/primitives/validate_whole_elephant.py <audit.json>` before formal_answer",
-            "validation failure blocks formal answer",
             "do not route local-truth essence reduction to any narrower method, including WAE, before Whole Elephant audit",
             "local_truth",
             "whole_object",
@@ -420,12 +418,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "user_named_object is not canonical_object",
             "local project docs/source > official/standard/primary source > web search > user term",
             "mark user-defined and deny definition authority",
-            "Validator path rule",
-            "resolve from skill path to plugin root scripts/primitives",
-            "Human-readable audit summary",
-            "do not dump raw JSON/YAML by default",
-            "Chinese-first output",
-            "avoid mixed-language jargon walls",
+            "中文场景优先用中文讲清判断",
+            "避免混合语言术语墙",
             "Canonical Object Centering",
             "do not let the umbrella system absorb the canonical object",
             "umbrella system is context, not thesis subject",
@@ -456,7 +450,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "validate_whole_elephant.py",
             "overreach_risk",
             "corrected_thesis",
             "Non-Mirror Correction / 非镜像纠错",
@@ -472,7 +465,18 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Essence Wording Guard / 本质措辞护栏",
             "corrected thesis must reject false essence claims",
         ):
-            self.assertIn(phrase, combined_compact)
+            self.assertIn(phrase, primitives_compact)
+
+        for phrase in (
+            "whole_elephant_validation",
+            "script_verdict",
+            "not_run_fallback",
+            "Do not claim validation passed without command evidence",
+            "validator path must resolve from the skill path to the plugin root",
+            "do not show full whole_elephant_audit by default",
+            "visible output starts with formal answer",
+        ):
+            self.assertIn(phrase, contract_compact)
 
         for phrase in (
             "canonical_object",
@@ -487,7 +491,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "do not show full whole_elephant_audit by default",
             "do not output short audit",
         ):
-            self.assertIn(phrase, combined_compact)
+            self.assertIn(phrase, " ".join((primitives_compact, contract_compact)))
 
     def test_whole_elephant_audit_is_hidden_by_default(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -495,8 +499,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
         ).read_text(encoding="utf-8")
         primitives = _read_shared_primitive_docs()
-        primitives_compact = " ".join(primitives.split())
-
         using_compact = " ".join(using.split())
         for phrase in (
             "Audit Hidden By Default / 审计默认内隐",
@@ -529,9 +531,44 @@ class MindthusRouterContractTests(unittest.TestCase):
             "script_must_not_decide",
             "internal evidence only",
             "Do not output short audit by default",
-            "visible answer starts with the global thesis, not the audit summary",
+            "visible output starts with formal answer",
         ):
-            self.assertIn(phrase, primitives_compact)
+            self.assertIn(phrase, contract_compact)
+
+    def test_public_whole_elephant_doc_keeps_runtime_commands_on_skill_surface(self):
+        public_doc = (
+            REPO
+            / "docs"
+            / "methodologies"
+            / "primitives"
+            / "whole-elephant-protocol.md"
+        ).read_text(encoding="utf-8")
+        boundary = (
+            REPO / "docs" / "methodologies" / "public-runtime-boundary.md"
+        ).read_text(encoding="utf-8")
+
+        for phrase in (
+            "Validation Boundary / 校验边界",
+            "校验器只检查 shape 和确定性约束",
+            "没有真实运行证据时，只能说明“未运行”",
+            "using-mindthus fidelity contract",
+            "Public Explanation and Runtime Trace",
+        ):
+            self.assertIn(phrase, public_doc)
+        for runtime_phrase in (
+            "run `python3 scripts/primitives/validate_whole_elephant.py",
+            "not_run_fallback",
+            "script_verdict",
+            "visible answer must not expose script stdout fields",
+        ):
+            self.assertNotIn(runtime_phrase, public_doc)
+        for classification in (
+            "public methodology",
+            "skill runtime instruction",
+            "validator contract",
+            "example",
+        ):
+            self.assertIn(classification, boundary)
 
     def test_using_mindthus_fidelity_contract_records_v1_4_1_calibration_case(self):
         contract = (
@@ -674,7 +711,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "validate_whole_elephant.py",
             "target job",
             "main use cases",
             "primary value carrier",
@@ -789,9 +825,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "scripts/primitives/validate_whole_elephant.py",
-            "mindthus-whole-elephant-audit-v0.1",
-            "validation failure blocks formal answer",
             "use weighted_synthesis when local contacts are independent, comparable, and cover enough of the object",
             "use whole_first_re_evaluation when local contacts are correlated, same-surface, or miss the governing structure",
             "When Partial Truth Capture triggers, the formal answer is incomplete without",

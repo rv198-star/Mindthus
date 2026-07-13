@@ -118,7 +118,7 @@ class MpgContractTests(unittest.TestCase):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
 
     def test_mpg_direct_load_runs_sela_support_check_for_trend_based_mainlines(self):
-        for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
+        for path in (MPG_SKILL, MPG_RESOURCE):
             text = path.read_text(encoding="utf-8")
             for phrase in (
                 "SELA ↔ MPG Twin-Lens Handshake",
@@ -142,6 +142,24 @@ class MpgContractTests(unittest.TestCase):
                 "visibly pull in different directions",
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+    def test_public_methodology_explains_twin_lens_without_runtime_commands(self):
+        text = MPG_DOC.read_text(encoding="utf-8")
+        for phrase in (
+            "SELA 先校准方向压力，MPG 再判断当前载体、暴露和路径动作",
+            "姐妹镜头",
+            "MPG 仍然拥有最终行动姿态",
+            "supported、failed 还是",
+            "MPG runtime surface",
+        ):
+            self.assertIn(phrase, text)
+        for runtime_phrase in (
+            "must read `mindthus:sela`",
+            "Direct-load output obligation",
+            "first visible sentence must",
+            "Default answer must not start",
+        ):
+            self.assertNotIn(runtime_phrase, text)
 
     def test_mpg_discovers_proxy_carrier_concentrated_exposure_structure(self):
         for path in (MPG_SKILL, MPG_RESOURCE, MPG_DOC):
