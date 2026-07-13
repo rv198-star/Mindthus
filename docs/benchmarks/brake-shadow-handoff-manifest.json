@@ -57,6 +57,13 @@
         "path": "tests/brake_semantic_triage_v04_expansion_cases.jsonl",
         "sha256": "591d785ea0a824f244162236d261790aa4ff4c68fbe593c7ddf98f37ffa890e3",
         "status": "immutable"
+      },
+      "v0_2_calibration": {
+        "path": "tests/brake_semantic_triage_v02_calibration_cases.jsonl",
+        "sha256": "bc1d5efd674bd60ab84b23b1fb382707a5d5a04ac442c92f120d7042c7b82257",
+        "source_packet_path": "docs/benchmarks/brake-semantic-triage-non-shadow-calibration-texts-v0.2.md",
+        "source_packet_sha256": "576e2f54c267270d265f44bba691fc172b10eb332ebd6f24d3e344e9d9593cde",
+        "status": "approved_additive_fixture"
       }
     },
     "triage_model": {

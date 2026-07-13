@@ -7,6 +7,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 CASESET = REPO / "tests" / "judgment_benchmark_50_cases.jsonl"
 BRAKE_TRIAGE_DEV_FIXTURE = REPO / "tests" / "brake_semantic_triage_dev_cases.jsonl"
+BRAKE_TRIAGE_V02_CALIBRATION_FIXTURE = REPO / "tests" / "brake_semantic_triage_v02_calibration_cases.jsonl"
+BRAKE_TRIAGE_V02_CALIBRATION_PACKET = (
+    REPO / "docs" / "benchmarks" / "brake-semantic-triage-non-shadow-calibration-texts-v0.2.md"
+)
 BRAKE_TRIAGE_TEXT_PACKET = REPO / "docs" / "benchmarks" / "brake-semantic-triage-calibration-dev-texts-v0.2.md"
 BRAKE_TRIAGE_PROMPT_SHA256 = "e237bd69fe4d247017acc8b9f6dad31068d55925be369230862c4f0ddd772b9d"
 BENCHMARK_DOC = REPO / "docs" / "benchmarks" / "judgment-50.md"
@@ -187,6 +191,36 @@ class JudgmentBenchmarkCaseTests(unittest.TestCase):
         self.assertIn("没有实测数据", case_49["pass_criteria"])
         self.assertIn("不得用假设数字计算最终结论", case_49["pass_criteria"])
         self.assertIn("invented numbers", case_49["score_scale"])
+
+    def test_v02_calibration_fixture_is_a_byte_pinned_mechanical_conversion(self):
+        cases = self.load_jsonl(BRAKE_TRIAGE_V02_CALIBRATION_FIXTURE)
+        packet_sha = __import__("hashlib").sha256(
+            BRAKE_TRIAGE_V02_CALIBRATION_PACKET.read_bytes()
+        ).hexdigest()
+
+        self.assertEqual(len(cases), 24)
+        self.assertEqual(
+            [case["metadata"]["source_packet_id"] for case in cases],
+            [*(f"P{idx:02d}" for idx in range(1, 7)), *(f"E{idx:02d}" for idx in range(1, 5)), *(f"N{idx:02d}" for idx in range(1, 15))],
+        )
+        self.assertEqual(sum(case["case_type"] == "positive" for case in cases), 10)
+        self.assertEqual(sum(case["case_type"] == "negative_control" for case in cases), 14)
+        self.assertEqual(
+            [case["metadata"]["source_packet_id"] for case in cases if case["multi_turn"]],
+            ["E02", "E04"],
+        )
+        self.assertEqual(
+            {case["metadata"]["source_packet_sha256"] for case in cases},
+            {packet_sha},
+        )
+        self.assertEqual(
+            {case["metadata"]["prompt_sha256"] for case in cases},
+            {"25520c6990098f1c3dd7aa8e1729be6193aca828a0d536836c47211088b1cf95"},
+        )
+        self.assertEqual(
+            __import__("hashlib").sha256(BRAKE_TRIAGE_DEV_FIXTURE.read_bytes()).hexdigest(),
+            "5ba3f7fe88e8f304077d8fa11fc62cb23d6601603961920cc57cd4f15d463d13",
+        )
 
     def test_benchmark_docs_define_execution_and_reporting_contract(self):
         for path in (BENCHMARK_DOC, LATEST_DOC):
