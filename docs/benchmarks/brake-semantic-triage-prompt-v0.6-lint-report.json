@@ -1,0 +1,21 @@
+{
+  "schema_version": "mindthus-brake-semantic-triage-prompt-lint-v0.1",
+  "prompt_path": "docs/benchmarks/brake-semantic-triage-prompt-v0.6.txt",
+  "prompt_sha256": "a56224cfc0f8c3f0ca4184a34af54f0fc070fddb963cdf573d62b292f8f8ac4f",
+  "input_provenance": "static_policy_checks_plus_one_way_protected_corpus_rejection",
+  "checks": {
+    "canonical_lf_single_trailing_newline": true,
+    "exact_authorized_insertion_only": true,
+    "authorized_insertion_occurs_once": true,
+    "contains_no_case_identifiers": true,
+    "contains_no_examples": true,
+    "contains_no_fixture_quotations": true,
+    "contains_required_abstract_definitions": true,
+    "contains_required_nonempty_abstain_instruction": true,
+    "contains_required_output_fields": true,
+    "contains_required_uncertainty_instruction": true,
+    "contains_no_domain_prefilter_or_marker_requirement": true,
+    "protected_corpus_check": "one_way_rejection_only"
+  },
+  "result": "pass"
+}
