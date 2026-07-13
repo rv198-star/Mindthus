@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### Product convergence after diagnostic research
+
+日期：2026-07-13
+
+本轮结束公开题库驱动的 activation / prompt 参数研究，把诊断成果收敛成产品合同。公开
+50 场景结果仍是 `1.447 < 1.5`，Mindthus 仍未通过认证；`latest.md` 不再描述一个活跃的
+V5 certification campaign。
+
+- README 明确显式调用 `using-mindthus` 或具体 skill 是可靠主路径，host 自然唤起仅为
+  best-effort，不构成正确性保证。
+- 完成 #101：公共方法文档保留方法、边界和语义效果；direct-load、validator、fallback、
+  trace 与输出形状义务留在 `skills/*` runtime surface。
+- 新增 10–20 个自然任务的 real-use validation 入口；真实任务无需强造评分，记录判断变化、
+  返工、额外负担、伤害和重复机制，只对重复问题立项。
+- 选择性带回通用 timeout bytes 解码修复和插件图标；不带回未通过独立证据门的 semantic
+  triage 研究 runtime。
+- 旧诊断 issues 按“完成 / 部分交付 / 停止研究”重新归档；诊断完成不再被表述为问题已解决。
+
 ### v1.4.4-diag diagnostic milestone
 
 日期：2026-07-08

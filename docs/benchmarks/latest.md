@@ -134,9 +134,10 @@ Key remaining hard failures under treatment: #4, #8, #13, #17, #33, #34, and #37
   `1.000 / 1.000 / 1.000`, required-visible-action rate `1.000 / 1.000 / 1.000`,
   negative runtime-event false wake-up `0.000 / 0.000 / 0.000`.
 
-Interpretation: the dev repair addresses the second external shadow retest's two public
-failure attributions. It is not certification; the second external shadow verdict remains
-open until an independently owned third shadow variant is rerun.
+Historical interpretation at the time of this run: the dev repair addressed the second
+external shadow retest's two public failure attributions and awaited another independent
+variant. The 2026-07-13 research closure supersedes that planned retest; this result remains
+diagnostic, not certification.
 
 ### Brake Semantic-Generalization Dev Diagnostic
 
@@ -154,9 +155,9 @@ open until an independently owned third shadow variant is rerun.
   `1.000 / 1.000 / 1.000`, required-visible-action rate `1.000 / 1.000 / 1.000`,
   negative runtime-event false wake-up `0.000 / 0.000 / 0.000`.
 
-Interpretation: the dev repair clears the public non-code migration check and keeps the
-near negative asleep. It is not certification; the prior external shadow failure remains
-open until an independently owned shadow variant is rerun.
+Historical interpretation at the time of this run: the dev repair cleared the public
+non-code migration check and kept the near negative asleep. The 2026-07-13 research closure
+supersedes the planned shadow rerun; the prior external failure remains unresolved.
 
 ### V5 Naturalization Diagnostic
 
@@ -220,9 +221,10 @@ not independently owned, and loaded-action quality residuals remain.
 - Negative controls: final-answer false wake-up `0/12`, runtime-event false wake-up
   `1/12`, register hints applied `0/12`
 
-Interpretation: the host-hint register mechanically solves public no-load activation in
-diagnostic mode, but #17 remains a stable loaded-but-wrong-action failure. Certification
-remains blocked pending natural activation/shadow evidence.
+Historical interpretation at the time of this run: the host-hint register mechanically
+solved public no-load activation in diagnostic mode, while #17 remained a stable
+loaded-but-wrong-action failure. No active certification campaign now follows from this
+diagnostic result.
 
 Wording-clause disposition: the retained 3L5S brake wording, EDSP anti-mush wording,
 SELA build-vs-rent boundary wording, and MPG method-reference boundary wording are
