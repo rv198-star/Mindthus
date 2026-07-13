@@ -1,8 +1,9 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing. The current closure point is the V5
-naturalization diagnostic after `v1.4.4-diag`; this is not a GitHub Release and not a
-certification result.
+Status: Not yet certified as passing. Active brake semantic-triage refinement closed on
+2026-07-13 at `adbda9eb`; see
+`docs/benchmarks/2026-07-13-brake-research-closure.md`. This is a research closure,
+not a GitHub Release or certification result.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
 baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
@@ -14,14 +15,15 @@ V5 certification candidates must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
 score movement.
 
-The newest evidence is a brake implicit-trigger and pressure-contract dev diagnostic, not a
-certification run:
-`docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md`.
+The closing evidence set combines the latest valid full 50-case run, the passing xhigh
+dev `n=3` diagnostic, and the subsequent V0.2 fail-closed calibration incident. These
+results are intentionally preserved together rather than rerun until a favorable sample
+appears.
 
-Certification remains blocked pending non-diagnostic activation evidence, loaded-action
-residual repair for cases such as #13/#49, an independently owned shadow set, and an
-external shadow retest of the brake pathology after the dev repair. Team-authored shadow
-fixtures may be reported as diagnostics, but cannot serve as the anti-overfitting veto.
+Certification remains blocked pending non-diagnostic activation evidence and an
+independently owned unseen evaluation. Team-authored fixtures may be reported as
+diagnostics, but cannot serve as the anti-overfitting veto. No active brake-specific
+certification campaign is planned at this closure point.
 
 ## Current Case Set
 
@@ -218,7 +220,11 @@ non-certifying. They are retained only as documented, unverified wording cleanup
 should be replaced or backed by mechanical hooks, calibration anchors, or repeatable
 telemetry before being counted as behavior progress.
 
-## Next Plan
+## Historical Plan And Stop State
+
+The following plan records the path that produced the archived evidence. It is not an
+active instruction to continue brake-specific refinement. Reopening requires the
+conditions in `docs/benchmarks/2026-07-13-brake-research-closure.md`.
 
 V5 work is now tracked as targeted stabilization rather than broad prompt/rule repair:
 
