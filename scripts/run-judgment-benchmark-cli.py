@@ -526,8 +526,17 @@ def run_codex(
     except subprocess.TimeoutExpired as exc:
         timed_out = True
         timeout_message = f"codex command timed out after {timeout} seconds"
-        stdout = exc.stdout or ""
-        stderr = (exc.stderr or "") + "\n" + timeout_message
+        stdout = (
+            exc.stdout.decode("utf-8", errors="replace")
+            if isinstance(exc.stdout, bytes)
+            else (exc.stdout or "")
+        )
+        stderr_value = (
+            exc.stderr.decode("utf-8", errors="replace")
+            if isinstance(exc.stderr, bytes)
+            else (exc.stderr or "")
+        )
+        stderr = stderr_value + "\n" + timeout_message
         returncode = 124
     duration = time.time() - started
     events_path.write_text(stdout, encoding="utf-8")

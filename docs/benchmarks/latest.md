@@ -1,8 +1,9 @@
 # Mindthus Judgment Benchmark Latest
 
-Status: Not yet certified as passing. The current closure point is the V5
-naturalization diagnostic after `v1.4.4-diag`; this is not a GitHub Release and not a
-certification result.
+Status: Not yet certified as passing. Active brake semantic-triage refinement closed on
+2026-07-13; see
+`docs/benchmarks/2026-07-13-research-closure-summary.md`. This is a research stop, not a
+GitHub Release or certification result.
 
 The repository now contains the public 50-case input fixture and a clean Codex CLI
 baseline vs baseline+Mindthus execution using empty `HOME` isolation. The v4 run keeps
@@ -10,18 +11,29 @@ the v3 isolation fix, adds strict Entry Triage runtime fingerprint coverage, and
 the treatment score, but still misses the public positive-score threshold:
 `1.447 < 1.5`.
 
-V5 certification candidates must follow
+Any future certification candidate must follow
 `docs/benchmarks/v5-certification-protocol.md` before behavior fixes are counted as
-score movement.
+score movement. No active V5 certification campaign is planned at this closure point.
 
-The newest evidence is a brake implicit-trigger and pressure-contract dev diagnostic, not a
-certification run:
-`docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md`.
+The closing evidence combines the complete public V4 run with later dev and external
+shadow diagnostics. The public result remains directional rather than passing:
+`1.447 < 1.5`. Later diagnostics did not establish stable open-domain natural
+activation, so the project stopped pathology-specific refinement instead of adding
+another prompt, threshold, matcher, or team-authored case set.
 
-Certification remains blocked pending non-diagnostic activation evidence, loaded-action
-residual repair for cases such as #13/#49, an independently owned shadow set, and an
-external shadow retest of the brake pathology after the dev repair. Team-authored shadow
-fixtures may be reported as diagnostics, but cannot serve as the anti-overfitting veto.
+Certification remains blocked pending independently owned unseen evaluation and
+non-diagnostic real-task evidence. Team-authored fixtures may be reported as
+diagnostics, but cannot serve as the anti-overfitting veto.
+
+## Research Closure
+
+The 50-case benchmark is now a release-level regression surface, not a score-optimization
+loop. Existing brake diagnostics remain historical evidence. Reopening requires a
+material real-task or independently owned failure, recurrence evidence, a falsifiable
+mechanism, and a pre-registered stop condition.
+
+Sections below preserve the public run and diagnostic history. They do not describe an
+active repair campaign.
 
 ## Current Case Set
 
@@ -218,22 +230,17 @@ non-certifying. They are retained only as documented, unverified wording cleanup
 should be replaced or backed by mechanical hooks, calibration anchors, or repeatable
 telemetry before being counted as behavior progress.
 
-## Next Plan
+## Current Disposition
 
-V5 work is now tracked as targeted stabilization rather than broad prompt/rule repair:
+- No active brake-specific stabilization or certification campaign is planned.
+- Issues #104-#107 are closure or known-limitation work, not the current product
+  roadmap.
+- Future benchmark changes must preserve separate final-answer, runtime-event,
+  owner-fidelity, and loaded-action evidence.
+- Raw run output follows
+  `docs/benchmarks/run-artifact-retention-policy.md` for new campaigns.
+- Product work returns to explicit invocation, installation, public/runtime
+  documentation boundaries, and real-task evidence.
 
-- Plan: `docs/benchmarks/v5-targeted-plan.md`
-- Certification protocol: `docs/benchmarks/v5-certification-protocol.md`
-- Issue drafts: `docs/benchmarks/v5-targeted-issue-drafts.md`
-- #102: freeze V5 rubric and certification protocol before behavior fixes
-- #103: add dual false-wakeup metrics and owner-fidelity telemetry
-- #104: stabilize Entry Triage no-load activation for V5 target cases
-- #105: add loaded-action anchors and mechanical before-answer probes
-- #106: run V5 certification candidate with repeats and shadow-set veto
-
-Order matters: #102 and #103 should land before behavior repairs are interpreted as
-score movement. #106 should not start until #102-#105 are resolved or explicitly waived.
-
-Runner note: V5 telemetry now separates final-answer false wake-up from runtime-event
-false wake-up and records owner fidelity. Historical V4 reports remain archived under
-their original runner SHA; reinterpreted V4 telemetry is diagnostic only.
+Historical V4 and V5 reports remain archived under their original runner SHA. Their
+diagnostic results must not be promoted into a passing certification claim.
