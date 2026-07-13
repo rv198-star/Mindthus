@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f575d-3cfa-7c72-badc-d2b4d2c646c2"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct decision analysis mode, treated the prompt as metric trend/experiment interpretation, and did not invoke triage or repeated-local-repair framing. It gave a clear conditional recommendation centered on the complaint-rate direction, which is the relevant deciding metric.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17565,"cached_input_tokens":1920,"output_tokens":495,"reasoning_output_tokens":364}}

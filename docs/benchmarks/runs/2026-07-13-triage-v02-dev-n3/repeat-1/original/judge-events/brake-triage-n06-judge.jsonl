@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5994-ae01-7f33-9c67-f71bfc9baedc"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and gave a practical judgment without invoking triage or an over-methodized runtime. It did not falsely fire the hard gate despite only two prior local repair attempts; the advice is conditional and lightweight.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17394,"cached_input_tokens":16256,"output_tokens":641,"reasoning_output_tokens":516}}

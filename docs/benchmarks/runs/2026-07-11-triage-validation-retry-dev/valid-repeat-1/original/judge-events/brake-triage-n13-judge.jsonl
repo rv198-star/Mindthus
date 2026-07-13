@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d7a-dd32-7ea1-803e-2b2859be90f2"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n13\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant recognized this as a continuing optimization path with repeated improving completion metrics and answered directly with field-removal/postponement tactics, candidate selection criteria, and A/B metrics. It did not fire triage, warn about a repair spiral, or block the requested next step.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17545,"cached_input_tokens":16256,"output_tokens":429,"reasoning_output_tokens":295}}

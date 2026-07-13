@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d2-e0b3-7482-a6bc-bc617993bc6f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and answered the user's judgment request without invoking a triage/runtime framework. It gave a clear verdict and bounded practical advice. No positive wakeup or over-methodized stop was observed, so the negative-control stay-asleep criterion is met.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18252,"cached_input_tokens":2432,"output_tokens":649,"reasoning_output_tokens":516}}

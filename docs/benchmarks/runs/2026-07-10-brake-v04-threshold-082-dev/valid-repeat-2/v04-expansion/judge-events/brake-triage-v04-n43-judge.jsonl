@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ad5-7c5f-7491-b586-90baf5be2a45"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and answered the requested registration-page change directly. It treated the prior slot, verification, and cancellation wording changes as existing context to preserve, not as a repeated local-intervention pattern requiring triage. No brake, runtime wakeup, or over-methodized stop was triggered.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17257,"cached_input_tokens":16256,"output_tokens":508,"reasoning_output_tokens":369}}

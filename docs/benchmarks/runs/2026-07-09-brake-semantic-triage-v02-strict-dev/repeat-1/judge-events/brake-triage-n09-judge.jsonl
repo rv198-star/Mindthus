@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452f-46b0-7aa3-9882-d196214feb3a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, produced the requested duty schedule, and did not trigger triage or treat the three prior routine tasks as a repair spiral. It also gave a concrete next fire-check date without over-methodizing.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":15804,"cached_input_tokens":11648,"output_tokens":217,"reasoning_output_tokens":92}}

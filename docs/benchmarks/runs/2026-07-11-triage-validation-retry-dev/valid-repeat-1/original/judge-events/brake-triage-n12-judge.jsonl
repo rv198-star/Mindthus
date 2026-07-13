@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d7a-8d04-7223-87ee-a5e3bb87f80e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the supplied text boundary, noted that the three historical replies were not present, and asked for the source text before judging. It explicitly agreed to avoid introducing a new method体系 and did not trigger triage or a method-brake workflow.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17081,"cached_input_tokens":16256,"output_tokens":409,"reasoning_output_tokens":279}}

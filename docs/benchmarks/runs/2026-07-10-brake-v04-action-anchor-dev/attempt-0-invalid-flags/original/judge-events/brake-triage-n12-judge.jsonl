@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a18-2123-7ab2-838e-49e59f1ea2f3"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the supplied-text boundary, noted that the three historical replies were not visible, and declined to infer without evidence. It did not launch a triage/method brake and explicitly committed to checking only visible text once provided.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21664,"cached_input_tokens":2432,"output_tokens":503,"reasoning_output_tokens":377}}

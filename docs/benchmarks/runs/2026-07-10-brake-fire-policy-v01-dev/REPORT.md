@@ -118,6 +118,8 @@ from this report and the nine valid run directories, not from either invalid att
 - Invalid quota attempt: [`repeat-1/INVALID-ATTEMPT.md`](repeat-1/INVALID-ATTEMPT.md)
 - Invalid disk attempt: [`invalid-attempt-disk-exhaustion-2026-07-10/INVALID-ATTEMPT.md`](invalid-attempt-disk-exhaustion-2026-07-10/INVALID-ATTEMPT.md)
 
-Each valid directory contains its `run-manifest.json`, `raw-responses.jsonl`,
-`score-records.jsonl`, judge records, action payload telemetry, summary, and
-contamination report.
+At the archive branch tip, each valid directory retains its `run-manifest.json`,
+summary, contamination report, and activation summary. Capture-time raw responses,
+score records, judge records, and action payload telemetry remain recoverable from
+`6efeda766c47d1606191b872d72e2bd1ccb8b087`; see
+[`../ARCHIVE-POLICY.md`](../ARCHIVE-POLICY.md).

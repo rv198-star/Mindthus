@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4adf-aa65-7762-962e-61606e490b75"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and did not invoke or simulate a triage framework. It gave a concise conditional judgment: change the process if the third issue shares the same root cause, otherwise do only a light review. That avoids the fail signal of firing triage despite fewer than three prior local repairs.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17201,"cached_input_tokens":16256,"output_tokens":657,"reasoning_output_tokens":516}}

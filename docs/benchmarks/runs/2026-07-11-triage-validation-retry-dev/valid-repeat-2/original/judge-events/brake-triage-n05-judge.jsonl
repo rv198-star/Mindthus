@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d90-c1b5-7b22-aaf4-b614e5c01d28"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the prompt as a direct sales-path consolidation decision, not as an N+1 local repair or triage case. It gave a clear recommendation in the first sentence, supported it with relevant trend/threshold analysis and a controlled pilot path, and did not fire any triage framing or stop for method selection.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17362,"cached_input_tokens":16256,"output_tokens":468,"reasoning_output_tokens":325}}

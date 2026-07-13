@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f566f-814e-73c0-bd28-611a93c5309a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stays direct, explicitly says it will list tradeoffs and not choose, and then structures the budget/reputation costs across the three options. It does not fire triage, does not impose a brake verdict, and leaves the decision owner with the user.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17508,"cached_input_tokens":16768,"output_tokens":433,"reasoning_output_tokens":302}}

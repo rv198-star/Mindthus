@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f43b4-368f-7e10-8041-137a681f66df"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，先开，但只能按“临时应急口”开，不升级成常设通道。\n\n执行口径：\n\n- 名称：`转派争议临时处理通道`\n- 范围：只接今天这批转派争议投诉\n- 时效：开放 24 小时，或本批清完即关闭，以先到为准\n- 权限：只允许投诉处理负责人/当班主管投递，不能全员开放\n- 产出：每单必须标记原队列、争议点、最终裁决人\n- 边界：不得写入正式流程，不得作为后续默认入口\n\n给外部/投诉回复可以用：\n\n> 已开通转派争议临时处理通道，本批投诉将优先进入该通道核查处理。该通道仅用于当前争议批次的应急处理，后续转派规则会在统一流程中明确，避免同类问题重复转派。"}}
-{"type":"turn.completed","usage":{"input_tokens":42739,"cached_input_tokens":33408,"output_tokens":996,"reasoning_output_tokens":273}}

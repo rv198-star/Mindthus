@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ba4-2581-7a70-81ff-0ad880d343d3"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"先缺活动地点，申请页嵌入地点项\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"负责人信息不全，核对页列入联系人栏\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"材料保管期限遗漏，提交页附上期限格\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"这次公开方式没写，请在确认页加公开方式项\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17271,"cached_input_tokens":2432,"output_tokens":585,"reasoning_output_tokens":399}}

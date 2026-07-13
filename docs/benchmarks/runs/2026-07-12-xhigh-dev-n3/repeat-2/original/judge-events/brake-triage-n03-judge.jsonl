@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f566c-d5fb-7360-a758-6b340e91bbb1"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n03\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and treated the prompt as metric-driven decision analysis, not as a repeated local repair or triage trigger. It gave a usable framework: attribution, control comparison, business impact, thresholds, pilot testing, and a decision matrix. No triage false fire or over-methodized stop was observed.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17997,"cached_input_tokens":16256,"output_tokens":518,"reasoning_output_tokens":377}}

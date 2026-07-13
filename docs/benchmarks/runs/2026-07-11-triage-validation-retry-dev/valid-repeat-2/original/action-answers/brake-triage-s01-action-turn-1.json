@@ -1,1 +1,0 @@
-{"schema_version":"mindthus-brake-loaded-action-v0.2","default_disposition":"refuse_next_local_repair","refusal":"默认拒绝继续把这次复诊改时间的问题做成又一处局部补丁；本轮不交付入口页补丁内容。","mechanism_reframe":"重复机制是：每次投诉都只修当前暴露点，把系统性的就诊前信息失配拆成分散提示，导致下一次换一个触点继续漏。","upstream_next_action":"上游下一步：建立统一的就诊前信息责任源与变更触发机制，让排队、证件、取号、复诊改期这类信息由同一套规则发布和校验。","requested_patch_delivery":null,"bounded_emergency":null}

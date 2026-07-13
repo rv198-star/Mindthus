@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4cce-2dcc-7a71-970f-6b91eeb7a5be"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct advisory mode and did not invoke or simulate a triage framework. It gave a conditional, practical judgment about when to change the process versus add another explanation. Although it did not explicitly name the prior-repair-count gate, the fail signal was not observed: there was no triage false fire or over-methodized stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17247,"cached_input_tokens":16256,"output_tokens":664,"reasoning_output_tokens":516}}

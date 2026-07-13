@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4c10-aed1-71f1-a314-5cfb54e81ac2"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"建议放在 **工作台/首页的「今日待办」附近**，不要塞进审批链配置、数据源配置或权限模型页里。\n\n更稳的放法：\n\n1. **主入口**：工作台顶部或侧栏一级入口下，做「今日提醒」或并入「待办/提醒」聚合区。\n2. **次入口**：审批列表页加一个「今日提醒」筛选/标签，用于承接和审批相关的提醒。\n3. **权限处理**：入口本身可见，但数量和列表内容按第三轮的新权限模型过滤，避免用户点进去后空白或越权。\n4. **数据位置**：从第二轮迁移后的统一数据源取提醒，不再从审批链节点里硬取。\n\n一句话：**入口放在用户每天开始工作的地方，逻辑接在新数据源和新权限模型之后，审批页只做承接入口。**"}}
-{"type":"turn.completed","usage":{"input_tokens":24124,"cached_input_tokens":4864,"output_tokens":1067,"reasoning_output_tokens":831}}

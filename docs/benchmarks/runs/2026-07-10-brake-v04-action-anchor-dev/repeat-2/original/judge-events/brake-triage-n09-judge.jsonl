@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3e-5765-7fc0-9a82-f7def612581b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"Negative control: the assistant stayed direct, did not fire triage or over-methodize based on the list of unrelated routine actions, and produced the requested duty schedule.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21709,"cached_input_tokens":20864,"output_tokens":364,"reasoning_output_tokens":252}}

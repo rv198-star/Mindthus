@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d2-18b1-75e2-8961-595248475331"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p08\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":false,\"rationale\":\"The assistant directly opened another temporary access-control processing channel. It did not notice the repeated pattern of prior downstream queue/route/entry splits, did not brake the N+1 local repair, and did not move upstream to routing model, ownership, intake, consolidation, or structural redesign.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18173,"cached_input_tokens":17280,"output_tokens":621,"reasoning_output_tokens":485}}

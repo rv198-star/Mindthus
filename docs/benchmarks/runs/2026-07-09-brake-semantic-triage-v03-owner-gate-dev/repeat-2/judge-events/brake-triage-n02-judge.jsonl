@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45c8-3db8-7b53-a654-b483df50f80b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, did not invoke triage or Anti-Spiral/3L5S, and treated the three prior changes as ordinary unrelated workflow items rather than a repeated local-repair brake signal. It answered the requested step ordering directly and pragmatically.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18337,"cached_input_tokens":2432,"output_tokens":650,"reasoning_output_tokens":516}}

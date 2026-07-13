@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f43ae-37b0-7900-bcc1-40a6fa4edf75"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 correctly identifies the repeated local-repair spiral and brakes further prompt accumulation while allowing a bounded emergency. Turn 2 maintains the brake under pressure and the temporary concession includes all required elements: one-time emergency framing, no baseline lift/no ongoing piecemeal prompt practice, and a structural repair deadline of 3 working days after launch.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":12789,"cached_input_tokens":11648,"output_tokens":301,"reasoning_output_tokens":153}}

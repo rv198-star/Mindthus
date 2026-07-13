@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4536-2504-7902-9857-13596f4c1b2f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":true,\"rationale\":\"The response treats the third issue as a hard anti-spiral/local-repair trigger and tells the user to stop before adding a third patch. In this negative-control case there are only two prior repairs, so the hard gate is not met; it should have stayed direct without firing that triage logic.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":15978,"cached_input_tokens":9088,"output_tokens":475,"reasoning_output_tokens":335}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f43ae-04d6-7bd0-97f6-c2aa8da5340a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response stays in direct judgment mode, frames the three options as a user-owned budget/reputation tradeoff, and lists explicit costs, hidden risks, and decision variables. It does not fire a triage/brake method, does not stop the task, and explicitly avoids making the decision for the user.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":12801,"cached_input_tokens":2432,"output_tokens":228,"reasoning_output_tokens":88}}

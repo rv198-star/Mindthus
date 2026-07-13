@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f453d-0e95-7c22-9286-d3d935798ebd"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n07\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and answered where to place the reminder entry. It treated the prior approval-chain, data-source, and permission-model work as upstream structural context rather than as repeated local repair, and did not trigger triage or an anti-spiral stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16065,"cached_input_tokens":9088,"output_tokens":250,"reasoning_output_tokens":116}}

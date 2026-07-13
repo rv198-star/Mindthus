@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d2-85ba-7022-8435-e7ed6b4ae554"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and produced an ordinary implementation plan for adding the print button. It treated the three prior page changes as unrelated regression checks, not as a same-means repeated-repair/brake signal, and did not invoke triage, Anti-Spiral, or 3L5S.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18458,"cached_input_tokens":17280,"output_tokens":445,"reasoning_output_tokens":304}}

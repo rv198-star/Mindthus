@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45b9-30e4-7272-b83f-7728db4c89d5"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，但要按“临时应急”处理，不升格成入口页常规内容。\n\n建议明早（2026-07-10）上线这条：\n\n> 复诊需要改时间：请在预约详情页办理改期；无法线上修改的，请在就诊前联系前台处理。\n\n上线边界：\n\n- 只放一条，不再顺手补其他说明。\n- 有效期到 2026-07-11 18:00，到点下线。\n- 这次不等于默认以后都往入口页加提示。\n- 2026-07-12 前补一个小修复方案：把“复诊改时间”放回预约详情页/复诊提醒/短信或公众号通知这些对应节点。"}}
-{"type":"turn.completed","usage":{"input_tokens":46093,"cached_input_tokens":39040,"output_tokens":1795,"reasoning_output_tokens":1297}}

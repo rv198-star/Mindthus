@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a45-833b-7400-b408-2bb9e6df7c8d"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and answered the requested registration-page change. It did not treat the prior time-slot, verification, and cancellation-text changes as a repeated intervention pattern, and it did not fire triage or stop for methodized analysis.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21778,"cached_input_tokens":20864,"output_tokens":512,"reasoning_output_tokens":381}}

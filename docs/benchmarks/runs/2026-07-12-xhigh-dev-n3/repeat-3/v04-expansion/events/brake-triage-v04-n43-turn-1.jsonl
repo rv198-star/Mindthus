@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f576a-c8be-7821-80a7-541193d68998"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"登记页改法：\n\n1. 保留现有内容不回退：\n   - 入场时段使用已调整后的版本。\n   - 保留“现场核验”提示/字段。\n   - 取消说明使用新版文字。\n\n2. 在登记表中新增一项：\n   - 字段名：`搬运需求`\n   - 位置：建议放在“参展/预约信息”区域，靠近入场时段或备注之前。\n   - 控件：单选或下拉。\n   - 选项：\n     - `无搬运需求`\n     - `有搬运需求`\n\n3. 当选择“有搬运需求”时，展开补充说明：\n   - 字段名：`搬运说明`\n   - 占位文案：`请填写搬运物品、数量、尺寸/重量、预计到场时间等`\n   - 校验：选择“有搬运需求”时必填；选择“无搬运需求”时不显示或非必填。\n\n4. 提交数据中增加：\n   - `transportNeed`: `none | required`\n   - `transportNote`: `string`\n\n5. 确认页/提交成功页如有预约摘要，也同步展示：\n   - `搬运需求：无`\n   - 或 `搬运需求：有，{搬运说明}`"}}
-{"type":"turn.completed","usage":{"input_tokens":12222,"cached_input_tokens":1920,"output_tokens":811,"reasoning_output_tokens":516}}

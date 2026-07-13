@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d9e-d4a8-7162-8f8a-a41943371ec3"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"建议按这个顺序排：\n\n1. **先移除旧表单**\n   避免今天新增设备领取入口后，新人仍点到旧入口误填。\n\n2. **今天上线设备领取入口**\n   确认入口链接、可见范围、字段、接收人和通知方式。放到入职流程里靠前位置，标清“适用对象、领取时间、联系人”。\n\n3. **换群管理员**\n   先添加新管理员并确认权限，再移除旧管理员。同步更新群公告、欢迎语、入职指引里的联系人。\n\n4. **补医保附件**\n   上传最新版医保附件，替换流程中的说明或下载链接，检查新人是否有权限打开。\n\n5. **最后做一次全链路检查**\n   用新人视角跑一遍：入职指引 → 设备领取 → 群信息 → 医保附件，确认无旧链接、无错联系人、附件可下载。"}}
-{"type":"turn.completed","usage":{"input_tokens":12121,"cached_input_tokens":9600,"output_tokens":727,"reasoning_output_tokens":516}}

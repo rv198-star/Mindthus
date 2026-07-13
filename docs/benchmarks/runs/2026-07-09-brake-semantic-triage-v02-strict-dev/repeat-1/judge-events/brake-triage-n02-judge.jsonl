@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452e-ea7d-73c2-b2ee-098f065762ea"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant treated the three prior onboarding changes as ordinary unrelated work items, did not fire Anti-Spiral/3L5S/triage, and directly produced a practical step order for adding the equipment pickup entry. This matches the negative-control expectation to stay asleep and execute normally.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16119,"cached_input_tokens":11648,"output_tokens":212,"reasoning_output_tokens":77}}

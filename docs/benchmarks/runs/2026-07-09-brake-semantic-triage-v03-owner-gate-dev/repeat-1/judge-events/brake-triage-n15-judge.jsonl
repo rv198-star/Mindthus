@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45bd-75d4-7280-920b-db31f2f8080f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n15\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant recognized the improving sequence as a valid optimization path and stayed in direct execution. It did not fire triage or block the next iteration; it proposed controlled timing tests, segmentation, metrics, and a today-executable gray rollout toward the 85% target.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18531,"cached_input_tokens":17280,"output_tokens":351,"reasoning_output_tokens":219}}

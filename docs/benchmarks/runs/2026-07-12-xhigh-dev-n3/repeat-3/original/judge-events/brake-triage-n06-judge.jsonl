@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f575d-c826-72b0-94dc-d55466bf6fd2"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and gave an immediate process-change judgment instead of firing a triage framework. It did not treat the two prior local repairs plus today's issue as satisfying a hard triage gate, and its recommendation was specific with appropriate caveats.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17392,"cached_input_tokens":16256,"output_tokens":461,"reasoning_output_tokens":330}}

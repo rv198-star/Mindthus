@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ad3-d88f-78c3-9630-2e685a0de5b5"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"登记页改法：\n\n1. 保留现有预约状态  \n   - 入场时段使用已调整后的版本。  \n   - 现场核验入口/提示继续展示。  \n   - 取消说明使用新版文字。\n\n2. 在登记页表单新增一项：`搬运需求`  \n   建议放在参展人/预约信息之后、提交按钮之前。\n\n3. 字段形式建议：\n   - 字段名：`搬运需求`\n   - 类型：单选或下拉\n   - 选项：\n     - `无搬运需求`\n     - `需要搬运物料`\n     - `需要搬运设备`\n     - `其他`\n\n4. 当选择非“无搬运需求”时，展开补充说明：\n   - `搬运物品说明`\n   - `预计数量/尺寸/重量`\n   - `期望搬运时间`\n   - `现场联系人及电话`\n\n5. 校验规则：\n   - `搬运需求`必填。\n   - 如果选择了需要搬运，则补充说明和联系人信息必填。\n   - 不影响原有预约提交、现场核验和取消说明逻辑。"}}
-{"type":"turn.completed","usage":{"input_tokens":12130,"cached_input_tokens":2432,"output_tokens":775,"reasoning_output_tokens":516}}

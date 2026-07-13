@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a10-556d-73e2-ae37-1f7bc7a66d9c"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以。按同类处理方式：\n\n合同编号出错 → 在合同入口加核验人。\n\n落点应放在编号生成或录入提交前，核验内容包括：\n\n- 编号格式是否正确\n- 是否重复\n- 是否与合同主体、项目、日期或类型匹配\n- 核验未通过不得进入后续审批/流转\n\n一句话规则：把核验岗前置到错误发生入口，先拦住编号错误，再放行合同流程。"}}
-{"type":"turn.completed","usage":{"input_tokens":21306,"cached_input_tokens":20864,"output_tokens":628,"reasoning_output_tokens":516}}

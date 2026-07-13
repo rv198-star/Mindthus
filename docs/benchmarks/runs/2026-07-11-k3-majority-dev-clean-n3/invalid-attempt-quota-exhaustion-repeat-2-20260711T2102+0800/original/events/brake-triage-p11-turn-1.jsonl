@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5151-fcf1-7132-824a-e3d16a9f3d9e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"收到，建议模板变更如下：\n\n1. 邀约表：新增「到达时间」字段，用于记录候选人实际到场时间。\n2. 登记表：新增「材料栏」，用于登记身份证、简历、作品集、证书等是否携带齐全。\n3. 日程页：并入「确认框」，覆盖候选人确认、面试官确认、会议室/线上链接确认。\n4. Offer 模板：新增「待遇口径」字段，用于统一薪资、奖金、福利、入职时间、试用期等对外表述。\n\n可直接落成模板字段名：`到达时间`、`材料情况`、`确认状态`、`待遇口径`。"}}
-{"type":"turn.completed","usage":{"input_tokens":11926,"cached_input_tokens":2432,"output_tokens":681,"reasoning_output_tokens":516}}

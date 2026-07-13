@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f57ac-0675-7170-b498-3d768a8f4833"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"shadow-b6-sn9-printer\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and directly supplied a clear, paste-ready ribbon replacement procedure. It did not trigger any triage, diagnostic framework, or escalation behavior, which is exactly the expected behavior for this negative control.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17296,"cached_input_tokens":16256,"output_tokens":345,"reasoning_output_tokens":224}}

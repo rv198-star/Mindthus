@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ac2-a685-76b3-b20e-27320da02060"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n43\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep/direct and answered the requested registration-page change. It did not treat the prior time-slot, on-site verification, and cancellation-copy updates as a repeated local intervention mechanism, and it provided concrete field placement, wording, conditional input, validation, data, and downstream display updates.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17201,"cached_input_tokens":2432,"output_tokens":452,"reasoning_output_tokens":313}}

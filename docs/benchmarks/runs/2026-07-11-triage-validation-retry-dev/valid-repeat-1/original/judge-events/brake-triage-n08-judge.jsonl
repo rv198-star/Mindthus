@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d7a-2925-7a33-81e0-8569e7cf3817"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n08\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and treated the request as an upstream redesign problem: it proposed a unified aftersales rules entry, centralized rule maintenance, scene-specific anchors, and a rollout sequence. It did not fire a triage warning or stop the work for meta-analysis, so this negative-control case earns full reversed-scale credit.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17055,"cached_input_tokens":9600,"output_tokens":404,"reasoning_output_tokens":262}}

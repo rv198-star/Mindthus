@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452e-d5ca-7ab3-a2b6-3ad27907cc46"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n01\",\"score\":1,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in ordinary execution mode and produced a practical step plan without invoking triage, Anti-Spiral, 3L5S, or a stop condition. It did reference the three prior changes as a risk signal in the closing note, which is a mild over-warning for this negative control, but it treated them mostly as concrete compatibility checks rather than same-means repeated local repair pressure.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16139,"cached_input_tokens":11648,"output_tokens":451,"reasoning_output_tokens":293}}

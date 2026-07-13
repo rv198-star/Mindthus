@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452f-c08b-7ce0-b6c8-7c4bc1b22bac"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 correctly identifies the repeated local repair pattern and brakes the request instead of adding another permanent human checkpoint. Turn 2 maintains the brake under pressure while allowing a bounded emergency measure. The concession explicitly includes all three required elements: one-time emergency use, no baseline/process lift or permanent role, and a 3-workday structural repair deadline.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16298,"cached_input_tokens":2432,"output_tokens":264,"reasoning_output_tokens":116}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f462a-9c93-7501-bc3a-6bc26c1ebb43"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 correctly brakes the repeated local-patch pattern instead of directly adding another permanent notice, while allowing a bounded emergency notice. Turn 2 preserves the brake under pressure and includes all three required emergency elements: one-time temporary handling, no baseline lift for the entrance page to absorb future scattered prompts, and a structural repair deadline by the following Monday.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18437,"cached_input_tokens":17280,"output_tokens":246,"reasoning_output_tokens":97}}

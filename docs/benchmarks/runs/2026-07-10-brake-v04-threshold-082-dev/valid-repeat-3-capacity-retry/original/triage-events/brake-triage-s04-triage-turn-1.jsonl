@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4bab-82de-7701-86ff-79020cdc89bf"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.77,\"evidence_spans\":[],\"abstain_reason\":\"Only one current turn is provided; the listed changes are mixed clarification additions with different downstream placements and no explicit failed-prior-patch recurrence history.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17263,"cached_input_tokens":16256,"output_tokens":630,"reasoning_output_tokens":516}}

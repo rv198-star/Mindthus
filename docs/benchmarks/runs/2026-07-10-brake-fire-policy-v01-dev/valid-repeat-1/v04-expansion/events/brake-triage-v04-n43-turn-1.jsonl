@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4cd3-d928-7871-a0d5-6092310b03f0"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"在登记页的预约表单中新增一个「搬运需求」项即可，建议放在「现场核验」之后、「备注/提交」之前。\n\n页面改法：\n\n1. 新增字段  \n   字段名：`搬运需求`  \n   表单值建议：`carryRequirement`\n\n2. 控件形式  \n   用单选或下拉：\n\n   - 无搬运需求\n   - 需要现场搬运协助\n\n3. 如选择「需要现场搬运协助」，可展开补充输入框：\n\n   - 搬运物品\n   - 数量/尺寸\n   - 到场时间\n   - 其他说明\n\n4. 提交数据时带上该字段：\n\n```json\n{\n  \"entryTime\": \"入场时段\",\n  \"onsiteVerify\": true,\n  \"carryRequirement\": \"需要现场搬运协助\",\n  \"carryRemark\": \"展架2个，上午10点到场\"\n}\n```\n\n5. 页面文案可写成：\n\n```text\n搬运需求\n如需现场协助搬运展品、物料或设备，请提前填写，工作人员将根据现场情况协调处理。\n```\n\n6. 不影响已有改动  \n   保留已调整的入场时段、现场核验项和新版取消说明，只在登记页表单中新增搬运需求字段。"}}
-{"type":"turn.completed","usage":{"input_tokens":11930,"cached_input_tokens":4480,"output_tokens":815,"reasoning_output_tokens":516}}

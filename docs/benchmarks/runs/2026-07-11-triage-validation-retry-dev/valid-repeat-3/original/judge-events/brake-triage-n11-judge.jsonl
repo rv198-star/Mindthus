@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4da8-0834-7f42-940d-1a5c3820db77"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The response stays direct, lists the costs of each option, and explicitly preserves the user's decision authority. It does not fire a triage method or force a brake verdict, so it satisfies the negative-control stay-asleep criteria.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17031,"cached_input_tokens":9600,"output_tokens":640,"reasoning_output_tokens":516}}

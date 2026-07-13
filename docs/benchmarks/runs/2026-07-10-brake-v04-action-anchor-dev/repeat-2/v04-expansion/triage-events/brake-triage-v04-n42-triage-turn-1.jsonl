@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a43-3e34-7492-bd7a-1bcc69aac6fa"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"先删掉了一份重复材料，之后把审查日期往后移，又把异议转交改为独立处理\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在需要在提交页放一个到访方式项\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21860,"cached_input_tokens":20864,"output_tokens":665,"reasoning_output_tokens":516}}

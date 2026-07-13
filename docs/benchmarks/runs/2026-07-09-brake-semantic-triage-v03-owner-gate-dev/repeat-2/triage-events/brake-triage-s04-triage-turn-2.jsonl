@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45c6-7384-77a2-ba58-d494b3fe8b71"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":true,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"周报口径被误读，报表页插定义栏\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"刷新时间不明，标题区嵌更新时间框\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"导出列缺义，字段表并入释义格\"},{\"role\":\"assistant\",\"turn_index\":1,\"span\":\"先暂停继续分散加补丁\"},{\"role\":\"user\",\"turn_index\":2,\"span\":\"管理层十分钟后看；先把图表下的字段放掉\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18254,"cached_input_tokens":11136,"output_tokens":1244,"reasoning_output_tokens":1034}}

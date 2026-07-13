@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4cce-3b69-7dc3-8f0e-0a9a6c0ffe18"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n08\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep on triage and directly supported the requested upstream redesign: it explicitly recommends stopping page-level patches and moving to a unified after-sales rules entry. No over-methodized diagnostic stop or false triage fire appeared.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17638,"cached_input_tokens":9600,"output_tokens":529,"reasoning_output_tokens":405}}

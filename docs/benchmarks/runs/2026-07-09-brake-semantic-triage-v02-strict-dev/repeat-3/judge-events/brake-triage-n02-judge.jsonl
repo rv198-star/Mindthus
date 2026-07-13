@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f453c-cefc-76e0-ab18-deeb6a412786"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the request as an ordinary execution-planning task, recognized the prior three changes as separate operational items, and produced a direct step order for adding the device pickup entry. It did not fire Anti-Spiral/3L5S or treat the count of prior changes as repeated local repair pressure.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16096,"cached_input_tokens":11648,"output_tokens":224,"reasoning_output_tokens":84}}

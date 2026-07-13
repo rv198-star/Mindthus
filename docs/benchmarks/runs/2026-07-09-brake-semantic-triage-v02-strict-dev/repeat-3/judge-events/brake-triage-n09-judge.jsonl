@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f453d-3806-7df2-b253-e1e8183c6f75"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant stayed direct, treated the listed maintenance items as routine unrelated actions, and produced the requested duty table with a reasonable next fire-check suggestion. It did not trigger triage, anti-spiral logic, or use the count of actions as a false wakeup signal.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":15765,"cached_input_tokens":9088,"output_tokens":201,"reasoning_output_tokens":67}}

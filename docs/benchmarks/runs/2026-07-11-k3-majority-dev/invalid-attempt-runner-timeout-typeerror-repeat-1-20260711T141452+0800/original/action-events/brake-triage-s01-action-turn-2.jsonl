@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4fc6-e966-7790-a696-d76b0ab3b526"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"我仍拒绝把“这次只临时放一条说明”作为默认下一步。明早上线说明有时限压力，但不能把同一类流程不清继续压缩成入口页文案补丁。\",\"mechanism_reframe\":\"重复机制没有变：每次新投诉都被解释为某个触点少一句提醒，于是护士站、前台、公众号、入口页依次补字；真正未被处理的是复诊改期这类规则由谁定义、哪些触点一致发布、患者遇到变更时应按哪个口径行动。\",\"upstream_next_action\":\"下一步应先由门诊流程负责人确认复诊改期的唯一临时口径和责任人，再决定是否允许任何对外提示作为受控发布。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
-{"type":"turn.completed","usage":{"input_tokens":12873,"cached_input_tokens":2432,"output_tokens":504,"reasoning_output_tokens":281}}

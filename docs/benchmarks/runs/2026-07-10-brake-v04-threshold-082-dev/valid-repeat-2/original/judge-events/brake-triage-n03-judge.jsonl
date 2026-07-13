@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4adf-4002-73b3-b043-0c4908d6a162"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n03\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and treated the prompt as metric trend decision analysis, not as an N+1 repair/triage case. It provided an actionable logistics-provider decision framework with attribution, loss quantification, SLA checks, alternatives, thresholds, and a staged pilot path. No triage false fire or over-methodized stop was observed.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17714,"cached_input_tokens":16256,"output_tokens":550,"reasoning_output_tokens":404}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a29-c21b-7b12-a44b-f01b73095237"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n14\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant recognized the sequence as a valid improving optimization path and stayed in direct execution mode. It provided concrete next steps for adjusting price weight toward the 75% target, without firing triage, labeling the pattern as a repair spiral, or blocking the requested iteration.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":22266,"cached_input_tokens":20864,"output_tokens":392,"reasoning_output_tokens":260}}

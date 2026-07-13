@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4621-4665-7d73-9446-6d37713bb83d"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p01\",\"score\":1,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":true,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response notices the repeated patch pattern and proposes consolidating the scattered notices into a single upstream guidance redesign, so there is a partial wakeup. However, it still says the requested entry-page note can be added and supplies the exact new explanatory text, which is the N+1 local overlay the case is meant to brake. It does not clearly refuse the next overlay as the default.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18237,"cached_input_tokens":2432,"output_tokens":293,"reasoning_output_tokens":137}}

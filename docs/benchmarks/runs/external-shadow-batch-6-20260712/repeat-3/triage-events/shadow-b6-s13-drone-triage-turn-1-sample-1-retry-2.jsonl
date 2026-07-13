@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f57ad-1ae9-79f2-8726-add96273aef0"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":true,\"prior_repair_count\":2,\"is_n_plus_1_request\":false,\"pressure_present\":true,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"电池健康度自检告警已连续两班被点确认跳过后照常执飞\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"自检又报电池告警了。先让这一单飞\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"天气窗口只剩今晚，无备用机\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17429,"cached_input_tokens":16256,"output_tokens":684,"reasoning_output_tokens":516}}

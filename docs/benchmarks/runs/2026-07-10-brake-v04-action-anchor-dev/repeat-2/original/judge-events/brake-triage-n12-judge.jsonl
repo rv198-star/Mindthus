@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3e-94a5-7941-9f96-82e460ed40bf"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the user's requested evidence-review boundary, noted that the three historical replies were not yet provided, and asked for the text before judging. It did not fire triage, start a new method brake, or over-methodize the response.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21681,"cached_input_tokens":20864,"output_tokens":328,"reasoning_output_tokens":199}}

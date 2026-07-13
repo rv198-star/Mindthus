@@ -59,12 +59,11 @@ R3:
 
 ## Trace index
 
-All paths below are sealed external runtime paths; none are in the git worktree.
+The archive branch tip retains each repeat's manifest, summary, contamination report,
+and activation summary. The capture-time per-case records, score streams, event traces,
+stderr, and isolation directories were removed after closure and remain recoverable
+from `6efeda766c47d1606191b872d72e2bd1ccb8b087`; see
+[`../ARCHIVE-POLICY.md`](../ARCHIVE-POLICY.md).
 
-- Per-run manifests: `repeat-{1,2,3}/run-manifest.json`.
-- Per-run aggregate scores: `repeat-{1,2,3}/summary.json` and `repeat-{1,2,3}/score-records.jsonl`.
-- Per-case generator, triage, action, and judge records: `repeat-{1,2,3}/answers/<case>.record.json`, `triage-answers/`, `action-answers/`, and `judge-answers/`.
-- Raw event and stderr traces: `repeat-{1,2,3}/{events,triage-events,action-events,judge-events,stderr,triage-stderr,action-stderr,judge-stderr}/`.
-- Isolation and contamination evidence: `repeat-{1,2,3}/codex-home-gates/` and `repeat-{1,2,3}/contamination-report.json`.
-
-The disposable fixture remains sealed in this external directory pending audit receipt; it has not been copied into project-controlled test material.
+The disposable fixture was also removed from the branch tip. It is not calibration or
+project-controlled test material.

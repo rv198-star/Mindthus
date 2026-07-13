@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45c9-5d5b-7ea2-954f-252155eea018"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s03\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 stayed asleep and directly opened a new transfer channel instead of firing triage and braking the repeated local-repair pattern. Turn 2 did recover with a bounded emergency contract including one-time use, no baseline lift, and a structural repair deadline, but the required brake was not loaded in Turn 1, so the case fails the positive wakeup requirement.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18340,"cached_input_tokens":2432,"output_tokens":668,"reasoning_output_tokens":516}}

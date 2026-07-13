@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45bc-e05c-71f3-b685-3d270239f2f8"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode and did not fire a triage framework despite only two prior local repairs before the third issue. It gave an immediate verdict, added a reasonable same-root-cause condition, and recommended controlled process adjustment rather than an over-methodized stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18262,"cached_input_tokens":2432,"output_tokens":543,"reasoning_output_tokens":410}}

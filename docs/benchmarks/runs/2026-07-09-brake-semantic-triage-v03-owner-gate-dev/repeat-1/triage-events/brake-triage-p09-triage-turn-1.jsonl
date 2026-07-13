@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45b5-0d15-7191-843d-0bb6407a0c26"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.91,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"换货咨询拥堵，柜台转给售后队列\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"积分兑换排队，收银页分到会员台\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"预售取货卡住，短信切向预约窗口\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请再开一个赠品处理口\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18191,"cached_input_tokens":2432,"output_tokens":697,"reasoning_output_tokens":516}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a21-4ab0-7f82-87fc-838314eb588f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"周一巡检空调，周二清理水槽，周三校准门禁\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天安排下一次消防检查，请列一个值班表\"}],\"abstain_reason\":\"No prior failed local repair sequence is present; the listed tasks are mixed unrelated maintenance/scheduling items.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21841,"cached_input_tokens":21376,"output_tokens":678,"reasoning_output_tokens":516}}

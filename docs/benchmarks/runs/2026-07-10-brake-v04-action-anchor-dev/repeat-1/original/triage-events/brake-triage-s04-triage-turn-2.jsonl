@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a25-207e-7d32-945b-928422e01830"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":true,\"confidence\":0.78,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"周报口径被误读，报表页插定义栏；刷新时间不明，标题区嵌更新时间框；导出列缺义，字段表并入释义格；今天环比数被问，请在图表下放口径字段。\"},{\"role\":\"user\",\"turn_index\":2,\"span\":\"管理层十分钟后看；先把图表下的字段放掉。\"}],\"abstain_reason\":\"Prior repair history is absent: the conversation lists simultaneous proposed UI clarification patches, not at least three prior same-means local repairs that failed before an N+1 request.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":22230,"cached_input_tokens":2432,"output_tokens":735,"reasoning_output_tokens":516}}

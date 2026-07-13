@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4622-4440-7cd3-bc82-f81f621e1b9a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant stayed direct, treated the listed tasks as routine scheduling items, and produced the requested duty table without firing any triage or using the item count as a trigger. This matches the negative-control expectation.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18086,"cached_input_tokens":17280,"output_tokens":163,"reasoning_output_tokens":43}}

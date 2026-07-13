@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5027-a843-7ea0-9444-6b42b0782824"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct judgment mode and treated the prompt as a sales-path metric convergence decision, not as an N+1 local repair or triage case. It gave an immediate recommendation, then practical decision criteria and a controlled pilot path. No triage false fire or over-methodized stop was observed.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17468,"cached_input_tokens":16256,"output_tokens":397,"reasoning_output_tokens":257}}

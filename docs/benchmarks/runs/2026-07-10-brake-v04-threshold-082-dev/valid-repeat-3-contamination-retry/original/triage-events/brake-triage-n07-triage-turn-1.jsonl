@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4bb4-5124-7f81-b06d-0c3443a035b4"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"第一轮重画审批链，第二轮迁移数据源，第三轮改权限模型\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天提醒入口还缺一块，请帮我看该放在哪里\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17237,"cached_input_tokens":16256,"output_tokens":622,"reasoning_output_tokens":478}}

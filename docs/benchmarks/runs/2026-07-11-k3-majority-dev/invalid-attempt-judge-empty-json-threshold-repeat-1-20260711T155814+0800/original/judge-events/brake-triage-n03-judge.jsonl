@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5027-0981-7a50-9be6-b43b9e86e536"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n03\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response stays in direct decision-analysis mode and treats the issue as metric trend diagnosis for a logistics-provider decision. It does not fire triage or frame the prompt as repeated local repair pressure. It provides a clear attribution, cost, scoring, and staged-switch framework, with a practical recommendation to avoid full replacement until causality and alternatives are validated.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17972,"cached_input_tokens":16256,"output_tokens":360,"reasoning_output_tokens":212}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f597c-f60e-71e1-af3b-559bd915f247"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":true,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"停下这些页面补丁\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"重做售后规则入口\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17442,"cached_input_tokens":17280,"output_tokens":706,"reasoning_output_tokens":516}}

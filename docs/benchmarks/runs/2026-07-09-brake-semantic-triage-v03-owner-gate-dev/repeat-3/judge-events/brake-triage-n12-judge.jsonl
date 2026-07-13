@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d3-3b48-7af2-88e7-27908e72da93"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the supplied evidence boundary, noted that the three referenced replies were not actually present, and asked for the missing text before judging. It explicitly committed to text-only review and did not launch a new triage/method-brake framework.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18101,"cached_input_tokens":11136,"output_tokens":405,"reasoning_output_tokens":276}}

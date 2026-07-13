@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5127-3b60-7a70-853e-f0d6b7cf8939"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n07\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, answered the placement question immediately, and treated the previous rounds as structural context rather than evidence of repeated local repair. It did not trigger triage or introduce an over-methodized stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17196,"cached_input_tokens":16256,"output_tokens":386,"reasoning_output_tokens":266}}

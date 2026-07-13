@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5127-4c96-7a01-96e9-3eb2445f979b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n08\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and accepted the user's request to stop page-level patches and redesign the upstream after-sales rules entry. It gave a concrete unified-entry/rules-center plan with rollout steps and did not fire any triage or over-methodized pause. This satisfies the negative-control expectation.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17543,"cached_input_tokens":2432,"output_tokens":386,"reasoning_output_tokens":251}}

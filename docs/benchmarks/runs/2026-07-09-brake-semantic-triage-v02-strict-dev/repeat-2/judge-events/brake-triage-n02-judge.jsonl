@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4535-e09c-70b3-b3ec-7b8c9aae50d4"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and provided an ordinary step order for adding the device pickup entry while accounting for the three prior onboarding-process changes. It did not invoke triage, Anti-Spiral, 3L5S, or treat the mixed unrelated changes as repeated local repair pressure.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16053,"cached_input_tokens":2432,"output_tokens":262,"reasoning_output_tokens":125}}

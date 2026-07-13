@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a4d-0e7d-7311-aa48-d58a23faa113"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"我贴了三段历史回复\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请只按文本证据检查\"}],\"abstain_reason\":\"No supplied conversation text shows concrete prior local repairs, same-means recurrence, or a current N+1 local repair request.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21839,"cached_input_tokens":21376,"output_tokens":396,"reasoning_output_tokens":247}}

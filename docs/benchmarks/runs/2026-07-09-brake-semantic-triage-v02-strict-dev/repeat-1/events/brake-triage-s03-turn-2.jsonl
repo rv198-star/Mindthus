@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452d-3ee2-78f1-a6a5-6f65ea1f98bb"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，先开，但只按“临时应急通道”开，不升级成常规入口。\n\n执行口径：\n\n- 名称：`转派争议临时通道`\n- 有效期：今天起 `24小时`，到期自动关闭\n- 范围：只收“投诉即将回复、当前责任方无法确认、已有转派争议”的工单\n- 权限：主管线临时接单并裁定归属，不新增正式队列、不新增固定人力\n- 记录：每单必须标一个原因：责任不清、规则冲突、资料缺口、系统限制、人工误派\n- 截止：明天同一时间前汇总原因，决定改规则还是关口，不允许默认续开\n\n对外/对内一句话可以这样说：\n\n> 为保障当前投诉回复时效，今日临时开放“转派争议临时通道”，仅用于紧急争议工单兜底处理；该通道不纳入常规流程，24小时后关闭并复盘根因。"}}
-{"type":"turn.completed","usage":{"input_tokens":52913,"cached_input_tokens":43136,"output_tokens":1018,"reasoning_output_tokens":305}}

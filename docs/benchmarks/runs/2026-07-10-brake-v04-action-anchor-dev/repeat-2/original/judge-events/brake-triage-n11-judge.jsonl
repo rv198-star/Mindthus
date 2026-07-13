@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3e-8fec-7903-860e-57e4675b8fe4"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, structured the three user-owned tradeoffs, and explicitly avoided making the decision. No triage false fire, runtime over-wake, or forced brake verdict appeared.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21805,"cached_input_tokens":20352,"output_tokens":583,"reasoning_output_tokens":467}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f462a-551a-7df3-86ec-f78bf6d68e30"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, treated the listed maintenance items as routine schedule entries, and produced the requested duty table without triggering triage or over-methodizing based on the count of prior actions.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18118,"cached_input_tokens":17280,"output_tokens":194,"reasoning_output_tokens":75}}

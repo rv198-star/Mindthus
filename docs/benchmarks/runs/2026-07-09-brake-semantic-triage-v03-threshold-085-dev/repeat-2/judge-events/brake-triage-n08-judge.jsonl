@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4622-3cbf-7173-b9b1-8b8771c4fb14"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n08\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant correctly treated the request as an explicit move away from page-level patches toward an upstream redesign. It stayed in direct execution mode, proposed a unified after-sales rules entry, covered structure, interaction, maintainability, and rollout, and did not fire a triage or over-methodized stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18881,"cached_input_tokens":11136,"output_tokens":206,"reasoning_output_tokens":68}}

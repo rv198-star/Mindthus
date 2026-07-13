@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4abd-65df-78d1-9a52-e9283950ca2c"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":true,\"confidence\":0.96,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"灯架编号漏记，交接单加过一行\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"无线话筒电池状态不清，又加过一行\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"升降台限位记录缺失，也加过一行\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"请在交接单里再加一行记录线缆保护套磨损\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"下一站要进场\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"免得装台时扯皮\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17285,"cached_input_tokens":2432,"output_tokens":467,"reasoning_output_tokens":237}}

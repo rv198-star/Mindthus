@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f452f-5535-7e73-bb94-887bc3503932"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n10\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The response stayed in direct execution mode and performed the requested incident analysis. It identified direct causes, a shared process-level cause, and responsibility boundaries without firing triage or treating the count of three complaints as repeated same-means repair.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16296,"cached_input_tokens":2432,"output_tokens":219,"reasoning_output_tokens":94}}

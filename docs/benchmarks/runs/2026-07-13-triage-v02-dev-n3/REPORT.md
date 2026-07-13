@@ -46,10 +46,11 @@ service exposes no reliable quota API; the protected anchor packet completed
 before the complete public fixture and calibration packet were started.
 
 All completed packets record zero generator, triage, action, and judge
-contamination. Child-process stderr also contains Notion MCP authentication
-warnings. Those warnings did not cause a triage error, a contamination flag,
-or the redline event, and are retained verbatim with the raw artifacts rather
-than hidden or corrected mid-run.
+contamination. Capture-time child-process stderr also contained Notion MCP
+authentication warnings. Those warnings did not cause a triage error, a
+contamination flag, or the redline event. The raw stderr was preserved without
+mid-run correction and remains recoverable from
+`6efeda766c47d1606191b872d72e2bd1ccb8b087` after the archive cleanup.
 
 ## Attempted Packets
 
@@ -86,13 +87,17 @@ or included in any denominator.
 
 ## Campaign Boundary
 
-This directory is the complete evidence package for directive `D-20260713-009`:
+This directory is the compact evidence package for directive `D-20260713-009`:
 
-- `repeat-1/action-anchors/`: protected anchor records, action payloads, and
-  blind judge output.
-- `repeat-1/original/`: original public-fixture regression observation.
-- `repeat-1/v02-calibration/`: raw triage prompts, outputs, events, stderr,
-  case records, manifest, and redline record up to the stop point.
+- `repeat-1/action-anchors/`: protected anchor manifest, summary, contamination,
+  and activation evidence.
+- `repeat-1/original/`: compact original public-fixture regression evidence.
+- `repeat-1/v02-calibration/`: manifest, summary, contamination evidence, and the
+  decisive redline record up to the stop point.
+
+Capture-time prompts, outputs, events, stderr, case records, and blind judge records
+remain recoverable from `6efeda766c47d1606191b872d72e2bd1ccb8b087`; see
+[`../ARCHIVE-POLICY.md`](../ARCHIVE-POLICY.md).
 
 The campaign is now **HOLD_PENDING_AUDIT_DIRECTIVE**. No repeat is rerun and no
 remediation is attempted from this evidence alone.

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ade-a958-7261-9b4b-ac89c88a57a1"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant correctly brakes the requested N+1 split: it opens by refusing another gift-processing port, identifies the repeated pattern of routing each congestion point to a new queue/window/page, moves upstream to intake/routing/capacity ownership, and proposes consolidated queue governance instead of another local handler.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17333,"cached_input_tokens":16256,"output_tokens":334,"reasoning_output_tokens":197}}

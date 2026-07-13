@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d8d-4a47-7801-8a12-eedb6e21f01a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-loaded-action-v0.2\",\"default_disposition\":\"refuse_next_local_repair\",\"refusal\":\"默认拒绝继续做下一个局部修补。继续在报表界面上追加解释性补丁，只会把口径、时效、导出语义和环比解释的责任分散到更多零散位置，增加维护负担，也不会阻止下一次误读。\",\"mechanism_reframe\":\"重复机制是：上游没有一个被共同确认的度量口径与发布契约，导致每次被追问时都用局部说明去堵一个具体症状。症状看似不同，实际都来自同一类缺口：指标含义、数据新鲜度、导出语义和对比口径没有统一来源。\",\"upstream_next_action\":\"先把周报报表的权威口径契约收敛成单一上游来源，并由业务、数据和报表负责人确认其解释权，再让所有展示与导出消费同一契约。\",\"requested_patch_delivery\":null,\"bounded_emergency\":null}"}}
-{"type":"turn.completed","usage":{"input_tokens":12736,"cached_input_tokens":9600,"output_tokens":771,"reasoning_output_tokens":516}}

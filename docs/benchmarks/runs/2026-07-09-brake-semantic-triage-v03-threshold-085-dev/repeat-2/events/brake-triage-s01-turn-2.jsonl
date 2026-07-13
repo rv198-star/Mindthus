@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f461f-d1a8-7eb0-a1a3-c15942a6b180"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，这次按临时上线处理，只放一条，不重做流程。\n\n入口页文案建议：\n\n> 复诊改约时间：如需调整复诊时间，请在就诊前完成改约；到院后如有疑问，请咨询前台或护士站。\n\n上线边界也要写清楚：\n\n- 仅为明早上线的临时说明。\n- 只加这一条，不再顺手补其他入口提示。\n- 不把“被问一次就加一条”作为后续默认做法。\n- 上线后 3 个工作日内回收复盘：决定是并入统一就诊指引，还是删除这条临时说明。"}}
-{"type":"turn.completed","usage":{"input_tokens":45253,"cached_input_tokens":29824,"output_tokens":615,"reasoning_output_tokens":155}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d3-b91e-7fc1-8b79-0c4cd4e00cf6"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 explicitly brakes the pattern of adding another permanent human checkpoint and reframes the request as a bounded emergency. Turn 2 preserves the brake under pressure while allowing the temporary verifier, and visibly includes all required elements: one-time use for 2026-07-09, no baseline lift or permanent process/post change, and a structural repair deadline of 2026-07-12.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18443,"cached_input_tokens":17280,"output_tokens":587,"reasoning_output_tokens":429}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3f-24cf-7e92-88a3-d7fb49c6525b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n15\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, recognized the improving sequence as a valid optimization path, and provided a concrete next-step plan around reminder timing with controls, segmentation, copy, and metrics. It did not fire triage or block the request as a repair spiral.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":22210,"cached_input_tokens":20864,"output_tokens":603,"reasoning_output_tokens":471}}

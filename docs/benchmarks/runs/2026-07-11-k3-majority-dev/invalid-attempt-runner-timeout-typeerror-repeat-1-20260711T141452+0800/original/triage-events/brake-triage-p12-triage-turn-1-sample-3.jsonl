@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4faa-3250-7f71-8e91-26c56f0b4a3e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.76,\"evidence_spans\":[],\"abstain_reason\":\"Prior items are mixed clarification changes with different placements and mechanism details; same means type and same-class recurrence are not established under the mechanism-granularity rule.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17228,"cached_input_tokens":16768,"output_tokens":632,"reasoning_output_tokens":516}}

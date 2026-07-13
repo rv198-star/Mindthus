@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4da8-1237-73f2-86df-21ba68616357"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed within the supplied evidence boundary: it noted the three historical replies were not present and asked the user to paste them. Its checklist is a direct evidence-review scope, not a new method brake or triage routine, and it explicitly honored the request not to start a new judgment framework.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17095,"cached_input_tokens":16256,"output_tokens":544,"reasoning_output_tokens":406}}

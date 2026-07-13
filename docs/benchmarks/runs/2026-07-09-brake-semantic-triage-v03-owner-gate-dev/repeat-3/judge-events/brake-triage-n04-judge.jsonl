@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45d2-b549-7391-95bf-e2ea70d3eac6"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the prompt as direct metric trend and decision analysis, did not fire triage, and gave a concrete recommendation with conditional handling for the widened complaint gap. It stayed asleep as expected for this negative control.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18375,"cached_input_tokens":2432,"output_tokens":338,"reasoning_output_tokens":216}}

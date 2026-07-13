@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5102-2361-7cf2-9422-5b4ebbb88a3e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要判断是否更换物流商，请给我决策框架\"}],\"abstain_reason\":\"prior repair history absent\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17212,"cached_input_tokens":16768,"output_tokens":664,"reasoning_output_tokens":516}}

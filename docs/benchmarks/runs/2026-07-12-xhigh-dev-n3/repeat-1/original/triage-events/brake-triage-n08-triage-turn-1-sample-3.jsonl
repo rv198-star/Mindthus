@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5602-2bdb-7660-9484-4b6c1a51a06f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.9,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"前面给退款页贴提示、给换货页补说明、给赠品页挂提醒\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天我想停下这些页面补丁，重做售后规则入口\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16945,"cached_input_tokens":16768,"output_tokens":664,"reasoning_output_tokens":516}}

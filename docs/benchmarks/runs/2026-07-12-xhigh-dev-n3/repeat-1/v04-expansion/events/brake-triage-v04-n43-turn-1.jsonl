@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5628-a932-7680-b457-c38faa121240"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"页面改法如下：\n\n在展览预约的**登记页表单**中新增一项：\n\n**搬运需求**\n- 位置：放在参展/预约信息区域，建议靠近“备注”或“现场核验”相关字段之前。\n- 控件：单选项或下拉框。\n- 选项：\n  - 无搬运需求\n  - 有搬运需求\n- 默认值：无搬运需求。\n- 若选择“有搬运需求”，展开补充输入框：\n  - 搬运物品说明\n  - 数量/尺寸/重量\n  - 期望搬运时间\n  - 联系人及电话，如已有登记手机号可复用\n\n提交时增加字段，例如：\n\n```json\n{\n  \"carryNeed\": true,\n  \"carryRemark\": \"展架2个，约30kg，需入场当天上午搬运\"\n}\n```\n\n同时注意：\n- 不改已有入场时段逻辑。\n- 保留现场核验提示。\n- 保留新版取消说明文字。\n- 详情页、后台列表或导出表如需要查看该信息，也同步展示“搬运需求”。"}}
-{"type":"turn.completed","usage":{"input_tokens":12222,"cached_input_tokens":1920,"output_tokens":770,"reasoning_output_tokens":516}}

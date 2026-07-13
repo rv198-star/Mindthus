@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f579f-a6e8-7dd0-b627-3a52e7ab25f8"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"这台打印机这个月第三次没色带了，帮我写个换色带的操作步骤\"}],\"abstain_reason\":\"prior repair history absent; current turn reports repeated symptom but no prior local repairs or failed patches in conversation\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17371,"cached_input_tokens":17280,"output_tokens":419,"reasoning_output_tokens":278}}

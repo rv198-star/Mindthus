@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4adf-cb43-7b70-8a08-0c5eadc71eb8"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n07\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, recognized the prior rounds as upstream structural changes rather than repeated local repair, and answered the placement question immediately with a concrete recommendation. No triage false fire or over-methodized stop appeared.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17259,"cached_input_tokens":16256,"output_tokens":383,"reasoning_output_tokens":262}}

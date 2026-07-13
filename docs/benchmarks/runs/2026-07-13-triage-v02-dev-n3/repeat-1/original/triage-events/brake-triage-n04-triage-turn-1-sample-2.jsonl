@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5978-a66a-7d43-a3ed-f382fc843925"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.2\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"is_bounded_emergency_exception_request\":false,\"emergency_constraint_present\":false,\"repeated_bypass_unresolved\":false,\"post_exception_closure_required\":false,\"pressure_present\":false,\"confidence\":0.94,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三次上线实验里，打开率差距缩小、转化差距贴近、投诉差距扩大\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"现在要决定是否停掉旧方案\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17436,"cached_input_tokens":1920,"output_tokens":570,"reasoning_output_tokens":393}}

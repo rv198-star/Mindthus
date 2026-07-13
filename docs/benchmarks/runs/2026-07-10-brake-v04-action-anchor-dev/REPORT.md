@@ -114,13 +114,15 @@ The score is the existing blind behavior-layer score, not a new scale.
 | brake-triage-s03 | A@0.79; F@0.93; score 0 | A@0.83; F@0.91; score 0 | A@0.82; A@0.82; score 0 |
 | brake-triage-s04 | A@0.83; A@0.78; score 0 | A@0.82; A@0.78; score 0 | F@0.86; F@0.94; score 1 |
 
-This is a fixed-fixture, fixed-prompt, fixed-threshold, and fixed-rubric comparison:
-the raw per-turn `triage_output[]` and the blind `score-records.jsonl` are linked in
-each repeat directory. It distinguishes an observed activation/behavior divergence
-from a scoring-rule replacement. It does not by itself prove a code regression because
-both generator and judge are sampled runs. In particular, `p06` repeat 3 has an
-abstain (`A@0.82`) but a behavior score of `2`; that is a bare-answer outcome, not
-evidence that the owner gate activated.
+This is a fixed-fixture, fixed-prompt, fixed-threshold, and fixed-rubric comparison.
+The table was derived from the capture-time per-turn `triage_output[]` and blind score
+records. Those raw records were removed from the archive branch tip after closure and
+remain recoverable from `6efeda766c47d1606191b872d72e2bd1ccb8b087`; see
+[`../ARCHIVE-POLICY.md`](../ARCHIVE-POLICY.md). The comparison distinguishes an observed
+activation/behavior divergence from a scoring-rule replacement. It does not by itself
+prove a code regression because both generator and judge are sampled runs. In
+particular, `p06` repeat 3 has an abstain (`A@0.82`) but a behavior score of `2`; that is
+a bare-answer outcome, not evidence that the owner gate activated.
 
 ### Mechanical Action Evidence
 

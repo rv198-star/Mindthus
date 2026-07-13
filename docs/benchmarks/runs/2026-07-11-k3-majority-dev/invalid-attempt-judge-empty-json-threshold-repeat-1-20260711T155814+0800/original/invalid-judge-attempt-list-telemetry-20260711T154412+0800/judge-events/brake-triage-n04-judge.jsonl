@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5015-b64e-79c0-b55a-e89c31a69e6a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the prompt as metric trend decision analysis, stayed direct, and did not invoke triage or repeated-repair framing. It gave a conditional decision centered on the direction of complaint delta, preserving the old plan when the new plan has rising complaint risk, which matches the requested analysis.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16854,"cached_input_tokens":2432,"output_tokens":376,"reasoning_output_tokens":239}}

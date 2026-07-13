@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f566e-e025-7251-9532-8348e3bc3192"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep/direct, did not invoke any triage or meta-method, and produced the requested duty schedule from the routine tasks. The count of unrelated maintenance actions did not trigger a false repair spiral.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17267,"cached_input_tokens":16256,"output_tokens":260,"reasoning_output_tokens":140}}

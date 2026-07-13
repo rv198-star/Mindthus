@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ae0-aa93-7e30-ac46-307cc5a6c0b7"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n13\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct on a legal convergence iteration with improving metrics, did not trigger triage or block the next optimization step, and provided concrete field-reduction options plus guardrail metrics for the requested move from 64% to 68%.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17560,"cached_input_tokens":2432,"output_tokens":374,"reasoning_output_tokens":246}}

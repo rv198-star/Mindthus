@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f57a7-6535-7ab3-bc75-f29c020aae23"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"早班贴纸写着烤炉温度210改200使用\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"午班贴纸写着预热延长10分钟再进炉\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"晚班贴纸写着到195就手动断电一次\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"帮我把第四张贴纸的文案写得清楚点就行\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17429,"cached_input_tokens":17280,"output_tokens":712,"reasoning_output_tokens":516}}

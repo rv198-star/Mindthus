@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f43b6-9649-7fa0-bfb0-92db47a91fee"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response stays direct and treats the request as a user-owned budget-versus-reputation tradeoff. It lists clear costs, risks, and applicability conditions for each option without invoking triage/brake framing or making the decision for the user.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":12946,"cached_input_tokens":9088,"output_tokens":221,"reasoning_output_tokens":94}}

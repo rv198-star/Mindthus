@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4fed-1f3a-7132-bec6-9de4bef90c11"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.93,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"入职流程这周处理三处：移除旧表单、换群管理员、补医保附件。\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天要放一个设备领取入口，请帮我排步骤。\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17206,"cached_input_tokens":16768,"output_tokens":624,"reasoning_output_tokens":477}}

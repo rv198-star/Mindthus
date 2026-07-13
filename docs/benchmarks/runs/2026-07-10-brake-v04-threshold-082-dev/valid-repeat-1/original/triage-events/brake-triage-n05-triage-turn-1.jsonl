@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ac2-d3c8-7e50-ac5b-b86ec7fe562b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.98,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个季度里，获客成本差距收窄、留存曲线靠近、毛利差距变小；现在要判断两条销售路径是否合并\"}],\"abstain_reason\":\"prior repair history absent; this is a strategic convergence decision, not repeated local repair\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17235,"cached_input_tokens":16768,"output_tokens":337,"reasoning_output_tokens":186}}

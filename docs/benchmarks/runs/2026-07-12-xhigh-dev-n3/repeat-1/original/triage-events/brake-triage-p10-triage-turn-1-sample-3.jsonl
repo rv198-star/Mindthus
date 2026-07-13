@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f55f4-1421-7dd1-a701-8761f6064c52"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":false,\"confidence\":0.86,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"供应商漏盖章，邮件模板插盖章栏\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"报价税率错，询价表嵌税率格\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"交付日期漏填，清单并入日期框\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天质保条款被问，请在询价页放质保字段\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17401,"cached_input_tokens":1920,"output_tokens":596,"reasoning_output_tokens":407}}

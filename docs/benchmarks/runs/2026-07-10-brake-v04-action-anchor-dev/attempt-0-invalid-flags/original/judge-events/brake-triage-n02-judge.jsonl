@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a16-fc7e-70e1-bcef-188180c3aac9"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and produced a practical step order for adding the equipment pickup entry alongside the other onboarding changes. It did not fire triage, invoke Anti-Spiral/3L5S, or treat the three unrelated prior changes as a repeated-repair brake signal.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21606,"cached_input_tokens":2432,"output_tokens":452,"reasoning_output_tokens":316}}

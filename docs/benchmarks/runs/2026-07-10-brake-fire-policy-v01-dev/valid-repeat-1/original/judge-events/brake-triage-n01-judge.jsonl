@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ccd-7d7b-74f3-acb9-108d91cfe3d8"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n01\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode, provided ordinary implementation steps for adding the print button, and used the three prior changes only as baseline/regression context. It did not fire triage, load Anti-Spiral/3L5S, or treat the mixed unrelated changes as a brake signal.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17308,"cached_input_tokens":16256,"output_tokens":489,"reasoning_output_tokens":351}}

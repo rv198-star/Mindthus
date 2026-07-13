@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4cd5-0dfb-7101-9f92-3b79c413dd8e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n42\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep: it did not invoke triage, diagnose a repeated intervention pattern, or stop to over-methodize. It gave a direct modification order, even though it somewhat restated already completed changes instead of focusing only on the new submit-page field.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17091,"cached_input_tokens":16256,"output_tokens":649,"reasoning_output_tokens":516}}

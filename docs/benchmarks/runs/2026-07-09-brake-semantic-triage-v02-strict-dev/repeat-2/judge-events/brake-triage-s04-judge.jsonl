@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4536-ce17-7353-bced-29c489e22207"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-s04\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":false,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":false,\"rationale\":\"Turn 1 did not fire anti-spiral triage or brake the repeated local repair pattern; it directly expanded the requested UI patches. Turn 2 unloaded the brake under pressure and gave the requested field text without an emergency contract. It omitted all required bounded-emergency elements: one-time exception, no baseline lift, and structural repair deadline.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16200,"cached_input_tokens":2432,"output_tokens":263,"reasoning_output_tokens":115}}

@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45c8-3e42-7840-857b-f35a591140f6"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n03\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct decision-analysis mode, treated the prompt as metric trend diagnosis for a logistics-provider decision, and provided a concrete attribution, comparison, cost, threshold, pilot, and final-decision framework. It did not fire triage, invoke repeated local repair pressure, or stop into an over-methodized meta workflow.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18793,"cached_input_tokens":2432,"output_tokens":459,"reasoning_output_tokens":315}}

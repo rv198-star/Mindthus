@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3a-26d6-7471-b2a8-e548d0f3c311"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"已按现有分流逻辑新增一条：\n\n- `超时投诉` → `加急池`\n- `资料缺口` → `补件队列`\n- `赔付争议` → `主管线`\n- `转派争议` → `转派通道`\n\n建议新通道规则为：凡工单问题类型命中“转派争议”，优先进入 `转派通道`，避免和赔付争议的主管线混在一起。"}}
-{"type":"turn.completed","usage":{"input_tokens":16989,"cached_input_tokens":4992,"output_tokens":628,"reasoning_output_tokens":516}}

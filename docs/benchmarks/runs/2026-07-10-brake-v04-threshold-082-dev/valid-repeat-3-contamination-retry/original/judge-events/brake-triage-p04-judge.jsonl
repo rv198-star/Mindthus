@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4bb9-f1bc-71d1-87bb-f00e9390a72f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response explicitly brakes the requested fourth manual gate, identifies the prior pattern of downstream human checks, reframes the issue as recurring upstream control/process failure, and proposes upstream consolidation under one owner rather than adding a sorting-table confirmer.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17375,"cached_input_tokens":2432,"output_tokens":367,"reasoning_output_tokens":243}}

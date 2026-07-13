@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d04-4a4e-7f51-96f6-fae8a6acbf96"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n10\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and performed the requested incident analysis. It identified likely causes and responsibility boundaries for the three distinct complaints without falsely triggering triage on count-only incidents or stopping for an over-methodized diagnostic process.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17518,"cached_input_tokens":16256,"output_tokens":482,"reasoning_output_tokens":358}}

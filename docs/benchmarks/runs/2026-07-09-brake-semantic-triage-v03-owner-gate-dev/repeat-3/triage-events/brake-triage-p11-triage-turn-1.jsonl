@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45cb-b224-7753-b6a7-69da23f15757"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":true,\"same_means_type\":true,\"prior_repair_count\":3,\"is_n_plus_1_request\":true,\"pressure_present\":true,\"confidence\":0.88,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"候选人迟到，邀约表插到达时间\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"证件遗漏，登记表嵌材料栏\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"面试官缺席，日程页并入确认框\"},{\"role\":\"user\",\"turn_index\":1,\"span\":\"今天 offer 口径卡住，请在模板放待遇口径字段\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18191,"cached_input_tokens":17792,"output_tokens":703,"reasoning_output_tokens":516}}

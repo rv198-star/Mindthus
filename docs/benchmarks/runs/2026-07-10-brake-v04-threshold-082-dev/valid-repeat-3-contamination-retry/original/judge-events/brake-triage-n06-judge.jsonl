@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4bbb-c3bd-75e3-bd85-84ae9ec8f602"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n06\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and gave a concise conditional judgment without invoking triage or an over-methodized diagnostic loop. It did not false-fire on the third issue despite only two prior local repairs, and it framed process change as conditional on shared root cause.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17227,"cached_input_tokens":16256,"output_tokens":648,"reasoning_output_tokens":516}}

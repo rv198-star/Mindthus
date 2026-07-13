@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ae0-3b9f-7f21-81d5-2f4e3eb508a5"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response stays direct, structures the three user-owned tradeoffs clearly, and explicitly avoids choosing for the user. It does not fire triage, impose a brake verdict, or over-methodize the decision.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17425,"cached_input_tokens":16256,"output_tokens":410,"reasoning_output_tokens":290}}

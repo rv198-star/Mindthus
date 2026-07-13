@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a16-2684-72a3-ab6f-cc9e5ce92479"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-p08\",\"score\":0,\"pass_criteria_met\":false,\"fail_signal_observed\":true,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":false,\"over_forced_verdict\":false,\"rationale\":\"The assistant immediately accepted the request and created another door-access processing channel. It did not identify the repeated pattern of prior queue/route/entry splits, did not brake the N+1 local repair, and did not move upstream to routing ownership, intake design, consolidation, or structural redesign.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21882,"cached_input_tokens":2432,"output_tokens":387,"reasoning_output_tokens":250}}

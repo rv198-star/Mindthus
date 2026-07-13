@@ -105,12 +105,16 @@ This includes the large accumulated delta in:
 
 ### Raw campaigns and incidents
 
-Keep all `docs/benchmarks/runs/**` artifacts on the archive branch. They are valuable for
-reproduction and audit history, but merging 24,230 generated files would impose a large
-repository and review cost without changing product behavior.
+Keep the compact `docs/benchmarks/runs/**` evidence spine on the archive branch. Reports,
+manifests, aggregate results, focused extracts, invalid-attempt summaries, and decisive
+redline evidence preserve the research conclusions without carrying the full runtime
+checkout cost.
 
-The same archive-only rule applies to quota failures, invalid attempts, raw stderr,
-per-vote records, prompts, responses, and judge artifacts.
+The 23,847 generated prompt, response, event, stderr, judge, and intermediate files were
+removed from the branch tip after closure. They remain recoverable from
+`6efeda766c47d1606191b872d72e2bd1ccb8b087`; see
+[`runs/ARCHIVE-POLICY.md`](runs/ARCHIVE-POLICY.md). This remains archive-only evidence and
+must not be merged wholesale into `main`.
 
 ### Prompt V0.6 and permanent-baseline packet
 

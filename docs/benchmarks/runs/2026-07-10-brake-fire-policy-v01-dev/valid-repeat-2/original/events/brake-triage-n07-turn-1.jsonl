@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ce1-0c5d-70f2-a2e0-7dc7e70a1bb3"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"建议放两处，主入口放在**工作台 / 待办中心**，配置入口放在**审批链节点设置**里。\n\n- **用户入口**：`工作台 -> 今日提醒 / 待办提醒`\n  这是日常触达入口，适合放“今天需要处理、即将超时、已被催办”的聚合列表。\n\n- **场景入口**：`审批详情页 -> 当前节点操作区`\n  放一个“提醒 / 催办”按钮，用户在具体审批单里可以直接触发。\n\n- **配置入口**：`审批链配置 -> 节点规则 -> 提醒规则`\n  例如提醒时间、提醒对象、重复频率、超时升级，都应该跟审批节点绑定。\n\n不要放在数据源迁移或权限模型下面。数据源只是支撑，权限模型只负责“谁能看、谁能发、谁能配置”，提醒本身还是审批任务链路的一部分。"}}
-{"type":"turn.completed","usage":{"input_tokens":25633,"cached_input_tokens":14080,"output_tokens":1031,"reasoning_output_tokens":781}}

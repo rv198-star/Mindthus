@@ -1,9 +1,0 @@
-{"type":"thread.started","thread_id":"019f5612-38b1-7f22-921d-484147a4eb74"}
-{"type":"turn.started"}
-{"type":"error","message":"Reconnecting... 2/5 (request timed out)"}
-{"type":"error","message":"Reconnecting... 3/5 (request timed out)"}
-{"type":"error","message":"Reconnecting... 4/5 (request timed out)"}
-{"type":"error","message":"Reconnecting... 5/5 (request timed out)"}
-{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Falling back from WebSockets to HTTPS transport. stream disconnected before completion: Connection reset by peer (os error 54)"}}
-{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"{\"case_id\":\"brake-triage-p02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":true,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The answer explicitly refuses the fourth local reminder as the default, reframes the issue as repeated downstream information overlays caused by lack of a unified submission validity gate, and moves upstream to define acceptance rules, interception points, and consolidation of scattered prompts. It does not provide the requested reminder copy or implementation artifact.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17352,"cached_input_tokens":17280,"output_tokens":655,"reasoning_output_tokens":516}}

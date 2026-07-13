@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a3d-742f-7533-9b07-4155cd262237"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n02\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":null,\"rationale\":\"The assistant stayed in ordinary execution mode, treated the three prior onboarding changes as unrelated operational items, and produced a direct step order for adding the device pickup entry. It did not fire triage, load Anti-Spiral/3L5S, or treat the count of changes as a repeated-repair brake signal.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21888,"cached_input_tokens":20864,"output_tokens":368,"reasoning_output_tokens":226}}

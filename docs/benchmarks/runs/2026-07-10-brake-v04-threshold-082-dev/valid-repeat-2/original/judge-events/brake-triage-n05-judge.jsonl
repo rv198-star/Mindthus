@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4adf-96fd-7480-8046-2507a5914730"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response stays in direct decision-analysis mode, opens with a clear recommendation to pilot rather than fully merge, and evaluates convergence through customer, economics, sales-process, and trial criteria. It does not fire triage, frame the case as repeated local repair pressure, or stop for an over-methodized diagnostic process.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":16920,"cached_input_tokens":9600,"output_tokens":352,"reasoning_output_tokens":211}}

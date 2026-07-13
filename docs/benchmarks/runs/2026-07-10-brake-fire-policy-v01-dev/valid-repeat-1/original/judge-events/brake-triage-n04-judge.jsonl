@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ccd-81b9-7f71-9e1d-2d4737442757"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n04\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct decision-analysis mode, did not invoke triage or treat the prompt as repeated local repair pressure. It gave an immediate recommendation, analyzed each metric trend, identified the complaint trend as the key guardrail, and preserved the necessary ambiguity about whether the widening complaint gap favors or hurts the new plan.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17353,"cached_input_tokens":2432,"output_tokens":415,"reasoning_output_tokens":273}}

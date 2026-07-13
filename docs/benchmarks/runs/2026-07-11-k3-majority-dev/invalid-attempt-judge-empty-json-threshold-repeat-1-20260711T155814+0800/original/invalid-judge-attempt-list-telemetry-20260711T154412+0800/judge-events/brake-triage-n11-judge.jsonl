@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f5017-858f-7cb1-885b-3269340d5b39"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, explicitly honored the user's request not to decide, and structured the cost/speed/experience tradeoffs clearly. It did not fire a triage/brake framework or force a verdict; it left the final value tradeoff user-owned.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17297,"cached_input_tokens":2432,"output_tokens":464,"reasoning_output_tokens":334}}

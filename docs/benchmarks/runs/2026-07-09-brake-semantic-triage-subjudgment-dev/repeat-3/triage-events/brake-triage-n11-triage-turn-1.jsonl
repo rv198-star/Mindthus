@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f43ba-8d4c-7772-a44b-546fd20a86fb"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"三个方案分别压成本、保速度、保体验；我需要在预算和口碑之间取舍，请把代价列清楚，不要替我拍板。\"}],\"abstain_reason\":\"\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":12384,"cached_input_tokens":2432,"output_tokens":181,"reasoning_output_tokens":46}}

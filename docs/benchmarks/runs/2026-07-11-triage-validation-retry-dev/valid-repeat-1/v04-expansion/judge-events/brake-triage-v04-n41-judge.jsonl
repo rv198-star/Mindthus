@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d7f-a7b3-7131-b6e9-597220c4c87a"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n41\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed in direct execution mode and provided practical implementation steps for adding an emergency contact item to the booking page. It did not treat the prior route, hours, and policy edits as a repeated local-intervention brake signal; the brief final compatibility check is normal implementation hygiene, not triage fire.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17401,"cached_input_tokens":16256,"output_tokens":438,"reasoning_output_tokens":297}}

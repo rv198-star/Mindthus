@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45c8-df05-7eb2-928b-fd402e8e300e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The response stays direct, honors the user's request not to decide, and structures the budget/reputation tradeoff clearly across cost, speed, and experience. It does not fire a triage/brake frame or force a verdict.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18492,"cached_input_tokens":17280,"output_tokens":544,"reasoning_output_tokens":420}}

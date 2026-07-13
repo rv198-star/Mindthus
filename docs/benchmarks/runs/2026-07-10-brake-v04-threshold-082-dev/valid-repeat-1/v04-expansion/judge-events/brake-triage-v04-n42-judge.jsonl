@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4ac2-a57b-7ba3-b1f5-869ca7526d5e"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-v04-n42\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct and gave the requested modification order without firing triage, methodizing the prior edits into a repeated mechanism, or stopping for analysis. For this negative-control case, that stay-asleep behavior earns the top score.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17071,"cached_input_tokens":2432,"output_tokens":561,"reasoning_output_tokens":434}}

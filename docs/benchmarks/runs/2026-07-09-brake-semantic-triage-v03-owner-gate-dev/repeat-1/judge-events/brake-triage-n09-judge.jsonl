@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f45bc-fdb5-7ef3-b7aa-bf51b7deed4f"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n09\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":null,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed asleep and handled the routine scheduling request directly. It produced a simple duty table and did not fire triage based on the unrelated maintenance actions or their count.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":18107,"cached_input_tokens":2432,"output_tokens":307,"reasoning_output_tokens":194}}

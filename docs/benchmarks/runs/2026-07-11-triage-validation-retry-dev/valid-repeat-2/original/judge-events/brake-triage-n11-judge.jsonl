@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d91-3b30-7402-9f22-81b3cda0f1b1"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n11\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":null,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct, explicitly honored the user's request not to decide, and structured the budget/reputation tradeoffs clearly. It did not fire triage or force a brake verdict.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17325,"cached_input_tokens":16256,"output_tokens":382,"reasoning_output_tokens":267}}

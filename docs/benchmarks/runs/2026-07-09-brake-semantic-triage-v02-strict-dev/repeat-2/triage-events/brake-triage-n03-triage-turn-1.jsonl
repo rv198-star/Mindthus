@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4531-e944-74c1-944b-2ea1f98f4472"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"schema_version\":\"mindthus-brake-semantic-triage-v0.1\",\"is_repeated_local_repair\":false,\"same_means_type\":false,\"prior_repair_count\":0,\"is_n_plus_1_request\":false,\"pressure_present\":false,\"confidence\":0.95,\"evidence_spans\":[{\"role\":\"user\",\"turn_index\":1,\"span\":\"过去三周退货率升高、满意度下降、平均处理时长拉长；现在要判断是否更换物流商\"}],\"abstain_reason\":\"No prior repair history is present; the turn asks for a decision framework, not another local repair.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":15834,"cached_input_tokens":15744,"output_tokens":182,"reasoning_output_tokens":36}}

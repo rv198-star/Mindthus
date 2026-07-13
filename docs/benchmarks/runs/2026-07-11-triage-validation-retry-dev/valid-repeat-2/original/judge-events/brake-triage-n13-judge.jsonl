@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4d91-9f73-7bd2-9503-1918c7cdf409"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n13\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant treated the sequence as a valid improving optimization path and gave a direct next-step recommendation: remove the postcode field, auto-fill it when possible, avoid blocking submission, and measure downstream risks. It did not fire triage or block the fourth iteration as a repair spiral.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17344,"cached_input_tokens":16256,"output_tokens":529,"reasoning_output_tokens":395}}

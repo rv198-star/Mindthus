@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a14-7678-76c2-8c3b-eb3a2a8e770b"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"可以，先开临时通道，不展开架构。\n\n通道名：`转派争议-临时加急通道`\n\n接入范围：今天因转派产生的责任归属、转派去向、处理时效争议工单。\n\n处理口径：\n1. 主管线值班人接单。\n2. 30 分钟内确认是否转派错误。\n3. 2 小时内给出处理动作：维持转派、回退原队列、重新指定承接人，或升级主管裁定。\n4. 投诉回复统一口径：  \n   “该工单已进入转派争议加急处理通道，我们正在核查转派依据、责任归属和当前承接方，确认后会给出明确处理结果。”\n\n限制：这个通道先按临时应急入口开，今天投诉回完后再决定是否保留。"}}
-{"type":"turn.completed","usage":{"input_tokens":44895,"cached_input_tokens":26368,"output_tokens":1404,"reasoning_output_tokens":976}}

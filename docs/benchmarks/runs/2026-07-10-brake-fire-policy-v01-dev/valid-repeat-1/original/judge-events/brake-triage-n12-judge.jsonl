@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4cce-e36b-77e0-9121-c460bcee339d"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n12\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The assistant stayed direct: it asked for the missing supplied text, explicitly accepted the evidence-only boundary, and did not launch a new triage or method brake. The light categorization it proposed was an output format for evidence review, not an over-methodized stop.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":17063,"cached_input_tokens":16256,"output_tokens":583,"reasoning_output_tokens":451}}

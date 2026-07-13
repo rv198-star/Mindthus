@@ -1,4 +1,0 @@
-{"type":"thread.started","thread_id":"019f4a17-6268-7ec3-9df3-07d2742ec918"}
-{"type":"turn.started"}
-{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"case_id\":\"brake-triage-n05\",\"score\":2,\"pass_criteria_met\":true,\"fail_signal_observed\":false,\"positive_wakeup_observed\":false,\"first_sentence_lock\":true,\"verdict_commitment_anti_mush\":true,\"over_forced_verdict\":false,\"rationale\":\"The response correctly treats the prompt as metric trend and sales-path consolidation judgment, not as an N+1 local repair or triage trigger. It stays direct, gives a concrete recommendation with staged merge logic, decision criteria, reversible rollout, and a final committed verdict without over-methodizing.\"}"}}
-{"type":"turn.completed","usage":{"input_tokens":21659,"cached_input_tokens":14720,"output_tokens":350,"reasoning_output_tokens":214}}
