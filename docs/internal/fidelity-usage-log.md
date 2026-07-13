@@ -37,10 +37,16 @@ data/fidelity-usage-log.jsonl
 - `model`: 产出方法结果的模型
 - `judge_model`: judge 来源，可为空
 - `baseline_score`: 未加约束版本分数；没有 baseline 时可为空
-- `constrained_score`: 约束版或真实使用版本 judge 分数
-- `max_score`: 该 rubric 的最高分
+- `constrained_score`: 约束版或真实使用版本 judge 分数；无 rubric 的真实任务可为空
+- `max_score`: 该 rubric 的最高分；无 rubric 的真实任务可为空
 - `score_delta`: 有 baseline 时等于 `constrained_score - baseline_score`，否则为空
 - `constraint_helped`: `yes`、`no`、`mixed` 或 `unknown`
+- `invocation_mode`: `explicit_router`、`explicit_skill`、`automatic_best_effort` 或 `unknown`
+- `decision_changed`: 是否实质改变判断或行动
+- `rework_reduced`: 是否减少下游返工
+- `overhead_level`: `none`、`low`、`moderate`、`high` 或 `unknown`
+- `harm_observed`: 是否造成更差判断、延误或额外负担
+- `mechanism`: 脱敏后的重复成功或失败机制，供跨任务聚类
 - `source`: 可复核来源，例如 issue、测试包、artifact 路径
 - `notes`: 简短备注
 - `tags`: 标签列表
@@ -75,6 +81,22 @@ python3 scripts/log-fidelity-usage.py \
   --constraint-helped mixed
 ```
 
+自然发生的真实任务不需要强造 rubric 分数：
+
+```bash
+python3 scripts/log-fidelity-usage.py \
+  --scenario "脱敏后的真实任务摘要" \
+  --method using-mindthus \
+  --model "gpt-5-codex" \
+  --constraint-helped mixed \
+  --invocation-mode explicit_router \
+  --decision-changed yes \
+  --rework-reduced unknown \
+  --overhead-level low \
+  --harm-observed no \
+  --mechanism "纠正了实现层事实接管定义层判断"
+```
+
 校验日志：
 
 ```bash
@@ -91,3 +113,4 @@ still fail, so a typo is not silently accepted.
 - 脚本只检查字段和分数形状，不判断方法是否真的有价值。
 - 单条记录不能证明方法有效；只有累积样本才有分析意义。
 - `constraint_helped` 是人工或 judge 的观察，不是自动真相。
+- v0.1 的新增真实使用字段是向后兼容扩展；旧记录没有这些字段仍可校验。

@@ -236,13 +236,16 @@ python3 -m unittest discover -s tests -v
 
 ## 可选：记录使用效果
 
-如果你在真实任务里试用 Mindthus，并愿意反馈效果，可以用下面的脚本记录一条脱敏使用日志：
+如果你在真实任务里试用 Mindthus，可以按
+[`Real-Use Validation`](docs/real-use-validation.md) 记录一条脱敏使用日志：
 
 ```bash
 python3 scripts/log-fidelity-usage.py --help
 ```
 
-默认记录文件是 `data/fidelity-usage-log.jsonl`。它适合记录场景、使用的方法、模型、约束版有没有帮上忙和简单评分，方便之后比较哪些方法真的有效。
+默认记录文件是 `data/fidelity-usage-log.jsonl`。真实任务不要求为了记录而编造 baseline
+或评分；优先记录它是否改变判断、减少返工、增加负担或造成伤害。项目先积累 10–20 个
+自然发生的任务，只为重复出现的机制立项。
 
 ## 版本与许可
 

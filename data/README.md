@@ -29,3 +29,6 @@ fail.
 
 The log is a data flywheel seed, not a benchmark claim. It is useful only after enough
 real or evaluation records accumulate.
+
+For product validation, follow `docs/real-use-validation.md`: prefer naturally occurring
+work, do not invent scores, and do not open an optimization issue from one mild event.
