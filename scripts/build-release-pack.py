@@ -27,8 +27,9 @@ TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
 CODEX_PLUGIN_VISUAL_ASSETS = (
-    Path("assets/mindthus-icon.png"),
-    Path("assets/mindthus-logo.png"),
+    Path("assets/mindthus-icon.svg"),
+    Path("assets/mindthus-logo.svg"),
+    Path("assets/mindthus-logo-dark.svg"),
 )
 RELEASE_SCRIPT_PATHS = (
     Path("run-fidelity-judge.py"),
@@ -351,8 +352,9 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
                 "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
                 "defaultPrompt": [CODEX_ACTIVATION_ROUTER_PROMPT],
                 "brandColor": "#161614",
-                "composerIcon": "./assets/mindthus-icon.png",
-                "logo": "./assets/mindthus-logo.png",
+                "composerIcon": "./assets/mindthus-icon.svg",
+                "logo": "./assets/mindthus-logo.svg",
+                "logoDark": "./assets/mindthus-logo-dark.svg",
             },
         },
     )

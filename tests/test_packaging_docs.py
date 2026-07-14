@@ -512,10 +512,7 @@ class PackagingDocsTests(unittest.TestCase):
             Path("codex-plugin/mindthus/skills/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
-        binary_asset_allowlist = {
-            Path("codex-plugin/mindthus/assets/mindthus-icon.png"),
-            Path("codex-plugin/mindthus/assets/mindthus-logo.png"),
-        }
+        binary_asset_allowlist: set[Path] = set()
         jsonl_paths: set[Path] = set()
         binary_asset_paths: set[Path] = set()
 
@@ -876,9 +873,13 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
             self.assertEqual(
                 codex_plugin_manifest["interface"]["composerIcon"],
-                "./assets/mindthus-icon.png",
+                "./assets/mindthus-icon.svg",
             )
-            self.assertEqual(codex_plugin_manifest["interface"]["logo"], "./assets/mindthus-logo.png")
+            self.assertEqual(codex_plugin_manifest["interface"]["logo"], "./assets/mindthus-logo.svg")
+            self.assertEqual(
+                codex_plugin_manifest["interface"]["logoDark"],
+                "./assets/mindthus-logo-dark.svg",
+            )
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertIn("SPDX AGPL-3.0-only", codex_plugin_manifest["interface"]["longDescription"])
             self.assertIn(
@@ -917,8 +918,22 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((codex_plugin_root / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "run-fidelity-judge.py").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "log-mindthus-runtime.py").exists())
-            self.assertTrue((codex_plugin_root / "assets" / "mindthus-icon.png").exists())
-            self.assertTrue((codex_plugin_root / "assets" / "mindthus-logo.png").exists())
+            for asset_name in (
+                "mindthus-icon.svg",
+                "mindthus-logo.svg",
+                "mindthus-logo-dark.svg",
+            ):
+                self.assertTrue((codex_plugin_root / "assets" / asset_name).exists())
+            icon_svg = (codex_plugin_root / "assets" / "mindthus-icon.svg").read_text(
+                encoding="utf-8"
+            )
+            dark_logo_svg = (
+                codex_plugin_root / "assets" / "mindthus-logo-dark.svg"
+            ).read_text(encoding="utf-8")
+            self.assertIn('fill="#F6F3EC"', icon_svg)
+            self.assertIn('stroke="#161614"', icon_svg)
+            self.assertIn('fill="#161614"', dark_logo_svg)
+            self.assertIn('stroke="#F6F3EC"', dark_logo_svg)
             self.assertTrue(
                 (codex_plugin_root / "scripts" / "primitives" / "whole_elephant_validator.py").exists()
             )
