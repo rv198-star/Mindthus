@@ -1007,6 +1007,58 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
+    def test_public_tvg_doc_adds_profile_layering_and_case_index(self):
+        text = (REPO / "docs" / "methodologies" / "tvg.md").read_text(encoding="utf-8")
+        for phrase in (
+            "TVG-Profile 是什么",
+            "Profile 的分层",
+            "`runtime_support`",
+            "当前随包提供五类 profile 资源",
+            "plain-sharp-skill-intro",
+            "cinematic-colossal-realism",
+            "案例索引",
+            "tvg-profile-cases/plain-sharp-skill-intro.md",
+            "tvg-profile-cases/film-style-profiles.md",
+            "tvg-profile-cases/cinematic-colossal-realism.md",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_tvg_profile_case_pages_exist_and_cover_three_example_lanes(self):
+        cases = {
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "plain-sharp-skill-intro.md": (
+                "Profile 不一定要从脚本、赛马、",
+                "`runtime_support`：没有",
+                "这个案例是我们给 TVG-Profile 准备的一条轻量起步线",
+            ),
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "film-style-profiles.md": (
+                "`shaw-brothers-wuxia-fantasy`",
+                "`king-hu-wuxia-cinema`",
+                "我们用来展示另一条高级路线",
+            ),
+            REPO
+            / "docs"
+            / "methodologies"
+            / "tvg-profile-cases"
+            / "cinematic-colossal-realism.md": (
+                "不是把外部 cinematic prompt skill 原样搬进来",
+                "行为样本，而不是 source truth",
+                "我们给它的角色，本来就只是确定性支撑，不是审美裁决",
+            ),
+        }
+        for path, phrases in cases.items():
+            self.assertTrue(path.exists(), path.name)
+            text = path.read_text(encoding="utf-8")
+            for phrase in phrases:
+                self.assertIn(phrase, text, f"{path.name}: {phrase}")
+
     def test_ab_pressure_tests_cover_issue_10_state_and_profile_scenarios(self):
         text = (REPO / "tests" / "tvg_ab_pressure_tests.md").read_text(encoding="utf-8")
         for phrase in (
@@ -1273,6 +1325,326 @@ class TvgContractTests(unittest.TestCase):
             "isolating global skill discovery",
         ):
             self.assertIn(phrase, text)
+
+    def test_cinematic_colossal_profile_package_exists_and_uses_four_layers(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = profile_dir / "profile.md"
+        self.assertTrue(profile.exists())
+        text = profile.read_text(encoding="utf-8")
+        for phrase in (
+            "cinematic colossal realism",
+            "value_semantics",
+            "realization_surface",
+            "gain_policy",
+            "runtime_support",
+            "behavior sample, not source truth",
+            "must not copy the external skill's concrete wording",
+            "scripts must not decide aesthetic success, profile maturity, or TVG exit",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_cinematic_colossal_runtime_resources_have_required_shapes(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        resource_names = (
+            "subject-taxonomy.json",
+            "scene-defaults.json",
+            "camera-lighting.json",
+            "negative-constraints.json",
+            "field-templates.json",
+            "image-audit-rubric.json",
+        )
+        for name in resource_names:
+            path = profile_dir / "resources" / name
+            self.assertTrue(path.exists(), name)
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            self.assertIn("schema_version", payload)
+            self.assertIn("profile", payload)
+            self.assertEqual(payload["profile"], "cinematic-colossal-realism")
+
+    def test_cinematic_colossal_profile_has_decisive_pressure_support(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "decisive-pressure-frame-depth",
+            "Use a decisive pressure frame",
+            "first-read cinematic pressure",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        pressure_frame = camera["decisive_pressure_frame"]
+        self.assertIn("near-overhead local threat cue", pressure_frame["composition_cues"])
+        self.assertIn("dominant subject fragment", pressure_frame["composition_cues"])
+        self.assertIn("upper-third focal pressure point", pressure_frame["composition_cues"])
+        self.assertIn("avoid replacing witness scale with poster display", pressure_frame["guardrails"])
+        self.assertIn("avoid pushing the decisive fragment to the far edge", pressure_frame["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertEqual(payload["primary_category"], "eastern_dragon_colossus")
+        self.assertIn("decisive_pressure_frame", payload["skeleton"])
+        self.assertIn(
+            "near-overhead local threat cue",
+            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
+        )
+        self.assertIn(
+            "upper-third focal pressure point",
+            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["decisive_pressure_frame"])
+
+    def test_cinematic_colossal_profile_has_director_shot_spine_support(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "director-shot-spine-depth",
+            "director shot spine",
+            "secondary details serve the shot",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        shot_spine = camera["director_shot_spine"]
+        for cue in (
+            "primary focal decision",
+            "viewer-eye path",
+            "reveal aperture or silhouette logic",
+            "edge occlusion as shot evidence",
+            "secondary details serve the shot",
+        ):
+            self.assertIn(cue, shot_spine["shot_cues"])
+        self.assertIn("do not let checklist detail compete with the primary image", shot_spine["guardrails"])
+        self.assertIn("keep the primary focus readable through reveal light", shot_spine["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("director_shot_spine", payload["skeleton"])
+        self.assertIn("primary focal decision", payload["skeleton"]["director_shot_spine"]["shot_cues"])
+        self.assertNotIn("director_quality", payload["skeleton"]["director_shot_spine"])
+
+    def test_cinematic_colossal_profile_has_director_subtraction_pass(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "director-subtraction-depth",
+            "director subtraction pass",
+            "one major event",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        subtraction = camera["director_subtraction_pass"]
+        self.assertEqual(subtraction["major_event_budget"], 1)
+        self.assertEqual(subtraction["foreground_intrusion_budget"], 2)
+        self.assertIn(
+            "if two actions read equally strong, demote one into reaction, silhouette, or atmosphere",
+            subtraction["subtractive_checks"],
+        )
+        self.assertIn("competing highlights", subtraction["demotion_targets"])
+        self.assertIn(
+            "do not solve clutter by collapsing the scene into a close hero portrait",
+            subtraction["guardrails"],
+        )
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("director_subtraction_pass", payload["skeleton"])
+        self.assertEqual(payload["skeleton"]["director_subtraction_pass"]["major_event_budget"], 1)
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["director_subtraction_pass"])
+
+    def test_cinematic_colossal_profile_controls_mess_and_fracture(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "controlled-fracture-coherence-depth",
+            "controlled fracture coherence",
+            "messy material becomes readable pressure",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        fracture = camera["controlled_fracture_coherence"]
+        self.assertIn("rain streaks, haze, debris, partial occlusion, broken reflections, damaged surfaces", fracture["allowed_chaos_materials"])
+        self.assertIn("every chaotic element must point to focus, scale, motion, or atmosphere", fracture["coherence_rules"])
+        self.assertIn("preserve physical continuity across fragments", fracture["coherence_rules"])
+        self.assertIn("do not sterilize the scene", fracture["guardrails"])
+        self.assertIn("do not let texture become random clutter", fracture["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("controlled_fracture_coherence", payload["skeleton"])
+        self.assertIn(
+            "every chaotic element must point to focus, scale, motion, or atmosphere",
+            payload["skeleton"]["controlled_fracture_coherence"]["coherence_rules"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["controlled_fracture_coherence"])
+
+    def test_cinematic_colossal_profile_has_shot_economy_mode(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "shot-economy-mode-depth",
+            "shot economy mode",
+            "subtractive selection before additive strengthening",
+        ):
+            self.assertIn(phrase, profile)
+
+        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
+        economy = camera["shot_economy_mode"]
+        self.assertEqual(economy["primary_image_budget"], 1)
+        self.assertEqual(economy["supporting_vector_budget"], 3)
+        self.assertIn("focus", economy["allowed_supporting_vector_roles"])
+        self.assertIn("scale", economy["allowed_supporting_vector_roles"])
+        self.assertIn("motion", economy["allowed_supporting_vector_roles"])
+        self.assertIn("atmosphere", economy["allowed_supporting_vector_roles"])
+        self.assertIn("demote correct but attention-expensive elements", economy["demotion_policy"])
+        self.assertIn("keep secondary action as reaction or aftermath when the main event is already readable", economy["demotion_policy"])
+        self.assertIn("preserve quiet or dark zones when they strengthen the primary image", economy["negative_space_policy"])
+        self.assertIn("do not increase pressure by filling every region", economy["guardrails"])
+        self.assertIn("do not collapse the scale vector into a close character shot", economy["guardrails"])
+
+        scripts = profile_dir / "scripts"
+        skeleton = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
+        payload = json.loads(skeleton.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("shot_economy_mode", payload["skeleton"])
+        self.assertEqual(payload["skeleton"]["shot_economy_mode"]["primary_image_budget"], 1)
+        self.assertIn(
+            "demote correct but attention-expensive elements",
+            payload["skeleton"]["shot_economy_mode"]["demotion_policy"],
+        )
+        self.assertNotIn("aesthetic_success", payload["skeleton"]["shot_economy_mode"])
+
+    def test_cinematic_colossal_image_audit_rubric_tracks_director_subtraction(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        rubric = json.loads((profile_dir / "resources" / "image-audit-rubric.json").read_text(encoding="utf-8"))
+        self.assertIn("director_subtraction_pass", rubric["prompt_review_handles"])
+        self.assertIn("single_major_event_visible", rubric["image_review_handles"])
+
+        negative = json.loads((profile_dir / "resources" / "negative-constraints.json").read_text(encoding="utf-8"))
+        self.assertIn("split_competing_actions", negative["safe_visual_failure_handles"])
+        self.assertIn("highlight_steals_subject", negative["safe_visual_failure_handles"])
+
+    def test_cinematic_colossal_profile_documents_pressure_fit_guidance(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        for phrase in (
+            "recommended starting",
+            "pressure is `3`",
+            "This pressure guidance is profile-specific operating advice",
+        ):
+            self.assertIn(phrase, profile)
+
+        examples = (profile_dir / "examples" / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
+        self.assertIn("## Pressure-Fit Guidance", examples)
+        self.assertIn("best general starting point for this profile", examples)
+
+    def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        scripts = profile_dir / "scripts"
+        classify = subprocess.run(
+            ["python3", str(scripts / "classify_subject.py"), "black tide dragon bone god"],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(classify.returncode, 0, classify.stderr)
+        classified = json.loads(classify.stdout)
+        self.assertEqual(classified["script_boundary"], "support_only_agentic_audit_required")
+        self.assertEqual(classified["primary_category"], "deep_sea_colossus_deity")
+        self.assertNotIn("PASS", classify.stdout)
+        self.assertNotIn("freeze", classify.stdout.lower())
+
+        lint = subprocess.run(
+            [
+                "python3",
+                str(scripts / "lint_prompt_packet.py"),
+                "--prompt",
+                "A huge god in the ocean, cinematic, animation style.",
+            ],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(lint.returncode, 1, lint.stderr + lint.stdout)
+        linted = json.loads(lint.stdout)
+        self.assertEqual(linted["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("missing_human_scale_anchor", linted["finding_codes"])
+        self.assertIn("missing_physical_environment_feedback", linted["finding_codes"])
+        self.assertIn("forbidden_media_term", linted["finding_codes"])
+        self.assertNotIn("PASS", lint.stdout)
+
+    def test_cinematic_colossal_field_lock_validator_reports_template_drift(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
+        script = profile_dir / "scripts" / "validate_field_lock.py"
+        expected = "【镜头角度】\n【景别】\n【前景】\n【远景】"
+        output = "【镜头角度】\n低机位\n【前景】\n潜水器\n【远景】\n古神"
+        result = subprocess.run(
+            ["python3", str(script), "--expected-fields", expected, "--output", output],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 1, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
+        self.assertIn("missing_field", payload["finding_codes"])
+        self.assertEqual(payload["missing_fields"], ["【景别】"])
+
+    def test_cinematic_colossal_examples_separate_profile_power_from_runtime_rescue(self):
+        examples = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism" / "examples"
+        single_pass = (examples / "single-pass-profile-power.md").read_text(encoding="utf-8")
+        loop_assisted = (examples / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
+        research_log = (examples / "loop-assisted-research-log.md").read_text(encoding="utf-8")
+        for phrase in (
+            "single_pass_profile_power",
+            "profile_control_power: partial",
+            "claim_ceiling",
+            "fixed profile",
+        ):
+            self.assertIn(phrase, single_pass)
+        for phrase in (
+            "loop_assisted_profile_use",
+            "baseline vs basic profile vs advanced four-layer profile",
+            "Images2 output is loop-assisted production evidence",
+            "does not prove the profile is generally strong",
+            "canonical exemplar note",
+        ):
+            self.assertIn(phrase, loop_assisted)
+        self.assertNotIn("【最终提示词】", loop_assisted)
+        self.assertNotIn("B Original SKILL", loop_assisted)
+        self.assertIn("Loop-Assisted Research Log", research_log)
+        self.assertIn("donor-skill behavior family summary", research_log)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,138 @@
+{
+  "schema_version": "cinematic-colossal-camera-lighting-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "camera_defaults": {
+    "aspect_ratio": "2.39:1 widescreen",
+    "viewpoint": "human-scale or instrument-scale witness position",
+    "angle": "low position with restrained upward angle",
+    "lens": "medium telephoto or telephoto compression unless confined-space proximity requires wide angle",
+    "depth": "medium depth or deep focus when scale relation must remain readable"
+  },
+  "lighting_defaults": {
+    "credible_sources": ["storm light", "moon edge", "city lights", "searchlights", "submersible lamps", "temple window light", "firelight"],
+    "atmospheric_media": ["rain", "mist", "dust", "silt", "smoke", "snow", "water turbidity"],
+    "exposure_behavior": ["layered shadows", "controlled highlights", "visible light scatter", "distant detail absorbed by atmosphere"]
+  },
+  "decisive_pressure_frame": {
+    "use_when": "pressure 4-5 or when the brief asks for extreme oppression, awe, dread, or a decisive cinematic first read",
+    "composition_cues": [
+      "near-overhead local threat cue",
+      "dominant subject fragment",
+      "upper-third focal pressure point",
+      "dark mass crossing the upper frame",
+      "compressed witness-to-colossus distance",
+      "one readable head, claw, eye, hand, rib arc, shadow, or body segment"
+    ],
+    "lighting_cues": [
+      "backlight or lightning behind the dominant fragment",
+      "low-key exposure with readable edge texture",
+      "foreground practical lights kept small against the mass"
+    ],
+    "guardrails": [
+      "avoid replacing witness scale with poster display",
+      "avoid pushing the decisive fragment to the far edge",
+      "keep at least one foreground witness or instrument anchor",
+      "keep the colossus partially hidden or frame-overflowing",
+      "do not add secondary detail that weakens the first-read threat"
+    ]
+  },
+  "director_shot_spine": {
+    "use_when": "when the image has enough pressure but lacks a directorly one-frame intention",
+    "shot_cues": [
+      "primary focal decision",
+      "viewer-eye path",
+      "reveal aperture or silhouette logic",
+      "edge occlusion as shot evidence",
+      "secondary details serve the shot"
+    ],
+    "practical_applications": [
+      "name where the first look lands",
+      "route the eye from foreground witness or frame edge to the subject fragment",
+      "explain why the subject is visible in this instant",
+      "use roof, window, cave, cloud, water, dust, or shadow edges as framing evidence",
+      "demote rain, lights, crowds, debris, and texture when they compete with the primary image"
+    ],
+    "guardrails": [
+      "do not let checklist detail compete with the primary image",
+      "keep the primary focus readable through reveal light",
+      "do not remove witness scale to make a clean poster",
+      "do not add a shot list; keep it one decisive frame",
+      "do not copy external skill wording"
+    ]
+  },
+  "director_subtraction_pass": {
+    "use_when": "pressure 4-5, or when the frame has pressure and scale but still reads like several small actions instead of one major event",
+    "major_event_budget": 1,
+    "foreground_intrusion_budget": 2,
+    "subtractive_checks": [
+      "if two actions read equally strong, demote one into reaction, silhouette, or atmosphere",
+      "if a bright effect reads before the subject, shrink it, darken it, or move it behind the event hierarchy",
+      "if foreground weapons, debris, branches, beams, or architecture cut the frame into pieces, keep only the ones that route the eye",
+      "if destruction does not read as the result of the main force, merge it into dust, smoke, shadow, or aftermath"
+    ],
+    "demotion_targets": [
+      "competing highlights",
+      "parallel micro-actions",
+      "gratuitous foreground intrusion",
+      "decorative destruction"
+    ],
+    "guardrails": [
+      "do not remove witness scale or environment scale while simplifying",
+      "do not solve clutter by collapsing the scene into a close hero portrait",
+      "do not sterilize weather, fracture, or atmosphere to create fake cleanliness",
+      "do not let secondary reaction beats become equal-strength micro-events"
+    ]
+  },
+  "controlled_fracture_coherence": {
+    "use_when": "when weather, damage, occlusion, darkness, or broken surfaces create scale and pressure but risk becoming visual mess",
+    "allowed_chaos_materials": [
+      "rain streaks, haze, debris, partial occlusion, broken reflections, damaged surfaces",
+      "mud, soot, scratches, condensation, water marks, dust, silt, torn fabric, bent trees, snapped flags",
+      "fragmented light beams, imperfect lens edges, frame-cropped architecture, damaged vehicles or structures"
+    ],
+    "coherence_rules": [
+      "every chaotic element must point to focus, scale, motion, or atmosphere",
+      "preserve physical continuity across fragments",
+      "keep directional forces consistent across rain, fabric, trees, smoke, dust, and reflections",
+      "separate readable subject silhouette from messy texture",
+      "keep foreground clutter subordinate to the viewer-eye path"
+    ],
+    "guardrails": [
+      "do not sterilize the scene",
+      "do not let texture become random clutter",
+      "do not let brokenness hide the primary subject",
+      "do not replace controlled weather and damage with clean decorative polish"
+    ]
+  },
+  "shot_economy_mode": {
+    "use_when": "pressure 4-5, or whenever the prompt is becoming correct but visually crowded",
+    "primary_image_budget": 1,
+    "supporting_vector_budget": 3,
+    "allowed_supporting_vector_roles": ["focus", "scale", "motion", "atmosphere"],
+    "texture_budget_policy": [
+      "texture exists only when it supports the primary image or one supporting vector",
+      "foreground clutter must either lead the eye or be darkened, blurred, cropped, or removed",
+      "background detail must either show scale or dissolve into atmosphere"
+    ],
+    "demotion_policy": [
+      "demote correct but attention-expensive elements",
+      "keep secondary action as reaction or aftermath when the main event is already readable",
+      "turn extra figures into silhouettes when they compete with the subject",
+      "turn extra debris into directional streaks or atmosphere when it competes with the subject",
+      "turn extra lights into small practical points when they compete with reveal light"
+    ],
+    "negative_space_policy": [
+      "preserve quiet or dark zones when they strengthen the primary image",
+      "allow low-detail atmosphere when it improves scale and pressure",
+      "do not treat every empty region as a defect"
+    ],
+    "guardrails": [
+      "do not increase pressure by filling every region",
+      "do not satisfy every profile surface at equal visual weight",
+      "do not remove human-scale or instrument-scale anchors",
+      "do not collapse the scale vector into a close character shot",
+      "do not make the scene sterile while reducing clutter"
+    ]
+  },
+  "texture_defaults": ["weathering", "wet surfaces", "dust or silt", "imperfect lens edge", "fine film grain"]
+}
