@@ -2,6 +2,33 @@
 
 ## Unreleased
 
+## v1.4.6
+
+发布日期：2026-07-14
+
+[完整发布日志](docs/releases/v1.4.6.md)
+
+说明：这是一次把 TVG 高级 Profile 案例和发布包产品完整性收束到一起的 release。显式调用
+`using-mindthus` 或具体 skill 仍是可靠主路径，host 自动唤起仍是 best-effort，不构成自动唤起认证。
+
+### TVG-Profile 高级案例
+
+- `docs/methodologies/tvg.md` 现在明确指向四层 `cinematic-colossal-realism` 高级包，补回最高级、最复杂的 TVG-Profile 用法。
+- 案例面向电影级出图的 prompt packet 与图像 review，不是邵氏 / 胡金铨等风格型影视案例的重复，也不声称任何图像模型稳定复现某种电影风格。
+- release pack 携带 profile、四层运行资源、示例记录和确定性 support scripts；脚本仍不能替 TVG 判断美学成功、Profile 成熟度或退出。
+
+### Codex 插件主题图标
+
+- Codex plugin manifest 改用可审查的 SVG visual assets。
+- composer icon 自带浅色底，避免深色主题下透明底黑线消失。
+- 增加 `interface.logoDark`，让 Codex 在深色主题使用深色底、浅色线条的 Logo。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -p 'test*.py' -q`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+
 ## v1.4.5
 
 发布日期：2026-07-13

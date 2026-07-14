@@ -8,12 +8,12 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.4.5.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.6.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_4_5(self):
+    def test_current_release_surface_is_v1_4_6(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -21,7 +21,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("当前仓库版本：`v1.4.5`", readme)
+        self.assertIn("当前仓库版本：`v1.4.6`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
         self.assertNotIn("当前仓库版本：`v1.4.4`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.3`", readme)
@@ -34,53 +34,49 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("mindthus-plugins-1.4.5.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.4.5.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.4.6.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.5/mindthus-plugins-1.4.5.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-plugins-1.4.6.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.5/mindthus-skills-1.4.5.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-skills-1.4.6.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.4.5", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.4.5.md)", changelog)
+        self.assertIn("## v1.4.6", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.6.md)", changelog)
         self.assertIn("显式调用", changelog)
         self.assertIn("best-effort", changelog)
         self.assertIn("7,193 bytes", changelog)
         self.assertIn("1.447 < 1.5", changelog)
         self.assertIn("不构成自动唤起认证", changelog)
-        self.assertIn('VERSION = "1.4.5"', builder)
-        self.assertIn('VERSION = "1.4.5"', runtime_logger)
+        self.assertIn('VERSION = "1.4.6"', builder)
+        self.assertIn('VERSION = "1.4.6"', runtime_logger)
 
-        release_log = (REPO / "docs" / "releases" / "v1.4.5.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.6.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.4.5 发布日志",
-            "发布日期：2026-07-13",
+            "# Mindthus v1.4.6 发布日志",
+            "发布日期：2026-07-14",
             "## 版本定位",
-            "可靠性与产品合同 patch release",
-            "## 主要变化",
-            "显式调用 `using-mindthus` 或具体 skill 是可靠主路径",
-            "host 自动唤起是 best-effort",
-            "7,193 bytes / 900 words",
-            "frame-risk AND execution impact",
-            "routing_decision",
-            "SKILLS 本质是提示词",
-            "4K/5K 显示器争论",
-            "公共方法与 runtime 分离",
-            "#101",
-            "五种布局",
+            "TVG-Profile",
+            "cinematic-colossal-realism",
+            "四层高级包",
+            "电影级图像 prompt packet",
+            "不是两个风格化画面的并列示范",
+            "## Codex 插件图标主题适配",
+            "logoDark",
+            "mindthus-icon.svg",
             "1.447 < 1.5",
             "v1.4.4-diag",
             "register-hints",
             "semantic triage",
-            "不进入 v1.4.5 产品承诺",
+            "不进入本版产品承诺",
             "SHA256SUMS",
             "## 升级影响",
             "## 验证",
