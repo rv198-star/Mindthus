@@ -5,6 +5,29 @@ The frozen protocol is
 It fixes what would count as success, harm, missing evidence, contamination, and a
 reason to stop before any semantic smoke or matched output is generated.
 
+## Codex-only amendment v0.2
+
+Protocol v0.2 preserves the three arms, 29-case matched workload, endpoint margins,
+missing-evidence rules, vetoes, and three-repeat exploration floor from v0.1, but removes
+the Claude execution stratum. It supports Codex-only claims and explicitly forbids
+Claude or cross-host generalization.
+
+The frozen v0.2 workload contains 261 generation cells and 522 independent judge
+records. Its smoke contains 15 generation cells and 30 judge records; valid smoke
+outputs count as repeat one. Generator and judge roles both use `gpt-5.6-sol` with
+`xhigh` reasoning, but run in isolated sessions and homes. This is same-model blind
+review, not independent-model validation.
+
+The preregistered hard ceilings are 276 generation calls, 552 judge calls, and
+25,000,000 aggregate input + output + reasoning tokens. Cached-input tokens are
+reported separately and are not double-counted. William is the blinded human
+adjudicator and stop authority.
+
+The immutable v0.2 protocol digest is
+`a886ebd0f94a4a01f28319f635b72999c28196b59956393eedc260e20db2d192`; its lock digest
+is `72f4af3e14f6d76fa920d623aaa00436dd4bbde5fb22ff7d34b630d865be0edc`.
+The v0.1 protocol and lock remain independently valid and unchanged.
+
 ## Frozen comparison
 
 The three immutable arm ids are `stable`, `direct-only`, and `thin-kernel`. Runtime
@@ -16,7 +39,7 @@ shadow receipts remain conditional on independent case-custodian binding and bli
 attestation before #119 authorization. Visible public and development cases are never
 reported as blind evidence.
 
-Both Codex and Claude package surfaces and all five entry modes are required strata.
+Under v0.1, both Codex and Claude package surfaces and all five entry modes are required strata.
 There are three planned repeats per arm/host/case, producing a preregistered ceiling of
 522 generation cells and two independent blinded judge records per output (1,044 judge
 records before any allowed parse retry). The five-case smoke is one repeat across all

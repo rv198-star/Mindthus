@@ -5,9 +5,33 @@ written, interrupted, resumed, and vetoed without making any model call. A green
 run is an orchestration claim only; it is not evidence that Stable, direct-only, or the
 thin Kernel produces better answers.
 
+## Codex-only v0.2 rehearsal
+
+The fixture builder also accepts `--protocol-version 0.2`. That path binds the frozen
+Codex-only protocol and its dedicated validator, builds three isolated manifests
+instead of six, and runs 24 deterministic cells (8 cases × 3 arms) plus 48
+plumbing-only judge records. The same eight negative fixtures and interrupted-run
+resume contract apply. It still performs zero generator calls, zero judge model calls,
+and zero semantic outputs.
+
+When a fixture is built inside the repository, inherited `AGENTS.md` files are sealed
+into each arm's ambient-context ledger. Undeclared inherited context remains a
+fail-closed protocol-drift error.
+
+Run the Codex-only rehearsal with:
+
+```bash
+python3 beta/2.0.0-beta.2/runtime/build-dry-run-fixture.py \
+  --root /tmp/mindthus-beta2-codex-dry-run \
+  --protocol-version 0.2
+python3 beta/2.0.0-beta.2/runtime/dry-run-orchestrator.py \
+  --plan /tmp/mindthus-beta2-codex-dry-run/dry-run-plan.json \
+  --out-dir /tmp/mindthus-beta2-codex-dry-run-output
+```
+
 ## What the rehearsal does
 
-`runtime/build-dry-run-fixture.py` builds six isolated source homes and sealed arm
+By default, `runtime/build-dry-run-fixture.py` builds six isolated source homes and sealed arm
 manifests: three arms on both Codex and Claude package shapes. Every manifest identifies
 the `deterministic-mock` model and exposes only the deterministic mock tool.
 

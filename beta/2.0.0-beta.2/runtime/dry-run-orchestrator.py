@@ -27,9 +27,13 @@ from mindthus_beta2_telemetry import build_turn_telemetry  # noqa: E402
 
 SEALER = BETA_ROOT / "runtime" / "seal-arm-manifest.py"
 PROTOCOL_VALIDATOR = BETA_ROOT / "runtime" / "freeze-evaluation-protocol.py"
+PROTOCOL_VALIDATORS = {
+    "0.1": PROTOCOL_VALIDATOR,
+    "0.2": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.2.py",
+}
 MATRIX_LINTER = BETA_ROOT / "runtime" / "lint-case-matrix.py"
 REQUIRED_ARMS = {"stable", "direct-only", "thin-kernel"}
-REQUIRED_SURFACES = {"codex-plugin", "claude-plugin"}
+KNOWN_SURFACES = {"codex-plugin", "claude-plugin"}
 CLAIMS_UNAVAILABLE = [
     "real-model final-answer quality or noninferiority",
     "real execution-owner fidelity",
@@ -116,7 +120,10 @@ def run_check(command: list[str], *, veto_id: str, label: str) -> dict[str, Any]
 
 def load_plan(plan_path: Path) -> dict[str, Any]:
     plan = read_json(plan_path)
-    if plan.get("schema_version") != "mindthus-beta2-dry-run-plan-v0.1":
+    if plan.get("schema_version") not in {
+        "mindthus-beta2-dry-run-plan-v0.1",
+        "mindthus-beta2-dry-run-plan-v0.2",
+    }:
         raise DryRunVeto("protocol-or-arm-drift", "unsupported dry-run plan schema")
     verify_embedded_digest(plan, "plan_digest", "dry-run plan")
     if plan.get("executor") != "deterministic-mock-only" or plan.get("model_execution_allowed") is not False:
@@ -132,10 +139,31 @@ def verify_protocol_and_matrix(plan: Mapping[str, Any]) -> tuple[dict[str, Any],
         raise DryRunVeto("protocol-or-arm-drift", "frozen protocol path or digest differs")
     if not matrix_path.is_file() or sha256_file(matrix_path) != plan.get("case_matrix_sha256"):
         raise DryRunVeto("protocol-or-arm-drift", "case matrix path or digest differs")
+    protocol = read_json(protocol_path)
+    protocol_version = str(protocol.get("protocol_version") or "")
+    validator_path = PROTOCOL_VALIDATORS.get(protocol_version)
+    if validator_path is None:
+        raise DryRunVeto("protocol-or-arm-drift", "protocol version has no dry-run validator")
+    if protocol_version == "0.2":
+        planned_validator = Path(str(plan.get("protocol_validator_path") or ""))
+        if planned_validator.resolve(strict=False) != validator_path.resolve(strict=False):
+            raise DryRunVeto("protocol-or-arm-drift", "v0.2 protocol validator path differs")
+        if not planned_validator.is_file() or sha256_file(planned_validator) != plan.get(
+            "protocol_validator_sha256"
+        ):
+            raise DryRunVeto("protocol-or-arm-drift", "v0.2 protocol validator digest differs")
+        expected_plan_schema = "mindthus-beta2-dry-run-plan-v0.2"
+    else:
+        expected_plan_schema = "mindthus-beta2-dry-run-plan-v0.1"
+    if plan.get("schema_version") != expected_plan_schema:
+        raise DryRunVeto("protocol-or-arm-drift", "dry-run plan/protocol versions differ")
+    protocol_surfaces = list(protocol.get("workload", {}).get("host_surfaces", []))
+    if list(plan.get("supported_surfaces", [])) != protocol_surfaces:
+        raise DryRunVeto("protocol-or-arm-drift", "dry-run surfaces differ from frozen workload")
     protocol_report = run_check(
         [
             "python3",
-            str(PROTOCOL_VALIDATOR),
+            str(validator_path),
             "validate",
             "--protocol",
             str(protocol_path),
@@ -150,7 +178,6 @@ def verify_protocol_and_matrix(plan: Mapping[str, Any]) -> tuple[dict[str, Any],
         veto_id="protocol-or-arm-drift",
         label="case matrix validation",
     )
-    protocol = read_json(protocol_path)
     matrix = read_json(matrix_path)
     lock = read_json(lock_path)
     if protocol_report.get("protocol_sha256") != plan.get("protocol_sha256"):
@@ -187,8 +214,17 @@ def verify_arm_set(
     fault: str | None,
 ) -> list[dict[str, Any]]:
     manifest_paths = [Path(str(value)) for value in plan.get("arm_manifests", [])]
-    if len(manifest_paths) != 6 or len({str(path.resolve()) for path in manifest_paths}) != 6:
-        raise DryRunVeto("cross-arm-contamination", "dry-run requires six distinct arm manifests")
+    required_surfaces = set(plan.get("supported_surfaces", []))
+    if not required_surfaces or not required_surfaces.issubset(KNOWN_SURFACES):
+        raise DryRunVeto("protocol-or-arm-drift", "dry-run surfaces are missing or unsupported")
+    expected_manifest_count = len(required_surfaces) * len(REQUIRED_ARMS)
+    if len(manifest_paths) != expected_manifest_count or len(
+        {str(path.resolve()) for path in manifest_paths}
+    ) != expected_manifest_count:
+        raise DryRunVeto(
+            "cross-arm-contamination",
+            f"dry-run requires {expected_manifest_count} distinct arm manifests",
+        )
     run_check(
         ["python3", str(SEALER), "verify-set", *[str(path) for path in manifest_paths]],
         veto_id="protocol-or-arm-drift",
@@ -197,7 +233,7 @@ def verify_arm_set(
     manifests = [read_json(path) for path in manifest_paths]
     observed_pairs = {(item.get("surface"), item.get("arm_id")) for item in manifests}
     required_pairs = {
-        (surface, arm) for surface in REQUIRED_SURFACES for arm in REQUIRED_ARMS
+        (surface, arm) for surface in required_surfaces for arm in REQUIRED_ARMS
     }
     if observed_pairs != required_pairs:
         raise DryRunVeto("cross-arm-contamination", "arm/surface matrix is incomplete or duplicated")
@@ -401,8 +437,9 @@ def materialize_homes(
     *,
     resume: bool,
 ) -> dict[str, str]:
+    manifest_list = list(manifests)
     receipts: dict[str, str] = {}
-    for manifest in manifests:
+    for manifest in manifest_list:
         target = out_dir / "materialized-homes" / manifest["surface"] / manifest["arm_id"]
         receipt_path = target / "home-receipt.json"
         expected, copies = materialized_home_payload(manifest, target)
@@ -427,7 +464,7 @@ def materialize_homes(
                 shutil.copyfile(source, destination)
             write_atomic_json(receipt_path, expected)
         receipts[manifest["identity_digest"]] = expected["home_receipt_digest"]
-    if len(receipts) != 6:
+    if len(receipts) != len(manifest_list):
         raise DryRunVeto("cross-arm-contamination", "materialized home identities are not unique")
     return receipts
 

@@ -1,0 +1,54 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.1",
+  "authorization_id": "issue-119-codex-v0.2",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization.py",
+  "authorization_validator_sha256": "42437cb243992e628ff17f675faac08291d0fed0d5e7974f992ed2c98f8499a0",
+  "status": "pending",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.2.json",
+    "sha256": "a886ebd0f94a4a01f28319f635b72999c28196b59956393eedc260e20db2d192",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.2.lock.json",
+    "lock_digest": "72f4af3e14f6d76fa920d623aaa00436dd4bbde5fb22ff7d34b630d865be0edc"
+  },
+  "host_surface": "codex-plugin",
+  "planned_generation_outputs": 261,
+  "planned_judge_records": 522,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 276,
+  "maximum_judge_calls": 552,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 25000000,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "human_confirmation": {
+    "authority": "William",
+    "confirmed_protocol_digest": null,
+    "confirmed_at_utc": null,
+    "source_summary": "The user authorized the Codex-only path and recommended defaults before the v0.2 digest existed; exact post-freeze digest binding remains required."
+  },
+  "sealed_case_attestation_path": null,
+  "blocking_requirements": [
+    "post-freeze human confirmation of protocol digest a886ebd0f94a4a01f28319f635b72999c28196b59956393eedc260e20db2d192",
+    "independent custodian binding and blindness attestation for all four sealed-shadow receipts"
+  ]
+}

@@ -17,6 +17,22 @@ REPO_ROOT = BETA_ROOT.parents[1]
 SEALER = BETA_ROOT / "runtime" / "seal-arm-manifest.py"
 PROTOCOL = BETA_ROOT / "protocols" / "evaluation-protocol-v0.1.json"
 PROTOCOL_LOCK = BETA_ROOT / "protocols" / "evaluation-protocol-v0.1.lock.json"
+PROTOCOL_CONFIGS = {
+    "0.1": {
+        "protocol": PROTOCOL,
+        "lock": PROTOCOL_LOCK,
+        "validator": BETA_ROOT / "runtime" / "freeze-evaluation-protocol.py",
+        "surfaces": ("codex-plugin", "claude-plugin"),
+        "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.1",
+    },
+    "0.2": {
+        "protocol": BETA_ROOT / "protocols" / "evaluation-protocol-v0.2.json",
+        "lock": BETA_ROOT / "protocols" / "evaluation-protocol-v0.2.lock.json",
+        "validator": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.2.py",
+        "surfaces": ("codex-plugin",),
+        "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.2",
+    },
+}
 CASE_MATRIX = BETA_ROOT / "fixtures" / "evaluation-case-matrix.json"
 NEGATIVE_CATALOG = BETA_ROOT / "fixtures" / "dry-run-negative-cases.json"
 OWNERS = ("using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan")
@@ -45,6 +61,36 @@ def canonical_sha256(value: object) -> str:
             separators=(",", ":"),
         ).encode("utf-8")
     ).hexdigest()
+
+
+def discovered_agents_files(host_home: Path, execution_root: Path) -> list[Path]:
+    discovered: set[Path] = set()
+    home_agents = host_home / "AGENTS.md"
+    if home_agents.is_file():
+        discovered.add(home_agents.resolve())
+    current = execution_root.resolve()
+    while True:
+        candidate = current / "AGENTS.md"
+        if candidate.is_file():
+            discovered.add(candidate.resolve())
+        parent = current.parent
+        if parent == current:
+            break
+        current = parent
+    return sorted(discovered, key=str)
+
+
+def ambient_agents_entries(host_home: Path, execution_root: Path) -> list[dict[str, str]]:
+    entries: list[dict[str, str]] = []
+    for path in discovered_agents_files(host_home, execution_root):
+        if path == (host_home / "AGENTS.md").resolve():
+            identifier = "host-agents"
+        elif path == (execution_root.parent / "AGENTS.md").resolve():
+            identifier = "workspace-agents"
+        else:
+            identifier = f"inherited-agents-{hashlib.sha256(str(path).encode()).hexdigest()[:12]}"
+        entries.append({"kind": "agents-file", "id": identifier, "path": str(path)})
+    return entries
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -151,17 +197,25 @@ def seal(spec_path: Path, manifest_path: Path) -> None:
         raise RuntimeError(result.stderr or result.stdout)
 
 
-def build(root: Path) -> Path:
+def build(root: Path, *, protocol_version: str = "0.1") -> Path:
+    configuration = PROTOCOL_CONFIGS[protocol_version]
+    protocol_path = Path(configuration["protocol"])
+    protocol_lock_path = Path(configuration["lock"])
+    protocol_validator_path = Path(configuration["validator"])
+    surfaces = tuple(configuration["surfaces"])
+    for required in (protocol_path, protocol_lock_path, protocol_validator_path):
+        if not required.is_file():
+            raise RuntimeError(f"dry-run prerequisite is missing: {required}")
     root = root.resolve()
     root.mkdir(parents=True, exist_ok=True)
     packages = {
         (surface, kind): make_package(root, surface, kind)
-        for surface in ("codex-plugin", "claude-plugin")
+        for surface in surfaces
         for kind in ("stable", "beta")
     }
     manifest_paths: list[Path] = []
     observations: list[dict[str, Any]] = []
-    for surface in ("codex-plugin", "claude-plugin"):
+    for surface in surfaces:
         for arm_id in ("stable", "direct-only", "thin-kernel"):
             case_root = root / "arms" / surface / arm_id
             home = case_root / "source-home"
@@ -223,14 +277,7 @@ def build(root: Path) -> Path:
                 "hook_state": hook_state,
                 "model": {"id": "deterministic-mock", "reasoning": "none"},
                 "tools": ["deterministic-mock"],
-                "ambient_context_files": [
-                    {"kind": "agents-file", "id": "host-agents", "path": str(home_agents)},
-                    {
-                        "kind": "agents-file",
-                        "id": "workspace-agents",
-                        "path": str(workspace_agents),
-                    },
-                ],
+                "ambient_context_files": ambient_agents_entries(home, execution_root),
                 "opaque_context": [
                     {
                         "kind": "system-context",
@@ -277,12 +324,12 @@ def build(root: Path) -> Path:
     write_json(judge_path, judge_environment)
 
     plan = {
-        "schema_version": "mindthus-beta2-dry-run-plan-v0.1",
+        "schema_version": configuration["plan_schema_version"],
         "executor": "deterministic-mock-only",
         "model_execution_allowed": False,
-        "protocol_path": str(PROTOCOL.resolve()),
-        "protocol_sha256": sha256_file(PROTOCOL),
-        "protocol_lock_path": str(PROTOCOL_LOCK.resolve()),
+        "protocol_path": str(protocol_path.resolve()),
+        "protocol_sha256": sha256_file(protocol_path),
+        "protocol_lock_path": str(protocol_lock_path.resolve()),
         "case_matrix_path": str(CASE_MATRIX.resolve()),
         "case_matrix_sha256": sha256_file(CASE_MATRIX),
         "arm_manifests": [str(path) for path in manifest_paths],
@@ -291,9 +338,12 @@ def build(root: Path) -> Path:
         "judge_environment_sha256": sha256_file(judge_path),
         "dry_run_case_ids": list(DRY_RUN_CASE_IDS),
         "required_lifecycle_paths": ["startup", "resume", "clear", "compact"],
-        "supported_surfaces": ["codex-plugin", "claude-plugin"],
+        "supported_surfaces": list(surfaces),
         "negative_fixture_catalog": str(NEGATIVE_CATALOG.resolve()),
     }
+    if protocol_version == "0.2":
+        plan["protocol_validator_path"] = str(protocol_validator_path.resolve())
+        plan["protocol_validator_sha256"] = sha256_file(protocol_validator_path)
     plan["plan_digest"] = canonical_sha256(plan)
     plan_path = root / "dry-run-plan.json"
     write_json(plan_path, plan)
@@ -303,13 +353,14 @@ def build(root: Path) -> Path:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--protocol-version", choices=sorted(PROTOCOL_CONFIGS), default="0.1")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        plan_path = build(args.root)
+        plan_path = build(args.root, protocol_version=args.protocol_version)
     except (OSError, json.JSONDecodeError, RuntimeError, subprocess.SubprocessError) as exc:
         print(f"dry-run fixture build failed: {exc}", file=sys.stderr)
         return 2
