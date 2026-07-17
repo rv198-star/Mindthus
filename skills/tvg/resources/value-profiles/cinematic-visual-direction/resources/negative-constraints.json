@@ -1,0 +1,18 @@
+{
+  "schema_version": "cinematic-visual-direction-negative-constraints-v1",
+  "profile": "cinematic-visual-direction",
+  "media_terms_are_constraint_only_when_user_or_profile_requires_them": true,
+  "safe_visual_failure_handles": [
+    "unclear_primary_read",
+    "split_competing_actions",
+    "highlight_steals_primary_image",
+    "frame_cut_into_unrelated_pieces",
+    "decorative_destruction",
+    "random_texture_clutter",
+    "flat_unmotivated_lighting",
+    "incoherent_material_response",
+    "generic_spectacle",
+    "adapter_rule_applied_out_of_scope",
+    "unrequested_media_drift"
+  ]
+}

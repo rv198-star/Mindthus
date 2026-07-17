@@ -1,0 +1,11 @@
+{
+  "schema_version": "cinematic-visual-direction-field-templates-v1",
+  "profile": "cinematic-visual-direction",
+  "field_lock_policy": {
+    "preserve_user_field_names": true,
+    "preserve_user_field_order": true,
+    "do_not_add_fields_when_user_says_fixed": true,
+    "allowed_change": "rewrite field contents only"
+  },
+  "known_field_markers": ["【镜头角度】", "【景别】", "【前景】", "【中景】", "【远景】", "【负面约束】"]
+}

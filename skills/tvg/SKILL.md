@@ -107,6 +107,13 @@ Value-Gain Scoring Reference is enabled by default as an always-on reference for
 
 Fidelity support: use `resources/fidelity-contract.md`, `templates/fidelity-output.json`, and `scripts/validate_tvg_output.py`; this is a fidelity contract shape check, not semantic approval.
 
+Visual atlas support: use `resources/atlas-search-contract.json` and
+`scripts/atlas/` for Profile-preserving `9 -> 3 -> 9` exploration, stable
+`Rnn-Eyy` IDs, visible lineage, evidence hashes, delivery audit state, and
+finalization evidence. `search-freeze` ends exploration; it does not certify a newly
+generated delivery board. Atlas scripts only label, compose, and validate deterministic
+facts; aesthetic selection and exit remain agentic, with final taste owned by the user.
+
 Resources: `resources/methodology.md`, `resources/exit-audit-template.md`, `resources/trace-record-schema.json`, `resources/value-profiles/profile-construction.md`.
 
 ## Boundaries / 边界

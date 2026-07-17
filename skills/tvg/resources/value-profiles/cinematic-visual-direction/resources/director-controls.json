@@ -1,0 +1,79 @@
+{
+  "schema_version": "cinematic-visual-direction-controls-v1",
+  "profile": "cinematic-visual-direction",
+  "camera_defaults": {
+    "aspect_ratio": "resolve from the intended delivery frame",
+    "viewpoint": "choose a scene-motivated witness, subject, or observational position",
+    "angle": "make angle serve the primary image rather than cinematic convention",
+    "lens": "choose field width and compression from scene relation",
+    "depth": "keep only the planes needed for the chosen eye path"
+  },
+  "lighting_defaults": {
+    "source_policy": "name a credible source or motivated reveal condition",
+    "atmosphere_policy": "use atmosphere only when it carries depth, motion, focus, or mood",
+    "exposure_policy": "protect the primary read and subordinate decorative highlights"
+  },
+  "director_shot_spine": {
+    "shot_cues": [
+      "primary focal decision",
+      "viewer-eye path",
+      "reveal aperture or silhouette logic",
+      "edge occlusion as shot evidence",
+      "secondary details serve the shot"
+    ],
+    "guardrails": [
+      "do not let checklist detail compete with the primary image",
+      "keep the primary focus readable through reveal light",
+      "do not add a shot list; keep one decisive frame",
+      "do not copy external skill wording"
+    ]
+  },
+  "director_subtraction_pass": {
+    "major_event_budget": 1,
+    "default_foreground_intrusion_budget": 2,
+    "subtractive_checks": [
+      "if two actions read equally strong, demote one into reaction, silhouette, atmosphere, or aftermath",
+      "if a bright effect reads before the subject or event, shrink it, darken it, or place it behind the hierarchy",
+      "if foreground objects cut the frame into unrelated pieces, keep only those that route the eye",
+      "if destruction or texture does not read as consequence, merge it into atmosphere or remove it"
+    ],
+    "guardrails": [
+      "do not solve clutter by collapsing every scene into a close portrait",
+      "do not sterilize useful weather, fracture, or atmosphere",
+      "do not let secondary reaction beats become equal-strength micro-events"
+    ]
+  },
+  "controlled_fracture_coherence": {
+    "coherence_rules": [
+      "every chaotic element must point to focus, spatial relation, motion, or atmosphere",
+      "preserve physical continuity across fragments",
+      "keep directional forces consistent across weather, fabric, vegetation, smoke, dust, water, and reflections",
+      "separate the primary silhouette or event from noisy texture"
+    ],
+    "guardrails": [
+      "do not sterilize the scene",
+      "do not let texture become random clutter",
+      "do not let brokenness hide the primary image"
+    ]
+  },
+  "shot_economy_mode": {
+    "primary_image_budget": 1,
+    "supporting_vector_budget": 3,
+    "allowed_supporting_vector_roles": ["focus", "scene relation", "motion", "atmosphere"],
+    "demotion_policy": [
+      "demote correct but attention-expensive elements",
+      "keep secondary action as reaction or aftermath when the main event is readable",
+      "turn extra figures, debris, and lights into subordinate vectors or remove them"
+    ],
+    "negative_space_policy": [
+      "preserve quiet or dark zones when they strengthen the primary image",
+      "allow low-detail atmosphere when it improves depth or emotional duration",
+      "do not treat every empty region as a defect"
+    ],
+    "guardrails": [
+      "do not increase intensity by filling every region",
+      "do not satisfy every Profile surface at equal visual weight",
+      "do not make the scene sterile while reducing clutter"
+    ]
+  }
+}

@@ -1,4 +1,6 @@
 import json
+import hashlib
+import importlib.util
 import subprocess
 import tempfile
 import unittest
@@ -7,6 +9,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 TVG = REPO / "skills" / "tvg"
+PILLOW_AVAILABLE = importlib.util.find_spec("PIL") is not None
 
 
 class TvgContractTests(unittest.TestCase):
@@ -1015,11 +1018,11 @@ class TvgContractTests(unittest.TestCase):
             "`runtime_support`",
             "当前随包提供五类 profile 资源",
             "plain-sharp-skill-intro",
-            "cinematic-colossal-realism",
+            "cinematic-visual-direction",
             "案例索引",
             "tvg-profile-cases/plain-sharp-skill-intro.md",
             "tvg-profile-cases/film-style-profiles.md",
-            "tvg-profile-cases/cinematic-colossal-realism.md",
+            "tvg-profile-cases/cinematic-visual-direction.md",
         ):
             self.assertIn(phrase, text)
 
@@ -1047,10 +1050,10 @@ class TvgContractTests(unittest.TestCase):
             / "docs"
             / "methodologies"
             / "tvg-profile-cases"
-            / "cinematic-colossal-realism.md": (
-                "不是把外部 cinematic prompt skill 原样搬进来",
-                "行为样本，而不是 source truth",
-                "我们给它的角色，本来就只是确定性支撑，不是审美裁决",
+            / "cinematic-visual-direction.md": (
+                "相对通用的影视画面优化",
+                "行为样本，不是 source truth",
+                "巨物能力没有删除",
             ),
         }
         for path, phrases in cases.items():
@@ -1326,325 +1329,433 @@ class TvgContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_cinematic_colossal_profile_package_exists_and_uses_four_layers(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = profile_dir / "profile.md"
-        self.assertTrue(profile.exists())
-        text = profile.read_text(encoding="utf-8")
+    def test_cinematic_visual_direction_profile_is_general_and_four_layered(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
         for phrase in (
-            "cinematic colossal realism",
+            "cinematic visual direction",
             "value_semantics",
             "realization_surface",
             "gain_policy",
             "runtime_support",
             "behavior sample, not source truth",
-            "must not copy the external skill's concrete wording",
+            "intentionally scene-general",
             "scripts must not decide aesthetic success, profile maturity, or TVG exit",
         ):
-            self.assertIn(phrase, text)
+            self.assertIn(phrase, profile)
+        self.assertIn("colossal-pressure", profile)
+        self.assertIn("must not be imposed on quiet landscapes", profile)
 
-    def test_cinematic_colossal_runtime_resources_have_required_shapes(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        resource_names = (
-            "subject-taxonomy.json",
-            "scene-defaults.json",
-            "camera-lighting.json",
+        legacy = (
+            TVG
+            / "resources"
+            / "value-profiles"
+            / "cinematic-colossal-realism"
+            / "profile.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("Compatibility Alias", legacy)
+        self.assertIn("not a second canonical Profile", legacy)
+
+    def test_cinematic_visual_direction_resources_separate_core_and_colossal_adapter(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        for name in (
+            "director-controls.json",
             "negative-constraints.json",
             "field-templates.json",
             "image-audit-rubric.json",
-        )
-        for name in resource_names:
-            path = profile_dir / "resources" / name
-            self.assertTrue(path.exists(), name)
-            payload = json.loads(path.read_text(encoding="utf-8"))
-            self.assertIn("schema_version", payload)
-            self.assertIn("profile", payload)
-            self.assertEqual(payload["profile"], "cinematic-colossal-realism")
-
-    def test_cinematic_colossal_profile_has_decisive_pressure_support(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "decisive-pressure-frame-depth",
-            "Use a decisive pressure frame",
-            "first-read cinematic pressure",
         ):
-            self.assertIn(phrase, profile)
+            payload = json.loads((profile_dir / "resources" / name).read_text(encoding="utf-8"))
+            self.assertEqual(payload["profile"], "cinematic-visual-direction")
 
-        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
-        pressure_frame = camera["decisive_pressure_frame"]
-        self.assertIn("near-overhead local threat cue", pressure_frame["composition_cues"])
-        self.assertIn("dominant subject fragment", pressure_frame["composition_cues"])
-        self.assertIn("upper-third focal pressure point", pressure_frame["composition_cues"])
-        self.assertIn("avoid replacing witness scale with poster display", pressure_frame["guardrails"])
-        self.assertIn("avoid pushing the decisive fragment to the far edge", pressure_frame["guardrails"])
+        controls = json.loads(
+            (profile_dir / "resources" / "director-controls.json").read_text(encoding="utf-8")
+        )
+        self.assertIn("director_shot_spine", controls)
+        self.assertIn("director_subtraction_pass", controls)
+        self.assertIn("controlled_fracture_coherence", controls)
+        self.assertIn("shot_economy_mode", controls)
+        self.assertNotIn("decisive_pressure_frame", controls)
 
-        scripts = profile_dir / "scripts"
-        skeleton = subprocess.run(
-            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+        adapter = json.loads(
+            (profile_dir / "resources" / "scene-adapters" / "colossal-pressure.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(adapter["adapter"], "colossal-pressure")
+        self.assertIn("witness anchor", adapter["realization_surfaces"])
+        self.assertIn("three-layer scale ladder", adapter["realization_surfaces"])
+        self.assertIn("decisive pressure frame", adapter["gain_moves"])
+        self.assertEqual(sorted(adapter["operating_intensity"]), ["2", "3", "4", "5"])
+
+    def test_cinematic_prompt_skeleton_activates_colossal_rules_only_with_adapter(self):
+        scripts = (
+            TVG / "resources" / "value-profiles" / "cinematic-visual-direction" / "scripts"
+        )
+        base = subprocess.run(
+            ["python3", str(scripts / "build_prompt_skeleton.py"), "一江春水向东流"],
             text=True,
             capture_output=True,
         )
-        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
-        payload = json.loads(skeleton.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertEqual(payload["primary_category"], "eastern_dragon_colossus")
-        self.assertIn("decisive_pressure_frame", payload["skeleton"])
-        self.assertIn(
-            "near-overhead local threat cue",
-            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
-        )
-        self.assertIn(
-            "upper-third focal pressure point",
-            payload["skeleton"]["decisive_pressure_frame"]["composition_cues"],
-        )
-        self.assertNotIn("aesthetic_success", payload["skeleton"]["decisive_pressure_frame"])
+        self.assertEqual(base.returncode, 0, base.stderr)
+        base_payload = json.loads(base.stdout)
+        self.assertEqual(base_payload["profile"], "cinematic-visual-direction")
+        self.assertIsNone(base_payload["resolved_adapter"])
+        self.assertNotIn("scene_adapter", base_payload["skeleton"])
 
-    def test_cinematic_colossal_profile_has_director_shot_spine_support(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "director-shot-spine-depth",
-            "director shot spine",
-            "secondary details serve the shot",
-        ):
-            self.assertIn(phrase, profile)
-
-        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
-        shot_spine = camera["director_shot_spine"]
-        for cue in (
-            "primary focal decision",
-            "viewer-eye path",
-            "reveal aperture or silhouette logic",
-            "edge occlusion as shot evidence",
-            "secondary details serve the shot",
-        ):
-            self.assertIn(cue, shot_spine["shot_cues"])
-        self.assertIn("do not let checklist detail compete with the primary image", shot_spine["guardrails"])
-        self.assertIn("keep the primary focus readable through reveal light", shot_spine["guardrails"])
-
-        scripts = profile_dir / "scripts"
-        skeleton = subprocess.run(
-            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
+        colossal = subprocess.run(
+            [
+                "python3",
+                str(scripts / "build_prompt_skeleton.py"),
+                "--adapter",
+                "colossal-pressure",
+                "中国黑龙盘踞在京城上空",
+            ],
             text=True,
             capture_output=True,
         )
-        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
-        payload = json.loads(skeleton.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("director_shot_spine", payload["skeleton"])
-        self.assertIn("primary focal decision", payload["skeleton"]["director_shot_spine"]["shot_cues"])
-        self.assertNotIn("director_quality", payload["skeleton"]["director_shot_spine"])
+        self.assertEqual(colossal.returncode, 0, colossal.stderr)
+        payload = json.loads(colossal.stdout)
+        self.assertEqual(payload["resolved_adapter"], "colossal-pressure")
+        self.assertIn("three-layer scale ladder", payload["skeleton"]["scene_adapter"]["realization_surfaces"])
+        self.assertNotIn("aesthetic_success", colossal.stdout)
 
-    def test_cinematic_colossal_profile_has_director_subtraction_pass(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "director-subtraction-depth",
-            "director subtraction pass",
-            "one major event",
-        ):
-            self.assertIn(phrase, profile)
-
-        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
-        subtraction = camera["director_subtraction_pass"]
-        self.assertEqual(subtraction["major_event_budget"], 1)
-        self.assertEqual(subtraction["foreground_intrusion_budget"], 2)
-        self.assertIn(
-            "if two actions read equally strong, demote one into reaction, silhouette, or atmosphere",
-            subtraction["subtractive_checks"],
-        )
-        self.assertIn("competing highlights", subtraction["demotion_targets"])
-        self.assertIn(
-            "do not solve clutter by collapsing the scene into a close hero portrait",
-            subtraction["guardrails"],
-        )
-
-        scripts = profile_dir / "scripts"
-        skeleton = subprocess.run(
-            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
-            text=True,
-            capture_output=True,
-        )
-        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
-        payload = json.loads(skeleton.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("director_subtraction_pass", payload["skeleton"])
-        self.assertEqual(payload["skeleton"]["director_subtraction_pass"]["major_event_budget"], 1)
-        self.assertNotIn("aesthetic_success", payload["skeleton"]["director_subtraction_pass"])
-
-    def test_cinematic_colossal_profile_controls_mess_and_fracture(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "controlled-fracture-coherence-depth",
-            "controlled fracture coherence",
-            "messy material becomes readable pressure",
-        ):
-            self.assertIn(phrase, profile)
-
-        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
-        fracture = camera["controlled_fracture_coherence"]
-        self.assertIn("rain streaks, haze, debris, partial occlusion, broken reflections, damaged surfaces", fracture["allowed_chaos_materials"])
-        self.assertIn("every chaotic element must point to focus, scale, motion, or atmosphere", fracture["coherence_rules"])
-        self.assertIn("preserve physical continuity across fragments", fracture["coherence_rules"])
-        self.assertIn("do not sterilize the scene", fracture["guardrails"])
-        self.assertIn("do not let texture become random clutter", fracture["guardrails"])
-
-        scripts = profile_dir / "scripts"
-        skeleton = subprocess.run(
-            ["python3", str(scripts / "build_prompt_skeleton.py"), "中国黑龙盘踞在京城上空"],
-            text=True,
-            capture_output=True,
-        )
-        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
-        payload = json.loads(skeleton.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("controlled_fracture_coherence", payload["skeleton"])
-        self.assertIn(
-            "every chaotic element must point to focus, scale, motion, or atmosphere",
-            payload["skeleton"]["controlled_fracture_coherence"]["coherence_rules"],
-        )
-        self.assertNotIn("aesthetic_success", payload["skeleton"]["controlled_fracture_coherence"])
-
-    def test_cinematic_colossal_profile_has_shot_economy_mode(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "shot-economy-mode-depth",
-            "shot economy mode",
-            "subtractive selection before additive strengthening",
-        ):
-            self.assertIn(phrase, profile)
-
-        camera = json.loads((profile_dir / "resources" / "camera-lighting.json").read_text(encoding="utf-8"))
-        economy = camera["shot_economy_mode"]
-        self.assertEqual(economy["primary_image_budget"], 1)
-        self.assertEqual(economy["supporting_vector_budget"], 3)
-        self.assertIn("focus", economy["allowed_supporting_vector_roles"])
-        self.assertIn("scale", economy["allowed_supporting_vector_roles"])
-        self.assertIn("motion", economy["allowed_supporting_vector_roles"])
-        self.assertIn("atmosphere", economy["allowed_supporting_vector_roles"])
-        self.assertIn("demote correct but attention-expensive elements", economy["demotion_policy"])
-        self.assertIn("keep secondary action as reaction or aftermath when the main event is already readable", economy["demotion_policy"])
-        self.assertIn("preserve quiet or dark zones when they strengthen the primary image", economy["negative_space_policy"])
-        self.assertIn("do not increase pressure by filling every region", economy["guardrails"])
-        self.assertIn("do not collapse the scale vector into a close character shot", economy["guardrails"])
-
-        scripts = profile_dir / "scripts"
-        skeleton = subprocess.run(
-            ["python3", str(scripts / "build_prompt_skeleton.py"), "韩立释放大衍剑阵"],
-            text=True,
-            capture_output=True,
-        )
-        self.assertEqual(skeleton.returncode, 0, skeleton.stderr)
-        payload = json.loads(skeleton.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("shot_economy_mode", payload["skeleton"])
-        self.assertEqual(payload["skeleton"]["shot_economy_mode"]["primary_image_budget"], 1)
-        self.assertIn(
-            "demote correct but attention-expensive elements",
-            payload["skeleton"]["shot_economy_mode"]["demotion_policy"],
-        )
-        self.assertNotIn("aesthetic_success", payload["skeleton"]["shot_economy_mode"])
-
-    def test_cinematic_colossal_image_audit_rubric_tracks_director_subtraction(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        rubric = json.loads((profile_dir / "resources" / "image-audit-rubric.json").read_text(encoding="utf-8"))
-        self.assertIn("director_subtraction_pass", rubric["prompt_review_handles"])
-        self.assertIn("single_major_event_visible", rubric["image_review_handles"])
-
-        negative = json.loads((profile_dir / "resources" / "negative-constraints.json").read_text(encoding="utf-8"))
-        self.assertIn("split_competing_actions", negative["safe_visual_failure_handles"])
-        self.assertIn("highlight_steals_subject", negative["safe_visual_failure_handles"])
-
-    def test_cinematic_colossal_profile_documents_pressure_fit_guidance(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
-        for phrase in (
-            "recommended starting",
-            "pressure is `3`",
-            "This pressure guidance is profile-specific operating advice",
-        ):
-            self.assertIn(phrase, profile)
-
-        examples = (profile_dir / "examples" / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
-        self.assertIn("## Pressure-Fit Guidance", examples)
-        self.assertIn("best general starting point for this profile", examples)
-
-    def test_cinematic_colossal_scripts_report_findings_without_pass_or_exit(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        scripts = profile_dir / "scripts"
-        classify = subprocess.run(
-            ["python3", str(scripts / "classify_subject.py"), "black tide dragon bone god"],
-            text=True,
-            capture_output=True,
-        )
-        self.assertEqual(classify.returncode, 0, classify.stderr)
-        classified = json.loads(classify.stdout)
-        self.assertEqual(classified["script_boundary"], "support_only_agentic_audit_required")
-        self.assertEqual(classified["primary_category"], "deep_sea_colossus_deity")
-        self.assertNotIn("PASS", classify.stdout)
-        self.assertNotIn("freeze", classify.stdout.lower())
-
+    def test_cinematic_profile_scripts_report_findings_without_semantic_verdict(self):
+        scripts = TVG / "resources" / "value-profiles" / "cinematic-visual-direction" / "scripts"
         lint = subprocess.run(
             [
                 "python3",
                 str(scripts / "lint_prompt_packet.py"),
+                "--adapter",
+                "colossal-pressure",
                 "--prompt",
-                "A huge god in the ocean, cinematic, animation style.",
+                "A huge god, cinematic.",
             ],
             text=True,
             capture_output=True,
         )
         self.assertEqual(lint.returncode, 1, lint.stderr + lint.stdout)
-        linted = json.loads(lint.stdout)
-        self.assertEqual(linted["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("missing_human_scale_anchor", linted["finding_codes"])
-        self.assertIn("missing_physical_environment_feedback", linted["finding_codes"])
-        self.assertIn("forbidden_media_term", linted["finding_codes"])
+        payload = json.loads(lint.stdout)
+        self.assertIn("missing_camera_relation", payload["finding_codes"])
+        self.assertIn("missing_colossal_witness_anchor", payload["finding_codes"])
+        self.assertIn("missing_colossal_environment_feedback", payload["finding_codes"])
         self.assertNotIn("PASS", lint.stdout)
+        self.assertNotIn("freeze", lint.stdout.lower())
 
-    def test_cinematic_colossal_field_lock_validator_reports_template_drift(self):
-        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism"
-        script = profile_dir / "scripts" / "validate_field_lock.py"
         expected = "【镜头角度】\n【景别】\n【前景】\n【远景】"
         output = "【镜头角度】\n低机位\n【前景】\n潜水器\n【远景】\n古神"
-        result = subprocess.run(
-            ["python3", str(script), "--expected-fields", expected, "--output", output],
+        field_lock = subprocess.run(
+            [
+                "python3",
+                str(scripts / "validate_field_lock.py"),
+                "--expected-fields",
+                expected,
+                "--output",
+                output,
+            ],
             text=True,
             capture_output=True,
         )
-        self.assertEqual(result.returncode, 1, result.stderr + result.stdout)
-        payload = json.loads(result.stdout)
-        self.assertEqual(payload["script_boundary"], "support_only_agentic_audit_required")
-        self.assertIn("missing_field", payload["finding_codes"])
-        self.assertEqual(payload["missing_fields"], ["【景别】"])
+        self.assertEqual(field_lock.returncode, 1, field_lock.stderr + field_lock.stdout)
+        self.assertIn("missing_field", json.loads(field_lock.stdout)["finding_codes"])
 
-    def test_cinematic_colossal_examples_separate_profile_power_from_runtime_rescue(self):
+    def test_legacy_colossal_examples_keep_profile_power_and_runtime_rescue_separate(self):
         examples = TVG / "resources" / "value-profiles" / "cinematic-colossal-realism" / "examples"
         single_pass = (examples / "single-pass-profile-power.md").read_text(encoding="utf-8")
         loop_assisted = (examples / "loop-assisted-image-comparison.md").read_text(encoding="utf-8")
         research_log = (examples / "loop-assisted-research-log.md").read_text(encoding="utf-8")
-        for phrase in (
-            "single_pass_profile_power",
-            "profile_control_power: partial",
-            "claim_ceiling",
-            "fixed profile",
-        ):
-            self.assertIn(phrase, single_pass)
-        for phrase in (
-            "loop_assisted_profile_use",
-            "baseline vs basic profile vs advanced four-layer profile",
-            "Images2 output is loop-assisted production evidence",
-            "does not prove the profile is generally strong",
-            "canonical exemplar note",
-        ):
-            self.assertIn(phrase, loop_assisted)
-        self.assertNotIn("【最终提示词】", loop_assisted)
-        self.assertNotIn("B Original SKILL", loop_assisted)
+        self.assertIn("single_pass_profile_power", single_pass)
+        self.assertIn("profile_control_power: partial", single_pass)
+        self.assertIn("loop_assisted_profile_use", loop_assisted)
+        self.assertIn("does not prove the profile is generally strong", loop_assisted)
+        self.assertIn("colossal-pressure", loop_assisted)
         self.assertIn("Loop-Assisted Research Log", research_log)
-        self.assertIn("donor-skill behavior family summary", research_log)
+
+    def test_generic_atlas_contract_preserves_profile_and_human_ownership(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        profile = (profile_dir / "profile.md").read_text(encoding="utf-8")
+        workflow = (profile_dir / "examples" / "atlas-search-workflow.md").read_text(
+            encoding="utf-8"
+        )
+        contract = json.loads((TVG / "resources" / "atlas-search-contract.json").read_text(encoding="utf-8"))
+        self.assertIn("9 -> 3 -> 9", workflow)
+        self.assertIn("search freeze is not final artifact freeze", workflow.lower())
+        self.assertIn("post-generation agentic delivery audit", json.dumps(contract))
+        self.assertEqual(contract["candidate_id_policy"], "Rnn-E01 through Rnn-E09 in row-major order")
+        self.assertEqual(contract["delivery_layout"], "2x2")
+        self.assertIn("every active scene adapter", contract["profile_evidence"])
+        self.assertIn("no delivery board", contract["blocked_run_policy"])
+        self.assertIn("colossal-pressure", profile)
+        self.assertEqual(contract["script_boundary"], "support_only_agentic_audit_required")
+
+    def test_generic_atlas_trace_example_validates(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        validator = TVG / "scripts" / "atlas" / "validate_trace.py"
+        example = profile_dir / "examples" / "atlas-search-trace.example.json"
+        result = subprocess.run(
+            ["python3", str(validator), str(example), "--json"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertTrue(report["valid"])
+        self.assertEqual(report["profile"], "cinematic-visual-direction")
+        self.assertEqual(report["round_count"], 2)
+        self.assertNotIn("PASS", result.stdout)
+
+    def test_generic_atlas_trace_rejects_control_boundary_failures(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        validator = TVG / "scripts" / "atlas" / "validate_trace.py"
+        example = json.loads(
+            (profile_dir / "examples" / "atlas-search-trace.example.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        cases = []
+        missing_profile = json.loads(json.dumps(example))
+        missing_profile["profile_snapshot"] = None
+        cases.append((missing_profile, "profile_snapshot: expected an object"))
+
+        missing_profile_hash = json.loads(json.dumps(example))
+        missing_profile_hash["profile_snapshot"].pop("sha256")
+        cases.append((missing_profile_hash, "profile_snapshot.sha256"))
+
+        missing_adapter_hash = json.loads(json.dumps(example))
+        missing_adapter_hash["profile_snapshot"]["adapters"][0].pop("sha256")
+        cases.append((missing_adapter_hash, "profile_snapshot.adapters[0].sha256"))
+
+        broken_lineage = json.loads(json.dumps(example))
+        broken_lineage["rounds"][1]["candidates"][3]["parent_candidate_id"] = "R00-E02"
+        cases.append((broken_lineage, "row lineage must map"))
+
+        no_search_freeze = json.loads(json.dumps(example))
+        no_search_freeze["rounds"][-1]["selection"]["gate_result"] = "return-remediate"
+        no_search_freeze["rounds"][-1]["selection"]["next_round_positive_value_hypothesis"] = "Another round may help."
+        for review in no_search_freeze["rounds"][-1]["selection"]["parent_reviews"]:
+            review["next_gain_hypothesis"] = "Another round may help."
+            review["exit_rationale"] = None
+        cases.append((no_search_freeze, "delivery requires the final round to reach a search-freeze gate"))
+
+        no_delivery_audit = json.loads(json.dumps(example))
+        no_delivery_audit["delivery"].pop("delivery_audit")
+        cases.append((no_delivery_audit, "delivery.delivery_audit: expected an object"))
+
+        ready_with_veto = json.loads(json.dumps(example))
+        ready_with_veto["delivery"]["candidates"][0]["veto_findings"] = ["primary read is split"]
+        cases.append((ready_with_veto, "ready delivery audit requires no candidate veto findings"))
+
+        skipped_with_residue = json.loads(json.dumps(example))
+        skipped_with_residue["finalization"] = {
+            "state": "skipped",
+            "mode": None,
+            "selected_shortlist_ids": ["S01"],
+            "outputs": [],
+            "reason": "Stopped by user.",
+        }
+        cases.append((skipped_with_residue, "skipped finalization requires null mode"))
+
+        post_hoc_without_warning = json.loads(json.dumps(example))
+        post_hoc_without_warning["rounds"][0]["candidates"][0]["intent_source"] = "post-hoc-with-warning"
+        post_hoc_without_warning["rounds"][-1]["selection"]["gate_result"] = "search-freeze"
+        cases.append((post_hoc_without_warning, "post-hoc R00 intent requires search-freeze-with-review-bound-warning"))
+
+        for payload, expected in cases:
+            with self.subTest(expected=expected), tempfile.TemporaryDirectory() as tmp:
+                trace = Path(tmp) / "trace.json"
+                trace.write_text(json.dumps(payload), encoding="utf-8")
+                result = subprocess.run(
+                    ["python3", str(validator), str(trace)],
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(expected, result.stdout + result.stderr)
+                self.assertNotIn("Traceback", result.stdout + result.stderr)
+
+    def test_generic_atlas_trace_accepts_blocked_run_and_deterministic_compose(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        validator = TVG / "scripts" / "atlas" / "validate_trace.py"
+        example = json.loads(
+            (profile_dir / "examples" / "atlas-search-trace.example.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        blocked = json.loads(json.dumps(example))
+        blocked["rounds"][-1]["selection"]["gate_result"] = "blocked"
+        blocked["delivery"] = None
+        blocked["finalization"] = {
+            "state": "skipped",
+            "mode": None,
+            "selected_shortlist_ids": [],
+            "outputs": [],
+            "reason": "Required runtime evidence is unavailable.",
+        }
+
+        composed = json.loads(json.dumps(example))
+        composed["delivery"]["generation_mode"] = "deterministic-compose"
+        composed["delivery"]["generation"] = {
+            "composition_manifest_path": "artifacts/shortlist-compose.json",
+            "composition_manifest_sha256": "0" * 64,
+            "raw_atlas_path": "artifacts/shortlist-raw.png",
+            "raw_atlas_sha256": "0" * 64,
+            "labeled_atlas_path": "artifacts/shortlist-labeled.png",
+            "labeled_atlas_sha256": "0" * 64,
+        }
+
+        for payload in (blocked, composed):
+            with self.subTest(mode=payload.get("delivery", {}).get("generation_mode") if payload.get("delivery") else "blocked"), tempfile.TemporaryDirectory() as tmp:
+                trace = Path(tmp) / "trace.json"
+                trace.write_text(json.dumps(payload), encoding="utf-8")
+                result = subprocess.run(
+                    ["python3", str(validator), str(trace)],
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_generic_atlas_trace_checks_completed_output_bytes(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        validator = TVG / "scripts" / "atlas" / "validate_trace.py"
+        payload = json.loads(
+            (profile_dir / "examples" / "atlas-search-trace.example.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+
+            def write_evidence(relative_path, content):
+                target = root / relative_path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(content)
+                return hashlib.sha256(content).hexdigest()
+
+            profile_bytes = b"fixed profile snapshot\n"
+            payload["profile_snapshot"]["path"] = "profile.md"
+            payload["profile_snapshot"]["sha256"] = write_evidence("profile.md", profile_bytes)
+            payload["profile_snapshot"]["adapters"] = []
+            write_evidence("artifacts/prompts.json", b"{}\n")
+
+            for round_record in payload["rounds"]:
+                generation = round_record["generation"]
+                for file_key, hash_key in (
+                    ("prompt_path", "prompt_sha256"),
+                    ("raw_atlas_path", "raw_atlas_sha256"),
+                    ("labeled_atlas_path", "labeled_atlas_sha256"),
+                ):
+                    generation[hash_key] = write_evidence(generation[file_key], file_key.encode())
+
+            delivery_generation = payload["delivery"]["generation"]
+            for file_key, hash_key in (
+                ("prompt_path", "prompt_sha256"),
+                ("raw_atlas_path", "raw_atlas_sha256"),
+                ("labeled_atlas_path", "labeled_atlas_sha256"),
+            ):
+                delivery_generation[hash_key] = write_evidence(
+                    delivery_generation[file_key], file_key.encode()
+                )
+
+            output_hash = write_evidence("artifacts/final.png", b"final image bytes")
+            payload["finalization"] = {
+                "state": "completed",
+                "mode": "accept-tile",
+                "selected_shortlist_ids": ["S01"],
+                "outputs": [
+                    {
+                        "source_shortlist_id": "S01",
+                        "path": "artifacts/final.png",
+                        "sha256": output_hash,
+                    }
+                ],
+                "reason": "The user selected S01.",
+            }
+            trace = root / "trace.json"
+            trace.write_text(json.dumps(payload), encoding="utf-8")
+
+            result = subprocess.run(
+                ["python3", str(validator), str(trace), "--check-files"],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+            (root / "artifacts" / "final.png").write_bytes(b"tampered")
+            result = subprocess.run(
+                ["python3", str(validator), str(trace), "--check-files"],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("finalization.outputs[0].sha256: hash does not match", result.stdout)
+
+    @unittest.skipUnless(PILLOW_AVAILABLE, "Pillow is required for atlas tests")
+    def test_generic_atlas_labeler_adds_round_ids_and_visible_lineage(self):
+        from PIL import Image, ImageChops
+
+        labeler = TVG / "scripts" / "atlas" / "label_atlas.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "atlas.png"
+            output = root / "labeled.png"
+            lineage = root / "lineage.json"
+            Image.new("RGB", (90, 90), (110, 120, 130)).save(source)
+            lineage.write_text(json.dumps({f"R02-E{i:02d}": "R01-E04" for i in range(1, 10)}))
+            result = subprocess.run(
+                [
+                    "python3", str(labeler), "--input", str(source), "--output", str(output),
+                    "--layout", "3x3", "--id-prefix", "R02-E", "--lineage-json", str(lineage),
+                    "--font-size", "10", "--json",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(result.stdout)
+            self.assertEqual([item["id"] for item in report["regions"]], [f"R02-E{i:02d}" for i in range(1, 10)])
+            self.assertEqual(report["regions"][0]["parent_candidate_ids"], ["R01-E04"])
+            self.assertEqual(report["regions"][-1]["pixel_box"], [60, 60, 90, 90])
+            with Image.open(source) as before, Image.open(output) as after:
+                self.assertEqual(after.size, before.size)
+                self.assertIsNotNone(ImageChops.difference(before, after).getbbox())
+
+    @unittest.skipUnless(PILLOW_AVAILABLE, "Pillow is required for atlas tests")
+    def test_generic_atlas_selection_board_crops_only_supplied_ids(self):
+        from PIL import Image
+
+        labeler = TVG / "scripts" / "atlas" / "label_atlas.py"
+        selector = TVG / "scripts" / "atlas" / "build_selection_board.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "atlas.png"
+            labels = root / "labels.json"
+            labeled = root / "labeled.png"
+            selected = root / "selected.png"
+            Image.new("RGB", (90, 90), (100, 110, 120)).save(source)
+            label_result = subprocess.run(
+                ["python3", str(labeler), "--input", str(source), "--output", str(labeled),
+                 "--layout", "3x3", "--id-prefix", "R00-E", "--json"],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(label_result.returncode, 0, label_result.stderr)
+            labels.write_text(label_result.stdout, encoding="utf-8")
+            result = subprocess.run(
+                ["python3", str(selector), "--input", str(source), "--labels-json", str(labels),
+                 "--selected", "R00-E01", "R00-E05", "R00-E09", "--output", str(selected), "--json"],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(result.stdout)
+            self.assertEqual([item["id"] for item in report["selected"]], ["R00-E01", "R00-E05", "R00-E09"])
+            self.assertTrue(selected.is_file())
 
 
 if __name__ == "__main__":

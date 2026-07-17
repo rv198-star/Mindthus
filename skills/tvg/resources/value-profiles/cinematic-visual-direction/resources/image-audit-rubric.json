@@ -1,0 +1,29 @@
+{
+  "schema_version": "cinematic-visual-direction-image-audit-v1",
+  "profile": "cinematic-visual-direction",
+  "prompt_review_handles": [
+    "primary_read",
+    "director_shot_spine",
+    "scene_relation",
+    "director_subtraction_pass",
+    "controlled_fracture_coherence",
+    "shot_economy_mode",
+    "credible_camera_lighting_material",
+    "adapter_fit",
+    "negative_constraint_hygiene",
+    "runtime_support_boundary"
+  ],
+  "image_review_handles": [
+    "primary_read_visible",
+    "one_frame_intention_visible",
+    "single_major_event_visible",
+    "scene_relation_visible",
+    "controlled_mess_readable",
+    "primary_image_protected_by_subtraction",
+    "light_material_motion_credible",
+    "adapter_rules_relevant",
+    "no_unrequested_media_drift",
+    "claim_ceiling_recorded"
+  ],
+  "claim_ceiling": "Generated images support one run's review and lineage; they do not prove universal aesthetic success or Profile maturity."
+}

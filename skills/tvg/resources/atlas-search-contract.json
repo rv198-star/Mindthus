@@ -1,0 +1,43 @@
+{
+  "schema_version": "tvg-atlas-search-contract-v1",
+  "owner": "TVG runtime support",
+  "profile_policy": "any explicitly resolved and fixed Profile snapshot; scene adapters are snapshotted separately",
+  "profile_evidence": "record the fixed Profile path and SHA-256 plus path and SHA-256 for every active scene adapter",
+  "round_id_policy": "R00, R01, R02 and later rounds in sequence",
+  "candidate_id_policy": "Rnn-E01 through Rnn-E09 in row-major order",
+  "explore_layout": "3x3",
+  "initial_candidate_count": 9,
+  "selected_parent_count": 3,
+  "children_per_parent": 3,
+  "row_lineage_rule": "each expansion row contains three children of one selected parent, preserving selected-parent order",
+  "lineage_display_rule": "keep the stable candidate ID and render parent provenance separately as 'from Rnn-Eyy'",
+  "search_terminal_gates": ["search-freeze", "search-freeze-with-review-bound-warning"],
+  "delivery_layout": "2x2",
+  "delivery_candidate_count": 4,
+  "delivery_generation_modes": ["regenerated", "deterministic-compose"],
+  "delivery_generation_evidence": {
+    "regenerated": "prompt, raw atlas, labeled atlas, and hashes",
+    "deterministic-compose": "composition manifest, raw atlas, labeled atlas, and hashes"
+  },
+  "delivery_audit_results": [
+    "ready-for-user-selection",
+    "ready-for-user-selection-with-warning",
+    "return-remediate",
+    "blocked"
+  ],
+  "finalization_states": ["pending-user-selection", "skipped", "completed"],
+  "finalization_modes": ["accept-tile", "rerender-selected", "rerender-selected-plus-backup"],
+  "blocked_run_policy": "a blocked search produces no delivery board and ends with skipped finalization",
+  "veto_policy": "a delivery candidate with a veto finding cannot be returned in a ready delivery state",
+  "semantic_owners": {
+    "exploration_intents": "agentic planning using the fixed Profile",
+    "candidate_selection": "agentic TVG audit using the fixed Profile",
+    "child_gain_hypotheses": "active Profile gain_policy and adapters",
+    "search_exit": "TVG search gate",
+    "delivery_readiness": "post-generation agentic delivery audit",
+    "final_taste": "user"
+  },
+  "evidence_policy": "persist prompts, model path, source paths, SHA-256 hashes, candidate findings, lineage, and claim ceiling",
+  "script_boundary": "support_only_agentic_audit_required",
+  "claim_ceiling": "A valid trace proves shape, evidence references, and lineage only; it does not prove value gain, aesthetic success, Profile maturity, or audit truth."
+}

@@ -65,4 +65,4 @@
 
 - 返回 [TVG 详细介绍页](../tvg.md)
 - 查看 [轻量 Profile 案例](plain-sharp-skill-intro.md)
-- 查看 [四层高级案例](cinematic-colossal-realism.md)
+- 查看 [四层高级案例](cinematic-visual-direction.md)
