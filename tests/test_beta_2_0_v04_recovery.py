@@ -248,6 +248,29 @@ class BetaTwoV04RecoveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "run"
             shutil.copytree(SOURCE_RUN, out)
+            # SOURCE_RUN is a live retained-evidence directory.  Once the official
+            # recovery has completed, reconstruct the frozen pre-recovery state in
+            # this disposable copy before exercising the model-free recovery path.
+            recovered_cell = out / "cells" / self.runner.RECOVERY_CELL_ID
+            recovered_attempt = (
+                out
+                / "generation-attempts"
+                / self.runner.RECOVERY_CELL_ID
+                / "attempt-02"
+            )
+            if recovered_cell.exists():
+                shutil.rmtree(recovered_cell)
+            if recovered_attempt.exists():
+                shutil.rmtree(recovered_attempt)
+            recovery_root = out / "recovery" / "0.4-recovery.1"
+            if recovery_root.is_dir():
+                for path in recovery_root.iterdir():
+                    if path.name == "pre-amendment":
+                        continue
+                    if path.is_dir():
+                        shutil.rmtree(path)
+                    else:
+                        path.unlink()
             base_authorization = json.loads(
                 (
                     BETA_ROOT

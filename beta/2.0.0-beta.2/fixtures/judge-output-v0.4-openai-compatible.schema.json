@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-judge-output-v0.4.json",
+  "title": "Mindthus Beta.2 blinded judge output v0.4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "normalized_final_answer_score",
+    "observed_execution_owner",
+    "primitive_obligation_results",
+    "unexpected_primitive_actions",
+    "false_wakeup_final_answer",
+    "required_visible_action_present",
+    "authority_or_evidence_regression",
+    "clarification_turns",
+    "rationale"
+  ],
+  "properties": {
+    "normalized_final_answer_score": {
+      "type": "number",
+      "enum": [
+        0,
+        0.5,
+        1
+      ]
+    },
+    "observed_execution_owner": {
+      "enum": [
+        "3l5s",
+        "direct_answer",
+        "direct_debugging",
+        "direct_execution",
+        "direct_judgment",
+        "edsp",
+        "information_acquisition",
+        "mpg",
+        "sela",
+        "tplan",
+        "tvg",
+        "using-mindthus",
+        "wae"
+      ]
+    },
+    "primitive_obligation_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "primitive_id",
+          "satisfied"
+        ],
+        "properties": {
+          "primitive_id": {
+            "enum": [
+              "input_framing_audit",
+              "whole_elephant",
+              "decision_context_calibration",
+              "anti_spiral",
+              "evidence_first"
+            ]
+          },
+          "satisfied": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "unexpected_primitive_actions": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "input_framing_audit",
+          "whole_elephant",
+          "decision_context_calibration",
+          "anti_spiral",
+          "evidence_first"
+        ]
+      }
+    },
+    "false_wakeup_final_answer": {
+      "type": "boolean"
+    },
+    "required_visible_action_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "authority_or_evidence_regression": {
+      "type": "boolean"
+    },
+    "clarification_turns": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800
+    }
+  }
+}

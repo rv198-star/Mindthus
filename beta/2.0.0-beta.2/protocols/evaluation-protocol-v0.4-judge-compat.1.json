@@ -1,0 +1,161 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-judge-compat-amendment-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-judge-compat.1",
+  "purpose": "Complete the v0.4 Judge workload after the API rejected a locally valid but unsupported Structured Outputs keyword before sampling.",
+  "base_binding": {
+    "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b",
+    "generation_recovery_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "generation_recovery_sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+    "generation_recovery_lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+    "generation_recovery_authorization_path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-recovery.1.json",
+    "generation_recovery_authorization_digest": "99c5676fa16bf3987ad9de33288c0b38cde0267246f47f252f863befb25869e2"
+  },
+  "retained_source_run": {
+    "phase": "smoke",
+    "completed_generation_outputs": 15,
+    "generation_attempts": 16,
+    "judge_attempts": 4,
+    "completed_judge_records": 0,
+    "known_counted_tokens": 618258,
+    "generation_cell_set_digest": "6060a7250409ec0907b49e8a6733315eabb7a54eb04e5f3bff5225355ff611aa",
+    "generation_cell_set_digest_format": "canonical_sha256(sorted([{cell_id,record_digest,file_sha256}], key=cell_id))",
+    "run_state_sha256": "16011a037fe547f0e37428012bdab8a23df37c4bdf6cced52c390906b56af596",
+    "run_state_digest": "6787b11a05becc9f58b520573069b22bd8fe3a3ebc459e27a3b98679264b1305",
+    "generation_metadata_repair_sha256": "60f4620f751be511b9822568e0eaa376b52d37fb7bec1701d3a807ac6436baed",
+    "generation_recovery_stop_report_sha256": "b77165655837c0da94f1954af07cca49fc8df6c22ec545d1f5f2be1538b1fabc",
+    "failed_output_id": "bd75595351da48405cd5eb84085714f1c8df1dbc01fe7b6bbdfa35b591c31712",
+    "judge_attempt_set_digest": "149f1d0f571927ecc53345abe649843da4f0e885b472ebd536670f1e860f99de",
+    "judge_attempt_set_digest_format": "canonical_sha256(failed_attempts in declared order)",
+    "judge_failure_packet_set_digest": "c46551c68e66cc11c0c0fde560370d5e6689f74290b1e51acbcb3c43d0634aa3",
+    "judge_failure_packet_set_digest_format": "canonical_sha256(failure_packets in slot order)",
+    "failed_attempts": [
+      {
+        "slot": 1,
+        "attempt": 1,
+        "attempt_digest": "c6538bea494fe71eac4550bc7fa95abbd5e4713f1a671e50870573f2079b52f5",
+        "attempt_file_sha256": "da0544ff67e195448ce58f19f95a350218fffaa76fe187ec9428e2a4d7e13f12",
+        "events_sha256": "d6f1749adc3a228716350800e01eaf7a6009f62b2d6032f0585bff47715d1f97"
+      },
+      {
+        "slot": 1,
+        "attempt": 2,
+        "attempt_digest": "d49a28d21717ea5c3cba64ee81cdcf6371ee884f24a96ccdf6968b32a94221c6",
+        "attempt_file_sha256": "88f8300f66b55b9a6cda3649aef0927a3445372262e68337c373b59baaeeee9b",
+        "events_sha256": "1eb793a339e57c218dce9c844c75f6a8d614daca4cf0d14ad89628262efbaf9b"
+      },
+      {
+        "slot": 2,
+        "attempt": 1,
+        "attempt_digest": "3c7910c0d41bc133715bdf4270115b47819c84c3f2b40e7d31b7d0e15e046002",
+        "attempt_file_sha256": "b974caafdf984e121ff9184b223b1a8367cb24ab5ec931933042c4405332dca0",
+        "events_sha256": "a2b95bcab39689baef8b1b83e43e4c24aad13006bb1b83830a39cb05dcaf8aaf"
+      },
+      {
+        "slot": 2,
+        "attempt": 2,
+        "attempt_digest": "38f739b8c65ec58c823867ad7599c83ca4c601a2dad0b9dc011a7e4f12a00ad1",
+        "attempt_file_sha256": "5e3242e089ed8c48169fc93dad4a85b5a243e27963a40a61af02438593e092e4",
+        "events_sha256": "7a2db1e090f05bf22a899159faaac57cfa2b36c34f11d33f3e4b970ec56f801d"
+      }
+    ],
+    "failure_packets": [
+      {
+        "slot": 1,
+        "packet_digest": "d28f1f0f8971c028b9c2d035e836eda97d48baf6dbd4fdbe49875220cf5cfee7",
+        "file_sha256": "ff0b79544e4cf4ddae5821ac786a91ba6305cf9b9a17200d2c5e19b6072aab6c"
+      },
+      {
+        "slot": 2,
+        "packet_digest": "6d62774f738c216890812b18c11f675b0bab02e27df33eae1901c9d7d75de452",
+        "file_sha256": "217deb182b791bb901719bba67fd602f75b773c5546bdad6a7db3e829ccac5b2"
+      }
+    ],
+    "failure_evidence": {
+      "stage": "before model sampling",
+      "returncode": 1,
+      "timed_out": false,
+      "output_present": false,
+      "native_usage_available": false,
+      "counted_tokens_per_attempt": 0,
+      "api_error": "Invalid schema for response_format 'codex_output_schema': In context=('properties', 'primitive_obligation_results'), 'uniqueItems' is not permitted.",
+      "original_judge_schema_sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f"
+    }
+  },
+  "schema_compatibility": {
+    "original_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+    "compatible_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+    "transformation": "remove exactly the two uniqueItems keywords rejected by the OpenAI Structured Outputs subset",
+    "removed_keyword_paths": [
+      "properties.primitive_obligation_results.uniqueItems",
+      "properties.unexpected_primitive_actions.uniqueItems"
+    ],
+    "unchanged": [
+      "required fields and additionalProperties constraints",
+      "types, enums, nullable field, numeric and string bounds",
+      "Judge rubric, prompt, model, reasoning effort, blinding, and isolation",
+      "local validate_judge_output duplicate rejection and every normalized scoring rule"
+    ],
+    "semantic_contract_relaxation": false,
+    "official_source": "https://developers.openai.com/api/docs/guides/structured-outputs#supported-schemas"
+  },
+  "amendment": {
+    "failed_slots": {
+      "append_attempt_numbers": [3, 4],
+      "attempt_3": "first compatible-schema request",
+      "attempt_4": "allowed only after a failed attempt-3; same payload and schema",
+      "successful_output_may_be_counted": true,
+      "prior_attempts_retained": true
+    },
+    "remaining_judges": {
+      "compatible_schema_required": true,
+      "base_two-attempt_policy_unchanged": true,
+      "maximum_judge_calls": 480,
+      "workload_truncation_allowed": false
+    },
+    "terminal_stop": "any failed slot after its compatibility attempts, schema rejection after transformation, contamination, digest drift, or budget breach"
+  },
+  "budget_accounting": {
+    "generation_calls_used": 16,
+    "judge_calls_used_by_schema_rejections": 4,
+    "judge_calls_remaining": 476,
+    "valid_judge_records_still_required": 450,
+    "judge_retry_headroom_after_required_records": 26,
+    "measured_counted_tokens": 618258,
+    "unknown_generation_usage_reserved_tokens": 2176000,
+    "amended_measured_token_ceiling": 19775744,
+    "budget_expansion": false
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instruction": "部分失败：1这个是什么原因？那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊",
+    "source_evidence_id": "E46a11b5c",
+    "authorized_at_utc": "2026-07-17T14:07:25.640257+00:00",
+    "release_preparation": false
+  },
+  "runtime_dependencies": [
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.lock.json",
+    "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-recovery.1.json",
+    "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+    "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_judge_compat.py",
+    "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-judge-compat.py",
+    "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-judge-compat.py"
+  ],
+  "freeze": {
+    "source_parent_commit": "da0a7b89a14fdbae1282c23ef8e42aff20cd5340",
+    "semantic_model_output_generated_before_amendment_freeze": true,
+    "semantic_judge_output_generated_before_amendment_freeze": false,
+    "semantic_model_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "Judge compatibility lock receipt creation and containing git commit",
+    "future_change_policy": "a further additive amendment or new experiment protocol must be frozen before another semantic call"
+  }
+}

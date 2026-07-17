@@ -1,0 +1,81 @@
+{
+  "schema_version": "mindthus-beta2-judge-compat-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-judge-compat.1",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+  "protocol_sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+  "base_protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+  "generation_recovery_sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+  "generation_recovery_lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+  "dependency_receipts": [
+    {
+      "id": "evaluation-protocol-v0.4.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+      "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-recovery.1.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+      "sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-recovery.1.lock.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.lock.json",
+      "sha256": "d9f248c07ecc09643eecaee2da131599234bd9b0357d37a6682873a2d2dd8e24"
+    },
+    {
+      "id": "issue-119-codex-v0.4-recovery.1.json",
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-recovery.1.json",
+      "sha256": "8c67145a98b1336277cf3d53ca7cde75938a2cb8fc27e8d11b02bb8da3ae13ad"
+    },
+    {
+      "id": "judge-output-v0.4.schema.json",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+      "sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f"
+    },
+    {
+      "id": "judge-output-v0.4-openai-compatible.schema.json",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+      "sha256": "82ba909f30bfc30360271b3e949c88f62afa61db6ce86a1a1929c6827996e0ed"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+      "sha256": "349614d7a6f9984c1f96fdb1207ad075f941be109f1a53b0679f3ab695c68162"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+      "sha256": "5ee6a73d7f85cf50b54accf8680dafb6f2c06daf210a475bd8ec0b4df729959a"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04_recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+      "sha256": "84a6c174c3dc809b1ec9f85336b432ee199bdebceabedd87605eebc117aa882d"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04_judge_compat.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_judge_compat.py",
+      "sha256": "5d3a3dea24c20910612e95b7c836ee1e09f395594bd9e3ef536d06a40b751165"
+    },
+    {
+      "id": "build-execution-authorization-v0.4-judge-compat.py",
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-judge-compat.py",
+      "sha256": "0ee17803378bad2beab1ddb24190ca2a8dfa8e97915d0508136fdcfb683c194b"
+    },
+    {
+      "id": "validate-execution-authorization-v0.4-judge-compat.py",
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-judge-compat.py",
+      "sha256": "f6b4ed12efb35dd6fbce14566de0f86da1bce9896aeeb3c6748ff18b3f8baa01"
+    }
+  ],
+  "frozen_at_utc": "2026-07-17T15:27:14.898264+00:00",
+  "source_parent_commit": "da0a7b89a14fdbae1282c23ef8e42aff20cd5340",
+  "semantic_model_output_generated_before_freeze": true,
+  "semantic_judge_output_generated_before_freeze": false,
+  "semantic_model_output_generated_under_amendment_before_freeze": false,
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-judge-compat-v0.4.py",
+  "validator_sha256": "ba22447ed5d4cdb64ac79bb7699d4f897d1f9c3744dc819fc4c210a6d726ed98",
+  "lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e"
+}
