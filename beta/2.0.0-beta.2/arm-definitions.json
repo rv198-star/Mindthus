@@ -1,0 +1,50 @@
+{
+  "schema_version": "mindthus-beta2-arm-definitions-v0.1",
+  "arms": {
+    "stable": {
+      "plugin_name": "mindthus",
+      "plugin_coordinate": "mindthus@mindthus",
+      "namespace_prefix": "mindthus:",
+      "carrier_policy": "stable-router",
+      "allowed_hook_states": [
+        "not-applicable"
+      ],
+      "runtime_diagnostic_required": false,
+      "expected_passive_status": null
+    },
+    "direct-only": {
+      "plugin_name": "mindthus-beta",
+      "plugin_coordinate": "mindthus-beta@mindthus-beta",
+      "namespace_prefix": "mindthus-beta:",
+      "carrier_policy": "disabled",
+      "allowed_hook_states": [
+        "disabled"
+      ],
+      "runtime_diagnostic_required": true,
+      "expected_passive_status": "degraded"
+    },
+    "thin-kernel": {
+      "plugin_name": "mindthus-beta",
+      "plugin_coordinate": "mindthus-beta@mindthus-beta",
+      "namespace_prefix": "mindthus-beta:",
+      "carrier_policy": "session-start-kernel",
+      "allowed_hook_states": [
+        "fired"
+      ],
+      "runtime_diagnostic_required": true,
+      "expected_passive_status": "reported-fired-carrier-verified"
+    }
+  },
+  "surfaces": {
+    "codex-plugin": {
+      "host_cli": "codex",
+      "plugin_manifest": ".codex-plugin/plugin.json",
+      "plugin_list_command": "codex plugin list --json"
+    },
+    "claude-plugin": {
+      "host_cli": "claude",
+      "plugin_manifest": ".claude-plugin/plugin.json",
+      "plugin_list_command": "claude plugin list --json"
+    }
+  }
+}

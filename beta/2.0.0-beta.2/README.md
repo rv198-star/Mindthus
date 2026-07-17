@@ -36,3 +36,25 @@ comparison. The first deliverable is the protocol and instrumented harness, not 
    `using-mindthus` load.
 3. Capture actual host/plugin/hook evidence and per-turn efficiency telemetry.
 4. Add smoke fixtures and stop gates; only then request authorization to start runs.
+
+## Issue roadmap
+
+Parent charter: [#112](https://github.com/rv198-star/Mindthus/issues/112).
+
+| Stage | Issue | Exit condition |
+| --- | --- | --- |
+| Foundation | [#113](https://github.com/rv198-star/Mindthus/issues/113) | Arm identity and isolation evidence are reproducible and fail closed. |
+| Foundation | [#114](https://github.com/rv198-star/Mindthus/issues/114) | Primitive action and skill loading are scored independently. |
+| Foundation | [#115](https://github.com/rv198-star/Mindthus/issues/115) | Per-turn cost and missing telemetry are explicit. |
+| Foundation | [#116](https://github.com/rv198-star/Mindthus/issues/116) | Owner, primitive, lifecycle, and provenance strata are covered. |
+| Freeze | [#117](https://github.com/rv198-star/Mindthus/issues/117) | Metrics, mix, margins, vetoes, and stop gates have a frozen digest. |
+| Rehearsal | [#118](https://github.com/rv198-star/Mindthus/issues/118) | A deterministic dry-run proves orchestration and contamination vetoes. |
+| Authorized run | [#119](https://github.com/rv198-star/Mindthus/issues/119) | A named maintainer separately authorizes the frozen protocol and budget. |
+
+The four foundation issues may advance independently. Protocol freeze depends on all
+four; dry-run depends on the freeze; real model evaluation is a separate authorization
+gate rather than an automatic next command.
+
+The #113 arm-identity contract and commands are documented in
+[`ARM-MANIFESTS.md`](ARM-MANIFESTS.md). No Beta.2 runner may accept a free-text variant
+as identity; it must consume a verified manifest reference and digest.

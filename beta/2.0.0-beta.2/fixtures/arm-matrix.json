@@ -1,0 +1,35 @@
+{
+  "schema_version": "mindthus-beta2-arm-fixtures-v0.1",
+  "cases": [
+    {
+      "id": "codex-stable",
+      "surface": "codex-plugin",
+      "arm_id": "stable"
+    },
+    {
+      "id": "codex-direct-only",
+      "surface": "codex-plugin",
+      "arm_id": "direct-only"
+    },
+    {
+      "id": "codex-thin-kernel",
+      "surface": "codex-plugin",
+      "arm_id": "thin-kernel"
+    },
+    {
+      "id": "claude-stable",
+      "surface": "claude-plugin",
+      "arm_id": "stable"
+    },
+    {
+      "id": "claude-direct-only",
+      "surface": "claude-plugin",
+      "arm_id": "direct-only"
+    },
+    {
+      "id": "claude-thin-kernel",
+      "surface": "claude-plugin",
+      "arm_id": "thin-kernel"
+    }
+  ]
+}
