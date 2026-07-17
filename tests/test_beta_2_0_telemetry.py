@@ -121,6 +121,57 @@ class BetaTwoTelemetryTests(unittest.TestCase):
             "missing",
         )
 
+    def test_runner_observed_latency_is_separate_and_optional(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            resource = Path(tmp) / "fixture.md"
+            resource.write_text("fixture", encoding="utf-8")
+            raw = complete_turn(resource)
+            baseline = self.telemetry.build_turn_telemetry(
+                raw,
+                context={"arm_manifest": fixture_manifest()},
+            )
+            self.assertNotIn(
+                "first_observable_action_latency_seconds", baseline["measurements"]
+            )
+            raw["first_observable_action_latency_seconds"] = 0.25
+            record = self.telemetry.build_turn_telemetry(
+                raw,
+                context={"arm_manifest": fixture_manifest()},
+                required_evidence={
+                    "first_observable_action_latency_seconds": ["deterministic"]
+                },
+            )
+        observed = record["measurements"]["first_observable_action_latency_seconds"]
+        self.assertEqual(observed["provenance"], "deterministic")
+        self.assertEqual(observed["source"], "runner.streaming_jsonl_arrival")
+        self.assertEqual(record["evidence_gate"]["status"], "pass")
+
+    def test_thin_manifest_exposes_bound_hook_receipt_only_when_present(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            resource = Path(tmp) / "fixture.md"
+            resource.write_text("fixture", encoding="utf-8")
+            manifest = fixture_manifest()
+            manifest["ambient_context"] = {
+                "opaque": [
+                    {
+                        "kind": "host-hook-observation",
+                        "id": "passive-kernel-session-start",
+                        "sha256": "b" * 64,
+                    }
+                ]
+            }
+            record = self.telemetry.build_turn_telemetry(
+                complete_turn(resource),
+                context={"arm_manifest": manifest},
+                required_evidence={
+                    "arm.hook_observation_receipt": ["deterministic"]
+                },
+            )
+        receipt = record["measurements"]["arm.hook_observation_receipt"]
+        self.assertEqual(receipt["value"], "b" * 64)
+        self.assertEqual(receipt["provenance"], "deterministic")
+        self.assertEqual(record["evidence_gate"]["status"], "pass")
+
     def test_contradictory_record_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

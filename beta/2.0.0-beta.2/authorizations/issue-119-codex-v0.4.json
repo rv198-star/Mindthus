@@ -1,0 +1,134 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.2",
+  "authorization_id": "issue-119-codex-v0.4-evidence-honest",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4.py",
+  "authorization_validator_sha256": "66aeac307a65f58d03b1efdf3387546bde6ae77a1a8be59b65e1b6a2a8bf3ec0",
+  "status": "authorized",
+  "packet_created_at_utc": "2026-07-17T12:25:32.377801+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+    "lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b"
+  },
+  "host_surface": "codex-plugin",
+  "planned_generation_outputs": 225,
+  "planned_judge_records": 450,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 239,
+  "maximum_judge_calls": 480,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 21951744,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "cumulative_authority": {
+    "maximum_generation_calls": 240,
+    "maximum_judge_calls": 480,
+    "aggregate_token_ceiling": 22000000,
+    "prior_consumption": {
+      "protocol_version": "0.3",
+      "generation_calls": 1,
+      "judge_calls": 0,
+      "counted_tokens": 48256
+    },
+    "v04_available": {
+      "maximum_generation_calls": 239,
+      "maximum_judge_calls": 480,
+      "aggregate_token_ceiling": 21951744
+    },
+    "budget_expansion": false
+  },
+  "case_scope": {
+    "matched_case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-edsp",
+      "b2-public-anti-spiral",
+      "b2-dev-owner-3l5s",
+      "b2-dev-owner-edsp",
+      "b2-dev-owner-sela",
+      "b2-dev-owner-mpg",
+      "b2-dev-owner-wae",
+      "b2-dev-owner-tvg",
+      "b2-dev-owner-tplan",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-evidence-first",
+      "b2-dev-multi-primitive",
+      "b2-dev-anti-third-touch",
+      "b2-dev-anti-renamed-object",
+      "b2-dev-anti-distinct-objects",
+      "b2-dev-anti-new-evidence",
+      "b2-dev-near-local-scope",
+      "b2-dev-near-sufficient-evidence",
+      "b2-dev-near-user-tradeoff",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-resume",
+      "b2-dev-lifecycle-clear",
+      "b2-dev-lifecycle-compact"
+    ],
+    "excluded_case_ids": [
+      "b2-shadow-owner-overlap",
+      "b2-shadow-passive-intersection",
+      "b2-shadow-anti-rename",
+      "b2-shadow-near-negative",
+      "b2-replay-architecture-review",
+      "b2-replay-debugging-session"
+    ],
+    "matched_case_count": 25,
+    "excluded_sealed_case_count": 4,
+    "included_sealed_case_count": 0,
+    "evidence_visibility": "implementation-visible",
+    "host_session_scope": "startup-only",
+    "claim_ceiling": "visible-case Codex startup-session exploratory evidence only"
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instructions": [
+      "去掉4道隐藏题，继续",
+      "推进，直到有具体结论或者必须我决策参与的时候才停下来"
+    ],
+    "source_evidence_ids": [
+      "E22324196",
+      "Eea1fda65"
+    ],
+    "authorized_at_utc": "2026-07-17T10:50:05.036251+00:00",
+    "authorized_protocol_version": "0.4",
+    "authorized_configuration_digest": "46ba8ffb27f6bee14c1b31792f1fadf6195709098327e6b9bd982166c92f486a",
+    "source_summary": "The maintainer preserved the 25-visible-case Sol xHigh design and authorized autonomous evidence-honest continuation until a concrete result or genuinely human-owned decision, without budget expansion.",
+    "must_escalate_on": [
+      "binary primary-axis judge disagreement",
+      "new spend beyond cumulative ceilings",
+      "release or publication decision",
+      "irreversible action"
+    ],
+    "digest_binding": {
+      "mode": "bounded-continuation-first-frozen-v0.4",
+      "bound_protocol_digest": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+      "bound_lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b",
+      "bound_at_utc": "2026-07-17T12:25:32.377801+00:00"
+    }
+  },
+  "sealed_case_attestation_path": null,
+  "release_preparation": false,
+  "blocking_requirements": []
+}

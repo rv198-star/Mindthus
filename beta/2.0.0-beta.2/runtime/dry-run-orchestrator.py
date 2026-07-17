@@ -31,6 +31,7 @@ PROTOCOL_VALIDATORS = {
     "0.1": PROTOCOL_VALIDATOR,
     "0.2": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.2.py",
     "0.3": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.3.py",
+    "0.4": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.4.py",
 }
 MATRIX_LINTER = BETA_ROOT / "runtime" / "lint-case-matrix.py"
 REQUIRED_ARMS = {"stable", "direct-only", "thin-kernel"}
@@ -39,7 +40,7 @@ CLAIMS_UNAVAILABLE = [
     "real-model final-answer quality or noninferiority",
     "real execution-owner fidelity",
     "real primitive recall, precision, or Kernel benefit",
-    "real token, wall-time, or first-useful-action distributions",
+    "real token, wall-time, first-observable-action, or native first-useful-action distributions",
     "real host hook behavior outside the deterministic fixture",
     "hidden-set or sealed-case blindness/generalization evidence",
     "matched-evaluation Hold/Stop/continue recommendation",
@@ -125,6 +126,7 @@ def load_plan(plan_path: Path) -> dict[str, Any]:
         "mindthus-beta2-dry-run-plan-v0.1",
         "mindthus-beta2-dry-run-plan-v0.2",
         "mindthus-beta2-dry-run-plan-v0.3",
+        "mindthus-beta2-dry-run-plan-v0.4",
     }:
         raise DryRunVeto("protocol-or-arm-drift", "unsupported dry-run plan schema")
     verify_embedded_digest(plan, "plan_digest", "dry-run plan")
@@ -532,7 +534,12 @@ def existing_cells(
     return completed
 
 
-def deterministic_raw_turn(cell: Mapping[str, Any], *, omit_native_latency: bool) -> dict[str, Any]:
+def deterministic_raw_turn(
+    cell: Mapping[str, Any],
+    *,
+    omit_primary_latency: bool,
+    protocol_version: str,
+) -> dict[str, Any]:
     digest = cell["cell_key_digest"]
     seed = int(digest[:8], 16)
     duration = round(0.4 + (seed % 400) / 1000, 3)
@@ -544,9 +551,9 @@ def deterministic_raw_turn(cell: Mapping[str, Any], *, omit_native_latency: bool
         for skill in case.get("required_skill_loads", [])
     ]
     native = {"lifecycle_event": case["expected_lifecycle_events"]}
-    if not omit_native_latency:
+    if protocol_version != "0.4" and not omit_primary_latency:
         native["first_useful_action_latency_seconds"] = first_latency
-    return {
+    raw_turn = {
         "usage": {
             "input_tokens": 200 + seed % 80,
             "cached_input_tokens": 20 + seed % 20,
@@ -561,6 +568,11 @@ def deterministic_raw_turn(cell: Mapping[str, Any], *, omit_native_latency: bool
         "returncode": 0,
         "timed_out": False,
     }
+    if protocol_version == "0.4":
+        raw_turn["first_observable_action_latency_seconds"] = (
+            None if omit_primary_latency else first_latency
+        )
+    return raw_turn
 
 
 def write_once(path: Path, payload: Mapping[str, Any]) -> None:
@@ -577,11 +589,29 @@ def execute_cell(
     home_receipts: Mapping[str, str],
     judge_environment: Mapping[str, Any],
     *,
-    omit_native_latency: bool,
+    omit_primary_latency: bool,
+    protocol_version: str,
 ) -> dict[str, Any]:
     manifest = cell["manifest"]
     case = cell["case"]
-    raw_turn = deterministic_raw_turn(cell, omit_native_latency=omit_native_latency)
+    raw_turn = deterministic_raw_turn(
+        cell,
+        omit_primary_latency=omit_primary_latency,
+        protocol_version=protocol_version,
+    )
+    required_evidence = None
+    if protocol_version == "0.4":
+        required_evidence = {
+            "tokens.input": ("native",),
+            "wall_time_seconds": ("deterministic",),
+            "first_observable_action_latency_seconds": ("deterministic",),
+            "arm_digest": ("native",),
+            "host_plugin_inventory": ("native",),
+            "hook_state": ("native",),
+            "lifecycle_event": ("native",),
+        }
+        if manifest["arm_id"] == "thin-kernel":
+            required_evidence["arm.hook_observation_receipt"] = ("deterministic",)
     telemetry = build_turn_telemetry(
         raw_turn,
         context={
@@ -593,6 +623,7 @@ def execute_cell(
             "arm_manifest": manifest,
             "judge_telemetry": {"clarification_turns": 0},
         },
+        required_evidence=required_evidence,
     )
     if telemetry["evidence_gate"]["status"] != "pass":
         raise DryRunVeto(
@@ -799,7 +830,8 @@ def run_dry_run(
             out_dir,
             home_receipts,
             judge_environment,
-            omit_native_latency=(fault == "missing-telemetry" and new_count == 0),
+            omit_primary_latency=(fault == "missing-telemetry" and new_count == 0),
+            protocol_version=str(protocol["protocol_version"]),
         )
         completed[cell["cell_id"]] = record["record_digest"]
         new_count += 1

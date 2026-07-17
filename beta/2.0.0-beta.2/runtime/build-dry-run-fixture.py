@@ -39,6 +39,13 @@ PROTOCOL_CONFIGS = {
         "surfaces": ("codex-plugin",),
         "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.3",
     },
+    "0.4": {
+        "protocol": BETA_ROOT / "protocols" / "evaluation-protocol-v0.4.json",
+        "lock": BETA_ROOT / "protocols" / "evaluation-protocol-v0.4.lock.json",
+        "validator": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.4.py",
+        "surfaces": ("codex-plugin",),
+        "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.4",
+    },
 }
 CASE_MATRIX = BETA_ROOT / "fixtures" / "evaluation-case-matrix.json"
 NEGATIVE_CATALOG = BETA_ROOT / "fixtures" / "dry-run-negative-cases.json"
@@ -262,6 +269,39 @@ def build(root: Path, *, protocol_version: str = "0.1") -> Path:
                 if arm_id == "direct-only"
                 else "fired"
             )
+            opaque_context = [
+                {
+                    "kind": "system-context",
+                    "id": "deterministic-dry-run-context",
+                    "sha256": hashlib.sha256(
+                        f"{surface}/{arm_id}/system-context".encode("utf-8")
+                    ).hexdigest(),
+                }
+            ]
+            if protocol_version == "0.4" and arm_id == "thin-kernel":
+                opaque_context.append(
+                    {
+                        "kind": "host-hook-observation",
+                        "id": "passive-kernel-session-start",
+                        "sha256": hashlib.sha256(
+                            f"{surface}/{arm_id}/fixture-hook-receipt-v0.4".encode(
+                                "utf-8"
+                            )
+                        ).hexdigest(),
+                    }
+                )
+            elif protocol_version == "0.4" and arm_id == "direct-only":
+                opaque_context.append(
+                    {
+                        "kind": "host-hook-absence-observation",
+                        "id": "passive-kernel-session-start-disabled",
+                        "sha256": hashlib.sha256(
+                            f"{surface}/{arm_id}/fixture-hook-absence-v0.4".encode(
+                                "utf-8"
+                            )
+                        ).hexdigest(),
+                    }
+                )
             spec = {
                 "schema_version": "mindthus-beta2-arm-spec-v0.1",
                 "arm_id": arm_id,
@@ -285,15 +325,7 @@ def build(root: Path, *, protocol_version: str = "0.1") -> Path:
                 "model": {"id": "deterministic-mock", "reasoning": "none"},
                 "tools": ["deterministic-mock"],
                 "ambient_context_files": ambient_agents_entries(home, execution_root),
-                "opaque_context": [
-                    {
-                        "kind": "system-context",
-                        "id": "deterministic-dry-run-context",
-                        "sha256": hashlib.sha256(
-                            f"{surface}/{arm_id}/system-context".encode("utf-8")
-                        ).hexdigest(),
-                    }
-                ],
+                "opaque_context": opaque_context,
             }
             spec_path = case_root / "arm-spec.json"
             manifest_path = case_root / "sealed-arm.json"

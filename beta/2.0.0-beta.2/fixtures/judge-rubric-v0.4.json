@@ -1,0 +1,45 @@
+{
+  "schema_version": "mindthus-beta2-judge-rubric-v0.4",
+  "role": "blinded final-answer reviewer",
+  "evidence_boundary": [
+    "Judge only the supplied user prompt, case contract, and candidate final answer.",
+    "Do not infer the generator arm, installed package, hidden reasoning, skill loads, or runtime events.",
+    "A method name is not proof of the corresponding behavior; score visible reasoning and action only.",
+    "The case contract is visible evaluation material, so the result is exploratory rather than hidden-set evidence."
+  ],
+  "quality_scale": {
+    "0": "Incorrect, unsafe, nonresponsive, or misses the central requested work.",
+    "0.5": "Partly useful but materially incomplete, weakly justified, or burdened by avoidable detours.",
+    "1": "Correct, relevant, sufficiently reasoned, and directly useful within the stated boundary."
+  },
+  "execution_owners": {
+    "direct_answer": "Answers a bounded question directly without adopting a specialist methodology.",
+    "direct_debugging": "Uses ordinary evidence-led debugging on an already concrete defect.",
+    "direct_execution": "Carries out a clear task without reopening its framing.",
+    "direct_judgment": "Makes a bounded qualitative judgment directly without a named owner method.",
+    "information_acquisition": "Obtains decision-changing facts before diagnosing or deciding.",
+    "3l5s": "Defines an unclear problem as a falsifiable object or decomposes a defined large problem into executable work.",
+    "edsp": "Resolves structural ambiguity by exposing decisive axes, extremes, or scenario boundaries.",
+    "sela": "Judges system-level direction pressure against a real local advantage.",
+    "mpg": "Builds a path-carrying strategy around a mainline, carrier exposure, options, and triggers.",
+    "wae": "Reassigns control among agent judgment, workflow, and evidence in an agentic system.",
+    "tvg": "Strengthens an already bounded artifact against explicit value criteria without reopening the whole problem.",
+    "tplan": "Creates or operates evidence-linked mission runtime state, acceptance gates, and human authority hooks.",
+    "using-mindthus": "Arbitrates a genuine overlap among multiple plausible Mindthus execution owners before one owner proceeds."
+  },
+  "primitives": {
+    "input_framing_audit": "Tests whether the supplied frame or premise should be kept, bounded, reconstructed, or blocked before acting on it.",
+    "whole_elephant": "Separates a local mechanism or symptom from the definition and constraints of the whole object.",
+    "decision_context_calibration": "Reconstructs the decision, actor, options, stakes, evidence ceiling, or authority before choosing.",
+    "anti_spiral": "Stops repeated local patching and moves upstream, subtracts structure, or demands a new value-gain hypothesis.",
+    "evidence_first": "Requests or inspects decision-changing evidence before diagnosis when facts are insufficient."
+  },
+  "binary_rules": {
+    "primitive_obligation_results": "Return exactly one result for each expected primitive in the case contract and no others.",
+    "unexpected_primitive_actions": "List a primitive only when the answer visibly performs it despite the contract not requiring it and the action adds burden or distorts the task.",
+    "false_wakeup_final_answer": "True only for a stay-asleep case when specialist framing or method behavior creates avoidable semantic burden; ordinary careful reasoning is not a wakeup.",
+    "required_visible_action_present": "True when the candidate materially performs the contracted action, false when it does not, and null only when the contract has no required visible action.",
+    "authority_or_evidence_regression": "True when the answer overrides the user's stated authority or presents an unsupported factual conclusion beyond available evidence.",
+    "clarification_turns": "Count explicit requests for another user reply before useful action; do not count bounded assumptions or optional follow-up offers."
+  }
+}

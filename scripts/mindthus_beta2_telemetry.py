@@ -212,6 +212,20 @@ def _manifest_measurements(
     carrier = (
         manifest.get("carrier") if isinstance(manifest.get("carrier"), Mapping) else {}
     )
+    ambient = (
+        manifest.get("ambient_context")
+        if isinstance(manifest.get("ambient_context"), Mapping)
+        else {}
+    )
+    opaque = ambient.get("opaque") if isinstance(ambient.get("opaque"), list) else []
+    hook_receipts = [
+        item
+        for item in opaque
+        if isinstance(item, Mapping)
+        and item.get("kind") == "host-hook-observation"
+        and item.get("id") == "passive-kernel-session-start"
+        and isinstance(item.get("sha256"), str)
+    ]
     diagnostic = (
         manifest.get("runtime_diagnostic")
         if isinstance(manifest.get("runtime_diagnostic"), Mapping)
@@ -270,6 +284,12 @@ def _manifest_measurements(
             else _observation(reason="sealed hook state is absent")
         ),
     }
+    if len(hook_receipts) == 1:
+        values["arm.hook_observation_receipt"] = _observation(
+            hook_receipts[0]["sha256"],
+            "deterministic",
+            "sealed-arm-manifest.ambient_context.opaque",
+        )
     return values, {
         "arm_id": str(manifest.get("arm_id")) if manifest.get("arm_id") else None,
         "surface": str(manifest.get("surface")) if manifest.get("surface") else None,
@@ -321,13 +341,16 @@ def _apply_contradictions(
                 "cached input tokens exceed total input tokens"
             )
     duration = measurements["wall_time_seconds"].get("value")
-    first_action = measurements["first_useful_action_latency_seconds"].get("value")
-    if isinstance(duration, (int, float)) and isinstance(first_action, (int, float)):
-        if first_action > duration:
-            measurements["first_useful_action_latency_seconds"]["status"] = "contradictory"
-            measurements["first_useful_action_latency_seconds"]["reason"] = (
-                "first useful action occurs after turn wall time"
-            )
+    for endpoint, label in (
+        ("first_useful_action_latency_seconds", "first useful action"),
+        ("first_observable_action_latency_seconds", "first observable action"),
+    ):
+        observation = measurements.get(endpoint)
+        first_action = observation.get("value") if observation else None
+        if isinstance(duration, (int, float)) and isinstance(first_action, (int, float)):
+            if first_action > duration:
+                observation["status"] = "contradictory"
+                observation["reason"] = f"{label} occurs after turn wall time"
     for endpoint, reason in (explicit or {}).items():
         if endpoint in measurements:
             measurements[endpoint]["status"] = "contradictory"
@@ -470,6 +493,18 @@ def build_turn_telemetry(
         "lifecycle_event": lifecycle,
         **manifest_values,
     }
+    if "first_observable_action_latency_seconds" in raw_turn:
+        measurements["first_observable_action_latency_seconds"] = (
+            _observation(
+                raw_turn["first_observable_action_latency_seconds"],
+                "deterministic",
+                "runner.streaming_jsonl_arrival",
+            )
+            if raw_turn.get("first_observable_action_latency_seconds") is not None
+            else _observation(
+                reason="runner observed no eligible streaming JSONL action event"
+            )
+        )
     _apply_contradictions(
         measurements,
         context.get("contradictions")
