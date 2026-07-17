@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-evaluation-case-v0.1.json",
+  "title": "Mindthus 2.0 Beta.2 axis-separated evaluation case",
+  "type": "object",
+  "required": [
+    "case_id",
+    "case_type",
+    "expected_execution_owner",
+    "accepted_execution_owners",
+    "expected_primitive_obligations",
+    "required_skill_loads",
+    "allowed_skill_loads",
+    "stay_asleep_expected",
+    "expected_lifecycle_events"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_type": {
+      "enum": [
+        "positive",
+        "negative_control"
+      ]
+    },
+    "expected_execution_owner": {
+      "type": "string"
+    },
+    "accepted_execution_owners": {
+      "$ref": "#/$defs/uniqueStrings"
+    },
+    "expected_primitive_obligations": {
+      "$ref": "#/$defs/uniqueStrings"
+    },
+    "required_visible_action": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "required_skill_loads": {
+      "$ref": "#/$defs/uniqueStrings"
+    },
+    "allowed_skill_loads": {
+      "$ref": "#/$defs/uniqueStrings"
+    },
+    "stay_asleep_expected": {
+      "type": "boolean"
+    },
+    "expected_lifecycle_events": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "session-start",
+          "before-route",
+          "before-answer",
+          "before-continue",
+          "before-freeze"
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "uniqueStrings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

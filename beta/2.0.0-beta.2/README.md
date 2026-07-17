@@ -58,3 +58,9 @@ gate rather than an automatic next command.
 The #113 arm-identity contract and commands are documented in
 [`ARM-MANIFESTS.md`](ARM-MANIFESTS.md). No Beta.2 runner may accept a free-text variant
 as identity; it must consume a verified manifest reference and digest.
+
+The #114 behavior/load separation is documented in
+[`SCORING-CONTRACT.md`](SCORING-CONTRACT.md) and
+[`evaluation-case.schema.json`](evaluation-case.schema.json). New Beta.2 summaries keep
+semantic behavior, primitive recall, lifecycle fidelity, and runtime skill loads on
+independent axes while retaining V5 compatibility fields.

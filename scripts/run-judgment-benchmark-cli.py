@@ -80,6 +80,16 @@ OWNER_ACCEPTED_SKILLS = {
     "approximate_quantified_mapping": {"using-mindthus", "mpg"},
 }
 
+PASSIVE_PRIMITIVE_IDS = {
+    "input_framing_audit",
+    "whole_elephant",
+    "anti_spiral",
+    "decision_context_calibration",
+    "aspect_arbitration",
+    "expression_discipline",
+    "approximate_quantified_mapping",
+}
+
 
 DEFAULT_SUPERPOWERS_ROOT_LABEL = "$CODEX_HOME/superpowers"
 
@@ -757,6 +767,19 @@ def judge_schema(path: Path) -> None:
             "first_sentence_lock": {"type": ["boolean", "null"]},
             "verdict_commitment_anti_mush": {"type": ["boolean", "null"]},
             "over_forced_verdict": {"type": ["boolean", "null"]},
+            "required_visible_action_present": {"type": ["boolean", "null"]},
+            "owner_semantic_success": {"type": ["boolean", "null"]},
+            "observed_execution_owner": {"type": ["string", "null"]},
+            "primitive_obligation_results": {
+                "type": "object",
+                "additionalProperties": {"type": "boolean"},
+            },
+            "unexpected_primitive_action_observed": {"type": ["boolean", "null"]},
+            "observed_lifecycle_events": {
+                "type": "array",
+                "items": {"type": "string"},
+                "uniqueItems": True,
+            },
             "rationale": {"type": "string"},
         },
     }
@@ -790,11 +813,43 @@ def validate_judge_output(parsed: dict[str, Any], expected_case_id: str) -> dict
             raise ValueError(f"judge output missing {key}")
         if parsed[key] is not None and not isinstance(parsed[key], bool):
             raise ValueError(f"judge output field {key} must be bool or null")
+    for key in (
+        "required_visible_action_present",
+        "owner_semantic_success",
+        "unexpected_primitive_action_observed",
+    ):
+        if key in parsed and parsed[key] is not None and not isinstance(parsed[key], bool):
+            raise ValueError(f"judge output field {key} must be bool or null")
+    observed_owner = parsed.get("observed_execution_owner")
+    if observed_owner is not None and not isinstance(observed_owner, str):
+        raise ValueError("judge output field observed_execution_owner must be string or null")
+    primitive_results = parsed.get("primitive_obligation_results")
+    if primitive_results is not None and (
+        not isinstance(primitive_results, dict)
+        or not all(
+            isinstance(key, str) and isinstance(value, bool)
+            for key, value in primitive_results.items()
+        )
+    ):
+        raise ValueError("judge output field primitive_obligation_results must map strings to bools")
+    lifecycle_events = parsed.get("observed_lifecycle_events")
+    if lifecycle_events is not None and (
+        not isinstance(lifecycle_events, list)
+        or not all(isinstance(item, str) for item in lifecycle_events)
+        or len(lifecycle_events) != len(set(lifecycle_events))
+    ):
+        raise ValueError("judge output field observed_lifecycle_events must be unique strings")
     allowed = set(required) | {
         "positive_wakeup_observed",
         "first_sentence_lock",
         "verdict_commitment_anti_mush",
         "over_forced_verdict",
+        "required_visible_action_present",
+        "owner_semantic_success",
+        "observed_execution_owner",
+        "primitive_obligation_results",
+        "unexpected_primitive_action_observed",
+        "observed_lifecycle_events",
     }
     extra = set(parsed) - allowed
     if extra:
@@ -845,6 +900,96 @@ def expected_owner_skills(case: dict[str, Any]) -> set[str]:
     return set()
 
 
+def _case_string_list(
+    case: dict[str, Any],
+    field: str,
+    *,
+    default: list[str] | None = None,
+) -> list[str]:
+    if field not in case:
+        return list(default or [])
+    value = case[field]
+    if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
+        raise ValueError(f"case field {field} must be an array of non-empty strings")
+    if len(value) != len(set(value)):
+        raise ValueError(f"case field {field} must not contain duplicates")
+    return list(value)
+
+
+def normalized_case_evaluation_contract(case: dict[str, Any]) -> dict[str, Any]:
+    """Adapt legacy V5 cases to the axis-separated Beta.2 scoring contract."""
+
+    stay_asleep = bool(case.get("stay_asleep_expected"))
+    legacy_owner = str(case.get("expected_owner", ""))
+    expected_execution_owner = str(case.get("expected_execution_owner") or legacy_owner)
+    explicit_contract = any(
+        field in case
+        for field in (
+            "expected_execution_owner",
+            "accepted_execution_owners",
+            "expected_primitive_obligations",
+            "required_skill_loads",
+            "allowed_skill_loads",
+            "expected_lifecycle_events",
+            "required_visible_action",
+        )
+    )
+
+    accepted_execution_owners = _case_string_list(
+        case,
+        "accepted_execution_owners",
+        default=(
+            []
+            if stay_asleep or not expected_execution_owner
+            else [expected_execution_owner]
+        ),
+    )
+    expected_primitives = _case_string_list(
+        case,
+        "expected_primitive_obligations",
+        default=[legacy_owner] if legacy_owner in PASSIVE_PRIMITIVE_IDS else [],
+    )
+    legacy_loads = sorted(expected_owner_skills(case))
+    allowed_loads = _case_string_list(case, "allowed_skill_loads", default=legacy_loads)
+    required_loads = _case_string_list(
+        case,
+        "required_skill_loads",
+        default=(
+            []
+            if stay_asleep or legacy_owner in DIRECT_EXPECTED_OWNERS
+            else legacy_loads
+        ),
+    )
+    missing_allowed = sorted(set(required_loads) - set(allowed_loads))
+    if missing_allowed:
+        raise ValueError(
+            "required_skill_loads must be a subset of allowed_skill_loads; "
+            f"missing={missing_allowed}"
+        )
+
+    required_visible_action = case.get("required_visible_action")
+    if required_visible_action is None and expected_primitives:
+        required_visible_action = case.get("pass_criteria")
+    if required_visible_action is not None and not isinstance(required_visible_action, str):
+        raise ValueError("case field required_visible_action must be a string")
+
+    return {
+        "schema_version": "mindthus-beta2-evaluation-contract-v0.1",
+        "contract_source": "beta2-explicit" if explicit_contract else "v5-legacy-adapter",
+        "expected_execution_owner": expected_execution_owner,
+        "accepted_execution_owners": sorted(accepted_execution_owners),
+        "expected_primitive_obligations": sorted(expected_primitives),
+        "required_visible_action": required_visible_action,
+        "required_skill_loads": sorted(required_loads),
+        "allowed_skill_loads": sorted(allowed_loads),
+        "required_skill_load_match": "any" if required_loads else "not-required",
+        "stay_asleep_expected": stay_asleep,
+        "expected_lifecycle_events": sorted(
+            _case_string_list(case, "expected_lifecycle_events")
+        ),
+    }
+
+
 def final_answer_false_wakeup(case: dict[str, Any], score: dict[str, Any]) -> bool:
     if not bool(case.get("stay_asleep_expected")):
         return False
@@ -854,12 +999,182 @@ def final_answer_false_wakeup(case: dict[str, Any], score: dict[str, Any]) -> bo
 def runtime_event_false_wakeup(
     case: dict[str, Any],
     *,
-    mindthus_loaded: bool,
-    superpowers_loaded: bool,
-) -> bool:
+    mindthus_loaded: bool | None,
+    superpowers_loaded: bool | None,
+) -> bool | None:
+    if mindthus_loaded is None or superpowers_loaded is None:
+        return None
     if not bool(case.get("stay_asleep_expected")):
         return False
     return mindthus_loaded or superpowers_loaded
+
+
+def _score_optional_bool(score: dict[str, Any], field: str) -> bool | None:
+    value = score.get(field)
+    return value if isinstance(value, bool) else None
+
+
+def _execution_owner_axes(
+    contract: dict[str, Any],
+    score: dict[str, Any],
+) -> tuple[str | None, bool | None, str]:
+    if contract["stay_asleep_expected"]:
+        return None, None, "not_applicable"
+    observed = score.get("observed_execution_owner")
+    if not isinstance(observed, str) or not observed:
+        return None, None, "unknown_missing_telemetry"
+    accepted = set(contract["accepted_execution_owners"])
+    fidelity = observed in accepted
+    return (
+        observed,
+        fidelity,
+        "expected_owner_observed" if fidelity else "wrong_owner_observed",
+    )
+
+
+def _primitive_axes(
+    contract: dict[str, Any],
+    score: dict[str, Any],
+    *,
+    required_visible_action_present: bool | None,
+    false_final: bool,
+) -> dict[str, Any]:
+    expected = list(contract["expected_primitive_obligations"])
+    raw_results = score.get("primitive_obligation_results")
+    results: dict[str, bool] = {}
+    if isinstance(raw_results, dict):
+        results = {
+            primitive: value
+            for primitive, value in raw_results.items()
+            if primitive in expected and isinstance(value, bool)
+        }
+    elif expected and required_visible_action_present is not None:
+        results = {primitive: required_visible_action_present for primitive in expected}
+
+    if not expected:
+        recall = None
+        recall_rate = None
+        recall_verdict = "not_applicable"
+    elif len(results) != len(expected):
+        recall = None
+        recall_rate = None
+        recall_verdict = "unknown_missing_semantic_telemetry"
+    else:
+        matched = sum(1 for primitive in expected if results[primitive])
+        recall = matched == len(expected)
+        recall_rate = round(matched / len(expected), 3)
+        recall_verdict = "recalled" if recall else "missed"
+
+    unexpected = _score_optional_bool(score, "unexpected_primitive_action_observed")
+    if unexpected is None and contract["stay_asleep_expected"]:
+        unexpected = false_final
+    precision = None if unexpected is None else not unexpected
+    precision_verdict = (
+        "unknown_missing_semantic_telemetry"
+        if precision is None
+        else "precise"
+        if precision
+        else "unexpected_primitive_action"
+    )
+    return {
+        "expected_primitive_obligations": expected,
+        "primitive_obligation_results": results,
+        "primitive_action_recall": recall,
+        "primitive_action_recall_rate": recall_rate,
+        "primitive_action_recall_verdict": recall_verdict,
+        "unexpected_primitive_action_observed": unexpected,
+        "primitive_action_precision": precision,
+        "primitive_action_precision_verdict": precision_verdict,
+    }
+
+
+def _lifecycle_axes(
+    contract: dict[str, Any],
+    score: dict[str, Any],
+) -> dict[str, Any]:
+    expected = list(contract["expected_lifecycle_events"])
+    observed_value = score.get("observed_lifecycle_events")
+    observed = (
+        sorted(set(observed_value))
+        if isinstance(observed_value, list)
+        and all(isinstance(item, str) and item for item in observed_value)
+        else None
+    )
+    if not expected:
+        fidelity = None
+        verdict = "not_applicable"
+        missing: list[str] = []
+    elif observed is None:
+        fidelity = None
+        verdict = "unknown_missing_telemetry"
+        missing = expected
+    else:
+        missing = sorted(set(expected) - set(observed))
+        fidelity = not missing
+        verdict = "satisfied" if fidelity else "missing_events"
+    return {
+        "expected_lifecycle_events": expected,
+        "observed_lifecycle_events": observed,
+        "missing_lifecycle_events": missing,
+        "lifecycle_fidelity": fidelity,
+        "lifecycle_fidelity_verdict": verdict,
+    }
+
+
+def _skill_load_axes(
+    contract: dict[str, Any],
+    *,
+    telemetry_observed: bool,
+    loaded_owner: list[str],
+    mindthus_loaded: bool | None,
+    superpowers_loaded: bool | None,
+) -> dict[str, Any]:
+    required = set(contract["required_skill_loads"])
+    allowed = set(contract["allowed_skill_loads"])
+    if not telemetry_observed:
+        return {
+            "skill_load_telemetry_status": "missing",
+            "actual_skill_load_path": None,
+            "required_skill_loads": sorted(required),
+            "allowed_skill_loads": sorted(allowed),
+            "required_skill_loads_satisfied": None,
+            "unexpected_skill_loads": None,
+            "skill_load_contract_satisfied": None,
+            "skill_load_verdict": "unknown_missing_telemetry",
+        }
+
+    unexpected = sorted(owner for owner in loaded_owner if owner not in allowed)
+    if superpowers_loaded:
+        unexpected.append("superpowers")
+    required_satisfied = bool(required.intersection(loaded_owner)) if required else None
+    required_met = required_satisfied is not False
+    if contract["stay_asleep_expected"]:
+        verdict = "runtime_over_wake" if mindthus_loaded or superpowers_loaded else "stay_asleep"
+    elif unexpected:
+        verdict = "unexpected_load"
+    elif required and required_satisfied:
+        verdict = "required_load_observed"
+    elif required:
+        verdict = "required_load_missing"
+    elif loaded_owner:
+        verdict = "allowed_optional_load"
+    else:
+        verdict = "no_load_required"
+    contract_satisfied = (
+        not unexpected
+        and required_met
+        and not (contract["stay_asleep_expected"] and (mindthus_loaded or superpowers_loaded))
+    )
+    return {
+        "skill_load_telemetry_status": "observed",
+        "actual_skill_load_path": loaded_owner,
+        "required_skill_loads": sorted(required),
+        "allowed_skill_loads": sorted(allowed),
+        "required_skill_loads_satisfied": required_satisfied,
+        "unexpected_skill_loads": unexpected,
+        "skill_load_contract_satisfied": contract_satisfied,
+        "skill_load_verdict": verdict,
+    }
 
 
 def owner_fidelity_for_case(
@@ -867,13 +1182,20 @@ def owner_fidelity_for_case(
     response: dict[str, Any],
     score: dict[str, Any],
 ) -> dict[str, Any]:
-    commands = [str(command) for command in response.get("loaded_commands_all_turns", [])]
+    raw_commands = response.get("loaded_commands_all_turns")
+    telemetry_observed = isinstance(raw_commands, list)
+    commands = [str(command) for command in raw_commands] if telemetry_observed else []
     loaded_owner = loaded_owners_from_commands(commands)
-    mindthus_loaded = bool(loaded_owner)
-    superpowers_loaded = any(SUPERPOWERS_RE.search(command) for command in commands)
+    mindthus_loaded = bool(loaded_owner) if telemetry_observed else None
+    superpowers_loaded = (
+        any(SUPERPOWERS_RE.search(command) for command in commands)
+        if telemetry_observed
+        else None
+    )
     accepted_owners = sorted(expected_owner_skills(case))
     stay_asleep = bool(case.get("stay_asleep_expected"))
     expected_owner = str(case.get("expected_owner", ""))
+    contract = normalized_case_evaluation_contract(case)
 
     false_final = final_answer_false_wakeup(case, score)
     false_runtime = runtime_event_false_wakeup(
@@ -881,11 +1203,34 @@ def owner_fidelity_for_case(
         mindthus_loaded=mindthus_loaded,
         superpowers_loaded=superpowers_loaded,
     )
-    required_visible_action_present = (
-        bool(score.get("pass_criteria_met")) if not stay_asleep else None
+    required_visible_action_present = _score_optional_bool(score, "required_visible_action_present")
+    if required_visible_action_present is None and not stay_asleep:
+        required_visible_action_present = _score_optional_bool(score, "pass_criteria_met")
+    owner_semantic_success = _score_optional_bool(score, "owner_semantic_success")
+    if owner_semantic_success is None:
+        owner_semantic_success = _score_optional_bool(score, "pass_criteria_met")
+    observed_execution_owner, execution_owner_fidelity, execution_owner_verdict = (
+        _execution_owner_axes(contract, score)
+    )
+    primitive_axes = _primitive_axes(
+        contract,
+        score,
+        required_visible_action_present=required_visible_action_present,
+        false_final=false_final,
+    )
+    lifecycle_axes = _lifecycle_axes(contract, score)
+    skill_load_axes = _skill_load_axes(
+        contract,
+        telemetry_observed=telemetry_observed,
+        loaded_owner=loaded_owner,
+        mindthus_loaded=mindthus_loaded,
+        superpowers_loaded=superpowers_loaded,
     )
 
-    if stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
+    if not telemetry_observed:
+        expected_owner_loaded = None
+        verdict = "unknown_load_telemetry"
+    elif stay_asleep or expected_owner in DIRECT_EXPECTED_OWNERS:
         expected_owner_loaded = not mindthus_loaded and not superpowers_loaded
         verdict = "runtime_over_wake" if false_runtime else "direct_stay_asleep"
     elif not accepted_owners:
@@ -909,9 +1254,22 @@ def owner_fidelity_for_case(
         "superpowers_loaded": superpowers_loaded,
         "false_wakeup_final_answer": false_final,
         "false_wakeup_runtime_event": false_runtime,
+        "runtime_false_wakeup": false_runtime,
         "expected_owner_loaded": expected_owner_loaded,
         "required_visible_action_present": required_visible_action_present,
         "owner_fidelity_verdict": verdict,
+        "owner_fidelity_verdict_semantics": "legacy-load-compatibility",
+        "evaluation_contract": contract,
+        "final_answer_behavior_success": _score_optional_bool(score, "pass_criteria_met"),
+        "owner_semantic_success": owner_semantic_success,
+        "expected_execution_owner": contract["expected_execution_owner"],
+        "accepted_execution_owners": contract["accepted_execution_owners"],
+        "observed_execution_owner": observed_execution_owner,
+        "execution_owner_fidelity": execution_owner_fidelity,
+        "execution_owner_fidelity_verdict": execution_owner_verdict,
+        **primitive_axes,
+        **lifecycle_axes,
+        **skill_load_axes,
     }
 
 
@@ -978,7 +1336,7 @@ def judge_case(
         }
     record = {
         **parsed,
-        "schema_version": "mindthus-judgment-cli-score-v0.2",
+        "schema_version": "mindthus-judgment-cli-score-v0.3",
         "judged_at_utc": datetime.now(timezone.utc).isoformat(),
         "variant": args.variant,
         "case_id": case_id,
@@ -1136,6 +1494,20 @@ def failure_diagnostics(
                 "expected_owner_loaded": score.get("expected_owner_loaded"),
                 "required_visible_action_present": score.get("required_visible_action_present"),
                 "owner_fidelity_verdict": score.get("owner_fidelity_verdict"),
+                "owner_semantic_success": score.get("owner_semantic_success"),
+                "observed_execution_owner": score.get("observed_execution_owner"),
+                "execution_owner_fidelity": score.get("execution_owner_fidelity"),
+                "execution_owner_fidelity_verdict": score.get(
+                    "execution_owner_fidelity_verdict"
+                ),
+                "primitive_action_recall": score.get("primitive_action_recall"),
+                "primitive_action_precision": score.get("primitive_action_precision"),
+                "lifecycle_fidelity": score.get("lifecycle_fidelity"),
+                "skill_load_telemetry_status": score.get("skill_load_telemetry_status"),
+                "skill_load_contract_satisfied": score.get(
+                    "skill_load_contract_satisfied"
+                ),
+                "skill_load_verdict": score.get("skill_load_verdict"),
             }
         )
 
@@ -1143,7 +1515,7 @@ def failure_diagnostics(
         return sum(1 for item in failed_cases if item[key])
 
     return {
-        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.2",
+        "schema_version": "mindthus-judgment-cli-failure-diagnostics-v0.3",
         "failed_case_count": len(failed_cases),
         "mindthus_loaded_failed_case_count": count("mindthus_loaded"),
         "superpowers_loaded_failed_case_count": count("superpowers_loaded"),
@@ -1193,9 +1565,132 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
         verdict: sum(1 for s in scores if s.get("owner_fidelity_verdict") == verdict)
         for verdict in sorted({str(s.get("owner_fidelity_verdict")) for s in scores if s.get("owner_fidelity_verdict")})
     }
+    final_behavior_items = [
+        s for s in scores if isinstance(s.get("final_answer_behavior_success", s.get("pass_criteria_met")), bool)
+    ]
+    owner_semantic_items = [
+        s for s in scores if isinstance(s.get("owner_semantic_success", s.get("pass_criteria_met")), bool)
+    ]
+    execution_owner_items = [
+        s for s in scores if isinstance(s.get("execution_owner_fidelity"), bool)
+    ]
+    primitive_recall_items = [
+        s for s in scores if isinstance(s.get("primitive_action_recall"), bool)
+    ]
+    primitive_precision_items = [
+        s for s in scores if isinstance(s.get("primitive_action_precision"), bool)
+    ]
+    lifecycle_items = [s for s in scores if isinstance(s.get("lifecycle_fidelity"), bool)]
+    def load_telemetry_status(score: dict[str, Any]) -> str:
+        status = score.get("skill_load_telemetry_status")
+        if status in {"observed", "missing"}:
+            return str(status)
+        if any(
+            field in score
+            for field in (
+                "expected_owner_loaded",
+                "mindthus_loaded",
+                "superpowers_loaded",
+                "loaded_owner",
+            )
+        ):
+            return "observed-legacy"
+        return "missing"
+
+    load_observed = [s for s in scores if load_telemetry_status(s).startswith("observed")]
+    load_missing = [s for s in scores if load_telemetry_status(s) == "missing"]
+    required_load_items = [
+        s for s in scores if isinstance(s.get("required_skill_loads_satisfied"), bool)
+    ]
+    load_contract_items = [
+        s for s in scores if isinstance(s.get("skill_load_contract_satisfied"), bool)
+    ]
+    skill_load_verdict_counts = {
+        verdict: sum(1 for s in scores if s.get("skill_load_verdict") == verdict)
+        for verdict in sorted(
+            {str(s.get("skill_load_verdict")) for s in scores if s.get("skill_load_verdict")}
+        )
+    }
+
+    def axis_rate(items: list[dict[str, Any]], field: str, fallback: str | None = None) -> float | None:
+        if not items:
+            return None
+        successes = 0
+        for item in items:
+            value = item.get(field)
+            if not isinstance(value, bool) and fallback:
+                value = item.get(fallback)
+            successes += value is True
+        return round(successes / len(items), 3)
+
+    behavior_axes = {
+        "final_answer_behavior_success_rate": axis_rate(
+            final_behavior_items,
+            "final_answer_behavior_success",
+            "pass_criteria_met",
+        ),
+        "owner_semantic_success_rate": axis_rate(
+            owner_semantic_items,
+            "owner_semantic_success",
+            "pass_criteria_met",
+        ),
+        "execution_owner_fidelity_rate": axis_rate(
+            execution_owner_items, "execution_owner_fidelity"
+        ),
+        "execution_owner_telemetry_case_count": len(execution_owner_items),
+        "primitive_action_recall_rate": axis_rate(
+            primitive_recall_items, "primitive_action_recall"
+        ),
+        "primitive_action_recall_case_count": len(primitive_recall_items),
+        "primitive_action_precision_rate": axis_rate(
+            primitive_precision_items, "primitive_action_precision"
+        ),
+        "primitive_action_precision_case_count": len(primitive_precision_items),
+        "required_visible_action_rate": rate(
+            action_items, "required_visible_action_present"
+        ),
+        "lifecycle_fidelity_rate": axis_rate(lifecycle_items, "lifecycle_fidelity"),
+        "lifecycle_telemetry_case_count": len(lifecycle_items),
+    }
+    runtime_load_axes = {
+        "telemetry_complete": len(load_missing) == 0,
+        "observed_case_count": len(load_observed),
+        "missing_case_count": len(load_missing),
+        "required_skill_load_success_rate": axis_rate(
+            required_load_items, "required_skill_loads_satisfied"
+        ),
+        "required_skill_load_case_count": len(required_load_items),
+        "skill_load_contract_success_rate": axis_rate(
+            load_contract_items, "skill_load_contract_satisfied"
+        ),
+        "skill_load_contract_case_count": len(load_contract_items),
+        "negative_runtime_false_wakeup_rate": (
+            round(len(runtime_false_wakes) / len(negative), 3)
+            if negative and not runtime_missing
+            else None
+        ),
+        "skill_load_verdict_counts": skill_load_verdict_counts,
+    }
+    legacy_v5_target_activation = v5_target_activation_diagnostics(scores)
+    legacy_compatibility = {
+        "expected_owner_loaded_rate": rate(owner_items, "expected_owner_loaded"),
+        "positive_expected_owner_loaded_rate": rate(
+            positive_owner_items, "expected_owner_loaded"
+        ),
+        "negative_runtime_stay_asleep_rate": rate(
+            negative_owner_items, "expected_owner_loaded"
+        ),
+        "owner_fidelity_counts": owner_fidelity_counts,
+        "v5_target_activation": legacy_v5_target_activation,
+        "semantics": "load-path compatibility only; not a behavior-success axis",
+    }
     return {
-        "schema_version": "mindthus-judgment-cli-summary-v0.2",
+        "schema_version": "mindthus-judgment-cli-summary-v0.3",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "axis_separation": "behavior-and-runtime-loads-independent",
+        "behavior_axes": behavior_axes,
+        "runtime_load_axes": runtime_load_axes,
+        "legacy_compatibility": legacy_compatibility,
         "case_count": len(scores),
         "positive_count": len(positive),
         "negative_control_count": len(negative),
@@ -1216,15 +1711,19 @@ def summarize(scores: list[dict[str, Any]]) -> dict[str, Any]:
         "verdict_commitment_anti_mush_rate": rate(anti_mush, "verdict_commitment_anti_mush"),
         "over_forced_verdict_rate": rate(over_forced, "over_forced_verdict"),
         "h_group_brake_rate": rate(h_group, "pass_criteria_met"),
-        "expected_owner_loaded_rate": rate(owner_items, "expected_owner_loaded"),
-        "positive_expected_owner_loaded_rate": rate(positive_owner_items, "expected_owner_loaded"),
-        "negative_runtime_stay_asleep_rate": rate(negative_owner_items, "expected_owner_loaded"),
+        "expected_owner_loaded_rate": legacy_compatibility["expected_owner_loaded_rate"],
+        "positive_expected_owner_loaded_rate": legacy_compatibility[
+            "positive_expected_owner_loaded_rate"
+        ],
+        "negative_runtime_stay_asleep_rate": legacy_compatibility[
+            "negative_runtime_stay_asleep_rate"
+        ],
         "required_visible_action_rate": rate(action_items, "required_visible_action_present"),
         "loaded_required_visible_action_rate": rate(
             loaded_action_items, "required_visible_action_present"
         ),
-        "owner_fidelity_counts": owner_fidelity_counts,
-        "v5_target_activation": v5_target_activation_diagnostics(scores),
+        "owner_fidelity_counts": legacy_compatibility["owner_fidelity_counts"],
+        "v5_target_activation": legacy_v5_target_activation,
         "score_histogram": {str(i): sum(1 for s in scores if int(s["score"]) == i) for i in (0, 1, 2)},
         "failed_cases": [
             {
