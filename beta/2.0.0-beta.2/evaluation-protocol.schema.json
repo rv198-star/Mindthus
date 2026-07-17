@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-evaluation-protocol-v0.1.json",
+  "title": "Mindthus 2.0 Beta.2 preregistered evaluation protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "protocol_version",
+    "status",
+    "purpose",
+    "dependencies",
+    "arms",
+    "workload",
+    "execution_design",
+    "primary_endpoints",
+    "secondary_endpoints",
+    "missing_data_policy",
+    "vetoes",
+    "rerun_policy",
+    "authorization_parameters",
+    "rejected_alternatives",
+    "freeze"
+  ],
+  "properties": {
+    "schema_version": { "const": "mindthus-beta2-evaluation-protocol-v0.1" },
+    "protocol_id": { "const": "mindthus-beta2-three-arm-evaluation" },
+    "protocol_version": { "type": "string", "pattern": "^0\\.[0-9]+$" },
+    "status": { "const": "frozen" },
+    "purpose": { "type": "string", "minLength": 1 },
+    "dependencies": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "$ref": "#/$defs/dependency" }
+    },
+    "arms": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/arm" }
+    },
+    "workload": { "$ref": "#/$defs/workload" },
+    "execution_design": { "type": "object", "minProperties": 1 },
+    "primary_endpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/primaryEndpoint" }
+    },
+    "secondary_endpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/secondaryEndpoint" }
+    },
+    "missing_data_policy": { "type": "object", "minProperties": 1 },
+    "vetoes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/veto" }
+    },
+    "rerun_policy": { "type": "object", "minProperties": 1 },
+    "authorization_parameters": { "type": "object", "minProperties": 1 },
+    "rejected_alternatives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["alternative", "reason"],
+        "properties": {
+          "alternative": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "freeze": { "$ref": "#/$defs/freeze" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "uniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "sha256", "acceptance_issue"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "acceptance_issue": { "type": "integer", "minimum": 113, "maximum": 117 }
+      }
+    },
+    "arm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["arm_id", "identity_source", "mutable"],
+      "properties": {
+        "arm_id": { "enum": ["stable", "direct-only", "thin-kernel"] },
+        "identity_source": { "const": "sealed-arm-manifest.identity_digest" },
+        "mutable": { "const": false }
+      }
+    },
+    "workload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matrix_dependency_id",
+        "matched_case_ids",
+        "smoke_case_ids",
+        "smoke_repeats",
+        "smoke_outputs_count_toward_matched",
+        "excluded_case_ids",
+        "case_type_weighting",
+        "host_surfaces",
+        "entry_modes",
+        "repeat_count_floor",
+        "planned_repeats",
+        "repeat_count_is_release_proof"
+      ],
+      "properties": {
+        "matrix_dependency_id": { "const": "case_matrix_fixture" },
+        "matched_case_ids": { "$ref": "#/$defs/uniqueStrings" },
+        "smoke_case_ids": { "$ref": "#/$defs/uniqueStrings" },
+        "smoke_repeats": { "const": 1 },
+        "smoke_outputs_count_toward_matched": { "const": true },
+        "excluded_case_ids": { "$ref": "#/$defs/uniqueStrings" },
+        "case_type_weighting": { "const": "equal-positive-negative-mass" },
+        "host_surfaces": { "$ref": "#/$defs/uniqueStrings" },
+        "entry_modes": { "$ref": "#/$defs/uniqueStrings" },
+        "repeat_count_floor": { "type": "integer", "minimum": 3 },
+        "planned_repeats": { "type": "integer", "minimum": 3 },
+        "repeat_count_is_release_proof": { "const": false }
+      }
+    },
+    "evidenceRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoint", "allowed_provenance", "minimum_per_cell"],
+      "properties": {
+        "endpoint": { "type": "string", "minLength": 1 },
+        "allowed_provenance": { "$ref": "#/$defs/uniqueStrings" },
+        "minimum_per_cell": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "margin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value", "unit"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "value": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "primaryEndpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "domain",
+        "status",
+        "metric",
+        "comparison",
+        "direction",
+        "margin",
+        "decision_rule",
+        "required_evidence",
+        "missing_policy"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 },
+        "status": { "const": "resolved" },
+        "metric": { "type": "string", "minLength": 1 },
+        "comparison": { "type": "string", "minLength": 1 },
+        "direction": { "type": "string", "minLength": 1 },
+        "margin": { "$ref": "#/$defs/margin" },
+        "decision_rule": { "type": "string", "minLength": 1 },
+        "required_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRequirement" }
+        },
+        "missing_policy": { "const": "veto" }
+      }
+    },
+    "secondaryEndpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "domain",
+        "status",
+        "metric",
+        "reporting_rule",
+        "required_evidence",
+        "missing_policy"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 },
+        "status": { "const": "resolved" },
+        "metric": { "type": "string", "minLength": 1 },
+        "reporting_rule": { "type": "string", "minLength": 1 },
+        "required_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceRequirement" }
+        },
+        "missing_policy": { "enum": ["block-endpoint", "veto"] }
+      }
+    },
+    "veto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "stage", "condition", "action"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "stage": { "type": "string", "minLength": 1 },
+        "condition": { "type": "string", "minLength": 1 },
+        "action": { "enum": ["stop-run", "block-decision", "recommend-stop"] }
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "immutable_after",
+        "amendment_policy",
+        "semantic_model_output_generated_before_freeze",
+        "source_parent_commit"
+      ],
+      "properties": {
+        "immutable_after": { "const": "lock receipt creation and containing git commit" },
+        "amendment_policy": { "const": "new protocol version and new lock required" },
+        "semantic_model_output_generated_before_freeze": { "const": false },
+        "source_parent_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+      }
+    }
+  }
+}

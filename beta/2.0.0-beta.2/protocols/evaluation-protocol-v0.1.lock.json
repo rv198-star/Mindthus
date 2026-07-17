@@ -1,0 +1,65 @@
+{
+  "schema_version": "mindthus-beta2-protocol-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "protocol_version": "0.1",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.1.json",
+  "protocol_sha256": "4134832d09c914fdf2956b98bcce18c685f7170135ed1ce45a8f43835db8f5ce",
+  "dependency_receipts": [
+    {
+      "id": "protocol_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-protocol.schema.json",
+      "sha256": "fddf1b810c6878eb81a027aadaf9b9bf63748471c18c267eaa8e2c5d29646aac"
+    },
+    {
+      "id": "protocol_lock_schema",
+      "path": "beta/2.0.0-beta.2/protocol-lock.schema.json",
+      "sha256": "9bc617b972d88b084e5430137c887123602324d43636b4a28af007f041ada72f"
+    },
+    {
+      "id": "arm_definitions",
+      "path": "beta/2.0.0-beta.2/arm-definitions.json",
+      "sha256": "559f0bac2345b3c686ebfb5ffc3f040cda7472d2ed426d5cb97b795fe51a7f95"
+    },
+    {
+      "id": "arm_manifest_schema",
+      "path": "beta/2.0.0-beta.2/arm-manifest.schema.json",
+      "sha256": "f709c13d36fff8ba7118a89d9ac292a3f072cb618dbf250c5f4e83b6b43db5c6"
+    },
+    {
+      "id": "scoring_case_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-case.schema.json",
+      "sha256": "079a4ddac5690210fcbc6b685522927ead242c0403f5e5b93ed17ed859cacf9b"
+    },
+    {
+      "id": "scoring_contract",
+      "path": "beta/2.0.0-beta.2/SCORING-CONTRACT.md",
+      "sha256": "d0af57c644bada442754eab77bac97b030f2c6aa483699d7828ea32d6d082c80"
+    },
+    {
+      "id": "telemetry_schema",
+      "path": "beta/2.0.0-beta.2/turn-telemetry.schema.json",
+      "sha256": "1e917b80b5cb02bc52bc3d2818f10950dc02461439303f57c83822a155d717cf"
+    },
+    {
+      "id": "case_matrix_schema",
+      "path": "beta/2.0.0-beta.2/case-matrix.schema.json",
+      "sha256": "9d9772038326482534291a190c78ad34e9bd0e5595c56dd8a72d98b6c733a926"
+    },
+    {
+      "id": "case_matrix_fixture",
+      "path": "beta/2.0.0-beta.2/fixtures/evaluation-case-matrix.json",
+      "sha256": "35b178920ddbcfc8fb9af1aa4a6c324ffdb86e6ecee4e78ee4ef9da7fc324441"
+    }
+  ],
+  "arm_ids": [
+    "stable",
+    "direct-only",
+    "thin-kernel"
+  ],
+  "frozen_at_utc": "2026-07-17T06:30:34.505153+00:00",
+  "source_parent_commit": "bb833f2e020e879f9fc55cec4a8372d9f5dbe42a",
+  "semantic_model_output_generated_before_freeze": false,
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol.py",
+  "validator_sha256": "3f6c5c5f8537813fef07c297107e6d49f7c4e17fa8ee322d6001dc2d030733ca",
+  "lock_digest": "2330313c92dd1a4c5f7bd3c5b38ee03c82c6ad4a8df94b98fc753a2132e150dc"
+}

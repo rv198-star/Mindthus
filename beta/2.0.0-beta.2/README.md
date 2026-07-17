@@ -76,3 +76,9 @@ its contract in [`case-matrix.schema.json`](case-matrix.schema.json) and fixture
 [`fixtures/`](fixtures/). Public, development, sealed-shadow, and real-task-replay
 sources have non-interchangeable eligibility; linting never promotes a visible case to
 blind evidence.
+
+The #117 preregistration is documented in
+[`EVALUATION-PROTOCOL.md`](EVALUATION-PROTOCOL.md). The versioned protocol, schema, lock
+schema, and immutable receipt live under [`protocols/`](protocols/) and this directory;
+they freeze workload, margins, evidence requirements, vetoes, and rerun rules before
+any semantic smoke output exists.

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-protocol-lock-v0.1.json",
+  "title": "Mindthus 2.0 Beta.2 evaluation protocol lock receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "protocol_version",
+    "protocol_path",
+    "protocol_sha256",
+    "dependency_receipts",
+    "arm_ids",
+    "frozen_at_utc",
+    "source_parent_commit",
+    "semantic_model_output_generated_before_freeze",
+    "validator_path",
+    "validator_sha256",
+    "lock_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "mindthus-beta2-protocol-lock-v0.1" },
+    "protocol_id": { "const": "mindthus-beta2-three-arm-evaluation" },
+    "protocol_version": { "type": "string", "pattern": "^0\\.[0-9]+$" },
+    "protocol_path": { "type": "string", "minLength": 1 },
+    "protocol_sha256": { "$ref": "#/$defs/sha256" },
+    "dependency_receipts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "sha256"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "arm_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "enum": ["stable", "direct-only", "thin-kernel"] }
+    },
+    "frozen_at_utc": { "type": "string", "format": "date-time" },
+    "source_parent_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "semantic_model_output_generated_before_freeze": { "const": false },
+    "validator_path": { "type": "string", "minLength": 1 },
+    "validator_sha256": { "$ref": "#/$defs/sha256" },
+    "lock_digest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}
