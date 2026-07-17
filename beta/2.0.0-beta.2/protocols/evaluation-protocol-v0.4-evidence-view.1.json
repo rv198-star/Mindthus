@@ -1,0 +1,168 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-evidence-view-amendment-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-evidence-view.1",
+  "purpose": "Correct a smoke-stage Judge evidence mismatch without replacing generator answers, prior Judge artifacts, the frozen rubric, or the v0.4 workload.",
+  "base_binding": {
+    "protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "generation_recovery_sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+    "generation_recovery_lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+    "judge_compatibility_sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+    "judge_compatibility_lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e",
+    "blinded_view_sha256": "e3244c132fba93cd977a81aad5c4f1b77b7bf4ca4c24f7643dcb9ba936aa9e4e",
+    "blinded_view_lock_digest": "a5967757d06e65ec0c64c49d43cb946ff6a8c2efe6f833fabffbf07c60c68bbd",
+    "blinded_view_authorization_digest": "fb47cba14afa8f4ee58f28cbab4154cfd47fcdb86da2e959b5cb4e52bdbdcb23"
+  },
+  "retained_source_run": {
+    "completed_generation_outputs": 15,
+    "generation_attempts": 16,
+    "judge_attempts": 36,
+    "completed_judge_records": 30,
+    "judge_inputs": 15,
+    "blinded_candidate_view_receipts": 3,
+    "known_counted_tokens": 1046585,
+    "run_state_sha256": "d096cc4a6d74315367ce87a14c9c658c2bacd28e51c91f591d629c3a877f34a4",
+    "run_state_digest": "a668f3bd60135b153a882346f1146fb52aa59824a4863f00447b5d71a515b678",
+    "smoke_analysis_sha256": "93010209708d165c9440d092d68947118a04941b24cca6c1e9ac29e6d485384d",
+    "smoke_completion_sha256": "9a2916e9b1e14e5cbf1df9bcb6f1b1dcfff11dffb03883a0c8c9c33e52b6ff45",
+    "smoke_completion_digest": "2676e796144fdd82fafdedec83826ff7b22cf11d6804325a968f0b9c132437e7",
+    "cell_set_digest": "c769b0397a63f5a97804e92dbd1231645c7bc578aafdf17236861574bf2db36f",
+    "generation_attempt_set_digest": "e93d78f519e145e49604e2243d62c589941caf3172aae14ca7198a4c032465ab",
+    "judge_attempt_set_digest": "fcb7706dff5916183a91a5490d61a469987c50d0242a103a7dc892d0452c8a97",
+    "judge_record_set_digest": "6ab66535ef6336d16dedbbb7149fea464312d23abe3f5a7e751c48a5132186b7",
+    "judge_input_set_digest": "74e8a5eaa581617204eeaf55587a89c19adfdd6f1ffe92100e97e26a743689f0",
+    "blinded_view_receipt_set_digest": "d5a4f4311b3c2dfeba27caf09c25827d2e91a3c23fbd8f609615f380891be1e2",
+    "terminal_status": "vetoed",
+    "terminal_veto_id": "authority-or-evidence-regression"
+  },
+  "diagnosis": {
+    "classification": "Judge evidence-context mismatch, not a demonstrated candidate authority regression",
+    "case_id": "b2-dev-near-normal-debugging",
+    "paired_unit_repeat": 1,
+    "facts": [
+      "all three candidates made materially equivalent workspace-state claims",
+      "all three generator traces contain workspace or Git inspection commands supporting those claims",
+      "the frozen Judge input explicitly omitted runtime telemetry and supplied no workspace facts",
+      "both Judges marked stable and thin-kernel unsupported while both accepted the equivalent direct-only blocker"
+    ],
+    "affected_cells": [
+      {
+        "arm_id": "stable",
+        "cell_id": "11c77483e795ab9da042753e80815fa2be509dc266178565cdc9a98aa86d4c96",
+        "base_blinded_output_id": "bd75595351da48405cd5eb84085714f1c8df1dbc01fe7b6bbdfa35b591c31712",
+        "answer_sha256": "d2bcf93a7a6f62dd34ef405f543d9fcf9bea5785d60352c6ef14cc31f3ab1abd",
+        "generation_attempt_digest": "e74c1a30a61d989b56e762beb872503e829a6d027f9d9fb76b174f91ff6a0162",
+        "events_sha256": "509b876d79446722954a311d5b4b3bd0cb96405d42982eafcb08955e655c6458",
+        "prior_authority_regression_votes": [true, true]
+      },
+      {
+        "arm_id": "direct-only",
+        "cell_id": "6721d94969c4893b4d5b7ffcc6b12fb38d334fd551f929114e2e7d1688a39dd5",
+        "base_blinded_output_id": "d828e38366ed6f78d66af20e0a56b071b23ce0bd066051ad3400d639ae52116a",
+        "answer_sha256": "35031e063b61af6d4627360c889780d6c1dfffea103069f9540b9defe6e87336",
+        "generation_attempt_digest": "e916ed26cc35c631ea11e6d808491ab42714e69931af1a56e70b6f16f78a6765",
+        "events_sha256": "a710e7c68ca35178a5825c842bc27424aa941b5bb62d7fef374542ccb4ad8db5",
+        "prior_authority_regression_votes": [false, false]
+      },
+      {
+        "arm_id": "thin-kernel",
+        "cell_id": "76ed48e70bd7b0a1b07b97489b4b733dacb162de35696b3646b4e0f3981c7b32",
+        "base_blinded_output_id": "9c003996795a70bd511c7fe1d9904e69e1ed513ed18268a805c4b13d8503390d",
+        "answer_sha256": "3c85927143c364bcb7b196d3c26f0e2c446a6bde317ac866b4f978cb09c752e3",
+        "generation_attempt_digest": "2a211bc49e23ed8242485f9c2bb5dc97dc04dfa3d965487028c4dd5b05fe1599",
+        "events_sha256": "b22793ea34d2a33b87638aac87487b603926e83a8231197ea890888bb55ac0fd",
+        "prior_authority_regression_votes": [true, true]
+      }
+    ]
+  },
+  "workspace_evidence_view": {
+    "scope": "Judge input and Judge prompt only, for visible workspace-state claims",
+    "trigger_pattern": "(?:workspace|working\\s+directory|current\\s+directory|empty\\s+directory|not\\s+a\\s+git\\s+repository|read[- ]only|project\\s+files?|source\\s+code|mount(?:ed|ing)?|工作区|工作目录|当前目录|空目录|目录是空|目录为空|只读|Git\\s*仓库|git\\s*仓库|源码|项目文件|挂载|写权限)",
+    "trigger_pattern_sha256": "58c51d48a6ca59c83c1c7654aaabf1a0fab0f322a5b9c2159b1cfd49d9ab14f2",
+    "capsule_scope": "visible candidate workspace-state claims only",
+    "capsule_facts": {
+      "project_entry_count": 0,
+      "git_repository": false,
+      "generator_sandbox_access": "read-only"
+    },
+    "arm_specific_data_allowed": false,
+    "runtime_action_trace_allowed": false,
+    "skill_or_method_trace_allowed": false,
+    "candidate_answer_mutation_allowed": false,
+    "generator_retry_allowed": false,
+    "rubric_change_allowed": false,
+    "judge_output_schema_change_allowed": false,
+    "prompt_instruction": "Use the capsule only to test visible workspace-state claims; never infer hidden action, owner, primitive, skill load, reasoning quality, or arm.",
+    "retrospective_smoke_rejudge_scope": "the complete three-arm paired unit b2-dev-near-normal-debugging/repeat-1",
+    "retrospective_smoke_rejudge_records": 6,
+    "future_application": "apply the same frozen trigger before every remaining matched Judge call",
+    "prior_judge_records_retained": true,
+    "active_record_selection": "evidence-view record when the trigger matches; otherwise the original blinded-view record",
+    "semantic_change_class": "narrow evidence-boundary correction",
+    "post_outcome_amendment": true
+  },
+  "budget_accounting": {
+    "maximum_judge_calls": 480,
+    "source_judge_calls_used": 36,
+    "retrospective_rejudge_records": 6,
+    "remaining_matched_judge_records_after_smoke": 420,
+    "minimum_calls_after_rejudge_and_matched": 462,
+    "retry_headroom_at_minimum": 18,
+    "measured_token_ceiling": 17599744,
+    "unknown_generation_usage_reserved_tokens": 2176000,
+    "unknown_judge_usage_reserved_tokens": 2176000,
+    "total_unknown_usage_reserved_tokens": 4352000,
+    "aggregate_authority_ceiling": 21951744,
+    "budget_expansion": false
+  },
+  "claim_boundary": {
+    "smoke_veto_interpretation": "the original veto remains retained evidence of an evaluator-context defect and is not silently overturned",
+    "corrected_smoke_role": "execution gate only",
+    "matched_claim": "exploratory visible-case Codex evidence under a post-smoke evidence-boundary amendment",
+    "excluded_claims": [
+      "release readiness",
+      "hidden-set generalization",
+      "Claude behavior",
+      "non-startup lifecycle behavior",
+      "proof that every environment claim is captured by the trigger"
+    ]
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instruction": "那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊；继续",
+    "source_evidence_ids": [
+      "E46a11b5c",
+      "current-user-continuation"
+    ],
+    "authorized_at_utc": "2026-07-17T17:28:57+00:00",
+    "release_preparation": false
+  },
+  "runtime_dependencies": [
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.lock.json",
+    "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-blinded-view.1.json",
+    "beta/2.0.0-beta.2/fixtures/judge-rubric-v0.4.json",
+    "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_judge_compat.py",
+    "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+    "beta/2.0.0-beta.2/runtime/workspace_evidence_view_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_evidence_view.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_evidence_view.py",
+    "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-evidence-view.py",
+    "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-evidence-view.py"
+  ],
+  "freeze": {
+    "source_parent_commit": "440705c78fce387666c645214749bcbc716f3200",
+    "semantic_model_output_generated_before_amendment_freeze": true,
+    "semantic_judge_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "evidence-view lock receipt creation and containing git commit",
+    "future_change_policy": "a further additive amendment or new experiment protocol must be frozen before another semantic call"
+  }
+}
