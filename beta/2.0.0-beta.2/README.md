@@ -64,3 +64,9 @@ The #114 behavior/load separation is documented in
 [`evaluation-case.schema.json`](evaluation-case.schema.json). New Beta.2 summaries keep
 semantic behavior, primitive recall, lifecycle fidelity, and runtime skill loads on
 independent axes while retaining V5 compatibility fields.
+
+The #115 telemetry contract is documented in
+[`TELEMETRY-CONTRACT.md`](TELEMETRY-CONTRACT.md) and
+[`turn-telemetry.schema.json`](turn-telemetry.schema.json). It records provenance per
+endpoint, redacts sensitive runner content, blocks claims on missing evidence, and
+summarizes p50/p95 only inside exact host/surface/entry-mode/arm strata.

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-turn-telemetry-v0.1.json",
+  "title": "Mindthus 2.0 Beta.2 redacted per-turn telemetry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "turn_index",
+    "stratum",
+    "measurements",
+    "required_evidence",
+    "evidence_gate",
+    "retention",
+    "telemetry_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "mindthus-beta2-turn-telemetry-v0.1"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "turn_index": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stratum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_runtime",
+        "surface",
+        "entry_mode",
+        "arm_id"
+      ],
+      "properties": {
+        "host_runtime": { "type": "string", "minLength": 1 },
+        "surface": { "type": "string", "minLength": 1 },
+        "entry_mode": { "type": "string", "minLength": 1 },
+        "arm_id": { "enum": ["stable", "direct-only", "thin-kernel", "unknown"] }
+      }
+    },
+    "measurements": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "required_evidence": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    },
+    "evidence_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reasons", "endpoint_results"],
+      "properties": {
+        "status": { "enum": ["pass", "blocked"] },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "endpoint_results": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "required_provenance",
+              "observed_provenance"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "satisfied",
+                  "missing",
+                  "provenance_mismatch",
+                  "contradictory"
+                ]
+              },
+              "required_provenance": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/provenance" }
+              },
+              "observed_provenance": { "$ref": "#/$defs/provenance" }
+            }
+          }
+        }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "raw_prompt_retained",
+        "raw_answer_retained",
+        "raw_commands_retained",
+        "external_paths_retained"
+      ],
+      "properties": {
+        "policy": { "const": "redacted-reproducibility-only" },
+        "raw_prompt_retained": { "const": false },
+        "raw_answer_retained": { "const": false },
+        "raw_commands_retained": { "const": false },
+        "external_paths_retained": { "const": false }
+      }
+    },
+    "telemetry_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "provenance": {
+      "enum": [
+        "native",
+        "deterministic",
+        "judge-inferred",
+        "self-reported",
+        "unavailable"
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "provenance", "status"],
+      "properties": {
+        "value": true,
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "status": { "enum": ["observed", "unavailable", "contradictory"] },
+        "source": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

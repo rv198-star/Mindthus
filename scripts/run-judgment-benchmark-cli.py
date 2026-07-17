@@ -14,10 +14,21 @@ import json
 import os
 import re
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+SCRIPT_ROOT = Path(__file__).resolve().parent
+if str(SCRIPT_ROOT) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_ROOT))
+
+from mindthus_beta2_telemetry import (  # noqa: E402
+    build_turn_telemetry,
+    summarize_response_telemetry,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -516,7 +527,7 @@ def run_codex(
             cmd.extend(["--output-schema", str(output_schema)])
         cmd.append("-")
 
-    started = time.time()
+    started = time.monotonic()
     prompt_path.write_text(prompt, encoding="utf-8")
     timed_out = False
     timeout_message = ""
@@ -548,7 +559,7 @@ def run_codex(
         )
         stderr = stderr_value + "\n" + timeout_message
         returncode = 124
-    duration = time.time() - started
+    duration = time.monotonic() - started
     events_path.write_text(stdout, encoding="utf-8")
     stderr_path.write_text(stderr, encoding="utf-8")
     answer = last_path.read_text(encoding="utf-8") if last_path.is_file() else ""
@@ -700,6 +711,21 @@ def run_case(
         thread_id = result["thread_id"]
         result["user_prompt"] = prompt
         result["activation_hint"] = activation_hint
+        arm_manifest = getattr(args, "beta2_arm_manifest", None)
+        if isinstance(arm_manifest, dict):
+            allowed_roots = [Path(args.repo_root), Path(args.execution_root)]
+            allowed_roots.append(Path(arm_manifest["package"]["root"]))
+            result["telemetry"] = build_turn_telemetry(
+                result,
+                context={
+                    "case_id": case_id,
+                    "turn_index": idx,
+                    "entry_mode": getattr(args, "entry_mode", None),
+                    "execution_root": args.execution_root,
+                    "allowed_roots": allowed_roots,
+                    "arm_manifest": arm_manifest,
+                },
+            )
         turn_records.append(result)
         prior_turn_answer = result["answer"]
         if result["returncode"] != 0:
@@ -1446,6 +1472,18 @@ def write_activation_summary(out_dir: Path, responses: list[dict[str, Any]]) -> 
     return summary
 
 
+def write_beta2_telemetry_summary(
+    out_dir: Path,
+    responses: list[dict[str, Any]],
+) -> dict[str, Any]:
+    summary = summarize_response_telemetry(responses)
+    (out_dir / "telemetry-summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return summary
+
+
 def write_contamination_report(
     out_dir: Path,
     responses: list[dict[str, Any]],
@@ -1745,6 +1783,10 @@ def validate_run_args(args: argparse.Namespace) -> list[str]:
         errors.append("--home and --empty-home-root cannot be used together")
     if getattr(args, "v5_register_hints", False) and getattr(args, "v5_semantic_triage_hints", False):
         errors.append("--v5-register-hints and --v5-semantic-triage-hints are mutually exclusive")
+    if getattr(args, "arm_manifest", None) and not getattr(args, "entry_mode", None):
+        errors.append("--arm-manifest requires --entry-mode")
+    if getattr(args, "entry_mode", None) and not getattr(args, "arm_manifest", None):
+        errors.append("--entry-mode requires --arm-manifest")
     if args.certification_candidate:
         if not args.model:
             errors.append("--certification-candidate requires explicit --model")
@@ -1779,6 +1821,17 @@ def main() -> int:
     parser.add_argument("--plugin-context", choices=("mindthus", "none"), default="mindthus")
     parser.add_argument("--model", default=None)
     parser.add_argument("--judge-model", default=None)
+    parser.add_argument(
+        "--arm-manifest",
+        type=Path,
+        default=None,
+        help="Verified Beta.2 arm manifest. Activates provenance-aware per-turn telemetry.",
+    )
+    parser.add_argument(
+        "--entry-mode",
+        default=None,
+        help="Frozen Beta.2 workload entry-mode identifier; requires --arm-manifest.",
+    )
     parser.add_argument("--timeout", type=int, default=240)
     parser.add_argument("--jobs", type=int, default=3)
     parser.add_argument("--select", default=None, help="Case numbers, e.g. 1-10,12,50.")
@@ -1824,6 +1877,10 @@ def main() -> int:
     if errors:
         parser.error("; ".join(errors))
 
+    args.beta2_arm_manifest = None
+    if args.arm_manifest:
+        args.beta2_arm_manifest = json.loads(args.arm_manifest.read_text(encoding="utf-8"))
+
     ensure_dirs(args.out_dir)
     all_cases = load_cases(args.cases)
     cases = selected_cases(all_cases, args.select)
@@ -1834,6 +1891,11 @@ def main() -> int:
         "schema_version": "mindthus-judgment-cli-run-manifest-v0.1",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "variant": args.variant,
+        "beta2_arm_manifest": str(args.arm_manifest) if args.arm_manifest else None,
+        "beta2_arm_identity_digest": (
+            args.beta2_arm_manifest.get("identity_digest") if args.beta2_arm_manifest else None
+        ),
+        "entry_mode": args.entry_mode,
         "case_fixture": str(args.cases),
         "case_fixture_sha256": sha256_file(args.cases),
         "runner": str(Path(__file__).resolve()),
@@ -1913,6 +1975,8 @@ def main() -> int:
         responses.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "raw-responses.jsonl", responses)
         write_activation_summary(args.out_dir, responses)
+        if args.beta2_arm_manifest:
+            write_beta2_telemetry_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
             if report["generator_contaminated_case_count"]:
@@ -1925,6 +1989,8 @@ def main() -> int:
                 responses.append(record)
         responses.sort(key=lambda item: int(item["case_number"]))
         write_activation_summary(args.out_dir, responses)
+        if args.beta2_arm_manifest:
+            write_beta2_telemetry_summary(args.out_dir, responses)
         if args.fail_on_contamination:
             report = write_contamination_report(args.out_dir, responses)
             if report["generator_contaminated_case_count"]:
