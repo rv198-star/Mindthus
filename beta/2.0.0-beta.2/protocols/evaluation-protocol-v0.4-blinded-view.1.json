@@ -1,0 +1,160 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-blinded-view-amendment-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-blinded-view.1",
+  "purpose": "Complete v0.4 without rerunning or mutating generator answers when evaluation-only arm identifiers appear in the candidate text.",
+  "base_binding": {
+    "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "generation_recovery_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "generation_recovery_sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+    "generation_recovery_lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+    "judge_compatibility_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+    "judge_compatibility_sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+    "judge_compatibility_lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e",
+    "judge_compatibility_authorization_path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-judge-compat.1.json",
+    "judge_compatibility_authorization_digest": "82583dcf3c20f642bb0531233673eae16079dc0e048154b1b3d10dca79d43ef1"
+  },
+  "retained_source_run": {
+    "phase": "smoke",
+    "completed_generation_outputs": 15,
+    "generation_attempts": 16,
+    "judge_attempts": 17,
+    "completed_judge_records": 12,
+    "known_counted_tokens": 789490,
+    "run_state_sha256": "8e991613286a7dc4085d7c76a3be47068744a73e352010f7f5bb21aadc3a2167",
+    "run_state_digest": "658fade04ab9c0681d4d75a6f08a875f8e818f18aa2231a1be5996b5a78307cf",
+    "judge_compatibility_stop_report_sha256": "5fa5c67a9116b8ef12326135df07490e7ee146b7c350e115eecbe663272355e3",
+    "judge_attempt_set_digest": "bd36624a2e9350dc43d2c6d8bd08f7f716c15d0215182239c82965f0b8b0427a",
+    "judge_attempt_set_digest_format": "canonical_sha256(sorted([{path,attempt_digest,file_sha256}], key=path))",
+    "judge_record_set_digest": "7cd792e2ddcd70c20b342ac4a827cc6ba69871e335c54fd740c2c1f7c8b8c3c2",
+    "judge_record_set_digest_format": "canonical_sha256(sorted([{path,record_digest,file_sha256}], key=path))",
+    "timed_out_judge_attempt": {
+      "blinded_output_id": "dc8d5f8fbd7970e31eacd06f3df165ac8ba81aa0ff98d4786336d1955a242913",
+      "slot": 1,
+      "attempt": 1,
+      "attempt_digest": "0f40bf5d5f3371a3eb4c7a8265e996c95e783bbd1e6ab1f2ec94086a48f87ddd",
+      "attempt_file_sha256": "44906532d4e967eeee77e097302460f157d1e8802d2bc6ad11a71eb4f6ada582",
+      "events_sha256": "f5958cfa6373875cc9e59780c62436f6d42783bf2d81b36f6e10b51e6d1959ab",
+      "returncode": -15,
+      "timed_out": true,
+      "output_present": false,
+      "native_usage_available": false,
+      "counted_tokens": 0
+    },
+    "identifier_exposure_scan": {
+      "scanned_generation_outputs": 15,
+      "exposed_generation_outputs": 3,
+      "exposed_set_digest": "268157629cbf5922e0d361c3726a93c21c59a68298902ef7839a850954e9156a",
+      "exposed_set_digest_format": "canonical_sha256(items in cell_id order)",
+      "items": [
+        {
+          "cell_id": "6721d94969c4893b4d5b7ffcc6b12fb38d334fd551f929114e2e7d1688a39dd5",
+          "answer_sha256": "35031e063b61af6d4627360c889780d6c1dfffea103069f9540b9defe6e87336",
+          "blinded_answer_sha256": "297a89dbe0604f59b65113d853c61956cdc028087964af303e30ce2d227da4db"
+        },
+        {
+          "cell_id": "aa2f44a4568d8eaff99c38e4564ba506728f7b588230a8ba0259eb234f0affc4",
+          "answer_sha256": "e16b95dcf5995cb62422a64d6d74e32faa4b41a58dd2399282492bf61912da00",
+          "blinded_answer_sha256": "5ddcf376890e353efc2337c474e2db68fd8db8948ddda2cbc2532e33312646bb"
+        },
+        {
+          "cell_id": "e55321ed72e3def6e51aea168be2ceaa3a2e968d2c3e4eb325e1fbef70a7cc40",
+          "answer_sha256": "fd0d9de40d25db4f3a066fc91eec71481b53f2314f6bebd82f94187da5868576",
+          "blinded_answer_sha256": "71c063e3a29d78f0af25dda4e74d9f248fe894eb334453aecd55565741ef9259"
+        }
+      ]
+    }
+  },
+  "blinded_candidate_view": {
+    "scope": "Judge input and Judge prompt only",
+    "original_answer_mutation_allowed": false,
+    "generation_retry_for_identifier_exposure_allowed": false,
+    "identity_view_for_unexposed_answers": true,
+    "sensitive_paths": [
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/direct-only/codex-home/plugins/cache/mindthus-beta/mindthus-beta/2.0.0-beta.1",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/thin-kernel/codex-home/plugins/cache/mindthus-beta/mindthus-beta/2.0.0-beta.1",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/stable/codex-home/plugins/cache/mindthus/mindthus/1.4.6",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/direct-only/codex-home",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/thin-kernel/codex-home",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v04-evaluation-a6e9da7e/arms/stable/codex-home",
+      "/Volumes/Data/Mindthus-evaluation-v04-a6e9da7e/direct-only/project",
+      "/Volumes/Data/Mindthus-evaluation-v04-a6e9da7e/thin-kernel/project",
+      "/Volumes/Data/Mindthus-evaluation-v04-a6e9da7e/stable/project"
+    ],
+    "sensitive_paths_digest": "8aedffebe74d119001204eebe5960ca27b7f976c35989cedc8975234bad4f9bd",
+    "label_pattern": "\\b(?:direct-only|thin-kernel|stable\\s+arm)\\b|mindthus(?:-beta)?:",
+    "path_replacement": "[blinded evaluation path]",
+    "arm_label_replacement": "[blinded arm]",
+    "namespace_prefix_replacement": "",
+    "transformation_order": [
+      "replace exact sensitive paths longest-first",
+      "remove Mindthus namespace prefixes",
+      "replace standalone arm labels"
+    ],
+    "receipt_required_when_non_identity": true,
+    "receipt_hidden_from_judges": true,
+    "semantic_scoring_contract_unchanged": true
+  },
+  "amendment": {
+    "remaining_generation_policy": "unchanged frozen v0.4 generation and retry policy",
+    "remaining_judge_policy": "unchanged compatible schema, two isolated slots, and two-attempt maximum",
+    "completed_judge_records_retained": true,
+    "workload_truncation_allowed": false,
+    "analysis_rule": "reconstruct and validate the deterministic blinded view before applying the original v0.4 and generation-recovery analysis",
+    "terminal_stop": "view transformation drift, original answer mutation, receipt mismatch, residual identifier exposure, budget breach, or exhausted Judge attempts"
+  },
+  "budget_accounting": {
+    "generation_calls_used": 16,
+    "judge_calls_used": 17,
+    "judge_calls_remaining": 463,
+    "valid_judge_records_still_required": 438,
+    "judge_retry_headroom_after_required_records": 25,
+    "measured_counted_tokens": 789490,
+    "prior_unknown_generation_usage_reserved_tokens": 2176000,
+    "new_unknown_judge_usage_reserve": {
+      "kind": "non-measured conservative risk reserve",
+      "model_context_window_tokens": 272000,
+      "context_window_multiplier": 8,
+      "reserved_tokens": 2176000,
+      "claim": "upper-bound reserve, not observed model usage"
+    },
+    "total_unknown_usage_reserved_tokens": 4352000,
+    "prior_measured_token_ceiling": 19775744,
+    "amended_measured_token_ceiling": 17599744,
+    "balance_rule": "amended measured ceiling plus both unknown reserves equals the frozen v0.4 measured ceiling",
+    "budget_expansion": false
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instruction": "那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊",
+    "source_evidence_id": "E46a11b5c",
+    "authorized_at_utc": "2026-07-17T14:07:25.640257+00:00",
+    "release_preparation": false
+  },
+  "runtime_dependencies": [
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.lock.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.lock.json",
+    "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-judge-compat.1.json",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_judge_compat.py",
+    "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_blinded_view.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_blinded_view.py",
+    "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-blinded-view.py",
+    "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-blinded-view.py"
+  ],
+  "freeze": {
+    "source_parent_commit": "7405d8c55b52aadce7aa87c84c8dc0a9e136ad73",
+    "semantic_model_output_generated_before_amendment_freeze": true,
+    "semantic_model_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "blinded-view lock receipt creation and containing git commit",
+    "future_change_policy": "a further additive amendment or new experiment protocol must be frozen before another semantic call"
+  }
+}

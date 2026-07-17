@@ -1,0 +1,181 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.2",
+  "authorization_id": "issue-119-codex-v0.4-blinded-view.1",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-blinded-view.py",
+  "authorization_validator_sha256": "3e8c0d4c203d356d5953260c669e7e4a491fd669ac1fdb1495aaccbb0d7a5b33",
+  "status": "authorized",
+  "packet_created_at_utc": "2026-07-17T16:43:34.636279+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+    "lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b"
+  },
+  "host_surface": "codex-plugin",
+  "planned_generation_outputs": 225,
+  "planned_judge_records": 450,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 239,
+  "maximum_judge_calls": 480,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 17599744,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "cumulative_authority": {
+    "maximum_generation_calls": 240,
+    "maximum_judge_calls": 480,
+    "aggregate_token_ceiling": 22000000,
+    "prior_consumption": {
+      "protocol_version": "0.3",
+      "generation_calls": 1,
+      "judge_calls": 0,
+      "counted_tokens": 48256
+    },
+    "v04_available": {
+      "maximum_generation_calls": 239,
+      "maximum_judge_calls": 480,
+      "aggregate_token_ceiling": 21951744
+    },
+    "budget_expansion": false
+  },
+  "case_scope": {
+    "matched_case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-edsp",
+      "b2-public-anti-spiral",
+      "b2-dev-owner-3l5s",
+      "b2-dev-owner-edsp",
+      "b2-dev-owner-sela",
+      "b2-dev-owner-mpg",
+      "b2-dev-owner-wae",
+      "b2-dev-owner-tvg",
+      "b2-dev-owner-tplan",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-evidence-first",
+      "b2-dev-multi-primitive",
+      "b2-dev-anti-third-touch",
+      "b2-dev-anti-renamed-object",
+      "b2-dev-anti-distinct-objects",
+      "b2-dev-anti-new-evidence",
+      "b2-dev-near-local-scope",
+      "b2-dev-near-sufficient-evidence",
+      "b2-dev-near-user-tradeoff",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-resume",
+      "b2-dev-lifecycle-clear",
+      "b2-dev-lifecycle-compact"
+    ],
+    "excluded_case_ids": [
+      "b2-shadow-owner-overlap",
+      "b2-shadow-passive-intersection",
+      "b2-shadow-anti-rename",
+      "b2-shadow-near-negative",
+      "b2-replay-architecture-review",
+      "b2-replay-debugging-session"
+    ],
+    "matched_case_count": 25,
+    "excluded_sealed_case_count": 4,
+    "included_sealed_case_count": 0,
+    "evidence_visibility": "implementation-visible",
+    "host_session_scope": "startup-only",
+    "claim_ceiling": "visible-case Codex startup-session exploratory evidence only"
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instructions": [
+      "去掉4道隐藏题，继续",
+      "推进，直到有具体结论或者必须我决策参与的时候才停下来",
+      "部分失败：1这个是什么原因？那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊"
+    ],
+    "source_evidence_ids": [
+      "E22324196",
+      "Eea1fda65",
+      "E46a11b5c"
+    ],
+    "authorized_at_utc": "2026-07-17T14:07:25.640257+00:00",
+    "authorized_protocol_version": "0.4 + generation recovery amendment 1 + Judge compatibility amendment 1 + blinded-view amendment 1",
+    "authorized_configuration_digest": "85865f2f141d1319edf9928781a754c13b13fa2e9705dbb4fc2ff78b1320f2d6",
+    "source_summary": "William's instruction to complete v0.4 binds deterministic Judge-view de-identification after the frozen blinding gate found evaluation-only identifiers. Original answers and all attempts remain immutable; no generation retry, rubric change, workload truncation, budget expansion, or release action is authorized.",
+    "must_escalate_on": [
+      "blinded-view transformation or receipt drift",
+      "residual identifier exposure after transformation",
+      "exhausted compatible Judge attempts",
+      "binary primary-axis judge disagreement",
+      "new spend beyond cumulative ceilings",
+      "release or publication decision",
+      "irreversible action"
+    ],
+    "digest_binding": {
+      "mode": "additive-v0.4-blinded-view-after-frozen-judge-compatibility",
+      "bound_protocol_digest": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+      "bound_generation_recovery_digest": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+      "bound_judge_compatibility_digest": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+      "bound_judge_compatibility_lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e",
+      "bound_blinded_view_digest": "e3244c132fba93cd977a81aad5c4f1b77b7bf4ca4c24f7643dcb9ba936aa9e4e",
+      "bound_blinded_view_lock_digest": "a5967757d06e65ec0c64c49d43cb946ff6a8c2efe6f833fabffbf07c60c68bbd",
+      "bound_at_utc": "2026-07-17T16:43:34.636279+00:00"
+    }
+  },
+  "sealed_case_attestation_path": null,
+  "release_preparation": false,
+  "blocking_requirements": [],
+  "recovery_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.lock.json",
+    "lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+    "amendment_id": "0.4-recovery.1",
+    "base_protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746"
+  },
+  "recovery_budget": {
+    "base_v0_4_measured_token_ceiling": 21951744,
+    "unknown_usage_reserved_tokens": 2176000,
+    "amended_measured_token_ceiling": 19775744,
+    "budget_expansion": false
+  },
+  "judge_compatibility_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+    "sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.lock.json",
+    "lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e",
+    "amendment_id": "0.4-judge-compat.1",
+    "compatible_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json"
+  },
+  "blinded_view_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.json",
+    "sha256": "e3244c132fba93cd977a81aad5c4f1b77b7bf4ca4c24f7643dcb9ba936aa9e4e",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.lock.json",
+    "lock_digest": "a5967757d06e65ec0c64c49d43cb946ff6a8c2efe6f833fabffbf07c60c68bbd",
+    "amendment_id": "0.4-blinded-view.1",
+    "source_judge_attempt_set_digest": "bd36624a2e9350dc43d2c6d8bd08f7f716c15d0215182239c82965f0b8b0427a",
+    "source_judge_record_set_digest": "7cd792e2ddcd70c20b342ac4a827cc6ba69871e335c54fd740c2c1f7c8b8c3c2"
+  },
+  "blinded_view_budget": {
+    "prior_measured_token_ceiling": 19775744,
+    "additional_unknown_judge_usage_reserved_tokens": 2176000,
+    "total_unknown_usage_reserved_tokens": 4352000,
+    "amended_measured_token_ceiling": 17599744,
+    "budget_expansion": false
+  }
+}
