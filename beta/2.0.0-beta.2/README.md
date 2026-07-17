@@ -1,6 +1,8 @@
 # Mindthus 2.0.0-beta.2 — Behavior Evaluation
 
-Status: opened; no A/B run has started.
+Status: visible-case protocol v0.3 is frozen and authorized; the real smoke stopped on
+its first generation cell because required native latency evidence was unavailable. No
+Arm comparison, judge run, matched run, or release preparation has started.
 
 Beta 2 begins from the isolated Beta 1 functional checkpoint `f131fd88`. Beta 1 owns
 the thin Kernel, direct Beta owner namespace, arbitration-only `using-mindthus`, exact
@@ -87,3 +89,9 @@ The #118 model-free rehearsal is documented in [`DRY-RUN.md`](DRY-RUN.md). Its p
 cell, and report schemas plus deterministic fault catalog prove isolation, lifecycle
 plumbing, atomic artifacts, safe resume, and veto mechanics while keeping every
 semantic, efficiency, and release claim unavailable.
+
+The current #119 boundary is documented in
+[`AUTHORIZATION-GATE.md`](AUTHORIZATION-GATE.md). The user-selected v0.3 path excludes
+the four sealed-shadow cases and both unauthorized replays. Its first real Codex cell
+produced an answer but lacked the protocol-required native first-useful-action
+timestamp, so the frozen evidence veto stopped all later generation and judge calls.

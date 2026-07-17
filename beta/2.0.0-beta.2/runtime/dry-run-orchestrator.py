@@ -30,6 +30,7 @@ PROTOCOL_VALIDATOR = BETA_ROOT / "runtime" / "freeze-evaluation-protocol.py"
 PROTOCOL_VALIDATORS = {
     "0.1": PROTOCOL_VALIDATOR,
     "0.2": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.2.py",
+    "0.3": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.3.py",
 }
 MATRIX_LINTER = BETA_ROOT / "runtime" / "lint-case-matrix.py"
 REQUIRED_ARMS = {"stable", "direct-only", "thin-kernel"}
@@ -40,7 +41,7 @@ CLAIMS_UNAVAILABLE = [
     "real primitive recall, precision, or Kernel benefit",
     "real token, wall-time, or first-useful-action distributions",
     "real host hook behavior outside the deterministic fixture",
-    "sealed-case blindness until independent custodian attestation",
+    "hidden-set or sealed-case blindness/generalization evidence",
     "matched-evaluation Hold/Stop/continue recommendation",
     "release readiness or Stable promotion",
 ]
@@ -123,6 +124,7 @@ def load_plan(plan_path: Path) -> dict[str, Any]:
     if plan.get("schema_version") not in {
         "mindthus-beta2-dry-run-plan-v0.1",
         "mindthus-beta2-dry-run-plan-v0.2",
+        "mindthus-beta2-dry-run-plan-v0.3",
     }:
         raise DryRunVeto("protocol-or-arm-drift", "unsupported dry-run plan schema")
     verify_embedded_digest(plan, "plan_digest", "dry-run plan")
@@ -144,15 +146,21 @@ def verify_protocol_and_matrix(plan: Mapping[str, Any]) -> tuple[dict[str, Any],
     validator_path = PROTOCOL_VALIDATORS.get(protocol_version)
     if validator_path is None:
         raise DryRunVeto("protocol-or-arm-drift", "protocol version has no dry-run validator")
-    if protocol_version == "0.2":
+    if protocol_version != "0.1":
         planned_validator = Path(str(plan.get("protocol_validator_path") or ""))
         if planned_validator.resolve(strict=False) != validator_path.resolve(strict=False):
-            raise DryRunVeto("protocol-or-arm-drift", "v0.2 protocol validator path differs")
+            raise DryRunVeto(
+                "protocol-or-arm-drift",
+                f"v{protocol_version} protocol validator path differs",
+            )
         if not planned_validator.is_file() or sha256_file(planned_validator) != plan.get(
             "protocol_validator_sha256"
         ):
-            raise DryRunVeto("protocol-or-arm-drift", "v0.2 protocol validator digest differs")
-        expected_plan_schema = "mindthus-beta2-dry-run-plan-v0.2"
+            raise DryRunVeto(
+                "protocol-or-arm-drift",
+                f"v{protocol_version} protocol validator digest differs",
+            )
+        expected_plan_schema = f"mindthus-beta2-dry-run-plan-v{protocol_version}"
     else:
         expected_plan_schema = "mindthus-beta2-dry-run-plan-v0.1"
     if plan.get("schema_version") != expected_plan_schema:

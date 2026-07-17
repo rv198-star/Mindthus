@@ -32,6 +32,13 @@ PROTOCOL_CONFIGS = {
         "surfaces": ("codex-plugin",),
         "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.2",
     },
+    "0.3": {
+        "protocol": BETA_ROOT / "protocols" / "evaluation-protocol-v0.3.json",
+        "lock": BETA_ROOT / "protocols" / "evaluation-protocol-v0.3.lock.json",
+        "validator": BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.3.py",
+        "surfaces": ("codex-plugin",),
+        "plan_schema_version": "mindthus-beta2-dry-run-plan-v0.3",
+    },
 }
 CASE_MATRIX = BETA_ROOT / "fixtures" / "evaluation-case-matrix.json"
 NEGATIVE_CATALOG = BETA_ROOT / "fixtures" / "dry-run-negative-cases.json"
@@ -341,7 +348,7 @@ def build(root: Path, *, protocol_version: str = "0.1") -> Path:
         "supported_surfaces": list(surfaces),
         "negative_fixture_catalog": str(NEGATIVE_CATALOG.resolve()),
     }
-    if protocol_version == "0.2":
+    if protocol_version != "0.1":
         plan["protocol_validator_path"] = str(protocol_validator_path.resolve())
         plan["protocol_validator_sha256"] = sha256_file(protocol_validator_path)
     plan["plan_digest"] = canonical_sha256(plan)

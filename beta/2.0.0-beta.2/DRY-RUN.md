@@ -5,14 +5,21 @@ written, interrupted, resumed, and vetoed without making any model call. A green
 run is an orchestration claim only; it is not evidence that Stable, direct-only, or the
 thin Kernel produces better answers.
 
-## Codex-only v0.2 rehearsal
+## Codex-only v0.2 and v0.3 rehearsals
 
-The fixture builder also accepts `--protocol-version 0.2`. That path binds the frozen
-Codex-only protocol and its dedicated validator, builds three isolated manifests
+The fixture builder also accepts `--protocol-version 0.2` or `0.3`. Each path binds its
+frozen Codex-only protocol and dedicated validator, builds three isolated manifests
 instead of six, and runs 24 deterministic cells (8 cases × 3 arms) plus 48
 plumbing-only judge records. The same eight negative fixtures and interrupted-run
 resume contract apply. It still performs zero generator calls, zero judge model calls,
 and zero semantic outputs.
+
+The retained v0.3 rehearsal completed all 24 cells and 48 plumbing-only judge records,
+exercised all four lifecycle paths and eight negative faults, and preserved five
+completed cells across interruption/resume. Its plan digest is
+`6e479e619b6d9af9d09dd018ae75fa406a206abbfe629e27be77e603ce2227b0`; its report
+digest is `033394eb45f4f8a46439f69be590028b2ea506353c543f65f32d7724ac8ef01e`.
+These are orchestration receipts, not behavior results.
 
 When a fixture is built inside the repository, inherited `AGENTS.md` files are sealed
 into each arm's ambient-context ledger. Undeclared inherited context remains a
@@ -23,7 +30,7 @@ Run the Codex-only rehearsal with:
 ```bash
 python3 beta/2.0.0-beta.2/runtime/build-dry-run-fixture.py \
   --root /tmp/mindthus-beta2-codex-dry-run \
-  --protocol-version 0.2
+  --protocol-version 0.3
 python3 beta/2.0.0-beta.2/runtime/dry-run-orchestrator.py \
   --plan /tmp/mindthus-beta2-codex-dry-run/dry-run-plan.json \
   --out-dir /tmp/mindthus-beta2-codex-dry-run-output
@@ -89,8 +96,8 @@ deterministic lifecycle plumbing, telemetry gate mechanics, atomic resume, and b
 judge-envelope checks work for the fixture.
 
 It leaves answer quality, owner fidelity, primitive recall/precision, token and latency
-distributions, real hook behavior, sealed-case blindness, the Beta recommendation, and
-release readiness explicitly unavailable. The report always records zero generator
+distributions, real hook behavior, hidden-set or sealed-case blindness/generalization,
+the Beta recommendation, and release readiness explicitly unavailable. The report always records zero generator
 model calls, zero judge model calls, and zero semantic model outputs.
 
 Run a local rehearsal with:

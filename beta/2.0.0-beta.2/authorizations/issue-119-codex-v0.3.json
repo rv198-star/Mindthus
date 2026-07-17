@@ -1,0 +1,103 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.2",
+  "authorization_id": "issue-119-codex-v0.3-visible-cases",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.3.py",
+  "authorization_validator_sha256": "f23d915914a45b4cd4fd010786e59c99a47ad368156d83c7594f20f2bdd41db3",
+  "status": "authorized",
+  "packet_created_at_utc": "2026-07-17T08:44:00+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.3.json",
+    "sha256": "ce8c06eb0656e1023de9ff477ab7a0b5a3302194e9e5af952b916130a231b144",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.3.lock.json",
+    "lock_digest": "2bd081510deaf76ebbc8b96a630ba1ec1fa9c28b982cb2205fbc7df12e951466"
+  },
+  "host_surface": "codex-plugin",
+  "planned_generation_outputs": 225,
+  "planned_judge_records": 450,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 240,
+  "maximum_judge_calls": 480,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 22000000,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "case_scope": {
+    "matched_case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-edsp",
+      "b2-public-anti-spiral",
+      "b2-dev-owner-3l5s",
+      "b2-dev-owner-edsp",
+      "b2-dev-owner-sela",
+      "b2-dev-owner-mpg",
+      "b2-dev-owner-wae",
+      "b2-dev-owner-tvg",
+      "b2-dev-owner-tplan",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-evidence-first",
+      "b2-dev-multi-primitive",
+      "b2-dev-anti-third-touch",
+      "b2-dev-anti-renamed-object",
+      "b2-dev-anti-distinct-objects",
+      "b2-dev-anti-new-evidence",
+      "b2-dev-near-local-scope",
+      "b2-dev-near-sufficient-evidence",
+      "b2-dev-near-user-tradeoff",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-resume",
+      "b2-dev-lifecycle-clear",
+      "b2-dev-lifecycle-compact"
+    ],
+    "excluded_case_ids": [
+      "b2-shadow-owner-overlap",
+      "b2-shadow-passive-intersection",
+      "b2-shadow-anti-rename",
+      "b2-shadow-near-negative",
+      "b2-replay-architecture-review",
+      "b2-replay-debugging-session"
+    ],
+    "matched_case_count": 25,
+    "excluded_sealed_case_count": 4,
+    "included_sealed_case_count": 0,
+    "evidence_visibility": "implementation-visible",
+    "claim_ceiling": "visible-case exploratory evidence only"
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instruction": "去掉4道隐藏题，继续",
+    "source_evidence_id": "E22324196",
+    "authorized_at_utc": "2026-07-17T08:25:29.458815+00:00",
+    "authorized_protocol_version": "0.3",
+    "authorized_configuration_digest": "3573b1c4d1a3b5fafc4c12a2ffa9c6dea9f7b265ed3d25213608d1e83cea3bd0",
+    "source_summary": "The maintainer accepted the stated 25-case, 225-output, 450-review Codex-only path and instructed execution to continue without the four sealed cases.",
+    "digest_binding": {
+      "mode": "delegated-first-valid-frozen-v0.3",
+      "bound_protocol_digest": "ce8c06eb0656e1023de9ff477ab7a0b5a3302194e9e5af952b916130a231b144",
+      "bound_lock_digest": "2bd081510deaf76ebbc8b96a630ba1ec1fa9c28b982cb2205fbc7df12e951466",
+      "bound_at_utc": "2026-07-17T08:43:30+00:00"
+    }
+  },
+  "sealed_case_attestation_path": null,
+  "blocking_requirements": []
+}

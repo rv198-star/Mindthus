@@ -28,12 +28,49 @@ The immutable v0.2 protocol digest is
 is `72f4af3e14f6d76fa920d623aaa00436dd4bbde5fb22ff7d34b630d865be0edc`.
 The v0.1 protocol and lock remain independently valid and unchanged.
 
+## Visible-case amendment v0.3
+
+Protocol v0.3 is the user-selected continuation after removing the four
+`sealed-shadow` cases. It contains only the 25 implementation-visible public and
+development cases. The four sealed cases and two unauthorized real-task replays are
+explicitly excluded; no custodian or blindness claim is implied by their absence.
+
+The matched workload is 25 cases × 3 arms × 3 repeats: 225 successful generation
+outputs and 450 isolated judge records. Its five-case smoke remains 15 generation
+outputs and 30 judge records. Generator and both judge sessions use `gpt-5.6-sol` with
+`xhigh` reasoning. William remains the human adjudicator and stop authority.
+
+The hard ceilings are 240 generation calls, 480 judge calls, and 22,000,000 aggregate
+input + output + reasoning tokens. The immutable protocol SHA-256 is
+`ce8c06eb0656e1023de9ff477ab7a0b5a3302194e9e5af952b916130a231b144`; its internal
+lock digest is
+`2bd081510deaf76ebbc8b96a630ba1ec1fa9c28b982cb2205fbc7df12e951466`.
+The v0.1 and v0.2 protocol/lock pairs remain independently valid and unchanged.
+
+The v0.3 claim ceiling is deliberately lower than the earlier design: results may be
+reported only as exploratory evidence on implementation-visible Codex cases. They
+cannot support hidden-set, sealed-case blindness, Claude, cross-host, independent-model,
+generalization, or release-readiness claims.
+
+## v0.3 execution status
+
+The authorization and model-free rehearsal passed, but the first real smoke cell fired
+the frozen `missing-primary-native-evidence` veto. Codex CLI 0.144.4 returned a valid
+answer and token usage, but none of its JSONL events contained a timestamp from which
+the required native `first_useful_action_latency_seconds` endpoint could be derived.
+
+Execution therefore stopped after one generation call, zero judge calls, and 48,256
+counted tokens. The remaining 14 smoke generations, all 30 smoke judges, and the
+matched run were never started. The existing cell must not be rerun. Continuing requires
+either a Codex host that emits the frozen native event or a separately reviewed protocol
+version that changes the endpoint provenance requirement.
+
 ## Frozen comparison
 
 The three immutable arm ids are `stable`, `direct-only`, and `thin-kernel`. Runtime
 identity still comes from each sealed arm manifest; the names alone are not evidence.
 
-The matched workload contains 29 cases from the accepted matrix. The two real-task
+Under v0.1 and v0.2, the matched workload contains 29 cases from the accepted matrix. The two real-task
 replays remain excluded because no replay consent has been authorized. Four sealed
 shadow receipts remain conditional on independent case-custodian binding and blindness
 attestation before #119 authorization. Visible public and development cases are never
@@ -101,7 +138,9 @@ new lock.
 The lock does not authorize model execution. Before #119, a maintainer must separately
 name the exact protocol digest, generator model per host, judge model and reasoning,
 generation/judge call ceilings, token or cost budget, and the person with stop
-authority. A budget below the 29-case frozen design means do not start; it does not
-authorize silently truncating the workload.
+authority. A budget below the workload frozen in the selected protocol version means
+do not start; it does not authorize silently truncating that workload.
 
-No semantic model output or A/B run was generated while creating or freezing v0.1.
+No semantic model output was generated while creating or freezing v0.1, v0.2, or v0.3.
+The single v0.3 output described above was generated only after its separate execution
+authorization validated.

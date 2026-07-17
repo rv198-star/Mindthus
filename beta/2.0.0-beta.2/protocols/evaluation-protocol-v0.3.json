@@ -1,0 +1,789 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-protocol-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "protocol_version": "0.3",
+  "status": "frozen",
+  "purpose": "Compare Stable, direct-only, and thin-kernel behavior and cost on 25 implementation-visible Codex cases only. This exploratory evidence cannot establish hidden-set generalization, Claude behavior, cross-host behavior, or release readiness.",
+  "dependencies": [
+    {
+      "id": "protocol_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-protocol.schema.json",
+      "sha256": "fddf1b810c6878eb81a027aadaf9b9bf63748471c18c267eaa8e2c5d29646aac",
+      "acceptance_issue": 117
+    },
+    {
+      "id": "protocol_lock_schema",
+      "path": "beta/2.0.0-beta.2/protocol-lock.schema.json",
+      "sha256": "9bc617b972d88b084e5430137c887123602324d43636b4a28af007f041ada72f",
+      "acceptance_issue": 117
+    },
+    {
+      "id": "arm_definitions",
+      "path": "beta/2.0.0-beta.2/arm-definitions.json",
+      "sha256": "559f0bac2345b3c686ebfb5ffc3f040cda7472d2ed426d5cb97b795fe51a7f95",
+      "acceptance_issue": 113
+    },
+    {
+      "id": "arm_manifest_schema",
+      "path": "beta/2.0.0-beta.2/arm-manifest.schema.json",
+      "sha256": "f709c13d36fff8ba7118a89d9ac292a3f072cb618dbf250c5f4e83b6b43db5c6",
+      "acceptance_issue": 113
+    },
+    {
+      "id": "scoring_case_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-case.schema.json",
+      "sha256": "079a4ddac5690210fcbc6b685522927ead242c0403f5e5b93ed17ed859cacf9b",
+      "acceptance_issue": 114
+    },
+    {
+      "id": "scoring_contract",
+      "path": "beta/2.0.0-beta.2/SCORING-CONTRACT.md",
+      "sha256": "d0af57c644bada442754eab77bac97b030f2c6aa483699d7828ea32d6d082c80",
+      "acceptance_issue": 114
+    },
+    {
+      "id": "telemetry_schema",
+      "path": "beta/2.0.0-beta.2/turn-telemetry.schema.json",
+      "sha256": "1e917b80b5cb02bc52bc3d2818f10950dc02461439303f57c83822a155d717cf",
+      "acceptance_issue": 115
+    },
+    {
+      "id": "case_matrix_schema",
+      "path": "beta/2.0.0-beta.2/case-matrix.schema.json",
+      "sha256": "9d9772038326482534291a190c78ad34e9bd0e5595c56dd8a72d98b6c733a926",
+      "acceptance_issue": 116
+    },
+    {
+      "id": "case_matrix_fixture",
+      "path": "beta/2.0.0-beta.2/fixtures/evaluation-case-matrix.json",
+      "sha256": "35b178920ddbcfc8fb9af1aa4a6c324ffdb86e6ecee4e78ee4ef9da7fc324441",
+      "acceptance_issue": 116
+    },
+    {
+      "id": "base_protocol_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol.py",
+      "sha256": "3f6c5c5f8537813fef07c297107e6d49f7c4e17fa8ee322d6001dc2d030733ca",
+      "acceptance_issue": 117
+    },
+    {
+      "id": "codex_protocol_v02_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol-v0.2.py",
+      "sha256": "325d4c5b5f538f36aa7356da18e67a58687390229c59efe8d35418cae166603a",
+      "acceptance_issue": 117
+    }
+  ],
+  "arms": [
+    {
+      "arm_id": "stable",
+      "identity_source": "sealed-arm-manifest.identity_digest",
+      "mutable": false
+    },
+    {
+      "arm_id": "direct-only",
+      "identity_source": "sealed-arm-manifest.identity_digest",
+      "mutable": false
+    },
+    {
+      "arm_id": "thin-kernel",
+      "identity_source": "sealed-arm-manifest.identity_digest",
+      "mutable": false
+    }
+  ],
+  "workload": {
+    "matrix_dependency_id": "case_matrix_fixture",
+    "matched_case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-edsp",
+      "b2-public-anti-spiral",
+      "b2-dev-owner-3l5s",
+      "b2-dev-owner-edsp",
+      "b2-dev-owner-sela",
+      "b2-dev-owner-mpg",
+      "b2-dev-owner-wae",
+      "b2-dev-owner-tvg",
+      "b2-dev-owner-tplan",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-evidence-first",
+      "b2-dev-multi-primitive",
+      "b2-dev-anti-third-touch",
+      "b2-dev-anti-renamed-object",
+      "b2-dev-anti-distinct-objects",
+      "b2-dev-anti-new-evidence",
+      "b2-dev-near-local-scope",
+      "b2-dev-near-sufficient-evidence",
+      "b2-dev-near-user-tradeoff",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-resume",
+      "b2-dev-lifecycle-clear",
+      "b2-dev-lifecycle-compact"
+    ],
+    "smoke_case_ids": [
+      "b2-dev-owner-3l5s",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-multi-primitive",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-compact"
+    ],
+    "smoke_repeats": 1,
+    "smoke_outputs_count_toward_matched": true,
+    "excluded_case_ids": [
+      "b2-shadow-owner-overlap",
+      "b2-shadow-passive-intersection",
+      "b2-shadow-anti-rename",
+      "b2-shadow-near-negative",
+      "b2-replay-architecture-review",
+      "b2-replay-debugging-session"
+    ],
+    "case_type_weighting": "equal-positive-negative-mass",
+    "host_surfaces": [
+      "codex-plugin"
+    ],
+    "entry_modes": [
+      "owner-direct",
+      "passive-kernel",
+      "arbitrator",
+      "stay-asleep",
+      "evidence-first"
+    ],
+    "repeat_count_floor": 3,
+    "planned_repeats": 3,
+    "repeat_count_is_release_proof": false,
+    "evidence_visibility": "implementation-visible",
+    "hidden_generalization_claim": "forbidden"
+  },
+  "execution_design": {
+    "matched_cell_key": "protocol_digest/arm_digest/host/case_id/repeat",
+    "paired_unit": "host/case_id/repeat",
+    "arm_order": "sha256-fixed Latin rotation from preregistered order seed",
+    "order_seed_sha256": "e13eda8d08419d8e849a09f3204b5fe6f67d503fdf8dfe895dcdc95f6246b14a",
+    "generator_environment": "one isolated verified host home per arm",
+    "judge_environment": "separate Mindthus-free and Superpowers-free home",
+    "generator_judge_separated": true,
+    "judge_count_per_output": 2,
+    "judge_sessions_independent": true,
+    "blinding": "strip arm labels, paths, telemetry, order, and model-facing diagnostics; shuffle opaque output ids before judging",
+    "adjudication": "retain both scores; disagreement on binary primary axes requires a blinded human adjudicator, never generator self-report",
+    "analysis_unit": "case-clustered paired delta with deterministic 95% bootstrap interval",
+    "bootstrap_iterations": 10000,
+    "sealed_case_custodian_attestation_required": false,
+    "sealed_receipt_binding_timing": "not-applicable: all sealed-shadow cases are excluded",
+    "stratum_rule": "report the Codex surface and every entry mode separately; an overall equal-positive-negative weighted line cannot override a failing required stratum",
+    "supported_result_surface": "codex-plugin",
+    "cross_host_generalization": "forbidden",
+    "same_model_judge_limitation": "generator and judges use gpt-5.6-sol xhigh in isolated sessions; this is same-model blind review, not independent-model or cross-host validation",
+    "visible_case_evidence_limitation": "all 25 matched prompts and expected behavior are visible to implementation; results are exploratory and cannot support blindness or hidden-set claims"
+  },
+  "primary_endpoints": [
+    {
+      "id": "quality_noninferiority_vs_stable",
+      "domain": "quality",
+      "status": "resolved",
+      "metric": "mean normalized blinded final-answer score",
+      "comparison": "thin-kernel minus stable",
+      "direction": "higher-is-better",
+      "margin": {
+        "kind": "noninferiority-delta",
+        "value": -0.05,
+        "unit": "proportion"
+      },
+      "decision_rule": "lower 95% paired interval must be >= -0.05 on the Codex surface",
+      "required_evidence": [
+        {
+          "endpoint": "judge.normalized_final_answer_score",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "execution_owner_fidelity_vs_stable",
+      "domain": "execution-owner-fidelity",
+      "status": "resolved",
+      "metric": "accepted execution-owner success rate",
+      "comparison": "thin-kernel minus stable",
+      "direction": "higher-is-better",
+      "margin": {
+        "kind": "noninferiority-delta",
+        "value": -0.05,
+        "unit": "proportion"
+      },
+      "decision_rule": "lower 95% paired interval must be >= -0.05 on the Codex surface",
+      "required_evidence": [
+        {
+          "endpoint": "judge.observed_execution_owner",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "primitive_recall_kernel_benefit",
+      "domain": "primitive-recall",
+      "status": "resolved",
+      "metric": "required primitive action recall",
+      "comparison": "thin-kernel minus direct-only",
+      "direction": "higher-is-better",
+      "margin": {
+        "kind": "minimum-superiority-delta",
+        "value": 0.1,
+        "unit": "proportion"
+      },
+      "decision_rule": "lower 95% paired interval must be >= +0.10 in passive-obligation cases",
+      "required_evidence": [
+        {
+          "endpoint": "judge.primitive_obligation_results",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "joint_owner_primitive_kernel_benefit",
+      "domain": "joint-owner-primitive",
+      "status": "resolved",
+      "metric": "joint accepted-owner and all-required-primitives success",
+      "comparison": "thin-kernel minus direct-only",
+      "direction": "higher-is-better",
+      "margin": {
+        "kind": "minimum-superiority-delta",
+        "value": 0.08,
+        "unit": "proportion"
+      },
+      "decision_rule": "lower 95% paired interval must be >= +0.08 in intersecting cases",
+      "required_evidence": [
+        {
+          "endpoint": "judge.observed_execution_owner",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        },
+        {
+          "endpoint": "judge.primitive_obligation_results",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "false_wakeup_harm_vs_stable",
+      "domain": "false-wakeup",
+      "status": "resolved",
+      "metric": "negative-control semantic or runtime false-wakeup rate",
+      "comparison": "thin-kernel minus stable",
+      "direction": "lower-is-better",
+      "margin": {
+        "kind": "maximum-harm-delta",
+        "value": 0.03,
+        "unit": "proportion"
+      },
+      "decision_rule": "upper 95% paired interval must be <= +0.03 and absolute rate <= 0.05",
+      "required_evidence": [
+        {
+          "endpoint": "judge.false_wakeup_final_answer",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        },
+        {
+          "endpoint": "skill_hops",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "lifecycle_fidelity",
+      "domain": "lifecycle",
+      "status": "resolved",
+      "metric": "required lifecycle event set fidelity",
+      "comparison": "thin-kernel absolute",
+      "direction": "higher-is-better",
+      "margin": {
+        "kind": "minimum-absolute-rate",
+        "value": 1.0,
+        "unit": "proportion"
+      },
+      "decision_rule": "every included thin-kernel cell must have native lifecycle fidelity",
+      "required_evidence": [
+        {
+          "endpoint": "lifecycle_event",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "input_token_savings_vs_stable",
+      "domain": "efficiency",
+      "status": "resolved",
+      "metric": "workload-weighted input token count",
+      "comparison": "thin-kernel relative to stable",
+      "direction": "lower-is-better",
+      "margin": {
+        "kind": "minimum-relative-reduction",
+        "value": 0.15,
+        "unit": "ratio-reduction"
+      },
+      "decision_rule": "upper 95% paired ratio interval must be <= 0.85 on the Codex surface",
+      "required_evidence": [
+        {
+          "endpoint": "tokens.input",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "kernel_token_overhead_vs_direct",
+      "domain": "efficiency",
+      "status": "resolved",
+      "metric": "workload-weighted input token count",
+      "comparison": "thin-kernel relative to direct-only",
+      "direction": "lower-is-better",
+      "margin": {
+        "kind": "maximum-relative-overhead",
+        "value": 0.08,
+        "unit": "ratio-overhead"
+      },
+      "decision_rule": "upper 95% paired ratio interval must be <= 1.08",
+      "required_evidence": [
+        {
+          "endpoint": "tokens.input",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "wall_time_savings_vs_stable",
+      "domain": "efficiency",
+      "status": "resolved",
+      "metric": "wall time p50 and p95",
+      "comparison": "thin-kernel relative to stable",
+      "direction": "lower-is-better",
+      "margin": {
+        "kind": "minimum-relative-reduction",
+        "value": 0.1,
+        "unit": "ratio-reduction"
+      },
+      "decision_rule": "p50 ratio must be <= 0.90 and p95 ratio <= 0.95 on the Codex surface",
+      "required_evidence": [
+        {
+          "endpoint": "wall_time_seconds",
+          "allowed_provenance": [
+            "native",
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    },
+    {
+      "id": "first_useful_action_latency",
+      "domain": "user-visible-interaction-cost",
+      "status": "resolved",
+      "metric": "native first-useful-action latency p50 and p95",
+      "comparison": "thin-kernel relative to stable",
+      "direction": "lower-is-better",
+      "margin": {
+        "kind": "minimum-relative-reduction",
+        "value": 0.1,
+        "unit": "ratio-reduction"
+      },
+      "decision_rule": "p50 ratio must be <= 0.90 and p95 ratio <= 0.95 on the Codex surface",
+      "required_evidence": [
+        {
+          "endpoint": "first_useful_action_latency_seconds",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    }
+  ],
+  "secondary_endpoints": [
+    {
+      "id": "primitive_precision",
+      "domain": "primitive-precision",
+      "status": "resolved",
+      "metric": "unexpected primitive action rate and per-primitive precision",
+      "reporting_rule": "report by Codex entry mode, primitive, arm, and provenance; no global pass",
+      "required_evidence": [
+        {
+          "endpoint": "judge.primitive_obligation_results",
+          "allowed_provenance": [
+            "judge-inferred"
+          ],
+          "minimum_per_cell": 2
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "token_breakdown",
+      "domain": "efficiency",
+      "status": "resolved",
+      "metric": "cached input, output, and reasoning tokens",
+      "reporting_rule": "report p50/p95 and missing denominators separately for every token component",
+      "required_evidence": [
+        {
+          "endpoint": "tokens.cached_input",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "tokens.output",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "tokens.reasoning",
+          "allowed_provenance": [
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "runtime_hops",
+      "domain": "efficiency",
+      "status": "resolved",
+      "metric": "skill hops, tool hops, and retained resource reads",
+      "reporting_rule": "report distributions by exact Codex entry/arm strata",
+      "required_evidence": [
+        {
+          "endpoint": "skill_hops",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "tool_hops",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "resource_reads",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "clarification_burden",
+      "domain": "user-visible-interaction-cost",
+      "status": "resolved",
+      "metric": "clarification turns before useful action",
+      "reporting_rule": "report paired counts; judge inference cannot satisfy native latency",
+      "required_evidence": [
+        {
+          "endpoint": "clarification_turns",
+          "allowed_provenance": [
+            "judge-inferred",
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "visible_notices_and_jargon",
+      "domain": "user-visible-interaction-cost",
+      "status": "resolved",
+      "metric": "visible notices and Mindthus terminology leakage",
+      "reporting_rule": "report counts and any severe leakage verbatim only in restricted audit storage",
+      "required_evidence": [
+        {
+          "endpoint": "visible_notices",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "mindthus_terminology_leakage",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "retry_and_failure_burden",
+      "domain": "reliability",
+      "status": "resolved",
+      "metric": "retry count, timeout, and failure count",
+      "reporting_rule": "report every retry and failure; never exclude it from efficiency denominators",
+      "required_evidence": [
+        {
+          "endpoint": "retry_count",
+          "allowed_provenance": [
+            "deterministic",
+            "native"
+          ],
+          "minimum_per_cell": 1
+        },
+        {
+          "endpoint": "failure_count",
+          "allowed_provenance": [
+            "deterministic",
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "load_contract",
+      "domain": "runtime-load",
+      "status": "resolved",
+      "metric": "required/allowed skill-load contract and stay-asleep fidelity",
+      "reporting_rule": "report separately from behavior and primitive success",
+      "required_evidence": [
+        {
+          "endpoint": "skill_hops",
+          "allowed_provenance": [
+            "deterministic"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "block-endpoint"
+    },
+    {
+      "id": "source_provenance",
+      "domain": "evidence-provenance",
+      "status": "resolved",
+      "metric": "public, development, sealed-shadow, and replay result lines",
+      "reporting_rule": "never pool visible cases into a blind-evidence claim",
+      "required_evidence": [
+        {
+          "endpoint": "case.source_receipt",
+          "allowed_provenance": [
+            "deterministic",
+            "native"
+          ],
+          "minimum_per_cell": 1
+        }
+      ],
+      "missing_policy": "veto"
+    }
+  ],
+  "missing_data_policy": {
+    "zero_imputation": "forbidden",
+    "pass_imputation": "forbidden",
+    "primary_endpoint_missing": "fire missing-primary-native-evidence veto and stop",
+    "secondary_endpoint_missing": "mark endpoint blocked/unknown with denominator; do not infer",
+    "wrong_provenance": "treat as missing for that endpoint",
+    "contradictory_evidence": "stop and retain both observations",
+    "cross_host_substitution": "forbidden",
+    "cross_entry_mode_substitution": "forbidden"
+  },
+  "vetoes": [
+    {
+      "id": "cross-arm-contamination",
+      "stage": "preflight-or-run",
+      "condition": "more than one Mindthus namespace or any arm artifact appears in another arm home",
+      "action": "stop-run"
+    },
+    {
+      "id": "protocol-or-arm-drift",
+      "stage": "preflight-or-resume",
+      "condition": "protocol, dependency, arm, package, hook, context, case, or tool digest differs",
+      "action": "stop-run"
+    },
+    {
+      "id": "untraceable-or-partial-artifact",
+      "stage": "any",
+      "condition": "a cell lacks an atomic receipt or cannot resolve to arm/protocol/case digests",
+      "action": "stop-run"
+    },
+    {
+      "id": "missing-primary-native-evidence",
+      "stage": "smoke-or-matched",
+      "condition": "any primary endpoint lacks its frozen native/deterministic minimum",
+      "action": "stop-run"
+    },
+    {
+      "id": "judge-environment-contamination",
+      "stage": "judge",
+      "condition": "judge sees arm labels, generator paths, Mindthus, Superpowers, or runtime telemetry",
+      "action": "stop-run"
+    },
+    {
+      "id": "systematic-critical-primitive-miss",
+      "stage": "smoke-or-matched",
+      "condition": "thin-kernel misses one required Frame, Whole, Decision Context, or Anti-Spiral action in all repeats of a Codex case",
+      "action": "stop-run"
+    },
+    {
+      "id": "authority-or-evidence-regression",
+      "stage": "smoke-or-matched",
+      "condition": "any output overrides user authority or states an unsupported factual conclusion that its evidence gate forbids",
+      "action": "stop-run"
+    },
+    {
+      "id": "insufficient-kernel-benefit",
+      "stage": "post-matched-decision",
+      "condition": "primitive recall or joint owner+primitive benefit versus direct-only misses its frozen margin",
+      "action": "recommend-stop"
+    },
+    {
+      "id": "negligible-efficiency-savings",
+      "stage": "post-matched-decision",
+      "condition": "token or wall-time savings versus Stable miss a frozen primary threshold",
+      "action": "recommend-stop"
+    }
+  ],
+  "rerun_policy": {
+    "infrastructure_failure_before_model_output": "one same-cell retry is allowed after recording the failed attempt and proving no output",
+    "model_output_exists": "never discard or replace; only preregistered repeats may add observations",
+    "judge_parse_failure": "one retry over the identical blinded payload; retain both attempts, then human adjudication",
+    "contamination_or_digest_failure": "no rerun under this protocol version; stop and version",
+    "exclusions": "only frozen eligibility or a fired veto; every exclusion remains in denominators and report",
+    "threshold_or_workload_change": "requires a new protocol version before new model output"
+  },
+  "authorization_parameters": {
+    "status": "required-before-issue-119",
+    "must_name": [
+      "protocol_digest",
+      "generator_model_by_host",
+      "judge_model_and_reasoning",
+      "maximum_generation_calls",
+      "maximum_judge_calls",
+      "token_or_cost_budget",
+      "stop_authority"
+    ],
+    "same_generator_configuration_across_arms": true,
+    "model_name_routing": "forbidden",
+    "budget_shortfall_action": "do not start; create a new protocol version rather than truncate cells",
+    "authorized_host_surface": "codex-plugin",
+    "planned_generation_outputs": 225,
+    "planned_judge_records": 450,
+    "proposed_authorization": {
+      "generator_model_by_host": {
+        "codex-plugin": {
+          "model_id": "gpt-5.6-sol",
+          "reasoning_effort": "xhigh",
+          "codex_cli_version": "0.144.4"
+        }
+      },
+      "judge_model_and_reasoning": {
+        "model_id": "gpt-5.6-sol",
+        "reasoning_effort": "xhigh",
+        "independent_sessions_per_output": 2,
+        "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+      },
+      "maximum_generation_calls": 240,
+      "maximum_judge_calls": 480,
+      "token_or_cost_budget": {
+        "kind": "aggregate-token-ceiling",
+        "maximum": 22000000,
+        "counted_components": [
+          "input",
+          "output",
+          "reasoning"
+        ],
+        "cached_input_double_counted": false
+      },
+      "human_adjudicator": "William",
+      "stop_authority": "William"
+    },
+    "delegated_digest_binding_allowed": true,
+    "delegated_digest_binding_rule": "The stop authority may authorize the exact experiment values before freeze and delegate binding to the first frozen v0.3 digest that validates against those values; any value drift requires new human authorization."
+  },
+  "rejected_alternatives": [
+    {
+      "alternative": "identify arms with a free-text variant label",
+      "reason": "labels do not prove package, host, hook, namespace, or context identity"
+    },
+    {
+      "alternative": "route by model name or capability guess",
+      "reason": "the architecture claim concerns behavior and cost, not a model allowlist"
+    },
+    {
+      "alternative": "collapse quality, primitive benefit, and efficiency into one score",
+      "reason": "a weighted composite can hide a quality regression or negligible Kernel value"
+    },
+    {
+      "alternative": "choose workload weights or margins after smoke output",
+      "reason": "result-aware choices invalidate the comparison"
+    },
+    {
+      "alternative": "treat public or development cases as blind evidence",
+      "reason": "their prompts and expected behavior are visible to implementation"
+    },
+    {
+      "alternative": "infer native timing or hook evidence from answer text",
+      "reason": "self-report and regex cannot establish host events"
+    },
+    {
+      "alternative": "use one repeat as release evidence",
+      "reason": "repeat count is only an exploration floor and never Stable release proof"
+    },
+    {
+      "alternative": "infer Claude or cross-host behavior from the Codex-only run",
+      "reason": "v0.2 contains no Claude execution stratum and supports only Codex claims"
+    },
+    {
+      "alternative": "retain empty sealed-shadow receipt slots without a custodian",
+      "reason": "opaque receipts without prompt content cannot be executed and would create a false blindness claim"
+    },
+    {
+      "alternative": "treat the 25 visible cases as hidden evaluation evidence",
+      "reason": "their prompts and expected behavior are available to implementation; v0.3 supports exploratory visible-case claims only"
+    }
+  ],
+  "freeze": {
+    "immutable_after": "lock receipt creation and containing git commit",
+    "amendment_policy": "new protocol version and new lock required",
+    "semantic_model_output_generated_before_freeze": false,
+    "source_parent_commit": "91b269907a7dc1a7cd74045b5546c7e5ae004a2e"
+  }
+}
