@@ -1,0 +1,102 @@
+{
+  "schema_version": "mindthus-reference-lock-v0.1",
+  "stable_baseline": "1.4.6",
+  "baseline_commit": "00da11657bce553cb32e8e90c06ffe959dc08362",
+  "source_path_base": "repository-root",
+  "package_path_base": "plugin-root",
+  "digest_algorithm": "sha256(relative-posix-path + NUL + file-bytes + NUL, sorted; release exclusions applied)",
+  "trees": [
+    {
+      "id": "owner-3l5s",
+      "source_path": "skills/3l5s",
+      "package_path": "skills/3l5s",
+      "sha256": "cf9eee7bfac3f2f6a31f9f1187387e9e7ae95b79353b71fe29b341074900fcab"
+    },
+    {
+      "id": "owner-edsp",
+      "source_path": "skills/edsp",
+      "package_path": "skills/edsp",
+      "sha256": "77bc4470289ba1f96a382c682ed3d41be1b05195d3413a89321e59e53e450a1d"
+    },
+    {
+      "id": "owner-sela",
+      "source_path": "skills/sela",
+      "package_path": "skills/sela",
+      "sha256": "5ae694fedc138df846d674823f1331ef7d2cada55edcc015a0bd4568ecce3095"
+    },
+    {
+      "id": "owner-mpg",
+      "source_path": "skills/mpg",
+      "package_path": "skills/mpg",
+      "sha256": "8084f8a07fb9cb30ca8c4f8f8074f3473a39c5e519d1bd3dfbfd54d269ce487f"
+    },
+    {
+      "id": "owner-wae",
+      "source_path": "skills/wae",
+      "package_path": "skills/wae",
+      "sha256": "ca81dbecdc6587a732eeb79b0f53d39d7767304c8e1d3216b5ec1312db7058ef"
+    },
+    {
+      "id": "owner-tvg",
+      "source_path": "skills/tvg",
+      "package_path": "skills/tvg",
+      "sha256": "259b4d68e5757a85837b73bc8a2ea0b955679ead38ac58650c602d615de529e7"
+    },
+    {
+      "id": "owner-tplan",
+      "source_path": "skills/tplan",
+      "package_path": "skills/tplan",
+      "jsonl_allowlist": [
+        "templates/evidence.jsonl"
+      ],
+      "sha256": "e5504cdbf6b8b903e51f9b4997dd022b67342677db982c98353ab5a9ae395948"
+    },
+    {
+      "id": "owner-shared-runtime",
+      "source_path": "skills/_runtime",
+      "package_paths_by_surface": {
+        "codex-plugin": "_runtime",
+        "claude-plugin": "skills/_runtime"
+      },
+      "sha256": "7f09db74c5e22bf2a9faa645c62a5f6ed942095e63197cf95264a4ec7ff85db1"
+    },
+    {
+      "id": "formal-methodologies",
+      "source_path": "docs/methodologies",
+      "package_path": "reference/1.4.6/docs/methodologies",
+      "sha256": "1c2009e7c1ad4efcd757a888d8262de5b64b2cf08fe4e4c1509cc41e2d7911d7"
+    },
+    {
+      "id": "stable-using-mindthus",
+      "source_path": "skills/using-mindthus",
+      "package_path": "reference/1.4.6/skills/using-mindthus",
+      "sha256": "f97b8cba11aa423474d9eb2eb52367ade965ff2a725c58ec015c665ab1552bae"
+    },
+    {
+      "id": "stable-primitives-runtime",
+      "source_path": "scripts/primitives",
+      "package_path": "reference/1.4.6/scripts/primitives",
+      "sha256": "4d7859ff13bec3bf28d49d8ffdcdb3637d6249c8e5553f940337f045a3a5dc3c"
+    }
+  ],
+  "files": [
+    {
+      "id": "stable-fidelity-judge",
+      "source_path": "scripts/run-fidelity-judge.py",
+      "package_path": "reference/1.4.6/scripts/run-fidelity-judge.py",
+      "sha256": "42ccfafe4e2ea93721a27b5ebed287690b89e995fe280ecdbf552262973928f5"
+    },
+    {
+      "id": "stable-fidelity-log",
+      "source_path": "scripts/log-fidelity-usage.py",
+      "package_path": "reference/1.4.6/scripts/log-fidelity-usage.py",
+      "sha256": "f076421401c96d1332b2dc6f59248cda04d9c081cfaea4bce149d6e2268200ff"
+    },
+    {
+      "id": "stable-runtime-log",
+      "source_path": "scripts/log-mindthus-runtime.py",
+      "package_path": "reference/1.4.6/scripts/log-mindthus-runtime.py",
+      "sha256": "da53767f2e1cbf205dbaa393523d6628fa9907f1e37dd529af96578c76247fc5"
+    }
+  ]
+}

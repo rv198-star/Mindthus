@@ -1,0 +1,135 @@
+{
+  "schema_version": "mindthus-release-profile-v0.2",
+  "release_line": "2.0-beta.1",
+  "version": "2.0.0-beta.1",
+  "status": "experimental",
+  "release_preparation": "not-started",
+  "behavioral_evaluation": "deferred-to-beta.2",
+  "path_base": "plugin-root",
+  "stable_baseline": "1.4.6",
+  "baseline_commit": "00da11657bce553cb32e8e90c06ffe959dc08362",
+  "formal_contracts": "1.4.6-reference-only",
+  "active_runtime_contract": "2.0.0-beta.1",
+  "plugin_identity": {
+    "name": "mindthus-beta",
+    "marketplace_name": "mindthus-beta",
+    "display_name": "Mindthus Beta",
+    "stable_plugin_coordinates": "mindthus@mindthus",
+    "coinstallable_with_stable": true,
+    "coenabled_with_stable": false
+  },
+  "namespace_adapter": {
+    "mode": "package-time-coordinate-only",
+    "source_prefix": "mindthus:",
+    "runtime_prefix": "mindthus-beta:"
+  },
+  "supported_packages": [
+    "plugins"
+  ],
+  "supported_surfaces": [
+    "codex-plugin",
+    "claude-plugin"
+  ],
+  "validated_hook_platforms": [
+    "macos",
+    "linux"
+  ],
+  "windows_hook_carrier": "not-implemented",
+  "passive_kernel": "runtime/passive-activation-kernel.md",
+  "using_mindthus_overlay": "skills/using-mindthus",
+  "runtime_diagnostic": "scripts/check-beta-runtime.py",
+  "beta_readme": "BETA.md",
+  "reference_lock": "reference/1.4.6/reference-lock.json",
+  "kernel_carrier": "SessionStart",
+  "carrier_verification": "diagnostic-semantic-execution",
+  "codex_hook_trust_required": true,
+  "hook_observability": "explicit-state-input; diagnostic-does-not-auto-detect-trust",
+  "stable_runtime_state_observability": "optional-host-cli-inspection-or-explicit-state-input",
+  "join_points": {
+    "host_enforced": [
+      "session-start"
+    ],
+    "model_obligated": [
+      "before-route",
+      "before-answer"
+    ],
+    "model_best_effort": [
+      "before-continue",
+      "before-freeze"
+    ],
+    "before_answer_sentinel": "not-implemented"
+  },
+  "anti_spiral_state": "model-context-only",
+  "hook_unavailable_fallback": "direct-owner discovery without passive-recall guarantee",
+  "owner_skills": [
+    "3l5s",
+    "edsp",
+    "sela",
+    "mpg",
+    "wae",
+    "tvg",
+    "tplan"
+  ],
+  "active_runtime_paths": [
+    "BETA.md",
+    "beta/release-profile.json",
+    "hooks/hooks.json",
+    "hooks/session-start",
+    "runtime/passive-activation-kernel.md",
+    "scripts/check-beta-runtime.py",
+    "skills/using-mindthus/SKILL.md"
+  ],
+  "active_runtime_paths_by_surface": {
+    "codex-plugin": [
+      "_runtime"
+    ],
+    "claude-plugin": [
+      "skills/_runtime"
+    ]
+  },
+  "reference_only_paths": [
+    "reference/1.4.6/docs/methodologies",
+    "reference/1.4.6/skills/using-mindthus",
+    "reference/1.4.6/scripts/log-fidelity-usage.py",
+    "reference/1.4.6/scripts/log-mindthus-runtime.py",
+    "reference/1.4.6/scripts/primitives",
+    "reference/1.4.6/scripts/run-fidelity-judge.py"
+  ],
+  "forbidden_active_paths": [
+    "docs/methodologies",
+    "scripts/log-fidelity-usage.py",
+    "scripts/log-mindthus-runtime.py",
+    "scripts/primitives",
+    "scripts/run-fidelity-judge.py"
+  ],
+  "behavioral_claims": {
+    "owner_hit_rate": "unproven-deferred-to-beta.2",
+    "passive_recall_reliability": "unproven-deferred-to-beta.2",
+    "token_and_latency_reduction": "unproven-deferred-to-beta.2"
+  },
+  "artifact_sha256": {
+    "BETA.md": "2275f7d8cf17ecaf19c944178fc81f33039c5bd07840dd2edfb77f31dbe2c73a",
+    "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
+    "runtime/passive-activation-kernel.md": "861677c2c74a7e6a87b1cdc7a8a38817e1e14093e95e2c2ce0e7b7a2231bd656",
+    "scripts/check-beta-runtime.py": "867d45546764bda2245d107a7bfc78c06d44920efe898c345831df69c65f740d",
+    "skills/using-mindthus/SKILL.md": "b4ab8925b49e7f4b3fc750e1498aca1f10af554e29578ef6c826b03fd09347f7"
+  },
+  "generated_artifact_sha256": {
+    "codex-plugin": {
+      ".codex-plugin/plugin.json": "26497ff084c1e1b8442a7d3faa8aff9c4cb2ec758d4eb5ee0f09239c1e894100",
+      "hooks/hooks.json": "85f672b4efa2ba0b8953e8eceb6085dbfb1230419f947920d4847f4aa5d49910",
+      "hooks/session-start": "45a219e14be2105a72ee8e2d6815a4a68f043bab885e2264ba02ad933d7759f6"
+    },
+    "claude-plugin": {
+      ".claude-plugin/plugin.json": "1289ebe039bb10b717a1a2afae107f5d70d7bf4a34fcf4f8d136333a708bf999",
+      "hooks/hooks.json": "06fe516869f318caef42c42463307ba5f2adb1174ed26fc348456a048593e839",
+      "hooks/session-start": "45a219e14be2105a72ee8e2d6815a4a68f043bab885e2264ba02ad933d7759f6"
+    }
+  },
+  "budgets": {
+    "kernel_max_bytes": 3072,
+    "kernel_max_words": 400,
+    "using_mindthus_max_bytes": 3072,
+    "using_mindthus_max_words": 400
+  }
+}

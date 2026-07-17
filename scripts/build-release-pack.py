@@ -4,12 +4,16 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
+from dataclasses import dataclass
 from pathlib import Path
 
 
-VERSION = "1.4.6"
+STABLE_VERSION = "1.4.6"
+BETA_RELEASE_LINE = "2.0-beta.1"
+RELEASE_LINES = ("stable", BETA_RELEASE_LINE)
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -63,10 +67,279 @@ CODEX_ACTIVATION_ROUTER_PROMPT = (
     "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
     "method-ref review direct; direct; evidence 1st; defer Superpowers."
 )
+BETA_CODEX_STARTER_PROMPT = (
+    "Route directly to mindthus-beta:<owner>; use mindthus-beta:using-mindthus only for "
+    "genuine owner ambiguity."
+)
+
+
+@dataclass(frozen=True)
+class ReleaseProfile:
+    release_line: str
+    version: str
+    using_skill_dir: Path
+    supported_packages: tuple[str, ...]
+    passive_kernel: Path | None = None
+    profile_manifest: Path | None = None
+    profile_data: dict | None = None
+    beta_readme: Path | None = None
+    runtime_diagnostic: Path | None = None
+    reference_lock: Path | None = None
+    reference_lock_data: dict | None = None
+    plugin_name: str = "mindthus"
+    marketplace_name: str = "mindthus"
+    display_name: str = "Mindthus"
+    budgets: dict[str, int] | None = None
+
+    @property
+    def experimental(self) -> bool:
+        return self.release_line != "stable"
 
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
+
+
+def _safe_relative_path(value: object, *, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise SystemExit(f"{label} must be a non-empty relative path")
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        raise SystemExit(f"{label} must stay inside its declared root: {value}")
+    return path
+
+
+def _contract_tree_digest(source: Path, *, jsonl_allowlist: set[Path] | None = None) -> str:
+    """Hash the deterministic, package-eligible contract surface under source."""
+
+    jsonl_allowlist = jsonl_allowlist or set()
+    digest = hashlib.sha256()
+    for item in sorted(source.rglob("*")):
+        if not item.is_file():
+            continue
+        rel = item.relative_to(source)
+        if any(part in EXCLUDED_DIRS for part in rel.parts):
+            continue
+        lowered = rel.as_posix().lower()
+        if any(token in lowered for token in EXCLUDED_NAME_SUBSTRINGS):
+            continue
+        if item.suffix in EXCLUDED_SUFFIXES:
+            continue
+        if item.suffix == ".jsonl" and rel not in jsonl_allowlist:
+            continue
+        digest.update(rel.as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(item.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
+def _verify_reference_lock(root: Path, lock_path: Path, *, baseline: str) -> dict:
+    try:
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"failed to load beta reference lock: {exc}") from exc
+
+    if lock.get("schema_version") != "mindthus-reference-lock-v0.1":
+        raise SystemExit("unsupported beta reference-lock schema")
+    if lock.get("stable_baseline") != baseline:
+        raise SystemExit("beta reference lock does not match the declared stable baseline")
+    if lock.get("source_path_base") != "repository-root":
+        raise SystemExit("beta reference source paths must be relative to repository-root")
+    if lock.get("package_path_base") != "plugin-root":
+        raise SystemExit("beta reference package paths must be relative to plugin-root")
+
+    trees = lock.get("trees")
+    files = lock.get("files")
+    if not isinstance(trees, list) or not isinstance(files, list):
+        raise SystemExit("beta reference lock must declare trees and files")
+
+    for record in trees:
+        if not isinstance(record, dict):
+            raise SystemExit("beta reference tree record must be an object")
+        source_rel = _safe_relative_path(record.get("source_path"), label="reference source_path")
+        package_path = record.get("package_path")
+        surface_paths = record.get("package_paths_by_surface")
+        if package_path is not None:
+            _safe_relative_path(package_path, label="reference package_path")
+        elif isinstance(surface_paths, dict) and set(surface_paths) == {
+            "codex-plugin",
+            "claude-plugin",
+        }:
+            for surface, value in surface_paths.items():
+                _safe_relative_path(value, label=f"reference package path for {surface}")
+        else:
+            raise SystemExit(
+                f"reference tree {source_rel} must declare package_path or both surface paths"
+            )
+        source = root / source_rel
+        if not source.is_dir():
+            raise SystemExit(f"locked reference tree not found: {source_rel}")
+        allowlist_raw = record.get("jsonl_allowlist", [])
+        if not isinstance(allowlist_raw, list):
+            raise SystemExit(f"jsonl_allowlist must be a list for {source_rel}")
+        allowlist = {
+            _safe_relative_path(value, label=f"jsonl allowlist for {source_rel}")
+            for value in allowlist_raw
+        }
+        actual = _contract_tree_digest(source, jsonl_allowlist=allowlist)
+        if actual != record.get("sha256"):
+            raise SystemExit(
+                f"frozen 1.4.6 reference drifted at {source_rel}: {actual} != {record.get('sha256')}"
+            )
+
+    for record in files:
+        if not isinstance(record, dict):
+            raise SystemExit("beta reference file record must be an object")
+        source_rel = _safe_relative_path(record.get("source_path"), label="reference source_path")
+        _safe_relative_path(record.get("package_path"), label="reference package_path")
+        source = root / source_rel
+        if not source.is_file():
+            raise SystemExit(f"locked reference file not found: {source_rel}")
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
+        if actual != record.get("sha256"):
+            raise SystemExit(
+                f"frozen 1.4.6 reference drifted at {source_rel}: {actual} != {record.get('sha256')}"
+            )
+    return lock
+
+
+def _enforce_text_budget(path: Path, *, max_bytes: int, max_words: int, label: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    byte_count = len(text.encode("utf-8"))
+    word_count = len(text.split())
+    if byte_count > max_bytes:
+        raise SystemExit(f"{label} exceeds byte budget: {byte_count} > {max_bytes}")
+    if word_count > max_words:
+        raise SystemExit(f"{label} exceeds word budget: {word_count} > {max_words}")
+
+
+def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
+    if release_line == "stable":
+        return ReleaseProfile(
+            release_line="stable",
+            version=STABLE_VERSION,
+            using_skill_dir=root / "skills" / "using-mindthus",
+            supported_packages=("all", "plugins", "skills"),
+        )
+
+    profile_dir = root / "beta" / "2.0.0-beta.1"
+    manifest_path = profile_dir / "release-profile.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"failed to load beta release profile: {exc}") from exc
+
+    if manifest.get("release_line") != release_line:
+        raise SystemExit(f"beta release profile must declare release_line {release_line!r}")
+    if manifest.get("schema_version") != "mindthus-release-profile-v0.2":
+        raise SystemExit("unsupported beta release-profile schema")
+    if manifest.get("version") != "2.0.0-beta.1":
+        raise SystemExit("2.0-beta.1 release line must build version 2.0.0-beta.1")
+    if manifest.get("path_base") != "plugin-root":
+        raise SystemExit("2.0.0-beta.1 package paths must be relative to plugin-root")
+
+    using_skill_dir = profile_dir / str(manifest.get("using_mindthus_overlay", ""))
+    passive_kernel = profile_dir / str(manifest.get("passive_kernel", ""))
+    beta_readme = profile_dir / "BETA.md"
+    runtime_diagnostic = profile_dir / "runtime" / "check-beta-runtime.py"
+    reference_lock = profile_dir / "reference-lock.json"
+    supported_packages = tuple(manifest.get("supported_packages", ()))
+    budgets = manifest.get("budgets", {})
+    if not (using_skill_dir / "SKILL.md").is_file():
+        raise SystemExit(f"beta using-mindthus overlay not found: {using_skill_dir}")
+    if not passive_kernel.is_file():
+        raise SystemExit(f"beta passive kernel not found: {passive_kernel}")
+    if not beta_readme.is_file():
+        raise SystemExit(f"beta onboarding guide not found: {beta_readme}")
+    if not runtime_diagnostic.is_file():
+        raise SystemExit(f"beta runtime diagnostic not found: {runtime_diagnostic}")
+    if supported_packages != ("plugins",):
+        raise SystemExit("2.0.0-beta.1 must remain plugin-only until skills-only carriers are verified")
+
+    identity = manifest.get("plugin_identity")
+    if not isinstance(identity, dict):
+        raise SystemExit("beta release profile must declare plugin_identity")
+    plugin_name = identity.get("name")
+    marketplace_name = identity.get("marketplace_name")
+    display_name = identity.get("display_name")
+    if plugin_name != "mindthus-beta" or marketplace_name != "mindthus-beta":
+        raise SystemExit("2.0.0-beta.1 must use an identity distinct from stable mindthus")
+    if not isinstance(display_name, str) or not display_name:
+        raise SystemExit("beta plugin_identity.display_name must be non-empty")
+
+    namespace_adapter = manifest.get("namespace_adapter")
+    if (
+        not isinstance(namespace_adapter, dict)
+        or namespace_adapter.get("source_prefix") != "mindthus:"
+        or namespace_adapter.get("runtime_prefix") != f"{plugin_name}:"
+        or namespace_adapter.get("mode") != "package-time-coordinate-only"
+    ):
+        raise SystemExit("2.0.0-beta.1 must declare its coordinate-only namespace adapter")
+
+    reference_lock_data = _verify_reference_lock(
+        root,
+        reference_lock,
+        baseline=str(manifest.get("stable_baseline", "")),
+    )
+
+    required_budgets = {
+        "kernel_max_bytes",
+        "kernel_max_words",
+        "using_mindthus_max_bytes",
+        "using_mindthus_max_words",
+    }
+    if not isinstance(budgets, dict) or not required_budgets.issubset(budgets):
+        raise SystemExit("beta release profile is missing text budgets")
+    _enforce_text_budget(
+        passive_kernel,
+        max_bytes=int(budgets["kernel_max_bytes"]),
+        max_words=int(budgets["kernel_max_words"]),
+        label="passive activation kernel",
+    )
+    _enforce_text_budget(
+        using_skill_dir / "SKILL.md",
+        max_bytes=int(budgets["using_mindthus_max_bytes"]),
+        max_words=int(budgets["using_mindthus_max_words"]),
+        label="beta using-mindthus",
+    )
+
+    artifact_sources = {
+        str(manifest.get("passive_kernel", "")): passive_kernel,
+        f"{manifest.get('using_mindthus_overlay', '')}/SKILL.md": using_skill_dir / "SKILL.md",
+        str(manifest.get("runtime_diagnostic", "")): runtime_diagnostic,
+        str(manifest.get("beta_readme", "")): beta_readme,
+        str(manifest.get("reference_lock", "")): reference_lock,
+    }
+    artifact_hashes = manifest.get("artifact_sha256")
+    if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != set(artifact_sources):
+        raise SystemExit("beta release profile artifact_sha256 must lock every authored beta artifact")
+    for package_path, source in artifact_sources.items():
+        _safe_relative_path(package_path, label="beta artifact path")
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
+        if actual != artifact_hashes.get(package_path):
+            raise SystemExit(
+                f"beta runtime artifact drifted at {package_path}: "
+                f"{actual} != {artifact_hashes.get(package_path)}"
+            )
+
+    return ReleaseProfile(
+        release_line=release_line,
+        version=str(manifest.get("version", "")),
+        using_skill_dir=using_skill_dir,
+        supported_packages=supported_packages,
+        passive_kernel=passive_kernel,
+        profile_manifest=manifest_path,
+        profile_data=manifest,
+        beta_readme=beta_readme,
+        runtime_diagnostic=runtime_diagnostic,
+        reference_lock=reference_lock,
+        reference_lock_data=reference_lock_data,
+        plugin_name=str(plugin_name),
+        marketplace_name=str(marketplace_name),
+        display_name=display_name,
+        budgets={key: int(value) for key, value in budgets.items()},
+    )
 
 
 def ensure_output_dir(path: Path, force: bool) -> None:
@@ -143,6 +416,18 @@ def skill_path_replacements(platform_skill_root: str) -> dict[str, str]:
     return {f"skills/{name}/": f"{platform_skill_root}/{name}/" for name in SKILL_NAMES}
 
 
+def profile_skill_replacements(
+    profile: ReleaseProfile,
+    replacements: dict[str, str] | None = None,
+) -> dict[str, str] | None:
+    merged = dict(replacements or {})
+    if profile.experimental:
+        assert profile.profile_data is not None
+        adapter = profile.profile_data["namespace_adapter"]
+        merged[str(adapter["source_prefix"])] = str(adapter["runtime_prefix"])
+    return merged or None
+
+
 def write_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -161,6 +446,111 @@ def copy_codex_plugin_visual_assets(repo: Path, plugin_root: Path) -> None:
 def copy_release_scripts(root: Path, target: Path) -> None:
     for rel_path in RELEASE_SCRIPT_PATHS:
         copy_file_filtered(root / "scripts" / rel_path, target / "scripts" / rel_path)
+
+
+def copy_locked_reference_material(root: Path, target: Path, profile: ReleaseProfile) -> None:
+    assert profile.reference_lock_data is not None
+    for record in profile.reference_lock_data["trees"]:
+        source_rel = _safe_relative_path(record["source_path"], label="reference source_path")
+        package_path = record.get("package_path")
+        if package_path is None:
+            continue
+        package_rel = _safe_relative_path(package_path, label="reference package_path")
+        if not package_rel.parts or package_rel.parts[0] != "reference":
+            continue
+        allowlist = {
+            _safe_relative_path(value, label=f"jsonl allowlist for {source_rel}")
+            for value in record.get("jsonl_allowlist", [])
+        }
+        copy_tree_filtered(
+            root / source_rel,
+            target / package_rel,
+            jsonl_allowlist=allowlist,
+        )
+    for record in profile.reference_lock_data["files"]:
+        source_rel = _safe_relative_path(record["source_path"], label="reference source_path")
+        package_rel = _safe_relative_path(record["package_path"], label="reference package_path")
+        copy_file_filtered(root / source_rel, target / package_rel)
+
+
+def copy_skills_for_profile(
+    skills_dir: Path,
+    target: Path,
+    profile: ReleaseProfile,
+    replacements: dict[str, str] | None = None,
+) -> None:
+    active_replacements = profile_skill_replacements(profile, replacements)
+    copy_tree_filtered(skills_dir, target, active_replacements)
+    if not profile.experimental:
+        return
+    using_target = target / "using-mindthus"
+    if using_target.exists():
+        shutil.rmtree(using_target)
+    copy_tree_filtered(profile.using_skill_dir, using_target, active_replacements)
+
+
+def copy_profile_runtime(root: Path, profile: ReleaseProfile, target: Path) -> None:
+    if not profile.experimental:
+        return
+    assert profile.passive_kernel is not None
+    assert profile.profile_manifest is not None
+    assert profile.profile_data is not None
+    assert profile.beta_readme is not None
+    assert profile.runtime_diagnostic is not None
+    assert profile.reference_lock is not None
+    copy_file_filtered(
+        profile.passive_kernel,
+        target / "runtime" / "passive-activation-kernel.md",
+    )
+    copy_file_filtered(
+        profile.profile_manifest,
+        target / "beta" / "release-profile.json",
+    )
+    copy_file_filtered(profile.beta_readme, target / "BETA.md")
+    diagnostic_target = target / _safe_relative_path(
+        profile.profile_data["runtime_diagnostic"],
+        label="runtime_diagnostic",
+    )
+    copy_file_filtered(profile.runtime_diagnostic, diagnostic_target)
+    diagnostic_target.chmod(0o755)
+    copy_file_filtered(
+        profile.reference_lock,
+        target / _safe_relative_path(
+            profile.profile_data["reference_lock"],
+            label="reference_lock",
+        ),
+    )
+    copy_locked_reference_material(root, target, profile)
+
+
+def verify_built_beta_runtime(
+    profile: ReleaseProfile,
+    plugin_root: Path,
+    surface: str,
+) -> None:
+    if not profile.experimental:
+        return
+    assert profile.profile_data is not None
+    expected_by_surface = profile.profile_data.get("generated_artifact_sha256")
+    if not isinstance(expected_by_surface, dict):
+        raise SystemExit("beta profile must lock generated runtime artifacts by surface")
+    expected = expected_by_surface.get(surface)
+    if not isinstance(expected, dict) or not expected:
+        raise SystemExit(f"beta profile has no generated runtime lock for {surface}")
+    for relative, expected_hash in expected.items():
+        path = plugin_root / _safe_relative_path(
+            relative,
+            label=f"generated beta artifact for {surface}",
+        )
+        try:
+            actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        except OSError as exc:
+            raise SystemExit(f"generated beta runtime artifact is missing: {relative}") from exc
+        if actual != expected_hash:
+            raise SystemExit(
+                f"generated beta runtime artifact drifted for {surface} at {relative}: "
+                f"{actual} != {expected_hash}"
+            )
 
 
 def copy_using_mindthus_conditional_primitives(
@@ -227,20 +617,88 @@ printf '{{\\n  "hookSpecificOutput": {{\\n    "hookEventName": "SessionStart",\\
     script_path.chmod(0o755)
 
 
-def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+def write_beta_activation_hook(plugin_root: Path, command_root_variable: str) -> None:
+    write_json(
+        plugin_root / "hooks" / "hooks.json",
+        {
+            "hooks": {
+                "SessionStart": [
+                    {
+                        "matcher": "startup|resume|clear|compact",
+                        "hooks": [
+                            {
+                                "type": "command",
+                                "command": f'"${{{command_root_variable}}}/hooks/session-start"',
+                                "async": False,
+                            }
+                        ],
+                    }
+                ]
+            }
+        },
+    )
+    script = r'''#!/usr/bin/env bash
+set -euo pipefail
+
+plugin_root="${PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-}}"
+if [[ -z "$plugin_root" ]]; then
+  printf '%s\n' 'Mindthus beta hook requires PLUGIN_ROOT or CLAUDE_PLUGIN_ROOT.' >&2
+  exit 1
+fi
+
+kernel_path="$plugin_root/runtime/passive-activation-kernel.md"
+if [[ ! -r "$kernel_path" ]]; then
+  printf 'Mindthus beta kernel is not readable: %s\n' "$kernel_path" >&2
+  exit 1
+fi
+
+context="<MINDTHUS_PASSIVE_KERNEL>
+$(cat "$kernel_path")
+</MINDTHUS_PASSIVE_KERNEL>"
+
+escape_for_json() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/\\r}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
+}
+
+printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$(escape_for_json "$context")"
+'''
+    script_path = plugin_root / "hooks" / "session-start"
+    script_path.parent.mkdir(parents=True, exist_ok=True)
+    script_path.write_text(script, encoding="utf-8")
+    script_path.chmod(0o755)
+
+
+def build_claude_code(
+    root: Path,
+    repo: Path,
+    skills_dir: Path,
+    methodologies_dir: Path,
+    profile: ReleaseProfile,
+) -> None:
     platform_root = root / "claude-code"
-    plugin_root = platform_root / "claude-plugin"
+    plugin_dir_name = profile.plugin_name if profile.experimental else "claude-plugin"
+    plugin_root = platform_root / plugin_dir_name
 
     write_json(
         platform_root / ".claude-plugin" / "marketplace.json",
         {
-            "name": "mindthus",
-            "description": "Mindthus public skills marketplace",
+            "name": profile.marketplace_name,
+            "description": (
+                "Mindthus 2.0 Beta experimental skills marketplace"
+                if profile.experimental
+                else "Mindthus public skills marketplace"
+            ),
             "owner": {"name": "Mindthus"},
             "plugins": [
                 {
-                    "name": "mindthus",
-                    "source": "./claude-plugin",
+                    "name": profile.plugin_name,
+                    "source": f"./{plugin_dir_name}",
                 }
             ],
         },
@@ -248,21 +706,33 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
     write_json(
         plugin_root / ".claude-plugin" / "plugin.json",
         {
-            "name": "mindthus",
-            "version": VERSION,
-            "description": "Mindthus cognitive judgment skills pack",
+            "name": profile.plugin_name,
+            "version": profile.version,
+            "description": (
+                "Mindthus 2.0 Beta: direct owner routing plus an experimental passive kernel"
+                if profile.experimental
+                else "Mindthus cognitive judgment skills pack"
+            ),
             "author": {"name": "Mindthus"},
         },
     )
-    copy_tree_filtered(skills_dir, plugin_root / "skills")
-    copy_using_mindthus_conditional_primitives(
-        methodologies_dir,
-        plugin_root / "skills" / "using-mindthus",
-    )
-    copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
+    copy_skills_for_profile(skills_dir, plugin_root / "skills", profile)
+    if not profile.experimental:
+        copy_using_mindthus_conditional_primitives(
+            methodologies_dir,
+            plugin_root / "skills" / "using-mindthus",
+        )
+        copy_tree_filtered(methodologies_dir, plugin_root / "docs" / "methodologies")
     copy_license_files(repo, plugin_root)
-    copy_release_scripts(repo, plugin_root)
-    write_claude_activation_hook(plugin_root)
+    if profile.experimental:
+        copy_profile_runtime(repo, profile, plugin_root)
+    else:
+        copy_release_scripts(repo, plugin_root)
+    if profile.experimental:
+        write_beta_activation_hook(plugin_root, "CLAUDE_PLUGIN_ROOT")
+    else:
+        write_claude_activation_hook(plugin_root)
+    verify_built_beta_runtime(profile, plugin_root, "claude-plugin")
 
 
 def build_claude_code_skills(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
@@ -296,83 +766,128 @@ def build_codex(root: Path, repo: Path, skills_dir: Path, agents_file: Path, met
     copy_release_scripts(repo, platform_root)
 
 
-def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
+def build_codex_plugin(
+    root: Path,
+    repo: Path,
+    skills_dir: Path,
+    methodologies_dir: Path,
+    profile: ReleaseProfile,
+) -> None:
     marketplace_root = root / "codex-plugin"
-    plugin_root = root / "codex-plugin" / "mindthus"
+    plugin_root = marketplace_root / profile.plugin_name
     write_json(
         marketplace_root / ".agents" / "plugins" / "marketplace.json",
         {
-            "name": "mindthus",
-            "interface": {"displayName": "Mindthus"},
+            "name": profile.marketplace_name,
+            "interface": {"displayName": profile.display_name},
             "plugins": [
                 {
-                    "name": "mindthus",
-                    "source": {"source": "local", "path": "./mindthus"},
+                    "name": profile.plugin_name,
+                    "source": {"source": "local", "path": f"./{profile.plugin_name}"},
                     "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
                     "category": "Engineering",
                 }
             ],
         },
     )
-    write_json(
-        plugin_root / ".codex-plugin" / "plugin.json",
-        {
-            "name": "mindthus",
-            "version": VERSION,
-            "description": "Judgment framework skills that help agents choose the right method before acting.",
-            "author": {"name": "Mindthus"},
-            "homepage": "https://github.com/rv198-star/Mindthus",
-            "repository": "https://github.com/rv198-star/Mindthus",
-            "license": "AGPL-3.0-only",
-            "keywords": [
-                "judgment",
-                "agent-workflow",
-                "skills",
-                "decision-making",
-                "tplan",
-                "sela",
-                "mpg",
-            ],
-            "skills": "./skills/",
-            "interface": {
-                "displayName": "Mindthus",
-                "shortDescription": "Choose the right judgment lens before acting",
-                "longDescription": (
+    plugin_manifest = {
+        "name": profile.plugin_name,
+        "version": profile.version,
+        "description": (
+            "Experimental two-plane judgment routing with passive cognitive-primitive activation."
+            if profile.experimental
+            else "Judgment framework skills that help agents choose the right method before acting."
+        ),
+        "author": {"name": "Mindthus"},
+        "homepage": "https://github.com/rv198-star/Mindthus",
+        "repository": "https://github.com/rv198-star/Mindthus",
+        "license": "AGPL-3.0-only",
+        "keywords": [
+            "judgment",
+            "agent-workflow",
+            "skills",
+            "decision-making",
+            "tplan",
+            "sela",
+            "mpg",
+        ],
+        "skills": "./skills/",
+        "interface": {
+            "displayName": profile.display_name,
+            "shortDescription": (
+                "Direct owner routing with a thin passive kernel"
+                if profile.experimental
+                else "Choose the right judgment lens before acting"
+            ),
+            "longDescription": (
+                (
+                    "Mindthus 2.0 Beta tests direct owner discovery plus a thin passive activation "
+                    "kernel. It is an opt-in experiment and keeps 1.4.6 as the stable baseline. "
+                    "After installation, review and trust its SessionStart hook with /hooks; "
+                    "without that trust, passive recall is not guaranteed. "
+                )
+                if profile.experimental
+                else (
                     "Mindthus is a judgment framework for AI agents. It helps Codex route "
                     "unclear, strategic, path-dependent, evidence-bound, or artifact-quality "
                     "problems to the smallest sufficient method instead of adding process everywhere. "
-                    "The release-pack manifest uses SPDX AGPL-3.0-only for the open-source lane; "
-                    "separate commercial licensing is documented in the repository license materials."
-                ),
-                "developerName": "Mindthus",
-                "category": "Engineering",
-                "capabilities": ["Interactive", "Read"],
-                "websiteURL": "https://github.com/rv198-star/Mindthus",
-                "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
-                "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
-                "defaultPrompt": [CODEX_ACTIVATION_ROUTER_PROMPT],
-                "brandColor": "#161614",
-                "composerIcon": "./assets/mindthus-icon.svg",
-                "logo": "./assets/mindthus-logo.svg",
-                "logoDark": "./assets/mindthus-logo-dark.svg",
-            },
+                )
+            )
+            + (
+                "The release-pack manifest uses SPDX AGPL-3.0-only for the open-source lane; "
+                "separate commercial licensing is documented in the repository license materials."
+            ),
+            "developerName": "Mindthus",
+            "category": "Engineering",
+            "capabilities": ["Interactive", "Read"],
+            "websiteURL": "https://github.com/rv198-star/Mindthus",
+            "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
+            "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
+            "defaultPrompt": [
+                BETA_CODEX_STARTER_PROMPT
+                if profile.experimental
+                else CODEX_ACTIVATION_ROUTER_PROMPT
+            ],
+            "brandColor": "#161614",
+            "composerIcon": "./assets/mindthus-icon.svg",
+            "logo": "./assets/mindthus-logo.svg",
+            "logoDark": "./assets/mindthus-logo-dark.svg",
         },
-    )
+    }
+    write_json(plugin_root / ".codex-plugin" / "plugin.json", plugin_manifest)
     for skill_name in SKILL_NAMES:
         jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
-        copy_tree_filtered(skills_dir / skill_name, plugin_root / "skills" / skill_name, jsonl_allowlist=jsonl_allowlist)
-    copy_using_mindthus_conditional_primitives(
-        methodologies_dir,
-        plugin_root / "skills" / "using-mindthus",
-    )
+        source = (
+            profile.using_skill_dir
+            if skill_name == "using-mindthus"
+            else skills_dir / skill_name
+        )
+        copy_tree_filtered(
+            source,
+            plugin_root / "skills" / skill_name,
+            profile_skill_replacements(profile),
+            jsonl_allowlist=jsonl_allowlist,
+        )
+    if not profile.experimental:
+        copy_using_mindthus_conditional_primitives(
+            methodologies_dir,
+            plugin_root / "skills" / "using-mindthus",
+        )
     copy_tree_filtered(skills_dir / "_runtime", plugin_root / "_runtime")
-    copy_tree_filtered(
-        methodologies_dir,
-        plugin_root / "docs" / "methodologies",
-    )
+    if not profile.experimental:
+        copy_tree_filtered(
+            methodologies_dir,
+            plugin_root / "docs" / "methodologies",
+        )
     copy_codex_plugin_visual_assets(repo, plugin_root)
     copy_license_files(repo, plugin_root)
-    copy_release_scripts(repo, plugin_root)
+    if profile.experimental:
+        copy_profile_runtime(repo, profile, plugin_root)
+    else:
+        copy_release_scripts(repo, plugin_root)
+    if profile.experimental:
+        write_beta_activation_hook(plugin_root, "PLUGIN_ROOT")
+    verify_built_beta_runtime(profile, plugin_root, "codex-plugin")
 
 
 def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
@@ -403,10 +918,22 @@ def main() -> int:
         default="all",
         help="Package surface to build. Release assets use plugins and skills; all is for local inspection.",
     )
+    parser.add_argument(
+        "--release-line",
+        choices=RELEASE_LINES,
+        default="stable",
+        help="Build the stable line or an explicit experimental release profile.",
+    )
     parser.add_argument("--force", action="store_true", help="Replace a non-empty output directory.")
     args = parser.parse_args()
 
     root = repo_root()
+    profile = load_release_profile(root, args.release_line)
+    if args.package not in profile.supported_packages:
+        supported = ", ".join(profile.supported_packages)
+        raise SystemExit(
+            f"release line {profile.release_line} supports package selection(s): {supported}"
+        )
     skills_dir = root / "skills"
     methodologies_dir = root / "docs" / "methodologies"
     agents_file = root / "AGENTS.md"
@@ -427,13 +954,19 @@ def main() -> int:
     ensure_safe_output_dir(output, root)
     ensure_output_dir(output, args.force)
     if args.package in ("all", "plugins"):
-        build_claude_code(output, root, skills_dir, methodologies_dir)
-        build_codex_plugin(output, root, skills_dir, methodologies_dir)
+        build_claude_code(output, root, skills_dir, methodologies_dir, profile)
+        build_codex_plugin(output, root, skills_dir, methodologies_dir, profile)
     if args.package in ("all", "skills"):
         build_claude_code_skills(output, root, skills_dir, methodologies_dir)
         build_codex(output, root, skills_dir, agents_file, methodologies_dir)
         build_opencode(output, root, skills_dir, agents_file, methodologies_dir)
-    print(f"built Mindthus {args.package} release pack at {output}")
+    if profile.experimental:
+        print(
+            f"built Mindthus {profile.version} {args.package} release pack "
+            f"for {profile.release_line} at {output}"
+        )
+    else:
+        print(f"built Mindthus {args.package} release pack at {output}")
     return 0
 
 
