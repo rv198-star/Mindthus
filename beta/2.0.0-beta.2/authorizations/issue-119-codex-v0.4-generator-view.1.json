@@ -1,0 +1,216 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.2",
+  "authorization_id": "issue-119-codex-v0.4-generator-view.1",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-generator-view.py",
+  "authorization_validator_sha256": "99de67fa7454b63c3bede58cebece32d31a495a513dc60e55182149ac44e50d3",
+  "status": "authorized",
+  "packet_created_at_utc": "2026-07-17T21:07:49.254425+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+    "lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b"
+  },
+  "host_surface": "codex-plugin",
+  "planned_generation_outputs": 225,
+  "planned_judge_records": 450,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 239,
+  "maximum_judge_calls": 480,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 17599744,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "cumulative_authority": {
+    "maximum_generation_calls": 240,
+    "maximum_judge_calls": 480,
+    "aggregate_token_ceiling": 22000000,
+    "prior_consumption": {
+      "protocol_version": "0.3",
+      "generation_calls": 1,
+      "judge_calls": 0,
+      "counted_tokens": 48256
+    },
+    "v04_available": {
+      "maximum_generation_calls": 239,
+      "maximum_judge_calls": 480,
+      "aggregate_token_ceiling": 21951744
+    },
+    "budget_expansion": false
+  },
+  "case_scope": {
+    "matched_case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-edsp",
+      "b2-public-anti-spiral",
+      "b2-dev-owner-3l5s",
+      "b2-dev-owner-edsp",
+      "b2-dev-owner-sela",
+      "b2-dev-owner-mpg",
+      "b2-dev-owner-wae",
+      "b2-dev-owner-tvg",
+      "b2-dev-owner-tplan",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-evidence-first",
+      "b2-dev-multi-primitive",
+      "b2-dev-anti-third-touch",
+      "b2-dev-anti-renamed-object",
+      "b2-dev-anti-distinct-objects",
+      "b2-dev-anti-new-evidence",
+      "b2-dev-near-local-scope",
+      "b2-dev-near-sufficient-evidence",
+      "b2-dev-near-user-tradeoff",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-lifecycle-resume",
+      "b2-dev-lifecycle-clear",
+      "b2-dev-lifecycle-compact"
+    ],
+    "excluded_case_ids": [
+      "b2-shadow-owner-overlap",
+      "b2-shadow-passive-intersection",
+      "b2-shadow-anti-rename",
+      "b2-shadow-near-negative",
+      "b2-replay-architecture-review",
+      "b2-replay-debugging-session"
+    ],
+    "matched_case_count": 25,
+    "excluded_sealed_case_count": 4,
+    "included_sealed_case_count": 0,
+    "evidence_visibility": "implementation-visible",
+    "host_session_scope": "startup-only",
+    "claim_ceiling": "visible-case Codex startup-session exploratory evidence only"
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instructions": [
+      "去掉4道隐藏题，继续",
+      "推进，直到有具体结论或者必须我决策参与的时候才停下来",
+      "部分失败：1这个是什么原因？那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊"
+    ],
+    "source_evidence_ids": [
+      "E22324196",
+      "Eea1fda65",
+      "E46a11b5c"
+    ],
+    "authorized_at_utc": "2026-07-17T14:07:25.640257+00:00",
+    "authorized_protocol_version": "0.4 + generation recovery amendment 1 + Judge compatibility amendment 1 + blinded-view amendment 1 + evidence-view amendment 1 + generator-view amendment 1",
+    "authorized_configuration_digest": "4894fe7be7ee0bdd6acf5b897bd981a6fbb01de2cf4ea7c1ac86478289259e3e",
+    "source_summary": "William's instruction to complete v0.4 authorizes a narrow detector correction after matched execution exposed a deterministic false positive. The successful attempt is retained and promoted without another model call; the real cross-arm veto, workload, models, thresholds, and budgets remain unchanged.",
+    "must_escalate_on": [
+      "any actual other-arm or control-resource read",
+      "source snapshot, target attempt, classifier, or promotion drift",
+      "new spend beyond cumulative ceilings",
+      "binary primary-axis Judge disagreement",
+      "release or publication decision",
+      "irreversible action"
+    ],
+    "digest_binding": {
+      "mode": "additive-v0.4-generator-view-after-false-positive-veto",
+      "bound_protocol_digest": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+      "bound_evidence_view_digest": "500f186106a7458b522e5d6b5c1476c72b76d31100e276e1eed4a1f8664b751c",
+      "bound_generator_view_digest": "f265c231b87d4a0be0ff52dcd064d2b55b3ffa1b74f79ba4a687a5b180fc5739",
+      "bound_generator_view_lock_digest": "f4ce9e6e4942d7bcf1ba41b32857147cca0ba1318bb723598261d022567c812b",
+      "bound_target_attempt_digest": "cc2eb0851b0cdb463f9724209f767f98a66c2a6ddc114cc7675d31673093fc4e",
+      "bound_at_utc": "2026-07-17T21:07:49.254425+00:00"
+    }
+  },
+  "sealed_case_attestation_path": null,
+  "release_preparation": false,
+  "blocking_requirements": [],
+  "recovery_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+    "sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.lock.json",
+    "lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4",
+    "amendment_id": "0.4-recovery.1",
+    "base_protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746"
+  },
+  "recovery_budget": {
+    "base_v0_4_measured_token_ceiling": 21951744,
+    "unknown_usage_reserved_tokens": 2176000,
+    "amended_measured_token_ceiling": 19775744,
+    "budget_expansion": false
+  },
+  "judge_compatibility_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+    "sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.lock.json",
+    "lock_digest": "04b3c287b033d889a5215831e27f5c633a3d030161a95218eb59e50424a11f5e",
+    "amendment_id": "0.4-judge-compat.1",
+    "compatible_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json"
+  },
+  "blinded_view_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.json",
+    "sha256": "e3244c132fba93cd977a81aad5c4f1b77b7bf4ca4c24f7643dcb9ba936aa9e4e",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.lock.json",
+    "lock_digest": "a5967757d06e65ec0c64c49d43cb946ff6a8c2efe6f833fabffbf07c60c68bbd",
+    "amendment_id": "0.4-blinded-view.1",
+    "source_judge_attempt_set_digest": "bd36624a2e9350dc43d2c6d8bd08f7f716c15d0215182239c82965f0b8b0427a",
+    "source_judge_record_set_digest": "7cd792e2ddcd70c20b342ac4a827cc6ba69871e335c54fd740c2c1f7c8b8c3c2"
+  },
+  "blinded_view_budget": {
+    "prior_measured_token_ceiling": 19775744,
+    "additional_unknown_judge_usage_reserved_tokens": 2176000,
+    "total_unknown_usage_reserved_tokens": 4352000,
+    "amended_measured_token_ceiling": 17599744,
+    "budget_expansion": false
+  },
+  "evidence_view_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-evidence-view.1.json",
+    "sha256": "500f186106a7458b522e5d6b5c1476c72b76d31100e276e1eed4a1f8664b751c",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-evidence-view.1.lock.json",
+    "lock_digest": "da36d4455241de0dd5ea7af47da71be13a39aaf0c2e2eb31b6df4ccfb782b1a0",
+    "amendment_id": "0.4-evidence-view.1",
+    "source_judge_attempt_set_digest": "fcb7706dff5916183a91a5490d61a469987c50d0242a103a7dc892d0452c8a97",
+    "source_judge_record_set_digest": "6ab66535ef6336d16dedbbb7149fea464312d23abe3f5a7e751c48a5132186b7"
+  },
+  "evidence_view_budget": {
+    "prior_measured_token_ceiling": 17599744,
+    "amended_measured_token_ceiling": 17599744,
+    "source_judge_calls_used": 36,
+    "retrospective_rejudge_records": 6,
+    "remaining_matched_judge_records": 420,
+    "minimum_total_judge_calls": 462,
+    "minimum_retry_headroom": 18,
+    "budget_expansion": false
+  },
+  "generator_view_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-generator-view.1.json",
+    "sha256": "f265c231b87d4a0be0ff52dcd064d2b55b3ffa1b74f79ba4a687a5b180fc5739",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-generator-view.1.lock.json",
+    "lock_digest": "f4ce9e6e4942d7bcf1ba41b32857147cca0ba1318bb723598261d022567c812b",
+    "amendment_id": "0.4-generator-view.1",
+    "source_generation_attempt_set_digest": "1483c0d8843f4bb33ceb96758c94dece06a03c04e424a217f5a914b4c86a71a9",
+    "target_attempt_digest": "cc2eb0851b0cdb463f9724209f767f98a66c2a6ddc114cc7675d31673093fc4e"
+  },
+  "generator_view_budget": {
+    "prior_measured_token_ceiling": 17599744,
+    "amended_measured_token_ceiling": 17599744,
+    "source_generation_calls_used": 75,
+    "source_judge_calls_used": 42,
+    "source_known_counted_tokens": 4192604,
+    "promotion_model_calls": 0,
+    "budget_expansion": false
+  }
+}

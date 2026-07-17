@@ -1,0 +1,124 @@
+{
+  "schema_version": "mindthus-beta2-generator-view-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-generator-view.1",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-generator-view.1.json",
+  "protocol_sha256": "f265c231b87d4a0be0ff52dcd064d2b55b3ffa1b74f79ba4a687a5b180fc5739",
+  "base_protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+  "evidence_view_sha256": "500f186106a7458b522e5d6b5c1476c72b76d31100e276e1eed4a1f8664b751c",
+  "dependency_receipts": [
+    {
+      "id": "evaluation-protocol-v0.4.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+      "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-recovery.1.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+      "sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-judge-compat.1.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-judge-compat.1.json",
+      "sha256": "b9ef851c0b056c76fea045411dc17803151a3bff5419636b39bbdc63d60a0990"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-blinded-view.1.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-blinded-view.1.json",
+      "sha256": "e3244c132fba93cd977a81aad5c4f1b77b7bf4ca4c24f7643dcb9ba936aa9e4e"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-evidence-view.1.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-evidence-view.1.json",
+      "sha256": "500f186106a7458b522e5d6b5c1476c72b76d31100e276e1eed4a1f8664b751c"
+    },
+    {
+      "id": "evaluation-protocol-v0.4-evidence-view.1.lock.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-evidence-view.1.lock.json",
+      "sha256": "fc17850ff6e3c8ab6ab4b70083ce212378288c24df8b1aec1568ec787f2921a3"
+    },
+    {
+      "id": "issue-119-codex-v0.4-evidence-view.1.json",
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4-evidence-view.1.json",
+      "sha256": "e9d19f9e8c27d6bbfdc659b5d43a767230b868ea102ed653a639abedae368558"
+    },
+    {
+      "id": "judge-rubric-v0.4.json",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-rubric-v0.4.json",
+      "sha256": "304adfc5be9a1e28283c67ee02df935041344cfe43506b37bd3785f990d2493e"
+    },
+    {
+      "id": "judge-output-v0.4-openai-compatible.schema.json",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+      "sha256": "82ba909f30bfc30360271b3e949c88f62afa61db6ce86a1a1929c6827996e0ed"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+      "sha256": "349614d7a6f9984c1f96fdb1207ad075f941be109f1a53b0679f3ab695c68162"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+      "sha256": "5ee6a73d7f85cf50b54accf8680dafb6f2c06daf210a475bd8ec0b4df729959a"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04_recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+      "sha256": "84a6c174c3dc809b1ec9f85336b432ee199bdebceabedd87605eebc117aa882d"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04_judge_compat.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_judge_compat.py",
+      "sha256": "5d3a3dea24c20910612e95b7c836ee1e09f395594bd9e3ef536d06a40b751165"
+    },
+    {
+      "id": "blinded_candidate_view_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+      "sha256": "bbff5979df29c25385a2ffc2e4452ee805fbc5191a9425e288edffac9a0fa0bc"
+    },
+    {
+      "id": "workspace_evidence_view_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/workspace_evidence_view_v04.py",
+      "sha256": "13917561bc3872e1dc8c388567b27f212a48d6780d600776ea78da02dfb10392"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04_evidence_view.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_evidence_view.py",
+      "sha256": "f8bae1c2bff64081d08185c7c42f5a98a8dbbb468ff0bf4f2fc49c8df4127ad3"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04_evidence_view.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_evidence_view.py",
+      "sha256": "75fada4351d377d11863272564fd211626c9652ad27c1a91d93645910a9f60e3"
+    },
+    {
+      "id": "generator_resource_view_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/generator_resource_view_v04.py",
+      "sha256": "4c4d93b7fc32ebb6d03344333ea2c53ba836b54581515fce6c08db892006f753"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04_generator_view.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_generator_view.py",
+      "sha256": "f2b8c35cc16ac072f7d38fc2ac52625f1f9ba84d5ccde47b80b582405abd2f4f"
+    },
+    {
+      "id": "build-execution-authorization-v0.4-generator-view.py",
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-generator-view.py",
+      "sha256": "57d653538ca3b0dbd7782ec30be39cf31aaaa0f7fb1433b63e50c2c763e6b1a7"
+    },
+    {
+      "id": "validate-execution-authorization-v0.4-generator-view.py",
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-generator-view.py",
+      "sha256": "99de67fa7454b63c3bede58cebece32d31a495a513dc60e55182149ac44e50d3"
+    }
+  ],
+  "frozen_at_utc": "2026-07-17T21:07:48.744569+00:00",
+  "source_parent_commit": "aba30ed8d0cb55570ee251ba8d2e019a555c88da",
+  "semantic_model_output_generated_before_freeze": true,
+  "semantic_model_output_generated_under_amendment_before_freeze": false,
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-generator-view-v0.4.py",
+  "validator_sha256": "3c4e61da35f5a220c2304d1dcdb83d7b91c50a122b1c9d4c22b38736c159a692",
+  "lock_digest": "f4ce9e6e4942d7bcf1ba41b32857147cca0ba1318bb723598261d022567c812b"
+}
