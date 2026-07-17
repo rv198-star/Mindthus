@@ -1,0 +1,227 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-recovery-amendment-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-recovery.1",
+  "purpose": "Complete the interrupted v0.4 run without replacing retained semantic evidence or opening a new architecture experiment.",
+  "base_binding": {
+    "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+    "lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b",
+    "authorization_path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4.json",
+    "authorization_digest": "a8e270c919da161fb4eac2ef2d862e2157074d4ae84641d9057d10d79affd74f"
+  },
+  "retained_source_run": {
+    "phase": "smoke",
+    "completed_generation_outputs": 10,
+    "generation_attempts": 11,
+    "judge_attempts": 0,
+    "known_counted_tokens": 444034,
+    "run_state_sha256": "47556d7d1619f313920d727679e8bba4c19fcd0dac985f86eb0d2bd864657717",
+    "run_state_digest": "e343ca8fa052f3dc618b3336d9354d2062b5542d3bc3ccb482d8a55730c55028",
+    "stop_report_sha256": "7b1ab48446406a48e4ae61284ee5b8946835d4c99d0ff4b3c871b92d2e5d201b",
+    "stop_veto_id": "untraceable-or-partial-artifact",
+    "arm_identity_digests": {
+      "stable": "0fbd6433cccaa471c9374b8feeed5ab454a92c8375024ba9868d959ae2df867b",
+      "direct-only": "5ee8f924e82eaa78be0008a3b64bf75be7018a5defcbc92261d1c5bfc7ed4691",
+      "thin-kernel": "32e2db75c738c84ac09a0bcfbf418b2f490244b5726102079b7bee2f45291520"
+    },
+    "completed_cells": [
+      {
+        "cell_id": "021b55b4f5b29f65ed9808ea33fe9529b48a9dec86a0d266f8c5fcd551c626bf",
+        "case_id": "b2-dev-owner-3l5s",
+        "arm_id": "stable",
+        "repeat": 1,
+        "record_digest": "e22a3077a847d7e130860fc4e8f047ace9de7a5cf0add0c01632f6a856c88587",
+        "file_sha256": "d34bc4d2596a0352571ffd7745345440cfc5f2e20942c02edd5c62be3d871d01"
+      },
+      {
+        "cell_id": "049578b684e53eb91552c4355d5aa1f9ecb809175aa9a6a8d4bba03969f7c4b9",
+        "case_id": "b2-dev-multi-primitive",
+        "arm_id": "thin-kernel",
+        "repeat": 1,
+        "record_digest": "222a05da6950065287e7b2e98efc6a5b612616c95f3b16b64b5b26229fea627e",
+        "file_sha256": "8e3726bb4d11857fe6bc3d12637eaa9c531fd71feb86f24f54dcdd124e55b5dd"
+      },
+      {
+        "cell_id": "0fbc7ba1216450d42dc8f3f301beef925cc46c1b7b8ed2e74d3471df8475f442",
+        "case_id": "b2-dev-owner-3l5s",
+        "arm_id": "direct-only",
+        "repeat": 1,
+        "record_digest": "d256ec64b38fe4db800023a87bec4584ac1402041748df160ecacdb6cc9680fb",
+        "file_sha256": "6015c1fa0e1bbc4320496eaef66ab012eef1e97fa715a9bb424112cef56e170b"
+      },
+      {
+        "cell_id": "11c77483e795ab9da042753e80815fa2be509dc266178565cdc9a98aa86d4c96",
+        "case_id": "b2-dev-near-normal-debugging",
+        "arm_id": "stable",
+        "repeat": 1,
+        "record_digest": "9908201e345992fb32e78486d0137c2b7cfe81d10f727cbe658aa03175c06e5f",
+        "file_sha256": "b45e8dabed72503d43a01bd2a3c606f423d8eb9cde31b5b891378081cbcc519d"
+      },
+      {
+        "cell_id": "14d660c49b486803a8cea2fba6e56d610b5af86d673c24400d42aed8f3891cec",
+        "case_id": "b2-dev-arbitrator-overlap",
+        "arm_id": "stable",
+        "repeat": 1,
+        "record_digest": "7d88a264208960fda019b73d7d9afd47c75e64400a163e119e0c547e9af09f57",
+        "file_sha256": "a322e8114ef0e714d8285c918224796883d099902286d7d3dfdf930e0a0488ad"
+      },
+      {
+        "cell_id": "1dd7da2c9d1f3f289bb55d9d7fbbebd292797f8d6530d423ef0d2249a65530d9",
+        "case_id": "b2-dev-owner-3l5s",
+        "arm_id": "thin-kernel",
+        "repeat": 1,
+        "record_digest": "27f27313cc7b557e1e319b37efb175b7a059a6ac2823cbc2228d790324358b20",
+        "file_sha256": "49b2f39cb5ef681ea27d76db49f5fb5b84594806e71847ef76bdc98ca529a56d"
+      },
+      {
+        "cell_id": "9c753a06e51523b4b661b5b78efbdb21457a599734699f182737f8248a3d79a5",
+        "case_id": "b2-dev-multi-primitive",
+        "arm_id": "stable",
+        "repeat": 1,
+        "record_digest": "1aba863629b212a4ad046b528388063f78d03e742f3bb0775e64fa168ebf74b8",
+        "file_sha256": "b0d779198581c28527b51d83d9591c6de2759b815e788bdb879c50a7a3852806"
+      },
+      {
+        "cell_id": "aa2f44a4568d8eaff99c38e4564ba506728f7b588230a8ba0259eb234f0affc4",
+        "case_id": "b2-dev-arbitrator-overlap",
+        "arm_id": "direct-only",
+        "repeat": 1,
+        "record_digest": "5d7b4a0f9b668eb7ed626abb7179904f6ac734327f3d00582e978edd41afd598",
+        "file_sha256": "5043ccfab3a5222fe913114113cf483493f4e54073e1fdf8a8e041831ff4dbbf"
+      },
+      {
+        "cell_id": "e55321ed72e3def6e51aea168be2ceaa3a2e968d2c3e4eb325e1fbef70a7cc40",
+        "case_id": "b2-dev-arbitrator-overlap",
+        "arm_id": "thin-kernel",
+        "repeat": 1,
+        "record_digest": "4956854976c831ae2f9c1b456268dda862c025d3645eff5a6f380d8c19b7f58c",
+        "file_sha256": "4154a78b2e65eea88fab240d5baf430080efe4a0b12022270ab71c9ce5bad16b"
+      },
+      {
+        "cell_id": "e82754e38972c606ffbbe6b08c1dc274ac86ad5bb075a37c4ee5df63800c9e4c",
+        "case_id": "b2-dev-multi-primitive",
+        "arm_id": "direct-only",
+        "repeat": 1,
+        "record_digest": "9aaa915e402eadb6767c490caadc40fe9387a47b487ecc77202a6671f6114336",
+        "file_sha256": "648d4458f2d3eb603ed82db76829994aeac19a6d1ecc4f6ac9594da4544fb943"
+      }
+    ],
+    "incomplete_cell": {
+      "cell_id": "6721d94969c4893b4d5b7ffcc6b12fb38d334fd551f929114e2e7d1688a39dd5",
+      "case_id": "b2-dev-near-normal-debugging",
+      "arm_id": "direct-only",
+      "entry_mode": "stay-asleep",
+      "repeat": 1,
+      "attempt": 1,
+      "attempt_file_sha256": "b71121c6209c96ec3973fe70b1f7e7f4a29f2d3363f69aa3fa759fba4ce36efa",
+      "attempt_digest": "87de31b554bae1fd1e10984d964e25603fe2b80026f2f4c85a2b407544597ec3",
+      "answer_sha256": "11e081349b0354fd49fdb1386334ccd7ab34dd0b11db92e88be28c9b5f6a26d4",
+      "events_sha256": "31b7807a3c9997f931d38b34c2bb92dbb882f6e23aced80f96cebd99789ffcc5",
+      "stderr_sha256": "ab12d8fc7294e19a20d1727e6e5c10ac0ef1f1a33f1a54aa16fd4e54b8b98d6d",
+      "returncode": -15,
+      "timed_out": true,
+      "wall_time_seconds": 900.033097,
+      "first_observable_action_latency_seconds": 120.774096,
+      "semantic_output_retained": true,
+      "native_usage_available": false
+    }
+  },
+  "amendment": {
+    "allowed_changes": [
+      "append exactly one attempt-02 to the named incomplete cell",
+      "raise the per-call timeout from 900 to 1800 seconds for recovery and remaining calls",
+      "reserve a conservative upper bound for the incomplete attempt's unknown native usage",
+      "right-censor the recovered paired unit from efficiency endpoints only"
+    ],
+    "unchanged_contracts": [
+      "generator model gpt-5.6-sol xhigh across all arms",
+      "judge model gpt-5.6-sol xhigh in two isolated sessions",
+      "prompts, arm identities, case workload, repeat count, ordering seed, endpoint thresholds, judge rubric, and vetoes",
+      "William remains adjudicator and stop authority",
+      "no hidden-case, Claude, release, or publication claim"
+    ],
+    "recovery_attempt": {
+      "attempt_number": 2,
+      "timeout_seconds": 1800,
+      "same_cell_identity": true,
+      "same_prompt_and_generator_configuration": true,
+      "append_only": true,
+      "successful_final_answer_may_be_judged": true,
+      "on_any_failure": "terminal-stop-v0.4",
+      "additional_recovery_attempts": 0
+    },
+    "remaining_calls": {
+      "timeout_seconds": 1800,
+      "base_generation_call_ceiling": 239,
+      "base_judge_call_ceiling": 480,
+      "workload_truncation_allowed": false
+    }
+  },
+  "budget_accounting": {
+    "base_v0_4_measured_token_ceiling": 21951744,
+    "unknown_usage_reserve": {
+      "kind": "non-measured conservative risk reserve",
+      "model_context_window_tokens": 272000,
+      "context_window_multiplier": 8,
+      "reserved_tokens": 2176000,
+      "claim": "upper-bound reserve, not observed model usage"
+    },
+    "amended_measured_token_ceiling": 19775744,
+    "balance_rule": "amended measured ceiling plus unknown reserve equals the frozen v0.4 measured ceiling",
+    "budget_expansion": false
+  },
+  "analysis_policy": {
+    "recovered_final_answer_included_in": [
+      "blinded quality judging",
+      "execution owner fidelity",
+      "primitive recall and joint owner-primitive success",
+      "false wakeup and authority-evidence vetoes"
+    ],
+    "right_censored_paired_unit": {
+      "case_id": "b2-dev-near-normal-debugging",
+      "repeat": 1,
+      "excluded_only_from_endpoints": [
+        "input_token_savings_vs_stable",
+        "kernel_token_overhead_vs_direct",
+        "wall_time_savings_vs_stable",
+        "first_observable_action_latency"
+      ],
+      "reason": "attempt-01 emitted semantic output but no native terminal usage; exact cumulative token and completion-time cost is unknowable"
+    },
+    "reporting": [
+      "report attempt-01 and attempt-02 separately",
+      "report measured tokens plus the unknown-usage reserve",
+      "report the efficiency denominator after deleting exactly one paired unit",
+      "do not describe the recovered unit's efficiency as measured or passing"
+    ]
+  },
+  "human_authorization": {
+    "authority": "William",
+    "source_instruction": "部分失败：1这个是什么原因？那我觉得这个失败是可以改造并完成的啊，没必要马上开0.5，而是把0.4这个补完，再继续执行剩余的啊",
+    "source_evidence_id": "E46a11b5c",
+    "authorized_at_utc": "2026-07-17T14:07:25.640257+00:00",
+    "release_preparation": false
+  },
+  "runtime_dependencies": [
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+    "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+    "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4.json",
+    "scripts/mindthus_beta2_telemetry.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+    "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_recovery.py",
+    "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+    "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-recovery.py",
+    "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-recovery.py"
+  ],
+  "freeze": {
+    "source_parent_commit": "93378d63b0c4da6bb6c1f25fedb0fa375ebb079e",
+    "semantic_model_output_generated_before_amendment_freeze": true,
+    "semantic_model_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "recovery lock receipt creation and containing git commit",
+    "future_change_policy": "a second recovery amendment or a new experiment protocol must be separately frozen before semantic model execution"
+  }
+}

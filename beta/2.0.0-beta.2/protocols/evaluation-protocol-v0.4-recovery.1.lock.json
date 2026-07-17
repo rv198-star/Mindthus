@@ -1,0 +1,69 @@
+{
+  "schema_version": "mindthus-beta2-recovery-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.4",
+  "amendment_id": "0.4-recovery.1",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4-recovery.1.json",
+  "protocol_sha256": "3c4b8b60a94592ce667ce271e58dba894772ba455c944778c6afa1aa0111aa48",
+  "base_protocol_sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746",
+  "base_lock_digest": "dc00e9564e655ae202a543f8719d40e9ad23858cf508a1889187bd4591fae62b",
+  "dependency_receipts": [
+    {
+      "id": "evaluation-protocol-v0.4.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.json",
+      "sha256": "a6e9da7ef2eb85e179d92ec909444c50e879673943b1be71f5c923b9e26d0746"
+    },
+    {
+      "id": "evaluation-protocol-v0.4.lock.json",
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.4.lock.json",
+      "sha256": "ed7f55286bc30a654a44094496bcf4ee56f6d6c5ffb9753a3e0de5bf6ff2a66b"
+    },
+    {
+      "id": "issue-119-codex-v0.4.json",
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.4.json",
+      "sha256": "34805e74e87f59a3ca0c24e6457eec99858a7c9334ef8e17693281d9dfd0650d"
+    },
+    {
+      "id": "mindthus_beta2_telemetry.py",
+      "path": "scripts/mindthus_beta2_telemetry.py",
+      "sha256": "3348ab066fd665cfb5d979384e276ce0ae22dc2be27fe2d617e9634941b6a58d"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+      "sha256": "349614d7a6f9984c1f96fdb1207ad075f941be109f1a53b0679f3ab695c68162"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+      "sha256": "5ee6a73d7f85cf50b54accf8680dafb6f2c06daf210a475bd8ec0b4df729959a"
+    },
+    {
+      "id": "run_real_codex_evaluation_v04_recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04_recovery.py",
+      "sha256": "f5e94d92f9ae5ec0ac417f77b5ef0dbeeb5ea95ec2d1abc0795e8773944dc725"
+    },
+    {
+      "id": "analyze_codex_evaluation_v04_recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04_recovery.py",
+      "sha256": "84a6c174c3dc809b1ec9f85336b432ee199bdebceabedd87605eebc117aa882d"
+    },
+    {
+      "id": "build-execution-authorization-v0.4-recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.4-recovery.py",
+      "sha256": "247323955ffd24b3f4c927e13b6f7e708fa0774b54a5bad70693220dd37dc935"
+    },
+    {
+      "id": "validate-execution-authorization-v0.4-recovery.py",
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.4-recovery.py",
+      "sha256": "1363ac39e8eeddb53512ae4f4fd07466b3bb4b13e32437f1bb9cbcd4cea89a0d"
+    }
+  ],
+  "frozen_at_utc": "2026-07-17T14:34:14.668079+00:00",
+  "source_parent_commit": "93378d63b0c4da6bb6c1f25fedb0fa375ebb079e",
+  "semantic_model_output_generated_before_freeze": true,
+  "semantic_model_output_generated_under_amendment_before_freeze": false,
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-recovery-v0.4.py",
+  "validator_sha256": "2d66560bd56eb0b2c1e2e8b432d9c29c1fb965231a6c6531dd656f9ea60946f0",
+  "lock_digest": "46143196f02198accf28106e5747ea21e8ca1dbd88ed34777ad4cb8fca8945d4"
+}
