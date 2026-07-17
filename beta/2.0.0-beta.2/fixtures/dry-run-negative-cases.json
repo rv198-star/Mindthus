@@ -1,0 +1,37 @@
+{
+  "schema_version": "mindthus-beta2-dry-run-negative-cases-v0.1",
+  "faults": [
+    {
+      "fault": "co-enable-contamination",
+      "expected_veto": "cross-arm-contamination"
+    },
+    {
+      "fault": "wrong-artifact-hash",
+      "expected_veto": "protocol-or-arm-drift"
+    },
+    {
+      "fault": "wrong-hook-state",
+      "expected_veto": "protocol-or-arm-drift"
+    },
+    {
+      "fault": "missing-telemetry",
+      "expected_veto": "missing-primary-native-evidence"
+    },
+    {
+      "fault": "duplicate-cell",
+      "expected_veto": "untraceable-or-partial-artifact"
+    },
+    {
+      "fault": "judge-environment-contamination",
+      "expected_veto": "judge-environment-contamination"
+    },
+    {
+      "fault": "partial-write",
+      "expected_veto": "untraceable-or-partial-artifact"
+    },
+    {
+      "fault": "path-resource-failure",
+      "expected_veto": "protocol-or-arm-drift"
+    }
+  ]
+}

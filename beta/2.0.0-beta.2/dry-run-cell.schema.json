@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.dev/schemas/beta2-dry-run-cell-v0.1.json",
+  "title": "Mindthus 2.0 Beta.2 deterministic dry-run cell artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "cell_id",
+    "cell_key",
+    "cell_key_digest",
+    "plan_executor",
+    "protocol_sha256",
+    "arm_digest",
+    "materialized_home_receipt_digest",
+    "case_source_receipt",
+    "synthetic_generation",
+    "telemetry",
+    "judge_input",
+    "judge_records",
+    "semantic_claims_available",
+    "record_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "mindthus-beta2-dry-run-cell-v0.1" },
+    "cell_id": { "$ref": "#/$defs/sha256" },
+    "cell_key": { "type": "object", "minProperties": 1 },
+    "cell_key_digest": { "$ref": "#/$defs/sha256" },
+    "plan_executor": { "const": "deterministic-mock-only" },
+    "protocol_sha256": { "$ref": "#/$defs/sha256" },
+    "arm_digest": { "$ref": "#/$defs/sha256" },
+    "materialized_home_receipt_digest": { "$ref": "#/$defs/sha256" },
+    "case_source_receipt": { "$ref": "#/$defs/sha256" },
+    "synthetic_generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_output_sha256", "model_call_performed", "semantic_output"],
+      "properties": {
+        "candidate_output_sha256": { "$ref": "#/$defs/sha256" },
+        "model_call_performed": { "const": false },
+        "semantic_output": { "const": false }
+      }
+    },
+    "telemetry": { "type": "object", "minProperties": 1 },
+    "judge_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "judge_input_digest"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "judge_input_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "judge_records": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["judge_slot", "path", "sha256", "record_digest"],
+        "properties": {
+          "judge_slot": { "type": "integer", "minimum": 1, "maximum": 2 },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "record_digest": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "semantic_claims_available": { "type": "array", "maxItems": 0 },
+    "record_digest": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

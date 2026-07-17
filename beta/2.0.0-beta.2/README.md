@@ -82,3 +82,8 @@ The #117 preregistration is documented in
 schema, and immutable receipt live under [`protocols/`](protocols/) and this directory;
 they freeze workload, margins, evidence requirements, vetoes, and rerun rules before
 any semantic smoke output exists.
+
+The #118 model-free rehearsal is documented in [`DRY-RUN.md`](DRY-RUN.md). Its plan,
+cell, and report schemas plus deterministic fault catalog prove isolation, lifecycle
+plumbing, atomic artifacts, safe resume, and veto mechanics while keeping every
+semantic, efficiency, and release claim unavailable.
