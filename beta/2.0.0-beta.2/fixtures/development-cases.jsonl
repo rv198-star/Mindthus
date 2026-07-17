@@ -1,0 +1,21 @@
+{"case_id":"b2-dev-owner-3l5s","prompt":"一个工单反复被退回，但大家说不清到底失败在哪。先把问题定义成可验证对象，再给最小拆解。"}
+{"case_id":"b2-dev-owner-edsp","prompt":"这个迁移方案究竟该全量切换还是永远双轨？两边都有道理，请先检查这个二选一是否成立。"}
+{"case_id":"b2-dev-owner-sela","prompt":"旧流程局部体验更精致，新系统单位成本持续下降。判断长期方向，但不要忽略不可逆损害。"}
+{"case_id":"b2-dev-owner-mpg","prompt":"长期方向已定，但当前载体现金流脆弱。给出继续、降暴露或切换的触发条件。"}
+{"case_id":"b2-dev-owner-wae","prompt":"自动评审工作流把模型判断改成了固定正则门，结果绿色但结论失真。重新分配 Agent、Workflow、Evidence 的控制权。"}
+{"case_id":"b2-dev-owner-tvg","prompt":"这份设计评审格式完整却没有证据、取舍和交接价值。只强化这个有边界的产物。"}
+{"case_id":"b2-dev-owner-tplan","prompt":"这个跨周任务有明确 Mission，但任务状态、验收证据、人工权限和恢复点都没有运行时承载。"}
+{"case_id":"b2-dev-arbitrator-overlap","prompt":"整体方向、载体路径和证据控制边界同时不清，两个以上 owner 仍会改变下一步。先仲裁谁主导。"}
+{"case_id":"b2-dev-evidence-first","prompt":"生产故障原因未知，只有一段二手描述。不要先套方法，先指出必须读取的日志和验证。"}
+{"case_id":"b2-dev-multi-primitive","prompt":"用户给出的局部指标正冒充全局定义，而且不同决策者会得到相反方案。直接回答时同时处理这两个约束。"}
+{"case_id":"b2-dev-anti-third-touch","turns":["第一次修改同一个告警规则。","第二次仍修改同一个告警规则。","第三次又准备给同一个告警规则增加例外。"]}
+{"case_id":"b2-dev-anti-renamed-object","turns":["修改结算重试策略。","把它改名为恢复策略后继续补规则。","第三次仍处理同一底层重试对象。"]}
+{"case_id":"b2-dev-anti-distinct-objects","turns":["修复登录按钮文案。","升级缓存依赖。","给订单表添加缺失索引。"]}
+{"case_id":"b2-dev-anti-new-evidence","turns":["第一次修复超时。","第二次获得新的火焰图后调整热点。","第三次因新的数据库锁等待证据切换方案。"]}
+{"case_id":"b2-dev-near-local-scope","prompt":"只解释这个函数的局部返回值，不要扩展成整个系统架构评审。"}
+{"case_id":"b2-dev-near-sufficient-evidence","prompt":"日志、trace 和复现实验都指向同一个空指针分支，请直接修复并验证。"}
+{"case_id":"b2-dev-near-user-tradeoff","prompt":"我明确接受短期维护成本来换取本周上线，权限也在我；请按这个取舍执行可逆改动。"}
+{"case_id":"b2-dev-near-normal-debugging","turns":["修复解析器的边界错误。","测试暴露另一个独立的编码错误，请继续修。","新测试发现第三个独立的时区错误，请继续。"]}
+{"case_id":"b2-dev-lifecycle-resume","prompt":"恢复一个已有 Mission，先确认当前任务和未决权限，再继续。"}
+{"case_id":"b2-dev-lifecycle-clear","prompt":"上下文被清空后重新进入任务，恢复 Kernel 义务但不要继承旧结论。"}
+{"case_id":"b2-dev-lifecycle-compact","prompt":"上下文压缩后继续同一任务，保留活动约束和停止条件。"}

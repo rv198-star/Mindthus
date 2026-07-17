@@ -1,0 +1,23 @@
+{
+  "schema_version": "mindthus-beta2-sealed-shadow-index-v0.1",
+  "content_retained_in_repository": false,
+  "blindness_claim": "requires independent custodian attestation at protocol freeze and run time",
+  "cases": [
+    {
+      "case_id": "b2-shadow-owner-overlap",
+      "receipt_sha256": "7f0894121c8764ce91e1431017cd64b99b9dccaaa5b45c96b0fb712149784cf7"
+    },
+    {
+      "case_id": "b2-shadow-passive-intersection",
+      "receipt_sha256": "6b984ddaf50f36e11671c46f7e158819a8da2e2fe24f58f483bbda145abbc944"
+    },
+    {
+      "case_id": "b2-shadow-anti-rename",
+      "receipt_sha256": "62467e8636ac30f104fbd6b664bcc712a2dc64329d80f0c7646f2d6a622c682d"
+    },
+    {
+      "case_id": "b2-shadow-near-negative",
+      "receipt_sha256": "7a2336cf7a28d4b2a6abdb277b0c6ef2f02bf126ba8130fba3f31f49c0d4da8a"
+    }
+  ]
+}

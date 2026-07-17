@@ -1,0 +1,1406 @@
+{
+  "schema_version": "mindthus-beta2-case-matrix-v0.1",
+  "coverage_requirements": {
+    "owners": [
+      "3l5s",
+      "edsp",
+      "sela",
+      "mpg",
+      "wae",
+      "tvg",
+      "tplan"
+    ],
+    "primitives": [
+      "input_framing_audit",
+      "whole_elephant",
+      "decision_context_calibration",
+      "anti_spiral",
+      "evidence_first"
+    ],
+    "lifecycle_paths": [
+      "startup",
+      "resume",
+      "clear",
+      "compact"
+    ],
+    "near_negatives": [
+      "legitimate-local-scope",
+      "sufficient-evidence",
+      "explicit-user-owned-tradeoff",
+      "normal-iterative-debugging"
+    ],
+    "anti_spiral_sequences": [
+      "same-object-third-touch",
+      "renamed-same-object",
+      "distinct-objects",
+      "repeated-with-new-evidence"
+    ],
+    "provenance_classes": [
+      "public-regression",
+      "development",
+      "sealed-shadow",
+      "real-task-replay"
+    ],
+    "entry_modes": [
+      "owner-direct",
+      "passive-kernel",
+      "arbitrator",
+      "stay-asleep",
+      "evidence-first"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "b2-public-frame",
+      "title": "Public regression: local diagnosis must not capture the whole incident",
+      "case_type": "positive",
+      "provenance": "public-regression",
+      "source": {
+        "locator": "tests/judgment_benchmark_50_cases.jsonl#mtj-001",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_answer",
+      "accepted_execution_owners": [
+        "direct_answer"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit"
+      ],
+      "required_visible_action": "Bound the indexing hypothesis before proposing changes.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "high",
+        "reason": "public expected behavior is visible to implementers"
+      },
+      "coverage_tags": [
+        "provenance:public-regression",
+        "entry:passive-kernel",
+        "lifecycle:startup",
+        "primitive:input_framing_audit"
+      ]
+    },
+    {
+      "case_id": "b2-public-whole",
+      "title": "Public regression: a local mechanism cannot claim whole-agent essence",
+      "case_type": "positive",
+      "provenance": "public-regression",
+      "source": {
+        "locator": "tests/judgment_benchmark_50_cases.jsonl#mtj-012",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_answer",
+      "accepted_execution_owners": [
+        "direct_answer"
+      ],
+      "expected_primitive_obligations": [
+        "whole_elephant"
+      ],
+      "required_visible_action": "Separate the local mechanism from the whole-object definition.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "high",
+        "reason": "public expected behavior is visible to implementers"
+      },
+      "coverage_tags": [
+        "provenance:public-regression",
+        "entry:passive-kernel",
+        "lifecycle:startup",
+        "primitive:whole_elephant"
+      ]
+    },
+    {
+      "case_id": "b2-public-edsp",
+      "title": "Public regression: reconstruct a malformed binary",
+      "case_type": "positive",
+      "provenance": "public-regression",
+      "source": {
+        "locator": "tests/judgment_benchmark_50_cases.jsonl#mtj-017",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "edsp",
+      "accepted_execution_owners": [
+        "edsp"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [
+        "edsp"
+      ],
+      "allowed_skill_loads": [
+        "edsp"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "high",
+        "reason": "public rubric and historical outputs are visible"
+      },
+      "coverage_tags": [
+        "provenance:public-regression",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "owner:edsp"
+      ]
+    },
+    {
+      "case_id": "b2-public-anti-spiral",
+      "title": "Public regression: stop a third same-object prompt patch",
+      "case_type": "positive",
+      "provenance": "public-regression",
+      "source": {
+        "locator": "tests/judgment_benchmark_50_cases.jsonl#mtj-033",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_judgment",
+      "accepted_execution_owners": [
+        "direct_judgment",
+        "3l5s",
+        "tplan"
+      ],
+      "expected_primitive_obligations": [
+        "anti_spiral"
+      ],
+      "required_visible_action": "Pause the next local patch and inspect the upstream cause.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [
+        "3l5s",
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "high",
+        "reason": "public Anti-Spiral trigger is known to implementers"
+      },
+      "coverage_tags": [
+        "provenance:public-regression",
+        "entry:passive-kernel",
+        "lifecycle:startup",
+        "primitive:anti_spiral",
+        "anti-spiral:same-object-third-touch"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-3l5s",
+      "title": "3L5S owns an undefined repeated-failure problem",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-3l5s",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "3l5s",
+      "accepted_execution_owners": [
+        "3l5s"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit"
+      ],
+      "required_visible_action": "Define a falsifiable problem before task breakdown.",
+      "required_skill_loads": [
+        "3l5s"
+      ],
+      "allowed_skill_loads": [
+        "3l5s"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:input_framing_audit",
+        "owner:3l5s",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-edsp",
+      "title": "EDSP owns structural ambiguity with situated decision pressure",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-edsp",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "edsp",
+      "accepted_execution_owners": [
+        "edsp"
+      ],
+      "expected_primitive_obligations": [
+        "decision_context_calibration"
+      ],
+      "required_visible_action": "Reconstruct the decision axes before selecting a scenario.",
+      "required_skill_loads": [
+        "edsp"
+      ],
+      "allowed_skill_loads": [
+        "edsp"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:decision_context_calibration",
+        "owner:edsp",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-sela",
+      "title": "SELA owns system-efficiency versus local-advantage direction",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-sela",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "sela",
+      "accepted_execution_owners": [
+        "sela"
+      ],
+      "expected_primitive_obligations": [
+        "whole_elephant"
+      ],
+      "required_visible_action": "Separate local excellence from system-level direction pressure.",
+      "required_skill_loads": [
+        "sela"
+      ],
+      "allowed_skill_loads": [
+        "sela"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:whole_elephant",
+        "owner:sela",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-mpg",
+      "title": "MPG owns path carrying after direction is fixed",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-mpg",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "mpg",
+      "accepted_execution_owners": [
+        "mpg"
+      ],
+      "expected_primitive_obligations": [
+        "decision_context_calibration"
+      ],
+      "required_visible_action": "Name carrier exposure and decision-changing triggers.",
+      "required_skill_loads": [
+        "mpg"
+      ],
+      "allowed_skill_loads": [
+        "mpg"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:decision_context_calibration",
+        "owner:mpg",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-wae",
+      "title": "WAE owns an agentic controller mismatch",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-wae",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "wae",
+      "accepted_execution_owners": [
+        "wae"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit"
+      ],
+      "required_visible_action": "Reassign control among agent judgment, workflow, and evidence.",
+      "required_skill_loads": [
+        "wae"
+      ],
+      "allowed_skill_loads": [
+        "wae"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:input_framing_audit",
+        "owner:wae",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-tvg",
+      "title": "TVG owns bounded value strengthening",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-tvg",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "tvg",
+      "accepted_execution_owners": [
+        "tvg"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": "Strengthen evidence, trade-offs, and handoff without reopening scope.",
+      "required_skill_loads": [
+        "tvg"
+      ],
+      "allowed_skill_loads": [
+        "tvg"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "owner:tvg"
+      ]
+    },
+    {
+      "case_id": "b2-dev-owner-tplan",
+      "title": "tplan owns Mission runtime and authority",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-owner-tplan",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "tplan",
+      "accepted_execution_owners": [
+        "tplan"
+      ],
+      "expected_primitive_obligations": [
+        "anti_spiral"
+      ],
+      "required_visible_action": "Create evidence-linked runtime state and an explicit authority gate.",
+      "required_skill_loads": [
+        "tplan"
+      ],
+      "allowed_skill_loads": [
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:startup",
+        "primitive:anti_spiral",
+        "owner:tplan",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-dev-arbitrator-overlap",
+      "title": "Genuine owner overlap reaches the thin arbitrator",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-arbitrator-overlap",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "arbitrator",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "using-mindthus",
+      "accepted_execution_owners": [
+        "using-mindthus"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": "Choose one execution owner and preserve remaining obligations.",
+      "required_skill_loads": [
+        "using-mindthus"
+      ],
+      "allowed_skill_loads": [
+        "using-mindthus",
+        "sela",
+        "mpg",
+        "wae"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:arbitrator",
+        "lifecycle:startup",
+        "owner-overlap:genuine"
+      ]
+    },
+    {
+      "case_id": "b2-dev-evidence-first",
+      "title": "Unknown incident requires facts before a method",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-evidence-first",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "evidence-first",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "information_acquisition",
+      "accepted_execution_owners": [
+        "information_acquisition"
+      ],
+      "expected_primitive_obligations": [
+        "evidence_first"
+      ],
+      "required_visible_action": "Request or inspect the decision-changing logs before diagnosing.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": true,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:evidence-first",
+        "lifecycle:startup",
+        "primitive:evidence_first"
+      ]
+    },
+    {
+      "case_id": "b2-dev-multi-primitive",
+      "title": "One direct answer carries Frame, Whole, and Decision Context",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-multi-primitive",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_judgment",
+      "accepted_execution_owners": [
+        "direct_judgment"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit",
+        "whole_elephant",
+        "decision_context_calibration"
+      ],
+      "required_visible_action": "Preserve one thesis while satisfying all three constraints.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:passive-kernel",
+        "lifecycle:startup",
+        "primitive:input_framing_audit",
+        "primitive:whole_elephant",
+        "primitive:decision_context_calibration",
+        "multi-obligation"
+      ]
+    },
+    {
+      "case_id": "b2-dev-anti-third-touch",
+      "title": "Anti-Spiral fires on the third same-object local repair",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-anti-third-touch",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_judgment",
+      "accepted_execution_owners": [
+        "direct_judgment"
+      ],
+      "expected_primitive_obligations": [
+        "anti_spiral"
+      ],
+      "required_visible_action": "Stop the next local addition and move upstream.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [
+        "3l5s",
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:passive-kernel",
+        "lifecycle:resume",
+        "primitive:anti_spiral",
+        "anti-spiral:same-object-third-touch"
+      ]
+    },
+    {
+      "case_id": "b2-dev-anti-renamed-object",
+      "title": "Anti-Spiral tracks object identity across renaming",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-anti-renamed-object",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_judgment",
+      "accepted_execution_owners": [
+        "direct_judgment"
+      ],
+      "expected_primitive_obligations": [
+        "anti_spiral"
+      ],
+      "required_visible_action": "Treat the renamed carrier as the same underlying object and pause.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [
+        "3l5s",
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:passive-kernel",
+        "lifecycle:resume",
+        "primitive:anti_spiral",
+        "anti-spiral:renamed-same-object"
+      ]
+    },
+    {
+      "case_id": "b2-dev-anti-distinct-objects",
+      "title": "Anti-Spiral stays asleep across distinct work objects",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-anti-distinct-objects",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_execution",
+      "accepted_execution_owners": [
+        "direct_execution"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:resume",
+        "anti-spiral:distinct-objects",
+        "near-negative:normal-iterative-debugging"
+      ]
+    },
+    {
+      "case_id": "b2-dev-anti-new-evidence",
+      "title": "Anti-Spiral stays asleep when each repeat has decision-changing evidence",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-anti-new-evidence",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_debugging",
+      "accepted_execution_owners": [
+        "direct_debugging"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:resume",
+        "anti-spiral:repeated-with-new-evidence",
+        "near-negative:sufficient-evidence"
+      ]
+    },
+    {
+      "case_id": "b2-dev-near-local-scope",
+      "title": "Legitimate local scope does not trigger whole-object reconstruction",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-near-local-scope",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_answer",
+      "accepted_execution_owners": [
+        "direct_answer"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:startup",
+        "near-negative:legitimate-local-scope"
+      ]
+    },
+    {
+      "case_id": "b2-dev-near-sufficient-evidence",
+      "title": "Sufficient evidence goes directly to repair",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-near-sufficient-evidence",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_debugging",
+      "accepted_execution_owners": [
+        "direct_debugging"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:startup",
+        "near-negative:sufficient-evidence"
+      ]
+    },
+    {
+      "case_id": "b2-dev-near-user-tradeoff",
+      "title": "Explicit user-owned reversible trade-off remains authoritative",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-near-user-tradeoff",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_execution",
+      "accepted_execution_owners": [
+        "direct_execution"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:startup",
+        "near-negative:explicit-user-owned-tradeoff"
+      ]
+    },
+    {
+      "case_id": "b2-dev-near-normal-debugging",
+      "title": "Independent debugging defects are not a same-object spiral",
+      "case_type": "negative_control",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-near-normal-debugging",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_debugging",
+      "accepted_execution_owners": [
+        "direct_debugging"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:stay-asleep",
+        "lifecycle:resume",
+        "near-negative:normal-iterative-debugging",
+        "anti-spiral:distinct-objects"
+      ]
+    },
+    {
+      "case_id": "b2-dev-lifecycle-resume",
+      "title": "Resume restores Mission state before continuation",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-lifecycle-resume",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "owner-direct",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "tplan",
+      "accepted_execution_owners": [
+        "tplan"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": "Recover active task, evidence, and authority before continuing.",
+      "required_skill_loads": [
+        "tplan"
+      ],
+      "allowed_skill_loads": [
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:owner-direct",
+        "lifecycle:resume",
+        "owner:tplan"
+      ]
+    },
+    {
+      "case_id": "b2-dev-lifecycle-clear",
+      "title": "Clear reinjects Kernel obligations without stale conclusions",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-lifecycle-clear",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "clear",
+      "expected_execution_owner": "direct_answer",
+      "accepted_execution_owners": [
+        "direct_answer"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit"
+      ],
+      "required_visible_action": "Re-evaluate the current frame after clear.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:passive-kernel",
+        "lifecycle:clear",
+        "primitive:input_framing_audit"
+      ]
+    },
+    {
+      "case_id": "b2-dev-lifecycle-compact",
+      "title": "Compact preserves active constraints and stop conditions",
+      "case_type": "positive",
+      "provenance": "development",
+      "source": {
+        "locator": "fixtures/development-cases.jsonl#b2-dev-lifecycle-compact",
+        "receipt_sha256": null,
+        "implementation_visible": true,
+        "run_eligibility": "eligible"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "compact",
+      "expected_execution_owner": "direct_execution",
+      "accepted_execution_owners": [
+        "direct_execution"
+      ],
+      "expected_primitive_obligations": [
+        "decision_context_calibration"
+      ],
+      "required_visible_action": "Carry the active decision context across compaction.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "medium",
+        "reason": "development-visible wording can tune implementation behavior"
+      },
+      "coverage_tags": [
+        "provenance:development",
+        "entry:passive-kernel",
+        "lifecycle:compact",
+        "primitive:decision_context_calibration"
+      ]
+    },
+    {
+      "case_id": "b2-shadow-owner-overlap",
+      "title": "Sealed owner-overlap shadow receipt",
+      "case_type": "positive",
+      "provenance": "sealed-shadow",
+      "source": {
+        "locator": "fixtures/sealed-shadow-index.json#b2-shadow-owner-overlap",
+        "receipt_sha256": "7f0894121c8764ce91e1431017cd64b99b9dccaaa5b45c96b0fb712149784cf7",
+        "implementation_visible": false,
+        "run_eligibility": "requires-custodian-attestation"
+      },
+      "entry_mode": "arbitrator",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "using-mindthus",
+      "accepted_execution_owners": [
+        "using-mindthus"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": "Resolve genuine ambiguity without becoming a mandatory router.",
+      "required_skill_loads": [
+        "using-mindthus"
+      ],
+      "allowed_skill_loads": [
+        "using-mindthus",
+        "sela",
+        "mpg"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "prompt content is absent from the implementation repository"
+      },
+      "coverage_tags": [
+        "provenance:sealed-shadow",
+        "entry:arbitrator",
+        "lifecycle:startup",
+        "owner-overlap:genuine"
+      ]
+    },
+    {
+      "case_id": "b2-shadow-passive-intersection",
+      "title": "Sealed direct-owner and multiple-passive intersection receipt",
+      "case_type": "positive",
+      "provenance": "sealed-shadow",
+      "source": {
+        "locator": "fixtures/sealed-shadow-index.json#b2-shadow-passive-intersection",
+        "receipt_sha256": "6b984ddaf50f36e11671c46f7e158819a8da2e2fe24f58f483bbda145abbc944",
+        "implementation_visible": false,
+        "run_eligibility": "requires-custodian-attestation"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "mpg",
+      "accepted_execution_owners": [
+        "mpg"
+      ],
+      "expected_primitive_obligations": [
+        "whole_elephant",
+        "decision_context_calibration"
+      ],
+      "required_visible_action": "Keep owner judgment distinct from both passive constraints.",
+      "required_skill_loads": [
+        "mpg"
+      ],
+      "allowed_skill_loads": [
+        "mpg"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "prompt content is absent from the implementation repository"
+      },
+      "coverage_tags": [
+        "provenance:sealed-shadow",
+        "entry:passive-kernel",
+        "lifecycle:startup",
+        "primitive:whole_elephant",
+        "primitive:decision_context_calibration",
+        "owner:mpg",
+        "multi-obligation",
+        "direct-owner-passive-intersection"
+      ]
+    },
+    {
+      "case_id": "b2-shadow-anti-rename",
+      "title": "Sealed renamed-object Anti-Spiral receipt",
+      "case_type": "positive",
+      "provenance": "sealed-shadow",
+      "source": {
+        "locator": "fixtures/sealed-shadow-index.json#b2-shadow-anti-rename",
+        "receipt_sha256": "62467e8636ac30f104fbd6b664bcc712a2dc64329d80f0c7646f2d6a622c682d",
+        "implementation_visible": false,
+        "run_eligibility": "requires-custodian-attestation"
+      },
+      "entry_mode": "passive-kernel",
+      "lifecycle_path": "compact",
+      "expected_execution_owner": "direct_judgment",
+      "accepted_execution_owners": [
+        "direct_judgment"
+      ],
+      "expected_primitive_obligations": [
+        "anti_spiral"
+      ],
+      "required_visible_action": "Detect same-object continuity without keyword matching.",
+      "required_skill_loads": [],
+      "allowed_skill_loads": [
+        "3l5s",
+        "tplan"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "prompt content is absent from the implementation repository"
+      },
+      "coverage_tags": [
+        "provenance:sealed-shadow",
+        "entry:passive-kernel",
+        "lifecycle:compact",
+        "primitive:anti_spiral",
+        "anti-spiral:renamed-same-object"
+      ]
+    },
+    {
+      "case_id": "b2-shadow-near-negative",
+      "title": "Sealed false-wakeup near-negative receipt",
+      "case_type": "negative_control",
+      "provenance": "sealed-shadow",
+      "source": {
+        "locator": "fixtures/sealed-shadow-index.json#b2-shadow-near-negative",
+        "receipt_sha256": "7a2336cf7a28d4b2a6abdb277b0c6ef2f02bf126ba8130fba3f31f49c0d4da8a",
+        "implementation_visible": false,
+        "run_eligibility": "requires-custodian-attestation"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "startup",
+      "expected_execution_owner": "direct_execution",
+      "accepted_execution_owners": [
+        "direct_execution"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-route",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "prompt content is absent from the implementation repository"
+      },
+      "coverage_tags": [
+        "provenance:sealed-shadow",
+        "entry:stay-asleep",
+        "lifecycle:startup",
+        "near-negative:explicit-user-owned-tradeoff"
+      ]
+    },
+    {
+      "case_id": "b2-replay-architecture-review",
+      "title": "Restricted real-task architecture review replay receipt",
+      "case_type": "positive",
+      "provenance": "real-task-replay",
+      "source": {
+        "locator": "fixtures/real-task-replay-index.json#b2-replay-architecture-review",
+        "receipt_sha256": "06cae09f78d92a92bea840f360d06c23d7fda7ff37100366597e7c87ee69edda",
+        "implementation_visible": false,
+        "run_eligibility": "requires-user-authorization"
+      },
+      "entry_mode": "arbitrator",
+      "lifecycle_path": "compact",
+      "expected_execution_owner": "using-mindthus",
+      "accepted_execution_owners": [
+        "using-mindthus"
+      ],
+      "expected_primitive_obligations": [
+        "input_framing_audit",
+        "whole_elephant"
+      ],
+      "required_visible_action": "Preserve the real task's authority and evidence boundaries.",
+      "required_skill_loads": [
+        "using-mindthus"
+      ],
+      "allowed_skill_loads": [
+        "using-mindthus",
+        "edsp",
+        "wae"
+      ],
+      "stay_asleep_expected": false,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "task content is external and requires user authorization"
+      },
+      "coverage_tags": [
+        "provenance:real-task-replay",
+        "entry:arbitrator",
+        "lifecycle:compact",
+        "primitive:input_framing_audit",
+        "primitive:whole_elephant",
+        "owner-overlap:genuine",
+        "multi-obligation"
+      ]
+    },
+    {
+      "case_id": "b2-replay-debugging-session",
+      "title": "Restricted real-task debugging replay receipt",
+      "case_type": "negative_control",
+      "provenance": "real-task-replay",
+      "source": {
+        "locator": "fixtures/real-task-replay-index.json#b2-replay-debugging-session",
+        "receipt_sha256": "44f2b66ba1805a6e17f7cc0f2d9178bb4337277d19817d95289b355bf123c551",
+        "implementation_visible": false,
+        "run_eligibility": "requires-user-authorization"
+      },
+      "entry_mode": "stay-asleep",
+      "lifecycle_path": "resume",
+      "expected_execution_owner": "direct_debugging",
+      "accepted_execution_owners": [
+        "direct_debugging"
+      ],
+      "expected_primitive_obligations": [],
+      "required_visible_action": null,
+      "required_skill_loads": [],
+      "allowed_skill_loads": [],
+      "stay_asleep_expected": true,
+      "expected_lifecycle_events": [
+        "session-start",
+        "before-continue",
+        "before-answer"
+      ],
+      "evidence_first_expected": false,
+      "contamination_risk": {
+        "level": "low",
+        "reason": "task content is external and requires user authorization"
+      },
+      "coverage_tags": [
+        "provenance:real-task-replay",
+        "entry:stay-asleep",
+        "lifecycle:resume",
+        "near-negative:normal-iterative-debugging",
+        "anti-spiral:repeated-with-new-evidence"
+      ]
+    }
+  ]
+}

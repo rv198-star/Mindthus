@@ -70,3 +70,9 @@ The #115 telemetry contract is documented in
 [`turn-telemetry.schema.json`](turn-telemetry.schema.json). It records provenance per
 endpoint, redacts sensitive runner content, blocks claims on missing evidence, and
 summarizes p50/p95 only inside exact host/surface/entry-mode/arm strata.
+
+The #116 coverage inventory is documented in [`CASE-MATRIX.md`](CASE-MATRIX.md), with
+its contract in [`case-matrix.schema.json`](case-matrix.schema.json) and fixtures under
+[`fixtures/`](fixtures/). Public, development, sealed-shadow, and real-task-replay
+sources have non-interchangeable eligibility; linting never promotes a visible case to
+blind evidence.

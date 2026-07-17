@@ -1,0 +1,17 @@
+{
+  "schema_version": "mindthus-beta2-real-task-replay-index-v0.1",
+  "content_retained_in_repository": false,
+  "default_run_eligibility": "requires-user-authorization",
+  "cases": [
+    {
+      "case_id": "b2-replay-architecture-review",
+      "receipt_sha256": "06cae09f78d92a92bea840f360d06c23d7fda7ff37100366597e7c87ee69edda",
+      "consent_scope": "not-yet-authorized"
+    },
+    {
+      "case_id": "b2-replay-debugging-session",
+      "receipt_sha256": "44f2b66ba1805a6e17f7cc0f2d9178bb4337277d19817d95289b355bf123c551",
+      "consent_scope": "not-yet-authorized"
+    }
+  ]
+}
