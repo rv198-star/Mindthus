@@ -120,4 +120,6 @@ host-measured model span is caller-visible request time, not a claim about pure 
 inference time. Label the uncovered elapsed remainder as not exactly recorded; do not
 assign it to LLM or script by guesswork. Do not merge nodes or invent display groups.
 Use `compact` only as a labelled projection for a quick handoff; use `audit` for the same
-topology plus measurement and recovery detail. Unknown measurements must remain unknown.
+topology plus measurement and recovery detail. Compact keeps Mission and real root Task
+cards with actual elapsed, LLM, script, tool, wait, Token, and result slots while
+declaring the omitted-node count. Unknown measurements must remain unknown.

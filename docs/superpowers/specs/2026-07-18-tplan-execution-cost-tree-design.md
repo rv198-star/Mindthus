@@ -29,6 +29,10 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   24 declared hierarchy edges, chronological relative-time labels, and one shared-scale
   temporal range strip per observed node. The former hierarchy-only Mermaid TB artifact
   is no longer the Standard output.
+- Its Compact projection renders at `1180 x 1056` with Mission plus four real root Task
+  cards, explicitly declares 20 omitted descendants, and retains elapsed, LLM, script,
+  tool, wait, Token, and result fields on every visible Task. It creates no synthetic
+  descendant-summary node.
 
 ## What This Gives The User
 
@@ -230,7 +234,8 @@ The renderer must preserve node identity before optimizing display density:
 The renderer supports:
 
 - `compact`: Mission plus real root Tasks, or a focused real subtree. Hidden nodes are
-  counted explicitly; no synthetic descendant-summary node is created.
+  counted explicitly; no synthetic descendant-summary node is created. Visible root
+  Task cards retain actual elapsed, LLM, script, tool, wait, Token, and result slots.
 - `standard`: every materialized Task, SubTask, and Step with a strict node-label
   budget; this is the default post-completion execution tree.
 - `audit`: the same complete topology plus status history, direct/inclusive cost,

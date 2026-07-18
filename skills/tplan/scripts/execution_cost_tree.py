@@ -1098,7 +1098,7 @@ def render_svg(report: dict[str, Any]) -> str:
     depth_indent = 26
     right_margin = 34
     row_top = 242
-    card_height = {"compact": 104, "standard": 178, "audit": 204}[view]
+    card_height = {"compact": 164, "standard": 178, "audit": 204}[view]
     row_gap = 22
     row_stride = card_height + row_gap
     footer_height = 70
@@ -1112,6 +1112,8 @@ def render_svg(report: dict[str, Any]) -> str:
     mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
     mission_cost = mission["cost"]
     mission_reconciliation = mission["elapsed_reconciliation"]
+    report_title = "TPlan 执行时间轴摘要" if view == "compact" else "TPlan 纵向实际执行时间轴"
+    visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -1119,9 +1121,10 @@ def render_svg(report: dict[str, Any]) -> str:
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
             f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="tplan-title tplan-desc" '
             f'data-layout="vertical-execution-timeline" '
+            f'data-view="{_html(view)}" '
             f'data-schema-version="{_html(report["schema_version"])}">'
         ),
-        f'<title id="tplan-title">{_html(mission["title"])} · TPlan 纵向实际执行时间轴</title>',
+        f'<title id="tplan-title">{_html(mission["title"])} · {_html(report_title)}</title>',
         (
             '<desc id="tplan-desc">纵向按首次观测时间排列真实任务节点；左侧刻度显示相对追踪起点的'
             '时间，卡片底部时间条按统一观测窗口等比例显示节点起止范围，蓝色折线保留真实父子关系。</desc>'
@@ -1148,7 +1151,7 @@ def render_svg(report: dict[str, Any]) -> str:
             f'<rect x="{header_x}" y="{header_y}" width="{header_width}" height="{header_height}" '
             'rx="18" fill="#172554" stroke="#2563eb" stroke-width="2"/>'
         ),
-        _svg_text(58, 58, "TPlan 纵向实际执行时间轴", "report-title"),
+        _svg_text(58, 58, report_title, "report-title"),
         _svg_text(58, 88, _shorten(mission["title"], 72), "mission-title"),
         _svg_text(
             58,
@@ -1176,7 +1179,7 @@ def render_svg(report: dict[str, Any]) -> str:
             (
                 f"未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
                 f" · Token {_fmt_tokens_compact(mission_cost)}"
-                f" · 真实节点 {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
+                f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
                 f" · 覆盖 {report['trace']['coverage']} · {view}"
             ),
             "mission-meta",
@@ -1292,15 +1295,42 @@ def render_svg(report: dict[str, Any]) -> str:
             ]
         )
         if view == "compact":
-            lines.append(
-                _svg_text(
-                    card_x + 18,
-                    card_y + 58,
-                    f"{_svg_node_status_details(node, scope_label)} · {range_text} · 实际历时 {elapsed}",
-                    "node-meta",
-                )
+            lines.extend(
+                [
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 54,
+                        f"{_svg_node_status_details(node, scope_label)} · {range_text} · 实际历时 {elapsed}",
+                        "node-meta",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 80,
+                        (
+                            f"LLM调用累计 {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')}"
+                            f" · 脚本累计 {_fmt_kind_duration(cost, SCRIPT_KINDS)}"
+                        ),
+                        "node-metric",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 105,
+                        (
+                            f"工具累计 {_fmt_kind_duration(cost, TOOL_KINDS)}"
+                            f" · 等待累计 {_fmt_kind_duration(cost, WAIT_KINDS)}"
+                            f" · Token {_fmt_tokens_compact(cost)}"
+                        ),
+                        "node-metric",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 128,
+                        f"结果：{_shorten(node['outcome_summary'], 82) if node['outcome_summary'] else '未记录'}",
+                        "node-result",
+                    ),
+                ]
             )
-            range_y = card_y + 82
+            range_y = card_y + 150
         else:
             lines.extend(
                 [
@@ -1429,7 +1459,7 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     cost = mission["cost"]
     overhead = report["overhead"]["cost"]
     lines = [
-        "# TPlan 实际执行与成本树",
+        "# TPlan 实际执行与成本树摘要" if report["view"] == "compact" else "# TPlan 实际执行与成本树",
         "",
         f"> {_coverage_note(report['trace']['coverage'])}",
         "",
@@ -1444,9 +1474,10 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     else:
         inline_svg = render_svg(report).split("\n", 1)[1].rstrip()
         lines.extend([inline_svg, ""])
+    visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
     lines.append(
         f"视图：`{report['view']}`；布局：`vertical_execution_timeline`；"
-        f"真实节点：{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}。"
+        f"{visible_node_label}：{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}。"
     )
     if report["trace"]["hidden_node_count"]:
         lines.append(
