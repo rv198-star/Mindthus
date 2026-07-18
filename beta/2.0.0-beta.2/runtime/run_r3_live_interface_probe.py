@@ -86,6 +86,53 @@ def validate_command_parser(command: list[str], cwd: Path) -> dict[str, Any]:
     }
 
 
+def parse_codex_stdout(value: bytes) -> dict[str, Any]:
+    """Extract only client-visible lifecycle facts from Codex JSONL stdout."""
+
+    events: list[dict[str, Any]] = []
+    invalid_lines: list[int] = []
+    for line_number, raw_line in enumerate(value.decode("utf-8", errors="replace").splitlines(), 1):
+        if not raw_line.strip():
+            continue
+        try:
+            event = json.loads(raw_line)
+        except json.JSONDecodeError:
+            invalid_lines.append(line_number)
+            continue
+        if isinstance(event, dict):
+            events.append(event)
+        else:
+            invalid_lines.append(line_number)
+    event_types = [str(event.get("type", "")) for event in events]
+    thread_ids = [str(event["thread_id"]) for event in events if event.get("type") == "thread.started" and event.get("thread_id")]
+    final_messages = [
+        str(event["item"]["text"])
+        for event in events
+        if event.get("type") == "item.completed"
+        and isinstance(event.get("item"), dict)
+        and event["item"].get("type") == "agent_message"
+        and isinstance(event["item"].get("text"), str)
+    ]
+    completed = [event for event in events if event.get("type") == "turn.completed"]
+    terminal_usage = completed[-1].get("usage") if completed and isinstance(completed[-1].get("usage"), dict) else None
+    lifecycle_complete = bool(
+        thread_ids
+        and "turn.started" in event_types
+        and final_messages
+        and completed
+        and terminal_usage is not None
+        and not invalid_lines
+    )
+    return {
+        "event_types": event_types,
+        "thread_ids": thread_ids,
+        "final_messages": final_messages,
+        "terminal_usage": terminal_usage,
+        "invalid_jsonl_lines": invalid_lines,
+        "lifecycle_complete": lifecycle_complete,
+    }
+
+
 def validate_authority(
     *, repo_root: Path, auth_path: Path, charter_path: Path, design_path: Path
 ) -> tuple[dict[str, Any], dict[str, Any], str, str]:
@@ -357,7 +404,10 @@ def main() -> int:
         if process is not None and returncode is None:
             returncode = process.returncode
 
+    lifecycle = parse_codex_stdout(bytes(stdout_bytes))
+    raw_file_sha256 = sha256_bytes(raw_path.read_bytes()) if raw_path.exists() else sha256_bytes(b"")
     infra = timed_out or returncode not in (0, None) or not stdout_bytes
+    lifecycle_complete = bool(lifecycle["lifecycle_complete"] and not infra)
     provider_code = "timeout" if timed_out else ("exit_nonzero" if returncode not in (0, None) else "ok")
     runtime.append_source(
         "provider_terminal",
@@ -367,7 +417,11 @@ def main() -> int:
             "infrastructure_receipt": infra,
             "stdout_sha256": sha256_bytes(bytes(stdout_bytes)),
             "stderr_sha256": sha256_bytes(bytes(stderr_bytes)),
+            "raw_file_sha256": raw_file_sha256,
             "stream_chunks": len(chunks),
+            "thread_ids": lifecycle["thread_ids"],
+            "terminal_usage": lifecycle["terminal_usage"],
+            "lifecycle_complete": lifecycle_complete,
             "finished_at": utc_now(),
         },
         event_id="provider-terminal:generator:1",
@@ -376,10 +430,10 @@ def main() -> int:
         "attempt",
         {
             "attempt_id": "generator-1",
-            "content": "final_nonempty" if stdout_bytes and not infra else "unknown",
+            "content": "final_nonempty" if lifecycle["final_messages"] and not infra else "unknown",
             "dependencies_valid": True,
             "claims": {},
-            "usage": None,
+            "usage": lifecycle["terminal_usage"],
         },
         event_id="attempt:generator:1",
     )
@@ -388,7 +442,11 @@ def main() -> int:
     receipt = {
         "schema_version": "mindthus-beta2-r3-live-interface-v0.1",
         "program_id": auth["program_id"],
-        "status": "LIVE_INTERFACE_PASSED" if not infra else "LIVE_INTERFACE_INFRA_FAILURE",
+        "status": (
+            "LIVE_INTERFACE_LIFECYCLE_PASSED"
+            if lifecycle_complete
+            else ("LIVE_INTERFACE_INFRA_FAILURE" if infra else "LIVE_INTERFACE_INCOMPLETE")
+        ),
         "started_at": started_at,
         "finished_at": utc_now(),
         "cutoff_at": auth["cutoff_at"],
@@ -404,7 +462,9 @@ def main() -> int:
         "returncode": returncode,
         "timed_out": timed_out,
         "stream_chunks": len(chunks),
-        "raw_stream_sha256": sha256_bytes(bytes(stdout_bytes) + bytes(stderr_bytes)),
+        "raw_stream_sha256": raw_file_sha256,
+        "raw_stream_layout": "ledger-order interleaved chunks",
+        "client_lifecycle": lifecycle,
         "decision_cut_digest": cut["digest"],
         "kernel_terminal": terminal,
         "qualification_claim_boundary": "No product or route claim; lifecycle observation only.",
@@ -412,7 +472,7 @@ def main() -> int:
     receipt["receipt_digest"] = digest(receipt)
     (out / "qualification-receipt.json").write_text(canonical_json(receipt) + "\n", encoding="utf-8")
     print(json.dumps({"status": receipt["status"], "receipt": str(out / "qualification-receipt.json"), "digest": receipt["receipt_digest"], "returncode": returncode}, ensure_ascii=False))
-    return 0 if not infra else 3
+    return 0 if lifecycle_complete else 3
 
 
 if __name__ == "__main__":

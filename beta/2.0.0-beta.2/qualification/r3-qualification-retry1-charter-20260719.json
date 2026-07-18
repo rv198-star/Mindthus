@@ -1,0 +1,37 @@
+{
+  "schema_version": "mindthus-beta2-r3-qualification-charter-v0.1",
+  "program_id": "mindthus-beta2-r3-qualification-retry1-20260719",
+  "design_sha256": "55e8e994423a1bac829a3ed8adc7bd9678cd83f54922fc9d6df8f08a3c43ec7e",
+  "candidate_commit": "d960bd6a9c5e590561550dc38a37b5807e9f905a",
+  "model": {
+    "family": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "purpose": "One corrected live interface qualification probe for the R3 decision-reset candidate.",
+  "qualification": {
+    "max_generator_calls": 1,
+    "max_paired_judge_calls": 0,
+    "concurrency": 1,
+    "local_time_limit_seconds": 900,
+    "authority_mode": "TAIL_ACCEPTED",
+    "formal_arm_sampling": false,
+    "release_publication": false
+  },
+  "claims_allowed": [
+    "LIVE_INTERFACE lifecycle was observed or was blocked by an explicitly recorded infrastructure failure.",
+    "The corrected execution adapter did or did not produce a durable provider terminal receipt.",
+    "No Judge or formal-arm result was produced."
+  ],
+  "claims_forbidden": [
+    "route superiority",
+    "formal arm validity",
+    "release readiness",
+    "product quality based on this probe"
+  ],
+  "authority": {
+    "william_stop_authority": true,
+    "tail_acceptance_explicit": true,
+    "token_or_cost_cap": null,
+    "authorization_basis": "William: continue, and authorize. Interpreted as the prior minimal qualification boundary bound to the corrected execution commit."
+  }
+}
