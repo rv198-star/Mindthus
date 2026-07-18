@@ -293,10 +293,77 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "standard"
             )
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
-            self.assertIn("1.1k in / 320 out (cached 400, reasoning 80)", markdown.stdout)
-            self.assertNotIn("1.5k in", markdown.stdout)
+            self.assertIn("Token 入 1.1k / 出 320", markdown.stdout)
+            self.assertNotIn("Token 入 1.5k", markdown.stdout)
 
-    def test_progressive_views_hide_low_signal_nodes_and_audit_expands_all(self):
+    def test_wall_time_conserves_elapsed_and_agent_turn_is_only_an_envelope(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script("transition_task.py", str(mission_dir), "--task-id", "S1", "--status", "active")
+            self.assertEqual(active.returncode, 0, active.stderr)
+            base = parse_time(read_jsonl(mission_dir / "execution_trace.jsonl")[-1]["timestamp"]) + timedelta(
+                microseconds=1
+            )
+
+            spans = [
+                ("model", 0, 5, "platform_reported"),
+                ("script", 1, 4, "host_measured"),
+                ("agent_turn", 0, 6, "host_measured"),
+            ]
+            for kind, start_ms, finish_ms, source in spans:
+                raw = {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": kind,
+                        "label": f"{kind} coverage",
+                        "status": "ok",
+                        "measurement_source": source,
+                        "attribution": "exact",
+                        "started_at": iso(base + timedelta(milliseconds=start_ms)),
+                        "finished_at": iso(base + timedelta(milliseconds=finish_ms)),
+                        "duration_ms": finish_ms - start_ms,
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                }
+                if kind in {"model", "agent_turn"}:
+                    raw["usage"] = {"input_tokens": 100, "output_tokens": 20}
+                record_span(
+                    tmp,
+                    mission_dir,
+                    raw,
+                    kind,
+                )
+            completed = run_script(
+                "transition_task.py", str(mission_dir), "--task-id", "S1", "--status", "completed"
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+
+            report = render_json(mission_dir, "--view", "standard")
+            node = next(item for item in report["nodes"] if item["id"] == "S1")
+            wall = node["subtree_wall_time"]
+            self.assertEqual(wall["attributed_wall_ms"], 5)
+            self.assertEqual(wall["excluded_envelope_span_count"], 1)
+            self.assertEqual(node["elapsed_ms"], wall["attributed_wall_ms"] + wall["unattributed_elapsed_ms"])
+            mission_wall = report["mission"]["wall_time"]
+            self.assertEqual(
+                report["mission"]["elapsed_ms"],
+                mission_wall["attributed_wall_ms"] + mission_wall["unattributed_elapsed_ms"],
+            )
+            self.assertEqual(node["inclusive_cost"]["by_kind_resource_ms"]["model"], 5)
+            self.assertEqual(node["inclusive_cost"]["additive_resource_time_ms"], 8)
+            self.assertEqual(node["inclusive_cost"]["usage"]["input_tokens"], 100)
+            self.assertEqual(node["inclusive_cost"]["usage"]["output_tokens"], 20)
+
+            standard = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "standard")
+            self.assertEqual(standard.returncode, 0, standard.stderr)
+            self.assertIn("LLM 5ms · 脚本 3ms", standard.stdout)
+            self.assertNotIn("Agent turn 包络", standard.stdout)
+            audit = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn("Agent turn 包络：1 个 span，6ms", audit.stdout)
+
+    def test_standard_and_audit_preserve_every_real_node_and_declared_edge(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
             active = run_script("transition_task.py", str(mission_dir), "--task-id", "S1", "--status", "active")
@@ -317,9 +384,20 @@ class ExecutionCostTreeTests(unittest.TestCase):
             standard = render_json(mission_dir, "--view", "standard")
             audit = render_json(mission_dir, "--view", "audit")
             self.assertEqual(compact["visible_node_ids"], ["T1"])
-            self.assertEqual(standard["visible_node_ids"], ["T1", "S1"])
+            self.assertEqual(standard["visible_node_ids"], ["T1", "S1", "S2"])
             self.assertEqual(audit["visible_node_ids"], ["T1", "S1", "S2"])
-            self.assertEqual(standard["trace"]["hidden_node_count"], 1)
+            self.assertEqual(standard["trace"]["hidden_node_count"], 0)
+            self.assertEqual(standard["trace"]["structure_fidelity"], "one_to_one")
+            self.assertEqual(
+                standard["tree_edges"],
+                [
+                    {"from": "mission", "to": "T1"},
+                    {"from": "T1", "to": "S1"},
+                    {"from": "T1", "to": "S2"},
+                ],
+            )
+            self.assertEqual(compact["trace"]["hidden_node_count"], 2)
+            self.assertTrue(compact["trace"]["projection"])
 
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -347,7 +425,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
             )
             self.assertEqual(audit.returncode, 0, audit.stderr)
-            self.assertIn("| not reported | not reported |", audit.stdout)
+            self.assertIn("LLM 未采集 · 脚本 未采集", audit.stdout)
 
     def test_privacy_guard_rejects_raw_content_without_appending_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -414,8 +492,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("S1", report["visible_node_ids"])
             markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
-            self.assertIn("| unknown | not reported | unknown |", markdown.stdout)
-            self.assertIn("AI unknown", markdown.stdout)
+            self.assertIn("LLM 未知 · 脚本 未采集", markdown.stdout)
+            self.assertIn("Token 未知", markdown.stdout)
 
     def test_traced_command_records_exit_metadata_but_not_command_or_output(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a progressive actual-execution and cost tree from a TPlan Mission runtime."""
+"""Render an actual-execution and cost tree from a TPlan Mission runtime."""
 
 from __future__ import annotations
 
@@ -17,7 +17,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--view", choices=("compact", "standard", "audit"), default="standard")
     parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
     parser.add_argument("--focus", help="Render only this task subtree.")
-    parser.add_argument("--top-cost", type=int, default=5, help="High-cost descendants retained in standard view.")
+    parser.add_argument(
+        "--top-cost",
+        type=int,
+        default=5,
+        help="Deprecated compatibility option; standard always preserves every real node.",
+    )
     parser.add_argument("--output", help="Write atomically to this path instead of stdout.")
     return parser.parse_args()
 

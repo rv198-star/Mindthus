@@ -20,7 +20,7 @@ from tplan_runtime import (
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.1"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.2"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -31,17 +31,21 @@ TERMINAL_MISSION_STATUSES = {
     "requires_human",
 }
 ABNORMAL_TASK_STATUSES = {"blocked", "paused", "pruned", "abandoned", "superseded"}
-AI_KINDS = {"model"}
-SCRIPT_TOOL_KINDS = {"script", "tool"}
+LLM_KINDS = {"model"}
+SCRIPT_KINDS = {"script"}
+TOOL_KINDS = {"tool"}
+WAIT_KINDS = {"wait"}
+RECONCILABLE_KINDS = {"model", "script", "tool", "wait", "runtime"}
+EXACT_MEASUREMENT_SOURCES = {"platform_reported", "host_measured"}
 STATUS_LABELS = {
-    "active": "running",
-    "completed": "completed",
-    "blocked": "blocked",
-    "paused": "paused",
-    "pending": "not run",
-    "pruned": "pruned",
-    "abandoned": "abandoned",
-    "superseded": "superseded",
+    "active": "执行中",
+    "completed": "成功",
+    "blocked": "受阻",
+    "paused": "已暂停",
+    "pending": "未执行",
+    "pruned": "已裁剪",
+    "abandoned": "已撤回",
+    "superseded": "已替代",
 }
 STATUS_ICONS = {
     "active": "▶",
@@ -62,6 +66,10 @@ def _parse_timestamp(value: str) -> datetime:
 
 def _timestamp_ms(value: str) -> int:
     return round(_parse_timestamp(value).timestamp() * 1000)
+
+
+def _iso_from_ms(value: int) -> str:
+    return datetime.fromtimestamp(value / 1000, tz=timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def _now_iso() -> str:
@@ -93,22 +101,88 @@ def _union_duration_ms(intervals: Iterable[tuple[int, int]]) -> int:
     return total + current_finish - current_start
 
 
+def _record_interval(record: dict[str, Any]) -> tuple[int, int]:
+    span = record["span"]
+    return _timestamp_ms(span["started_at"]), _timestamp_ms(span["finished_at"])
+
+
+def _is_reconcilable(record: dict[str, Any]) -> bool:
+    span = record["span"]
+    return (
+        span["kind"] in RECONCILABLE_KINDS
+        and span["measurement_source"] in EXACT_MEASUREMENT_SOURCES
+    )
+
+
+def _clip_interval(
+    interval: tuple[int, int],
+    started_at: str | None,
+    finished_at: str | None,
+) -> tuple[int, int] | None:
+    start, finish = interval
+    if started_at is not None:
+        start = max(start, _timestamp_ms(started_at))
+    if finished_at is not None:
+        finish = min(finish, _timestamp_ms(finished_at))
+    if finish < start:
+        return None
+    return start, finish
+
+
+def _wall_partition(
+    records: Iterable[dict[str, Any]],
+    *,
+    elapsed_ms: int | None,
+    observed_elapsed_ms: int | None,
+    coverage: str,
+    started_at: str | None,
+    finished_at: str | None,
+) -> dict[str, Any]:
+    records = list(records)
+    intervals = []
+    for record in records:
+        if not _is_reconcilable(record):
+            continue
+        clipped = _clip_interval(_record_interval(record), started_at, finished_at)
+        if clipped is not None:
+            intervals.append(clipped)
+    attributed_wall_ms = _union_duration_ms(intervals)
+    if observed_elapsed_ms is not None:
+        attributed_wall_ms = min(attributed_wall_ms, observed_elapsed_ms)
+    exact_partition = coverage == "exact" and elapsed_ms is not None
+    unattributed_elapsed_ms = (
+        max(0, elapsed_ms - attributed_wall_ms) if exact_partition else None
+    )
+    attribution_ratio = None
+    if exact_partition:
+        attribution_ratio = 1.0 if elapsed_ms == 0 and attributed_wall_ms == 0 else (
+            attributed_wall_ms / elapsed_ms if elapsed_ms else 0.0
+        )
+    return {
+        "coverage": coverage,
+        "elapsed_ms": elapsed_ms,
+        "observed_elapsed_ms": observed_elapsed_ms,
+        "attributed_wall_ms": attributed_wall_ms if observed_elapsed_ms is not None else None,
+        "unattributed_elapsed_ms": unattributed_elapsed_ms,
+        "attribution_ratio": attribution_ratio,
+        "included_span_count": len(intervals),
+        "excluded_envelope_span_count": sum(
+            1 for record in records if record["span"]["kind"] == "agent_turn"
+        ),
+    }
+
+
 def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
     records = list(records)
     intervals: list[tuple[int, int]] = []
     kind_intervals: dict[str, list[tuple[int, int]]] = defaultdict(list)
     kind_sources: dict[str, Counter[str]] = defaultdict(Counter)
     by_kind_resource_ms: Counter[str] = Counter()
-    usage: Counter[str] = Counter()
-    usage_fields: set[str] = set()
     sources: Counter[str] = Counter()
-    usage_sources: Counter[str] = Counter()
     statuses: Counter[str] = Counter()
     for record in records:
         span = record["span"]
-        start = _timestamp_ms(span["started_at"])
-        finish = _timestamp_ms(span["finished_at"])
-        interval = (start, finish)
+        interval = _record_interval(record)
         intervals.append(interval)
         kind = span["kind"]
         kind_intervals[kind].append(interval)
@@ -116,15 +190,19 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         sources[span["measurement_source"]] += 1
         kind_sources[kind][span["measurement_source"]] += 1
         statuses[span["status"]] += 1
+    token_records = [record for record in records if record["span"]["kind"] == "model"]
+    if not token_records:
+        token_records = [record for record in records if record["span"]["kind"] == "agent_turn"]
+    usage: Counter[str] = Counter()
+    usage_fields: set[str] = set()
+    usage_sources: Counter[str] = Counter()
+    for record in token_records:
         usage_source = record.get("usage_source")
         if isinstance(usage_source, str):
             usage_sources[usage_source] += 1
         for field, value in record.get("usage", {}).items():
             usage_fields.add(field)
             usage[field] += value
-    token_records = [record for record in records if record["span"]["kind"] == "model"]
-    if not token_records:
-        token_records = [record for record in records if record["span"]["kind"] == "agent_turn"]
     if not token_records:
         usage_coverage = "not_reported"
     elif all(
@@ -140,6 +218,12 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "span_count": len(records),
         "observed_wall_ms": _union_duration_ms(intervals),
         "resource_time_ms": sum(by_kind_resource_ms.values()),
+        "additive_resource_time_ms": sum(
+            value for kind, value in by_kind_resource_ms.items() if kind != "agent_turn"
+        ),
+        "envelope_span_count": sum(
+            1 for record in records if record["span"]["kind"] == "agent_turn"
+        ),
         "by_kind_resource_ms": dict(sorted(by_kind_resource_ms.items())),
         "by_kind_wall_ms": {
             kind: _union_duration_ms(kind_intervals[kind]) for kind in sorted(kind_intervals)
@@ -197,8 +281,14 @@ def _new_lifecycle_state() -> dict[str, Any]:
 
 def _observe_node(state: dict[str, Any], timestamp: str, next_order: list[int]) -> None:
     state["visited"] = True
-    state["first_observed_at"] = state["first_observed_at"] or timestamp
-    state["last_observed_at"] = timestamp
+    if state["first_observed_at"] is None or _timestamp_ms(timestamp) < _timestamp_ms(
+        state["first_observed_at"]
+    ):
+        state["first_observed_at"] = timestamp
+    if state["last_observed_at"] is None or _timestamp_ms(timestamp) > _timestamp_ms(
+        state["last_observed_at"]
+    ):
+        state["last_observed_at"] = timestamp
     if state["execution_order"] is None:
         state["execution_order"] = next_order[0]
         next_order[0] += 1
@@ -283,7 +373,7 @@ def _build_lifecycle(
 
         if event_type == "span_completed" and state is not None:
             _observe_node(state, record["span"]["started_at"], next_order)
-            state["last_observed_at"] = record["span"]["finished_at"]
+            _observe_node(state, record["span"]["finished_at"], next_order)
             state["attempts"] = max(state["attempts"], record["span"]["attempt"])
 
     if trace:
@@ -293,9 +383,12 @@ def _build_lifecycle(
     mission_status = mission.get("mission", {}).get("status")
     active_finish_ms = trace_finish_ms if mission_status in TERMINAL_MISSION_STATUSES else _timestamp_ms(generated_at)
     for state in states.values():
+        was_active = state["active_started_ms"] is not None
         if state["active_started_ms"] is not None:
             state["active_intervals"].append((state["active_started_ms"], active_finish_ms))
             state["active_started_ms"] = None
+        if was_active:
+            _observe_node(state, _iso_from_ms(active_finish_ms), next_order)
         observed_active_ms = (
             _union_duration_ms(state["active_intervals"]) if coverage != "snapshot_only" else None
         )
@@ -303,6 +396,16 @@ def _build_lifecycle(
         state["observed_active_duration_ms"] = observed_active_ms
         state["active_duration_ms"] = observed_active_ms if duration_coverage == "exact" else None
         state["active_duration_source"] = duration_coverage
+        observed_elapsed_ms = None
+        if coverage != "snapshot_only" and state["first_observed_at"] and state["last_observed_at"]:
+            observed_elapsed_ms = max(
+                0,
+                _timestamp_ms(state["last_observed_at"])
+                - _timestamp_ms(state["first_observed_at"]),
+            )
+        state["observed_elapsed_ms"] = observed_elapsed_ms
+        state["elapsed_ms"] = observed_elapsed_ms if duration_coverage == "exact" else None
+        state["elapsed_coverage"] = duration_coverage
         state["attempts"] = max(state["attempts"], state["activation_attempts"])
         del state["active_intervals"]
         del state["active_started_ms"]
@@ -344,17 +447,6 @@ def _node_actual_state(status: str, visited: bool) -> str:
     return status
 
 
-def _cost_rank(node: dict[str, Any]) -> tuple[int, int, int, int]:
-    cost = node["direct_cost"]
-    usage = cost["usage"]
-    return (
-        cost["resource_time_ms"],
-        usage.get("input_tokens", 0) + usage.get("output_tokens", 0),
-        cost["span_count"],
-        -node["plan_index"],
-    )
-
-
 def _select_nodes(
     nodes: list[dict[str, Any]],
     children: dict[str | None, list[str]],
@@ -373,34 +465,12 @@ def _select_nodes(
     )
     roots = [focus_task_id] if focus_task_id else list(children.get(None, []))
 
-    if view == "audit":
+    if view in {"standard", "audit"}:
         selected = set(scope)
     elif view == "compact":
         selected = set(roots)
         if focus_task_id is not None:
             selected.update(children.get(focus_task_id, []))
-    else:
-        selected = set(roots)
-        candidates = [node for node in nodes if node["id"] in scope and node["id"] not in selected]
-        for node in candidates:
-            if (
-                node["status"] in ABNORMAL_TASK_STATUSES
-                or node["attempts"] > 1
-                or node["dynamic"]
-                or node["outcome_summary"]
-                or node["direct_cost"]["error_span_count"] > 0
-                or node["direct_cost"]["measurement_sources"].get("unavailable", 0) > 0
-                or node["id"] == node.get("active_task_id")
-            ):
-                selected.add(node["id"])
-        ranked = sorted(candidates, key=_cost_rank, reverse=True)
-        selected.update(node["id"] for node in ranked[:top_cost] if _cost_rank(node)[:3] != (0, 0, 0))
-
-        for task_id in list(selected):
-            parent_id = by_id[task_id]["parent_id"]
-            while parent_id is not None and parent_id in scope:
-                selected.add(parent_id)
-                parent_id = by_id[parent_id]["parent_id"]
 
     def sibling_key(task_id: str) -> tuple[int, int]:
         order = by_id[task_id]["execution_order"]
@@ -412,7 +482,10 @@ def _select_nodes(
         if task_id in selected:
             ordered.append(task_id)
         for child_id in sorted(children.get(task_id, []), key=sibling_key):
-            if child_id in scope and (child_id in selected or any(item in selected for item in _descendant_ids(child_id, children))):
+            if child_id in scope and (
+                child_id in selected
+                or any(item in selected for item in _descendant_ids(child_id, children))
+            ):
                 visit(child_id)
 
     for root_id in sorted([item for item in roots if item is not None], key=sibling_key):
@@ -468,6 +541,20 @@ def build_execution_cost_tree(
         else:
             overhead_spans[attribution].append(record)
 
+    observed_elapsed_ms, started_at, finished_at = _mission_elapsed(
+        mission, trace, coverage, generated_at
+    )
+    mission_elapsed_ms = observed_elapsed_ms if coverage == "exact" else None
+    mission_cost = _span_cost(all_spans)
+    mission_wall_time = _wall_partition(
+        all_spans,
+        elapsed_ms=mission_elapsed_ms,
+        observed_elapsed_ms=observed_elapsed_ms,
+        coverage=coverage,
+        started_at=started_at,
+        finished_at=finished_at,
+    )
+
     active_task_id = mission.get("active_task_id")
     nodes: list[dict[str, Any]] = []
     for task_id, task in by_id.items():
@@ -478,6 +565,12 @@ def build_execution_cost_tree(
             for descendant_id in [task_id, *descendant_ids]
             for record in exact_spans.get(descendant_id, [])
         ]
+        direct_records = exact_spans.get(task_id, [])
+        direct_cost = _span_cost(direct_records)
+        inclusive_cost = _span_cost(inclusive_records)
+        elapsed_ms = state["elapsed_ms"]
+        observed_node_elapsed_ms = state["observed_elapsed_ms"]
+        elapsed_coverage = state["elapsed_coverage"]
         node = {
             "id": task_id,
             "parent_id": task.get("parent_id"),
@@ -493,6 +586,9 @@ def build_execution_cost_tree(
             "attempts": state["attempts"],
             "first_observed_at": state["first_observed_at"],
             "last_observed_at": state["last_observed_at"],
+            "elapsed_ms": elapsed_ms,
+            "observed_elapsed_ms": observed_node_elapsed_ms,
+            "elapsed_coverage": elapsed_coverage,
             "active_duration_ms": state["active_duration_ms"],
             "observed_active_duration_ms": state["observed_active_duration_ms"],
             "active_duration_source": state["active_duration_source"],
@@ -500,8 +596,24 @@ def build_execution_cost_tree(
             "evidence_refs": state["evidence_refs"],
             "artifact_refs": state["artifact_refs"],
             "status_history": state["status_history"],
-            "direct_cost": _span_cost(exact_spans.get(task_id, [])),
-            "inclusive_cost": _span_cost(inclusive_records),
+            "direct_cost": direct_cost,
+            "inclusive_cost": inclusive_cost,
+            "direct_wall_time": _wall_partition(
+                direct_records,
+                elapsed_ms=elapsed_ms,
+                observed_elapsed_ms=observed_node_elapsed_ms,
+                coverage=elapsed_coverage,
+                started_at=state["first_observed_at"],
+                finished_at=state["last_observed_at"],
+            ),
+            "subtree_wall_time": _wall_partition(
+                inclusive_records,
+                elapsed_ms=elapsed_ms,
+                observed_elapsed_ms=observed_node_elapsed_ms,
+                coverage=elapsed_coverage,
+                started_at=state["first_observed_at"],
+                finished_at=state["last_observed_at"],
+            ),
             "plan_index": plan_index[task_id],
             "active_task_id": active_task_id,
         }
@@ -519,7 +631,6 @@ def build_execution_cost_tree(
     for node in visible_nodes:
         node.pop("plan_index", None)
         node.pop("active_task_id", None)
-    observed_elapsed_ms, started_at, finished_at = _mission_elapsed(mission, trace, coverage, generated_at)
     overhead_by_attribution = {
         attribution: _span_cost(records) for attribution, records in sorted(overhead_spans.items())
     }
@@ -534,12 +645,13 @@ def build_execution_cost_tree(
             "title": mission.get("mission", {}).get("title"),
             "status": mission.get("mission", {}).get("status"),
             "active_task_id": active_task_id,
-            "elapsed_ms": observed_elapsed_ms if coverage == "exact" else None,
+            "elapsed_ms": mission_elapsed_ms,
             "observed_elapsed_ms": observed_elapsed_ms,
             "elapsed_coverage": coverage,
             "started_at": started_at,
             "finished_at": finished_at,
-            "cost": _span_cost(all_spans),
+            "cost": mission_cost,
+            "wall_time": mission_wall_time,
         },
         "trace": {
             "coverage": coverage,
@@ -549,6 +661,8 @@ def build_execution_cost_tree(
             "hidden_node_count": hidden_count,
             "visible_node_count": len(visible_nodes),
             "total_node_count": len(nodes),
+            "structure_fidelity": "one_to_one",
+            "projection": view == "compact" or focus_task_id is not None,
         },
         "overhead": {
             "cost": _span_cost([record for records in overhead_spans.values() for record in records]),
@@ -557,33 +671,29 @@ def build_execution_cost_tree(
         "nodes": visible_nodes,
         "visible_node_ids": visible_ids,
     }
-    report["tree_edges"] = _visible_edges(visible_nodes, visible_set, by_id, focus_task_id)
+    report["tree_edges"] = _visible_edges(visible_nodes, visible_set, focus_task_id)
     return report
 
 
 def _visible_edges(
     nodes: list[dict[str, Any]],
     visible_ids: set[str],
-    all_tasks: dict[str, dict[str, Any]],
     focus_task_id: str | None,
 ) -> list[dict[str, str]]:
     edges: list[dict[str, str]] = []
     for node in nodes:
         task_id = node["id"]
         parent_id = node["parent_id"]
-        while parent_id is not None and parent_id not in visible_ids:
-            parent = all_tasks.get(parent_id)
-            parent_id = parent.get("parent_id") if parent else None
         if task_id == focus_task_id or parent_id is None:
             edges.append({"from": "mission", "to": task_id})
-        else:
+        elif parent_id in visible_ids:
             edges.append({"from": parent_id, "to": task_id})
     return edges
 
 
 def _fmt_duration(value: int | None) -> str:
     if value is None:
-        return "unknown"
+        return "未知"
     if value < 1000:
         return f"{value}ms"
     seconds = value / 1000
@@ -601,7 +711,7 @@ def _fmt_covered_duration(exact_value: int | None, observed_value: int | None, c
         return _fmt_duration(exact_value)
     if coverage == "partial" and observed_value:
         return f"≥{_fmt_duration(observed_value)}"
-    return "unknown"
+    return "未知"
 
 
 def _fmt_token_number(value: int) -> str:
@@ -617,9 +727,9 @@ def _fmt_tokens(cost: dict[str, Any]) -> str:
     fields = set(cost["usage_fields"])
     coverage = cost["usage_coverage"]
     if coverage == "not_reported":
-        return "not reported"
+        return "未采集"
     if coverage == "unavailable" or not ({"input_tokens", "output_tokens"} & fields):
-        return "unknown"
+        return "未知"
     lower_bound = "≥" if coverage == "partial" else ""
     input_value = (
         lower_bound + _fmt_token_number(usage.get("input_tokens", 0))
@@ -633,10 +743,32 @@ def _fmt_tokens(cost: dict[str, Any]) -> str:
     )
     suffix: list[str] = []
     if "cached_input_tokens" in fields:
-        suffix.append(f"cached {_fmt_token_number(usage.get('cached_input_tokens', 0))}")
+        suffix.append(f"缓存 {_fmt_token_number(usage.get('cached_input_tokens', 0))}")
     if "reasoning_output_tokens" in fields:
-        suffix.append(f"reasoning {_fmt_token_number(usage.get('reasoning_output_tokens', 0))}")
-    return f"{input_value} in / {output_value} out" + (f" ({', '.join(suffix)})" if suffix else "")
+        suffix.append(f"推理 {_fmt_token_number(usage.get('reasoning_output_tokens', 0))}")
+    return f"输入 {input_value} / 输出 {output_value}" + (f" ({', '.join(suffix)})" if suffix else "")
+
+
+def _fmt_tokens_compact(cost: dict[str, Any]) -> str:
+    usage = cost["usage"]
+    fields = set(cost["usage_fields"])
+    coverage = cost["usage_coverage"]
+    if coverage == "not_reported":
+        return "未采集"
+    if coverage == "unavailable" or not ({"input_tokens", "output_tokens"} & fields):
+        return "未知"
+    lower_bound = "≥" if coverage == "partial" else ""
+    input_value = (
+        lower_bound + _fmt_token_number(usage.get("input_tokens", 0))
+        if "input_tokens" in fields
+        else "?"
+    )
+    output_value = (
+        lower_bound + _fmt_token_number(usage.get("output_tokens", 0))
+        if "output_tokens" in fields
+        else "?"
+    )
+    return f"入 {input_value} / 出 {output_value}"
 
 
 def _kind_time(cost: dict[str, Any], kinds: set[str]) -> int:
@@ -646,33 +778,37 @@ def _kind_time(cost: dict[str, Any], kinds: set[str]) -> int:
 def _fmt_kind_duration(cost: dict[str, Any], kinds: set[str]) -> str:
     present = [kind for kind in kinds if kind in cost["by_kind_resource_ms"]]
     if not present:
-        return "not reported"
+        return "未采集"
     sources: Counter[str] = Counter()
     for kind in present:
         sources.update(cost["by_kind_measurement_sources"].get(kind, {}))
     value = _kind_time(cost, kinds)
     if sources and set(sources) == {"unavailable"}:
-        return "unknown"
+        return "未知"
     rendered = _fmt_duration(value)
     if sources.get("unavailable"):
-        return f"≥{rendered}" if value else "unknown"
+        return f"≥{rendered}" if value else "未知"
     if sources.get("inferred"):
-        return f"~{rendered}"
+        return f"≈{rendered}"
     return rendered
 
 
 def _fmt_resource_duration(cost: dict[str, Any]) -> str:
-    if not cost["span_count"]:
-        return "not reported"
+    if cost["span_count"] == cost["envelope_span_count"]:
+        return "未采集"
     sources = Counter(cost["measurement_sources"])
-    value = cost["resource_time_ms"]
+    for source, count in cost["by_kind_measurement_sources"].get("agent_turn", {}).items():
+        sources[source] -= count
+        if sources[source] <= 0:
+            del sources[source]
+    value = cost["additive_resource_time_ms"]
     if sources and set(sources) == {"unavailable"}:
-        return "unknown"
+        return "未知"
     rendered = _fmt_duration(value)
     if sources.get("unavailable"):
-        return f"≥{rendered}" if value else "unknown"
+        return f"≥{rendered}" if value else "未知"
     if sources.get("inferred"):
-        return f"~{rendered}"
+        return f"≈{rendered}"
     return rendered
 
 
@@ -693,57 +829,70 @@ def _html(value: Any) -> str:
     )
 
 
+def _fmt_unattributed(wall_time: dict[str, Any]) -> str:
+    if wall_time["coverage"] != "exact":
+        return "未知"
+    return _fmt_duration(wall_time["unattributed_elapsed_ms"])
+
+
+def _node_cost_view(node: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], str]:
+    if node["kind"] == "step":
+        return node["direct_cost"], node["direct_wall_time"], "直接成本"
+    return node["inclusive_cost"], node["subtree_wall_time"], "子树汇总"
+
+
 def _node_label(node: dict[str, Any], view: str) -> str:
-    order = f"#{node['execution_order']} " if node["execution_order"] is not None else ""
-    dynamic = " +dynamic" if node["dynamic"] else ""
-    title = _shorten(node["title"], 54 if view != "audit" else 80)
+    kind_label = {"task": "Task", "subtask": "SubTask", "step": "Step"}.get(
+        node["kind"], str(node["kind"] or "Node")
+    )
+    dynamic = " · 动态新增" if node["dynamic"] else ""
+    title = _shorten(node["title"], 48 if view != "audit" else 72)
     status = STATUS_LABELS.get(node["status"], node["status"])
     icon = STATUS_ICONS.get(node["status"], "•")
-    active_duration = _fmt_covered_duration(
-        node["active_duration_ms"],
-        node["observed_active_duration_ms"],
-        node["active_duration_source"],
+    elapsed = _fmt_covered_duration(
+        node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
     )
-    lines = [f"{order}{title} · {node['id']}{dynamic}", f"{icon} {status} · active {active_duration}"]
-    if view != "compact":
-        cost = node["inclusive_cost"]
-        cost_parts: list[str] = []
-        if any(kind in cost["by_kind_resource_ms"] for kind in AI_KINDS):
-            cost_parts.append(f"AI {_fmt_kind_duration(cost, AI_KINDS)}")
-        if any(kind in cost["by_kind_resource_ms"] for kind in SCRIPT_TOOL_KINDS):
-            cost_parts.append(f"script/tool {_fmt_kind_duration(cost, SCRIPT_TOOL_KINDS)}")
-        if "agent_turn" in cost["by_kind_resource_ms"]:
-            cost_parts.append(f"turn {_fmt_kind_duration(cost, {'agent_turn'})}")
-        if cost_parts:
-            lines.append(" · ".join(cost_parts))
-        tokens = _fmt_tokens(cost)
-        if cost["usage_coverage"] != "not_reported":
-            lines.append(f"tokens {tokens}")
-        if node["attempts"] > 1:
-            lines.append(f"attempts {node['attempts']}")
-        if node["outcome_summary"]:
-            lines.append(f"result: {_shorten(node['outcome_summary'], 72)}")
+    order = f"#{node['execution_order']}" if node["execution_order"] is not None else "未运行"
+    lines = [
+        f"[{kind_label}] {title} · {node['id']}{dynamic}",
+        f"{icon} {status} · {order}",
+    ]
+    if view == "compact":
+        lines[1] += f" · 实际历时 {elapsed}"
+        return "<br/>".join(_html(line) for line in lines)
+
+    cost, wall_time, scope_label = _node_cost_view(node)
+    status_details = [scope_label]
+    if node["attempts"] > 1:
+        status_details.append(f"执行次数 {node['attempts']}")
+    if node["direct_cost"]["error_span_count"]:
+        status_details.append(f"错误 {node['direct_cost']['error_span_count']}")
+    lines[1] += " · " + " · ".join(status_details)
+    lines.extend(
+        [
+            f"实际历时 {elapsed} · 未归因 {_fmt_unattributed(wall_time)}",
+            f"LLM {_fmt_kind_duration(cost, LLM_KINDS)} · 脚本 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
+            f"工具 {_fmt_kind_duration(cost, TOOL_KINDS)} · 等待 {_fmt_kind_duration(cost, WAIT_KINDS)} · Token {_fmt_tokens_compact(cost)}",
+        ]
+    )
+    if node["outcome_summary"]:
+        lines.append(f"结果：{_shorten(node['outcome_summary'], 64)}")
     return "<br/>".join(_html(line) for line in lines)
 
 
 def render_mermaid(report: dict[str, Any]) -> str:
     mission = report["mission"]
     cost = mission["cost"]
+    wall_time = mission["wall_time"]
+    mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
     mission_lines = [
         f"{_shorten(mission['title'], 68)}",
-        f"Mission · {mission['status']} · elapsed {_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}",
+        f"Mission · {mission_status} · 实际历时 {_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}",
+        f"LLM {_fmt_kind_duration(cost, LLM_KINDS)} · 脚本 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
+        f"工具 {_fmt_kind_duration(cost, TOOL_KINDS)} · 等待 {_fmt_kind_duration(cost, WAIT_KINDS)}",
+        f"未归因 {_fmt_unattributed(wall_time)} · Token {_fmt_tokens_compact(cost)}",
+        f"覆盖 {report['trace']['coverage']} · {report['view']}",
     ]
-    cost_parts: list[str] = []
-    if any(kind in cost["by_kind_resource_ms"] for kind in AI_KINDS):
-        cost_parts.append(f"AI {_fmt_kind_duration(cost, AI_KINDS)}")
-    if any(kind in cost["by_kind_resource_ms"] for kind in SCRIPT_TOOL_KINDS):
-        cost_parts.append(f"script/tool {_fmt_kind_duration(cost, SCRIPT_TOOL_KINDS)}")
-    if cost_parts:
-        mission_lines.append(" · ".join(cost_parts))
-    tokens = _fmt_tokens(cost)
-    if cost["usage_coverage"] != "not_reported":
-        mission_lines.append(f"tokens {tokens}")
-    mission_lines.append(f"coverage {report['trace']['coverage']} · {report['view']}")
 
     node_keys = {node["id"]: f"N{index}" for index, node in enumerate(report["nodes"], start=1)}
     lines = ["flowchart TB", f'  M["{"<br/>".join(_html(item) for item in mission_lines)}"]']
@@ -780,10 +929,10 @@ def _markdown_cell(value: Any) -> str:
 
 def _coverage_note(coverage: str) -> str:
     if coverage == "exact":
-        return "Lifecycle tracing started with Mission initialization; costs still include only spans actually reported by their hosts."
+        return "生命周期追踪从 Mission 初始化开始；各类成本仍只包含宿主实际上报的 span。"
     if coverage == "partial":
-        return "Tracing began after Mission creation, so earlier route and cost are unknown rather than estimated."
-    return "No execution trace is available; the tree shows the current Mission snapshot and leaves time/Token cost unknown."
+        return "追踪晚于 Mission 创建，因此更早的执行路线与成本保持未知，不做猜测。"
+    return "没有执行轨迹；当前仅展示 Mission 快照，时间与 Token 成本保持未知。"
 
 
 def render_markdown(report: dict[str, Any]) -> str:
@@ -791,48 +940,37 @@ def render_markdown(report: dict[str, Any]) -> str:
     cost = mission["cost"]
     overhead = report["overhead"]["cost"]
     lines = [
-        "# TPlan Actual Execution & Cost Tree",
+        "# TPlan 实际执行与成本树",
         "",
         f"> {_coverage_note(report['trace']['coverage'])}",
-        "",
-        "| Scope | State | End-to-end elapsed | AI/model time | Script/tool time | Tokens |",
-        "| --- | --- | ---: | ---: | ---: | --- |",
-        "| "
-        + " | ".join(
-            [
-                _markdown_cell(mission["title"]),
-                _markdown_cell(mission["status"]),
-                _fmt_covered_duration(
-                    mission["elapsed_ms"], mission["observed_elapsed_ms"], mission["elapsed_coverage"]
-                ),
-                _fmt_kind_duration(cost, AI_KINDS),
-                _fmt_kind_duration(cost, SCRIPT_TOOL_KINDS),
-                _markdown_cell(_fmt_tokens(cost)),
-            ]
-        )
-        + " |",
         "",
         "```mermaid",
         render_mermaid(report),
         "```",
         "",
-        f"View: `{report['view']}`. Visible nodes: {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}.",
+        f"视图：`{report['view']}`；真实节点：{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}。",
     ]
     if report["trace"]["hidden_node_count"]:
         lines.append(
-            f"{report['trace']['hidden_node_count']} lower-signal nodes are hidden; use `--view audit` or `--focus TASK_ID` to expand."
+            f"这是投影视图，省略了 {report['trace']['hidden_node_count']} 个真实节点；"
+            "使用 `--view standard` 或 `--view audit` 查看完整拓扑。"
         )
     lines.extend(
         [
             "",
-            "Cost reading: end-to-end elapsed is wall time; per-kind durations are resource time and may overlap when spans are nested or parallel. "
-            "Cached input is already part of input Tokens and is never added again.",
+            "口径：实际历时是墙钟区间；LLM、脚本、工具和等待是资源时间，嵌套或并行时不可直接相加。"
+            "已缓存输入包含在输入 Token 中，不会重复累计。",
         ]
     )
-    if overhead["span_count"]:
+    if report["view"] == "audit" and cost["envelope_span_count"]:
         lines.append(
-            f"Mission overhead/shared/unattributed spans: {_fmt_duration(overhead['resource_time_ms'])} resource time, "
-            f"{_fmt_tokens(overhead)} Tokens. These costs are not divided across task nodes."
+            f"Agent turn 包络：{cost['envelope_span_count']} 个 span，"
+            f"{_fmt_kind_duration(cost, {'agent_turn'})}；仅用于审计，不计入 LLM 或可加资源时间。"
+        )
+    if report["view"] == "audit" and overhead["span_count"]:
+        lines.append(
+            f"Mission 级共享/未归属 span：{_fmt_duration(overhead['additive_resource_time_ms'])} 可加资源时间，"
+            f"{_fmt_tokens(overhead)} Token；这些成本不分摊到任务节点。"
         )
 
     notable = [
@@ -843,16 +981,16 @@ def render_markdown(report: dict[str, Any]) -> str:
         or node["attempts"] > 1
         or node["direct_cost"]["error_span_count"]
     ]
-    if notable and report["view"] != "compact":
-        lines.extend(["", "## Outcomes and exceptions", ""])
+    if notable and report["view"] == "audit":
+        lines.extend(["", "## 结果与异常", ""])
         for node in notable:
             details: list[str] = []
             if node["outcome_summary"]:
                 details.append(_shorten(node["outcome_summary"], 180))
             if node["attempts"] > 1:
-                details.append(f"{node['attempts']} attempts")
+                details.append(f"执行 {node['attempts']} 次")
             if node["direct_cost"]["error_span_count"]:
-                details.append(f"{node['direct_cost']['error_span_count']} error span(s)")
+                details.append(f"{node['direct_cost']['error_span_count']} 个错误 span")
             if not details:
                 details.append(STATUS_LABELS.get(node["status"], node["status"]))
             lines.append(f"- {node['title']} (`{node['id']}`): {'; '.join(details)}")
@@ -861,10 +999,10 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.extend(
             [
                 "",
-                "## Audit detail",
+                "## 审计明细",
                 "",
-                "| Order | Node | State | Active | Attempts | Direct resource | Subtree resource | Evidence refs | Artifact refs |",
-                "| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+                "| 顺序 | 节点 | 状态 | 实际历时 | 活跃时间 | 次数 | 直接资源 | 子树资源 | 子树未归因 | 证据 | 产物 |",
+                "| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
             ]
         )
         for node in report["nodes"]:
@@ -876,6 +1014,9 @@ def render_markdown(report: dict[str, Any]) -> str:
                         _markdown_cell(f"{node['title']} ({node['id']})"),
                         _markdown_cell(node["actual_state"]),
                         _fmt_covered_duration(
+                            node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
+                        ),
+                        _fmt_covered_duration(
                             node["active_duration_ms"],
                             node["observed_active_duration_ms"],
                             node["active_duration_source"],
@@ -883,6 +1024,7 @@ def render_markdown(report: dict[str, Any]) -> str:
                         str(node["attempts"]),
                         _fmt_resource_duration(node["direct_cost"]),
                         _fmt_resource_duration(node["inclusive_cost"]),
+                        _fmt_unattributed(node["subtree_wall_time"]),
                         str(len(node["evidence_refs"])),
                         str(len(node["artifact_refs"])),
                     ]
