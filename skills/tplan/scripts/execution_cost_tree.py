@@ -20,7 +20,7 @@ from tplan_runtime import (
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.4"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.5"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -466,7 +466,7 @@ def _select_nodes(
     view: str,
     focus_task_id: str | None,
     top_cost: int,
-) -> tuple[list[str], int]:
+) -> tuple[list[str], int, dict[str, list[str]]]:
     by_id = {node["id"]: node for node in nodes}
     if focus_task_id is not None and focus_task_id not in by_id:
         raise TplanError(f"focus task {focus_task_id} does not exist")
@@ -477,12 +477,64 @@ def _select_nodes(
     )
     roots = [focus_task_id] if focus_task_id else list(children.get(None, []))
 
+    reasons: dict[str, set[str]] = defaultdict(set)
     if view in {"standard", "audit"}:
         selected = set(scope)
+        for task_id in selected:
+            reasons[task_id].add("full_view")
     elif view == "compact":
-        selected = set(roots)
-        if focus_task_id is not None:
-            selected.update(children.get(focus_task_id, []))
+        selected = {task_id for task_id in roots if task_id is not None}
+        for task_id in selected:
+            reasons[task_id].add("root")
+
+        for task_id in scope:
+            node = by_id[task_id]
+            signal_reasons: list[str] = []
+            if node["status"] == "active" or node["status"] in ABNORMAL_TASK_STATUSES:
+                signal_reasons.append("status_signal")
+            if node["attempts"] > 1:
+                signal_reasons.append("retry")
+            if node["direct_cost"]["error_span_count"]:
+                signal_reasons.append("error")
+            if node["direct_open_span_count"]:
+                signal_reasons.append("open_span")
+            if node["dynamic"]:
+                signal_reasons.append("dynamic")
+            if signal_reasons:
+                selected.add(task_id)
+                reasons[task_id].update(signal_reasons)
+
+        def direct_cost_key(task_id: str) -> tuple[int, int, int, int]:
+            node = by_id[task_id]
+            direct_cost = node["direct_cost"]
+            token_total = sum(direct_cost["usage"].values())
+            execution_order = node["execution_order"]
+            return (
+                direct_cost["additive_resource_time_ms"],
+                token_total,
+                -(execution_order if isinstance(execution_order, int) else 1_000_000),
+                -node["plan_index"],
+            )
+
+        cost_candidates = [
+            task_id
+            for task_id in scope
+            if task_id not in selected
+            and (
+                by_id[task_id]["direct_cost"]["additive_resource_time_ms"] > 0
+                or any(by_id[task_id]["direct_cost"]["usage"].values())
+            )
+        ]
+        for task_id in sorted(cost_candidates, key=direct_cost_key, reverse=True)[:top_cost]:
+            selected.add(task_id)
+            reasons[task_id].add("top_direct_cost")
+
+        for task_id in list(selected):
+            parent_id = by_id[task_id].get("parent_id")
+            while parent_id in scope:
+                selected.add(parent_id)
+                reasons[parent_id].add("selected_path")
+                parent_id = by_id[parent_id].get("parent_id")
 
     def sibling_key(task_id: str) -> tuple[int, int]:
         order = by_id[task_id]["execution_order"]
@@ -502,7 +554,11 @@ def _select_nodes(
 
     for root_id in sorted([item for item in roots if item is not None], key=sibling_key):
         visit(root_id)
-    return ordered, len(scope - selected)
+    return (
+        ordered,
+        len(scope - selected),
+        {task_id: sorted(reasons[task_id]) for task_id in ordered},
+    )
 
 
 def _timeline_metadata(
@@ -743,7 +799,7 @@ def build_execution_cost_tree(
         }
         nodes.append(node)
 
-    visible_ids, hidden_count = _select_nodes(
+    visible_ids, hidden_count, selection_reasons = _select_nodes(
         nodes,
         children,
         view=view,
@@ -762,6 +818,7 @@ def build_execution_cost_tree(
         "schema_version": REPORT_SCHEMA_VERSION,
         "generated_at": generated_at,
         "view": view,
+        "presentation": "unicode_text_tree" if view == "compact" else "vertical_timeline_svg",
         "focus_task_id": focus_task_id,
         "top_cost": top_cost,
         "mission": {
@@ -800,6 +857,7 @@ def build_execution_cost_tree(
             "total_node_count": len(nodes),
             "structure_fidelity": "one_to_one",
             "projection": view == "compact" or focus_task_id is not None,
+            "selection_reasons": selection_reasons if view == "compact" else {},
         },
         "overhead": {
             "cost": _span_cost([record for records in overhead_spans.values() for record in records]),
@@ -822,11 +880,19 @@ def build_execution_cost_tree(
         "visible_node_ids": visible_ids,
     }
     report["tree_edges"] = _visible_edges(visible_nodes, visible_set, focus_task_id)
-    report["timeline"] = _timeline_metadata(
-        report["mission"],
-        visible_nodes,
-        focus_task_id=focus_task_id,
-    )
+    if view == "compact":
+        report["compact_projection"] = {
+            "policy": "roots_plus_signals_and_top_direct_cost",
+            "top_direct_cost_count": top_cost,
+            "signal_rules": ["active_or_abnormal", "retry", "error", "open_span", "dynamic"],
+            "selected_paths_preserved": True,
+        }
+    else:
+        report["timeline"] = _timeline_metadata(
+            report["mission"],
+            visible_nodes,
+            focus_task_id=focus_task_id,
+        )
     return report
 
 
@@ -1074,6 +1140,113 @@ def _svg_node_status_details(node: dict[str, Any], scope_label: str) -> str:
     return " · ".join(details)
 
 
+def _compact_status(status: str, actual_state: str | None = None) -> str:
+    if actual_state == "not_run":
+        return "○ 未执行"
+    return {
+        "active": "▶️ 执行中",
+        "completed": "✅",
+        "blocked": "⛔ 受阻",
+        "paused": "⏸ 已暂停",
+        "pending": "○ 待执行",
+        "pruned": "✂ 已裁剪",
+        "abandoned": "↩ 已撤回",
+        "superseded": "↪ 已替代",
+        "budget_exhausted": "⛔ 预算耗尽",
+        "requires_human": "⛔ 等待人工",
+    }.get(status, STATUS_LABELS.get(status, status))
+
+
+def _compact_cost_summary(cost: dict[str, Any]) -> str:
+    parts = [
+        f"LLM {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')}",
+        f"脚本 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
+    ]
+    optional = [
+        ("工具", _fmt_kind_duration(cost, TOOL_KINDS)),
+        ("等待", _fmt_kind_duration(cost, WAIT_KINDS)),
+        ("Token", _fmt_tokens_compact(cost)),
+    ]
+    parts.extend(f"{label} {value}" for label, value in optional if value != "未采集")
+    return " · ".join(parts)
+
+
+def _compact_node_summary(node: dict[str, Any]) -> str:
+    cost, _, _ = _node_cost_view(node)
+    elapsed = _fmt_covered_duration(
+        node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
+    )
+    parts = [
+        f"{_shorten(node['title'], 46)} {_compact_status(node['status'], node['actual_state'])} {elapsed}",
+        _compact_cost_summary(cost),
+    ]
+    if node["dynamic"]:
+        parts.append("动态新增")
+    if node["attempts"] > 1:
+        parts.append(f"attempt {node['attempts']}")
+    if node["direct_cost"]["error_span_count"]:
+        parts.append(f"error {node['direct_cost']['error_span_count']}")
+    if node["direct_open_span_count"]:
+        parts.append(f"未结束调用 {node['direct_open_span_count']}")
+    if node["outcome_summary"]:
+        parts.append(f"→ {_shorten(node['outcome_summary'], 52)}")
+    return " · ".join(parts)
+
+
+def render_compact_text(report: dict[str, Any]) -> str:
+    if report["view"] != "compact":
+        raise TplanError("text tree is only available for compact view")
+    mission = report["mission"]
+    mission_elapsed = _fmt_covered_duration(
+        mission["elapsed_ms"], mission["observed_elapsed_ms"], mission["elapsed_coverage"]
+    )
+    lines = [
+        (
+            f"Mission · {_shorten(mission['title'], 60)} "
+            f"{_compact_status(mission['status'])} {mission_elapsed}"
+        ),
+        (
+            f"成本：{_compact_cost_summary(mission['cost'])}"
+            f" · 未被精确记录 {_fmt_not_exactly_recorded(mission['elapsed_reconciliation'])}"
+        ),
+    ]
+    node_by_id = {node["id"]: node for node in report["nodes"]}
+    order = {node["id"]: index for index, node in enumerate(report["nodes"])}
+    children: dict[str, list[str]] = defaultdict(list)
+    roots: list[str] = []
+    for node in report["nodes"]:
+        parent_id = node.get("parent_id")
+        if parent_id in node_by_id:
+            children[parent_id].append(node["id"])
+        else:
+            roots.append(node["id"])
+    for parent_id in children:
+        children[parent_id].sort(key=lambda task_id: order[task_id])
+    roots.sort(key=lambda task_id: order[task_id])
+
+    def visit(task_id: str, prefix: str, is_last: bool) -> None:
+        connector = "└─ " if is_last else "├─ "
+        lines.append(prefix + connector + _compact_node_summary(node_by_id[task_id]))
+        next_prefix = prefix + ("   " if is_last else "│  ")
+        child_ids = children.get(task_id, [])
+        for index, child_id in enumerate(child_ids):
+            visit(child_id, next_prefix, index == len(child_ids) - 1)
+
+    for index, task_id in enumerate(roots):
+        visit(task_id, "", index == len(roots) - 1)
+    lines.extend(
+        [
+            "",
+            (
+                f"投影：显示 {report['trace']['visible_node_count']}/{report['trace']['total_node_count']} 个真实节点；"
+                f"省略 {report['trace']['hidden_node_count']}；根 Task + 异常/重试/动态 + "
+                f"直接成本 Top {report['top_cost']} + 真实祖先路径"
+            ),
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
 def render_svg(report: dict[str, Any]) -> str:
     """Render a portrait SVG: chronological rows plus the real hierarchy overlay.
 
@@ -1083,6 +1256,8 @@ def render_svg(report: dict[str, Any]) -> str:
     against the same Mission duration.
     """
 
+    if report["view"] == "compact":
+        raise TplanError("compact view uses a Unicode text tree; SVG is only available for standard/audit")
     mission = report["mission"]
     timeline = report["timeline"]
     node_by_id = {node["id"]: node for node in report["nodes"]}
@@ -1455,11 +1630,32 @@ def _coverage_note(coverage: str) -> str:
 
 
 def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = None) -> str:
+    if report["view"] == "compact":
+        if timeline_svg_ref is not None:
+            raise TplanError("compact Markdown is a Unicode text tree and has no SVG sidecar")
+        lines = [
+            "# TPlan 执行摘要",
+            "",
+            f"> {_coverage_note(report['trace']['coverage'])}",
+            "",
+            "```text",
+            render_compact_text(report).rstrip(),
+            "```",
+            "",
+            "Task/SubTask 成本为其真实子树累计；Step 为直接成本。没有出现的下级节点只是被省略，没有被合并。",
+            "",
+            (
+                "口径：LLM、脚本、工具和等待是累计资源时间，可能相互重叠；"
+                "调用端实测不等于平台内部纯推理时间，`≈` 表示估算。"
+            ),
+        ]
+        return "\n".join(lines).rstrip() + "\n"
+
     mission = report["mission"]
     cost = mission["cost"]
     overhead = report["overhead"]["cost"]
     lines = [
-        "# TPlan 实际执行与成本树摘要" if report["view"] == "compact" else "# TPlan 实际执行与成本树",
+        "# TPlan 实际执行与成本树",
         "",
         f"> {_coverage_note(report['trace']['coverage'])}",
         "",

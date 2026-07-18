@@ -29,10 +29,11 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   24 declared hierarchy edges, chronological relative-time labels, and one shared-scale
   temporal range strip per observed node. The former hierarchy-only Mermaid TB artifact
   is no longer the Standard output.
-- Its Compact projection renders at `1180 x 1056` with Mission plus four real root Task
-  cards, explicitly declares 20 omitted descendants, and retains elapsed, LLM, script,
-  tool, wait, Token, and result fields on every visible Task. It creates no synthetic
-  descendant-summary node.
+- Its Compact projection now renders as a Unicode text tree rather than SVG. The same
+  Mission shows 15/24 real nodes: every root Task, execution-signal nodes, five top
+  direct-cost nodes, and the real ancestor paths required to reach them. Each line keeps
+  elapsed, LLM, script, optional tool/wait/Token, retry/error, and result fields. It
+  declares nine omissions and creates no synthetic descendant-summary node.
 
 ## What This Gives The User
 
@@ -41,8 +42,8 @@ visible node can show its observed state, execution order, actual elapsed time,
 retries, result, cumulative LLM-call time, script/tool/wait time, elapsed time not
 exactly recorded, and Token usage.
 
-The default visual is a portrait vertical execution timeline, not a hierarchy-only TB
-tree. Real nodes are ordered by first observed execution time; the left rail shows
+The default Standard/Audit visual is a portrait vertical execution timeline, not a
+hierarchy-only TB tree. Real nodes are ordered by first observed execution time; the left rail shows
 observed relative time, and every observed card carries a range strip on one shared
 linear elapsed-window scale. With exact lifecycle coverage the origin is Mission
 initialization; partial coverage is explicitly relative to the observed trace window.
@@ -233,9 +234,9 @@ The renderer must preserve node identity before optimizing display density:
 
 The renderer supports:
 
-- `compact`: Mission plus real root Tasks, or a focused real subtree. Hidden nodes are
-  counted explicitly; no synthetic descendant-summary node is created. Visible root
-  Task cards retain actual elapsed, LLM, script, tool, wait, Token, and result slots.
+- `compact`: a Unicode text tree containing Mission, every real root Task, execution-
+  signal nodes, top direct-cost nodes, and required real ancestor paths. Hidden nodes
+  and selection policy are explicit; no SVG or synthetic summary node is created.
 - `standard`: every materialized Task, SubTask, and Step with a strict node-label
   budget; this is the default post-completion execution tree.
 - `audit`: the same complete topology plus status history, direct/inclusive cost,
@@ -259,9 +260,10 @@ The renderer supports:
 Subtree cost is rolled up to ancestors without replacing descendants. Shared,
 Mission-level, and unattributed cost appears separately.
 
-The renderer emits standalone SVG, Markdown that embeds a sibling SVG, or structured
-JSON. `--focus TASK_ID` selects one real subtree without merging, regrouping, or
-fabricating nodes. The report schema is `tplan.execution_cost_tree.v0.4`.
+Standard/Audit emit standalone SVG, Markdown that embeds a sibling SVG, or structured
+JSON. Compact emits plain text, Markdown with a fenced Unicode tree, or structured JSON;
+it rejects SVG. `--focus TASK_ID` selects one real subtree without merging, regrouping,
+or fabricating nodes. The report schema is `tplan.execution_cost_tree.v0.5`.
 
 ## Coverage And Legacy Behavior
 
@@ -308,6 +310,8 @@ whether a result is true, acceptable, or worth acting on.
   matching the JSON topology
 - compact and focus views declare every omission and never replace hidden nodes with a
   synthetic summary node
+- compact Markdown/text creates no SVG sidecar and preserves real ancestor paths for
+  selected signal and top direct-cost nodes
 - privacy-sensitive fields fail before append
 - legacy Mission runtimes render `partial` or `snapshot_only` without invented cost
 - the command wrapper records exit status and elapsed time but no command/output text

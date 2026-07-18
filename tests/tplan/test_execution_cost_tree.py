@@ -303,6 +303,29 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("Token 入 1.1k / 出 320", markdown.stdout)
             self.assertNotIn("Token 入 1.5k", markdown.stdout)
 
+            compact = render_json(mission_dir, "--view", "compact", "--top-cost", "1")
+            self.assertEqual(compact["visible_node_ids"], ["T1", "S1"])
+            self.assertEqual(
+                compact["trace"]["selection_reasons"]["S1"],
+                ["top_direct_cost"],
+            )
+            self.assertIn("selected_path", compact["trace"]["selection_reasons"]["T1"])
+            compact_text = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--top-cost",
+                "1",
+                "--format",
+                "text",
+            )
+            self.assertEqual(compact_text.returncode, 0, compact_text.stderr)
+            self.assertIn("└─ Ship execution tree", compact_text.stdout)
+            self.assertIn("   └─ Capture high-cost execution", compact_text.stdout)
+            self.assertIn("LLM 2.0s（平台上报） · 脚本 500ms（宿主实测）", compact_text.stdout)
+            self.assertIn("→ High-cost path measured", compact_text.stdout)
+
     def test_elapsed_reconciliation_conserves_time_and_agent_turn_is_only_an_envelope(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -414,6 +437,25 @@ class ExecutionCostTreeTests(unittest.TestCase):
             )
             self.assertEqual(compact["trace"]["hidden_node_count"], 2)
             self.assertTrue(compact["trace"]["projection"])
+            self.assertEqual(compact["presentation"], "unicode_text_tree")
+            self.assertNotIn("timeline", compact)
+            self.assertEqual(compact["trace"]["selection_reasons"], {"T1": ["root"]})
+
+            compact_text = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--format",
+                "text",
+            )
+            self.assertEqual(compact_text.returncode, 0, compact_text.stderr)
+            for label in ["LLM调用累计", "脚本累计", "工具累计", "等待累计", "Token", "结果："]:
+                self.assertNotIn(label, compact_text.stdout)
+            self.assertIn("Mission · Execution Tree Mission", compact_text.stdout)
+            self.assertIn("└─ Ship execution tree", compact_text.stdout)
+            self.assertIn("LLM 未采集 · 脚本 未采集", compact_text.stdout)
+            self.assertNotIn("Capture high-cost execution", compact_text.stdout)
 
             compact_svg = run_script(
                 "render_execution_cost_tree.py",
@@ -423,23 +465,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "--format",
                 "svg",
             )
-            self.assertEqual(compact_svg.returncode, 0, compact_svg.stderr)
-            compact_root = ET.fromstring(compact_svg.stdout)
-            self.assertEqual(compact_root.attrib["data-view"], "compact")
-            compact_cards = [
-                element
-                for element in compact_root.iter()
-                if element.attrib.get("class") == "task-card"
-            ]
-            self.assertEqual(
-                [element.attrib["data-task-id"] for element in compact_cards],
-                ["T1"],
-            )
-            compact_card_text = "".join(compact_cards[0].itertext())
-            for label in ["LLM调用累计", "脚本累计", "工具累计", "等待累计", "Token", "结果："]:
-                self.assertIn(label, compact_card_text)
-            self.assertIn("可见真实节点 1/3", compact_svg.stdout)
-            self.assertIn("投影视图省略 2 个真实节点", compact_svg.stdout)
+            self.assertNotEqual(compact_svg.returncode, 0)
+            self.assertIn("compact view uses a Unicode text tree", compact_svg.stderr)
 
     def test_standard_svg_is_a_vertical_timeline_with_one_card_per_real_node(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -461,7 +488,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
 
             report = render_json(mission_dir, "--view", "standard")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.4")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.5")
             self.assertEqual(report["timeline"]["axis"], "vertical")
             self.assertEqual(
                 report["timeline"]["row_positioning"],
@@ -550,6 +577,113 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("flowchart TB", markdown)
             root = ET.parse(svg_output).getroot()
             self.assertEqual(root.attrib["data-layout"], "vertical-execution-timeline")
+
+    def test_compact_markdown_writes_only_a_unicode_text_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            output = Path(tmp) / "execution-summary.md"
+            result = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--output",
+                str(output),
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("rendered_execution_cost_tree_svg", result.stdout)
+            self.assertFalse(output.with_suffix(".svg").exists())
+            markdown = output.read_text(encoding="utf-8")
+            self.assertIn("# TPlan 执行摘要", markdown)
+            self.assertIn("```text", markdown)
+            self.assertIn("Mission · Execution Tree Mission", markdown)
+            self.assertIn("└─ Ship execution tree", markdown)
+            self.assertIn("直接成本 Top 5", markdown)
+            self.assertNotIn("<svg", markdown)
+
+    def test_compact_selects_signal_nodes_and_preserves_their_real_ancestors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+            started = parse_time(read_jsonl(mission_dir / "execution_trace.jsonl")[-1]["timestamp"])
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "script",
+                        "label": "second attempt",
+                        "status": "ok",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "started_at": iso(started + timedelta(milliseconds=1)),
+                        "finished_at": iso(started + timedelta(milliseconds=2)),
+                        "duration_ms": 1,
+                        "attempt": 2,
+                        "parent_span_id": None,
+                    },
+                },
+                "second-attempt",
+            )
+            completed = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S1",
+                "--status",
+                "completed",
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            blocked = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S2",
+                "--status",
+                "blocked",
+            )
+            self.assertEqual(blocked.returncode, 0, blocked.stderr)
+
+            compact = render_json(
+                mission_dir,
+                "--view",
+                "compact",
+                "--top-cost",
+                "0",
+            )
+            self.assertEqual(compact["visible_node_ids"], ["T1", "S1", "S2"])
+            self.assertEqual(compact["trace"]["selection_reasons"]["S1"], ["retry"])
+            self.assertEqual(
+                compact["trace"]["selection_reasons"]["S2"],
+                ["status_signal"],
+            )
+            self.assertEqual(
+                compact["trace"]["selection_reasons"]["T1"],
+                ["root", "selected_path"],
+            )
+            text = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--top-cost",
+                "0",
+                "--format",
+                "text",
+            )
+            self.assertEqual(text.returncode, 0, text.stderr)
+            self.assertIn("Capture high-cost execution ✅", text.stdout)
+            self.assertIn("attempt 2", text.stdout)
+            self.assertIn("Optional untouched path ⛔ 受阻", text.stdout)
 
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -762,7 +896,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("must not enter the trace", raw_trace)
 
             report = render_json(mission_dir, "--view", "audit")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.4")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.5")
             self.assertEqual(report["trace"]["started_span_count"], 1)
             self.assertEqual(report["trace"]["completed_span_count"], 1)
             self.assertEqual(report["trace"]["open_span_count"], 0)
