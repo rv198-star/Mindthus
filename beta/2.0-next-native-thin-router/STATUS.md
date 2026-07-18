@@ -1,10 +1,16 @@
 # Mindthus 2.0 Native Thin Router Candidate
 
-Status: `static candidate / not Beta.3 / no live qualification`
+Status: `REJECT_NATIVE_ENTRY / route stopped / not Beta.3`
 
 This unpublished Codex-only profile tests one successor hypothesis: one natively
 discoverable thin `using-mindthus` entry can preserve minimum passive obligations while
 concrete Mindthus owners remain directly discoverable from their own descriptions.
+
+The authorized N3 qualification completed on 2026-07-19. Native thin-entry discovery
+was directly observed, but the route failed eligibility: unrelated WAE loading occurred
+on the Frame/Whole case, and MPG+SELA loaded before decision context was locked on the
+ambiguous migration case. The one allowed Candidate B wording correction did not change
+either result. See `qualification/n3-20260719/RESULT.md` in the source tree.
 
 The candidate deliberately has no SessionStart Hook, separate Passive Kernel, guard
 Skill, model-name route, or plugin default-prompt routing policy. The seven owner Skills
@@ -33,9 +39,8 @@ python3 /tmp/mindthus-native-thin-router/codex-plugin/mindthus-beta/scripts/chec
 ```
 
 Passing this diagnostic proves package shape, hashes, namespace isolation, owner-tree
-identity, absence of forbidden carriers, and static budgets. It does not prove native
-Skill activation, passive recall, owner selection, answer quality, token savings, or
-latency.
+identity, absence of forbidden carriers, and static budgets. It does not override the
+recorded N3 rejection or prove answer quality, token savings, or latency.
 
 ## Model-free rehearsal checkpoint
 
@@ -52,9 +57,9 @@ This checkpoint is reproducible package evidence, not native-carrier eligibility
 
 ## Runtime boundary
 
-- Use a fresh isolated `CODEX_HOME` for any later qualification.
 - Do not enable Stable and this candidate together.
-- Do not run the closed eight-call qualification without William's separate authority.
 - Do not publish, tag, promote, or rename this candidate as Beta.3.
-- If native activation cannot be observed after the one permitted wording correction,
-  stop the route; do not add a Hook fallback.
+- Do not run a third wording repair, add a Hook fallback, rewrite owners inside this
+  candidate, or reopen N3 under a new protocol version.
+- Any successor must start from the observed owner-metadata/discovery-topology problem,
+  not from another repair to this thin entry.

@@ -2,10 +2,10 @@
   "schema_version": "mindthus-release-profile-v0.3",
   "release_line": "2.0-next-native-thin-router",
   "version": "2.0.0-next.1",
-  "status": "static-candidate",
+  "status": "rejected-native-entry",
   "release_preparation": "not-started",
-  "live_qualification": "not-authorized",
-  "behavioral_evaluation": "not-authorized",
+  "live_qualification": "completed-rejected",
+  "behavioral_evaluation": "n3-native-carrier-only-completed",
   "path_base": "plugin-root",
   "stable_baseline": "1.4.6",
   "baseline_commit": "00da11657bce553cb32e8e90c06ffe959dc08362",
@@ -31,7 +31,7 @@
     "codex-plugin"
   ],
   "carrier_mode": "native-skill-description",
-  "carrier_claim": "candidate-unproven",
+  "carrier_claim": "native-discovery-observed-route-rejected",
   "using_mindthus_overlay": "skills/using-mindthus",
   "runtime_diagnostic_source": "runtime/check-native-router.py",
   "runtime_diagnostic": "scripts/check-native-router.py",
@@ -79,16 +79,16 @@
     "scripts/run-fidelity-judge.py"
   ],
   "behavioral_claims": {
-    "native_entry_activation": "unproven-pending-separate-qualification",
-    "owner_hit_rate": "unproven-pending-separate-comparison",
-    "passive_recall_reliability": "unproven-pending-separate-comparison",
+    "native_entry_activation": "observed-in-n3-fresh-threads",
+    "owner_hit_rate": "failed-n3-false-owner-and-pre-context-owner-loading",
+    "passive_recall_reliability": "observed-on-closed-cases-not-comparatively-qualified",
     "token_and_latency_reduction": "unproven-pending-separate-comparison"
   },
   "artifact_sha256": {
-    "STATUS.md": "4f9f80e1c8226baa8c3aecece2f82076c8fbc1f2c2e82b53d771d79cc77fdf7e",
+    "STATUS.md": "c686b296625a259753b45467bbfd781b46405cb1eef4fb0f65b82a9e4f56480c",
     "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
     "scripts/check-native-router.py": "046f06f6b6f636c94b538d36b0e0b13c41abf3e83fd1fa40540b0e7c99d1d5bf",
-    "skills/using-mindthus/SKILL.md": "b1035c3656fbf7b9e41cc264c4faf5b954690da2cfd784d98e9183ba868caad9"
+    "skills/using-mindthus/SKILL.md": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"
   },
   "generated_artifact_sha256": {
     "codex-plugin": {

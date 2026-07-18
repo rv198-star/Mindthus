@@ -63,9 +63,12 @@ class NativeThinRouterTests(unittest.TestCase):
     def test_profile_is_unpublished_codex_only_candidate(self) -> None:
         self.assertEqual(self.profile["schema_version"], "mindthus-release-profile-v0.3")
         self.assertEqual(self.profile["version"], "2.0.0-next.1")
-        self.assertEqual(self.profile["status"], "static-candidate")
-        self.assertEqual(self.profile["live_qualification"], "not-authorized")
-        self.assertEqual(self.profile["behavioral_evaluation"], "not-authorized")
+        self.assertEqual(self.profile["status"], "rejected-native-entry")
+        self.assertEqual(self.profile["live_qualification"], "completed-rejected")
+        self.assertEqual(
+            self.profile["behavioral_evaluation"],
+            "n3-native-carrier-only-completed",
+        )
         self.assertEqual(self.profile["carrier_mode"], "native-skill-description")
         self.assertEqual(self.profile["supported_surfaces"], ["codex-plugin"])
         self.assertNotIn("beta.3", json.dumps(self.profile).lower())
