@@ -108,7 +108,10 @@ python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-inte
 
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
 to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
-status, actual elapsed, LLM, script, tool, wait, Token, and result slots. Do not merge
-nodes or invent display groups. Use `compact` only as a labelled projection for a quick
-handoff; use `audit` for the same topology plus measurement and recovery detail. Unknown
-measurements must remain unknown.
+status, actual elapsed, cumulative LLM-call, script, tool, wait, Token, and result slots.
+Keep `host_measured`, `platform_reported`, and `inferred` visibly distinct. A
+host-measured model span is caller-visible request time, not a claim about pure provider
+inference time. Label the uncovered elapsed remainder as not exactly recorded; do not
+assign it to LLM or script by guesswork. Do not merge nodes or invent display groups.
+Use `compact` only as a labelled projection for a quick handoff; use `audit` for the same
+topology plus measurement and recovery detail. Unknown measurements must remain unknown.

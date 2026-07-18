@@ -16,13 +16,15 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   from `evaluation_baseline_ref`; the compatibility branch is not a republished Beta2.
 - A deterministic simulated campaign-readiness Mission completed in 12m06s with 27/27
   real nodes, one withdrawn SubTask, 5m31s script time, 1m15s wait time, 15s tool time,
-  approximately 1m08s LLM time, and estimated Token usage visibly marked with `≈`.
+  approximately 1m08s cumulative LLM-call time, and estimated Token usage visibly
+  marked with `≈`.
 
 ## What This Gives The User
 
 After a Mission, TPlan can render the route that was actually taken as a tree. Each
 visible node can show its observed state, execution order, actual elapsed time,
-retries, result, LLM time, script/tool/wait time, unattributed time, and Token usage.
+retries, result, cumulative LLM-call time, script/tool/wait time, elapsed time not
+exactly recorded, and Token usage.
 
 Task structure and information density are separate concerns. Every rendered Mission,
 Task, SubTask, or Step maps to exactly one real TPlan node. The renderer never merges
@@ -36,7 +38,7 @@ The report distinguishes three clocks instead of producing one misleading number
 
 - end-to-end elapsed time: natural time from observed start to finish for the Mission
   or node lifecycle
-- resource time by kind: the sum of model, script, tool, wait, or agent-turn spans
+- resource time by kind: the sum of model-call, script, tool, wait, or agent-turn spans
 - Token usage: platform-reported input/output usage, with cached input and reasoning
   output shown as subsets rather than added twice
 
@@ -47,11 +49,18 @@ When lifecycle coverage is exact, the report also partitions actual elapsed time
 union rather than resource-time addition:
 
 ```text
-actual elapsed = attributed wall coverage + unattributed elapsed
+actual elapsed = exact interval coverage + elapsed not exactly recorded
 ```
 
+For model spans, `host_measured` means caller-visible request elapsed at the SDK/API
+boundary. It can include provider queueing, network transfer, internal retries, and
+streaming, so it must not be presented as pure provider-internal inference time.
+`platform_reported` retains the platform adapter's stated definition, while `inferred`
+is visibly estimated. The uncovered elapsed remainder is not automatically model,
+script, or orchestration time.
+
 An `agent_turn` is an orchestration envelope that may include model, script, tool, and
-wait spans. It is never labeled as LLM time or added to its nested spans. A
+wait spans. It is never labeled as cumulative LLM-call time or added to its nested spans. A
 platform-reported duration whose Mission or node scope is unknown remains an external
 audit observation and does not enter node reconciliation.
 
@@ -101,6 +110,7 @@ The runtime records:
 - `task_status_changed`
 - `active_node_changed`
 - `mission_status_changed`
+- `span_started`
 - `span_completed`
 
 State-changing runtime entry points commit lifecycle records together with the matching
@@ -112,6 +122,13 @@ Legacy direct state mutation is not treated as exact history. If tracing starts 
 initialization, report coverage is `partial`.
 
 ## Cost Span Contract
+
+A host observer emits a `span_started` entry marker before the real operation and a
+`span_completed` record after it. Both share one `span_id`. The completed record owns
+the authoritative `started_at`, `finished_at`, and monotonic `duration_ms`, so trace I/O
+does not enter the measurement. An unmatched start remains an open/interrupted span and
+does not enter cost totals. Standalone completions remain valid for after-the-fact
+platform ingestion and compatibility.
 
 A `span_completed` record contains:
 
@@ -161,12 +178,14 @@ Shared and uncertain cost is never silently divided between tasks.
 
 ## Collection Paths
 
-The shared core supplies three collection surfaces:
+The shared core supplies four collection surfaces:
 
 1. Lifecycle scripts capture task-tree and state mutations automatically.
-2. `record_execution_span.py` ingests sanitized platform-reported model/Agent timing
+2. `ModelCallObserver` in `observe_model_call.py` writes paired entry/completion events
+   and measures the caller-visible SDK operation with a host monotonic clock.
+3. `record_execution_span.py` ingests sanitized platform-reported model/Agent timing
    and Token usage.
-3. `run_traced_command.py` measures script/tool elapsed time around a real command while
+4. `run_traced_command.py` measures script/tool elapsed time around a real command while
    inheriting its output and deliberately not storing command arguments, stdout, or
    stderr.
 
@@ -239,6 +258,9 @@ whether a result is true, acceptable, or worth acting on.
 - initialization creates the trace and report directory without touching evidence
 - dynamic nodes and lifecycle changes produce linked trace records
 - model, script, Token, cached Token, and shared overhead roll up correctly
+- host-observed model calls emit paired start/completion events with caller-side timing
+- model-call errors are recorded before the original exception is re-raised
+- unmatched starts remain visible as open calls and never enter completed cost totals
 - every rendered task node maps one-to-one to a real Mission task ID
 - no view merges nodes at any hierarchy level or invents display-only grouping nodes
 - standard and audit preserve every materialized node and declared parent-child edge
@@ -257,5 +279,6 @@ whether a result is true, acceptable, or worth acting on.
 - full distributed tracing across machines
 - allocation of shared cost by arbitrary percentages
 - automatic proof that all model or tool activity was observed
+- claiming caller-visible request time as pure provider-internal inference time
 - putting every trace field inside every Standard node
 - synthetic grouping nodes, composite task nodes, or merged Mission hierarchy nodes

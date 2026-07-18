@@ -39,6 +39,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "scripts/mission_pulse.py",
             "scripts/render_user_update.py",
             "scripts/record_execution_span.py",
+            "scripts/observe_model_call.py",
             "scripts/run_traced_command.py",
             "scripts/render_execution_cost_tree.py",
         ]

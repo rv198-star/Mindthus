@@ -87,8 +87,10 @@ TRACE_EVENT_TYPES = {
     "task_status_changed",
     "active_node_changed",
     "mission_status_changed",
+    "span_started",
     "span_completed",
 }
+TRACE_SPAN_EVENT_TYPES = {"span_started", "span_completed"}
 TRACE_SPAN_KINDS = {"model", "agent_turn", "script", "tool", "wait", "runtime"}
 TRACE_SPAN_STATUSES = {"ok", "error", "cancelled", "unknown"}
 TRACE_MEASUREMENT_SOURCES = {"platform_reported", "host_measured", "inferred", "unavailable"}
@@ -113,6 +115,7 @@ TRACE_SPAN_FIELDS = {
     "attempt",
     "shared_task_ids",
 }
+TRACE_SPAN_START_FIELDS = TRACE_SPAN_FIELDS - {"status", "started_at", "finished_at", "duration_ms"}
 TRACE_METADATA_FIELDS = {
     "agent_role",
     "cache_hit",
@@ -1793,11 +1796,13 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
         elif task_id not in tasks:
             errors.append(f"execution trace task_id {task_id} does not exist")
 
-    allowed_record_fields = TRACE_COMMON_RECORD_FIELDS | (
-        {"span", "usage", "usage_source", "metadata"}
-        if event_type == "span_completed"
-        else {"payload", "source", "commit_id"}
-    )
+    if event_type == "span_completed":
+        event_fields = {"span", "usage", "usage_source", "metadata"}
+    elif event_type == "span_started":
+        event_fields = {"span", "metadata"}
+    else:
+        event_fields = {"payload", "source", "commit_id"}
+    allowed_record_fields = TRACE_COMMON_RECORD_FIELDS | event_fields
     unsupported_record_fields = sorted(set(record) - allowed_record_fields)
     if unsupported_record_fields:
         errors.append(f"execution trace record fields unsupported: {', '.join(unsupported_record_fields)}")
@@ -1812,7 +1817,7 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
         for field, values in refs.items():
             if not _valid_trace_refs(values):
                 errors.append(f"execution trace refs {field} must be a list of safe single-line references")
-    if event_type != "span_completed":
+    if event_type not in TRACE_SPAN_EVENT_TYPES:
         payload = record.get("payload", {})
         if not isinstance(payload, dict):
             errors.append("execution trace payload must be an object")
@@ -1835,7 +1840,8 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
         errors.append("execution trace span must be an object")
         return errors
 
-    unsupported_span_fields = sorted(set(span) - TRACE_SPAN_FIELDS)
+    allowed_span_fields = TRACE_SPAN_START_FIELDS if event_type == "span_started" else TRACE_SPAN_FIELDS
+    unsupported_span_fields = sorted(set(span) - allowed_span_fields)
     if unsupported_span_fields:
         errors.append(f"execution trace span fields unsupported: {', '.join(unsupported_span_fields)}")
 
@@ -1846,9 +1852,6 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
     kind = _require_trace_string(errors, span, "kind", "execution trace span")
     if kind is not None and kind not in TRACE_SPAN_KINDS:
         errors.append(f"execution trace span kind unsupported: {kind}")
-    status = _require_trace_string(errors, span, "status", "execution trace span")
-    if status is not None and status not in TRACE_SPAN_STATUSES:
-        errors.append(f"execution trace span status unsupported: {status}")
     source = _require_trace_string(errors, span, "measurement_source", "execution trace span")
     if source is not None and source not in TRACE_MEASUREMENT_SOURCES:
         errors.append(f"execution trace span measurement_source unsupported: {source}")
@@ -1856,19 +1859,6 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
     if attribution is not None and attribution not in TRACE_ATTRIBUTIONS:
         errors.append(f"execution trace span attribution unsupported: {attribution}")
 
-    try:
-        started_at = _parse_trace_timestamp(span.get("started_at"), "span.started_at")
-        finished_at = _parse_trace_timestamp(span.get("finished_at"), "span.finished_at")
-        if finished_at < started_at:
-            errors.append("execution trace span finished_at must not precede started_at")
-    except TplanError as exc:
-        errors.append(str(exc))
-
-    duration_ms = span.get("duration_ms")
-    if isinstance(duration_ms, bool) or not isinstance(duration_ms, int) or duration_ms < 0:
-        errors.append("execution trace span duration_ms must be a non-negative integer")
-    if source == "unavailable" and duration_ms != 0:
-        errors.append("execution trace unavailable duration measurement must use duration_ms 0")
     attempt = span.get("attempt")
     if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
         errors.append("execution trace span attempt must be a positive integer")
@@ -1895,6 +1885,39 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
     if attribution in {"mission_overhead", "unattributed"} and task_id is not None:
         errors.append(f"execution trace {attribution} attribution requires task_id null")
 
+    metadata = record.get("metadata", {})
+    if not isinstance(metadata, dict):
+        errors.append("execution trace metadata must be an object")
+    else:
+        unsupported_metadata = sorted(set(metadata) - TRACE_METADATA_FIELDS)
+        if unsupported_metadata:
+            errors.append(f"execution trace metadata fields unsupported: {', '.join(unsupported_metadata)}")
+        for field, value in metadata.items():
+            if not isinstance(value, (str, int, bool)) or isinstance(value, float):
+                errors.append(f"execution trace metadata {field} must be a string, integer, or boolean")
+            elif isinstance(value, str) and not _valid_safe_trace_text(value, limit=160):
+                errors.append(f"execution trace metadata {field} must be a safe single-line string")
+
+    if event_type == "span_started":
+        return errors
+
+    status = _require_trace_string(errors, span, "status", "execution trace span")
+    if status is not None and status not in TRACE_SPAN_STATUSES:
+        errors.append(f"execution trace span status unsupported: {status}")
+    try:
+        started_at = _parse_trace_timestamp(span.get("started_at"), "span.started_at")
+        finished_at = _parse_trace_timestamp(span.get("finished_at"), "span.finished_at")
+        if finished_at < started_at:
+            errors.append("execution trace span finished_at must not precede started_at")
+    except TplanError as exc:
+        errors.append(str(exc))
+
+    duration_ms = span.get("duration_ms")
+    if isinstance(duration_ms, bool) or not isinstance(duration_ms, int) or duration_ms < 0:
+        errors.append("execution trace span duration_ms must be a non-negative integer")
+    if source == "unavailable" and duration_ms != 0:
+        errors.append("execution trace unavailable duration measurement must use duration_ms 0")
+
     usage = record.get("usage", {})
     if not isinstance(usage, dict):
         errors.append("execution trace usage must be an object")
@@ -1914,19 +1937,6 @@ def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> lis
         errors.append("execution trace usage_source unsupported")
     if isinstance(usage, dict) and usage and usage_source is None:
         errors.append("execution trace non-empty usage requires usage_source")
-
-    metadata = record.get("metadata", {})
-    if not isinstance(metadata, dict):
-        errors.append("execution trace metadata must be an object")
-    else:
-        unsupported_metadata = sorted(set(metadata) - TRACE_METADATA_FIELDS)
-        if unsupported_metadata:
-            errors.append(f"execution trace metadata fields unsupported: {', '.join(unsupported_metadata)}")
-        for field, value in metadata.items():
-            if not isinstance(value, (str, int, bool)) or isinstance(value, float):
-                errors.append(f"execution trace metadata {field} must be a string, integer, or boolean")
-            elif isinstance(value, str) and not _valid_safe_trace_text(value, limit=160):
-                errors.append(f"execution trace metadata {field} must be a safe single-line string")
     return errors
 
 
@@ -1935,7 +1945,56 @@ def validate_execution_trace(mission: dict[str, Any], records: Any) -> list[str]
         return ["execution trace must be a list of records"]
     errors: list[str] = []
     event_ids: set[str] = set()
-    span_ids: set[str] = set()
+    span_events: dict[str, dict[str, tuple[int, dict[str, Any]]]] = {}
+
+    def validate_span_pair(
+        span_id: str,
+        started_line: int,
+        started_record: dict[str, Any],
+        completed_line: int,
+        completed_record: dict[str, Any],
+    ) -> None:
+        if started_line >= completed_line:
+            errors.append(
+                f"execution trace line {started_line}: span_started must precede span_completed for {span_id}"
+            )
+        started_span = started_record.get("span", {})
+        completed_span = completed_record.get("span", {})
+        for field in (
+            "kind",
+            "label",
+            "measurement_source",
+            "attribution",
+            "attempt",
+            "parent_span_id",
+            "shared_task_ids",
+        ):
+            if started_span.get(field) != completed_span.get(field):
+                errors.append(
+                    f"execution trace line {completed_line}: span_started/span_completed {field} mismatch for {span_id}"
+                )
+        if started_record.get("task_id") != completed_record.get("task_id"):
+            errors.append(
+                f"execution trace line {completed_line}: span_started/span_completed task_id mismatch for {span_id}"
+            )
+        started_metadata = started_record.get("metadata", {})
+        completed_metadata = completed_record.get("metadata", {})
+        if isinstance(started_metadata, dict) and isinstance(completed_metadata, dict):
+            for field in set(started_metadata) & set(completed_metadata):
+                if started_metadata[field] != completed_metadata[field]:
+                    errors.append(
+                        f"execution trace line {completed_line}: span_started/span_completed metadata.{field} mismatch for {span_id}"
+                    )
+        try:
+            start_marker = _parse_trace_timestamp(started_record.get("timestamp"), "timestamp")
+            measured_start = _parse_trace_timestamp(completed_span.get("started_at"), "span.started_at")
+            if measured_start < start_marker:
+                errors.append(
+                    f"execution trace line {completed_line}: measured span start precedes span_started marker for {span_id}"
+                )
+        except TplanError:
+            pass
+
     for index, record in enumerate(records, start=1):
         for error in validate_execution_trace_record(mission, record):
             errors.append(f"execution trace line {index}: {error}")
@@ -1946,12 +2005,25 @@ def validate_execution_trace(mission: dict[str, Any], records: Any) -> list[str]
             if event_id in event_ids:
                 errors.append(f"execution trace line {index}: duplicate event_id {event_id}")
             event_ids.add(event_id)
+        event_type = record.get("event_type")
         span = record.get("span")
         span_id = span.get("span_id") if isinstance(span, dict) else None
-        if isinstance(span_id, str):
-            if span_id in span_ids:
-                errors.append(f"execution trace line {index}: duplicate span_id {span_id}")
-            span_ids.add(span_id)
+        if isinstance(span_id, str) and event_type in TRACE_SPAN_EVENT_TYPES:
+            events = span_events.setdefault(span_id, {})
+            if event_type in events:
+                errors.append(f"execution trace line {index}: duplicate {event_type} for span_id {span_id}")
+                continue
+            events[event_type] = (index, record)
+            if "span_started" in events and "span_completed" in events:
+                started_line, started_record = events["span_started"]
+                completed_line, completed_record = events["span_completed"]
+                validate_span_pair(
+                    span_id,
+                    started_line,
+                    started_record,
+                    completed_line,
+                    completed_record,
+                )
     return errors
 
 
@@ -1992,7 +2064,7 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
     normalized.setdefault("mission_id", _trace_mission_id(mission))
     normalized.setdefault("task_id", None)
     normalized.setdefault("refs", {})
-    if normalized.get("event_type") != "span_completed":
+    if normalized.get("event_type") not in TRACE_SPAN_EVENT_TYPES:
         normalized.setdefault("payload", {})
     errors = validate_execution_trace_record(mission, normalized)
     if errors:
@@ -2003,14 +2075,19 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
     if any(item.get("event_id") == event_id for item in existing):
         raise TplanError(f"execution trace event_id already exists: {event_id}")
     span_id = normalized.get("span", {}).get("span_id")
-    if span_id and any(item.get("span", {}).get("span_id") == span_id for item in existing):
-        raise TplanError(f"execution trace span_id already exists: {span_id}")
+    trace_errors = validate_execution_trace(mission, [*existing, normalized])
+    if trace_errors:
+        raise TplanError("; ".join(trace_errors))
     initialized = next((item for item in existing if item.get("event_type") == "mission_initialized"), None)
     if span_id and initialized is not None:
-        span_finished = _parse_trace_timestamp(normalized["span"]["finished_at"], "span.finished_at")
+        observed_at = (
+            _parse_trace_timestamp(normalized["span"]["finished_at"], "span.finished_at")
+            if normalized.get("event_type") == "span_completed"
+            else _parse_trace_timestamp(normalized["timestamp"], "timestamp")
+        )
         mission_started = _parse_trace_timestamp(initialized["timestamp"], "mission_initialized.timestamp")
-        if span_finished < mission_started:
-            raise TplanError("execution trace span must not finish before Mission initialization")
+        if observed_at < mission_started:
+            raise TplanError("execution trace span event must not precede Mission initialization")
 
     path = mission_paths(mission_dir)["trace"]
     previous = path.read_text(encoding="utf-8") if path.exists() else ""
@@ -2260,23 +2337,65 @@ def transition_task_status(
     return after
 
 
-def record_execution_span(mission_dir: Path, raw: Any) -> dict[str, Any]:
+def start_execution_span(mission_dir: Path, raw: Any) -> dict[str, Any]:
+    """Persist a sanitized host-entry marker before an observed operation begins."""
     if not isinstance(raw, dict):
-        raise TplanError("execution span input must be an object")
+        raise TplanError("execution span start input must be an object")
     mission = read_mission(mission_dir)
     span = dict(raw.get("span", {})) if isinstance(raw.get("span"), dict) else raw.get("span")
     if isinstance(span, dict):
         span.setdefault("span_id", f"SP{uuid.uuid4().hex[:12]}")
         span.setdefault("parent_span_id", None)
         span.setdefault("attempt", 1)
+    record = {
+        "schema_version": EXECUTION_TRACE_SCHEMA_VERSION,
+        "event_id": f"X{uuid.uuid4().hex[:12]}",
+        "event_type": "span_started",
+        "timestamp": raw.get("timestamp") or now_iso(),
+        "mission_id": _trace_mission_id(mission),
+        "task_id": raw.get("task_id"),
+        "span": span,
+        "refs": raw.get("refs", {}),
+    }
+    if "metadata" in raw:
+        record["metadata"] = raw["metadata"]
+    return append_execution_trace_record(mission_dir, record)
+
+
+def record_execution_span(mission_dir: Path, raw: Any) -> dict[str, Any]:
+    """Persist a completed span, either standalone or paired with span_started."""
+    if not isinstance(raw, dict):
+        raise TplanError("execution span input must be an object")
+    mission = read_mission(mission_dir)
+    span = dict(raw.get("span", {})) if isinstance(raw.get("span"), dict) else raw.get("span")
+    started_record: dict[str, Any] | None = None
+    if isinstance(span, dict):
+        span.setdefault("span_id", f"SP{uuid.uuid4().hex[:12]}")
+        started_record = next(
+            (
+                record
+                for record in read_execution_trace(mission_dir)
+                if record.get("event_type") == "span_started"
+                and record.get("span", {}).get("span_id") == span["span_id"]
+            ),
+            None,
+        )
+        if started_record is not None:
+            for field, value in started_record["span"].items():
+                span.setdefault(field, value)
+        span.setdefault("parent_span_id", None)
+        span.setdefault("attempt", 1)
     usage = raw.get("usage", {})
+    task_id = raw.get("task_id") if "task_id" in raw else (
+        started_record.get("task_id") if started_record is not None else None
+    )
     record = {
         "schema_version": EXECUTION_TRACE_SCHEMA_VERSION,
         "event_id": f"X{uuid.uuid4().hex[:12]}",
         "event_type": "span_completed",
         "timestamp": raw.get("timestamp") or (span.get("finished_at") if isinstance(span, dict) else now_iso()),
         "mission_id": _trace_mission_id(mission),
-        "task_id": raw.get("task_id"),
+        "task_id": task_id,
         "span": span,
         "usage": usage,
         "refs": raw.get("refs", {}),
@@ -2285,8 +2404,12 @@ def record_execution_span(mission_dir: Path, raw: Any) -> dict[str, Any]:
         record["usage_source"] = raw.get("usage_source") or (
             span.get("measurement_source") if isinstance(span, dict) else None
         )
-    if "metadata" in raw:
+    if "metadata" in raw and not isinstance(raw.get("metadata"), dict):
         record["metadata"] = raw["metadata"]
+    elif started_record is not None or "metadata" in raw:
+        metadata = dict(started_record.get("metadata", {})) if started_record is not None else {}
+        metadata.update(raw.get("metadata", {}))
+        record["metadata"] = metadata
     return append_execution_trace_record(mission_dir, record)
 
 
