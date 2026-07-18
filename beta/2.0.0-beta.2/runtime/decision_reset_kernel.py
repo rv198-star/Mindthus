@@ -280,4 +280,3 @@ def run_deterministic_qualification(root: Path) -> dict[str, Any]:
         for fixture in fixtures.values()
     )
     return {"schema_version": SCHEMA_VERSION, "status": "passed" if all_pass else "failed", "fixtures": fixtures}
-

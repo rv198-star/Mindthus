@@ -41,4 +41,3 @@ def test_duplicate_event_is_idempotent(tmp_path: Path) -> None:
     second = runtime.append_source("attempt", {"content": "final_empty"}, event_id="a1")
     assert first == second
     assert len(runtime.ledger.records()) == 1
-
