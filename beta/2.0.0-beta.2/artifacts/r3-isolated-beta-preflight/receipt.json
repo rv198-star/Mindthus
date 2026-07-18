@@ -1,0 +1,49 @@
+{
+  "schema_version": "mindthus-beta2-r3-isolated-beta-preflight-v0.1",
+  "created_at": "2026-07-18T17:40:23Z",
+  "source_commit": "5ace6980",
+  "semantic_calls": 0,
+  "global_plugin_state_mutated": false,
+  "release_pack": {
+    "release_line": "2.0-beta.1",
+    "version": "2.0.0-beta.1",
+    "plugin_id": "mindthus-beta@mindthus-beta",
+    "manifest_sha256": "26497ff084c1e1b8442a7d3faa8aff9c4cb2ec758d4eb5ee0f09239c1e894100",
+    "default_prompt": "Route directly to mindthus-beta:<owner>; use mindthus-beta:using-mindthus only for genuine owner ambiguity.",
+    "default_prompt_characters": 107,
+    "default_prompt_sha256": "c2a1304f1a86f2866dc8cf0f995f893bd2a860c041ee54c7747f3559c7f9a5b3",
+    "passive_kernel_sha256": "861677c2c74a7e6a87b1cdc7a8a38817e1e14093e95e2c2ce0e7b7a2231bd656",
+    "hook_script_sha256": "45a219e14be2105a72ee8e2d6815a4a68f043bab885e2264ba02ad933d7759f6"
+  },
+  "isolated_host_observation": {
+    "codex_home": "/private/tmp/mindthus-beta2-codex-home.ZD0yIA",
+    "installed_plugins": [
+      "mindthus-beta@mindthus-beta"
+    ],
+    "stable_runtime_state": "not-installed",
+    "runtime_isolation_status": "isolated-observed",
+    "package_integrity": "ok",
+    "carrier_status": "verified",
+    "hook_state": "unknown",
+    "passive_kernel_status": "degraded",
+    "direct_owner_status": "packaged-verified",
+    "login_status": "not-logged-in"
+  },
+  "manual_carrier_check": {
+    "hook_executable": true,
+    "emitted_exact_packaged_kernel": true,
+    "claim_ceiling": "Proves the packaged carrier; does not prove Codex host SessionStart firing."
+  },
+  "formal_gate": {
+    "status": "BLOCKED_PENDING_AUTHENTICATED_LIVE_SESSION",
+    "reason": "Thin-kernel arm identity requires observed host firing, not manual hook execution.",
+    "required_next_authority": {
+      "generator_calls": 1,
+      "judge_calls": 0,
+      "formal_arm_sampling": false,
+      "release_publication": false,
+      "credential_action": "Allow the isolated temporary Codex Home to read the existing Codex login for this one qualification session."
+    }
+  },
+  "content_digest_before_digest_field": "4aed831434197ee0af83798d9dcaced6bdb9e1715940108f17ef5a22327ec81e"
+}
