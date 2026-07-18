@@ -38,7 +38,8 @@ scripts. Platform and host cost need an explicit observer:
 | state mutation | TPlan runtime | automatic lifecycle event |
 
 Missing data stays absent. Never replace an unavailable Token field or duration with a
-fabricated zero.
+fabricated zero. A category with no emitted span is `not reported`, not automatically
+zero or not applicable.
 
 ## Span Fields
 

@@ -337,7 +337,17 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(active.returncode, 0, active.stderr)
             partial = render_json(mission_dir, "--view", "audit")
             self.assertEqual(partial["trace"]["coverage"], "partial")
+            self.assertIsNone(partial["mission"]["elapsed_ms"])
+            self.assertIsNotNone(partial["mission"]["observed_elapsed_ms"])
+            partial_node = next(node for node in partial["nodes"] if node["id"] == "S1")
+            self.assertIsNone(partial_node["active_duration_ms"])
+            self.assertEqual(partial_node["active_duration_source"], "partial")
             self.assertEqual(partial["mission"]["cost"]["span_count"], 0)
+            audit = run_script(
+                "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
+            )
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn("| not reported | not reported |", audit.stdout)
 
     def test_privacy_guard_rejects_raw_content_without_appending_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -404,7 +414,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("S1", report["visible_node_ids"])
             markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
-            self.assertIn("| unknown | n/a | unknown |", markdown.stdout)
+            self.assertIn("| unknown | not reported | unknown |", markdown.stdout)
             self.assertIn("AI unknown", markdown.stdout)
 
     def test_traced_command_records_exit_metadata_but_not_command_or_output(self):
