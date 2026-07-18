@@ -49,6 +49,43 @@ def git_commit_exists(repo_root: Path, commit: str) -> bool:
     return result.returncode == 0
 
 
+def build_codex_command(auth: dict[str, Any], repo_root: Path, prompt: str) -> list[str]:
+    """Build the exact command, keeping global options before the exec subcommand."""
+
+    model = auth["model"]
+    return [
+        "codex",
+        "--ask-for-approval",
+        "never",
+        "exec",
+        "--json",
+        "--ephemeral",
+        "--sandbox",
+        "read-only",
+        "-m",
+        str(model["family"]),
+        "-c",
+        f'model_reasoning_effort="{model["reasoning_effort"]}"',
+        "-C",
+        str(repo_root),
+        prompt,
+    ]
+
+
+def validate_command_parser(command: list[str], cwd: Path) -> dict[str, Any]:
+    """Exercise the final argv through clap without starting a model turn."""
+
+    check_command = command[:-1] + ["--help"]
+    result = subprocess.run(check_command, cwd=cwd, text=True, capture_output=True, timeout=20)
+    return {
+        "command": check_command,
+        "returncode": result.returncode,
+        "stdout_sha256": sha256_bytes(result.stdout.encode("utf-8")),
+        "stderr_sha256": sha256_bytes(result.stderr.encode("utf-8")),
+        "stderr": result.stderr,
+    }
+
+
 def validate_authority(
     *, repo_root: Path, auth_path: Path, charter_path: Path, design_path: Path
 ) -> tuple[dict[str, Any], dict[str, Any], str, str]:
@@ -69,11 +106,25 @@ def validate_authority(
         raise ValueError("concurrency must be exactly one")
     if auth.get("limits", {}).get("authority_mode") != "TAIL_ACCEPTED":
         raise ValueError("authority mode must be explicit TAIL_ACCEPTED")
+    if auth.get("model") != charter.get("model"):
+        raise ValueError("authorization/charter model mismatch")
+    charter_limits = charter.get("qualification", {})
+    for key in (
+        "max_generator_calls",
+        "max_paired_judge_calls",
+        "concurrency",
+        "local_time_limit_seconds",
+        "authority_mode",
+    ):
+        if auth.get("limits", {}).get(key) != charter_limits.get(key):
+            raise ValueError(f"authorization/charter limit mismatch: {key}")
     if not auth.get("tail_acceptance", {}).get("accepted"):
         raise ValueError("tail acceptance is not explicit")
     if auth.get("formal_arm_sampling") or auth.get("release_publication"):
         raise ValueError("formal arm and release/publication must remain disabled")
     candidate = str(auth.get("candidate_commit", ""))
+    if candidate != str(charter.get("candidate_commit", "")):
+        raise ValueError("authorization/charter candidate mismatch")
     if not candidate or not git_commit_exists(repo_root, candidate):
         raise ValueError("candidate commit is not present in the repository")
     now = time.time()
@@ -160,6 +211,87 @@ def main() -> int:
         },
         event_id=f"authorization:{auth['program_id']}:{auth_digest}",
     )
+
+    raw_path = out / "raw-stream.bin"
+    prompt = (
+        "This is a lifecycle qualification probe. Respond with exactly PROBE_OK. "
+        "Do not inspect files, use tools, or make changes."
+    )
+    command = build_codex_command(auth, repo_root, prompt)
+    parser_check = validate_command_parser(command, repo_root)
+    runtime.append_source(
+        "interface_precheck",
+        {
+            "command": parser_check["command"],
+            "returncode": parser_check["returncode"],
+            "stdout_sha256": parser_check["stdout_sha256"],
+            "stderr_sha256": parser_check["stderr_sha256"],
+        },
+        event_id="interface-precheck:generator:1",
+    )
+    if parser_check["returncode"] != 0:
+        runtime.append_source(
+            "provider_terminal",
+            {
+                "infrastructure_receipt": True,
+                "provider_code": "interface_precheck_failed",
+                "stderr": parser_check["stderr"],
+                "finished_at": utc_now(),
+            },
+            event_id="provider-terminal:precheck",
+        )
+        cut = runtime.seal_cut(reason="qualification_interface_precheck_failed")
+        terminal = runtime.terminal_receipt()
+        receipt = {
+            "schema_version": "mindthus-beta2-r3-live-interface-v0.1",
+            "program_id": auth["program_id"],
+            "status": "BLOCKED_INTERFACE_PRECHECK",
+            "started_at": started_at,
+            "finished_at": utc_now(),
+            "design_sha256": design_sha,
+            "candidate_commit": candidate,
+            "generator_calls": 0,
+            "judge_calls": 0,
+            "formal_arm_sampling": False,
+            "release_publication": False,
+            "decision_cut_digest": cut["digest"],
+            "kernel_terminal": terminal,
+            "parser_check": parser_check,
+        }
+        receipt["receipt_digest"] = digest(receipt)
+        (out / "qualification-receipt.json").write_text(canonical_json(receipt) + "\n", encoding="utf-8")
+        print(json.dumps({"status": receipt["status"], "generator_calls": 0, "digest": receipt["receipt_digest"]}, ensure_ascii=False))
+        return 2
+
+    cutoff = datetime.fromisoformat(str(auth["cutoff_at"]).replace("Z", "+00:00")).timestamp()
+    if time.time() >= cutoff:
+        runtime.append_source(
+            "provider_terminal",
+            {
+                "infrastructure_receipt": True,
+                "provider_code": "cutoff_before_request_start",
+                "finished_at": utc_now(),
+            },
+            event_id="provider-terminal:prestart-cutoff",
+        )
+        cut = runtime.seal_cut(reason="qualification_cutoff_before_request_start")
+        terminal = runtime.terminal_receipt()
+        receipt = {
+            "schema_version": "mindthus-beta2-r3-live-interface-v0.1",
+            "program_id": auth["program_id"],
+            "status": "BLOCKED_CUTOFF_BEFORE_REQUEST",
+            "started_at": started_at,
+            "finished_at": utc_now(),
+            "generator_calls": 0,
+            "judge_calls": 0,
+            "decision_cut_digest": cut["digest"],
+            "kernel_terminal": terminal,
+        }
+        receipt["receipt_digest"] = digest(receipt)
+        (out / "qualification-receipt.json").write_text(canonical_json(receipt) + "\n", encoding="utf-8")
+        print(json.dumps({"status": receipt["status"], "generator_calls": 0, "digest": receipt["receipt_digest"]}, ensure_ascii=False))
+        return 2
+
     runtime.append_source(
         "reservation",
         {"generator_slot": 1, "judge_slots": 0, "concurrency": 1, "reserved_at": started_at},
@@ -167,31 +299,9 @@ def main() -> int:
     )
     runtime.append_source(
         "request_start",
-        {"generator_slot": 1, "started_at": started_at, "model": auth["model"]},
+        {"generator_slot": 1, "started_at": started_at, "model": auth["model"], "parser_check": "passed"},
         event_id="request-start:generator:1",
     )
-
-    raw_path = out / "raw-stream.bin"
-    prompt = (
-        "This is a lifecycle qualification probe. Respond with exactly PROBE_OK. "
-        "Do not inspect files, use tools, or make changes."
-    )
-    command = [
-        "codex",
-        "exec",
-        "--json",
-        "--ephemeral",
-        "--ask-for-approval",
-        "never",
-        "--sandbox",
-        "read-only",
-        "-m",
-        auth["model"]["family"],
-        "-C",
-        str(repo_root),
-        prompt,
-    ]
-    cutoff = datetime.fromisoformat(str(auth["cutoff_at"]).replace("Z", "+00:00")).timestamp()
     process: subprocess.Popen[bytes] | None = None
     chunks: list[dict[str, Any]] = []
     stdout_bytes = bytearray()
