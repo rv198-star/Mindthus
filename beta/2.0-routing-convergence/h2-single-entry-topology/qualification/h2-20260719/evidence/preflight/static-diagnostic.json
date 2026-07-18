@@ -1,0 +1,153 @@
+{
+  "schema_version": "mindthus-h2-diagnostic-v0.1",
+  "integrity": "ok",
+  "runtime_isolation_status": "isolated-reported",
+  "claim_ceiling": "static package and reported isolation only; entry activation, on-demand owner reads, passive obligations, quality, tokens, and usability remain unproven",
+  "checks": [
+    {
+      "id": "profile-contract",
+      "status": "ok",
+      "detail": "unpublished Codex-only H2 profile"
+    },
+    {
+      "id": "plugin-manifest",
+      "status": "ok",
+      "detail": "one skills root, no Hook, no defaultPrompt"
+    },
+    {
+      "id": "single-discoverable-skill",
+      "status": "ok",
+      "detail": "['skills/using-mindthus/SKILL.md']"
+    },
+    {
+      "id": "no-reference-skill-atlas",
+      "status": "ok",
+      "detail": "[]"
+    },
+    {
+      "id": "no-reference-method-atlas",
+      "status": "ok",
+      "detail": "reference/1.4.6/docs/methodologies"
+    },
+    {
+      "id": "owner-lock:3l5s",
+      "status": "ok",
+      "detail": "cf9eee7bfac3f2f6a31f9f1187387e9e7ae95b79353b71fe29b341074900fcab"
+    },
+    {
+      "id": "owner-lock:edsp",
+      "status": "ok",
+      "detail": "77bc4470289ba1f96a382c682ed3d41be1b05195d3413a89321e59e53e450a1d"
+    },
+    {
+      "id": "owner-lock:sela",
+      "status": "ok",
+      "detail": "5ae694fedc138df846d674823f1331ef7d2cada55edcc015a0bd4568ecce3095"
+    },
+    {
+      "id": "owner-lock:mpg",
+      "status": "ok",
+      "detail": "8084f8a07fb9cb30ca8c4f8f8074f3473a39c5e519d1bd3dfbfd54d269ce487f"
+    },
+    {
+      "id": "owner-lock:wae",
+      "status": "ok",
+      "detail": "ca81dbecdc6587a732eeb79b0f53d39d7767304c8e1d3216b5ec1312db7058ef"
+    },
+    {
+      "id": "owner-lock:tvg",
+      "status": "ok",
+      "detail": "259b4d68e5757a85837b73bc8a2ea0b955679ead38ac58650c602d615de529e7"
+    },
+    {
+      "id": "owner-lock:tplan",
+      "status": "ok",
+      "detail": "e5504cdbf6b8b903e51f9b4997dd022b67342677db982c98353ab5a9ae395948"
+    },
+    {
+      "id": "owner-companion-paths",
+      "status": "ok",
+      "detail": "declared=4 broken=[]"
+    },
+    {
+      "id": "owner-lock:_runtime",
+      "status": "ok",
+      "detail": "7f09db74c5e22bf2a9faa645c62a5f6ed942095e63197cf95264a4ec7ff85db1"
+    },
+    {
+      "id": "owner-index",
+      "status": "ok",
+      "detail": "owner_refs=7"
+    },
+    {
+      "id": "forbidden:AGENTS.md",
+      "status": "ok",
+      "detail": "AGENTS.md"
+    },
+    {
+      "id": "forbidden:hooks",
+      "status": "ok",
+      "detail": "hooks"
+    },
+    {
+      "id": "forbidden:runtime/passive-activation-kernel.md",
+      "status": "ok",
+      "detail": "runtime/passive-activation-kernel.md"
+    },
+    {
+      "id": "forbidden:docs/methodologies",
+      "status": "ok",
+      "detail": "docs/methodologies"
+    },
+    {
+      "id": "forbidden:scripts/log-fidelity-usage.py",
+      "status": "ok",
+      "detail": "scripts/log-fidelity-usage.py"
+    },
+    {
+      "id": "forbidden:scripts/log-mindthus-runtime.py",
+      "status": "ok",
+      "detail": "scripts/log-mindthus-runtime.py"
+    },
+    {
+      "id": "forbidden:scripts/primitives",
+      "status": "ok",
+      "detail": "scripts/primitives"
+    },
+    {
+      "id": "forbidden:scripts/run-fidelity-judge.py",
+      "status": "ok",
+      "detail": "scripts/run-fidelity-judge.py"
+    },
+    {
+      "id": "artifact:STATUS.md",
+      "status": "ok",
+      "detail": "02b62135a3cc475505a1b0a330d784cb7b851199ab1662c5e9c6b8aad6a6a435"
+    },
+    {
+      "id": "artifact:reference/1.4.6/reference-lock.json",
+      "status": "ok",
+      "detail": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589"
+    },
+    {
+      "id": "artifact:scripts/check-h2-topology.py",
+      "status": "ok",
+      "detail": "53abc533f4c5a04749c46e7134fd30eb9a7a0f78183a07db0d2a91b55ca50dfd"
+    },
+    {
+      "id": "artifact:skills/using-mindthus/SKILL.md",
+      "status": "ok",
+      "detail": "3f522e7c3ef169d7364c6ae4d069b72d10e6da2995e5ded425ffe27ec1fadd0c"
+    },
+    {
+      "id": "artifact:skills/using-mindthus/references/owner-index.md",
+      "status": "ok",
+      "detail": "483a6cb6f1819818e884eb5dc5fe7132f8dd0bece536d885371a0f2553ad55c6"
+    },
+    {
+      "id": "generated:.codex-plugin/plugin.json",
+      "status": "ok",
+      "detail": "b1e4f1567f29195ed895d551b820960b76516ab0bba23ec1672efc483c20a347"
+    }
+  ]
+}

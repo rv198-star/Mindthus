@@ -1,0 +1,5 @@
+**Continue.** Retiring database A by Q4 remains the right direction, and the dual-write carrier has not shown structural failure. Tested rollback preserves optionality; the 40 engineer-weeks alone is not justification—it is sunk exposure.
+
+This approves continued migration work, not unconditional cutover. Hold the cutover if lag cannot drain to zero, reconciliation finds unexplained divergence, or rollback plus verification cannot fit safely inside the two-hour window. Switch only if representative rehearsals repeatedly show the dual-write design cannot meet those conditions or threatens Q4 more than an alternative.
+
+Because acceptable loss was not specified, use zero unexplained data loss as the cutover gate. The MPG lens makes the distinction explicit: continue the carrier, gate the irreversible step.

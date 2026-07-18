@@ -1,0 +1,32 @@
+{
+  "recommendation": "close",
+  "rationale": "H1 and H2 both reached their frozen rejection conditions; Stable comparison was correctly withheld, and no authorized path can produce new decision-changing evidence.",
+  "confidence": 100,
+  "evidence_links": [
+    "E485160cb",
+    "E50a3d76d",
+    "E816b2334",
+    "Ef6c6d11b",
+    "beta/2.0-routing-convergence/DECISION-REPORT.zh-CN.md"
+  ],
+  "proposed_mutations": [
+    {
+      "type": "set_mission_status",
+      "status": "completed"
+    }
+  ],
+  "requires_human": false,
+  "mission_alignment": "Closing with STOP_2X_EXPLORATION is one of the four authorized Mission outcomes and preserves every frozen acceptance threshold.",
+  "mission_review": {
+    "objective_alignment": "The Mission sought an evidence-backed continue, stop, or requires-William terminal outcome; STOP is now evidenced.",
+    "acceptance_gap": "No required terminal artifact remains; positive continuation criteria were not met and are not being inferred.",
+    "task_contribution": "All tasks now carry H1 rejection, H2 rejection, skipped-comparison, and terminal-report evidence.",
+    "roi_effect": "Further work has negative authorized ROI because it requires a rerun, new architecture, or relaxed boundary.",
+    "non_action_risk": "Stopping leaves 1.4.6 as the functional baseline and preserves reproducible evidence; it creates no release action."
+  },
+  "path_assessment": {
+    "marginal_roi": "negative",
+    "path_role": "dominant_path",
+    "evidence_delta": "no_new_evidence_expected"
+  }
+}
