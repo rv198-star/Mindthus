@@ -1,0 +1,29 @@
+{
+  "schema_version": "mindthus-beta2-decision-cases-v0.6",
+  "repeat_count": 3,
+  "pilot_units": [
+    {"case_id": "b2-public-frame", "repeat": 1},
+    {"case_id": "b2-dev-multi-primitive", "repeat": 1},
+    {"case_id": "b2-dev-near-normal-debugging", "repeat": 1}
+  ],
+  "buckets": {
+    "kernel-benefit": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-anti-spiral",
+      "b2-dev-multi-primitive"
+    ],
+    "routing-integrity": [
+      "b2-dev-owner-wae",
+      "b2-dev-arbitrator-overlap"
+    ],
+    "stay-asleep": [
+      "b2-dev-near-normal-debugging",
+      "b2-dev-near-sufficient-evidence"
+    ]
+  },
+  "arm_ids": ["stable", "direct-only", "thin-kernel"],
+  "successful_batches": 24,
+  "successful_generation_outputs": 72,
+  "successful_paired_judge_calls": 48
+}
