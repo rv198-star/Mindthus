@@ -1,5 +1,9 @@
 # Mindthus 2.0.0-beta.2 — Behavior Evaluation
 
+> Archived: Beta.2 ended `STOP_UNPROVEN / SUPERSEDED`. See
+> [`BETA2-CLOSURE.md`](BETA2-CLOSURE.md). No further model runs, protocol repair, or
+> release work is authorized on this line.
+
 Status: visible-case protocol v0.3 is frozen and authorized; the real smoke stopped on
 its first generation cell because required native latency evidence was unavailable. No
 Arm comparison, judge run, matched run, or release preparation has started.
