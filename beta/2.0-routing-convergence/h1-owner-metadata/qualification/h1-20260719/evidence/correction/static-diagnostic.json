@@ -1,0 +1,133 @@
+{
+  "schema_version": "mindthus-h1-diagnostic-v0.1",
+  "integrity": "ok",
+  "runtime_isolation_status": "isolated-reported",
+  "claim_ceiling": "static package and reported isolation only; activation, owner selection, passive recall, answer quality, tokens, and latency remain unproven",
+  "checks": [
+    {
+      "id": "profile-contract",
+      "status": "ok",
+      "detail": "distinct unpublished Codex-only H1 profile"
+    },
+    {
+      "id": "plugin-manifest",
+      "status": "ok",
+      "detail": "neutral default prompt and no Hook"
+    },
+    {
+      "id": "forbidden:AGENTS.md",
+      "status": "ok",
+      "detail": "AGENTS.md"
+    },
+    {
+      "id": "forbidden:hooks",
+      "status": "ok",
+      "detail": "hooks"
+    },
+    {
+      "id": "forbidden:runtime/passive-activation-kernel.md",
+      "status": "ok",
+      "detail": "runtime/passive-activation-kernel.md"
+    },
+    {
+      "id": "forbidden:docs/methodologies",
+      "status": "ok",
+      "detail": "docs/methodologies"
+    },
+    {
+      "id": "forbidden:scripts/log-fidelity-usage.py",
+      "status": "ok",
+      "detail": "scripts/log-fidelity-usage.py"
+    },
+    {
+      "id": "forbidden:scripts/log-mindthus-runtime.py",
+      "status": "ok",
+      "detail": "scripts/log-mindthus-runtime.py"
+    },
+    {
+      "id": "forbidden:scripts/primitives",
+      "status": "ok",
+      "detail": "scripts/primitives"
+    },
+    {
+      "id": "forbidden:scripts/run-fidelity-judge.py",
+      "status": "ok",
+      "detail": "scripts/run-fidelity-judge.py"
+    },
+    {
+      "id": "artifact:STATUS.md",
+      "status": "ok",
+      "detail": "0afcf274139f1d9a987166a9f775004bfd0a55cc957212232643ffa40b689b3b"
+    },
+    {
+      "id": "artifact:reference/1.4.6/reference-lock.json",
+      "status": "ok",
+      "detail": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589"
+    },
+    {
+      "id": "artifact:scripts/check-h1-metadata.py",
+      "status": "ok",
+      "detail": "d8f7c26cbad12fdb5bb3122fee97fab5d0ef1f143b2a9fa695c4a13c81fab658"
+    },
+    {
+      "id": "artifact:skills/using-mindthus/SKILL.md",
+      "status": "ok",
+      "detail": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"
+    },
+    {
+      "id": "generated:.codex-plugin/plugin.json",
+      "status": "ok",
+      "detail": "d9a91ab14d7c578feba5406fc681b480bfb1510de13826ccc9e3b9418768734d"
+    },
+    {
+      "id": "thin-entry-lock",
+      "status": "ok",
+      "detail": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"
+    },
+    {
+      "id": "owner:3l5s",
+      "status": "ok",
+      "detail": "body=e97fc134b409cbfb9761ba8440fd2a3672688a64f7878e072e711ca624eb51fc; description_bytes=319"
+    },
+    {
+      "id": "owner:edsp",
+      "status": "ok",
+      "detail": "body=a8d824170ace39e16ea62e2783ceaebf0c37635e5c75b4979150119f68cdca0c; description_bytes=244"
+    },
+    {
+      "id": "owner:sela",
+      "status": "ok",
+      "detail": "body=6f49c8844d0975aaa91bf2e89edfe28580021738af380244917398013570eb70; description_bytes=295"
+    },
+    {
+      "id": "owner:mpg",
+      "status": "ok",
+      "detail": "body=b285388e8761fa410478bd0198b797ebd6b8aabb4f87180d56806841293fb79f; description_bytes=295"
+    },
+    {
+      "id": "owner:wae",
+      "status": "ok",
+      "detail": "body=2b22931b3f7b71f7b88b52d6bdc3ea7925b877dc4bd3c16c977c2e40ded77578; description_bytes=276"
+    },
+    {
+      "id": "owner:tvg",
+      "status": "ok",
+      "detail": "body=ce8054c9b1cf4aa3c3bc95951fe159b6365372f13f43771f7dadee3bb0c00c92; description_bytes=150"
+    },
+    {
+      "id": "owner:tplan",
+      "status": "ok",
+      "detail": "body=d4bf945aacbf25ae98bc2b55499291301874d7c0701a40d34265b3a3235dfd2d; description_bytes=223"
+    },
+    {
+      "id": "owner-inventory",
+      "status": "ok",
+      "detail": "['3l5s', 'edsp', 'sela', 'mpg', 'wae', 'tvg', 'tplan']"
+    },
+    {
+      "id": "namespace-isolation",
+      "status": "ok",
+      "detail": "[]"
+    }
+  ]
+}

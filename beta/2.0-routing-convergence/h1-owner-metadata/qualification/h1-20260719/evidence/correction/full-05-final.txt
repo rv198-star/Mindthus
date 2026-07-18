@@ -1,0 +1,3 @@
+Decision for now: **hold the migration—do not continue yet, but don’t abandon it.**
+
+To make the final continue/stop call, provide: what is being migrated, current rollout stage, passed/failed evidence, whether rollback is proven, and the maximum acceptable outage/data loss/cost.

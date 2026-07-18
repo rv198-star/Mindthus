@@ -1,6 +1,6 @@
 # Mindthus H1 Owner Metadata Candidate
 
-Status: `UNPUBLISHED / ONE-TIME CORRECTION STATIC QUALIFIED / LIVE PENDING`
+Status: `H1_REJECTED / unpublished / route closed`
 
 This Codex-only candidate tests whether precise native Skill discovery metadata can
 remove the two owner false positives observed in N3 while retaining direct owner recall.
@@ -13,6 +13,13 @@ correction therefore adds a package-time 3L5S description replacement grounded i
 existing body domain. See `CORRECTION.md` in the source tree. The thin entry, all seven
 owner bodies, the other four owner descriptions, the topology, and the neutral plugin
 prompt remain unchanged.
+
+The correction preserved 3L5S recall and eliminated every owner load on the fresh
+missing-context case. H1 still failed: after reading only the thin entry, Codex stated
+`hold the migration` before obtaining the answer-changing context. Owner metadata can
+control discovery precision, but it cannot make an already injected thin entry obey the
+required decision sequencing. No further H1 correction is allowed. See
+`qualification/h1-20260719/RESULT.md`.
 
 Build for isolated inspection:
 

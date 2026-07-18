@@ -2,10 +2,10 @@
   "schema_version": "mindthus-release-profile-v0.4",
   "release_line": "2.0-routing-h1-metadata",
   "version": "2.0.0-next.2",
-  "status": "unpublished-corrected-static-candidate",
+  "status": "h1-rejected",
   "release_preparation": "forbidden",
-  "live_qualification": "not-started",
-  "behavioral_evaluation": "pending",
+  "live_qualification": "completed-rejected",
+  "behavioral_evaluation": "owner-precision-fixed-decision-sequencing-failed",
   "path_base": "plugin-root",
   "stable_baseline": "1.4.6",
   "baseline_commit": "f9117426e23a0c986cd5a833571e9098e8ebc401",
@@ -88,7 +88,7 @@
     "scripts/run-fidelity-judge.py"
   ],
   "artifact_sha256": {
-    "STATUS.md": "0afcf274139f1d9a987166a9f775004bfd0a55cc957212232643ffa40b689b3b",
+    "STATUS.md": "c800c52cb549568d0124e906c0f9406d68e9018be46e6cc977373caf1a874f68",
     "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
     "scripts/check-h1-metadata.py": "d8f7c26cbad12fdb5bb3122fee97fab5d0ef1f143b2a9fa695c4a13c81fab658",
     "skills/using-mindthus/SKILL.md": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"

@@ -1,0 +1,3 @@
+Decision now: **stop at the next reversible checkpoint**—do not abandon or roll back yet. There isn’t enough evidence to justify more migration risk.
+
+To decide whether to resume, provide one compact snapshot: current completion %, measurable target, remaining cost/time, active failures, rollback window, and maximum acceptable loss. Continue only if the target remains achievable, critical failures are controlled, and rollback is still viable.

@@ -1,0 +1,3 @@
+Reading additional input from stdin...
+2026-07-18T21:17:57.775601Z  WARN codex_analytics::client: events failed with status 503 Service Unavailable: upstream connect error or disconnect/reset before headers. retried and the latest reset reason: connection timeout
+2026-07-18T21:18:04.751205Z  WARN codex_otel::events::session_telemetry: metrics counter [codex.skill.injected] failed: tag value contains invalid characters: mindthus-beta:using-mindthus

@@ -1,0 +1,87 @@
+The defensible conclusion is: **customer-impacting symptoms are reported, but the failing component, mechanism, and relationship to the deploy remain unproven.** Missing logs limit the investigation; they are not evidence of a cause.
+
+Use this as the investigation brief.
+
+## Investigation objective
+
+Determine:
+
+> Which request path first deviated from expected behavior, at what component boundary and time, and which evidence distinguishes a deploy regression from a pre-existing, dependency, configuration, data, or client-specific failure?
+
+## Current baseline
+
+Known:
+
+- Customer complaints were received.
+- A deployment occurred near the reported period.
+- Relevant logs are incomplete or absent.
+- Three fixes have been proposed.
+
+Not yet established:
+
+- Whether all complaints describe the same failure.
+- The last verified successful event and first verified failed event.
+- Whether failures began after the deploy.
+- Whether impacted requests ran the new version.
+- Where the request first diverged.
+- Why logs are missing: non-emission, sampling, pipeline loss, retention, or querying error.
+- Whether any proposed fix targets the actual failure mechanism.
+
+## Evidence plan
+
+| Workstream | Action | Required output | Owner role |
+|---|---|---|---|
+| Complaint normalization | Convert every complaint into a case row: customer, timestamp/timezone, operation, expected/actual result, surface, region, client version, request ID, retry outcome | Deduplicated cases grouped by matching symptom | Support/incident analyst |
+| Timeline | Record last known good, first known bad, deploy start/end by component, config/flag/schema/data changes, alerts, and recovery events | One timestamped timeline using a single timezone | Incident coordinator |
+| Version correlation | Determine which application version served each confirmed success and failure | Failure rate and sample counts by version | Release/service owner |
+| Request-path localization | Inspect edge, gateway, application, dependency, queue, and datastore evidence for matching requests | Earliest boundary where expected and actual behavior diverge | Service owners |
+| Log-gap diagnosis | Verify logging configuration, sampling, ingestion health, retention, index/query coverage, and access | Exact scope and cause of missing telemetry | Observability owner |
+| Controlled validation | Replay or reproduce representative cases in a safe environment; compare old/new versions or changed/unchanged cohorts | Repeatable test with observable pass/fail result | Engineering owner |
+
+Start with the smallest confirmed incident window: the last verified success through the first verified failure. Expand it only if evidence requires expansion.
+
+## Hypothesis ledger
+
+Track claims separately from fixes:
+
+| Hypothesis | Prediction that must be observable | Evidence against it |
+|---|---|---|
+| Deploy regression | Confirmed failures begin after deployment and disproportionately run the changed version or path; controlled reversal removes the symptom | Failures precede deployment, affect unchanged versions equally, or persist under reversal |
+| Dependency/data failure | Failures align with a dependency, entity, region, or data-state boundary across application versions | Same inputs succeed through the same dependency path during the affected window |
+| Configuration/flag/traffic change | Impact follows a specific cohort or routing/configuration boundary | Affected and unaffected cohorts share identical configuration and routing |
+| Client-specific failure | Failures cluster by client version, integration, payload, or retry behavior | Equivalent requests fail across unrelated clients |
+| Observability-only defect | Requests succeed but telemetry is absent through a demonstrable logging failure | Independent evidence confirms the customer operation itself failed |
+
+For each proposed fix—Fix 1, Fix 2, and Fix 3—record:
+
+- The hypothesis it assumes.
+- The mechanism it changes.
+- Its predicted measurable effect.
+- How quickly that effect should appear.
+- Reversibility and blast radius.
+- The evidence that would reject it.
+
+Do not describe a proposal as “the fix” until its causal prediction is validated. A reversible mitigation may still be used earlier to reduce customer impact, but it should be labeled a mitigation rather than root-cause proof.
+
+## Execution order
+
+1. Within 30 minutes, normalize complaints and establish the narrowest incident window.
+2. In parallel, construct the deploy/change timeline and diagnose the telemetry gap.
+3. Select representative failed and successful cases from the same operation and cohort.
+4. Trace those cases boundary by boundary.
+5. Update the hypothesis ledger with confirming and contradicting evidence.
+6. Run the least risky discriminating test—replay, cohort comparison, canary, or reversible change.
+7. Choose a remediation only after the evidence identifies a mechanism.
+
+## Root-cause acceptance gate
+
+State that the failure is identified only when one explanation:
+
+- Accounts for the confirmed customer cases.
+- Matches the timing and affected cohort.
+- Identifies the first failing boundary.
+- Explains how the observed symptom was produced.
+- Survives contradictory-evidence checks.
+- Is confirmed by reproduction, reversal, replay, or another meaningful counterfactual.
+
+Until then, incident updates should say: **“Root cause remains under investigation; current hypotheses are…”** rather than attributing the incident to the deploy or endorsing one of the three fixes.
