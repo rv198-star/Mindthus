@@ -1,0 +1,35 @@
+{
+  "schema_version": "mindthus-beta2-r3-qualification-authorization-v0.1",
+  "program_id": "mindthus-beta2-r3-qualification-20260719",
+  "status": "ACTIVE",
+  "issued_at": "2026-07-18T17:05:08Z",
+  "cutoff_at": "2026-07-18T17:20:08Z",
+  "design_sha256": "55e8e994423a1bac829a3ed8adc7bd9678cd83f54922fc9d6df8f08a3c43ec7e",
+  "candidate_commit": "f3e753f3",
+  "model": {
+    "family": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "limits": {
+    "max_generator_calls": 1,
+    "max_paired_judge_calls": 0,
+    "concurrency": 1,
+    "local_time_limit_seconds": 900,
+    "authority_mode": "TAIL_ACCEPTED"
+  },
+  "formal_arm_sampling": false,
+  "release_publication": false,
+  "william_stop_authority": true,
+  "tail_acceptance": {
+    "accepted": true,
+    "finite_token_cap": null,
+    "finite_cost_cap": null,
+    "basis": "Explicit user authorization; local wall-clock cutoff remains binding."
+  },
+  "judge_calls": 0,
+  "notes": [
+    "This authorization permits exactly one LIVE_INTERFACE Generator probe.",
+    "The candidate commit identifies the product/kernel baseline; qualification adapter files are execution support and do not silently change that binding.",
+    "No formal arm, A/B sampling, release, or publication is authorized."
+  ]
+}
