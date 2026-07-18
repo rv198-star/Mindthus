@@ -16,7 +16,7 @@ Use the trace to answer:
 
 - which nodes actually ran, and in what order
 - which nodes completed, blocked, paused, retried, or were added during execution
-- how much lifecycle wall time was observed
+- how much lifecycle elapsed time was observed
 - how much reported model, Agent-turn, script, tool, wait, or runtime time was consumed
 - which Token fields were reported by the platform
 - what result summary and stable artifact/evidence references were attached
@@ -166,9 +166,10 @@ The renderer never merges real nodes, reparents them, or invents display groups.
 large tree may be split only at real Task boundaries without changing topology.
 
 Step cards show direct cost; Task and SubTask cards show inclusive subtree cost. JSON
-exposes both. Actual elapsed is a wall-clock interval. Attributed wall time is the
-union of exact model, script, tool, wait, and runtime intervals, so nested and parallel
-spans are not double-counted. When lifecycle coverage is exact:
+exposes both. Actual elapsed is the natural time from observed start to finish.
+Attributed elapsed time is the union of exact model, script, tool, wait, and runtime
+intervals, so nested and parallel spans are not double-counted. When lifecycle coverage
+is exact:
 
 `actual elapsed = attributed wall coverage + unattributed elapsed`
 

@@ -495,6 +495,38 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("LLM 未知 · 脚本 未采集", markdown.stdout)
             self.assertIn("Token 未知", markdown.stdout)
 
+    def test_inferred_token_usage_is_visibly_marked_as_estimated(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            started = parse_time(read_jsonl(mission_dir / "execution_trace.jsonl")[0]["timestamp"])
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "model",
+                        "label": "estimated model usage",
+                        "status": "ok",
+                        "measurement_source": "inferred",
+                        "attribution": "exact",
+                        "started_at": iso(started),
+                        "finished_at": iso(started + timedelta(milliseconds=10)),
+                        "duration_ms": 10,
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                    "usage": {"input_tokens": 1200, "output_tokens": 180},
+                    "usage_source": "inferred",
+                },
+                "inferred-usage",
+            )
+
+            markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
+            self.assertEqual(markdown.returncode, 0, markdown.stderr)
+            self.assertIn("Token ≈入 1.2k / 出 180", markdown.stdout)
+            self.assertNotIn("墙钟", markdown.stdout)
+
     def test_traced_command_records_exit_metadata_but_not_command_or_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)

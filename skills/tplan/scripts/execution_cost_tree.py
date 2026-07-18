@@ -746,7 +746,10 @@ def _fmt_tokens(cost: dict[str, Any]) -> str:
         suffix.append(f"缓存 {_fmt_token_number(usage.get('cached_input_tokens', 0))}")
     if "reasoning_output_tokens" in fields:
         suffix.append(f"推理 {_fmt_token_number(usage.get('reasoning_output_tokens', 0))}")
-    return f"输入 {input_value} / 输出 {output_value}" + (f" ({', '.join(suffix)})" if suffix else "")
+    estimate_prefix = "≈" if cost["usage_sources"].get("inferred") else ""
+    return f"{estimate_prefix}输入 {input_value} / 输出 {output_value}" + (
+        f" ({', '.join(suffix)})" if suffix else ""
+    )
 
 
 def _fmt_tokens_compact(cost: dict[str, Any]) -> str:
@@ -768,7 +771,8 @@ def _fmt_tokens_compact(cost: dict[str, Any]) -> str:
         if "output_tokens" in fields
         else "?"
     )
-    return f"入 {input_value} / 出 {output_value}"
+    estimate_prefix = "≈" if cost["usage_sources"].get("inferred") else ""
+    return f"{estimate_prefix}入 {input_value} / 出 {output_value}"
 
 
 def _kind_time(cost: dict[str, Any], kinds: set[str]) -> int:
@@ -958,7 +962,8 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "口径：实际历时是墙钟区间；LLM、脚本、工具和等待是资源时间，嵌套或并行时不可直接相加。"
+            "口径：实际历时按开始到结束的自然经过时间计算；LLM、脚本、工具和等待是资源占用时间，"
+            "嵌套或并行时不可直接相加。"
             "已缓存输入包含在输入 Token 中，不会重复累计。",
         ]
     )
