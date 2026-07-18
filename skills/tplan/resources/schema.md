@@ -7,8 +7,11 @@ Each Mission directory contains:
 - `mission.json`: machine-readable Mission, Task, SubTask, and Step state.
 - `mission.md`: narrative, rationale, and review notes.
 - `evidence.jsonl`: append-only evidence event stream. This is not a process log.
+- `execution_trace.jsonl`: lifecycle and sanitized execution-cost events. This is not
+  acceptance evidence or a raw transcript.
 - `logs/`: active task-local step logs.
 - `archive/`: archived step logs and task summaries when needed.
+- `reports/`: generated progressive execution-cost trees and other read-only reports.
 
 Project-level Mission shared context memory lives outside the Mission directory:
 
@@ -88,6 +91,17 @@ Step remains the stable execution leaf.
 Structure changes should go through `scripts/add_node.py` or another runtime script.
 Agentic judgment decides what to add and why; scripts own field defaults, shape
 normalization, and validation before write.
+
+## Execution Trace Sidecar
+
+The Mission schema remains `tplan.v0.1`; execution telemetry uses the additive
+`tplan.execution_trace.v0.1` sidecar. Lifecycle records cover Mission initialization,
+dynamic node addition, task status, active node, and Mission status. Cost records use
+sanitized `span_completed` events.
+
+Trace coverage is `exact`, `partial`, or `snapshot_only`. Exact lifecycle coverage does
+not imply that every platform cost was observable. See `execution-trace.md` for the
+span, attribution, privacy, and renderer contracts.
 
 ## Adaptive Runtime Records
 

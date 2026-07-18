@@ -7,7 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from tplan_runtime import TplanError, read_mission, set_task_status, write_mission
+from tplan_runtime import TplanError, transition_task_status
 
 
 def main() -> int:
@@ -15,16 +15,20 @@ def main() -> int:
     parser.add_argument("mission_dir")
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--status", required=True)
+    parser.add_argument("--outcome-summary")
+    parser.add_argument("--evidence-ref", action="append", default=[])
+    parser.add_argument("--artifact-ref", action="append", default=[])
     args = parser.parse_args()
 
     mission_dir = Path(args.mission_dir)
     try:
-        mission = read_mission(mission_dir)
-        set_task_status(mission, args.task_id, args.status)
-        write_mission(
+        transition_task_status(
             mission_dir,
-            mission,
-            latest_state=f"Task {args.task_id} transitioned to {args.status}.",
+            args.task_id,
+            args.status,
+            outcome_summary=args.outcome_summary,
+            evidence_refs=args.evidence_ref,
+            artifact_refs=args.artifact_ref,
         )
     except (OSError, ValueError, TplanError) as exc:
         print(str(exc), file=sys.stderr)
