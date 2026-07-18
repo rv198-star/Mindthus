@@ -1,8 +1,19 @@
 # TPlan Actual Execution & Cost Tree Design
 
-Status: implemented on feature branch; release-line validation pending
+Status: implemented; 1.x verified; queued for the next 2.x shared-core checkpoint
 Date: 2026-07-18
 Issue: https://github.com/rv198-star/Mindthus/issues/121
+
+## Verification And Release Disposition
+
+- 1.x Stable-based branch: 189 TPlan tests and 620 full-repository tests pass.
+- The identical stable patch-id applies to the Beta2 source without conflict: 189 TPlan
+  tests and 792 non-frozen tests pass (10 skipped).
+- The current Beta2 release profile deliberately freezes the 1.4.6 `skills/tplan`
+  digest. Its package gate rejects the changed live tree as evaluation-identity drift.
+- The frozen reference lock, protocols, receipts, and evaluation evidence are unchanged.
+  This feature enters 2.x at the next checkpoint after `shared_core_ref` is separated
+  from `evaluation_baseline_ref`; the compatibility branch is not a republished Beta2.
 
 ## What This Gives The User
 
