@@ -17,6 +17,7 @@ LOCK_PATH = BETA_ROOT / "protocols" / "evaluation-protocol-v0.5.lock.json"
 PENDING_AUTH_PATH = (
     BETA_ROOT / "authorizations" / "issue-119-codex-v0.5.pending.json"
 )
+ACTIVE_AUTH_PATH = BETA_ROOT / "authorizations" / "issue-119-codex-v0.5.json"
 BUILDER_PATH = BETA_ROOT / "runtime" / "build-evaluation-protocol-v0.5.py"
 VALIDATOR_PATH = BETA_ROOT / "runtime" / "freeze-evaluation-protocol-v0.5.py"
 AUTH_BUILDER_PATH = BETA_ROOT / "runtime" / "build-execution-authorization-v0.5.py"
@@ -294,6 +295,18 @@ class BetaTwoIncrementalV05Tests(unittest.TestCase):
             validator.validate_authorization(
                 PENDING_AUTH_PATH, require_active=True, check_runtime=False
             )
+
+    def test_active_authorization_binds_only_the_initial_five_batches(self) -> None:
+        validator = load_module("beta2_active_auth_validator_v05", AUTH_VALIDATOR_PATH)
+        report = validator.validate_authorization(
+            ACTIVE_AUTH_PATH, require_active=True, check_runtime=False
+        )
+        self.assertEqual(report["status"], "authorized")
+        self.assertEqual(report["maximum_committed_batches"], 5)
+        self.assertEqual(report["maximum_generation_calls"], 17)
+        self.assertEqual(report["maximum_judge_calls"], 34)
+        self.assertEqual(report["token_budget"]["maximum"], 3_000_000)
+        self.assertFalse(report["release_preparation"])
 
     def test_prior_official_locks_remain_valid(self) -> None:
         for version in ("", "-v0.2", "-v0.3", "-v0.4"):

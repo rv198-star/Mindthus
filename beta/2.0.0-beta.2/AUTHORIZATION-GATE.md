@@ -1,15 +1,16 @@
 # Beta.2 #119 execution authorization gate
 
-## Pending incremental authorization (v0.5)
+## Authorized incremental smoke (v0.5)
 
-The user authorized the v0.5 design change, but that instruction did not authorize new
-semantic model calls. The frozen protocol SHA-256 is
+The earlier design-change instruction did not authorize semantic model calls. William
+has now separately confirmed the frozen identifiers and authorized only the initial
+five committed batches. The frozen protocol SHA-256 is
 `f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336`; the
 lock digest is
 `8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713`.
 
-`authorizations/issue-119-codex-v0.5.pending.json` proposes only the five-batch
-Judge-backed smoke:
+`authorizations/issue-119-codex-v0.5.json` binds only the five-batch Judge-backed
+smoke:
 
 - `gpt-5.6-sol` / `xhigh` for the generator and both isolated Judge sessions;
 - five committed case/repeat triplets, containing 15 generation outputs and 30 Judge
@@ -23,13 +24,14 @@ headroom; they do not increase the five-commit evidence ceiling. Previous v0.3/v
 consumption remains visible in the packet: 146 generation calls, 42 Judge calls, and
 8,133,510 counted tokens.
 
-The pending packet digest is
-`c110fb10bfc48f33617071eb9809e301f423ca7593aae968ccf4846f18b99440`.
-`runtime/validate-execution-authorization-v0.5.py --allow-pending` validates its shape,
-while the normal validator exits blocked. Real execution requires William to confirm
-the exact protocol and lock digests and authorize the five-batch/17-call/34-call/
-3,000,000-token ceiling. Any later batches require another explicit budget decision;
-v0.4 authority does not transfer.
+The retained pre-authorization packet digest is
+`c110fb10bfc48f33617071eb9809e301f423ca7593aae968ccf4846f18b99440`;
+the active authorization digest is
+`813b3cb648768db98d7782c0ddafc77396ac9eeb287586819e3ef5e880b79957`.
+`runtime/validate-execution-authorization-v0.5.py` validates the exact configuration,
+human evidence, protocol lock, installed Codex runtime, and native sandbox carrier
+before returning `authorized`. Any batch after the first five requires another explicit
+budget decision; v0.4 authority does not transfer.
 
 ## Current visible-case authorization (v0.3)
 
