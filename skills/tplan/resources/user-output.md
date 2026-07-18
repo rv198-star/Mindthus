@@ -109,6 +109,12 @@ python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-inte
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
 to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
 status, actual elapsed, cumulative LLM-call, script, tool, wait, Token, and result slots.
+The primary layout is a portrait SVG execution timeline: rows follow first-observed
+chronology, the left rail prints observed relative time, every card has a shared-scale
+range bar, and the declared hierarchy is overlaid as tree edges. Exact lifecycle
+coverage makes those offsets Mission-relative; partial coverage visibly uses the
+observed trace window. Vertical row spacing is ordinal and must never be interpreted as
+duration.
 Keep `host_measured`, `platform_reported`, and `inferred` visibly distinct. A
 host-measured model span is caller-visible request time, not a claim about pure provider
 inference time. Label the uncovered elapsed remainder as not exactly recorded; do not

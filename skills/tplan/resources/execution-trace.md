@@ -200,12 +200,23 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
   --output "$MISSION_DIR/reports/execution-cost-tree.md"
 ```
 
+Writing Markdown also writes `execution-cost-tree.svg` beside it and embeds that SVG as
+the primary diagram. Render SVG directly when a standalone image is preferred:
+
+```bash
+python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
+  --view standard \
+  --format svg \
+  --output "$MISSION_DIR/reports/execution-cost-tree.svg"
+```
+
 Other views:
 
 ```bash
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --view compact
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --view audit
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --focus T1
+python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --format svg
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --format json
 ```
 
@@ -219,6 +230,15 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --form
 
 The renderer never merges real nodes, reparents them, or invents display groups. A
 large tree may be split only at real Task boundaries without changing topology.
+
+Standard and Audit use a vertical execution timeline rather than a hierarchy-only TB
+layout. Rows are sorted by first observed time; the left rail prints the observed start
+offset. With exact lifecycle coverage the origin is Mission initialization; partial
+coverage uses and labels the observed trace window. Row spacing is ordinal to keep long
+idle gaps from inflating the image. The range strip at the bottom of every observed card
+is linearly scaled against the same elapsed window, so temporal position and duration
+remain comparable.
+Blue overlay edges preserve the declared Mission / Task / SubTask / Step hierarchy.
 
 Step cards show direct cost; Task and SubTask cards show inclusive subtree cost. JSON
 exposes both. Actual elapsed is the natural time from observed start to finish.

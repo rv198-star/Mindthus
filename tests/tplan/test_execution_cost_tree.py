@@ -4,6 +4,7 @@ import sys
 import tempfile
 import time
 import unittest
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -414,6 +415,116 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(compact["trace"]["hidden_node_count"], 2)
             self.assertTrue(compact["trace"]["projection"])
 
+    def test_standard_svg_is_a_vertical_timeline_with_one_card_per_real_node(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            for task_id, status in [
+                ("T1", "active"),
+                ("S1", "active"),
+                ("S1", "completed"),
+                ("T1", "completed"),
+            ]:
+                result = run_script(
+                    "transition_task.py",
+                    str(mission_dir),
+                    "--task-id",
+                    task_id,
+                    "--status",
+                    status,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+            report = render_json(mission_dir, "--view", "standard")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.4")
+            self.assertEqual(report["timeline"]["axis"], "vertical")
+            self.assertEqual(
+                report["timeline"]["row_positioning"],
+                "first_observed_chronological",
+            )
+            self.assertEqual(
+                report["timeline"]["row_spacing"],
+                "ordinal_not_duration_proportional",
+            )
+            observed_offsets = [
+                row["start_offset_ms"]
+                for row in report["timeline"]["rows"]
+                if row["start_offset_ms"] is not None
+            ]
+            self.assertEqual(observed_offsets, sorted(observed_offsets))
+
+            svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "standard",
+                "--format",
+                "svg",
+            )
+            self.assertEqual(svg.returncode, 0, svg.stderr)
+            root = ET.fromstring(svg.stdout)
+            self.assertEqual(root.attrib["data-layout"], "vertical-execution-timeline")
+            task_cards = [
+                element
+                for element in root.iter()
+                if element.attrib.get("class") == "task-card"
+            ]
+            self.assertEqual(
+                [element.attrib["data-task-id"] for element in task_cards],
+                [row["node_id"] for row in report["timeline"]["rows"]],
+            )
+            self.assertEqual(len(task_cards), report["trace"]["visible_node_count"])
+            range_bars = [
+                element.attrib["data-task-id"]
+                for element in root.iter()
+                if element.attrib.get("class") == "node-range"
+            ]
+            self.assertEqual(
+                range_bars,
+                [
+                    row["node_id"]
+                    for row in report["timeline"]["rows"]
+                    if row["start_offset_ms"] is not None
+                    and row["finish_offset_ms"] is not None
+                ],
+            )
+            tree_edges = {
+                (element.attrib["data-tree-from"], element.attrib["data-tree-to"])
+                for element in root.iter()
+                if "data-tree-from" in element.attrib
+            }
+            self.assertEqual(
+                tree_edges,
+                {(edge["from"], edge["to"]) for edge in report["tree_edges"]},
+            )
+            self.assertIn("纵向行距不代表持续时间", svg.stdout)
+            self.assertNotIn("flowchart TB", svg.stdout)
+
+    def test_markdown_output_writes_and_embeds_timeline_svg_sidecar(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            output = Path(tmp) / "execution-tree.md"
+            result = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "standard",
+                "--output",
+                str(output),
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            svg_output = output.with_suffix(".svg")
+            self.assertTrue(svg_output.is_file())
+            self.assertIn("rendered_execution_cost_tree_svg", result.stdout)
+            markdown = output.read_text(encoding="utf-8")
+            self.assertIn(
+                "![TPlan 纵向实际执行时间轴](<execution-tree.svg>)",
+                markdown,
+            )
+            self.assertIn("布局：`vertical_execution_timeline`", markdown)
+            self.assertNotIn("flowchart TB", markdown)
+            root = ET.parse(svg_output).getroot()
+            self.assertEqual(root.attrib["data-layout"], "vertical-execution-timeline")
+
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -436,11 +547,15 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIsNone(partial_node["active_duration_ms"])
             self.assertEqual(partial_node["active_duration_source"], "partial")
             self.assertEqual(partial["mission"]["cost"]["span_count"], 0)
+            self.assertEqual(partial["timeline"]["offset_origin"], "first_observed_trace")
+            self.assertEqual(partial["timeline"]["range_bar_scale"], "linear_observed_window")
             audit = run_script(
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
             )
             self.assertEqual(audit.returncode, 0, audit.stderr)
             self.assertIn("LLM调用累计 未采集 · 脚本累计 未采集", audit.stdout)
+            self.assertIn("左侧是已观测相对时间", audit.stdout)
+            self.assertIn("观测窗口结束 ≥", audit.stdout)
 
     def test_privacy_guard_rejects_raw_content_without_appending_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -621,7 +736,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("must not enter the trace", raw_trace)
 
             report = render_json(mission_dir, "--view", "audit")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.3")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.4")
             self.assertEqual(report["trace"]["started_span_count"], 1)
             self.assertEqual(report["trace"]["completed_span_count"], 1)
             self.assertEqual(report["trace"]["open_span_count"], 0)

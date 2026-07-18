@@ -20,7 +20,7 @@ from tplan_runtime import (
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.3"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.4"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -505,6 +505,94 @@ def _select_nodes(
     return ordered, len(scope - selected)
 
 
+def _timeline_metadata(
+    mission: dict[str, Any],
+    nodes: list[dict[str, Any]],
+    *,
+    focus_task_id: str | None,
+) -> dict[str, Any]:
+    """Build semantic layout data for the vertical execution timeline.
+
+    Row spacing is deliberately ordinal so a long idle period cannot make the SVG
+    unboundedly tall. Exact relative time remains visible in each row, while the
+    per-node range bar uses one shared linear Mission scale.
+    """
+
+    mission_start = mission.get("started_at")
+    mission_finish = mission.get("finished_at")
+    mission_elapsed = mission.get("elapsed_ms")
+    if mission_elapsed is None:
+        mission_elapsed = mission.get("observed_elapsed_ms")
+    origin_ms = _timestamp_ms(mission_start) if mission_start else None
+    parent_by_id = {node["id"]: node.get("parent_id") for node in nodes}
+
+    def depth_for(task_id: str) -> int:
+        depth = 0
+        current = parent_by_id.get(task_id)
+        seen = {task_id}
+        while current in parent_by_id and current not in seen:
+            if current == focus_task_id:
+                break
+            seen.add(current)
+            depth += 1
+            current = parent_by_id.get(current)
+        return depth
+
+    rows: list[dict[str, Any]] = []
+    for tree_index, node in enumerate(nodes):
+        started_at = node.get("first_observed_at")
+        finished_at = node.get("last_observed_at")
+        start_offset_ms = (
+            max(0, _timestamp_ms(started_at) - origin_ms)
+            if origin_ms is not None and started_at is not None
+            else None
+        )
+        finish_offset_ms = (
+            max(start_offset_ms or 0, _timestamp_ms(finished_at) - origin_ms)
+            if origin_ms is not None and finished_at is not None
+            else None
+        )
+        rows.append(
+            {
+                "node_id": node["id"],
+                "depth": depth_for(node["id"]),
+                "tree_index": tree_index,
+                "execution_order": node.get("execution_order"),
+                "start_offset_ms": start_offset_ms,
+                "finish_offset_ms": finish_offset_ms,
+            }
+        )
+
+    rows.sort(
+        key=lambda row: (
+            row["start_offset_ms"] is None,
+            row["start_offset_ms"] if row["start_offset_ms"] is not None else 0,
+            row["execution_order"] if row["execution_order"] is not None else 1_000_000,
+            row["tree_index"],
+        )
+    )
+    return {
+        "axis": "vertical",
+        "row_positioning": "first_observed_chronological",
+        "row_spacing": "ordinal_not_duration_proportional",
+        "range_bar_scale": (
+            "linear_mission_elapsed"
+            if mission.get("elapsed_coverage") == "exact"
+            else "linear_observed_window"
+        ),
+        "offset_coverage": mission.get("elapsed_coverage"),
+        "offset_origin": (
+            "mission_initialized"
+            if mission.get("elapsed_coverage") == "exact"
+            else "first_observed_trace"
+        ),
+        "started_at": mission_start,
+        "finished_at": mission_finish,
+        "elapsed_ms": mission_elapsed,
+        "rows": rows,
+    }
+
+
 def build_execution_cost_tree(
     mission_dir: Path,
     *,
@@ -734,6 +822,11 @@ def build_execution_cost_tree(
         "visible_node_ids": visible_ids,
     }
     report["tree_edges"] = _visible_edges(visible_nodes, visible_set, focus_task_id)
+    report["timeline"] = _timeline_metadata(
+        report["mission"],
+        visible_nodes,
+        focus_task_id=focus_task_id,
+    )
     return report
 
 
@@ -922,93 +1015,401 @@ def _node_cost_view(node: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
     return node["inclusive_cost"], node["subtree_elapsed_reconciliation"], "子树汇总"
 
 
-def _node_label(node: dict[str, Any], view: str) -> str:
-    kind_label = {"task": "Task", "subtask": "SubTask", "step": "Step"}.get(
-        node["kind"], str(node["kind"] or "Node")
-    )
-    dynamic = " · 动态新增" if node["dynamic"] else ""
-    title = _shorten(node["title"], 48 if view != "audit" else 72)
-    status = STATUS_LABELS.get(node["status"], node["status"])
-    icon = STATUS_ICONS.get(node["status"], "•")
-    elapsed = _fmt_covered_duration(
-        node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
-    )
-    order = f"#{node['execution_order']}" if node["execution_order"] is not None else "未运行"
-    lines = [
-        f"[{kind_label}] {title} · {node['id']}{dynamic}",
-        f"{icon} {status} · {order}",
-    ]
-    if view == "compact":
-        lines[1] += f" · 实际历时 {elapsed}"
-        return "<br/>".join(_html(line) for line in lines)
+def _fmt_timeline_offset(value: int | None, coverage: str = "exact") -> str:
+    if value is None:
+        return "未观测"
+    sign = "+" if coverage == "exact" and value >= 0 else "≥" if value >= 0 else "−"
+    value = abs(value)
+    hours, remainder = divmod(value, 3_600_000)
+    minutes, remainder = divmod(remainder, 60_000)
+    seconds, milliseconds = divmod(remainder, 1000)
+    if hours:
+        return f"{sign}{hours:02d}:{minutes:02d}:{seconds:02d}.{milliseconds:03d}"
+    return f"{sign}{minutes:02d}:{seconds:02d}.{milliseconds:03d}"
 
-    cost, elapsed_reconciliation, scope_label = _node_cost_view(node)
-    status_details = [scope_label]
+
+def _svg_status_palette(status: str) -> tuple[str, str, str]:
+    return {
+        "active": ("#eff6ff", "#2563eb", "#1e3a8a"),
+        "completed": ("#f0fdf4", "#16a34a", "#14532d"),
+        "blocked": ("#fef2f2", "#dc2626", "#7f1d1d"),
+        "paused": ("#fffbeb", "#d97706", "#78350f"),
+        "pending": ("#f8fafc", "#94a3b8", "#475569"),
+        "pruned": ("#f8fafc", "#64748b", "#334155"),
+        "abandoned": ("#fff1f2", "#e11d48", "#881337"),
+        "superseded": ("#f8fafc", "#64748b", "#334155"),
+    }.get(status, ("#f8fafc", "#64748b", "#334155"))
+
+
+def _svg_text(
+    x: int | float,
+    y: int | float,
+    value: Any,
+    class_name: str,
+    *,
+    anchor: str | None = None,
+) -> str:
+    anchor_attr = f' text-anchor="{anchor}"' if anchor else ""
+    return f'<text x="{x}" y="{y}" class="{class_name}"{anchor_attr}>{_html(value)}</text>'
+
+
+def _svg_node_status_details(node: dict[str, Any], scope_label: str) -> str:
+    details = [
+        f"#{node['execution_order']}" if node["execution_order"] is not None else "未运行",
+        scope_label,
+    ]
+    if node["dynamic"]:
+        details.append("动态新增")
     if node["attempts"] > 1:
-        status_details.append(f"执行次数 {node['attempts']}")
+        details.append(f"执行次数 {node['attempts']}")
     if node["direct_cost"]["error_span_count"]:
-        status_details.append(f"错误 {node['direct_cost']['error_span_count']}")
+        details.append(f"错误 {node['direct_cost']['error_span_count']}")
     open_span_count = (
         node["direct_open_span_count"]
         if node["kind"] == "step"
         else node["inclusive_open_span_count"]
     )
     if open_span_count:
-        status_details.append(f"未结束调用 {open_span_count}")
-    lines[1] += " · " + " · ".join(status_details)
-    lines.extend(
-        [
-            f"实际历时 {elapsed} · 未被精确记录 {_fmt_not_exactly_recorded(elapsed_reconciliation)}",
-            f"LLM调用累计 {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')} · 脚本累计 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
-            f"工具累计 {_fmt_kind_duration(cost, TOOL_KINDS)} · 等待累计 {_fmt_kind_duration(cost, WAIT_KINDS)} · Token {_fmt_tokens_compact(cost)}",
-        ]
-    )
-    if node["outcome_summary"]:
-        lines.append(f"结果：{_shorten(node['outcome_summary'], 64)}")
-    return "<br/>".join(_html(line) for line in lines)
+        details.append(f"未结束调用 {open_span_count}")
+    return " · ".join(details)
 
 
-def render_mermaid(report: dict[str, Any]) -> str:
+def render_svg(report: dict[str, Any]) -> str:
+    """Render a portrait SVG: chronological rows plus the real hierarchy overlay.
+
+    Vertical spacing follows event order, not elapsed duration. Every row therefore
+    remains readable even when the Mission contains long idle gaps. Exact relative
+    offsets are printed beside the axis, and each card has a linearly scaled range bar
+    against the same Mission duration.
+    """
+
     mission = report["mission"]
-    cost = mission["cost"]
-    elapsed_reconciliation = mission["elapsed_reconciliation"]
+    timeline = report["timeline"]
+    node_by_id = {node["id"]: node for node in report["nodes"]}
+    rows = timeline["rows"]
+    view = report["view"]
+    width = 1180
+    header_x = 32
+    header_y = 24
+    header_width = width - 64
+    header_height = 168
+    axis_x = 112
+    card_base_x = 270
+    depth_indent = 26
+    right_margin = 34
+    row_top = 242
+    card_height = {"compact": 104, "standard": 178, "audit": 204}[view]
+    row_gap = 22
+    row_stride = card_height + row_gap
+    footer_height = 70
+    content_rows = max(1, len(rows))
+    height = row_top + content_rows * row_stride + footer_height
+    axis_start_y = row_top + card_height / 2
+    axis_end_y = row_top + (content_rows - 1) * row_stride + card_height / 2
+    mission_elapsed = timeline.get("elapsed_ms")
+    time_coverage = timeline.get("offset_coverage") or report["trace"]["coverage"]
+    time_label = "实际相对时间" if time_coverage == "exact" else "已观测相对时间"
     mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
-    mission_lines = [
-        f"{_shorten(mission['title'], 68)}",
-        f"Mission · {mission_status} · 实际历时 {_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}",
-        f"LLM调用累计 {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')} · 脚本累计 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
-        f"工具累计 {_fmt_kind_duration(cost, TOOL_KINDS)} · 等待累计 {_fmt_kind_duration(cost, WAIT_KINDS)}",
-        f"未被精确记录 {_fmt_not_exactly_recorded(elapsed_reconciliation)} · Token {_fmt_tokens_compact(cost)}",
-        f"覆盖 {report['trace']['coverage']} · {report['view']}",
+    mission_cost = mission["cost"]
+    mission_reconciliation = mission["elapsed_reconciliation"]
+
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        (
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+            f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="tplan-title tplan-desc" '
+            f'data-layout="vertical-execution-timeline" '
+            f'data-schema-version="{_html(report["schema_version"])}">'
+        ),
+        f'<title id="tplan-title">{_html(mission["title"])} · TPlan 纵向实际执行时间轴</title>',
+        (
+            '<desc id="tplan-desc">纵向按首次观测时间排列真实任务节点；左侧刻度显示相对追踪起点的'
+            '时间，卡片底部时间条按统一观测窗口等比例显示节点起止范围，蓝色折线保留真实父子关系。</desc>'
+        ),
+        "<style>",
+        "text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}",
+        ".report-title{font-size:22px;font-weight:700;fill:#ffffff}",
+        ".mission-title{font-size:18px;font-weight:650;fill:#dbeafe}",
+        ".mission-meta{font-size:14px;fill:#dbeafe}",
+        ".legend{font-size:13px;fill:#475569}",
+        ".time-label{font-size:12px;font-variant-numeric:tabular-nums;fill:#475569}",
+        ".node-title{font-size:15px;font-weight:650;fill:#0f172a}",
+        ".node-meta{font-size:12.5px;fill:#475569}",
+        ".node-metric{font-size:13px;fill:#1e293b}",
+        ".node-result{font-size:12.5px;fill:#334155}",
+        ".status-label{font-size:12px;font-weight:650}",
+        ".tree-edge{fill:none;stroke:#3b82f6;stroke-width:1.6;opacity:.72}",
+        ".time-guide{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:3 5}",
+        ".axis{stroke:#64748b;stroke-width:2}",
+        ".range-track{fill:#e2e8f0}",
+        "</style>",
+        f'<rect width="{width}" height="{height}" fill="#f8fafc"/>',
+        (
+            f'<rect x="{header_x}" y="{header_y}" width="{header_width}" height="{header_height}" '
+            'rx="18" fill="#172554" stroke="#2563eb" stroke-width="2"/>'
+        ),
+        _svg_text(58, 58, "TPlan 纵向实际执行时间轴", "report-title"),
+        _svg_text(58, 88, _shorten(mission["title"], 72), "mission-title"),
+        _svg_text(
+            58,
+            116,
+            (
+                f"Mission · {mission_status} · 实际历时 "
+                f"{_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}"
+            ),
+            "mission-meta",
+        ),
+        _svg_text(
+            58,
+            140,
+            (
+                f"LLM调用累计 {_fmt_kind_duration(mission_cost, LLM_KINDS, host_label='调用端实测')}"
+                f" · 脚本累计 {_fmt_kind_duration(mission_cost, SCRIPT_KINDS)}"
+                f" · 工具累计 {_fmt_kind_duration(mission_cost, TOOL_KINDS)}"
+                f" · 等待累计 {_fmt_kind_duration(mission_cost, WAIT_KINDS)}"
+            ),
+            "mission-meta",
+        ),
+        _svg_text(
+            58,
+            164,
+            (
+                f"未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
+                f" · Token {_fmt_tokens_compact(mission_cost)}"
+                f" · 真实节点 {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
+                f" · 覆盖 {report['trace']['coverage']} · {view}"
+            ),
+            "mission-meta",
+        ),
+        _svg_text(
+            32,
+            220,
+            f"纵向按首次执行排序；左侧是{time_label}，卡片底部时间条统一按观测窗口等比例。蓝线表示真实父子关系。",
+            "legend",
+        ),
     ]
 
-    node_keys = {node["id"]: f"N{index}" for index, node in enumerate(report["nodes"], start=1)}
-    lines = ["flowchart TB", f'  M["{"<br/>".join(_html(item) for item in mission_lines)}"]']
-    for node in report["nodes"]:
-        lines.append(f'  {node_keys[node["id"]]}["{_node_label(node, report["view"])}"]')
+    if rows:
+        lines.append(
+            f'<line x1="{axis_x}" y1="{axis_start_y}" x2="{axis_x}" y2="{axis_end_y}" class="axis"/>'
+        )
+
+    positions: dict[str, dict[str, float]] = {}
+    for index, row in enumerate(rows):
+        node = node_by_id[row["node_id"]]
+        card_x = card_base_x + row["depth"] * depth_indent
+        card_y = row_top + index * row_stride
+        card_width = width - right_margin - card_x
+        center_y = card_y + card_height / 2
+        positions[node["id"]] = {
+            "x": card_x,
+            "y": card_y,
+            "width": card_width,
+            "height": card_height,
+            "center_y": center_y,
+        }
+        lines.extend(
+            [
+                f'<line x1="{axis_x + 8}" y1="{center_y}" x2="{card_x - 10}" y2="{center_y}" class="time-guide"/>',
+                f'<circle cx="{axis_x}" cy="{center_y}" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>',
+                _svg_text(
+                    axis_x - 12,
+                    center_y + 4,
+                    _fmt_timeline_offset(row["start_offset_ms"], time_coverage),
+                    "time-label",
+                    anchor="end",
+                ),
+            ]
+        )
+
     for edge in report["tree_edges"]:
-        source = "M" if edge["from"] == "mission" else node_keys[edge["from"]]
-        lines.append(f"  {source} --> {node_keys[edge['to']]}")
+        child_position = positions.get(edge["to"])
+        if child_position is None:
+            continue
+        child_x = child_position["x"]
+        child_y = child_position["center_y"]
+        if edge["from"] == "mission":
+            branch_x = card_base_x - 28
+            path = f"M {branch_x} {header_y + header_height} V {child_y} H {child_x}"
+        else:
+            parent_position = positions.get(edge["from"])
+            if parent_position is None:
+                continue
+            parent_x = parent_position["x"]
+            parent_y = parent_position["center_y"]
+            branch_x = min(parent_x, child_x) - 18
+            path = f"M {parent_x} {parent_y} H {branch_x} V {child_y} H {child_x}"
+        lines.append(
+            (
+                f'<path d="{path}" class="tree-edge" data-tree-from="{_html(edge["from"])}" '
+                f'data-tree-to="{_html(edge["to"])}"/>'
+            )
+        )
+
+    for row in rows:
+        node = node_by_id[row["node_id"]]
+        position = positions[node["id"]]
+        card_x = position["x"]
+        card_y = position["y"]
+        card_width = position["width"]
+        fill, stroke, text_color = _svg_status_palette(node["status"])
+        cost, reconciliation, scope_label = _node_cost_view(node)
+        kind_label = {"task": "Task", "subtask": "SubTask", "step": "Step"}.get(
+            node["kind"], str(node["kind"] or "Node")
+        )
+        status = STATUS_LABELS.get(node["status"], node["status"])
+        icon = STATUS_ICONS.get(node["status"], "•")
+        title_limit = 58 if view != "audit" else 76
+        title = f"[{kind_label}] {_shorten(node['title'], title_limit)} · {node['id']}"
+        elapsed = _fmt_covered_duration(
+            node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
+        )
+        range_text = (
+            f"{_fmt_timeline_offset(row['start_offset_ms'], time_coverage)} → "
+            f"{_fmt_timeline_offset(row['finish_offset_ms'], time_coverage)}"
+        )
+        lines.extend(
+            [
+                (
+                    f'<g id="node-{_html(node["id"])}" class="task-card" '
+                    f'data-task-id="{_html(node["id"])}" data-depth="{row["depth"]}" '
+                    f'data-start-offset-ms="{row["start_offset_ms"] if row["start_offset_ms"] is not None else ""}" '
+                    f'data-finish-offset-ms="{row["finish_offset_ms"] if row["finish_offset_ms"] is not None else ""}">'
+                ),
+                (
+                    f'<rect x="{card_x}" y="{card_y}" width="{card_width}" height="{card_height}" '
+                    f'rx="14" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>'
+                ),
+                _svg_text(card_x + 18, card_y + 28, title, "node-title"),
+                (
+                    f'<rect x="{card_x + card_width - 94}" y="{card_y + 13}" width="76" height="24" '
+                    f'rx="12" fill="{stroke}" opacity=".13"/>'
+                ),
+                (
+                    f'<text x="{card_x + card_width - 56}" y="{card_y + 30}" class="status-label" '
+                    f'text-anchor="middle" fill="{text_color}">{_html(icon + " " + status)}</text>'
+                ),
+            ]
+        )
+        if view == "compact":
+            lines.append(
+                _svg_text(
+                    card_x + 18,
+                    card_y + 58,
+                    f"{_svg_node_status_details(node, scope_label)} · {range_text} · 实际历时 {elapsed}",
+                    "node-meta",
+                )
+            )
+            range_y = card_y + 82
+        else:
+            lines.extend(
+                [
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 54,
+                        _svg_node_status_details(node, scope_label),
+                        "node-meta",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 79,
+                        (
+                            f"时间 {range_text} · 实际历时 {elapsed}"
+                            f" · 未被精确记录 {_fmt_not_exactly_recorded(reconciliation)}"
+                        ),
+                        "node-metric",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 104,
+                        (
+                            f"LLM调用累计 {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')}"
+                            f" · 脚本累计 {_fmt_kind_duration(cost, SCRIPT_KINDS)}"
+                        ),
+                        "node-metric",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 129,
+                        (
+                            f"工具累计 {_fmt_kind_duration(cost, TOOL_KINDS)}"
+                            f" · 等待累计 {_fmt_kind_duration(cost, WAIT_KINDS)}"
+                            f" · Token {_fmt_tokens_compact(cost)}"
+                        ),
+                        "node-metric",
+                    ),
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 151,
+                        f"结果：{_shorten(node['outcome_summary'], 82) if node['outcome_summary'] else '未记录'}",
+                        "node-result",
+                    ),
+                ]
+            )
+            if view == "audit":
+                lines.append(
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 174,
+                        (
+                            f"审计：直接 span {node['direct_cost']['span_count']} · 子树 span {node['inclusive_cost']['span_count']}"
+                            f" · 证据 {len(node['evidence_refs'])} · 产物 {len(node['artifact_refs'])}"
+                        ),
+                        "node-meta",
+                    )
+                )
+                range_y = card_y + 190
+            else:
+                range_y = card_y + 164
+
+        track_x = card_x + 18
+        track_width = card_width - 36
+        lines.append(
+            f'<rect x="{track_x}" y="{range_y}" width="{track_width}" height="6" rx="3" class="range-track"/>'
+        )
+        start_offset = row["start_offset_ms"]
+        finish_offset = row["finish_offset_ms"]
+        if mission_elapsed and start_offset is not None and finish_offset is not None:
+            start_fraction = min(1.0, max(0.0, start_offset / mission_elapsed))
+            finish_fraction = min(1.0, max(start_fraction, finish_offset / mission_elapsed))
+            range_x = min(track_x + track_width - 4.0, track_x + start_fraction * track_width)
+            range_width = max(4.0, (finish_fraction - start_fraction) * track_width)
+            range_width = min(range_width, track_x + track_width - range_x)
+            lines.append(
+                (
+                    f'<rect x="{range_x:.2f}" y="{range_y}" width="{range_width:.2f}" height="6" '
+                    f'rx="3" fill="{stroke}" class="node-range" data-task-id="{_html(node["id"])}"/>'
+                )
+            )
+        lines.append("</g>")
+
+    footer_y = row_top + content_rows * row_stride + 18
     lines.extend(
         [
-            "  classDef mission fill:#172554,color:#ffffff,stroke:#1d4ed8,stroke-width:2px;",
-            "  classDef active fill:#dbeafe,color:#172554,stroke:#2563eb,stroke-width:2px;",
-            "  classDef completed fill:#dcfce7,color:#14532d,stroke:#16a34a;",
-            "  classDef blocked fill:#fee2e2,color:#7f1d1d,stroke:#dc2626,stroke-width:2px;",
-            "  classDef paused fill:#fef3c7,color:#78350f,stroke:#d97706;",
-            "  classDef pending fill:#f8fafc,color:#475569,stroke:#94a3b8,stroke-dasharray:4 3;",
-            "  classDef closed fill:#f1f5f9,color:#334155,stroke:#64748b;",
-            "  class M mission;",
+            f'<line x1="32" y1="{footer_y - 24}" x2="{width - 32}" y2="{footer_y - 24}" stroke="#e2e8f0"/>',
+            _svg_text(
+                32,
+                footer_y,
+                (
+                    f"{'Mission 结束' if time_coverage == 'exact' else '观测窗口结束'} "
+                    f"{_fmt_timeline_offset(mission_elapsed, time_coverage)} · 纵向行距不代表持续时间；"
+                    "精确时间由刻度、节点起止值及统一比例时间条表达。"
+                ),
+                "legend",
+            ),
         ]
     )
-    classes: dict[str, list[str]] = defaultdict(list)
-    for node in report["nodes"]:
-        status = node["status"]
-        style = status if status in {"active", "completed", "blocked", "paused", "pending"} else "closed"
-        classes[style].append(node_keys[node["id"]])
-    for style, keys in classes.items():
-        lines.append(f"  class {','.join(keys)} {style};")
-    return "\n".join(lines)
+    if report["trace"]["hidden_node_count"]:
+        lines.append(
+            _svg_text(
+                32,
+                footer_y + 24,
+                f"投影视图省略 {report['trace']['hidden_node_count']} 个真实节点；Standard/Audit 可查看完整拓扑。",
+                "legend",
+            )
+        )
+    lines.append("</svg>")
+    return "\n".join(lines) + "\n"
 
 
 def _markdown_cell(value: Any) -> str:
@@ -1023,7 +1424,7 @@ def _coverage_note(coverage: str) -> str:
     return "没有执行轨迹；当前仅展示 Mission 快照，时间与 Token 成本保持未知。"
 
 
-def render_markdown(report: dict[str, Any]) -> str:
+def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = None) -> str:
     mission = report["mission"]
     cost = mission["cost"]
     overhead = report["overhead"]["cost"]
@@ -1032,12 +1433,21 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"> {_coverage_note(report['trace']['coverage'])}",
         "",
-        "```mermaid",
-        render_mermaid(report),
-        "```",
-        "",
-        f"视图：`{report['view']}`；真实节点：{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}。",
     ]
+    if timeline_svg_ref:
+        lines.extend(
+            [
+                f"![TPlan 纵向实际执行时间轴](<{timeline_svg_ref}>)",
+                "",
+            ]
+        )
+    else:
+        inline_svg = render_svg(report).split("\n", 1)[1].rstrip()
+        lines.extend([inline_svg, ""])
+    lines.append(
+        f"视图：`{report['view']}`；布局：`vertical_execution_timeline`；"
+        f"真实节点：{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}。"
+    )
     if report["trace"]["hidden_node_count"]:
         lines.append(
             f"这是投影视图，省略了 {report['trace']['hidden_node_count']} 个真实节点；"
