@@ -659,7 +659,7 @@ def build_execution_cost_tree(
     *,
     view: str = "standard",
     focus_task_id: str | None = None,
-    top_cost: int = 5,
+    top_cost: int = 3,
     generated_at: str | None = None,
 ) -> dict[str, Any]:
     if view not in VIEWS:
@@ -1164,38 +1164,133 @@ def _compact_status(status: str, actual_state: str | None = None) -> str:
 
 def _compact_cost_summary(cost: dict[str, Any]) -> str:
     parts = [
-        f"LLM {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')}",
-        f"脚本 {_fmt_kind_duration(cost, SCRIPT_KINDS)}",
+        f"LLM {_fmt_kind_duration_compact(cost, LLM_KINDS)}",
+        f"脚本 {_fmt_kind_duration_compact(cost, SCRIPT_KINDS)}",
     ]
     optional = [
-        ("工具", _fmt_kind_duration(cost, TOOL_KINDS)),
-        ("等待", _fmt_kind_duration(cost, WAIT_KINDS)),
-        ("Token", _fmt_tokens_compact(cost)),
+        ("工具", _fmt_kind_duration_compact(cost, TOOL_KINDS)),
+        ("等待", _fmt_kind_duration_compact(cost, WAIT_KINDS)),
     ]
-    parts.extend(f"{label} {value}" for label, value in optional if value != "未采集")
-    return " · ".join(parts)
+    parts.extend(f"{label} {value}" for label, value in optional if value != "—")
+    return " / ".join(parts)
 
 
-def _compact_node_summary(node: dict[str, Any]) -> str:
+def _fmt_kind_duration_compact(cost: dict[str, Any], kinds: set[str]) -> str:
+    present = [kind for kind in kinds if kind in cost["by_kind_resource_ms"]]
+    if not present:
+        return "—"
+    sources: Counter[str] = Counter()
+    for kind in present:
+        sources.update(cost["by_kind_measurement_sources"].get(kind, {}))
+    value = _kind_time(cost, kinds)
+    if sources and set(sources) == {"unavailable"}:
+        return "?"
+    rendered = _fmt_duration(value)
+    if sources.get("unavailable"):
+        return f"≥{rendered}" if value else "?"
+    if sources.get("inferred"):
+        return f"≈{rendered}"
+    return rendered
+
+
+def _fmt_tokens_inline(cost: dict[str, Any]) -> str:
+    usage = cost["usage"]
+    fields = set(cost["usage_fields"])
+    coverage = cost["usage_coverage"]
+    if coverage == "not_reported":
+        return "—"
+    if coverage == "unavailable" or not ({"input_tokens", "output_tokens"} & fields):
+        return "?"
+    input_value = _fmt_token_number(usage.get("input_tokens", 0)) if "input_tokens" in fields else "?"
+    output_value = _fmt_token_number(usage.get("output_tokens", 0)) if "output_tokens" in fields else "?"
+    prefix = "≈" if cost["usage_sources"].get("inferred") else ""
+    if coverage == "partial":
+        prefix += "≥"
+    return f"{prefix}{input_value}/{output_value}"
+
+
+def _compact_kind_source(
+    cost: dict[str, Any],
+    kinds: set[str],
+    *,
+    host_label: str,
+) -> str | None:
+    present = [kind for kind in kinds if kind in cost["by_kind_resource_ms"]]
+    if not present:
+        return None
+    sources: Counter[str] = Counter()
+    for kind in present:
+        sources.update(cost["by_kind_measurement_sources"].get(kind, {}))
+    labels = [
+        label
+        for source, label in (
+            ("platform_reported", "平台上报"),
+            ("host_measured", host_label),
+            ("inferred", "估算"),
+            ("unavailable", "未知"),
+        )
+        if sources.get(source)
+    ]
+    return "/".join(labels) if labels else "来源未标注"
+
+
+def _compact_source_legend(cost: dict[str, Any]) -> str:
+    source_groups: dict[str, list[str]] = defaultdict(list)
+    for label, kinds, host_label in (
+        ("LLM", LLM_KINDS, "调用端实测"),
+        ("脚本", SCRIPT_KINDS, "宿主实测"),
+        ("工具", TOOL_KINDS, "宿主实测"),
+        ("等待", WAIT_KINDS, "宿主实测"),
+    ):
+        source = _compact_kind_source(cost, kinds, host_label=host_label)
+        if source is not None:
+            source_groups[source].append(label)
+    if not source_groups:
+        rendered = "本次未采集资源时长"
+    else:
+        rendered = " · ".join(
+            f"{'/'.join(labels)} {source}" for source, labels in source_groups.items()
+        )
+    return f"来源：{rendered}"
+
+
+def _compact_signal_reasons(node: dict[str, Any], reasons: set[str]) -> set[str]:
+    signal_reasons = reasons & {
+        "status_signal",
+        "retry",
+        "error",
+        "open_span",
+        "dynamic",
+    }
+    if node["status"] != "completed" and node["actual_state"] != "not_run":
+        signal_reasons.add("non_routine_status")
+    return signal_reasons
+
+
+def _compact_node_summary(node: dict[str, Any], reasons: set[str]) -> str:
     cost, _, _ = _node_cost_view(node)
     elapsed = _fmt_covered_duration(
         node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
     )
     kind_tag = COMPACT_KIND_TAGS.get(node["kind"], "[?]")
     parts = [
-        f"{kind_tag} {_shorten(node['title'], 46)} "
+        f"{kind_tag} {_shorten(node['title'], 40)} "
         f"{_compact_status(node['status'], node['actual_state'])} {elapsed}",
         _compact_cost_summary(cost),
     ]
+    signal_reasons = _compact_signal_reasons(node, reasons)
+    token_value = _fmt_tokens_inline(cost)
+    if token_value != "—" and ("top_direct_cost" in reasons or signal_reasons):
+        parts.append(f"Tok {token_value}")
     if node["dynamic"]:
-        parts.append("动态新增")
+        parts.append("动态")
     if node["attempts"] > 1:
-        parts.append(f"attempt {node['attempts']}")
+        parts.append(f"↻{node['attempts']}")
     if node["direct_cost"]["error_span_count"]:
-        parts.append(f"error {node['direct_cost']['error_span_count']}")
+        parts.append(f"✕{node['direct_cost']['error_span_count']}")
     if node["direct_open_span_count"]:
-        parts.append(f"未结束调用 {node['direct_open_span_count']}")
-    if node["outcome_summary"]:
+        parts.append(f"未结束 {node['direct_open_span_count']}")
+    if node["outcome_summary"] and signal_reasons:
         parts.append(f"→ {_shorten(node['outcome_summary'], 52)}")
     return " · ".join(parts)
 
@@ -1207,18 +1302,20 @@ def render_compact_text(report: dict[str, Any]) -> str:
     mission_elapsed = _fmt_covered_duration(
         mission["elapsed_ms"], mission["observed_elapsed_ms"], mission["elapsed_coverage"]
     )
-    lines = [
-        (
-            f"Mission · {_shorten(mission['title'], 60)} "
-            f"{_compact_status(mission['status'])} {mission_elapsed}"
-        ),
-        (
-            f"成本：{_compact_cost_summary(mission['cost'])}"
-            f" · 未被精确记录 {_fmt_not_exactly_recorded(mission['elapsed_reconciliation'])}"
-        ),
-        "层级：[T] Task · [ST] SubTask · [P] Step",
-    ]
+    mission_token = _fmt_tokens_inline(mission["cost"])
+    mission_line = (
+        f"Mission · {_shorten(mission['title'], 60)} "
+        f"{_compact_status(mission['status'])} {mission_elapsed}"
+        f" · {_compact_cost_summary(mission['cost'])}"
+    )
+    if mission_token != "—":
+        mission_line += f" · Tok {mission_token}"
+    lines = [mission_line, "层级：[T] Task · [ST] SubTask · [P] Step"]
     node_by_id = {node["id"]: node for node in report["nodes"]}
+    selection_reasons = {
+        task_id: set(reasons)
+        for task_id, reasons in report["trace"]["selection_reasons"].items()
+    }
     order = {node["id"]: index for index, node in enumerate(report["nodes"])}
     children: dict[str, list[str]] = defaultdict(list)
     roots: list[str] = []
@@ -1234,7 +1331,11 @@ def render_compact_text(report: dict[str, Any]) -> str:
 
     def visit(task_id: str, prefix: str, is_last: bool) -> None:
         connector = "└─ " if is_last else "├─ "
-        lines.append(prefix + connector + _compact_node_summary(node_by_id[task_id]))
+        lines.append(
+            prefix
+            + connector
+            + _compact_node_summary(node_by_id[task_id], selection_reasons.get(task_id, set()))
+        )
         next_prefix = prefix + ("   " if is_last else "│  ")
         child_ids = children.get(task_id, [])
         for index, child_id in enumerate(child_ids):
@@ -1246,9 +1347,13 @@ def render_compact_text(report: dict[str, Any]) -> str:
         [
             "",
             (
-                f"投影：显示 {report['trace']['visible_node_count']}/{report['trace']['total_node_count']} 个真实节点；"
-                f"省略 {report['trace']['hidden_node_count']}；根 Task + 异常/重试/动态 + "
-                f"直接成本 Top {report['top_cost']} + 真实祖先路径"
+                f"显示 {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}；"
+                f"省略 {report['trace']['hidden_node_count']}"
+            ),
+            (
+                f"{_compact_source_legend(mission['cost'])}；"
+                f"未精确记录 {_fmt_not_exactly_recorded(mission['elapsed_reconciliation'])}；"
+                "— 未采集 · ? 未知 · ≈ 估算 · ≥ 部分采集"
             ),
         ]
     )
@@ -1652,10 +1757,7 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
             "",
             "Task/SubTask 成本为其真实子树累计；Step 为直接成本。没有出现的下级节点只是被省略，没有被合并。",
             "",
-            (
-                "口径：LLM、脚本、工具和等待是累计资源时间，可能相互重叠；"
-                "调用端实测不等于平台内部纯推理时间，`≈` 表示估算。"
-            ),
+            "LLM、脚本、工具和等待是累计资源时间，可能相互重叠；逐节点详情见 Standard/Audit。",
         ]
         return "\n".join(lines).rstrip() + "\n"
 
