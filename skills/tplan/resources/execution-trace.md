@@ -46,7 +46,8 @@ zero or not applicable.
 Span kinds:
 
 - `model`: one provider model call
-- `agent_turn`: outer Agent turn; may contain model, tool, and wait child spans
+- `agent_turn`: outer Agent turn; may contain model, tool, and wait child spans. It is
+  an audit envelope, not LLM time, and is never added to its child resource spans.
 - `script`: local script or test command
 - `tool`: non-model tool/API operation
 - `wait`: queue, approval, or external wait
@@ -136,7 +137,7 @@ content does not belong in the trace.
 
 ## Render The Tree
 
-Default progressive view:
+Default complete-topology view:
 
 ```bash
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
@@ -153,14 +154,27 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --focu
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --format json
 ```
 
-- `compact`: Mission and root Tasks; focused mode adds direct children
-- `standard`: abnormal, retried, dynamic, result-bearing, active, error, and top-cost
-  paths, plus their ancestors
-- `audit`: every node and stable recovery detail
+- `compact`: an explicitly labelled projection containing Mission and root Tasks;
+  focused mode adds direct children and reports the number of omitted real nodes
+- `standard`: every materialized Mission / Task / SubTask / Step and every declared
+  parent-child edge, with the fixed status, elapsed, LLM, script, tool, wait, Token,
+  and result slots
+- `audit`: the same one-to-one topology as `standard`, plus recovery and measurement
+  detail
 
-Tree node costs are inclusive subtree rollups. The JSON output also exposes direct
-cost. End-to-end elapsed is wall time. Per-kind duration is resource time and may
-overlap because of nesting or parallel execution.
+The renderer never merges real nodes, reparents them, or invents display groups. A
+large tree may be split only at real Task boundaries without changing topology.
+
+Step cards show direct cost; Task and SubTask cards show inclusive subtree cost. JSON
+exposes both. Actual elapsed is a wall-clock interval. Attributed wall time is the
+union of exact model, script, tool, wait, and runtime intervals, so nested and parallel
+spans are not double-counted. When lifecycle coverage is exact:
+
+`actual elapsed = attributed wall coverage + unattributed elapsed`
+
+Per-kind duration remains resource time and may overlap; it is not expected to sum to
+actual elapsed. `agent_turn` remains an audit envelope and is excluded from LLM and
+additive resource totals.
 
 ## Coverage
 

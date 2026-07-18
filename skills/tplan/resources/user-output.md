@@ -107,6 +107,8 @@ python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-inte
 ```
 
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
-to `standard`: show the Mission and significant actual paths, with status, time, Token,
-retry, and result summaries. Use `compact` for a quick handoff and `audit` only when the
-reader needs every node and stable reference. Unknown measurements must remain unknown.
+to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
+status, actual elapsed, LLM, script, tool, wait, Token, and result slots. Do not merge
+nodes or invent display groups. Use `compact` only as a labelled projection for a quick
+handoff; use `audit` for the same topology plus measurement and recovery detail. Unknown
+measurements must remain unknown.
