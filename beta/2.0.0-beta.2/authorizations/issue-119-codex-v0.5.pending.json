@@ -1,0 +1,83 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.5",
+  "authorization_id": "issue-119-codex-v0.5-initial-five-batches",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.5.py",
+  "authorization_validator_sha256": "606fc1282324947b1088a95c5abfef1bf9e92a2511760b8176439b3904432649",
+  "status": "pending",
+  "packet_created_at_utc": "2026-07-18T04:07:13.852355+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+    "sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+    "lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713"
+  },
+  "host_surface": "codex-plugin",
+  "maximum_committed_batches": 5,
+  "planned_generation_outputs": 15,
+  "planned_judge_records": 30,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 17,
+  "maximum_judge_calls": 34,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 3000000,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "prior_consumption": {
+    "protocol_versions": [
+      "0.3",
+      "0.4"
+    ],
+    "generation_calls": 146,
+    "judge_calls": 42,
+    "counted_tokens": 8133510
+  },
+  "requested_cumulative_ceiling": {
+    "maximum_generation_calls": 163,
+    "maximum_judge_calls": 76,
+    "aggregate_token_ceiling": 11133510
+  },
+  "case_scope": {
+    "batch_count": 5,
+    "generation_outputs": 15,
+    "judge_records": 30,
+    "evidence_visibility": "implementation-visible",
+    "host_session_scope": "startup-only",
+    "result_ceiling": "five Judge-backed smoke triplets; no architecture conclusion"
+  },
+  "human_authorization": {
+    "authority": "William",
+    "design_change_instruction": "那按你的建议调整吧",
+    "design_change_evidence_id": "E47ad3faa",
+    "design_change_authorized": true,
+    "semantic_execution_authorized": false,
+    "authorized_protocol_digest": null,
+    "authorized_configuration_digest": null,
+    "authorized_at_utc": null
+  },
+  "release_preparation": false,
+  "blocking_requirements": [
+    "William must confirm the exact frozen v0.5 protocol and lock digests",
+    "William must authorize the initial 5-batch, 17-generation-call, 34-Judge-call, 3,000,000-token ceiling"
+  ],
+  "pending_packet_digest": "990a6677be8a6cbe17f1d023ef2a20d886967dae3e926b13e25dbb78a3ba09b0"
+}

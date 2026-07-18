@@ -65,6 +65,49 @@ matched run were never started. The existing cell must not be rerun. Continuing 
 either a Codex host that emits the frozen native event or a separately reviewed protocol
 version that changes the endpoint provenance requirement.
 
+## Incremental filesystem-isolated amendment v0.5
+
+v0.4 remains an immutable stopped experiment. Across the prior v0.3 and v0.4
+executions, 146 generation attempts, 42 judge attempts, and 8,133,510 counted tokens
+were consumed, but v0.4 produced no valid three-arm comparison record: judging closed
+too late, and retrospective evidence showed that accepted processes could reach a
+sibling package tree outside their nominal project roots. Those semantic outputs are
+retained for audit but excluded from v0.5 comparison evidence.
+
+v0.5 replaces the controller rather than adding another path-string exception. Its
+atomic unit is one case/repeat triplet:
+
+1. generate one fresh output for each of the three frozen arms;
+2. require a passing native filesystem-isolation receipt for every semantic process;
+3. obtain two blinded, isolated judge records for each output;
+4. write one hash-chained batch commit; and
+5. only then advance to the next case/repeat triplet.
+
+There are 75 planned batches: 225 generation outputs and 450 judge records. The first
+five batches are the smoke. If execution stops inside a batch, all artifacts from that
+batch remain inspectable but do not count; resume must complete the same batch before
+advancing. A binary disagreement between the two judges requires William's adjudication
+before the next batch.
+
+Filesystem access is enforced by a per-process macOS sandbox profile, not inferred
+from command strings. Each profile denies the protected repository and home roots,
+reopens only the exact execution inputs and output mailbox needed by that process, and
+runs positive plus absolute-path, parent-traversal, and symlink-escape probes. The
+profile and probe receipts are bound into each accepted record. Failure blocks the
+batch before its commit.
+
+Partial committed results are descriptive only: they may report denominators and means,
+but cannot apply the preregistered comparison thresholds or support an architecture
+conclusion. Those decision lines are evaluated only after all 75 committed batches.
+The visible/startup-session, Codex-only, no-release claim ceiling remains unchanged.
+
+The frozen v0.5 protocol SHA-256 is
+`f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336`; its
+lock digest is
+`8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713`.
+The lock validates the 29 bound dependencies and does not authorize semantic model
+execution.
+
 ## Frozen comparison
 
 The three immutable arm ids are `stable`, `direct-only`, and `thin-kernel`. Runtime

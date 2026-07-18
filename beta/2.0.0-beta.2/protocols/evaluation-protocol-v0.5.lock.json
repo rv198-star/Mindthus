@@ -1,0 +1,166 @@
+{
+  "schema_version": "mindthus-beta2-protocol-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "protocol_version": "0.5",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+  "protocol_sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+  "dependency_receipts": [
+    {
+      "id": "protocol_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-protocol.schema.json",
+      "sha256": "fddf1b810c6878eb81a027aadaf9b9bf63748471c18c267eaa8e2c5d29646aac"
+    },
+    {
+      "id": "protocol_lock_schema",
+      "path": "beta/2.0.0-beta.2/protocol-lock.schema.json",
+      "sha256": "9bc617b972d88b084e5430137c887123602324d43636b4a28af007f041ada72f"
+    },
+    {
+      "id": "arm_definitions",
+      "path": "beta/2.0.0-beta.2/arm-definitions.json",
+      "sha256": "559f0bac2345b3c686ebfb5ffc3f040cda7472d2ed426d5cb97b795fe51a7f95"
+    },
+    {
+      "id": "arm_manifest_schema",
+      "path": "beta/2.0.0-beta.2/arm-manifest.schema.json",
+      "sha256": "f709c13d36fff8ba7118a89d9ac292a3f072cb618dbf250c5f4e83b6b43db5c6"
+    },
+    {
+      "id": "scoring_case_schema",
+      "path": "beta/2.0.0-beta.2/evaluation-case.schema.json",
+      "sha256": "079a4ddac5690210fcbc6b685522927ead242c0403f5e5b93ed17ed859cacf9b"
+    },
+    {
+      "id": "scoring_contract",
+      "path": "beta/2.0.0-beta.2/SCORING-CONTRACT.md",
+      "sha256": "d0af57c644bada442754eab77bac97b030f2c6aa483699d7828ea32d6d082c80"
+    },
+    {
+      "id": "telemetry_schema",
+      "path": "beta/2.0.0-beta.2/turn-telemetry.schema.json",
+      "sha256": "1e917b80b5cb02bc52bc3d2818f10950dc02461439303f57c83822a155d717cf"
+    },
+    {
+      "id": "case_matrix_schema",
+      "path": "beta/2.0.0-beta.2/case-matrix.schema.json",
+      "sha256": "9d9772038326482534291a190c78ad34e9bd0e5595c56dd8a72d98b6c733a926"
+    },
+    {
+      "id": "case_matrix_fixture",
+      "path": "beta/2.0.0-beta.2/fixtures/evaluation-case-matrix.json",
+      "sha256": "35b178920ddbcfc8fb9af1aa4a6c324ffdb86e6ecee4e78ee4ef9da7fc324441"
+    },
+    {
+      "id": "base_protocol_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol.py",
+      "sha256": "3f6c5c5f8537813fef07c297107e6d49f7c4e17fa8ee322d6001dc2d030733ca"
+    },
+    {
+      "id": "codex_protocol_v02_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol-v0.2.py",
+      "sha256": "325d4c5b5f538f36aa7356da18e67a58687390229c59efe8d35418cae166603a"
+    },
+    {
+      "id": "visible_protocol_v03_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol-v0.3.py",
+      "sha256": "38541f15264dce6674ab11b83fd7035f8cab5569c2c9d116e3559e48a85503c3"
+    },
+    {
+      "id": "telemetry_builder",
+      "path": "scripts/mindthus_beta2_telemetry.py",
+      "sha256": "3348ab066fd665cfb5d979384e276ce0ae22dc2be27fe2d617e9634941b6a58d"
+    },
+    {
+      "id": "codex_stream_capture",
+      "path": "beta/2.0.0-beta.2/runtime/codex_stream_capture.py",
+      "sha256": "e6f713fe018965de16cc300db73f07b9f4b3cd3f32402a7f47bbad813c14fb5f"
+    },
+    {
+      "id": "codex_hook_probe",
+      "path": "beta/2.0.0-beta.2/runtime/probe_codex_hook.py",
+      "sha256": "351aa20639c51c82ea3ef2c6319b6e71ff8ebbca143ff23aae8d3a3c1e8a6de8"
+    },
+    {
+      "id": "real_arm_materializer",
+      "path": "beta/2.0.0-beta.2/runtime/materialize-real-codex-arm.py",
+      "sha256": "9bb95f9e9aba3d8900ad40c30844235df5b10011b7063fff95ecbec13954ddc0"
+    },
+    {
+      "id": "real_evaluation_runner_v04",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+      "sha256": "349614d7a6f9984c1f96fdb1207ad075f941be109f1a53b0679f3ab695c68162"
+    },
+    {
+      "id": "real_evaluation_analyzer_v04",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_codex_evaluation_v04.py",
+      "sha256": "5ee6a73d7f85cf50b54accf8680dafb6f2c06daf210a475bd8ec0b4df729959a"
+    },
+    {
+      "id": "judge_output_schema_v04",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+      "sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f"
+    },
+    {
+      "id": "judge_rubric_v04",
+      "path": "beta/2.0.0-beta.2/fixtures/judge-rubric-v0.4.json",
+      "sha256": "304adfc5be9a1e28283c67ee02df935041344cfe43506b37bd3785f990d2493e"
+    },
+    {
+      "id": "dry_run_plan_schema_v04",
+      "path": "beta/2.0.0-beta.2/dry-run-plan-v0.4.schema.json",
+      "sha256": "e7df8579e9985df164b0c58f43b33d09d8bfba7f564ab805b6ad25f7200c1d83"
+    },
+    {
+      "id": "dry_run_fixture_builder",
+      "path": "beta/2.0.0-beta.2/runtime/build-dry-run-fixture.py",
+      "sha256": "665e352c7083f5715a8a8e8888375c2b10b8131a793b431a57e918467f0d5be2"
+    },
+    {
+      "id": "dry_run_orchestrator",
+      "path": "beta/2.0.0-beta.2/runtime/dry-run-orchestrator.py",
+      "sha256": "8815d5d13d648961d35401f2e1fe47b2d69259ec6342895fd0a04eb17e179374"
+    },
+    {
+      "id": "visible_protocol_v04_validator",
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol-v0.4.py",
+      "sha256": "97f2a799f809bc5d64620bba80fa09a646559a06bd3c7ab4034c13a2e5741884"
+    },
+    {
+      "id": "filesystem_isolation_v05",
+      "path": "beta/2.0.0-beta.2/runtime/filesystem_isolation_v05.py",
+      "sha256": "c776b4356bd94527f0faaf68c8d3a6466666c33c032f1d77d2f3377a67f9a155"
+    },
+    {
+      "id": "real_arm_materializer_v05",
+      "path": "beta/2.0.0-beta.2/runtime/materialize-real-codex-arm-v05.py",
+      "sha256": "f13ea10c8fc3a4b73cbe7044aa7cdf8f98803672166de3b163dd5269e8afc1de"
+    },
+    {
+      "id": "real_evaluation_runner_v05",
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05.py",
+      "sha256": "03034ca15c480c35c4c98b68577828f327c34e88b4836040f9b3b3fbd906fcb8"
+    },
+    {
+      "id": "incremental_analyzer_v05",
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05.py",
+      "sha256": "aa4996c85e4034e0b53238d30a406feb00a24eebf6651ef1747d038fe108841a"
+    },
+    {
+      "id": "incremental_dry_run_v05",
+      "path": "beta/2.0.0-beta.2/runtime/dry-run-incremental-v05.py",
+      "sha256": "0e296a93974eed7da227ed77932791f7c66173bbbf1759445f28ce7c39276e0d"
+    }
+  ],
+  "arm_ids": [
+    "stable",
+    "direct-only",
+    "thin-kernel"
+  ],
+  "frozen_at_utc": "2026-07-18T04:07:13.736313+00:00",
+  "source_parent_commit": "fc50be8bfe18c3f28a5d184cf9f2db44a26014c4",
+  "semantic_model_output_generated_before_freeze": true,
+  "semantic_model_output_generated_under_v0_5_before_freeze": false,
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-protocol-v0.5.py",
+  "validator_sha256": "7d18e679e1015287acce04dbd2aef14524f493ac86eb72fb384321d50bb1b9c0",
+  "lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713"
+}
