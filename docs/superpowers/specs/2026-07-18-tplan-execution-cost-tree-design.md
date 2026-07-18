@@ -6,14 +6,17 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
 
 ## Verification And Release Disposition
 
-- 1.x Stable-based branch: 190 TPlan tests and 621 full-repository tests pass.
+- 1.x Stable-based branch: 191 TPlan tests and 622 full-repository tests pass.
 - The same revised implementation applies to the Beta2 source without conflict, and
-  all 190 TPlan tests pass there.
+  all 191 TPlan tests pass there.
 - The current Beta2 release profile deliberately freezes the 1.4.6 `skills/tplan`
   digest. Its package gate rejects the changed live tree as evaluation-identity drift.
 - The frozen reference lock, protocols, receipts, and evaluation evidence are unchanged.
   This feature enters 2.x at the next checkpoint after `shared_core_ref` is separated
   from `evaluation_baseline_ref`; the compatibility branch is not a republished Beta2.
+- A deterministic simulated campaign-readiness Mission completed in 12m06s with 27/27
+  real nodes, one withdrawn SubTask, 5m31s script time, 1m15s wait time, 15s tool time,
+  approximately 1m08s LLM time, and estimated Token usage visibly marked with `≈`.
 
 ## What This Gives The User
 
@@ -31,15 +34,16 @@ changing that hierarchy.
 
 The report distinguishes three clocks instead of producing one misleading number:
 
-- end-to-end elapsed time: wall time for the Mission or node lifecycle
+- end-to-end elapsed time: natural time from observed start to finish for the Mission
+  or node lifecycle
 - resource time by kind: the sum of model, script, tool, wait, or agent-turn spans
 - Token usage: platform-reported input/output usage, with cached input and reasoning
   output shown as subsets rather than added twice
 
-Resource time may exceed wall time when work is nested or parallel. Unknown data remains
-unknown; the renderer does not estimate missing measurements.
+Resource time may exceed actual elapsed time when work is nested or parallel. Unknown
+data remains unknown; the renderer does not estimate missing measurements.
 
-When lifecycle coverage is exact, the report also partitions wall time using interval
+When lifecycle coverage is exact, the report also partitions actual elapsed time using interval
 union rather than resource-time addition:
 
 ```text
@@ -162,7 +166,7 @@ The shared core supplies three collection surfaces:
 1. Lifecycle scripts capture task-tree and state mutations automatically.
 2. `record_execution_span.py` ingests sanitized platform-reported model/Agent timing
    and Token usage.
-3. `run_traced_command.py` measures script/tool wall time around a real command while
+3. `run_traced_command.py` measures script/tool elapsed time around a real command while
    inheriting its output and deliberately not storing command arguments, stdout, or
    stderr.
 
