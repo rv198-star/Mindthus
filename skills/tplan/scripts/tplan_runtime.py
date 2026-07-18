@@ -7,15 +7,28 @@ truth.
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 import re
 import sys
+import threading
 import uuid
 from collections import Counter
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+try:
+    import fcntl
+except ImportError:  # pragma: no cover - Windows fallback
+    fcntl = None  # type: ignore[assignment]
+
+try:
+    import msvcrt
+except ImportError:  # pragma: no cover - POSIX path
+    msvcrt = None  # type: ignore[assignment]
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -26,6 +39,7 @@ from _runtime.core.shape import findings_from_messages
 
 
 SCHEMA_VERSION = "tplan.v0.1"
+EXECUTION_TRACE_SCHEMA_VERSION = "tplan.execution_trace.v0.1"
 SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
 SHARED_CONTEXT_MARKER_START = "<!-- tplan-shared-context"
 SHARED_CONTEXT_MARKER_END = "-->"
@@ -66,6 +80,84 @@ ALLOWED_TASK_TRANSITIONS = {
 
 TASK_ROLES = {"success-critical", "supporting", "exploratory"}
 NODE_KINDS = {"task", "subtask", "step"}
+
+TRACE_EVENT_TYPES = {
+    "mission_initialized",
+    "node_added",
+    "task_status_changed",
+    "active_node_changed",
+    "mission_status_changed",
+    "span_completed",
+}
+TRACE_SPAN_KINDS = {"model", "agent_turn", "script", "tool", "wait", "runtime"}
+TRACE_SPAN_STATUSES = {"ok", "error", "cancelled", "unknown"}
+TRACE_MEASUREMENT_SOURCES = {"platform_reported", "host_measured", "inferred", "unavailable"}
+TRACE_ATTRIBUTIONS = {"exact", "shared", "mission_overhead", "unattributed"}
+TRACE_USAGE_FIELDS = {
+    "input_tokens",
+    "cached_input_tokens",
+    "output_tokens",
+    "reasoning_output_tokens",
+}
+TRACE_SPAN_FIELDS = {
+    "span_id",
+    "parent_span_id",
+    "kind",
+    "label",
+    "status",
+    "measurement_source",
+    "attribution",
+    "started_at",
+    "finished_at",
+    "duration_ms",
+    "attempt",
+    "shared_task_ids",
+}
+TRACE_METADATA_FIELDS = {
+    "agent_role",
+    "cache_hit",
+    "exit_code",
+    "model",
+    "operation",
+    "parallel_group_id",
+    "provider",
+    "tool_class",
+}
+TRACE_REF_FIELDS = {"artifact_refs", "evidence_ids", "evidence_links"}
+TRACE_COMMON_RECORD_FIELDS = {
+    "schema_version",
+    "event_id",
+    "event_type",
+    "timestamp",
+    "mission_id",
+    "task_id",
+    "refs",
+}
+TRACE_LIFECYCLE_PAYLOAD_FIELDS = {
+    "mission_initialized": {"mission_status", "active_task_id", "tasks"},
+    "node_added": {"parent_id", "kind", "status", "title", "dynamic"},
+    "task_status_changed": {"from_status", "to_status", "outcome_summary", "artifact_refs"},
+    "active_node_changed": {"from_task_id", "to_task_id"},
+    "mission_status_changed": {"from_status", "to_status"},
+}
+TRACE_THREAD_LOCK = threading.RLock()
+TRACE_FORBIDDEN_KEYS = {
+    "prompt",
+    "raw_prompt",
+    "response",
+    "raw_response",
+    "stdout",
+    "stderr",
+    "environment",
+    "env",
+    "credentials",
+    "credential",
+    "secrets",
+    "secret",
+    "command",
+    "command_args",
+    "arguments",
+}
 
 RECOMMENDATIONS = {"add", "subtract", "continue", "switch", "close", "escalate"}
 
@@ -441,8 +533,10 @@ def mission_paths(mission_dir: Path) -> dict[str, Path]:
         "mission": mission_dir / "mission.json",
         "narrative": mission_dir / "mission.md",
         "evidence": mission_dir / "evidence.jsonl",
+        "trace": mission_dir / "execution_trace.jsonl",
         "logs": mission_dir / "logs",
         "archive": mission_dir / "archive",
+        "reports": mission_dir / "reports",
     }
 
 
@@ -460,6 +554,44 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
         if tmp_path.exists():
             tmp_path.unlink()
         raise
+
+
+def write_text_atomic(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    tmp_path.write_text(text, encoding="utf-8")
+    try:
+        os.replace(tmp_path, path)
+    except OSError:
+        if tmp_path.exists():
+            tmp_path.unlink()
+        raise
+
+
+@contextmanager
+def execution_trace_lock(mission_dir: Path):
+    """Serialize trace append/state commits across local processes."""
+
+    lock_path = mission_dir / ".execution_trace.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with TRACE_THREAD_LOCK, lock_path.open("a+b") as handle:
+        if fcntl is not None:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        elif msvcrt is not None:  # pragma: no cover - Windows fallback
+            handle.seek(0, os.SEEK_END)
+            if handle.tell() == 0:
+                handle.write(b"\0")
+                handle.flush()
+            handle.seek(0)
+            msvcrt.locking(handle.fileno(), msvcrt.LK_LOCK, 1)
+        try:
+            yield
+        finally:
+            if fcntl is not None:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+            elif msvcrt is not None:  # pragma: no cover - Windows fallback
+                handle.seek(0)
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
 
 
 def read_mission(mission_dir: Path) -> dict[str, Any]:
@@ -554,7 +686,7 @@ def sync_mission_narrative(
     next_block = render_lite_runtime_state(mission, state)
     updated = _replace_lite_runtime_state_sections(narrative, next_block)
     if updated != narrative:
-        narrative_path.write_text(updated, encoding="utf-8")
+        write_text_atomic(narrative_path, updated)
 
 
 def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str | None = None) -> None:
@@ -1111,12 +1243,15 @@ def normalize_task_for_mission(mission: dict[str, Any], raw: dict[str, Any]) -> 
 def add_task_node(mission_dir: Path, raw: dict[str, Any]) -> dict[str, Any]:
     mission = read_mission(mission_dir)
     node = normalize_task_for_mission(mission, raw)
-    updated = dict(mission)
+    updated = copy.deepcopy(mission)
     updated["tasks"] = list(mission.get("tasks", [])) + [node]
-    errors = validate_mission(updated)
-    if errors:
-        raise TplanError("; ".join(errors))
-    write_mission(mission_dir, updated)
+    commit_mission_state(
+        mission_dir,
+        mission,
+        updated,
+        source={"kind": "runtime_script", "name": "add_node"},
+        latest_state=f"Task node {node['id']} was added.",
+    )
     return node
 
 
@@ -1488,6 +1623,673 @@ def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     return event
 
 
+def read_execution_trace(mission_dir: Path) -> list[dict[str, Any]]:
+    path = mission_paths(mission_dir)["trace"]
+    records: list[dict[str, Any]] = []
+    if not path.exists():
+        return records
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise TplanError(f"execution trace line {line_number} is invalid JSON: {exc.msg}") from exc
+        if not isinstance(record, dict):
+            raise TplanError(f"execution trace line {line_number} must be an object")
+        records.append(record)
+    return records
+
+
+def _trace_mission_id(mission: dict[str, Any]) -> str:
+    mission_meta = mission.get("mission")
+    mission_id = mission_meta.get("id") if isinstance(mission_meta, dict) else None
+    if not isinstance(mission_id, str) or not mission_id:
+        raise TplanError("mission id is required for execution tracing")
+    return mission_id
+
+
+def _parse_trace_timestamp(value: Any, field: str) -> datetime:
+    if not isinstance(value, str) or not value:
+        raise TplanError(f"execution trace {field} must be a non-empty ISO-8601 string")
+    normalized = value[:-1] + "+00:00" if value.endswith("Z") else value
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError as exc:
+        raise TplanError(f"execution trace {field} must be ISO-8601") from exc
+    if parsed.tzinfo is None:
+        raise TplanError(f"execution trace {field} must include a timezone")
+    return parsed
+
+
+def _trace_forbidden_path(value: Any, path: str = "record") -> str | None:
+    if isinstance(value, dict):
+        for key, item in value.items():
+            normalized = str(key).strip().lower()
+            next_path = f"{path}.{key}"
+            if normalized in TRACE_FORBIDDEN_KEYS:
+                return next_path
+            forbidden = _trace_forbidden_path(item, next_path)
+            if forbidden:
+                return forbidden
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            forbidden = _trace_forbidden_path(item, f"{path}[{index}]")
+            if forbidden:
+                return forbidden
+    return None
+
+
+def _require_trace_string(errors: list[str], data: dict[str, Any], field: str, label: str) -> str | None:
+    value = data.get(field)
+    if not isinstance(value, str) or not value:
+        errors.append(f"{label} {field} must be a non-empty string")
+        return None
+    return value
+
+
+def _valid_safe_trace_text(value: Any, *, limit: int) -> bool:
+    return isinstance(value, str) and bool(value.strip()) and len(value) <= limit and "\n" not in value and "\r" not in value
+
+
+def _safe_trace_summary(value: Any, *, limit: int) -> str:
+    summary = re.sub(r"\s+", " ", str(value or "")).strip()
+    return summary if len(summary) <= limit else summary[: limit - 1].rstrip() + "…"
+
+
+def _valid_trace_refs(values: Any) -> bool:
+    return isinstance(values, list) and all(
+        _valid_safe_trace_text(item, limit=500) for item in values
+    )
+
+
+def _validate_lifecycle_payload(
+    errors: list[str],
+    mission: dict[str, Any],
+    event_type: str,
+    payload: dict[str, Any],
+) -> None:
+    allowed = TRACE_LIFECYCLE_PAYLOAD_FIELDS.get(event_type, set())
+    unsupported = sorted(set(payload) - allowed)
+    if unsupported:
+        errors.append(f"execution trace {event_type} payload fields unsupported: {', '.join(unsupported)}")
+    tasks = task_map(mission)
+    if event_type == "mission_initialized":
+        if payload.get("mission_status") not in MISSION_STATUSES:
+            errors.append("execution trace mission_initialized mission_status unsupported")
+        active_task_id = payload.get("active_task_id")
+        if active_task_id is not None and active_task_id not in tasks:
+            errors.append("execution trace mission_initialized active_task_id must reference a task or be null")
+        snapshots = payload.get("tasks")
+        if not isinstance(snapshots, list):
+            errors.append("execution trace mission_initialized tasks must be a list")
+        else:
+            for snapshot in snapshots:
+                if not isinstance(snapshot, dict) or set(snapshot) != {"id", "parent_id", "kind", "status", "title"}:
+                    errors.append("execution trace mission_initialized task snapshots have invalid shape")
+                    continue
+                if snapshot.get("id") not in tasks:
+                    errors.append("execution trace mission_initialized task snapshot must reference a task")
+                if snapshot.get("kind") not in NODE_KINDS or snapshot.get("status") not in TASK_STATUSES:
+                    errors.append("execution trace mission_initialized task snapshot kind/status unsupported")
+                if not _valid_safe_trace_text(snapshot.get("title"), limit=240):
+                    errors.append("execution trace mission_initialized task title must be a safe single-line summary")
+    elif event_type == "node_added":
+        if payload.get("parent_id") is not None and payload.get("parent_id") not in tasks:
+            errors.append("execution trace node_added parent_id must reference a task or be null")
+        if payload.get("kind") not in NODE_KINDS or payload.get("status") not in TASK_STATUSES:
+            errors.append("execution trace node_added kind/status unsupported")
+        if not _valid_safe_trace_text(payload.get("title"), limit=240):
+            errors.append("execution trace node_added title must be a safe single-line summary")
+        if payload.get("dynamic") is not True:
+            errors.append("execution trace node_added dynamic must be true")
+    elif event_type == "task_status_changed":
+        if payload.get("from_status") not in TASK_STATUSES or payload.get("to_status") not in TASK_STATUSES:
+            errors.append("execution trace task_status_changed from_status/to_status unsupported")
+        if "outcome_summary" in payload and not _valid_safe_trace_text(payload["outcome_summary"], limit=500):
+            errors.append("execution trace outcome_summary must be a safe single-line summary of at most 500 characters")
+        if "artifact_refs" in payload and not _valid_trace_refs(payload["artifact_refs"]):
+            errors.append("execution trace task_status_changed artifact_refs must be safe references")
+    elif event_type == "active_node_changed":
+        for field in ("from_task_id", "to_task_id"):
+            value = payload.get(field)
+            if value is not None and value not in tasks:
+                errors.append(f"execution trace active_node_changed {field} must reference a task or be null")
+    elif event_type == "mission_status_changed":
+        if payload.get("from_status") not in MISSION_STATUSES or payload.get("to_status") not in MISSION_STATUSES:
+            errors.append("execution trace mission_status_changed from_status/to_status unsupported")
+
+
+def validate_execution_trace_record(mission: dict[str, Any], record: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(record, dict):
+        return ["execution trace record must be an object"]
+
+    forbidden = _trace_forbidden_path(record)
+    if forbidden:
+        errors.append(f"execution trace contains forbidden raw-content field: {forbidden}")
+
+    if record.get("schema_version") != EXECUTION_TRACE_SCHEMA_VERSION:
+        errors.append(f"execution trace schema_version must be {EXECUTION_TRACE_SCHEMA_VERSION}")
+    _require_trace_string(errors, record, "event_id", "execution trace")
+    event_type = _require_trace_string(errors, record, "event_type", "execution trace")
+    if event_type is not None and event_type not in TRACE_EVENT_TYPES:
+        errors.append(f"execution trace event_type unsupported: {event_type}")
+    try:
+        _parse_trace_timestamp(record.get("timestamp"), "timestamp")
+    except TplanError as exc:
+        errors.append(str(exc))
+
+    mission_id = record.get("mission_id")
+    expected_mission_id = _trace_mission_id(mission)
+    if mission_id != expected_mission_id:
+        errors.append(f"execution trace mission_id must be {expected_mission_id}")
+
+    task_id = record.get("task_id")
+    tasks = task_map(mission)
+    if task_id is not None:
+        if not isinstance(task_id, str) or not task_id:
+            errors.append("execution trace task_id must be a non-empty string or null")
+        elif task_id not in tasks:
+            errors.append(f"execution trace task_id {task_id} does not exist")
+
+    allowed_record_fields = TRACE_COMMON_RECORD_FIELDS | (
+        {"span", "usage", "usage_source", "metadata"}
+        if event_type == "span_completed"
+        else {"payload", "source", "commit_id"}
+    )
+    unsupported_record_fields = sorted(set(record) - allowed_record_fields)
+    if unsupported_record_fields:
+        errors.append(f"execution trace record fields unsupported: {', '.join(unsupported_record_fields)}")
+
+    refs = record.get("refs", {})
+    if not isinstance(refs, dict):
+        errors.append("execution trace refs must be an object")
+    else:
+        unsupported_refs = sorted(set(refs) - TRACE_REF_FIELDS)
+        if unsupported_refs:
+            errors.append(f"execution trace refs fields unsupported: {', '.join(unsupported_refs)}")
+        for field, values in refs.items():
+            if not _valid_trace_refs(values):
+                errors.append(f"execution trace refs {field} must be a list of safe single-line references")
+    if event_type != "span_completed":
+        payload = record.get("payload", {})
+        if not isinstance(payload, dict):
+            errors.append("execution trace payload must be an object")
+        elif isinstance(event_type, str):
+            _validate_lifecycle_payload(errors, mission, event_type, payload)
+        source_record = record.get("source", {})
+        if not isinstance(source_record, dict):
+            errors.append("execution trace source must be an object")
+        elif set(source_record) != {"kind", "name"}:
+            errors.append("execution trace source requires only kind and name")
+        elif not all(_valid_safe_trace_text(value, limit=160) for value in source_record.values()):
+            errors.append("execution trace source values must be safe single-line strings")
+        commit_id = record.get("commit_id")
+        if event_type != "mission_initialized" and not _valid_safe_trace_text(commit_id, limit=80):
+            errors.append(f"execution trace {event_type} requires commit_id")
+        return errors
+
+    span = record.get("span")
+    if not isinstance(span, dict):
+        errors.append("execution trace span must be an object")
+        return errors
+
+    unsupported_span_fields = sorted(set(span) - TRACE_SPAN_FIELDS)
+    if unsupported_span_fields:
+        errors.append(f"execution trace span fields unsupported: {', '.join(unsupported_span_fields)}")
+
+    _require_trace_string(errors, span, "span_id", "execution trace span")
+    label = span.get("label")
+    if label is not None and not _valid_safe_trace_text(label, limit=160):
+        errors.append("execution trace span label must be a non-empty single-line string of at most 160 characters")
+    kind = _require_trace_string(errors, span, "kind", "execution trace span")
+    if kind is not None and kind not in TRACE_SPAN_KINDS:
+        errors.append(f"execution trace span kind unsupported: {kind}")
+    status = _require_trace_string(errors, span, "status", "execution trace span")
+    if status is not None and status not in TRACE_SPAN_STATUSES:
+        errors.append(f"execution trace span status unsupported: {status}")
+    source = _require_trace_string(errors, span, "measurement_source", "execution trace span")
+    if source is not None and source not in TRACE_MEASUREMENT_SOURCES:
+        errors.append(f"execution trace span measurement_source unsupported: {source}")
+    attribution = _require_trace_string(errors, span, "attribution", "execution trace span")
+    if attribution is not None and attribution not in TRACE_ATTRIBUTIONS:
+        errors.append(f"execution trace span attribution unsupported: {attribution}")
+
+    try:
+        started_at = _parse_trace_timestamp(span.get("started_at"), "span.started_at")
+        finished_at = _parse_trace_timestamp(span.get("finished_at"), "span.finished_at")
+        if finished_at < started_at:
+            errors.append("execution trace span finished_at must not precede started_at")
+    except TplanError as exc:
+        errors.append(str(exc))
+
+    duration_ms = span.get("duration_ms")
+    if isinstance(duration_ms, bool) or not isinstance(duration_ms, int) or duration_ms < 0:
+        errors.append("execution trace span duration_ms must be a non-negative integer")
+    if source == "unavailable" and duration_ms != 0:
+        errors.append("execution trace unavailable duration measurement must use duration_ms 0")
+    attempt = span.get("attempt")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        errors.append("execution trace span attempt must be a positive integer")
+    parent_span_id = span.get("parent_span_id")
+    if parent_span_id is not None and (not isinstance(parent_span_id, str) or not parent_span_id):
+        errors.append("execution trace span parent_span_id must be a non-empty string or null")
+
+    if attribution == "exact" and task_id is None:
+        errors.append("execution trace exact attribution requires task_id")
+    if attribution == "shared":
+        shared_task_ids = span.get("shared_task_ids")
+        if (
+            not isinstance(shared_task_ids, list)
+            or not all(isinstance(item, str) for item in shared_task_ids)
+            or len(set(shared_task_ids)) < 2
+        ):
+            errors.append("execution trace shared attribution requires at least two distinct shared_task_ids")
+        elif not all(isinstance(item, str) and item in tasks for item in shared_task_ids):
+            errors.append("execution trace shared_task_ids must reference existing tasks")
+        if task_id is not None:
+            errors.append("execution trace shared attribution uses shared_task_ids and requires task_id null")
+    elif "shared_task_ids" in span:
+        errors.append("execution trace shared_task_ids is allowed only for shared attribution")
+    if attribution in {"mission_overhead", "unattributed"} and task_id is not None:
+        errors.append(f"execution trace {attribution} attribution requires task_id null")
+
+    usage = record.get("usage", {})
+    if not isinstance(usage, dict):
+        errors.append("execution trace usage must be an object")
+    else:
+        unknown_usage = sorted(set(usage) - TRACE_USAGE_FIELDS)
+        if unknown_usage:
+            errors.append(f"execution trace usage fields unsupported: {', '.join(unknown_usage)}")
+        for field, value in usage.items():
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                errors.append(f"execution trace usage {field} must be a non-negative integer")
+        input_tokens = usage.get("input_tokens")
+        cached_tokens = usage.get("cached_input_tokens")
+        if isinstance(input_tokens, int) and isinstance(cached_tokens, int) and cached_tokens > input_tokens:
+            errors.append("execution trace cached_input_tokens must not exceed input_tokens")
+    usage_source = record.get("usage_source")
+    if usage_source is not None and usage_source not in TRACE_MEASUREMENT_SOURCES:
+        errors.append("execution trace usage_source unsupported")
+    if isinstance(usage, dict) and usage and usage_source is None:
+        errors.append("execution trace non-empty usage requires usage_source")
+
+    metadata = record.get("metadata", {})
+    if not isinstance(metadata, dict):
+        errors.append("execution trace metadata must be an object")
+    else:
+        unsupported_metadata = sorted(set(metadata) - TRACE_METADATA_FIELDS)
+        if unsupported_metadata:
+            errors.append(f"execution trace metadata fields unsupported: {', '.join(unsupported_metadata)}")
+        for field, value in metadata.items():
+            if not isinstance(value, (str, int, bool)) or isinstance(value, float):
+                errors.append(f"execution trace metadata {field} must be a string, integer, or boolean")
+            elif isinstance(value, str) and not _valid_safe_trace_text(value, limit=160):
+                errors.append(f"execution trace metadata {field} must be a safe single-line string")
+    return errors
+
+
+def validate_execution_trace(mission: dict[str, Any], records: Any) -> list[str]:
+    if not isinstance(records, list):
+        return ["execution trace must be a list of records"]
+    errors: list[str] = []
+    event_ids: set[str] = set()
+    span_ids: set[str] = set()
+    for index, record in enumerate(records, start=1):
+        for error in validate_execution_trace_record(mission, record):
+            errors.append(f"execution trace line {index}: {error}")
+        if not isinstance(record, dict):
+            continue
+        event_id = record.get("event_id")
+        if isinstance(event_id, str):
+            if event_id in event_ids:
+                errors.append(f"execution trace line {index}: duplicate event_id {event_id}")
+            event_ids.add(event_id)
+        span = record.get("span")
+        span_id = span.get("span_id") if isinstance(span, dict) else None
+        if isinstance(span_id, str):
+            if span_id in span_ids:
+                errors.append(f"execution trace line {index}: duplicate span_id {span_id}")
+            span_ids.add(span_id)
+    return errors
+
+
+def _new_trace_record(
+    mission: dict[str, Any],
+    event_type: str,
+    *,
+    task_id: str | None = None,
+    timestamp: str | None = None,
+    payload: dict[str, Any] | None = None,
+    refs: dict[str, Any] | None = None,
+    source: dict[str, Any] | None = None,
+    commit_id: str | None = None,
+) -> dict[str, Any]:
+    record: dict[str, Any] = {
+        "schema_version": EXECUTION_TRACE_SCHEMA_VERSION,
+        "event_id": f"X{uuid.uuid4().hex[:12]}",
+        "event_type": event_type,
+        "timestamp": timestamp or now_iso(),
+        "mission_id": _trace_mission_id(mission),
+        "task_id": task_id,
+        "payload": payload or {},
+        "refs": refs or {},
+    }
+    if source:
+        record["source"] = source
+    if commit_id:
+        record["commit_id"] = commit_id
+    return record
+
+
+def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
+    mission = read_mission(mission_dir)
+    normalized = dict(record)
+    normalized.setdefault("schema_version", EXECUTION_TRACE_SCHEMA_VERSION)
+    normalized.setdefault("event_id", f"X{uuid.uuid4().hex[:12]}")
+    normalized.setdefault("timestamp", now_iso())
+    normalized.setdefault("mission_id", _trace_mission_id(mission))
+    normalized.setdefault("task_id", None)
+    normalized.setdefault("refs", {})
+    if normalized.get("event_type") != "span_completed":
+        normalized.setdefault("payload", {})
+    errors = validate_execution_trace_record(mission, normalized)
+    if errors:
+        raise TplanError("; ".join(errors))
+
+    existing = read_execution_trace(mission_dir)
+    event_id = normalized["event_id"]
+    if any(item.get("event_id") == event_id for item in existing):
+        raise TplanError(f"execution trace event_id already exists: {event_id}")
+    span_id = normalized.get("span", {}).get("span_id")
+    if span_id and any(item.get("span", {}).get("span_id") == span_id for item in existing):
+        raise TplanError(f"execution trace span_id already exists: {span_id}")
+    initialized = next((item for item in existing if item.get("event_type") == "mission_initialized"), None)
+    if span_id and initialized is not None:
+        span_finished = _parse_trace_timestamp(normalized["span"]["finished_at"], "span.finished_at")
+        mission_started = _parse_trace_timestamp(initialized["timestamp"], "mission_initialized.timestamp")
+        if span_finished < mission_started:
+            raise TplanError("execution trace span must not finish before Mission initialization")
+
+    path = mission_paths(mission_dir)["trace"]
+    previous = path.read_text(encoding="utf-8") if path.exists() else ""
+    if previous and not previous.endswith("\n"):
+        previous += "\n"
+    write_text_atomic(path, previous + json.dumps(normalized, ensure_ascii=False) + "\n")
+    return normalized
+
+
+def append_execution_trace_record(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
+    with execution_trace_lock(mission_dir):
+        return _append_execution_trace_record_unlocked(mission_dir, record)
+
+
+def _initialize_execution_trace_unlocked(
+    mission_dir: Path, mission: dict[str, Any], *, timestamp: str | None = None
+) -> dict[str, Any]:
+    path = mission_paths(mission_dir)["trace"]
+    if path.exists() and path.read_text(encoding="utf-8").strip():
+        raise TplanError(f"execution trace already exists: {path}")
+    tasks = [
+        {
+            "id": task.get("id"),
+            "parent_id": task.get("parent_id"),
+            "kind": task.get("kind"),
+            "status": task.get("status"),
+            "title": _safe_trace_summary(task.get("title"), limit=240),
+        }
+        for task in mission.get("tasks", [])
+        if isinstance(task, dict)
+    ]
+    record = _new_trace_record(
+        mission,
+        "mission_initialized",
+        task_id=mission.get("active_task_id"),
+        timestamp=timestamp,
+        payload={
+            "mission_status": mission.get("mission", {}).get("status"),
+            "active_task_id": mission.get("active_task_id"),
+            "tasks": tasks,
+        },
+        source={"kind": "runtime", "name": "mission_initialization"},
+    )
+    errors = validate_execution_trace_record(mission, record)
+    if errors:
+        raise TplanError("; ".join(errors))
+    write_text_atomic(path, json.dumps(record, ensure_ascii=False) + "\n")
+    return record
+
+
+def initialize_execution_trace(mission_dir: Path, mission: dict[str, Any], *, timestamp: str | None = None) -> dict[str, Any]:
+    with execution_trace_lock(mission_dir):
+        return _initialize_execution_trace_unlocked(mission_dir, mission, timestamp=timestamp)
+
+
+def _state_change_trace_records(
+    before: dict[str, Any],
+    after: dict[str, Any],
+    *,
+    source: dict[str, Any],
+    refs: dict[str, Any] | None = None,
+    task_details: dict[str, dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    timestamp = now_iso()
+    commit_id = f"C{uuid.uuid4().hex[:12]}"
+    records: list[dict[str, Any]] = []
+    before_tasks = task_map(before)
+    after_tasks = task_map(after)
+    task_details = task_details or {}
+
+    for task_id in sorted(set(after_tasks) - set(before_tasks)):
+        task = after_tasks[task_id]
+        records.append(
+            _new_trace_record(
+                after,
+                "node_added",
+                task_id=task_id,
+                timestamp=timestamp,
+                payload={
+                    "parent_id": task.get("parent_id"),
+                    "kind": task.get("kind"),
+                    "status": task.get("status"),
+                    "title": _safe_trace_summary(task.get("title"), limit=240),
+                    "dynamic": True,
+                },
+                refs=refs,
+                source=source,
+                commit_id=commit_id,
+            )
+        )
+
+    for task_id in sorted(set(before_tasks) & set(after_tasks)):
+        previous_status = before_tasks[task_id].get("status")
+        next_status = after_tasks[task_id].get("status")
+        if previous_status == next_status:
+            continue
+        payload = {"from_status": previous_status, "to_status": next_status}
+        payload.update(task_details.get(task_id, {}))
+        records.append(
+            _new_trace_record(
+                after,
+                "task_status_changed",
+                task_id=task_id,
+                timestamp=timestamp,
+                payload=payload,
+                refs=refs,
+                source=source,
+                commit_id=commit_id,
+            )
+        )
+
+    previous_active = before.get("active_task_id")
+    next_active = after.get("active_task_id")
+    if previous_active != next_active:
+        records.append(
+            _new_trace_record(
+                after,
+                "active_node_changed",
+                task_id=next_active,
+                timestamp=timestamp,
+                payload={"from_task_id": previous_active, "to_task_id": next_active},
+                refs=refs,
+                source=source,
+                commit_id=commit_id,
+            )
+        )
+
+    previous_mission_status = before.get("mission", {}).get("status")
+    next_mission_status = after.get("mission", {}).get("status")
+    if previous_mission_status != next_mission_status:
+        records.append(
+            _new_trace_record(
+                after,
+                "mission_status_changed",
+                timestamp=timestamp,
+                payload={"from_status": previous_mission_status, "to_status": next_mission_status},
+                refs=refs,
+                source=source,
+                commit_id=commit_id,
+            )
+        )
+    return records
+
+
+def _commit_mission_state_unlocked(
+    mission_dir: Path,
+    before: dict[str, Any],
+    after: dict[str, Any],
+    *,
+    source: dict[str, Any],
+    refs: dict[str, Any] | None = None,
+    task_details: dict[str, dict[str, Any]] | None = None,
+    latest_state: str | None = None,
+) -> list[dict[str, Any]]:
+    current = read_mission(mission_dir)
+    if current != before:
+        raise TplanError("Mission state changed concurrently; reload and retry the mutation")
+    errors = validate_mission(after)
+    if errors:
+        raise TplanError("; ".join(errors))
+    records = _state_change_trace_records(
+        before,
+        after,
+        source=source,
+        refs=refs,
+        task_details=task_details,
+    )
+    for record in records:
+        errors = validate_execution_trace_record(after, record)
+        if errors:
+            raise TplanError("; ".join(errors))
+
+    paths = mission_paths(mission_dir)
+    trace_existed = paths["trace"].exists()
+    previous_trace = paths["trace"].read_text(encoding="utf-8") if trace_existed else ""
+    previous_mission = paths["mission"].read_text(encoding="utf-8")
+    next_trace = previous_trace
+    if next_trace and not next_trace.endswith("\n"):
+        next_trace += "\n"
+    next_trace += "".join(json.dumps(record, ensure_ascii=False) + "\n" for record in records)
+
+    try:
+        if records or trace_existed:
+            write_text_atomic(paths["trace"], next_trace)
+        write_mission(mission_dir, after, latest_state=latest_state)
+    except OSError:
+        if trace_existed:
+            write_text_atomic(paths["trace"], previous_trace)
+        elif paths["trace"].exists():
+            paths["trace"].unlink()
+        if paths["mission"].read_text(encoding="utf-8") != previous_mission:
+            write_text_atomic(paths["mission"], previous_mission)
+        raise
+    return records
+
+
+def commit_mission_state(
+    mission_dir: Path,
+    before: dict[str, Any],
+    after: dict[str, Any],
+    *,
+    source: dict[str, Any],
+    refs: dict[str, Any] | None = None,
+    task_details: dict[str, dict[str, Any]] | None = None,
+    latest_state: str | None = None,
+) -> list[dict[str, Any]]:
+    with execution_trace_lock(mission_dir):
+        return _commit_mission_state_unlocked(
+            mission_dir,
+            before,
+            after,
+            source=source,
+            refs=refs,
+            task_details=task_details,
+            latest_state=latest_state,
+        )
+
+
+def transition_task_status(
+    mission_dir: Path,
+    task_id: str,
+    status: str,
+    *,
+    outcome_summary: str | None = None,
+    evidence_refs: list[str] | None = None,
+    artifact_refs: list[str] | None = None,
+    source_name: str = "transition_task",
+) -> dict[str, Any]:
+    before = read_mission(mission_dir)
+    after = copy.deepcopy(before)
+    set_task_status(after, task_id, status)
+    details: dict[str, Any] = {}
+    if outcome_summary:
+        details["outcome_summary"] = outcome_summary
+    if artifact_refs:
+        details["artifact_refs"] = artifact_refs
+    refs = {"evidence_ids": evidence_refs or [], "artifact_refs": artifact_refs or []}
+    commit_mission_state(
+        mission_dir,
+        before,
+        after,
+        source={"kind": "runtime_script", "name": source_name},
+        refs=refs,
+        task_details={task_id: details},
+        latest_state=f"Task {task_id} transitioned to {status}.",
+    )
+    return after
+
+
+def record_execution_span(mission_dir: Path, raw: Any) -> dict[str, Any]:
+    if not isinstance(raw, dict):
+        raise TplanError("execution span input must be an object")
+    mission = read_mission(mission_dir)
+    span = dict(raw.get("span", {})) if isinstance(raw.get("span"), dict) else raw.get("span")
+    if isinstance(span, dict):
+        span.setdefault("span_id", f"SP{uuid.uuid4().hex[:12]}")
+        span.setdefault("parent_span_id", None)
+        span.setdefault("attempt", 1)
+    usage = raw.get("usage", {})
+    record = {
+        "schema_version": EXECUTION_TRACE_SCHEMA_VERSION,
+        "event_id": f"X{uuid.uuid4().hex[:12]}",
+        "event_type": "span_completed",
+        "timestamp": raw.get("timestamp") or (span.get("finished_at") if isinstance(span, dict) else now_iso()),
+        "mission_id": _trace_mission_id(mission),
+        "task_id": raw.get("task_id"),
+        "span": span,
+        "usage": usage,
+        "refs": raw.get("refs", {}),
+    }
+    if isinstance(usage, dict) and usage:
+        record["usage_source"] = raw.get("usage_source") or (
+            span.get("measurement_source") if isinstance(span, dict) else None
+        )
+    if "metadata" in raw:
+        record["metadata"] = raw["metadata"]
+    return append_execution_trace_record(mission_dir, record)
+
+
 def _risk_signals(mission: dict[str, Any]) -> list[dict[str, Any]]:
     shared_context = mission.get("shared_context")
     if not isinstance(shared_context, dict):
@@ -1740,8 +2542,9 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
         if not isinstance(attempt, str) or not attempt.strip():
             raise TplanError("stop report attempts must be non-empty strings")
 
-    mission = read_mission(mission_dir)
-    find_task(mission, task_id)
+    before = read_mission(mission_dir)
+    find_task(before, task_id)
+    mission = copy.deepcopy(before)
     set_task_status(mission, task_id, "blocked")
     mission["active_task_id"] = task_id
     mission["mission"]["status"] = "requires_human"
@@ -1757,7 +2560,15 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
             "payload": payload,
         },
     )
-    write_mission(mission_dir, mission)
+    commit_mission_state(
+        mission_dir,
+        before,
+        mission,
+        source={"kind": "runtime_script", "name": "stop_report"},
+        refs={"evidence_ids": [event["id"]]},
+        task_details={task_id: {"outcome_summary": summary}},
+        latest_state=f"Task {task_id} is blocked and requires human input.",
+    )
     return event
 
 
@@ -3100,22 +3911,23 @@ def apply_mutation(mission: dict[str, Any], mutation: Any) -> None:
 
 
 def apply_decision(mission_dir: Path, decision: Any) -> str:
-    mission = read_mission(mission_dir)
-    errors = validate_hook_output(decision, active_risk_signals(mission))
+    before = read_mission(mission_dir)
+    errors = validate_hook_output(decision, active_risk_signals(before))
     if errors:
         raise TplanError("; ".join(errors))
 
-    mode = authority_mode(mission)
+    mode = authority_mode(before)
     if mode == "advisory" or decision["requires_human"]:
         record_decision_recommendation(mission_dir, decision)
         return "recorded_recommendation"
 
+    mission = copy.deepcopy(before)
     for mutation in decision["proposed_mutations"]:
         apply_mutation(mission, mutation)
     errors = validate_mission(mission)
     if errors:
         raise TplanError("; ".join(errors))
-    append_event(
+    event = append_event(
         mission_dir,
         {
             "event_type": "decision_applied",
@@ -3124,9 +3936,18 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
             "payload": decision,
         },
     )
-    write_mission(
+    task_details = {
+        mutation["task_id"]: {"outcome_summary": decision["rationale"]}
+        for mutation in decision["proposed_mutations"]
+        if mutation.get("type") == "transition_task" and isinstance(mutation.get("task_id"), str)
+    }
+    commit_mission_state(
         mission_dir,
+        before,
         mission,
+        source={"kind": "decision_hook", "name": decision["recommendation"]},
+        refs={"evidence_ids": [event["id"]], "evidence_links": decision.get("evidence_links", [])},
+        task_details=task_details,
         latest_state=f"Decision applied: {decision['recommendation']}.",
     )
     return "applied_decision"

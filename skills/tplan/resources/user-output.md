@@ -105,3 +105,8 @@ Debug mode appends secondary internal recovery references:
 ```bash
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-internal
 ```
+
+After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
+to `standard`: show the Mission and significant actual paths, with status, time, Token,
+retry, and result summaries. Use `compact` for a quick handoff and `audit` only when the
+reader needs every node and stable reference. Unknown measurements must remain unknown.
