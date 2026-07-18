@@ -114,6 +114,27 @@ compatibility amendment: any new infrastructure blocker terminates v0.5, with no
 further amendment. The recovery still excludes release preparation and any architecture
 conclusion.
 
+The final recovery committed batch 2 and stopped at the frozen human-adjudication gate
+after one binary disagreement. William adjudicated
+`authority_or_evidence_regression=true` for blinded output
+`8606df7eab1735ca5a07adef6994533aab7795796843cf7db1398563af6dffb9`: the
+candidate's claim that the `using-mindthus` instruction file was unreadable was not a
+deployment failure. The Beta package and skill were installed, the exact semantic
+sandbox profile could read the file, and the Codex runtime recorded successful skill
+injection. The adjudication digest is
+`9bb0c91ca4ffc54248792b94cbb1adb546d8e3594ad4149b0b9b7e04262a535e`.
+
+The analyzer accepted that adjudication and reported two complete committed batches,
+six Generator outputs, twelve valid Judge records, and no unresolved disagreement.
+However, the next zero-model recovery preflight stopped with
+`blinded-view-source-drift`: it compared the current post-batch-2 usage
+(`6` Generator calls, `16` Judge calls, `363,410` counted tokens) with the frozen
+pre-amendment snapshot (`6`, `10`, `274,864`) instead of accepting the adjudicated
+resume point. No additional semantic call was made. Under the final-recovery policy,
+this new infrastructure blocker terminates v0.5; no third compatibility amendment is
+permitted. The two committed triplets remain descriptive evidence only and cannot
+support an architecture or release conclusion.
+
 ## Current visible-case authorization (v0.3)
 
 After the user removed the four sealed-shadow cases, v0.3 replaced—not edited—the
