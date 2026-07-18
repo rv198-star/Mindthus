@@ -78,7 +78,7 @@ signal. At this second stop the cumulative v0.5 consumption is one committed bat
 six Generator calls, ten Judge calls (including the four original zero-token schema
 failures), and 274,864 counted tokens.
 
-### Pending Judge-only blinded-view recovery
+### Final authorized Judge-only blinded-view recovery
 
 The additive `0.5-blinded-view.1` amendment reuses the already validated v0.4
 de-identification primitive. It removes only experiment identifiers from the copy sent
@@ -102,12 +102,17 @@ triplet must be reused without regeneration. The 24 remaining Judge calls exactl
 the 24 valid records still required for five commits, so any further Judge failure
 stops the run.
 
-`authorizations/issue-119-codex-v0.5-blinded-view.1.pending.json` remains pending.
-Its configuration digest is
+`authorizations/issue-119-codex-v0.5-blinded-view.1.pending.json` retains the
+pre-authorization packet. William subsequently confirmed the exact amendment and lock
+digests; `authorizations/issue-119-codex-v0.5-blinded-view.1.json` is now active. Its
+configuration digest is
 `3bda3b701b7fe14f47244c42cb956e7a54e5235d6c3a3898f2da896c68c407ce`.
-The no-model preflight passes and all 813 repository tests pass, but no semantic call is
-permitted until William confirms the exact amendment and lock digests. The recovery
-still excludes release preparation and any architecture conclusion.
+The active authorization digest is
+`7878ac47035c36754876e72b9d4962d18f4e5106db388df2109aa5484ab35765`.
+The no-model preflight and all 813 repository tests pass. This is the final v0.5
+compatibility amendment: any new infrastructure blocker terminates v0.5, with no
+further amendment. The recovery still excludes release preparation and any architecture
+conclusion.
 
 ## Current visible-case authorization (v0.3)
 
