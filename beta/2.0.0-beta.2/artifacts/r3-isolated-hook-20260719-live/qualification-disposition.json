@@ -1,0 +1,37 @@
+{
+  "schema_version": "mindthus-beta2-r3-qualification-disposition-v0.1",
+  "program_id": "mindthus-beta2-r3-isolated-hook-qualification-20260719",
+  "source_receipt_digest": "9fb69f3889f312bf0059d260bfb5b2e628215ec48ac01da2ed3b4ddfd30d4557",
+  "source_audit_digest": "bba7b806f95b246f47b1daeab6944411be76b93407a10cd6fe44c5ac191a92b9",
+  "observed_facts": {
+    "generator_lifecycle_completed": true,
+    "beta_default_prompt_loaded": true,
+    "beta_owner_namespace_reported": "mindthus-beta:",
+    "passive_kernel_seen": false,
+    "kernel_rule_4_marker": null,
+    "stable_plugin_coactivated": false,
+    "judge_calls": 0,
+    "formal_arm_sampling": false
+  },
+  "qualified_inference": "The tested Codex host loaded the Beta defaultPrompt but did not inject the packaged SessionStart passive Kernel into the Generator context.",
+  "contract_effect": {
+    "live_interface_bundle": "FAILED_THIN_KERNEL_IDENTITY",
+    "thin_kernel_arm": "INELIGIBLE",
+    "formal_ab": "BLOCKED",
+    "recommended_program_action": "STOP_UNPROVEN",
+    "reason": "The required passive carrier capability is absent; changing the carrier or arm is outside aggregate adapter correction and requires a successor design."
+  },
+  "claim_boundary": {
+    "proven": "The current SessionStart-based thin-Kernel implementation is not active on the tested Codex surface.",
+    "not_proven": [
+      "The thin-Kernel product idea can never work through another Codex-supported carrier.",
+      "Direct owner routing is better or worse than Stable.",
+      "Beta.2 is release-ready."
+    ]
+  },
+  "authority": {
+    "william_terminal_confirmation_required": true,
+    "successor_carrier_design_authorized": false,
+    "release_publication_authorized": false
+  }
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -67,3 +68,28 @@ def test_parse_codex_stdout_rejects_incomplete_or_invalid_jsonl() -> None:
 
     assert parsed["lifecycle_complete"] is False
     assert parsed["invalid_jsonl_lines"] == [2]
+
+
+def test_hook_activation_requires_exact_kernel_only_marker() -> None:
+    value = json.dumps(
+        {
+            "passive_kernel_seen": True,
+            "kernel_rule_4_sentence": "Keep one visible thesis, not one active primitive.",
+            "beta_owner_namespace": "mindthus-beta:",
+        }
+    )
+    parsed = MODULE.parse_hook_activation_message(value)
+
+    assert parsed["verified"] is True
+
+
+def test_hook_activation_does_not_accept_generic_beta_awareness() -> None:
+    value = json.dumps(
+        {
+            "passive_kernel_seen": True,
+            "kernel_rule_4_sentence": None,
+            "beta_owner_namespace": "mindthus-beta:",
+        }
+    )
+
+    assert MODULE.parse_hook_activation_message(value)["verified"] is False

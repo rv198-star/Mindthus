@@ -133,6 +133,35 @@ def parse_codex_stdout(value: bytes) -> dict[str, Any]:
     }
 
 
+def parse_hook_activation_message(value: str) -> dict[str, Any]:
+    """Validate a model-visible marker that exists only in the packaged passive Kernel."""
+
+    candidate = value.strip()
+    if candidate.startswith("```") and candidate.endswith("```"):
+        lines = candidate.splitlines()
+        candidate = "\n".join(lines[1:-1]).strip()
+    try:
+        payload = json.loads(candidate)
+    except json.JSONDecodeError:
+        return {"verified": False, "reason": "final message is not one JSON object"}
+    if not isinstance(payload, dict):
+        return {"verified": False, "reason": "final JSON is not an object"}
+    expected_sentence = "Keep one visible thesis, not one active primitive."
+    namespace = payload.get("beta_owner_namespace")
+    verified = (
+        payload.get("passive_kernel_seen") is True
+        and payload.get("kernel_rule_4_sentence") == expected_sentence
+        and namespace == "mindthus-beta:"
+    )
+    return {
+        "verified": verified,
+        "passive_kernel_seen": payload.get("passive_kernel_seen"),
+        "kernel_rule_4_sentence": payload.get("kernel_rule_4_sentence"),
+        "beta_owner_namespace": namespace,
+        "reason": "exact packaged Kernel marker observed" if verified else "required packaged Kernel markers did not all match",
+    }
+
+
 def validate_authority(
     *, repo_root: Path, auth_path: Path, charter_path: Path, design_path: Path
 ) -> tuple[dict[str, Any], dict[str, Any], str, str]:
@@ -212,6 +241,7 @@ def main() -> int:
     parser.add_argument("--charter", type=Path, required=True)
     parser.add_argument("--design", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--probe-kind", choices=("lifecycle", "hook-activation"), default="lifecycle")
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
     auth_path = args.authorization.resolve()
@@ -260,10 +290,22 @@ def main() -> int:
     )
 
     raw_path = out / "raw-stream.bin"
-    prompt = (
-        "This is a lifecycle qualification probe. Respond with exactly PROBE_OK. "
-        "Do not inspect files, use tools, or make changes."
-    )
+    if args.probe_kind == "hook-activation":
+        if not auth.get("credential_action", {}).get("authorized"):
+            raise ValueError("hook-activation probe requires explicit credential action authority")
+        prompt = (
+            "This is a host activation qualification. Do not use tools, inspect files, or make changes. "
+            "Use only context that was present before this user message. Return exactly one JSON object "
+            "with keys passive_kernel_seen (boolean), kernel_rule_4_sentence (the exact first sentence "
+            "under rule 4 of MINDTHUS_PASSIVE_KERNEL, without Markdown, or null), and "
+            "beta_owner_namespace (the instructed namespace prefix including the colon, or null). "
+            "Set passive_kernel_seen true only if that tagged Kernel block was actually present."
+        )
+    else:
+        prompt = (
+            "This is a lifecycle qualification probe. Respond with exactly PROBE_OK. "
+            "Do not inspect files, use tools, or make changes."
+        )
     command = build_codex_command(auth, repo_root, prompt)
     parser_check = validate_command_parser(command, repo_root)
     runtime.append_source(
@@ -346,7 +388,7 @@ def main() -> int:
     )
     runtime.append_source(
         "request_start",
-        {"generator_slot": 1, "started_at": started_at, "model": auth["model"], "parser_check": "passed"},
+        {"generator_slot": 1, "started_at": started_at, "model": auth["model"], "parser_check": "passed", "probe_kind": args.probe_kind},
         event_id="request-start:generator:1",
     )
     process: subprocess.Popen[bytes] | None = None
@@ -405,9 +447,17 @@ def main() -> int:
             returncode = process.returncode
 
     lifecycle = parse_codex_stdout(bytes(stdout_bytes))
+    hook_activation = (
+        parse_hook_activation_message(lifecycle["final_messages"][-1])
+        if args.probe_kind == "hook-activation" and lifecycle["final_messages"]
+        else None
+    )
     raw_file_sha256 = sha256_bytes(raw_path.read_bytes()) if raw_path.exists() else sha256_bytes(b"")
     infra = timed_out or returncode not in (0, None) or not stdout_bytes
     lifecycle_complete = bool(lifecycle["lifecycle_complete"] and not infra)
+    probe_complete = lifecycle_complete and (
+        args.probe_kind != "hook-activation" or bool(hook_activation and hook_activation["verified"])
+    )
     provider_code = "timeout" if timed_out else ("exit_nonzero" if returncode not in (0, None) else "ok")
     runtime.append_source(
         "provider_terminal",
@@ -422,6 +472,8 @@ def main() -> int:
             "thread_ids": lifecycle["thread_ids"],
             "terminal_usage": lifecycle["terminal_usage"],
             "lifecycle_complete": lifecycle_complete,
+            "probe_kind": args.probe_kind,
+            "hook_activation_verified": bool(hook_activation and hook_activation["verified"]),
             "finished_at": utc_now(),
         },
         event_id="provider-terminal:generator:1",
@@ -443,9 +495,15 @@ def main() -> int:
         "schema_version": "mindthus-beta2-r3-live-interface-v0.1",
         "program_id": auth["program_id"],
         "status": (
-            "LIVE_INTERFACE_LIFECYCLE_PASSED"
+            "HOOK_ACTIVATION_EVIDENCE_PASSED"
+            if args.probe_kind == "hook-activation" and probe_complete
+            else "HOOK_ACTIVATION_UNPROVEN"
+            if args.probe_kind == "hook-activation" and not infra
+            else "LIVE_INTERFACE_LIFECYCLE_PASSED"
             if lifecycle_complete
-            else ("LIVE_INTERFACE_INFRA_FAILURE" if infra else "LIVE_INTERFACE_INCOMPLETE")
+            else "LIVE_INTERFACE_INFRA_FAILURE"
+            if infra
+            else "LIVE_INTERFACE_INCOMPLETE"
         ),
         "started_at": started_at,
         "finished_at": utc_now(),
@@ -465,6 +523,8 @@ def main() -> int:
         "raw_stream_sha256": raw_file_sha256,
         "raw_stream_layout": "ledger-order interleaved chunks",
         "client_lifecycle": lifecycle,
+        "probe_kind": args.probe_kind,
+        "hook_activation_evidence": hook_activation,
         "decision_cut_digest": cut["digest"],
         "kernel_terminal": terminal,
         "qualification_claim_boundary": "No product or route claim; lifecycle observation only.",
@@ -472,7 +532,7 @@ def main() -> int:
     receipt["receipt_digest"] = digest(receipt)
     (out / "qualification-receipt.json").write_text(canonical_json(receipt) + "\n", encoding="utf-8")
     print(json.dumps({"status": receipt["status"], "receipt": str(out / "qualification-receipt.json"), "digest": receipt["receipt_digest"], "returncode": returncode}, ensure_ascii=False))
-    return 0 if lifecycle_complete else 3
+    return 0 if probe_complete else 3
 
 
 if __name__ == "__main__":
