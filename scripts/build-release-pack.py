@@ -463,8 +463,8 @@ def _load_h1_owner_metadata_profile(root: Path) -> ReleaseProfile:
             raise SystemExit(f"H1 {label} not found: {path}")
 
     overrides = manifest.get("owner_description_overrides")
-    if not isinstance(overrides, dict) or set(overrides) != {"mpg", "wae"}:
-        raise SystemExit("H1 must override exactly the MPG and WAE descriptions")
+    if not isinstance(overrides, dict) or set(overrides) != {"3l5s", "mpg", "wae"}:
+        raise SystemExit("H1 correction must override exactly the 3L5S, MPG, and WAE descriptions")
     if not all(isinstance(value, str) and value for value in overrides.values()):
         raise SystemExit("H1 owner-description overrides must be non-empty strings")
 

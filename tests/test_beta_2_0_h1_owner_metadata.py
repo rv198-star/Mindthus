@@ -59,9 +59,9 @@ class H1OwnerMetadataTests(unittest.TestCase):
         self.assertEqual(self.profile["release_preparation"], "forbidden")
         self.assertNotIn("beta.3", json.dumps(self.profile).lower())
 
-    def test_only_mpg_and_wae_descriptions_change(self) -> None:
+    def test_only_frozen_correction_descriptions_change(self) -> None:
         overrides = self.profile["owner_description_overrides"]
-        self.assertEqual(set(overrides), {"mpg", "wae"})
+        self.assertEqual(set(overrides), {"3l5s", "mpg", "wae"})
         for owner in OWNERS:
             source_metadata, source_body = split_skill(REPO / "skills" / owner / "SKILL.md")
             built_metadata, built_body = split_skill(self.plugin / "skills" / owner / "SKILL.md")

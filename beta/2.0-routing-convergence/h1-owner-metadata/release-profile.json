@@ -2,7 +2,7 @@
   "schema_version": "mindthus-release-profile-v0.4",
   "release_line": "2.0-routing-h1-metadata",
   "version": "2.0.0-next.2",
-  "status": "unpublished-static-candidate",
+  "status": "unpublished-corrected-static-candidate",
   "release_preparation": "forbidden",
   "live_qualification": "not-started",
   "behavioral_evaluation": "pending",
@@ -47,11 +47,11 @@
     "tplan"
   ],
   "owner_description_overrides": {
+    "3l5s": "Use only when noisy or scattered signals, or repeated execution failures, must be turned into a falsifiable problem; or when an accepted problem or task plan is too large or complex to decompose into executable, verifiable work. A single underspecified decision request is missing context, not by itself a 3L5S problem.",
     "mpg": "Use only when an established mainline, a concrete actor/carrier with meaningful exposure, real path volatility, and a current continue/commit/hold/exit/switch decision are all present. If actor, carrier, exposure, or decision context is missing, no MPG; not for method-reference evidence review.",
     "wae": "Use only when an agentic system—LLM, agent, skill, prompt, or its workflow/script/schema/evidence gate—has a real controller mismatch. No agentic system or no controller mismatch, no WAE; ordinary product release-readiness or generic evidence sufficiency is outside scope."
   },
   "unchanged_owner_descriptions": {
-    "3l5s": "Use when a problem is unclear, noisy, repeatedly reworked, or too large to execute directly; also use when a task list looks structured but may not be executable, verifiable, or tied to a falsifiable problem.",
     "edsp": "Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed.",
     "sela": "Use for long-term system-efficiency versus local-advantage direction pressure, especially old paradigm vs scalable system or external system efficiency vs local/internal advantage; when concrete carrier/exposure/path action is also present, use as a support lens with MPG rather than sole owner.",
     "tvg": "Use as a value-directed strengthening loop for bounded AI artifacts that need clearer judgment, evidence, trade-offs, handoff, reuse, or action value.",
@@ -88,7 +88,7 @@
     "scripts/run-fidelity-judge.py"
   ],
   "artifact_sha256": {
-    "STATUS.md": "2e4d1e4e2d86115102e684f6204aff44b725209347b8fbb0b3ba990f4ccb9e32",
+    "STATUS.md": "0afcf274139f1d9a987166a9f775004bfd0a55cc957212232643ffa40b689b3b",
     "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
     "scripts/check-h1-metadata.py": "d8f7c26cbad12fdb5bb3122fee97fab5d0ef1f143b2a9fa695c4a13c81fab658",
     "skills/using-mindthus/SKILL.md": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"

@@ -1,15 +1,18 @@
 # Mindthus H1 Owner Metadata Candidate
 
-Status: `UNPUBLISHED / STATIC QUALIFIED / LIVE QUALIFICATION PENDING`
+Status: `UNPUBLISHED / ONE-TIME CORRECTION STATIC QUALIFIED / LIVE PENDING`
 
 This Codex-only candidate tests whether precise native Skill discovery metadata can
 remove the two owner false positives observed in N3 while retaining direct owner recall.
 It is a new profile built from `f9117426`; it does not repair or inherit the rejected
 candidate's status.
 
-The only intended behavioral delta is package-time replacement of the WAE and MPG
-frontmatter descriptions. The thin entry, all seven owner bodies, the other five owner
-descriptions, the topology, and the neutral plugin prompt remain unchanged.
+Candidate A passed the WAE positive and near-negative probes but failed the missing
+decision-context probe by loading 3L5S and recommending a pause. The one permitted
+correction therefore adds a package-time 3L5S description replacement grounded in its
+existing body domain. See `CORRECTION.md` in the source tree. The thin entry, all seven
+owner bodies, the other four owner descriptions, the topology, and the neutral plugin
+prompt remain unchanged.
 
 Build for isolated inspection:
 
