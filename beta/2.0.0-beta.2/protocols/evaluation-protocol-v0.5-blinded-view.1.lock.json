@@ -1,0 +1,77 @@
+{
+  "schema_version": "mindthus-beta2-blinded-view-lock-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.5",
+  "amendment_id": "0.5-blinded-view.1",
+  "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-blinded-view.1.json",
+  "protocol_sha256": "b52bc87e4eec22d01dae62c269768aa7e495b8ee1b077271ade6ce69cfd348bc",
+  "base_protocol_sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+  "base_lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713",
+  "judge_compatibility_protocol_sha256": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6",
+  "judge_compatibility_lock_digest": "420e8cb9473c944cd41ca33166a0258f986bb4855d7a2ecefc42a5d44bbad16e",
+  "source_receipt_digest": "105e899dbdc85bf48ef203f92afd45ee35c2b1e1b6a5bef284ab70e840fecd55",
+  "dependency_receipts": [
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+      "sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+      "sha256": "8f00c807a1b35f747a4ba3f643ae5e9ab2f867483660621f97515b835a8c50d5"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.json",
+      "sha256": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.lock.json",
+      "sha256": "f0062fa3d29eb21a42e83dd97d79c931891692e1399e7e459ec360768a54de92"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5-judge-compat.1.json",
+      "sha256": "0a13c54eb9d6adc112ef95a6b07c002ab13bc8fedbba1882062258323eeea3ce"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05.py",
+      "sha256": "03034ca15c480c35c4c98b68577828f327c34e88b4836040f9b3b3fbd906fcb8"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05_judge_compat.py",
+      "sha256": "dee79bc076376e0c7e2febaa32443109616e5500a28048ac99d7fb85f7916fbd"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05.py",
+      "sha256": "aa4996c85e4034e0b53238d30a406feb00a24eebf6651ef1747d038fe108841a"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+      "sha256": "bbff5979df29c25385a2ffc2e4452ee805fbc5191a9425e288edffac9a0fa0bc"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05_blinded_view.py",
+      "sha256": "2eee2b556b7ea017012dd1f17d93ed991bc581762f8c019f32c15bdf8e8f69a1"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05_blinded_view.py",
+      "sha256": "a1d4ef7798825f7cd0b28cd8664ac587a9f22554da24faedb552d04b4944e3d6"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-blinded-view-v0.5.py",
+      "sha256": "1e6779d55c83c61b28576aeca14947a4bc9550dcb7360a305ccbaa2e79142b9d"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.5-blinded-view.py",
+      "sha256": "0d0d413e0f8ec6bc666ac6a7ecffd9684f579de416a309c0b1527d13bfabac1d"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.5-blinded-view.py",
+      "sha256": "93f2b598c7c419a72690725fb5af23cb3ae819aa1ab12886bf39dfb2598e64e1"
+    }
+  ],
+  "validator_path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-blinded-view-v0.5.py",
+  "validator_sha256": "1e6779d55c83c61b28576aeca14947a4bc9550dcb7360a305ccbaa2e79142b9d",
+  "source_parent_commit": "0cafb7b4cbfd02cf88b44c038e8deaf82a73bd80",
+  "semantic_output_generated_under_amendment_before_freeze": false,
+  "frozen_at_utc": "2026-07-18T09:53:18.670324+00:00",
+  "lock_digest": "a98ee55e53ad2044431034a714ec49217f6cfdc58bdd644e969c9d2d8eefb6f2"
+}

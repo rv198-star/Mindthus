@@ -1,0 +1,219 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-blinded-view-amendment-v0.1",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.5",
+  "amendment_id": "0.5-blinded-view.1",
+  "purpose": "Resume the stopped v0.5 incremental run by removing experiment identifiers only from the Judge-facing candidate copy, while preserving the original Generator answer and every frozen execution ceiling.",
+  "base_binding": {
+    "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+    "protocol_sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+    "lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713",
+    "judge_compatibility_protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.json",
+    "judge_compatibility_protocol_sha256": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6",
+    "judge_compatibility_lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.lock.json",
+    "judge_compatibility_lock_digest": "420e8cb9473c944cd41ca33166a0258f986bb4855d7a2ecefc42a5d44bbad16e",
+    "judge_compatibility_authorization_path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5-judge-compat.1.json",
+    "judge_compatibility_authorization_file_sha256": "0a13c54eb9d6adc112ef95a6b07c002ab13bc8fedbba1882062258323eeea3ce",
+    "judge_compatibility_authorization_digest": "3a87294be05939455de1157a1466acdd71710bae30bed852361afe28c7789e5a"
+  },
+  "retained_source_run": {
+    "snapshot_receipt_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run/recovery/0.5-blinded-view.1/pre-amendment/source-receipt.json",
+    "snapshot_receipt_sha256": "fd1fdfd810acfbe597ecf5a82c76106c6aa5ef6f65a0e31f1f9eae98ea5e2600",
+    "snapshot_receipt_digest": "105e899dbdc85bf48ef203f92afd45ee35c2b1e1b6a5bef284ab70e840fecd55",
+    "source_run_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run",
+    "usage": {
+      "committed_batches": 1,
+      "generation_calls": 6,
+      "judge_calls": 10,
+      "counted_tokens": 274864,
+      "generation_outputs": 6,
+      "valid_judge_records": 6
+    },
+    "remaining_authority": {
+      "committed_batches": 4,
+      "generation_calls": 11,
+      "judge_calls": 24,
+      "counted_tokens": 2725136
+    },
+    "active_batch": {
+      "batch_id": "e830f879b1f8e4964cb25de92bcbaf5f0041b732638a0a96a74716cb9653086d",
+      "batch_index": 2,
+      "retained_uncommitted_cell_ids": [
+        "11b0c13b639611727b8cfa425feb29263d90d7e7e1e1e332ac4937a82e8fd64b",
+        "4d402ccd073594170c0128f9f90e0391adf2e0e8f72ba1eefae4db2f046e68dd",
+        "d5b1fa7f059b51b66da0780ec80b2180d1834b1e39cec2df39da6fbe3c5ff5d2"
+      ],
+      "batch_judge_calls": 0
+    },
+    "identifier_exposure_scan": {
+      "exposed_outputs": 1,
+      "items": [
+        {
+          "cell_id": "11b0c13b639611727b8cfa425feb29263d90d7e7e1e1e332ac4937a82e8fd64b",
+          "blinded_output_id": "918ed06a5662be4ffff7f9f8cdaa7d5dfdf43796d93e41389ea139bdb231e3bd",
+          "answer_sha256": "0747a7cdd5d945643d967204fd7ac17c2e43da20417eadeaffff953ba2aff312",
+          "blinded_answer_sha256": "926e32b4b85b8ece03c6203468f5ce0cb9b93f550ce70975a7d60e50017b526a",
+          "transformations": [
+            {
+              "kind": "namespace-prefix",
+              "source_sha256": "14e3a0aa89cc468f28c4ac86f33059a47b6b8d3b4609273b12542f939219b4cb",
+              "occurrences": 1
+            }
+          ]
+        }
+      ],
+      "exposed_set_digest": "a5be56ff0fac2c955b8b00d78f1356dcdfc1eaafe227f83ecb1848a51e45eca3",
+      "exact_sensitive_path_exposures": 0
+    }
+  },
+  "blinded_candidate_view": {
+    "scope": "Judge input and Judge prompt only",
+    "primitive_path": "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+    "primitive_sha256": "bbff5979df29c25385a2ffc2e4452ee805fbc5191a9425e288edffac9a0fa0bc",
+    "label_pattern": "\\b(?:direct-only|thin-kernel|stable\\s+arm)\\b|mindthus(?:-beta)?:",
+    "sensitive_paths": [
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/direct-only-r2/codex-home/plugins/cache/mindthus-beta/mindthus-beta/2.0.0-beta.1",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/thin-kernel/codex-home/plugins/cache/mindthus-beta/mindthus-beta/2.0.0-beta.1",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/stable/codex-home/plugins/cache/mindthus/mindthus/1.4.6",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/direct-only-r2/codex-home",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/thin-kernel/codex-home",
+      "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/stable/codex-home",
+      "/Volumes/Data/Mindthus-evaluation-v05-f9bc7232/direct-only-r2/project",
+      "/Volumes/Data/Mindthus-evaluation-v05-f9bc7232/thin-kernel/project",
+      "/Volumes/Data/Mindthus-evaluation-v05-f9bc7232/stable/project"
+    ],
+    "sensitive_path_set_digest": "9b3149ff0435503498650b7865829916440d8e090483b5d27b362b91adba8f90",
+    "transformations": {
+      "mindthus_or_mindthus_beta_namespace_prefix": "remove prefix only; preserve owner name",
+      "explicit_arm_label": "[blinded arm]",
+      "exact_sensitive_path": "terminal stop before transformation"
+    },
+    "original_answer_mutation_allowed": false,
+    "identity_view_receipt": false,
+    "transformed_view_receipt_schema": "mindthus-beta2-blinded-candidate-view-v0.1",
+    "receipt_path": "recovery/0.5-blinded-view.1/candidate-views/{blinded_output_id}.json",
+    "analysis_reconstruction_required": true,
+    "semantic_scoring_contract_relaxation": false
+  },
+  "recovery_control": {
+    "retained_generation_policy": "reuse all three uncommitted batch-2 Generator outputs; never regenerate them",
+    "resume_point": "one committed batch; batch 2 generated; zero batch-2 Judge calls",
+    "call_order": "Judge retained batch 2, atomically commit it, then continue remaining authorized batches",
+    "batch_commit_semantics": "unchanged frozen v0.5 hash-chained atomic commit",
+    "analysis_semantics": "base v0.5 committed-batch analysis plus deterministic candidate-view validation",
+    "future_retry_policy": "unchanged Generator retry rules; no Judge retry headroom",
+    "terminal_stops": [
+      "exact sensitive path exposure",
+      "candidate-view transformation or receipt drift",
+      "source or isolation drift",
+      "any new Judge failure",
+      "binary Judge disagreement requiring William",
+      "any original cumulative ceiling breach"
+    ]
+  },
+  "budget_accounting": {
+    "original_ceiling": {
+      "maximum_committed_batches": 5,
+      "maximum_generation_calls": 17,
+      "maximum_judge_calls": 34,
+      "maximum_counted_tokens": 3000000
+    },
+    "consumed_before_amendment": {
+      "committed_batches": 1,
+      "generation_calls": 6,
+      "judge_calls": 10,
+      "counted_tokens": 274864,
+      "generation_outputs": 6,
+      "valid_judge_records": 6
+    },
+    "remaining": {
+      "committed_batches": 4,
+      "generation_calls": 11,
+      "judge_calls": 24,
+      "counted_tokens": 2725136
+    },
+    "retained_uncommitted_generation_outputs": 3,
+    "valid_judge_records_still_required_for_five_batches": 24,
+    "future_judge_retry_headroom": 0,
+    "budget_expansion": false
+  },
+  "human_authorization": {
+    "authority": "William",
+    "design_instruction": "继续",
+    "design_evidence_id": "E0ed03902",
+    "zero_model_amendment_authorized": true,
+    "semantic_recovery_execution_authorized": false,
+    "fresh_exact_digest_authorization_required": true,
+    "human_adjudicator": "William",
+    "stop_authority": "William",
+    "release_preparation": false
+  },
+  "dependency_receipts": [
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+      "sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+      "sha256": "8f00c807a1b35f747a4ba3f643ae5e9ab2f867483660621f97515b835a8c50d5"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.json",
+      "sha256": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.lock.json",
+      "sha256": "f0062fa3d29eb21a42e83dd97d79c931891692e1399e7e459ec360768a54de92"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5-judge-compat.1.json",
+      "sha256": "0a13c54eb9d6adc112ef95a6b07c002ab13bc8fedbba1882062258323eeea3ce"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05.py",
+      "sha256": "03034ca15c480c35c4c98b68577828f327c34e88b4836040f9b3b3fbd906fcb8"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05_judge_compat.py",
+      "sha256": "dee79bc076376e0c7e2febaa32443109616e5500a28048ac99d7fb85f7916fbd"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05.py",
+      "sha256": "aa4996c85e4034e0b53238d30a406feb00a24eebf6651ef1747d038fe108841a"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/blinded_candidate_view_v04.py",
+      "sha256": "bbff5979df29c25385a2ffc2e4452ee805fbc5191a9425e288edffac9a0fa0bc"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05_blinded_view.py",
+      "sha256": "2eee2b556b7ea017012dd1f17d93ed991bc581762f8c019f32c15bdf8e8f69a1"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05_blinded_view.py",
+      "sha256": "a1d4ef7798825f7cd0b28cd8664ac587a9f22554da24faedb552d04b4944e3d6"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-blinded-view-v0.5.py",
+      "sha256": "1e6779d55c83c61b28576aeca14947a4bc9550dcb7360a305ccbaa2e79142b9d"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.5-blinded-view.py",
+      "sha256": "0d0d413e0f8ec6bc666ac6a7ecffd9684f579de416a309c0b1527d13bfabac1d"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.5-blinded-view.py",
+      "sha256": "93f2b598c7c419a72690725fb5af23cb3ae819aa1ab12886bf39dfb2598e64e1"
+    }
+  ],
+  "freeze": {
+    "source_parent_commit": "0cafb7b4cbfd02cf88b44c038e8deaf82a73bd80",
+    "built_at_utc": "2026-07-18T09:53:18.281357+00:00",
+    "semantic_generator_output_existed_before_amendment": true,
+    "semantic_judge_output_existed_before_amendment": true,
+    "semantic_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "blinded-view lock creation and containing git commit",
+    "future_change_policy": "another additive amendment must be frozen and exactly authorized before semantic calls"
+  }
+}

@@ -33,7 +33,7 @@ human evidence, protocol lock, installed Codex runtime, and native sandbox carri
 before returning `authorized`. Any batch after the first five requires another explicit
 budget decision; v0.4 authority does not transfer.
 
-### Stopped run and pending Judge compatibility recovery
+### Judge compatibility recovery and second stop
 
 The first v0.5 triplet did reach Judge immediately after its three isolated Generator
 calls, which verifies the incremental-controller goal that v0.4 failed to provide. The
@@ -68,6 +68,46 @@ The no-model preflight validates the three retained outputs, four original failu
 all isolation receipts, compatible transport schema, three sealed arms, and remaining
 ceilings. The active validator now permits recovery within those unchanged ceilings.
 Recovery still does not authorize release preparation or an architecture conclusion.
+
+The authorized compatibility recovery subsequently completed and atomically committed
+the retained first batch. That commit contains three Generator records and six valid
+Judge records. It then generated all three answers for batch 2, but stopped before the
+first batch-2 Judge call because one answer named its owner as `mindthus-beta:3l5s`.
+The frozen contamination rule correctly treated the plugin namespace as an arm-identity
+signal. At this second stop the cumulative v0.5 consumption is one committed batch,
+six Generator calls, ten Judge calls (including the four original zero-token schema
+failures), and 274,864 counted tokens.
+
+### Pending Judge-only blinded-view recovery
+
+The additive `0.5-blinded-view.1` amendment reuses the already validated v0.4
+de-identification primitive. It removes only experiment identifiers from the copy sent
+to the Judge: `mindthus:` and `mindthus-beta:` namespace prefixes are removed while the
+owner name is preserved, and explicit arm labels are replaced. Original Generator
+answers are never mutated. Exact sensitive-path exposure remains a terminal stop rather
+than being silently redacted. Every non-identity Judge view receives a content-addressed
+receipt, and the incremental analyzer reconstructs and verifies the same view before a
+batch can be accepted.
+
+The amendment binds the one committed batch, all six generated answers, all ten Judge
+attempts, the three uncommitted batch-2 outputs, the compatibility stop state, and the
+single observed namespace exposure. Its frozen SHA-256 is
+`b52bc87e4eec22d01dae62c269768aa7e495b8ee1b077271ade6ce69cfd348bc`; its
+lock digest is
+`a98ee55e53ad2044431034a714ec49217f6cfdc58bdd644e969c9d2d8eefb6f2`.
+
+No budget was added. Four commits, 11 Generator calls, 24 Judge calls, and 2,725,136
+counted tokens remain under the original cumulative ceilings. The retained batch-2
+triplet must be reused without regeneration. The 24 remaining Judge calls exactly equal
+the 24 valid records still required for five commits, so any further Judge failure
+stops the run.
+
+`authorizations/issue-119-codex-v0.5-blinded-view.1.pending.json` remains pending.
+Its configuration digest is
+`3bda3b701b7fe14f47244c42cb956e7a54e5235d6c3a3898f2da896c68c407ce`.
+The no-model preflight passes and all 813 repository tests pass, but no semantic call is
+permitted until William confirms the exact amendment and lock digests. The recovery
+still excludes release preparation and any architecture conclusion.
 
 ## Current visible-case authorization (v0.3)
 
