@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,11 +16,13 @@ STABLE_VERSION = "1.4.6"
 BETA_RELEASE_LINE = "2.0-beta.1"
 NATIVE_THIN_ROUTER_RELEASE_LINE = "2.0-next-native-thin-router"
 H1_OWNER_METADATA_RELEASE_LINE = "2.0-routing-h1-metadata"
+H2_SINGLE_ENTRY_RELEASE_LINE = "2.0-routing-h2-single-entry"
 RELEASE_LINES = (
     "stable",
     BETA_RELEASE_LINE,
     NATIVE_THIN_ROUTER_RELEASE_LINE,
     H1_OWNER_METADATA_RELEASE_LINE,
+    H2_SINGLE_ENTRY_RELEASE_LINE,
 )
 EXCLUDED_DIRS = {
     "__pycache__",
@@ -104,6 +107,8 @@ class ReleaseProfile:
     runtime_diagnostic_package_path: str = "scripts/check-beta-runtime.py"
     default_prompt: str | None = None
     owner_description_overrides: dict[str, str] | None = None
+    single_entry_resource_owners: bool = False
+    include_default_prompt: bool = True
 
     @property
     def experimental(self) -> bool:
@@ -548,6 +553,147 @@ def _load_h1_owner_metadata_profile(root: Path) -> ReleaseProfile:
     )
 
 
+def _load_h2_single_entry_profile(root: Path) -> ReleaseProfile:
+    profile_dir = root / "beta" / "2.0-routing-convergence" / "h2-single-entry-topology"
+    manifest_path = profile_dir / "release-profile.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"failed to load H2 single-entry profile: {exc}") from exc
+
+    if manifest.get("schema_version") != "mindthus-release-profile-v0.5":
+        raise SystemExit("unsupported H2 single-entry release-profile schema")
+    if manifest.get("release_line") != H2_SINGLE_ENTRY_RELEASE_LINE:
+        raise SystemExit("H2 single-entry profile declares the wrong release line")
+    if manifest.get("version") != "2.0.0-next.3":
+        raise SystemExit("H2 must use unpublished version 2.0.0-next.3")
+    if manifest.get("path_base") != "plugin-root":
+        raise SystemExit("H2 package paths must be relative to plugin-root")
+    if manifest.get("carrier_mode") != "single-entry-resource-owners":
+        raise SystemExit("H2 must use the single-entry resource-owner carrier")
+    if tuple(manifest.get("supported_packages", ())) != ("plugins",):
+        raise SystemExit("H2 must remain plugin-only")
+    if tuple(manifest.get("supported_surfaces", ())) != ("codex-plugin",):
+        raise SystemExit("H2 must remain Codex-only")
+
+    identity = manifest.get("plugin_identity")
+    if not isinstance(identity, dict):
+        raise SystemExit("H2 must declare plugin_identity")
+    plugin_name = identity.get("name")
+    marketplace_name = identity.get("marketplace_name")
+    display_name = identity.get("display_name")
+    if plugin_name != "mindthus-beta" or marketplace_name != "mindthus-beta":
+        raise SystemExit("H2 must stay isolated from Stable identity")
+    if not isinstance(display_name, str) or not display_name:
+        raise SystemExit("H2 display name must be non-empty")
+
+    adapter = manifest.get("namespace_adapter")
+    if (
+        not isinstance(adapter, dict)
+        or adapter.get("source_prefix") != "mindthus:"
+        or adapter.get("runtime_prefix") != "mindthus-beta:"
+        or adapter.get("mode") != "package-time-coordinate-only"
+    ):
+        raise SystemExit("H2 has an invalid namespace adapter")
+
+    using_skill_dir = profile_dir / "skills" / "using-mindthus"
+    guide_source = profile_dir / "STATUS.md"
+    diagnostic_source = profile_dir / "runtime" / "check-h2-topology.py"
+    reference_lock = root / "beta" / "2.0-next-native-thin-router" / "reference-lock.json"
+    for label, path in (
+        ("single entry", using_skill_dir / "SKILL.md"),
+        ("owner index", using_skill_dir / "references" / "owner-index.md"),
+        ("profile guide", guide_source),
+        ("runtime diagnostic", diagnostic_source),
+        ("reference lock", reference_lock),
+    ):
+        if not path.is_file():
+            raise SystemExit(f"H2 {label} not found: {path}")
+
+    budgets = manifest.get("budgets")
+    required_budgets = {
+        "using_mindthus_max_bytes",
+        "using_mindthus_max_words",
+        "description_max_bytes",
+        "owner_index_max_bytes",
+        "owner_index_max_words",
+    }
+    if not isinstance(budgets, dict) or not required_budgets.issubset(budgets):
+        raise SystemExit("H2 profile is missing text budgets")
+    using_skill = using_skill_dir / "SKILL.md"
+    owner_index = using_skill_dir / "references" / "owner-index.md"
+    _enforce_text_budget(
+        using_skill,
+        max_bytes=int(budgets["using_mindthus_max_bytes"]),
+        max_words=int(budgets["using_mindthus_max_words"]),
+        label="H2 single entry",
+    )
+    _enforce_text_budget(
+        owner_index,
+        max_bytes=int(budgets["owner_index_max_bytes"]),
+        max_words=int(budgets["owner_index_max_words"]),
+        label="H2 owner index",
+    )
+    frontmatter = _parse_skill_frontmatter(using_skill)
+    if frontmatter["name"] != "using-mindthus":
+        raise SystemExit("H2 entry must keep the using-mindthus name")
+    if len(frontmatter["description"].encode("utf-8")) > int(budgets["description_max_bytes"]):
+        raise SystemExit("H2 entry description exceeds its byte budget")
+    if manifest.get("default_prompt") is not None:
+        raise SystemExit("H2 must not declare a defaultPrompt")
+    if manifest.get("owner_skills") != list(("3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan")):
+        raise SystemExit("H2 must declare exactly seven resource owners")
+
+    reference_lock_data = _verify_reference_lock(
+        root, reference_lock, baseline=str(manifest.get("stable_baseline", ""))
+    )
+    artifact_sources = {
+        str(manifest.get("profile_guide")): guide_source,
+        str(manifest.get("reference_lock")): reference_lock,
+        str(manifest.get("runtime_diagnostic")): diagnostic_source,
+        "skills/using-mindthus/SKILL.md": using_skill,
+        "skills/using-mindthus/references/owner-index.md": owner_index,
+    }
+    artifact_hashes = manifest.get("artifact_sha256")
+    if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != set(artifact_sources):
+        raise SystemExit("H2 artifact_sha256 must lock every authored active artifact")
+    for package_path, source in artifact_sources.items():
+        _safe_relative_path(package_path, label="H2 artifact path")
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
+        if actual != artifact_hashes.get(package_path):
+            raise SystemExit(
+                f"H2 runtime artifact drifted at {package_path}: "
+                f"{actual} != {artifact_hashes.get(package_path)}"
+            )
+    generated = manifest.get("generated_artifact_sha256")
+    if not isinstance(generated, dict) or set(generated) != {"codex-plugin"}:
+        raise SystemExit("H2 must lock only Codex generated artifacts")
+
+    return ReleaseProfile(
+        release_line=H2_SINGLE_ENTRY_RELEASE_LINE,
+        version="2.0.0-next.3",
+        using_skill_dir=using_skill_dir,
+        supported_packages=("plugins",),
+        supported_surfaces=("codex-plugin",),
+        carrier_mode="single-entry-resource-owners",
+        profile_manifest=manifest_path,
+        profile_data=manifest,
+        beta_readme=guide_source,
+        runtime_diagnostic=diagnostic_source,
+        reference_lock=reference_lock,
+        reference_lock_data=reference_lock_data,
+        plugin_name=str(plugin_name),
+        marketplace_name=str(marketplace_name),
+        display_name=display_name,
+        budgets={key: int(value) for key, value in budgets.items()},
+        profile_guide_package_path=str(manifest.get("profile_guide")),
+        runtime_diagnostic_package_path=str(manifest.get("runtime_diagnostic")),
+        default_prompt=None,
+        single_entry_resource_owners=True,
+        include_default_prompt=False,
+    )
+
+
 def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
     if release_line == "stable":
         return ReleaseProfile(
@@ -562,6 +708,9 @@ def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
 
     if release_line == H1_OWNER_METADATA_RELEASE_LINE:
         return _load_h1_owner_metadata_profile(root)
+
+    if release_line == H2_SINGLE_ENTRY_RELEASE_LINE:
+        return _load_h2_single_entry_profile(root)
 
     profile_dir = root / "beta" / "2.0.0-beta.1"
     manifest_path = profile_dir / "release-profile.json"
@@ -801,6 +950,49 @@ def apply_profile_owner_override(profile: ReleaseProfile, skill_name: str, targe
         apply_owner_description_override(target / "SKILL.md", description)
 
 
+def copy_h2_resource_owners(skills_dir: Path, using_target: Path, profile: ReleaseProfile) -> None:
+    owners_target = using_target / "references" / "owners"
+    path_replacements = {
+        f"skills/{name}/": f"skills/using-mindthus/references/owners/{name}/"
+        for name in SKILL_NAMES
+        if name != "using-mindthus"
+    }
+    path_replacements.update(
+        {
+            "mindthus:sela": "__H2_OWNER_SELA__",
+            "mindthus:mpg": "__H2_OWNER_MPG__",
+        }
+    )
+    for name in SKILL_NAMES:
+        if name == "using-mindthus":
+            continue
+        allowlist = {Path("templates/evidence.jsonl")} if name == "tplan" else set()
+        owner_target = owners_target / name
+        copy_tree_filtered(
+            skills_dir / name,
+            owner_target,
+            path_replacements,
+            jsonl_allowlist=allowlist,
+        )
+        skill_path = owner_target / "SKILL.md"
+        owner_path = owner_target / "OWNER.md"
+        if not skill_path.is_file() or owner_path.exists():
+            raise SystemExit(f"H2 owner root cannot be renamed safely: {name}")
+        skill_path.rename(owner_path)
+        for markdown in owner_target.rglob("*.md"):
+            text = markdown.read_text(encoding="utf-8")
+            for companion in ("sela", "mpg"):
+                relative = Path(
+                    os.path.relpath(
+                        owners_target / companion / "OWNER.md",
+                        markdown.parent,
+                    )
+                ).as_posix()
+                text = text.replace(f"__H2_OWNER_{companion.upper()}__", relative)
+            markdown.write_text(text, encoding="utf-8")
+    copy_tree_filtered(skills_dir / "_runtime", owners_target / "_runtime")
+
+
 def write_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -904,7 +1096,8 @@ def copy_profile_runtime(root: Path, profile: ReleaseProfile, target: Path) -> N
             label="reference_lock",
         ),
     )
-    copy_locked_reference_material(root, target, profile)
+    if not profile.single_entry_resource_owners:
+        copy_locked_reference_material(root, target, profile)
 
 
 def verify_built_beta_runtime(
@@ -1158,6 +1351,7 @@ def build_codex_plugin(
     profile: ReleaseProfile,
 ) -> None:
     native_thin = profile.carrier_mode == "native-skill-description"
+    h2_single_entry = profile.single_entry_resource_owners
     marketplace_root = root / "codex-plugin"
     plugin_root = marketplace_root / profile.plugin_name
     write_json(
@@ -1179,7 +1373,9 @@ def build_codex_plugin(
         "name": profile.plugin_name,
         "version": profile.version,
         "description": (
-            "Experimental Codex-native thin judgment entry with direct owner discovery."
+            "Experimental Codex single-entry judgment router with on-demand owner resources."
+            if h2_single_entry
+            else "Experimental Codex-native thin judgment entry with direct owner discovery."
             if native_thin
             else (
                 "Experimental two-plane judgment routing with passive cognitive-primitive activation."
@@ -1204,7 +1400,9 @@ def build_codex_plugin(
         "interface": {
             "displayName": profile.display_name,
             "shortDescription": (
-                "Native thin entry with direct owner discovery"
+                "Single entry with on-demand owner resources"
+                if h2_single_entry
+                else "Native thin entry with direct owner discovery"
                 if native_thin
                 else (
                     "Direct owner routing with a thin passive kernel"
@@ -1214,6 +1412,12 @@ def build_codex_plugin(
             ),
             "longDescription": (
                 (
+                    "Mindthus 2.0 successor tests one discoverable entry plus on-demand owner "
+                    "resources on Codex. It has no Hook, AGENTS injection, default prompt, second "
+                    "Skill, or direct owner coordinates. Qualification and behavior remain unproven. "
+                )
+                if h2_single_entry
+                else (
                     "Mindthus 2.0 successor tests one natively discoverable thin entry plus direct "
                     "owner discovery on Codex. It has no SessionStart hook and keeps 1.4.6 owner "
                     "contracts as a locked baseline. Native activation and behavior remain unproven. "
@@ -1255,27 +1459,35 @@ def build_codex_plugin(
             "logoDark": "./assets/mindthus-logo-dark.svg",
         },
     }
+    if not profile.include_default_prompt:
+        plugin_manifest["interface"].pop("defaultPrompt", None)
     write_json(plugin_root / ".codex-plugin" / "plugin.json", plugin_manifest)
-    for skill_name in SKILL_NAMES:
-        jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
-        source = (
-            profile.using_skill_dir
-            if skill_name == "using-mindthus"
-            else skills_dir / skill_name
-        )
-        copy_tree_filtered(
-            source,
-            plugin_root / "skills" / skill_name,
-            profile_skill_replacements(profile),
-            jsonl_allowlist=jsonl_allowlist,
-        )
-        apply_profile_owner_override(profile, skill_name, plugin_root / "skills" / skill_name)
+    if h2_single_entry:
+        using_target = plugin_root / "skills" / "using-mindthus"
+        copy_tree_filtered(profile.using_skill_dir, using_target)
+        copy_h2_resource_owners(skills_dir, using_target, profile)
+    else:
+        for skill_name in SKILL_NAMES:
+            jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
+            source = (
+                profile.using_skill_dir
+                if skill_name == "using-mindthus"
+                else skills_dir / skill_name
+            )
+            copy_tree_filtered(
+                source,
+                plugin_root / "skills" / skill_name,
+                profile_skill_replacements(profile),
+                jsonl_allowlist=jsonl_allowlist,
+            )
+            apply_profile_owner_override(profile, skill_name, plugin_root / "skills" / skill_name)
     if not profile.experimental:
         copy_using_mindthus_conditional_primitives(
             methodologies_dir,
             plugin_root / "skills" / "using-mindthus",
         )
-    copy_tree_filtered(skills_dir / "_runtime", plugin_root / "_runtime")
+    if not h2_single_entry:
+        copy_tree_filtered(skills_dir / "_runtime", plugin_root / "_runtime")
     if not profile.experimental:
         copy_tree_filtered(
             methodologies_dir,

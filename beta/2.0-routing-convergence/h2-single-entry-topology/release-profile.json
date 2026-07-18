@@ -1,0 +1,84 @@
+{
+  "schema_version": "mindthus-release-profile-v0.5",
+  "release_line": "2.0-routing-h2-single-entry",
+  "version": "2.0.0-next.3",
+  "status": "static-qualified-live-pending",
+  "release_preparation": "forbidden",
+  "live_qualification": "not-started",
+  "path_base": "plugin-root",
+  "stable_baseline": "1.4.6",
+  "baseline_commit": "f9117426e23a0c986cd5a833571e9098e8ebc401",
+  "carrier_mode": "single-entry-resource-owners",
+  "plugin_identity": {
+    "name": "mindthus-beta",
+    "marketplace_name": "mindthus-beta",
+    "display_name": "Mindthus H2 Single-entry Candidate",
+    "stable_plugin_coordinates": "mindthus@mindthus",
+    "coinstallable_with_stable": true,
+    "coenabled_with_stable": false
+  },
+  "namespace_adapter": {
+    "mode": "package-time-coordinate-only",
+    "source_prefix": "mindthus:",
+    "runtime_prefix": "mindthus-beta:"
+  },
+  "supported_packages": [
+    "plugins"
+  ],
+  "supported_surfaces": [
+    "codex-plugin"
+  ],
+  "runtime_diagnostic": "scripts/check-h2-topology.py",
+  "profile_guide": "STATUS.md",
+  "reference_lock": "reference/1.4.6/reference-lock.json",
+  "default_prompt": null,
+  "owner_skills": [
+    "3l5s",
+    "edsp",
+    "sela",
+    "mpg",
+    "wae",
+    "tvg",
+    "tplan"
+  ],
+  "active_runtime_paths": [
+    "STATUS.md",
+    "beta/release-profile.json",
+    "scripts/check-h2-topology.py",
+    "skills/using-mindthus/SKILL.md",
+    "skills/using-mindthus/references/owner-index.md",
+    "skills/using-mindthus/references/owners"
+  ],
+  "reference_only_paths": [
+    "reference/1.4.6/reference-lock.json"
+  ],
+  "forbidden_active_paths": [
+    "AGENTS.md",
+    "hooks",
+    "runtime/passive-activation-kernel.md",
+    "docs/methodologies",
+    "scripts/log-fidelity-usage.py",
+    "scripts/log-mindthus-runtime.py",
+    "scripts/primitives",
+    "scripts/run-fidelity-judge.py"
+  ],
+  "artifact_sha256": {
+    "STATUS.md": "02b62135a3cc475505a1b0a330d784cb7b851199ab1662c5e9c6b8aad6a6a435",
+    "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
+    "scripts/check-h2-topology.py": "53abc533f4c5a04749c46e7134fd30eb9a7a0f78183a07db0d2a91b55ca50dfd",
+    "skills/using-mindthus/SKILL.md": "3f522e7c3ef169d7364c6ae4d069b72d10e6da2995e5ded425ffe27ec1fadd0c",
+    "skills/using-mindthus/references/owner-index.md": "483a6cb6f1819818e884eb5dc5fe7132f8dd0bece536d885371a0f2553ad55c6"
+  },
+  "generated_artifact_sha256": {
+    "codex-plugin": {
+      ".codex-plugin/plugin.json": "b1e4f1567f29195ed895d551b820960b76516ab0bba23ec1672efc483c20a347"
+    }
+  },
+  "budgets": {
+    "using_mindthus_max_bytes": 3000,
+    "using_mindthus_max_words": 320,
+    "description_max_bytes": 420,
+    "owner_index_max_bytes": 2300,
+    "owner_index_max_words": 340
+  }
+}

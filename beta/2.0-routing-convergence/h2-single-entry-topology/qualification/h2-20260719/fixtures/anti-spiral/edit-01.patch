@@ -1,0 +1,7 @@
+--- a/incident-plan.md
++++ b/incident-plan.md
+@@ -9 +9,3 @@
+-1. Capture aggregate latency and payment outcomes.
++1. Keep the existing 10% traffic cap.
++2. Capture per-hop latency and payment outcome for the affected cohort.
++3. Roll back the new pricing call if p95 exceeds 1.5 s for five minutes.
