@@ -6,9 +6,9 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
 
 ## Verification And Release Disposition
 
-- 1.x Stable-based branch: 191 TPlan tests and 622 full-repository tests pass.
+- 1.x Stable-based branch: 194 TPlan tests and 625 full-repository tests pass.
 - The same revised implementation applies to the Beta2 source without conflict, and
-  all 191 TPlan tests pass there.
+  all 194 TPlan tests pass there.
 - The current Beta2 release profile deliberately freezes the 1.4.6 `skills/tplan`
   digest. Its package gate rejects the changed live tree as evaluation-identity drift.
 - The frozen reference lock, protocols, receipts, and evaluation evidence are unchanged.
