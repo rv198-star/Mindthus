@@ -13,7 +13,8 @@ from pathlib import Path
 
 STABLE_VERSION = "1.4.6"
 BETA_RELEASE_LINE = "2.0-beta.1"
-RELEASE_LINES = ("stable", BETA_RELEASE_LINE)
+NATIVE_THIN_ROUTER_RELEASE_LINE = "2.0-next-native-thin-router"
+RELEASE_LINES = ("stable", BETA_RELEASE_LINE, NATIVE_THIN_ROUTER_RELEASE_LINE)
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -71,6 +72,7 @@ BETA_CODEX_STARTER_PROMPT = (
     "Route directly to mindthus-beta:<owner>; use mindthus-beta:using-mindthus only for "
     "genuine owner ambiguity."
 )
+NATIVE_THIN_ROUTER_CODEX_STARTER_PROMPT = "Apply the smallest sufficient Mindthus lens."
 
 
 @dataclass(frozen=True)
@@ -79,6 +81,8 @@ class ReleaseProfile:
     version: str
     using_skill_dir: Path
     supported_packages: tuple[str, ...]
+    supported_surfaces: tuple[str, ...] = ("codex-plugin", "claude-plugin")
+    carrier_mode: str = "stable"
     passive_kernel: Path | None = None
     profile_manifest: Path | None = None
     profile_data: dict | None = None
@@ -90,6 +94,9 @@ class ReleaseProfile:
     marketplace_name: str = "mindthus"
     display_name: str = "Mindthus"
     budgets: dict[str, int] | None = None
+    profile_guide_package_path: str = "BETA.md"
+    runtime_diagnostic_package_path: str = "scripts/check-beta-runtime.py"
+    default_prompt: str | None = None
 
     @property
     def experimental(self) -> bool:
@@ -214,6 +221,179 @@ def _enforce_text_budget(path: Path, *, max_bytes: int, max_words: int, label: s
         raise SystemExit(f"{label} exceeds word budget: {word_count} > {max_words}")
 
 
+def _parse_skill_frontmatter(path: Path) -> dict[str, str]:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0] != "---":
+        raise SystemExit(f"skill frontmatter is missing at {path}")
+    try:
+        end = lines.index("---", 1)
+    except ValueError as exc:
+        raise SystemExit(f"skill frontmatter is not closed at {path}") from exc
+    data: dict[str, str] = {}
+    for line in lines[1:end]:
+        if ":" not in line:
+            raise SystemExit(f"invalid skill frontmatter line at {path}: {line!r}")
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if value.startswith('"'):
+            try:
+                value = json.loads(value)
+            except json.JSONDecodeError as exc:
+                raise SystemExit(f"invalid quoted skill frontmatter at {path}: {exc}") from exc
+        if key in data or not isinstance(value, str) or not value:
+            raise SystemExit(f"invalid or duplicate skill frontmatter key at {path}: {key}")
+        data[key] = value
+    if set(data) != {"name", "description"}:
+        raise SystemExit(f"skill frontmatter must contain only name and description at {path}")
+    return data
+
+
+def _load_native_thin_router_profile(root: Path) -> ReleaseProfile:
+    profile_dir = root / "beta" / "2.0-next-native-thin-router"
+    manifest_path = profile_dir / "release-profile.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"failed to load native thin-router profile: {exc}") from exc
+
+    if manifest.get("schema_version") != "mindthus-release-profile-v0.3":
+        raise SystemExit("unsupported native thin-router release-profile schema")
+    if manifest.get("release_line") != NATIVE_THIN_ROUTER_RELEASE_LINE:
+        raise SystemExit("native thin-router profile declares the wrong release line")
+    if manifest.get("version") != "2.0.0-next.1":
+        raise SystemExit("native thin-router profile must use unpublished version 2.0.0-next.1")
+    if manifest.get("path_base") != "plugin-root":
+        raise SystemExit("native thin-router package paths must be relative to plugin-root")
+    if manifest.get("carrier_mode") != "native-skill-description":
+        raise SystemExit("native thin-router profile must use the native Skill description carrier")
+
+    supported_packages = tuple(manifest.get("supported_packages", ()))
+    supported_surfaces = tuple(manifest.get("supported_surfaces", ()))
+    if supported_packages != ("plugins",):
+        raise SystemExit("native thin-router profile must remain plugin-only")
+    if supported_surfaces != ("codex-plugin",):
+        raise SystemExit("native thin-router profile must remain Codex-only")
+
+    identity = manifest.get("plugin_identity")
+    if not isinstance(identity, dict):
+        raise SystemExit("native thin-router profile must declare plugin_identity")
+    plugin_name = identity.get("name")
+    marketplace_name = identity.get("marketplace_name")
+    display_name = identity.get("display_name")
+    if plugin_name != "mindthus-beta" or marketplace_name != "mindthus-beta":
+        raise SystemExit("native thin-router profile must stay isolated from Stable identity")
+    if not isinstance(display_name, str) or not display_name:
+        raise SystemExit("native thin-router display name must be non-empty")
+
+    namespace_adapter = manifest.get("namespace_adapter")
+    if (
+        not isinstance(namespace_adapter, dict)
+        or namespace_adapter.get("source_prefix") != "mindthus:"
+        or namespace_adapter.get("runtime_prefix") != f"{plugin_name}:"
+        or namespace_adapter.get("mode") != "package-time-coordinate-only"
+    ):
+        raise SystemExit("native thin-router profile has an invalid namespace adapter")
+
+    using_skill_dir = profile_dir / str(manifest.get("using_mindthus_overlay", ""))
+    using_skill = using_skill_dir / "SKILL.md"
+    guide_source = profile_dir / str(manifest.get("profile_guide_source", ""))
+    diagnostic_source = profile_dir / str(manifest.get("runtime_diagnostic_source", ""))
+    reference_lock = profile_dir / str(manifest.get("reference_lock_source", ""))
+    for label, path in (
+        ("using-mindthus overlay", using_skill),
+        ("profile guide", guide_source),
+        ("runtime diagnostic", diagnostic_source),
+        ("reference lock", reference_lock),
+    ):
+        if not path.is_file():
+            raise SystemExit(f"native thin-router {label} not found: {path}")
+
+    budgets = manifest.get("budgets")
+    required_budgets = {
+        "using_mindthus_max_bytes",
+        "using_mindthus_max_words",
+        "description_max_bytes",
+        "default_prompt_max_bytes",
+    }
+    if not isinstance(budgets, dict) or not required_budgets.issubset(budgets):
+        raise SystemExit("native thin-router profile is missing text budgets")
+    _enforce_text_budget(
+        using_skill,
+        max_bytes=int(budgets["using_mindthus_max_bytes"]),
+        max_words=int(budgets["using_mindthus_max_words"]),
+        label="native thin using-mindthus",
+    )
+    frontmatter = _parse_skill_frontmatter(using_skill)
+    if frontmatter["name"] != "using-mindthus":
+        raise SystemExit("native thin entry must keep the using-mindthus name")
+    description_bytes = len(frontmatter["description"].encode("utf-8"))
+    if description_bytes > int(budgets["description_max_bytes"]):
+        raise SystemExit(
+            f"native thin description exceeds byte budget: "
+            f"{description_bytes} > {budgets['description_max_bytes']}"
+        )
+    default_prompt = manifest.get("default_prompt")
+    if not isinstance(default_prompt, str) or not default_prompt:
+        raise SystemExit("native thin-router profile must declare one neutral default prompt")
+    default_prompt_bytes = len(default_prompt.encode("utf-8"))
+    if default_prompt_bytes > int(budgets["default_prompt_max_bytes"]):
+        raise SystemExit(
+            f"native thin default prompt exceeds byte budget: "
+            f"{default_prompt_bytes} > {budgets['default_prompt_max_bytes']}"
+        )
+
+    reference_lock_data = _verify_reference_lock(
+        root,
+        reference_lock,
+        baseline=str(manifest.get("stable_baseline", "")),
+    )
+
+    artifact_sources = {
+        str(manifest.get("profile_guide", "")): guide_source,
+        str(manifest.get("reference_lock", "")): reference_lock,
+        str(manifest.get("runtime_diagnostic", "")): diagnostic_source,
+        f"{manifest.get('using_mindthus_overlay', '')}/SKILL.md": using_skill,
+    }
+    artifact_hashes = manifest.get("artifact_sha256")
+    if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != set(artifact_sources):
+        raise SystemExit("native thin artifact_sha256 must lock every authored runtime artifact")
+    for package_path, source in artifact_sources.items():
+        _safe_relative_path(package_path, label="native thin artifact path")
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
+        if actual != artifact_hashes.get(package_path):
+            raise SystemExit(
+                f"native thin runtime artifact drifted at {package_path}: "
+                f"{actual} != {artifact_hashes.get(package_path)}"
+            )
+
+    generated = manifest.get("generated_artifact_sha256")
+    if not isinstance(generated, dict) or set(generated) != {"codex-plugin"}:
+        raise SystemExit("native thin profile must lock only Codex generated artifacts")
+
+    return ReleaseProfile(
+        release_line=NATIVE_THIN_ROUTER_RELEASE_LINE,
+        version="2.0.0-next.1",
+        using_skill_dir=using_skill_dir,
+        supported_packages=supported_packages,
+        supported_surfaces=supported_surfaces,
+        carrier_mode="native-skill-description",
+        profile_manifest=manifest_path,
+        profile_data=manifest,
+        beta_readme=guide_source,
+        runtime_diagnostic=diagnostic_source,
+        reference_lock=reference_lock,
+        reference_lock_data=reference_lock_data,
+        plugin_name=str(plugin_name),
+        marketplace_name=str(marketplace_name),
+        display_name=display_name,
+        budgets={key: int(value) for key, value in budgets.items()},
+        profile_guide_package_path=str(manifest.get("profile_guide", "")),
+        runtime_diagnostic_package_path=str(manifest.get("runtime_diagnostic", "")),
+        default_prompt=default_prompt,
+    )
+
+
 def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
     if release_line == "stable":
         return ReleaseProfile(
@@ -222,6 +402,9 @@ def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
             using_skill_dir=root / "skills" / "using-mindthus",
             supported_packages=("all", "plugins", "skills"),
         )
+
+    if release_line == NATIVE_THIN_ROUTER_RELEASE_LINE:
+        return _load_native_thin_router_profile(root)
 
     profile_dir = root / "beta" / "2.0.0-beta.1"
     manifest_path = profile_dir / "release-profile.json"
@@ -328,6 +511,8 @@ def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
         version=str(manifest.get("version", "")),
         using_skill_dir=using_skill_dir,
         supported_packages=supported_packages,
+        supported_surfaces=("codex-plugin", "claude-plugin"),
+        carrier_mode="session-start-kernel",
         passive_kernel=passive_kernel,
         profile_manifest=manifest_path,
         profile_data=manifest,
@@ -339,6 +524,9 @@ def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
         marketplace_name=str(marketplace_name),
         display_name=display_name,
         budgets={key: int(value) for key, value in budgets.items()},
+        profile_guide_package_path="BETA.md",
+        runtime_diagnostic_package_path=str(manifest.get("runtime_diagnostic", "")),
+        default_prompt=BETA_CODEX_STARTER_PROMPT,
     )
 
 
@@ -492,23 +680,32 @@ def copy_skills_for_profile(
 def copy_profile_runtime(root: Path, profile: ReleaseProfile, target: Path) -> None:
     if not profile.experimental:
         return
-    assert profile.passive_kernel is not None
     assert profile.profile_manifest is not None
     assert profile.profile_data is not None
     assert profile.beta_readme is not None
     assert profile.runtime_diagnostic is not None
     assert profile.reference_lock is not None
-    copy_file_filtered(
-        profile.passive_kernel,
-        target / "runtime" / "passive-activation-kernel.md",
-    )
+    if profile.passive_kernel is not None:
+        copy_file_filtered(
+            profile.passive_kernel,
+            target / _safe_relative_path(
+                profile.profile_data["passive_kernel"],
+                label="passive_kernel",
+            ),
+        )
     copy_file_filtered(
         profile.profile_manifest,
         target / "beta" / "release-profile.json",
     )
-    copy_file_filtered(profile.beta_readme, target / "BETA.md")
+    copy_file_filtered(
+        profile.beta_readme,
+        target / _safe_relative_path(
+            profile.profile_guide_package_path,
+            label="profile guide package path",
+        ),
+    )
     diagnostic_target = target / _safe_relative_path(
-        profile.profile_data["runtime_diagnostic"],
+        profile.runtime_diagnostic_package_path,
         label="runtime_diagnostic",
     )
     copy_file_filtered(profile.runtime_diagnostic, diagnostic_target)
@@ -773,6 +970,7 @@ def build_codex_plugin(
     methodologies_dir: Path,
     profile: ReleaseProfile,
 ) -> None:
+    native_thin = profile.carrier_mode == "native-skill-description"
     marketplace_root = root / "codex-plugin"
     plugin_root = marketplace_root / profile.plugin_name
     write_json(
@@ -794,9 +992,13 @@ def build_codex_plugin(
         "name": profile.plugin_name,
         "version": profile.version,
         "description": (
-            "Experimental two-plane judgment routing with passive cognitive-primitive activation."
-            if profile.experimental
-            else "Judgment framework skills that help agents choose the right method before acting."
+            "Experimental Codex-native thin judgment entry with direct owner discovery."
+            if native_thin
+            else (
+                "Experimental two-plane judgment routing with passive cognitive-primitive activation."
+                if profile.experimental
+                else "Judgment framework skills that help agents choose the right method before acting."
+            )
         ),
         "author": {"name": "Mindthus"},
         "homepage": "https://github.com/rv198-star/Mindthus",
@@ -815,22 +1017,34 @@ def build_codex_plugin(
         "interface": {
             "displayName": profile.display_name,
             "shortDescription": (
-                "Direct owner routing with a thin passive kernel"
-                if profile.experimental
-                else "Choose the right judgment lens before acting"
+                "Native thin entry with direct owner discovery"
+                if native_thin
+                else (
+                    "Direct owner routing with a thin passive kernel"
+                    if profile.experimental
+                    else "Choose the right judgment lens before acting"
+                )
             ),
             "longDescription": (
                 (
-                    "Mindthus 2.0 Beta tests direct owner discovery plus a thin passive activation "
-                    "kernel. It is an opt-in experiment and keeps 1.4.6 as the stable baseline. "
-                    "After installation, review and trust its SessionStart hook with /hooks; "
-                    "without that trust, passive recall is not guaranteed. "
+                    "Mindthus 2.0 successor tests one natively discoverable thin entry plus direct "
+                    "owner discovery on Codex. It has no SessionStart hook and keeps 1.4.6 owner "
+                    "contracts as a locked baseline. Native activation and behavior remain unproven. "
                 )
-                if profile.experimental
+                if native_thin
                 else (
-                    "Mindthus is a judgment framework for AI agents. It helps Codex route "
-                    "unclear, strategic, path-dependent, evidence-bound, or artifact-quality "
-                    "problems to the smallest sufficient method instead of adding process everywhere. "
+                    (
+                        "Mindthus 2.0 Beta tests direct owner discovery plus a thin passive activation "
+                        "kernel. It is an opt-in experiment and keeps 1.4.6 as the stable baseline. "
+                        "After installation, review and trust its SessionStart hook with /hooks; "
+                        "without that trust, passive recall is not guaranteed. "
+                    )
+                    if profile.experimental
+                    else (
+                        "Mindthus is a judgment framework for AI agents. It helps Codex route "
+                        "unclear, strategic, path-dependent, evidence-bound, or artifact-quality "
+                        "problems to the smallest sufficient method instead of adding process everywhere. "
+                    )
                 )
             )
             + (
@@ -844,8 +1058,8 @@ def build_codex_plugin(
             "privacyPolicyURL": "https://github.com/rv198-star/Mindthus",
             "termsOfServiceURL": "https://github.com/rv198-star/Mindthus",
             "defaultPrompt": [
-                BETA_CODEX_STARTER_PROMPT
-                if profile.experimental
+                profile.default_prompt
+                if profile.experimental and profile.default_prompt is not None
                 else CODEX_ACTIVATION_ROUTER_PROMPT
             ],
             "brandColor": "#161614",
@@ -885,7 +1099,7 @@ def build_codex_plugin(
         copy_profile_runtime(repo, profile, plugin_root)
     else:
         copy_release_scripts(repo, plugin_root)
-    if profile.experimental:
+    if profile.carrier_mode == "session-start-kernel":
         write_beta_activation_hook(plugin_root, "PLUGIN_ROOT")
     verify_built_beta_runtime(profile, plugin_root, "codex-plugin")
 
@@ -954,8 +1168,10 @@ def main() -> int:
     ensure_safe_output_dir(output, root)
     ensure_output_dir(output, args.force)
     if args.package in ("all", "plugins"):
-        build_claude_code(output, root, skills_dir, methodologies_dir, profile)
-        build_codex_plugin(output, root, skills_dir, methodologies_dir, profile)
+        if "claude-plugin" in profile.supported_surfaces:
+            build_claude_code(output, root, skills_dir, methodologies_dir, profile)
+        if "codex-plugin" in profile.supported_surfaces:
+            build_codex_plugin(output, root, skills_dir, methodologies_dir, profile)
     if args.package in ("all", "skills"):
         build_claude_code_skills(output, root, skills_dir, methodologies_dir)
         build_codex(output, root, skills_dir, agents_file, methodologies_dir)

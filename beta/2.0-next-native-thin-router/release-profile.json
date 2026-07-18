@@ -1,0 +1,104 @@
+{
+  "schema_version": "mindthus-release-profile-v0.3",
+  "release_line": "2.0-next-native-thin-router",
+  "version": "2.0.0-next.1",
+  "status": "static-candidate",
+  "release_preparation": "not-started",
+  "live_qualification": "not-authorized",
+  "behavioral_evaluation": "not-authorized",
+  "path_base": "plugin-root",
+  "stable_baseline": "1.4.6",
+  "baseline_commit": "00da11657bce553cb32e8e90c06ffe959dc08362",
+  "formal_contracts": "1.4.6-reference-only",
+  "active_runtime_contract": "native-thin-router-r0",
+  "plugin_identity": {
+    "name": "mindthus-beta",
+    "marketplace_name": "mindthus-beta",
+    "display_name": "Mindthus Native Thin Router",
+    "stable_plugin_coordinates": "mindthus@mindthus",
+    "coinstallable_with_stable": true,
+    "coenabled_with_stable": false
+  },
+  "namespace_adapter": {
+    "mode": "package-time-coordinate-only",
+    "source_prefix": "mindthus:",
+    "runtime_prefix": "mindthus-beta:"
+  },
+  "supported_packages": [
+    "plugins"
+  ],
+  "supported_surfaces": [
+    "codex-plugin"
+  ],
+  "carrier_mode": "native-skill-description",
+  "carrier_claim": "candidate-unproven",
+  "using_mindthus_overlay": "skills/using-mindthus",
+  "runtime_diagnostic_source": "runtime/check-native-router.py",
+  "runtime_diagnostic": "scripts/check-native-router.py",
+  "profile_guide_source": "STATUS.md",
+  "profile_guide": "STATUS.md",
+  "reference_lock_source": "reference-lock.json",
+  "reference_lock": "reference/1.4.6/reference-lock.json",
+  "default_prompt": "Apply the smallest sufficient Mindthus lens.",
+  "owner_skills": [
+    "3l5s",
+    "edsp",
+    "sela",
+    "mpg",
+    "wae",
+    "tvg",
+    "tplan"
+  ],
+  "active_runtime_paths": [
+    "STATUS.md",
+    "beta/release-profile.json",
+    "scripts/check-native-router.py",
+    "skills/using-mindthus/SKILL.md"
+  ],
+  "active_runtime_paths_by_surface": {
+    "codex-plugin": [
+      "_runtime"
+    ]
+  },
+  "reference_only_paths": [
+    "reference/1.4.6/docs/methodologies",
+    "reference/1.4.6/skills/using-mindthus",
+    "reference/1.4.6/scripts/log-fidelity-usage.py",
+    "reference/1.4.6/scripts/log-mindthus-runtime.py",
+    "reference/1.4.6/scripts/primitives",
+    "reference/1.4.6/scripts/run-fidelity-judge.py"
+  ],
+  "forbidden_active_paths": [
+    "AGENTS.md",
+    "hooks",
+    "runtime/passive-activation-kernel.md",
+    "docs/methodologies",
+    "scripts/log-fidelity-usage.py",
+    "scripts/log-mindthus-runtime.py",
+    "scripts/primitives",
+    "scripts/run-fidelity-judge.py"
+  ],
+  "behavioral_claims": {
+    "native_entry_activation": "unproven-pending-separate-qualification",
+    "owner_hit_rate": "unproven-pending-separate-comparison",
+    "passive_recall_reliability": "unproven-pending-separate-comparison",
+    "token_and_latency_reduction": "unproven-pending-separate-comparison"
+  },
+  "artifact_sha256": {
+    "STATUS.md": "4f9f80e1c8226baa8c3aecece2f82076c8fbc1f2c2e82b53d771d79cc77fdf7e",
+    "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
+    "scripts/check-native-router.py": "046f06f6b6f636c94b538d36b0e0b13c41abf3e83fd1fa40540b0e7c99d1d5bf",
+    "skills/using-mindthus/SKILL.md": "b1035c3656fbf7b9e41cc264c4faf5b954690da2cfd784d98e9183ba868caad9"
+  },
+  "generated_artifact_sha256": {
+    "codex-plugin": {
+      ".codex-plugin/plugin.json": "95d5f914b3e0264198464762e8c898079c9864e6a4740663def675f756fc319a"
+    }
+  },
+  "budgets": {
+    "using_mindthus_max_bytes": 2400,
+    "using_mindthus_max_words": 260,
+    "description_max_bytes": 420,
+    "default_prompt_max_bytes": 96
+  }
+}
