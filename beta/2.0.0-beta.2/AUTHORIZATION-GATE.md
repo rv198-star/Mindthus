@@ -33,6 +33,39 @@ human evidence, protocol lock, installed Codex runtime, and native sandbox carri
 before returning `authorized`. Any batch after the first five requires another explicit
 budget decision; v0.4 authority does not transfer.
 
+### Stopped run and pending Judge compatibility recovery
+
+The first v0.5 triplet did reach Judge immediately after its three isolated Generator
+calls, which verifies the incremental-controller goal that v0.4 failed to provide. The
+three retained outputs consumed 90,100 counted tokens. Both Judge slots then made their
+two authorized attempts, but all four requests were rejected before model sampling
+because the API-facing Structured Outputs schema contained unsupported `uniqueItems`
+keywords. They consumed zero counted tokens, produced no Judge verdict, and no batch
+commit was written.
+
+The additive `0.5-judge-compat.1` amendment preserves those outputs and failures. It
+removes exactly the two unsupported keywords from the API transport view while keeping
+the canonical local validator—including duplicate rejection—and all scoring semantics
+unchanged. Its frozen amendment SHA-256 is
+`fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6`; its
+lock digest is
+`420e8cb9473c944cd41ca33166a0258f986bb4855d7a2ecefc42a5d44bbad16e`.
+
+No budget was added. The original ceilings remain five commits, 17 Generator calls, 34
+Judge calls, and 3,000,000 counted tokens. After the stopped run, 14 Generator calls,
+30 Judge calls, and 2,909,900 counted tokens remain. The 30 Judge calls exactly equal
+the 30 valid records needed for five commits, so the recovery grants no further retry:
+any new Judge failure stops the run.
+
+`authorizations/issue-119-codex-v0.5-judge-compat.1.pending.json` remains pending. Its
+configuration digest is
+`c7d886513e225c83c11449e1b16efe0d853f31050df5b0adf502a23c41056aa8`.
+The no-model preflight validates the three retained outputs, four original failures,
+all isolation receipts, compatible transport schema, three sealed arms, and remaining
+ceilings. A real Judge call is prohibited until William confirms the exact amendment
+and lock digests. Recovery still does not authorize release preparation or an
+architecture conclusion.
+
 ## Current visible-case authorization (v0.3)
 
 After the user removed the four sealed-shadow cases, v0.3 replaced—not edited—the

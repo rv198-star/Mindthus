@@ -1,0 +1,256 @@
+{
+  "schema_version": "mindthus-beta2-evaluation-judge-compat-amendment-v0.2",
+  "protocol_id": "mindthus-beta2-three-arm-evaluation",
+  "base_protocol_version": "0.5",
+  "amendment_id": "0.5-judge-compat.1",
+  "purpose": "Resume the first v0.5 incremental run after four pre-sampling API schema rejections, preserving all generated answers and changing only the Judge Structured Outputs transport view.",
+  "base_binding": {
+    "protocol_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+    "protocol_sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+    "lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713",
+    "authorization_path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5.json",
+    "authorization_file_sha256": "cd55b64dd11d845d59f0debe8711acac189af9172c90966720b6d7df1e7014d6",
+    "authorization_digest": "813b3cb648768db98d7782c0ddafc77396ac9eeb287586819e3ef5e880b79957",
+    "authorized_configuration_digest": "e2a6fbe6dc5593ad7e34738213131908dd33fdc886c72f8bb35753af520fda30"
+  },
+  "retained_source_run": {
+    "path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run",
+    "protocol_sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+    "authorization_digest": "813b3cb648768db98d7782c0ddafc77396ac9eeb287586819e3ef5e880b79957",
+    "batch_id": "f99071b8f687b69c12da3f806f1d53c1f3552e902fd6d52880f7205f56b10327",
+    "batch_index": 1,
+    "case_id": "b2-dev-owner-3l5s",
+    "generation_calls": 3,
+    "completed_generation_outputs": 3,
+    "judge_attempts": 4,
+    "completed_judge_records": 0,
+    "committed_batches": 0,
+    "known_counted_tokens": 90100,
+    "run_state_file_sha256": "18e4a942e47fbb62edb9d9c48f28f3c299ce34d6dec3c9c080504951006517f2",
+    "run_state_digest": "7be21dbf3621368a82098df569b916194b57ffed96f759cee21ed67a60659b27",
+    "generation_cells": [
+      {
+        "cell_id": "55fd7a24b69e7912b709f6db1bfa7bcd044ae2d446689fdbb48c73e00d98d9ca",
+        "arm_id": "stable",
+        "record_digest": "e99b292fbcac28e8c2b50e474cb12b3c95177b2c29630f670c7c6e83910e3c22",
+        "record_file_sha256": "0447b0f65657ca5058b045b7fa8434141e566498b596addf891ed1ff28093c0f",
+        "answer_sha256": "bacc25b3b1713526e3b3463a39243ef22aefff1f0b48b0fb4840bf185fb52433",
+        "counted_tokens": 28812,
+        "isolation_receipt_digest": "fd47ce552ec27eb8e02190f786971855d0dcec7388175257f4e4884dc46eb925",
+        "isolation_receipt_file_sha256": "105bc03b62ab1a970b08fd9c5a30456b4da24e3b1aed03a85221167da08530e2"
+      },
+      {
+        "cell_id": "90ec4059572dff9b99d8eed0c5d9494954423bf65922260ad5d9bfab00c4f14f",
+        "arm_id": "direct-only",
+        "record_digest": "a64c028ca1fdf9b5e959c3cfeb90b1a2561e5453ac02c87a817fdcddd05218ae",
+        "record_file_sha256": "a1d1037967e27c6c7e599c5e1ac7b7d919ab0199de4d6dcc69eb0f7715a8847d",
+        "answer_sha256": "6fb68fe348031c3727fe44d453098963e9ed23e0146d639cc8384a9e6b21228b",
+        "counted_tokens": 29901,
+        "isolation_receipt_digest": "acd35f5985f0e42305432dbde0ca26608605f3501fdab67a57555ebe8e861fea",
+        "isolation_receipt_file_sha256": "6f3256fdd04182c589c55b8ec5828697070f4566371927c586eea3b803afc384"
+      },
+      {
+        "cell_id": "a5f442a9fbdfc63e9b69f3295b7b11997723cfe72e85f68b83afb1dfb09ffe71",
+        "arm_id": "thin-kernel",
+        "record_digest": "12bb0b8eece89e34632e56b612c2755aa1ad0c8dee85ca9ff9cd62d68b8a92c7",
+        "record_file_sha256": "cafe67d3655d000cdce49be89a63ddf844cbe4edf951268c79130396722f97bf",
+        "answer_sha256": "482a4bc621196a7c1274c16c4f9f9d8a6bc7bda766c89caff25d74dc56bd5d7a",
+        "counted_tokens": 31387,
+        "isolation_receipt_digest": "c5f3bed2b58e80909c358dbbfce8f12792be7dbf627344c8da92d27603d2dafc",
+        "isolation_receipt_file_sha256": "97b6f54aa6a8b5c45d939584cd8422352d5006a11fa895dcf456273c7006a9d1"
+      }
+    ],
+    "generation_cell_set_digest": "aec0fc9738aa61f00e324e9c401907cc578b69059b61b8f4df5686e0ba28752b",
+    "failed_output_id": "07c65c9cf8224e6eb16da280ff8924972a9caa5033426f5cdf4fa7f0150ee460",
+    "failed_judge_attempts": [
+      {
+        "slot": 1,
+        "attempt": 1,
+        "attempt_digest": "ab9fa7343adf7e0b37c3b4c0b6232836d5b3e737bfa6dd0a835c79fb33d86655",
+        "attempt_file_sha256": "5de60d302e2490e38164b2d0b311984025c35107ec8786c9d98034d7130f1c79",
+        "events_sha256": "bd27618cd39620ecc78f71a27152bee1e86cb852da47e74250d732fde9f8ca83",
+        "stderr_sha256": "a82db3fcffee51e9015870bf98edb370b712c76c0baff5446e2a6a3a7724d051",
+        "isolation_receipt_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run/isolation-receipts/judge/07c65c9cf8224e6eb16da280ff8924972a9caa5033426f5cdf4fa7f0150ee460/slot-1/attempt-01.json",
+        "isolation_receipt_digest": "5cf19e7a7c5ce36d16eadb07cdf5c5f78ec3d841ca01e2003400d2f23c4b5785",
+        "isolation_receipt_file_sha256": "1a990c5761fa7220af11b6e03118e39cbf36e8fef6cf86fd2f91f6d01cdf9547"
+      },
+      {
+        "slot": 1,
+        "attempt": 2,
+        "attempt_digest": "1321f852fc983374cbccaf7673b892e5c755e0dba058c4d23c2db4b0e0d9db34",
+        "attempt_file_sha256": "31f5eead5d6e74149a2dc3fa8d1281c49c1708d6743d9e56358fdaf2204cd33b",
+        "events_sha256": "c51065c6856db4d7b9c1aecd4124a001ea0c39dfb285c426b3e0b8ff2854ea5a",
+        "stderr_sha256": "083becc94ef1398169c4573a07b5bd1a4030562022e4a1b422799cb644dbca81",
+        "isolation_receipt_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run/isolation-receipts/judge/07c65c9cf8224e6eb16da280ff8924972a9caa5033426f5cdf4fa7f0150ee460/slot-1/attempt-02.json",
+        "isolation_receipt_digest": "60561ca3b383260f4a0a37d6d7dc592707ea387024fbd7812bd600c4c0f44a8a",
+        "isolation_receipt_file_sha256": "35c1954c121e3c8b8702e9cbfb392ca2a972187052114fcd773d6d6ce1443a9a"
+      },
+      {
+        "slot": 2,
+        "attempt": 1,
+        "attempt_digest": "0cab546322d661082a03898393b4a9b5f380987034df12ef9bc686027b882800",
+        "attempt_file_sha256": "e85e6179315fe08035093c3abea94ac2a5cea26a9b93befe6a0b6a2c4dbfbd3b",
+        "events_sha256": "5a96c105f289a25bbefde04e7b671810b9b52831b1227a4b36739b24c5653e11",
+        "stderr_sha256": "1c298754179e35c544c19ab947c1ddc73bb9e74f00c7f9ad4599929f1b50e76d",
+        "isolation_receipt_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run/isolation-receipts/judge/07c65c9cf8224e6eb16da280ff8924972a9caa5033426f5cdf4fa7f0150ee460/slot-2/attempt-01.json",
+        "isolation_receipt_digest": "61dfc56edf39471edb15dc5ab86ffecf9a63b38a1de193b46c80697b48070aae",
+        "isolation_receipt_file_sha256": "3dbbc9b760585a4989aebbe106003b6f5cf24a0389e31be755b6c309c49b5544"
+      },
+      {
+        "slot": 2,
+        "attempt": 2,
+        "attempt_digest": "862aadb1340d045d8706ec5cc5d2b556927c3e41cd2bb3a410c38c36d5e6c61a",
+        "attempt_file_sha256": "1540687497deb11fb888635dd03c1df21613f032bd20cfa0cb4740fd4889a685",
+        "events_sha256": "b62a281cc2c53ae0e29369be12c33169bf56159b194724039d5d46f10b940ad8",
+        "stderr_sha256": "682db80de6dfdf974bf6dacfda15e84a86721510f03767af80e987aff017eac4",
+        "isolation_receipt_path": ".tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/run/isolation-receipts/judge/07c65c9cf8224e6eb16da280ff8924972a9caa5033426f5cdf4fa7f0150ee460/slot-2/attempt-02.json",
+        "isolation_receipt_digest": "37d1dc9c4ce3627548c91a3e8d60de7db36bb3d8a65302f28bc08a2bf82eeea5",
+        "isolation_receipt_file_sha256": "31bde0299f43999f512448882953c296665118a82fd467936941a0f5df288a88"
+      }
+    ],
+    "failed_judge_attempt_set_digest": "11aa4b5e0e9545550ae216b25d8b45eac18b7b5d930bfc682085ccf9d8436f15",
+    "failure_packets": [
+      {
+        "slot": 1,
+        "packet_digest": "9fa84fd932c2d78548cd10c6ec262c54dc94b18cfc5374878cb9bb27e4d486a5",
+        "file_sha256": "51ac1c780b2fb3d34918b349103846c9dced88d1c005b207b086d29b5e188e19"
+      },
+      {
+        "slot": 2,
+        "packet_digest": "a7e33a7fd7dc81d8a1ddb4b0d9c5ba9e3b0afd9ea770e41da568776b0b86b43e",
+        "file_sha256": "f5ee8c8767bb3c039441fee3cff701c8785cbb7ad17ef831062540dd66e983da"
+      }
+    ],
+    "failure_packet_set_digest": "db93eed2e979aded79eabc58985db543506231ba4edba9f8a156b5468acf940c",
+    "judge_input_file_sha256": "48aac8912ac50b8ecee6fcde94a1f5d7ad53e0f873326a423d404a9452978336",
+    "judge_input_digest": "5943af625a1e1b7ebfcc29c32ad0c174ed24909cd8dce8b173f4e2580c7c23eb",
+    "failure_evidence": {
+      "stage": "before model sampling",
+      "returncode": 1,
+      "timed_out": false,
+      "output_present": false,
+      "native_usage_available": false,
+      "counted_tokens_per_attempt": 0,
+      "api_error": "Invalid schema for response_format 'codex_output_schema': In context=('properties', 'primitive_obligation_results'), 'uniqueItems' is not permitted.",
+      "original_judge_schema_sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f"
+    },
+    "source_receipt_digest": "c8d3faf6eb993461840347493bc3c19e4f603a6c91f35e92cf10dcef78c93d1b"
+  },
+  "schema_compatibility": {
+    "canonical_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+    "canonical_schema_sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f",
+    "api_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+    "api_schema_sha256": "82ba909f30bfc30360271b3e949c88f62afa61db6ce86a1a1929c6827996e0ed",
+    "transformation": "remove exactly the two uniqueItems keywords rejected by the OpenAI Structured Outputs subset",
+    "removed_keyword_paths": [
+      "properties.primitive_obligation_results.uniqueItems",
+      "properties.unexpected_primitive_actions.uniqueItems"
+    ],
+    "canonical_local_validation": "unchanged validate_judge_output rejects duplicate primitive entries and applies every original scoring normalization",
+    "semantic_contract_relaxation": false
+  },
+  "recovery_control": {
+    "retained_generation_policy": "reuse exactly the three bound v0.5 cells; never regenerate them",
+    "original_failure_policy": "retain attempts 1/2 and both human failure packets unchanged",
+    "failed_slot_attempt_number": 3,
+    "new_slot_attempt_number": 1,
+    "retry_policy": "none: the four original failures consumed all initial Judge retry headroom",
+    "call_order": "resume immediate Judge for the retained triplet, atomically commit it, then continue the remaining authorized smoke batches",
+    "batch_commit_semantics": "unchanged frozen v0.5 hash-chained atomic commit",
+    "analysis_semantics": "unchanged frozen v0.5 committed-batch-only analyzer",
+    "terminal_stop": "any new Judge failure, schema rejection, source drift, isolation failure, binary disagreement, or original budget breach"
+  },
+  "budget_accounting": {
+    "original_ceiling": {
+      "maximum_committed_batches": 5,
+      "maximum_generation_calls": 17,
+      "maximum_judge_calls": 34,
+      "maximum_counted_tokens": 3000000
+    },
+    "consumed_before_amendment": {
+      "committed_batches": 0,
+      "generation_calls": 3,
+      "judge_calls": 4,
+      "counted_tokens": 90100
+    },
+    "remaining": {
+      "committed_batches": 5,
+      "generation_calls": 14,
+      "judge_calls": 30,
+      "counted_tokens": 2909900
+    },
+    "valid_judge_records_still_required_for_five_batches": 30,
+    "future_retry_headroom": 0,
+    "budget_expansion": false
+  },
+  "human_authorization": {
+    "authority": "William",
+    "design_instruction": "那按你的建议调整吧",
+    "design_evidence_id": "E7c74a48b",
+    "design_authorized": true,
+    "semantic_recovery_execution_authorized": false,
+    "fresh_exact_digest_authorization_required": true,
+    "stop_authority": "William",
+    "release_preparation": false
+  },
+  "dependency_receipts": [
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+      "sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+      "sha256": "8f00c807a1b35f747a4ba3f643ae5e9ab2f867483660621f97515b835a8c50d5"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5.json",
+      "sha256": "cd55b64dd11d845d59f0debe8711acac189af9172c90966720b6d7df1e7014d6"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4.schema.json",
+      "sha256": "b92db5c621d8668b7e7eda7dad08f8365cbecf138ed2b891eccdecf95b1a022f"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+      "sha256": "82ba909f30bfc30360271b3e949c88f62afa61db6ce86a1a1929c6827996e0ed"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05.py",
+      "sha256": "03034ca15c480c35c4c98b68577828f327c34e88b4836040f9b3b3fbd906fcb8"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/analyze_incremental_v05.py",
+      "sha256": "aa4996c85e4034e0b53238d30a406feb00a24eebf6651ef1747d038fe108841a"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v05_judge_compat.py",
+      "sha256": "dee79bc076376e0c7e2febaa32443109616e5500a28048ac99d7fb85f7916fbd"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/build-evaluation-judge-compat-v0.5.py",
+      "sha256": "6c620149bde1736455fbaa1610c783a366cc252692a25a51f2d887ffeb679ee1"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/freeze-evaluation-judge-compat-v0.5.py",
+      "sha256": "f12a5ec61b9aac5394df2909ce4bb5f499a95e5cc9fd019f587f43629b8ebcd0"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/build-execution-authorization-v0.5-judge-compat.py",
+      "sha256": "8db90a4f9a8a5dfdb5f7e3de414d5c68fad283ea3437aab69e4964971ead6d55"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.5-judge-compat.py",
+      "sha256": "ed57cec88a7703c646ba477066b109077d9f1ccbf9a284d00867450a758729ef"
+    }
+  ],
+  "freeze": {
+    "source_parent_commit": "70c54016d5c51b5bf032c7da3e65b7c5e5d347b6",
+    "built_at_utc": "2026-07-18T05:35:39.332700+00:00",
+    "semantic_generator_output_generated_before_amendment": true,
+    "semantic_judge_output_generated_before_amendment": false,
+    "semantic_output_generated_under_amendment_before_freeze": false,
+    "immutable_after": "compatibility lock creation and containing git commit",
+    "future_change_policy": "another additive amendment or experiment protocol must be frozen before any further semantic call"
+  }
+}
