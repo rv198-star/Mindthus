@@ -14,7 +14,13 @@ from pathlib import Path
 STABLE_VERSION = "1.4.6"
 BETA_RELEASE_LINE = "2.0-beta.1"
 NATIVE_THIN_ROUTER_RELEASE_LINE = "2.0-next-native-thin-router"
-RELEASE_LINES = ("stable", BETA_RELEASE_LINE, NATIVE_THIN_ROUTER_RELEASE_LINE)
+H1_OWNER_METADATA_RELEASE_LINE = "2.0-routing-h1-metadata"
+RELEASE_LINES = (
+    "stable",
+    BETA_RELEASE_LINE,
+    NATIVE_THIN_ROUTER_RELEASE_LINE,
+    H1_OWNER_METADATA_RELEASE_LINE,
+)
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -97,6 +103,7 @@ class ReleaseProfile:
     profile_guide_package_path: str = "BETA.md"
     runtime_diagnostic_package_path: str = "scripts/check-beta-runtime.py"
     default_prompt: str | None = None
+    owner_description_overrides: dict[str, str] | None = None
 
     @property
     def experimental(self) -> bool:
@@ -348,7 +355,6 @@ def _load_native_thin_router_profile(root: Path) -> ReleaseProfile:
         reference_lock,
         baseline=str(manifest.get("stable_baseline", "")),
     )
-
     artifact_sources = {
         str(manifest.get("profile_guide", "")): guide_source,
         str(manifest.get("reference_lock", "")): reference_lock,
@@ -366,7 +372,6 @@ def _load_native_thin_router_profile(root: Path) -> ReleaseProfile:
                 f"native thin runtime artifact drifted at {package_path}: "
                 f"{actual} != {artifact_hashes.get(package_path)}"
             )
-
     generated = manifest.get("generated_artifact_sha256")
     if not isinstance(generated, dict) or set(generated) != {"codex-plugin"}:
         raise SystemExit("native thin profile must lock only Codex generated artifacts")
@@ -394,6 +399,155 @@ def _load_native_thin_router_profile(root: Path) -> ReleaseProfile:
     )
 
 
+def _load_h1_owner_metadata_profile(root: Path) -> ReleaseProfile:
+    profile_dir = root / "beta" / "2.0-routing-convergence" / "h1-owner-metadata"
+    manifest_path = profile_dir / "release-profile.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"failed to load H1 owner-metadata profile: {exc}") from exc
+
+    if manifest.get("schema_version") != "mindthus-release-profile-v0.4":
+        raise SystemExit("unsupported H1 owner-metadata release-profile schema")
+    if manifest.get("release_line") != H1_OWNER_METADATA_RELEASE_LINE:
+        raise SystemExit("H1 owner-metadata profile declares the wrong release line")
+    if manifest.get("version") != "2.0.0-next.2":
+        raise SystemExit("H1 owner-metadata profile must use unpublished version 2.0.0-next.2")
+    if manifest.get("path_base") != "plugin-root":
+        raise SystemExit("H1 package paths must be relative to plugin-root")
+    if manifest.get("carrier_mode") != "native-skill-description":
+        raise SystemExit("H1 must use only the native Skill-description carrier")
+    if tuple(manifest.get("supported_packages", ())) != ("plugins",):
+        raise SystemExit("H1 must remain plugin-only")
+    if tuple(manifest.get("supported_surfaces", ())) != ("codex-plugin",):
+        raise SystemExit("H1 must remain Codex-only")
+
+    identity = manifest.get("plugin_identity")
+    if not isinstance(identity, dict):
+        raise SystemExit("H1 must declare plugin_identity")
+    plugin_name = identity.get("name")
+    marketplace_name = identity.get("marketplace_name")
+    display_name = identity.get("display_name")
+    if plugin_name != "mindthus-beta" or marketplace_name != "mindthus-beta":
+        raise SystemExit("H1 must stay isolated from Stable identity")
+    if not isinstance(display_name, str) or not display_name:
+        raise SystemExit("H1 display name must be non-empty")
+
+    adapter = manifest.get("namespace_adapter")
+    if (
+        not isinstance(adapter, dict)
+        or adapter.get("source_prefix") != "mindthus:"
+        or adapter.get("runtime_prefix") != "mindthus-beta:"
+        or adapter.get("mode") != "package-time-coordinate-only"
+    ):
+        raise SystemExit("H1 has an invalid namespace adapter")
+
+    source_paths = manifest.get("source_paths")
+    if not isinstance(source_paths, dict):
+        raise SystemExit("H1 must declare source_paths")
+    using_skill_dir = root / _safe_relative_path(
+        source_paths.get("using_mindthus_overlay"), label="H1 using-mindthus source"
+    )
+    guide_source = profile_dir / "STATUS.md"
+    diagnostic_source = profile_dir / "runtime" / "check-h1-metadata.py"
+    reference_lock = root / _safe_relative_path(
+        source_paths.get("reference_lock"), label="H1 reference-lock source"
+    )
+    for label, path in (
+        ("using-mindthus overlay", using_skill_dir / "SKILL.md"),
+        ("profile guide", guide_source),
+        ("runtime diagnostic", diagnostic_source),
+        ("reference lock", reference_lock),
+    ):
+        if not path.is_file():
+            raise SystemExit(f"H1 {label} not found: {path}")
+
+    overrides = manifest.get("owner_description_overrides")
+    if not isinstance(overrides, dict) or set(overrides) != {"mpg", "wae"}:
+        raise SystemExit("H1 must override exactly the MPG and WAE descriptions")
+    if not all(isinstance(value, str) and value for value in overrides.values()):
+        raise SystemExit("H1 owner-description overrides must be non-empty strings")
+
+    budgets = manifest.get("budgets")
+    required_budgets = {
+        "using_mindthus_max_bytes",
+        "using_mindthus_max_words",
+        "description_max_bytes",
+        "owner_description_max_bytes",
+        "default_prompt_max_bytes",
+    }
+    if not isinstance(budgets, dict) or not required_budgets.issubset(budgets):
+        raise SystemExit("H1 profile is missing text budgets")
+    using_skill = using_skill_dir / "SKILL.md"
+    _enforce_text_budget(
+        using_skill,
+        max_bytes=int(budgets["using_mindthus_max_bytes"]),
+        max_words=int(budgets["using_mindthus_max_words"]),
+        label="H1 thin using-mindthus",
+    )
+    frontmatter = _parse_skill_frontmatter(using_skill)
+    if frontmatter["name"] != "using-mindthus":
+        raise SystemExit("H1 thin entry must keep the using-mindthus name")
+    if len(frontmatter["description"].encode("utf-8")) > int(budgets["description_max_bytes"]):
+        raise SystemExit("H1 thin-entry description exceeds its byte budget")
+    for owner, description in overrides.items():
+        if len(description.encode("utf-8")) > int(budgets["owner_description_max_bytes"]):
+            raise SystemExit(f"H1 {owner} description exceeds its byte budget")
+
+    default_prompt = manifest.get("default_prompt")
+    if not isinstance(default_prompt, str) or not default_prompt:
+        raise SystemExit("H1 must declare one neutral default prompt")
+    if len(default_prompt.encode("utf-8")) > int(budgets["default_prompt_max_bytes"]):
+        raise SystemExit("H1 default prompt exceeds its byte budget")
+
+    reference_lock_data = _verify_reference_lock(
+        root, reference_lock, baseline=str(manifest.get("stable_baseline", ""))
+    )
+    artifact_sources = {
+        str(manifest.get("profile_guide")): guide_source,
+        str(manifest.get("reference_lock")): reference_lock,
+        str(manifest.get("runtime_diagnostic")): diagnostic_source,
+        "skills/using-mindthus/SKILL.md": using_skill,
+    }
+    artifact_hashes = manifest.get("artifact_sha256")
+    if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != set(artifact_sources):
+        raise SystemExit("H1 artifact_sha256 must lock every authored active artifact")
+    for package_path, source in artifact_sources.items():
+        _safe_relative_path(package_path, label="H1 artifact path")
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
+        if actual != artifact_hashes.get(package_path):
+            raise SystemExit(
+                f"H1 runtime artifact drifted at {package_path}: "
+                f"{actual} != {artifact_hashes.get(package_path)}"
+            )
+    generated = manifest.get("generated_artifact_sha256")
+    if not isinstance(generated, dict) or set(generated) != {"codex-plugin"}:
+        raise SystemExit("H1 must lock only Codex generated artifacts")
+
+    return ReleaseProfile(
+        release_line=H1_OWNER_METADATA_RELEASE_LINE,
+        version="2.0.0-next.2",
+        using_skill_dir=using_skill_dir,
+        supported_packages=("plugins",),
+        supported_surfaces=("codex-plugin",),
+        carrier_mode="native-skill-description",
+        profile_manifest=manifest_path,
+        profile_data=manifest,
+        beta_readme=guide_source,
+        runtime_diagnostic=diagnostic_source,
+        reference_lock=reference_lock,
+        reference_lock_data=reference_lock_data,
+        plugin_name=str(plugin_name),
+        marketplace_name=str(marketplace_name),
+        display_name=display_name,
+        budgets={key: int(value) for key, value in budgets.items()},
+        profile_guide_package_path=str(manifest.get("profile_guide")),
+        runtime_diagnostic_package_path=str(manifest.get("runtime_diagnostic")),
+        default_prompt=default_prompt,
+        owner_description_overrides={str(key): str(value) for key, value in overrides.items()},
+    )
+
+
 def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
     if release_line == "stable":
         return ReleaseProfile(
@@ -405,6 +559,9 @@ def load_release_profile(root: Path, release_line: str) -> ReleaseProfile:
 
     if release_line == NATIVE_THIN_ROUTER_RELEASE_LINE:
         return _load_native_thin_router_profile(root)
+
+    if release_line == H1_OWNER_METADATA_RELEASE_LINE:
+        return _load_h1_owner_metadata_profile(root)
 
     profile_dir = root / "beta" / "2.0.0-beta.1"
     manifest_path = profile_dir / "release-profile.json"
@@ -616,6 +773,34 @@ def profile_skill_replacements(
     return merged or None
 
 
+def apply_owner_description_override(path: Path, description: str) -> None:
+    """Replace only a built Skill's description while preserving its body bytes."""
+
+    payload = path.read_bytes()
+    marker = b"---\n"
+    if not payload.startswith(marker):
+        raise SystemExit(f"cannot override description without Skill frontmatter: {path}")
+    end = payload.find(marker, len(marker))
+    if end < 0:
+        raise SystemExit(f"cannot find Skill frontmatter end for description override: {path}")
+    body = payload[end + len(marker) :]
+    frontmatter = _parse_skill_frontmatter(path)
+    encoded = (
+        "---\n"
+        f"name: {frontmatter['name']}\n"
+        f"description: {json.dumps(description, ensure_ascii=False)}\n"
+        "---\n"
+    ).encode("utf-8")
+    path.write_bytes(encoded + body)
+
+
+def apply_profile_owner_override(profile: ReleaseProfile, skill_name: str, target: Path) -> None:
+    overrides = profile.owner_description_overrides or {}
+    description = overrides.get(skill_name)
+    if description is not None:
+        apply_owner_description_override(target / "SKILL.md", description)
+
+
 def write_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -669,6 +854,8 @@ def copy_skills_for_profile(
 ) -> None:
     active_replacements = profile_skill_replacements(profile, replacements)
     copy_tree_filtered(skills_dir, target, active_replacements)
+    for skill_name in profile.owner_description_overrides or {}:
+        apply_profile_owner_override(profile, skill_name, target / skill_name)
     if not profile.experimental:
         return
     using_target = target / "using-mindthus"
@@ -1082,6 +1269,7 @@ def build_codex_plugin(
             profile_skill_replacements(profile),
             jsonl_allowlist=jsonl_allowlist,
         )
+        apply_profile_owner_override(profile, skill_name, plugin_root / "skills" / skill_name)
     if not profile.experimental:
         copy_using_mindthus_conditional_primitives(
             methodologies_dir,

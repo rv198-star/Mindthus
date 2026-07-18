@@ -1,0 +1,108 @@
+{
+  "schema_version": "mindthus-release-profile-v0.4",
+  "release_line": "2.0-routing-h1-metadata",
+  "version": "2.0.0-next.2",
+  "status": "unpublished-static-candidate",
+  "release_preparation": "forbidden",
+  "live_qualification": "not-started",
+  "behavioral_evaluation": "pending",
+  "path_base": "plugin-root",
+  "stable_baseline": "1.4.6",
+  "baseline_commit": "f9117426e23a0c986cd5a833571e9098e8ebc401",
+  "carrier_mode": "native-skill-description",
+  "plugin_identity": {
+    "name": "mindthus-beta",
+    "marketplace_name": "mindthus-beta",
+    "display_name": "Mindthus H1 Metadata Candidate",
+    "stable_plugin_coordinates": "mindthus@mindthus",
+    "coinstallable_with_stable": true,
+    "coenabled_with_stable": false
+  },
+  "namespace_adapter": {
+    "mode": "package-time-coordinate-only",
+    "source_prefix": "mindthus:",
+    "runtime_prefix": "mindthus-beta:"
+  },
+  "supported_packages": [
+    "plugins"
+  ],
+  "supported_surfaces": [
+    "codex-plugin"
+  ],
+  "source_paths": {
+    "using_mindthus_overlay": "beta/2.0-next-native-thin-router/skills/using-mindthus",
+    "reference_lock": "beta/2.0-next-native-thin-router/reference-lock.json"
+  },
+  "runtime_diagnostic": "scripts/check-h1-metadata.py",
+  "profile_guide": "STATUS.md",
+  "reference_lock": "reference/1.4.6/reference-lock.json",
+  "default_prompt": "Apply the smallest sufficient Mindthus lens.",
+  "owner_skills": [
+    "3l5s",
+    "edsp",
+    "sela",
+    "mpg",
+    "wae",
+    "tvg",
+    "tplan"
+  ],
+  "owner_description_overrides": {
+    "mpg": "Use only when an established mainline, a concrete actor/carrier with meaningful exposure, real path volatility, and a current continue/commit/hold/exit/switch decision are all present. If actor, carrier, exposure, or decision context is missing, no MPG; not for method-reference evidence review.",
+    "wae": "Use only when an agentic system—LLM, agent, skill, prompt, or its workflow/script/schema/evidence gate—has a real controller mismatch. No agentic system or no controller mismatch, no WAE; ordinary product release-readiness or generic evidence sufficiency is outside scope."
+  },
+  "unchanged_owner_descriptions": {
+    "3l5s": "Use when a problem is unclear, noisy, repeatedly reworked, or too large to execute directly; also use when a task list looks structured but may not be executable, verifiable, or tied to a falsifiable problem.",
+    "edsp": "Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed.",
+    "sela": "Use for long-term system-efficiency versus local-advantage direction pressure, especially old paradigm vs scalable system or external system efficiency vs local/internal advantage; when concrete carrier/exposure/path action is also present, use as a support lens with MPG rather than sole owner.",
+    "tvg": "Use as a value-directed strengthening loop for bounded AI artifacts that need clearer judgment, evidence, trade-offs, handoff, reuse, or action value.",
+    "tplan": "Use when an AI agent needs an OKR-Runtime: a Mission needs script-driven task state, acceptance evidence, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and recovery."
+  },
+  "owner_body_sha256": {
+    "3l5s": "e97fc134b409cbfb9761ba8440fd2a3672688a64f7878e072e711ca624eb51fc",
+    "edsp": "a8d824170ace39e16ea62e2783ceaebf0c37635e5c75b4979150119f68cdca0c",
+    "sela": "6f49c8844d0975aaa91bf2e89edfe28580021738af380244917398013570eb70",
+    "mpg": "b285388e8761fa410478bd0198b797ebd6b8aabb4f87180d56806841293fb79f",
+    "wae": "2b22931b3f7b71f7b88b52d6bdc3ea7925b877dc4bd3c16c977c2e40ded77578",
+    "tvg": "ce8054c9b1cf4aa3c3bc95951fe159b6365372f13f43771f7dadee3bb0c00c92",
+    "tplan": "d4bf945aacbf25ae98bc2b55499291301874d7c0701a40d34265b3a3235dfd2d"
+  },
+  "thin_entry_sha256": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9",
+  "active_runtime_paths": [
+    "STATUS.md",
+    "beta/release-profile.json",
+    "scripts/check-h1-metadata.py",
+    "skills/using-mindthus/SKILL.md"
+  ],
+  "reference_only_paths": [
+    "reference/1.4.6/docs/methodologies",
+    "reference/1.4.6/skills/using-mindthus"
+  ],
+  "forbidden_active_paths": [
+    "AGENTS.md",
+    "hooks",
+    "runtime/passive-activation-kernel.md",
+    "docs/methodologies",
+    "scripts/log-fidelity-usage.py",
+    "scripts/log-mindthus-runtime.py",
+    "scripts/primitives",
+    "scripts/run-fidelity-judge.py"
+  ],
+  "artifact_sha256": {
+    "STATUS.md": "2e4d1e4e2d86115102e684f6204aff44b725209347b8fbb0b3ba990f4ccb9e32",
+    "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
+    "scripts/check-h1-metadata.py": "d8f7c26cbad12fdb5bb3122fee97fab5d0ef1f143b2a9fa695c4a13c81fab658",
+    "skills/using-mindthus/SKILL.md": "2cf45620b83a8f4b32ba85a9957be9f7aa85dabacdf0e16af4699c6c82c83eb9"
+  },
+  "generated_artifact_sha256": {
+    "codex-plugin": {
+      ".codex-plugin/plugin.json": "d9a91ab14d7c578feba5406fc681b480bfb1510de13826ccc9e3b9418768734d"
+    }
+  },
+  "budgets": {
+    "using_mindthus_max_bytes": 2400,
+    "using_mindthus_max_words": 260,
+    "description_max_bytes": 420,
+    "owner_description_max_bytes": 420,
+    "default_prompt_max_bytes": 96
+  }
+}
