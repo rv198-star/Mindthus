@@ -1,0 +1,37 @@
+{
+  "schema_version": "mindthus-beta2-route-decision-authorization-v0.6",
+  "status": "authorized",
+  "protocol_path": "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.6.json",
+  "protocol_file_sha256": "dbf84116a055cebac37b9e15c8e8afe7e2ff0dea6c22b6e044123f233fe861a3",
+  "lock_path": "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.6.lock.json",
+  "lock_digest": "86080918a16192f4399923edc8dea296af8d75635f3287fe007529aba03565b8",
+  "required_codex_version": "codex-cli 0.144.4",
+  "model_roles": {
+    "generator": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "judge_1": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "judge_2": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    }
+  },
+  "maximum_generation_calls": 74,
+  "maximum_paired_judge_calls": 50,
+  "maximum_counted_tokens": 4000000,
+  "maximum_counted_tokens_per_call": 131072,
+  "adjudicator": "William",
+  "stop_authority": "William",
+  "release_preparation_authorized": false,
+  "confirmation_template": "确认 v0.6 协议 SHA dbf84116a055cebac37b9e15c8e8afe7e2ff0dea6c22b6e044123f233fe861a3、锁摘要 86080918a16192f4399923edc8dea296af8d75635f3287fe007529aba03565b8；授权最多 74 次 Generator、50 次成对 Judge、4000000 counted tokens（按调用结束结算）；单次调用上限 131072 counted tokens；Generator/Judge 均为 Sol xHigh，William 拥有裁决和停止权，不做发布准备。",
+  "confirmation": {
+    "principal": "William",
+    "exact_text": "确认 v0.6 协议 SHA dbf84116a055cebac37b9e15c8e8afe7e2ff0dea6c22b6e044123f233fe861a3、锁摘要 86080918a16192f4399923edc8dea296af8d75635f3287fe007529aba03565b8；授权最多 74 次 Generator、50 次成对 Judge、4000000 counted tokens（按调用结束结算）；单次调用上限 131072 counted tokens；Generator/Judge 均为 Sol xHigh，William 拥有裁决和停止权，不做发布准备。",
+    "text_sha256": "5731e9a1b3ba283b5cc5782d6d0687bd09f5aa46f8fa1e82073ba06488a93eb5"
+  },
+  "authorization_digest": "734021adca5183363afa796b67be2451bf520cb169c7754d798cbc6b01b9d0ae"
+}
