@@ -25,6 +25,10 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   failed supplier-term check and its successful retry remained visible on the same
   real Step. The controlled model-call stubs validate host instrumentation mechanics;
   they do not claim a live Codex/provider integration.
+- The same Mission now renders as a portrait `1180 x 5112` SVG with 24 real task cards,
+  24 declared hierarchy edges, chronological relative-time labels, and one shared-scale
+  temporal range strip per observed node. The former hierarchy-only Mermaid TB artifact
+  is no longer the Standard output.
 
 ## What This Gives The User
 
@@ -32,6 +36,14 @@ After a Mission, TPlan can render the route that was actually taken as a tree. E
 visible node can show its observed state, execution order, actual elapsed time,
 retries, result, cumulative LLM-call time, script/tool/wait time, elapsed time not
 exactly recorded, and Token usage.
+
+The default visual is a portrait vertical execution timeline, not a hierarchy-only TB
+tree. Real nodes are ordered by first observed execution time; the left rail shows
+observed relative time, and every observed card carries a range strip on one shared
+linear elapsed-window scale. With exact lifecycle coverage the origin is Mission
+initialization; partial coverage is explicitly relative to the observed trace window.
+Declared parent-child edges are overlaid on those chronological rows, so execution order
+and hierarchy remain simultaneously visible.
 
 Task structure and information density are separate concerns. Every rendered Mission,
 Task, SubTask, or Step maps to exactly one real TPlan node. The renderer never merges
@@ -210,8 +222,8 @@ The renderer must preserve node identity before optimizing display density:
 3. No renderer view invents grouping, summary, rollup, or layout-only task nodes.
 4. A view may omit real nodes only when it is explicitly labeled as a projection and
    reports how many nodes are hidden; omission never changes the remaining node IDs.
-5. Large trees may be split into several Mermaid diagrams at real Task boundaries, but
-   the diagrams together preserve every node and declared parent-child edge.
+5. Large trees may be split into several SVG pages at real root Task boundaries, but
+   the pages together preserve every node and declared parent-child edge.
 6. Execution spans remain cost/detail records inside a real node. They do not replace,
    merge, or synthesize Mission task nodes.
 
@@ -224,13 +236,27 @@ The renderer supports:
 - `audit`: the same complete topology plus status history, direct/inclusive cost,
   spans, measurement sources, and stable refs.
 
-The declared parent-child tree remains the layout backbone. Actual execution order is a
-node annotation, not a second set of edges, so the diagram remains readable. Subtree
-cost is rolled up to ancestors without replacing descendants. Shared, Mission-level,
-and unattributed cost appears separately.
+### Vertical Timeline Layout Contract
 
-The renderer emits Markdown with Mermaid or structured JSON. `--focus TASK_ID` selects
-one real subtree without merging, regrouping, or fabricating nodes.
+- Vertical rows follow first-observed chronology; unobserved nodes remain real and are
+  placed after observed rows.
+- The left rail and node cards print observed relative start/end offsets. They are exact
+  Mission-relative values only when lifecycle coverage is exact.
+- Vertical row spacing is ordinal, not duration-proportional. This prevents long idle
+  periods from making the image arbitrarily tall and is stated in the SVG itself.
+- Every observed node has a range strip linearly scaled against the same elapsed window,
+  preserving comparable temporal position and duration without widening the canvas.
+- The declared parent-child tree is a blue overlay on chronological rows. No timeline
+  marker is a task node, and no task node is duplicated to satisfy layout.
+- The portrait SVG has bounded width; large outputs may be split only at real root Task
+  boundaries without changing or regrouping the topology.
+
+Subtree cost is rolled up to ancestors without replacing descendants. Shared,
+Mission-level, and unattributed cost appears separately.
+
+The renderer emits standalone SVG, Markdown that embeds a sibling SVG, or structured
+JSON. `--focus TASK_ID` selects one real subtree without merging, regrouping, or
+fabricating nodes. The report schema is `tplan.execution_cost_tree.v0.4`.
 
 ## Coverage And Legacy Behavior
 
@@ -271,6 +297,10 @@ whether a result is true, acceptable, or worth acting on.
 - every rendered task node maps one-to-one to a real Mission task ID
 - no view merges nodes at any hierarchy level or invents display-only grouping nodes
 - standard and audit preserve every materialized node and declared parent-child edge
+- standard SVG uses chronological vertical rows, exact relative time labels, and one
+  shared-scale range strip per observed node
+- the SVG contains exactly one task card per visible real node, with hierarchy edges
+  matching the JSON topology
 - compact and focus views declare every omission and never replace hidden nodes with a
   synthetic summary node
 - privacy-sensitive fields fail before append

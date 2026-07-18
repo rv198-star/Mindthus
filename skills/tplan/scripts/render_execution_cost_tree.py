@@ -7,7 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from execution_cost_tree import build_execution_cost_tree, render_json, render_markdown
+from execution_cost_tree import build_execution_cost_tree, render_json, render_markdown, render_svg
 from tplan_runtime import TplanError, write_text_atomic
 
 
@@ -15,7 +15,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render a tplan actual-execution and cost tree.")
     parser.add_argument("mission_dir")
     parser.add_argument("--view", choices=("compact", "standard", "audit"), default="standard")
-    parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
+    parser.add_argument("--format", choices=("markdown", "svg", "json"), default="markdown")
     parser.add_argument("--focus", help="Render only this task subtree.")
     parser.add_argument(
         "--top-cost",
@@ -36,11 +36,22 @@ def main() -> int:
             focus_task_id=args.focus,
             top_cost=args.top_cost,
         )
-        rendered = render_markdown(report) if args.format == "markdown" else render_json(report)
+        if args.format == "svg":
+            rendered = render_svg(report)
+        elif args.format == "json":
+            rendered = render_json(report)
+        else:
+            rendered = render_markdown(report)
         if args.output:
             output_path = Path(args.output)
+            if args.format == "markdown":
+                svg_path = output_path.with_suffix(".svg")
+                rendered = render_markdown(report, timeline_svg_ref=svg_path.name)
+                write_text_atomic(svg_path, render_svg(report))
             write_text_atomic(output_path, rendered)
             print(f"rendered_execution_cost_tree: {output_path}")
+            if args.format == "markdown":
+                print(f"rendered_execution_cost_tree_svg: {svg_path}")
         else:
             print(rendered, end="")
         return 0
