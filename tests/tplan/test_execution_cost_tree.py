@@ -415,6 +415,32 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(compact["trace"]["hidden_node_count"], 2)
             self.assertTrue(compact["trace"]["projection"])
 
+            compact_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--format",
+                "svg",
+            )
+            self.assertEqual(compact_svg.returncode, 0, compact_svg.stderr)
+            compact_root = ET.fromstring(compact_svg.stdout)
+            self.assertEqual(compact_root.attrib["data-view"], "compact")
+            compact_cards = [
+                element
+                for element in compact_root.iter()
+                if element.attrib.get("class") == "task-card"
+            ]
+            self.assertEqual(
+                [element.attrib["data-task-id"] for element in compact_cards],
+                ["T1"],
+            )
+            compact_card_text = "".join(compact_cards[0].itertext())
+            for label in ["LLM调用累计", "脚本累计", "工具累计", "等待累计", "Token", "结果："]:
+                self.assertIn(label, compact_card_text)
+            self.assertIn("可见真实节点 1/3", compact_svg.stdout)
+            self.assertIn("投影视图省略 2 个真实节点", compact_svg.stdout)
+
     def test_standard_svg_is_a_vertical_timeline_with_one_card_per_real_node(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)

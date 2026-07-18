@@ -221,7 +221,9 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --form
 ```
 
 - `compact`: an explicitly labelled projection containing Mission and root Tasks;
-  focused mode adds direct children and reports the number of omitted real nodes
+  focused mode adds direct children and reports the number of omitted real nodes;
+  every visible Task card retains actual elapsed, LLM, script, tool, wait, Token, and
+  result slots
 - `standard`: every materialized Mission / Task / SubTask / Step and every declared
   parent-child edge, with the fixed status, elapsed, cumulative LLM-call, script, tool,
   wait, Token, and result slots
