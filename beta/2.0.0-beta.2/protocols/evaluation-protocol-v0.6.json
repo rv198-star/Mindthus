@@ -1,0 +1,204 @@
+{
+  "schema_version": "mindthus-beta2-route-decision-protocol-v0.6",
+  "protocol_id": "issue-119-codex-route-decision-v0.6",
+  "status": "frozen",
+  "purpose": "bounded visible-case Codex decision for the current Thin-Kernel Beta route",
+  "source_commit": "aa69c7f48bda177ec639f336fed249d4b50458be",
+  "dependencies": [
+    {
+      "path": "beta/2.0.0-beta.2/DECISION-EVALUATION-V0.6.md",
+      "sha256": "bed380d74cf903f9d800ff7ba60d87c155c68ae4050c00f61d9ab20f78b0b280"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/decision-cases-v0.6.json",
+      "sha256": "b726ff85b92e22a9841977709f18a5059b9cfcfbdadc1b548c6ba90d6022d583"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/evaluation-case-matrix.json",
+      "sha256": "35b178920ddbcfc8fb9af1aa4a6c324ffdb86e6ecee4e78ee4ef9da7fc324441"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/paired-judge-output-v0.6.schema.json",
+      "sha256": "3bf976ddcbb31361fd293bd4861523a78d8a493310ba78dfa7ca391c41d8b418"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/paired-judge-rubric-v0.6.json",
+      "sha256": "f36686c8c6b9334e08cd3b3bff7f8e1ce8f8d812066f4e425b1d3b6edf25678d"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/fixtures/development-cases.jsonl",
+      "sha256": "68559a92f59d50b7d2298325247c3b78ffebe274b77259e25b62e96e0558006f"
+    },
+    {
+      "path": "tests/judgment_benchmark_50_cases.jsonl",
+      "sha256": "ee3f348ba8a77089e0ef0d276195dfc33ea61b684c2601bd3fc6d77e57f0129c"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/decision_evaluation_v06.py",
+      "sha256": "2faf23370d42bf6052efdd20fd28012fa4ed6b8460afd13c63475dda207d65da"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v06.py",
+      "sha256": "88e5a2b962da460a34eef6eec617ac5725ef0a61247af0aee412a01119b8d715"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/run_real_codex_evaluation_v04.py",
+      "sha256": "349614d7a6f9984c1f96fdb1207ad075f941be109f1a53b0679f3ab695c68162"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/filesystem_isolation_v05.py",
+      "sha256": "c776b4356bd94527f0faaf68c8d3a6466666c33c032f1d77d2f3377a67f9a155"
+    },
+    {
+      "path": "beta/2.0.0-beta.2/runtime/codex_stream_capture.py",
+      "sha256": "e6f713fe018965de16cc300db73f07b9f4b3cd3f32402a7f47bbad813c14fb5f"
+    },
+    {
+      "path": "scripts/mindthus_beta2_telemetry.py",
+      "sha256": "3348ab066fd665cfb5d979384e276ce0ae22dc2be27fe2d617e9634941b6a58d"
+    }
+  ],
+  "arms": [
+    {
+      "arm_id": "stable",
+      "path": "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/stable/sealed-arm.json",
+      "file_sha256": "5c37b6896a032d3526711dd6de1e29e1cb5087583b4258fb6efbd74ff0fca074",
+      "identity_digest": "b71dfbb5ef701ca74fa2fe263a6a45011901ce1ebd9e5d856cfb2eff2ed189a7",
+      "package_tree_sha256": "9859a1dbedb8cc152ca9b09dff4601d3b116e3f2d6b25455ee08062e67e8892d"
+    },
+    {
+      "arm_id": "direct-only",
+      "path": "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/direct-only-r2/sealed-arm.json",
+      "file_sha256": "50bc7ebd4912e34c30f2d3a67f6c7871eb806316986a79161052e5842bdf1dff",
+      "identity_digest": "cbe023b1fba45260f7d5e2b490be1d00f56e1f41079d6740c765b4ec7f5b445e",
+      "package_tree_sha256": "06dac6b4ab1b2a4261fd14a5b0c11a29fb8dd6da8399a6a45d7ef2d4e31592c0"
+    },
+    {
+      "arm_id": "thin-kernel",
+      "path": "/Volumes/Data/My Projects/Github/Mindthus-2.0.0-beta.2/.tplan/missions/mindthus-beta2-evaluation/artifacts/real-v05-smoke-f9bc7232/arms/thin-kernel/sealed-arm.json",
+      "file_sha256": "9cff18ce8601de5a54adcc64a0ea0c5b5677d2d0bb245f057f0960e7d17eacad",
+      "identity_digest": "e0c2dcd62d75b51b07bd59d4c59c1ed2865ebbd0ccb71c0a08663928be748a07",
+      "package_tree_sha256": "06dac6b4ab1b2a4261fd14a5b0c11a29fb8dd6da8399a6a45d7ef2d4e31592c0"
+    }
+  ],
+  "workload": {
+    "case_ids": [
+      "b2-public-frame",
+      "b2-public-whole",
+      "b2-public-anti-spiral",
+      "b2-dev-multi-primitive",
+      "b2-dev-owner-wae",
+      "b2-dev-arbitrator-overlap",
+      "b2-dev-near-normal-debugging",
+      "b2-dev-near-sufficient-evidence"
+    ],
+    "case_contract_digests": {
+      "b2-public-frame": "5ce41fc6e5bfada4bb1c8f6a519c385742165a1ee232088d65d06cfd5dc8e47a",
+      "b2-public-whole": "3fc267cfa78bc882ba46015189f6c335bc43907467f4bf8c8f88740228d4f830",
+      "b2-public-anti-spiral": "1968b175664cfba4698155846fb853f6044171ba8309cfa1361b9a13d3385aaf",
+      "b2-dev-multi-primitive": "c9bf417853af0c8634a649868a879353e18ec342ccb7c41334846acf18bef2f5",
+      "b2-dev-owner-wae": "01e033c91a97b40bb5edab3bb9c9f9468e055e04f0dcb023e57df32ce3a2b885",
+      "b2-dev-arbitrator-overlap": "79c4ff7b7fc425bc7c89b77f6dec3b3e6647ecf6f8b3504750f2ef98b2099180",
+      "b2-dev-near-normal-debugging": "a6b54b3f824441b92c1013424dcbbe16e142d448ef18a84a242cc1dfc604674f",
+      "b2-dev-near-sufficient-evidence": "cc8a68ce4444bfdceefd4b044f728a4ae831fd20e069c76768458eac56ede641"
+    },
+    "buckets": {
+      "kernel-benefit": [
+        "b2-public-frame",
+        "b2-public-whole",
+        "b2-public-anti-spiral",
+        "b2-dev-multi-primitive"
+      ],
+      "routing-integrity": [
+        "b2-dev-owner-wae",
+        "b2-dev-arbitrator-overlap"
+      ],
+      "stay-asleep": [
+        "b2-dev-near-normal-debugging",
+        "b2-dev-near-sufficient-evidence"
+      ]
+    },
+    "pilot_units": [
+      {
+        "case_id": "b2-public-frame",
+        "repeat": 1
+      },
+      {
+        "case_id": "b2-dev-multi-primitive",
+        "repeat": 1
+      },
+      {
+        "case_id": "b2-dev-near-normal-debugging",
+        "repeat": 1
+      }
+    ],
+    "repeats": 3,
+    "batch_count": 24,
+    "generation_outputs": 72,
+    "paired_judge_calls": 48
+  },
+  "model_roles": {
+    "generator": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "judge_1": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "judge_2": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh"
+    }
+  },
+  "execution": {
+    "surface": "codex-plugin",
+    "batch_unit": "case/repeat three-arm triplet",
+    "arm_order": "deterministic sha256 rotation",
+    "judge_unit": "three opaque candidates per call",
+    "judge_slots": 2,
+    "candidate_order": "slot-specific deterministic sha256 shuffle",
+    "generator_wrapper_sha256": "4340ade857f016c7bc1116d1c159f71a4447cba9dafa53919a93d92f32955265",
+    "built_in_blinding": true,
+    "authoritative_state": "reconstructed finalized attempts plus hash-chained commits",
+    "pilot_semantic_gate": false,
+    "post_adjudication_resume": "reconstruct current ledger; never compare with a pre-run usage snapshot"
+  },
+  "decision_gates": {
+    "kernel_minimum_successes": 9,
+    "kernel_minimum_gain_over_direct": 3,
+    "quality_noninferiority_delta": -0.05,
+    "owner_maximum_loss_cells_vs_stable": 1,
+    "routing_minimum_successes": 5,
+    "stay_asleep_maximum_false_wakeups": 1,
+    "stay_asleep_maximum_additional_vs_stable": 1,
+    "thin_authority_regression_maximum": 0,
+    "material_input_token_ratio_vs_stable": 0.9,
+    "material_wall_time_ratio_vs_stable": 0.9,
+    "material_skill_hop_reduction_vs_stable": 0.25,
+    "input_token_guardrail_vs_stable": 1.08,
+    "wall_time_guardrail_vs_stable": 1.1,
+    "input_token_guardrail_vs_direct": 1.08,
+    "all_gates_required": true,
+    "valid_failure_result": "route-rejected"
+  },
+  "failure_semantics": {
+    "infrastructure": "experiment-invalid",
+    "product_gate_failure": "route-rejected",
+    "compatibility_amendments": 0,
+    "semantic_retry": "one only when zero semantic output and zero counted tokens are proven"
+  },
+  "proposed_ceiling": {
+    "maximum_generation_calls": 74,
+    "maximum_paired_judge_calls": 50,
+    "maximum_counted_tokens": 4000000,
+    "maximum_counted_tokens_per_call": 131072,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "token_enforcement": "pre-call full-context reserve plus post-call native usage validation; Codex exposes aggregate usage only after an in-flight call completes"
+  },
+  "claim_boundary": "visible Codex/Sol-xHigh exploratory route decision only; no release, hidden-set, cross-host, or universal architecture claim"
+}
