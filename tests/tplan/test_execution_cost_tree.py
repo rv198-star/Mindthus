@@ -321,8 +321,9 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "text",
             )
             self.assertEqual(compact_text.returncode, 0, compact_text.stderr)
-            self.assertIn("└─ Ship execution tree", compact_text.stdout)
-            self.assertIn("   └─ Capture high-cost execution", compact_text.stdout)
+            self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", compact_text.stdout)
+            self.assertIn("└─ [T] Ship execution tree", compact_text.stdout)
+            self.assertIn("   └─ [ST] Capture high-cost execution", compact_text.stdout)
             self.assertIn("LLM 2.0s（平台上报） · 脚本 500ms（宿主实测）", compact_text.stdout)
             self.assertIn("→ High-cost path measured", compact_text.stdout)
 
@@ -453,7 +454,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
             for label in ["LLM调用累计", "脚本累计", "工具累计", "等待累计", "Token", "结果："]:
                 self.assertNotIn(label, compact_text.stdout)
             self.assertIn("Mission · Execution Tree Mission", compact_text.stdout)
-            self.assertIn("└─ Ship execution tree", compact_text.stdout)
+            self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", compact_text.stdout)
+            self.assertIn("└─ [T] Ship execution tree", compact_text.stdout)
             self.assertIn("LLM 未采集 · 脚本 未采集", compact_text.stdout)
             self.assertNotIn("Capture high-cost execution", compact_text.stdout)
 
@@ -597,9 +599,60 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("# TPlan 执行摘要", markdown)
             self.assertIn("```text", markdown)
             self.assertIn("Mission · Execution Tree Mission", markdown)
-            self.assertIn("└─ Ship execution tree", markdown)
+            self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", markdown)
+            self.assertIn("└─ [T] Ship execution tree", markdown)
             self.assertIn("直接成本 Top 5", markdown)
             self.assertNotIn("<svg", markdown)
+
+    def test_compact_labels_task_subtask_and_step_nodes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            added = run_script(
+                "add_node.py",
+                str(mission_dir),
+                "--id",
+                "P1",
+                "--kind",
+                "step",
+                "--parent-id",
+                "S1",
+                "--title",
+                "Inspect the rendered level labels",
+                "--parent-contribution",
+                "Makes each runtime node kind visible in Compact.",
+                "--mission-trace",
+                "via S1 -> T1 -> A1",
+                "--step-action",
+                "Render and inspect the Compact text tree.",
+                "--done-condition",
+                "The Step line carries the Step marker.",
+            )
+            self.assertEqual(added.returncode, 0, added.stderr)
+            blocked = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "P1",
+                "--status",
+                "blocked",
+            )
+            self.assertEqual(blocked.returncode, 0, blocked.stderr)
+
+            text = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--top-cost",
+                "0",
+                "--format",
+                "text",
+            )
+            self.assertEqual(text.returncode, 0, text.stderr)
+            self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", text.stdout)
+            self.assertIn("└─ [T] Ship execution tree", text.stdout)
+            self.assertIn("└─ [ST] Capture high-cost execution", text.stdout)
+            self.assertIn("└─ [P] Inspect the rendered level labels", text.stdout)
 
     def test_compact_selects_signal_nodes_and_preserves_their_real_ancestors(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -681,9 +734,9 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "text",
             )
             self.assertEqual(text.returncode, 0, text.stderr)
-            self.assertIn("Capture high-cost execution ✅", text.stdout)
+            self.assertIn("[ST] Capture high-cost execution ✅", text.stdout)
             self.assertIn("attempt 2", text.stdout)
-            self.assertIn("Optional untouched path ⛔ 受阻", text.stdout)
+            self.assertIn("[ST] Optional untouched path ⛔ 受阻", text.stdout)
 
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -57,6 +57,11 @@ STATUS_ICONS = {
     "abandoned": "×",
     "superseded": "↪",
 }
+COMPACT_KIND_TAGS = {
+    "task": "[T]",
+    "subtask": "[ST]",
+    "step": "[P]",
+}
 
 
 def _parse_timestamp(value: str) -> datetime:
@@ -1176,8 +1181,10 @@ def _compact_node_summary(node: dict[str, Any]) -> str:
     elapsed = _fmt_covered_duration(
         node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
     )
+    kind_tag = COMPACT_KIND_TAGS.get(node["kind"], "[?]")
     parts = [
-        f"{_shorten(node['title'], 46)} {_compact_status(node['status'], node['actual_state'])} {elapsed}",
+        f"{kind_tag} {_shorten(node['title'], 46)} "
+        f"{_compact_status(node['status'], node['actual_state'])} {elapsed}",
         _compact_cost_summary(cost),
     ]
     if node["dynamic"]:
@@ -1209,6 +1216,7 @@ def render_compact_text(report: dict[str, Any]) -> str:
             f"成本：{_compact_cost_summary(mission['cost'])}"
             f" · 未被精确记录 {_fmt_not_exactly_recorded(mission['elapsed_reconciliation'])}"
         ),
+        "层级：[T] Task · [ST] SubTask · [P] Step",
     ]
     node_by_id = {node["id"]: node for node in report["nodes"]}
     order = {node["id"]: index for index, node in enumerate(report["nodes"])}
