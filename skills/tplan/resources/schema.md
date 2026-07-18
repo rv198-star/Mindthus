@@ -97,7 +97,8 @@ normalization, and validation before write.
 The Mission schema remains `tplan.v0.1`; execution telemetry uses the additive
 `tplan.execution_trace.v0.1` sidecar. Lifecycle records cover Mission initialization,
 dynamic node addition, task status, active node, and Mission status. Cost records use
-sanitized `span_completed` events.
+sanitized `span_started`/`span_completed` pairs for host-observed operations, while a
+standalone `span_completed` remains valid for after-the-fact platform telemetry.
 
 Trace coverage is `exact`, `partial`, or `snapshot_only`. Exact lifecycle coverage does
 not imply that every platform cost was observable. See `execution-trace.md` for the

@@ -38,7 +38,8 @@ external input.
 
 Runtime state changes append lifecycle records to `execution_trace.jsonl`. Related task,
 active-node, and Mission-state changes share one logical `commit_id`. Cost observers
-append sanitized `span_completed` records separately.
+append sanitized paired `span_started`/`span_completed` records separately; a platform
+that only reports after completion may append a standalone completion.
 
 The trace answers what ran and what it cost. It does not turn process activity into
 acceptance evidence. After completion or handoff, use

@@ -10,7 +10,13 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from tplan_runtime import TplanError, find_task, read_mission, record_execution_span
+from tplan_runtime import (
+    TplanError,
+    find_task,
+    read_mission,
+    record_execution_span,
+    start_execution_span,
+)
 
 
 def now_iso() -> str:
@@ -65,6 +71,25 @@ def main() -> int:
         print(str(exc), file=sys.stderr)
         return 2
 
+    start_span: dict[str, object] = {
+        "kind": args.kind,
+        "label": args.label,
+        "measurement_source": "host_measured",
+        "attribution": args.attribution,
+        "attempt": args.attempt,
+        "parent_span_id": args.parent_span_id,
+    }
+    if args.shared_task_id:
+        start_span["shared_task_ids"] = args.shared_task_id
+    try:
+        start_record = start_execution_span(
+            Path(args.mission_dir),
+            {"task_id": args.task_id, "span": start_span},
+        )
+    except (OSError, TplanError, ValueError) as exc:
+        print(f"command was not started because its trace entry could not be recorded: {exc}", file=sys.stderr)
+        return 2
+
     started_at = now_iso()
     started_clock = time.perf_counter_ns()
     try:
@@ -80,24 +105,16 @@ def main() -> int:
     duration_ms = max(0, round((finished_clock - started_clock) / 1_000_000))
 
     span: dict[str, object] = {
-        "kind": args.kind,
-        "label": args.label,
+        "span_id": start_record["span"]["span_id"],
         "status": span_status,
-        "measurement_source": "host_measured",
-        "attribution": args.attribution,
         "started_at": started_at,
         "finished_at": finished_at,
         "duration_ms": duration_ms,
-        "attempt": args.attempt,
-        "parent_span_id": args.parent_span_id,
     }
-    if args.shared_task_id:
-        span["shared_task_ids"] = args.shared_task_id
     try:
         record = record_execution_span(
             Path(args.mission_dir),
             {
-                "task_id": args.task_id,
                 "span": span,
                 "metadata": {"exit_code": returncode},
             },

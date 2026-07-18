@@ -2,12 +2,18 @@ import json
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from datetime import datetime, timedelta
 from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[2]
+SCRIPTS = REPO / "skills" / "tplan" / "scripts"
+sys.path.insert(0, str(SCRIPTS))
+
+from observe_model_call import ModelCallObserver
+from tplan_runtime import TplanError, record_execution_span, start_execution_span
 
 
 def run_script(script_name, *args):
@@ -296,7 +302,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("Token 入 1.1k / 出 320", markdown.stdout)
             self.assertNotIn("Token 入 1.5k", markdown.stdout)
 
-    def test_wall_time_conserves_elapsed_and_agent_turn_is_only_an_envelope(self):
+    def test_elapsed_reconciliation_conserves_time_and_agent_turn_is_only_an_envelope(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
             active = run_script("transition_task.py", str(mission_dir), "--task-id", "S1", "--status", "active")
@@ -341,14 +347,19 @@ class ExecutionCostTreeTests(unittest.TestCase):
 
             report = render_json(mission_dir, "--view", "standard")
             node = next(item for item in report["nodes"] if item["id"] == "S1")
-            wall = node["subtree_wall_time"]
-            self.assertEqual(wall["attributed_wall_ms"], 5)
-            self.assertEqual(wall["excluded_envelope_span_count"], 1)
-            self.assertEqual(node["elapsed_ms"], wall["attributed_wall_ms"] + wall["unattributed_elapsed_ms"])
-            mission_wall = report["mission"]["wall_time"]
+            reconciliation = node["subtree_elapsed_reconciliation"]
+            self.assertEqual(reconciliation["exact_interval_coverage_ms"], 5)
+            self.assertEqual(reconciliation["excluded_envelope_span_count"], 1)
+            self.assertEqual(
+                node["elapsed_ms"],
+                reconciliation["exact_interval_coverage_ms"]
+                + reconciliation["not_exactly_recorded_elapsed_ms"],
+            )
+            mission_reconciliation = report["mission"]["elapsed_reconciliation"]
             self.assertEqual(
                 report["mission"]["elapsed_ms"],
-                mission_wall["attributed_wall_ms"] + mission_wall["unattributed_elapsed_ms"],
+                mission_reconciliation["exact_interval_coverage_ms"]
+                + mission_reconciliation["not_exactly_recorded_elapsed_ms"],
             )
             self.assertEqual(node["inclusive_cost"]["by_kind_resource_ms"]["model"], 5)
             self.assertEqual(node["inclusive_cost"]["additive_resource_time_ms"], 8)
@@ -357,11 +368,15 @@ class ExecutionCostTreeTests(unittest.TestCase):
 
             standard = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "standard")
             self.assertEqual(standard.returncode, 0, standard.stderr)
-            self.assertIn("LLM 5ms · 脚本 3ms", standard.stdout)
+            self.assertIn(
+                "LLM调用累计 5ms（平台上报） · 脚本累计 3ms（宿主实测）",
+                standard.stdout,
+            )
+            self.assertIn("未被精确记录", standard.stdout)
             self.assertNotIn("Agent turn 包络", standard.stdout)
             audit = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
             self.assertEqual(audit.returncode, 0, audit.stderr)
-            self.assertIn("Agent turn 包络：1 个 span，6ms", audit.stdout)
+            self.assertIn("Agent turn 包络：1 个 span，6ms（宿主实测）", audit.stdout)
 
     def test_standard_and_audit_preserve_every_real_node_and_declared_edge(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -425,7 +440,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
             )
             self.assertEqual(audit.returncode, 0, audit.stderr)
-            self.assertIn("LLM 未采集 · 脚本 未采集", audit.stdout)
+            self.assertIn("LLM调用累计 未采集 · 脚本累计 未采集", audit.stdout)
 
     def test_privacy_guard_rejects_raw_content_without_appending_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -492,7 +507,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("S1", report["visible_node_ids"])
             markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
-            self.assertIn("LLM 未知 · 脚本 未采集", markdown.stdout)
+            self.assertIn("LLM调用累计 未知 · 脚本累计 未采集", markdown.stdout)
             self.assertIn("Token 未知", markdown.stdout)
 
     def test_inferred_token_usage_is_visibly_marked_as_estimated(self):
@@ -524,6 +539,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
 
             markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
+            self.assertIn("LLM调用累计 ≈10ms（估算）", markdown.stdout)
             self.assertIn("Token ≈入 1.2k / 出 180", markdown.stdout)
             self.assertNotIn("墙钟", markdown.stdout)
 
@@ -544,15 +560,145 @@ class ExecutionCostTreeTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             records = read_jsonl(mission_dir / "execution_trace.jsonl")
-            span = records[-1]
-            self.assertEqual(span["event_type"], "span_completed")
-            self.assertEqual(span["span"]["kind"], "script")
-            self.assertEqual(span["metadata"], {"exit_code": 0})
+            started, completed = records[-2:]
+            self.assertEqual(started["event_type"], "span_started")
+            self.assertEqual(completed["event_type"], "span_completed")
+            self.assertEqual(started["span"]["span_id"], completed["span"]["span_id"])
+            self.assertEqual(completed["span"]["kind"], "script")
+            self.assertEqual(completed["metadata"], {"exit_code": 0})
             raw_trace = (mission_dir / "execution_trace.jsonl").read_text(encoding="utf-8")
             self.assertNotIn(sys.executable, raw_trace)
             self.assertNotIn('"command"', raw_trace)
             self.assertNotIn('"stdout"', raw_trace)
             self.assertNotIn('"stderr"', raw_trace)
+
+    def test_model_call_observer_records_paired_host_measurement_and_platform_usage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            observer = ModelCallObserver(
+                mission_dir,
+                task_id="S1",
+                label="campaign recommendation call",
+                provider="example-provider",
+                model="example-model",
+                operation="recommendation",
+            )
+
+            def invoke_model():
+                time.sleep(0.003)
+                return {
+                    "raw_response": "must not enter the trace",
+                    "usage": {"input_tokens": 240, "output_tokens": 60},
+                }
+
+            result = observer.invoke(
+                invoke_model,
+                usage_from_result=lambda response: response["usage"],
+            )
+            self.assertEqual(result["raw_response"], "must not enter the trace")
+
+            records = read_jsonl(mission_dir / "execution_trace.jsonl")
+            pair = [
+                record
+                for record in records
+                if record.get("span", {}).get("span_id") == observer.started_record["span"]["span_id"]
+            ]
+            self.assertEqual([record["event_type"] for record in pair], ["span_started", "span_completed"])
+            self.assertNotIn("started_at", pair[0]["span"])
+            self.assertEqual(pair[1]["span"]["measurement_source"], "host_measured")
+            self.assertGreaterEqual(pair[1]["span"]["duration_ms"], 2)
+            self.assertEqual(pair[1]["usage_source"], "platform_reported")
+            self.assertEqual(pair[1]["usage"], {"input_tokens": 240, "output_tokens": 60})
+            self.assertEqual(
+                pair[1]["metadata"],
+                {
+                    "model": "example-model",
+                    "operation": "recommendation",
+                    "provider": "example-provider",
+                },
+            )
+            raw_trace = (mission_dir / "execution_trace.jsonl").read_text(encoding="utf-8")
+            self.assertNotIn("must not enter the trace", raw_trace)
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.3")
+            self.assertEqual(report["trace"]["started_span_count"], 1)
+            self.assertEqual(report["trace"]["completed_span_count"], 1)
+            self.assertEqual(report["trace"]["open_span_count"], 0)
+            markdown = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
+            self.assertEqual(markdown.returncode, 0, markdown.stderr)
+            self.assertIn("调用端实测", markdown.stdout)
+            self.assertIn("不等于平台内部纯推理时间", markdown.stdout)
+
+    def test_model_call_observer_records_error_before_reraising(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            observer = ModelCallObserver(
+                mission_dir,
+                task_id="S1",
+                label="failing recommendation call",
+            )
+
+            def fail_model():
+                raise RuntimeError("provider unavailable")
+
+            with self.assertRaisesRegex(RuntimeError, "provider unavailable"):
+                observer.invoke(fail_model)
+
+            records = read_jsonl(mission_dir / "execution_trace.jsonl")
+            pair = [
+                record
+                for record in records
+                if record.get("span", {}).get("span_id") == observer.started_record["span"]["span_id"]
+            ]
+            self.assertEqual([record["event_type"] for record in pair], ["span_started", "span_completed"])
+            self.assertEqual(pair[1]["span"]["status"], "error")
+            self.assertNotIn("provider unavailable", (mission_dir / "execution_trace.jsonl").read_text())
+
+    def test_open_span_is_visible_but_excluded_from_cost_and_mismatched_completion_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            started = start_execution_span(
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "model",
+                        "label": "interrupted recommendation call",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                },
+            )
+            measured_start = parse_time(started["timestamp"]) + timedelta(microseconds=1)
+            with self.assertRaisesRegex(TplanError, "task_id mismatch"):
+                record_execution_span(
+                    mission_dir,
+                    {
+                        "task_id": "S2",
+                        "span": {
+                            "span_id": started["span"]["span_id"],
+                            "status": "ok",
+                            "started_at": iso(measured_start),
+                            "finished_at": iso(measured_start + timedelta(milliseconds=1)),
+                            "duration_ms": 1,
+                        },
+                    },
+                )
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["trace"]["started_span_count"], 1)
+            self.assertEqual(report["trace"]["completed_span_count"], 0)
+            self.assertEqual(report["trace"]["open_span_count"], 1)
+            self.assertEqual(report["mission"]["cost"]["span_count"], 0)
+            node = next(item for item in report["nodes"] if item["id"] == "S1")
+            self.assertEqual(node["direct_open_span_count"], 1)
+            audit = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn("未结束调用：1 个", audit.stdout)
+            self.assertIn("因此不计入累计成本", audit.stdout)
 
     def test_concurrent_span_processes_do_not_lose_records(self):
         with tempfile.TemporaryDirectory() as tmp:
