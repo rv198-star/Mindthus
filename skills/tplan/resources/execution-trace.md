@@ -200,8 +200,8 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
   --output "$MISSION_DIR/reports/execution-cost-tree.md"
 ```
 
-Writing Markdown also writes `execution-cost-tree.svg` beside it and embeds that SVG as
-the primary diagram. Render SVG directly when a standalone image is preferred:
+For Standard/Audit, writing Markdown also writes `execution-cost-tree.svg` beside it and
+embeds that SVG as the primary diagram. Render SVG directly when a standalone image is preferred:
 
 ```bash
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
@@ -214,16 +214,18 @@ Other views:
 
 ```bash
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --view compact
+python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --view compact --format text
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --view audit
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --focus T1
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --format svg
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --format json
 ```
 
-- `compact`: an explicitly labelled projection containing Mission and root Tasks;
-  focused mode adds direct children and reports the number of omitted real nodes;
-  every visible Task card retains actual elapsed, LLM, script, tool, wait, Token, and
-  result slots
+- `compact`: an explicitly labelled Unicode text-tree projection containing Mission,
+  every real root Task, execution-signal nodes, the top direct-cost nodes, and the real
+  ancestor paths needed to reach them; each visible line retains actual elapsed, LLM,
+  script, optional tool/wait/Token, retry/error, and result fields; `--top-cost N`
+  controls cost-node count, and SVG output is rejected
 - `standard`: every materialized Mission / Task / SubTask / Step and every declared
   parent-child edge, with the fixed status, elapsed, cumulative LLM-call, script, tool,
   wait, Token, and result slots
