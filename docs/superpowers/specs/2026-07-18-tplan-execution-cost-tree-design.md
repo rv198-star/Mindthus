@@ -6,9 +6,9 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
 
 ## Verification And Release Disposition
 
-- 1.x Stable-based branch: 194 TPlan tests and 625 full-repository tests pass.
+- 1.x Stable-based branch: 199 TPlan tests and 630 full-repository tests pass.
 - The same revised implementation applies to the Beta2 source without conflict, and
-  all 194 TPlan tests pass there.
+  all 199 TPlan tests pass there.
 - The current Beta2 release profile deliberately freezes the 1.4.6 `skills/tplan`
   digest. Its package gate rejects the changed live tree as evaluation-identity drift.
 - The frozen reference lock, protocols, receipts, and evaluation evidence are unchanged.
@@ -30,10 +30,12 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   temporal range strip per observed node. The former hierarchy-only Mermaid TB artifact
   is no longer the Standard output.
 - Its Compact projection now renders as a Unicode text tree rather than SVG. The same
-  Mission shows 15/24 real nodes: every root Task, execution-signal nodes, five top
-  direct-cost nodes, and the real ancestor paths required to reach them. Each line keeps
-  elapsed, LLM, script, optional tool/wait/Token, retry/error, and result fields. It
-  declares nine omissions and creates no synthetic descendant-summary node.
+  Mission shows 11/24 real nodes: every root Task, execution-signal nodes, three top
+  direct-cost nodes, and the real ancestor paths required to reach them. Every line
+  keeps elapsed plus compact LLM/script time; tool/wait, node Token, retry/error, and
+  outcomes appear only when relevant. Measurement sources and the Mission remainder
+  are consolidated in one footer. It declares thirteen omissions and creates no
+  synthetic descendant-summary node.
 
 ## What This Gives The User
 
@@ -235,10 +237,13 @@ The renderer must preserve node identity before optimizing display density:
 The renderer supports:
 
 - `compact`: a Unicode text tree containing Mission, every real root Task, execution-
-  signal nodes, top direct-cost nodes, and required real ancestor paths. Hidden nodes
-  and selection policy are explicit. Every node line begins with `[T]`, `[ST]`, or
-  `[P]`, with a legend mapping those tags to Task, SubTask, and Step. No SVG or
-  synthetic summary node is created.
+  signal nodes, top direct-cost nodes, and required real ancestor paths. The text tree
+  declares the hidden-node count and the machine report retains its selection policy.
+  Every node line begins with `[T]`, `[ST]`, or
+  `[P]`, with a legend mapping those tags to Task, SubTask, and Step. The default top-
+  cost budget is three. LLM/script time is fixed; tool/wait, node Token, recovery flags,
+  and outcomes are conditional. Sources and Mission-level elapsed reconciliation appear
+  once in the footer. No SVG or synthetic summary node is created.
 - `standard`: every materialized Task, SubTask, and Step with a strict node-label
   budget; this is the default post-completion execution tree.
 - `audit`: the same complete topology plus status history, direct/inclusive cost,

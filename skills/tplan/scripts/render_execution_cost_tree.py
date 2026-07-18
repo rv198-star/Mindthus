@@ -26,8 +26,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--top-cost",
         type=int,
-        default=5,
-        help="Compact only: include this many highest direct-cost real nodes (default: 5).",
+        default=3,
+        help="Compact only: include this many highest direct-cost real nodes (default: 3).",
     )
     parser.add_argument("--output", help="Write atomically to this path instead of stdout.")
     return parser.parse_args()

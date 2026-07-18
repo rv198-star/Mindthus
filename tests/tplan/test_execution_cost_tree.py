@@ -324,8 +324,11 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", compact_text.stdout)
             self.assertIn("└─ [T] Ship execution tree", compact_text.stdout)
             self.assertIn("   └─ [ST] Capture high-cost execution", compact_text.stdout)
-            self.assertIn("LLM 2.0s（平台上报） · 脚本 500ms（宿主实测）", compact_text.stdout)
-            self.assertIn("→ High-cost path measured", compact_text.stdout)
+            self.assertIn("LLM 2.0s / 脚本 500ms · Tok 1.0k/300", compact_text.stdout)
+            self.assertIn("来源：LLM 平台上报 · 脚本 宿主实测", compact_text.stdout)
+            self.assertNotIn("（平台上报）", compact_text.stdout)
+            self.assertNotIn("（宿主实测）", compact_text.stdout)
+            self.assertNotIn("High-cost path measured", compact_text.stdout)
 
     def test_elapsed_reconciliation_conserves_time_and_agent_turn_is_only_an_envelope(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -423,6 +426,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             compact = render_json(mission_dir, "--view", "compact")
             standard = render_json(mission_dir, "--view", "standard")
             audit = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(compact["top_cost"], 3)
             self.assertEqual(compact["visible_node_ids"], ["T1"])
             self.assertEqual(standard["visible_node_ids"], ["T1", "S1", "S2"])
             self.assertEqual(audit["visible_node_ids"], ["T1", "S1", "S2"])
@@ -456,7 +460,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("Mission · Execution Tree Mission", compact_text.stdout)
             self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", compact_text.stdout)
             self.assertIn("└─ [T] Ship execution tree", compact_text.stdout)
-            self.assertIn("LLM 未采集 · 脚本 未采集", compact_text.stdout)
+            self.assertIn("LLM — / 脚本 —", compact_text.stdout)
             self.assertNotIn("Capture high-cost execution", compact_text.stdout)
 
             compact_svg = run_script(
@@ -601,7 +605,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("Mission · Execution Tree Mission", markdown)
             self.assertIn("层级：[T] Task · [ST] SubTask · [P] Step", markdown)
             self.assertIn("└─ [T] Ship execution tree", markdown)
-            self.assertIn("直接成本 Top 5", markdown)
+            self.assertIn("显示 1/3；省略 2", markdown)
+            self.assertIn("来源：本次未采集资源时长", markdown)
             self.assertNotIn("<svg", markdown)
 
     def test_compact_labels_task_subtask_and_step_nodes(self):
@@ -694,6 +699,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "S1",
                 "--status",
                 "completed",
+                "--outcome-summary",
+                "Recovered on retry",
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
             blocked = run_script(
@@ -703,6 +710,8 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "S2",
                 "--status",
                 "blocked",
+                "--outcome-summary",
+                "Waiting for an external decision",
             )
             self.assertEqual(blocked.returncode, 0, blocked.stderr)
 
@@ -735,8 +744,10 @@ class ExecutionCostTreeTests(unittest.TestCase):
             )
             self.assertEqual(text.returncode, 0, text.stderr)
             self.assertIn("[ST] Capture high-cost execution ✅", text.stdout)
-            self.assertIn("attempt 2", text.stdout)
+            self.assertIn("↻2", text.stdout)
+            self.assertIn("→ Recovered on retry", text.stdout)
             self.assertIn("[ST] Optional untouched path ⛔ 受阻", text.stdout)
+            self.assertIn("→ Waiting for an external decision", text.stdout)
 
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:
