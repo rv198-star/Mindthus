@@ -57,14 +57,17 @@ Judge calls, and 3,000,000 counted tokens. After the stopped run, 14 Generator c
 the 30 valid records needed for five commits, so the recovery grants no further retry:
 any new Judge failure stops the run.
 
-`authorizations/issue-119-codex-v0.5-judge-compat.1.pending.json` remains pending. Its
+`authorizations/issue-119-codex-v0.5-judge-compat.1.pending.json` retains the
+pre-authorization packet. William subsequently confirmed the exact amendment and lock
+digests; `authorizations/issue-119-codex-v0.5-judge-compat.1.json` is now active. Its
 configuration digest is
 `c7d886513e225c83c11449e1b16efe0d853f31050df5b0adf502a23c41056aa8`.
+The active authorization digest is
+`3a87294be05939455de1157a1466acdd71710bae30bed852361afe28c7789e5a`.
 The no-model preflight validates the three retained outputs, four original failures,
 all isolation receipts, compatible transport schema, three sealed arms, and remaining
-ceilings. A real Judge call is prohibited until William confirms the exact amendment
-and lock digests. Recovery still does not authorize release preparation or an
-architecture conclusion.
+ceilings. The active validator now permits recovery within those unchanged ceilings.
+Recovery still does not authorize release preparation or an architecture conclusion.
 
 ## Current visible-case authorization (v0.3)
 

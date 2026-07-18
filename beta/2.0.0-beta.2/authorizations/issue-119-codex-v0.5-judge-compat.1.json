@@ -1,0 +1,119 @@
+{
+  "schema_version": "mindthus-beta2-execution-authorization-v0.5-judge-compat.1",
+  "authorization_id": "issue-119-codex-v0.5-judge-compat.1",
+  "authorization_validator_path": "beta/2.0.0-beta.2/runtime/validate-execution-authorization-v0.5-judge-compat.py",
+  "authorization_validator_sha256": "ed57cec88a7703c646ba477066b109077d9f1ccbf9a284d00867450a758729ef",
+  "status": "authorized",
+  "packet_created_at_utc": "2026-07-18T05:36:25.749306+00:00",
+  "protocol": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.json",
+    "sha256": "f9bc7232647b02a77c67010a74deff79f205cc99590452c2134c515e252b4336",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5.lock.json",
+    "lock_digest": "8c2d7ddcb1aac478eae31b937afa85a63505d1d4e48f5082781aa6a5c7321713"
+  },
+  "host_surface": "codex-plugin",
+  "maximum_committed_batches": 5,
+  "planned_generation_outputs": 15,
+  "planned_judge_records": 30,
+  "generator_model_by_host": {
+    "codex-plugin": {
+      "model_id": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "codex_cli_version": "0.144.4"
+    }
+  },
+  "judge_model_and_reasoning": {
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "independent_sessions_per_output": 2,
+    "environment": "isolated Mindthus-free and Superpowers-free Codex home"
+  },
+  "maximum_generation_calls": 17,
+  "maximum_judge_calls": 34,
+  "token_or_cost_budget": {
+    "kind": "aggregate-token-ceiling",
+    "maximum": 3000000,
+    "counted_components": [
+      "input",
+      "output",
+      "reasoning"
+    ],
+    "cached_input_double_counted": false
+  },
+  "human_adjudicator": "William",
+  "stop_authority": "William",
+  "prior_consumption": {
+    "protocol_versions": [
+      "0.3",
+      "0.4"
+    ],
+    "generation_calls": 146,
+    "judge_calls": 42,
+    "counted_tokens": 8133510
+  },
+  "requested_cumulative_ceiling": {
+    "maximum_generation_calls": 163,
+    "maximum_judge_calls": 76,
+    "aggregate_token_ceiling": 11133510
+  },
+  "case_scope": {
+    "batch_count": 5,
+    "generation_outputs": 15,
+    "judge_records": 30,
+    "evidence_visibility": "implementation-visible",
+    "host_session_scope": "startup-only",
+    "result_ceiling": "five Judge-backed smoke triplets; no architecture conclusion"
+  },
+  "release_preparation": false,
+  "base_authorization": {
+    "path": "beta/2.0.0-beta.2/authorizations/issue-119-codex-v0.5.json",
+    "file_sha256": "cd55b64dd11d845d59f0debe8711acac189af9172c90966720b6d7df1e7014d6",
+    "authorization_digest": "813b3cb648768db98d7782c0ddafc77396ac9eeb287586819e3ef5e880b79957"
+  },
+  "judge_compatibility_amendment": {
+    "path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.json",
+    "sha256": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6",
+    "lock_path": "beta/2.0.0-beta.2/protocols/evaluation-protocol-v0.5-judge-compat.1.lock.json",
+    "lock_digest": "420e8cb9473c944cd41ca33166a0258f986bb4855d7a2ecefc42a5d44bbad16e",
+    "amendment_id": "0.5-judge-compat.1",
+    "api_schema_path": "beta/2.0.0-beta.2/fixtures/judge-output-v0.4-openai-compatible.schema.json",
+    "api_schema_sha256": "82ba909f30bfc30360271b3e949c88f62afa61db6ce86a1a1929c6827996e0ed"
+  },
+  "current_run_consumption": {
+    "committed_batches": 0,
+    "generation_calls": 3,
+    "judge_calls": 4,
+    "counted_tokens": 90100
+  },
+  "remaining_authority": {
+    "committed_batches": 5,
+    "generation_calls": 14,
+    "judge_calls": 30,
+    "counted_tokens": 2909900,
+    "Judge_retry_headroom": 0
+  },
+  "recovery_scope": {
+    "retained_generation_outputs": 3,
+    "regeneration_allowed": false,
+    "valid_judge_records_still_required": 30,
+    "result_ceiling": "five Judge-backed smoke triplets; no architecture conclusion",
+    "budget_expansion": false
+  },
+  "human_authorization": {
+    "authority": "William",
+    "design_instruction": "那按你的建议调整吧",
+    "design_evidence_id": "E7c74a48b",
+    "design_authorized": true,
+    "semantic_recovery_execution_authorized": true,
+    "authorized_amendment_digest": "fd5312d66f59a11215bb78929a683cf3c57377d84b3f2d53390ae6d27578efe6",
+    "authorized_lock_digest": "420e8cb9473c944cd41ca33166a0258f986bb4855d7a2ecefc42a5d44bbad16e",
+    "authorized_configuration_digest": "c7d886513e225c83c11449e1b16efe0d853f31050df5b0adf502a23c41056aa8",
+    "authorized_at_utc": "2026-07-18T05:44:49.454Z",
+    "semantic_execution_evidence_id": "E984c4ba2",
+    "semantic_execution_instruction": "确认兼容补丁 SHA fd5312…78efe6、锁摘要 420e8c…ad16e；在原 v0.5 上限内恢复执行：最多 5 个提交批次、17 次 Generator、34 次 Judge、300 万 counted tokens；目前剩余 14 次 Generator、30 次 Judge、2,909,900 counted tokens；Generator/Judge 均为 Sol xHigh，William 拥有裁决和停止权，不做发布准备。"
+  },
+  "blocking_requirements": [],
+  "authorization_configuration_digest": "c7d886513e225c83c11449e1b16efe0d853f31050df5b0adf502a23c41056aa8",
+  "authorized_packet_created_at_utc": "2026-07-18T05:44:49.454Z",
+  "source_pending_packet_digest": "a9816c7e96fa98b02d9648471db1b80dd1dfb281000da68d9140d2483c3c7c57"
+}
