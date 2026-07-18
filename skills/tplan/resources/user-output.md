@@ -124,5 +124,7 @@ does not render SVG. Compact always keeps real root Tasks, then selects real act
 abnormal, retry, error, open-span, dynamic, and top direct-cost nodes while preserving
 the real ancestor paths required to reach them. Each visible line keeps actual elapsed,
 LLM, script, optional tool/wait/Token, retry/error, and result fields. It declares the
-selection rule and omitted-node count. Use `audit` for complete topology plus recovery
-and measurement detail. Unknown measurements must remain unknown.
+selection rule and omitted-node count. Compact prefixes every real node with `[T]`,
+`[ST]`, or `[P]` for Task, SubTask, or Step and prints that legend above the tree. Use
+`audit` for complete topology plus recovery and measurement detail. Unknown
+measurements must remain unknown.

@@ -225,7 +225,8 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --form
   every real root Task, execution-signal nodes, the top direct-cost nodes, and the real
   ancestor paths needed to reach them; each visible line retains actual elapsed, LLM,
   script, optional tool/wait/Token, retry/error, and result fields; `--top-cost N`
-  controls cost-node count, and SVG output is rejected
+  controls cost-node count; `[T]`, `[ST]`, and `[P]` identify Task, SubTask, and Step;
+  SVG output is rejected
 - `standard`: every materialized Mission / Task / SubTask / Step and every declared
   parent-child edge, with the fixed status, elapsed, cumulative LLM-call, script, tool,
   wait, Token, and result slots

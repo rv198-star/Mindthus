@@ -236,7 +236,9 @@ The renderer supports:
 
 - `compact`: a Unicode text tree containing Mission, every real root Task, execution-
   signal nodes, top direct-cost nodes, and required real ancestor paths. Hidden nodes
-  and selection policy are explicit; no SVG or synthetic summary node is created.
+  and selection policy are explicit. Every node line begins with `[T]`, `[ST]`, or
+  `[P]`, with a legend mapping those tags to Task, SubTask, and Step. No SVG or
+  synthetic summary node is created.
 - `standard`: every materialized Task, SubTask, and Step with a strict node-label
   budget; this is the default post-completion execution tree.
 - `audit`: the same complete topology plus status history, direct/inclusive cost,
