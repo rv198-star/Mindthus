@@ -1,6 +1,6 @@
 # TPlan Actual Execution & Cost Tree Design
 
-Status: implemented; 1.x verified; queued for the next 2.x shared-core checkpoint
+Status: implementation foundation complete; structure-fidelity and report-semantics revision pending before merge
 Date: 2026-07-18
 Issue: https://github.com/rv198-star/Mindthus/issues/121
 
@@ -18,9 +18,16 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
 ## What This Gives The User
 
 After a Mission, TPlan can render the route that was actually taken as a tree. Each
-visible node can show its observed state, execution order, active time, retries,
-result, AI/model time, script/tool time, and Token usage. The default view stays small;
-an audit view retains the full trace when it is needed.
+visible node can show its observed state, execution order, actual elapsed time,
+retries, result, LLM time, script/tool/wait time, unattributed time, and Token usage.
+
+Task structure and information density are separate concerns. Every rendered Mission,
+Task, SubTask, or Step maps to exactly one real TPlan node. The renderer never merges
+nodes at any level and never inserts display-only grouping nodes. `compact` may omit
+real nodes only when it declares itself as a projection and reports the hidden count.
+The default `standard` view preserves the complete materialized hierarchy while
+limiting the fields inside each node; `audit` adds detailed trace information without
+changing that hierarchy.
 
 The report distinguishes three clocks instead of producing one misleading number:
 
@@ -31,6 +38,18 @@ The report distinguishes three clocks instead of producing one misleading number
 
 Resource time may exceed wall time when work is nested or parallel. Unknown data remains
 unknown; the renderer does not estimate missing measurements.
+
+When lifecycle coverage is exact, the report also partitions wall time using interval
+union rather than resource-time addition:
+
+```text
+actual elapsed = attributed wall coverage + unattributed elapsed
+```
+
+An `agent_turn` is an orchestration envelope that may include model, script, tool, and
+wait spans. It is never labeled as LLM time or added to its nested spans. A
+platform-reported duration whose Mission or node scope is unknown remains an external
+audit observation and does not enter node reconciliation.
 
 ## Release-Line Contract
 
@@ -152,19 +171,36 @@ not convert an absent Token field into zero or infer provider time from prose.
 
 ## Progressive Tree Views
 
+### Structure-Fidelity Invariant
+
+The renderer must preserve node identity before optimizing display density:
+
+1. Every rendered Mission, Task, SubTask, and Step maps to one real runtime node.
+2. No renderer view merges task nodes at any hierarchy level.
+3. No renderer view invents grouping, summary, rollup, or layout-only task nodes.
+4. A view may omit real nodes only when it is explicitly labeled as a projection and
+   reports how many nodes are hidden; omission never changes the remaining node IDs.
+5. Large trees may be split into several Mermaid diagrams at real Task boundaries, but
+   the diagrams together preserve every node and declared parent-child edge.
+6. Execution spans remain cost/detail records inside a real node. They do not replace,
+   merge, or synthesize Mission task nodes.
+
 The renderer supports:
 
-- `compact`: Mission plus root Tasks, or a focused node plus its direct children
-- `standard`: root Tasks plus abnormal, retried, dynamic, outcome-bearing, active,
-  error, and top-cost descendants; this is the default
-- `audit`: every node, complete status history, direct/inclusive cost, and stable refs
+- `compact`: Mission plus real root Tasks, or a focused real subtree. Hidden nodes are
+  counted explicitly; no synthetic descendant-summary node is created.
+- `standard`: every materialized Task, SubTask, and Step with a strict node-label
+  budget; this is the default post-completion execution tree.
+- `audit`: the same complete topology plus status history, direct/inclusive cost,
+  spans, measurement sources, and stable refs.
 
 The declared parent-child tree remains the layout backbone. Actual execution order is a
 node annotation, not a second set of edges, so the diagram remains readable. Subtree
-cost is rolled up to ancestors. Shared/Mission/unattributed cost appears separately.
+cost is rolled up to ancestors without replacing descendants. Shared, Mission-level,
+and unattributed cost appears separately.
 
-The renderer emits Markdown with Mermaid or structured JSON. `--focus TASK_ID` narrows
-the tree without changing the underlying trace.
+The renderer emits Markdown with Mermaid or structured JSON. `--focus TASK_ID` selects
+one real subtree without merging, regrouping, or fabricating nodes.
 
 ## Coverage And Legacy Behavior
 
@@ -199,7 +235,11 @@ whether a result is true, acceptable, or worth acting on.
 - initialization creates the trace and report directory without touching evidence
 - dynamic nodes and lifecycle changes produce linked trace records
 - model, script, Token, cached Token, and shared overhead roll up correctly
-- compact/standard/audit views expose progressively more nodes
+- every rendered task node maps one-to-one to a real Mission task ID
+- no view merges nodes at any hierarchy level or invents display-only grouping nodes
+- standard and audit preserve every materialized node and declared parent-child edge
+- compact and focus views declare every omission and never replace hidden nodes with a
+  synthetic summary node
 - privacy-sensitive fields fail before append
 - legacy Mission runtimes render `partial` or `snapshot_only` without invented cost
 - the command wrapper records exit status and elapsed time but no command/output text
@@ -213,4 +253,5 @@ whether a result is true, acceptable, or worth acting on.
 - full distributed tracing across machines
 - allocation of shared cost by arbitrary percentages
 - automatic proof that all model or tool activity was observed
-- a dense always-expanded diagram
+- putting every trace field inside every Standard node
+- synthetic grouping nodes, composite task nodes, or merged Mission hierarchy nodes
