@@ -18,6 +18,13 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   real nodes, one withdrawn SubTask, 5m31s script time, 1m15s wait time, 15s tool time,
   approximately 1m08s cumulative LLM-call time, and estimated Token usage visibly
   marked with `≈`.
+- A follow-up replenishment Mission completed in 4m58.705s with 24/24 real nodes and
+  15/15 paired spans: 1m20.066s caller-measured model-call stubs, 2m35.581s scripts,
+  35.139s tools, and 25.012s wait. Exact interval coverage was 4m55.802s and elapsed
+  not exactly recorded was 2.903s, which reconciles exactly to Mission elapsed. One
+  failed supplier-term check and its successful retry remained visible on the same
+  real Step. The controlled model-call stubs validate host instrumentation mechanics;
+  they do not claim a live Codex/provider integration.
 
 ## What This Gives The User
 
