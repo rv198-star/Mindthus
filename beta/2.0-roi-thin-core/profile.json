@@ -1,0 +1,53 @@
+{
+  "schema_version": "mindthus-roi-candidate-v0.1",
+  "candidate": "2.0.0-roi.1",
+  "status": "unpublished-candidate",
+  "surface": "codex-plugin",
+  "baseline": {
+    "version": "1.4.6",
+    "commit": "00da11657bce553cb32e8e90c06ffe959dc08362"
+  },
+  "runtime_shape": {
+    "topology": "stable-native-owner-discovery",
+    "using_mindthus": "thin-shared-floor",
+    "changed_skill_paths": [
+      "skills/using-mindthus/SKILL.md"
+    ],
+    "unchanged_owner_skills": [
+      "3l5s",
+      "edsp",
+      "sela",
+      "mpg",
+      "wae",
+      "tvg",
+      "tplan"
+    ],
+    "session_start_hook": false,
+    "model_name_routing": false,
+    "second_guard": false,
+    "default_prompt_delta": false
+  },
+  "loss_policy": {
+    "allowed": "missed enrichment that changes neither decision nor execution",
+    "blocked": [
+      "strategy",
+      "evidence_requirement",
+      "risk_handling",
+      "authority",
+      "next_action",
+      "stopping_condition"
+    ]
+  },
+  "qualification_gates": {
+    "using_mindthus_max_bytes": 2300,
+    "using_mindthus_max_baseline_ratio": 0.35,
+    "owners_byte_identical_to_baseline": true,
+    "explicit_owner_regression_allowed": false,
+    "decision_changing_regression_allowed": false,
+    "ordinary_or_near_negative_extra_round_allowed": false,
+    "required_median_loaded_byte_reduction": 0.5,
+    "target_median_uncached_input_token_reduction": 0.1,
+    "token_savings_must_be_host_reported": true
+  },
+  "release_preparation": false
+}
