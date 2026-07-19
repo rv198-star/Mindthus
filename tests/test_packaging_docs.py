@@ -1101,7 +1101,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
 
-    def test_release_pack_includes_cinematic_colossal_profile_package(self):
+    def test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "release"
@@ -1111,7 +1111,7 @@ class PackagingDocsTests(unittest.TestCase):
                 capture_output=True,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
-            packaged = (
+            profiles = (
                 out
                 / "codex"
                 / "skills"
@@ -1119,12 +1119,24 @@ class PackagingDocsTests(unittest.TestCase):
                 / "tvg"
                 / "resources"
                 / "value-profiles"
-                / "cinematic-colossal-realism"
             )
-            self.assertTrue((packaged / "profile.md").exists())
-            self.assertTrue((packaged / "resources" / "subject-taxonomy.json").exists())
-            self.assertTrue((packaged / "scripts" / "lint_prompt_packet.py").exists())
-            self.assertTrue((packaged / "examples" / "loop-assisted-image-comparison.md").exists())
+            canonical = profiles / "cinematic-visual-direction"
+            legacy = profiles / "cinematic-colossal-realism"
+            tvg_root = out / "codex" / "skills" / "mindthus" / "tvg"
+            self.assertTrue((canonical / "profile.md").exists())
+            self.assertTrue((canonical / "resources" / "director-controls.json").exists())
+            self.assertTrue(
+                (canonical / "resources" / "scene-adapters" / "colossal-pressure.json").exists()
+            )
+            self.assertTrue((canonical / "scripts" / "lint_prompt_packet.py").exists())
+            self.assertTrue((canonical / "examples" / "atlas-search-workflow.md").exists())
+            self.assertTrue((legacy / "profile.md").exists())
+            self.assertTrue((legacy / "resources" / "subject-taxonomy.json").exists())
+            self.assertTrue((legacy / "examples" / "loop-assisted-image-comparison.md").exists())
+            self.assertTrue((tvg_root / "resources" / "atlas-search-contract.json").exists())
+            self.assertTrue((tvg_root / "scripts" / "atlas" / "label_atlas.py").exists())
+            self.assertTrue((tvg_root / "scripts" / "atlas" / "validate_trace.py").exists())
+            self.assertTrue((tvg_root / "scripts" / "atlas" / "build_selection_board.py").exists())
 
 
 if __name__ == "__main__":

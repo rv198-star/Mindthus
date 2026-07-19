@@ -1,0 +1,56 @@
+{
+  "schema_version": "cinematic-scene-adapter-v1",
+  "profile": "cinematic-visual-direction",
+  "adapter": "colossal-pressure",
+  "scope": "mythic, monstrous, disaster-scale, deep-sea, sky, divine, or cosmic subjects whose scale and pressure must be witnessed inside a scene",
+  "value_semantics_additions": {
+    "good_means": [
+      "human-scale or instrument-scale witness makes enormity legible",
+      "human, environment, and colossal scales form one readable ladder",
+      "one partial subject fragment creates decisive pressure without erasing the scene",
+      "the large force produces physically credible environment feedback",
+      "partial visibility and frame overflow preserve mystery and weight"
+    ],
+    "bad_means": [
+      "full centered poster display replaces witnessed presence",
+      "pressure is simulated with unrelated lightning, debris, or bright effects",
+      "environment width disappears merely to make the subject larger"
+    ],
+    "veto_constraints": [
+      "must not freeze without a witness or instrument scale anchor",
+      "must not freeze without physical environment feedback"
+    ]
+  },
+  "realization_surfaces": [
+    "witness anchor",
+    "three-layer scale ladder",
+    "dominant partial threat fragment",
+    "environment feedback",
+    "partial visibility or frame overflow"
+  ],
+  "gain_moves": [
+    "build scale ladder",
+    "decisive pressure frame",
+    "compress witness-to-colossus distance",
+    "strengthen physical feedback",
+    "increase partial visibility while preserving scene width"
+  ],
+  "operating_intensity": {
+    "2": "wide environment and quieter witnessed scale",
+    "3": "balanced scene width, director intention, and pressure",
+    "4": "one decisive partial threat with preserved witness field",
+    "5": "maximum one-frame oppression with explicit narrow-field risk"
+  },
+  "prompt_support": {
+    "scale_ladder": ["witness scale", "environment scale", "colossal scale"],
+    "decisive_pressure_frame": ["dominant partial fragment", "upper-frame pressure", "subordinate practical light"],
+    "physical_feedback": ["weather", "water", "dust", "fabric", "structures", "crowds", "instruments"],
+    "guardrails": [
+      "keep the witness field",
+      "subordinate lightning and magic highlights",
+      "make destruction consequence rather than decoration",
+      "do not apply this adapter to unrelated quiet or intimate scenes"
+    ]
+  },
+  "legacy_support_path": "skills/tvg/resources/value-profiles/cinematic-colossal-realism"
+}

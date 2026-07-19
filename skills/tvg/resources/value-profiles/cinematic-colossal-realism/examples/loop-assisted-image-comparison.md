@@ -168,3 +168,16 @@ local tuning evidence without turning session history into the main lesson.
 
 This remains one-run loop-assisted production evidence, not proof that the external
 skill is generally better or that the tuned profile is generally mature.
+
+## Optional Atlas Search Extension
+
+The later [atlas search workflow](../../cinematic-visual-direction/examples/atlas-search-workflow.md)
+adds deterministic labels, visible parent lineage, repeated `9 -> 3 -> 9` candidate
+expansion, and a post-generation-audited `2x2` handoff. The canonical Profile is now
+`cinematic-visual-direction`; this historical colossal run calibrates its
+`colossal-pressure` adapter and does not redefine the general cinematic core.
+
+The atlas carrier uses the existing image audit rubric for selection and the existing
+gain policy for child hypotheses. Its validator checks shape only and cannot decide
+whether an image improved, whether another round has value, or whether the Profile is
+mature.

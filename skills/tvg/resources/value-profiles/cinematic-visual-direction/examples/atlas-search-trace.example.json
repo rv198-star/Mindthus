@@ -1,0 +1,130 @@
+{
+  "schema_version": "tvg-atlas-trace-v1",
+  "profile_snapshot": {
+    "name": "cinematic-visual-direction",
+    "version": "v1",
+    "path": "../profile.md",
+    "sha256": "07600db894660a7d0972b54a8d6bb2b719f194b387e9ff771f23e63e1083d976",
+    "source_mode": "supplied",
+    "fixed_for_run": true,
+    "adapters": [
+      {
+        "name": "colossal-pressure",
+        "path": "../resources/scene-adapters/colossal-pressure.json",
+        "sha256": "a45c050b20f08b0acef6b95e81f0260c8e7abd7052825803d2de46b35a04eee2"
+      }
+    ]
+  },
+  "task_prompt": "A Chinese black dragon coils above the capital with overwhelming pressure.",
+  "tvg_pressure": 3,
+  "run_evidence": {
+    "model_path": "Images2 built-in",
+    "prompt_manifest_path": "artifacts/prompts.json"
+  },
+  "rounds": [
+    {
+      "round_id": "R00",
+      "stage": "initial",
+      "layout": "3x3",
+      "generation": {
+        "prompt_path": "artifacts/prompts/r00.txt",
+        "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "raw_atlas_path": "artifacts/r00-raw.png",
+        "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "labeled_atlas_path": "artifacts/r00-labeled.png",
+        "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "candidates": [
+        {"id": "R00-E01", "region": {"row": 1, "column": 1}, "parent_candidate_id": null, "exploration_intent": "wide gate-framed witness field", "intent_source": "predeclared", "audit_findings": ["stable city width; conservative pressure"]},
+        {"id": "R00-E02", "region": {"row": 1, "column": 2}, "parent_candidate_id": null, "exploration_intent": "rooftop witness and overhead fragment", "intent_source": "predeclared", "audit_findings": ["clear scale ladder and shot spine"]},
+        {"id": "R00-E03", "region": {"row": 1, "column": 3}, "parent_candidate_id": null, "exploration_intent": "rain reveal with restrained highlights", "intent_source": "predeclared", "audit_findings": ["useful atmosphere; head pressure is weak"]},
+        {"id": "R00-E04", "region": {"row": 2, "column": 1}, "parent_candidate_id": null, "exploration_intent": "street witness and broad cloud mass", "intent_source": "predeclared", "audit_findings": ["human field is clear; dragon reads too distant"]},
+        {"id": "R00-E05", "region": {"row": 2, "column": 2}, "parent_candidate_id": null, "exploration_intent": "partial head with directorly cloud aperture", "intent_source": "predeclared", "audit_findings": ["strong reveal; cloud highlight competes"]},
+        {"id": "R00-E06", "region": {"row": 2, "column": 3}, "parent_candidate_id": null, "exploration_intent": "compressed witness distance", "intent_source": "predeclared", "audit_findings": ["high pressure; environment width collapses"]},
+        {"id": "R00-E07", "region": {"row": 3, "column": 1}, "parent_candidate_id": null, "exploration_intent": "controlled rain and reflections", "intent_source": "predeclared", "audit_findings": ["fracture is coherent; primary fragment is small"]},
+        {"id": "R00-E08", "region": {"row": 3, "column": 2}, "parent_candidate_id": null, "exploration_intent": "roof-edge reveal with one major event", "intent_source": "predeclared", "audit_findings": ["high upside; foreground intrusion needs subtraction"]},
+        {"id": "R00-E09", "region": {"row": 3, "column": 3}, "parent_candidate_id": null, "exploration_intent": "maximum storm response", "intent_source": "predeclared", "audit_findings": ["feedback is strong; texture approaches clutter"]}
+      ],
+      "selection": {
+        "selected_candidate_ids": ["R00-E02", "R00-E05", "R00-E08"],
+        "selection_reason": "Keep stable scale, directorly reveal, and a bounded high-upside fracture branch.",
+        "parent_reviews": [
+          {"candidate_id": "R00-E02", "preserve": ["city width", "witness scale"], "repair": ["weak first-read pressure"], "next_gain_hypothesis": "A larger partial fragment can add pressure without deleting city width.", "exit_rationale": null},
+          {"candidate_id": "R00-E05", "preserve": ["shot spine", "partial visibility"], "repair": ["competing cloud highlight"], "next_gain_hypothesis": "Director subtraction can restore the head as first read.", "exit_rationale": null},
+          {"candidate_id": "R00-E08", "preserve": ["rain field", "single major event"], "repair": ["frame-cutting roof edge"], "next_gain_hypothesis": "Subtracting one intrusion can preserve fracture without clutter.", "exit_rationale": null}
+        ],
+        "gate_result": "return-remediate",
+        "next_round_positive_value_hypothesis": "Three adapter-aware repair paths can improve pressure, focus, and fracture."
+      }
+    },
+    {
+      "round_id": "R01",
+      "stage": "expand",
+      "layout": "3x3",
+      "generation": {
+        "prompt_path": "artifacts/prompts/r01.txt",
+        "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "raw_atlas_path": "artifacts/r01-raw.png",
+        "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "labeled_atlas_path": "artifacts/r01-labeled.png",
+        "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "candidates": [
+        {"id": "R01-E01", "region": {"row": 1, "column": 1}, "parent_candidate_id": "R00-E02", "gain_move": "preserve-and-repair", "positive_value_hypothesis": "Keep city width and add restrained pressure.", "audit_findings": ["city width survives; pressure remains conservative"]},
+        {"id": "R01-E02", "region": {"row": 1, "column": 2}, "parent_candidate_id": "R00-E02", "gain_move": "decisive pressure frame", "positive_value_hypothesis": "A larger partial head can dominate while witness scale remains.", "audit_findings": ["best scale and pressure balance"]},
+        {"id": "R01-E03", "region": {"row": 1, "column": 3}, "parent_candidate_id": "R00-E02", "gain_move": "bounded intensity alternative", "positive_value_hypothesis": "Maximum compression may preserve enough city field.", "audit_findings": ["strong pressure; field width narrows"]},
+        {"id": "R01-E04", "region": {"row": 2, "column": 1}, "parent_candidate_id": "R00-E05", "gain_move": "preserve-and-repair", "positive_value_hypothesis": "Darken the aperture while keeping the reveal.", "audit_findings": ["subject focus improves"]},
+        {"id": "R01-E05", "region": {"row": 2, "column": 2}, "parent_candidate_id": "R00-E05", "gain_move": "director subtraction", "positive_value_hypothesis": "One reveal edge can replace competing highlights.", "audit_findings": ["cleanest one-frame intention"]},
+        {"id": "R01-E06", "region": {"row": 2, "column": 3}, "parent_candidate_id": "R00-E05", "gain_move": "bounded intensity alternative", "positive_value_hypothesis": "Stronger compression may raise pressure without effects.", "audit_findings": ["witness anchor becomes too small"]},
+        {"id": "R01-E07", "region": {"row": 3, "column": 1}, "parent_candidate_id": "R00-E08", "gain_move": "preserve-and-repair", "positive_value_hypothesis": "Remove one roof intrusion while preserving rain continuity.", "audit_findings": ["fracture remains useful"]},
+        {"id": "R01-E08", "region": {"row": 3, "column": 2}, "parent_candidate_id": "R00-E08", "gain_move": "shot economy", "positive_value_hypothesis": "One fragment and three support vectors can retain pressure.", "audit_findings": ["best controlled-fracture branch"]},
+        {"id": "R01-E09", "region": {"row": 3, "column": 3}, "parent_candidate_id": "R00-E08", "gain_move": "bounded rain alternative", "positive_value_hypothesis": "Denser rain may intensify pressure if highlights stay subordinate.", "audit_findings": ["rain approaches clutter boundary"]}
+      ],
+      "selection": {
+        "selected_candidate_ids": ["R01-E02", "R01-E05", "R01-E08"],
+        "selection_reason": "The three branches preserve useful differentiation without an active adapter veto.",
+        "parent_reviews": [
+          {"candidate_id": "R01-E02", "preserve": ["city width", "partial head"], "repair": ["minor model drift remains review-bound"], "next_gain_hypothesis": null, "exit_rationale": "Further search is mostly taste variation."},
+          {"candidate_id": "R01-E05", "preserve": ["one-frame intention", "subordinate reveal"], "repair": ["minor texture variation"], "next_gain_hypothesis": null, "exit_rationale": "Further search is mostly taste variation."},
+          {"candidate_id": "R01-E08", "preserve": ["controlled fracture", "single event"], "repair": ["rain density remains taste-bound"], "next_gain_hypothesis": null, "exit_rationale": "Further search is mostly taste variation."}
+        ],
+        "gate_result": "search-freeze-with-review-bound-warning",
+        "next_round_positive_value_hypothesis": null
+      }
+    }
+  ],
+  "delivery": {
+    "mode": "shortlist",
+    "layout": "2x2",
+    "generation_mode": "regenerated",
+    "generation": {
+      "prompt_path": "artifacts/prompts/shortlist.txt",
+      "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "raw_atlas_path": "artifacts/shortlist-raw.png",
+      "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "labeled_atlas_path": "artifacts/shortlist-labeled.png",
+      "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "candidates": [
+      {"id": "S01", "region": {"row": 1, "column": 1}, "source_candidate_ids": ["R01-E02"], "prompt_delta_summary": "stable wide pressure branch", "audit_findings": ["ready wide branch"], "veto_findings": []},
+      {"id": "S02", "region": {"row": 1, "column": 2}, "source_candidate_ids": ["R01-E05"], "prompt_delta_summary": "directorly reveal branch", "audit_findings": ["ready reveal branch"], "veto_findings": []},
+      {"id": "S03", "region": {"row": 2, "column": 1}, "source_candidate_ids": ["R01-E08"], "prompt_delta_summary": "controlled fracture branch", "audit_findings": ["ready rain branch"], "veto_findings": []},
+      {"id": "S04", "region": {"row": 2, "column": 2}, "source_candidate_ids": ["R01-E02", "R01-E05"], "prompt_delta_summary": "bounded scale and reveal synthesis", "audit_findings": ["ready synthesis branch"], "veto_findings": []}
+    ],
+    "delivery_audit": {
+      "result": "ready-for-user-selection-with-warning",
+      "audit_role": "agentic",
+      "rationale": "All four are viable; minor model drift remains a user-visible warning.",
+      "warnings": ["one-run image-model drift remains possible"]
+    }
+  },
+  "finalization": {
+    "state": "pending-user-selection",
+    "mode": null,
+    "selected_shortlist_ids": [],
+    "outputs": [],
+    "reason": "The user owns final taste selection."
+  },
+  "evidence_warnings": [],
+  "claim_ceiling": "This example proves trace shape only; image value and Profile maturity remain agentic and review-bound claims."
+}
