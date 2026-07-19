@@ -1,5 +1,6 @@
 {
   "schema_version": "tvg-atlas-trace-v2",
+  "evidence_class": "deterministic-structural-fixture",
   "profile_snapshot": {
     "name": "cinematic-visual-direction",
     "version": "v1",
@@ -15,11 +16,11 @@
       }
     ]
   },
-  "task_prompt": "A Chinese black dragon coils above the capital with overwhelming pressure.",
+  "task_prompt": "Structural fixture scenario: a Chinese black dragon coils above the capital.",
   "tvg_pressure": 3,
   "run_evidence": {
-    "model_path": "Images2 built-in",
-    "prompt_manifest_path": "artifacts/prompts.json"
+    "model_path": "deterministic structural fixture (no model call)",
+    "prompt_manifest_path": "example-evidence/prompts.json"
   },
   "rounds": [
     {
@@ -27,12 +28,12 @@
       "stage": "initial",
       "layout": "3x3",
       "generation": {
-        "prompt_path": "artifacts/prompts/r00.txt",
-        "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-        "raw_atlas_path": "artifacts/r00-raw.png",
-        "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-        "labeled_atlas_path": "artifacts/r00-labeled.png",
-        "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        "prompt_path": "example-evidence/prompts/r00.txt",
+        "prompt_sha256": "f23eb57b90cf1f8ad9a7ff6b45d7c7396f2551a9e0dab5f411a970c82d4bb209",
+        "raw_atlas_path": "example-evidence/r00-raw.ppm",
+        "raw_atlas_sha256": "4cbe244c1ae9c4a7d402d9911c65056872e2749fb882edea6ec16c2ac7eed617",
+        "labeled_atlas_path": "example-evidence/r00-labeled.ppm",
+        "labeled_atlas_sha256": "26c5f9d387fa1333bee32856ae36757b63c0aa6d2406a925ded89addad9430d6"
       },
       "candidates": [
         {"id": "R00-E01", "region": {"row": 1, "column": 1}, "parent_candidate_id": null, "exploration_intent": "wide gate-framed witness field", "intent_source": "predeclared", "audit_findings": ["stable city width; conservative pressure"]},
@@ -62,12 +63,12 @@
       "stage": "expand",
       "layout": "3x3",
       "generation": {
-        "prompt_path": "artifacts/prompts/r01.txt",
-        "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-        "raw_atlas_path": "artifacts/r01-raw.png",
-        "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-        "labeled_atlas_path": "artifacts/r01-labeled.png",
-        "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        "prompt_path": "example-evidence/prompts/r01.txt",
+        "prompt_sha256": "d8cdfbfc0299079a816a1eb1d149676cf80083f26655c483178fbfadd32cd58d",
+        "raw_atlas_path": "example-evidence/r01-raw.ppm",
+        "raw_atlas_sha256": "5850d98f541a1d2312ff01ea5767910cfdfcb539f52a422bb4ba486fcc3d4467",
+        "labeled_atlas_path": "example-evidence/r01-labeled.ppm",
+        "labeled_atlas_sha256": "6c28befe9e077a3f1622fcdf8c46733fd34b6d2d3f7e995c8952471870efc1fc"
       },
       "candidates": [
         {"id": "R01-E01", "region": {"row": 1, "column": 1}, "parent_candidate_id": "R00-E02", "gain_move": "preserve-and-repair", "positive_value_hypothesis": "Keep city width and add restrained pressure.", "audit_findings": ["city width survives; pressure remains conservative"]},
@@ -99,16 +100,16 @@
     "delivery_boundary": {
       "materially_distinct_viable_options": true,
       "user_taste_authority_required": true,
-      "rationale": "Four viable branches preserve materially different reveal and pressure choices owned by user taste."
+      "rationale": "Structural declaration for validator coverage only; the synthetic fixture does not establish that any branch is aesthetically viable."
     },
     "generation_mode": "regenerated",
     "generation": {
-      "prompt_path": "artifacts/prompts/shortlist.txt",
-      "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "raw_atlas_path": "artifacts/shortlist-raw.png",
-      "raw_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "labeled_atlas_path": "artifacts/shortlist-labeled.png",
-      "labeled_atlas_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      "prompt_path": "example-evidence/prompts/shortlist.txt",
+      "prompt_sha256": "33faa3a8c05a5c6b24c3bb8168fdd350be1c8ffc785d6e24be3cf7b45b164fdc",
+      "raw_atlas_path": "example-evidence/shortlist-raw.ppm",
+      "raw_atlas_sha256": "decd7f291d3ac78521648d8245bd7790c4ae06cab96648562f900dcbd70264e7",
+      "labeled_atlas_path": "example-evidence/shortlist-labeled.ppm",
+      "labeled_atlas_sha256": "975c2ec0adcb263eaefb9c29a6793dd97b56b8ec616ebfb022ebe1765f6253f9"
     },
     "candidates": [
       {"id": "S01", "region": {"row": 1, "column": 1}, "source_candidate_ids": ["R01-E02"], "prompt_delta_summary": "stable wide pressure branch", "audit_findings": ["ready wide branch"], "veto_findings": []},
@@ -119,8 +120,8 @@
     "delivery_audit": {
       "result": "ready-for-user-selection-with-warning",
       "audit_role": "agentic",
-      "rationale": "All four are viable; minor model drift remains a user-visible warning.",
-      "warnings": ["one-run image-model drift remains possible"]
+      "rationale": "Fixture-only ready state exercises delivery validation; it is not an aesthetic judgment.",
+      "warnings": ["synthetic candidates require a real runtime audit before any user delivery"]
     }
   },
   "finalization": {
@@ -130,6 +131,8 @@
     "outputs": [],
     "reason": "The user owns final taste selection."
   },
-  "evidence_warnings": [],
-  "claim_ceiling": "This example proves trace shape only; image value and Profile maturity remain agentic and review-bound claims."
+  "evidence_warnings": [
+    "Synthetic PPM tiles and illustrative semantic fields provide no aesthetic or model-generation evidence."
+  ],
+  "claim_ceiling": "This deterministic fixture proves schema, paths, hashes, and lineage mechanics only; it is not an Images2 run and supports no image-value, audit-truth, or Profile-maturity claim."
 }

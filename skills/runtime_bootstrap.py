@@ -19,6 +19,6 @@ def runtime_import_root(anchor: str | Path = __file__) -> Path:
 def activate_runtime(anchor: str | Path = __file__) -> Path:
     root = runtime_import_root(anchor)
     value = str(root)
-    if value not in sys.path:
-        sys.path.insert(0, value)
+    sys.path[:] = [entry for entry in sys.path if entry != value]
+    sys.path.insert(0, value)
     return root

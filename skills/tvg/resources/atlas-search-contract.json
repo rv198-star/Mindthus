@@ -1,6 +1,10 @@
 {
-  "schema_version": "tvg-atlas-search-contract-v1",
+  "schema_version": "tvg-atlas-search-contract-v2",
   "owner": "TVG runtime support",
+  "evidence_classes": {
+    "runtime-evidence": "real prompt/model/output provenance eligible for file and semantic audit",
+    "deterministic-structural-fixture": "synthetic bytes for schema/file-integrity smoke only; no aesthetic or model-generation claim"
+  },
   "profile_policy": "any explicitly resolved and fixed Profile snapshot; scene adapters are snapshotted separately",
   "profile_evidence": "record the fixed Profile path and SHA-256 plus path and SHA-256 for every active scene adapter",
   "round_id_policy": "R00, R01, R02 and later rounds in sequence",
@@ -28,6 +32,8 @@
   "delivery_audit_results": [
     "ready-for-user-selection",
     "ready-for-user-selection-with-warning",
+    "ready-for-direct-delivery",
+    "ready-for-direct-delivery-with-warning",
     "return-remediate",
     "blocked"
   ],

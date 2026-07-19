@@ -1712,8 +1712,10 @@ def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
 def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     path = mission_paths(mission_dir)["evidence"]
     event = prepare_event(mission_dir, event)
-    with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return event
 
 

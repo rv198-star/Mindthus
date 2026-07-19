@@ -74,8 +74,10 @@ Finalization states:
 - `completed`: a direct result or user-selected tile becomes the final master, accepted
   or rerendered with output evidence
 
-A ready delivery state requires every candidate veto list to be empty. A completed output
-records its source shortlist ID, path, and SHA-256; `--check-files` verifies the bytes.
+A ready delivery state requires every candidate veto list to be empty. A completed
+shortlist output records `selected_shortlist_ids` plus `source_shortlist_id`; a completed
+direct output records `selected_delivery_ids` plus `source_delivery_id`. Both record path
+and SHA-256, and `--check-files` verifies the bytes.
 
 ## Commands
 

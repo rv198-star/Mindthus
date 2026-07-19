@@ -280,6 +280,14 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
         errors.append(
             f"schema_version: expected {SCHEMA_VERSION!r} or legacy {LEGACY_SCHEMA_VERSION!r}"
         )
+    evidence_class = payload.get("evidence_class")
+    if schema_version == SCHEMA_VERSION and evidence_class not in {
+        "runtime-evidence",
+        "deterministic-structural-fixture",
+    }:
+        errors.append(
+            "evidence_class: v2 traces require 'runtime-evidence' or 'deterministic-structural-fixture'"
+        )
     _validate_profile(errors, payload.get("profile_snapshot"), base_dir, check_files)
     _require_string(errors, payload.get("task_prompt"), "task_prompt")
     tvg_pressure = payload.get("tvg_pressure")
@@ -293,6 +301,13 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
         errors.append("run_evidence: expected an object")
     else:
         _require_string(errors, run_evidence.get("model_path"), "run_evidence.model_path")
+        if (
+            evidence_class == "deterministic-structural-fixture"
+            and run_evidence.get("model_path") != "deterministic structural fixture (no model call)"
+        ):
+            errors.append(
+                "run_evidence.model_path: structural fixture must state that no model call occurred"
+            )
         manifest = run_evidence.get("prompt_manifest_path")
         _require_string(errors, manifest, "run_evidence.prompt_manifest_path")
         if check_files and _nonempty(manifest) and not _resolve(base_dir, manifest).is_file():
@@ -428,6 +443,12 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
             errors.append("post-hoc R00 intent requires search-freeze-with-review-bound-warning")
         if not warnings:
             errors.append("evidence_warnings: post-hoc R00 intent requires a recorded warning")
+    if evidence_class == "deterministic-structural-fixture" and not any(
+        "no aesthetic or model-generation evidence" in warning for warning in warnings
+    ):
+        errors.append(
+            "evidence_warnings: structural fixture must disclaim aesthetic and model-generation evidence"
+        )
 
     delivery = payload.get("delivery")
     delivery_result: str | None = None

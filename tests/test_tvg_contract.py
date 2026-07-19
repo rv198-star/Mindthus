@@ -1478,6 +1478,7 @@ class TvgContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         contract = json.loads((TVG / "resources" / "atlas-search-contract.json").read_text(encoding="utf-8"))
+        self.assertEqual(contract["schema_version"], "tvg-atlas-search-contract-v2")
         self.assertIn("9 -> 3 -> 9", workflow)
         self.assertIn("search freeze is not final artifact freeze", workflow.lower())
         self.assertIn("post-generation agentic delivery audit", json.dumps(contract))
@@ -1487,6 +1488,8 @@ class TvgContractTests(unittest.TestCase):
         self.assertIn("user taste authority", contract["delivery_modes"]["shortlist"])
         self.assertIn("remains internal", contract["delivery_modes"]["internal-exploration"])
         self.assertIn("output evidence", contract["delivery_modes"]["final-master"])
+        self.assertIn("ready-for-direct-delivery", contract["delivery_audit_results"])
+        self.assertIn("ready-for-direct-delivery-with-warning", contract["delivery_audit_results"])
         self.assertIn("every active scene adapter", contract["profile_evidence"])
         self.assertIn("no delivery board", contract["blocked_run_policy"])
         self.assertIn("colossal-pressure", profile)
@@ -1497,7 +1500,7 @@ class TvgContractTests(unittest.TestCase):
         validator = TVG / "scripts" / "atlas" / "validate_trace.py"
         example = profile_dir / "examples" / "atlas-search-trace.example.json"
         result = subprocess.run(
-            ["python3", str(validator), str(example), "--json"],
+            ["python3", str(validator), str(example), "--check-files", "--json"],
             text=True,
             capture_output=True,
             check=False,
@@ -1508,6 +1511,19 @@ class TvgContractTests(unittest.TestCase):
         self.assertEqual(report["profile"], "cinematic-visual-direction")
         self.assertEqual(report["round_count"], 2)
         self.assertNotIn("PASS", result.stdout)
+        payload = json.loads(example.read_text(encoding="utf-8"))
+        self.assertEqual(payload["evidence_class"], "deterministic-structural-fixture")
+        self.assertEqual(
+            payload["run_evidence"]["model_path"],
+            "deterministic structural fixture (no model call)",
+        )
+        self.assertTrue(
+            any(
+                "no aesthetic or model-generation evidence" in warning
+                for warning in payload["evidence_warnings"]
+            )
+        )
+        self.assertNotIn("Images2 built-in", json.dumps(payload))
 
     def test_generic_atlas_trace_example_profile_and_adapter_hashes_match_packaged_sources(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
@@ -1544,6 +1560,14 @@ class TvgContractTests(unittest.TestCase):
         missing_adapter_hash = json.loads(json.dumps(example))
         missing_adapter_hash["profile_snapshot"]["adapters"][0].pop("sha256")
         cases.append((missing_adapter_hash, "profile_snapshot.adapters[0].sha256"))
+
+        fixture_claims_model = json.loads(json.dumps(example))
+        fixture_claims_model["run_evidence"]["model_path"] = "Images2 built-in"
+        cases.append((fixture_claims_model, "structural fixture must state that no model call occurred"))
+
+        fixture_without_disclaimer = json.loads(json.dumps(example))
+        fixture_without_disclaimer["evidence_warnings"] = []
+        cases.append((fixture_without_disclaimer, "structural fixture must disclaim aesthetic"))
 
         broken_lineage = json.loads(json.dumps(example))
         broken_lineage["rounds"][1]["candidates"][3]["parent_candidate_id"] = "R00-E02"
@@ -1736,7 +1760,7 @@ class TvgContractTests(unittest.TestCase):
             payload["profile_snapshot"]["path"] = "profile.md"
             payload["profile_snapshot"]["sha256"] = write_evidence("profile.md", profile_bytes)
             payload["profile_snapshot"]["adapters"] = []
-            write_evidence("artifacts/prompts.json", b"{}\n")
+            write_evidence(payload["run_evidence"]["prompt_manifest_path"], b"{}\n")
 
             for round_record in payload["rounds"]:
                 generation = round_record["generation"]

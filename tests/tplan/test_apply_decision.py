@@ -6,6 +6,7 @@ import unittest
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from threading import Barrier
+from threading import Event
 from unittest import mock
 
 
@@ -160,6 +161,99 @@ def write_decision(tmp, recommendation="switch"):
 
 
 class ApplyDecisionTests(unittest.TestCase):
+    def test_concurrent_feedback_append_waits_for_lifecycle_commit_without_loss(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
+            recovery_entered = Event()
+            release_recovery = Event()
+            paused = {"done": False}
+            original_recover = tplan_runtime._recover_pending_mission_transaction_unlocked
+
+            def pause_recovery(path):
+                if (path / ".mission-transaction.json").exists() and not paused["done"]:
+                    paused["done"] = True
+                    recovery_entered.set()
+                    self.assertTrue(release_recovery.wait(timeout=5))
+                return original_recover(path)
+
+            with mock.patch.object(
+                tplan_runtime,
+                "_recover_pending_mission_transaction_unlocked",
+                pause_recovery,
+            ):
+                with ThreadPoolExecutor(max_workers=2) as pool:
+                    decision_future = pool.submit(tplan_runtime.apply_decision, mission_dir, decision)
+                    self.assertTrue(recovery_entered.wait(timeout=5))
+                    feedback_future = pool.submit(
+                        tplan_runtime.append_event,
+                        mission_dir,
+                        {"event_type": "feedback", "summary": "Keep this event.", "task_id": "T1"},
+                    )
+                    self.assertFalse(feedback_future.done())
+                    release_recovery.set()
+                    self.assertEqual(decision_future.result(timeout=5), "applied_decision")
+                    self.assertEqual(feedback_future.result(timeout=5)["event_type"], "feedback")
+
+            events = tplan_runtime.read_events(mission_dir)
+            self.assertEqual(
+                [event["event_type"] for event in events],
+                ["decision_applied", "feedback"],
+            )
+
+    def test_lifecycle_journal_recovers_each_durable_boundary(self):
+        for target_name in ("execution_trace.jsonl", "evidence.jsonl"):
+            with self.subTest(target=target_name), tempfile.TemporaryDirectory() as tmp:
+                mission_dir = create_mission(tmp, human_in_loop=0)
+                decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
+                original_write_text = tplan_runtime.write_text_atomic
+                failed = {"done": False}
+
+                def fail_target(path, text, **kwargs):
+                    if (
+                        path.name == target_name
+                        and (mission_dir / ".mission-transaction.json").exists()
+                        and not failed["done"]
+                    ):
+                        failed["done"] = True
+                        raise OSError(f"simulated {target_name} interruption")
+                    return original_write_text(path, text, **kwargs)
+
+                with mock.patch.object(tplan_runtime, "write_text_atomic", fail_target):
+                    with self.assertRaisesRegex(OSError, "simulated"):
+                        tplan_runtime.apply_decision(mission_dir, decision)
+
+                self.assertTrue((mission_dir / ".mission-transaction.json").exists())
+                recovered = tplan_runtime.read_mission(mission_dir)
+                self.assertEqual(recovered["active_task_id"], "T2")
+                self.assertFalse((mission_dir / ".mission-transaction.json").exists())
+                self.assertEqual(
+                    sum(
+                        event.get("event_type") == "decision_applied"
+                        for event in tplan_runtime.read_events(mission_dir)
+                    ),
+                    1,
+                )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
+            original_unlink = Path.unlink
+            failed = {"done": False}
+
+            def fail_journal_unlink(path, *args, **kwargs):
+                if path.name == ".mission-transaction.json" and not failed["done"]:
+                    failed["done"] = True
+                    raise OSError("simulated journal deletion interruption")
+                return original_unlink(path, *args, **kwargs)
+
+            with mock.patch.object(Path, "unlink", fail_journal_unlink):
+                with self.assertRaisesRegex(OSError, "journal deletion"):
+                    tplan_runtime.apply_decision(mission_dir, decision)
+
+            self.assertTrue((mission_dir / ".mission-transaction.json").exists())
+            self.assertEqual(tplan_runtime.read_mission(mission_dir)["active_task_id"], "T2")
+            self.assertFalse((mission_dir / ".mission-transaction.json").exists())
     def test_concurrent_decision_loser_leaves_no_ghost_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp, human_in_loop=0)

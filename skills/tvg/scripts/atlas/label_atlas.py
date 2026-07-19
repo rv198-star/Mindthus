@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import re
 import sys
@@ -111,12 +112,19 @@ def _load_lineage(path: Path | None) -> dict[str, list[str]]:
     return lineage
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+def _source_snapshot(source: Path) -> tuple[Any, dict[str, Any]]:
+    Image, _, _, ImageOps = _pillow()
+    try:
+        source_bytes = source.read_bytes()
+        with Image.open(io.BytesIO(source_bytes)) as opened:
+            image = ImageOps.exif_transpose(opened).convert("RGBA")
+    except (OSError, ValueError) as exc:
+        raise AtlasLabelError(f"cannot read atlas: {exc}") from exc
+    return image, {
+        "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        "decoded_width": image.width,
+        "decoded_height": image.height,
+    }
 
 
 def label_atlas(
@@ -126,6 +134,7 @@ def label_atlas(
     id_prefix: str,
     font_size: int | None,
     lineage: dict[str, list[str]] | None = None,
+    _snapshot: tuple[Any, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if layout not in LAYOUTS:
         raise AtlasLabelError(f"unsupported layout {layout!r}")
@@ -138,12 +147,7 @@ def label_atlas(
     if not source.is_file():
         raise AtlasLabelError(f"input image not found: {source}")
 
-    Image, _, _, ImageOps = _pillow()
-    try:
-        with Image.open(source) as opened:
-            image = ImageOps.exif_transpose(opened).convert("RGBA")
-    except (OSError, ValueError) as exc:
-        raise AtlasLabelError(f"cannot read atlas: {exc}") from exc
+    image, _ = _snapshot or _source_snapshot(source)
 
     columns, rows = LAYOUTS[layout]
     lineage = lineage or {}
@@ -177,18 +181,6 @@ def label_atlas(
     return regions
 
 
-def source_identity(source: Path) -> dict[str, Any]:
-    Image, _, _, ImageOps = _pillow()
-    try:
-        digest = _sha256(source)
-        with Image.open(source) as opened:
-            decoded = ImageOps.exif_transpose(opened)
-            width, height = decoded.size
-    except (OSError, ValueError) as exc:
-        raise AtlasLabelError(f"cannot identify atlas source: {exc}") from exc
-    return {"sha256": digest, "decoded_width": width, "decoded_height": height}
-
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Label equal atlas regions and optional parent lineage without judging image quality."
@@ -207,7 +199,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        identity = source_identity(args.input)
+        snapshot = _source_snapshot(args.input)
+        identity = snapshot[1]
         regions = label_atlas(
             args.input,
             args.output,
@@ -215,9 +208,8 @@ def main(argv: list[str] | None = None) -> int:
             args.id_prefix,
             args.font_size,
             _load_lineage(args.lineage_json),
+            _snapshot=snapshot,
         )
-        if source_identity(args.input) != identity:
-            raise AtlasLabelError("input image changed while labels were being generated")
     except AtlasLabelError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

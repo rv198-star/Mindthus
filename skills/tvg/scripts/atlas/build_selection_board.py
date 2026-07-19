@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import sys
 from pathlib import Path
@@ -18,14 +19,6 @@ LAYOUTS = {"2x2": (2, 2), "3x3": (3, 3)}
 
 class SelectionBoardError(ValueError):
     pass
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _pillow() -> tuple[Any, Any, Any, Any]:
@@ -46,7 +39,7 @@ def _font(size: int) -> Any:
 
 def _load_regions(
     path: Path,
-    source: Path,
+    source_digest: str,
     decoded_width: int,
     decoded_height: int,
 ) -> dict[str, dict[str, Any]]:
@@ -59,11 +52,7 @@ def _load_regions(
     source_record = payload.get("source")
     if not isinstance(source_record, dict):
         raise SelectionBoardError("labels JSON must contain source identity")
-    try:
-        actual_digest = _sha256(source)
-    except OSError as exc:
-        raise SelectionBoardError(f"cannot read input image bytes: {exc}") from exc
-    if source_record.get("sha256") != actual_digest:
+    if source_record.get("sha256") != source_digest:
         raise SelectionBoardError("labels JSON source digest does not match input image")
     if source_record.get("decoded_width") != decoded_width or source_record.get(
         "decoded_height"
@@ -107,11 +96,17 @@ def build_board(source: Path, labels: Path, selected: list[str], output: Path) -
         raise SelectionBoardError(f"input image not found: {source}")
     Image, ImageDraw, _, ImageOps = _pillow()
     try:
-        with Image.open(source) as opened:
+        source_bytes = source.read_bytes()
+        with Image.open(io.BytesIO(source_bytes)) as opened:
             image = ImageOps.exif_transpose(opened).convert("RGB")
     except (OSError, ValueError) as exc:
         raise SelectionBoardError(f"cannot read input image: {exc}") from exc
-    regions = _load_regions(labels, source, image.width, image.height)
+    regions = _load_regions(
+        labels,
+        hashlib.sha256(source_bytes).hexdigest(),
+        image.width,
+        image.height,
+    )
     unknown = [candidate_id for candidate_id in selected if candidate_id not in regions]
     if unknown:
         raise SelectionBoardError(f"unknown selected IDs: {unknown}")

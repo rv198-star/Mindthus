@@ -116,6 +116,27 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(selected.returncode, 0, selected.stderr + selected.stdout)
             self.assertTrue((artifacts / "r01-selected.png").is_file())
+            packaged_example = (
+                plugin
+                / "skills"
+                / "tvg"
+                / "resources"
+                / "value-profiles"
+                / "cinematic-visual-direction"
+                / "examples"
+                / "atlas-search-trace.example.json"
+            )
+            trace_check = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "tvg" / "scripts" / "atlas" / "validate_trace.py"),
+                    str(packaged_example),
+                    "--check-files",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(trace_check.returncode, 0, trace_check.stderr + trace_check.stdout)
 
     def test_built_helpers_self_locate_runtime_without_pythonpath(self):
         script = REPO / "scripts" / "build-release-pack.py"
@@ -219,6 +240,21 @@ class PackagingDocsTests(unittest.TestCase):
                 capture_output=True,
             )
             self.assertEqual(explicit.returncode, 0, explicit.stderr)
+            foreign = tmp_dir / "foreign"
+            (foreign / "_runtime").mkdir(parents=True)
+            (foreign / "_runtime" / "__init__.py").write_text("# wrong runtime\n", encoding="utf-8")
+            shadowed_env = {
+                **env,
+                "PYTHONPATH": f"{foreign}{os.pathsep}{plugin_root.resolve()}",
+            }
+            shadowed = subprocess.run(
+                ["python3", str(plugin_root / "skills" / helper_paths[0]), "--help"],
+                cwd=tmp_dir,
+                env=shadowed_env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(shadowed.returncode, 0, shadowed.stderr)
 
     def assert_skill_frontmatter_is_parseable(self, path: Path) -> None:
         text = path.read_text(encoding="utf-8")
