@@ -34,6 +34,19 @@ terminal state.
 observational state records facts such as failures, blockers, completed evidence, and
 external input.
 
+## Actual Route And Cost Lifecycle
+
+Runtime state changes append lifecycle records to `execution_trace.jsonl`. Related task,
+active-node, and Mission-state changes share one logical `commit_id`. Cost observers
+append sanitized paired `span_started`/`span_completed` records separately; a platform
+that only reports after completion may append a standalone completion.
+
+The trace answers what ran and what it cost. It does not turn process activity into
+acceptance evidence. After completion or handoff, use
+`scripts/render_execution_cost_tree.py` to render `compact`, `standard`, or `audit`
+views. Legacy Missions without a trace render as `snapshot_only`; Missions whose trace
+began late render as `partial`.
+
 ## Decision State
 
 decision state records PM choices such as split, prune, downgrade, abandon, switch, and

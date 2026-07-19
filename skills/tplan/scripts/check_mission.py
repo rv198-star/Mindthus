@@ -13,7 +13,9 @@ from pathlib import Path
 
 from tplan_runtime import (
     TplanError,
+    read_execution_trace,
     read_mission,
+    validate_execution_trace,
     validate_mission,
     validate_mission_directory_identity,
 )
@@ -32,6 +34,7 @@ def main() -> int:
         mission = read_mission(mission_dir)
         errors = validate_mission(mission)
         errors.extend(validate_mission_directory_identity(mission, mission_dir))
+        errors.extend(validate_execution_trace(mission, read_execution_trace(mission_dir)))
     except (OSError, json.JSONDecodeError, TplanError) as exc:
         errors = [str(exc)]
 

@@ -28,6 +28,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "resources/policy.md",
             "resources/hooks.md",
             "resources/user-output.md",
+            "resources/execution-trace.md",
             "resources/subagents.md",
             "templates/mission.json",
             "templates/mission.md",
@@ -37,6 +38,10 @@ class TplanSkillContractTests(unittest.TestCase):
             "scripts/checkpoint.py",
             "scripts/mission_pulse.py",
             "scripts/render_user_update.py",
+            "scripts/record_execution_span.py",
+            "scripts/observe_model_call.py",
+            "scripts/run_traced_command.py",
+            "scripts/render_execution_cost_tree.py",
         ]
         missing = [path for path in required if not (SKILL / path).exists()]
         self.assertEqual(missing, [])

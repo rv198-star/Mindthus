@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="4976.0" viewBox="0 0 1180 4976.0" role="img" aria-labelledby="tplan-title tplan-desc" data-layout="vertical-execution-timeline" data-view="standard" data-schema-version="tplan.execution_cost_tree.v0.5">
+<title id="tplan-title">周末补货与仓配可执行性决策 · TPlan 纵向实际执行时间轴</title>
+<desc id="tplan-desc">纵向按首次观测时间排列真实任务节点；左侧刻度显示相对追踪起点的时间，卡片底部中性时间条按统一观测窗口等比例显示节点起止范围，弱配色折线保留真实父子关系；缩进、6/4/2px 主干与分支结构线、短层级标记、类型牌及标题字重共同区分 Task、SubTask 与 Step；Task 主干与分支全线不透明以保持同色；父子线共享接头由父级等效色不透明覆盖，避免子级颜色透出混色；状态颜色集中在状态标签，异常节点才使用状态底色；中性耗时排名标签不表示失败。</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}
+.report-title{font-size:22px;font-weight:700;fill:#ffffff}
+.mission-title{font-size:18px;font-weight:650;fill:#dbeafe}
+.mission-meta{font-size:14px;fill:#dbeafe}
+.legend{font-size:13px;fill:#475569}
+.time-label{font-size:12px;font-variant-numeric:tabular-nums;fill:#475569}
+.node-title-task{font-size:16px;font-weight:700;fill:#0f172a}
+.node-title-subtask{font-size:15px;font-weight:650;fill:#0f172a}
+.node-title-step{font-size:14px;font-weight:600;fill:#0f172a}
+.kind-label{font-size:11px;font-weight:750;letter-spacing:.35px}
+.node-meta{font-size:12.5px;fill:#475569}
+.node-metric{font-size:13px;fill:#1e293b}
+.node-result{font-size:12.5px;fill:#334155}
+.status-label{font-size:12px;font-weight:650}
+.duration-hotspot-label{font-size:12px;font-weight:650;fill:#475569}
+.tree-edge{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.time-guide{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:3 5}
+.axis{stroke:#64748b;stroke-width:2}
+.range-track{fill:#e8edf3}
+</style>
+<rect width="1180" height="4976.0" fill="#f8fafc"/>
+<rect x="32" y="24" width="1116" height="192" rx="16" fill="#172554" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="58" y="58" class="report-title">TPlan 纵向实际执行时间轴</text>
+<text x="58" y="88" class="mission-title">周末补货与仓配可执行性决策</text>
+<text x="58" y="116" class="mission-meta">Mission · 成功 · 实际历时 4m59s</text>
+<text x="58" y="140" class="mission-meta">LLM调用累计 1m20s（调用端实测） · 脚本累计 2m36s（宿主实测）</text>
+<text x="58" y="164" class="mission-meta">工具累计 35s（宿主实测） · 等待累计 25s（宿主实测） · 未被精确记录 2.9s</text>
+<text x="58" y="188" class="mission-meta">Token ≈入 2.8k / 出 540 · 真实节点 24/24 · 覆盖 exact · standard</text>
+<text x="32" y="246" class="legend">纵向=首次执行；左侧是实际相对时间；蓝灰条=起止/持续；层级线=Task 主干 6 / SubTask 分支 4 / Step 末梢 2px；中性标签=Task 耗时排名。</text>
+<line x1="112" y1="357.0" x2="112" y2="4817.0" class="axis"/>
+<line x1="120" y1="357.0" x2="260" y2="357.0" class="time-guide"/>
+<circle cx="112" cy="357.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="361.0" class="time-label" text-anchor="end">+00:00.033</text>
+<line x1="120" y1="553.0" x2="302" y2="553.0" class="time-guide"/>
+<circle cx="112" cy="553.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="557.0" class="time-label" text-anchor="end">+00:00.066</text>
+<line x1="120" y1="743.0" x2="344" y2="743.0" class="time-guide"/>
+<circle cx="112" cy="743.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="747.0" class="time-label" text-anchor="end">+00:00.098</text>
+<line x1="120" y1="933.0" x2="344" y2="933.0" class="time-guide"/>
+<circle cx="112" cy="933.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="937.0" class="time-label" text-anchor="end">+00:15.301</text>
+<line x1="120" y1="1123.0" x2="344" y2="1123.0" class="time-guide"/>
+<circle cx="112" cy="1123.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="1127.0" class="time-label" text-anchor="end">+00:30.482</text>
+<line x1="120" y1="1331.0" x2="260" y2="1331.0" class="time-guide"/>
+<circle cx="112" cy="1331.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="1335.0" class="time-label" text-anchor="end">+00:50.766</text>
+<line x1="120" y1="1527.0" x2="302" y2="1527.0" class="time-guide"/>
+<circle cx="112" cy="1527.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="1531.0" class="time-label" text-anchor="end">+00:50.798</text>
+<line x1="120" y1="1717.0" x2="344" y2="1717.0" class="time-guide"/>
+<circle cx="112" cy="1717.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="1721.0" class="time-label" text-anchor="end">+00:50.829</text>
+<line x1="120" y1="1907.0" x2="344" y2="1907.0" class="time-guide"/>
+<circle cx="112" cy="1907.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="1911.0" class="time-label" text-anchor="end">+01:25.941</text>
+<line x1="120" y1="2103.0" x2="302" y2="2103.0" class="time-guide"/>
+<circle cx="112" cy="2103.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="2107.0" class="time-label" text-anchor="end">+01:51.199</text>
+<line x1="120" y1="2293.0" x2="344" y2="2293.0" class="time-guide"/>
+<circle cx="112" cy="2293.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="2297.0" class="time-label" text-anchor="end">+01:51.246</text>
+<line x1="120" y1="2483.0" x2="344" y2="2483.0" class="time-guide"/>
+<circle cx="112" cy="2483.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="2487.0" class="time-label" text-anchor="end">+02:16.378</text>
+<line x1="120" y1="2691.0" x2="260" y2="2691.0" class="time-guide"/>
+<circle cx="112" cy="2691.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="2695.0" class="time-label" text-anchor="end">+02:36.654</text>
+<line x1="120" y1="2887.0" x2="302" y2="2887.0" class="time-guide"/>
+<circle cx="112" cy="2887.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="2891.0" class="time-label" text-anchor="end">+02:36.686</text>
+<line x1="120" y1="3077.0" x2="344" y2="3077.0" class="time-guide"/>
+<circle cx="112" cy="3077.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="3081.0" class="time-label" text-anchor="end">+02:36.716</text>
+<line x1="120" y1="3267.0" x2="344" y2="3267.0" class="time-guide"/>
+<circle cx="112" cy="3267.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="3271.0" class="time-label" text-anchor="end">+02:56.921</text>
+<line x1="120" y1="3463.0" x2="302" y2="3463.0" class="time-guide"/>
+<circle cx="112" cy="3463.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="3467.0" class="time-label" text-anchor="end">+03:22.175</text>
+<line x1="120" y1="3653.0" x2="344" y2="3653.0" class="time-guide"/>
+<circle cx="112" cy="3653.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="3657.0" class="time-label" text-anchor="end">+03:22.220</text>
+<line x1="120" y1="3843.0" x2="344" y2="3843.0" class="time-guide"/>
+<circle cx="112" cy="3843.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="3847.0" class="time-label" text-anchor="end">+03:47.611</text>
+<line x1="120" y1="4051.0" x2="260" y2="4051.0" class="time-guide"/>
+<circle cx="112" cy="4051.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="4055.0" class="time-label" text-anchor="end">+04:02.950</text>
+<line x1="120" y1="4247.0" x2="302" y2="4247.0" class="time-guide"/>
+<circle cx="112" cy="4247.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="4251.0" class="time-label" text-anchor="end">+04:02.985</text>
+<line x1="120" y1="4437.0" x2="344" y2="4437.0" class="time-guide"/>
+<circle cx="112" cy="4437.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="4441.0" class="time-label" text-anchor="end">+04:03.020</text>
+<line x1="120" y1="4627.0" x2="344" y2="4627.0" class="time-guide"/>
+<circle cx="112" cy="4627.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="4631.0" class="time-label" text-anchor="end">+04:23.149</text>
+<line x1="120" y1="4817.0" x2="344" y2="4817.0" class="time-guide"/>
+<circle cx="112" cy="4817.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="4821.0" class="time-label" text-anchor="end">+04:43.369</text>
+<path d="M 312 553.0 H 294 V 743.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S1.1" data-tree-to="P1.1.1" data-child-kind="step"/>
+<path d="M 312 553.0 H 294 V 933.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S1.1" data-tree-to="P1.1.2" data-child-kind="step"/>
+<path d="M 312 553.0 H 294 V 1123.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S1.1" data-tree-to="P1.1.3" data-child-kind="step"/>
+<path d="M 312 1527.0 H 294 V 1717.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S2.1" data-tree-to="P2.1.1" data-child-kind="step"/>
+<path d="M 312 1527.0 H 294 V 1907.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S2.1" data-tree-to="P2.1.2" data-child-kind="step"/>
+<path d="M 312 2103.0 H 294 V 2293.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S2.2" data-tree-to="P2.2.1" data-child-kind="step"/>
+<path d="M 312 2103.0 H 294 V 2483.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S2.2" data-tree-to="P2.2.2" data-child-kind="step"/>
+<path d="M 312 2887.0 H 294 V 3077.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S3.1" data-tree-to="P3.1.1" data-child-kind="step"/>
+<path d="M 312 2887.0 H 294 V 3267.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S3.1" data-tree-to="P3.1.2" data-child-kind="step"/>
+<path d="M 312 3463.0 H 294 V 3653.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S3.2" data-tree-to="P3.2.1" data-child-kind="step"/>
+<path d="M 312 3463.0 H 294 V 3843.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S3.2" data-tree-to="P3.2.2" data-child-kind="step"/>
+<path d="M 312 4247.0 H 294 V 4437.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S4.1" data-tree-to="P4.1.1" data-child-kind="step"/>
+<path d="M 312 4247.0 H 294 V 4627.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S4.1" data-tree-to="P4.1.2" data-child-kind="step"/>
+<path d="M 312 4247.0 H 294 V 4817.0 H 354" class="tree-edge" stroke="#60a5fa" stroke-width="2.0" opacity="0.84" data-tree-from="S4.1" data-tree-to="P4.1.3" data-child-kind="step"/>
+<path d="M 270 357.0 H 252 V 553.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T1" data-tree-to="S1.1" data-child-kind="subtask"/>
+<path d="M 270 1331.0 H 252 V 1527.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T2" data-tree-to="S2.1" data-child-kind="subtask"/>
+<path d="M 270 1331.0 H 252 V 2103.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T2" data-tree-to="S2.2" data-child-kind="subtask"/>
+<path d="M 270 2691.0 H 252 V 2887.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T3" data-tree-to="S3.1" data-child-kind="subtask"/>
+<path d="M 270 2691.0 H 252 V 3463.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T3" data-tree-to="S3.2" data-child-kind="subtask"/>
+<path d="M 270 4051.0 H 252 V 4247.0 H 312" class="tree-edge" stroke="#8b5cf6" stroke-width="4.0" opacity="0.72" data-tree-from="T4" data-tree-to="S4.1" data-child-kind="subtask"/>
+<path d="M 242 216 V 357.0 H 270" class="tree-edge" stroke="#64748b" stroke-width="6.0" opacity="1.0" data-tree-from="mission" data-tree-to="T1" data-child-kind="task"/>
+<path d="M 242 216 V 1331.0 H 270" class="tree-edge" stroke="#64748b" stroke-width="6.0" opacity="1.0" data-tree-from="mission" data-tree-to="T2" data-child-kind="task"/>
+<path d="M 242 216 V 2691.0 H 270" class="tree-edge" stroke="#64748b" stroke-width="6.0" opacity="1.0" data-tree-from="mission" data-tree-to="T3" data-child-kind="task"/>
+<path d="M 242 216 V 4051.0 H 270" class="tree-edge" stroke="#64748b" stroke-width="6.0" opacity="1.0" data-tree-from="mission" data-tree-to="T4" data-child-kind="task"/>
+<line x1="294" y1="553.0" x2="312" y2="553.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S1.1" data-parent-kind="subtask"/>
+<line x1="294" y1="1527.0" x2="312" y2="1527.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S2.1" data-parent-kind="subtask"/>
+<line x1="294" y1="2103.0" x2="312" y2="2103.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S2.2" data-parent-kind="subtask"/>
+<line x1="294" y1="2887.0" x2="312" y2="2887.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S3.1" data-parent-kind="subtask"/>
+<line x1="294" y1="3463.0" x2="312" y2="3463.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S3.2" data-parent-kind="subtask"/>
+<line x1="294" y1="4247.0" x2="312" y2="4247.0" class="tree-edge junction-cap" stroke="#aa88f8" stroke-width="4.0" opacity="1" data-junction-parent="S4.1" data-parent-kind="subtask"/>
+<line x1="252" y1="357.0" x2="270" y2="357.0" class="tree-edge junction-cap" stroke="#64748b" stroke-width="6.0" opacity="1" data-junction-parent="T1" data-parent-kind="task"/>
+<line x1="252" y1="1331.0" x2="270" y2="1331.0" class="tree-edge junction-cap" stroke="#64748b" stroke-width="6.0" opacity="1" data-junction-parent="T2" data-parent-kind="task"/>
+<line x1="252" y1="2691.0" x2="270" y2="2691.0" class="tree-edge junction-cap" stroke="#64748b" stroke-width="6.0" opacity="1" data-junction-parent="T3" data-parent-kind="task"/>
+<line x1="252" y1="4051.0" x2="270" y2="4051.0" class="tree-edge junction-cap" stroke="#64748b" stroke-width="6.0" opacity="1" data-junction-parent="T4" data-parent-kind="task"/>
+<g id="node-T1" class="task-card" data-task-id="T1" data-depth="0" data-start-offset-ms="33" data-finish-offset-ms="50703">
+<rect x="270" y="268.0" width="876" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="273" y="281.0" width="6" height="28" rx="3.0" fill="#64748b" class="hierarchy-accent" data-node-kind="task"/>
+<rect x="288" y="281.0" width="72" height="24" rx="6" fill="#475569" stroke="#475569" stroke-width="1.25"/>
+<text x="324" y="298.0" class="kind-label" text-anchor="middle" fill="#ffffff">TASK</text>
+<text x="374" y="297.0" class="node-title-task">建立库存与销售基线 · T1</text>
+<rect x="1052" y="281.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="298.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="288" y="322.0" class="node-meta">#1 · 子树汇总</text>
+<text x="288" y="347.0" class="node-metric">时间 +00:00.033 → +00:50.703 · 实际历时 51s · 未被精确记录 492ms</text>
+<text x="288" y="372.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 50s（宿主实测）</text>
+<text x="288" y="397.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="288" y="419.0" class="node-result">结果：经营数据基线通过验收</text>
+<rect x="288" y="432.0" width="840" height="6" rx="3" class="range-track"/>
+<rect x="288.09" y="432.0" width="142.49" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="T1"/>
+</g>
+<g id="node-S1.1" class="task-card" data-task-id="S1.1" data-depth="1" data-start-offset-ms="66" data-finish-offset-ms="50671">
+<rect x="312" y="464.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="477.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="477.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="494.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="493.0" class="node-title-subtask">准备 SKU 经营快照 · S1.1</text>
+<rect x="1052" y="477.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="494.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="518.0" class="node-meta">#2 · 子树汇总</text>
+<text x="330" y="543.0" class="node-metric">时间 +00:00.066 → +00:50.671 · 实际历时 51s · 未被精确记录 427ms</text>
+<text x="330" y="568.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 50s（宿主实测）</text>
+<text x="330" y="593.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="330" y="615.0" class="node-result">结果：SKU 快照、质量检查和覆盖基线均已完成</text>
+<rect x="330" y="628.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="330.18" y="628.0" width="135.19" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S1.1"/>
+</g>
+<g id="node-P1.1.1" class="task-card" data-task-id="P1.1.1" data-depth="2" data-start-offset-ms="98" data-finish-offset-ms="15270">
+<rect x="354" y="654.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="667.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="667.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="684.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="683.0" class="node-title-step">生成 SKU 销售库存快照 · P1.1.1</text>
+<rect x="1052" y="667.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="684.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="708.0" class="node-meta">#3 · 直接成本</text>
+<text x="372" y="733.0" class="node-metric">时间 +00:00.098 → +00:15.270 · 实际历时 15s · 未被精确记录 109ms</text>
+<text x="372" y="758.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 15s（宿主实测）</text>
+<text x="372" y="783.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="805.0" class="node-result">结果：六个 SKU 的销售库存快照已生成</text>
+<rect x="372" y="818.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="372.25" y="818.0" width="38.40" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P1.1.1"/>
+</g>
+<g id="node-P1.1.2" class="task-card" data-task-id="P1.1.2" data-depth="2" data-start-offset-ms="15301" data-finish-offset-ms="30446">
+<rect x="354" y="844.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="857.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="857.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="874.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="873.0" class="node-title-step">核对字段与库存勾稽 · P1.1.2</text>
+<rect x="1052" y="857.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="874.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="898.0" class="node-meta">#4 · 直接成本</text>
+<text x="372" y="923.0" class="node-metric">时间 +00:15.301 → +00:30.446 · 实际历时 15s · 未被精确记录 90ms</text>
+<text x="372" y="948.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 15s（宿主实测）</text>
+<text x="372" y="973.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="995.0" class="node-result">结果：六行快照通过字段和非负值检查</text>
+<rect x="372" y="1008.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="410.73" y="1008.0" width="38.33" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P1.1.2"/>
+</g>
+<g id="node-P1.1.3" class="task-card" data-task-id="P1.1.3" data-depth="2" data-start-offset-ms="30482" data-finish-offset-ms="50639">
+<rect x="354" y="1034.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="1047.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="1047.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="1064.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="1063.0" class="node-title-step">计算库存覆盖与缺货窗口 · P1.1.3</text>
+<rect x="1052" y="1047.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="1064.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="1088.0" class="node-meta">#5 · 直接成本</text>
+<text x="372" y="1113.0" class="node-metric">时间 +00:30.482 → +00:50.639 · 实际历时 20s · 未被精确记录 97ms</text>
+<text x="372" y="1138.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 20s（宿主实测）</text>
+<text x="372" y="1163.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="1185.0" class="node-result">结果：库存覆盖天数和风险窗口已形成</text>
+<rect x="372" y="1198.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="449.15" y="1198.0" width="51.02" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P1.1.3"/>
+</g>
+<g id="node-T2" class="task-card" data-task-id="T2" data-depth="0" data-start-offset-ms="50766" data-finish-offset-ms="156591" data-duration-hotspot-rank="1">
+<rect x="270" y="1242.0" width="876" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="273" y="1255.0" width="6" height="28" rx="3.0" fill="#64748b" class="hierarchy-accent" data-node-kind="task"/>
+<rect x="288" y="1255.0" width="72" height="24" rx="6" fill="#475569" stroke="#475569" stroke-width="1.25"/>
+<text x="324" y="1272.0" class="kind-label" text-anchor="middle" fill="#ffffff">TASK</text>
+<text x="374" y="1271.0" class="node-title-task">形成补货候选与商业选择 · T2</text>
+<rect x="1052" y="1255.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="1272.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<rect x="922" y="1255.0" width="118" height="24" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="981" y="1272.0" class="duration-hotspot-label" text-anchor="middle">耗时排名 #1</text>
+<text x="288" y="1296.0" class="node-meta">#6 · 子树汇总</text>
+<text x="288" y="1321.0" class="node-metric">时间 +00:50.766 → +02:36.591 · 实际历时 1m46s · 未被精确记录 646ms</text>
+<text x="288" y="1346.0" class="node-metric">LLM调用累计 1m00s（调用端实测） · 脚本累计 45s（宿主实测）</text>
+<text x="288" y="1371.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 1.7k / 出 320</text>
+<text x="288" y="1393.0" class="node-result">结果：补货候选与商业选择通过验收</text>
+<rect x="288" y="1406.0" width="840" height="6" rx="3" class="range-track"/>
+<rect x="430.76" y="1406.0" width="297.59" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="T2"/>
+</g>
+<g id="node-S2.1" class="task-card" data-task-id="S2.1" data-depth="1" data-start-offset-ms="50798" data-finish-offset-ms="111160">
+<rect x="312" y="1438.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="1451.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="1451.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="1468.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="1467.0" class="node-title-subtask">评估 SKU 断货风险 · S2.1</text>
+<rect x="1052" y="1451.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="1468.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="1492.0" class="node-meta">#7 · 子树汇总</text>
+<text x="330" y="1517.0" class="node-metric">时间 +00:50.798 → +01:51.160 · 实际历时 1m00s · 未被精确记录 267ms</text>
+<text x="330" y="1542.0" class="node-metric">LLM调用累计 35s（调用端实测） · 脚本累计 25s（宿主实测）</text>
+<text x="330" y="1567.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 980 / 出 180</text>
+<text x="330" y="1589.0" class="node-result">结果：断货风险和候选数量已形成</text>
+<rect x="330" y="1602.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="465.71" y="1602.0" width="161.26" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S2.1"/>
+</g>
+<g id="node-P2.1.1" class="task-card" data-task-id="P2.1.1" data-depth="2" data-start-offset-ms="50829" data-finish-offset-ms="85905">
+<rect x="354" y="1628.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="1641.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="1641.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="1658.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="1657.0" class="node-title-step">解释高风险 SKU 与经营影响 · P2.1.1</text>
+<rect x="1052" y="1641.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="1658.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="1682.0" class="node-meta">#8 · 直接成本</text>
+<text x="372" y="1707.0" class="node-metric">时间 +00:50.829 → +01:25.905 · 实际历时 35s · 未被精确记录 51ms</text>
+<text x="372" y="1732.0" class="node-metric">LLM调用累计 35s（调用端实测） · 脚本累计 未采集</text>
+<text x="372" y="1757.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 980 / 出 180</text>
+<text x="372" y="1779.0" class="node-result">结果：高风险 SKU 与经营影响解释已形成</text>
+<rect x="372" y="1792.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="500.64" y="1792.0" width="88.77" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P2.1.1"/>
+</g>
+<g id="node-P2.1.2" class="task-card" data-task-id="P2.1.2" data-depth="2" data-start-offset-ms="85941" data-finish-offset-ms="111123">
+<rect x="354" y="1818.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="1831.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="1831.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="1848.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="1847.0" class="node-title-step">计算首轮候选补货量 · P2.1.2</text>
+<rect x="1052" y="1831.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="1848.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="1872.0" class="node-meta">#9 · 直接成本</text>
+<text x="372" y="1897.0" class="node-metric">时间 +01:25.941 → +01:51.123 · 实际历时 25s · 未被精确记录 112ms</text>
+<text x="372" y="1922.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 25s（宿主实测）</text>
+<text x="372" y="1947.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="1969.0" class="node-result">结果：首轮候选补货量已生成</text>
+<rect x="372" y="1982.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="589.51" y="1982.0" width="63.73" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P2.1.2"/>
+</g>
+<g id="node-S2.2" class="task-card" data-task-id="S2.2" data-depth="1" data-start-offset-ms="111199" data-finish-offset-ms="156560">
+<rect x="312" y="2014.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="2027.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="2027.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="2044.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="2043.0" class="node-title-subtask">选择资金约束内方案 · S2.2</text>
+<rect x="1052" y="2027.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="2044.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="2068.0" class="node-meta">#10 · 子树汇总</text>
+<text x="330" y="2093.0" class="node-metric">时间 +01:51.199 → +02:36.560 · 实际历时 45s · 未被精确记录 277ms</text>
+<text x="330" y="2118.0" class="node-metric">LLM调用累计 25s（调用端实测） · 脚本累计 20s（宿主实测）</text>
+<text x="330" y="2143.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 760 / 出 140</text>
+<text x="330" y="2165.0" class="node-result">结果：资金约束内的补货方案已选择</text>
+<rect x="330" y="2178.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="627.07" y="2178.0" width="121.18" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S2.2"/>
+</g>
+<g id="node-P2.2.1" class="task-card" data-task-id="P2.2.1" data-depth="2" data-start-offset-ms="111246" data-finish-offset-ms="136345">
+<rect x="354" y="2204.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="2217.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="2217.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="2234.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="2233.0" class="node-title-step">比较保守、平衡与进取方案 · P2.2.1</text>
+<rect x="1052" y="2217.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="2234.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="2258.0" class="node-meta">#11 · 直接成本</text>
+<text x="372" y="2283.0" class="node-metric">时间 +01:51.246 → +02:16.345 · 实际历时 25s · 未被精确记录 73ms</text>
+<text x="372" y="2308.0" class="node-metric">LLM调用累计 25s（调用端实测） · 脚本累计 未采集</text>
+<text x="372" y="2333.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 760 / 出 140</text>
+<text x="372" y="2355.0" class="node-result">结果：保守、平衡和进取方案已完成比较</text>
+<rect x="372" y="2368.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="653.56" y="2368.0" width="63.52" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P2.2.1"/>
+</g>
+<g id="node-P2.2.2" class="task-card" data-task-id="P2.2.2" data-depth="2" data-start-offset-ms="136378" data-finish-offset-ms="156527">
+<rect x="354" y="2394.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="2407.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="2407.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="2424.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="2423.0" class="node-title-step">校验采购预算与库存上限 · P2.2.2</text>
+<rect x="1052" y="2407.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="2424.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="2448.0" class="node-meta">#12 · 直接成本</text>
+<text x="372" y="2473.0" class="node-metric">时间 +02:16.378 → +02:36.527 · 实际历时 20s · 未被精确记录 91ms</text>
+<text x="372" y="2498.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 20s（宿主实测）</text>
+<text x="372" y="2523.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="2545.0" class="node-result">结果：平衡方案通过预算与仓容约束</text>
+<rect x="372" y="2558.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="717.16" y="2558.0" width="51.00" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P2.2.2"/>
+</g>
+<g id="node-T3" class="task-card" data-task-id="T3" data-depth="0" data-start-offset-ms="156654" data-finish-offset-ms="242877">
+<rect x="270" y="2602.0" width="876" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="273" y="2615.0" width="6" height="28" rx="3.0" fill="#64748b" class="hierarchy-accent" data-node-kind="task"/>
+<rect x="288" y="2615.0" width="72" height="24" rx="6" fill="#475569" stroke="#475569" stroke-width="1.25"/>
+<text x="324" y="2632.0" class="kind-label" text-anchor="middle" fill="#ffffff">TASK</text>
+<text x="374" y="2631.0" class="node-title-task">确认供应商与仓配可执行性 · T3</text>
+<rect x="1052" y="2615.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="2632.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="288" y="2656.0" class="node-meta">#13 · 子树汇总</text>
+<text x="288" y="2681.0" class="node-metric">时间 +02:36.654 → +04:02.877 · 实际历时 1m26s · 未被精确记录 938ms</text>
+<text x="288" y="2706.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 25s（宿主实测）</text>
+<text x="288" y="2731.0" class="node-metric">工具累计 35s（宿主实测） · 等待累计 25s（宿主实测） · Token 未采集</text>
+<text x="288" y="2753.0" class="node-result">结果：供应商与仓配可执行性通过验收</text>
+<rect x="288" y="2766.0" width="840" height="6" rx="3" class="range-track"/>
+<rect x="728.53" y="2766.0" width="242.47" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="T3"/>
+</g>
+<g id="node-S3.1" class="task-card" data-task-id="S3.1" data-depth="1" data-start-offset-ms="156686" data-finish-offset-ms="202118">
+<rect x="312" y="2798.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="2811.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="2811.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="2828.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="2827.0" class="node-title-subtask">获取供应商承诺 · S3.1</text>
+<rect x="1052" y="2811.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="2828.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="2852.0" class="node-meta">#14 · 子树汇总</text>
+<text x="330" y="2877.0" class="node-metric">时间 +02:36.686 → +03:22.118 · 实际历时 45s · 未被精确记录 353ms</text>
+<text x="330" y="2902.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 未采集</text>
+<text x="330" y="2927.0" class="node-metric">工具累计 20s（宿主实测） · 等待累计 25s（宿主实测） · Token 未采集</text>
+<text x="330" y="2949.0" class="node-result">结果：报价、交期和库存锁定均已确认</text>
+<rect x="330" y="2962.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="748.59" y="2962.0" width="121.37" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S3.1"/>
+</g>
+<g id="node-P3.1.1" class="task-card" data-task-id="P3.1.1" data-depth="2" data-start-offset-ms="156716" data-finish-offset-ms="176889">
+<rect x="354" y="2988.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="3001.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="3001.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="3018.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="3017.0" class="node-title-step">拉取供应商报价与交期 · P3.1.1</text>
+<rect x="1052" y="3001.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3018.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="3042.0" class="node-meta">#15 · 直接成本</text>
+<text x="372" y="3067.0" class="node-metric">时间 +02:36.716 → +02:56.889 · 实际历时 20s · 未被精确记录 106ms</text>
+<text x="372" y="3092.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 未采集</text>
+<text x="372" y="3117.0" class="node-metric">工具累计 20s（宿主实测） · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="3139.0" class="node-result">结果：供应商报价与交期已返回</text>
+<rect x="372" y="3152.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="768.64" y="3152.0" width="51.06" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P3.1.1"/>
+</g>
+<g id="node-P3.1.2" class="task-card" data-task-id="P3.1.2" data-depth="2" data-start-offset-ms="176921" data-finish-offset-ms="202032">
+<rect x="354" y="3178.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="3191.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="3191.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="3208.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="3207.0" class="node-title-step">等待供应商锁定库存 · P3.1.2</text>
+<rect x="1052" y="3191.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3208.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="3232.0" class="node-meta">#16 · 直接成本</text>
+<text x="372" y="3257.0" class="node-metric">时间 +02:56.921 → +03:22.032 · 实际历时 25s · 未被精确记录 99ms</text>
+<text x="372" y="3282.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 未采集</text>
+<text x="372" y="3307.0" class="node-metric">工具累计 未采集 · 等待累计 25s（宿主实测） · Token 未采集</text>
+<text x="372" y="3329.0" class="node-result">结果：供应商已锁定关键 SKU 库存</text>
+<rect x="372" y="3342.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="819.77" y="3342.0" width="63.55" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P3.1.2"/>
+</g>
+<g id="node-S3.2" class="task-card" data-task-id="S3.2" data-depth="1" data-start-offset-ms="202175" data-finish-offset-ms="242842">
+<rect x="312" y="3374.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="3387.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="3387.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="3404.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="3403.0" class="node-title-subtask">校验供应条款并预约仓容 · S3.2</text>
+<rect x="1052" y="3387.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3404.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="3428.0" class="node-meta">#17 · 子树汇总</text>
+<text x="330" y="3453.0" class="node-metric">时间 +03:22.175 → +04:02.842 · 实际历时 41s · 未被精确记录 461ms</text>
+<text x="330" y="3478.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 25s（宿主实测）</text>
+<text x="330" y="3503.0" class="node-metric">工具累计 15s（宿主实测） · 等待累计 未采集 · Token 未采集</text>
+<text x="330" y="3525.0" class="node-result">结果：供应条款重试通过且仓容预约完成</text>
+<rect x="330" y="3538.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="870.12" y="3538.0" width="108.64" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S3.2"/>
+</g>
+<g id="node-P3.2.1" class="task-card" data-task-id="P3.2.1" data-depth="2" data-start-offset-ms="202220" data-finish-offset-ms="227577">
+<rect x="354" y="3564.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="3577.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="3577.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="3594.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="3593.0" class="node-title-step">校验供应商交期条款并重试 · P3.2.1</text>
+<rect x="1052" y="3577.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3594.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="3618.0" class="node-meta">#18 · 直接成本 · 执行次数 2 · 错误 1</text>
+<text x="372" y="3643.0" class="node-metric">时间 +03:22.220 → +03:47.577 · 实际历时 25s · 未被精确记录 224ms</text>
+<text x="372" y="3668.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 25s（宿主实测）</text>
+<text x="372" y="3693.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="3715.0" class="node-result">结果：第一次缺少分批承诺，修正响应后重试通过</text>
+<rect x="372" y="3728.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="883.80" y="3728.0" width="64.18" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P3.2.1"/>
+</g>
+<g id="node-P3.2.2" class="task-card" data-task-id="P3.2.2" data-depth="2" data-start-offset-ms="227611" data-finish-offset-ms="242804">
+<rect x="354" y="3754.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="3767.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="3767.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="3784.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="3783.0" class="node-title-step">预约到货仓容与卸货时段 · P3.2.2</text>
+<rect x="1052" y="3767.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3784.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="3808.0" class="node-meta">#19 · 直接成本</text>
+<text x="372" y="3833.0" class="node-metric">时间 +03:47.611 → +04:02.804 · 实际历时 15s · 未被精确记录 120ms</text>
+<text x="372" y="3858.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 未采集</text>
+<text x="372" y="3883.0" class="node-metric">工具累计 15s（宿主实测） · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="3905.0" class="node-result">结果：仓容和卸货时段预约成功</text>
+<rect x="372" y="3918.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="948.07" y="3918.0" width="38.45" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P3.2.2"/>
+</g>
+<g id="node-T4" class="task-card" data-task-id="T4" data-depth="0" data-start-offset-ms="242950" data-finish-offset-ms="298634">
+<rect x="270" y="3962.0" width="876" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="273" y="3975.0" width="6" height="28" rx="3.0" fill="#64748b" class="hierarchy-accent" data-node-kind="task"/>
+<rect x="288" y="3975.0" width="72" height="24" rx="6" fill="#475569" stroke="#475569" stroke-width="1.25"/>
+<text x="324" y="3992.0" class="kind-label" text-anchor="middle" fill="#ffffff">TASK</text>
+<text x="374" y="3991.0" class="node-title-task">交付补货决策与验收包 · T4</text>
+<rect x="1052" y="3975.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="3992.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="288" y="4016.0" class="node-meta">#20 · 子树汇总</text>
+<text x="288" y="4041.0" class="node-metric">时间 +04:02.950 → +04:58.634 · 实际历时 56s · 未被精确记录 524ms</text>
+<text x="288" y="4066.0" class="node-metric">LLM调用累计 20s（调用端实测） · 脚本累计 35s（宿主实测）</text>
+<text x="288" y="4091.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 1.1k / 出 220</text>
+<text x="288" y="4113.0" class="node-result">结果：补货决策与验收包交付完成</text>
+<rect x="288" y="4126.0" width="840" height="6" rx="3" class="range-track"/>
+<rect x="971.21" y="4126.0" width="156.59" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="T4"/>
+</g>
+<g id="node-S4.1" class="task-card" data-task-id="S4.1" data-depth="1" data-start-offset-ms="242985" data-finish-offset-ms="298598">
+<rect x="312" y="4158.0" width="834" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="315" y="4171.0" width="4" height="28" rx="2.0" fill="#8b5cf6" class="hierarchy-accent" data-node-kind="subtask"/>
+<rect x="330" y="4171.0" width="72" height="24" rx="6" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1.25"/>
+<text x="366" y="4188.0" class="kind-label" text-anchor="middle" fill="#6d28d9">SUBTASK</text>
+<text x="416" y="4187.0" class="node-title-subtask">生成并核验补货简报 · S4.1</text>
+<rect x="1052" y="4171.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="4188.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="330" y="4212.0" class="node-meta">#21 · 子树汇总</text>
+<text x="330" y="4237.0" class="node-metric">时间 +04:02.985 → +04:58.598 · 实际历时 56s · 未被精确记录 453ms</text>
+<text x="330" y="4262.0" class="node-metric">LLM调用累计 20s（调用端实测） · 脚本累计 35s（宿主实测）</text>
+<text x="330" y="4287.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 1.1k / 出 220</text>
+<text x="330" y="4309.0" class="node-result">结果：补货简报与验收结果均已完成</text>
+<rect x="330" y="4322.0" width="798" height="6" rx="3" class="range-track"/>
+<rect x="979.14" y="4322.0" width="148.57" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="S4.1"/>
+</g>
+<g id="node-P4.1.1" class="task-card" data-task-id="P4.1.1" data-depth="2" data-start-offset-ms="243020" data-finish-offset-ms="263114">
+<rect x="354" y="4348.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="4361.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="4361.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="4378.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="4377.0" class="node-title-step">组织补货决策叙事 · P4.1.1</text>
+<rect x="1052" y="4361.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="4378.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="4402.0" class="node-meta">#22 · 直接成本</text>
+<text x="372" y="4427.0" class="node-metric">时间 +04:03.020 → +04:23.114 · 实际历时 20s · 未被精确记录 77ms</text>
+<text x="372" y="4452.0" class="node-metric">LLM调用累计 20s（调用端实测） · 脚本累计 未采集</text>
+<text x="372" y="4477.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token ≈入 1.1k / 出 220</text>
+<text x="372" y="4499.0" class="node-result">结果：经营决策简报提纲已形成</text>
+<rect x="372" y="4512.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="987.07" y="4512.0" width="50.86" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P4.1.1"/>
+</g>
+<g id="node-P4.1.2" class="task-card" data-task-id="P4.1.2" data-depth="2" data-start-offset-ms="263149" data-finish-offset-ms="283334">
+<rect x="354" y="4538.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="4551.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="4551.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="4568.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="4567.0" class="node-title-step">生成周末补货执行简报 · P4.1.2</text>
+<rect x="1052" y="4551.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="4568.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="4592.0" class="node-meta">#23 · 直接成本</text>
+<text x="372" y="4617.0" class="node-metric">时间 +04:23.149 → +04:43.334 · 实际历时 20s · 未被精确记录 112ms</text>
+<text x="372" y="4642.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 20s（宿主实测）</text>
+<text x="372" y="4667.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="4689.0" class="node-result">结果：周末补货执行简报已生成</text>
+<rect x="372" y="4702.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="1038.01" y="4702.0" width="51.09" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P4.1.2"/>
+</g>
+<g id="node-P4.1.3" class="task-card" data-task-id="P4.1.3" data-depth="2" data-start-offset-ms="283369" data-finish-offset-ms="298558">
+<rect x="354" y="4728.0" width="792" height="178" rx="10" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.2"/>
+<rect x="357" y="4741.0" width="2" height="28" rx="1.0" fill="#60a5fa" class="hierarchy-accent" data-node-kind="step"/>
+<rect x="372" y="4741.0" width="72" height="24" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="408" y="4758.0" class="kind-label" text-anchor="middle" fill="#1d4ed8">STEP</text>
+<text x="458" y="4757.0" class="node-title-step">核对验收证据与遥测完整性 · P4.1.3</text>
+<rect x="1052" y="4741.0" width="76" height="24" rx="12" fill="#16a34a" opacity=".13"/>
+<text x="1090" y="4758.0" class="status-label" text-anchor="middle" fill="#14532d">✓ 成功</text>
+<text x="372" y="4782.0" class="node-meta">#24 · 直接成本</text>
+<text x="372" y="4807.0" class="node-metric">时间 +04:43.369 → +04:58.558 · 实际历时 15s · 未被精确记录 119ms</text>
+<text x="372" y="4832.0" class="node-metric">LLM调用累计 未采集 · 脚本累计 15s（宿主实测）</text>
+<text x="372" y="4857.0" class="node-metric">工具累计 未采集 · 等待累计 未采集 · Token 未采集</text>
+<text x="372" y="4879.0" class="node-result">结果：A1 至 A4 业务验收检查全部通过</text>
+<rect x="372" y="4892.0" width="756" height="6" rx="3" class="range-track"/>
+<rect x="1089.19" y="4892.0" width="38.44" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="P4.1.3"/>
+</g>
+<line x1="32" y1="4922.0" x2="1148" y2="4922.0" stroke="#e2e8f0"/>
+<text x="32" y="4946.0" class="legend">Mission 结束 +04:58.705 · 纵向行距不代表持续时间；精确时间由刻度、节点起止值及统一比例时间条表达。</text>
+</svg>
