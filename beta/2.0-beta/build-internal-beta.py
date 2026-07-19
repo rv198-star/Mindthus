@@ -404,7 +404,7 @@ def main() -> int:
         write_checksum(archive_path, checksum_path)
         print(f"built reproducible Beta archive at {archive_path}")
         print(f"wrote Beta archive checksum at {checksum_path}")
-    print(f"built Mindthus 1.5.1 ROI Beta prerelease at {plugin_root}")
+    print(f"built Mindthus 1.5.1 ROI Beta experimental package at {plugin_root}")
     return 0
 
 
