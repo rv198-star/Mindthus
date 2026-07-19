@@ -185,6 +185,7 @@ rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 mkdir -p ~/.claude/skills
 rm -rf "$HOME/.claude/skills/_runtime"
 cp -R /tmp/mindthus-skills/claude-code/skills/_runtime "$HOME/.claude/skills/_runtime"
+cp /tmp/mindthus-skills/claude-code/skills/runtime_bootstrap.py "$HOME/.claude/skills/runtime_bootstrap.py"
 for skill in /tmp/mindthus-skills/claude-code/skills/*; do
   [ -f "$skill/SKILL.md" ] || continue
   rm -rf "$HOME/.claude/skills/$(basename "$skill")"
@@ -199,6 +200,7 @@ done
 ```bash
 rm -rf ~/.claude/skills/{3l5s,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
+rm -f ~/.claude/skills/runtime_bootstrap.py
 ```
 
 ### OpenCode

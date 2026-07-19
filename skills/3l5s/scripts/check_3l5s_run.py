@@ -11,6 +11,9 @@ from dataclasses import asdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from runtime_bootstrap import activate_runtime
+
+activate_runtime(__file__)
 
 from _runtime.core.report import Finding
 

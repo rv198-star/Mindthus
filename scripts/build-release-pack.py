@@ -361,6 +361,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
     for skill_name in SKILL_NAMES:
         jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
         copy_tree_filtered(skills_dir / skill_name, plugin_root / "skills" / skill_name, jsonl_allowlist=jsonl_allowlist)
+    copy_file_filtered(skills_dir / "runtime_bootstrap.py", plugin_root / "skills" / "runtime_bootstrap.py")
     copy_using_mindthus_conditional_primitives(
         methodologies_dir,
         plugin_root / "skills" / "using-mindthus",

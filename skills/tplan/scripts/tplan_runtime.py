@@ -32,6 +32,9 @@ except ImportError:  # pragma: no cover - POSIX path
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from runtime_bootstrap import activate_runtime
+
+activate_runtime(__file__)
 
 from _runtime.core.io import load_json
 from _runtime.core.report import Finding
