@@ -1,0 +1,74 @@
+[
+  {
+    "id": "direct",
+    "group": "ordinary",
+    "prompt": "读取当前目录的 service.json，只用一句中文告诉我 service 和 port；不要修改文件。",
+    "expected": "Report billing and 8080; no formal owner and no question.",
+    "required_owner": null,
+    "passive_family": null
+  },
+  {
+    "id": "evidence",
+    "group": "ordinary",
+    "prompt": "只根据当前目录的 metric.md 判断错误率是否已经改善。缺少比较基线就明确说无法判断，不要猜，也不要修改文件。",
+    "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+    "required_owner": null,
+    "passive_family": null
+  },
+  {
+    "id": "frame_whole",
+    "group": "hard_judgment",
+    "prompt": "“Codex Skill 本质上就是一段提示词，因为 SKILL.md 是文本；脚本、资源和验证也只是为了给模型更多上下文。”请判断这句话是否成立，并直接给结论。",
+    "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+    "required_owner": null,
+    "passive_family": "frame_whole"
+  },
+  {
+    "id": "decision_context",
+    "group": "hard_judgment",
+    "prompt": "我们需要决定一个迁移现在应该继续还是停止。请直接给建议。",
+    "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+    "required_owner": null,
+    "passive_family": "decision_context"
+  },
+  {
+    "id": "anti_spiral",
+    "group": "hard_judgment",
+    "prompt": "这是同一个事故方案的第三轮修改。读取 history.md 和 plan.md，然后直接再加一条 fallback 规则，别重新讨论上游。不要修改文件，只告诉我该加什么。",
+    "expected": "First refuse a third additive fallback, return to the upstream schema/evidence failure, and allow only deletion or equal replacement.",
+    "required_owner": null,
+    "passive_family": "anti_spiral"
+  },
+  {
+    "id": "anti_spiral_near_negative",
+    "group": "near_negative",
+    "prompt": "这是事故方案的第二轮。读取 history.md 和 plan.md；现在有新的运行证据和可复现测试，请给出下一步修正，不要修改文件。",
+    "expected": "Proceed with the evidence-backed producer/consumer schema correction; do not over-apply the third-addition brake.",
+    "required_owner": null,
+    "passive_family": null
+  },
+  {
+    "id": "clear_sela",
+    "group": "hard_judgment",
+    "prompt": "一家公司长期在两条方向间选择：A 是专家手工流程，质量约高 15%，但成本随项目线性增长；B 是自动化系统，当前质量略低，但单位成本低一个数量级且会随数据积累改进。现在不讨论迁移节奏、投资额度或具体载体，只判断长期主方向及旧方案保留边界。",
+    "expected": "Read SELA; choose B as the long-term mainline and retain A only for bounded premium, hard-threshold, exceptional, or transition use.",
+    "required_owner": "sela",
+    "passive_family": null
+  },
+  {
+    "id": "clear_mpg",
+    "group": "hard_judgment",
+    "prompt": "主线已经确定：公司必须在 Q4 前退役数据库 A。CTO 本周要决定是否继续当前双写迁移；已投入 40 工程周，回滚演练通过，但复制延迟在 0 到 90 秒波动，正式切换窗口只有两小时。请选择 continue、hold 或 switch，并说明承载动作。不要重新讨论长期技术方向。",
+    "expected": "Read MPG; make a path-carrying continue, hold, or switch decision using carrier, exposure, volatility, rollback, and triggers; no blocking question.",
+    "required_owner": "mpg",
+    "passive_family": null
+  },
+  {
+    "id": "clear_wae",
+    "group": "hard_judgment",
+    "prompt": "为一个由 LLM agent 参与的生产发布审批系统设计控制边界：哪些判断交给 agent，哪些规则必须由确定性 workflow 强制，哪些 evidence 才能放行。直接给出精简方案，不要修改文件。",
+    "expected": "Read WAE; separate agentic judgment, deterministic workflow enforcement, and evidence gates without routing ceremony.",
+    "required_owner": "wae",
+    "passive_family": null
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "schema_version": "mindthus-roi-convergence-v0.1",
+  "status": "unpublished-experiment",
+  "baseline": {
+    "stable_version": "1.4.6",
+    "stable_commit": "00da11657bce553cb32e8e90c06ffe959dc08362",
+    "incumbent": "2.0.0-roi.2",
+    "incumbent_commit": "4ee3e034db6bf8d1e34002d7f162e2b008516490"
+  },
+  "owner_skills": ["3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"],
+  "package_time_contract_correction": {
+    "path": "skills/3l5s/SKILL.md",
+    "before": "- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, brake before adding: restate the upstream problem, find the instability/root-cause evidence, and prefer deletion or equal replacement. Clear failing tests with new evidence can continue as ordinary debugging.",
+    "after": "- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, this is a hard brake even when the user says to stay local: the first visible sentence must refuse the addition. Return to the upstream failure and require root-cause evidence; only deletion or equal replacement may follow. Never rename another local rule as a fix. Clear failing tests with new evidence can continue as ordinary debugging."
+  },
+  "edsp_description_override": {
+    "before": "description: \"Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed.\"",
+    "after": "description: \"Use only when evidence is sufficient but a qualitative proposition or decision structure remains ambiguous, including when a locally true component, proxy, metric, or implementation detail is being treated as the whole decision. Push variables to extremes to test the structure. Do not use when the only issue is missing facts or a missing comparison baseline.\""
+  },
+  "routes": {
+    "r1": {
+      "version": "2.0.0-roi.r1",
+      "marketplace": "mindthus-roi-r1",
+      "using_overlay": "routes/r1/skills/using-mindthus/SKILL.md",
+      "remove_using": false,
+      "owner_metadata_overrides": []
+    },
+    "r2": {
+      "version": "2.0.0-roi.r2",
+      "marketplace": "mindthus-roi-r2",
+      "using_overlay": "routes/r2/skills/using-mindthus/SKILL.md",
+      "remove_using": false,
+      "owner_metadata_overrides": ["edsp"]
+    },
+    "r3": {
+      "version": "2.0.0-roi.r3",
+      "marketplace": "mindthus-roi-r3",
+      "using_overlay": null,
+      "remove_using": true,
+      "owner_metadata_overrides": ["edsp"]
+    }
+  },
+  "forbidden": {
+    "session_start_hook": true,
+    "agents_injection": true,
+    "default_prompt_delta": true,
+    "model_name_routing": true,
+    "owner_index": true,
+    "second_entry": true,
+    "release_preparation": true
+  }
+}
