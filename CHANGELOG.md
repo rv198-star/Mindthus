@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## v2.0.0-beta.1
+
+预发布日期：2026-07-19
+
+[Beta 预发布说明](docs/releases/v2.0.0-beta.1.md)
+
+说明：这是 Codex-only、Efficiency-first 的 ROI.2 Beta，不替代 1.x Stable。
+
+- 以 1.5.1 repaired shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
+- 修复 #128：单分支自包含构建、Beta namespace/diagnostics 隔离、dirty-input 拒绝、输入与 manifest provenance、artifact-local 路径和可复现 archive。
+- Stable 与 Beta 使用不同 package、marketplace、cache 和 skill namespace；不自动迁移、不发布 marketplace。
+- GitHub Release 必须标记为 prerelease；Beta 的行为证据仍有样本和覆盖边界。
+
 ## v1.5.1
 
 准备日期：2026-07-19（尚未发布）

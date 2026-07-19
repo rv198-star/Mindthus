@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import inspect
 import json
@@ -18,6 +19,9 @@ from pathlib import Path
 PROFILE_DIR = Path(__file__).resolve().parent
 PROFILE_PATH = PROFILE_DIR / "profile.json"
 REGISTER_PATH = PROFILE_DIR / "capability-register.json"
+PROFILE_REPO_PATH = "beta/2.0-beta/profile.json"
+REGISTER_REPO_PATH = "beta/2.0-beta/capability-register.json"
+BUILDER_REPO_PATH = "beta/2.0-beta/build-internal-beta.py"
 
 
 def repo_root() -> Path:
@@ -49,6 +53,15 @@ def git_bytes(root: Path, ref: str, path: str) -> bytes:
 
 def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def require_clean_checkout(root: Path) -> None:
+    status = git_output(root, "status", "--porcelain=v1", "--untracked-files=all")
+    if status:
+        raise SystemExit(
+            "Beta assembly requires a clean checkout; commit or remove all tracked and "
+            "untracked inputs before building"
+        )
 
 
 def ensure_safe_output(path: Path, root: Path, force: bool) -> None:
@@ -123,7 +136,7 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     manifest = read_json(manifest_path)
     manifest["name"] = "mindthus-beta"
     manifest["version"] = version
-    manifest["description"] = "Internal ROI.2-based Mindthus 2.0 Beta for Codex."
+    manifest["description"] = "ROI.2-based Mindthus 2.0 Beta prerelease for Codex."
     interface = manifest["interface"]
     interface["displayName"] = "Mindthus 2.0 Beta"
     interface["shortDescription"] = "ROI.2 thin entry over the 1.5 shared core"
@@ -140,21 +153,82 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     return plugin_root
 
 
+def rewrite_namespace(plugin_root: Path) -> dict[str, int]:
+    rewrites: dict[str, int] = {}
+    for path in sorted(candidate for candidate in plugin_root.rglob("*") if candidate.is_file()):
+        raw = path.read_bytes()
+        count = raw.count(b"mindthus:")
+        if count == 0:
+            continue
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError as error:
+            raise SystemExit(f"Stable namespace appears in non-UTF-8 artifact: {path}") from error
+        path.write_text(text.replace("mindthus:", "mindthus-beta:"), encoding="utf-8")
+        rewrites[path.relative_to(plugin_root).as_posix()] = count
+    return rewrites
+
+
+def rewrite_runtime_diagnostics(plugin_root: Path, stable_version: str, beta_version: str) -> None:
+    path = plugin_root / "scripts" / "log-mindthus-runtime.py"
+    text = path.read_text(encoding="utf-8")
+    replacements = {
+        f'VERSION = "{stable_version}"': f'VERSION = "{beta_version}"',
+        'f"mindthus-v{VERSION}" / "codex-plugin" / "mindthus"': (
+            'f"mindthus-beta-v{VERSION}" / "mindthus-beta"'
+        ),
+        '"plugins" / "cache" / "mindthus" / "mindthus" / VERSION': (
+            '"plugins" / "cache" / "mindthus-beta" / "mindthus-beta" / VERSION'
+        ),
+    }
+    for before, after in replacements.items():
+        if text.count(before) != 1:
+            raise SystemExit(f"Beta runtime diagnostic rewrite no longer applies once: {before}")
+        text = text.replace(before, after)
+    path.write_text(text, encoding="utf-8")
+
+
+def write_reproducible_archive(source: Path, archive_path: Path, version: str) -> None:
+    archive_path.parent.mkdir(parents=True, exist_ok=True)
+    root_name = f"mindthus-beta-{version}"
+    with archive_path.open("wb") as raw, gzip.GzipFile(
+        filename="", mode="wb", fileobj=raw, mtime=0
+    ) as compressed, tarfile.open(fileobj=compressed, mode="w") as archive:
+        for path in sorted(source.rglob("*"), key=lambda item: item.relative_to(source).as_posix()):
+            relative = path.relative_to(source)
+            info = archive.gettarinfo(str(path), arcname=f"{root_name}/{relative.as_posix()}")
+            info.uid = 0
+            info.gid = 0
+            info.uname = ""
+            info.gname = ""
+            info.mtime = 0
+            if info.isfile():
+                info.mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
+                with path.open("rb") as source_file:
+                    archive.addfile(info, source_file)
+            else:
+                info.mode = 0o755
+                archive.addfile(info)
+
+
 def build(output: Path, force: bool) -> Path:
     root = repo_root()
-    profile = read_json(PROFILE_PATH)
+    require_clean_checkout(root)
+    source_ref = git_output(root, "rev-parse", "HEAD")
+    profile_bytes = git_bytes(root, source_ref, PROFILE_REPO_PATH)
+    register_bytes = git_bytes(root, source_ref, REGISTER_REPO_PATH)
+    builder_bytes = git_bytes(root, source_ref, BUILDER_REPO_PATH)
+    profile = json.loads(profile_bytes.decode("utf-8"))
     shared_ref = profile["shared_core"]["ref"]
     runtime = profile["runtime_profile"]
     implementation_ref = runtime["implementation_ref"]
     qualification_ref = runtime["qualification_ref"]
-    convergence_ref = runtime["convergence_evidence_ref"]
 
-    for ref in (shared_ref, implementation_ref, qualification_ref, convergence_ref):
+    for ref in (shared_ref, implementation_ref, qualification_ref):
         require_commit(root, ref)
     require_ancestor(root, shared_ref)
     require_ancestor(root, qualification_ref)
     require_ancestor(root, implementation_ref, qualification_ref)
-    require_ancestor(root, qualification_ref, convergence_ref)
     actual_tree = git_output(root, "rev-parse", f"{shared_ref}^{{tree}}")
     if actual_tree != profile["shared_core"]["tree_oid"]:
         raise SystemExit("shared-core tree identity does not match profile")
@@ -213,24 +287,44 @@ def build(output: Path, force: bool) -> Path:
         raise SystemExit("qualified 3L5S guardrail replacement no longer applies exactly once")
     correction_target.write_text(correction_text.replace(before, after), encoding="utf-8")
 
-    packaged_profile = dict(profile)
-    packaged_profile["assembly_source_ref"] = git_output(root, "rev-parse", "HEAD")
-    packaged_profile["runtime_overlay_sha256"] = sha256_bytes(overlay_bytes)
-    packaged_profile["historical_profile_sha256"] = sha256_bytes(
-        historical_profile_bytes
+    rewrite_runtime_diagnostics(
+        plugin_root, profile["shared_core"]["version"], profile["version"]
     )
+    namespace_rewrites = rewrite_namespace(plugin_root)
+    if not namespace_rewrites:
+        raise SystemExit("Beta artifact contained no Stable namespace references to isolate")
+
+    packaged_profile = dict(profile)
+    manifest_path = plugin_root / ".codex-plugin" / "plugin.json"
+    register_target = plugin_root / profile["capability_register"]["artifact_path"]
+    register_target.write_bytes(register_bytes)
+    packaged_profile["assembly_source_ref"] = source_ref
+    packaged_profile["assembly_inputs_sha256"] = {
+        BUILDER_REPO_PATH: sha256_bytes(builder_bytes),
+        PROFILE_REPO_PATH: sha256_bytes(profile_bytes),
+        REGISTER_REPO_PATH: sha256_bytes(register_bytes),
+        runtime["overlay_path"]: sha256_bytes(overlay_bytes),
+        runtime["historical_profile_path"]: sha256_bytes(historical_profile_bytes),
+    }
+    packaged_profile["artifact_manifest_sha256"] = sha256_bytes(manifest_path.read_bytes())
+    packaged_profile["capability_register_sha256"] = sha256_bytes(register_bytes)
+    packaged_profile["namespace_rewrites"] = namespace_rewrites
     write_json(plugin_root / "beta-profile.json", packaged_profile)
-    shutil.copy2(REGISTER_PATH, plugin_root / "capability-register.json")
     return plugin_root
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--archive", type=Path)
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     plugin_root = build(args.out.resolve(), args.force)
-    print(f"built internal Mindthus 2.0 Beta at {plugin_root}")
+    if args.archive:
+        profile = read_json(plugin_root / "beta-profile.json")
+        write_reproducible_archive(args.out.resolve(), args.archive.resolve(), profile["version"])
+        print(f"built reproducible Beta archive at {args.archive.resolve()}")
+    print(f"built Mindthus 2.0 Beta prerelease at {plugin_root}")
     return 0
 
 

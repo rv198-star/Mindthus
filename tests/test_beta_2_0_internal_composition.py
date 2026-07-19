@@ -1,3 +1,4 @@
+import hashlib
 import json
 import subprocess
 import sys
@@ -22,6 +23,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         root = Path(cls._tempdir.name)
         cls.stable_out = root / "stable"
         cls.beta_out = root / "beta"
+        cls.beta_archive = root / "mindthus-beta-2.0.0-beta.1.tar.gz"
         stable = subprocess.run(
             [
                 sys.executable,
@@ -43,6 +45,8 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 str(BETA / "build-internal-beta.py"),
                 "--out",
                 str(cls.beta_out),
+                "--archive",
+                str(cls.beta_archive),
             ],
             cwd=REPO,
             text=True,
@@ -58,20 +62,24 @@ class InternalBetaCompositionTests(unittest.TestCase):
         cls._tempdir.cleanup()
 
     def test_internal_identity_and_immutable_refs(self) -> None:
-        self.assertEqual(PROFILE["status"], "internal-beta")
+        self.assertEqual(PROFILE["status"], "beta-prerelease")
         self.assertEqual(PROFILE["version"], "2.0.0-beta.1")
         self.assertEqual(PROFILE["package_identity"], "mindthus-beta")
-        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.0")
+        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "2cd323d4875069bef17b137a6c7dd50bb06680f8",
+            "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
-        self.assertFalse(PROFILE["publication"]["github_release"])
+        self.assertTrue(PROFILE["publication"]["github_release"])
+        self.assertEqual(PROFILE["publication"]["github_release_kind"], "prerelease")
         self.assertFalse(PROFILE["publication"]["marketplace"])
+        self.assertFalse(
+            PROFILE["runtime_profile"]["convergence_evidence"]["required_at_build"]
+        )
 
     def test_shared_1_5_capabilities_are_present_and_identical(self) -> None:
         shared_paths = (
@@ -107,9 +115,11 @@ class InternalBetaCompositionTests(unittest.TestCase):
             )
             self.assertEqual(beta_files, stable_files, owner)
             for relative in stable_files:
+                beta_bytes = (beta_tree / relative).read_bytes()
+                stable_bytes = (stable_tree / relative).read_bytes()
                 self.assertEqual(
-                    (beta_tree / relative).read_bytes(),
-                    (stable_tree / relative).read_bytes(),
+                    beta_bytes.replace(b"mindthus-beta:", b"mindthus:"),
+                    stable_bytes,
                     f"{owner}/{relative}",
                 )
 
@@ -135,14 +145,22 @@ class InternalBetaCompositionTests(unittest.TestCase):
             if (self.stable_plugin / relative).read_bytes()
             != (self.beta_plugin / relative).read_bytes()
         }
-        self.assertEqual(
-            actual_deltas,
-            {
-                Path(".codex-plugin/plugin.json"),
-                Path("skills/using-mindthus/SKILL.md"),
-                Path("skills/3l5s/SKILL.md"),
-            },
-        )
+        expected_special = {
+            Path(".codex-plugin/plugin.json"),
+            Path("skills/using-mindthus/SKILL.md"),
+            Path("skills/3l5s/SKILL.md"),
+            Path("scripts/log-mindthus-runtime.py"),
+        }
+        self.assertTrue(expected_special.issubset(actual_deltas))
+        for relative in actual_deltas - expected_special:
+            stable_bytes = (self.stable_plugin / relative).read_bytes()
+            beta_bytes = (self.beta_plugin / relative).read_bytes()
+            self.assertIn(b"mindthus:", stable_bytes, relative)
+            self.assertEqual(
+                beta_bytes.replace(b"mindthus-beta:", b"mindthus:"),
+                stable_bytes,
+                relative,
+            )
         self.assertEqual(
             (self.beta_plugin / "skills/using-mindthus/SKILL.md").read_bytes(),
             (HISTORICAL / "skills/using-mindthus/SKILL.md").read_bytes(),
@@ -177,6 +195,29 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("mindthus-beta:using-mindthus", prompt)
         self.assertNotIn("mindthus:using-mindthus", prompt)
         self.assertNotIn("hooks", manifest)
+        for path in self.beta_plugin.rglob("*"):
+            if path.is_file():
+                self.assertNotIn(b"mindthus:", path.read_bytes(), path)
+
+    def test_beta_runtime_diagnostics_use_only_beta_coordinates(self) -> None:
+        codex_home = Path(self._tempdir.name) / "diagnostic-home"
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(self.beta_plugin / "scripts" / "log-mindthus-runtime.py"),
+                "--codex-home",
+                str(codex_home),
+                "--json",
+            ],
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["version"], "2.0.0-beta.1")
+        self.assertIn("mindthus-beta-v2.0.0-beta.1", report["locations"]["marketplace"]["root"])
+        self.assertIn("mindthus-beta/mindthus-beta/2.0.0-beta.1", report["locations"]["cache"]["root"])
+        self.assertNotIn("/mindthus/mindthus/", json.dumps(report))
 
     def test_packaged_profile_and_capability_register_are_auditable(self) -> None:
         packaged = json.loads(
@@ -186,8 +227,25 @@ class InternalBetaCompositionTests(unittest.TestCase):
             (self.beta_plugin / "capability-register.json").read_text(encoding="utf-8")
         )
         self.assertEqual(packaged["shared_core"], PROFILE["shared_core"])
-        self.assertEqual(len(packaged["runtime_overlay_sha256"]), 64)
-        self.assertEqual(len(packaged["historical_profile_sha256"]), 64)
+        self.assertEqual(packaged["assembly_source_ref"], subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=REPO, text=True
+        ).strip())
+        self.assertEqual(len(packaged["artifact_manifest_sha256"]), 64)
+        self.assertEqual(len(packaged["capability_register_sha256"]), 64)
+        self.assertEqual(len(packaged["assembly_inputs_sha256"]), 5)
+        for digest in packaged["assembly_inputs_sha256"].values():
+            self.assertEqual(len(digest), 64)
+        manifest = self.beta_plugin / ".codex-plugin" / "plugin.json"
+        self.assertEqual(
+            packaged["artifact_manifest_sha256"],
+            hashlib.sha256(manifest.read_bytes()).hexdigest(),
+        )
+        register_path = self.beta_plugin / PROFILE["capability_register"]["artifact_path"]
+        self.assertTrue(register_path.is_file())
+        self.assertEqual(
+            packaged["capability_register_sha256"],
+            hashlib.sha256(register_path.read_bytes()).hexdigest(),
+        )
         states = {
             item["id"]: item["release_2x"]["state"]
             for item in register["capabilities"]
@@ -200,6 +258,50 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 "roi.2-thin-core": "included",
             },
         )
+
+    def test_archive_is_byte_reproducible_from_the_same_commit(self) -> None:
+        second_out = Path(self._tempdir.name) / "beta-second"
+        second_archive = Path(self._tempdir.name) / "beta-second.tar.gz"
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(BETA / "build-internal-beta.py"),
+                "--out",
+                str(second_out),
+                "--archive",
+                str(second_archive),
+            ],
+            cwd=REPO,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertEqual(self.beta_archive.read_bytes(), second_archive.read_bytes())
+
+    def test_dirty_checkout_is_rejected_before_assembly(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="mindthus-beta-dirty-") as temporary:
+            clone = Path(temporary) / "clone"
+            subprocess.run(
+                ["git", "clone", "--local", "--no-hardlinks", str(REPO), str(clone)],
+                check=True,
+                text=True,
+                capture_output=True,
+            )
+            profile = clone / "beta" / "2.0-beta" / "profile.json"
+            profile.write_text(profile.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(clone / "beta" / "2.0-beta" / "build-internal-beta.py"),
+                    "--out",
+                    str(Path(temporary) / "out"),
+                ],
+                cwd=clone,
+                text=True,
+                capture_output=True,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("requires a clean checkout", result.stderr + result.stdout)
 
 
 if __name__ == "__main__":

@@ -1,36 +1,46 @@
 {
-  "schema_version": "mindthus-beta-composition-v0.1",
-  "status": "internal-beta",
+  "schema_version": "mindthus-beta-composition-v0.2",
+  "status": "beta-prerelease",
   "release_line": "2.x",
   "version": "2.0.0-beta.1",
   "package_identity": "mindthus-beta",
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
-    "version": "1.5.0",
-    "ref": "2cd323d4875069bef17b137a6c7dd50bb06680f8",
-    "tree_oid": "f35f1b8b640c7506c20f44ce9393e63c7f6af4cb"
+    "version": "1.5.1",
+    "ref": "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
+    "tree_oid": "873a1d91af57a91dbbaede44484b0f06c0912f58"
   },
   "runtime_profile": {
     "name": "roi.2-thin-core",
     "implementation_ref": "493f9520b75f582aa22f6c8647ec08eab3e122d3",
     "qualification_ref": "4ee3e034db6bf8d1e34002d7f162e2b008516490",
-    "convergence_evidence_ref": "9a1c2268d26c30905d7ada9ee206d722214e3a7b",
+    "convergence_evidence": {
+      "identifier": "9a1c2268d26c30905d7ada9ee206d722214e3a7b",
+      "role": "historical-decision-reference",
+      "required_at_build": false
+    },
     "overlay_path": "beta/2.0-roi-thin-core/skills/using-mindthus/SKILL.md",
     "historical_profile_path": "beta/2.0-roi-thin-core/profile.json"
   },
   "declared_runtime_deltas": [
     "skills/using-mindthus/SKILL.md",
     "skills/3l5s/SKILL.md",
-    ".codex-plugin/plugin.json"
+    ".codex-plugin/plugin.json",
+    "scripts/log-mindthus-runtime.py",
+    "textual namespace references: mindthus: -> mindthus-beta:"
   ],
-  "capability_register": "beta/2.0-beta/capability-register.json",
+  "capability_register": {
+    "source_path": "beta/2.0-beta/capability-register.json",
+    "artifact_path": "capability-register.json"
+  },
   "rollback": {
-    "version": "1.5.0",
+    "version": "1.4.6",
     "package_identity": "mindthus",
-    "tag": "v1.5.0"
+    "tag": "v1.4.6"
   },
   "publication": {
-    "github_release": false,
+    "github_release": true,
+    "github_release_kind": "prerelease",
     "marketplace": false,
     "automatic_migration": false
   }

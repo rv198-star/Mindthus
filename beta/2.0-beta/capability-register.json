@@ -1,19 +1,19 @@
 {
-  "schema_version": "mindthus-capability-register-v0.1",
-  "shared_core_ref": "2cd323d4875069bef17b137a6c7dd50bb06680f8",
+  "schema_version": "mindthus-capability-register-v0.2",
+  "shared_core_ref": "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
   "capabilities": [
     {
       "id": "tvg-profile-atlas-v1",
-      "source_commit": "9b2a1793f97a4551a219c21976105a533a0e1d72",
+      "source_commit": "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
       "ownership": "shared-product-core",
-      "release_1x": {"state": "included", "version": "1.5.0"},
+      "release_1x": {"state": "included", "version": "1.5.1"},
       "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
     },
     {
       "id": "tplan-execution-cost-tree-v1",
-      "source_commit": "8f55458a65ea677eeb3ce1b95d73422ea9620925",
+      "source_commit": "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
       "ownership": "shared-product-core",
-      "release_1x": {"state": "included", "version": "1.5.0"},
+      "release_1x": {"state": "included", "version": "1.5.1"},
       "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
     },
     {
@@ -22,7 +22,7 @@
       "ownership": "2.x-runtime-profile",
       "release_1x": {
         "state": "not-applicable",
-        "version": "1.5.0",
+        "version": "1.5.1",
         "reason": "Stable keeps the full using-mindthus runtime profile."
       },
       "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
