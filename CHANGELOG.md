@@ -8,7 +8,39 @@
 
 [Beta 预发布说明](docs/releases/v2.0.0-beta.1.md)
 
-说明：这是 Codex-only、Efficiency-first 的 ROI.2 Beta，不替代 1.x Stable。
+说明：这是面向 Codex、Efficiency-first 的 ROI.2 Beta，不替代 1.x Stable。
+
+### 为什么有 2.0 Beta
+
+- `gpt-5.6-sol` 这类强工程模型已经能在许多清晰、低风险、事实充分的任务中直接行动；
+  若仍让每次会话常驻加载完整的方法目录和详细合同，额外输入 token 与等待时间未必会改变
+  正确行动，反而成为纯开销。
+- ROI.2 把 `using-mindthus` 收缩为薄的共同判断底座：清晰任务直接执行；原生 Skill
+  discovery 已能确定 owner 时直接加载 owner；只有定框、证据上限、决策上下文或反螺旋会
+  改变行动时，才保留最小约束。它不增加 Hook、第二常驻 router、模型分流或隐藏 prompt。
+- 这是刻意的有损优化，而不是“更聪明所以不需要判断”。它接受一部分被动方法/认知原语
+  不再被自动唤起；只要策略、证据、风险、权限、行动和停止条件不变，漏掉细化是可接受的。
+  反之应直接加载 owner、补证据或回到 Stable。
+- 有限的 `gpt-5.6-sol / xhigh` 资格样本显示显式 Mindthus 加载 bytes 中位数下降 42.17%、
+  host-reported uncached input tokens 下降 53.63%、wall duration 下降 10.07%。这些是
+  ROI 方向证据，不是所有任务、所有 owner 或所有模型的召回率证明。
+
+### 选择哪一条线
+
+- 需要完整方法合同、可预测的被动认知原语、跨模型一致性，或任务本身不允许召回损失时，
+  选 1.5.1 Stable。
+- 主要在高能力 Codex 上做清晰工程执行，且愿意以有限的被动唤起损失交换明显的常驻开销
+  下降时，才评估 2.0 Beta；它仍是实验线，不应作为 Stable 的自动迁移目标。
+
+### 与 1.5.1 Stable 的关系
+
+- `2.x Beta` 不是 `1.5.1 Stable` 的替代版，也不是“版本号更高所以默认更好”。两条线共享
+  一部分产品核心，但优化目标不同：Stable 优先完整能力与保守可靠性，Beta 优先特定高能力
+  Codex 场景下的加载 ROI。
+- Beta 的薄入口只是一种受限实验合同，不把 Stable 的完整入口降级，也不触发用户安装、配置
+  或工作流的自动迁移。任何进入正式 2.x 的决定都需要新的行为证据与单独授权。
+- 因此，选择 Beta 是针对任务、模型与可接受损失的显式选择；需要默认可靠行为时仍选 Stable，
+  发现 decision-changing recall 损失时应直接回退 Stable。
 
 - 以 1.5.1 repaired shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
 - 修复 #128：单分支自包含构建、Beta namespace/diagnostics 隔离、dirty-input 拒绝、输入与 manifest provenance、artifact-local 路径和可复现 archive。

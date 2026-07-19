@@ -97,6 +97,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("尚未发布", notes)
         self.assertIn("冻结源码 tag", changelog)
         self.assertIn("源码 tag 已冻结", notes)
+        self.assertIn("为什么有 2.0 Beta", changelog)
+        self.assertIn("与 1.5.1 Stable 的关系", changelog)
+        self.assertIn("不是 `1.5.1 Stable` 的替代版", changelog)
+        self.assertIn("不触发用户安装、配置或工作流的自动迁移", changelog)
         self.assertNotIn("预发布日期", changelog + notes)
 
     def test_shared_1_5_capabilities_are_present_and_identical(self) -> None:
