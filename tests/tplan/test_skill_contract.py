@@ -188,6 +188,8 @@ class TplanSkillContractTests(unittest.TestCase):
             "User-facing output should lead with meaning",
             "scripts/render_user_update.py",
             "ordinary updates should not lead with raw IDs",
+            "--completion-handoff",
+            "include both emitted links",
         ):
             self.assertIn(phrase, skill_text)
 
@@ -201,6 +203,10 @@ class TplanSkillContractTests(unittest.TestCase):
             "Stop reports should not lead with raw task or evidence IDs",
             "Internal: active_task_id = T1",
             "User-facing:",
+            "Terminal Mission Delivery Contract",
+            "--completion-handoff",
+            "Copy both into the terminal user",
+            "execution graph is unavailable",
         ):
             self.assertIn(phrase, resource)
 

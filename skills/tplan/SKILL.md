@@ -85,9 +85,11 @@ acceptance authority.
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
 ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py` for
-compact Chinese status updates. After completion or cost review, use
-`scripts/render_execution_cost_tree.py`; default to the one-to-one `standard` portrait
-timeline, preserving every real node and edge with chronological offsets.
+compact Chinese status updates. For completion or cost review, use the Standard tree.
+
+Terminal handoff: run `render_execution_cost_tree.py "$MISSION_DIR"
+--completion-handoff`; include both emitted links, or state the rendering failure. Full
+delivery contract: `resources/user-output.md`.
 
 ### Read-only SubAgent Acceleration
 

@@ -106,6 +106,28 @@ Debug mode appends secondary internal recovery references:
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-internal
 ```
 
+## Terminal Mission Delivery Contract
+
+For every terminal Mission handoff (`completed`, `blocked`, `budget_exhausted`,
+`abandoned`, `superseded`, or `requires_human`) and every explicit cost review, render
+the full Standard execution report before writing the final user response:
+
+```bash
+python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \
+  --completion-handoff
+```
+
+This writes these reproducible artifacts:
+
+- `$MISSION_DIR/reports/execution-cost-tree.md`
+- `$MISSION_DIR/reports/execution-cost-tree.svg`
+
+The command prints two absolute Markdown links. Copy both into the terminal user
+response under a short label such as `TPlan 执行记录` so the user can open the report or
+view the process graph directly. Do not replace the links with a claim that the graph
+exists. If rendering fails, state that the execution graph is unavailable, include the
+recoverable command above, and do not hide the failure behind a completed claim.
+
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
 to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
 status, actual elapsed, cumulative LLM-call, script, tool, wait, Token, and result slots.
