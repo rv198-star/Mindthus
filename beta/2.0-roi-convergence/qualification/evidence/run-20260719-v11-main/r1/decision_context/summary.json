@@ -1,0 +1,37 @@
+{
+  "arm": "r1",
+  "case": "decision_context",
+  "group": "hard_judgment",
+  "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+  "required_owner": null,
+  "passive_family": "decision_context",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:25:47.749594+00:00",
+  "duration_seconds": 54.258,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 63424,
+    "cached_input_tokens": 48128,
+    "output_tokens": 1151,
+    "reasoning_output_tokens": 383
+  },
+  "counted_tokens": 64575,
+  "uncached_input_tokens": 15296,
+  "loaded_paths": [
+    "skills/mpg/SKILL.md",
+    "skills/sela/SKILL.md"
+  ],
+  "loaded_skills": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_owners": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14073,
+  "final": "迁移方向可以保留，但现在应停止继续推进——准确说，暂停新增切换，而不是永久取消或立即回滚。\n\n原因很直接：目前没有成功指标、剩余成本、故障情况和回滚证据。信息不足时继续迁移会扩大不可逆风险，而暂停仍保留选择权。\n\n现在这样做：\n\n- 停止下一批迁移，已稳定运行的部分先不回滚。\n- 保留旧系统、数据同步和回滚能力。\n- 只有同时满足三项才恢复：关键指标达标、回滚演练通过、剩余成本与期限有明确上限。\n- 如果原本没有量化验收标准，先补标准；这本身就是暂停的充分理由。\n\n所以二选一：**现在停止，证据过关后再继续。**"
+}

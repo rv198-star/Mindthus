@@ -1,0 +1,106 @@
+{
+  "schema_version": "mindthus-roi-convergence-live-v0.1",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "expected_cases": [
+    "clear_mpg",
+    "decision_context"
+  ],
+  "arms": [
+    "r2"
+  ],
+  "calls": 2,
+  "counted_tokens": 80528,
+  "complete": {
+    "r2": true
+  },
+  "medians": {
+    "r2": {
+      "loaded_mindthus_bytes": 7931.5,
+      "uncached_input_tokens": 10451.5,
+      "duration_seconds": 43.312
+    }
+  },
+  "hard_judgment_medians": {
+    "r2": {
+      "loaded_mindthus_bytes": 7931.5,
+      "uncached_input_tokens": 10451.5,
+      "duration_seconds": 43.312
+    }
+  },
+  "reductions_vs_incumbent": {},
+  "records": [
+    {
+      "arm": "r2",
+      "case": "clear_mpg",
+      "group": "hard_judgment",
+      "expected": "Read MPG; make a path-carrying continue, hold, or switch decision using carrier, exposure, volatility, rollback, and triggers; no blocking question.",
+      "required_owner": "mpg",
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T07:03:03.196915+00:00",
+      "duration_seconds": 48.019,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "1cdae1b96775062d7df5f280a0372973c7a82103e377b8a760e65544c343414d",
+      "usage": {
+        "input_tokens": 49877,
+        "cached_input_tokens": 34048,
+        "output_tokens": 1045,
+        "reasoning_output_tokens": 436
+      },
+      "counted_tokens": 50922,
+      "uncached_input_tokens": 15829,
+      "loaded_paths": [
+        "skills/mpg/SKILL.md",
+        "skills/sela/SKILL.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "loaded_skills": [
+        "mpg",
+        "sela",
+        "using-mindthus"
+      ],
+      "loaded_owners": [
+        "mpg",
+        "sela"
+      ],
+      "loaded_mindthus_bytes": 14968,
+      "final": "正式切换可接受的最大数据丢失或不一致窗口（RPO）是多少——是否必须将复制延迟降至 0，并连续稳定一段时间后才能切换？"
+    },
+    {
+      "arm": "r2",
+      "case": "decision_context",
+      "group": "hard_judgment",
+      "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+      "required_owner": null,
+      "passive_family": "decision_context",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T07:02:24.419970+00:00",
+      "duration_seconds": 38.605,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "1cdae1b96775062d7df5f280a0372973c7a82103e377b8a760e65544c343414d",
+      "usage": {
+        "input_tokens": 29138,
+        "cached_input_tokens": 24064,
+        "output_tokens": 468,
+        "reasoning_output_tokens": 187
+      },
+      "counted_tokens": 29606,
+      "uncached_input_tokens": 5074,
+      "loaded_paths": [
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "loaded_skills": [
+        "using-mindthus"
+      ],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 895,
+      "final": "这次迁移的对象、当前进度、继续与停止各自的最大损失、能否回滚，以及最晚决策时间分别是什么？"
+    }
+  ],
+  "semantic_verdict": "agentic_review_required"
+}

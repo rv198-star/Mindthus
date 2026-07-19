@@ -1,0 +1,35 @@
+{
+  "arm": "r3",
+  "case": "clear_sela",
+  "group": "hard_judgment",
+  "expected": "Read SELA; choose B as the long-term mainline and retain A only for bounded premium, hard-threshold, exceptional, or transition use.",
+  "required_owner": "sela",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:36:54.653238+00:00",
+  "duration_seconds": 66.286,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+  "usage": {
+    "input_tokens": 48099,
+    "cached_input_tokens": 34048,
+    "output_tokens": 1277,
+    "reasoning_output_tokens": 475
+  },
+  "counted_tokens": 49376,
+  "uncached_input_tokens": 14051,
+  "loaded_paths": [
+    "skills/sela/SKILL.md",
+    "skills/sela/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "sela"
+  ],
+  "loaded_owners": [
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14046,
+  "final": "长期主方向应明确选择 **B（自动化系统）**。一个数量级的单位成本优势、非线性的扩展能力和数据反馈带来的持续改进，长期会压过 A 当前约 15% 的局部质量优势。A 不再作为并列主路线，而是退为例外能力。\n\nA 只在以下边界内保留：\n\n- **质量存在硬门槛**：低于门槛会造成重大、不可逆或合规后果，不能用平均质量抵消。\n- **质量溢价足以覆盖成本差**：特定客户确实愿意为这 15% 支付远高于新增成本的价格。\n- **稀有或新颖任务**：数据极少、异常度高，B 暂时无法可靠处理。\n- **系统制衡角色**：用于高风险复核、质量标定、异常诊断和系统审计，而不是承担常规生产。\n- **不可系统化的人本价值**：专家本人、信任关系或定制体验就是产品的一部分。\n\n核心边界可以压缩成一句话：\n\n> 只有当 A 的额外质量产生了非线性价值，并且无法被“B＋有限人工复核”复制时，才保留 A。\n\n反之，只要 B 达到普通业务的最低可接受质量，15% 的差距没有触发硬风险或足额溢价，任务就应归入 B。最终格局应是：**B 占据主战场，A 服务于高风险、高溢价和长尾例外，同时充当 B 的校准机制。**"
+}

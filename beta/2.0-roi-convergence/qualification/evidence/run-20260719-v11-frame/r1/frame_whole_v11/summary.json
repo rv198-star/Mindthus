@@ -1,0 +1,28 @@
+{
+  "arm": "r1",
+  "case": "frame_whole_v11",
+  "group": "hard_judgment",
+  "expected": "Preserve the local component-test result but deny that it establishes whole-device safety; no question and no external-doc lookup.",
+  "required_owner": null,
+  "passive_family": "frame_whole",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:22:57.020045+00:00",
+  "duration_seconds": 26.464,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 14315,
+    "cached_input_tokens": 9984,
+    "output_tokens": 142,
+    "reasoning_output_tokens": 76
+  },
+  "counted_tokens": 14457,
+  "uncached_input_tokens": 4331,
+  "loaded_paths": [],
+  "loaded_skills": [],
+  "loaded_owners": [],
+  "loaded_mindthus_bytes": 0,
+  "final": "不成立。关键承重零件通过强度测试，只能证明该零件满足特定强度要求；整机安全还取决于控制软件、装配质量、冗余设计、系统级测试等因素，零件结果不能替代系统安全验证。"
+}

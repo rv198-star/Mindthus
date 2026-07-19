@@ -1,0 +1,3 @@
+**结论：不成立，最多只对了一半。**
+
+`SKILL.md` 确实是指令入口，但 Codex Skill 本质上是一个以它为核心的**可复用工作流包**。脚本可以实际执行操作和验证结果，资源与依赖也有独立作用，不能统称为“给模型更多上下文”。官方定义同样将 Skill 描述为指令、资源和可选脚本的组合。[Codex Skills 文档](https://developers.openai.com/codex/skills)

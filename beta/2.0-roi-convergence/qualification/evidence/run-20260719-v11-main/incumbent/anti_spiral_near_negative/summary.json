@@ -1,0 +1,34 @@
+{
+  "arm": "incumbent",
+  "case": "anti_spiral_near_negative",
+  "group": "near_negative",
+  "expected": "Proceed with the evidence-backed producer/consumer schema correction; do not over-apply the third-addition brake.",
+  "required_owner": null,
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:34:51.309204+00:00",
+  "duration_seconds": 58.704,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+  "usage": {
+    "input_tokens": 47574,
+    "cached_input_tokens": 34048,
+    "output_tokens": 1780,
+    "reasoning_output_tokens": 886
+  },
+  "counted_tokens": 49354,
+  "uncached_input_tokens": 13526,
+  "loaded_paths": [
+    "skills/3l5s/SKILL.md"
+  ],
+  "loaded_skills": [
+    "3l5s"
+  ],
+  "loaded_owners": [
+    "3l5s"
+  ],
+  "loaded_mindthus_bytes": 7937,
+  "final": "结论：当前计划方向基本正确，但“只做校验”会让所有 v3 消息稳定失败，不能恢复处理。下一步应修复字段兼容，同时移除无效重试。\n\n建议修正为：\n\n1. 将根因定性为确定性的 schema 不兼容：`user_id` 与 `userId` 不匹配，不是瞬时超时。\n2. 以 `userId` 为规范字段：\n   - 从源头把 producer v3 改为发送 `userId`。\n   - 若已有在途或存量 v3 消息，在 consumer 边界临时将 `user_id` 映射为 `userId`。\n3. 先归一化字段，再执行 schema 校验；缺少两种字段或两者值冲突时，作为不可重试错误拒绝或隔离。\n4. 删除该契约错误触发的 timeout retry；重试仅保留给真正的瞬时故障。\n5. 验收标准：\n   - 现有复现测试由失败转为通过；\n   - trace 显示 payload 被正常处理且未进入重试；\n   - 补充“字段缺失”和“双字段冲突”两个非重试测试。\n6. producer v3 全量修复、存量消息消化后，再移除临时兼容映射。\n\n可将下一版计划概括为：\n\n> 修复 producer v3 的字段名，并在 consumer 边界提供临时版本化兼容；归一化后校验 payload，将 schema 错误标记为不可重试。以现有失败契约测试转绿且运行 trace 不再进入 timeout retry 作为验收条件。\n\n依据是 [history.md](</var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-convergence-live-utgco11_/calls/incumbent/anti_spiral_near_negative/workspace/history.md:3>) 的运行证据；[plan.md](</var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-convergence-live-utgco11_/calls/incumbent/anti_spiral_near_negative/workspace/plan.md:3>) 未被修改。"
+}

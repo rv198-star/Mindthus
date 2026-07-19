@@ -1,0 +1,26 @@
+{
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "arms": [
+    "r2"
+  ],
+  "cases": [
+    "decision_context",
+    "clear_mpg"
+  ],
+  "schedule": [
+    {
+      "arm": "r2",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r2",
+      "case": "clear_mpg"
+    }
+  ],
+  "per_call_counted_cap": 200000,
+  "mission_counted_cap": 5000000,
+  "mission_call_cap": 51,
+  "protocol": "beta/2.0-roi-convergence/PROTOCOL.md",
+  "cases_file": "/Volumes/Data/My Projects/Github/Mindthus-2.0-roi-convergence-v2/beta/2.0-roi-convergence/qualification/cases-v1.1.json"
+}

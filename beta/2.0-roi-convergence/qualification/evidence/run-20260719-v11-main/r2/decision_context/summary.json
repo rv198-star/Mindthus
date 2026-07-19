@@ -1,0 +1,34 @@
+{
+  "arm": "r2",
+  "case": "decision_context",
+  "group": "hard_judgment",
+  "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+  "required_owner": null,
+  "passive_family": "decision_context",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:26:42.161435+00:00",
+  "duration_seconds": 50.115,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+  "usage": {
+    "input_tokens": 30630,
+    "cached_input_tokens": 19968,
+    "output_tokens": 659,
+    "reasoning_output_tokens": 271
+  },
+  "counted_tokens": 31289,
+  "uncached_input_tokens": 10662,
+  "loaded_paths": [
+    "skills/3l5s/SKILL.md"
+  ],
+  "loaded_skills": [
+    "3l5s"
+  ],
+  "loaded_owners": [
+    "3l5s"
+  ],
+  "loaded_mindthus_bytes": 7937,
+  "final": "建议现在停止继续迁移——准确说，是“暂停新增迁移”，不要贸然回滚已经稳定运行的部分。\n\n原因很简单：目前没有成功标准、风险数据和已验证的回退方案，继续相当于用生产环境补齐决策依据。\n\n只有同时满足以下条件才恢复：\n\n- 数据一致性、错误率和性能达到明确阈值；\n- 回退方案已实际演练成功；\n- 剩余风险有负责人和监控；\n- 下一批可以小流量、可逆地验证。\n\n默认动作：冻结新流量，保留现场，补齐上述证据后再决定继续或终止。"
+}

@@ -1,0 +1,35 @@
+{
+  "arm": "r3",
+  "case": "clear_wae",
+  "group": "hard_judgment",
+  "expected": "Read WAE; separate agentic judgment, deterministic workflow enforcement, and evidence gates without routing ceremony.",
+  "required_owner": "wae",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:51:41.377565+00:00",
+  "duration_seconds": 74.22,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+  "usage": {
+    "input_tokens": 70450,
+    "cached_input_tokens": 56320,
+    "output_tokens": 1780,
+    "reasoning_output_tokens": 606
+  },
+  "counted_tokens": 72230,
+  "uncached_input_tokens": 14130,
+  "loaded_paths": [
+    "skills/wae/SKILL.md",
+    "skills/wae/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "wae"
+  ],
+  "loaded_owners": [
+    "wae"
+  ],
+  "loaded_mindthus_bytes": 31711,
+  "final": "采用 WAE 边界：**Agent 负责处理不确定性；Workflow 负责不可绕过的秩序与权限；Evidence 负责约束结论。**\n\n| 控制层 | 职责 |\n|---|---|\n| LLM Agent | 解释代码/配置变更、识别语义风险与测试缺口、评估影响面、分析异常、提出灰度与回滚方案；必须输出依据、假设、置信度和未决项 |\n| 确定性 Workflow | 身份与 RBAC、职责分离、发布窗口、制品锁定、环境映射、必跑检查、阈值判断、审批人数、灰度节奏、超时/自动回滚、审计留痕 |\n| 人工审批 | 高影响、不可逆、跨权限、证据冲突及例外放行；Agent 无权授予豁免 |\n\n放行所需 evidence：\n\n- **制品一致性**：测试对象与待发布制品的 digest 完全一致，来源和构建链可追溯。\n- **质量验证**：规定范围的单元、集成、端到端、回归测试通过；覆盖范围与变更影响匹配。\n- **安全合规**：漏洞、密钥、依赖、许可证和策略扫描通过确定性阈值。\n- **运行准备**：监控、告警、容量、迁移方案、灰度方案和可执行回滚方案已验证。\n- **审批有效性**：审批人有权、职责分离满足、审批绑定当前 commit/digest，且未过期。\n- **证据完整性**：证据来自可信系统，带时间、范围、结果和不可篡改引用；缺失、过期或相互矛盾即阻断。\n\n最终规则：\n\n```text\n放行 =\n全部硬门禁通过\nAND evidence 有效且绑定同一制品\nAND 无未解决 blocker\nAND 满足风险等级对应的人工审批\n```\n\nAgent 的“建议放行”、自评分或自然语言总结**不能作为放行证据，也不能覆盖硬门禁**。任何例外必须由确定性流程记录授权人、范围、补偿措施和失效时间。"
+}

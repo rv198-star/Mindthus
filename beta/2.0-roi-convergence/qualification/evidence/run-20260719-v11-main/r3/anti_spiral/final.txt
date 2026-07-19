@@ -1,0 +1,7 @@
+不要新增第三条 fallback；现有证据表明故障来自 schema drift，继续叠加 fallback 没有依据。
+
+应等量替换现有 fallback queue 规则为：
+
+> 对不匹配明确版本化 schema 的 payload，立即隔离并告警，禁止重试或进入 fallback queue；记录 schema 版本、校验差异和原始 payload 供定位。
+
+未修改任何文件。

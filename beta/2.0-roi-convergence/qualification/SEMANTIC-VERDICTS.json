@@ -1,0 +1,50 @@
+{
+  "schema_version": "mindthus-roi-convergence-semantic-verdict-v0.1",
+  "review_basis": "Frozen case rubrics; activation comes only from raw read events; wording and formatting are not scored.",
+  "initial_panel": {
+    "arms": ["incumbent", "r1", "r2", "r3"],
+    "passing_cases_for_all_arms": [
+      "direct",
+      "evidence",
+      "frame_whole_v11",
+      "anti_spiral",
+      "anti_spiral_near_negative",
+      "clear_sela",
+      "clear_mpg",
+      "clear_wae"
+    ],
+    "failing_case_for_all_arms": {
+      "case": "decision_context",
+      "reason": "Every arm gave a stop, pause, or hold posture before acquiring answer-changing context; the frozen rubric required no direction and exactly one blocking question."
+    },
+    "route_action_gate": {
+      "r1": "FAIL",
+      "r2": "FAIL",
+      "r3": "FAIL"
+    },
+    "route_recall_floor": {
+      "r1": "PASS: explicit 3/3; passive 2/3",
+      "r2": "PASS: explicit 3/3; passive 3/3",
+      "r3": "PASS: explicit 3/3; passive 2/3"
+    }
+  },
+  "r2_1_targeted_pair": {
+    "decision_context": {
+      "verdict": "PASS",
+      "reason": "Only the 895-byte gate loaded; the final response gave no posture and asked one answer-changing compound question."
+    },
+    "clear_mpg": {
+      "verdict": "FAIL",
+      "reason": "The gate loaded despite the frozen clear-owner negative control and replaced the required same-turn MPG path action with an RPO blocking question."
+    },
+    "correction_verdict": "R2_1_REJECTED",
+    "full_requalification_authorized": false
+  },
+  "terminal": {
+    "r1": "REJECTED_NEGATIVE_ROI_AND_ACTION_FAILURE",
+    "r2": "REJECTED_ACTION_FAILURE",
+    "r3": "REJECTED_NEGATIVE_ROI_AND_ACTION_FAILURE",
+    "r2_1": "REJECTED_TARGETED_NEAR_NEGATIVE_FAILURE",
+    "qualified_new_route": null
+  }
+}

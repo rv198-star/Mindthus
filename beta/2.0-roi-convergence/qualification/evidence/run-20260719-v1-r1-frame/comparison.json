@@ -1,0 +1,62 @@
+{
+  "schema_version": "mindthus-roi-convergence-live-v0.1",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "expected_cases": [
+    "frame_whole"
+  ],
+  "arms": [
+    "r1"
+  ],
+  "calls": 1,
+  "counted_tokens": 275010,
+  "complete": {
+    "r1": true
+  },
+  "medians": {
+    "r1": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 55687,
+      "duration_seconds": 80.954
+    }
+  },
+  "hard_judgment_medians": {
+    "r1": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 55687,
+      "duration_seconds": 80.954
+    }
+  },
+  "reductions_vs_incumbent": {},
+  "records": [
+    {
+      "arm": "r1",
+      "case": "frame_whole",
+      "group": "hard_judgment",
+      "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:13:47.869725+00:00",
+      "duration_seconds": 80.954,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+      "usage": {
+        "input_tokens": 273799,
+        "cached_input_tokens": 218112,
+        "output_tokens": 1211,
+        "reasoning_output_tokens": 542
+      },
+      "counted_tokens": 275010,
+      "uncached_input_tokens": 55687,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "**结论：不成立，只在“纯指令型 Skill”这一特例下近似成立。**\n\n`SKILL.md` 确实承担提示词式的指令与触发元数据；但完整 Skill 是一个可复用工作流包。脚本可被实际执行以提供确定性行为，验证用于判定结果是否合格，资源也可能是模板或交付物，而不只是“更多上下文”。因此，把 Skill 本质归结为一段提示词，是过度简化。[OpenAI Codex Skills 文档](https://learn.chatgpt.com/docs/build-skills)"
+    }
+  ],
+  "semantic_verdict": "agentic_review_required"
+}

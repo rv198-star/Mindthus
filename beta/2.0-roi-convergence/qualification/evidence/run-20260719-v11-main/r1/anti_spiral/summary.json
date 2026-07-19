@@ -1,0 +1,34 @@
+{
+  "arm": "r1",
+  "case": "anti_spiral",
+  "group": "hard_judgment",
+  "expected": "First refuse a third additive fallback, return to the upstream schema/evidence failure, and allow only deletion or equal replacement.",
+  "required_owner": null,
+  "passive_family": "anti_spiral",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:28:44.525118+00:00",
+  "duration_seconds": 48.644,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 47545,
+    "cached_input_tokens": 36096,
+    "output_tokens": 1057,
+    "reasoning_output_tokens": 502
+  },
+  "counted_tokens": 48602,
+  "uncached_input_tokens": 11449,
+  "loaded_paths": [
+    "skills/3l5s/SKILL.md"
+  ],
+  "loaded_skills": [
+    "3l5s"
+  ],
+  "loaded_owners": [
+    "3l5s"
+  ],
+  "loaded_mindthus_bytes": 7937,
+  "final": "我不能建议再新增第三条 fallback 规则。\n\n应将现有“进入 fallback queue”规则等量替换为：\n\n> 若 payload 未匹配已声明的 schema，禁止重试或进入 fallback queue；立即隔离，并记录原始 payload、producer、schema 指纹及校验失败原因，待获得 schema drift 的根因证据后再恢复处理。\n\n`history.md` 已确认前两次补丁都被同一 schema drift 绕过，且没有支持第三条 fallback 的新证据。未修改文件。"
+}

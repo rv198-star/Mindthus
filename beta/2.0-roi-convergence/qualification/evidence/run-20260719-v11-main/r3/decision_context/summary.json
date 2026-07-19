@@ -1,0 +1,28 @@
+{
+  "arm": "r3",
+  "case": "decision_context",
+  "group": "hard_judgment",
+  "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+  "required_owner": null,
+  "passive_family": "decision_context",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:27:32.422000+00:00",
+  "duration_seconds": 71.943,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+  "usage": {
+    "input_tokens": 67785,
+    "cached_input_tokens": 52224,
+    "output_tokens": 1649,
+    "reasoning_output_tokens": 670
+  },
+  "counted_tokens": 69434,
+  "uncached_input_tokens": 15561,
+  "loaded_paths": [],
+  "loaded_skills": [],
+  "loaded_owners": [],
+  "loaded_mindthus_bytes": 0,
+  "final": "长期迁移方向可以保留，但当前迁移现在应当**停止推进**。\n\n具体执行：\n\n- 停止新增流量、数据和依赖切换。\n- 已稳定运行的迁移部分先保留，不贸然全量回滚。\n- 若正处于切换中，先到达可恢复检查点，避免停在半迁移状态。\n- 只有在回滚演练通过、验收指标达标、下一阶段影响范围受控后再恢复。\n\n理由很简单：目前没有基线、收益、故障率或回滚能力的证据。继续会扩大不可逆暴露，暂停则保留重新启动的选择权。"
+}

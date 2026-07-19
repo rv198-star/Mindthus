@@ -1,0 +1,20 @@
+{
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "arms": [
+    "r1"
+  ],
+  "cases": [
+    "frame_whole"
+  ],
+  "schedule": [
+    {
+      "arm": "r1",
+      "case": "frame_whole"
+    }
+  ],
+  "per_call_counted_cap": 200000,
+  "mission_counted_cap": 5000000,
+  "mission_call_cap": 51,
+  "protocol": "beta/2.0-roi-convergence/PROTOCOL.md"
+}

@@ -1,0 +1,7 @@
+我不能建议再新增第三条 fallback 规则。
+
+应将现有“进入 fallback queue”规则等量替换为：
+
+> 若 payload 未匹配已声明的 schema，禁止重试或进入 fallback queue；立即隔离，并记录原始 payload、producer、schema 指纹及校验失败原因，待获得 schema drift 的根因证据后再恢复处理。
+
+`history.md` 已确认前两次补丁都被同一 schema drift 绕过，且没有支持第三条 fallback 的新证据。未修改文件。

@@ -1,0 +1,35 @@
+{
+  "arm": "r2",
+  "case": "clear_sela",
+  "group": "hard_judgment",
+  "expected": "Read SELA; choose B as the long-term mainline and retain A only for bounded premium, hard-threshold, exceptional, or transition use.",
+  "required_owner": "sela",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:40:16.256102+00:00",
+  "duration_seconds": 64.918,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+  "usage": {
+    "input_tokens": 48514,
+    "cached_input_tokens": 34048,
+    "output_tokens": 1287,
+    "reasoning_output_tokens": 465
+  },
+  "counted_tokens": 49801,
+  "uncached_input_tokens": 14466,
+  "loaded_paths": [
+    "skills/sela/SKILL.md",
+    "skills/sela/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "sela"
+  ],
+  "loaded_owners": [
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14046,
+  "final": "长期主方向应选 B；A 不再作为平行主线，而应收缩为例外处理、质量标杆和高价值精品通道。\n\n核心原因是：A 的 15% 是局部质量优势，B 的数量级成本优势、可复制性和数据改进能力则是系统优势。只要 B 的质量达到“可接受阈值”，长期规模、数据和迭代形成的复利通常会压过 A 的静态领先。\n\nA 的保留边界应按任务性质划定：\n\n- 质量差距会造成不可逆损失、重大责任或安全风险；\n- 15% 的提升带来非线性价值，客户愿意支付显著溢价；\n- 极端、稀有、非标准案例，B 缺少数据且错误代价高；\n- 作为金标准、审计复核和训练反馈来源，用来持续校准 B。\n\n除此之外，标准化、重复性强、数量大的任务都应归入 B。尤其不能因为“最强专家比当前自动化系统好”就保留 A 为默认流程——公平比较应是平均 A 对平均 B，并考虑 B 的学习曲线。\n\n只有三种证据足以推翻这个方向：\n\n1. B 长期停滞在业务不可接受的质量阈值以下；\n2. A 的质量优势能够规模化，同时成本不再线性增长；\n3. 那 15% 实际承载了绝大部分经济价值，而非普通的线性改善。\n\n因此，准确表述不是“淘汰 A”，而是：**B 占据主战场，A 退守质量差距真正具有决定性的边界场景。** 这只是长期结构判断，并不自动推出现在立即全量切换。"
+}

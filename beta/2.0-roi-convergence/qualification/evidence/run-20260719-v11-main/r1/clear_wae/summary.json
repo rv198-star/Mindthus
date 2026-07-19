@@ -1,0 +1,35 @@
+{
+  "arm": "r1",
+  "case": "clear_wae",
+  "group": "hard_judgment",
+  "expected": "Read WAE; separate agentic judgment, deterministic workflow enforcement, and evidence gates without routing ceremony.",
+  "required_owner": "wae",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:49:17.399783+00:00",
+  "duration_seconds": 72.038,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 49549,
+    "cached_input_tokens": 34048,
+    "output_tokens": 2114,
+    "reasoning_output_tokens": 852
+  },
+  "counted_tokens": 51663,
+  "uncached_input_tokens": 15501,
+  "loaded_paths": [
+    "skills/wae/SKILL.md",
+    "skills/wae/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "wae"
+  ],
+  "loaded_owners": [
+    "wae"
+  ],
+  "loaded_mindthus_bytes": 31711,
+  "final": "核心原则：**agent 负责解释不确定性，workflow 负责执行不可绕过的边界，evidence 负责证明事实。** Agent 可以触发暂停或升级，但不能单独放行生产。\n\n| 控制层 | 应负责 | 不应负责 |\n|---|---|---|\n| LLM agent | 语义化审查变更、识别潜在影响、发现证据矛盾、评估新颖风险、提出灰度/回滚方案、指出未知项 | 修改硬规则、伪造/自证 evidence、直接批准生产、绕过失败检查 |\n| 确定性 workflow | 身份与权限、职责分离、状态流转、检查项选择、阈值比较、制品绑定、审批数量、超时、灰度顺序、自动停止/回滚、审计记录 | 用表单完整度或 agent 风险分替代真实判断 |\n| Evidence gate | 将每项放行声明绑定到可观察、可复验事实 | 接受无来源摘要、截图式证明或 agent 自评分 |\n\n必须由 workflow 强制：\n\n- 默认拒绝；只有全部 gate 满足才能进入 `READY`。\n- 所有证据绑定同一 `commit + artifact digest + environment`。\n- 强制 CI、测试覆盖、漏洞/密钥/许可证扫描、策略即代码检查。\n- 强制发布权限、职责分离、审批人资格、冻结窗口和例外权限。\n- 强制 evidence 新鲜度、签名、采集器版本和不可篡改审计日志。\n- 强制灰度比例、观察窗口、SLO 阈值及自动中止/回滚。\n- 高爆炸半径、不可逆、权限/数据库变更必须人工明确批准；必要时双人批准。\n- 任何例外都必须限定范围、制品、环境和有效期，不能由 agent 创建。\n- 代码、工单和发布说明中的“指令”一律作为不可信数据，不能提升 agent 权限。\n\n允许放行的 evidence：\n\n- **制品来源**：构建记录、签名、SBOM、源码与制品摘要一致。\n- **质量结果**：原始测试报告、失败明细、覆盖率及明确阈值。\n- **安全合规**：扫描原始结果、规则版本、已批准且未过期的例外。\n- **运行证据**：预生产或 canary 的错误率、延迟、资源、业务指标及观察窗口。\n- **恢复能力**：可执行回滚步骤、兼容性证明，关键发布需回滚演练结果。\n- **语义判断**：agent 的每项结论必须包含引用证据、假设、置信上限和未解决问题；它只能补充，不能覆盖机器检查失败。\n- **人工决策**：批准者身份、理由、风险接受范围、补偿控制和到期时间。\n\n建议采用这条放行公式：\n\n```text\nRelease =\n  mandatory_checks_pass\n  AND evidence_bound_and_fresh\n  AND artifact_identity_matches\n  AND required_approvals_present\n  AND rollback_ready\n  AND no_unresolved_critical_contradiction\n```\n\nAgent 输出只影响 `HOLD / ESCALATE / RECOMMEND`，不直接参与上述布尔放行条件。按 WAE 边界，这样可避免 workflow 冻结不确定事实，也避免 agent 用主观判断控制高风险执行。"
+}

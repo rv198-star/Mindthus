@@ -1,0 +1,37 @@
+{
+  "arm": "incumbent",
+  "case": "decision_context",
+  "group": "hard_judgment",
+  "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+  "required_owner": null,
+  "passive_family": "decision_context",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:24:44.347488+00:00",
+  "duration_seconds": 63.244,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+  "usage": {
+    "input_tokens": 48593,
+    "cached_input_tokens": 34048,
+    "output_tokens": 1262,
+    "reasoning_output_tokens": 529
+  },
+  "counted_tokens": 49855,
+  "uncached_input_tokens": 14545,
+  "loaded_paths": [
+    "skills/mpg/SKILL.md",
+    "skills/sela/SKILL.md"
+  ],
+  "loaded_skills": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_owners": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14073,
+  "final": "建议：**停止当前迁移的继续扩张，但保留迁移方向。** 立即暂停新增切流，不要仓促全量回退。\n\n原因很简单：目前没有成功标准、成本上限、回滚验证和关键指标；在这种证据条件下继续投入，会扩大锁定和故障面，而暂停是更可逆的选择。\n\n只在以下条件全部满足后恢复：\n\n- 数据一致性与核心业务指标达标\n- 回滚演练通过\n- 剩余成本和工期仍在预算内\n- 小流量运行稳定一个完整业务周期\n- 没有未解决的高严重度问题\n\n建议设置 **7–14 天验证窗口**。到期仍不能满足，就停止当前迁移路径，重新选方案；若存在硬性合规期限或旧系统即将失效，则只保留最小范围的灰度迁移。这个判断把“长期迁移方向”和“眼下这条实施路径”分开了：方向未必错，但现在不值得继续加码。"
+}

@@ -1,0 +1,3 @@
+**结论：不成立，只在“纯指令型 Skill”这一特例下近似成立。**
+
+`SKILL.md` 确实承担提示词式的指令与触发元数据；但完整 Skill 是一个可复用工作流包。脚本可被实际执行以提供确定性行为，验证用于判定结果是否合格，资源也可能是模板或交付物，而不只是“更多上下文”。因此，把 Skill 本质归结为一段提示词，是过度简化。[OpenAI Codex Skills 文档](https://learn.chatgpt.com/docs/build-skills)

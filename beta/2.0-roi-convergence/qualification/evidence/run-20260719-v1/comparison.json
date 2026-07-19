@@ -1,0 +1,337 @@
+{
+  "schema_version": "mindthus-roi-convergence-live-v0.1",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "expected_cases": [
+    "anti_spiral",
+    "anti_spiral_near_negative",
+    "clear_mpg",
+    "clear_sela",
+    "clear_wae",
+    "decision_context",
+    "direct",
+    "evidence",
+    "frame_whole"
+  ],
+  "arms": [
+    "incumbent",
+    "r1",
+    "r2",
+    "r3"
+  ],
+  "calls": 9,
+  "counted_tokens": 530725,
+  "complete": {
+    "incumbent": false,
+    "r1": false,
+    "r2": false,
+    "r3": false
+  },
+  "medians": {
+    "incumbent": {
+      "loaded_mindthus_bytes": 0.0,
+      "uncached_input_tokens": 6675.0,
+      "duration_seconds": 29.9135
+    },
+    "r1": {
+      "loaded_mindthus_bytes": 0.0,
+      "uncached_input_tokens": 6651.0,
+      "duration_seconds": 31.857
+    },
+    "r2": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 8714,
+      "duration_seconds": 28.823
+    },
+    "r3": {
+      "loaded_mindthus_bytes": 0.0,
+      "uncached_input_tokens": 5446.0,
+      "duration_seconds": 29.644
+    }
+  },
+  "hard_judgment_medians": {
+    "r2": {
+      "loaded_mindthus_bytes": 4293,
+      "uncached_input_tokens": 70022,
+      "duration_seconds": 97.816
+    }
+  },
+  "reductions_vs_incumbent": {
+    "r1": {
+      "loaded_mindthus_bytes": null,
+      "uncached_input_tokens": 0.0036,
+      "duration_seconds": -0.065
+    },
+    "r2": {
+      "loaded_mindthus_bytes": null,
+      "uncached_input_tokens": -0.3055,
+      "duration_seconds": 0.0365
+    },
+    "r3": {
+      "loaded_mindthus_bytes": null,
+      "uncached_input_tokens": 0.1841,
+      "duration_seconds": 0.009
+    }
+  },
+  "records": [
+    {
+      "arm": "incumbent",
+      "case": "direct",
+      "group": "ordinary",
+      "expected": "Report billing and 8080; no formal owner and no question.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:02:48.761320+00:00",
+      "duration_seconds": 32.507,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+      "usage": {
+        "input_tokens": 28648,
+        "cached_input_tokens": 24064,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28784,
+      "uncached_input_tokens": 4584,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "incumbent",
+      "case": "evidence",
+      "group": "ordinary",
+      "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:06:21.237581+00:00",
+      "duration_seconds": 27.32,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+      "usage": {
+        "input_tokens": 28734,
+        "cached_input_tokens": 19968,
+        "output_tokens": 187,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28921,
+      "uncached_input_tokens": 8766,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否已经改善。`metric.md` 仅提供当前错误率 **2.1%**，没有更早的测量值或比较基线。"
+    },
+    {
+      "arm": "r1",
+      "case": "direct",
+      "group": "ordinary",
+      "expected": "Report billing and 8080; no formal owner and no question.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:03:21.408409+00:00",
+      "duration_seconds": 35.047,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+      "usage": {
+        "input_tokens": 28626,
+        "cached_input_tokens": 24064,
+        "output_tokens": 134,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28760,
+      "uncached_input_tokens": 4562,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "r1",
+      "case": "evidence",
+      "group": "ordinary",
+      "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:04:54.838581+00:00",
+      "duration_seconds": 28.667,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+      "usage": {
+        "input_tokens": 28708,
+        "cached_input_tokens": 19968,
+        "output_tokens": 181,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28889,
+      "uncached_input_tokens": 8740,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否已改善。`metric.md` 只提供当前错误率 **2.1%**，没有更早的测量值或比较基线。"
+    },
+    {
+      "arm": "r2",
+      "case": "direct",
+      "group": "ordinary",
+      "expected": "Report billing and 8080; no formal owner and no question.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:03:56.598529+00:00",
+      "duration_seconds": 28.823,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+      "usage": {
+        "input_tokens": 28682,
+        "cached_input_tokens": 19968,
+        "output_tokens": 130,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28812,
+      "uncached_input_tokens": 8714,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "r2",
+      "case": "evidence",
+      "group": "ordinary",
+      "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:05:23.649879+00:00",
+      "duration_seconds": 27.16,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+      "usage": {
+        "input_tokens": 28814,
+        "cached_input_tokens": 24064,
+        "output_tokens": 250,
+        "reasoning_output_tokens": 57
+      },
+      "counted_tokens": 29064,
+      "uncached_input_tokens": 4750,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否改善。\n\n`metric.md` 仅提供当前错误率 **2.1%**，并明确说明没有历史测量值或比较基线。"
+    },
+    {
+      "arm": "r2",
+      "case": "frame_whole",
+      "group": "hard_judgment",
+      "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:06:48.727131+00:00",
+      "duration_seconds": 97.816,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+      "usage": {
+        "input_tokens": 298118,
+        "cached_input_tokens": 228096,
+        "output_tokens": 2011,
+        "reasoning_output_tokens": 830
+      },
+      "counted_tokens": 300129,
+      "uncached_input_tokens": 70022,
+      "loaded_paths": [
+        "skills/edsp/SKILL.md"
+      ],
+      "loaded_skills": [
+        "edsp"
+      ],
+      "loaded_owners": [
+        "edsp"
+      ],
+      "loaded_mindthus_bytes": 4293,
+      "final": "**结论：不成立。**\n\n`SKILL.md` 的确是文本，是 Skill 的“控制说明”；但 Codex Skill 整体是一个**可发现、渐进加载、可执行的工作流包**。其中脚本会被实际执行，验证会产生可判定的证据或约束，资源可作为模板和产物——它们不只是提示模型的上下文。\n\n反证很简单：两份完全相同的 `SKILL.md`，一份带可运行的验证脚本，另一份脚本失效，实际能力和结果可靠性会明显不同；若 Skill 本质只是提示词，两者应当等价，但并不等价。\n\n更准确的表述是：**提示词是 Skill 的控制层，脚本、资源和验证是执行与证据层。** [OpenAI 官方文档](https://developers.openai.com/codex/concepts/customization#skills)也明确将 Skill 定义为包含 `SKILL.md` 及可选脚本、参考资料和资源的可复用工作流。"
+    },
+    {
+      "arm": "r3",
+      "case": "direct",
+      "group": "ordinary",
+      "expected": "Report billing and 8080; no formal owner and no question.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:04:25.561514+00:00",
+      "duration_seconds": 29.14,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+      "usage": {
+        "input_tokens": 28408,
+        "cached_input_tokens": 23040,
+        "output_tokens": 134,
+        "reasoning_output_tokens": 0
+      },
+      "counted_tokens": 28542,
+      "uncached_input_tokens": 5368,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "r3",
+      "case": "evidence",
+      "group": "ordinary",
+      "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+      "required_owner": null,
+      "passive_family": null,
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:05:50.948564+00:00",
+      "duration_seconds": 30.148,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+      "usage": {
+        "input_tokens": 28564,
+        "cached_input_tokens": 23040,
+        "output_tokens": 260,
+        "reasoning_output_tokens": 68
+      },
+      "counted_tokens": 28824,
+      "uncached_input_tokens": 5524,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否已经改善。\n\n`metric.md` 仅提供当前错误率 **2.1%**，并明确说明没有更早的测量值或比较基线。"
+    }
+  ],
+  "semantic_verdict": "agentic_review_required"
+}

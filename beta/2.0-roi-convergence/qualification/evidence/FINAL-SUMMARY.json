@@ -1,0 +1,515 @@
+{
+  "schema_version": "mindthus-roi-convergence-aggregate-v0.1",
+  "script_verdict": "arithmetic_and_activation_shape_only",
+  "semantic_review": "qualification/SEMANTIC-VERDICTS.json",
+  "valid_initial_panel": {
+    "calls": 36,
+    "cases_per_arm": 9,
+    "source_paths": {
+      "incumbent": {
+        "direct": "qualification/evidence/run-20260719-v1/incumbent/direct/summary.json",
+        "evidence": "qualification/evidence/run-20260719-v1/incumbent/evidence/summary.json",
+        "frame_whole_v11": "qualification/evidence/run-20260719-v11-frame/incumbent/frame_whole_v11/summary.json",
+        "decision_context": "qualification/evidence/run-20260719-v11-main/incumbent/decision_context/summary.json",
+        "anti_spiral": "qualification/evidence/run-20260719-v11-main/incumbent/anti_spiral/summary.json",
+        "anti_spiral_near_negative": "qualification/evidence/run-20260719-v11-main/incumbent/anti_spiral_near_negative/summary.json",
+        "clear_sela": "qualification/evidence/run-20260719-v11-main/incumbent/clear_sela/summary.json",
+        "clear_mpg": "qualification/evidence/run-20260719-v11-main/incumbent/clear_mpg/summary.json",
+        "clear_wae": "qualification/evidence/run-20260719-v11-main/incumbent/clear_wae/summary.json"
+      },
+      "r1": {
+        "direct": "qualification/evidence/run-20260719-v1/r1/direct/summary.json",
+        "evidence": "qualification/evidence/run-20260719-v1/r1/evidence/summary.json",
+        "frame_whole_v11": "qualification/evidence/run-20260719-v11-frame/r1/frame_whole_v11/summary.json",
+        "decision_context": "qualification/evidence/run-20260719-v11-main/r1/decision_context/summary.json",
+        "anti_spiral": "qualification/evidence/run-20260719-v11-main/r1/anti_spiral/summary.json",
+        "anti_spiral_near_negative": "qualification/evidence/run-20260719-v11-main/r1/anti_spiral_near_negative/summary.json",
+        "clear_sela": "qualification/evidence/run-20260719-v11-main/r1/clear_sela/summary.json",
+        "clear_mpg": "qualification/evidence/run-20260719-v11-main/r1/clear_mpg/summary.json",
+        "clear_wae": "qualification/evidence/run-20260719-v11-main/r1/clear_wae/summary.json"
+      },
+      "r2": {
+        "direct": "qualification/evidence/run-20260719-v1/r2/direct/summary.json",
+        "evidence": "qualification/evidence/run-20260719-v1/r2/evidence/summary.json",
+        "frame_whole_v11": "qualification/evidence/run-20260719-v11-frame/r2/frame_whole_v11/summary.json",
+        "decision_context": "qualification/evidence/run-20260719-v11-main/r2/decision_context/summary.json",
+        "anti_spiral": "qualification/evidence/run-20260719-v11-main/r2/anti_spiral/summary.json",
+        "anti_spiral_near_negative": "qualification/evidence/run-20260719-v11-main/r2/anti_spiral_near_negative/summary.json",
+        "clear_sela": "qualification/evidence/run-20260719-v11-main/r2/clear_sela/summary.json",
+        "clear_mpg": "qualification/evidence/run-20260719-v11-main/r2/clear_mpg/summary.json",
+        "clear_wae": "qualification/evidence/run-20260719-v11-main/r2/clear_wae/summary.json"
+      },
+      "r3": {
+        "direct": "qualification/evidence/run-20260719-v1/r3/direct/summary.json",
+        "evidence": "qualification/evidence/run-20260719-v1/r3/evidence/summary.json",
+        "frame_whole_v11": "qualification/evidence/run-20260719-v11-frame/r3/frame_whole_v11/summary.json",
+        "decision_context": "qualification/evidence/run-20260719-v11-main/r3/decision_context/summary.json",
+        "anti_spiral": "qualification/evidence/run-20260719-v11-main/r3/anti_spiral/summary.json",
+        "anti_spiral_near_negative": "qualification/evidence/run-20260719-v11-main/r3/anti_spiral_near_negative/summary.json",
+        "clear_sela": "qualification/evidence/run-20260719-v11-main/r3/clear_sela/summary.json",
+        "clear_mpg": "qualification/evidence/run-20260719-v11-main/r3/clear_mpg/summary.json",
+        "clear_wae": "qualification/evidence/run-20260719-v11-main/r3/clear_wae/summary.json"
+      }
+    },
+    "medians": {
+      "incumbent": {
+        "loaded_mindthus_bytes": 7937,
+        "uncached_input_tokens": 10407,
+        "duration_seconds": 63.244
+      },
+      "r1": {
+        "loaded_mindthus_bytes": 7937,
+        "uncached_input_tokens": 11449,
+        "duration_seconds": 54.258
+      },
+      "r2": {
+        "loaded_mindthus_bytes": 7937,
+        "uncached_input_tokens": 8714,
+        "duration_seconds": 57.718
+      },
+      "r3": {
+        "loaded_mindthus_bytes": 7937,
+        "uncached_input_tokens": 13146,
+        "duration_seconds": 66.286
+      }
+    },
+    "hard_judgment_medians": {
+      "incumbent": {
+        "loaded_mindthus_bytes": 10991.5,
+        "uncached_input_tokens": 12476.0,
+        "duration_seconds": 65.39
+      },
+      "r1": {
+        "loaded_mindthus_bytes": 14059.5,
+        "uncached_input_tokens": 14971.5,
+        "duration_seconds": 56.221000000000004
+      },
+      "r2": {
+        "loaded_mindthus_bytes": 10991.5,
+        "uncached_input_tokens": 12140.5,
+        "duration_seconds": 61.318000000000005
+      },
+      "r3": {
+        "loaded_mindthus_bytes": 10991.5,
+        "uncached_input_tokens": 14090.5,
+        "duration_seconds": 69.11449999999999
+      }
+    },
+    "reductions_vs_incumbent": {
+      "r1": {
+        "loaded_mindthus_bytes": 0.0,
+        "uncached_input_tokens": -0.1001,
+        "duration_seconds": 0.1421
+      },
+      "r2": {
+        "loaded_mindthus_bytes": 0.0,
+        "uncached_input_tokens": 0.1627,
+        "duration_seconds": 0.0874
+      },
+      "r3": {
+        "loaded_mindthus_bytes": 0.0,
+        "uncached_input_tokens": -0.2632,
+        "duration_seconds": -0.0481
+      }
+    },
+    "activation": {
+      "incumbent": {
+        "explicit": {
+          "clear_sela": {
+            "required": "sela",
+            "loaded_owners": [
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_mpg": {
+            "required": "mpg",
+            "loaded_owners": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_wae": {
+            "required": "wae",
+            "loaded_owners": [
+              "wae"
+            ],
+            "hit": true
+          }
+        },
+        "explicit_hits": 3,
+        "passive": {
+          "frame_whole": {
+            "case": "frame_whole_v11",
+            "loaded_skills": [
+              "edsp"
+            ],
+            "hit": true
+          },
+          "decision_context": {
+            "case": "decision_context",
+            "loaded_skills": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "anti_spiral": {
+            "case": "anti_spiral",
+            "loaded_skills": [
+              "3l5s"
+            ],
+            "hit": true
+          }
+        },
+        "passive_hits": 3
+      },
+      "r1": {
+        "explicit": {
+          "clear_sela": {
+            "required": "sela",
+            "loaded_owners": [
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_mpg": {
+            "required": "mpg",
+            "loaded_owners": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_wae": {
+            "required": "wae",
+            "loaded_owners": [
+              "wae"
+            ],
+            "hit": true
+          }
+        },
+        "explicit_hits": 3,
+        "passive": {
+          "frame_whole": {
+            "case": "frame_whole_v11",
+            "loaded_skills": [],
+            "hit": false
+          },
+          "decision_context": {
+            "case": "decision_context",
+            "loaded_skills": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "anti_spiral": {
+            "case": "anti_spiral",
+            "loaded_skills": [
+              "3l5s"
+            ],
+            "hit": true
+          }
+        },
+        "passive_hits": 2
+      },
+      "r2": {
+        "explicit": {
+          "clear_sela": {
+            "required": "sela",
+            "loaded_owners": [
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_mpg": {
+            "required": "mpg",
+            "loaded_owners": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_wae": {
+            "required": "wae",
+            "loaded_owners": [
+              "wae"
+            ],
+            "hit": true
+          }
+        },
+        "explicit_hits": 3,
+        "passive": {
+          "frame_whole": {
+            "case": "frame_whole_v11",
+            "loaded_skills": [
+              "edsp"
+            ],
+            "hit": true
+          },
+          "decision_context": {
+            "case": "decision_context",
+            "loaded_skills": [
+              "3l5s"
+            ],
+            "hit": true
+          },
+          "anti_spiral": {
+            "case": "anti_spiral",
+            "loaded_skills": [
+              "3l5s"
+            ],
+            "hit": true
+          }
+        },
+        "passive_hits": 3
+      },
+      "r3": {
+        "explicit": {
+          "clear_sela": {
+            "required": "sela",
+            "loaded_owners": [
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_mpg": {
+            "required": "mpg",
+            "loaded_owners": [
+              "mpg",
+              "sela"
+            ],
+            "hit": true
+          },
+          "clear_wae": {
+            "required": "wae",
+            "loaded_owners": [
+              "wae"
+            ],
+            "hit": true
+          }
+        },
+        "explicit_hits": 3,
+        "passive": {
+          "frame_whole": {
+            "case": "frame_whole_v11",
+            "loaded_skills": [
+              "edsp"
+            ],
+            "hit": true
+          },
+          "decision_context": {
+            "case": "decision_context",
+            "loaded_skills": [],
+            "hit": false
+          },
+          "anti_spiral": {
+            "case": "anti_spiral",
+            "loaded_skills": [
+              "3l5s"
+            ],
+            "hit": true
+          }
+        },
+        "passive_hits": 2
+      }
+    },
+    "counted_tokens_by_arm": {
+      "incumbent": 386118,
+      "r1": 387548,
+      "r2": 468814,
+      "r3": 450298
+    }
+  },
+  "invalidated_v1_frame_carrier": {
+    "calls": 3,
+    "counted_tokens": 776284,
+    "records": [
+      {
+        "arm": "r2",
+        "case": "frame_whole",
+        "group": "hard_judgment",
+        "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+        "required_owner": null,
+        "passive_family": "frame_whole",
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "started_at": "2026-07-19T06:06:48.727131+00:00",
+        "duration_seconds": 97.816,
+        "exit_code": 0,
+        "timed_out": false,
+        "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+        "usage": {
+          "input_tokens": 298118,
+          "cached_input_tokens": 228096,
+          "output_tokens": 2011,
+          "reasoning_output_tokens": 830
+        },
+        "counted_tokens": 300129,
+        "uncached_input_tokens": 70022,
+        "loaded_paths": [
+          "skills/edsp/SKILL.md"
+        ],
+        "loaded_skills": [
+          "edsp"
+        ],
+        "loaded_owners": [
+          "edsp"
+        ],
+        "loaded_mindthus_bytes": 4293,
+        "final": "**结论：不成立。**\n\n`SKILL.md` 的确是文本，是 Skill 的“控制说明”；但 Codex Skill 整体是一个**可发现、渐进加载、可执行的工作流包**。其中脚本会被实际执行，验证会产生可判定的证据或约束，资源可作为模板和产物——它们不只是提示模型的上下文。\n\n反证很简单：两份完全相同的 `SKILL.md`，一份带可运行的验证脚本，另一份脚本失效，实际能力和结果可靠性会明显不同；若 Skill 本质只是提示词，两者应当等价，但并不等价。\n\n更准确的表述是：**提示词是 Skill 的控制层，脚本、资源和验证是执行与证据层。** [OpenAI 官方文档](https://developers.openai.com/codex/concepts/customization#skills)也明确将 Skill 定义为包含 `SKILL.md` 及可选脚本、参考资料和资源的可复用工作流。"
+      },
+      {
+        "arm": "incumbent",
+        "case": "frame_whole",
+        "group": "hard_judgment",
+        "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+        "required_owner": null,
+        "passive_family": "frame_whole",
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "started_at": "2026-07-19T06:10:52.403894+00:00",
+        "duration_seconds": 76.323,
+        "exit_code": 0,
+        "timed_out": false,
+        "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+        "usage": {
+          "input_tokens": 199673,
+          "cached_input_tokens": 155904,
+          "output_tokens": 1472,
+          "reasoning_output_tokens": 667
+        },
+        "counted_tokens": 201145,
+        "uncached_input_tokens": 43769,
+        "loaded_paths": [
+          "skills/edsp/SKILL.md"
+        ],
+        "loaded_skills": [
+          "edsp"
+        ],
+        "loaded_owners": [
+          "edsp"
+        ],
+        "loaded_mindthus_bytes": 4177,
+        "final": "**结论：不成立，最多只对了一半。**\n\n`SKILL.md` 确实是指令入口，但 Codex Skill 本质上是一个以它为核心的**可复用工作流包**。脚本可以实际执行操作和验证结果，资源与依赖也有独立作用，不能统称为“给模型更多上下文”。官方定义同样将 Skill 描述为指令、资源和可选脚本的组合。[Codex Skills 文档](https://developers.openai.com/codex/skills)"
+      },
+      {
+        "arm": "r1",
+        "case": "frame_whole",
+        "group": "hard_judgment",
+        "expected": "Preserve that SKILL.md is text but deny that this local fact defines the whole Skill; no question.",
+        "required_owner": null,
+        "passive_family": "frame_whole",
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "started_at": "2026-07-19T06:13:47.869725+00:00",
+        "duration_seconds": 80.954,
+        "exit_code": 0,
+        "timed_out": false,
+        "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+        "usage": {
+          "input_tokens": 273799,
+          "cached_input_tokens": 218112,
+          "output_tokens": 1211,
+          "reasoning_output_tokens": 542
+        },
+        "counted_tokens": 275010,
+        "uncached_input_tokens": 55687,
+        "loaded_paths": [],
+        "loaded_skills": [],
+        "loaded_owners": [],
+        "loaded_mindthus_bytes": 0,
+        "final": "**结论：不成立，只在“纯指令型 Skill”这一特例下近似成立。**\n\n`SKILL.md` 确实承担提示词式的指令与触发元数据；但完整 Skill 是一个可复用工作流包。脚本可被实际执行以提供确定性行为，验证用于判定结果是否合格，资源也可能是模板或交付物，而不只是“更多上下文”。因此，把 Skill 本质归结为一段提示词，是过度简化。[OpenAI Codex Skills 文档](https://learn.chatgpt.com/docs/build-skills)"
+      }
+    ],
+    "verdict_use": false,
+    "mission_budget_use": true
+  },
+  "r2_1_targeted_pair": {
+    "calls": 2,
+    "counted_tokens": 80528,
+    "records": [
+      {
+        "arm": "r2",
+        "case": "decision_context",
+        "group": "hard_judgment",
+        "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+        "required_owner": null,
+        "passive_family": "decision_context",
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "started_at": "2026-07-19T07:02:24.419970+00:00",
+        "duration_seconds": 38.605,
+        "exit_code": 0,
+        "timed_out": false,
+        "plugin_tree_sha256": "1cdae1b96775062d7df5f280a0372973c7a82103e377b8a760e65544c343414d",
+        "usage": {
+          "input_tokens": 29138,
+          "cached_input_tokens": 24064,
+          "output_tokens": 468,
+          "reasoning_output_tokens": 187
+        },
+        "counted_tokens": 29606,
+        "uncached_input_tokens": 5074,
+        "loaded_paths": [
+          "skills/using-mindthus/SKILL.md"
+        ],
+        "loaded_skills": [
+          "using-mindthus"
+        ],
+        "loaded_owners": [],
+        "loaded_mindthus_bytes": 895,
+        "final": "这次迁移的对象、当前进度、继续与停止各自的最大损失、能否回滚，以及最晚决策时间分别是什么？"
+      },
+      {
+        "arm": "r2",
+        "case": "clear_mpg",
+        "group": "hard_judgment",
+        "expected": "Read MPG; make a path-carrying continue, hold, or switch decision using carrier, exposure, volatility, rollback, and triggers; no blocking question.",
+        "required_owner": "mpg",
+        "passive_family": null,
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "started_at": "2026-07-19T07:03:03.196915+00:00",
+        "duration_seconds": 48.019,
+        "exit_code": 0,
+        "timed_out": false,
+        "plugin_tree_sha256": "1cdae1b96775062d7df5f280a0372973c7a82103e377b8a760e65544c343414d",
+        "usage": {
+          "input_tokens": 49877,
+          "cached_input_tokens": 34048,
+          "output_tokens": 1045,
+          "reasoning_output_tokens": 436
+        },
+        "counted_tokens": 50922,
+        "uncached_input_tokens": 15829,
+        "loaded_paths": [
+          "skills/mpg/SKILL.md",
+          "skills/sela/SKILL.md",
+          "skills/using-mindthus/SKILL.md"
+        ],
+        "loaded_skills": [
+          "mpg",
+          "sela",
+          "using-mindthus"
+        ],
+        "loaded_owners": [
+          "mpg",
+          "sela"
+        ],
+        "loaded_mindthus_bytes": 14968,
+        "final": "正式切换可接受的最大数据丢失或不一致窗口（RPO）是多少——是否必须将复制延迟降至 0，并连续稳定一段时间后才能切换？"
+      }
+    ]
+  },
+  "mission_usage": {
+    "generator_calls": 41,
+    "judge_calls": 0,
+    "counted_tokens": 2549590,
+    "input_tokens": 2496115,
+    "output_tokens": 53475,
+    "cached_input_tokens_is_input_subset": true
+  }
+}

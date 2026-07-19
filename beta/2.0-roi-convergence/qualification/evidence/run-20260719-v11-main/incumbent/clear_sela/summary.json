@@ -1,0 +1,35 @@
+{
+  "arm": "incumbent",
+  "case": "clear_sela",
+  "group": "hard_judgment",
+  "expected": "Read SELA; choose B as the long-term mainline and retain A only for bounded premium, hard-threshold, exceptional, or transition use.",
+  "required_owner": "sela",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:38:01.118487+00:00",
+  "duration_seconds": 76.63,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+  "usage": {
+    "input_tokens": 64879,
+    "cached_input_tokens": 49152,
+    "output_tokens": 1548,
+    "reasoning_output_tokens": 589
+  },
+  "counted_tokens": 66427,
+  "uncached_input_tokens": 15727,
+  "loaded_paths": [
+    "skills/sela/SKILL.md",
+    "skills/sela/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "sela"
+  ],
+  "loaded_owners": [
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14046,
+  "final": "结论：长期主方向选 B；A 不再作为并列主线，而应退守为“例外处理与质量校准层”。\n\n原因很直接：A 的约 15% 局部质量优势，难以长期抵消 B 的数量级成本优势、规模化能力和数据复利。随着使用量增加，B 的成本优势会扩大，质量差距则大概率收窄。\n\nA 只在以下边界内保留：\n\n- **硬质量门槛**：B 的误差可能造成安全、合规、不可逆损失或重大责任。\n- **高价值例外**：A 带来的增量收益明确高于其增量成本。\n- **付费精品市场**：客户确实愿意为约 15% 的质量提升持续支付溢价。\n- **系统校准职能**：用于疑难案例、金标准标注、抽检审计、纠偏和极端情况下的兜底。\n\n边界应按“风险与经济性”划分，不能按“重要客户”“复杂项目”等模糊标签划分。一旦某类案例被标准化、B 达到可接受质量，或 A 的增量收益不再覆盖成本，就应退出人工通道。\n\n因此，合理结构是：**B 承担规模化生产，A 只处理无法容错、值得溢价或用于改进 B 的少数场景。** 如果后来证明 B 并不会随数据改善，或长期无法跨越关键质量门槛，才需要重新审视这一主方向。"
+}

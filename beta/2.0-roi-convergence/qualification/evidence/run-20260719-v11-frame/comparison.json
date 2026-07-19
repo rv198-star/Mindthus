@@ -1,0 +1,216 @@
+{
+  "schema_version": "mindthus-roi-convergence-live-v0.1",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "expected_cases": [
+    "frame_whole_v11"
+  ],
+  "arms": [
+    "incumbent",
+    "r1",
+    "r2",
+    "r3"
+  ],
+  "calls": 4,
+  "counted_tokens": 104855,
+  "complete": {
+    "incumbent": true,
+    "r1": true,
+    "r2": true,
+    "r3": true
+  },
+  "medians": {
+    "incumbent": {
+      "loaded_mindthus_bytes": 4177,
+      "uncached_input_tokens": 5768,
+      "duration_seconds": 39.657
+    },
+    "r1": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 4331,
+      "duration_seconds": 26.464
+    },
+    "r2": {
+      "loaded_mindthus_bytes": 4293,
+      "uncached_input_tokens": 5799,
+      "duration_seconds": 33.819
+    },
+    "r3": {
+      "loaded_mindthus_bytes": 4293,
+      "uncached_input_tokens": 9624,
+      "duration_seconds": 27.035
+    }
+  },
+  "hard_judgment_medians": {
+    "incumbent": {
+      "loaded_mindthus_bytes": 4177,
+      "uncached_input_tokens": 5768,
+      "duration_seconds": 39.657
+    },
+    "r1": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 4331,
+      "duration_seconds": 26.464
+    },
+    "r2": {
+      "loaded_mindthus_bytes": 4293,
+      "uncached_input_tokens": 5799,
+      "duration_seconds": 33.819
+    },
+    "r3": {
+      "loaded_mindthus_bytes": 4293,
+      "uncached_input_tokens": 9624,
+      "duration_seconds": 27.035
+    }
+  },
+  "reductions_vs_incumbent": {
+    "r1": {
+      "loaded_mindthus_bytes": 1.0,
+      "uncached_input_tokens": 0.2491,
+      "duration_seconds": 0.3327
+    },
+    "r2": {
+      "loaded_mindthus_bytes": -0.0278,
+      "uncached_input_tokens": -0.0054,
+      "duration_seconds": 0.1472
+    },
+    "r3": {
+      "loaded_mindthus_bytes": -0.0278,
+      "uncached_input_tokens": -0.6685,
+      "duration_seconds": 0.3183
+    }
+  },
+  "records": [
+    {
+      "arm": "incumbent",
+      "case": "frame_whole_v11",
+      "group": "hard_judgment",
+      "expected": "Preserve the local component-test result but deny that it establishes whole-device safety; no question and no external-doc lookup.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:22:17.212453+00:00",
+      "duration_seconds": 39.657,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+      "usage": {
+        "input_tokens": 29832,
+        "cached_input_tokens": 24064,
+        "output_tokens": 387,
+        "reasoning_output_tokens": 113
+      },
+      "counted_tokens": 30219,
+      "uncached_input_tokens": 5768,
+      "loaded_paths": [
+        "skills/edsp/SKILL.md"
+      ],
+      "loaded_skills": [
+        "edsp"
+      ],
+      "loaded_owners": [
+        "edsp"
+      ],
+      "loaded_mindthus_bytes": 4177,
+      "final": "不成立。关键零件通过强度测试只是整机安全的必要条件之一，不能替代控制软件、装配质量、冗余设计和系统测试的安全验证。"
+    },
+    {
+      "arm": "r1",
+      "case": "frame_whole_v11",
+      "group": "hard_judgment",
+      "expected": "Preserve the local component-test result but deny that it establishes whole-device safety; no question and no external-doc lookup.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:22:57.020045+00:00",
+      "duration_seconds": 26.464,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+      "usage": {
+        "input_tokens": 14315,
+        "cached_input_tokens": 9984,
+        "output_tokens": 142,
+        "reasoning_output_tokens": 76
+      },
+      "counted_tokens": 14457,
+      "uncached_input_tokens": 4331,
+      "loaded_paths": [],
+      "loaded_skills": [],
+      "loaded_owners": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "不成立。关键承重零件通过强度测试，只能证明该零件满足特定强度要求；整机安全还取决于控制软件、装配质量、冗余设计、系统级测试等因素，零件结果不能替代系统安全验证。"
+    },
+    {
+      "arm": "r2",
+      "case": "frame_whole_v11",
+      "group": "hard_judgment",
+      "expected": "Preserve the local component-test result but deny that it establishes whole-device safety; no question and no external-doc lookup.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:23:23.635268+00:00",
+      "duration_seconds": 33.819,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+      "usage": {
+        "input_tokens": 29863,
+        "cached_input_tokens": 24064,
+        "output_tokens": 359,
+        "reasoning_output_tokens": 72
+      },
+      "counted_tokens": 30222,
+      "uncached_input_tokens": 5799,
+      "loaded_paths": [
+        "skills/edsp/SKILL.md"
+      ],
+      "loaded_skills": [
+        "edsp"
+      ],
+      "loaded_owners": [
+        "edsp"
+      ],
+      "loaded_mindthus_bytes": 4293,
+      "final": "不成立。关键零件通过强度测试，只能证明该零件在测试条件下达标，不能推出整机安全；控制软件、装配质量、冗余设计和系统测试都是整机安全的独立必要条件，而非附加说明。"
+    },
+    {
+      "arm": "r3",
+      "case": "frame_whole_v11",
+      "group": "hard_judgment",
+      "expected": "Preserve the local component-test result but deny that it establishes whole-device safety; no question and no external-doc lookup.",
+      "required_owner": null,
+      "passive_family": "frame_whole",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T06:23:57.583633+00:00",
+      "duration_seconds": 27.035,
+      "exit_code": 0,
+      "timed_out": false,
+      "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+      "usage": {
+        "input_tokens": 29592,
+        "cached_input_tokens": 19968,
+        "output_tokens": 365,
+        "reasoning_output_tokens": 92
+      },
+      "counted_tokens": 29957,
+      "uncached_input_tokens": 9624,
+      "loaded_paths": [
+        "skills/edsp/SKILL.md"
+      ],
+      "loaded_skills": [
+        "edsp"
+      ],
+      "loaded_owners": [
+        "edsp"
+      ],
+      "loaded_mindthus_bytes": 4293,
+      "final": "不成立。关键零件通过强度测试只能证明该零件满足特定强度要求，不能推出整机安全；控制软件、装配质量、冗余设计和系统测试都是整机安全的必要组成部分。"
+    }
+  ],
+  "semantic_verdict": "agentic_review_required"
+}

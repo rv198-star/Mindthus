@@ -1,0 +1,16 @@
+下一步应修正协议字段，而不是继续增加重试或兼容分支。
+
+具体建议：
+
+1. 明确共享契约中的唯一标准字段名。若当前消费者契约是权威定义，则让 producer v3 输出 `userId`。
+2. 在消费者处理前执行契约校验；收到仅含 `user_id` 的载荷时，立即返回明确的 schema violation，不进入超时重试。
+3. 删除第一轮加入的 timeout retry。
+4. 将现有复现测试转为回归验收：
+
+   - producer v3 发送 `userId` 时测试通过；
+   - 仅发送 `user_id` 时确定性校验失败；
+   - 合法消息只处理一次，不触发重试。
+
+当前 [plan.md](</var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-convergence-live-utgco11_/calls/r1/anti_spiral_near_negative/workspace/plan.md>) 方向正确，但“失败测试是验收检查”应更准确地表述为：该测试先证明根因，修正后必须变绿，同时证明重试路径已被移除。
+
+唯一需要先确认的是哪一端拥有字段命名权；若已发布的 producer v3 契约正式规定 `user_id`，则应反向修改消费者契约，不能仅凭现状默认 `userId` 正确。文件未修改。

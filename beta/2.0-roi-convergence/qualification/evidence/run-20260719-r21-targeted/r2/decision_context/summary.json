@@ -1,0 +1,32 @@
+{
+  "arm": "r2",
+  "case": "decision_context",
+  "group": "hard_judgment",
+  "expected": "Give no continue, hold, stop, pause, or interim posture before context; ask exactly one question that locks action-changing actor, target, timing, authority, exposure, rollback, or acceptable loss.",
+  "required_owner": null,
+  "passive_family": "decision_context",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T07:02:24.419970+00:00",
+  "duration_seconds": 38.605,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "1cdae1b96775062d7df5f280a0372973c7a82103e377b8a760e65544c343414d",
+  "usage": {
+    "input_tokens": 29138,
+    "cached_input_tokens": 24064,
+    "output_tokens": 468,
+    "reasoning_output_tokens": 187
+  },
+  "counted_tokens": 29606,
+  "uncached_input_tokens": 5074,
+  "loaded_paths": [
+    "skills/using-mindthus/SKILL.md"
+  ],
+  "loaded_skills": [
+    "using-mindthus"
+  ],
+  "loaded_owners": [],
+  "loaded_mindthus_bytes": 895,
+  "final": "这次迁移的对象、当前进度、继续与停止各自的最大损失、能否回滚，以及最晚决策时间分别是什么？"
+}

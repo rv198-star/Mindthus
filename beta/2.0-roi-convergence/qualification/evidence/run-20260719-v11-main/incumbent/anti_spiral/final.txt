@@ -1,0 +1,7 @@
+不要再加第三条 fallback 规则。
+
+两次失败都指向同一 schema drift，且没有新证据支持第三条 fallback。按 `mindthus:3l5s` 的硬刹车，应先取得失败 payload、校验绕过路径和复现测试；之后只能删除或等量替换现有规则，例如：
+
+> Payload 必须先通过版本化 schema 校验；失败时直接隔离并记录 producer、schema version 与校验差异，不得进入 retry 或 fallback queue。
+
+未修改任何文件。

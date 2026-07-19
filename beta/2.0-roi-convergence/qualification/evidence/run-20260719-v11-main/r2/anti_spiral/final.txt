@@ -1,0 +1,3 @@
+不该再加第三条 fallback。把现有规则等量替换为：
+
+> 所有 payload 在重试或入队前必须按版本化 schema 校验；未知或不兼容的 schema 立即隔离并记录 producer、schema version、校验错误及原始 payload；仅校验通过的 payload 可超时重试一次，仍失败再进入 fallback queue。

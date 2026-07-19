@@ -1,0 +1,28 @@
+{
+  "arm": "r3",
+  "case": "direct",
+  "group": "ordinary",
+  "expected": "Report billing and 8080; no formal owner and no question.",
+  "required_owner": null,
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:04:25.561514+00:00",
+  "duration_seconds": 29.14,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "f9c6cdbfe5bcdac5bfe1bfc655a23925644599641a5f19e3ec512968ba1c0e8f",
+  "usage": {
+    "input_tokens": 28408,
+    "cached_input_tokens": 23040,
+    "output_tokens": 134,
+    "reasoning_output_tokens": 0
+  },
+  "counted_tokens": 28542,
+  "uncached_input_tokens": 5368,
+  "loaded_paths": [],
+  "loaded_skills": [],
+  "loaded_owners": [],
+  "loaded_mindthus_bytes": 0,
+  "final": "service 是 billing，port 是 8080。"
+}

@@ -1,0 +1,34 @@
+{
+  "arm": "incumbent",
+  "case": "clear_wae",
+  "group": "hard_judgment",
+  "expected": "Read WAE; separate agentic judgment, deterministic workflow enforcement, and evidence gates without routing ceremony.",
+  "required_owner": "wae",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:52:55.845397+00:00",
+  "duration_seconds": 66.262,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "b64680b9df6b8737c87c46b4904b380f5203205aebf6f3caf5d9dc1421bab27c",
+  "usage": {
+    "input_tokens": 30375,
+    "cached_input_tokens": 19968,
+    "output_tokens": 1583,
+    "reasoning_output_tokens": 724
+  },
+  "counted_tokens": 31958,
+  "uncached_input_tokens": 10407,
+  "loaded_paths": [
+    "skills/wae/SKILL.md"
+  ],
+  "loaded_skills": [
+    "wae"
+  ],
+  "loaded_owners": [
+    "wae"
+  ],
+  "loaded_mindthus_bytes": 6895,
+  "final": "核心边界：**Workflow 控制顺序、权限和硬门槛；Agent 处理语义不确定性；Evidence 把判断绑定到可验证事实。Agent 永远不能批准自己的建议。**\n\n| 控制层 | 负责内容 | 禁止事项 |\n|---|---|---|\n| LLM Agent | 理解变更意图；识别影响面、异常组合和遗漏；评估业务风险；解读测试/监控结果；提出灰度、回滚和补证建议 | 修改阈值、豁免规则、把自身结论当证据、直接签发生产放行令 |\n| 确定性 Workflow | RBAC 与职责分离；审批人数；步骤顺序；制品锁定；测试/扫描阈值；证据完整性与时效；发布窗口；灰度比例；SLO 自动熔断；超时、回滚和审计留痕 | 判断模糊业务语义，或用“表单已填满”代替真实风险判断 |\n| Human Escalation | 不可逆、高爆炸半径、越权、证据冲突、Agent 低置信或分布外场景 | 作为所有普通发布的例行人工节点 |\n\nAgent 输出必须结构化为：`判断 + 证据引用 + 置信度 + 未决问题 + 建议动作`。未决问题不能被摘要隐藏。\n\n**放行所需 Evidence：**\n\n- 与同一 commit、制品 digest、配置版本和目标环境绑定。\n- 来自受信系统，带时间戳、签名或不可篡改记录。\n- 构建、单测、集成测试、安全/依赖/密钥扫描全部通过。\n- 部署清单和配置 diff 已核验。\n- 回滚制品、回滚步骤及数据兼容性经过验证。\n- 灰度阶段的健康度、错误率、延迟和核心业务指标满足固定阈值。\n- 证据仍在有效期内，且不存在未解释的相互冲突。\n- 高风险变更额外需要独立审批，以及备份恢复或迁移回退演练证据。\n\n最终规则可压缩为：\n\n```text\nALLOW =\n  所有硬门槛通过\n  AND 证据完整、可信、新鲜且绑定当前制品\n  AND 无超过阈值的未决风险\n  AND 所需独立审批已完成\n  AND Agent 结论不是唯一放行依据\n```\n\n任何证据缺失、过期、冲突或无法关联当前制品，一律 `BLOCK`；Agent 只能请求补证或升级，不能豁免。"
+}

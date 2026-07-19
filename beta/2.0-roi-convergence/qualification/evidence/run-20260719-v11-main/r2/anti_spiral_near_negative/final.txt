@@ -1,0 +1,8 @@
+下一步应修正字段契约，而不是增加重试：
+
+1. 撤销第一次加入的 timeout retry。
+2. 将 v3 契约统一为 `userId`，优先修正 producer；若短期无法同步升级，只在版本化边界显式转换 `user_id → userId`，并设移除条件。
+3. consumer 在处理前校验 payload，契约不符时立即失败，不进入重试。
+4. 以现有失败契约测试作为验收：修正后测试通过，并确认业务处理仅执行一次、无 timeout retry。
+
+这是“用根因修正等量替换失败补丁”，不是继续叠加第三个局部规则。依据见 [history.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-convergence-live-utgco11_/calls/r2/anti_spiral_near_negative/workspace/history.md:3) 和 [plan.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-convergence-live-utgco11_/calls/r2/anti_spiral_near_negative/workspace/plan.md:3)。未修改任何文件。

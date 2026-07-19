@@ -1,0 +1,121 @@
+{
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "arms": [
+    "incumbent",
+    "r1",
+    "r2",
+    "r3"
+  ],
+  "cases": [
+    "decision_context",
+    "anti_spiral",
+    "anti_spiral_near_negative",
+    "clear_sela",
+    "clear_mpg",
+    "clear_wae"
+  ],
+  "schedule": [
+    {
+      "arm": "incumbent",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r1",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r2",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r3",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r1",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "r2",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "r3",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "incumbent",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "r2",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r3",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "incumbent",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r1",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "r2",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "r2",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_wae"
+    },
+    {
+      "arm": "r2",
+      "case": "clear_wae"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_wae"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_wae"
+    }
+  ],
+  "per_call_counted_cap": 200000,
+  "mission_counted_cap": 5000000,
+  "mission_call_cap": 51,
+  "protocol": "beta/2.0-roi-convergence/PROTOCOL.md",
+  "cases_file": "/Volumes/Data/My Projects/Github/Mindthus-2.0-roi-convergence-v2/beta/2.0-roi-convergence/qualification/cases-v1.1.json"
+}

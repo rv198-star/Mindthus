@@ -1,0 +1,35 @@
+{
+  "arm": "r2",
+  "case": "clear_wae",
+  "group": "hard_judgment",
+  "expected": "Read WAE; separate agentic judgment, deterministic workflow enforcement, and evidence gates without routing ceremony.",
+  "required_owner": "wae",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:50:29.664968+00:00",
+  "duration_seconds": 71.565,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "db03c7ba70b185ad31a309a9f694b7d32d72801a1e4a22a74ecaa70e5f1f9978",
+  "usage": {
+    "input_tokens": 70963,
+    "cached_input_tokens": 57344,
+    "output_tokens": 2383,
+    "reasoning_output_tokens": 1017
+  },
+  "counted_tokens": 73346,
+  "uncached_input_tokens": 13619,
+  "loaded_paths": [
+    "skills/wae/SKILL.md",
+    "skills/wae/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "wae"
+  ],
+  "loaded_owners": [
+    "wae"
+  ],
+  "loaded_mindthus_bytes": 31711,
+  "final": "核心原则：**Workflow 决定“能不能继续”，Agent 判断“意味着什么、还缺什么”，Evidence 证明“事实是否成立”**。Agent 永远不能直接生成最终放行信号。\n\n| 控制层 | 应负责 | 明确禁止 |\n|---|---|---|\n| LLM Agent | 理解变更意图；分析代码、配置和依赖影响；识别异常与风险场景；建议风险等级、灰度策略和补充检查；汇总审批材料 | 自行批准发布；修改门槛；把自己的结论当证据；绕过缺失检查；直接持有生产发布凭证 |\n| 确定性 Workflow | RBAC、职责分离；固定审批状态机；环境与风险等级策略；制品哈希绑定；证据来源、时效和完整性检查；超时失败关闭；灰度比例、暂停、回滚；例外审批及审计 | 判断模糊的业务影响；用表单完成度代替风险判断 |\n| Human | 高风险、不可逆、超权限、证据冲突及策略例外的最终裁决 | 代替所有日常机械检查 |\n\n必须由 Workflow 强制的规则：\n\n- 发布对象必须绑定唯一 commit、制品哈希、配置版本和目标环境，审批后不得重新构建。\n- 构建、测试、扫描、审批、灰度、全量必须按固定状态机执行。\n- 缺失、过期、来源不可信或互相矛盾的证据一律阻断。\n- 高风险发布必须职责分离；例外需指定批准人、范围、原因和失效时间。\n- Agent 输出只能改变“需要哪些检查或是否升级人工”，不能把失败改为通过。\n- 发布内容中的注释、工单、日志均视为不可信数据，不能扩大 Agent 权限。\n- 灰度指标越界自动暂停或回滚；任何超时默认拒绝放行。\n\n放行证据必须同时满足：**可验证、可追溯、绑定本次制品、来源可信、仍在有效期内**。\n\n两级放行门：\n\n1. 灰度放行：制品签名与来源、必需测试通过、安全与合规扫描、变更授权、影响分析、可执行且已验证的回滚方案。\n2. 全量放行：上述证据全部有效，再加规定观察窗口内的真实灰度指标、关键 SLO、错误率、告警和业务健康信号均达标。\n\n最终判定可以固化为：\n\n```text\nALLOW =\n  权限有效\n  AND 制品身份一致\n  AND 强制策略全部通过\n  AND 证据可信、完整、新鲜\n  AND 必要人工审批有效\n  AND 灰度运行指标达标\n  AND 无未解决冲突或阻断项\n```\n\nAgent 的风险报告属于“派生判断”，只能触发补证、收紧灰度或升级审批，不能单独作为放行证据。"
+}

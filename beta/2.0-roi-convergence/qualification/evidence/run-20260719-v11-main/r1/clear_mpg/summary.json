@@ -1,0 +1,37 @@
+{
+  "arm": "r1",
+  "case": "clear_mpg",
+  "group": "hard_judgment",
+  "expected": "Read MPG; make a path-carrying continue, hold, or switch decision using carrier, exposure, volatility, rollback, and triggers; no blocking question.",
+  "required_owner": "mpg",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:43:14.499403+00:00",
+  "duration_seconds": 71.923,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 48695,
+    "cached_input_tokens": 34048,
+    "output_tokens": 2572,
+    "reasoning_output_tokens": 1634
+  },
+  "counted_tokens": 51267,
+  "uncached_input_tokens": 14647,
+  "loaded_paths": [
+    "skills/mpg/SKILL.md",
+    "skills/sela/SKILL.md"
+  ],
+  "loaded_skills": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_owners": [
+    "mpg",
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14073,
+  "final": "Q4 前退役数据库 A 的方向不变，但本周应选 **hold**：冻结正式切换承诺，保留双写迁移作为当前载体，限时消除复制延迟的不确定性。\n\n原因：\n\n- 回滚演练通过，只证明“失败后能退”，没有证明“两小时内能可靠切成”。\n- 复制延迟在 0–90 秒波动，关键问题不是 90 秒本身，而是尾部是否有界、能否稳定追平。\n- 40 工程周既是沉没成本，也形成了可复用资产；不足以支持盲目 continue，也没有证据支持现在 switch。\n- 两小时窗口要求确定性流程，不能依赖切换当天延迟恰好较低。\n\n承载动作：\n\n1. 保持双写运行，冻结非必要功能开发和正式切换。\n2. 用一周左右完成生产峰值负载下的连续全流程演练：写入栅栏、复制追平、关键数据校验、流量切换、回滚。\n3. 将两小时拆成硬预算：前 60 分钟完成追平、校验和切换；后 60 分钟保留给观察与回滚。\n4. 只有连续演练均满足以下条件才转为 **continue**：\n   - 最大延迟可解释且有明确上界；\n   - 能在业务 RPO 内追平；\n   - 无未解释的数据差异；\n   - 到决策点仍保留完整回滚时间。\n5. 若限时验证后延迟仍不可控，则转 **switch**，把最终切换载体改为“短暂停写或入口写栅栏＋持久化队列＋追平校验”，而不是继续依赖开放写入下的双写直切。\n\n简言之：**现在不换路线，也不上线碰运气；锁住双写资产，用一次有截止日期的 hold 换取可验证的切换确定性。**"
+}

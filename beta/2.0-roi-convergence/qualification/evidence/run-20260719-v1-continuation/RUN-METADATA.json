@@ -1,0 +1,108 @@
+{
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "arms": [
+    "incumbent",
+    "r1",
+    "r3"
+  ],
+  "cases": [
+    "frame_whole",
+    "decision_context",
+    "anti_spiral",
+    "anti_spiral_near_negative",
+    "clear_sela",
+    "clear_mpg",
+    "clear_wae"
+  ],
+  "schedule": [
+    {
+      "arm": "incumbent",
+      "case": "frame_whole"
+    },
+    {
+      "arm": "r1",
+      "case": "frame_whole"
+    },
+    {
+      "arm": "r3",
+      "case": "frame_whole"
+    },
+    {
+      "arm": "r1",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r3",
+      "case": "decision_context"
+    },
+    {
+      "arm": "incumbent",
+      "case": "decision_context"
+    },
+    {
+      "arm": "r3",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "incumbent",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "r1",
+      "case": "anti_spiral"
+    },
+    {
+      "arm": "incumbent",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r1",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r3",
+      "case": "anti_spiral_near_negative"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_sela"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_mpg"
+    },
+    {
+      "arm": "incumbent",
+      "case": "clear_wae"
+    },
+    {
+      "arm": "r1",
+      "case": "clear_wae"
+    },
+    {
+      "arm": "r3",
+      "case": "clear_wae"
+    }
+  ],
+  "per_call_counted_cap": 200000,
+  "mission_counted_cap": 5000000,
+  "mission_call_cap": 51,
+  "protocol": "beta/2.0-roi-convergence/PROTOCOL.md"
+}

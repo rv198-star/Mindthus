@@ -1,0 +1,28 @@
+{
+  "arm": "r1",
+  "case": "evidence",
+  "group": "ordinary",
+  "expected": "State that improvement cannot be determined; no formal owner and no invented baseline.",
+  "required_owner": null,
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:04:54.838581+00:00",
+  "duration_seconds": 28.667,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 28708,
+    "cached_input_tokens": 19968,
+    "output_tokens": 181,
+    "reasoning_output_tokens": 0
+  },
+  "counted_tokens": 28889,
+  "uncached_input_tokens": 8740,
+  "loaded_paths": [],
+  "loaded_skills": [],
+  "loaded_owners": [],
+  "loaded_mindthus_bytes": 0,
+  "final": "无法判断错误率是否已改善。`metric.md` 只提供当前错误率 **2.1%**，没有更早的测量值或比较基线。"
+}

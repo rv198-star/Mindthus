@@ -1,0 +1,35 @@
+{
+  "arm": "r1",
+  "case": "clear_sela",
+  "group": "hard_judgment",
+  "expected": "Read SELA; choose B as the long-term mainline and retain A only for bounded premium, hard-threshold, exceptional, or transition use.",
+  "required_owner": "sela",
+  "passive_family": null,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T06:39:17.908139+00:00",
+  "duration_seconds": 58.184,
+  "exit_code": 0,
+  "timed_out": false,
+  "plugin_tree_sha256": "0185f714e6c7d76f843604f1f39c6eeaddac1125958d104b00f73d1575be1465",
+  "usage": {
+    "input_tokens": 48484,
+    "cached_input_tokens": 29952,
+    "output_tokens": 1339,
+    "reasoning_output_tokens": 606
+  },
+  "counted_tokens": 49823,
+  "uncached_input_tokens": 18532,
+  "loaded_paths": [
+    "skills/sela/SKILL.md",
+    "skills/sela/resources/methodology.md"
+  ],
+  "loaded_skills": [
+    "sela"
+  ],
+  "loaded_owners": [
+    "sela"
+  ],
+  "loaded_mindthus_bytes": 14046,
+  "final": "结论：长期主方向选 B。A 不再作为并列路线，只保留为受限的专家例外层。\n\n理由是：A 的约 15% 质量优势属于局部优势，成本却随规模线性增长；B 已有数量级成本优势，并具备数据反馈带来的持续改进能力。规模越大、时间越长，B 的系统优势越会复利，而 A 不会。\n\nA 仅应保留在以下边界：\n\n- B 尚未达到不可妥协的质量、安全、合规或信誉底线。\n- 那 15% 的质量提升会产生非线性价值，其收益或风险降低足以覆盖约十倍成本。\n- 极少数、高价值、非标准案例超出系统能力边界。\n- 用作疑难升级、质量审计、基准标注和系统校准。\n\n凡是 B 已达到“可接受质量”、错误可发现可修正、且质量差距没有带来数量级损失的场景，都应归入 B。\n\n因此最终结构应是：**B 占据默认主战场，A 作为有明确准入条件的高端、特殊和校准机制存在；不能因 A 仍然更好，就让它继续拥有默认流程地位。**"
+}

@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"019f78f9-6cd7-7eb3-8f17-4e796a8a3c3e"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"我会只读取文件，不做任何修改。"}}
+{"type":"item.started","item":{"id":"item_1","type":"command_execution","command":"/bin/zsh -lc \"sed -n '1,160p' service.json\"","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"command_execution","command":"/bin/zsh -lc \"sed -n '1,160p' service.json\"","aggregated_output":"{\n  \"service\": \"billing\",\n  \"port\": 8080\n}\n","exit_code":0,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"service 是 billing，port 是 8080。"}}
+{"type":"turn.completed","usage":{"input_tokens":28682,"cached_input_tokens":19968,"output_tokens":130,"reasoning_output_tokens":0}}
