@@ -14,6 +14,7 @@ SCRIPTS = REPO / "skills" / "tplan" / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from observe_model_call import ModelCallObserver
+from execution_cost_tree import _duration_hotspots
 from tplan_runtime import TplanError, record_execution_span, start_execution_span
 
 
@@ -116,6 +117,38 @@ def render_json(mission_dir, *args):
 
 
 class ExecutionCostTreeTests(unittest.TestCase):
+    def test_standard_duration_hotspots_use_smaller_top_three_or_thirty_percent_quota(self):
+        def task(index, elapsed_ms):
+            return {
+                "id": f"T{index}",
+                "kind": "task",
+                "visited": True,
+                "elapsed_ms": elapsed_ms,
+                "execution_order": index,
+                "plan_index": index,
+            }
+
+        eight_tasks = [task(index, index * 100) for index in range(1, 9)]
+        hotspots = _duration_hotspots(eight_tasks, view="standard")
+        self.assertEqual(hotspots["eligible_task_count"], 8)
+        self.assertEqual(hotspots["selected_count"], 2)
+        self.assertEqual(
+            [item["task_id"] for item in hotspots["tasks"]],
+            ["T8", "T7"],
+        )
+
+        twenty_tasks = [task(index, index * 100) for index in range(1, 21)]
+        capped = _duration_hotspots(twenty_tasks, view="standard")
+        self.assertEqual(capped["selected_count"], 3)
+        self.assertEqual(
+            [item["task_id"] for item in capped["tasks"]],
+            ["T20", "T19", "T18"],
+        )
+
+        audit = _duration_hotspots(twenty_tasks, view="audit")
+        self.assertFalse(audit["enabled"])
+        self.assertEqual(audit["tasks"], [])
+
     def test_initialization_creates_trace_and_reports_without_evidence_pollution(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -583,6 +616,72 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("flowchart TB", markdown)
             root = ET.parse(svg_output).getroot()
             self.assertEqual(root.attrib["data-layout"], "vertical-execution-timeline")
+
+    def test_parent_edges_paint_after_child_edges_at_junctions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            added = run_script(
+                "add_node.py",
+                str(mission_dir),
+                "--id",
+                "P1",
+                "--kind",
+                "step",
+                "--parent-id",
+                "S1",
+                "--title",
+                "Inspect connector junctions",
+                "--parent-contribution",
+                "Verifies parent branches visually own shared junctions.",
+                "--mission-trace",
+                "via S1 -> T1 -> A1",
+                "--step-action",
+                "Render the connector hierarchy.",
+                "--done-condition",
+                "Parent connectors paint above child connectors.",
+            )
+            self.assertEqual(added.returncode, 0, added.stderr)
+
+            svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "standard",
+                "--format",
+                "svg",
+            )
+            self.assertEqual(svg.returncode, 0, svg.stderr)
+            root = ET.fromstring(svg.stdout)
+            edges = [
+                element
+                for element in root.iter()
+                if element.attrib.get("class") == "tree-edge"
+            ]
+            kinds = [element.attrib["data-child-kind"] for element in edges]
+            paint_order = {"step": 0, "subtask": 1, "task": 2}
+            self.assertEqual(kinds, sorted(kinds, key=paint_order.__getitem__))
+            self.assertEqual(
+                {element.attrib["data-child-kind"]: element.attrib["stroke-width"] for element in edges},
+                {"step": "2.0", "subtask": "4.0", "task": "6.0"},
+            )
+            self.assertEqual(
+                {element.attrib["data-child-kind"]: element.attrib["opacity"] for element in edges},
+                {"step": "0.84", "subtask": "0.72", "task": "1.0"},
+            )
+            junction_caps = [
+                element
+                for element in root.iter()
+                if element.attrib.get("class") == "tree-edge junction-cap"
+            ]
+            self.assertEqual(
+                {element.attrib["data-parent-kind"] for element in junction_caps},
+                {"task", "subtask"},
+            )
+            self.assertTrue(all(element.attrib["opacity"] == "1" for element in junction_caps))
+            self.assertEqual(
+                {element.attrib["data-parent-kind"]: element.attrib["stroke"] for element in junction_caps},
+                {"task": "#64748b", "subtask": "#aa88f8"},
+            )
 
     def test_compact_markdown_writes_only_a_unicode_text_tree(self):
         with tempfile.TemporaryDirectory() as tmp:
