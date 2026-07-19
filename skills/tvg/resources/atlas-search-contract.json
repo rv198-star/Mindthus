@@ -12,8 +12,14 @@
   "row_lineage_rule": "each expansion row contains three children of one selected parent, preserving selected-parent order",
   "lineage_display_rule": "keep the stable candidate ID and render parent provenance separately as 'from Rnn-Eyy'",
   "search_terminal_gates": ["search-freeze", "search-freeze-with-review-bound-warning"],
-  "delivery_layout": "2x2",
-  "delivery_candidate_count": 4,
+  "delivery_modes": {
+    "internal-exploration": "9 -> 3 -> 9 remains internal and is never itself a user delivery requirement",
+    "direct": "1x1 only when one objectively sufficient result exists and user choice would not materially change the outcome",
+    "shortlist": "2x2 when viable materially different options remain and user taste authority can change the choice",
+    "final-master": "a direct result or user-selected shortlist tile accepted or rerendered with output evidence"
+  },
+  "delivery_layouts": {"direct": "1x1", "shortlist": "2x2"},
+  "delivery_candidate_counts": {"direct": 1, "shortlist": 4},
   "delivery_generation_modes": ["regenerated", "deterministic-compose"],
   "delivery_generation_evidence": {
     "regenerated": "prompt, raw atlas, labeled atlas, and hashes",

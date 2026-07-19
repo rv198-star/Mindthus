@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -12,6 +13,7 @@ from typing import Any
 
 
 SCRIPT_BOUNDARY = "support_only_agentic_audit_required"
+LABEL_SCHEMA_VERSION = "tvg-atlas-labels-v1"
 LAYOUTS = {"2x2": (2, 2), "3x3": (3, 3)}
 PREFIX_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,23}$")
 
@@ -109,6 +111,14 @@ def _load_lineage(path: Path | None) -> dict[str, list[str]]:
     return lineage
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def label_atlas(
     source: Path,
     output: Path,
@@ -167,6 +177,18 @@ def label_atlas(
     return regions
 
 
+def source_identity(source: Path) -> dict[str, Any]:
+    Image, _, _, ImageOps = _pillow()
+    try:
+        digest = _sha256(source)
+        with Image.open(source) as opened:
+            decoded = ImageOps.exif_transpose(opened)
+            width, height = decoded.size
+    except (OSError, ValueError) as exc:
+        raise AtlasLabelError(f"cannot identify atlas source: {exc}") from exc
+    return {"sha256": digest, "decoded_width": width, "decoded_height": height}
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Label equal atlas regions and optional parent lineage without judging image quality."
@@ -178,12 +200,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--lineage-json", type=Path)
     parser.add_argument("--font-size", type=int)
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--json-output", type=Path)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        identity = source_identity(args.input)
         regions = label_atlas(
             args.input,
             args.output,
@@ -192,27 +216,32 @@ def main(argv: list[str] | None = None) -> int:
             args.font_size,
             _load_lineage(args.lineage_json),
         )
+        if source_identity(args.input) != identity:
+            raise AtlasLabelError("input image changed while labels were being generated")
     except AtlasLabelError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+    payload = {
+        "schema_version": LABEL_SCHEMA_VERSION,
+        "source": identity,
+        "input_path": str(args.input),
+        "output_path": str(args.output),
+        "layout": args.layout,
+        "regions": regions,
+        "script_boundary": SCRIPT_BOUNDARY,
+        "boundary_note": (
+            "Equal theoretical regions, IDs, and supplied lineage were rendered mechanically; "
+            "atlas legibility and candidate value still require agentic audit."
+        ),
+    }
+    rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
+        args.json_output.write_text(rendered, encoding="utf-8")
     if args.json:
-        print(
-            json.dumps(
-                {
-                    "input_path": str(args.input),
-                    "output_path": str(args.output),
-                    "layout": args.layout,
-                    "regions": regions,
-                    "script_boundary": SCRIPT_BOUNDARY,
-                    "boundary_note": (
-                        "Equal theoretical regions, IDs, and supplied lineage were rendered mechanically; "
-                        "atlas legibility and candidate value still require agentic audit."
-                    ),
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(rendered, end="")
+    elif args.json_output:
+        print(args.json_output)
     else:
         print(args.output)
     return 0

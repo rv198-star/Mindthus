@@ -2,6 +2,7 @@ import json
 import hashlib
 import importlib.util
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -1481,7 +1482,11 @@ class TvgContractTests(unittest.TestCase):
         self.assertIn("search freeze is not final artifact freeze", workflow.lower())
         self.assertIn("post-generation agentic delivery audit", json.dumps(contract))
         self.assertEqual(contract["candidate_id_policy"], "Rnn-E01 through Rnn-E09 in row-major order")
-        self.assertEqual(contract["delivery_layout"], "2x2")
+        self.assertEqual(contract["delivery_layouts"], {"direct": "1x1", "shortlist": "2x2"})
+        self.assertIn("objectively sufficient", contract["delivery_modes"]["direct"])
+        self.assertIn("user taste authority", contract["delivery_modes"]["shortlist"])
+        self.assertIn("remains internal", contract["delivery_modes"]["internal-exploration"])
+        self.assertIn("output evidence", contract["delivery_modes"]["final-master"])
         self.assertIn("every active scene adapter", contract["profile_evidence"])
         self.assertIn("no delivery board", contract["blocked_run_policy"])
         self.assertIn("colossal-pressure", profile)
@@ -1503,6 +1508,21 @@ class TvgContractTests(unittest.TestCase):
         self.assertEqual(report["profile"], "cinematic-visual-direction")
         self.assertEqual(report["round_count"], 2)
         self.assertNotIn("PASS", result.stdout)
+
+    def test_generic_atlas_trace_example_profile_and_adapter_hashes_match_packaged_sources(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        example_path = profile_dir / "examples" / "atlas-search-trace.example.json"
+        payload = json.loads(example_path.read_text(encoding="utf-8"))
+        profile = payload["profile_snapshot"]
+        self.assertEqual(
+            profile["sha256"],
+            hashlib.sha256((example_path.parent / profile["path"]).resolve().read_bytes()).hexdigest(),
+        )
+        for adapter in profile["adapters"]:
+            self.assertEqual(
+                adapter["sha256"],
+                hashlib.sha256((example_path.parent / adapter["path"]).resolve().read_bytes()).hexdigest(),
+            )
 
     def test_generic_atlas_trace_rejects_control_boundary_failures(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
@@ -1540,6 +1560,10 @@ class TvgContractTests(unittest.TestCase):
         no_delivery_audit = json.loads(json.dumps(example))
         no_delivery_audit["delivery"].pop("delivery_audit")
         cases.append((no_delivery_audit, "delivery.delivery_audit: expected an object"))
+
+        no_delivery_boundary = json.loads(json.dumps(example))
+        no_delivery_boundary["delivery"].pop("delivery_boundary")
+        cases.append((no_delivery_boundary, "delivery.delivery_boundary: expected an object"))
 
         ready_with_veto = json.loads(json.dumps(example))
         ready_with_veto["delivery"]["candidates"][0]["veto_findings"] = ["primary read is split"]
@@ -1616,6 +1640,79 @@ class TvgContractTests(unittest.TestCase):
                     check=False,
                 )
                 self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_generic_atlas_trace_accepts_bounded_direct_delivery_and_legacy_shortlist(self):
+        profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
+        validator = TVG / "scripts" / "atlas" / "validate_trace.py"
+        example = json.loads(
+            (profile_dir / "examples" / "atlas-search-trace.example.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        direct = json.loads(json.dumps(example))
+        candidate = direct["delivery"]["candidates"][0]
+        candidate["id"] = "D01"
+        candidate["region"] = {"row": 1, "column": 1}
+        direct["delivery"].update(
+            {
+                "mode": "direct",
+                "layout": "1x1",
+                "delivery_boundary": {
+                    "objective_sufficiency_confirmed": True,
+                    "material_user_choice_remaining": False,
+                    "rationale": "One result satisfies the fixed brief and no remaining taste choice changes the outcome.",
+                },
+                "candidates": [candidate],
+                "delivery_audit": {
+                    "result": "ready-for-direct-delivery",
+                    "audit_role": "agentic",
+                    "rationale": "The single result is objectively sufficient for the fixed brief.",
+                    "warnings": [],
+                },
+            }
+        )
+        direct["finalization"] = {
+            "state": "completed",
+            "mode": "accept-tile",
+            "selected_delivery_ids": ["D01"],
+            "outputs": [
+                {
+                    "source_delivery_id": "D01",
+                    "path": "artifacts/direct-final.png",
+                    "sha256": "0" * 64,
+                }
+            ],
+            "reason": "The sufficient direct result is the final master.",
+        }
+
+        legacy = json.loads(json.dumps(example))
+        legacy["schema_version"] = "tvg-atlas-trace-v1"
+        legacy["delivery"].pop("delivery_boundary")
+
+        for payload in (direct, legacy):
+            with self.subTest(schema=payload["schema_version"]), tempfile.TemporaryDirectory() as tmp:
+                trace = Path(tmp) / "trace.json"
+                trace.write_text(json.dumps(payload), encoding="utf-8")
+                result = subprocess.run(
+                    ["python3", str(validator), str(trace)],
+                    text=True,
+                    capture_output=True,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+        invalid_direct = json.loads(json.dumps(direct))
+        invalid_direct["delivery"]["delivery_boundary"]["material_user_choice_remaining"] = True
+        with tempfile.TemporaryDirectory() as tmp:
+            trace = Path(tmp) / "trace.json"
+            trace.write_text(json.dumps(invalid_direct), encoding="utf-8")
+            result = subprocess.run(
+                ["python3", str(validator), str(trace)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("direct delivery requires false", result.stdout)
 
     def test_generic_atlas_trace_checks_completed_output_bytes(self):
         profile_dir = TVG / "resources" / "value-profiles" / "cinematic-visual-direction"
@@ -1709,7 +1806,7 @@ class TvgContractTests(unittest.TestCase):
             lineage.write_text(json.dumps({f"R02-E{i:02d}": "R01-E04" for i in range(1, 10)}))
             result = subprocess.run(
                 [
-                    "python3", str(labeler), "--input", str(source), "--output", str(output),
+                    sys.executable, str(labeler), "--input", str(source), "--output", str(output),
                     "--layout", "3x3", "--id-prefix", "R02-E", "--lineage-json", str(lineage),
                     "--font-size", "10", "--json",
                 ],
@@ -1718,6 +1815,10 @@ class TvgContractTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             report = json.loads(result.stdout)
+            self.assertEqual(report["schema_version"], "tvg-atlas-labels-v1")
+            self.assertEqual(report["source"]["decoded_width"], 90)
+            self.assertEqual(report["source"]["decoded_height"], 90)
+            self.assertEqual(len(report["source"]["sha256"]), 64)
             self.assertEqual([item["id"] for item in report["regions"]], [f"R02-E{i:02d}" for i in range(1, 10)])
             self.assertEqual(report["regions"][0]["parent_candidate_ids"], ["R01-E04"])
             self.assertEqual(report["regions"][-1]["pixel_box"], [60, 60, 90, 90])
@@ -1739,15 +1840,15 @@ class TvgContractTests(unittest.TestCase):
             selected = root / "selected.png"
             Image.new("RGB", (90, 90), (100, 110, 120)).save(source)
             label_result = subprocess.run(
-                ["python3", str(labeler), "--input", str(source), "--output", str(labeled),
-                 "--layout", "3x3", "--id-prefix", "R00-E", "--json"],
+                [sys.executable, str(labeler), "--input", str(source), "--output", str(labeled),
+                 "--layout", "3x3", "--id-prefix", "R00-E", "--json-output", str(labels)],
                 text=True,
                 capture_output=True,
             )
             self.assertEqual(label_result.returncode, 0, label_result.stderr)
-            labels.write_text(label_result.stdout, encoding="utf-8")
+            self.assertEqual(Path(label_result.stdout.strip()), labels)
             result = subprocess.run(
-                ["python3", str(selector), "--input", str(source), "--labels-json", str(labels),
+                [sys.executable, str(selector), "--input", str(source), "--labels-json", str(labels),
                  "--selected", "R00-E01", "R00-E05", "R00-E09", "--output", str(selected), "--json"],
                 text=True,
                 capture_output=True,
@@ -1756,6 +1857,84 @@ class TvgContractTests(unittest.TestCase):
             report = json.loads(result.stdout)
             self.assertEqual([item["id"] for item in report["selected"]], ["R00-E01", "R00-E05", "R00-E09"])
             self.assertTrue(selected.is_file())
+
+    @unittest.skipUnless(PILLOW_AVAILABLE, "Pillow is required for atlas tests")
+    def test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image(self):
+        from PIL import Image
+
+        labeler = TVG / "scripts" / "atlas" / "label_atlas.py"
+        selector = TVG / "scripts" / "atlas" / "build_selection_board.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_a = root / "a.png"
+            source_b = root / "b.png"
+            labels = root / "labels.json"
+            labeled = root / "labeled.png"
+            selected = root / "selected.png"
+            Image.new("RGB", (90, 90), (100, 110, 120)).save(source_a)
+            Image.new("RGB", (90, 90), (120, 110, 100)).save(source_b)
+            labeled_result = subprocess.run(
+                [
+                    sys.executable, str(labeler), "--input", str(source_a), "--output", str(labeled),
+                    "--layout", "3x3", "--id-prefix", "R00-E", "--json-output", str(labels),
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(labeled_result.returncode, 0, labeled_result.stderr)
+            selected_result = subprocess.run(
+                [
+                    sys.executable, str(selector), "--input", str(source_b), "--labels-json", str(labels),
+                    "--selected", "R00-E01", "R00-E05", "R00-E09", "--output", str(selected),
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(selected_result.returncode, 2)
+            self.assertIn("source digest does not match", selected_result.stderr)
+            self.assertFalse(selected.exists())
+
+    @unittest.skipUnless(PILLOW_AVAILABLE, "Pillow is required for atlas tests")
+    def test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions(self):
+        from PIL import Image
+
+        labeler = TVG / "scripts" / "atlas" / "label_atlas.py"
+        selector = TVG / "scripts" / "atlas" / "build_selection_board.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "atlas.png"
+            labels = root / "labels.json"
+            labeled = root / "labeled.png"
+            Image.new("RGB", (90, 90), (100, 110, 120)).save(source)
+            result = subprocess.run(
+                [
+                    sys.executable, str(labeler), "--input", str(source), "--output", str(labeled),
+                    "--layout", "3x3", "--id-prefix", "R00-E", "--json-output", str(labels),
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(labels.read_text(encoding="utf-8"))
+            cases = (
+                (list(reversed(payload["regions"])), "row-major order"),
+                ([{**payload["regions"][0], "pixel_box": [0, 0, 91, 30]}, *payload["regions"][1:]], "outside the declared layout"),
+            )
+            for regions, expected in cases:
+                with self.subTest(expected=expected):
+                    payload["regions"] = regions
+                    labels.write_text(json.dumps(payload), encoding="utf-8")
+                    selected = root / f"selected-{expected[:3]}.png"
+                    selected_result = subprocess.run(
+                        [
+                            sys.executable, str(selector), "--input", str(source), "--labels-json", str(labels),
+                            "--selected", "R00-E01", "R00-E05", "R00-E09", "--output", str(selected),
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(selected_result.returncode, 2)
+                    self.assertIn(expected, selected_result.stderr)
 
 
 if __name__ == "__main__":

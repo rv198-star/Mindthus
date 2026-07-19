@@ -1,5 +1,5 @@
 {
-  "schema_version": "tvg-atlas-trace-v1",
+  "schema_version": "tvg-atlas-trace-v2",
   "profile_snapshot": {
     "name": "cinematic-visual-direction",
     "version": "v1",
@@ -11,7 +11,7 @@
       {
         "name": "colossal-pressure",
         "path": "../resources/scene-adapters/colossal-pressure.json",
-        "sha256": "a45c050b20f08b0acef6b95e81f0260c8e7abd7052825803d2de46b35a04eee2"
+        "sha256": "0fa4ac05108a6ff005b96ad9e8e35e76458de8328b9c6365ffe102389d326b06"
       }
     ]
   },
@@ -96,6 +96,11 @@
   "delivery": {
     "mode": "shortlist",
     "layout": "2x2",
+    "delivery_boundary": {
+      "materially_distinct_viable_options": true,
+      "user_taste_authority_required": true,
+      "rationale": "Four viable branches preserve materially different reveal and pressure choices owned by user taste."
+    },
     "generation_mode": "regenerated",
     "generation": {
       "prompt_path": "artifacts/prompts/shortlist.txt",

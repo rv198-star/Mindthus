@@ -54,15 +54,25 @@ generic mutation policy.
 
 ## Delivery And Finalization
 
-The `2x2` should contain four viable and differentiated options. It may use the final
-three branches plus one controlled synthesis or contrast branch. Every tile records its
-source IDs and receives post-generation audit findings.
+Internal exploration stays internal: `9 -> 3 -> 9` is a search carrier, not a promise to
+show every intermediate board to the user. After search freeze, choose one delivery mode:
+
+- `direct`: use one `1x1` result only when the delivery audit finds one objectively
+  sufficient result and no material taste/trade-off choice would change the answer.
+- `shortlist`: use a `2x2` when several viable, materially different options remain and
+  user taste authority can change the chosen result. It may use the final three branches
+  plus one controlled synthesis or contrast branch.
+
+Every delivered tile records its source IDs and receives post-generation audit findings.
+Scripts validate the declared boundary fields; the agentic delivery audit owns whether
+the declaration is true. Do not manufacture a shortlist when direct delivery is sufficient.
 
 Finalization states:
 
 - `pending-user-selection`: a ready `2x2` is waiting for user taste authority
 - `skipped`: the user accepts the board or declines a final master
-- `completed`: a selected tile is accepted or rerendered with output evidence
+- `completed`: a direct result or user-selected tile becomes the final master, accepted
+  or rerendered with output evidence
 
 A ready delivery state requires every candidate veto list to be empty. A completed output
 records its source shortlist ID, path, and SHA-256; `--check-files` verifies the bytes.
@@ -76,7 +86,7 @@ python3 skills/tvg/scripts/atlas/label_atlas.py \
   --layout 3x3 \
   --id-prefix R01-E \
   --lineage-json artifacts/r01-lineage.json \
-  --json
+  --json-output artifacts/r01-labels.json
 ```
 
 ```bash

@@ -1,9 +1,11 @@
 import json
+import importlib.util
 import os
 import shutil
 import subprocess
 import tempfile
 import unittest
+import sys
 from pathlib import Path
 
 
@@ -46,6 +48,75 @@ def parse_frontmatter_mapping(text: str) -> dict[str, str]:
 
 
 class PackagingDocsTests(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None, "Pillow is required")
+    def test_generated_plugin_runs_documented_atlas_label_and_selection_stages(self):
+        from PIL import Image
+
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr)
+            plugin = out / "codex-plugin" / "mindthus"
+            artifacts = root / "artifacts"
+            artifacts.mkdir()
+            Image.new("RGB", (90, 90), (90, 110, 130)).save(artifacts / "r01-raw.png")
+            (artifacts / "r01-lineage.json").write_text(
+                json.dumps({f"R01-E{i:02d}": "R00-E04" for i in range(1, 10)}),
+                encoding="utf-8",
+            )
+            labeler = plugin / "skills" / "tvg" / "scripts" / "atlas" / "label_atlas.py"
+            labeled = subprocess.run(
+                [
+                    sys.executable,
+                    str(labeler),
+                    "--input",
+                    "artifacts/r01-raw.png",
+                    "--output",
+                    "artifacts/r01-labeled.png",
+                    "--layout",
+                    "3x3",
+                    "--id-prefix",
+                    "R01-E",
+                    "--lineage-json",
+                    "artifacts/r01-lineage.json",
+                    "--json-output",
+                    "artifacts/r01-labels.json",
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(labeled.returncode, 0, labeled.stderr + labeled.stdout)
+            selector = plugin / "skills" / "tvg" / "scripts" / "atlas" / "build_selection_board.py"
+            selected = subprocess.run(
+                [
+                    sys.executable,
+                    str(selector),
+                    "--input",
+                    "artifacts/r01-raw.png",
+                    "--labels-json",
+                    "artifacts/r01-labels.json",
+                    "--selected",
+                    "R01-E01",
+                    "R01-E04",
+                    "R01-E07",
+                    "--output",
+                    "artifacts/r01-selected.png",
+                    "--json",
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(selected.returncode, 0, selected.stderr + selected.stdout)
+            self.assertTrue((artifacts / "r01-selected.png").is_file())
+
     def test_built_helpers_self_locate_runtime_without_pythonpath(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
