@@ -1,0 +1,23 @@
+[
+  {
+    "id": "T1",
+    "title": "Requalify frozen H2 candidate with corrected isolated carrier",
+    "role": "success-critical",
+    "mission_contribution": "Produces a complete trusted H2 qualification without changing the candidate.",
+    "acceptance_evidence": ["KR1", "KR2"]
+  },
+  {
+    "id": "T2",
+    "title": "Run Stable comparison only if H2 qualifies",
+    "role": "success-critical",
+    "mission_contribution": "Tests quality, owner fidelity, passive recall, loaded bytes, uncached tokens, and usability against Stable.",
+    "acceptance_evidence": ["KR3"]
+  },
+  {
+    "id": "T3",
+    "title": "Close continuation with an evidence-backed terminal decision",
+    "role": "success-critical",
+    "mission_contribution": "Records continue, stop, or requires-William without release action.",
+    "acceptance_evidence": ["KR4"]
+  }
+]
