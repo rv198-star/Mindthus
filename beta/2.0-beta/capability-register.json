@@ -1,0 +1,31 @@
+{
+  "schema_version": "mindthus-capability-register-v0.1",
+  "shared_core_ref": "2cd323d4875069bef17b137a6c7dd50bb06680f8",
+  "capabilities": [
+    {
+      "id": "tvg-profile-atlas-v1",
+      "source_commit": "9b2a1793f97a4551a219c21976105a533a0e1d72",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.5.0"},
+      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+    },
+    {
+      "id": "tplan-execution-cost-tree-v1",
+      "source_commit": "8f55458a65ea677eeb3ce1b95d73422ea9620925",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.5.0"},
+      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+    },
+    {
+      "id": "roi.2-thin-core",
+      "source_commit": "493f9520b75f582aa22f6c8647ec08eab3e122d3",
+      "ownership": "2.x-runtime-profile",
+      "release_1x": {
+        "state": "not-applicable",
+        "version": "1.5.0",
+        "reason": "Stable keeps the full using-mindthus runtime profile."
+      },
+      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+    }
+  ]
+}

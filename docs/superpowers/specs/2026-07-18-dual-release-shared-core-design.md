@@ -1,11 +1,11 @@
 # Mindthus 1.x / 2.x Dual-Release Shared-Core Design
 
-Status: accepted product direction on 2026-07-19; shared-core implementation remains staged
+Status: accepted product direction on 2026-07-19; first internal composition implemented on the 2.x Beta integration branch
 
 Related work:
 
-- Stable baseline: `v1.4.6`
-- Next Stable target: `v1.5.0`
+- Current Stable line: `v1.5.0`
+- Historical ROI.2 evaluation baseline: `v1.4.6`
 - 2.0 Beta charter: https://github.com/rv198-star/Mindthus/issues/112
 - Selected 2.x Beta runtime baseline: ROI.2 / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 - TVG Profile atlas workflow: https://github.com/rv198-star/Mindthus/issues/120
@@ -319,15 +319,32 @@ its original digest.
 Resolved:
 
 - `main` is the Shared Product Core integration source;
-- the next 1.x Stable target is `1.5.0`;
+- the current 1.x Stable release is `1.5.0`;
 - ROI.2 is the 2.x Beta runtime baseline;
-- no 2.x publication is authorized by this decision.
+- the first composed internal checkpoint is `2.0.0-beta.1`;
+- its package and marketplace identity is `mindthus-beta`;
+- the live composition profile and capability register live under `beta/2.0-beta/`;
+- no GitHub Release or marketplace publication is authorized by this checkpoint.
+
+Internal composition checkpoint:
+
+- shared core: `v1.5.0` / `2cd323d4875069bef17b137a6c7dd50bb06680f8`;
+- ROI.2 implementation: `493f9520b75f582aa22f6c8647ec08eab3e122d3`;
+- frozen qualification: `4ee3e034db6bf8d1e34002d7f162e2b008516490`;
+- convergence evidence reference only: `9a1c2268d26c30905d7ada9ee206d722214e3a7b`;
+- rollback: published Stable `v1.5.0`;
+- assembly: materialize the named 1.5 Git object, build its Codex plugin, apply the
+  frozen ROI.2 entry and qualified 3L5S replacement, then rewrite only the Beta package
+  identity and namespace adapter.
+
+The historical `beta/2.0-roi-thin-core/` tree remains byte-identical to its qualification
+checkpoint. Its old builder is expected to reject the live 1.5 tree; this is retained as
+evidence that the evaluation lock has not been silently reinterpreted as a live product
+builder. The new internal builder owns the advancing shared-core composition.
 
 Still deferred:
 
 - exact permanent branch names
-- the next 2.x Beta identifier
-- the storage location and schema name of the capability register
 - whether the next 2.x checkpoint requires a complete comparative rerun or a bounded
   regression authorization
 
