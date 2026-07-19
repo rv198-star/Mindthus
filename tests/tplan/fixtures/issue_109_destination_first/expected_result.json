@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "passed": true
+  },
+  "core_fixture": {
+    "passed": true,
+    "frontier": [
+      "T2",
+      "T3"
+    ],
+    "restarted_frontier": [
+      "T2",
+      "T3"
+    ],
+    "next_gate": "selection",
+    "invariant_count": 10
+  },
+  "real_mission_replays": [
+    {
+      "id": "v5_targeted_stabilization",
+      "vague_region_count": 1,
+      "current_tplan_can_represent_vague_regions": true,
+      "beats_eager_materialization": true,
+      "unique_value_over_current_tplan": false,
+      "observed_missing_additions": 0
+    },
+    {
+      "id": "issue_31_tvg_value_profiles",
+      "vague_region_count": 0,
+      "current_tplan_can_represent_vague_regions": true,
+      "beats_eager_materialization": false,
+      "unique_value_over_current_tplan": false,
+      "observed_missing_additions": 1
+    }
+  ],
+  "negative_control": {
+    "id": "mpg_convergence",
+    "expected_mode": "off",
+    "actual_mode": "off",
+    "passed": true
+  },
+  "adoption_decision": {
+    "recommend_core_runtime_change": false,
+    "recommend_task_schema_change": false,
+    "recommend_new_runtime_node_kind": false,
+    "recommended_scope": "documentation_pattern_and_prospective_trial_only"
+  },
+  "evidence_status": {
+    "protocol_timing": "locally_pre_specified_not_public_preregistration",
+    "historical_replay_coding": "owner_curated",
+    "mechanical_reproducibility": "committed_fixture_and_expected_projection",
+    "source_manifest": "tests/tplan/fixtures/issue_109_destination_first/source_manifest.md"
+  }
+}

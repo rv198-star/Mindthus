@@ -1,0 +1,148 @@
+{
+  "evidence_status": {
+    "protocol_timing": "locally_pre_specified_not_public_preregistration",
+    "historical_replay_coding": "owner_curated",
+    "mechanical_reproducibility": "committed_fixture_and_expected_projection",
+    "source_manifest": "tests/tplan/fixtures/issue_109_destination_first/source_manifest.md"
+  },
+  "real_mission_replays": [
+    {
+      "id": "v5_targeted_stabilization",
+      "title": "V5 targeted stabilization",
+      "source_anchors": [
+        ".tplan/missions/mission-v5-targeted-stabilization/mission.json",
+        ".tplan/shared_contexts/tplan_mission_shared_context-mission-v5-targeted-stabilization.md",
+        "docs/benchmarks/v5-targeted-plan.md",
+        "https://github.com/rv198-star/Mindthus/issues/104",
+        "https://github.com/rv198-star/Mindthus/issues/105",
+        "https://github.com/rv198-star/Mindthus/issues/106",
+        "https://github.com/rv198-star/Mindthus/issues/107",
+        "https://github.com/rv198-star/Mindthus/issues/108"
+      ],
+      "observed_runtime_shape": {
+        "root_task_count": 1,
+        "root_task_ids": [
+          "V5P"
+        ],
+        "shared_context_key_findings": 0,
+        "later_issue_units": [
+          "#107",
+          "#108"
+        ]
+      },
+      "regions": [
+        {
+          "id": "V5-R1",
+          "name": "Natural activation carrier after diagnostic register hints",
+          "precision_on_first_observation": "vague",
+          "correct_current_tplan_handling": "keep inside the #104 discovery Task and Mission narrative until a disease-level carrier is specified",
+          "later_disposition": "absorbed_by_existing_task",
+          "source": "docs/benchmarks/v5-targeted-plan.md and issue #104 follow-up"
+        },
+        {
+          "id": "V5-R2",
+          "name": "Definition-authority register coverage for #8/#37",
+          "precision_on_first_observation": "specified",
+          "correct_current_tplan_handling": "materialize through addition",
+          "later_disposition": "materialized",
+          "materialized_ref": "#107",
+          "source": "issue #105 dependency note and issue #107"
+        },
+        {
+          "id": "V5-R3",
+          "name": "Cross-review of public-case narrow fitting",
+          "precision_on_first_observation": "specified",
+          "correct_current_tplan_handling": "materialize through addition",
+          "later_disposition": "materialized",
+          "materialized_ref": "#108",
+          "source": "issue #108"
+        },
+        {
+          "id": "V5-R4",
+          "name": "Independently owned shadow-set precondition",
+          "precision_on_first_observation": "specified",
+          "correct_current_tplan_handling": "materialize as a blocked Task with an authority boundary",
+          "later_disposition": "blocked_task",
+          "materialized_ref": "#106 preflight",
+          "source": "issue #106 follow-up"
+        }
+      ],
+      "observed_defects": [
+        "canonical TPLAN task state did not reflect later #107/#108 additions",
+        "Mission Shared Context contained no key findings despite later route changes"
+      ],
+      "defect_classification": [
+        "existing addition/loopback state was not maintained",
+        "Mission Shared Context was stale",
+        "only V5-R1 was genuinely not yet precise"
+      ]
+    },
+    {
+      "id": "issue_31_tvg_value_profiles",
+      "title": "Issue #31 TVG value profiles and Shaw Brothers pilot",
+      "source_anchors": [
+        ".tplan/missions/issue-31-tvg-value-profiles-run/mission.json",
+        ".tplan/missions/issue-31-tvg-value-profiles-run/evidence.jsonl",
+        ".tplan/missions/issue-31-tvg-value-profiles-run/logs/task-pilot-loop.jsonl",
+        "https://github.com/rv198-star/Mindthus/issues/31"
+      ],
+      "observed_runtime_shape": {
+        "root_task_count": 3,
+        "root_task_ids": [
+          "task-tvg-profile-mechanism",
+          "task-shaw-profile",
+          "task-pilot-loop"
+        ],
+        "shared_context_key_findings": null,
+        "later_issue_units": []
+      },
+      "regions": [
+        {
+          "id": "I31-R1",
+          "name": "Correct delivery form to one 18-panel storyboard image",
+          "precision_on_first_observation": "specified",
+          "correct_current_tplan_handling": "targeted fix inside the active pilot Task",
+          "later_disposition": "absorbed_by_existing_task",
+          "source": "task-pilot-loop log L2"
+        },
+        {
+          "id": "I31-R2",
+          "name": "Run an independent clean-room storyboard capability follow-up",
+          "precision_on_first_observation": "specified",
+          "correct_current_tplan_handling": "materialize through addition because the question and proof condition are already clear",
+          "later_disposition": "missing_addition",
+          "source": "key_finding event: pilot evidence ceiling downgraded"
+        }
+      ],
+      "observed_defects": [
+        "the clean-room follow-up remained inside the active pilot Task after becoming precise"
+      ],
+      "defect_classification": [
+        "existing addition gate was not used",
+        "the clean-room follow-up is not Fog"
+      ]
+    }
+  ],
+  "negative_control": {
+    "id": "mpg_convergence",
+    "title": "Mainline-Path Game TVG convergence",
+    "source_anchors": [
+      ".tplan/missions/mainline-path-game-tvg-2026-06-08-run/mission.json",
+      ".tplan/missions/mainline-path-game-tvg-2026-06-08-run/mainline-path-game-tvg-analysis.md"
+    ],
+    "initial_tasks": [
+      "T1",
+      "T2",
+      "T3",
+      "T4"
+    ],
+    "terminal_tasks": [
+      "T1",
+      "T2",
+      "T3",
+      "T4"
+    ],
+    "not_yet_precise_regions": [],
+    "expected_mode": "off"
+  }
+}
