@@ -360,6 +360,31 @@ class InternalBetaCompositionTests(unittest.TestCase):
                     self.assertFalse(output.exists())
         self.assertEqual(hashlib.sha256(readme.read_bytes()).hexdigest(), readme_digest)
 
+    def test_archive_rejects_checksum_asset_name_collision(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="mindthus-beta-asset-collision-") as temporary:
+            root = Path(temporary)
+            for reserved_name in ("SHA256SUMS", "sha256sums"):
+                with self.subTest(reserved_name=reserved_name):
+                    output = root / f"output-{reserved_name}"
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(BETA / "build-internal-beta.py"),
+                            "--out",
+                            str(output),
+                            "--archive",
+                            str(root / reserved_name),
+                            "--force",
+                        ],
+                        cwd=REPO,
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("reserved SHA256SUMS asset", result.stderr + result.stdout)
+                    self.assertFalse(output.exists())
+                    self.assertFalse((root / reserved_name).exists())
+
     @unittest.skipUnless(shutil.which("codex"), "Codex CLI is required")
     def test_stable_and_beta_install_and_remove_independently(self) -> None:
         with tempfile.TemporaryDirectory(prefix="mindthus-beta-lifecycle-") as temporary:

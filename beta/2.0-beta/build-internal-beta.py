@@ -105,6 +105,11 @@ def ensure_safe_checksum(path: Path, root: Path, output: Path, force: bool) -> N
     ensure_safe_archive(path, root, output, force)
 
 
+def ensure_distinct_asset_paths(archive_path: Path, checksum_path: Path) -> None:
+    if archive_path == checksum_path or archive_path.name.casefold() == checksum_path.name.casefold():
+        raise SystemExit("Beta archive path must not collide with the reserved SHA256SUMS asset")
+
+
 def require_commit(root: Path, ref: str) -> None:
     subprocess.run(
         ["git", "cat-file", "-e", f"{ref}^{{commit}}"],
@@ -389,6 +394,7 @@ def main() -> int:
     archive_path = args.archive.resolve() if args.archive else None
     checksum_path = archive_path.parent / "SHA256SUMS" if archive_path else None
     if archive_path is not None and checksum_path is not None:
+        ensure_distinct_asset_paths(archive_path, checksum_path)
         ensure_safe_archive(archive_path, root, output, args.force)
         ensure_safe_checksum(checksum_path, root, output, args.force)
     plugin_root = build(output, args.force)
