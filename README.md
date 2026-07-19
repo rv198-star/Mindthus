@@ -101,6 +101,10 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 当前已发布 Stable 是 `v1.4.6`；`v1.5.1` 仅有冻结源码 tag，仍是未发布的修复候选。
 
+同一 `1.5.1` release train 还冻结了可选的 `v1.5.1-roi-beta`：它面向高能力 Codex /
+GPT-Sol，以较低的加载开销交换有限的被动唤起损失。它不替代 Stable、不自动迁移现有安装，
+当前同样没有发布资产；需要完整、保守行为时请继续使用 Stable。
+
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.4.6.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.4.6.tar.gz`。
 

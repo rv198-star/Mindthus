@@ -36,6 +36,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
         self.assertIn("当前已发布 Stable 是 `v1.4.6`", readme)
+        self.assertIn("可选的 `v1.5.1-roi-beta`", readme)
+        self.assertIn("不替代 Stable、不自动迁移现有安装", readme)
         self.assertIn("mindthus-plugins-1.4.6.tar.gz", readme)
         self.assertIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertNotIn("mindthus-plugins-1.5.1.tar.gz", readme)
