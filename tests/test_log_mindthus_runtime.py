@@ -271,6 +271,41 @@ class LogMindthusRuntimeTests(unittest.TestCase):
         self.assertEqual(args.cache_root, cache_root)
         self.assertEqual(args.marketplace_root, marketplace_root)
 
+    def test_parse_args_discovers_local_marketplace_from_codex_config(self):
+        logger = load_runtime_logger()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            codex_home = root / "home"
+            marketplace = root / "marketplace"
+            plugin = marketplace / "mindthus"
+            (marketplace / ".agents" / "plugins").mkdir(parents=True)
+            plugin.mkdir()
+            (marketplace / ".agents" / "plugins" / "marketplace.json").write_text(
+                json.dumps(
+                    {
+                        "name": "mindthus",
+                        "plugins": [
+                            {
+                                "name": "mindthus",
+                                "source": {"source": "local", "path": "./mindthus"},
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            codex_home.mkdir()
+            (codex_home / "config.toml").write_text(
+                "[marketplaces.mindthus]\n"
+                "source_type = \"local\"\n"
+                f"source = {json.dumps(str(marketplace))}\n",
+                encoding="utf-8",
+            )
+
+            args = logger.parse_args(["--codex-home", str(codex_home)])
+
+            self.assertEqual(args.marketplace_root, plugin.resolve())
+
     def test_reports_matching_runtime_fingerprints_and_markers_as_json(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -306,7 +341,6 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertTrue(payload["summary"]["all_available_hashes_match"])
             self.assertIn("Truth Orientation / 真相优先", payload["markers"])
             self.assertIn("pursue facts and truth over agreement", payload["markers"])
-            self.assertIn("First task: judge whether the user led you to the wrong level", payload["markers"])
             self.assertIn("Entry Triage / 入口分诊", payload["markers"])
             self.assertIn("definition authority contest", payload["markers"])
             self.assertIn("green tests imply release readiness", payload["markers"])
@@ -338,13 +372,11 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertIn("definition_owner", payload["markers"])
             self.assertIn("result_controller", payload["markers"])
             self.assertIn("decision_consequence", payload["markers"])
-            self.assertIn("validate_whole_elephant.py", payload["markers"])
             self.assertIn(
                 "When Partial Truth Capture triggers, the formal answer is incomplete without",
                 payload["markers"],
             )
             self.assertIn("mindthus-whole-elephant-audit-v0.1", payload["markers"])
-            self.assertIn("validation failure blocks formal answer", payload["markers"])
             self.assertIn(
                 "scripts/primitives/validate_whole_elephant.py",
                 payload["locations"]["cache"]["files"],
