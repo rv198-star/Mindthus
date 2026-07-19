@@ -1,0 +1,77 @@
+{
+  "schema_version": "roi-static-v0.1",
+  "routes": {
+    "r1": {
+      "discoverable_skills": [
+        "skills/3l5s/SKILL.md",
+        "skills/edsp/SKILL.md",
+        "skills/mpg/SKILL.md",
+        "skills/sela/SKILL.md",
+        "skills/tplan/SKILL.md",
+        "skills/tvg/SKILL.md",
+        "skills/using-mindthus/SKILL.md",
+        "skills/wae/SKILL.md"
+      ],
+      "using_bytes": 1242,
+      "profile_sha256": "765e2e99bb779f623caa14687d3da92510174bd19daff092b331c27408badc45",
+      "plugin_sha256": {
+        "skills/3l5s/SKILL.md": "cd98fec541f09e461918dd6a64ce28ab34c41ade08ec15d10311915a462d7da2",
+        "skills/edsp/SKILL.md": "6a5c5b0cd491fd38ad19a94d7c7fe8123aceb626dab1d6c3b2d188521be7d333",
+        "skills/mpg/SKILL.md": "323d7a47ed262fd34d1a46a88bddc1d1b1ef52daf472cdd2c70e0699eea8d29b",
+        "skills/sela/SKILL.md": "ea8de51ae53072ec98cc99fb0558f7cca43954e9e09a96431cc717ef7e50890b",
+        "skills/tplan/SKILL.md": "bb5b4ca5dbeb43ed4b2b77e9f6e90859661c95df869066adc846a9d863629636",
+        "skills/tvg/SKILL.md": "9b8b2c5202c7c46588887abc876dd0a7f7ca85e6c3dad2b8cee293dab0fc8255",
+        "skills/using-mindthus/SKILL.md": "77f7f6e22c6c8db15c140e80ff1963e869ca7ae1a12c1f1318adf29d1f6f3738",
+        "skills/wae/SKILL.md": "67e9f20a412b1ffe1b53127f942d1fdc5b1942917ff37351a0927d278ad657e8"
+      }
+    },
+    "r2": {
+      "discoverable_skills": [
+        "skills/3l5s/SKILL.md",
+        "skills/edsp/SKILL.md",
+        "skills/mpg/SKILL.md",
+        "skills/sela/SKILL.md",
+        "skills/tplan/SKILL.md",
+        "skills/tvg/SKILL.md",
+        "skills/using-mindthus/SKILL.md",
+        "skills/wae/SKILL.md"
+      ],
+      "using_bytes": 895,
+      "profile_sha256": "c5173b6be7fe2fa8d03019e653293eb786ee43abb157d1bdb5d3d9b8a709de84",
+      "plugin_sha256": {
+        "skills/3l5s/SKILL.md": "cd98fec541f09e461918dd6a64ce28ab34c41ade08ec15d10311915a462d7da2",
+        "skills/edsp/SKILL.md": "32e3ecab7645d826cf5ae9199c8be9712d3ff137b6d1727911a9103411efbe0f",
+        "skills/mpg/SKILL.md": "323d7a47ed262fd34d1a46a88bddc1d1b1ef52daf472cdd2c70e0699eea8d29b",
+        "skills/sela/SKILL.md": "ea8de51ae53072ec98cc99fb0558f7cca43954e9e09a96431cc717ef7e50890b",
+        "skills/tplan/SKILL.md": "bb5b4ca5dbeb43ed4b2b77e9f6e90859661c95df869066adc846a9d863629636",
+        "skills/tvg/SKILL.md": "9b8b2c5202c7c46588887abc876dd0a7f7ca85e6c3dad2b8cee293dab0fc8255",
+        "skills/using-mindthus/SKILL.md": "83aba6a1d852a7aa5e749ffdd3af3e4add2cbe95ff4b9671464c844b01ba85da",
+        "skills/wae/SKILL.md": "67e9f20a412b1ffe1b53127f942d1fdc5b1942917ff37351a0927d278ad657e8"
+      }
+    },
+    "r3": {
+      "discoverable_skills": [
+        "skills/3l5s/SKILL.md",
+        "skills/edsp/SKILL.md",
+        "skills/mpg/SKILL.md",
+        "skills/sela/SKILL.md",
+        "skills/tplan/SKILL.md",
+        "skills/tvg/SKILL.md",
+        "skills/wae/SKILL.md"
+      ],
+      "using_bytes": 0,
+      "profile_sha256": "c7a9a8f9ff11ce28d6e3b455add2446b0cc0c3614b11c628e789e8ed01cf8b8c",
+      "plugin_sha256": {
+        "skills/3l5s/SKILL.md": "cd98fec541f09e461918dd6a64ce28ab34c41ade08ec15d10311915a462d7da2",
+        "skills/edsp/SKILL.md": "32e3ecab7645d826cf5ae9199c8be9712d3ff137b6d1727911a9103411efbe0f",
+        "skills/mpg/SKILL.md": "323d7a47ed262fd34d1a46a88bddc1d1b1ef52daf472cdd2c70e0699eea8d29b",
+        "skills/sela/SKILL.md": "ea8de51ae53072ec98cc99fb0558f7cca43954e9e09a96431cc717ef7e50890b",
+        "skills/tplan/SKILL.md": "bb5b4ca5dbeb43ed4b2b77e9f6e90859661c95df869066adc846a9d863629636",
+        "skills/tvg/SKILL.md": "9b8b2c5202c7c46588887abc876dd0a7f7ca85e6c3dad2b8cee293dab0fc8255",
+        "skills/wae/SKILL.md": "67e9f20a412b1ffe1b53127f942d1fdc5b1942917ff37351a0927d278ad657e8"
+      }
+    }
+  },
+  "failures": [],
+  "status": "PASS"
+}

@@ -1,12 +1,15 @@
 ---
 name: using-mindthus
-description: Use only when the user explicitly asks which Mindthus lens or Skill should own a hard judgment, or when two concrete Mindthus owner domains remain genuinely tied after facts and decision context are known. Do not use as a default preflight.
+description: Use before any continue, hold, stop, exit, or switch recommendation when missing actor, target, timing, authority, exposure, rollback, or acceptable loss could flip the answer. Give no direction first; ask exactly one blocking question. Skip when decision context is already sufficient.
 ---
 
-# using-mindthus — Explicit Arbitration
+# using-mindthus — Decision Context Gate
 
-Concrete owner Skills activate directly. This entry only resolves a genuine owner tie
-or an explicit request for Mindthus method selection. Acquire missing facts or one
-action-changing clarification first; then choose the smallest owner whose domain would
-change definition, evidence, action, or stopping condition. Do not print an owner menu,
-load multiple owners for reassurance, or turn routing into another user round.
+Before recommending a path, check whether actor, target, timing, authority, exposure,
+rollback, or acceptable loss is missing and could change the answer. If so, the first
+visible response must contain no direction, posture, fallback, or hold. Ask exactly one
+question that locks the answer-changing context, then end.
+
+If context is sufficient or no path decision is requested, do not intervene. Concrete
+owner Skills activate directly. This entry has no method catalog, owner summary,
+routing workflow, or second gate.
