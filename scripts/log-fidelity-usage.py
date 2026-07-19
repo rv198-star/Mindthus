@@ -20,6 +20,8 @@ DEFAULT_LOG = Path("data/fidelity-usage-log.jsonl")
 METHODS = ("3L5S", "SELA", "MPG", "EDSP", "WAE", "TVG", "tplan", "using-mindthus")
 RECORD_TYPES = ("real_use", "evaluation", "fixture")
 HELPED_VALUES = ("yes", "no", "mixed", "unknown")
+INVOCATION_MODES = ("explicit_router", "explicit_skill", "automatic_best_effort", "unknown")
+OVERHEAD_LEVELS = ("none", "low", "moderate", "high", "unknown")
 
 
 @dataclass(frozen=True)
@@ -93,16 +95,56 @@ def validate_record(record: Any, line: int) -> list[Finding]:
             )
         )
 
+    invocation_mode = record.get("invocation_mode")
+    if invocation_mode is not None and invocation_mode not in INVOCATION_MODES:
+        findings.append(
+            Finding(
+                line,
+                "invalid-invocation-mode",
+                f"invocation_mode must be one of: {', '.join(INVOCATION_MODES)}",
+            )
+        )
+    for field in ("decision_changed", "rework_reduced", "harm_observed"):
+        value = record.get(field)
+        if value is not None and value not in HELPED_VALUES:
+            findings.append(
+                Finding(
+                    line,
+                    "invalid-outcome-value",
+                    f"{field} must be one of: {', '.join(HELPED_VALUES)}",
+                )
+            )
+    overhead_level = record.get("overhead_level")
+    if overhead_level is not None and overhead_level not in OVERHEAD_LEVELS:
+        findings.append(
+            Finding(
+                line,
+                "invalid-overhead-level",
+                f"overhead_level must be one of: {', '.join(OVERHEAD_LEVELS)}",
+            )
+        )
+    if "mechanism" in record and not isinstance(record.get("mechanism"), str):
+        findings.append(Finding(line, "invalid-optional-field", "mechanism must be a string"))
+
     max_score = record.get("max_score")
-    if not is_int(max_score) or max_score <= 0:
+    baseline = record.get("baseline_score")
+    constrained = record.get("constrained_score")
+    if max_score is None and record.get("record_type") == "real_use":
+        if baseline is not None or constrained is not None:
+            findings.append(
+                Finding(
+                    line,
+                    "incomplete-score-set",
+                    "real_use scores require constrained_score and a positive max_score",
+                )
+            )
+    elif not is_int(max_score) or max_score <= 0:
         findings.append(Finding(line, "invalid-max-score", "max_score must be a positive integer"))
         max_score = 0
     else:
         validate_score(record, "baseline_score", max_score, findings, line)
         validate_score(record, "constrained_score", max_score, findings, line)
 
-    baseline = record.get("baseline_score")
-    constrained = record.get("constrained_score")
     expected_delta = constrained - baseline if is_int(baseline) and is_int(constrained) else None
     if record.get("score_delta") != expected_delta:
         findings.append(
@@ -136,6 +178,12 @@ def build_record(args: argparse.Namespace) -> dict[str, Any]:
         "max_score": args.max_score,
         "score_delta": constrained - baseline if baseline is not None else None,
         "constraint_helped": args.constraint_helped,
+        "invocation_mode": args.invocation_mode,
+        "decision_changed": args.decision_changed,
+        "rework_reduced": args.rework_reduced,
+        "overhead_level": args.overhead_level,
+        "harm_observed": args.harm_observed,
+        "mechanism": optional_text(args.mechanism),
         "source": optional_text(args.source),
         "notes": optional_text(args.notes),
         "tags": parse_tags(args.tags),
@@ -202,17 +250,23 @@ def append_record(path: Path, record: dict[str, Any]) -> int:
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
 
-    baseline = record["baseline_score"]
-    delta = record["score_delta"]
-    baseline_text = "none" if baseline is None else str(baseline)
-    delta_text = "none" if delta is None else f"{delta:+d}"
     print(f"appended fidelity usage log record to {path}")
+    if record["max_score"] is None:
+        score_summary = "score=not_recorded"
+    else:
+        baseline = record["baseline_score"]
+        delta = record["score_delta"]
+        baseline_text = "none" if baseline is None else str(baseline)
+        delta_text = "none" if delta is None else f"{delta:+d}"
+        score_summary = (
+            f"baseline={baseline_text}/{record['max_score']} "
+            f"constrained={record['constrained_score']}/{record['max_score']} "
+            f"delta={delta_text}"
+        )
     print(
         "summary: "
-        f"method={record['method']} model={record['model']} "
-        f"baseline={baseline_text}/{record['max_score']} "
-        f"constrained={record['constrained_score']}/{record['max_score']} "
-        f"delta={delta_text} helped={record['constraint_helped']}"
+        f"method={record['method']} model={record['model']} {score_summary} "
+        f"helped={record['constraint_helped']} invocation={record['invocation_mode']}"
     )
     return 0
 
@@ -229,6 +283,37 @@ def main() -> int:
     parser.add_argument("--constrained-score", type=int, help="Constrained or real-use judge score.")
     parser.add_argument("--max-score", type=int, help="Maximum judge score for this rubric.")
     parser.add_argument("--constraint-helped", choices=HELPED_VALUES, help="Whether constraints helped.")
+    parser.add_argument(
+        "--invocation-mode",
+        default="unknown",
+        choices=INVOCATION_MODES,
+        help="How Mindthus entered the task.",
+    )
+    parser.add_argument(
+        "--decision-changed",
+        default="unknown",
+        choices=HELPED_VALUES,
+        help="Whether Mindthus materially changed the judgment or action.",
+    )
+    parser.add_argument(
+        "--rework-reduced",
+        default="unknown",
+        choices=HELPED_VALUES,
+        help="Whether Mindthus reduced downstream rework.",
+    )
+    parser.add_argument(
+        "--overhead-level",
+        default="unknown",
+        choices=OVERHEAD_LEVELS,
+        help="Observed extra process or attention cost.",
+    )
+    parser.add_argument(
+        "--harm-observed",
+        default="unknown",
+        choices=HELPED_VALUES,
+        help="Whether Mindthus caused a worse decision, delay, or avoidable burden.",
+    )
+    parser.add_argument("--mechanism", help="Redacted recurring success or failure mechanism.")
     parser.add_argument("--record-type", default="real_use", choices=RECORD_TYPES, help="Usage record type.")
     parser.add_argument("--logged-at", help="Override timestamp, preferably ISO-8601.")
     parser.add_argument("--source", help="Optional artifact or issue reference.")
@@ -243,13 +328,24 @@ def main() -> int:
         "scenario": args.scenario,
         "method": args.method,
         "model": args.model,
-        "constrained_score": args.constrained_score,
-        "max_score": args.max_score,
         "constraint_helped": args.constraint_helped,
     }
+    if args.record_type != "real_use":
+        required.update(
+            {
+                "constrained_score": args.constrained_score,
+                "max_score": args.max_score,
+            }
+        )
     missing = [name for name, value in required.items() if value is None or value == ""]
     if missing:
         raise SystemExit(f"missing required arguments for append: {', '.join(missing)}")
+
+    score_values = (args.baseline_score, args.constrained_score, args.max_score)
+    if any(value is not None for value in score_values) and (
+        args.constrained_score is None or args.max_score is None
+    ):
+        raise SystemExit("partial scores are invalid: provide constrained_score and max_score together")
 
     return append_record(args.log, build_record(args))
 

@@ -141,6 +141,62 @@ class V101UsageLogTests(unittest.TestCase):
             self.assertEqual(record["constrained_score"], 8)
             self.assertIsNone(record["score_delta"])
 
+    def test_real_use_record_captures_product_outcomes_without_forced_score(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log_path = Path(tmp) / "usage.jsonl"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--log",
+                    str(log_path),
+                    "--scenario",
+                    "脱敏后的真实决策任务",
+                    "--method",
+                    "using-mindthus",
+                    "--model",
+                    "gpt-5-codex",
+                    "--constraint-helped",
+                    "mixed",
+                    "--invocation-mode",
+                    "explicit_router",
+                    "--decision-changed",
+                    "yes",
+                    "--rework-reduced",
+                    "unknown",
+                    "--overhead-level",
+                    "low",
+                    "--harm-observed",
+                    "no",
+                    "--mechanism",
+                    "纠正了实现层事实接管定义层判断",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            record = json.loads(log_path.read_text(encoding="utf-8").strip())
+            self.assertIsNone(record["baseline_score"])
+            self.assertIsNone(record["constrained_score"])
+            self.assertIsNone(record["max_score"])
+            self.assertIsNone(record["score_delta"])
+            self.assertEqual(record["invocation_mode"], "explicit_router")
+            self.assertEqual(record["decision_changed"], "yes")
+            self.assertEqual(record["rework_reduced"], "unknown")
+            self.assertEqual(record["overhead_level"], "low")
+            self.assertEqual(record["harm_observed"], "no")
+            self.assertEqual(record["mechanism"], "纠正了实现层事实接管定义层判断")
+            self.assertIn("score=not_recorded", result.stdout)
+
+            validation = subprocess.run(
+                ["python3", str(USAGE_LOGGER), "--validate", "--log", str(log_path)],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stderr + validation.stdout)
+
     def test_usage_logger_blocks_invalid_score_and_delta(self):
         with tempfile.TemporaryDirectory() as tmp:
             log_path = Path(tmp) / "usage.jsonl"
@@ -183,10 +239,11 @@ class V101UsageLogTests(unittest.TestCase):
         )
 
         for phrase in (
-            "当前仓库版本：`v1.4.3`",
+            "当前仓库版本：`v1.4.6`",
             "scripts/log-fidelity-usage.py",
             "data/fidelity-usage-log.jsonl",
             "可选：记录使用效果",
+            "Real-Use Validation",
         ):
             self.assertIn(phrase, readme)
 
@@ -212,7 +269,7 @@ class V101UsageLogTests(unittest.TestCase):
                     / "plugin.json"
                 ).read_text(encoding="utf-8")
             )
-            self.assertEqual(plugin["version"], "1.4.3")
+            self.assertEqual(plugin["version"], "1.4.6")
             for platform_root in (
                 root / "claude-code" / "claude-plugin",
                 root / "codex",

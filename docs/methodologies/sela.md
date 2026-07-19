@@ -36,16 +36,14 @@ SELA 同时要求做时机检查。长期方向正确，不等于现在必须立
 
 ### SELA ↔ MPG Twin-Lens Handshake
 
-SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+SELA calibrates direction; MPG owns path-carrying action. 当问题已经出现承载者、暴露、
+路径波动或继续/退出承诺时，只判断长期方向还不够：需要再用 MPG 判断当前载体和行动姿态。
+这不是两套平行结论，而是一条清楚的分工线：SELA 说明方向压力，MPG 决定如何穿过路径。
 
-SELA calibrates direction; MPG owns path-carrying action. When the companion check
-applies, the first visible sentence must be a plain-language thesis that separates
-direction calibration from path action in ordinary language. Do not start the default
-answer with `direction:` or `current carrier/path:`. Default answer must not start with
-debug labels. Internal labels are debug/audit support; hide them unless the user asks
-for audit, validation, or handoff. Use
-`SELA dominate + MPG not yet needed` only when没有载体、路径或行动承诺需要判断。do not
-turn a direction win into a carrier commitment.
+对外解释时，应把“长期方向是否成立”和“当前载体是否值得继续”分开说清。只有没有载体、
+路径或行动承诺需要判断时，才停在方向层；不能从“方向可能正确”直接推出“当前载体必须
+继续”。Agent 的 direct-load、companion skill 加载与输出形状要求属于
+[`SELA runtime surface`](../../skills/sela/SKILL.md)，不由这份公共方法文档承担。
 
 ## 怎么用
 

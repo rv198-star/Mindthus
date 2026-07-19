@@ -8,6 +8,15 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
+USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
+    "frame-fitness-check.md",
+    "entry-triage.md",
+    "aspect-ownership.md",
+    "decision-context-calibration.md",
+    "whole-elephant-protocol.md",
+    "expression-pressure-and-gates.md",
+    "mpg-scalar-commitment-unpack.md",
+)
 
 
 def parse_frontmatter_mapping(text: str) -> dict[str, str]:
@@ -51,12 +60,37 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertIn("name", parsed, f"{path} frontmatter missing name")
         self.assertIn("description", parsed, f"{path} frontmatter missing description")
 
+    def assert_packaged_using_mindthus_primitives(self, skill_dir: Path) -> None:
+        fidelity_contract = skill_dir / "resources" / "fidelity-contract.md"
+        self.assertTrue(
+            fidelity_contract.is_file(),
+            f"missing packaged fidelity contract: {fidelity_contract}",
+        )
+        for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
+            source = (
+                REPO / "docs" / "methodologies" / "primitives" / filename
+            ).read_text(encoding="utf-8")
+            expected = source.replace(
+                "../../../skills/using-mindthus/resources/fidelity-contract.md",
+                "../fidelity-contract.md",
+            )
+            packaged = skill_dir / "resources" / "primitives" / filename
+            self.assertTrue(packaged.is_file(), f"missing packaged primitive: {packaged}")
+            packaged_text = packaged.read_text(encoding="utf-8")
+            self.assertEqual(packaged_text, expected)
+            if "../fidelity-contract.md" in packaged_text:
+                linked_contract = packaged.parent / "../fidelity-contract.md"
+                self.assertTrue(
+                    linked_contract.resolve().is_file(),
+                    f"broken packaged fidelity link: {packaged} -> {linked_contract}",
+                )
+
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.4.3`",
+            "当前仓库版本：`v1.4.6`",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -377,12 +411,12 @@ class PackagingDocsTests(unittest.TestCase):
         )
 
     def test_using_mindthus_entrypoint_stays_thin_enough_for_attention(self):
-        budget_bytes = 11 * 1024
+        budget_bytes = 9 * 1024
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
         self.assertLessEqual(
             path.stat().st_size,
             budget_bytes,
-            "using-mindthus is the routing entrypoint; keep it under 11KiB and move long semantics to AOP primitives/scripts.",
+            "using-mindthus is the high-frequency routing entrypoint; keep it under 9KiB and move detailed semantics to conditional resources.",
         )
 
     def test_using_mindthus_entrypoint_stays_within_word_attention_budget(self):
@@ -390,9 +424,19 @@ class PackagingDocsTests(unittest.TestCase):
         word_count = len(path.read_text(encoding="utf-8").split())
         self.assertLessEqual(
             word_count,
-            1100,
-            "using-mindthus should stay under 1100 words; move detailed semantics to shared primitives, resources, or validators.",
+            900,
+            "using-mindthus should stay under 900 words; move detailed semantics to shared primitives, resources, or validators.",
         )
+
+    def test_using_mindthus_uses_progressive_disclosure_for_detail_contracts(self):
+        path = REPO / "skills" / "using-mindthus" / "SKILL.md"
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("### Conditional Resources / Runtime Support", text)
+        self.assertIn("Do not preload every resource", text)
+        self.assertIn("Portable alias: `resources/primitives/`", text)
+        for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
+            self.assertIn(f"docs/methodologies/primitives/{filename}", text)
+        self.assertIn("resources/fidelity-contract.md", text)
 
     def test_using_mindthus_entrypoint_has_no_empty_markdown_headings(self):
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
@@ -468,6 +512,7 @@ class PackagingDocsTests(unittest.TestCase):
             Path("codex-plugin/mindthus/skills/tplan/templates/evidence.jsonl"),
             Path("opencode/.opencode/skills/mindthus/tplan/templates/evidence.jsonl"),
         }
+        binary_asset_allowlist: set[Path] = set()
         jsonl_paths: set[Path] = set()
         binary_asset_paths: set[Path] = set()
 
@@ -490,7 +535,11 @@ class PackagingDocsTests(unittest.TestCase):
             jsonl_paths.issubset(jsonl_allowlist),
             f"release pack should only include allowlisted jsonl templates: {jsonl_paths - jsonl_allowlist}",
         )
-        self.assertEqual(binary_asset_paths, set(), "release packs should not carry binary images or media")
+        self.assertTrue(
+            binary_asset_paths.issubset(binary_asset_allowlist),
+            "release packs should only carry declared Codex plugin visual assets: "
+            f"{binary_asset_paths - binary_asset_allowlist}",
+        )
 
     def test_skill_frontmatter_parser_rejects_unquoted_nested_colon(self):
         with self.assertRaises(ValueError):
@@ -706,6 +755,20 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assert_release_pack_excludes_runtime_artifacts(out)
 
+            for skill_dir in (
+                out / "claude-code" / "claude-plugin" / "skills" / "using-mindthus",
+                out / "claude-code" / "skills" / "using-mindthus",
+                out / "codex-plugin" / "mindthus" / "skills" / "using-mindthus",
+                out / "codex" / "skills" / "mindthus" / "using-mindthus",
+                out
+                / "opencode"
+                / ".opencode"
+                / "skills"
+                / "mindthus"
+                / "using-mindthus",
+            ):
+                self.assert_packaged_using_mindthus_primitives(skill_dir)
+
             marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
             plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"
             self.assertTrue(marketplace_path.exists())
@@ -716,7 +779,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.4.3")
+            self.assertEqual(plugin["version"], "1.4.6")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -804,9 +867,19 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.4.3")
+            self.assertEqual(codex_plugin_manifest["version"], "1.4.6")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
+            self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
+            self.assertEqual(
+                codex_plugin_manifest["interface"]["composerIcon"],
+                "./assets/mindthus-icon.svg",
+            )
+            self.assertEqual(codex_plugin_manifest["interface"]["logo"], "./assets/mindthus-logo.svg")
+            self.assertEqual(
+                codex_plugin_manifest["interface"]["logoDark"],
+                "./assets/mindthus-logo-dark.svg",
+            )
             self.assertIn("Judgment framework", codex_plugin_manifest["description"])
             self.assertIn("SPDX AGPL-3.0-only", codex_plugin_manifest["interface"]["longDescription"])
             self.assertIn(
@@ -845,6 +918,22 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((codex_plugin_root / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "run-fidelity-judge.py").exists())
             self.assertTrue((codex_plugin_root / "scripts" / "log-mindthus-runtime.py").exists())
+            for asset_name in (
+                "mindthus-icon.svg",
+                "mindthus-logo.svg",
+                "mindthus-logo-dark.svg",
+            ):
+                self.assertTrue((codex_plugin_root / "assets" / asset_name).exists())
+            icon_svg = (codex_plugin_root / "assets" / "mindthus-icon.svg").read_text(
+                encoding="utf-8"
+            )
+            dark_logo_svg = (
+                codex_plugin_root / "assets" / "mindthus-logo-dark.svg"
+            ).read_text(encoding="utf-8")
+            self.assertIn('fill="#F6F3EC"', icon_svg)
+            self.assertIn('stroke="#161614"', icon_svg)
+            self.assertIn('fill="#161614"', dark_logo_svg)
+            self.assertIn('stroke="#F6F3EC"', dark_logo_svg)
             self.assertTrue(
                 (codex_plugin_root / "scripts" / "primitives" / "whole_elephant_validator.py").exists()
             )
@@ -913,8 +1002,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.4.3"
-            skills = tmp_dir / "mindthus-skills-1.4.3"
+            plugins = tmp_dir / "mindthus-plugins-1.4.6"
+            skills = tmp_dir / "mindthus-skills-1.4.6"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
@@ -1011,6 +1100,31 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((skills / "codex-plugin").exists())
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
+
+    def test_release_pack_includes_cinematic_colossal_profile_package(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "release"
+            result = subprocess.run(
+                ["python3", str(script), "--package", "skills", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            packaged = (
+                out
+                / "codex"
+                / "skills"
+                / "mindthus"
+                / "tvg"
+                / "resources"
+                / "value-profiles"
+                / "cinematic-colossal-realism"
+            )
+            self.assertTrue((packaged / "profile.md").exists())
+            self.assertTrue((packaged / "resources" / "subject-taxonomy.json").exists())
+            self.assertTrue((packaged / "scripts" / "lint_prompt_packet.py").exists())
+            self.assertTrue((packaged / "examples" / "loop-assisted-image-comparison.md").exists())
 
 
 if __name__ == "__main__":

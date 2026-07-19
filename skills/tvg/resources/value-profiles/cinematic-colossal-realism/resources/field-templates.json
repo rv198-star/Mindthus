@@ -1,0 +1,11 @@
+{
+  "schema_version": "cinematic-colossal-field-templates-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "field_lock_policy": {
+    "preserve_user_field_names": true,
+    "preserve_user_field_order": true,
+    "do_not_add_fields_when_user_says_fixed": true,
+    "allowed_change": "rewrite field contents only"
+  },
+  "known_field_markers": ["【镜头角度】", "【景别】", "【前景】", "【中景】", "【远景】", "【负面约束】"]
+}

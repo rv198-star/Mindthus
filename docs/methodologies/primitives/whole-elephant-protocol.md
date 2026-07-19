@@ -181,20 +181,16 @@ Expanded/debug audit can add `object_hierarchy`, `user_named_object_relation`,
 If an expanded package is used, its fields must be internally consistent; it is
 guardrail/debug support, not a new judgment center.
 
-Shape and wording-risk validation gate:
-write a Whole Elephant audit JSON: write a `mindthus-whole-elephant-audit-v0.1` JSON
-audit and run `python3 scripts/primitives/validate_whole_elephant.py <audit.json>`
-before formal_answer when the runtime can execute the script. validation failure blocks
-formal answer.
+### Validation Boundary / 校验边界
 
-If the host cannot run the script, use `not_run_fallback`: perform an internal compact
-triad and consequence-probe self-check, record why the script could not run, and disclose
-that script validation did not run when this matters for handoff or debug. Do not claim
-validation passed without command evidence.
+Whole Elephant 可以配合结构校验器检查审计包是否缺字段、内部对象是否漂移，以及是否出现
+明显的让步型措辞风险。校验器只检查 shape 和确定性约束；它不能决定语义真相、定义是否
+正确、证据是否充分、领域价值或用户权限。
 
-The script checks required shape and obvious concession-wording risks; it does not
-decide semantic truth, definition correctness, evidence sufficiency, domain value, or
-user authority.
+校验状态本身也是证据 claim：没有真实运行证据时，只能说明“未运行”，不能声称“已经
+通过”。具体的审计文件格式、命令、路径解析、失败阻断和不可执行时的回退合同属于
+[`using-mindthus fidelity contract`](../../../skills/using-mindthus/resources/fidelity-contract.md)，
+不属于公共方法说明。
 
 Audit Package Consistency / 审计包一致性:
 `object_hierarchy.whole_object`, top-level `whole_object`, `canonical_object`, and
@@ -202,20 +198,13 @@ Audit Package Consistency / 审计包一致性:
 not grant definition authority to a local interface that
 `formal_answer_plan.definition_disposition` rejects.
 
-Validator path rule: resolve from skill path to plugin root scripts/primitives. When
-that path or runtime is unavailable, record fallback reason instead of inventing command
-evidence.
+### Public Explanation and Runtime Trace
 
-Audit Hidden By Default / 审计默认内隐: Do not output short audit by default.
-whole_elephant_validation is internal evidence by default. visible answer starts with
-the global thesis, not the audit summary. Human-readable audit summary is only for
-explicit/debug paths; do not dump raw JSON/YAML by default.
+面向读者的解释以整体对象、结果主控者和实际后果为中心。机器可读审计包、validator trace
+和调试字段是 runtime 支撑物，不是方法结论本身。何时显示这些内部材料、如何处理 validator
+输出，由 skill runtime contract 约束；公共方法文档只说明这种分层关系。
 
-Chinese-first output; avoid mixed-language jargon walls.
-
-visible answer must not expose script stdout fields: `script_verdict`,
-`agentic_judgment_required`, or `script_must_not_decide`; use them as internal evidence
-only.
+中文场景优先用中文讲清判断，避免混合语言术语墙。
 
 ## Expanded Field Notes
 

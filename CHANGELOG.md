@@ -2,7 +2,89 @@
 
 ## Unreleased
 
-### v1.4.4-diag diagnostic milestone
+## v1.4.6
+
+发布日期：2026-07-14
+
+[完整发布日志](docs/releases/v1.4.6.md)
+
+说明：这是一次把 TVG 高级 Profile 案例和发布包产品完整性收束到一起的 release。显式调用
+`using-mindthus` 或具体 skill 仍是可靠主路径，host 自动唤起仍是 best-effort，不构成自动唤起认证。
+
+### TVG-Profile 高级案例
+
+- `docs/methodologies/tvg.md` 现在明确指向四层 `cinematic-colossal-realism` 高级包，补回最高级、最复杂的 TVG-Profile 用法。
+- 案例面向电影级出图的 prompt packet 与图像 review，不是邵氏 / 胡金铨等风格型影视案例的重复，也不声称任何图像模型稳定复现某种电影风格。
+- release pack 携带 profile、四层运行资源、示例记录和确定性 support scripts；脚本仍不能替 TVG 判断美学成功、Profile 成熟度或退出。
+
+### Codex 插件主题图标
+
+- Codex plugin manifest 改用可审查的 SVG visual assets。
+- composer icon 自带浅色底，避免深色主题下透明底黑线消失。
+- 增加 `interface.logoDark`，让 Codex 在深色主题使用深色底、浅色线条的 Logo。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -p 'test*.py' -q`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+
+## v1.4.5
+
+发布日期：2026-07-13
+
+[完整发布日志](docs/releases/v1.4.5.md)
+
+说明：这是一次可靠性与产品合同 patch release。它不新增方法、不改变 Mindthus 的核心
+定位，也不把未通过的自动唤起研究包装成能力升级；主要变化是把诊断研究中可复用的部分
+收回到更轻、更明确、更容易安装和验证的正式产品面。
+
+### 产品收敛
+
+日期：2026-07-13
+
+本轮结束公开题库驱动的 activation / prompt 参数研究，把诊断成果收敛成产品合同。公开
+50 场景结果仍是 `1.447 < 1.5`，Mindthus 仍未通过认证；`latest.md` 不再描述一个活跃的
+V5 certification campaign。
+
+- README 明确显式调用 `using-mindthus` 或具体 skill 是可靠主路径，host 自然唤起仅为
+  best-effort，不构成正确性保证。
+- 完成 #101：公共方法文档保留方法、边界和语义效果；direct-load、validator、fallback、
+  trace 与输出形状义务留在 `skills/*` runtime surface。
+- 新增 10–20 个自然任务的 real-use validation 入口；真实任务无需强造评分，记录判断变化、
+  返工、额外负担、伤害和重复机制，只对重复问题立项。
+- 选择性带回通用 timeout bytes 解码修复和插件图标；不带回未通过独立证据门的 semantic
+  triage 研究 runtime。
+- 旧诊断 issues 按“完成 / 部分交付 / 停止研究”重新归档；诊断完成不再被表述为问题已解决。
+
+### 高频入口与发布包
+
+- `using-mindthus/SKILL.md` 从 11,224 bytes / 1,094 words 收敛到 7,193 bytes /
+  900 words；高频 preload 只保留介入边界、定框审计、定义权裁决、方法路由、执行影响和
+  停止条件，详细语义改为 conditional resources。
+- Frame Fitness 明确为 `frame-risk AND execution impact` 才运行；触发后必须记录
+  `routing_decision`，避免既过度审计又丢失路由结果。
+- 七份条件原语文档被镜像进 Claude plugin、Claude skills、Codex plugin、Codex skills
+  和 OpenCode skills 五种发布布局；打包测试验证改写后的 fidelity 链接真实可达。
+- Codex plugin 增加正式图标与 logo；通用 timeout bytes 解码修复进入公开代码。
+
+### 评测与边界
+
+- 公共 50 场景 fixture、runner、双层误唤醒口径和历史 artifacts 保留为可复查证据，
+  但不进入 release pack，也不构成自动唤起认证。
+- V4 treatment positive mean 仍为 `1.447 < 1.5`；register-hints、semantic triage 和
+  后续 shadow 实验只作为诊断路线记录，未成为 v1.4.5 的生产承诺。
+- “SKILLS 本质是提示词”与 4K/5K 判断场景的有效改进保留在 Whole Elephant、Decision
+  Context、Definition Authority 和首句落锤合同中；不依赖题号 matcher。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -p 'test_*.py' -q`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+- 五种发布布局的入口 SHA 与条件资源链接通过独立复核。
+
+## v1.4.4-diag diagnostic milestone
 
 日期：2026-07-08
 

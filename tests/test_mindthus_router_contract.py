@@ -15,6 +15,37 @@ def _read_shared_primitive_docs() -> str:
     return "\n".join(parts)
 
 
+def _read_using_mindthus_contract() -> str:
+    """Return the preload entry plus details it explicitly loads on demand."""
+    skill_dir = REPO / "skills" / "using-mindthus"
+    return "\n".join(
+        (
+            (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
+            _read_shared_primitive_docs(),
+            (skill_dir / "resources" / "fidelity-contract.md").read_text(
+                encoding="utf-8"
+            ),
+        )
+    )
+
+
+def _parse_using_mindthus_routes(text: str) -> dict[str, str]:
+    """Parse the compact two-column owner table from the preload entry."""
+    start = text.index("### Skill Routing")
+    rows: dict[str, str] = {}
+    for line in text[start:].splitlines():
+        if not line.startswith("|"):
+            if rows:
+                break
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if cells == ["Owner", "Dominates when"] or set(cells) == {"---"}:
+            continue
+        if len(cells) == 2:
+            rows[cells[0].strip("`")] = cells[1]
+    return rows
+
+
 def _skill_description(skill_name: str) -> str:
     text = (REPO / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
     _, frontmatter, _ = text.split("---", 2)
@@ -98,11 +129,12 @@ class MindthusRouterContractTests(unittest.TestCase):
         )
         for path in surfaces:
             text = path.read_text(encoding="utf-8")
-            for phrase in (
-                "Truth Orientation / 真相优先",
+            compact = " ".join(text.split()).lower()
+            self.assertIn("Truth Orientation / 真相优先", text)
+            self.assertIn(
                 "user input is signal, constraint, or hypothesis; not evidence by itself",
-            ):
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+                compact,
+            )
             self.assertTrue(
                 _states_truth_over_agreement(text),
                 f"{path} must state the truth-over-agreement principle",
@@ -110,37 +142,48 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_using_mindthus_defines_premise_calibration_as_pre_route_action(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("Premise Calibration", text)
-        self.assertIn("前置校准", text)
-        self.assertIn("不是独立方法论", text)
-        self.assertIn("只帮助选择", text)
-        self.assertIn("真实对象", text)
-        self.assertIn("底层约束", text)
-        self.assertIn("目标函数", text)
+        for phrase in (
+            "Premise Calibration / 前置校准",
+            "is not a method",
+            "Before lens choice",
+            "真实对象",
+            "底层约束",
+            "目标函数",
+        ):
+            self.assertIn(phrase, text)
 
     def test_input_framing_audit_is_strong_entry_protocol_inside_using_mindthus(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        using_compact = " ".join(using.split())
         primitives = _read_shared_primitive_docs()
         agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
 
         for phrase in (
             "Input Framing Audit / 输入定框审计",
             "强约束入口协议",
-            "在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级",
-            "true_question",
-            "packed_premises",
-            "layer_risks",
+            "在进入判断之前，先检查当前问题是否已经被",
+            "提问方式绑到错误层级",
             "frame_status",
-            "reframed_question",
             "routing_decision",
+            "Run only with both frame-risk and execution impact",
+            "Triggered audits record `routing_decision`",
             "clean / biased / overloaded / malformed",
-            "not keyword rules",
+            "not a keyword rule",
             "No frame-risk signal, no frame check",
-            "When frame-risk exists",
-            "internal result",
-            "No execution impact:omit frame check",
+            "no execution impact, omit the frame check",
+            "docs/methodologies/primitives/frame-fitness-check.md",
         ):
-            self.assertIn(phrase, using)
+            self.assertIn(phrase, using_compact)
+
+        self.assertNotIn(
+            "omit the audit only with neither frame-risk nor execution impact",
+            using_compact,
+        )
+        for phrase in (
+            "No frame-risk signal, no frame check",
+            "No execution impact, omit the frame check",
+        ):
+            self.assertIn(phrase, primitives)
 
         for phrase in (
             "Framing-risk signals, not keyword rules",
@@ -154,6 +197,10 @@ class MindthusRouterContractTests(unittest.TestCase):
             "先给结论，再让模型评价",
             "把实现层直接说成本体层",
             "把局部机制直接说成整体解释",
+            "true_question",
+            "packed_premises",
+            "layer_risks",
+            "reframed_question",
         ):
             self.assertIn(phrase, primitives)
 
@@ -177,33 +224,21 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, agents)
 
-        for phrase in (
-            "vague dissatisfaction or ordinary writing quality",
-            "MPG owns qualified-mainline path volatility",
-            "information acquisition, clarification, or sharper routing",
-            "validation is not semantic approval",
-        ):
-            self.assertIn(phrase, using)
+        self.assertIn("acquire information, clarify, or reroute", using_compact)
 
     def test_input_framing_audit_rejects_soft_commentary_fallback(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        using_compact = " ".join(using.split())
         pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
             encoding="utf-8"
         )
 
         for phrase in (
-            "Audit discipline",
+            "Judge whether the user led you to the wrong level",
             "audit hidden",
-            "Do not answer as a soft commentary fallback",
-            "A clever paragraph is not an audit",
-            "Question level before opinion",
-            "step outside the user's narrative",
-            "level-correct judgment",
-            "First task: judge whether the user led you to the wrong level",
-            "audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer",
-            "leading_point",
+            "soft commentary is no substitute",
         ):
-            self.assertIn(phrase, using)
+            self.assertIn(phrase, using_compact)
 
         primitives = _read_shared_primitive_docs()
         for phrase in (
@@ -232,28 +267,28 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_input_framing_audit_productizes_original_prompt_as_mainline_protocol(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        using_compact = " ".join(using.split())
         primitives = _read_shared_primitive_docs()
 
         for phrase in (
             "description: Use when any Mindthus judgment lens may apply",
-            "General frame rule / 通用定框规则",
-            "any locally true frame",
-            "agent inference, method routing, tests, metrics, artifacts, or implementation details",
-            "must earn global explanatory authority before it can define the whole object",
             "Original Prompt Contract / 原始有效提示词合同",
-            "legacy prompt template",
             "not the judgment center",
-            "AOP Aspect Activation / 切面唤起",
-            "before-route",
-            "before-answer",
-            "Auxiliary checks belong inside step 3",
-            "never become a new judgment center",
-            "Forbidden substitute",
-            "fluent half-right verdict",
-            "runtime-only caveat",
-            "score-as-concession",
+            "Judge whether the user led you to the wrong level",
+            "then reframe and answer",
+            "docs/methodologies/primitives/frame-fitness-check.md",
         ):
-            self.assertIn(phrase, using)
+            self.assertIn(phrase, using_compact)
+
+        for phrase in (
+            "Frame Fitness Check / 定框适配检查",
+            "local-frame capture",
+            "local frame is true or useful at one level",
+            "begins controlling the global judgment",
+            "Original Prompt Contract / 原始有效提示词合同",
+            "legacy prompt template, not the judgment center",
+        ):
+            self.assertIn(phrase, primitives)
 
         for phrase in (
             "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
@@ -277,38 +312,16 @@ class MindthusRouterContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        using_compact = " ".join(using.split())
         primitives_compact = " ".join(primitives.split())
         for phrase in (
-            "Explanatory Authority Check / 解释权校准",
-            "full_object",
-            "local_frame_role",
-            "authority_status",
-            "global_owner",
-            "downgraded_use",
-            "owns_explanation",
-            "contributes_locally",
-            "misclaims_authority",
-            "blocked_by_missing_evidence",
-            "Dominant Carrier Check / 主导承载校准",
-            "target_result",
-            "primary_result_bearer",
-            "stability_basis",
-            "carrier_status",
-            "primary_carrier",
-            "supporting_surface",
-            "incidental_signal",
-            "System Subject Check / 系统主体校准",
-            "visible actor",
-            "system_object",
-            "governing_structure",
-            "actor_role",
-            "subject_status",
-            "misassigned_subject",
-            "surface caveat is not enough",
-            "local correctness is not explanatory authority",
+            "Frame Fitness Check / 定框适配检查",
+            "locally true frame",
+            "claims global",
+            "authority",
+            "Definition Authority Adjudication / 定义权裁决",
+            "docs/methodologies/primitives/frame-fitness-check.md",
         ):
-            self.assertIn(phrase, using_compact)
+            self.assertIn(phrase, using)
 
         for phrase in (
             "Explanatory Authority Check / 解释权校准",
@@ -348,12 +361,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, primitives_compact)
 
-        section_start = using.index("Explanatory Authority Check / 解释权校准")
-        section_end = using.index("internal result", section_start)
-        authority_section = using[section_start:section_end]
-        self.assertNotIn("Script determinism check", authority_section)
-        self.assertNotIn("carrier, activation, control, state", authority_section)
-        self.assertNotIn("A/B", authority_section)
+        self.assertNotIn("Script determinism check", using)
 
         pressure_compact = " ".join(pressure.split())
         for phrase in (
@@ -387,29 +395,20 @@ class MindthusRouterContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
 
         using_compact = " ".join(using.split())
-        combined_compact = " ".join("\n".join((primitives, contract)).split())
+        primitives_compact = " ".join(primitives.split())
+        contract_compact = " ".join(contract.split())
         for phrase in (
             "Partial Truth Capture / 局部真相捕获",
             "A locally true observation must not own the whole explanation",
             "Whole Elephant hard gate",
-            "Internal Whole Elephant contract",
-            "MUST build compact audit before formal_answer",
+            "Compact Semantic Triad / 三根硬支柱 before formal_answer",
             "Audit Hidden By Default / 审计默认内隐",
-            "full audit JSON internal by default",
-            "validation_command",
-            "output_evidence",
-            "Do not claim validation passed unless the command actually ran",
-            "No command evidence, no validation-passed claim",
-            "If the command cannot run, use explicit not_run_fallback",
-            "fallback_reason+self_check_evidence",
-            "do not fake command evidence",
+            "No command evidence, no passed claim",
+            "not_run_fallback",
         ):
             self.assertIn(phrase, using_compact)
 
         for phrase in (
-            "write a Whole Elephant audit JSON",
-            "run `python3 scripts/primitives/validate_whole_elephant.py <audit.json>` before formal_answer",
-            "validation failure blocks formal answer",
             "do not route local-truth essence reduction to any narrower method, including WAE, before Whole Elephant audit",
             "local_truth",
             "whole_object",
@@ -420,12 +419,8 @@ class MindthusRouterContractTests(unittest.TestCase):
             "user_named_object is not canonical_object",
             "local project docs/source > official/standard/primary source > web search > user term",
             "mark user-defined and deny definition authority",
-            "Validator path rule",
-            "resolve from skill path to plugin root scripts/primitives",
-            "Human-readable audit summary",
-            "do not dump raw JSON/YAML by default",
-            "Chinese-first output",
-            "avoid mixed-language jargon walls",
+            "中文场景优先用中文讲清判断",
+            "避免混合语言术语墙",
             "Canonical Object Centering",
             "do not let the umbrella system absorb the canonical object",
             "umbrella system is context, not thesis subject",
@@ -456,7 +451,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "validate_whole_elephant.py",
             "overreach_risk",
             "corrected_thesis",
             "Non-Mirror Correction / 非镜像纠错",
@@ -472,7 +466,18 @@ class MindthusRouterContractTests(unittest.TestCase):
             "Essence Wording Guard / 本质措辞护栏",
             "corrected thesis must reject false essence claims",
         ):
-            self.assertIn(phrase, combined_compact)
+            self.assertIn(phrase, primitives_compact)
+
+        for phrase in (
+            "whole_elephant_validation",
+            "script_verdict",
+            "not_run_fallback",
+            "Do not claim validation passed without command evidence",
+            "validator path must resolve from the skill path to the plugin root",
+            "do not show full whole_elephant_audit by default",
+            "visible output starts with formal answer",
+        ):
+            self.assertIn(phrase, contract_compact)
 
         for phrase in (
             "canonical_object",
@@ -487,7 +492,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "do not show full whole_elephant_audit by default",
             "do not output short audit",
         ):
-            self.assertIn(phrase, combined_compact)
+            self.assertIn(phrase, " ".join((primitives_compact, contract_compact)))
 
     def test_whole_elephant_audit_is_hidden_by_default(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -495,14 +500,10 @@ class MindthusRouterContractTests(unittest.TestCase):
             REPO / "skills" / "using-mindthus" / "resources" / "fidelity-contract.md"
         ).read_text(encoding="utf-8")
         primitives = _read_shared_primitive_docs()
-        primitives_compact = " ".join(primitives.split())
-
         using_compact = " ".join(using.split())
         for phrase in (
             "Audit Hidden By Default / 审计默认内隐",
-            "full audit JSON internal by default",
-            "visible output starts with formal answer",
-            "expand only when user asks, validation fails, or handoff/debug needs it",
+            "expose only on request, validation failure, or handoff/debug",
         ):
             self.assertIn(phrase, using_compact)
 
@@ -529,9 +530,44 @@ class MindthusRouterContractTests(unittest.TestCase):
             "script_must_not_decide",
             "internal evidence only",
             "Do not output short audit by default",
-            "visible answer starts with the global thesis, not the audit summary",
+            "visible output starts with formal answer",
         ):
-            self.assertIn(phrase, primitives_compact)
+            self.assertIn(phrase, contract_compact)
+
+    def test_public_whole_elephant_doc_keeps_runtime_commands_on_skill_surface(self):
+        public_doc = (
+            REPO
+            / "docs"
+            / "methodologies"
+            / "primitives"
+            / "whole-elephant-protocol.md"
+        ).read_text(encoding="utf-8")
+        boundary = (
+            REPO / "docs" / "methodologies" / "public-runtime-boundary.md"
+        ).read_text(encoding="utf-8")
+
+        for phrase in (
+            "Validation Boundary / 校验边界",
+            "校验器只检查 shape 和确定性约束",
+            "没有真实运行证据时，只能说明“未运行”",
+            "using-mindthus fidelity contract",
+            "Public Explanation and Runtime Trace",
+        ):
+            self.assertIn(phrase, public_doc)
+        for runtime_phrase in (
+            "run `python3 scripts/primitives/validate_whole_elephant.py",
+            "not_run_fallback",
+            "script_verdict",
+            "visible answer must not expose script stdout fields",
+        ):
+            self.assertNotIn(runtime_phrase, public_doc)
+        for classification in (
+            "public methodology",
+            "skill runtime instruction",
+            "validator contract",
+            "example",
+        ):
+            self.assertIn(classification, boundary)
 
     def test_using_mindthus_fidelity_contract_records_v1_4_1_calibration_case(self):
         contract = (
@@ -597,14 +633,10 @@ class MindthusRouterContractTests(unittest.TestCase):
 
         using_compact = " ".join(using.split())
         for phrase in (
-            "First Sentence Stress Test / 首句主判断压力测试",
-            "target_result+final_say/result_owner+optimization_consequence",
-            "controller_shift",
-            "no second-question gap",
-            "visible first sentence must be corrected_thesis",
-            "global_thesis_first",
-            "local_truth_after",
-            "not an audit field list",
+            "Formal Answer Gate",
+            "Core Thesis Extraction / 主判断收束",
+            "global thesis, result owner, and consequence first",
+            "local truth follows",
         ):
             self.assertIn(phrase, using_compact)
 
@@ -674,7 +706,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "validate_whole_elephant.py",
             "target job",
             "main use cases",
             "primary value carrier",
@@ -789,9 +820,6 @@ class MindthusRouterContractTests(unittest.TestCase):
             "definition_owner",
             "result_controller",
             "decision_consequence",
-            "scripts/primitives/validate_whole_elephant.py",
-            "mindthus-whole-elephant-audit-v0.1",
-            "validation failure blocks formal answer",
             "use weighted_synthesis when local contacts are independent, comparable, and cover enough of the object",
             "use whole_first_re_evaluation when local contacts are correlated, same-surface, or miss the governing structure",
             "When Partial Truth Capture triggers, the formal answer is incomplete without",
@@ -977,15 +1005,22 @@ class MindthusRouterContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_router_defines_objective_priority_and_references_minimal_lens(self):
-        for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
-            text = path.read_text(encoding="utf-8")
-            for phrase in (
-                "先尊重用户给出的目标函数",
-                "若用户未给出",
-                "默认效率优先",
-                "最小充分镜头",
-            ):
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        for phrase in (
+            "先尊重用户给出的目标函数",
+            "若用户未给出",
+            "默认效率优先",
+            "最小充分镜头",
+        ):
+            self.assertIn(phrase, agents)
+
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        using_compact = " ".join(using.split())
+        self.assertIn("Direct execution / 直接执行", using_compact)
+        self.assertIn("Do not use Mindthus", using_compact)
+        self.assertIn("Do not preload every resource", using_compact)
 
         primitives = _read_shared_primitive_docs()
         for phrase in (
@@ -997,40 +1032,36 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_minimal_sufficient_lens_does_not_change_tplan_activation(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        start = text.index("### 最小充分镜头")
-        end = text.index("### Skill 路由", start)
+        start = text.index("## Mainline")
+        end = text.index("### Skill Routing", start)
         section = text[start:end]
         self.assertNotIn("tplan", section.lower())
 
     def test_using_mindthus_defines_intervention_boundary_before_skill_choice(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        compact = " ".join(text.split())
         for phrase in (
-            "Intervention Boundary / 介入边界",
             "Direct execution / 直接执行",
             "Information acquisition / 信息补全",
             "Mindthus intervention / Mindthus 介入",
-            "do not use Mindthus",
-            "facts, files, data, runtime proof, or user clarification",
+            "Do not use Mindthus",
+            "facts, files, runtime proof, platform rules, or",
             "hard judgment point",
         ):
-            self.assertIn(phrase, text)
+            self.assertIn(phrase, compact)
 
     def test_judgment_object_routing_precedes_individual_skill_routes(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        start = text.index("#### Judgment Object Routing / 判断对象路由")
-        first_skill = text.index("#### `sela`", start)
-        section = text[start:first_skill]
-        for phrase in (
-            "Problem-definition failure",
-            "False binary or structural ambiguity",
-            "Long-term system efficiency versus local advantage",
-            "Qualified mainline with path/counter-force exposure",
-            "Agentic-system control-boundary mismatch",
-            "Bounded artifact with thin practical value",
-            "Mission runtime state",
-            "Repeated local repair",
-        ):
-            self.assertIn(phrase, section)
+        self.assertLess(text.index("Route by the active judgment object"), text.index("| Owner |"))
+        routes = _parse_using_mindthus_routes(text)
+        self.assertIn("Problem-definition failure", routes["3l5s"])
+        self.assertIn("False binary or structural ambiguity", routes["edsp"])
+        self.assertIn("Long-term system efficiency versus local advantage", routes["sela"])
+        self.assertIn("carrier, exposure, path volatility, and commitment", routes["mpg"])
+        self.assertIn("Agentic-system", routes["wae"])
+        self.assertIn("Bounded artifact", routes["tvg"])
+        self.assertIn("Mission state", routes["tplan"])
+        self.assertIn("Repeated local repair", text)
 
     def test_all_method_skill_entrypoints_have_using_mindthus_route_heading(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -1039,18 +1070,14 @@ class MindthusRouterContractTests(unittest.TestCase):
             for path in (REPO / "skills").glob("*/SKILL.md")
             if path.parent.name not in {"using-mindthus"}
         }
-        for method in sorted(routed_methods):
-            self.assertIn(f"#### `{method}`", using, f"{method} missing using-mindthus route heading")
+        self.assertEqual(set(_parse_using_mindthus_routes(using)), routed_methods)
 
     def test_tvg_and_tplan_are_non_proactive_routes(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        for phrase in (
-            "TVG requires a bounded artifact",
-            "tplan requires Mission-level runtime state",
-            "do not proactively activate",
-            "ordinary complexity is not enough",
-        ):
-            self.assertIn(phrase, text)
+        routes = _parse_using_mindthus_routes(text)
+        self.assertIn("named value-gain target", routes["tvg"])
+        self.assertIn("Durable Mission state", routes["tplan"])
+        self.assertIn("ordinary complexity is insufficient", routes["tplan"])
 
     def test_wae_route_requires_agentic_system_domain_gate(self):
         skill = (REPO / "skills" / "wae" / "SKILL.md").read_text(encoding="utf-8")
@@ -1072,12 +1099,9 @@ class MindthusRouterContractTests(unittest.TestCase):
             ):
                 self.assertIn(phrase, text)
 
-        for phrase in (
-            "Agentic-system control-boundary mismatch -> `wae`",
-            "Do not let `wae` absorb ordinary conceptual, organizational, product, or structural boundaries",
-            "No agentic system, no WAE",
-        ):
-            self.assertIn(phrase, using)
+        wae_route = _parse_using_mindthus_routes(using)["wae"]
+        self.assertIn("Agentic-system Workflow / Agentic / Evidence mismatch", wae_route)
+        self.assertIn("no controller mismatch, no WAE", wae_route)
 
         for phrase in (
             "agentic systems",
@@ -1124,12 +1148,11 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, template)
 
-        for phrase in (
-            "Do not route to `tvg` merely because the user asks for an audit, review, or check",
-            "bounded artifact whose practical value is thin and whose expected value can be named",
-            "No active TVG loop, no TVG audit",
-        ):
-            self.assertIn(phrase, using)
+        tvg_route = _parse_using_mindthus_routes(using)["tvg"]
+        self.assertIn("Bounded artifact is thin", tvg_route)
+        self.assertIn("named value-gain target", tvg_route)
+        self.assertIn("TVG audit needs an active loop", tvg_route)
+        self.assertIn("external audits stay object-routed", tvg_route)
 
         for phrase in (
             "TVG 的 audit 是内部退出检查",
@@ -1142,20 +1165,17 @@ class MindthusRouterContractTests(unittest.TestCase):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
+        using_compact = " ".join(using.split())
         pressure = (REPO / "tests" / "mindthus_router_pressure_tests.md").read_text(
             encoding="utf-8"
         )
 
         for phrase in (
             "Method Reference Boundary / 方法引用边界",
-            "method name in an inspection request is evidence scope, not route ownership",
-            "conversation forensics",
-            "rubric reference",
-            "do not say the current task is using MPG merely because it checks MPG-AQM",
-            "target session evidence",
-            "current confirmation request",
+            "a method named in evidence review sets scope, not route ownership",
+            "Separate target session from confirmation",
         ):
-            self.assertIn(phrase, using)
+            self.assertIn(phrase, using_compact)
 
         for phrase in (
             "Scenario 50: MPG-AQM Session Forensics Is Not MPG Route Ownership",
@@ -1215,19 +1235,41 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_using_mindthus_defines_low_frequency_method_wakeup_probes(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
-        start = text.index("#### Wake-Up Probes / 唤醒探针")
-        end = text.index("#### Context Injection Point / 上下文注入口", start)
-        section = text[start:end]
+        text_compact = " ".join(text.split())
+        entry = (
+            REPO / "docs" / "methodologies" / "primitives" / "entry-triage.md"
+        ).read_text(encoding="utf-8")
+        entry_compact = " ".join(entry.split())
+        self.assertIn("docs/methodologies/primitives/entry-triage.md", text)
+        self.assertIn(
+            "whenever a hard cue may change route, evidence, owner, or stop",
+            text_compact,
+        )
+        self.assertIn("cue conflict is unnecessary", text_compact)
+        routes = _parse_using_mindthus_routes(text)
+        self.assertEqual(set(routes), {"3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"})
         for phrase in (
-            "`SELA` wake-up",
-            "`MPG` wake-up",
-            "`EDSP` wake-up",
-            "Do not route through `3l5s`",
-            "Do not let `wae`",
-            "Do not run `tvg`",
-            "strategic, path-bearing, or structurally ambiguous",
+            "These families are wake-up candidates, not automatic method calls",
+            "It is not a keyword router",
+            "EDSP owns bare A/B structural choice",
+            "SELA owns local expertise versus automation scale",
+            "AQM stays inside the active judgment owner",
+            "If it changes none of these, skip it",
         ):
-            self.assertIn(phrase, section)
+            self.assertIn(phrase, entry_compact)
+
+    def test_using_mindthus_keeps_before_route_and_before_answer_activation_handoff(self):
+        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        compact = " ".join(text.split())
+        for phrase in (
+            "python3 scripts/primitives/check.py --event before-route --method using-mindthus",
+            "--event before-answer",
+            "after frame/partial-truth activation",
+            "never decides semantics",
+        ):
+            self.assertIn(phrase, compact)
 
     def test_sela_mpg_sibling_activation_for_path_carrying_commitments(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -1235,20 +1277,12 @@ class MindthusRouterContractTests(unittest.TestCase):
             REPO / "tests" / "mpg" / "scalar_commitment_unpack_manual_review_cases.md"
         ).read_text(encoding="utf-8")
 
+        routes = _parse_using_mindthus_routes(using)
+        self.assertIn("carrier/path action defers to MPG", routes["sela"])
+        self.assertIn("carrier, exposure, path volatility, and commitment", routes["mpg"])
         using_compact = " ".join(using.split())
-        for phrase in (
-            "SELA and MPG are sibling strategic lenses",
-            "SELA qualifies system-efficiency direction pressure",
-            "MPG qualifies path-carrying action",
-            "Common order: SELA calibrates direction before MPG tests carrier/path;sequence not hierarchy",
-            "SELA must not swallow MPG-ready carrier/path/exposure/commitment questions",
-            "MPG must not replace SELA for naked system-efficiency direction judgment",
-            "MPG route handoff: when `mpg` dominates and system-efficiency direction pressure is present, carry `SELA support + MPG dominate` into the answer plan",
-            "Do not leave SELA support implicit after selecting MPG",
-            "AQM visibility map or skipped reason",
-            "One final answer, two distinct judgment surfaces",
-        ):
-            self.assertIn(phrase, using_compact)
+        self.assertIn("SELA owns direction pressure", using_compact)
+        self.assertIn("MPG owns path-carrying action", using_compact)
 
         for phrase in (
             "Sibling activation expected",
@@ -1265,13 +1299,12 @@ class MindthusRouterContractTests(unittest.TestCase):
             REPO / "tests" / "mpg" / "scalar_commitment_unpack_manual_review_cases.md"
         ).read_text(encoding="utf-8")
 
-        using_compact = " ".join(using.split())
         for phrase in (
-            "MPG-unpack:scalar-commitment",
-            "mainline/carrier/path/exposure/commitment",
+            "MPG Scalar Commitment Unpack",
+            "mainline / carrier / path_volatility / exposure / commitment",
             "support-only",
         ):
-            self.assertIn(phrase, using_compact)
+            self.assertIn(phrase, using)
 
         primitives_compact = " ".join(primitives.split())
         for phrase in (
@@ -1390,32 +1423,30 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_context_injection_point_is_interface_not_memory_implementation(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        compact = " ".join(text.split())
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
         for phrase in (
             "Context Injection Point / 上下文注入口",
-            "does not implement memory",
-            "storage, retrieval, ranking",
-            "current user input takes priority",
-            "must not silently override",
-            "user_preference",
-            "long_term_objective",
-            "risk_posture",
-            "authority_boundary",
+            "neither implements memory nor overrides current input",
         ):
-            self.assertIn(phrase, text)
+            self.assertIn(phrase, compact)
+        for phrase in (
+            "当前用户输入优先",
+            "不能静默覆盖本轮明确指令",
+        ):
+            self.assertIn(phrase, agents)
 
     def test_using_mindthus_defines_judgment_constraint_recognition(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        compact = " ".join(text.split())
         for phrase in (
             "Judgment Constraint Recognition / 判断约束识别",
-            "Facts and evidence constrain factual claims",
-            "Values and preferences constrain priorities",
-            "Interests and incentives constrain stakeholder interpretation",
-            "Emotional signals constrain attention",
-            "Risk posture and reversibility constrain action strength",
-            "Authority boundaries constrain who may decide",
-            "do not let values or emotion assert factual claims",
+            "facts constrain claims",
+            "values set priorities",
+            "risk sets action strength",
+            "authority determines who decides",
         ):
-            self.assertIn(phrase, text)
+            self.assertIn(phrase, compact)
 
     def test_using_mindthus_defines_method_arbitration_actions(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
@@ -1468,7 +1499,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "stopping condition",
             "method choice",
             "handoff packet",
-            "If a judgment changes none of these",
+            "If none changes",
         ):
             self.assertIn(phrase, text)
 
@@ -1476,14 +1507,9 @@ class MindthusRouterContractTests(unittest.TestCase):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         for phrase in (
             "Pressure Surface Check / 施压面检查",
-            "Pressure is not a standalone route",
-            "low-risk deterministic",
-            "Perspective Pressure handles single-view, incentive, or game-theoretic",
-            "SELA and EDSP own role pressure",
-            "TVG owns bounded-artifact value pressure",
-            "Evidence / Claim Ceiling owns proof limits",
-            "Anti-Spiral owns repeated local repair pressure",
-            "owner, reason, and execution effect",
+            "pressure is not a route",
+            "assign its owner",
+            "docs/methodologies/primitives/expression-pressure-and-gates.md",
         ):
             self.assertIn(phrase, text)
 
@@ -1517,26 +1543,38 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, primitives)
 
-        for text in (using, agents):
-            for phrase in (
-                "Approximate Quantified Mapping",
-                "非精准量化显影",
-                "hypothetical numbers",
-                "not factual measurements",
-                "do not compute decisions",
-            ):
-                self.assertIn(phrase, text)
+        for phrase in (
+            "Approximate Quantified Mapping",
+            "非精准量化显影",
+            "Hypothetical numbers",
+            "must not prove facts or compute decisions",
+        ):
+            self.assertIn(phrase, using)
+        for phrase in (
+            "Approximate Quantified Mapping",
+            "非精准量化显影",
+            "hypothetical numbers are not factual measurements",
+            "do not compute decisions",
+        ):
+            self.assertIn(phrase, agents)
 
-        start = using.index("#### Judgment Object Routing / 判断对象路由")
-        end = using.index("#### Context Injection Point / 上下文注入口", start)
-        routing_table = using[start:end]
-        self.assertNotIn("Approximate Quantified Mapping", routing_table)
-        self.assertNotIn("非精准量化显影", routing_table)
+        routes = _parse_using_mindthus_routes(using)
+        self.assertNotIn("Approximate Quantified Mapping", " ".join(routes.values()))
+        self.assertNotIn("非精准量化显影", " ".join(routes.values()))
 
     def test_aqm_snapshot_is_visible_when_user_asks_for_dominant_variables(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
             encoding="utf-8"
         )
+        details = "\n".join(
+            (
+                _read_shared_primitive_docs(),
+                (REPO / "docs" / "methodologies" / "mpg.md").read_text(
+                    encoding="utf-8"
+                ),
+            )
+        )
+        self.assertIn("docs/methodologies/primitives/expression-pressure-and-gates.md", using)
         for phrase in (
             "visible AQM snapshot / 显影快照",
             "variables are many",
@@ -1550,7 +1588,7 @@ class MindthusRouterContractTests(unittest.TestCase):
             "trigger strength",
             "stage/probe, not commit",
         ):
-            self.assertIn(phrase, using)
+            self.assertIn(phrase, details)
 
     def test_game_theory_is_not_a_standalone_skill(self):
         for name in ("game-theory", "game_theory", "gametheory"):
@@ -1593,12 +1631,9 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, primitives)
 
-        for phrase in (
-            "can be used inside an existing judgment owner",
-            "active method keeps decision authority",
-            "does not become the judgment owner",
-        ):
-            self.assertIn(phrase, using)
+        using_compact = " ".join(using.split())
+        self.assertIn("exposes variables inside an existing owner", using_compact)
+        self.assertIn("must not prove facts or compute decisions", using_compact)
 
     def test_approximate_quantified_mapping_has_anti_overuse_threshold(self):
         primitives = _read_shared_primitive_docs()
@@ -1618,12 +1653,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, primitives)
 
-        for phrase in (
-            "Use it only when the relationship is complex enough",
-            "skip it for simple adjectives",
-            "plain language is enough",
-        ):
-            self.assertIn(phrase, using)
+        self.assertIn("docs/methodologies/primitives/expression-pressure-and-gates.md", using)
 
         for phrase in (
             "Scenario 16: Simple Claim Skips Mapping",
@@ -1687,9 +1717,20 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, primitives)
 
+        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn(primitives_path, agents)
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        for linked_detail in (
+            "docs/methodologies/primitives/frame-fitness-check.md",
+            "docs/methodologies/primitives/entry-triage.md",
+            "docs/methodologies/primitives/expression-pressure-and-gates.md",
+        ):
+            self.assertIn(linked_detail, using)
+
         for path in (REPO / "AGENTS.md", REPO / "skills" / "using-mindthus" / "SKILL.md"):
             text = path.read_text(encoding="utf-8")
-            self.assertIn(primitives_path, text, f"{path} should link cognitive primitives")
             for copied_definition in (
                 "每个抽象概念至少给出一种支撑",
                 "Can this be answered directly?",
@@ -1807,25 +1848,25 @@ class MindthusRouterContractTests(unittest.TestCase):
 
     def test_skill_routing_surface_preserves_pre_refactor_route_triggers(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        routes = _parse_using_mindthus_routes(using)
         expected_routes = {
-            "sela": ("系统级费效比", "短视选择"),
-            "mpg": ("Qualified mainline with path/counter-force exposure", "`mpg`"),
-            "3l5s": ("问题还不清楚", "Discovery -> Definition"),
-            "tplan": ("durable task state", "human-in-loop authority"),
-            "edsp": ("A/B 都像对", "Extreme Deduction"),
-            "wae": ("Workflow / Agentic / Evidence", "控制权"),
-            "tvg": ("结构完整但实质浅薄", "bounded artifact"),
+            "sela": ("system efficiency", "local advantage"),
+            "mpg": ("carrier", "path volatility", "commitment"),
+            "3l5s": ("Problem-definition failure", "too large to execute"),
+            "tplan": ("Mission state", "human authority"),
+            "edsp": ("A/B 都像对", "structural ambiguity"),
+            "wae": ("Workflow / Agentic / Evidence", "controller mismatch"),
+            "tvg": ("Bounded artifact", "value-gain target"),
         }
         for skill, phrases in expected_routes.items():
-            self.assertIn(f"#### `{skill}`", using)
             for phrase in phrases:
-                self.assertIn(phrase, using, f"{skill} route missing {phrase!r}")
+                self.assertIn(phrase, routes[skill], f"{skill} route missing {phrase!r}")
 
     def test_cognitive_primitives_are_active_in_their_primary_owner_surfaces(self):
         surfaces = {
             "Minimal Sufficient Lens": (
                 REPO / "skills" / "using-mindthus" / "SKILL.md",
-                ("最小充分镜头", "shared-primitives.md", "不要为了形式"),
+                ("Direct execution / 直接执行", "Do not use Mindthus", "Do not preload every resource"),
             ),
             "Evidence / Claim Ceiling": (
                 REPO / "skills" / "wae" / "SKILL.md",
@@ -1855,17 +1896,16 @@ class MindthusRouterContractTests(unittest.TestCase):
                 REPO / "skills" / "using-mindthus" / "SKILL.md",
                 (
                     "Frame Fitness Check",
-                    "local frame",
+                    "locally true frame",
                     "preserve frame",
                     "qualify frame",
                     "reframe",
                     "block pending evidence",
-                    "SELA",
                 ),
             ),
         }
         for primitive, (path, phrases) in surfaces.items():
-            text = path.read_text(encoding="utf-8")
+            text = " ".join(path.read_text(encoding="utf-8").split())
             for phrase in phrases:
                 self.assertIn(phrase, text, f"{primitive} inactive in {path}: {phrase!r}")
 
@@ -1897,18 +1937,15 @@ class MindthusRouterContractTests(unittest.TestCase):
 
         for phrase in (
             "Frame Fitness Check / 定框适配检查",
-            "local-frame capture",
             "locally true",
-            "global judgment",
+            "claims global",
+            "authority",
             "preserve frame",
             "qualify frame",
             "reframe",
             "block pending evidence",
-            "can wake `sela`",
-            "does not require a full SELA run",
             "wrong level",
-            "implementation-layer truth",
-            "definition-layer truth",
+            "docs/methodologies/primitives/frame-fitness-check.md",
         ):
             self.assertIn(phrase, using)
 

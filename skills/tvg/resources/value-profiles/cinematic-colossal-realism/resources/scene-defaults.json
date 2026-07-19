@@ -1,0 +1,36 @@
+{
+  "schema_version": "cinematic-colossal-scene-defaults-v0.1",
+  "profile": "cinematic-colossal-realism",
+  "scenes": {
+    "storm_city_or_mountain": {
+      "foreground": ["street-level pedestrians", "vehicle lights", "rain on glass"],
+      "midground": ["high-rise rooflines", "bridges", "mountain ridges"],
+      "background": ["storm cloud mass", "partly hidden dragon body"],
+      "physical_feedback": ["rain shears sideways", "clouds compress", "street lights flicker"]
+    },
+    "deep_sea_trench": {
+      "foreground": ["submersible window", "instrument glow", "diver shoulder silhouette"],
+      "midground": ["shipwreck ribs", "cut cables", "silt cloud"],
+      "background": ["trench wall", "partly lit deity silhouette"],
+      "physical_feedback": ["silt moves across light beams", "cables pull taut", "fish change direction"]
+    },
+    "darkened_city_sky": {
+      "foreground": ["crowd silhouettes", "traffic lights", "wet pavement"],
+      "midground": ["city skyline", "searchlights", "low clouds"],
+      "background": ["dark celestial disk", "sky aperture", "horizon shadow"],
+      "physical_feedback": ["exposure drops", "birds scatter", "windows catch abnormal reflection"]
+    },
+    "temple_or_ruined_plaza": {
+      "foreground": ["stone steps", "small witnesses", "dust in torchlight"],
+      "midground": ["columns", "collapsed walls", "ritual banners"],
+      "background": ["partly hidden face or hand", "shadowed divine mass"],
+      "physical_feedback": ["dust falls from stone", "banners pull in wind", "small flames bend"]
+    },
+    "edge_of_known_world": {
+      "foreground": ["human witness", "vehicle or shelter", "weathered object"],
+      "midground": ["terrain edge", "built structure", "atmospheric haze"],
+      "background": ["partly obscured colossus", "compressed horizon"],
+      "physical_feedback": ["airborne particles shift", "small lights flicker", "surface water ripples"]
+    }
+  }
+}

@@ -68,7 +68,6 @@ class SelaContractTests(unittest.TestCase):
         for path in (
             SELA / "SKILL.md",
             SELA / "resources" / "methodology.md",
-            REPO / "docs" / "methodologies" / "sela.md",
         ):
             text = path.read_text(encoding="utf-8")
             for phrase in (
@@ -87,6 +86,26 @@ class SelaContractTests(unittest.TestCase):
                 "carrier commitment",
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+
+    def test_public_methodology_explains_handshake_without_runtime_commands(self):
+        text = (REPO / "docs" / "methodologies" / "sela.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "SELA calibrates direction; MPG owns path-carrying action",
+            "承载者、暴露",
+            "SELA 说明方向压力，MPG 决定如何穿过路径",
+            "不能从“方向可能正确”直接推出",
+            "SELA runtime surface",
+        ):
+            self.assertIn(phrase, text)
+        for runtime_phrase in (
+            "must read `mindthus:mpg`",
+            "first visible sentence must",
+            "Default answer must not start",
+            "debug labels",
+        ):
+            self.assertNotIn(runtime_phrase, text)
 
     def test_methodology_adds_role_pressure_without_efficiency_dogma(self):
         text = (SELA / "resources" / "methodology.md").read_text(encoding="utf-8")

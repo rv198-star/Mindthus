@@ -8,18 +8,23 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.6.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_4_3(self):
+    def test_current_release_surface_is_v1_4_6(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
+        runtime_logger = (REPO / "scripts" / "log-mindthus-runtime.py").read_text(
+            encoding="utf-8"
+        )
 
-        self.assertIn("当前仓库版本：`v1.4.3`", readme)
+        self.assertIn("当前仓库版本：`v1.4.6`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
+        self.assertNotIn("当前仓库版本：`v1.4.4`", readme)
+        self.assertNotIn("当前仓库版本：`v1.4.3`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.2`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.1`", readme)
         self.assertNotIn("## 版本与开发状态", readme)
@@ -29,65 +34,83 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("mindthus-plugins-1.4.3.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.4.3.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.4.6.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.3/mindthus-plugins-1.4.3.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-plugins-1.4.6.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.3/mindthus-skills-1.4.3.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-skills-1.4.6.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.4.3", changelog)
-        self.assertIn("[完整发布日志](docs/releases/v1.4.3.md)", changelog)
-        self.assertIn("Method Reference Boundary", changelog)
-        self.assertIn("MPG-AQM 会话取证负测", changelog)
-        self.assertIn("TVG 外部审查边界", changelog)
-        self.assertIn("v1.4.2 GitHub Release 已撤回", changelog)
-        self.assertIn("Compact Semantic Triad / 三根硬支柱", changelog)
-        self.assertIn("Decision Context Calibration / 决策语境校准", changelog)
-        self.assertIn("Aspect Ownership Matrix / 切面主导权矩阵", changelog)
-        self.assertIn("MPG Scalar Commitment Unpack / MPG 标量承诺显影", changelog)
-        self.assertIn('VERSION = "1.4.3"', builder)
+        self.assertIn("## v1.4.6", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.6.md)", changelog)
+        self.assertIn("显式调用", changelog)
+        self.assertIn("best-effort", changelog)
+        self.assertIn("7,193 bytes", changelog)
+        self.assertIn("1.447 < 1.5", changelog)
+        self.assertIn("不构成自动唤起认证", changelog)
+        self.assertIn('VERSION = "1.4.6"', builder)
+        self.assertIn('VERSION = "1.4.6"', runtime_logger)
 
-        release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.4.6.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
+            "# Mindthus v1.4.6 发布日志",
+            "发布日期：2026-07-14",
+            "## 版本定位",
+            "TVG-Profile",
+            "cinematic-colossal-realism",
+            "四层高级包",
+            "电影级图像 prompt packet",
+            "不是两个风格化画面的并列示范",
+            "## Codex 插件图标主题适配",
+            "logoDark",
+            "mindthus-icon.svg",
+            "1.447 < 1.5",
+            "v1.4.4-diag",
+            "register-hints",
+            "semantic triage",
+            "不进入本版产品承诺",
+            "SHA256SUMS",
+            "## 升级影响",
+            "## 验证",
+            "python3 scripts/build-release-pack.py",
+            "python3 -m unittest discover",
+        ):
+            self.assertIn(phrase, release_log)
+
+        self.assertNotIn("Release date:", release_log)
+
+    def test_v1_4_3_release_surface_is_preserved(self):
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        release_log = (REPO / "docs" / "releases" / "v1.4.3.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("## v1.4.3", changelog)
+        self.assertIn("[完整发布日志](docs/releases/v1.4.3.md)", changelog)
+        for phrase in (
             "# Mindthus v1.4.3 发布日志",
             "发布日期：2026-07-06",
-            "## 版本定位",
-            "## 吸收自 v1.4.2 的内容",
-            "## 主要变化",
-            "## 边界",
-            "## 验证",
             "v1.4.2 GitHub Release 已删除",
             "Compact Semantic Triad / 三根硬支柱",
             "Contrastive Consequence Probe / 后果对比探针",
             "Decision Context Calibration / 决策语境校准",
             "Aspect Ownership Matrix / 切面主导权矩阵",
             "MPG Scalar Commitment Unpack / MPG 标量承诺显影",
-            "docs/methodologies/primitives/",
-            "scripts/primitives/whole_elephant_validator.py",
             "Method Reference Boundary / 方法引用边界",
-            "method name in an inspection request is evidence scope, not route ownership",
-            "019f359a-6aa2-78c0-9ac5-822abae99495",
             "TVG 外部审查防回归",
-            "skills/mpg/SKILL.md",
-            "不要从 v1.4.2 安装或引用其 release asset",
             "本版不关闭 #85",
             "本版不新增独立 skill",
             "不声称解决所有 discovery 层误触",
-            "python3 scripts/build-release-pack.py",
-            "python3 -m pytest -q",
         ):
             self.assertIn(phrase, release_log)
-
-        self.assertNotIn("Release date:", release_log)
 
     def test_v1_1_2_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")

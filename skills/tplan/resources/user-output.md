@@ -105,3 +105,31 @@ Debug mode appends secondary internal recovery references:
 ```bash
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-internal
 ```
+
+After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
+to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
+status, actual elapsed, cumulative LLM-call, script, tool, wait, Token, and result slots.
+The primary Standard/Audit layout is a portrait SVG execution timeline: rows follow first-observed
+chronology, the left rail prints observed relative time, every card has a shared-scale
+range bar, and the declared hierarchy is overlaid as tree edges. Exact lifecycle
+coverage makes those offsets Mission-relative; partial coverage visibly uses the
+observed trace window. Vertical row spacing is ordinal and must never be interpreted as
+duration.
+Keep `host_measured`, `platform_reported`, and `inferred` visibly distinct. A
+host-measured model span is caller-visible request time, not a claim about pure provider
+inference time. Label the uncovered elapsed remainder as not exactly recorded; do not
+assign it to LLM or script by guesswork. Do not merge nodes or invent display groups.
+Use `compact` only as a labelled Unicode text-tree projection for a quick handoff; it
+does not render SVG. Compact always keeps real root Tasks, then selects real active or
+abnormal, retry, error, open-span, dynamic, and top direct-cost nodes while preserving
+the real ancestor paths required to reach them. The default is the top three direct-cost
+nodes; `--top-cost N` may override it. Every visible line keeps actual elapsed, LLM,
+and script time. Tool/wait time appears only when collected. Node Token appears only
+for an execution-signal or selected top-cost node. Routine successful outcomes are
+omitted; abnormal, retry, error, open-span, and dynamic outcomes remain visible.
+Measurement sources and the Mission-level not-exactly-recorded remainder move to one
+footer rather than repeating in every node. Compact reports only shown/total and omitted
+counts in the tree; the machine report retains the full selection policy. Compact
+prefixes every real node with `[T]`, `[ST]`, or `[P]` for Task, SubTask, or Step and
+prints that legend above the tree. Use `audit` for complete topology plus recovery and
+measurement detail. Unknown measurements must remain unknown.
