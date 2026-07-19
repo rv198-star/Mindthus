@@ -1,0 +1,23 @@
+{
+  "arm": "stable",
+  "case": "anti_spiral",
+  "expected": "Refuse a third additive fallback first; return upstream; allow only deletion or equal replacement.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:28:32.109081+00:00",
+  "duration_seconds": 47.87,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 49720,
+    "cached_input_tokens": 37120,
+    "output_tokens": 1079,
+    "reasoning_output_tokens": 587
+  },
+  "uncached_input_tokens": 12600,
+  "loaded_paths": [
+    "skills/using-mindthus/SKILL.md",
+    "skills/wae/SKILL.md"
+  ],
+  "loaded_mindthus_bytes": 14088,
+  "final": "建议在现有规则后追加：\n\n> 若 payload 的 schema 缺失、未知或无法按已知版本解析，则跳过重试及普通 fallback queue，直接进入隔离队列；保留原始 payload、校验错误和 correlation ID，禁止自动回放，并告警值班人员。仅在兼容性校验通过后允许重新入队。"
+}

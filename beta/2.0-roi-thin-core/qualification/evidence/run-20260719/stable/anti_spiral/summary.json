@@ -1,0 +1,23 @@
+{
+  "arm": "stable",
+  "case": "anti_spiral",
+  "expected": "Do not add a third unsupported fallback; return to the upstream schema/evidence failure; using-mindthus activation must be evidenced.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:14:35.941226+00:00",
+  "duration_seconds": 72.523,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 100955,
+    "cached_input_tokens": 82432,
+    "output_tokens": 1758,
+    "reasoning_output_tokens": 699
+  },
+  "uncached_input_tokens": 18523,
+  "loaded_paths": [
+    "skills/using-mindthus/SKILL.md",
+    "skills/using-mindthus/resources/primitives/entry-triage.md"
+  ],
+  "loaded_mindthus_bytes": 13363,
+  "final": "不要添加第三条 fallback；将现有 fallback 规则替换为：\n\n> 所有入站 payload 必须携带 `schema_version` 并通过对应版本的契约校验；未知版本或校验失败时立即隔离并告警，保留原始 payload 与 producer 元数据，不得进入重试或 fallback queue。"
+}

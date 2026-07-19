@@ -1,0 +1,22 @@
+{
+  "arm": "candidate",
+  "case": "anti_spiral",
+  "expected": "Refuse a third additive fallback first; return upstream; allow only deletion or equal replacement.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:27:42.105667+00:00",
+  "duration_seconds": 49.777,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 47406,
+    "cached_input_tokens": 40192,
+    "output_tokens": 1090,
+    "reasoning_output_tokens": 554
+  },
+  "uncached_input_tokens": 7214,
+  "loaded_paths": [
+    "skills/3l5s/SKILL.md"
+  ],
+  "loaded_mindthus_bytes": 7937,
+  "final": "不要加第三条 fallback；现有证据仍指向同一 schema drift，新增规则没有依据。\n\n若必须改，只做等量替换：\n\n> Payload 未通过已声明 schema 验证或 schema 版本未知时，禁止重试及进入 fallback queue；隔离原始 payload，并记录 producer、schema version 和验证错误，等待根因证据。\n\n文件未修改。"
+}

@@ -1,0 +1,20 @@
+{
+  "arm": "stable",
+  "case": "direct",
+  "expected": "Report billing and 8080; no Mindthus Skill read and no question.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:09:39.228898+00:00",
+  "duration_seconds": 26.221,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 28364,
+    "cached_input_tokens": 23040,
+    "output_tokens": 132,
+    "reasoning_output_tokens": 0
+  },
+  "uncached_input_tokens": 5324,
+  "loaded_paths": [],
+  "loaded_mindthus_bytes": 0,
+  "final": "service 是 billing，port 是 8080。"
+}
