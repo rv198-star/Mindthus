@@ -1,0 +1,31 @@
+{
+  "schema_version": "mindthus-roi-convergence-lock-v0.1",
+  "mission_id": "mindthus-2x-roi-convergence-20260719",
+  "protocol_version": "v1.1",
+  "implementation_commit": "570969cc2ccfcba7db40a1369a701eee05345fc0",
+  "parent_lock_sha256": "45d09600d8c17fa2268534d8eed775cacf555ba23eb89346dd0d9c86a1fb37d4",
+  "unchanged_protocol_sha256": "b315f257a8a9fb47467a87a14c4b7df2b8a769685f766992f7db8920acf2c6fd",
+  "amendment": {
+    "path": "qualification/AMENDMENT-01.md",
+    "sha256": "216646bbe4d5e192148fca6a6420e4161e7a1ad1486e5b9fb562df597190ec4b",
+    "scope": "one equal replacement of the confounded Frame/Whole carrier"
+  },
+  "cases": {
+    "path": "qualification/cases-v1.1.json",
+    "sha256": "62379923494ba205fb0b97870621f4c3107a765c5842e378d66b3d9c630afd2c",
+    "unchanged_v1_cases": 8,
+    "replaced_case": "frame_whole -> frame_whole_v11"
+  },
+  "runner_sha256": "7616fe515da5e09258bb1e86b3b4fa6c049f78e6fbeef57fdf9d3b2528429de3",
+  "invalidated_artifacts": [
+    "qualification/evidence/run-20260719-v1/r2/frame_whole",
+    "qualification/evidence/run-20260719-v1-continuation/incumbent/frame_whole",
+    "qualification/evidence/run-20260719-v1-r1-frame/r1/frame_whole"
+  ],
+  "invalidated_samples_still_count_toward_mission_budget": true,
+  "product_floor_changed": false,
+  "roi_threshold_changed": false,
+  "route_changed": false,
+  "further_protocol_correction_allowed": false,
+  "release_or_publication_authorized": false
+}
