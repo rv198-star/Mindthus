@@ -4,9 +4,15 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 REPO = Path(__file__).resolve().parents[2]
+SCRIPTS = REPO / "skills" / "tplan" / "scripts"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+import init_lite
 
 
 def run_script(script_name, *args):
@@ -46,6 +52,40 @@ def create_lite_mission(tmp):
 
 
 class InitLiteTests(unittest.TestCase):
+    def test_late_initialization_failure_rolls_back_and_retry_succeeds(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            argv = [
+                "init_lite.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m1",
+                "--title",
+                "Lite Mission",
+                "--objective",
+                "Make failed initialization retryable.",
+                "--acceptance-evidence",
+                "A1:Retry succeeds.",
+                "--active-task-id",
+                "T1",
+                "--active-task-title",
+                "Initialize safely",
+                "--active-task-contribution",
+                "Provides retryable initialization.",
+            ]
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(
+                init_lite,
+                "initialize_execution_trace",
+                side_effect=OSError("simulated late failure"),
+            ):
+                self.assertEqual(init_lite.main(), 1)
+
+            self.assertFalse((mission_dir / "mission.json").exists())
+            with mock.patch.object(sys, "argv", argv):
+                self.assertEqual(init_lite.main(), 0)
+            self.assertTrue((mission_dir / "mission.json").exists())
+
     def test_init_lite_creates_active_root_task_without_step(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"

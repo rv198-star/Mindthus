@@ -179,6 +179,12 @@ def _elapsed_reconciliation(
     }
 
 
+def _counted_tokens(usage: dict[str, int]) -> int:
+    """Count billable totals without re-adding cached/reasoning subsets."""
+
+    return usage.get("input_tokens", 0) + usage.get("output_tokens", 0)
+
+
 def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
     records = list(records)
     intervals: list[tuple[int, int]] = []
@@ -197,9 +203,31 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         sources[span["measurement_source"]] += 1
         kind_sources[kind][span["measurement_source"]] += 1
         statuses[span["status"]] += 1
-    token_records = [record for record in records if record["span"]["kind"] == "model"]
-    if not token_records:
-        token_records = [record for record in records if record["span"]["kind"] == "agent_turn"]
+    by_span_id = {
+        record["span"].get("span_id"): record
+        for record in records
+        if isinstance(record["span"].get("span_id"), str)
+    }
+    model_records = [record for record in records if record["span"]["kind"] == "model"]
+    model_ancestor_ids: set[str] = set()
+    for record in model_records:
+        parent_span_id = record["span"].get("parent_span_id")
+        visited: set[str] = set()
+        while isinstance(parent_span_id, str) and parent_span_id not in visited:
+            visited.add(parent_span_id)
+            parent = by_span_id.get(parent_span_id)
+            if parent is None:
+                break
+            if parent["span"]["kind"] == "agent_turn":
+                model_ancestor_ids.add(parent_span_id)
+            parent_span_id = parent["span"].get("parent_span_id")
+    independent_agent_turn_records = [
+        record
+        for record in records
+        if record["span"]["kind"] == "agent_turn"
+        and record["span"].get("span_id") not in model_ancestor_ids
+    ]
+    token_records = [*model_records, *independent_agent_turn_records]
     usage: Counter[str] = Counter()
     usage_fields: set[str] = set()
     usage_sources: Counter[str] = Counter()
@@ -242,6 +270,8 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "usage_fields": sorted(usage_fields),
         "usage_coverage": usage_coverage,
         "usage_sources": dict(sorted(usage_sources.items())),
+        "usage_record_count": len(token_records),
+        "excluded_usage_envelope_count": len(model_ancestor_ids),
         "measurement_sources": dict(sorted(sources.items())),
         "span_statuses": dict(sorted(statuses.items())),
         "error_span_count": statuses["error"],
@@ -512,7 +542,7 @@ def _select_nodes(
         def direct_cost_key(task_id: str) -> tuple[int, int, int, int]:
             node = by_id[task_id]
             direct_cost = node["direct_cost"]
-            token_total = sum(direct_cost["usage"].values())
+            token_total = _counted_tokens(direct_cost["usage"])
             execution_order = node["execution_order"]
             return (
                 direct_cost["additive_resource_time_ms"],

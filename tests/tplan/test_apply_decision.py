@@ -3,10 +3,17 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Barrier
+from unittest import mock
 
 
 REPO = Path(__file__).resolve().parents[2]
+SCRIPTS = REPO / "skills" / "tplan" / "scripts"
+sys.path.insert(0, str(SCRIPTS))
+
+import tplan_runtime
 
 
 def run_script(script_name, *args):
@@ -153,6 +160,69 @@ def write_decision(tmp, recommendation="switch"):
 
 
 class ApplyDecisionTests(unittest.TestCase):
+    def test_concurrent_decision_loser_leaves_no_ghost_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
+            barrier = Barrier(2)
+            original_commit = tplan_runtime.commit_mission_state
+
+            def synchronized_commit(*args, **kwargs):
+                barrier.wait(timeout=5)
+                return original_commit(*args, **kwargs)
+
+            def invoke():
+                try:
+                    return tplan_runtime.apply_decision(mission_dir, decision)
+                except tplan_runtime.TplanError as exc:
+                    return str(exc)
+
+            with mock.patch.object(tplan_runtime, "commit_mission_state", synchronized_commit):
+                with ThreadPoolExecutor(max_workers=2) as pool:
+                    results = list(pool.map(lambda _: invoke(), range(2)))
+
+            self.assertEqual(results.count("applied_decision"), 1)
+            self.assertEqual(
+                sum("Mission state changed concurrently" in result for result in results),
+                1,
+            )
+            events = [
+                json.loads(line)
+                for line in (mission_dir / "evidence.jsonl").read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(
+                sum(event.get("event_type") == "decision_applied" for event in events),
+                1,
+            )
+
+    def test_interrupted_decision_rolls_forward_on_next_read(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp, human_in_loop=0)
+            decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
+            original_write_json = tplan_runtime.write_json
+
+            def interrupt_after_journal(path, data):
+                if path.name == "mission.json" and (mission_dir / ".mission-transaction.json").exists():
+                    raise OSError("simulated abrupt interruption")
+                return original_write_json(path, data)
+
+            with mock.patch.object(tplan_runtime, "write_json", interrupt_after_journal):
+                with self.assertRaisesRegex(OSError, "simulated abrupt interruption"):
+                    tplan_runtime.apply_decision(mission_dir, decision)
+
+            self.assertTrue((mission_dir / ".mission-transaction.json").exists())
+            recovered = tplan_runtime.read_mission(mission_dir)
+            self.assertEqual(recovered["active_task_id"], "T2")
+            self.assertFalse((mission_dir / ".mission-transaction.json").exists())
+            trace = tplan_runtime.read_execution_trace(mission_dir)
+            events = tplan_runtime.read_events(mission_dir)
+            applied = [event for event in events if event.get("event_type") == "decision_applied"]
+            self.assertEqual(len(applied), 1)
+            self.assertTrue(
+                any(applied[0]["id"] in record.get("refs", {}).get("evidence_ids", []) for record in trace)
+            )
+
     def test_autonomous_mode_applies_decision_mutation(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp, human_in_loop=0)

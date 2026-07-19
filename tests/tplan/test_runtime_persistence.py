@@ -5,7 +5,6 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
-from types import SimpleNamespace
 from unittest import mock
 
 
@@ -114,8 +113,7 @@ class RuntimePersistenceTests(unittest.TestCase):
             path = Path(tmp) / "mission.json"
             path.write_text('{"version": 1}\n', encoding="utf-8")
 
-            fake_os = SimpleNamespace(replace=mock.Mock(side_effect=OSError("replace failed")))
-            with mock.patch.object(tplan_runtime, "os", fake_os, create=True):
+            with mock.patch.object(tplan_runtime.os, "replace", side_effect=OSError("replace failed")):
                 with self.assertRaises(OSError):
                     tplan_runtime.write_json(path, {"version": 2})
 
@@ -161,14 +159,21 @@ class RuntimePersistenceTests(unittest.TestCase):
             for event_id in results:
                 self.assertRegex(event_id, r"^E[0-9a-f]{8}$")
 
-    def test_stop_report_appends_event_before_mission_write(self):
+    def test_stop_report_transaction_prepare_failure_leaves_no_ghost_event(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
             active = run_script("transition_task.py", str(mission_dir), "--task-id", "T1", "--status", "active")
             self.assertEqual(active.returncode, 0, active.stderr)
             before = read_mission(mission_dir)
 
-            with mock.patch.object(tplan_runtime, "write_mission", side_effect=OSError("disk full")):
+            original_write_json = tplan_runtime.write_json
+
+            def fail_transaction(path, data):
+                if path.name == ".mission-transaction.json":
+                    raise OSError("disk full")
+                return original_write_json(path, data)
+
+            with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
                     tplan_runtime.record_stop_report(
                         mission_dir,
@@ -186,8 +191,7 @@ class RuntimePersistenceTests(unittest.TestCase):
 
             self.assertEqual(read_mission(mission_dir), before)
             events = read_events(mission_dir)
-            self.assertEqual(len(events), 1)
-            self.assertEqual(events[0]["event_type"], "stop_report")
+            self.assertEqual(events, [])
 
     def test_record_risk_signal_appends_event_before_mission_write(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -227,19 +231,25 @@ class RuntimePersistenceTests(unittest.TestCase):
             self.assertEqual(events[-1]["event_type"], "risk_context_recovery")
             self.assertEqual(events[-1]["payload"]["risk_id"], "R1")
 
-    def test_apply_decision_appends_event_before_mission_write(self):
+    def test_apply_decision_transaction_prepare_failure_leaves_no_ghost_event(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
             before = read_mission(mission_dir)
 
-            with mock.patch.object(tplan_runtime, "write_mission", side_effect=OSError("disk full")):
+            original_write_json = tplan_runtime.write_json
+
+            def fail_transaction(path, data):
+                if path.name == ".mission-transaction.json":
+                    raise OSError("disk full")
+                return original_write_json(path, data)
+
+            with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
                     tplan_runtime.apply_decision(mission_dir, decision_payload())
 
             self.assertEqual(read_mission(mission_dir), before)
             events = read_events(mission_dir)
-            self.assertEqual(len(events), 1)
-            self.assertEqual(events[0]["event_type"], "decision_applied")
+            self.assertEqual(events, [])
 
 
 if __name__ == "__main__":
