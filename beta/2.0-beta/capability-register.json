@@ -1,17 +1,17 @@
 {
   "schema_version": "mindthus-capability-register-v0.2",
-  "shared_core_ref": "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
+  "shared_core_ref": "fc9909798015dc7f17dc307f67bb751bf137442a",
   "capabilities": [
     {
       "id": "tvg-profile-atlas-v1",
-      "source_commit": "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
+      "source_commit": "fc9909798015dc7f17dc307f67bb751bf137442a",
       "ownership": "shared-product-core",
       "release_1x": {"state": "included", "version": "1.5.1"},
       "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
     },
     {
       "id": "tplan-execution-cost-tree-v1",
-      "source_commit": "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
+      "source_commit": "fc9909798015dc7f17dc307f67bb751bf137442a",
       "ownership": "shared-product-core",
       "release_1x": {"state": "included", "version": "1.5.1"},
       "release_2x": {"state": "included", "version": "2.0.0-beta.1"}

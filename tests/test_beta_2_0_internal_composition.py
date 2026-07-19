@@ -71,7 +71,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
+            "fc9909798015dc7f17dc307f67bb751bf137442a",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
