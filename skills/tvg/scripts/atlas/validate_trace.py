@@ -12,7 +12,8 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "tvg-atlas-trace-v1"
+SCHEMA_VERSION = "tvg-atlas-trace-v2"
+LEGACY_SCHEMA_VERSION = "tvg-atlas-trace-v1"
 SCRIPT_BOUNDARY = "support_only_agentic_audit_required"
 PROFILE_SOURCE_MODES = {"default", "supplied", "inferred-with-warning"}
 SEARCH_TERMINAL_GATES = {"search-freeze", "search-freeze-with-review-bound-warning"}
@@ -20,13 +21,19 @@ SEARCH_GATES = SEARCH_TERMINAL_GATES | {"return-remediate", "blocked"}
 DELIVERY_RESULTS = {
     "ready-for-user-selection",
     "ready-for-user-selection-with-warning",
+    "ready-for-direct-delivery",
+    "ready-for-direct-delivery-with-warning",
     "return-remediate",
     "blocked",
 }
 READY_DELIVERY_RESULTS = {
     "ready-for-user-selection",
     "ready-for-user-selection-with-warning",
+    "ready-for-direct-delivery",
+    "ready-for-direct-delivery-with-warning",
 }
+DIRECT_READY_RESULTS = {"ready-for-direct-delivery", "ready-for-direct-delivery-with-warning"}
+SHORTLIST_READY_RESULTS = {"ready-for-user-selection", "ready-for-user-selection-with-warning"}
 FINALIZATION_STATES = {"pending-user-selection", "skipped", "completed"}
 FINALIZATION_MODES = {
     "accept-tile",
@@ -268,8 +275,19 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
     errors: list[str] = []
     if not isinstance(payload, dict):
         return ["root: expected an object"]
-    if payload.get("schema_version") != SCHEMA_VERSION:
-        errors.append(f"schema_version: expected {SCHEMA_VERSION!r}")
+    schema_version = payload.get("schema_version")
+    if schema_version not in {SCHEMA_VERSION, LEGACY_SCHEMA_VERSION}:
+        errors.append(
+            f"schema_version: expected {SCHEMA_VERSION!r} or legacy {LEGACY_SCHEMA_VERSION!r}"
+        )
+    evidence_class = payload.get("evidence_class")
+    if schema_version == SCHEMA_VERSION and evidence_class not in {
+        "runtime-evidence",
+        "deterministic-structural-fixture",
+    }:
+        errors.append(
+            "evidence_class: v2 traces require 'runtime-evidence' or 'deterministic-structural-fixture'"
+        )
     _validate_profile(errors, payload.get("profile_snapshot"), base_dir, check_files)
     _require_string(errors, payload.get("task_prompt"), "task_prompt")
     tvg_pressure = payload.get("tvg_pressure")
@@ -283,6 +301,13 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
         errors.append("run_evidence: expected an object")
     else:
         _require_string(errors, run_evidence.get("model_path"), "run_evidence.model_path")
+        if (
+            evidence_class == "deterministic-structural-fixture"
+            and run_evidence.get("model_path") != "deterministic structural fixture (no model call)"
+        ):
+            errors.append(
+                "run_evidence.model_path: structural fixture must state that no model call occurred"
+            )
         manifest = run_evidence.get("prompt_manifest_path")
         _require_string(errors, manifest, "run_evidence.prompt_manifest_path")
         if check_files and _nonempty(manifest) and not _resolve(base_dir, manifest).is_file():
@@ -418,6 +443,12 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
             errors.append("post-hoc R00 intent requires search-freeze-with-review-bound-warning")
         if not warnings:
             errors.append("evidence_warnings: post-hoc R00 intent requires a recorded warning")
+    if evidence_class == "deterministic-structural-fixture" and not any(
+        "no aesthetic or model-generation evidence" in warning for warning in warnings
+    ):
+        errors.append(
+            "evidence_warnings: structural fixture must disclaim aesthetic and model-generation evidence"
+        )
 
     delivery = payload.get("delivery")
     delivery_result: str | None = None
@@ -430,10 +461,46 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
     else:
         if final_gate not in SEARCH_TERMINAL_GATES:
             errors.append("delivery requires the final round to reach a search-freeze gate")
-        if delivery.get("mode") != "shortlist":
-            errors.append("delivery.mode: expected 'shortlist'")
-        if delivery.get("layout") != "2x2":
-            errors.append("delivery.layout: expected '2x2'")
+        delivery_mode = delivery.get("mode")
+        if schema_version == LEGACY_SCHEMA_VERSION:
+            if delivery_mode != "shortlist":
+                errors.append("delivery.mode: legacy traces require 'shortlist'")
+        elif delivery_mode not in {"direct", "shortlist"}:
+            errors.append("delivery.mode: expected 'direct' or 'shortlist'")
+        expected_layout = "1x1" if delivery_mode == "direct" else "2x2"
+        expected_count = 1 if delivery_mode == "direct" else 4
+        expected_prefix = "D" if delivery_mode == "direct" else "S"
+        columns = 1 if delivery_mode == "direct" else 2
+        if delivery.get("layout") != expected_layout:
+            errors.append(f"delivery.layout: expected {expected_layout!r} for {delivery_mode!r}")
+        boundary = delivery.get("delivery_boundary")
+        if schema_version == SCHEMA_VERSION:
+            if not isinstance(boundary, dict):
+                errors.append("delivery.delivery_boundary: expected an object")
+            elif delivery_mode == "direct":
+                if boundary.get("objective_sufficiency_confirmed") is not True:
+                    errors.append(
+                        "delivery.delivery_boundary.objective_sufficiency_confirmed: direct delivery requires true"
+                    )
+                if boundary.get("material_user_choice_remaining") is not False:
+                    errors.append(
+                        "delivery.delivery_boundary.material_user_choice_remaining: direct delivery requires false"
+                    )
+                _require_string(
+                    errors, boundary.get("rationale"), "delivery.delivery_boundary.rationale"
+                )
+            elif delivery_mode == "shortlist":
+                if boundary.get("materially_distinct_viable_options") is not True:
+                    errors.append(
+                        "delivery.delivery_boundary.materially_distinct_viable_options: shortlist requires true"
+                    )
+                if boundary.get("user_taste_authority_required") is not True:
+                    errors.append(
+                        "delivery.delivery_boundary.user_taste_authority_required: shortlist requires true"
+                    )
+                _require_string(
+                    errors, boundary.get("rationale"), "delivery.delivery_boundary.rationale"
+                )
         generation_mode = delivery.get("generation_mode")
         if generation_mode not in {"regenerated", "deterministic-compose"}:
             errors.append("delivery.generation_mode: expected 'regenerated' or 'deterministic-compose'")
@@ -450,18 +517,18 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
         if not isinstance(candidates, list):
             errors.append("delivery.candidates: expected a list")
             candidates = []
-        if len(candidates) != 4:
-            errors.append("delivery.candidates: expected exactly 4 candidates")
+        if len(candidates) != expected_count:
+            errors.append(f"delivery.candidates: expected exactly {expected_count} candidates")
         for index, candidate in enumerate(candidates):
             path = f"delivery.candidates[{index}]"
             if not isinstance(candidate, dict):
                 errors.append(f"{path}: expected an object")
                 continue
-            expected_id = f"S{index + 1:02d}"
+            expected_id = f"{expected_prefix}{index + 1:02d}"
             delivery_ids.append(expected_id)
             if candidate.get("id") != expected_id:
                 errors.append(f"{path}.id: expected {expected_id!r}")
-            _validate_region(errors, candidate.get("region"), f"{path}.region", index, 2)
+            _validate_region(errors, candidate.get("region"), f"{path}.region", index, columns)
             sources = _string_list(
                 errors, candidate.get("source_candidate_ids"), f"{path}.source_candidate_ids", minimum=1
             )
@@ -488,6 +555,16 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
             _string_list(errors, audit.get("warnings"), "delivery.delivery_audit.warnings")
             if delivery_result in READY_DELIVERY_RESULTS and has_delivery_veto:
                 errors.append("ready delivery audit requires no candidate veto findings")
+            if delivery_mode == "direct" and delivery_result not in DIRECT_READY_RESULTS | {
+                "return-remediate",
+                "blocked",
+            }:
+                errors.append("direct delivery requires a direct-delivery audit result")
+            if delivery_mode == "shortlist" and delivery_result not in SHORTLIST_READY_RESULTS | {
+                "return-remediate",
+                "blocked",
+            }:
+                errors.append("shortlist delivery requires a user-selection audit result")
 
     finalization = payload.get("finalization")
     if not isinstance(finalization, dict):
@@ -497,14 +574,17 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
         if state not in FINALIZATION_STATES:
             errors.append(f"finalization.state: expected one of {sorted(FINALIZATION_STATES)}")
         mode = finalization.get("mode")
-        selected = _string_list(
-            errors, finalization.get("selected_shortlist_ids"), "finalization.selected_shortlist_ids"
-        )
+        selection_field = (
+            "selected_delivery_ids" if delivery.get("mode") == "direct" else "selected_shortlist_ids"
+        ) if isinstance(delivery, dict) else "selected_shortlist_ids"
+        selected = _string_list(errors, finalization.get(selection_field, []), f"finalization.{selection_field}")
         outputs = finalization.get("outputs")
         if not isinstance(outputs, list):
             errors.append("finalization.outputs: expected a list")
             outputs = []
         if state == "pending-user-selection":
+            if isinstance(delivery, dict) and delivery.get("mode") != "shortlist":
+                errors.append("pending-user-selection requires shortlist delivery")
             if delivery_result not in READY_DELIVERY_RESULTS:
                 errors.append("pending-user-selection requires a ready delivery audit")
             if mode is not None or selected or outputs:
@@ -522,10 +602,10 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
             if mode not in FINALIZATION_MODES:
                 errors.append(f"finalization.mode: expected one of {sorted(FINALIZATION_MODES)}")
             if not selected:
-                errors.append("finalization.selected_shortlist_ids: completed finalization requires a selection")
+                errors.append(f"finalization.{selection_field}: completed finalization requires a selection")
             unknown = [item for item in selected if item not in delivery_ids]
             if unknown:
-                errors.append(f"finalization.selected_shortlist_ids: unknown IDs {unknown}")
+                errors.append(f"finalization.{selection_field}: unknown IDs {unknown}")
             if not outputs:
                 errors.append("finalization.outputs: completed finalization requires output evidence")
             for index, output in enumerate(outputs):
@@ -533,10 +613,15 @@ def validate_trace(payload: Any, base_dir: Path, check_files: bool = False) -> l
                 if not isinstance(output, dict):
                     errors.append(f"{path}: expected an object")
                     continue
-                source_id = output.get("source_shortlist_id")
-                _require_string(errors, source_id, f"{path}.source_shortlist_id")
+                source_field = (
+                    "source_delivery_id"
+                    if isinstance(delivery, dict) and delivery.get("mode") == "direct"
+                    else "source_shortlist_id"
+                )
+                source_id = output.get(source_field)
+                _require_string(errors, source_id, f"{path}.{source_field}")
                 if _nonempty(source_id) and source_id not in selected:
-                    errors.append(f"{path}.source_shortlist_id: must be one of the selected IDs")
+                    errors.append(f"{path}.{source_field}: must be one of the selected IDs")
                 if check_files:
                     _validate_file_reference(
                         errors,

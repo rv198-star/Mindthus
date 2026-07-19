@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 REPO = Path(__file__).resolve().parents[2]
@@ -12,6 +13,7 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from tplan_runtime import acceptance_ids, task_map
+import init_mission
 
 
 def run_script(script_name, *args):
@@ -23,6 +25,24 @@ def run_script(script_name, *args):
 
 
 class InitMissionTests(unittest.TestCase):
+    def test_late_initialization_failure_rolls_back_and_retry_succeeds(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            argv = list(self.init_args(mission_dir))
+
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(
+                init_mission,
+                "initialize_execution_trace",
+                side_effect=OSError("simulated late failure"),
+            ):
+                self.assertEqual(init_mission.main(), 1)
+
+            self.assertFalse((mission_dir / "mission.json").exists())
+            self.assertFalse((mission_dir / "evidence.jsonl").exists())
+            with mock.patch.object(sys, "argv", argv):
+                self.assertEqual(init_mission.main(), 0)
+            self.assertTrue((mission_dir / "mission.json").exists())
+
     def write_tasks(self, tmp, tasks):
         task_path = Path(tmp) / "tasks.json"
         task_path.write_text(json.dumps(tasks), encoding="utf-8")

@@ -179,7 +179,49 @@ def _elapsed_reconciliation(
     }
 
 
-def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
+def _counted_tokens(usage: dict[str, int]) -> int:
+    """Count billable totals without re-adding cached/reasoning subsets."""
+
+    return usage.get("input_tokens", 0) + usage.get("output_tokens", 0)
+
+
+def _usage_owner_event_ids(records: Iterable[dict[str, Any]]) -> set[str]:
+    """Choose leaf-most explicit model/agent-turn usage owners from the full span graph."""
+
+    records = list(records)
+    token_records = [
+        record for record in records if record["span"]["kind"] in {"model", "agent_turn"}
+    ]
+    by_span_id = {
+        record["span"].get("span_id"): record
+        for record in records
+        if isinstance(record["span"].get("span_id"), str)
+    }
+    excluded_agent_span_ids: set[str] = set()
+    for record in token_records:
+        parent_span_id = record["span"].get("parent_span_id")
+        visited: set[str] = set()
+        while isinstance(parent_span_id, str) and parent_span_id not in visited:
+            visited.add(parent_span_id)
+            parent = by_span_id.get(parent_span_id)
+            if parent is None:
+                break
+            if parent["span"]["kind"] == "agent_turn":
+                excluded_agent_span_ids.add(parent_span_id)
+            parent_span_id = parent["span"].get("parent_span_id")
+    return {
+        record["event_id"]
+        for record in token_records
+        if record["span"]["kind"] == "model"
+        or record["span"].get("span_id") not in excluded_agent_span_ids
+    }
+
+
+def _span_cost(
+    records: Iterable[dict[str, Any]],
+    *,
+    usage_owner_event_ids: set[str] | None = None,
+) -> dict[str, Any]:
     records = list(records)
     intervals: list[tuple[int, int]] = []
     kind_intervals: dict[str, list[tuple[int, int]]] = defaultdict(list)
@@ -197,9 +239,12 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         sources[span["measurement_source"]] += 1
         kind_sources[kind][span["measurement_source"]] += 1
         statuses[span["status"]] += 1
-    token_records = [record for record in records if record["span"]["kind"] == "model"]
-    if not token_records:
-        token_records = [record for record in records if record["span"]["kind"] == "agent_turn"]
+    resolved_usage_owners = (
+        _usage_owner_event_ids(records)
+        if usage_owner_event_ids is None
+        else usage_owner_event_ids
+    )
+    token_records = [record for record in records if record.get("event_id") in resolved_usage_owners]
     usage: Counter[str] = Counter()
     usage_fields: set[str] = set()
     usage_sources: Counter[str] = Counter()
@@ -242,6 +287,13 @@ def _span_cost(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "usage_fields": sorted(usage_fields),
         "usage_coverage": usage_coverage,
         "usage_sources": dict(sorted(usage_sources.items())),
+        "usage_record_count": len(token_records),
+        "excluded_usage_envelope_count": sum(
+            1
+            for record in records
+            if record["span"]["kind"] == "agent_turn"
+            and record.get("event_id") not in resolved_usage_owners
+        ),
         "measurement_sources": dict(sorted(sources.items())),
         "span_statuses": dict(sorted(statuses.items())),
         "error_span_count": statuses["error"],
@@ -512,7 +564,7 @@ def _select_nodes(
         def direct_cost_key(task_id: str) -> tuple[int, int, int, int]:
             node = by_id[task_id]
             direct_cost = node["direct_cost"]
-            token_total = sum(direct_cost["usage"].values())
+            token_total = _counted_tokens(direct_cost["usage"])
             execution_order = node["execution_order"]
             return (
                 direct_cost["additive_resource_time_ms"],
@@ -753,11 +805,13 @@ def build_execution_cost_tree(
         else:
             overhead_spans[attribution].append(record)
 
+    usage_owner_event_ids = _usage_owner_event_ids(all_spans)
+
     observed_elapsed_ms, started_at, finished_at = _mission_elapsed(
         mission, trace, coverage, generated_at
     )
     mission_elapsed_ms = observed_elapsed_ms if coverage == "exact" else None
-    mission_cost = _span_cost(all_spans)
+    mission_cost = _span_cost(all_spans, usage_owner_event_ids=usage_owner_event_ids)
     mission_elapsed_reconciliation = _elapsed_reconciliation(
         all_spans,
         elapsed_ms=mission_elapsed_ms,
@@ -789,8 +843,8 @@ def build_execution_cost_tree(
             if record["span"]["attribution"] == "exact"
             and record.get("task_id") in {task_id, *descendant_ids}
         ]
-        direct_cost = _span_cost(direct_records)
-        inclusive_cost = _span_cost(inclusive_records)
+        direct_cost = _span_cost(direct_records, usage_owner_event_ids=usage_owner_event_ids)
+        inclusive_cost = _span_cost(inclusive_records, usage_owner_event_ids=usage_owner_event_ids)
         elapsed_ms = state["elapsed_ms"]
         observed_node_elapsed_ms = state["observed_elapsed_ms"]
         elapsed_coverage = state["elapsed_coverage"]
@@ -858,7 +912,8 @@ def build_execution_cost_tree(
         node.pop("plan_index", None)
         node.pop("active_task_id", None)
     overhead_by_attribution = {
-        attribution: _span_cost(records) for attribution, records in sorted(overhead_spans.items())
+        attribution: _span_cost(records, usage_owner_event_ids=usage_owner_event_ids)
+        for attribution, records in sorted(overhead_spans.items())
     }
     report = {
         "schema_version": REPORT_SCHEMA_VERSION,
@@ -906,7 +961,10 @@ def build_execution_cost_tree(
             "selection_reasons": selection_reasons if view == "compact" else {},
         },
         "overhead": {
-            "cost": _span_cost([record for records in overhead_spans.values() for record in records]),
+            "cost": _span_cost(
+                [record for records in overhead_spans.values() for record in records],
+                usage_owner_event_ids=usage_owner_event_ids,
+            ),
             "by_attribution": overhead_by_attribution,
         },
         "metric_semantics": {

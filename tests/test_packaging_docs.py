@@ -1,9 +1,11 @@
 import json
+import importlib.util
 import os
 import shutil
 import subprocess
 import tempfile
 import unittest
+import sys
 from pathlib import Path
 
 
@@ -46,6 +48,214 @@ def parse_frontmatter_mapping(text: str) -> dict[str, str]:
 
 
 class PackagingDocsTests(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec("PIL") is not None, "Pillow is required")
+    def test_generated_plugin_runs_documented_atlas_label_and_selection_stages(self):
+        from PIL import Image
+
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr)
+            plugin = out / "codex-plugin" / "mindthus"
+            artifacts = root / "artifacts"
+            artifacts.mkdir()
+            Image.new("RGB", (90, 90), (90, 110, 130)).save(artifacts / "r01-raw.png")
+            (artifacts / "r01-lineage.json").write_text(
+                json.dumps({f"R01-E{i:02d}": "R00-E04" for i in range(1, 10)}),
+                encoding="utf-8",
+            )
+            labeler = plugin / "skills" / "tvg" / "scripts" / "atlas" / "label_atlas.py"
+            labeled = subprocess.run(
+                [
+                    sys.executable,
+                    str(labeler),
+                    "--input",
+                    "artifacts/r01-raw.png",
+                    "--output",
+                    "artifacts/r01-labeled.png",
+                    "--layout",
+                    "3x3",
+                    "--id-prefix",
+                    "R01-E",
+                    "--lineage-json",
+                    "artifacts/r01-lineage.json",
+                    "--json-output",
+                    "artifacts/r01-labels.json",
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(labeled.returncode, 0, labeled.stderr + labeled.stdout)
+            selector = plugin / "skills" / "tvg" / "scripts" / "atlas" / "build_selection_board.py"
+            selected = subprocess.run(
+                [
+                    sys.executable,
+                    str(selector),
+                    "--input",
+                    "artifacts/r01-raw.png",
+                    "--labels-json",
+                    "artifacts/r01-labels.json",
+                    "--selected",
+                    "R01-E01",
+                    "R01-E04",
+                    "R01-E07",
+                    "--output",
+                    "artifacts/r01-selected.png",
+                    "--json",
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(selected.returncode, 0, selected.stderr + selected.stdout)
+            self.assertTrue((artifacts / "r01-selected.png").is_file())
+            packaged_example = (
+                plugin
+                / "skills"
+                / "tvg"
+                / "resources"
+                / "value-profiles"
+                / "cinematic-visual-direction"
+                / "examples"
+                / "atlas-search-trace.example.json"
+            )
+            trace_check = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "tvg" / "scripts" / "atlas" / "validate_trace.py"),
+                    str(packaged_example),
+                    "--check-files",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(trace_check.returncode, 0, trace_check.stderr + trace_check.stdout)
+
+    def test_built_helpers_self_locate_runtime_without_pythonpath(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_dir = Path(tmp)
+            out = tmp_dir / "release"
+            built = subprocess.run(
+                ["python3", str(script), "--package", "all", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr)
+
+            skill_roots = (
+                out / "codex-plugin" / "mindthus" / "skills",
+                out / "codex" / "skills" / "mindthus",
+                out / "claude-code" / "skills",
+                out / "claude-code" / "claude-plugin" / "skills",
+                out / "opencode" / ".opencode" / "skills" / "mindthus",
+            )
+            helper_paths = (
+                Path("tplan/scripts/check_mission.py"),
+                Path("3l5s/scripts/validate_3l5s_output.py"),
+                Path("sela/scripts/validate_sela_output.py"),
+                Path("mpg/scripts/validate_mpg_output.py"),
+                Path("edsp/scripts/validate_edsp_output.py"),
+                Path("wae/scripts/validate_wae_output.py"),
+                Path("tvg/scripts/validate_tvg_output.py"),
+                Path("using-mindthus/scripts/validate_using_mindthus_output.py"),
+            )
+            env = os.environ.copy()
+            env.pop("PYTHONPATH", None)
+            env["PYTHONNOUSERSITE"] = "1"
+            for skill_root in skill_roots:
+                with self.subTest(layout=str(skill_root)):
+                    self.assertTrue((skill_root / "runtime_bootstrap.py").is_file())
+                    for helper_path in helper_paths:
+                        helper = skill_root / helper_path
+                        result = subprocess.run(
+                            ["python3", str(helper), "--help"],
+                            cwd=tmp_dir,
+                            env=env,
+                            text=True,
+                            capture_output=True,
+                        )
+                        self.assertEqual(
+                            result.returncode,
+                            0,
+                            f"{helper}:\n{result.stderr}\n{result.stdout}",
+                        )
+
+            plugin_root = out / "codex-plugin" / "mindthus"
+            self.assertFalse((plugin_root / "skills" / "_runtime").exists())
+            self.assertTrue((plugin_root / "_runtime" / "__init__.py").is_file())
+            installed_mission = tmp_dir / "installed-smoke"
+            initialized = subprocess.run(
+                [
+                    "python3",
+                    str(plugin_root / "skills" / "tplan" / "scripts" / "init_lite.py"),
+                    "--dir",
+                    str(installed_mission),
+                    "--mission-id",
+                    "installed-smoke",
+                    "--title",
+                    "Installed smoke",
+                    "--objective",
+                    "Prove direct installed helper execution.",
+                    "--acceptance-evidence",
+                    "A1:Mission validates.",
+                    "--active-task-id",
+                    "T1",
+                    "--active-task-title",
+                    "Validate installed runtime",
+                    "--active-task-contribution",
+                    "Proves runtime self-location.",
+                ],
+                cwd=tmp_dir,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            checked = subprocess.run(
+                [
+                    "python3",
+                    str(plugin_root / "skills" / "tplan" / "scripts" / "check_mission.py"),
+                    str(installed_mission),
+                ],
+                cwd=tmp_dir,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(checked.returncode, 0, checked.stderr + checked.stdout)
+            explicit_env = {**env, "PYTHONPATH": str(plugin_root)}
+            explicit = subprocess.run(
+                ["python3", str(plugin_root / "skills" / helper_paths[0]), "--help"],
+                cwd=tmp_dir,
+                env=explicit_env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(explicit.returncode, 0, explicit.stderr)
+            foreign = tmp_dir / "foreign"
+            (foreign / "_runtime").mkdir(parents=True)
+            (foreign / "_runtime" / "__init__.py").write_text("# wrong runtime\n", encoding="utf-8")
+            shadowed_env = {
+                **env,
+                "PYTHONPATH": f"{foreign}{os.pathsep}{plugin_root.resolve()}",
+            }
+            shadowed = subprocess.run(
+                ["python3", str(plugin_root / "skills" / helper_paths[0]), "--help"],
+                cwd=tmp_dir,
+                env=shadowed_env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(shadowed.returncode, 0, shadowed.stderr)
+
     def assert_skill_frontmatter_is_parseable(self, path: Path) -> None:
         text = path.read_text(encoding="utf-8")
         self.assertTrue(text.startswith("---\n"), f"{path} missing frontmatter")
@@ -90,7 +300,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.5.0`",
+            "当前仓库版本：`v1.5.1`",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -603,6 +813,7 @@ class PackagingDocsTests(unittest.TestCase):
 
         self.assertIn("/tmp/mindthus-skills/claude-code/skills/_runtime", section)
         self.assertIn("$HOME/.claude/skills/_runtime", section)
+        self.assertIn("runtime_bootstrap.py", section)
         self.assertIn("不是可调用 skill", section)
 
     def test_claude_personal_skills_copy_layout_keeps_validator_runtime_imports_working(self):
@@ -623,6 +834,7 @@ class PackagingDocsTests(unittest.TestCase):
 
             packaged_skills = out / "claude-code" / "skills"
             shutil.copytree(packaged_skills / "_runtime", skills_home / "_runtime")
+            shutil.copy2(packaged_skills / "runtime_bootstrap.py", skills_home / "runtime_bootstrap.py")
             for skill in packaged_skills.iterdir():
                 if not (skill / "SKILL.md").is_file():
                     continue
@@ -728,7 +940,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue((home / ".claude" / "skills" / "tplan").is_symlink(), result.stdout)
             self.assertTrue((home / ".claude" / "skills" / "sela").is_symlink(), result.stdout)
             self.assertIn("repo-local _runtime", result.stdout)
-            self.assertIn("copy _runtime separately", result.stdout)
+            self.assertIn("copy _runtime plus runtime_bootstrap.py", result.stdout)
 
     def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
         script = REPO / "scripts" / "build-release-pack.py"
@@ -781,7 +993,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.5.0")
+            self.assertEqual(plugin["version"], "1.5.1")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -869,7 +1081,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.5.0")
+            self.assertEqual(codex_plugin_manifest["version"], "1.5.1")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1004,8 +1216,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.5.0"
-            skills = tmp_dir / "mindthus-skills-1.5.0"
+            plugins = tmp_dir / "mindthus-plugins-1.5.1"
+            skills = tmp_dir / "mindthus-skills-1.5.1"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

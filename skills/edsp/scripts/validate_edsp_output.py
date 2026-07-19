@@ -9,6 +9,9 @@ from pathlib import Path
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from runtime_bootstrap import activate_runtime
+
+activate_runtime(__file__)
 
 from _runtime.core.io import load_json
 from _runtime.fidelity.core import FidelitySpec, print_text_report, validate_fidelity_output
