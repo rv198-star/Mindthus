@@ -5,7 +5,7 @@ v1.5.1 GitHub Release as Stable. Marketplace publication remains absent.
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.1` / `360b3faa3a8d28fbb62fcd342fcdc3e8d5ca4fea`
+- Shared Product Core: Mindthus `1.5.1` / `ce2c601822b1f038b59a6cfed0660c3695e3c468`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
