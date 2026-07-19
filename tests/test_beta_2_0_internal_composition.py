@@ -1,5 +1,7 @@
 import hashlib
 import json
+import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -24,6 +26,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         cls.stable_out = root / "stable"
         cls.beta_out = root / "beta"
         cls.beta_archive = root / "mindthus-beta-2.0.0-beta.1.tar.gz"
+        cls.beta_checksum = root / "SHA256SUMS"
         stable = subprocess.run(
             [
                 sys.executable,
@@ -68,18 +71,30 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
+            "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
-        self.assertTrue(PROFILE["publication"]["github_release"])
-        self.assertEqual(PROFILE["publication"]["github_release_kind"], "prerelease")
+        self.assertEqual(PROFILE["publication"]["status"], "not-published")
+        self.assertTrue(PROFILE["publication"]["prerelease_ready"])
+        self.assertEqual(
+            PROFILE["publication"]["allowed_release_kind_if_separately_authorized"],
+            "github-prerelease",
+        )
+        self.assertFalse(PROFILE["publication"]["github_release"])
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
             PROFILE["runtime_profile"]["convergence_evidence"]["required_at_build"]
         )
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        notes = (REPO / "docs" / "releases" / "v2.0.0-beta.1.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("尚未发布", changelog)
+        self.assertIn("尚未发布", notes)
+        self.assertNotIn("预发布日期", changelog + notes)
 
     def test_shared_1_5_capabilities_are_present_and_identical(self) -> None:
         shared_paths = (
@@ -195,29 +210,57 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("mindthus-beta:using-mindthus", prompt)
         self.assertNotIn("mindthus:using-mindthus", prompt)
         self.assertNotIn("hooks", manifest)
+        self.assertLessEqual(len(prompt.encode("utf-8")), 128)
         for path in self.beta_plugin.rglob("*"):
             if path.is_file():
                 self.assertNotIn(b"mindthus:", path.read_bytes(), path)
 
     def test_beta_runtime_diagnostics_use_only_beta_coordinates(self) -> None:
-        codex_home = Path(self._tempdir.name) / "diagnostic-home"
-        result = subprocess.run(
-            [
+        with tempfile.TemporaryDirectory(prefix="mindthus-beta-diagnostic-") as temporary:
+            codex_home = Path(temporary) / "home"
+            cache = (
+                codex_home
+                / "plugins"
+                / "cache"
+                / "mindthus-beta"
+                / "mindthus-beta"
+                / "2.0.0-beta.1"
+            )
+            shutil.copytree(self.beta_plugin, cache)
+            codex_home.mkdir(exist_ok=True)
+            (codex_home / "config.toml").write_text(
+                "[marketplaces.mindthus-beta]\n"
+                "source_type = \"local\"\n"
+                f"source = {json.dumps(str(self.beta_out))}\n",
+                encoding="utf-8",
+            )
+            command = [
                 sys.executable,
-                str(self.beta_plugin / "scripts" / "log-mindthus-runtime.py"),
+                str(cache / "scripts" / "log-mindthus-runtime.py"),
                 "--codex-home",
                 str(codex_home),
                 "--json",
-            ],
-            text=True,
-            capture_output=True,
-        )
-        self.assertEqual(result.returncode, 0, result.stderr)
-        report = json.loads(result.stdout)
-        self.assertEqual(report["version"], "2.0.0-beta.1")
-        self.assertIn("mindthus-beta-v2.0.0-beta.1", report["locations"]["marketplace"]["root"])
-        self.assertIn("mindthus-beta/mindthus-beta/2.0.0-beta.1", report["locations"]["cache"]["root"])
-        self.assertNotIn("/mindthus/mindthus/", json.dumps(report))
+                "--strict",
+            ]
+            result = subprocess.run(command, text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertEqual(report["version"], "2.0.0-beta.1")
+            self.assertEqual(report["summary"]["status"], "ok")
+            self.assertIn(
+                "mindthus-beta/mindthus-beta/2.0.0-beta.1",
+                report["locations"]["cache"]["root"],
+            )
+            self.assertNotIn("/mindthus/mindthus/", json.dumps(report))
+
+            thin_core = cache / "skills" / "using-mindthus" / "SKILL.md"
+            thin_core.write_text(
+                thin_core.read_text(encoding="utf-8").replace("Evidence ceiling:", "Evidence limit:"),
+                encoding="utf-8",
+            )
+            mutated = subprocess.run(command[:-1], text=True, capture_output=True)
+            self.assertEqual(mutated.returncode, 0, mutated.stderr)
+            self.assertEqual(json.loads(mutated.stdout)["summary"]["status"], "mismatch")
 
     def test_packaged_profile_and_capability_register_are_auditable(self) -> None:
         packaged = json.loads(
@@ -261,7 +304,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
 
     def test_archive_is_byte_reproducible_from_the_same_commit(self) -> None:
         second_out = Path(self._tempdir.name) / "beta-second"
-        second_archive = Path(self._tempdir.name) / "beta-second.tar.gz"
+        second_archive = Path(self._tempdir.name) / "second-assets" / self.beta_archive.name
         result = subprocess.run(
             [
                 sys.executable,
@@ -277,6 +320,77 @@ class InternalBetaCompositionTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
         self.assertEqual(self.beta_archive.read_bytes(), second_archive.read_bytes())
+        checksum = self.beta_checksum.read_text(encoding="utf-8")
+        self.assertEqual(
+            checksum,
+            f"{hashlib.sha256(self.beta_archive.read_bytes()).hexdigest()}  {self.beta_archive.name}\n",
+        )
+        self.assertEqual(
+            checksum,
+            (second_archive.parent / "SHA256SUMS").read_text(encoding="utf-8"),
+        )
+
+    def test_archive_rejects_repository_and_output_tree_paths(self) -> None:
+        readme = REPO / "README.md"
+        readme_digest = hashlib.sha256(readme.read_bytes()).hexdigest()
+        with tempfile.TemporaryDirectory(prefix="mindthus-beta-unsafe-archive-") as temporary:
+            root = Path(temporary)
+            cases = (
+                (root / "repo-output", readme, "outside the repository tree"),
+                (root / "self-output", root / "self-output" / "self.tar.gz", "outside the assembly output tree"),
+            )
+            for output, archive, expected in cases:
+                with self.subTest(archive=str(archive)):
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(BETA / "build-internal-beta.py"),
+                            "--out",
+                            str(output),
+                            "--archive",
+                            str(archive),
+                            "--force",
+                        ],
+                        cwd=REPO,
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn(expected, result.stderr + result.stdout)
+                    self.assertFalse(output.exists())
+        self.assertEqual(hashlib.sha256(readme.read_bytes()).hexdigest(), readme_digest)
+
+    @unittest.skipUnless(shutil.which("codex"), "Codex CLI is required")
+    def test_stable_and_beta_install_and_remove_independently(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="mindthus-beta-lifecycle-") as temporary:
+            codex_home = Path(temporary) / "home"
+            codex_home.mkdir()
+            env = {**os.environ, "CODEX_HOME": str(codex_home)}
+
+            def run(*args: str) -> subprocess.CompletedProcess[str]:
+                return subprocess.run(
+                    ["codex", "plugin", *args, "--json"],
+                    env=env,
+                    text=True,
+                    capture_output=True,
+                )
+
+            for marketplace in (self.stable_out / "codex-plugin", self.beta_out):
+                result = run("marketplace", "add", str(marketplace))
+                self.assertEqual(result.returncode, 0, result.stderr)
+            for plugin in ("mindthus@mindthus", "mindthus-beta@mindthus-beta"):
+                result = run("add", plugin)
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+            installed = json.loads(run("list").stdout)["installed"]
+            self.assertEqual({item["name"] for item in installed}, {"mindthus", "mindthus-beta"})
+            self.assertEqual(run("remove", "mindthus-beta@mindthus-beta").returncode, 0)
+            installed = json.loads(run("list").stdout)["installed"]
+            self.assertEqual({item["name"] for item in installed}, {"mindthus"})
+            self.assertEqual(run("add", "mindthus-beta@mindthus-beta").returncode, 0)
+            self.assertEqual(run("remove", "mindthus@mindthus").returncode, 0)
+            installed = json.loads(run("list").stdout)["installed"]
+            self.assertEqual({item["name"] for item in installed}, {"mindthus-beta"})
 
     def test_dirty_checkout_is_rejected_before_assembly(self) -> None:
         with tempfile.TemporaryDirectory(prefix="mindthus-beta-dirty-") as temporary:

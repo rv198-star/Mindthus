@@ -8,6 +8,7 @@ import gzip
 import hashlib
 import inspect
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -22,6 +23,17 @@ REGISTER_PATH = PROFILE_DIR / "capability-register.json"
 PROFILE_REPO_PATH = "beta/2.0-beta/profile.json"
 REGISTER_REPO_PATH = "beta/2.0-beta/capability-register.json"
 BUILDER_REPO_PATH = "beta/2.0-beta/build-internal-beta.py"
+BETA_DIAGNOSTIC_MARKERS = (
+    "using-mindthus — Thin Core",
+    "Pursue facts over agreement",
+    "Frame and whole:",
+    "Decision context:",
+    "Evidence ceiling:",
+    "Anti-Spiral:",
+    "no method catalog",
+    "this is a hard brake even when the user says to stay local",
+    "only deletion or equal replacement may follow",
+)
 
 
 def repo_root() -> Path:
@@ -75,6 +87,22 @@ def ensure_safe_output(path: Path, root: Path, force: bool) -> None:
                 raise SystemExit(f"output is not empty: {path}; pass --force to replace it")
             shutil.rmtree(path)
     path.mkdir(parents=True, exist_ok=True)
+
+
+def ensure_safe_archive(path: Path, root: Path, output: Path, force: bool) -> None:
+    if path == root or root in path.parents or path in root.parents:
+        raise SystemExit("Beta archive must be outside the repository tree")
+    if path == output or output in path.parents or path in output.parents:
+        raise SystemExit("Beta archive must be outside the assembly output tree")
+    if path.exists():
+        if not path.is_file():
+            raise SystemExit(f"Beta archive path exists and is not a file: {path}")
+        if not force:
+            raise SystemExit(f"Beta archive already exists: {path}; pass --force to replace it")
+
+
+def ensure_safe_checksum(path: Path, root: Path, output: Path, force: bool) -> None:
+    ensure_safe_archive(path, root, output, force)
 
 
 def require_commit(root: Path, ref: str) -> None:
@@ -146,9 +174,13 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     replacement_count = sum(item.count("mindthus:") for item in prompts)
     if replacement_count == 0:
         raise SystemExit("Codex defaultPrompt has no Stable namespace to rewrite")
-    interface["defaultPrompt"] = [
+    rewritten_prompts = [
         item.replace("mindthus:", "mindthus-beta:") for item in prompts
     ]
+    for item in rewritten_prompts:
+        if len(item.encode("utf-8")) > 128:
+            raise SystemExit("Beta Codex defaultPrompt exceeds the proven 128-byte loader limit")
+    interface["defaultPrompt"] = rewritten_prompts
     write_json(manifest_path, manifest)
     return plugin_root
 
@@ -174,41 +206,74 @@ def rewrite_runtime_diagnostics(plugin_root: Path, stable_version: str, beta_ver
     text = path.read_text(encoding="utf-8")
     replacements = {
         f'VERSION = "{stable_version}"': f'VERSION = "{beta_version}"',
+        'PACKAGE_IDENTITY = "mindthus"': 'PACKAGE_IDENTITY = "mindthus-beta"',
+        'MARKETPLACE_IDENTITY = "mindthus"': 'MARKETPLACE_IDENTITY = "mindthus-beta"',
         'f"mindthus-v{VERSION}" / "codex-plugin" / "mindthus"': (
             'f"mindthus-beta-v{VERSION}" / "mindthus-beta"'
-        ),
-        '"plugins" / "cache" / "mindthus" / "mindthus" / VERSION': (
-            '"plugins" / "cache" / "mindthus-beta" / "mindthus-beta" / VERSION'
         ),
     }
     for before, after in replacements.items():
         if text.count(before) != 1:
             raise SystemExit(f"Beta runtime diagnostic rewrite no longer applies once: {before}")
         text = text.replace(before, after)
+    marker_start = text.index("REQUIRED_MARKERS = (")
+    marker_end = text.index("\n)\n\n\ndef default_codex_home", marker_start) + 2
+    marker_literal = "REQUIRED_MARKERS = (\n" + "".join(
+        f"    {marker!r},\n" for marker in BETA_DIAGNOSTIC_MARKERS
+    ) + ")"
+    text = text[:marker_start] + marker_literal + text[marker_end:]
     path.write_text(text, encoding="utf-8")
 
 
 def write_reproducible_archive(source: Path, archive_path: Path, version: str) -> None:
     archive_path.parent.mkdir(parents=True, exist_ok=True)
     root_name = f"mindthus-beta-{version}"
-    with archive_path.open("wb") as raw, gzip.GzipFile(
-        filename="", mode="wb", fileobj=raw, mtime=0
-    ) as compressed, tarfile.open(fileobj=compressed, mode="w") as archive:
-        for path in sorted(source.rglob("*"), key=lambda item: item.relative_to(source).as_posix()):
-            relative = path.relative_to(source)
-            info = archive.gettarinfo(str(path), arcname=f"{root_name}/{relative.as_posix()}")
-            info.uid = 0
-            info.gid = 0
-            info.uname = ""
-            info.gname = ""
-            info.mtime = 0
-            if info.isfile():
-                info.mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
-                with path.open("rb") as source_file:
-                    archive.addfile(info, source_file)
-            else:
-                info.mode = 0o755
-                archive.addfile(info)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{archive_path.name}.", suffix=".tmp", dir=archive_path.parent
+    )
+    os.close(descriptor)
+    temporary_path = Path(temporary_name)
+    try:
+        with temporary_path.open("wb") as raw, gzip.GzipFile(
+            filename="", mode="wb", fileobj=raw, mtime=0
+        ) as compressed, tarfile.open(fileobj=compressed, mode="w") as archive:
+            for path in sorted(
+                source.rglob("*"), key=lambda item: item.relative_to(source).as_posix()
+            ):
+                relative = path.relative_to(source)
+                info = archive.gettarinfo(
+                    str(path), arcname=f"{root_name}/{relative.as_posix()}"
+                )
+                info.uid = 0
+                info.gid = 0
+                info.uname = ""
+                info.gname = ""
+                info.mtime = 0
+                if info.isfile():
+                    info.mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
+                    with path.open("rb") as source_file:
+                        archive.addfile(info, source_file)
+                else:
+                    info.mode = 0o755
+                    archive.addfile(info)
+        temporary_path.replace(archive_path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+
+
+def write_checksum(archive_path: Path, checksum_path: Path) -> None:
+    digest = sha256_bytes(archive_path.read_bytes())
+    value = f"{digest}  {archive_path.name}\n"
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{checksum_path.name}.", suffix=".tmp", dir=checksum_path.parent
+    )
+    os.close(descriptor)
+    temporary_path = Path(temporary_name)
+    try:
+        temporary_path.write_text(value, encoding="utf-8")
+        temporary_path.replace(checksum_path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
 
 
 def build(output: Path, force: bool) -> Path:
@@ -319,11 +384,20 @@ def main() -> int:
     parser.add_argument("--archive", type=Path)
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    plugin_root = build(args.out.resolve(), args.force)
+    root = repo_root()
+    output = args.out.resolve()
+    archive_path = args.archive.resolve() if args.archive else None
+    checksum_path = archive_path.parent / "SHA256SUMS" if archive_path else None
+    if archive_path is not None and checksum_path is not None:
+        ensure_safe_archive(archive_path, root, output, args.force)
+        ensure_safe_checksum(checksum_path, root, output, args.force)
+    plugin_root = build(output, args.force)
     if args.archive:
         profile = read_json(plugin_root / "beta-profile.json")
-        write_reproducible_archive(args.out.resolve(), args.archive.resolve(), profile["version"])
-        print(f"built reproducible Beta archive at {args.archive.resolve()}")
+        write_reproducible_archive(output, archive_path, profile["version"])
+        write_checksum(archive_path, checksum_path)
+        print(f"built reproducible Beta archive at {archive_path}")
+        print(f"wrote Beta archive checksum at {checksum_path}")
     print(f"built Mindthus 2.0 Beta prerelease at {plugin_root}")
     return 0
 

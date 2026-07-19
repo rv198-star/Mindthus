@@ -7,8 +7,8 @@
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
     "version": "1.5.1",
-    "ref": "4f2dbc756625dfde5f4dad7dfcb2c04730f0217b",
-    "tree_oid": "873a1d91af57a91dbbaede44484b0f06c0912f58"
+    "ref": "16f4b9dcda7b7200f92c16274704fab5b66a9e4c",
+    "tree_oid": "753ef3662098e6d6e9cb45137a0d4e209ab0ec55"
   },
   "runtime_profile": {
     "name": "roi.2-thin-core",
@@ -39,8 +39,10 @@
     "tag": "v1.4.6"
   },
   "publication": {
-    "github_release": true,
-    "github_release_kind": "prerelease",
+    "status": "not-published",
+    "prerelease_ready": true,
+    "allowed_release_kind_if_separately_authorized": "github-prerelease",
+    "github_release": false,
     "marketplace": false,
     "automatic_migration": false
   }

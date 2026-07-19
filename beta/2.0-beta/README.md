@@ -4,7 +4,7 @@ Status: GitHub prerelease candidate; not a Stable release or marketplace package
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.1` / `4f2dbc756625dfde5f4dad7dfcb2c04730f0217b`
+- Shared Product Core: Mindthus `1.5.1` / `16f4b9dcda7b7200f92c16274704fab5b66a9e4c`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
