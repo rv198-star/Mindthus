@@ -1,0 +1,14 @@
+Keep the three-year shared-platform direction, but **hold the German production cutover now**.
+
+The German rollout is not ready: accuracy has repeatedly fallen below the approved 99.0% floor, and the audited comparison favors the current team across every consequential dimension—not just accuracy. The committed engineering effort and contract are sunk exposure; they do not justify accepting regulatory or customer-trust risk.
+
+Resume cutover only when all of these conditions are met:
+
+- Two consecutive independent, production-representative audits achieve at least 99.0%, with no critical regulatory errors. A single 99.4% result is insufficient given the 96.8%–99.4% variation.
+- The shared platform is demonstrably non-inferior to the German team in regulatory handling and unusual-case resolution, or those cases remain under mandatory German-expert review.
+- The customer-trust gap has a tested mitigation with named ownership and measurable complaint/escalation limits.
+- Two end-to-end cutover rehearsals finish within four hours, including reconciliation and rollback validation.
+- The German team remains operational through cutover and a defined stabilization period.
+- Automatic rollback is triggered by accuracy below 99.0%, any material regulatory breach, reconciliation failure, or breach of the four-hour window.
+
+Time-box the hold to one remediation cycle—about 30 days. If the platform still cannot satisfy every gate, **replace the German rollout vehicle**, keeping the local operation in place while redesigning the German rules, exception workflow, or platform implementation. That would replace a failing path, not reverse the board’s shared-platform strategy.

@@ -1,0 +1,11 @@
+**Choose: HOLD.** Hold the cutover—not the Q4 goal.
+
+The mainline remains valid, and switching carriers is premature because dual-write has not failed and rollback works. But continuing toward cutover is unjustified while replication lag can spike to 90 seconds without a CTO-approved tolerance or proven reconciliation safety. The 40 engineer-weeks are sunk exposure, not a reason to proceed.
+
+Resume only when a production-like two-hour test demonstrates:
+
+- Lag remains within an explicit CTO-approved bound.
+- Reconciliation meets the agreed data-loss/consistency threshold.
+- Rollback succeeds under the same peak-load conditions.
+
+Switch only if a short, time-boxed remediation cannot eliminate the 90-second excursions or proves the carrier cannot meet those gates before Q4.

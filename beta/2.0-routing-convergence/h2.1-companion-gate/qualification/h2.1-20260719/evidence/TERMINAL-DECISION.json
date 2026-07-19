@@ -1,0 +1,35 @@
+{
+  "recommendation": "close",
+  "rationale": "C1 proved the narrowed MPG gate removes the prior false SELA read, but trusted C2 lifecycle ran entry-index-SELA-MPG rather than the frozen entry-index-MPG-SELA positive path. The unchanged SELA reverse handshake bypassed the modified MPG companion gate, so H2.1 failed its causal qualification and no authorized call can restore eligibility.",
+  "confidence": 100,
+  "evidence_links": [
+    "E06f95827",
+    "Ece8ddec0",
+    "E5162720f",
+    "E5bf99aa9",
+    "E860053cd",
+    "beta/2.0-routing-convergence/h2.1-companion-gate/qualification/h2.1-20260719/RESULT.md",
+    "beta/2.0-routing-convergence/h2.1-companion-gate/qualification/h2.1-20260719/AUDIT.md",
+    "beta/2.0-routing-convergence/h2.1-companion-gate/DECISION-REPORT.zh-CN.md"
+  ],
+  "proposed_mutations": [
+    {
+      "type": "set_mission_status",
+      "status": "completed"
+    }
+  ],
+  "requires_human": false,
+  "mission_alignment": "STOP_2X_EXPLORATION is an explicitly authorized terminal outcome after a trusted H2.1 causal failure; closing preserves the frozen thresholds, single-correction boundary, and no-H3 rule.",
+  "mission_review": {
+    "objective_alignment": "The Mission tested the only authorized H2.1 correction and reached an evidence-backed terminal outcome without requiring a product-value choice from William.",
+    "acceptance_gap": "Positive qualification, Stable comparison, and cost benefits are not proved; they are reported as absent rather than inferred from static size or answer quality.",
+    "task_contribution": "Static qualification completed, causal qualification stopped on its first trusted failure, conditional comparison was pruned, and terminal evidence/reporting completed.",
+    "roi_effect": "Further calls have negative authorized ROI because C3 cannot prove the bypassed positive branch and any repair requires another semantic correction or architecture hypothesis.",
+    "non_action_risk": "Stopping keeps 1.4.6 as the functional baseline and preserves a reproducible rejected candidate; it causes no release, merge, installation, or publication action."
+  },
+  "path_assessment": {
+    "marginal_roi": "negative",
+    "path_role": "dominant_path",
+    "evidence_delta": "no_new_evidence_expected"
+  }
+}

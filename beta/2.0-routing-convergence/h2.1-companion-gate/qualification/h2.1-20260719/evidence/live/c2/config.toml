@@ -1,0 +1,10 @@
+[marketplaces.mindthus-beta]
+last_updated = "2026-07-19T04:00:07Z"
+source_type = "local"
+source = "/private/tmp/mindthus-h21-candidate-1cbca9c9/codex-plugin"
+
+[plugins."mindthus-beta@mindthus-beta"]
+enabled = true
+
+[projects."/private/tmp/mindthus-h21-live-20260719-1cbca9c9/c2/workspace"]
+trust_level = "trusted"
