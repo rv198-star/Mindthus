@@ -734,6 +734,37 @@ class ExecutionCostTreeTests(unittest.TestCase):
             root = ET.parse(svg_output).getroot()
             self.assertEqual(root.attrib["data-layout"], "vertical-execution-timeline")
 
+    def test_completion_handoff_writes_default_artifacts_and_prints_final_links(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            result = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--completion-handoff",
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = mission_dir / "reports" / "execution-cost-tree.md"
+            graph = mission_dir / "reports" / "execution-cost-tree.svg"
+            self.assertTrue(report.is_file())
+            self.assertTrue(graph.is_file())
+            self.assertIn("TPlan terminal handoff links", result.stdout)
+            self.assertIn(f"[TPlan 执行报告](<{report.resolve()}>)", result.stdout)
+            self.assertIn(f"[TPlan 执行过程图](<{graph.resolve()}>)", result.stdout)
+            self.assertIn(
+                "![TPlan 纵向实际执行时间轴](<execution-cost-tree.svg>)",
+                report.read_text(encoding="utf-8"),
+            )
+
+            invalid = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--completion-handoff",
+                "--view",
+                "audit",
+            )
+            self.assertNotEqual(invalid.returncode, 0)
+            self.assertIn("requires the default Standard Markdown", invalid.stderr)
+
     def test_parent_edges_paint_after_child_edges_at_junctions(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
