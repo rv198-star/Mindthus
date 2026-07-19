@@ -59,9 +59,9 @@ hand edits. Separate logs from evidence. Survey state, build a packet with
 validated decisions. Stop in Chinese when continuation is unsafe.
 
 Lite Quickstart Recipe: Prefer these recipes over script-help exploration when inputs
-are known. Start with `python3 skills/tplan/scripts/init_lite.py --dir ...`, checkpoint
-with `scripts/checkpoint.py`, escalate through evidence, packet, hook, and
-`scripts/apply_decision.py`.
+are known: start with `python3 skills/tplan/scripts/init_lite.py --dir ...`, checkpoint
+with `scripts/checkpoint.py`, then escalate through evidence, packet, hook, and
+`scripts/apply_decision.py` only when needed.
 
 ### Shared Risk Context
 
@@ -85,7 +85,9 @@ acceptance authority.
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
 ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py` for
-compact Chinese status updates.
+compact Chinese status updates. After completion or cost review, use
+`scripts/render_execution_cost_tree.py`; default to the one-to-one `standard` portrait
+timeline, preserving every real node and edge with chronological offsets.
 
 ### Read-only SubAgent Acceleration
 
@@ -137,6 +139,7 @@ context.
 - `tplan` is runtime governance, not a standalone reasoning engine.
 - Scripts validate bookkeeping only; they do not prove semantic correctness.
 - Evidence is not a process log.
+- Execution trace is cost/lifecycle telemetry, not evidence or a raw transcript.
 - Shared Risk Context is not a cross-task transcript.
 - Mission shared context Markdown is memory; `mission.json.shared_context` is the
   runtime index.
@@ -145,12 +148,9 @@ context.
 
 ## Runtime Support / 支撑材料
 
-- `resources/schema.md`: mission files, task fields, decision packet, hook output.
-- `resources/lifecycle.md`: Mission completion, closure, task states, transitions.
-- `resources/policy.md`: risk/resource policy and human-in-loop authority.
-- `resources/hooks.md`: decision hooks, routed skills, path/risk/continuation contracts.
-- `resources/user-output.md`: user-facing rendering rules.
-- `resources/subagents.md`: read-only SubAgent acceleration and merge rules.
-- `resources/platforms/*.md`: optional platform review carrier adapters.
-- `scripts/mission_pulse.py`: read-only Mission Pulse route note.
-- `scripts/*review_packet.py`: creates review carrier packets and optional platform runs.
+- Core contracts: `resources/schema.md`, `lifecycle.md`, `policy.md`, and `hooks.md`.
+- Output contracts: `resources/user-output.md` and `execution-trace.md`.
+- Review carriers: `resources/subagents.md`, `resources/platforms/*.md`, and
+  `scripts/*review_packet.py`.
+- Runtime views: `scripts/mission_pulse.py`, `render_user_update.py`, and
+  `render_execution_cost_tree.py`.

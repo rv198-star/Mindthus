@@ -14,6 +14,7 @@ from tplan_runtime import (
     TplanError,
     attach_project_shared_context,
     build_mission,
+    initialize_execution_trace,
     load_task_json,
     mission_paths,
     parse_acceptance_evidence,
@@ -23,7 +24,7 @@ from tplan_runtime import (
 )
 
 
-RUNTIME_FILES = ("mission", "narrative", "evidence", "logs", "archive")
+RUNTIME_FILES = ("mission", "narrative", "evidence", "trace", "logs", "archive", "reports")
 
 
 def parse_args() -> argparse.Namespace:
@@ -80,9 +81,11 @@ def main() -> int:
         paths["dir"].mkdir(parents=True, exist_ok=True)
         paths["logs"].mkdir(parents=True, exist_ok=True)
         paths["archive"].mkdir(parents=True, exist_ok=True)
+        paths["reports"].mkdir(parents=True, exist_ok=True)
         write_json(paths["mission"], mission)
         paths["narrative"].write_text(render_mission_md(mission), encoding="utf-8")
         paths["evidence"].write_text("", encoding="utf-8")
+        initialize_execution_trace(mission_dir, mission)
         if args.project_root:
             write_project_shared_context(Path(args.project_root), mission)
         print(f"initialized_mission: {mission_dir}")
