@@ -57,7 +57,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
         self.assertIn("## v1.5.1", changelog)
-        self.assertIn("[冻结候选说明](docs/releases/v1.5.1.md)", changelog)
+        self.assertIn("[发布说明](docs/releases/v1.5.1.md)", changelog)
         self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("新增：TPlan 执行过程图与终局交付", changelog)
         self.assertIn("1.5.1 ROI Beta（GPT/Sol）", changelog)
