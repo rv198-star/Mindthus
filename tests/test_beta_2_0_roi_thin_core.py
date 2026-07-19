@@ -60,11 +60,11 @@ class RoiThinCoreTests(unittest.TestCase):
         cls._tempdir.cleanup()
 
     def test_profile_freezes_the_subtractive_scope(self) -> None:
-        self.assertEqual(PROFILE["candidate"], "2.0.0-roi.1")
+        self.assertEqual(PROFILE["candidate"], "2.0.0-roi.2")
         self.assertEqual(PROFILE["surface"], "codex-plugin")
         self.assertEqual(
             PROFILE["runtime_shape"]["changed_skill_paths"],
-            ["skills/using-mindthus/SKILL.md"],
+            ["skills/using-mindthus/SKILL.md", "skills/3l5s/SKILL.md"],
         )
         self.assertFalse(PROFILE["runtime_shape"]["session_start_hook"])
         self.assertFalse(PROFILE["runtime_shape"]["model_name_routing"])
@@ -132,6 +132,7 @@ class RoiThinCoreTests(unittest.TestCase):
         allowed_deltas = {
             Path(".codex-plugin/plugin.json"),
             Path("skills/using-mindthus/SKILL.md"),
+            Path("skills/3l5s/SKILL.md"),
         }
         actual_deltas = {
             relative
@@ -140,6 +141,16 @@ class RoiThinCoreTests(unittest.TestCase):
             != (self.candidate_plugin / relative).read_bytes()
         }
         self.assertEqual(actual_deltas, allowed_deltas)
+
+    def test_three_l5s_delta_is_one_exact_hard_brake_replacement(self) -> None:
+        correction = PROFILE["package_time_contract_correction"]
+        stable = (self.stable_plugin / correction["path"]).read_text(encoding="utf-8")
+        candidate = (self.candidate_plugin / correction["path"]).read_text(encoding="utf-8")
+        self.assertEqual(stable.count(correction["before"]), 1)
+        self.assertNotIn(correction["after"], stable)
+        self.assertEqual(candidate, stable.replace(correction["before"], correction["after"]))
+        self.assertIn("first visible sentence must refuse the addition", candidate)
+        self.assertIn("Clear failing tests with new evidence can continue", candidate)
 
     def test_all_owner_trees_and_stable_prompt_are_unchanged(self) -> None:
         for owner in OWNERS:
@@ -181,7 +192,7 @@ class RoiThinCoreTests(unittest.TestCase):
         )
         self.assertEqual(marketplace["name"], "mindthus-roi")
         self.assertEqual(manifest["name"], "mindthus")
-        self.assertEqual(manifest["version"], "2.0.0-roi.1")
+        self.assertEqual(manifest["version"], "2.0.0-roi.2")
         self.assertEqual(packaged_profile["status"], "unpublished-candidate")
         self.assertEqual(len(packaged_profile["overlay_sha256"]), 64)
 

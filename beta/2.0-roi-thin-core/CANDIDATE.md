@@ -9,19 +9,31 @@ Keep the complete 1.4.6 owner topology, but replace the high-frequency
 missed activation would not change the decision or execution. The candidate succeeds
 only if that bounded loss buys a material reduction in actual loading cost.
 
-## Single Allowed Product Delta
+## Candidate History
 
-- Keep all seven owner Skills and their descriptions, bodies, resources, and native
-  Codex discoverability byte-identical to 1.4.6.
+`2.0.0-roi.1` changed only `using-mindthus`. It produced large savings but was rejected:
+the Anti-Spiral case loaded `3l5s` directly, read its existing brake, then let the user's
+request to stay local override it and proposed a third fallback.
+
+`2.0.0-roi.2` is the only correction. It keeps the same architecture and adds one exact
+replacement to the existing 3L5S Anti-Spiral guardrail: a third unsupported local
+addition must be visibly refused even when the user asks to stay local. The correction
+does not add a route, owner, resource, or runtime carrier.
+
+## Allowed Product Delta
+
+- Keep six owner Skills byte-identical to 1.4.6.
 - Replace only `skills/using-mindthus/SKILL.md` at candidate assembly time.
+- Apply one exact package-time sentence replacement to the existing 3L5S Anti-Spiral
+  guardrail; keep its description, mainline, resources, and all other bytes unchanged.
 - Keep the Stable Codex `defaultPrompt` unchanged for this first causal candidate.
 - Add no Hook, injected project instructions, model-name branch, second entry, owner
   index, hidden atlas, or semantic routing script.
 - Keep the 1.4.6 `using-mindthus` resources in the package as compatibility/reference
   material, but do not reference or preload them on the normal Thin Core path.
 
-This isolates the question: does deleting methodology detail from the frequently loaded
-entry improve ROI without losing decision-changing behavior?
+This tests whether a thin shared entry plus a narrowly strengthened critical owner
+guardrail improves ROI without rebuilding routing.
 
 ## Loss Budget
 
@@ -49,7 +61,8 @@ One decision-changing regression blocks continuation; harmless enrichment misses
 Static qualification requires:
 
 - Thin Core at most 2,300 bytes and at most 35% of the 1.4.6 entry size;
-- all seven owner trees byte-identical to the 1.4.6 baseline;
+- six owner trees byte-identical to the 1.4.6 baseline and the 3L5S tree differing by
+  exactly the declared guardrail replacement;
 - no methodology names, owner table, conditional-resource preload, Hook, model branch,
   or extra runtime carrier in the active candidate delta.
 

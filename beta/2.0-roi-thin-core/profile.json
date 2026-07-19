@@ -1,6 +1,6 @@
 {
   "schema_version": "mindthus-roi-candidate-v0.1",
-  "candidate": "2.0.0-roi.1",
+  "candidate": "2.0.0-roi.2",
   "status": "unpublished-candidate",
   "surface": "codex-plugin",
   "baseline": {
@@ -11,10 +11,10 @@
     "topology": "stable-native-owner-discovery",
     "using_mindthus": "thin-shared-floor",
     "changed_skill_paths": [
-      "skills/using-mindthus/SKILL.md"
+      "skills/using-mindthus/SKILL.md",
+      "skills/3l5s/SKILL.md"
     ],
     "unchanged_owner_skills": [
-      "3l5s",
       "edsp",
       "sela",
       "mpg",
@@ -26,6 +26,11 @@
     "model_name_routing": false,
     "second_guard": false,
     "default_prompt_delta": false
+  },
+  "package_time_contract_correction": {
+    "path": "skills/3l5s/SKILL.md",
+    "before": "- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, brake before adding: restate the upstream problem, find the instability/root-cause evidence, and prefer deletion or equal replacement. Clear failing tests with new evidence can continue as ordinary debugging.",
+    "after": "- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, this is a hard brake even when the user says to stay local: the first visible sentence must refuse the addition. Return to the upstream failure and require root-cause evidence; only deletion or equal replacement may follow. Never rename another local rule as a fix. Clear failing tests with new evidence can continue as ordinary debugging."
   },
   "loss_policy": {
     "allowed": "missed enrichment that changes neither decision nor execution",
@@ -41,7 +46,8 @@
   "qualification_gates": {
     "using_mindthus_max_bytes": 2300,
     "using_mindthus_max_baseline_ratio": 0.35,
-    "owners_byte_identical_to_baseline": true,
+    "unchanged_owners_byte_identical_to_baseline": true,
+    "three_l5s_exact_guardrail_replacement": true,
     "explicit_owner_regression_allowed": false,
     "decision_changing_regression_allowed": false,
     "ordinary_or_near_negative_extra_round_allowed": false,

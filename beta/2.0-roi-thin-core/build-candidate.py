@@ -13,7 +13,7 @@ import tempfile
 from pathlib import Path
 
 
-CANDIDATE_VERSION = "2.0.0-roi.1"
+CANDIDATE_VERSION = "2.0.0-roi.2"
 MARKETPLACE_NAME = "mindthus-roi"
 OWNER_SKILLS = ("3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan")
 
@@ -88,6 +88,15 @@ def build(output: Path, force: bool) -> Path:
     plugin_root = output / "mindthus"
     using_target = plugin_root / "skills" / "using-mindthus" / "SKILL.md"
     shutil.copy2(overlay, using_target)
+
+    correction = profile["package_time_contract_correction"]
+    correction_target = plugin_root / correction["path"]
+    correction_text = correction_target.read_text(encoding="utf-8")
+    before = correction["before"]
+    after = correction["after"]
+    if correction_text.count(before) != 1 or after in correction_text:
+        raise SystemExit("3L5S guardrail correction no longer matches exactly once")
+    correction_target.write_text(correction_text.replace(before, after), encoding="utf-8")
 
     marketplace_path = output / ".agents" / "plugins" / "marketplace.json"
     marketplace = read_json(marketplace_path)
