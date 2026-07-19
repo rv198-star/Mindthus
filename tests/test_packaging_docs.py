@@ -48,6 +48,71 @@ def parse_frontmatter_mapping(text: str) -> dict[str, str]:
 
 
 class PackagingDocsTests(unittest.TestCase):
+    def test_generated_plugin_runtime_diagnostic_accepts_healthy_local_install(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            codex_home = root / "home"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.5.1"
+            result = subprocess.run(
+                [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            shutil.copytree(out / "codex-plugin" / "mindthus", cache)
+            codex_home.mkdir(exist_ok=True)
+            (codex_home / "config.toml").write_text(
+                "[marketplaces.mindthus]\n"
+                "source_type = \"local\"\n"
+                f"source = {json.dumps(str(out / 'codex-plugin'))}\n",
+                encoding="utf-8",
+            )
+            diagnostic = subprocess.run(
+                [
+                    sys.executable,
+                    str(cache / "scripts" / "log-mindthus-runtime.py"),
+                    "--codex-home",
+                    str(codex_home),
+                    "--json",
+                    "--strict",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(diagnostic.returncode, 0, diagnostic.stderr)
+            payload = json.loads(diagnostic.stdout)
+            self.assertEqual(payload["summary"]["status"], "ok")
+            self.assertEqual(
+                Path(payload["locations"]["marketplace"]["root"]),
+                (out / "codex-plugin" / "mindthus").resolve(),
+            )
+
+    def test_release_pack_rejects_repository_and_nested_output_paths(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        for output in (REPO, REPO / "release-inside-repository"):
+            with self.subTest(output=str(output)):
+                result = subprocess.run(
+                    [
+                        sys.executable,
+                        str(script),
+                        "--package",
+                        "plugins",
+                        "--out",
+                        str(output),
+                        "--force",
+                    ],
+                    text=True,
+                    capture_output=True,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(
+                    "refusing output directory inside protected source tree",
+                    result.stderr + result.stdout,
+                )
+        self.assertFalse((REPO / "release-inside-repository").exists())
+
     @unittest.skipUnless(importlib.util.find_spec("PIL") is not None, "Pillow is required")
     def test_generated_plugin_runs_documented_atlas_label_and_selection_stages(self):
         from PIL import Image
@@ -1103,16 +1168,16 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
-                    "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-                    "method-ref review direct; direct; evidence 1st; defer Superpowers."
+                    "Mindthus: frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
+                    "method-ref direct; evidence 1st; defer Superpowers."
                 ],
             )
             codex_default_prompt = codex_plugin_manifest["interface"]["defaultPrompt"][0]
             self.assertIn("Superpowers", codex_default_prompt)
-            self.assertIn("method-ref review direct", codex_default_prompt)
-            self.assertIn("hard frame/whole/binary/spiral/no-data", codex_default_prompt)
-            self.assertLessEqual(len(codex_default_prompt), 192)
-            self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 192)
+            self.assertIn("method-ref direct", codex_default_prompt)
+            self.assertIn("frame/whole/binary/spiral/no-data", codex_default_prompt)
+            self.assertLessEqual(len(codex_default_prompt), 123)
+            self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 123)
             self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())

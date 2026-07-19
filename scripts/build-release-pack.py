@@ -60,8 +60,8 @@ CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "brainstorming and should intervene only at remaining hard judgment points."
 )
 CODEX_ACTIVATION_ROUTER_PROMPT = (
-    "Mindthus: hard frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-    "method-ref review direct; direct; evidence 1st; defer Superpowers."
+    "Mindthus: frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
+    "method-ref direct; evidence 1st; defer Superpowers."
 )
 
 
