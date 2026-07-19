@@ -221,6 +221,7 @@ def reduction(stable: float, candidate: float) -> float | None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--evidence", required=True, type=Path)
+    parser.add_argument("--cases-file", type=Path)
     parser.add_argument("--codex", default="codex")
     parser.add_argument("--auth", type=Path)
     args = parser.parse_args()
@@ -228,7 +229,8 @@ def main() -> int:
     root = repo_root()
     qualification = Path(__file__).resolve().parent
     candidate_root = qualification.parent
-    cases = json.loads((qualification / "cases.json").read_text(encoding="utf-8"))
+    cases_path = (args.cases_file or (qualification / "cases.json")).resolve()
+    cases = json.loads(cases_path.read_text(encoding="utf-8"))
     evidence_root = args.evidence.resolve()
     if evidence_root.exists() and any(evidence_root.iterdir()):
         raise SystemExit(f"evidence directory is not empty: {evidence_root}")
