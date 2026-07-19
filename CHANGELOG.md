@@ -12,7 +12,7 @@
 `using-mindthus` 入口和全部正式方法合同，作为需要稳定显式调用、完整被动认知原语
 覆盖或跨模型一致性的基线；不把 ROI Beta 的有损唤起策略带入 Stable。
 
-### Stable 基线与终局交付
+### 新增：TPlan 执行过程图与终局交付
 
 - 完成 TPlan Mission 时，终局交付合同现在要求生成实际执行报告和 SVG 执行过程图，
   并把两条链接放进最终回复；渲染失败必须显式说明，不能以“已完成”掩盖缺图。
@@ -42,7 +42,7 @@
   分别以可复现源码 tag 固定，但未来若获授权，只对应一个 1.5.1 GitHub Release 和两份发布包。
 - 在 ROI Beta 对指定场景证明价值之前，Stable 继续是需要完整能力与保守风险边界时的推荐选择。
 
-### TPlan 一致性
+### TPlan 运行可靠性修复
 
 - Mission 生命周期持久化失败可恢复，trace、evidence 与 Mission 状态不再静默分叉。
 - 成本树按全局 leaf-most owner 归属 usage，避免跨投影和嵌套 agent turn 重复计费。
