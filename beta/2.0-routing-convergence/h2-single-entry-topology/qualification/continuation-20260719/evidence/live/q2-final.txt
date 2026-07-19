@@ -1,0 +1,16 @@
+Retiring database A by Q4 remains the right direction, but **hold the dual-write cutover**.
+
+Why:
+
+- The tested rollback limits downside, but it does not prove forward-cutover safety.
+- Lag varying from 0–90 seconds is unresolved path risk until measured against an explicit tolerance and reconciliation proof.
+- The 40 engineer-weeks justify preserving the current approach, not overriding readiness evidence.
+- Switching is premature because there’s no evidence that another carrier would be safer or still meet Q4.
+
+Resume only after peak-load rehearsals demonstrate:
+
+- Lag stays within an approved bound.
+- All writes converge with no unexplained mismatches.
+- Drain, reconcile, cut over, verify, and—if necessary—roll back fit inside two hours.
+
+Time-box the hold to the next rehearsal cycle. Switch only if this approach cannot meet those gates by the latest date that preserves the Q4 retirement target.

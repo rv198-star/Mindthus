@@ -1,0 +1,36 @@
+{
+  "source_rollout_sha256": "6df01cb9d2c707054618d71a5da4fcb8315084d253512a7fe79ef286b92abc1a",
+  "session": {
+    "id": "019f7847-fb43-7843-80f8-baf5da35f0c0",
+    "cwd": "/private/tmp/mindthus-h2-continuation-20260719-9c271c1f/workspaces/q1-q2",
+    "originator": "Codex Desktop",
+    "cli_version": "0.144.4",
+    "source": "exec",
+    "model_provider": "openai"
+  },
+  "turns": [
+    {
+      "case": "Q1",
+      "turn_id": "019f7847-fb9d-7021-ab8c-17dd687b5e55",
+      "cwd": "/private/tmp/mindthus-h2-continuation-20260719-9c271c1f/workspaces/q1-q2",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "approval_policy": "never",
+      "sandbox_policy": "danger-full-access",
+      "agents_md": null,
+      "event_jsonl_sha256": "5bd3a34f9638bd41dfebe12108d9390d977481332192b169f1da87b27a908bac"
+    },
+    {
+      "case": "Q2",
+      "turn_id": "019f7848-7cf5-7880-8529-9e6087c9cf94",
+      "cwd": "/private/tmp/mindthus-h2-continuation-20260719-9c271c1f/workspaces/q1-q2",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "approval_policy": "never",
+      "sandbox_policy": "danger-full-access",
+      "agents_md": null,
+      "event_jsonl_sha256": "a8bbc25bce0f392e32bc288061d8e016658b67c0f0122e3a8928cca5371328f8"
+    }
+  ],
+  "preservation_note": "Minimal lifecycle metadata extracted from the raw Codex rollout before temporary-home cleanup. Raw case event JSONL remains under evidence/live/."
+}

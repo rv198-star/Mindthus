@@ -1,0 +1,32 @@
+{
+  "recommendation": "close",
+  "rationale": "The doubled budget and corrected cwd removed the previous carrier failures, but clean Q2 evidence shows the frozen candidate loaded unrelated SELA after MPG. This violates a critical owner-fidelity gate; no candidate correction, relaxed criterion, Stable comparison, Judge run, or H3 remains authorized.",
+  "confidence": 100,
+  "evidence_links": [
+    "E1c9949d1",
+    "Eca53056f",
+    "beta/2.0-routing-convergence/h2-single-entry-topology/qualification/continuation-20260719/RESULT.md",
+    "beta/2.0-routing-convergence/h2-single-entry-topology/qualification/continuation-20260719/AUDIT.md",
+    "beta/2.0-routing-convergence/CONTINUATION-DECISION-REPORT.zh-CN.md"
+  ],
+  "proposed_mutations": [
+    {
+      "type": "set_mission_status",
+      "status": "completed"
+    }
+  ],
+  "requires_human": false,
+  "mission_alignment": "STOP_2X_EXPLORATION is an authorized terminal outcome after a trusted H2 critical failure and preserves the frozen candidate, criteria, and no-H3 boundary.",
+  "mission_review": {
+    "objective_alignment": "The continuation tested the frozen H2 candidate after correcting isolation and expanding budget, then reached an evidence-backed terminal outcome.",
+    "acceptance_gap": "No required terminal artifact remains; positive qualification and Stable comparison gates were not met and are not inferred.",
+    "task_contribution": "Qualification, conditional comparison, responsibility-separated audit, terminal report, and cost evidence are recorded.",
+    "roi_effect": "Further calls cannot restore eligibility and would require a candidate change, relaxed criterion, or new architecture.",
+    "non_action_risk": "Stopping preserves 1.4.6 as the functional baseline and all reproducible evidence without release action."
+  },
+  "path_assessment": {
+    "marginal_roi": "negative",
+    "path_role": "dominant_path",
+    "evidence_delta": "no_new_evidence_expected"
+  }
+}
