@@ -31,8 +31,8 @@ BETA_DIAGNOSTIC_MARKERS = (
     "Evidence ceiling:",
     "Anti-Spiral:",
     "no method catalog",
-    "this is a hard brake even when the user says to stay local",
-    "only deletion or equal replacement may follow",
+    "Anti-Spiral hard brake",
+    "prefer deletion or equal replacement",
 )
 
 
