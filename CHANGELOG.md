@@ -10,7 +10,7 @@
 
 说明：这是 1.x Stable 线的可靠性与交付修复候选。它保留完整的
 `using-mindthus` 入口和全部正式方法合同，作为需要稳定显式调用、完整被动认知原语
-覆盖或跨模型一致性的基线；不把 2.x Beta 的有损唤起策略带入 Stable。
+覆盖或跨模型一致性的基线；不把 ROI Beta 的有损唤起策略带入 Stable。
 
 ### Stable 基线与终局交付
 
@@ -19,13 +19,16 @@
 - Stable 不以“更少 token”作为唯一目标：当任务需要完整方法入口、可预测的被动唤起
   或跨模型的保守行为时，继续使用这条完整基线。
 
-### 与 2.x Beta 的关系
+### 同一 1.5.1 release train 的两种发布包
 
-- `1.5.1 Stable` 与 `2.x Beta` 是并行版本线，不是“高版本自动取代低版本”的关系。
-  Stable 是默认、完整、可回退的产品基线；2.x 仅在高能力 Codex 上验证另一套 ROI 取舍。
-- Beta 可以复用 Stable shared core，但它改变了唤起/加载合同；因此不能把 Beta 的 token
-  节省直接宣传为 Stable 的升级，也不能把 Stable 用户自动迁移到 Beta。
-- 在 Beta 证明对指定场景有价值之前，Stable 继续是需要完整能力与保守风险边界时的推荐选择。
+- `1.5.1 Stable` 与 `1.5.1 ROI Beta（GPT/Sol）` 是同一个 release train 的两种独立发布包，
+  不是“高版本自动取代低版本”的关系。Stable 是默认、完整、可回退的产品基线；ROI Beta
+  仅在高能力 Codex / GPT-Sol 上验证另一套加载 ROI 取舍。
+- ROI Beta 从本 Stable tag 复用 shared core，只改变唤起/加载覆盖层；因此不能把它的 token
+  节省宣传为 Stable 的升级，也不能把 Stable 用户自动迁移到 Beta。
+- 每个 release train 先冻结并验证 Stable，再基于该冻结 commit 装配并验证 ROI Beta；二者
+  分别以可复现源码 tag 固定，但未来若获授权，只对应一个 1.5.1 GitHub Release 和两份发布包。
+- 在 ROI Beta 对指定场景证明价值之前，Stable 继续是需要完整能力与保守风险边界时的推荐选择。
 
 ### TPlan 一致性
 
