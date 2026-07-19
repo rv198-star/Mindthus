@@ -13,7 +13,7 @@ Source context only (no inherited success or authority):
 - ROI.2 final report and both original comparison JSON files remain byte-preserved
   under `beta/2.0-roi-thin-core/qualification/`.
 
-Implementation commit: `TO_BE_LOCKED`
+Implementation commit: `b65e92784db903a497482b525f0a362f172e625a`
 
 Protocol SHA-256: computed after replacing the implementation placeholder; the digest
 is recorded in `LOCK.json`, not self-embedded here.

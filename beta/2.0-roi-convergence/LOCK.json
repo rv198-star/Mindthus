@@ -1,0 +1,38 @@
+{
+  "schema_version": "mindthus-roi-convergence-lock-v0.1",
+  "mission_id": "mindthus-2x-roi-convergence-20260719",
+  "implementation_commit": "b65e92784db903a497482b525f0a362f172e625a",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "digests": {
+    "PROTOCOL.md": "b315f257a8a9fb47467a87a14c4b7df2b8a769685f766992f7db8920acf2c6fd",
+    "profile.json": "0e15631dd9a8f42f097130c33c6ae4c73c6f0c7bff08e94df8c37eb3d727f67a",
+    "qualification/cases.json": "04fe4ca2e2c46c63c6a305e79875c40ed690b6578b20beb15aaef4e74a7daf1a",
+    "qualification/static-check.json": "d4779414db9c98362495c8e1b076195222f435be73f9e5433cf13c53aa715e4b",
+    "routes/r1/skills/using-mindthus/SKILL.md": "77f7f6e22c6c8db15c140e80ff1963e869ca7ae1a12c1f1318adf29d1f6f3738",
+    "routes/r2/skills/using-mindthus/SKILL.md": "1dd12f54878622ed19abd01b42862827853e870a6988d01625a789c410598a51",
+    "build-candidate.py": "213ecaef64e9dbfa9cdde038d03c38dd886bee1af611a3c7dd31d95b80c8c3aa",
+    "qualification/run_live.py": "e4362dc69220a892c5eec6f74500df10e78624f6ced55f6b1b05eea61b193576"
+  },
+  "static_status": "PASS",
+  "product_floor": {
+    "explicit_owner_recall": "3/3",
+    "passive_primitive_recall": "at least 2/3",
+    "decision_changing_regression_allowed": false,
+    "user_visible_routing_round_allowed": false
+  },
+  "roi": {
+    "primary": "median host-reported uncached_input_tokens across nine frozen cases",
+    "minimum_distinguishable_improvement": 0.05,
+    "source_bytes_as_token_proxy": false
+  },
+  "routes": ["r1", "r2", "r3"],
+  "budget": {
+    "generator_calls": 51,
+    "judge_calls": 0,
+    "counted_tokens": 5000000,
+    "per_call_counted_tokens": 200000,
+    "per_call_timeout_seconds": 900
+  },
+  "release_or_publication_authorized": false
+}
