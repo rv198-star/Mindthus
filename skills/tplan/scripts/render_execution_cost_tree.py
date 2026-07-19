@@ -30,14 +30,29 @@ def parse_args() -> argparse.Namespace:
         help="Compact only: include this many highest direct-cost real nodes (default: 3).",
     )
     parser.add_argument("--output", help="Write atomically to this path instead of stdout.")
+    parser.add_argument(
+        "--completion-handoff",
+        action="store_true",
+        help=(
+            "Write the default Standard report and SVG under reports/, then print the "
+            "Markdown links that must be included in the terminal user handoff."
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
+        mission_dir = Path(args.mission_dir).resolve()
+        if args.completion_handoff:
+            if args.output or args.focus or args.view != "standard" or args.format != "markdown":
+                raise TplanError(
+                    "--completion-handoff requires the default Standard Markdown full-Mission view"
+                )
+            args.output = str(mission_dir / "reports" / "execution-cost-tree.md")
         report = build_execution_cost_tree(
-            Path(args.mission_dir),
+            mission_dir,
             view=args.view,
             focus_task_id=args.focus,
             top_cost=args.top_cost,
@@ -60,6 +75,10 @@ def main() -> int:
             print(f"rendered_execution_cost_tree: {output_path}")
             if args.format == "markdown" and args.view != "compact":
                 print(f"rendered_execution_cost_tree_svg: {svg_path}")
+            if args.completion_handoff:
+                print("TPlan terminal handoff links (include both in the final user response):")
+                print(f"- [TPlan 执行报告](<{output_path.resolve()}>)")
+                print(f"- [TPlan 执行过程图](<{svg_path.resolve()}>)")
         else:
             print(rendered, end="")
         return 0
