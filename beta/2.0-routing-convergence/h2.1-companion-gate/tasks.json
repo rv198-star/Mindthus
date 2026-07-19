@@ -1,0 +1,38 @@
+[
+  {
+    "id": "T1",
+    "kind": "task",
+    "title": "Build and statically qualify the single-correction H2.1 candidate",
+    "status": "active",
+    "role": "success-critical",
+    "mission_contribution": "Produces a reproducible candidate whose only semantic delta is the authorized MPG-SELA companion gate correction.",
+    "acceptance_evidence": ["KR1"]
+  },
+  {
+    "id": "T2",
+    "kind": "task",
+    "title": "Run causal probes and complete Q1-Q7 only after causal pass",
+    "status": "pending",
+    "role": "success-critical",
+    "mission_contribution": "Determines whether the correction removes false SELA loads while preserving the genuine companion and all H2 qualification behavior.",
+    "acceptance_evidence": ["KR2", "KR3"]
+  },
+  {
+    "id": "T3",
+    "kind": "task",
+    "title": "Run Stable comparison and paired Judge only for a qualified candidate",
+    "status": "pending",
+    "role": "success-critical",
+    "mission_contribution": "Tests decision-changing quality, passive recall, owner fidelity, practical usability, and host-reported cost against Stable 1.4.6.",
+    "acceptance_evidence": ["KR3"]
+  },
+  {
+    "id": "T4",
+    "kind": "task",
+    "title": "Close H2.1 with responsibility-separated evidence and a pushed terminal report",
+    "status": "pending",
+    "role": "success-critical",
+    "mission_contribution": "Produces one authorized terminal outcome without release action.",
+    "acceptance_evidence": ["KR4"]
+  }
+]

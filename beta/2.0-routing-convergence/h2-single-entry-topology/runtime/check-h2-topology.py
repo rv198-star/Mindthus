@@ -11,6 +11,24 @@ from pathlib import Path
 
 
 OWNERS = ("3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan")
+H21_STRICT_GATE = (
+    "MPG companion gate: only system-efficiency/trend pressure against a real local "
+    "advantage permits reading `mindthus:sela`; otherwise stay in MPG. A bare trend or "
+    "accepted mainline does not qualify."
+)
+H21_TARGETS = {
+    "SKILL.md": (
+        "MPG direct-load companion check: when a system-efficiency/trend-based mainline "
+        "appears, run SELA support check before path strategy; must read `mindthus:sela`; "
+        "Do not treat this as an internal memory-only check."
+    ),
+    "resources/methodology.md": (
+        "MPG direct-load companion check: when the input presents a "
+        "system-efficiency/trend-based mainline, run a lightweight SELA support check "
+        "before path strategy. When this applies, you must read `mindthus:sela` before "
+        "the final answer. Do not treat this as an internal memory-only check."
+    ),
+}
 EXCLUDED_DIRS = {"__pycache__", ".pytest_cache", ".tplan", ".tvg", "artifacts", "logs", "test", "tests"}
 EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".pyc", ".pyo", ".tmp", ".webp"}
 
@@ -32,7 +50,11 @@ def add(checks: list[dict], check_id: str, ok: bool, detail: str) -> None:
     checks.append({"id": check_id, "status": "ok" if ok else "failed", "detail": detail})
 
 
-def normalized_owner_digest(owner_root: Path, name: str) -> str:
+def normalized_owner_digest(
+    owner_root: Path,
+    name: str,
+    correction: dict | None = None,
+) -> str:
     digest = hashlib.sha256()
     for item in sorted(owner_root.rglob("*")):
         if not item.is_file():
@@ -63,6 +85,15 @@ def normalized_owner_digest(owner_root: Path, name: str) -> str:
                     )
                 ).as_posix()
                 text = text.replace(companion_path, f"mindthus:{companion}")
+            correction_path = normalized_relative.as_posix()
+            if name == "mpg" and correction is not None and correction_path in H21_TARGETS:
+                after = str(correction["after"])
+                before = H21_TARGETS[correction_path]
+                if text.count(after) != 1 or before in text:
+                    raise ValueError(
+                        f"authorized replacement drifted: {name}/{correction_path}"
+                    )
+                text = text.replace(after, before)
             payload = text.encode("utf-8")
         digest.update(normalized_relative.as_posix().encode("utf-8"))
         digest.update(b"\0")
@@ -104,10 +135,38 @@ def diagnose(root: Path, stable_state: str, require_isolated: bool) -> dict:
         "profile-contract",
         profile.get("schema_version") == "mindthus-release-profile-v0.5"
         and profile.get("release_line") == "2.0-routing-h2-single-entry"
-        and profile.get("version") == "2.0.0-next.3"
+        and profile.get("version") == "2.0.0-next.4"
         and profile.get("carrier_mode") == "single-entry-resource-owners"
         and profile.get("supported_surfaces") == ["codex-plugin"],
-        "unpublished Codex-only H2 profile",
+        "unpublished Codex-only H2.1 profile",
+    )
+    correction = profile.get("package_time_owner_correction")
+    correction_shape_ok = (
+        profile.get("candidate_revision") == "h2.1-companion-gate"
+        and isinstance(correction, dict)
+        and set(correction) == {"id", "mode", "owner", "after", "targets"}
+        and correction.get("id") == "mpg-sela-companion-conjunction"
+        and correction.get("mode") == "exact-subtractive-replace"
+        and correction.get("owner") == "mpg"
+        and correction.get("after") == H21_STRICT_GATE
+        and isinstance(correction.get("targets"), list)
+        and len(correction.get("targets", [])) == 2
+        and all(
+            isinstance(item, dict) and set(item) == {"path", "before"}
+            for item in correction.get("targets", [])
+        )
+        and {
+            item.get("path"): item.get("before")
+            for item in correction.get("targets", [])
+            if isinstance(item, dict) and set(item) == {"path", "before"}
+        }
+        == H21_TARGETS
+    )
+    add(
+        checks,
+        "h2.1-companion-correction",
+        correction_shape_ok,
+        "one exact MPG correction; two byte-subtractive declarations",
     )
 
     try:
@@ -117,7 +176,7 @@ def diagnose(root: Path, stable_state: str, require_isolated: bool) -> dict:
             checks,
             "plugin-manifest",
             manifest.get("name") == "mindthus-beta"
-            and manifest.get("version") == "2.0.0-next.3"
+            and manifest.get("version") == "2.0.0-next.4"
             and manifest.get("skills") == "./skills/"
             and "hooks" not in manifest
             and "defaultPrompt" not in interface,
@@ -159,7 +218,11 @@ def diagnose(root: Path, stable_state: str, require_isolated: bool) -> dict:
     for owner in OWNERS:
         try:
             built = owner_root / owner
-            actual = normalized_owner_digest(built, owner)
+            actual = normalized_owner_digest(
+                built,
+                owner,
+                correction if correction_shape_ok else None,
+            )
             expected = lock_records[f"owner-{owner}"]["sha256"]
             add(
                 checks,
@@ -169,7 +232,7 @@ def diagnose(root: Path, stable_state: str, require_isolated: bool) -> dict:
                 and actual == expected,
                 actual,
             )
-        except (OSError, KeyError, TypeError) as exc:
+        except (OSError, KeyError, TypeError, ValueError) as exc:
             add(checks, f"owner-lock:{owner}", False, str(exc))
     companion_paths: list[str] = []
     broken_companion_paths: list[str] = []
@@ -186,11 +249,17 @@ def diagnose(root: Path, stable_state: str, require_isolated: bool) -> dict:
                 companion_paths.append(f"{markdown.relative_to(root)}:{relative}")
                 if not (markdown.parent / relative).resolve().is_file():
                     broken_companion_paths.append(companion_paths[-1])
+    expected_companion_paths = {
+        "skills/using-mindthus/references/owners/mpg/OWNER.md:../sela/OWNER.md",
+        "skills/using-mindthus/references/owners/mpg/resources/methodology.md:../../sela/OWNER.md",
+        "skills/using-mindthus/references/owners/sela/OWNER.md:../mpg/OWNER.md",
+        "skills/using-mindthus/references/owners/sela/resources/methodology.md:../../mpg/OWNER.md",
+    }
     add(
         checks,
         "owner-companion-paths",
-        len(companion_paths) >= 2 and not broken_companion_paths,
-        f"declared={len(companion_paths)} broken={broken_companion_paths}",
+        set(companion_paths) == expected_companion_paths and not broken_companion_paths,
+        f"declared={companion_paths} broken={broken_companion_paths}",
     )
     try:
         runtime_actual = plain_tree_digest(owner_root / "_runtime")

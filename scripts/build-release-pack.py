@@ -107,6 +107,7 @@ class ReleaseProfile:
     runtime_diagnostic_package_path: str = "scripts/check-beta-runtime.py"
     default_prompt: str | None = None
     owner_description_overrides: dict[str, str] | None = None
+    package_time_owner_correction: dict[str, object] | None = None
     single_entry_resource_owners: bool = False
     include_default_prompt: bool = True
 
@@ -565,8 +566,8 @@ def _load_h2_single_entry_profile(root: Path) -> ReleaseProfile:
         raise SystemExit("unsupported H2 single-entry release-profile schema")
     if manifest.get("release_line") != H2_SINGLE_ENTRY_RELEASE_LINE:
         raise SystemExit("H2 single-entry profile declares the wrong release line")
-    if manifest.get("version") != "2.0.0-next.3":
-        raise SystemExit("H2 must use unpublished version 2.0.0-next.3")
+    if manifest.get("version") != "2.0.0-next.4":
+        raise SystemExit("H2.1 must use unpublished version 2.0.0-next.4")
     if manifest.get("path_base") != "plugin-root":
         raise SystemExit("H2 package paths must be relative to plugin-root")
     if manifest.get("carrier_mode") != "single-entry-resource-owners":
@@ -644,6 +645,41 @@ def _load_h2_single_entry_profile(root: Path) -> ReleaseProfile:
     if manifest.get("owner_skills") != list(("3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan")):
         raise SystemExit("H2 must declare exactly seven resource owners")
 
+    correction = manifest.get("package_time_owner_correction")
+    required_correction_keys = {"id", "mode", "owner", "after", "targets"}
+    if not isinstance(correction, dict) or set(correction) != required_correction_keys:
+        raise SystemExit("H2.1 must declare one complete package-time owner correction")
+    if (
+        correction.get("id") != "mpg-sela-companion-conjunction"
+        or correction.get("mode") != "exact-subtractive-replace"
+        or correction.get("owner") != "mpg"
+    ):
+        raise SystemExit("H2.1 may only apply the frozen MPG-to-SELA correction")
+    after = correction.get("after")
+    if not isinstance(after, str) or "mindthus:sela" not in after:
+        raise SystemExit("H2.1 correction must preserve the conditional SELA companion")
+    targets = correction.get("targets")
+    allowed_paths = {"SKILL.md", "resources/methodology.md"}
+    if not isinstance(targets, list) or len(targets) != 2:
+        raise SystemExit("H2.1 must declare exactly two synchronized MPG gate replacements")
+    if {item.get("path") for item in targets if isinstance(item, dict)} != allowed_paths:
+        raise SystemExit("H2.1 MPG replacements must target only the root and methodology declarations")
+    total_delta = 0
+    for item in targets:
+        if not isinstance(item, dict) or set(item) != {"path", "before"}:
+            raise SystemExit("H2.1 correction targets must contain only path/before")
+        _safe_relative_path(item["path"], label="H2.1 owner replacement path")
+        before = item.get("before")
+        if not isinstance(before, str) or before == after:
+            raise SystemExit("H2.1 owner replacements must be non-empty exact replacements")
+        if len(after.encode("utf-8")) > len(before.encode("utf-8")):
+            raise SystemExit("H2.1 owner replacement must be byte-subtractive")
+        if "mindthus:sela" not in before or "mindthus:sela" not in after:
+            raise SystemExit("H2.1 may only narrow the MPG-to-SELA companion gate")
+        total_delta += len(after.encode("utf-8")) - len(before.encode("utf-8"))
+    if total_delta >= 0:
+        raise SystemExit("H2.1 correction must reduce the total owner contract bytes")
+
     reference_lock_data = _verify_reference_lock(
         root, reference_lock, baseline=str(manifest.get("stable_baseline", ""))
     )
@@ -671,7 +707,7 @@ def _load_h2_single_entry_profile(root: Path) -> ReleaseProfile:
 
     return ReleaseProfile(
         release_line=H2_SINGLE_ENTRY_RELEASE_LINE,
-        version="2.0.0-next.3",
+        version="2.0.0-next.4",
         using_skill_dir=using_skill_dir,
         supported_packages=("plugins",),
         supported_surfaces=("codex-plugin",),
@@ -689,6 +725,7 @@ def _load_h2_single_entry_profile(root: Path) -> ReleaseProfile:
         profile_guide_package_path=str(manifest.get("profile_guide")),
         runtime_diagnostic_package_path=str(manifest.get("runtime_diagnostic")),
         default_prompt=None,
+        package_time_owner_correction=correction,
         single_entry_resource_owners=True,
         include_default_prompt=False,
     )
@@ -974,6 +1011,24 @@ def copy_h2_resource_owners(skills_dir: Path, using_target: Path, profile: Relea
             path_replacements,
             jsonl_allowlist=allowlist,
         )
+        correction = profile.package_time_owner_correction or {}
+        if name == correction.get("owner"):
+            after = str(correction["after"])
+            for source, target_value in path_replacements.items():
+                after = after.replace(source, target_value)
+            for replacement in correction.get("targets", []):
+                target_path = owner_target / _safe_relative_path(
+                    replacement["path"], label="H2.1 owner replacement path"
+                )
+                text = target_path.read_text(encoding="utf-8")
+                before = str(replacement["before"])
+                for source, target_value in path_replacements.items():
+                    before = before.replace(source, target_value)
+                if text.count(before) != 1 or after in text:
+                    raise SystemExit(
+                        f"H2.1 owner replacement precondition failed: {name}/{replacement['path']}"
+                    )
+                target_path.write_text(text.replace(before, after), encoding="utf-8")
         skill_path = owner_target / "SKILL.md"
         owner_path = owner_target / "OWNER.md"
         if not skill_path.is_file() or owner_path.exists():

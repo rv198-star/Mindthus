@@ -1,8 +1,9 @@
 {
   "schema_version": "mindthus-release-profile-v0.5",
   "release_line": "2.0-routing-h2-single-entry",
-  "version": "2.0.0-next.3",
+  "version": "2.0.0-next.4",
   "status": "static-qualified-live-pending",
+  "candidate_revision": "h2.1-companion-gate",
   "release_preparation": "forbidden",
   "live_qualification": "not-started",
   "path_base": "plugin-root",
@@ -41,6 +42,22 @@
     "tvg",
     "tplan"
   ],
+  "package_time_owner_correction": {
+    "id": "mpg-sela-companion-conjunction",
+    "mode": "exact-subtractive-replace",
+    "owner": "mpg",
+    "after": "MPG companion gate: only system-efficiency/trend pressure against a real local advantage permits reading `mindthus:sela`; otherwise stay in MPG. A bare trend or accepted mainline does not qualify.",
+    "targets": [
+      {
+        "path": "SKILL.md",
+        "before": "MPG direct-load companion check: when a system-efficiency/trend-based mainline appears, run SELA support check before path strategy; must read `mindthus:sela`; Do not treat this as an internal memory-only check."
+      },
+      {
+        "path": "resources/methodology.md",
+        "before": "MPG direct-load companion check: when the input presents a system-efficiency/trend-based mainline, run a lightweight SELA support check before path strategy. When this applies, you must read `mindthus:sela` before the final answer. Do not treat this as an internal memory-only check."
+      }
+    ]
+  },
   "active_runtime_paths": [
     "STATUS.md",
     "beta/release-profile.json",
@@ -63,15 +80,15 @@
     "scripts/run-fidelity-judge.py"
   ],
   "artifact_sha256": {
-    "STATUS.md": "02b62135a3cc475505a1b0a330d784cb7b851199ab1662c5e9c6b8aad6a6a435",
+    "STATUS.md": "6b3252365885b3b9d2ada259c73d52409a6341acb580712fed117282126feffa",
     "reference/1.4.6/reference-lock.json": "3679983b7198d54771d428c42f027b4a16bda0688cd207fe57754498c7681589",
-    "scripts/check-h2-topology.py": "53abc533f4c5a04749c46e7134fd30eb9a7a0f78183a07db0d2a91b55ca50dfd",
+    "scripts/check-h2-topology.py": "239914fcfe8c2795927d5fa8b176b60767194d7b55eaf2c65006ace819338875",
     "skills/using-mindthus/SKILL.md": "3f522e7c3ef169d7364c6ae4d069b72d10e6da2995e5ded425ffe27ec1fadd0c",
     "skills/using-mindthus/references/owner-index.md": "483a6cb6f1819818e884eb5dc5fe7132f8dd0bece536d885371a0f2553ad55c6"
   },
   "generated_artifact_sha256": {
     "codex-plugin": {
-      ".codex-plugin/plugin.json": "b1e4f1567f29195ed895d551b820960b76516ab0bba23ec1672efc483c20a347"
+      ".codex-plugin/plugin.json": "cee68a71b80003d9a490dcd1f5cf676cc5d7d1aca1475be86f20d8e27dec89df"
     }
   },
   "budgets": {
