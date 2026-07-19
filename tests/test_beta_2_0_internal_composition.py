@@ -71,13 +71,14 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "fc9909798015dc7f17dc307f67bb751bf137442a",
+            "f53f20b3bc62beec4e731277f031ff5fe5acd9d6",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
-        self.assertEqual(PROFILE["publication"]["status"], "not-published")
+        self.assertEqual(PROFILE["publication"]["status"], "tagged-not-published")
+        self.assertEqual(PROFILE["publication"]["source_tag"], "v2.0.0-beta.1")
         self.assertTrue(PROFILE["publication"]["prerelease_ready"])
         self.assertEqual(
             PROFILE["publication"]["allowed_release_kind_if_separately_authorized"],
@@ -94,6 +95,8 @@ class InternalBetaCompositionTests(unittest.TestCase):
         )
         self.assertIn("尚未发布", changelog)
         self.assertIn("尚未发布", notes)
+        self.assertIn("冻结源码 tag", changelog)
+        self.assertIn("源码 tag 已冻结", notes)
         self.assertNotIn("预发布日期", changelog + notes)
 
     def test_shared_1_5_capabilities_are_present_and_identical(self) -> None:

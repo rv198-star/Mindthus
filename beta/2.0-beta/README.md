@@ -1,10 +1,10 @@
 # Mindthus 2.0 Beta Prerelease
 
-Status: GitHub prerelease candidate; not a Stable release or marketplace package.
+Status: source tag `v2.0.0-beta.1` is frozen; GitHub Release and marketplace publication remain absent.
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.1` / `fc9909798015dc7f17dc307f67bb751bf137442a`
+- Shared Product Core: Mindthus `1.5.1` / `f53f20b3bc62beec4e731277f031ff5fe5acd9d6`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
