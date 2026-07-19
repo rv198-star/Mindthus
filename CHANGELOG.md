@@ -2,6 +2,45 @@
 
 ## Unreleased
 
+## v1.5.0
+
+发布日期：2026-07-19
+
+[完整发布日志](docs/releases/v1.5.0.md)
+
+说明：这是 1.x Stable 线的功能增量版本。它把 TPlan 的真实执行/成本树和 TVG 的
+Profile 保真视觉图谱工作流带入正式发布，但不改变 `using-mindthus` 的可靠调用边界，
+也不发布仍在探索中的 2.x ROI.2 Beta。
+
+### TPlan 真实执行与成本树
+
+- 新 Mission 使用追加式 `execution_trace.jsonl` 记录生命周期和脱敏成本事件；它不替代
+  `evidence.jsonl`，也不保存 prompt、response 或原始 transcript。
+- 新增 host-boundary model observer、traced command 和 sanitized span ingestion，明确区分
+  `host_measured`、`platform_reported`、`inferred` 与不可得测量。
+- 新增 `compact`、`standard`、`audit` 三种执行树视图；完整拓扑、局部 trace、旧 Mission
+  snapshot 都有显式覆盖状态，未知成本保持未知。
+
+### TVG Profile 保真视觉图谱
+
+- 将通用影视画面导演控制收敛为 canonical `cinematic-visual-direction` Profile，并把
+  巨物压迫规则降为可选 `colossal-pressure` 场景适配器；旧路径继续作为兼容入口。
+- 新增 Profile 保真的 `9 -> 3 -> 9` 图谱探索、稳定 `Rnn-Eyy` 标识、可见 lineage、
+  evidence hash、search freeze、delivery audit 与 finalization evidence。
+- 图谱脚本只标注、拼板和校验确定性事实；审美选择和退出判断仍由 agent / 用户负责。
+
+### 发布边界
+
+- 显式调用 `using-mindthus` 或具体 skill 仍是可靠主路径；host 自然唤起仍是 best-effort。
+- issue #109 的可复现实验进入仓库测试证据，但 tests、内部设计、benchmark 与运行记录不进入 release pack。
+- ROI.2 仅确认为 2.x Beta 演进线；本版不创建 2.x tag、Release 或安装资产。
+
+### 验证
+
+- `python3 -m unittest discover -s tests -p 'test_*.py' -q`
+- `python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-release-plugins-check --force`
+- `python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-release-skills-check --force`
+
 ## v1.4.6
 
 发布日期：2026-07-14
