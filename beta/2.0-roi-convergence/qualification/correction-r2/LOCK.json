@@ -1,0 +1,34 @@
+{
+  "schema_version": "mindthus-roi-r2-correction-lock-v0.1",
+  "mission_id": "mindthus-2x-roi-convergence-20260719",
+  "candidate": "r2.1",
+  "implementation_commit": "46ad883cffabe5a121d3b6baaf5ff98bcc7315fc",
+  "parent_protocol_lock_v1_1_sha256": "8bc519f54ac478405e02e9c0de80c0aae3d8ad30501ea7876bafa7ed84ba11dc",
+  "digests": {
+    "PROTOCOL.md": "0635e5bccc342e7024851bc2d9324846320febdc61630878afbe0edc6dfb3369",
+    "static-check.json": "5cc7584e2e23f81a792484cb435ab3fd625f981f92dd2cc6fbd5c49d9a2ae5aa",
+    "r2-using-mindthus-SKILL.md": "83aba6a1d852a7aa5e749ffdd3af3e4add2cbe95ff4b9671464c844b01ba85da",
+    "profile.json": "439874125e21ea3571000966a9bfc5da165fb62aac21c159b2219d8f464c4e22",
+    "cases-v1.1.json": "62379923494ba205fb0b97870621f4c3107a765c5842e378d66b3d9c630afd2c",
+    "run_live.py": "7616fe515da5e09258bb1e86b3b4fa6c049f78e6fbeef57fdf9d3b2528429de3"
+  },
+  "using_mindthus_bytes": 895,
+  "static_status": "PASS",
+  "repo_tests": "619 passed",
+  "targeted_cases": ["decision_context", "clear_mpg"],
+  "targeted_calls": 2,
+  "full_panel_calls_if_targeted_passes": 9,
+  "correction_budget_exhausted_on_freeze": true,
+  "mission_usage_before_correction": {
+    "generator_calls": 39,
+    "counted_tokens": 2469062
+  },
+  "mission_budget_remaining_before_correction": {
+    "generator_calls": 12,
+    "counted_tokens": 2530938
+  },
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "judge_calls": 0,
+  "release_or_publication_authorized": false
+}

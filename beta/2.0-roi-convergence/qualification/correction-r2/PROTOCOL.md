@@ -2,7 +2,7 @@
 
 Status: `FROZEN_BEFORE_TARGETED_CALLS` after the implementation and lock commits below.
 
-Implementation commit: `TO_BE_LOCKED`
+Implementation commit: `46ad883cffabe5a121d3b6baaf5ff98bcc7315fc`
 
 ## Causal basis
 
