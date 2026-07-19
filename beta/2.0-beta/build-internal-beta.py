@@ -32,7 +32,7 @@ BETA_DIAGNOSTIC_MARKERS = (
     "Anti-Spiral:",
     "no method catalog",
     "Anti-Spiral hard brake",
-    "prefer deletion or equal replacement",
+    "same local repair count >= 3",
 )
 
 
