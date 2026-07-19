@@ -2,15 +2,16 @@
 
 ## Unreleased
 
-### 2.0.0-beta.1 prerelease candidate
+### 新增发布包：1.5.1 ROI Beta（GPT/Sol）
 
-冻结 tag：`v2.0.0-beta.1`（尚未发布）
+冻结源码 tag：`v1.5.1-roi-beta`（尚未发布）
 
-[Beta 预发布说明](docs/releases/v2.0.0-beta.1.md)
+[ROI Beta 预发布说明](docs/releases/v1.5.1-roi-beta.md)
 
-说明：这是面向 Codex、Efficiency-first 的 ROI.2 Beta，不替代 1.x Stable。
+说明：这是与 `1.5.1 Stable` 同属一个 release train 的第二种发布包，面向 Codex / GPT-Sol
+做 ROI-first 的有损唤起实验；它不替代 Stable，也不自动迁移既有用户。
 
-### 为什么有 2.0 Beta
+### 背景与取舍
 
 - `gpt-5.6-sol` 这类强工程模型已经能在许多清晰、低风险、事实充分的任务中直接行动；
   若仍让每次会话常驻加载完整的方法目录和详细合同，额外输入 token 与等待时间未必会改变
@@ -30,22 +31,24 @@
 - 需要完整方法合同、可预测的被动认知原语、跨模型一致性，或任务本身不允许召回损失时，
   选 1.5.1 Stable。
 - 主要在高能力 Codex 上做清晰工程执行，且愿意以有限的被动唤起损失交换明显的常驻开销
-  下降时，才评估 2.0 Beta；它仍是实验线，不应作为 Stable 的自动迁移目标。
+  下降时，才评估 ROI Beta；它仍是实验包，不应作为 Stable 的自动迁移目标。
 
 ### 与 1.5.1 Stable 的关系
 
-- `2.x Beta` 不是 `1.5.1 Stable` 的替代版，也不是“版本号更高所以默认更好”。两条线共享
-  一部分产品核心，但优化目标不同：Stable 优先完整能力与保守可靠性，Beta 优先特定高能力
-  Codex 场景下的加载 ROI。
+- `1.5.1 ROI Beta（GPT/Sol）` 不是 `1.5.1 Stable` 的替代版，也不是“版本号更高所以默认
+  更好”。两个包共享同一产品核心，但优化目标不同：Stable 优先完整能力与保守可靠性，ROI
+  Beta 优先特定高能力 Codex 场景下的加载 ROI。
 - Beta 的薄入口只是一种受限实验合同，不把 Stable 的完整入口降级，也不触发用户安装、配置
-  或工作流的自动迁移。任何进入正式 2.x 的决定都需要新的行为证据与单独授权。
+  或工作流的自动迁移。任何把 ROI 策略扩大为默认行为的决定都需要新的行为证据与单独授权。
 - 因此，选择 Beta 是针对任务、模型与可接受损失的显式选择；需要默认可靠行为时仍选 Stable，
   发现 decision-changing recall 损失时应直接回退 Stable。
 
-- 以 1.5.1 repaired shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
+- 以 `v1.5.1` Stable shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
 - 修复 #128：单分支自包含构建、Beta namespace/diagnostics 隔离、dirty-input 拒绝、输入与 manifest provenance、artifact-local 路径和可复现 archive。
 - Stable 与 Beta 使用不同 package、marketplace、cache 和 skill namespace；不自动迁移、不发布 marketplace。
-- 若未来获得单独发布授权，GitHub Release 必须标记为 prerelease；当前只有冻结源码 tag，不存在 Beta Release 或公开资产。
+- 若未来获得发布授权，两个包对应同一个 1.5.1 GitHub Release；ROI 包以独立 experimental
+  asset 标识，而不是创建第二个 Beta Release。当前只有冻结源码 tag，不存在 GitHub Release
+  或公开资产。
 
 ## v1.5.1
 

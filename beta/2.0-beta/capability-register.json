@@ -1,31 +1,31 @@
 {
   "schema_version": "mindthus-capability-register-v0.2",
-  "shared_core_ref": "f53f20b3bc62beec4e731277f031ff5fe5acd9d6",
+  "shared_core_ref": "c3349aa5d0dde25520048bcea011bf2ceea226c1",
   "capabilities": [
     {
       "id": "tvg-profile-atlas-v1",
-      "source_commit": "f53f20b3bc62beec4e731277f031ff5fe5acd9d6",
+      "source_commit": "c3349aa5d0dde25520048bcea011bf2ceea226c1",
       "ownership": "shared-product-core",
       "release_1x": {"state": "included", "version": "1.5.1"},
-      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
     },
     {
       "id": "tplan-execution-cost-tree-v1",
-      "source_commit": "f53f20b3bc62beec4e731277f031ff5fe5acd9d6",
+      "source_commit": "c3349aa5d0dde25520048bcea011bf2ceea226c1",
       "ownership": "shared-product-core",
       "release_1x": {"state": "included", "version": "1.5.1"},
-      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
     },
     {
       "id": "roi.2-thin-core",
       "source_commit": "493f9520b75f582aa22f6c8647ec08eab3e122d3",
-      "ownership": "2.x-runtime-profile",
+      "ownership": "roi-beta-runtime-profile",
       "release_1x": {
         "state": "not-applicable",
         "version": "1.5.1",
         "reason": "Stable keeps the full using-mindthus runtime profile."
       },
-      "release_2x": {"state": "included", "version": "2.0.0-beta.1"}
+      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
     }
   ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compose the internal Mindthus 2.0 Beta from a frozen shared core and ROI.2."""
+"""Compose Mindthus 1.5.1 ROI Beta from a frozen shared core and ROI.2."""
 
 from __future__ import annotations
 
@@ -160,7 +160,7 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     marketplace_path = marketplace_root / ".agents" / "plugins" / "marketplace.json"
     marketplace = read_json(marketplace_path)
     marketplace["name"] = "mindthus-beta"
-    marketplace["interface"]["displayName"] = "Mindthus 2.0 Beta"
+    marketplace["interface"]["displayName"] = "Mindthus 1.5.1 ROI Beta (GPT/Sol)"
     marketplace["plugins"][0]["name"] = "mindthus-beta"
     marketplace["plugins"][0]["source"]["path"] = "./mindthus-beta"
     write_json(marketplace_path, marketplace)
@@ -169,10 +169,10 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     manifest = read_json(manifest_path)
     manifest["name"] = "mindthus-beta"
     manifest["version"] = version
-    manifest["description"] = "ROI.2-based Mindthus 2.0 Beta prerelease for Codex."
+    manifest["description"] = "ROI-first Mindthus 1.5.1 Beta for high-capability Codex / GPT-Sol."
     interface = manifest["interface"]
-    interface["displayName"] = "Mindthus 2.0 Beta"
-    interface["shortDescription"] = "ROI.2 thin entry over the 1.5 shared core"
+    interface["displayName"] = "Mindthus 1.5.1 ROI Beta (GPT/Sol)"
+    interface["shortDescription"] = "ROI-first thin entry over the 1.5.1 Stable shared core"
     prompts = interface.get("defaultPrompt")
     if not isinstance(prompts, list) or not all(isinstance(item, str) for item in prompts):
         raise SystemExit("Codex defaultPrompt is not a string list")
@@ -404,7 +404,7 @@ def main() -> int:
         write_checksum(archive_path, checksum_path)
         print(f"built reproducible Beta archive at {archive_path}")
         print(f"wrote Beta archive checksum at {checksum_path}")
-    print(f"built Mindthus 2.0 Beta prerelease at {plugin_root}")
+    print(f"built Mindthus 1.5.1 ROI Beta prerelease at {plugin_root}")
     return 0
 
 

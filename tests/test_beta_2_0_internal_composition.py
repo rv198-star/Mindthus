@@ -25,7 +25,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         root = Path(cls._tempdir.name)
         cls.stable_out = root / "stable"
         cls.beta_out = root / "beta"
-        cls.beta_archive = root / "mindthus-beta-2.0.0-beta.1.tar.gz"
+        cls.beta_archive = root / "mindthus-beta-1.5.1-roi-beta.tar.gz"
         cls.beta_checksum = root / "SHA256SUMS"
         stable = subprocess.run(
             [
@@ -66,38 +66,39 @@ class InternalBetaCompositionTests(unittest.TestCase):
 
     def test_internal_identity_and_immutable_refs(self) -> None:
         self.assertEqual(PROFILE["status"], "beta-prerelease")
-        self.assertEqual(PROFILE["version"], "2.0.0-beta.1")
+        self.assertEqual(PROFILE["version"], "1.5.1-roi-beta")
         self.assertEqual(PROFILE["package_identity"], "mindthus-beta")
         self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "f53f20b3bc62beec4e731277f031ff5fe5acd9d6",
+            "c3349aa5d0dde25520048bcea011bf2ceea226c1",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
-        self.assertEqual(PROFILE["publication"]["status"], "tagged-not-published")
-        self.assertEqual(PROFILE["publication"]["source_tag"], "v2.0.0-beta.1")
-        self.assertTrue(PROFILE["publication"]["prerelease_ready"])
+        self.assertEqual(PROFILE["publication"]["status"], "frozen-not-published")
+        self.assertEqual(PROFILE["publication"]["source_tag"], "v1.5.1-roi-beta")
         self.assertEqual(
-            PROFILE["publication"]["allowed_release_kind_if_separately_authorized"],
-            "github-prerelease",
+            PROFILE["publication"]["allowed_release_shape_if_separately_authorized"],
+            "single-github-release-with-stable-and-experimental-roi-packages",
         )
+        self.assertEqual(PROFILE["publication"]["release_train"], "1.5.1")
+        self.assertEqual(PROFILE["publication"]["release_asset_channel"], "experimental-roi-beta")
         self.assertFalse(PROFILE["publication"]["github_release"])
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
             PROFILE["runtime_profile"]["convergence_evidence"]["required_at_build"]
         )
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        notes = (REPO / "docs" / "releases" / "v2.0.0-beta.1.md").read_text(
+        notes = (REPO / "docs" / "releases" / "v1.5.1-roi-beta.md").read_text(
             encoding="utf-8"
         )
         self.assertIn("尚未发布", changelog)
         self.assertIn("尚未发布", notes)
         self.assertIn("冻结源码 tag", changelog)
         self.assertIn("源码 tag 已冻结", notes)
-        self.assertIn("为什么有 2.0 Beta", changelog)
+        self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("与 1.5.1 Stable 的关系", changelog)
         self.assertIn("不是 `1.5.1 Stable` 的替代版", changelog)
         self.assertIn("不触发用户安装、配置", changelog)
@@ -213,7 +214,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
             marketplace["plugins"][0]["source"]["path"], "./mindthus-beta"
         )
         self.assertEqual(manifest["name"], "mindthus-beta")
-        self.assertEqual(manifest["version"], "2.0.0-beta.1")
+        self.assertEqual(manifest["version"], "1.5.1-roi-beta")
         prompt = "\n".join(manifest["interface"]["defaultPrompt"])
         self.assertIn("mindthus-beta:using-mindthus", prompt)
         self.assertNotIn("mindthus:using-mindthus", prompt)
@@ -232,7 +233,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 / "cache"
                 / "mindthus-beta"
                 / "mindthus-beta"
-                / "2.0.0-beta.1"
+                / "1.5.1-roi-beta"
             )
             shutil.copytree(self.beta_plugin, cache)
             codex_home.mkdir(exist_ok=True)
@@ -253,10 +254,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
             result = subprocess.run(command, text=True, capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             report = json.loads(result.stdout)
-            self.assertEqual(report["version"], "2.0.0-beta.1")
+            self.assertEqual(report["version"], "1.5.1-roi-beta")
             self.assertEqual(report["summary"]["status"], "ok")
             self.assertIn(
-                "mindthus-beta/mindthus-beta/2.0.0-beta.1",
+                "mindthus-beta/mindthus-beta/1.5.1-roi-beta",
                 report["locations"]["cache"]["root"],
             )
             self.assertNotIn("/mindthus/mindthus/", json.dumps(report))
@@ -298,7 +299,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
             hashlib.sha256(register_path.read_bytes()).hexdigest(),
         )
         states = {
-            item["id"]: item["release_2x"]["state"]
+            item["id"]: item["release_roi_beta"]["state"]
             for item in register["capabilities"]
         }
         self.assertEqual(
