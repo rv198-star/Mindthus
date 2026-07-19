@@ -1,12 +1,18 @@
 # Mindthus 1.x / 2.x Dual-Release Shared-Core Design
 
-Status: proposed for implementation after the current 2.0 Beta evaluation checkpoint
+Status: accepted product direction on 2026-07-19; shared-core implementation remains staged
 
 Related work:
 
 - Stable baseline: `v1.4.6`
+- Next Stable target: `v1.5.0`
 - 2.0 Beta charter: https://github.com/rv198-star/Mindthus/issues/112
+- Selected 2.x Beta runtime baseline: ROI.2 / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 - TVG Profile atlas workflow: https://github.com/rv198-star/Mindthus/issues/120
+
+The 2.x selection is a Beta-line decision, not publication or Stable promotion. ROI.2
+remains explicit opt-in and unpublished until a separately frozen promotion contract is
+satisfied.
 
 ## Core Decision
 
@@ -50,7 +56,7 @@ active product source tree to stop evolving.
 1. Implement shared features and shared bug fixes once.
 2. Ship those capabilities in both 1.x and 2.x packages without copying source trees.
 3. Keep the full `using-mindthus` runtime available in Stable 1.x.
-4. Keep the Thin Kernel and alternative activation path isolated in 2.x.
+4. Keep the ROI.2 thin-entry and alternative activation path isolated in 2.x.
 5. Preserve frozen Beta evaluation evidence while the 2.x product line advances.
 6. Allow independent release timing without hiding temporary capability lag.
 7. Make package identity, source provenance, runtime profile, and rollback target
@@ -72,7 +78,7 @@ active product source tree to stop evolving.
 | --- | --- | --- |
 | Shared Product Core | owner skills, TVG Profiles, generic runtime support, methodology docs, schemas, validators, shared tests | one canonical source |
 | 1.x Runtime Profile | full `using-mindthus`, current Stable routing and activation behavior | 1.x only |
-| 2.x Runtime Profile | Thin Kernel, arbitration-only entry, hooks, activation telemetry, host capability handling | 2.x only |
+| 2.x Runtime Profile | ROI.2 thin `using-mindthus`, native direct-owner discovery, evidence-triggered owner-local hardening, host capability handling | 2.x only |
 | Evaluation Harness | frozen arms, protocols, manifests, judges, receipts, replay evidence | checkpoint-specific |
 | Release Assembly | version, `shared_core_ref`, runtime overlay, namespace, package identity, artifact hashes | release-line-specific |
 
@@ -142,13 +148,15 @@ The 2.x line needs two separate references:
 - `shared_core_ref`: the product capabilities intended for the next 2.x package.
 - `evaluation_baseline_ref`: the immutable composition used by a named experiment.
 
-The current Beta2 evaluation may continue to use the 1.4.6 baseline. Its manifests,
-protocol digests, receipts, and generated package hashes remain unchanged.
+The historical Beta2 evaluation remains closed and continues to use its immutable 1.4.6
+baseline. ROI.2 qualification and later convergence checkpoints are also historical
+evidence surfaces. Their manifests, protocol digests, receipts, and generated package
+hashes remain unchanged.
 
-After that evaluation closes, a new Beta checkpoint may advance `shared_core_ref`, adopt
-new shared capabilities, and produce new package identities. If comparative evidence is
-required for that composition, it receives new arm manifests and a new authorization
-record. Historical Beta2 evidence is retained rather than rewritten.
+The next ROI.2-based Beta checkpoint may advance `shared_core_ref`, adopt new shared
+capabilities, and produce a new package identity. If comparative evidence is required
+for that composition, it receives new arm manifests and a new authorization record.
+Historical Beta2 and ROI evidence is retained rather than rewritten.
 
 ## Change Routing
 
@@ -306,14 +314,19 @@ its original digest.
 - #120 packages and tests pass in both release compositions without source duplication
 - rollback identifies a concrete prior package and runtime profile for each line
 
-## Deferred Decisions
+## Decisions After ROI.2 Selection
 
-The following choices should be made when the current Beta evaluation closes:
+Resolved:
+
+- `main` is the Shared Product Core integration source;
+- the next 1.x Stable target is `1.5.0`;
+- ROI.2 is the 2.x Beta runtime baseline;
+- no 2.x publication is authorized by this decision.
+
+Still deferred:
 
 - exact permanent branch names
-- the next 1.x and 2.x release numbers
-- whether `main` immediately becomes the shared integration branch or transitions after
-  one release cycle
+- the next 2.x Beta identifier
 - the storage location and schema name of the capability register
 - whether the next 2.x checkpoint requires a complete comparative rerun or a bounded
   regression authorization
