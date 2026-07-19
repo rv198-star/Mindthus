@@ -6,9 +6,9 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
 
 ## Verification And Release Disposition
 
-- 1.x Stable-based branch: 199 TPlan tests and 630 full-repository tests pass.
+- 1.x Stable-based branch: 201 TPlan tests and 632 full-repository tests pass.
 - The same revised implementation applies to the Beta2 source without conflict, and
-  all 199 TPlan tests pass there.
+  all 201 TPlan tests pass there.
 - The current Beta2 release profile deliberately freezes the 1.4.6 `skills/tplan`
   digest. Its package gate rejects the changed live tree as evaluation-identity drift.
 - The frozen reference lock, protocols, receipts, and evaluation evidence are unchanged.
@@ -25,10 +25,11 @@ Issue: https://github.com/rv198-star/Mindthus/issues/121
   failed supplier-term check and its successful retry remained visible on the same
   real Step. The controlled model-call stubs validate host instrumentation mechanics;
   they do not claim a live Codex/provider integration.
-- The same Mission now renders as a portrait `1180 x 5112` SVG with 24 real task cards,
+- The same Mission now renders as a portrait `1180 x 4976` SVG with 24 real task cards,
   24 declared hierarchy edges, chronological relative-time labels, and one shared-scale
-  temporal range strip per observed node. The former hierarchy-only Mermaid TB artifact
-  is no longer the Standard output.
+  temporal range strip per observed node. Task, SubTask, and Step are distinguished by
+  6/4/2px slate/violet/blue hierarchy lines, indentation, type labels, and title weight.
+  The former hierarchy-only Mermaid TB artifact is no longer the Standard output.
 - Its Compact projection now renders as a Unicode text tree rather than SVG. The same
   Mission shows 11/24 real nodes: every root Task, execution-signal nodes, three top
   direct-cost nodes, and the real ancestor paths required to reach them. Every line
@@ -50,7 +51,9 @@ observed relative time, and every observed card carries a range strip on one sha
 linear elapsed-window scale. With exact lifecycle coverage the origin is Mission
 initialization; partial coverage is explicitly relative to the observed trace window.
 Declared parent-child edges are overlaid on those chronological rows, so execution order
-and hierarchy remain simultaneously visible.
+and hierarchy remain simultaneously visible. Parent-level connectors paint above child
+connectors, and their shared junction segment is opaque, so a child color cannot bleed
+through its parent branch.
 
 Task structure and information density are separate concerns. Every rendered Mission,
 Task, SubTask, or Step maps to exactly one real TPlan node. The renderer never merges
@@ -245,7 +248,10 @@ The renderer supports:
   and outcomes are conditional. Sources and Mission-level elapsed reconciliation appear
   once in the footer. No SVG or synthetic summary node is created.
 - `standard`: every materialized Task, SubTask, and Step with a strict node-label
-  budget; this is the default post-completion execution tree.
+  budget; this is the default post-completion execution tree. Comparable executed Task
+  nodes with exact elapsed time receive a neutral elapsed-rank label for the smaller of
+  the top three or top thirty percent (`floor(N * 0.30)`, with at least one when
+  `N >= 2`). The label is not an error or status signal.
 - `audit`: the same complete topology plus status history, direct/inclusive cost,
   spans, measurement sources, and stable refs.
 
@@ -257,10 +263,14 @@ The renderer supports:
   Mission-relative values only when lifecycle coverage is exact.
 - Vertical row spacing is ordinal, not duration-proportional. This prevents long idle
   periods from making the image arbitrarily tall and is stated in the SVG itself.
-- Every observed node has a range strip linearly scaled against the same elapsed window,
-  preserving comparable temporal position and duration without widening the canvas.
-- The declared parent-child tree is a blue overlay on chronological rows. No timeline
-  marker is a task node, and no task node is duplicated to satisfy layout.
+- Every observed node has a neutral range strip linearly scaled against the same elapsed
+  window, preserving comparable temporal position and duration without widening the
+  canvas.
+- The declared parent-child tree is a slate/violet/blue overlay on chronological rows:
+  Task uses a 6px opaque main trunk and branch, SubTask uses a 4px violet branch, and
+  Step uses a 2px blue terminal branch. Child connectors paint first; the parent owns
+  each shared junction through an opaque, visually equivalent cover segment. No
+  timeline marker is a task node, and no task node is duplicated to satisfy layout.
 - The portrait SVG has bounded width; large outputs may be split only at real root Task
   boundaries without changing or regrouping the topology.
 
@@ -313,8 +323,12 @@ whether a result is true, acceptable, or worth acting on.
 - standard and audit preserve every materialized node and declared parent-child edge
 - standard SVG uses chronological vertical rows, exact relative time labels, and one
   shared-scale range strip per observed node
+- standard elapsed hotspots rank only comparable executed Task nodes, use the declared
+  top-three/top-thirty-percent quota, and remain visually neutral
 - the SVG contains exactly one task card per visible real node, with hierarchy edges
   matching the JSON topology
+- hierarchy lines retain 6/4/2px Task/SubTask/Step weights; parent connectors paint
+  above child connectors and shared junctions do not blend colors
 - compact and focus views declare every omission and never replace hidden nodes with a
   synthetic summary node
 - compact Markdown/text creates no SVG sidecar and preserves real ancestor paths for

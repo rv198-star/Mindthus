@@ -566,6 +566,46 @@ def _select_nodes(
     )
 
 
+def _duration_hotspots(nodes: list[dict[str, Any]], *, view: str) -> dict[str, Any]:
+    """Rank comparable executed Task nodes by exact actual elapsed time."""
+
+    eligible = [
+        node
+        for node in nodes
+        if view == "standard"
+        and node["kind"] == "task"
+        and node["visited"]
+        and node["elapsed_ms"] is not None
+    ]
+    eligible.sort(
+        key=lambda node: (
+            -node["elapsed_ms"],
+            node["execution_order"] if node["execution_order"] is not None else 1_000_000,
+            node["plan_index"],
+        )
+    )
+    eligible_count = len(eligible)
+    selected_count = (
+        min(3, max(1, (eligible_count * 3) // 10)) if eligible_count >= 2 else 0
+    )
+    return {
+        "enabled": view == "standard",
+        "metric": "actual_elapsed_ms",
+        "scope": "executed_task_nodes_with_exact_elapsed",
+        "quota_rule": "min(3,max(1,floor(N*0.30))) when N>=2",
+        "eligible_task_count": eligible_count,
+        "selected_count": selected_count,
+        "tasks": [
+            {
+                "task_id": node["id"],
+                "rank": rank,
+                "elapsed_ms": node["elapsed_ms"],
+            }
+            for rank, node in enumerate(eligible[:selected_count], start=1)
+        ],
+    }
+
+
 def _timeline_metadata(
     mission: dict[str, Any],
     nodes: list[dict[str, Any]],
@@ -811,6 +851,7 @@ def build_execution_cost_tree(
         focus_task_id=focus_task_id,
         top_cost=top_cost,
     )
+    duration_hotspots = _duration_hotspots(nodes, view=view)
     visible_set = set(visible_ids)
     visible_nodes = [next(node for node in nodes if node["id"] == task_id) for task_id in visible_ids]
     for node in visible_nodes:
@@ -884,6 +925,8 @@ def build_execution_cost_tree(
         "nodes": visible_nodes,
         "visible_node_ids": visible_ids,
     }
+    if view == "standard":
+        report["duration_hotspots"] = duration_hotspots
     report["tree_edges"] = _visible_edges(visible_nodes, visible_set, focus_task_id)
     if view == "compact":
         report["compact_projection"] = {
@@ -1376,24 +1419,34 @@ def render_svg(report: dict[str, Any]) -> str:
     node_by_id = {node["id"]: node for node in report["nodes"]}
     rows = timeline["rows"]
     view = report["view"]
+    hotspot_by_id = {
+        item["task_id"]: item for item in report.get("duration_hotspots", {}).get("tasks", [])
+    }
     width = 1180
     header_x = 32
     header_y = 24
     header_width = width - 64
-    header_height = 168
+    header_height = 192
     axis_x = 112
     card_base_x = 270
-    depth_indent = 26
+    depth_indent = 42
     right_margin = 34
-    row_top = 242
+    row_top = 268
     card_height = {"compact": 164, "standard": 178, "audit": 204}[view]
-    row_gap = 22
-    row_stride = card_height + row_gap
+    row_gap_by_kind = {"task": 30, "subtask": 18, "step": 12}
+    row_ys: list[float] = []
+    row_cursor = float(row_top)
+    for index, row in enumerate(rows):
+        if index:
+            row_kind = node_by_id[row["node_id"]]["kind"]
+            row_cursor += row_gap_by_kind.get(row_kind, 16)
+        row_ys.append(row_cursor)
+        row_cursor += card_height
     footer_height = 70
-    content_rows = max(1, len(rows))
-    height = row_top + content_rows * row_stride + footer_height
-    axis_start_y = row_top + card_height / 2
-    axis_end_y = row_top + (content_rows - 1) * row_stride + card_height / 2
+    content_bottom = row_cursor if rows else row_top + card_height
+    height = content_bottom + footer_height
+    axis_start_y = row_ys[0] + card_height / 2 if rows else row_top + card_height / 2
+    axis_end_y = row_ys[-1] + card_height / 2 if rows else axis_start_y
     mission_elapsed = timeline.get("elapsed_ms")
     time_coverage = timeline.get("offset_coverage") or report["trace"]["coverage"]
     time_label = "实际相对时间" if time_coverage == "exact" else "已观测相对时间"
@@ -1415,7 +1468,11 @@ def render_svg(report: dict[str, Any]) -> str:
         f'<title id="tplan-title">{_html(mission["title"])} · {_html(report_title)}</title>',
         (
             '<desc id="tplan-desc">纵向按首次观测时间排列真实任务节点；左侧刻度显示相对追踪起点的'
-            '时间，卡片底部时间条按统一观测窗口等比例显示节点起止范围，蓝色折线保留真实父子关系。</desc>'
+            '时间，卡片底部中性时间条按统一观测窗口等比例显示节点起止范围，弱配色折线保留真实父子关系；'
+            '缩进、6/4/2px 主干与分支结构线、短层级标记、类型牌及标题字重共同区分 Task、SubTask 与 Step；'
+            'Task 主干与分支全线不透明以保持同色；父子线共享接头由父级等效色不透明覆盖，'
+            '避免子级颜色透出混色；'
+            '状态颜色集中在状态标签，异常节点才使用状态底色；中性耗时排名标签不表示失败。</desc>'
         ),
         "<style>",
         "text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}",
@@ -1424,20 +1481,24 @@ def render_svg(report: dict[str, Any]) -> str:
         ".mission-meta{font-size:14px;fill:#dbeafe}",
         ".legend{font-size:13px;fill:#475569}",
         ".time-label{font-size:12px;font-variant-numeric:tabular-nums;fill:#475569}",
-        ".node-title{font-size:15px;font-weight:650;fill:#0f172a}",
+        ".node-title-task{font-size:16px;font-weight:700;fill:#0f172a}",
+        ".node-title-subtask{font-size:15px;font-weight:650;fill:#0f172a}",
+        ".node-title-step{font-size:14px;font-weight:600;fill:#0f172a}",
+        ".kind-label{font-size:11px;font-weight:750;letter-spacing:.35px}",
         ".node-meta{font-size:12.5px;fill:#475569}",
         ".node-metric{font-size:13px;fill:#1e293b}",
         ".node-result{font-size:12.5px;fill:#334155}",
         ".status-label{font-size:12px;font-weight:650}",
-        ".tree-edge{fill:none;stroke:#3b82f6;stroke-width:1.6;opacity:.72}",
+        ".duration-hotspot-label{font-size:12px;font-weight:650;fill:#475569}",
+        ".tree-edge{fill:none;stroke-linecap:round;stroke-linejoin:round}",
         ".time-guide{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:3 5}",
         ".axis{stroke:#64748b;stroke-width:2}",
-        ".range-track{fill:#e2e8f0}",
+        ".range-track{fill:#e8edf3}",
         "</style>",
         f'<rect width="{width}" height="{height}" fill="#f8fafc"/>',
         (
             f'<rect x="{header_x}" y="{header_y}" width="{header_width}" height="{header_height}" '
-            'rx="18" fill="#172554" stroke="#2563eb" stroke-width="2"/>'
+            'rx="16" fill="#172554" stroke="#3b82f6" stroke-width="1.5"/>'
         ),
         _svg_text(58, 58, report_title, "report-title"),
         _svg_text(58, 88, _shorten(mission["title"], 72), "mission-title"),
@@ -1456,8 +1517,6 @@ def render_svg(report: dict[str, Any]) -> str:
             (
                 f"LLM调用累计 {_fmt_kind_duration(mission_cost, LLM_KINDS, host_label='调用端实测')}"
                 f" · 脚本累计 {_fmt_kind_duration(mission_cost, SCRIPT_KINDS)}"
-                f" · 工具累计 {_fmt_kind_duration(mission_cost, TOOL_KINDS)}"
-                f" · 等待累计 {_fmt_kind_duration(mission_cost, WAIT_KINDS)}"
             ),
             "mission-meta",
         ),
@@ -1465,8 +1524,17 @@ def render_svg(report: dict[str, Any]) -> str:
             58,
             164,
             (
-                f"未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
-                f" · Token {_fmt_tokens_compact(mission_cost)}"
+                f"工具累计 {_fmt_kind_duration(mission_cost, TOOL_KINDS)}"
+                f" · 等待累计 {_fmt_kind_duration(mission_cost, WAIT_KINDS)}"
+                f" · 未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
+            ),
+            "mission-meta",
+        ),
+        _svg_text(
+            58,
+            188,
+            (
+                f"Token {_fmt_tokens_compact(mission_cost)}"
                 f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
                 f" · 覆盖 {report['trace']['coverage']} · {view}"
             ),
@@ -1474,8 +1542,11 @@ def render_svg(report: dict[str, Any]) -> str:
         ),
         _svg_text(
             32,
-            220,
-            f"纵向按首次执行排序；左侧是{time_label}，卡片底部时间条统一按观测窗口等比例。蓝线表示真实父子关系。",
+            246,
+            (
+                f"纵向=首次执行；左侧是{time_label}；蓝灰条=起止/持续；"
+                "层级线=Task 主干 6 / SubTask 分支 4 / Step 末梢 2px；中性标签=Task 耗时排名。"
+            ),
             "legend",
         ),
     ]
@@ -1489,7 +1560,7 @@ def render_svg(report: dict[str, Any]) -> str:
     for index, row in enumerate(rows):
         node = node_by_id[row["node_id"]]
         card_x = card_base_x + row["depth"] * depth_indent
-        card_y = row_top + index * row_stride
+        card_y = row_ys[index]
         card_width = width - right_margin - card_x
         center_y = card_y + card_height / 2
         positions[node["id"]] = {
@@ -1498,6 +1569,7 @@ def render_svg(report: dict[str, Any]) -> str:
             "width": card_width,
             "height": card_height,
             "center_y": center_y,
+            "kind": node["kind"],
         }
         lines.extend(
             [
@@ -1513,12 +1585,51 @@ def render_svg(report: dict[str, Any]) -> str:
             ]
         )
 
-    for edge in report["tree_edges"]:
+    # SVG uses painter's order. Paint thinner child branches first so the thicker
+    # parent edge owns their shared junction instead of being visibly cut by it.
+    edge_paint_order = {"step": 0, "subtask": 1, "task": 2}
+    edge_styles = {
+        "task": {
+            "width": 6.0,
+            "color": "#64748b",
+            "opacity": 1.0,
+            "opaque_equivalent": "#64748b",
+        },
+        "subtask": {
+            "width": 4.0,
+            "color": "#8b5cf6",
+            "opacity": 0.72,
+            "opaque_equivalent": "#aa88f8",
+        },
+        "step": {
+            "width": 2.0,
+            "color": "#60a5fa",
+            "opacity": 0.84,
+            "opaque_equivalent": "#78b3fa",
+        },
+    }
+    painted_edges = sorted(
+        report["tree_edges"],
+        key=lambda edge: edge_paint_order.get(
+            positions.get(edge["to"], {}).get("kind", ""), -1
+        ),
+    )
+    junction_caps: dict[tuple[str, float, float, float], dict[str, Any]] = {}
+    for edge in painted_edges:
         child_position = positions.get(edge["to"])
         if child_position is None:
             continue
         child_x = child_position["x"]
         child_y = child_position["center_y"]
+        edge_style = edge_styles.get(
+            child_position["kind"],
+            {
+                "width": 2.0,
+                "color": "#94a3b8",
+                "opacity": 0.72,
+                "opaque_equivalent": "#a7b0bd",
+            },
+        )
         if edge["from"] == "mission":
             branch_x = card_base_x - 28
             path = f"M {branch_x} {header_y + header_height} V {child_y} H {child_x}"
@@ -1530,28 +1641,103 @@ def render_svg(report: dict[str, Any]) -> str:
             parent_y = parent_position["center_y"]
             branch_x = min(parent_x, child_x) - 18
             path = f"M {parent_x} {parent_y} H {branch_x} V {child_y} H {child_x}"
+            parent_kind = parent_position["kind"]
+            parent_style = edge_styles.get(parent_kind)
+            if parent_style is not None:
+                junction_caps[(edge["from"], parent_x, parent_y, branch_x)] = {
+                    "parent_id": edge["from"],
+                    "kind": parent_kind,
+                    "x1": branch_x,
+                    "x2": parent_x,
+                    "y": parent_y,
+                    "style": parent_style,
+                }
         lines.append(
             (
-                f'<path d="{path}" class="tree-edge" data-tree-from="{_html(edge["from"])}" '
-                f'data-tree-to="{_html(edge["to"])}"/>'
+                f'<path d="{path}" class="tree-edge" stroke="{edge_style["color"]}" '
+                f'stroke-width="{edge_style["width"]}" opacity="{edge_style["opacity"]}" '
+                f'data-tree-from="{_html(edge["from"])}" data-tree-to="{_html(edge["to"])}" '
+                f'data-child-kind="{_html(child_position["kind"])}"/>'
+            )
+        )
+
+    for cap in sorted(
+        junction_caps.values(),
+        key=lambda item: edge_paint_order.get(item["kind"], -1),
+    ):
+        cap_style = cap["style"]
+        lines.append(
+            (
+                f'<line x1="{cap["x1"]}" y1="{cap["y"]}" x2="{cap["x2"]}" y2="{cap["y"]}" '
+                f'class="tree-edge junction-cap" stroke="{cap_style["opaque_equivalent"]}" '
+                f'stroke-width="{cap_style["width"]}" opacity="1" '
+                f'data-junction-parent="{_html(cap["parent_id"])}" '
+                f'data-parent-kind="{_html(cap["kind"])}"/>'
             )
         )
 
     for row in rows:
         node = node_by_id[row["node_id"]]
+        hotspot = hotspot_by_id.get(node["id"])
         position = positions[node["id"]]
         card_x = position["x"]
         card_y = position["y"]
         card_width = position["width"]
-        fill, stroke, text_color = _svg_status_palette(node["status"])
+        status_fill, status_stroke, text_color = _svg_status_palette(node["status"])
+        if node["status"] == "completed":
+            card_fill = "#ffffff"
+            card_stroke = "#d8e0ea"
+            card_stroke_width = 1.2
+        else:
+            card_fill = status_fill
+            card_stroke = status_stroke
+            card_stroke_width = 1.5
         cost, reconciliation, scope_label = _node_cost_view(node)
         kind_label = {"task": "Task", "subtask": "SubTask", "step": "Step"}.get(
             node["kind"], str(node["kind"] or "Node")
         )
+        kind_style = {
+            "task": {
+                "label": "TASK",
+                "fill": "#475569",
+                "stroke": "#475569",
+                "text": "#ffffff",
+            },
+            "subtask": {
+                "label": "SUBTASK",
+                "fill": "#f3e8ff",
+                "stroke": "#8b5cf6",
+                "text": "#6d28d9",
+            },
+            "step": {
+                "label": "STEP",
+                "fill": "#eff6ff",
+                "stroke": "#3b82f6",
+                "text": "#1d4ed8",
+            },
+        }.get(
+            node["kind"],
+            {
+                "label": kind_label.upper(),
+                "fill": "#f8fafc",
+                "stroke": "#94a3b8",
+                "text": "#475569",
+            },
+        )
+        hierarchy_accent = {
+            "task": {"color": "#64748b", "width": 6},
+            "subtask": {"color": "#8b5cf6", "width": 4},
+            "step": {"color": "#60a5fa", "width": 2},
+        }.get(node["kind"], {"color": "#94a3b8", "width": 2})
+        title_class = {
+            "task": "node-title-task",
+            "subtask": "node-title-subtask",
+            "step": "node-title-step",
+        }.get(node["kind"], "node-title-subtask")
         status = STATUS_LABELS.get(node["status"], node["status"])
         icon = STATUS_ICONS.get(node["status"], "•")
-        title_limit = 58 if view != "audit" else 76
-        title = f"[{kind_label}] {_shorten(node['title'], title_limit)} · {node['id']}"
+        title_limit = 32 if view != "audit" else 46
+        title = f"{_shorten(node['title'], title_limit)} · {node['id']}"
         elapsed = _fmt_covered_duration(
             node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
         )
@@ -1559,22 +1745,37 @@ def render_svg(report: dict[str, Any]) -> str:
             f"{_fmt_timeline_offset(row['start_offset_ms'], time_coverage)} → "
             f"{_fmt_timeline_offset(row['finish_offset_ms'], time_coverage)}"
         )
+        hotspot_rank_attr = f' data-duration-hotspot-rank="{hotspot["rank"]}"' if hotspot else ""
         lines.extend(
             [
                 (
                     f'<g id="node-{_html(node["id"])}" class="task-card" '
                     f'data-task-id="{_html(node["id"])}" data-depth="{row["depth"]}" '
                     f'data-start-offset-ms="{row["start_offset_ms"] if row["start_offset_ms"] is not None else ""}" '
-                    f'data-finish-offset-ms="{row["finish_offset_ms"] if row["finish_offset_ms"] is not None else ""}">'
+                    f'data-finish-offset-ms="{row["finish_offset_ms"] if row["finish_offset_ms"] is not None else ""}"'
+                    f'{hotspot_rank_attr}>'
                 ),
                 (
                     f'<rect x="{card_x}" y="{card_y}" width="{card_width}" height="{card_height}" '
-                    f'rx="14" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>'
+                    f'rx="10" fill="{card_fill}" stroke="{card_stroke}" stroke-width="{card_stroke_width}"/>'
                 ),
-                _svg_text(card_x + 18, card_y + 28, title, "node-title"),
+                (
+                    f'<rect x="{card_x + 3}" y="{card_y + 13}" width="{hierarchy_accent["width"]}" '
+                    f'height="28" rx="{hierarchy_accent["width"] / 2}" fill="{hierarchy_accent["color"]}" '
+                    f'class="hierarchy-accent" data-node-kind="{_html(node["kind"])}"/>'
+                ),
+                (
+                    f'<rect x="{card_x + 18}" y="{card_y + 13}" width="72" height="24" rx="6" '
+                    f'fill="{kind_style["fill"]}" stroke="{kind_style["stroke"]}" stroke-width="1.25"/>'
+                ),
+                (
+                    f'<text x="{card_x + 54}" y="{card_y + 30}" class="kind-label" text-anchor="middle" '
+                    f'fill="{kind_style["text"]}">{_html(kind_style["label"])}</text>'
+                ),
+                _svg_text(card_x + 104, card_y + 29, title, title_class),
                 (
                     f'<rect x="{card_x + card_width - 94}" y="{card_y + 13}" width="76" height="24" '
-                    f'rx="12" fill="{stroke}" opacity=".13"/>'
+                    f'rx="12" fill="{status_stroke}" opacity=".13"/>'
                 ),
                 (
                     f'<text x="{card_x + card_width - 56}" y="{card_y + 30}" class="status-label" '
@@ -1582,6 +1783,21 @@ def render_svg(report: dict[str, Any]) -> str:
                 ),
             ]
         )
+        if hotspot:
+            hotspot_badge_x = card_x + card_width - 224
+            lines.extend(
+                [
+                    (
+                        f'<rect x="{hotspot_badge_x}" y="{card_y + 13}" width="118" height="24" '
+                        'rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.25"/>'
+                    ),
+                    (
+                        f'<text x="{hotspot_badge_x + 59}" y="{card_y + 30}" '
+                        'class="duration-hotspot-label" text-anchor="middle">'
+                        f'耗时排名 #{hotspot["rank"]}</text>'
+                    ),
+                ]
+            )
         if view == "compact":
             lines.extend(
                 [
@@ -1620,6 +1836,15 @@ def render_svg(report: dict[str, Any]) -> str:
             )
             range_y = card_y + 150
         else:
+            time_metric = _svg_text(
+                card_x + 18,
+                card_y + 79,
+                (
+                    f"时间 {range_text} · 实际历时 {elapsed}"
+                    f" · 未被精确记录 {_fmt_not_exactly_recorded(reconciliation)}"
+                ),
+                "node-metric",
+            )
             lines.extend(
                 [
                     _svg_text(
@@ -1628,15 +1853,7 @@ def render_svg(report: dict[str, Any]) -> str:
                         _svg_node_status_details(node, scope_label),
                         "node-meta",
                     ),
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 79,
-                        (
-                            f"时间 {range_text} · 实际历时 {elapsed}"
-                            f" · 未被精确记录 {_fmt_not_exactly_recorded(reconciliation)}"
-                        ),
-                        "node-metric",
-                    ),
+                    time_metric,
                     _svg_text(
                         card_x + 18,
                         card_y + 104,
@@ -1693,15 +1910,20 @@ def render_svg(report: dict[str, Any]) -> str:
             range_x = min(track_x + track_width - 4.0, track_x + start_fraction * track_width)
             range_width = max(4.0, (finish_fraction - start_fraction) * track_width)
             range_width = min(range_width, track_x + track_width - range_x)
+            range_y_rendered = range_y
+            range_height = 6
+            range_fill = "#64748b"
+            range_class = "node-range"
             lines.append(
                 (
-                    f'<rect x="{range_x:.2f}" y="{range_y}" width="{range_width:.2f}" height="6" '
-                    f'rx="3" fill="{stroke}" class="node-range" data-task-id="{_html(node["id"])}"/>'
+                    f'<rect x="{range_x:.2f}" y="{range_y_rendered}" width="{range_width:.2f}" '
+                    f'height="{range_height}" rx="4" fill="{range_fill}" class="{range_class}" '
+                    f'data-task-id="{_html(node["id"])}"/>'
                 )
             )
         lines.append("</g>")
 
-    footer_y = row_top + content_rows * row_stride + 18
+    footer_y = content_bottom + 40
     lines.extend(
         [
             f'<line x1="32" y1="{footer_y - 24}" x2="{width - 32}" y2="{footer_y - 24}" stroke="#e2e8f0"/>',
