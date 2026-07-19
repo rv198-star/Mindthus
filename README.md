@@ -99,7 +99,7 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.4.6`；仓库中的 `v1.5.1` 仍是尚未发布的修复候选。
+当前已发布 Stable 是 `v1.4.6`；`v1.5.1` 仅有冻结源码 tag，仍是未发布的修复候选。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.4.6.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.4.6.tar.gz`。

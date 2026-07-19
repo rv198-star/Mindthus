@@ -54,7 +54,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
         self.assertIn("## v1.5.1", changelog)
-        self.assertIn("[发布说明草案](docs/releases/v1.5.1.md)", changelog)
+        self.assertIn("[冻结候选说明](docs/releases/v1.5.1.md)", changelog)
         self.assertIn("显式调用", changelog)
         self.assertIn("best-effort", changelog)
         self.assertIn("execution_trace.jsonl", changelog)
@@ -67,7 +67,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.5.1 发布说明草案",
+            "# Mindthus v1.5.1 冻结候选说明",
             "准备日期：2026-07-19",
             "## 版本定位",
             "## #125：TPlan 状态与成本一致性",
@@ -81,7 +81,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover",
             "## 发布边界",
-            "不创建 `v1.5.1` tag",
+            "`v1.5.1` tag 只冻结已验收源码",
+            "GitHub Release 和安装资产仍未发布",
         ):
             self.assertIn(phrase, release_log)
 
