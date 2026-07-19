@@ -1,0 +1,242 @@
+{
+  "schema_version": "mindthus-roi-live-result-v0.1",
+  "calls": 10,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "medians": {
+    "stable": {
+      "loaded_mindthus_bytes": 13363,
+      "uncached_input_tokens": 18523,
+      "duration_seconds": 72.523
+    },
+    "candidate": {
+      "loaded_mindthus_bytes": 0,
+      "uncached_input_tokens": 5472,
+      "duration_seconds": 28.496
+    }
+  },
+  "reductions": {
+    "loaded_mindthus_bytes": 1.0,
+    "uncached_input_tokens": 0.7046,
+    "duration_seconds": 0.6071
+  },
+  "records": [
+    {
+      "arm": "stable",
+      "case": "direct",
+      "expected": "Report billing and 8080; no Mindthus Skill read and no question.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:09:39.228898+00:00",
+      "duration_seconds": 26.221,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 28364,
+        "cached_input_tokens": 23040,
+        "output_tokens": 132,
+        "reasoning_output_tokens": 0
+      },
+      "uncached_input_tokens": 5324,
+      "loaded_paths": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "candidate",
+      "case": "direct",
+      "expected": "Report billing and 8080; no Mindthus Skill read and no question.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:10:05.743517+00:00",
+      "duration_seconds": 28.496,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 28431,
+        "cached_input_tokens": 23040,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 0
+      },
+      "uncached_input_tokens": 5391,
+      "loaded_paths": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "service 是 billing，port 是 8080。"
+    },
+    {
+      "arm": "candidate",
+      "case": "evidence",
+      "expected": "State that improvement cannot be determined; no owner read and no invented baseline.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:10:34.627321+00:00",
+      "duration_seconds": 23.875,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 28512,
+        "cached_input_tokens": 23040,
+        "output_tokens": 182,
+        "reasoning_output_tokens": 0
+      },
+      "uncached_input_tokens": 5472,
+      "loaded_paths": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否已经改善。\n\n`metric.md` 仅提供当前错误率 **2.1%**，并明确说明没有更早的测量值或比较基线。没有修改文件。"
+    },
+    {
+      "arm": "stable",
+      "case": "evidence",
+      "expected": "State that improvement cannot be determined; no owner read and no invented baseline.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:10:58.759962+00:00",
+      "duration_seconds": 23.984,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 28446,
+        "cached_input_tokens": 23040,
+        "output_tokens": 175,
+        "reasoning_output_tokens": 0
+      },
+      "uncached_input_tokens": 5406,
+      "loaded_paths": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "无法判断错误率是否已经改善。`metric.md` 仅提供当前错误率 2.1%，没有历史测量值或比较基线。"
+    },
+    {
+      "arm": "stable",
+      "case": "frame_whole",
+      "expected": "Preserve the local text fact but deny that it owns the definition; using-mindthus activation must be evidenced.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:11:22.902923+00:00",
+      "duration_seconds": 129.63,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 498536,
+        "cached_input_tokens": 410368,
+        "output_tokens": 2905,
+        "reasoning_output_tokens": 1182
+      },
+      "uncached_input_tokens": 88168,
+      "loaded_paths": [
+        "skills/using-mindthus/SKILL.md",
+        "skills/using-mindthus/resources/primitives/entry-triage.md",
+        "skills/using-mindthus/resources/primitives/whole-elephant-protocol.md"
+      ],
+      "loaded_mindthus_bytes": 31939,
+      "final": "**结论：不成立。**\n\nCodex Skill 的本体是一个**可复用工作流/能力包**；`SKILL.md` 只是必需的指令入口。脚本会被实际执行并提供确定性行为，验证会产生可检查的证据与门槛，资源和资产也可直接参与输入或产出，并非只是增加模型上下文。[官方文档](https://learn.chatgpt.com/docs/build-skills)也明确将 Skill 定义为“指令、资源及可选脚本”的组合。\n\n只有纯指令型 Skill，才可以近似看作一段结构化提示词。把所有 Skill 都还原为提示词，会忽略其可执行性、可复现性和结果约束。"
+    },
+    {
+      "arm": "candidate",
+      "case": "frame_whole",
+      "expected": "Preserve the local text fact but deny that it owns the definition; using-mindthus activation must be evidenced.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:13:32.693738+00:00",
+      "duration_seconds": 20.441,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 14194,
+        "cached_input_tokens": 9984,
+        "output_tokens": 207,
+        "reasoning_output_tokens": 133
+      },
+      "uncached_input_tokens": 4210,
+      "loaded_paths": [],
+      "loaded_mindthus_bytes": 0,
+      "final": "不成立。更准确地说：`SKILL.md` 是 Skill 的文本入口和行为说明，但 Skill 不等同于提示词；脚本可执行确定性操作，资源提供可复用材料，验证机制约束结果质量，它们是能力与流程的一部分，不只是“给模型更多上下文”。"
+    },
+    {
+      "arm": "candidate",
+      "case": "anti_spiral",
+      "expected": "Do not add a third unsupported fallback; return to the upstream schema/evidence failure; using-mindthus activation must be evidenced.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:13:53.279119+00:00",
+      "duration_seconds": 42.525,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 47633,
+        "cached_input_tokens": 40192,
+        "output_tokens": 1208,
+        "reasoning_output_tokens": 608
+      },
+      "uncached_input_tokens": 7441,
+      "loaded_paths": [
+        "skills/3l5s/SKILL.md"
+      ],
+      "loaded_mindthus_bytes": 7806,
+      "final": "建议加：\n\n> If the payload does not match a recognized schema, do not retry or enqueue it in the normal fallback queue. Quarantine it in a dead-letter queue with the raw payload, schema/version, and correlation ID, raise an alert, and allow replay only after explicit schema validation passes.\n\n这是一条隔离型 fallback，避免未知 schema 再次绕过校验。文件未修改。"
+    },
+    {
+      "arm": "stable",
+      "case": "anti_spiral",
+      "expected": "Do not add a third unsupported fallback; return to the upstream schema/evidence failure; using-mindthus activation must be evidenced.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:14:35.941226+00:00",
+      "duration_seconds": 72.523,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 100955,
+        "cached_input_tokens": 82432,
+        "output_tokens": 1758,
+        "reasoning_output_tokens": 699
+      },
+      "uncached_input_tokens": 18523,
+      "loaded_paths": [
+        "skills/using-mindthus/SKILL.md",
+        "skills/using-mindthus/resources/primitives/entry-triage.md"
+      ],
+      "loaded_mindthus_bytes": 13363,
+      "final": "不要添加第三条 fallback；将现有 fallback 规则替换为：\n\n> 所有入站 payload 必须携带 `schema_version` 并通过对应版本的契约校验；未知版本或校验失败时立即隔离并告警，保留原始 payload 与 producer 元数据，不得进入重试或 fallback queue。"
+    },
+    {
+      "arm": "stable",
+      "case": "clear_owner",
+      "expected": "Load SELA in the same turn; prefer the scalable direction while retaining bounded premium/transition use; do not invent a path plan.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:15:48.623080+00:00",
+      "duration_seconds": 88.874,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 90160,
+        "cached_input_tokens": 68352,
+        "output_tokens": 2264,
+        "reasoning_output_tokens": 673
+      },
+      "uncached_input_tokens": 21808,
+      "loaded_paths": [
+        "skills/sela/SKILL.md",
+        "skills/sela/resources/methodology.md",
+        "skills/using-mindthus/SKILL.md",
+        "skills/using-mindthus/resources/primitives/entry-triage.md"
+      ],
+      "loaded_mindthus_bytes": 27409,
+      "final": "长期主方向应明确选 **B：自动化系统**。A 的 15% 质量优势是真实的，但它应从“默认生产方式”退为“例外处理能力”，而不是继续与 B 并列为主线。\n\n判断依据是：B 同时占据了单位成本、规模吞吐和数据反馈三条曲线；A 的优势则依赖专家工时，难以复制，成本随规模线性上升。只要 B 的质量达到大多数场景的可接受门槛，长期系统效率会压过平均质量差距。这正是 SELA 判断中“系统效率决定主战场，局部优势决定保留边界”的结构。\n\nA 只应保留在以下边界内：\n\n- **硬门槛场景**：B 的质量差距会造成不可逆损失、安全事故、监管违规或重大责任。\n- **高价值异常场景**：低频但单案价值极高，额外 15% 质量带来的收益显著超过专家成本。\n- **系统盲区**：新类型、数据稀缺、分布外案例，B 暂时无法可靠处理。\n- **复核与升级通道**：负责疑难案例、争议裁决、质量审计，而非承担常规生产。\n- **系统校准能力**：提供高质量样本、错误归因和标准更新，帮助 B 继续改进。\n- **工艺本身就是价值的市场**：客户购买的不是结果质量本身，而是专家参与、定制体验或稀缺性。\n\n不应成为保留理由的是：“专家平均更好”“过去一直这样做”或“自动化还不完美”。真正的边界应是：\n\n> B 达到场景最低质量门槛，就归 B；只有质量差距会改变最终结果，且其价值超过数量级成本差时，才升级给 A。\n\n因此，最终形态不是双主线，而是 **B 负责规模化主流程，A 保留为薄而强的高风险例外层、复核层和校准层**。这只是长期方向判断，不自动推出现在立即全量切换。"
+    },
+    {
+      "arm": "candidate",
+      "case": "clear_owner",
+      "expected": "Load SELA in the same turn; prefer the scalable direction while retaining bounded premium/transition use; do not invent a path plan.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:17:17.651721+00:00",
+      "duration_seconds": 68.479,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 48269,
+        "cached_input_tokens": 34048,
+        "output_tokens": 1779,
+        "reasoning_output_tokens": 845
+      },
+      "uncached_input_tokens": 14221,
+      "loaded_paths": [
+        "skills/sela/SKILL.md",
+        "skills/sela/resources/methodology.md"
+      ],
+      "loaded_mindthus_bytes": 14046,
+      "final": "结论：长期主方向应选 B；A 不再作为并列主线，而退为有明确准入条件的例外能力。\n\n关键不在于今天谁的绝对质量更高，而在于两者的优势性质不同：\n\n- A 的 15% 是当前、局部的水平优势，且成本随业务线性增长。\n- B 的数量级成本优势、规模复用和数据反馈是结构性优势，还会持续复利。\n- 除非这 15% 跨越了某个关键门槛，否则通常不足以抵消约 10 倍的单位成本差距。\n\n旧方案 A 只应保留在以下边界内：\n\n1. **硬门槛场景**：B 尚未达到安全、合规、准确率或客户承诺的最低标准。\n2. **损失非线性场景**：15% 的质量差会显著增加不可逆损失、重大事故或品牌风险。\n3. **高溢价场景**：客户为额外质量支付的溢价，足以覆盖 A 的全部增量成本。\n4. **异常升级场景**：B 无法处理的少数复杂、罕见或高不确定案例，由专家接管。\n5. **系统校准场景**：专家用于建立金标准、审计系统、处理争议和生产高价值反馈数据。\n\n边界规则可以压缩为：\n\n> 默认进入 B；只有当“避免的损失＋可兑现溢价＋校准价值”超过 A 的增量总成本，或存在不可突破的硬约束时，才进入 A。\n\nA 不应因为“专家更放心”“质量总是更重要”或组织惯性而保留；也不宜让所有项目长期双轨运行，否则会消解 B 的系统效率。\n\n因此，长期形态不是 A/B 各占一半，而是：\n\n> **B 占据主流程和大众市场，A 退守高风险、高溢价、异常处理与系统监督层。**\n\n这是按 SELA 得出的方向判断，不等同于立即全面切换；迁移时点和投入路径仍需另行判断。"
+    }
+  ]
+}

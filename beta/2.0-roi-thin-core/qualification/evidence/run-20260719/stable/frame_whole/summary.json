@@ -1,0 +1,24 @@
+{
+  "arm": "stable",
+  "case": "frame_whole",
+  "expected": "Preserve the local text fact but deny that it owns the definition; using-mindthus activation must be evidenced.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:11:22.902923+00:00",
+  "duration_seconds": 129.63,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 498536,
+    "cached_input_tokens": 410368,
+    "output_tokens": 2905,
+    "reasoning_output_tokens": 1182
+  },
+  "uncached_input_tokens": 88168,
+  "loaded_paths": [
+    "skills/using-mindthus/SKILL.md",
+    "skills/using-mindthus/resources/primitives/entry-triage.md",
+    "skills/using-mindthus/resources/primitives/whole-elephant-protocol.md"
+  ],
+  "loaded_mindthus_bytes": 31939,
+  "final": "**结论：不成立。**\n\nCodex Skill 的本体是一个**可复用工作流/能力包**；`SKILL.md` 只是必需的指令入口。脚本会被实际执行并提供确定性行为，验证会产生可检查的证据与门槛，资源和资产也可直接参与输入或产出，并非只是增加模型上下文。[官方文档](https://learn.chatgpt.com/docs/build-skills)也明确将 Skill 定义为“指令、资源及可选脚本”的组合。\n\n只有纯指令型 Skill，才可以近似看作一段结构化提示词。把所有 Skill 都还原为提示词，会忽略其可执行性、可复现性和结果约束。"
+}
