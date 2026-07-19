@@ -1,0 +1,40 @@
+{
+  "schema_version": "mindthus-h2.1-candidate-lock-v0.1",
+  "created_at": "2026-07-19",
+  "branch": "codex/2.0-h2-companion-gate",
+  "source_commit": "1cbca9c997546e89cbf9088cdafc3d1cb976e17a",
+  "source_tree_clean_at_build": true,
+  "base_commit": "11e3d43e2e735cfc1a5898315fd4e60fa7c0064f",
+  "fetched_predecessor_tip": "11e3d43e2e735cfc1a5898315fd4e60fa7c0064f",
+  "release_line": "2.0-routing-h2-single-entry",
+  "plugin": {
+    "name": "mindthus-beta",
+    "version": "2.0.0-next.4",
+    "candidate_revision": "h2.1-companion-gate",
+    "file_count": 121,
+    "relative_tree_sha256": "b552d5935ffb5466702b1778d391d49c4f1d5fd5dfb6e4fdb009d091979d2934",
+    "owner_tree_sha256": "acc9ca4a6353aff12c857d8a975ed8fd7e00714fc74a64b7b4c1e59ef5a149c4",
+    "manifest_sha256": "cee68a71b80003d9a490dcd1f5cf676cc5d7d1aca1475be86f20d8e27dec89df",
+    "packaged_profile_sha256": "caaf2ac920f665cba6960292b3f2485cffd78312ee5c0748e2d68e1082503c1e"
+  },
+  "source_sha256": {
+    "scripts/build-release-pack.py": "bb3cef63f082b1c20ece6bc95f6b73d45df849a502de0d0c0082671ed1176e5c",
+    "beta/2.0-routing-convergence/h2-single-entry-topology/release-profile.json": "caaf2ac920f665cba6960292b3f2485cffd78312ee5c0748e2d68e1082503c1e",
+    "beta/2.0-routing-convergence/h2-single-entry-topology/runtime/check-h2-topology.py": "239914fcfe8c2795927d5fa8b176b60767194d7b55eaf2c65006ace819338875",
+    "qualification/h2.1-20260719/fixture-lock.json": "62330241703dbb5bd3fc2b1ca79006a07a9ef6804d40d72c196a08dc788b131a",
+    "qualification/h2.1-20260719/FROZEN-CASES.md": "e4dc09e4369747c572695cd65e7842573b094639179b791457d90cbf4ddfe29b"
+  },
+  "diagnostic": {
+    "sha256": "4db1714554827ef576011bf6cb62defd8566e2a909b9f77643d4003678e6e391",
+    "integrity": "ok",
+    "checks": 30,
+    "failed": 0,
+    "claim_ceiling": "static package and reported isolation only; entry activation, on-demand owner reads, passive obligations, quality, tokens, and usability remain unproven"
+  },
+  "tests": {
+    "focused_h2": "10/10 passed",
+    "full_repository": "646/646 passed",
+    "skill_validation": "passed"
+  },
+  "live_calls_started": false
+}
