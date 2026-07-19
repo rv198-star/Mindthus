@@ -35,19 +35,20 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("当前已发布 Stable 是 `v1.4.6`", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.5.1`", readme)
         self.assertIn("可选的 `v1.5.1-roi-beta`", readme)
         self.assertIn("不替代 Stable、不自动迁移现有安装", readme)
-        self.assertIn("mindthus-plugins-1.4.6.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.4.6.tar.gz", readme)
-        self.assertNotIn("mindthus-plugins-1.5.1.tar.gz", readme)
-        self.assertNotIn("mindthus-skills-1.5.1.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.5.1.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.5.1.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.5.1-roi-beta.tar.gz", readme)
+        self.assertNotIn("mindthus-plugins-1.4.6.tar.gz", readme)
+        self.assertNotIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-plugins-1.4.6.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.1/mindthus-plugins-1.5.1.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.4.6/mindthus-skills-1.4.6.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.1/mindthus-skills-1.5.1.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
@@ -74,7 +75,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.5.1 冻结候选说明",
+            "# Mindthus v1.5.1 发布说明",
             "准备日期：2026-07-19",
             "## 版本定位",
             "## #125：TPlan 状态与成本一致性",
@@ -88,8 +89,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover",
             "## 发布边界",
-            "`v1.5.1` tag 只冻结已验收源码",
-            "GitHub Release 和安装资产仍未发布",
+            "`v1.5.1` GitHub Release 同时提供",
+            "mindthus-beta-1.5.1-roi-beta.tar.gz",
         ):
             self.assertIn(phrase, release_log)
 

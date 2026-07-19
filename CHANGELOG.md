@@ -52,7 +52,7 @@
 
 ## v1.5.1
 
-冻结 tag：`v1.5.1`（尚未发布）
+发布 tag：`v1.5.1`
 
 [冻结候选说明](docs/releases/v1.5.1.md)
 
@@ -97,7 +97,8 @@
 
 - #125、#127、#126 按顺序修复并分别经过独立只读复审。
 - 使用本地完整测试、双 release-pack 构建及隔离安装/回滚验证替代已停用的付费 GitHub CI。
-- `v1.5.1` 仅冻结可复现的源码候选；不创建 GitHub Release、不上传资产。
+- `v1.5.1` GitHub Release 同时提供 Stable plugins、Stable skills 和 Codex ROI Beta
+  experimental asset，并附 `SHA256SUMS`。
 
 ## v1.5.0
 
