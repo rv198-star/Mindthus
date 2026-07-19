@@ -366,6 +366,7 @@ def write_comparison(evidence_root: Path, cases: list[dict], arms: list[str]) ->
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--evidence", required=True, type=Path)
+    parser.add_argument("--cases-file", type=Path)
     parser.add_argument("--arms", nargs="+", choices=ALL_ARMS, default=list(ALL_ARMS))
     parser.add_argument("--case", action="append", default=[])
     parser.add_argument("--codex", default="codex")
@@ -375,7 +376,8 @@ def main() -> int:
 
     root = repo_root()
     qualification = qualification_root()
-    all_cases = json.loads((qualification / "cases.json").read_text(encoding="utf-8"))
+    cases_path = (args.cases_file or (qualification / "cases.json")).resolve()
+    all_cases = json.loads(cases_path.read_text(encoding="utf-8"))
     cases = [case for case in all_cases if not args.case or case["id"] in set(args.case)]
     if args.case and len(cases) != len(set(args.case)):
         known = {case["id"] for case in all_cases}
@@ -409,6 +411,7 @@ def main() -> int:
             "mission_counted_cap": MISSION_COUNTED_CAP,
             "mission_call_cap": MISSION_CALL_CAP,
             "protocol": "beta/2.0-roi-convergence/PROTOCOL.md",
+            "cases_file": str(cases_path),
         },
     )
 
