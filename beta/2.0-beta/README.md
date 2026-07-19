@@ -5,7 +5,7 @@ Status: source tag `v1.5.1-roi-beta` is frozen; it is the ROI package in the sam
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.1` / `dd55c2f295eb7841c7b8395cd54c2f20e13a1bbb`
+- Shared Product Core: Mindthus `1.5.1` / `1adfc5efe5893e9f3fd77a68fc62c79318a397b7`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
