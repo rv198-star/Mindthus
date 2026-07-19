@@ -32,6 +32,9 @@ except ImportError:  # pragma: no cover - POSIX path
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from runtime_bootstrap import activate_runtime
+
+activate_runtime(__file__)
 
 from _runtime.core.io import load_json
 from _runtime.core.report import Finding
@@ -40,6 +43,7 @@ from _runtime.core.shape import findings_from_messages
 
 SCHEMA_VERSION = "tplan.v0.1"
 EXECUTION_TRACE_SCHEMA_VERSION = "tplan.execution_trace.v0.1"
+MISSION_TRANSACTION_SCHEMA_VERSION = "tplan.mission_transaction.v0.1"
 SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
 SHARED_CONTEXT_MARKER_START = "<!-- tplan-shared-context"
 SHARED_CONTEXT_MARKER_END = "-->"
@@ -537,34 +541,69 @@ def mission_paths(mission_dir: Path) -> dict[str, Path]:
         "narrative": mission_dir / "mission.md",
         "evidence": mission_dir / "evidence.jsonl",
         "trace": mission_dir / "execution_trace.jsonl",
+        "transaction": mission_dir / ".mission-transaction.json",
         "logs": mission_dir / "logs",
         "archive": mission_dir / "archive",
         "reports": mission_dir / "reports",
     }
 
 
+def cleanup_failed_initialization(mission_dir: Path) -> None:
+    """Remove only files/directories owned by an initialization attempt."""
+
+    paths = mission_paths(mission_dir)
+    for name in ("transaction", "trace", "evidence", "narrative", "mission"):
+        path = paths[name]
+        if path.exists() and path.is_file():
+            path.unlink()
+    lock_path = mission_dir / ".execution_trace.lock"
+    if lock_path.exists() and lock_path.is_file():
+        lock_path.unlink()
+    for name in ("logs", "archive", "reports"):
+        path = paths[name]
+        if path.exists() and path.is_dir():
+            try:
+                path.rmdir()
+            except OSError:
+                pass
+    if mission_dir.exists():
+        try:
+            mission_dir.rmdir()
+        except OSError:
+            pass
+
+
 def read_json(path: Path) -> dict[str, Any]:
     return load_json(path, error_factory=TplanError)
 
 
-def write_json(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp_path = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    tmp_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+def _fsync_directory(path: Path) -> None:
     try:
-        os.replace(tmp_path, path)
-    except OSError:
-        if tmp_path.exists():
-            tmp_path.unlink()
-        raise
+        directory_fd = os.open(path, os.O_RDONLY)
+    except OSError:  # pragma: no cover - platform-specific directory handles
+        return
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
-def write_text_atomic(path: Path, text: str) -> None:
+def write_json(path: Path, data: dict[str, Any], *, durable: bool = False) -> None:
+    write_text_atomic(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n", durable=durable)
+
+
+def write_text_atomic(path: Path, text: str, *, durable: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    tmp_path.write_text(text, encoding="utf-8")
     try:
+        with tmp_path.open("w", encoding="utf-8") as handle:
+            handle.write(text)
+            if durable:
+                handle.flush()
+                os.fsync(handle.fileno())
         os.replace(tmp_path, path)
+        if durable:
+            _fsync_directory(path.parent)
     except OSError:
         if tmp_path.exists():
             tmp_path.unlink()
@@ -597,8 +636,16 @@ def execution_trace_lock(mission_dir: Path):
                 msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
 
 
-def read_mission(mission_dir: Path) -> dict[str, Any]:
+def _read_mission_unlocked(mission_dir: Path) -> dict[str, Any]:
     return read_json(mission_paths(mission_dir)["mission"])
+
+
+def read_mission(mission_dir: Path) -> dict[str, Any]:
+    if not mission_dir.exists():
+        return _read_mission_unlocked(mission_dir)
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        return _read_mission_unlocked(mission_dir)
 
 
 LITE_RUNTIME_STATE_HEADING = "## Lite Runtime State"
@@ -695,6 +742,37 @@ def sync_mission_narrative(
 def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str | None = None) -> None:
     write_json(mission_paths(mission_dir)["mission"], data)
     sync_mission_narrative(mission_dir, data, latest_state=latest_state)
+
+
+def _recover_pending_mission_transaction_unlocked(mission_dir: Path) -> bool:
+    """Roll a prepared lifecycle mutation forward after an interrupted process."""
+
+    paths = mission_paths(mission_dir)
+    transaction_path = paths["transaction"]
+    if not transaction_path.exists():
+        return False
+    transaction = read_json(transaction_path)
+    if transaction.get("schema_version") != MISSION_TRANSACTION_SCHEMA_VERSION:
+        raise TplanError("unsupported pending Mission transaction schema")
+    mission = transaction.get("mission")
+    trace_text = transaction.get("trace_text")
+    evidence_text = transaction.get("evidence_text")
+    latest_state = transaction.get("latest_state")
+    if not isinstance(mission, dict) or not isinstance(trace_text, str):
+        raise TplanError("pending Mission transaction is malformed")
+    if evidence_text is not None and not isinstance(evidence_text, str):
+        raise TplanError("pending Mission transaction evidence_text is malformed")
+    if latest_state is not None and not isinstance(latest_state, str):
+        raise TplanError("pending Mission transaction latest_state is malformed")
+
+    write_text_atomic(paths["trace"], trace_text, durable=True)
+    if evidence_text is not None:
+        write_text_atomic(paths["evidence"], evidence_text, durable=True)
+    write_json(paths["mission"], mission, durable=True)
+    sync_mission_narrative(mission_dir, mission, latest_state=latest_state)
+    transaction_path.unlink()
+    _fsync_directory(transaction_path.parent)
+    return True
 
 
 def task_map(mission: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -1603,7 +1681,7 @@ def write_indexed_shared_context(mission: dict[str, Any]) -> Path | None:
     return write_project_shared_context(Path(project_root), mission)
 
 
-def read_events(mission_dir: Path) -> list[dict[str, Any]]:
+def _read_events_unlocked(mission_dir: Path) -> list[dict[str, Any]]:
     path = mission_paths(mission_dir)["evidence"]
     events: list[dict[str, Any]] = []
     if not path.exists():
@@ -1614,19 +1692,34 @@ def read_events(mission_dir: Path) -> list[dict[str, Any]]:
     return events
 
 
-def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
-    path = mission_paths(mission_dir)["evidence"]
+def read_events(mission_dir: Path) -> list[dict[str, Any]]:
+    if not mission_dir.exists():
+        return []
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        return _read_events_unlocked(mission_dir)
+
+
+def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     event = dict(event)
     event.setdefault("id", _next_event_id(mission_dir))
     event.setdefault("timestamp", now_iso())
     event.setdefault("task_id", None)
     event.setdefault("payload", {})
-    with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return event
 
 
-def read_execution_trace(mission_dir: Path) -> list[dict[str, Any]]:
+def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
+    path = mission_paths(mission_dir)["evidence"]
+    event = prepare_event(mission_dir, event)
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    return event
+
+
+def _read_execution_trace_unlocked(mission_dir: Path) -> list[dict[str, Any]]:
     path = mission_paths(mission_dir)["trace"]
     records: list[dict[str, Any]] = []
     if not path.exists():
@@ -1642,6 +1735,14 @@ def read_execution_trace(mission_dir: Path) -> list[dict[str, Any]]:
             raise TplanError(f"execution trace line {line_number} must be an object")
         records.append(record)
     return records
+
+
+def read_execution_trace(mission_dir: Path) -> list[dict[str, Any]]:
+    if not mission_dir.exists():
+        return []
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        return _read_execution_trace_unlocked(mission_dir)
 
 
 def _trace_mission_id(mission: dict[str, Any]) -> str:
@@ -2056,7 +2157,7 @@ def _new_trace_record(
 
 
 def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
-    mission = read_mission(mission_dir)
+    mission = _read_mission_unlocked(mission_dir)
     normalized = dict(record)
     normalized.setdefault("schema_version", EXECUTION_TRACE_SCHEMA_VERSION)
     normalized.setdefault("event_id", f"X{uuid.uuid4().hex[:12]}")
@@ -2070,7 +2171,7 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
     if errors:
         raise TplanError("; ".join(errors))
 
-    existing = read_execution_trace(mission_dir)
+    existing = _read_execution_trace_unlocked(mission_dir)
     event_id = normalized["event_id"]
     if any(item.get("event_id") == event_id for item in existing):
         raise TplanError(f"execution trace event_id already exists: {event_id}")
@@ -2099,6 +2200,7 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
 
 def append_execution_trace_record(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
         return _append_execution_trace_record_unlocked(mission_dir, record)
 
 
@@ -2140,6 +2242,7 @@ def _initialize_execution_trace_unlocked(
 
 def initialize_execution_trace(mission_dir: Path, mission: dict[str, Any], *, timestamp: str | None = None) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
         return _initialize_execution_trace_unlocked(mission_dir, mission, timestamp=timestamp)
 
 
@@ -2241,8 +2344,9 @@ def _commit_mission_state_unlocked(
     refs: dict[str, Any] | None = None,
     task_details: dict[str, dict[str, Any]] | None = None,
     latest_state: str | None = None,
+    prepared_evidence_events: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    current = read_mission(mission_dir)
+    current = _read_mission_unlocked(mission_dir)
     if current != before:
         raise TplanError("Mission state changed concurrently; reload and retry the mutation")
     errors = validate_mission(after)
@@ -2261,26 +2365,32 @@ def _commit_mission_state_unlocked(
             raise TplanError("; ".join(errors))
 
     paths = mission_paths(mission_dir)
-    trace_existed = paths["trace"].exists()
-    previous_trace = paths["trace"].read_text(encoding="utf-8") if trace_existed else ""
-    previous_mission = paths["mission"].read_text(encoding="utf-8")
+    previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""
     next_trace = previous_trace
     if next_trace and not next_trace.endswith("\n"):
         next_trace += "\n"
     next_trace += "".join(json.dumps(record, ensure_ascii=False) + "\n" for record in records)
 
-    try:
-        if records or trace_existed:
-            write_text_atomic(paths["trace"], next_trace)
-        write_mission(mission_dir, after, latest_state=latest_state)
-    except OSError:
-        if trace_existed:
-            write_text_atomic(paths["trace"], previous_trace)
-        elif paths["trace"].exists():
-            paths["trace"].unlink()
-        if paths["mission"].read_text(encoding="utf-8") != previous_mission:
-            write_text_atomic(paths["mission"], previous_mission)
-        raise
+    evidence_text: str | None = None
+    if prepared_evidence_events:
+        evidence_text = paths["evidence"].read_text(encoding="utf-8") if paths["evidence"].exists() else ""
+        if evidence_text and not evidence_text.endswith("\n"):
+            evidence_text += "\n"
+        evidence_text += "".join(
+            json.dumps(event, ensure_ascii=False) + "\n" for event in prepared_evidence_events
+        )
+
+    transaction = {
+        "schema_version": MISSION_TRANSACTION_SCHEMA_VERSION,
+        "transaction_id": f"TX{uuid.uuid4().hex[:12]}",
+        "prepared_at": now_iso(),
+        "mission": after,
+        "trace_text": next_trace,
+        "evidence_text": evidence_text,
+        "latest_state": latest_state,
+    }
+    write_json(paths["transaction"], transaction, durable=True)
+    _recover_pending_mission_transaction_unlocked(mission_dir)
     return records
 
 
@@ -2293,8 +2403,10 @@ def commit_mission_state(
     refs: dict[str, Any] | None = None,
     task_details: dict[str, dict[str, Any]] | None = None,
     latest_state: str | None = None,
+    prepared_evidence_events: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
         return _commit_mission_state_unlocked(
             mission_dir,
             before,
@@ -2303,6 +2415,7 @@ def commit_mission_state(
             refs=refs,
             task_details=task_details,
             latest_state=latest_state,
+            prepared_evidence_events=prepared_evidence_events,
         )
 
 
@@ -2674,7 +2787,7 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
     errors = validate_mission(mission)
     if errors:
         raise TplanError("; ".join(errors))
-    event = append_event(
+    event = prepare_event(
         mission_dir,
         {
             "event_type": "stop_report",
@@ -2691,6 +2804,7 @@ def record_stop_report(mission_dir: Path, task_id: str, summary: str, payload: d
         refs={"evidence_ids": [event["id"]]},
         task_details={task_id: {"outcome_summary": summary}},
         latest_state=f"Task {task_id} is blocked and requires human input.",
+        prepared_evidence_events=[event],
     )
     return event
 
@@ -4050,7 +4164,7 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
     errors = validate_mission(mission)
     if errors:
         raise TplanError("; ".join(errors))
-    event = append_event(
+    event = prepare_event(
         mission_dir,
         {
             "event_type": "decision_applied",
@@ -4072,5 +4186,6 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
         refs={"evidence_ids": [event["id"]], "evidence_links": decision.get("evidence_links", [])},
         task_details=task_details,
         latest_state=f"Decision applied: {decision['recommendation']}.",
+        prepared_evidence_events=[event],
     )
     return "applied_decision"

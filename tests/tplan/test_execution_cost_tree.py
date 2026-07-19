@@ -14,7 +14,7 @@ SCRIPTS = REPO / "skills" / "tplan" / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from observe_model_call import ModelCallObserver
-from execution_cost_tree import _duration_hotspots
+from execution_cost_tree import _counted_tokens, _duration_hotspots, _span_cost, _usage_owner_event_ids
 from tplan_runtime import TplanError, record_execution_span, start_execution_span
 
 
@@ -117,6 +117,122 @@ def render_json(mission_dir, *args):
 
 
 class ExecutionCostTreeTests(unittest.TestCase):
+    def test_counted_tokens_do_not_readd_cached_or_reasoning_subsets(self):
+        self.assertEqual(
+            _counted_tokens(
+                {
+                    "input_tokens": 100,
+                    "cached_input_tokens": 80,
+                    "output_tokens": 20,
+                    "reasoning_output_tokens": 15,
+                }
+            ),
+            120,
+        )
+
+    def test_usage_counts_models_and_independent_turns_but_not_model_envelopes(self):
+        def record(kind, span_id, parent_span_id, input_tokens, output_tokens):
+            return {
+                "event_id": f"event-{span_id}",
+                "span": {
+                    "kind": kind,
+                    "span_id": span_id,
+                    "parent_span_id": parent_span_id,
+                    "duration_ms": 1,
+                    "started_at": "2026-01-01T00:00:00Z",
+                    "finished_at": "2026-01-01T00:00:00.001000Z",
+                    "measurement_source": "platform_reported",
+                    "status": "ok",
+                },
+                "usage_source": "platform_reported",
+                "usage": {
+                    "input_tokens": input_tokens,
+                    "cached_input_tokens": input_tokens // 2,
+                    "output_tokens": output_tokens,
+                    "reasoning_output_tokens": output_tokens // 2,
+                },
+            }
+
+        cost = _span_cost(
+            [
+                record("agent_turn", "envelope", None, 100, 20),
+                record("model", "model", "envelope", 100, 20),
+                record("agent_turn", "independent", None, 40, 10),
+            ]
+        )
+
+        self.assertEqual(cost["usage"]["input_tokens"], 140)
+        self.assertEqual(cost["usage"]["output_tokens"], 30)
+        self.assertEqual(cost["usage_record_count"], 2)
+        self.assertEqual(cost["excluded_usage_envelope_count"], 1)
+
+    def test_global_usage_ownership_survives_cross_attribution_projection(self):
+        def record(kind, span_id, parent_span_id, tokens):
+            return {
+                "event_id": f"event-{span_id}",
+                "span": {
+                    "kind": kind,
+                    "span_id": span_id,
+                    "parent_span_id": parent_span_id,
+                    "duration_ms": 1,
+                    "started_at": "2026-01-01T00:00:00Z",
+                    "finished_at": "2026-01-01T00:00:00.001000Z",
+                    "measurement_source": "platform_reported",
+                    "status": "ok",
+                },
+                "usage": tokens,
+            }
+
+        exact_turn = record("agent_turn", "turn", None, {"input_tokens": 100, "output_tokens": 20})
+        shared_model = record("model", "model", "turn", {"input_tokens": 100, "output_tokens": 20})
+        owners = _usage_owner_event_ids([exact_turn, shared_model])
+
+        self.assertEqual(_span_cost([exact_turn], usage_owner_event_ids=owners)["usage"], {})
+        self.assertEqual(
+            _span_cost([shared_model], usage_owner_event_ids=owners)["usage"]["input_tokens"],
+            100,
+        )
+        self.assertEqual(
+            _span_cost([exact_turn, shared_model], usage_owner_event_ids=owners)["usage"]["input_tokens"],
+            100,
+        )
+
+    def test_nested_agent_turns_count_only_the_leaf_and_partial_usage_stays_partial(self):
+        parent = {
+            "event_id": "event-parent",
+            "span": {
+                "kind": "agent_turn",
+                "span_id": "parent",
+                "parent_span_id": None,
+                "duration_ms": 2,
+                "started_at": "2026-01-01T00:00:00Z",
+                "finished_at": "2026-01-01T00:00:00.002000Z",
+                "measurement_source": "host_measured",
+                "status": "ok",
+            },
+            "usage": {"input_tokens": 50, "output_tokens": 10},
+        }
+        child = {
+            "event_id": "event-child",
+            "span": {
+                "kind": "agent_turn",
+                "span_id": "child",
+                "parent_span_id": "parent",
+                "duration_ms": 1,
+                "started_at": "2026-01-01T00:00:00Z",
+                "finished_at": "2026-01-01T00:00:00.001000Z",
+                "measurement_source": "host_measured",
+                "status": "ok",
+            },
+            "usage": {"input_tokens": 25},
+        }
+
+        cost = _span_cost([parent, child])
+        self.assertEqual(cost["usage"], {"input_tokens": 25})
+        self.assertEqual(cost["usage_coverage"], "partial")
+        self.assertNotIn("output_tokens", cost["usage"])
+        self.assertEqual(cost["excluded_usage_envelope_count"], 1)
+
     def test_standard_duration_hotspots_use_smaller_top_three_or_thirty_percent_quota(self):
         def task(index, elapsed_ms):
             return {
@@ -373,15 +489,16 @@ class ExecutionCostTreeTests(unittest.TestCase):
             )
 
             spans = [
-                ("model", 0, 5, "platform_reported"),
-                ("script", 1, 4, "host_measured"),
-                ("agent_turn", 0, 6, "host_measured"),
+                ("model", "model-1", "turn-1", 0, 5, "platform_reported"),
+                ("script", "script-1", None, 1, 4, "host_measured"),
+                ("agent_turn", "turn-1", None, 0, 6, "host_measured"),
             ]
-            for kind, start_ms, finish_ms, source in spans:
+            for kind, span_id, parent_span_id, start_ms, finish_ms, source in spans:
                 raw = {
                     "task_id": "S1",
                     "span": {
                         "kind": kind,
+                        "span_id": span_id,
                         "label": f"{kind} coverage",
                         "status": "ok",
                         "measurement_source": source,
@@ -390,7 +507,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                         "finished_at": iso(base + timedelta(milliseconds=finish_ms)),
                         "duration_ms": finish_ms - start_ms,
                         "attempt": 1,
-                        "parent_span_id": None,
+                        "parent_span_id": parent_span_id,
                     },
                 }
                 if kind in {"model", "agent_turn"}:

@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.5.0"
+VERSION = "1.5.1"
 RELATIVE_FILES = (
     "skills/using-mindthus/SKILL.md",
     "skills/using-mindthus/resources/calibration-pairs.yaml",

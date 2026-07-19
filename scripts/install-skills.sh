@@ -89,7 +89,7 @@ case "${mode}" in
     done
     echo "installed Mindthus skills into ${HOME}/.claude/skills"
     echo "note: claude mode links skills back to this repo checkout; validators keep using the repo-local _runtime"
-    echo "note: for copied release-pack installs, follow README Claude Code Personal Skills Mode and copy _runtime separately"
+    echo "note: for copied release-pack installs, follow README Claude Code Personal Skills Mode and copy _runtime plus runtime_bootstrap.py"
     ;;
   *)
     echo "unknown mode: ${mode}" >&2

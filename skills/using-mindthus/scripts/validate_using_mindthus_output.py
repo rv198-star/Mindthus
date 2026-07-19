@@ -10,22 +10,9 @@ from pathlib import Path
 
 
 THIS_FILE = Path(__file__).resolve()
+sys.path.insert(0, str(THIS_FILE.parents[2]))
 
-
-def _prepend_import_root(path: Path) -> None:
-    value = str(path)
-    if value not in sys.path:
-        sys.path.insert(0, value)
-
-
-def _find_runtime_import_root() -> Path:
-    for candidate in THIS_FILE.parents:
-        if (candidate / "_runtime").is_dir():
-            return candidate
-        skills_runtime = candidate / "skills" / "_runtime"
-        if skills_runtime.is_dir():
-            return candidate / "skills"
-    raise ImportError("Cannot locate packaged _runtime import root")
+from runtime_bootstrap import activate_runtime
 
 
 def _find_whole_elephant_validator_path() -> Path:
@@ -63,7 +50,7 @@ def _load_whole_elephant_validator() -> object:
     return module
 
 
-_prepend_import_root(_find_runtime_import_root())
+activate_runtime(THIS_FILE)
 _WHOLE_ELEPHANT_VALIDATOR = _load_whole_elephant_validator()
 
 from _runtime.core.io import load_json

@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+## v1.5.1
+
+准备日期：2026-07-19（尚未发布）
+
+[发布说明草案](docs/releases/v1.5.1.md)
+
+说明：这是 1.x Stable 线的可靠性修复候选，不新增方法，也不改变 2.x Beta 路线。
+
+### TPlan 一致性
+
+- Mission 生命周期持久化失败可恢复，trace、evidence 与 Mission 状态不再静默分叉。
+- 成本树按全局 leaf-most owner 归属 usage，避免跨投影和嵌套 agent turn 重复计费。
+- durable sync 收窄到生命周期 journal，保留恢复保证而不为每条高频事件支付完整 fsync 成本。
+
+### 安装与 TVG 图谱可靠性
+
+- 发布包内 Python helper 会把自身对应的共享 runtime 提升到 `sys.path` 首位，不再依赖外部 `PYTHONPATH`，也不受同名外部包遮蔽。
+- Atlas 标签 manifest 绑定源图 digest、尺寸、顺序与区域；选择板拒绝错图、越界、重排和 TOCTOU 不一致。
+- Atlas trace v2 补齐 direct-delivery 状态和证据分类；仓库示例明确为 deterministic structural fixture，不冒充真实模型或审美证据。
+
+### 验证与发布边界
+
+- #125、#127、#126 按顺序修复并分别经过独立只读复审。
+- 使用本地完整测试、双 release-pack 构建及隔离安装/回滚验证替代已停用的付费 GitHub CI。
+- 当前只准备 `1.5.1` 候选：不创建 tag、不创建 GitHub Release、不上传资产。
+
 ## v1.5.0
 
 发布日期：2026-07-19

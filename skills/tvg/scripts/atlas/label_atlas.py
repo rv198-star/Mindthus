@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import io
 import json
 import re
 import sys
@@ -12,6 +14,7 @@ from typing import Any
 
 
 SCRIPT_BOUNDARY = "support_only_agentic_audit_required"
+LABEL_SCHEMA_VERSION = "tvg-atlas-labels-v1"
 LAYOUTS = {"2x2": (2, 2), "3x3": (3, 3)}
 PREFIX_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,23}$")
 
@@ -109,6 +112,21 @@ def _load_lineage(path: Path | None) -> dict[str, list[str]]:
     return lineage
 
 
+def _source_snapshot(source: Path) -> tuple[Any, dict[str, Any]]:
+    Image, _, _, ImageOps = _pillow()
+    try:
+        source_bytes = source.read_bytes()
+        with Image.open(io.BytesIO(source_bytes)) as opened:
+            image = ImageOps.exif_transpose(opened).convert("RGBA")
+    except (OSError, ValueError) as exc:
+        raise AtlasLabelError(f"cannot read atlas: {exc}") from exc
+    return image, {
+        "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        "decoded_width": image.width,
+        "decoded_height": image.height,
+    }
+
+
 def label_atlas(
     source: Path,
     output: Path,
@@ -116,6 +134,7 @@ def label_atlas(
     id_prefix: str,
     font_size: int | None,
     lineage: dict[str, list[str]] | None = None,
+    _snapshot: tuple[Any, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if layout not in LAYOUTS:
         raise AtlasLabelError(f"unsupported layout {layout!r}")
@@ -128,12 +147,7 @@ def label_atlas(
     if not source.is_file():
         raise AtlasLabelError(f"input image not found: {source}")
 
-    Image, _, _, ImageOps = _pillow()
-    try:
-        with Image.open(source) as opened:
-            image = ImageOps.exif_transpose(opened).convert("RGBA")
-    except (OSError, ValueError) as exc:
-        raise AtlasLabelError(f"cannot read atlas: {exc}") from exc
+    image, _ = _snapshot or _source_snapshot(source)
 
     columns, rows = LAYOUTS[layout]
     lineage = lineage or {}
@@ -178,12 +192,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--lineage-json", type=Path)
     parser.add_argument("--font-size", type=int)
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--json-output", type=Path)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        snapshot = _source_snapshot(args.input)
+        identity = snapshot[1]
         regions = label_atlas(
             args.input,
             args.output,
@@ -191,28 +208,32 @@ def main(argv: list[str] | None = None) -> int:
             args.id_prefix,
             args.font_size,
             _load_lineage(args.lineage_json),
+            _snapshot=snapshot,
         )
     except AtlasLabelError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+    payload = {
+        "schema_version": LABEL_SCHEMA_VERSION,
+        "source": identity,
+        "input_path": str(args.input),
+        "output_path": str(args.output),
+        "layout": args.layout,
+        "regions": regions,
+        "script_boundary": SCRIPT_BOUNDARY,
+        "boundary_note": (
+            "Equal theoretical regions, IDs, and supplied lineage were rendered mechanically; "
+            "atlas legibility and candidate value still require agentic audit."
+        ),
+    }
+    rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
+        args.json_output.write_text(rendered, encoding="utf-8")
     if args.json:
-        print(
-            json.dumps(
-                {
-                    "input_path": str(args.input),
-                    "output_path": str(args.output),
-                    "layout": args.layout,
-                    "regions": regions,
-                    "script_boundary": SCRIPT_BOUNDARY,
-                    "boundary_note": (
-                        "Equal theoretical regions, IDs, and supplied lineage were rendered mechanically; "
-                        "atlas legibility and candidate value still require agentic audit."
-                    ),
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(rendered, end="")
+    elif args.json_output:
+        print(args.json_output)
     else:
         print(args.output)
     return 0
