@@ -98,8 +98,8 @@ def prepare_home(
     auth_source: Path,
     codex: str,
 ) -> dict[str, str]:
-    home.mkdir(parents=True)
-    workspace.mkdir(parents=True)
+    home.mkdir(parents=True, exist_ok=True)
+    workspace.mkdir(parents=True, exist_ok=True)
     shutil.copy2(auth_source, home / "auth.json")
     env = dict(os.environ)
     env["CODEX_HOME"] = str(home)
