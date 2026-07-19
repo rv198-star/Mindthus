@@ -78,17 +78,8 @@
   会改变决策时，应使用 Stable。
 - 它只面向高能力 Codex / GPT-Sol 的受限实验场景；不自动迁移用户安装、配置或工作流，
   也不把有限样本的成本改善解释成所有模型或任务的普遍收益。
-
-### 同一 1.5.1 release train 的两种发布包
-
-- `1.5.1 Stable` 与 `1.5.1 ROI Beta（GPT/Sol）` 是同一个 release train 的两种独立发布包，
-  不是“高版本自动取代低版本”的关系。Stable 是默认、完整、可回退的产品基线；ROI Beta
-  仅在高能力 Codex / GPT-Sol 上验证另一套加载 ROI 取舍。
-- ROI Beta 从本 Stable tag 复用 shared core，只改变唤起/加载覆盖层；因此不能把它的 token
-  节省宣传为 Stable 的升级，也不能把 Stable 用户自动迁移到 Beta。
 - 每个 release train 先冻结并验证 Stable，再基于该冻结 commit 装配并验证 ROI Beta；二者
   分别以可复现源码 tag 固定，但未来若获授权，只对应一个 1.5.1 GitHub Release 和两份发布包。
-- 在 ROI Beta 对指定场景证明价值之前，Stable 继续是需要完整能力与保守风险边界时的推荐选择。
 
 ### TPlan 运行可靠性修复
 
