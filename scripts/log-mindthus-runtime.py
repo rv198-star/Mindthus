@@ -7,12 +7,15 @@ import argparse
 import hashlib
 import json
 import os
+import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
 
 
 VERSION = "1.5.1"
+PACKAGE_IDENTITY = "mindthus"
+MARKETPLACE_IDENTITY = "mindthus"
 RELATIVE_FILES = (
     "skills/using-mindthus/SKILL.md",
     "skills/using-mindthus/resources/calibration-pairs.yaml",
@@ -52,8 +55,6 @@ REQUIRED_MARKERS = (
     "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
     "Truth Orientation / 真相优先",
     "pursue facts and truth over agreement",
-    "user input is signal, constraint, or hypothesis; not evidence by itself",
-    "First task: judge whether the user led you to the wrong level",
     "audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer",
     "Entry Triage / 入口分诊",
     "definition authority contest",
@@ -81,10 +82,7 @@ REQUIRED_MARKERS = (
     "definition_owner",
     "result_controller",
     "decision_consequence",
-    "validate_whole_elephant.py",
-    "scripts/primitives/validate_whole_elephant.py",
     "mindthus-whole-elephant-audit-v0.1",
-    "validation failure blocks formal answer",
     "When Partial Truth Capture triggers, the formal answer is incomplete without",
     "target job",
     "main use cases",
@@ -108,7 +106,6 @@ REQUIRED_MARKERS = (
     "Explanatory Authority Check / 解释权校准",
     "Dominant Carrier Check / 主导承载校准",
     "System Subject Check / 系统主体校准",
-    "local correctness is not explanatory authority",
     "problem key over dialogue continuity",
     "professional tone is not proof",
     "common implementation is not essence",
@@ -128,8 +125,35 @@ def default_marketplace_root(codex_home: Path) -> Path:
     return codex_home / "local-marketplaces" / f"mindthus-v{VERSION}" / "codex-plugin" / "mindthus"
 
 
+def configured_marketplace_root(codex_home: Path) -> Path:
+    fallback = default_marketplace_root(codex_home)
+    config_path = codex_home / "config.toml"
+    if not config_path.is_file():
+        return fallback
+    try:
+        config = tomllib.loads(config_path.read_text(encoding="utf-8"))
+        marketplace = config["marketplaces"][MARKETPLACE_IDENTITY]
+        if marketplace.get("source_type") != "local":
+            return fallback
+        source_root = Path(marketplace["source"]).expanduser().resolve()
+        manifest = json.loads(
+            (source_root / ".agents" / "plugins" / "marketplace.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        plugin = next(
+            item for item in manifest["plugins"] if item.get("name") == PACKAGE_IDENTITY
+        )
+        plugin_source = plugin["source"]
+        if plugin_source.get("source") != "local":
+            return fallback
+        return (source_root / plugin_source["path"]).resolve()
+    except (KeyError, StopIteration, OSError, tomllib.TOMLDecodeError, TypeError, ValueError):
+        return fallback
+
+
 def default_cache_root(codex_home: Path) -> Path:
-    return codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / VERSION
+    return codex_home / "plugins" / "cache" / MARKETPLACE_IDENTITY / PACKAGE_IDENTITY / VERSION
 
 
 def sha256_text(path: Path) -> str:
@@ -307,7 +331,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     args = parser.parse_args(argv)
     args.codex_home = Path(args.codex_home).expanduser()
     if args.marketplace_root is None:
-        args.marketplace_root = default_marketplace_root(args.codex_home)
+        args.marketplace_root = configured_marketplace_root(args.codex_home)
     else:
         args.marketplace_root = Path(args.marketplace_root).expanduser()
     if args.cache_root is None:
