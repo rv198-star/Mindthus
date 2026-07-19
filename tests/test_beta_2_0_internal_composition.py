@@ -71,13 +71,13 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "1adfc5efe5893e9f3fd77a68fc62c79318a397b7",
+            "360b3faa3a8d28fbb62fcd342fcdc3e8d5ca4fea",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
-        self.assertEqual(PROFILE["publication"]["status"], "frozen-not-published")
+        self.assertEqual(PROFILE["publication"]["status"], "published")
         self.assertEqual(PROFILE["publication"]["source_tag"], "v1.5.1-roi-beta")
         self.assertEqual(
             PROFILE["publication"]["allowed_release_shape_if_separately_authorized"],
@@ -85,7 +85,11 @@ class InternalBetaCompositionTests(unittest.TestCase):
         )
         self.assertEqual(PROFILE["publication"]["release_train"], "1.5.1")
         self.assertEqual(PROFILE["publication"]["release_asset_channel"], "experimental-roi-beta")
-        self.assertFalse(PROFILE["publication"]["github_release"])
+        self.assertTrue(PROFILE["publication"]["github_release"])
+        self.assertEqual(
+            PROFILE["publication"]["release_url"],
+            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.1",
+        )
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
             PROFILE["runtime_profile"]["convergence_evidence"]["required_at_build"]
@@ -94,10 +98,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
         notes = (REPO / "docs" / "releases" / "v1.5.1-roi-beta.md").read_text(
             encoding="utf-8"
         )
-        self.assertIn("尚未发布", changelog)
-        self.assertIn("尚未发布", notes)
-        self.assertIn("冻结源码 tag", changelog)
-        self.assertIn("源码 tag 已冻结", notes)
+        self.assertIn("experimental asset", changelog)
+        self.assertIn("experimental asset", notes)
+        self.assertIn("发布源码 tag", changelog)
+        self.assertIn("作为 `v1.5.1` GitHub Release", notes)
         self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("与 1.5.1 Stable 的关系", changelog)
         self.assertIn("不是 `1.5.1 Stable` 的替代版", changelog)

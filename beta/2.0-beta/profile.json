@@ -7,8 +7,8 @@
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
     "version": "1.5.1",
-    "ref": "1adfc5efe5893e9f3fd77a68fc62c79318a397b7",
-    "tree_oid": "7541ab0927ad63dbc5c5841def7182184195dc36"
+    "ref": "360b3faa3a8d28fbb62fcd342fcdc3e8d5ca4fea",
+    "tree_oid": "41130bfca7a82301bdea108dcf5ad474da7f80f4"
   },
   "runtime_profile": {
     "name": "roi.2-thin-core",
@@ -39,12 +39,13 @@
     "tag": "v1.5.1"
   },
   "publication": {
-    "status": "frozen-not-published",
+    "status": "published",
     "release_train": "1.5.1",
     "source_tag": "v1.5.1-roi-beta",
     "release_asset_channel": "experimental-roi-beta",
     "allowed_release_shape_if_separately_authorized": "single-github-release-with-stable-and-experimental-roi-packages",
-    "github_release": false,
+    "github_release": true,
+    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.1",
     "marketplace": false,
     "automatic_migration": false
   }

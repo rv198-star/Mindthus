@@ -1,11 +1,11 @@
 # Mindthus 1.5.1 ROI Beta (GPT/Sol) package
 
-Status: source tag `v1.5.1-roi-beta` is frozen; it is the ROI package in the same
-1.5.1 release train as Stable. GitHub Release and marketplace publication remain absent.
+Status: source tag `v1.5.1-roi-beta` is the experimental ROI package in the same
+v1.5.1 GitHub Release as Stable. Marketplace publication remains absent.
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.1` / `1adfc5efe5893e9f3fd77a68fc62c79318a397b7`
+- Shared Product Core: Mindthus `1.5.1` / `360b3faa3a8d28fbb62fcd342fcdc3e8d5ca4fea`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
@@ -33,6 +33,6 @@ directory and a byte-reproducible archive. It does not install into the user's
 `CODEX_HOME` or update a marketplace.
 
 Rollback target: the paired `v1.5.1` Stable plugin package (or the retained `v1.4.6`
-Stable package). If future publication is authorized, both packages belong to one 1.5.1
-GitHub Release; the ROI package remains explicitly experimental. Stable and ROI Beta use
+Stable package). Both packages belong to one 1.5.1 GitHub Release; the ROI package remains
+explicitly experimental. Stable and ROI Beta use
 different package, marketplace, cache, and skill namespaces and can be removed independently.

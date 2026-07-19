@@ -4,9 +4,9 @@
 
 ### 新增发布包：1.5.1 ROI Beta（GPT/Sol）
 
-冻结源码 tag：`v1.5.1-roi-beta`（尚未发布）
+发布源码 tag：`v1.5.1-roi-beta`（作为 `v1.5.1` Release 的 experimental asset）
 
-[ROI Beta 预发布说明](docs/releases/v1.5.1-roi-beta.md)
+[ROI Beta experimental asset 说明](docs/releases/v1.5.1-roi-beta.md)
 
 说明：这是与 `1.5.1 Stable` 同属一个 release train 的第二种发布包，面向 Codex / GPT-Sol
 做 ROI-first 的有损唤起实验；它不替代 Stable，也不自动迁移既有用户。
@@ -46,9 +46,8 @@
 - 以 `v1.5.1` Stable shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
 - 修复 #128：单分支自包含构建、Beta namespace/diagnostics 隔离、dirty-input 拒绝、输入与 manifest provenance、artifact-local 路径和可复现 archive。
 - Stable 与 Beta 使用不同 package、marketplace、cache 和 skill namespace；不自动迁移、不发布 marketplace。
-- 若未来获得发布授权，两个包对应同一个 1.5.1 GitHub Release；ROI 包以独立 experimental
-  asset 标识，而不是创建第二个 Beta Release。当前只有冻结源码 tag，不存在 GitHub Release
-  或公开资产。
+- ROI 包作为同一个 1.5.1 GitHub Release 的独立 experimental asset 发布，而不是创建第二个
+  Beta Release；不发布 marketplace。
 
 ## v1.5.1
 
