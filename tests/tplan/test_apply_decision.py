@@ -202,10 +202,10 @@ class ApplyDecisionTests(unittest.TestCase):
             decision = json.loads(write_decision(tmp).read_text(encoding="utf-8"))
             original_write_json = tplan_runtime.write_json
 
-            def interrupt_after_journal(path, data):
+            def interrupt_after_journal(path, data, **kwargs):
                 if path.name == "mission.json" and (mission_dir / ".mission-transaction.json").exists():
                     raise OSError("simulated abrupt interruption")
-                return original_write_json(path, data)
+                return original_write_json(path, data, **kwargs)
 
             with mock.patch.object(tplan_runtime, "write_json", interrupt_after_journal):
                 with self.assertRaisesRegex(OSError, "simulated abrupt interruption"):

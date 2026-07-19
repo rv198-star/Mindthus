@@ -574,28 +574,33 @@ def read_json(path: Path) -> dict[str, Any]:
     return load_json(path, error_factory=TplanError)
 
 
-def write_json(path: Path, data: dict[str, Any]) -> None:
-    write_text_atomic(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+def _fsync_directory(path: Path) -> None:
+    try:
+        directory_fd = os.open(path, os.O_RDONLY)
+    except OSError:  # pragma: no cover - platform-specific directory handles
+        return
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
-def write_text_atomic(path: Path, text: str) -> None:
+def write_json(path: Path, data: dict[str, Any], *, durable: bool = False) -> None:
+    write_text_atomic(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n", durable=durable)
+
+
+def write_text_atomic(path: Path, text: str, *, durable: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
     try:
         with tmp_path.open("w", encoding="utf-8") as handle:
             handle.write(text)
-            handle.flush()
-            os.fsync(handle.fileno())
+            if durable:
+                handle.flush()
+                os.fsync(handle.fileno())
         os.replace(tmp_path, path)
-        try:
-            directory_fd = os.open(path.parent, os.O_RDONLY)
-        except OSError:  # pragma: no cover - platform-specific directory handles
-            directory_fd = None
-        if directory_fd is not None:
-            try:
-                os.fsync(directory_fd)
-            finally:
-                os.close(directory_fd)
+        if durable:
+            _fsync_directory(path.parent)
     except OSError:
         if tmp_path.exists():
             tmp_path.unlink()
@@ -757,12 +762,13 @@ def _recover_pending_mission_transaction_unlocked(mission_dir: Path) -> bool:
     if latest_state is not None and not isinstance(latest_state, str):
         raise TplanError("pending Mission transaction latest_state is malformed")
 
-    write_text_atomic(paths["trace"], trace_text)
+    write_text_atomic(paths["trace"], trace_text, durable=True)
     if evidence_text is not None:
-        write_text_atomic(paths["evidence"], evidence_text)
-    write_json(paths["mission"], mission)
+        write_text_atomic(paths["evidence"], evidence_text, durable=True)
+    write_json(paths["mission"], mission, durable=True)
     sync_mission_narrative(mission_dir, mission, latest_state=latest_state)
     transaction_path.unlink()
+    _fsync_directory(transaction_path.parent)
     return True
 
 
@@ -2378,7 +2384,7 @@ def _commit_mission_state_unlocked(
         "evidence_text": evidence_text,
         "latest_state": latest_state,
     }
-    write_json(paths["transaction"], transaction)
+    write_json(paths["transaction"], transaction, durable=True)
     _recover_pending_mission_transaction_unlocked(mission_dir)
     return records
 

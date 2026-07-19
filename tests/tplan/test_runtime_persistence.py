@@ -168,10 +168,10 @@ class RuntimePersistenceTests(unittest.TestCase):
 
             original_write_json = tplan_runtime.write_json
 
-            def fail_transaction(path, data):
+            def fail_transaction(path, data, **kwargs):
                 if path.name == ".mission-transaction.json":
                     raise OSError("disk full")
-                return original_write_json(path, data)
+                return original_write_json(path, data, **kwargs)
 
             with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
@@ -238,10 +238,10 @@ class RuntimePersistenceTests(unittest.TestCase):
 
             original_write_json = tplan_runtime.write_json
 
-            def fail_transaction(path, data):
+            def fail_transaction(path, data, **kwargs):
                 if path.name == ".mission-transaction.json":
                     raise OSError("disk full")
-                return original_write_json(path, data)
+                return original_write_json(path, data, **kwargs)
 
             with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
