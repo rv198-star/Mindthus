@@ -1,0 +1,115 @@
+{
+  "schema_version": "mindthus-roi-live-result-v0.1",
+  "calls": 4,
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "medians": {
+    "stable": {
+      "loaded_mindthus_bytes": 13725.5,
+      "uncached_input_tokens": 16822.0,
+      "duration_seconds": 67.54899999999999
+    },
+    "candidate": {
+      "loaded_mindthus_bytes": 7937.0,
+      "uncached_input_tokens": 7801.0,
+      "duration_seconds": 60.7435
+    }
+  },
+  "reductions": {
+    "loaded_mindthus_bytes": 0.4217,
+    "uncached_input_tokens": 0.5363,
+    "duration_seconds": 0.1007
+  },
+  "records": [
+    {
+      "arm": "candidate",
+      "case": "anti_spiral",
+      "expected": "Refuse a third additive fallback first; return upstream; allow only deletion or equal replacement.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:27:42.105667+00:00",
+      "duration_seconds": 49.777,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 47406,
+        "cached_input_tokens": 40192,
+        "output_tokens": 1090,
+        "reasoning_output_tokens": 554
+      },
+      "uncached_input_tokens": 7214,
+      "loaded_paths": [
+        "skills/3l5s/SKILL.md"
+      ],
+      "loaded_mindthus_bytes": 7937,
+      "final": "不要加第三条 fallback；现有证据仍指向同一 schema drift，新增规则没有依据。\n\n若必须改，只做等量替换：\n\n> Payload 未通过已声明 schema 验证或 schema 版本未知时，禁止重试及进入 fallback queue；隔离原始 payload，并记录 producer、schema version 和验证错误，等待根因证据。\n\n文件未修改。"
+    },
+    {
+      "arm": "stable",
+      "case": "anti_spiral",
+      "expected": "Refuse a third additive fallback first; return upstream; allow only deletion or equal replacement.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:28:32.109081+00:00",
+      "duration_seconds": 47.87,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 49720,
+        "cached_input_tokens": 37120,
+        "output_tokens": 1079,
+        "reasoning_output_tokens": 587
+      },
+      "uncached_input_tokens": 12600,
+      "loaded_paths": [
+        "skills/using-mindthus/SKILL.md",
+        "skills/wae/SKILL.md"
+      ],
+      "loaded_mindthus_bytes": 14088,
+      "final": "建议在现有规则后追加：\n\n> 若 payload 的 schema 缺失、未知或无法按已知版本解析，则跳过重试及普通 fallback queue，直接进入隔离队列；保留原始 payload、校验错误和 correlation ID，禁止自动回放，并告警值班人员。仅在兼容性校验通过后允许重新入队。"
+    },
+    {
+      "arm": "stable",
+      "case": "anti_spiral_near_negative",
+      "expected": "Proceed with the evidence-backed schema correction; do not over-apply the third-addition brake.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:29:20.130321+00:00",
+      "duration_seconds": 87.228,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 121652,
+        "cached_input_tokens": 100608,
+        "output_tokens": 2779,
+        "reasoning_output_tokens": 1282
+      },
+      "uncached_input_tokens": 21044,
+      "loaded_paths": [
+        "skills/using-mindthus/SKILL.md",
+        "skills/using-mindthus/resources/primitives/entry-triage.md"
+      ],
+      "loaded_mindthus_bytes": 13363,
+      "final": "下一步应修正协议边界，不再调整超时或重试。\n\n- 撤销第一轮加入的 timeout retry；该故障发生在重试之前，重试无法恢复。\n- 以正式的 v3 schema 决定字段名：\n  - 若规定为 `user_id`，修正 consumer，并在入口映射为内部 `userId`。\n  - 若规定为 `userId`，修正 producer v3 的序列化。\n  - 不要仅因运行时当前发送 `user_id`，就把它自动认定为正确协议。\n- 在处理业务逻辑前执行 schema 校验；协议错误应明确失败，且不得触发重试。\n- 用现有失败 contract test 作为验收门槛，并补充确认：合法 payload 通过、错误字段被拒绝、错误不会进入重试路径。\n\n因此，[plan.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-live-13kqqsz8/stable/anti_spiral_near_negative/workspace/plan.md) 的方向正确，但需要补上“谁拥有正式 schema、最终采用哪个字段名”。根因可依据 [history.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-live-13kqqsz8/stable/anti_spiral_near_negative/workspace/history.md) 更新为：**producer v3 与 consumer 的字段契约不一致**。未修改任何文件。"
+    },
+    {
+      "arm": "candidate",
+      "case": "anti_spiral_near_negative",
+      "expected": "Proceed with the evidence-backed schema correction; do not over-apply the third-addition brake.",
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh",
+      "started_at": "2026-07-19T05:30:47.511800+00:00",
+      "duration_seconds": 71.71,
+      "exit_code": 0,
+      "usage": {
+        "input_tokens": 64708,
+        "cached_input_tokens": 56320,
+        "output_tokens": 1711,
+        "reasoning_output_tokens": 703
+      },
+      "uncached_input_tokens": 8388,
+      "loaded_paths": [
+        "skills/3l5s/SKILL.md"
+      ],
+      "loaded_mindthus_bytes": 7937,
+      "final": "下一步应修正“字段契约”，而不是继续调整超时重试：\n\n1. 删除第一轮新增的 timeout retry；这是确定性格式错误，重试不会成功。\n2. 将 producer v3 的线格式明确为 `user_id`，在 consumer 入口增加显式适配：`user_id → userId`，再进入现有校验和处理逻辑。\n3. 缺失字段、类型错误，以及 `user_id`/`userId` 同时存在但值冲突时，立即返回“不可重试的契约错误”。\n4. 以现有失败契约测试为首要验收：v3 payload 能成功处理且重试次数为 0；另补一个畸形 payload 被拒绝且不重试的测试。\n5. 上线时观察契约校验失败数和 timeout retry 数，前者不应新增，后者应归零。\n\n这比当前 [plan.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-live-13kqqsz8/candidate/anti_spiral_near_negative/workspace/plan.md) 更明确：共享 schema 负责防止再次漂移，入口适配负责兼容已在运行的 producer v3。根据 [history.md](/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-roi-live-13kqqsz8/candidate/anti_spiral_near_negative/workspace/history.md)，不应再增加第三个重试或兜底分支。未修改任何文件。"
+    }
+  ]
+}

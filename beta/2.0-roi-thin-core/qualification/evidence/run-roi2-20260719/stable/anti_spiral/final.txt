@@ -1,0 +1,3 @@
+建议在现有规则后追加：
+
+> 若 payload 的 schema 缺失、未知或无法按已知版本解析，则跳过重试及普通 fallback queue，直接进入隔离队列；保留原始 payload、校验错误和 correlation ID，禁止自动回放，并告警值班人员。仅在兼容性校验通过后允许重新入队。
