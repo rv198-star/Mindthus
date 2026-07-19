@@ -56,6 +56,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.5.1", changelog)
         self.assertIn("[冻结候选说明](docs/releases/v1.5.1.md)", changelog)
         self.assertIn("同一 1.5.1 release train 的两种发布包", changelog)
+        self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("1.5.1 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("Stable 是默认、完整、可回退的产品基线", changelog)
         self.assertIn("一个 1.5.1 GitHub Release 和两份发布包", changelog)
