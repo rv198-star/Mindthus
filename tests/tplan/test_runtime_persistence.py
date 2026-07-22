@@ -193,28 +193,40 @@ class RuntimePersistenceTests(unittest.TestCase):
             events = read_events(mission_dir)
             self.assertEqual(events, [])
 
-    def test_record_risk_signal_appends_event_before_mission_write(self):
+    def test_record_risk_signal_transaction_prepare_failure_leaves_no_ghost_event(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
             before = read_mission(mission_dir)
 
-            with mock.patch.object(tplan_runtime, "write_mission", side_effect=OSError("disk full")):
+            original_write_json = tplan_runtime.write_json
+
+            def fail_transaction(path, data, **kwargs):
+                if path.name == ".mission-transaction.json":
+                    raise OSError("disk full")
+                return original_write_json(path, data, **kwargs)
+
+            with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
                     tplan_runtime.record_risk_signal(mission_dir, "T1", risk_payload())
 
             self.assertEqual(read_mission(mission_dir), before)
-            events = read_events(mission_dir)
-            self.assertEqual(len(events), 1)
-            self.assertEqual(events[0]["event_type"], "risk_context_update")
-            self.assertEqual(events[0]["payload"]["risk_signal"]["source_evidence_id"], events[0]["id"])
+            self.assertEqual(read_events(mission_dir), [])
 
-    def test_resolve_risk_signal_appends_event_before_mission_write(self):
+    def test_resolve_risk_signal_transaction_prepare_failure_leaves_no_ghost_event(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_mission(tmp)
             tplan_runtime.record_risk_signal(mission_dir, "T1", risk_payload())
             before = read_mission(mission_dir)
+            events_before = read_events(mission_dir)
 
-            with mock.patch.object(tplan_runtime, "write_mission", side_effect=OSError("disk full")):
+            original_write_json = tplan_runtime.write_json
+
+            def fail_transaction(path, data, **kwargs):
+                if path.name == ".mission-transaction.json":
+                    raise OSError("disk full")
+                return original_write_json(path, data, **kwargs)
+
+            with mock.patch.object(tplan_runtime, "write_json", side_effect=fail_transaction):
                 with self.assertRaises(OSError):
                     tplan_runtime.resolve_risk_signal(
                         mission_dir,
@@ -226,10 +238,7 @@ class RuntimePersistenceTests(unittest.TestCase):
                     )
 
             self.assertEqual(read_mission(mission_dir), before)
-            events = read_events(mission_dir)
-            self.assertEqual(len(events), 2)
-            self.assertEqual(events[-1]["event_type"], "risk_context_recovery")
-            self.assertEqual(events[-1]["payload"]["risk_id"], "R1")
+            self.assertEqual(read_events(mission_dir), events_before)
 
     def test_apply_decision_transaction_prepare_failure_leaves_no_ghost_event(self):
         with tempfile.TemporaryDirectory() as tmp:

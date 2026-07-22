@@ -106,6 +106,36 @@ Debug mode appends secondary internal recovery references:
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --include-internal
 ```
 
+### Automatic Update Delivery
+
+An automatic status delivery may carry the opaque cursor returned by its previous
+render:
+
+```bash
+python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" \
+  --delivery automatic --cursor OPAQUE_CURSOR --json
+```
+
+The renderer compares the complete Mission digest, evidence boundary, and a
+message-free Interaction Guard control-state digest without writing state. With no
+new user-visible runtime state, the first two automatic calls
+return `update_kind=quiet` and no text; the third returns an honest `heartbeat`, then
+resets its cursor streak. This is delivery pacing, not progress evidence.
+
+Use `--delivery explicit` for a user-initiated status question. It always returns a
+brief answer even when the cursor is unchanged. New Mission/evidence state, a blocker,
+stop, Guard boundary change, or a cursor error must never be hidden as quiet. A
+pending Mission transaction is an explicit error: the renderer and a survey-only
+checkpoint never recover it by writing state. Each delivery channel owns its own
+cursor; do not put it in `mission.json`, evidence, or a renderer sidecar.
+
+When a Guard change causes a full render, the text must say whether write protection is
+active (with its phase and revision) or has just been released. Never expose message
+references or message text in that status line.
+
+`checkpoint.py` with neither a log nor evidence is a survey-only no-op. It reports
+`checkpoint_noop` and does not claim that work was recorded.
+
 ## Terminal Mission Delivery Contract
 
 For every terminal Mission handoff (`completed`, `blocked`, `budget_exhausted`,

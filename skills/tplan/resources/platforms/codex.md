@@ -15,6 +15,112 @@ Codex reviewers are carriers, not controllers.
 - The main agent verifies, merges, records evidence, mutates Mission state, and writes
   the final user-facing conclusion.
 
+## Interaction Guard Adapter
+
+Interaction protection is defined by the platform-neutral
+`resources/interaction-host-contract.md`, not by Codex semantics. Codex has three
+separate lifecycle profiles:
+
+- `codex-desktop`: experimental Desktop hook mapping for `UserPromptSubmit`,
+  `PreToolUse`, and `Stop`; it has its own certification record.
+- `codex-cli`: experimental CLI hook mapping for the same event names, but it does
+  not inherit Desktop lifecycle evidence.
+- `scripts/codex_interaction_adapter.py`: explicit host/IPC integration seam for a
+  host that owns message IDs, thread binding, completion, and receipt signing.
+
+Choose exactly one lifecycle carrier for a Mission. Do not run the native hook and
+`codex_interaction_adapter.py` together: they use different delivery semantics and a
+guard intentionally rejects competing platform/session bindings.
+
+Generate an experimental Mission-scoped hook configuration for the target surface:
+
+```bash
+python3 skills/tplan/scripts/generate_interaction_hooks.py MISSION_DIR \
+  --platform codex-desktop --state-dir HOST_PROTECTED_STATE_DIR --experimental
+
+python3 skills/tplan/scripts/generate_interaction_hooks.py MISSION_DIR \
+  --platform codex-cli --state-dir HOST_PROTECTED_STATE_DIR --experimental
+```
+
+Merge the generated `hooks` object into a trusted Codex hook layer only for a recorded
+E2E. The first prompt starts active-turn tracking; another prompt before `Stop` opens
+the guard. Subsequent new local tool invocations are denied unless they are on the
+Codex-specific read-only or exact safe-control allowlist, and supported TPlan writers
+independently fail closed until resolution. The first **owning** `Stop` directly
+restores the unchanged baseline with CAS and digest checks, then returns ordinary hook
+success. It must not request, emit, or depend on a synthetic continuation. Turn mismatch
+or hook failure leaves the Mission locked as `orphaned` but never traps the conversation.
+
+The host owns the lifecycle. It must call `message-arrived` **before** any later
+mutable TPlan action, with an explicit `thread_id -> mission_dir` binding. The adapter
+persists that supplied thread id into the open guard and rejects later cross-thread
+completion; it does not discover or authenticate the initial binding. It must then
+call exactly one completion disposition on normal response, abort, error, or
+compaction: `response-resume-original`, `response-awaiting-confirmation`,
+or `response-stop`.
+
+Example read-only interruption:
+
+```bash
+python3 skills/tplan/scripts/codex_interaction_adapter.py message-arrived MISSION_DIR \
+  --thread-id THREAD --message-ref MESSAGE
+
+python3 skills/tplan/scripts/codex_interaction_adapter.py response-resume-original MISSION_DIR \
+  --thread-id THREAD --guard-id IG... --expected-revision 1 --message-ref MESSAGE
+```
+
+An exact Plan change is mechanically two-stage. The host first keeps the guard open
+while the agent shows a complete proposal. Only a **new, still-pending** user message
+received after that proposal can be confirmed. The host signs a one-time authority
+receipt through a host-only signer or IPC capability (with a secret outside
+agent-controlled state), then invokes the runtime verifier inside that trusted host
+boundary. The receipt binds the guard, revision, baseline,
+proposal, complete decision digest, exact mutation digest, and confirmation reference;
+agent-generated prose is not an authority receipt. Neither CLI adapter exposes an
+`apply` command or accepts a verifier-secret environment variable, because an
+agent-invocable process cannot constitute a host-only authority boundary.
+
+Use `capabilities` to expose the contract. `tplan_api_mutation_prevention` applies only
+when a real host wires both lifecycle callbacks, protects its signing capability, and
+routes Mission writes through the guarded runtime APIs. Raw filesystem writes are not
+contained by this Python adapter; a host that needs that guarantee must sandbox Mission
+files.
+
+Managed Codex hooks are valuable source-integrity controls, but they are not an
+authority signer. Codex documents command-hook input as ordinary JSON and does not
+document a host-signed callback credential. A separate macOS user, root-owned Hook
+script, or helper service is insufficient by itself: the Agent and the Hook child
+share the Codex host principal and can reproduce an agent-invocable request. Do not
+deploy such a helper as evidence of trusted authority. The required integration is a
+host-native signer/IPC that accepts only an unforgeably authenticated lifecycle event,
+owns state writes and receipt issuance, and exposes no equivalent Agent tool path.
+
+Generated configuration and contract tests are not a real-host E2E result. All hook
+profiles currently require `--experimental`; report a concrete Desktop or CLI version
+as `mutation_prevention` only after that profile's separate E2E gate passes. Do not
+infer Desktop support merely because it bundles a Codex binary, or infer CLI support
+from a Desktop trace.
+
+When the carrier supports MCP registration, run the Mission-bound
+`scripts/tplan_guard_control_server.py` as server name `tplan_guard`. It exposes only
+`inspect`, `await_proposal`, and `stop_fixed`; `resume_original` stays outside the
+Agent tool surface. Without MCP registration, the deterministic `TPLAN_CONTROL`
+operator envelope is the recovery route.
+
+For Desktop E2E, merge the emitted JSON into the trusted project hook layer, restart
+the app if it has not loaded the project layer, and explicitly trust the exact
+non-managed command-hook hash in the Hooks manager. Record the app build, profile
+digest, hook source/hash, trust state, state-directory isolation, and all active hook
+sources before asserting a capability. Remove the temporary E2E hook after the run;
+it is not a default-on project configuration.
+
+Codex does not re-run `PreToolUse` when `write_stdin` sends input to an execution that
+started before the guard, and specialized tool paths may bypass the normal local-hook
+path. Generated hooks alone therefore do not satisfy the prevention claim unless the
+host also terminates/isolates pre-existing mutable executions and protects hook state.
+
+Official hook reference: https://learn.chatgpt.com/docs/hooks
+
 ## Script
 
 Use `scripts/codex_review_packet.py` to generate concrete Codex review artifacts:

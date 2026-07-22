@@ -57,6 +57,19 @@ def create_mission(tmp):
     return mission_dir
 
 
+def create_pending_transaction(mission_dir):
+    transaction = {
+        "schema_version": "tplan.mission_transaction.v0.2",
+        "mission": json.loads((mission_dir / "mission.json").read_text(encoding="utf-8")),
+        "trace_text": (mission_dir / "execution_trace.jsonl").read_text(encoding="utf-8"),
+        "evidence_text": (mission_dir / "evidence.jsonl").read_text(encoding="utf-8"),
+        "latest_state": "A prepared transaction must be recovered by a writer.",
+    }
+    path = mission_dir / ".mission-transaction.json"
+    path.write_text(json.dumps(transaction), encoding="utf-8")
+    return path
+
+
 class CheckpointTests(unittest.TestCase):
     def test_checkpoint_records_optional_log_and_evidence_then_outputs_survey(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -122,6 +135,56 @@ class CheckpointTests(unittest.TestCase):
             self.assertIn("evidence summary is required", result.stderr)
             self.assertFalse((mission_dir / "logs" / "T1.jsonl").exists())
             self.assertEqual((mission_dir / "evidence.jsonl").read_text(encoding="utf-8"), "")
+
+    def test_empty_checkpoint_reports_honest_noop_without_writing_runtime_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            before_files = {
+                path.relative_to(mission_dir): path.read_bytes()
+                for path in mission_dir.rglob("*")
+                if path.is_file()
+            }
+
+            result = run_script("checkpoint.py", str(mission_dir), "--json")
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            output = json.loads(result.stdout)
+            self.assertTrue(output["noop"])
+            self.assertIsNone(output["recorded_log"])
+            self.assertIsNone(output["recorded_evidence"])
+            self.assertEqual(
+                {
+                    path.relative_to(mission_dir): path.read_bytes()
+                    for path in mission_dir.rglob("*")
+                    if path.is_file()
+                },
+                before_files,
+            )
+            self.assertFalse((mission_dir / "logs" / "T1.jsonl").exists())
+
+            text_result = run_script("checkpoint.py", str(mission_dir))
+            self.assertEqual(text_result.returncode, 0, text_result.stderr)
+            self.assertIn("checkpoint_noop: survey only", text_result.stdout)
+            self.assertNotIn("checkpoint recorded", text_result.stdout)
+
+    def test_empty_checkpoint_refuses_pending_transaction_without_recovering_it(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_mission(tmp)
+            transaction_path = create_pending_transaction(mission_dir)
+            watched = [
+                mission_dir / "mission.json",
+                mission_dir / "mission.md",
+                mission_dir / "evidence.jsonl",
+                mission_dir / "execution_trace.jsonl",
+                transaction_path,
+            ]
+            before = {path: path.read_bytes() for path in watched}
+
+            result = run_script("checkpoint.py", str(mission_dir), "--json")
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("pending Mission transaction", result.stderr)
+            self.assertEqual({path: path.read_bytes() for path in watched}, before)
 
 
 if __name__ == "__main__":

@@ -34,6 +34,36 @@ Claude Code reviewers are carriers, not controllers.
 - The main agent verifies, merges, records evidence, mutates Mission state, and writes
   the final user-facing conclusion.
 
+## Interaction Guard Carrier
+
+Interaction protection is shared runtime behavior, separate from reviewer subagents.
+Claude Code maps `UserPromptSubmit`, `PreToolUse`, and `Stop` onto the portable contract
+in `resources/interaction-host-contract.md`.
+
+Generate a Mission-scoped settings snippet:
+
+```bash
+python3 skills/tplan/scripts/generate_interaction_hooks.py MISSION_DIR \
+  --platform claude-code --state-dir HOST_PROTECTED_STATE_DIR --experimental
+```
+
+Merge the generated `hooks` object into a trusted Claude Code settings layer only for
+a recorded E2E. The first prompt starts normal active-turn tracking. A second prompt
+before `Stop` opens the guard; later mutation-capable tools are denied while read-only
+tools can answer the interruption. The first owning `Stop` directly resumes the
+unchanged baseline with Mission/evidence digest and pending-message checks. It never
+requests a retry or relies on a synthetic `UserPromptSubmit`; mismatch or failure
+marks the guard `orphaned` and ends the conversation normally.
+
+The native carrier does not parse prose or sign authority receipts. A requested Plan
+change remains locked in `await_clarification` until a trusted external host confirms
+the exact proposal. Without installed hooks, use the shared prompt fallback and report
+`advisory_only`.
+
+The official Claude Code hook reference documents these events and denial output, but
+this repository's generated config still needs a concrete-version E2E before claiming
+`mutation_prevention`; it remains experimental: https://code.claude.com/docs/en/hooks
+
 ## Script
 
 Use `scripts/platform_review_packet.py` to generate Claude Code carrier artifacts:

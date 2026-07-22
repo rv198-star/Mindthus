@@ -18,8 +18,10 @@ from tplan_runtime import (
     append_event,
     append_step_log,
     build_survey,
+    build_survey_from_state,
     find_task,
     read_mission,
+    read_user_update_snapshot,
     validate_mission,
 )
 
@@ -61,7 +63,9 @@ def main() -> int:
     try:
         mission_dir = Path(args.mission_dir)
         log_payload, evidence_payload = validate_checkpoint_args(args)
-        mission = read_mission(mission_dir)
+        noop = not args.log_summary and not args.evidence_type
+        snapshot = read_user_update_snapshot(mission_dir) if noop else None
+        mission = snapshot["mission"] if snapshot is not None else read_mission(mission_dir)
         errors = validate_mission(mission)
         if errors:
             raise TplanError("; ".join(errors))
@@ -99,7 +103,12 @@ def main() -> int:
         result = {
             "recorded_log": recorded_log,
             "recorded_evidence": recorded_evidence,
-            "survey": build_survey(mission_dir),
+            "noop": recorded_log is None and recorded_evidence is None,
+            "survey": (
+                build_survey_from_state(snapshot["mission"], snapshot["events"])
+                if snapshot is not None
+                else build_survey(mission_dir)
+            ),
         }
     except (OSError, TplanError, ValueError, json.JSONDecodeError) as exc:
         print(str(exc), file=sys.stderr)
@@ -108,6 +117,8 @@ def main() -> int:
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
+        if result["noop"]:
+            print("checkpoint_noop: survey only; no log or evidence recorded")
         if recorded_log:
             print(f"checkpoint_log: {recorded_log['id']}")
         if recorded_evidence:
@@ -120,7 +131,10 @@ def main() -> int:
             f"active_task={active} "
             f"events={result['survey']['event_count']}"
         )
-        print("script_result: checkpoint recorded; semantic interpretation remains agentic")
+        if result["noop"]:
+            print("script_result: checkpoint survey only; semantic interpretation remains agentic")
+        else:
+            print("script_result: checkpoint recorded; semantic interpretation remains agentic")
     return 0
 
 

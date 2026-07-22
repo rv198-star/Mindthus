@@ -31,6 +31,13 @@ OpenCode reviewers are carriers, not controllers.
 - The main agent verifies, merges, records evidence, mutates Mission state, and writes
   the final user-facing conclusion.
 
+## Interaction Guard Status
+
+This repository does not currently provide a verified OpenCode native lifecycle-hook
+mapping for mid-turn messages. Use the prompt fallback in
+`resources/interaction-host-contract.md` and report `advisory_only`. OpenCode reviewer
+support below does not imply interaction-guard enforcement.
+
 ## Script
 
 Use `scripts/platform_review_packet.py` to generate OpenCode carrier artifacts:
