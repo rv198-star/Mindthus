@@ -11,7 +11,7 @@ import json
 import sys
 from pathlib import Path
 
-from tplan_runtime import append_event
+from tplan_runtime import TplanError, append_event
 
 
 def main() -> int:
@@ -36,7 +36,7 @@ def main() -> int:
                 "payload": payload,
             },
         )
-    except (OSError, ValueError) as exc:
+    except (OSError, TplanError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
 

@@ -262,7 +262,7 @@ logs.
 
 Sparse evidence categories:
 
-- acceptance passed or failed
+- `acceptance_passed` or `acceptance_failed`
 - blocker
 - user feedback
 - decision
@@ -279,6 +279,23 @@ Each line is one JSON object with:
 - `summary`
 - `task_id`
 - `payload`
+
+New qualified acceptance events are fail-closed. Their payload must contain a
+non-empty, distinct `acceptance_ids` list; every id must exist in the Mission, and the
+event `task_id` must name a node whose own declaration or success-critical ancestor
+covers those ids. This validates shape and references only. The Agent or reviewer,
+not the script, remains responsible for deciding whether the acceptance claim is true.
+
+Legacy `acceptance` remains readable. A complete legacy record is classified using the
+same reference rules; an incomplete one is retained as `unclassified_writeback` with
+an audit warning and is never silently upgraded. `decision_applied` is runtime-reserved
+and cannot be appended through the public evidence command.
+
+Validated writeback and countable progress are different. Only qualified acceptance
+and a runtime-applied path decision count as positive progress. Blockers, failures,
+feedback, stops, risk changes, failed acceptance, and unapplied decision recommendations
+are constraint deltas. State changes, artifacts, key findings, and unknown event types
+remain state or unclassified writeback unless a qualified evidence event is written.
 
 `stop_report` evidence events use English payload keys with Chinese user-facing
 content:

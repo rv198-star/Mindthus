@@ -52,6 +52,23 @@ LEGACY_INTERACTION_GUARD_SCHEMA_VERSION = "tplan.interaction_guard.v0.1"
 AUTHORITY_RECEIPT_SCHEMA_VERSION = "tplan.authority_receipt.v0.1"
 SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
 USER_UPDATE_CURSOR_SCHEMA_VERSION = "tplan.user_update_cursor.v0.2"
+OUTCOME_ATTRIBUTION_SCHEMA_VERSION = "tplan.outcome_attribution.v0.1"
+RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied"}
+_RESERVED_EVIDENCE_AUTHORITY = object()
+_RESERVED_EVIDENCE_CONTEXT = threading.local()
+QUALIFIED_ACCEPTANCE_EVENT_TYPES = {"acceptance_passed", "acceptance_failed"}
+CONSTRAINT_EVIDENCE_EVENT_TYPES = {
+    "blocker",
+    "blocked",
+    "failure",
+    "interruption",
+    "stop_report",
+    "user_feedback",
+    "feedback",
+    "risk_context_update",
+    "risk_context_recovery",
+    "decision_recommendation",
+}
 SHARED_CONTEXT_MARKER_START = "<!-- tplan-shared-context"
 SHARED_CONTEXT_MARKER_END = "-->"
 
@@ -2209,16 +2226,162 @@ def read_user_update_snapshot(mission_dir: Path) -> dict[str, Any]:
         _require_no_pending_mission_transaction_unlocked(mission_dir, "rendering a user update")
         mission = _read_mission_unlocked(mission_dir)
         events = _read_events_unlocked(mission_dir)
+        trace = _read_execution_trace_unlocked(mission_dir)
         interaction_guard_state = _interaction_guard_boundary_state_unlocked(mission_dir)
         return {
             "mission": mission,
             "events": events,
+            "trace": trace,
             "mission_binding": _sha256_digest(str(mission_dir.resolve())),
             "mission_digest": mission_control_digest(mission),
             "evidence_digest": _evidence_boundary_digest_unlocked(mission_dir),
             "interaction_guard_digest": _sha256_digest(interaction_guard_state),
             "interaction_guard_state": interaction_guard_state,
         }
+
+
+def read_outcome_attribution_snapshot(mission_dir: Path) -> dict[str, Any]:
+    """Read Mission, evidence, and trace as one no-write attribution boundary."""
+
+    with execution_trace_lock(mission_dir):
+        _require_no_pending_mission_transaction_unlocked(mission_dir, "reading outcome attribution")
+        return {
+            "mission": _read_mission_unlocked(mission_dir),
+            "events": _read_events_unlocked(mission_dir),
+            "trace": _read_execution_trace_unlocked(mission_dir),
+        }
+
+
+def _acceptance_coverage_for_task(mission: dict[str, Any], task_id: str) -> set[str]:
+    """Return acceptance ids declared by a node or success-critical ancestors."""
+
+    chain = parent_chain(mission, task_id)
+    covered: set[str] = set()
+    for task in chain:
+        if task.get("id") == task_id or task.get("role") == "success-critical":
+            values = task.get("acceptance_evidence", [])
+            if isinstance(values, list):
+                covered.update(value for value in values if isinstance(value, str))
+    return covered
+
+
+def validate_evidence_event(
+    mission: dict[str, Any],
+    event: Any,
+    *,
+    compatibility: bool = False,
+    internal: bool = False,
+) -> list[str]:
+    """Validate evidence shape and mechanical references, never semantic truth.
+
+    Compatibility mode is for historical reads: incomplete legacy ``acceptance``
+    records return findings instead of being silently upgraded. New qualified
+    acceptance records always fail closed.
+    """
+
+    if not isinstance(event, dict):
+        return ["evidence event must be an object"]
+    errors: list[str] = []
+    for field in ("id", "timestamp", "event_type", "summary", "task_id", "payload"):
+        if field not in event:
+            errors.append(f"evidence event missing field: {field}")
+    for field in ("id", "timestamp", "event_type", "summary"):
+        value = event.get(field)
+        if field in event and (not isinstance(value, str) or not value.strip()):
+            errors.append(f"evidence event {field} must be a non-empty string")
+        elif isinstance(value, str) and ("\n" in value or "\r" in value):
+            errors.append(f"evidence event {field} must be single-line")
+    timestamp = event.get("timestamp")
+    if isinstance(timestamp, str) and timestamp.strip():
+        try:
+            normalized = timestamp[:-1] + "+00:00" if timestamp.endswith("Z") else timestamp
+            parsed = datetime.fromisoformat(normalized)
+            if parsed.tzinfo is None:
+                raise ValueError
+        except ValueError:
+            errors.append("evidence event timestamp must be ISO-8601 with timezone")
+    payload = event.get("payload")
+    if "payload" in event and not isinstance(payload, dict):
+        errors.append("evidence event payload must be an object")
+    task_id = event.get("task_id")
+    if task_id is not None and (not isinstance(task_id, str) or not task_id):
+        errors.append("evidence event task_id must be null or a non-empty string")
+    elif isinstance(task_id, str) and task_id not in task_map(mission):
+        errors.append(f"evidence event task_id does not exist: {task_id}")
+
+    event_type = event.get("event_type")
+    if event_type in RESERVED_EVIDENCE_EVENT_TYPES and not internal:
+        errors.append(f"evidence event type is runtime-reserved: {event_type}")
+
+    strict_acceptance = event_type in QUALIFIED_ACCEPTANCE_EVENT_TYPES
+    legacy_acceptance = event_type == "acceptance"
+    if strict_acceptance or legacy_acceptance:
+        acceptance_values = payload.get("acceptance_ids") if isinstance(payload, dict) else None
+        acceptance_errors: list[str] = []
+        if not isinstance(acceptance_values, list) or not acceptance_values:
+            acceptance_errors.append("evidence payload acceptance_ids must be a non-empty list")
+        elif not all(isinstance(value, str) and value for value in acceptance_values):
+            acceptance_errors.append("evidence payload acceptance_ids items must be non-empty strings")
+        elif len(acceptance_values) != len(set(acceptance_values)):
+            acceptance_errors.append("evidence payload acceptance_ids must be distinct")
+        else:
+            unknown = sorted(set(acceptance_values) - acceptance_ids(mission))
+            if unknown:
+                acceptance_errors.append(
+                    "evidence acceptance_ids do not exist: " + ", ".join(unknown)
+                )
+        if not isinstance(task_id, str) or not task_id:
+            acceptance_errors.append("qualified acceptance evidence requires task_id")
+        elif isinstance(acceptance_values, list) and all(
+            isinstance(value, str) and value for value in acceptance_values
+        ):
+            uncovered = sorted(set(acceptance_values) - _acceptance_coverage_for_task(mission, task_id))
+            if uncovered:
+                acceptance_errors.append(
+                    "task or success-critical ancestor does not cover acceptance_ids: "
+                    + ", ".join(uncovered)
+                )
+        errors.extend(acceptance_errors)
+    return errors
+
+
+def classify_evidence_outcome(mission: dict[str, Any], event: Any) -> dict[str, Any]:
+    """Classify one evidence record without inferring semantic truth or causality."""
+
+    event_type = event.get("event_type") if isinstance(event, dict) else None
+    errors = validate_evidence_event(mission, event, compatibility=True, internal=True)
+    if errors:
+        return {"classification": "unclassified_writeback", "warnings": errors}
+    if event_type in {"acceptance", "acceptance_passed"}:
+        return {"classification": "acceptance_delta", "warnings": []}
+    if event_type == "acceptance_failed" or event_type in CONSTRAINT_EVIDENCE_EVENT_TYPES:
+        return {"classification": "constraint_delta", "warnings": []}
+    if event_type == "decision_applied":
+        return {"classification": "decision_applied_candidate", "warnings": []}
+    return {"classification": "unclassified_writeback", "warnings": []}
+
+
+def _validate_new_evidence_ids_unlocked(
+    mission_dir: Path, new_events: list[dict[str, Any]]
+) -> list[str]:
+    """Keep evidence references globally unique across existing and batched writes."""
+
+    existing_ids = [
+        event.get("id")
+        for event in _read_events_unlocked(mission_dir)
+        if isinstance(event, dict) and isinstance(event.get("id"), str)
+    ]
+    new_ids = [event.get("id") for event in new_events if isinstance(event.get("id"), str)]
+    batch_duplicates = sorted(
+        event_id for event_id, count in Counter(new_ids).items() if count > 1
+    )
+    collisions = sorted(set(existing_ids) & set(new_ids))
+    errors: list[str] = []
+    if batch_duplicates:
+        errors.append("prepared evidence ids must be unique: " + ", ".join(batch_duplicates))
+    if collisions:
+        errors.append("evidence ids already exist: " + ", ".join(collisions))
+    return errors
 
 
 def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
@@ -2237,6 +2400,12 @@ def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
         if _read_interaction_guard_unlocked(mission_dir) is not None:
             raise TplanError("interaction guard is open; evidence writes require an authorized resolution")
         event = prepare_event(mission_dir, event)
+        errors = validate_evidence_event(_read_mission_unlocked(mission_dir), event)
+        if errors:
+            raise TplanError("; ".join(errors))
+        errors = _validate_new_evidence_ids_unlocked(mission_dir, [event])
+        if errors:
+            raise TplanError("; ".join(errors))
         with path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return event
@@ -2880,6 +3049,7 @@ def _commit_mission_state_unlocked(
     prepared_evidence_events: list[dict[str, Any]] | None = None,
     extra_trace_records: list[dict[str, Any]] | None = None,
     guard_after: dict[str, Any] | None | object = _GUARD_UNSET,
+    reserved_evidence_authority: object | None = None,
 ) -> list[dict[str, Any]]:
     current = _read_mission_unlocked(mission_dir)
     if current != before:
@@ -2892,6 +3062,18 @@ def _commit_mission_state_unlocked(
     errors = validate_mission(after)
     if errors:
         raise TplanError("; ".join(errors))
+    for event in prepared_evidence_events or []:
+        errors = validate_evidence_event(
+            after,
+            event,
+            internal=reserved_evidence_authority is _RESERVED_EVIDENCE_AUTHORITY,
+        )
+        if errors:
+            raise TplanError("; ".join(errors))
+    if prepared_evidence_events:
+        errors = _validate_new_evidence_ids_unlocked(mission_dir, prepared_evidence_events)
+        if errors:
+            raise TplanError("; ".join(errors))
     records = _state_change_trace_records(
         before,
         after,
@@ -2965,7 +3147,28 @@ def commit_mission_state(
             latest_state=latest_state,
             prepared_evidence_events=prepared_evidence_events,
             guard_after=_GUARD_UNSET,
+            reserved_evidence_authority=getattr(
+                _RESERVED_EVIDENCE_CONTEXT, "authority", None
+            ),
         )
+
+
+@contextmanager
+def _reserved_evidence_commit_scope():
+    """Grant one thread a non-public capability for a vetted runtime decision."""
+
+    previous = getattr(_RESERVED_EVIDENCE_CONTEXT, "authority", None)
+    _RESERVED_EVIDENCE_CONTEXT.authority = _RESERVED_EVIDENCE_AUTHORITY
+    try:
+        yield
+    finally:
+        if previous is None:
+            try:
+                del _RESERVED_EVIDENCE_CONTEXT.authority
+            except AttributeError:
+                pass
+        else:
+            _RESERVED_EVIDENCE_CONTEXT.authority = previous
 
 
 def resolve_interaction_guard(
@@ -3119,6 +3322,7 @@ def resolve_interaction_guard(
             task_details=task_details,
             latest_state=f"Interaction-authorized decision applied: {decision['recommendation']}.",
             prepared_evidence_events=[event],
+            reserved_evidence_authority=_RESERVED_EVIDENCE_AUTHORITY,
             extra_trace_records=[
                 _interaction_guard_trace_record(
                     before, guard, disposition="apply_authorized_change", phase="closed"
@@ -5117,14 +5321,15 @@ def apply_decision(mission_dir: Path, decision: Any) -> str:
         for mutation in decision["proposed_mutations"]
         if mutation.get("type") == "transition_task" and isinstance(mutation.get("task_id"), str)
     }
-    commit_mission_state(
-        mission_dir,
-        before,
-        mission,
-        source={"kind": "decision_hook", "name": decision["recommendation"]},
-        refs={"evidence_ids": [event["id"]], "evidence_links": decision.get("evidence_links", [])},
-        task_details=task_details,
-        latest_state=f"Decision applied: {decision['recommendation']}.",
-        prepared_evidence_events=[event],
-    )
+    with _reserved_evidence_commit_scope():
+        commit_mission_state(
+            mission_dir,
+            before,
+            mission,
+            source={"kind": "decision_hook", "name": decision["recommendation"]},
+            refs={"evidence_ids": [event["id"]], "evidence_links": decision.get("evidence_links", [])},
+            task_details=task_details,
+            latest_state=f"Decision applied: {decision['recommendation']}.",
+            prepared_evidence_events=[event],
+        )
     return "applied_decision"

@@ -97,7 +97,7 @@ class RenderUserUpdateTests(unittest.TestCase):
             self.assertIn("Make tplan progress readable to ordinary users.", output)
             self.assertIn("当前进展：", output)
             self.assertIn("Render readable progress summary", output)
-            self.assertIn("已确认：", output)
+            self.assertIn("可计推进：", output)
             self.assertIn("The update explains progress without leading with internal IDs.", output)
             self.assertNotIn("T1", output)
             self.assertNotIn(event_id, output)
@@ -200,6 +200,38 @@ class RenderUserUpdateTests(unittest.TestCase):
             self.assertEqual(changed["update_kind"], "full")
             self.assertEqual(changed["quiet_streak"], 0)
             self.assertIn("Verified a new user-visible result.", changed["text"])
+
+    def test_constraints_and_facts_are_not_rendered_as_countable_progress(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_lite_mission(tmp)
+            blocker = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "blocker",
+                "--task-id",
+                "T1",
+                "--summary",
+                "Target host is unavailable.",
+            )
+            finding = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "key_finding",
+                "--task-id",
+                "T1",
+                "--summary",
+                "The host uses a different hook carrier.",
+            )
+            self.assertEqual(blocker.returncode, 0, blocker.stderr)
+            self.assertEqual(finding.returncode, 0, finding.stderr)
+
+            output = run_script("render_user_update.py", str(mission_dir)).stdout
+            self.assertIn("关键约束：", output)
+            self.assertIn("Target host is unavailable.", output)
+            self.assertIn("已确认事实：", output)
+            self.assertIn("The host uses a different hook carrier.", output)
 
     def test_task_local_log_does_not_claim_a_user_visible_delta(self):
         with tempfile.TemporaryDirectory() as tmp:

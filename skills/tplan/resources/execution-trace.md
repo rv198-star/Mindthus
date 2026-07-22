@@ -24,6 +24,25 @@ Use the trace to answer:
 Do not use it to prove semantic correctness. A process can run successfully and still
 produce the wrong result.
 
+## Outcome Attribution Boundary
+
+`outcome_attribution.py` derives a read-only view from one locked Mission, evidence,
+and trace snapshot. It does not create a sidecar or change Mission/trace schemas. The
+execution-cost report schema is `tplan.execution_cost_tree.v0.6`.
+
+Telemetry answers what ran and what it cost. Validated writeback answers which legal
+Mission/evidence/state records were committed. Countable progress is narrower: only a
+qualified acceptance delta or a runtime-applied path decision. Constraint deltas,
+state writebacks, and unclassified legacy records remain visible in separate buckets.
+Task-local evidence and lifecycle records roll up through real ancestors; shared and
+unattributed spans stay in Mission overhead and are never split across outcomes.
+
+Records that share a trace `commit_id` and evidence refs may be reported as accompanying
+the same writeback. This is correlation at a transaction boundary, not proof that a
+specific duration or Token count caused the outcome. A completed task without qualified
+acceptance/path evidence retains its completed state but receives
+`completion_without_progress_evidence`.
+
 ## Capture Surfaces
 
 Lifecycle capture is automatic when Mission state is changed through TPlan runtime

@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from outcome_attribution import build_outcome_attribution
 from tplan_runtime import (
     USER_UPDATE_CURSOR_SCHEMA_VERSION,
     TplanError,
@@ -26,22 +27,8 @@ from tplan_runtime import (
 CURSOR_DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 
 
-def render_confirmed(events: list[dict[str, Any]]) -> list[str]:
-    useful_types = {
-        "acceptance",
-        "acceptance_evidence",
-        "blocker",
-        "blocked",
-        "failure",
-        "interruption",
-        "user_feedback",
-        "feedback",
-        "decision",
-        "decision_recommendation",
-        "key_finding",
-        "state_transition",
-        "stop_report",
-    }
+def render_confirmed_facts(events: list[dict[str, Any]]) -> list[str]:
+    useful_types = {"acceptance_evidence", "key_finding", "state_transition"}
     summaries = [
         str(event["summary"]).strip()
         for event in events
@@ -50,6 +37,31 @@ def render_confirmed(events: list[dict[str, Any]]) -> list[str]:
         and event["summary"].strip()
     ]
     return summaries[-3:]
+
+
+def _outcome_summaries(attribution: dict[str, Any], field: str) -> list[str]:
+    return [
+        str(item["summary"]).strip()
+        for item in attribution.get(field, [])
+        if isinstance(item.get("summary"), str) and item["summary"].strip()
+    ][-3:]
+
+
+def _latest_meaningful_summary(attribution: dict[str, Any], events: list[dict[str, Any]]) -> str:
+    meaningful_ids = {
+        evidence_id
+        for field in ("countable_progress", "constraint_deltas")
+        for item in attribution.get(field, [])
+        for evidence_id in item.get("evidence_ids", [])
+        if isinstance(evidence_id, str)
+    }
+    fact_types = {"acceptance_evidence", "key_finding", "state_transition"}
+    for event in reversed(events):
+        if event.get("id") in meaningful_ids or event.get("event_type") in fact_types:
+            summary = event.get("summary")
+            if isinstance(summary, str) and summary.strip():
+                return summary.strip()
+    return "暂无可验证变化记录"
 
 
 def _encode_cursor(snapshot: dict[str, Any], quiet_streak: int) -> str:
@@ -127,9 +139,13 @@ def render_brief_unchanged(mission: dict[str, Any], current: dict[str, Any] | No
     return f"暂无新的可验证变化，{_current_subject(mission, current)}。\n"
 
 
-def render_heartbeat(mission: dict[str, Any], current: dict[str, Any] | None, events: list[dict[str, Any]]) -> str:
-    confirmed = render_confirmed(events)
-    latest = confirmed[-1] if confirmed else "暂无可验证变化记录"
+def render_heartbeat(
+    mission: dict[str, Any],
+    current: dict[str, Any] | None,
+    events: list[dict[str, Any]],
+    attribution: dict[str, Any],
+) -> str:
+    latest = _latest_meaningful_summary(attribution, events)
     return (
         "状态心跳：连续 3 次自动检查没有新的 Mission 或验收证据变化。"
         f"当前{_current_subject(mission, current)}；最近一次可验证变化是“{latest}”。\n"
@@ -150,12 +166,17 @@ def interaction_guard_text(state: dict[str, Any], *, just_released: bool = False
 def render_update(
     mission: dict[str, Any],
     events: list[dict[str, Any]],
+    trace: list[dict[str, Any]],
     include_internal: bool,
     interaction_guard_state: dict[str, Any],
     *,
     guard_just_released: bool = False,
 ) -> str:
     current = active_task(mission)
+    attribution = build_outcome_attribution(mission, events, trace)["mission"]
+    progress = _outcome_summaries(attribution, "countable_progress")
+    constraints = _outcome_summaries(attribution, "constraint_deltas")
+    facts = render_confirmed_facts(events)
     lines = [
         "当前目标：",
         mission["mission"]["objective"],
@@ -163,13 +184,16 @@ def render_update(
         "当前进展：",
         current["title"] if current else "暂未选择当前任务。",
         "",
-        "已确认：",
+        "可计推进：",
     ]
-    confirmed = render_confirmed(events)
-    if confirmed:
-        lines.extend(f"- {summary}" for summary in confirmed)
+    if progress:
+        lines.extend(f"- {summary}" for summary in progress)
     else:
-        lines.append("- 暂无可约束结论；只有运行状态已建立。")
+        lines.append("- 暂无合格的 acceptance 或已应用路径决策。")
+    if constraints:
+        lines.extend(["", "关键约束：", *[f"- {summary}" for summary in constraints]])
+    if facts:
+        lines.extend(["", "已确认事实：", *[f"- {summary}" for summary in facts]])
     lines.extend(
         [
             "",
@@ -205,6 +229,8 @@ def render_delivery(
 ) -> dict[str, Any]:
     mission = snapshot["mission"]
     events = snapshot["events"]
+    trace = snapshot["trace"]
+    attribution = build_outcome_attribution(mission, events, trace)["mission"]
     current = active_task(mission)
     if cursor_value is None:
         return {
@@ -212,7 +238,7 @@ def render_delivery(
             "update_kind": "full",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
-            "text": render_update(mission, events, include_internal, snapshot["interaction_guard_state"]),
+            "text": render_update(mission, events, trace, include_internal, snapshot["interaction_guard_state"]),
         }
 
     cursor = _decode_cursor(cursor_value)
@@ -235,6 +261,7 @@ def render_delivery(
             "text": render_update(
                 mission,
                 events,
+                trace,
                 include_internal,
                 snapshot["interaction_guard_state"],
                 guard_just_released=guard_changed and not snapshot["interaction_guard_state"]["present"],
@@ -256,7 +283,7 @@ def render_delivery(
             "update_kind": "heartbeat",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
-            "text": render_heartbeat(mission, current, events),
+            "text": render_heartbeat(mission, current, events, attribution),
         }
     return {
         "changed": False,

@@ -117,6 +117,124 @@ def render_json(mission_dir, *args):
 
 
 class ExecutionCostTreeTests(unittest.TestCase):
+    def test_cost_renderer_refuses_pending_transaction_without_recovery_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            transaction = mission_dir / ".mission-transaction.json"
+            transaction.write_text("{}", encoding="utf-8")
+
+            result = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "json",
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("pending Mission transaction", result.stderr)
+            self.assertEqual(transaction.read_text(encoding="utf-8"), "{}")
+
+    def test_outcome_attribution_is_present_in_json_compact_standard_and_audit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            evidence = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "acceptance_passed",
+                "--task-id",
+                "S1",
+                "--summary",
+                "A1 passed in the target renderer.",
+                "--payload-json",
+                '{"acceptance_ids":["A1"]}',
+            )
+            self.assertEqual(evidence.returncode, 0, evidence.stderr)
+
+            report = render_json(mission_dir)
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
+            self.assertEqual(report["mission"]["outcome_attribution"]["yield_class"], "countable_progress")
+            by_id = {node["id"]: node for node in report["nodes"]}
+            self.assertEqual(by_id["S1"]["outcome_attribution"]["yield_class"], "countable_progress")
+
+            compact = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "compact",
+                "--format",
+                "text",
+            )
+            standard = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "standard")
+            audit = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
+            self.assertEqual(compact.returncode, 0, compact.stderr)
+            self.assertEqual(standard.returncode, 0, standard.stderr)
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn("推进", compact.stdout)
+            self.assertIn("产出归因", standard.stdout)
+            self.assertIn("产出归因审计", audit.stdout)
+
+    def test_audit_includes_mission_level_unclassified_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            evidence = run_script(
+                "record_evidence.py",
+                str(mission_dir),
+                "--event-type",
+                "key_finding",
+                "--summary",
+                "Mission-level fact is not progress.",
+            )
+            self.assertEqual(evidence.returncode, 0, evidence.stderr)
+            event_id = read_jsonl(mission_dir / "evidence.jsonl")[-1]["id"]
+            with (mission_dir / "evidence.jsonl").open("a", encoding="utf-8") as handle:
+                handle.write(
+                    json.dumps(
+                        {
+                            "id": "ELEGACY",
+                            "timestamp": "2026-07-22T12:00:00Z",
+                            "event_type": "acceptance",
+                            "summary": "Historical incomplete acceptance.",
+                            "task_id": None,
+                            "payload": {},
+                        }
+                    )
+                    + "\n"
+                )
+
+            audit = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "audit")
+            audit_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "audit",
+                "--format",
+                "svg",
+            )
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertEqual(audit_svg.returncode, 0, audit_svg.stderr)
+            self.assertIn(f"Mission (`execution-tree`)", audit.stdout)
+            self.assertIn(event_id, audit.stdout)
+            self.assertIn(event_id, audit_svg.stdout)
+            self.assertIn("legacy_or_invalid_evidence", audit_svg.stdout)
+
+    def test_standard_shows_completion_without_progress_warning(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            transition = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S1",
+                "--status",
+                "completed",
+            )
+            self.assertEqual(transition.returncode, 0, transition.stderr)
+
+            standard = run_script("render_execution_cost_tree.py", str(mission_dir), "--view", "standard")
+            self.assertEqual(standard.returncode, 0, standard.stderr)
+            self.assertIn("completion_without_progress_evidence", standard.stdout)
+
     def test_counted_tokens_do_not_readd_cached_or_reasoning_subsets(self):
         self.assertEqual(
             _counted_tokens(
@@ -644,7 +762,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
 
             report = render_json(mission_dir, "--view", "standard")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.5")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
             self.assertEqual(report["timeline"]["axis"], "vertical")
             self.assertEqual(
                 report["timeline"]["row_positioning"],
@@ -1207,7 +1325,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("must not enter the trace", raw_trace)
 
             report = render_json(mission_dir, "--view", "audit")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.5")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
             self.assertEqual(report["trace"]["started_span_count"], 1)
             self.assertEqual(report["trace"]["completed_span_count"], 1)
             self.assertEqual(report["trace"]["open_span_count"], 0)
