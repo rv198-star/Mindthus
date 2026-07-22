@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+## v1.5.2
+
+发布 tag：`v1.5.2`
+
+[发布说明](docs/releases/v1.5.2.md)
+
+说明：这是 1.x Stable 线的可靠性 patch。它吸收并收敛了 LoopX 对比后确认值得修复的
+三项 TPlan 运行问题：交互不应劫持既有 Mission、长时间无状态变化仍应给出低频可见反馈、
+以及执行结果不能被未验证的遥测或写回伪造。它不新增方法论，也不要求迁移既有 Mission。
+
+### #134：Bounded Interaction Guard
+
+- 把中途插入的用户消息与既有 Mission 的控制权分开：有能力的 host 可在 continuation
+  boundary 强制守卫；没有对应 hook 的 host 则显式降级为提示词合同，而不假装具备硬阻断。
+- safe-stop、operator resume 与 completion 的状态转换都有可验证的边界，避免“为了回复一条
+  消息”把执行目标整个切走。
+
+### #135：Quiet no-op 可见进度
+
+- 连续两次无状态变化可以保持安静；第三次起以低频 heartbeat 提醒用户任务仍在推进，
+  同时避免每次轮询都制造无意义噪声。
+
+### #136：Validated Outcome Attribution
+
+- 将执行证据的观测、校验与 Mission outcome 写回分离；未被验证的遥测、重复事件或错误
+  owner 归属不能把 Mission 标成已完成或已交付。
+- 新增的报告字段为兼容性扩展；证据不足时宁可标为未知或拒绝写回，不虚构成功结果。
+
+### 发布边界
+
+- `v1.5.2` GitHub Release 同时提供 Stable plugins、Stable skills 和 Codex ROI Beta
+  experimental asset，并附 `SHA256SUMS`。
+- ROI Beta 继续是独立命名空间的实验包；本次仅将其共享核心推进到相同的 `1.5.2` 修复点，
+  不把它升级为默认安装路径。
+
 ## v1.5.1
 
 发布 tag：`v1.5.1`
