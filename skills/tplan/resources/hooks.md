@@ -177,6 +177,12 @@ Implemented read-only routes:
 - routine `checkpoint_batch` with no trigger candidate -> `continue`
 - checkpoint batch without fresh acceptance evidence movement -> `continuation_authorization`
 
+When an automatic user-update delivery sees this ordinary no-candidate `continue`
+result and its delivery cursor is unchanged, it may use the Quiet no-op pacing rule:
+two silent successful checks, then one factual heartbeat. This does not write Pulse
+state, create evidence, or upgrade the next Gate; user-initiated status questions
+remain answerable immediately.
+
 ## Anti-Spiral Runtime Gate
 
 `anti_spiral_audit` is a runtime gate, not a standalone Mindthus skill. It exists so a

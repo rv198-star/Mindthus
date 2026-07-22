@@ -1,20 +1,20 @@
 {
   "schema_version": "mindthus-capability-register-v0.2",
-  "shared_core_ref": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
+  "shared_core_ref": "4372508d0afb41fab95936b92a1d92d0ec9d56b1",
   "capabilities": [
     {
       "id": "tvg-profile-atlas-v1",
       "source_commit": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
       "ownership": "shared-product-core",
-      "release_1x": {"state": "included", "version": "1.5.1"},
-      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
+      "release_1x": {"state": "included", "version": "1.5.2"},
+      "release_roi_beta": {"state": "included", "version": "1.5.2-roi-beta"}
     },
     {
       "id": "tplan-execution-cost-tree-v1",
       "source_commit": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
       "ownership": "shared-product-core",
-      "release_1x": {"state": "included", "version": "1.5.1"},
-      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
+      "release_1x": {"state": "included", "version": "1.5.2"},
+      "release_roi_beta": {"state": "included", "version": "1.5.2-roi-beta"}
     },
     {
       "id": "roi.2-thin-core",
@@ -22,10 +22,24 @@
       "ownership": "roi-beta-runtime-profile",
       "release_1x": {
         "state": "not-applicable",
-        "version": "1.5.1",
+        "version": "1.5.2",
         "reason": "Stable keeps the full using-mindthus runtime profile."
       },
-      "release_roi_beta": {"state": "included", "version": "1.5.1-roi-beta"}
+      "release_roi_beta": {"state": "included", "version": "1.5.2-roi-beta"}
+    },
+    {
+      "id": "tplan-interaction-guard-and-heartbeat-v1",
+      "source_commit": "3c5552ee0a67f91e7200a9c4934f94e641a91498",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.5.2"},
+      "release_roi_beta": {"state": "included", "version": "1.5.2-roi-beta"}
+    },
+    {
+      "id": "tplan-validated-outcome-attribution-v1",
+      "source_commit": "887a481a7e0b80b9e86609289e432a791d801472",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.5.2"},
+      "release_roi_beta": {"state": "included", "version": "1.5.2-roi-beta"}
     }
   ]
 }

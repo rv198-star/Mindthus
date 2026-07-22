@@ -2,52 +2,40 @@
 
 ## Unreleased
 
-### 新增发布包：1.5.1 ROI Beta（GPT/Sol）
+## v1.5.2
 
-发布源码 tag：`v1.5.1-roi-beta`（作为 `v1.5.1` Release 的 experimental asset）
+发布 tag：`v1.5.2`
 
-[ROI Beta experimental asset 说明](docs/releases/v1.5.1-roi-beta.md)
+[发布说明](docs/releases/v1.5.2.md)
 
-说明：这是与 `1.5.1 Stable` 同属一个 release train 的第二种发布包，面向 Codex / GPT-Sol
-做 ROI-first 的有损唤起实验；它不替代 Stable，也不自动迁移既有用户。
+说明：这是 1.x Stable 线的可靠性 patch。它吸收并收敛了 LoopX 对比后确认值得修复的
+三项 TPlan 运行问题：交互不应劫持既有 Mission、长时间无状态变化仍应给出低频可见反馈、
+以及执行结果不能被未验证的遥测或写回伪造。它不新增方法论，也不要求迁移既有 Mission。
 
-### 背景与取舍
+### #134：Bounded Interaction Guard
 
-- `gpt-5.6-sol` 这类强工程模型已经能在许多清晰、低风险、事实充分的任务中直接行动；
-  若仍让每次会话常驻加载完整的方法目录和详细合同，额外输入 token 与等待时间未必会改变
-  正确行动，反而成为纯开销。
-- ROI.2 把 `using-mindthus` 收缩为薄的共同判断底座：清晰任务直接执行；原生 Skill
-  discovery 已能确定 owner 时直接加载 owner；只有定框、证据上限、决策上下文或反螺旋会
-  改变行动时，才保留最小约束。它不增加 Hook、第二常驻 router、模型分流或隐藏 prompt。
-- 这是刻意的有损优化，而不是“更聪明所以不需要判断”。它接受一部分被动方法/认知原语
-  不再被自动唤起；只要策略、证据、风险、权限、行动和停止条件不变，漏掉细化是可接受的。
-  反之应直接加载 owner、补证据或回到 Stable。
-- 有限的 `gpt-5.6-sol / xhigh` 资格样本显示显式 Mindthus 加载 bytes 中位数下降 42.17%、
-  host-reported uncached input tokens 下降 53.63%、wall duration 下降 10.07%。这些是
-  ROI 方向证据，不是所有任务、所有 owner 或所有模型的召回率证明。
+- 把中途插入的用户消息与既有 Mission 的控制权分开：有能力的 host 可在 continuation
+  boundary 强制守卫；没有对应 hook 的 host 则显式降级为提示词合同，而不假装具备硬阻断。
+- safe-stop、operator resume 与 completion 的状态转换都有可验证的边界，避免“为了回复一条
+  消息”把执行目标整个切走。
 
-### 选择哪一条线
+### #135：Quiet no-op 可见进度
 
-- 需要完整方法合同、可预测的被动认知原语、跨模型一致性，或任务本身不允许召回损失时，
-  选 1.5.1 Stable。
-- 主要在高能力 Codex 上做清晰工程执行，且愿意以有限的被动唤起损失交换明显的常驻开销
-  下降时，才评估 ROI Beta；它仍是实验包，不应作为 Stable 的自动迁移目标。
+- 连续两次无状态变化可以保持安静；第三次起以低频 heartbeat 提醒用户任务仍在推进，
+  同时避免每次轮询都制造无意义噪声。
 
-### 与 1.5.1 Stable 的关系
+### #136：Validated Outcome Attribution
 
-- `1.5.1 ROI Beta（GPT/Sol）` 不是 `1.5.1 Stable` 的替代版，也不是“版本号更高所以默认
-  更好”。两个包共享同一产品核心，但优化目标不同：Stable 优先完整能力与保守可靠性，ROI
-  Beta 优先特定高能力 Codex 场景下的加载 ROI。
-- Beta 的薄入口只是一种受限实验合同，不把 Stable 的完整入口降级，也不触发用户安装、配置
-  或工作流的自动迁移。任何把 ROI 策略扩大为默认行为的决定都需要新的行为证据与单独授权。
-- 因此，选择 Beta 是针对任务、模型与可接受损失的显式选择；需要默认可靠行为时仍选 Stable，
-  发现 decision-changing recall 损失时应直接回退 Stable。
+- 将执行证据的观测、校验与 Mission outcome 写回分离；未被验证的遥测、重复事件或错误
+  owner 归属不能把 Mission 标成已完成或已交付。
+- 新增的报告字段为兼容性扩展；证据不足时宁可标为未知或拒绝写回，不虚构成功结果。
 
-- 以 `v1.5.1` Stable shared core 为不可变基础，保留 ROI.2 的 thin `using-mindthus` 和唯一一处 3L5S 合同修正。
-- 修复 #128：单分支自包含构建、Beta namespace/diagnostics 隔离、dirty-input 拒绝、输入与 manifest provenance、artifact-local 路径和可复现 archive。
-- Stable 与 Beta 使用不同 package、marketplace、cache 和 skill namespace；不自动迁移、不发布 marketplace。
-- ROI 包作为同一个 1.5.1 GitHub Release 的独立 experimental asset 发布，而不是创建第二个
-  Beta Release；不发布 marketplace。
+### 发布边界
+
+- `v1.5.2` GitHub Release 同时提供 Stable plugins、Stable skills 和 Codex ROI Beta
+  experimental asset，并附 `SHA256SUMS`。
+- ROI Beta 继续是独立命名空间的实验包；本次仅将其共享核心推进到相同的 `1.5.2` 修复点，
+  不把它升级为默认安装路径。
 
 ## v1.5.1
 

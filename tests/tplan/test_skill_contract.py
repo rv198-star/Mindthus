@@ -152,7 +152,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "full mission review",
             "high-impact changes still require alignment or review",
             "Promote an action into a Step only when",
-            "acceptance passed or failed",
+            "`acceptance_passed` or `acceptance_failed`",
         ):
             self.assertIn(phrase, resources)
 
@@ -196,7 +196,9 @@ class TplanSkillContractTests(unittest.TestCase):
         for phrase in (
             "当前目标：",
             "当前进展：",
-            "已确认：",
+            "可计推进：",
+            "关键约束：",
+            "已确认事实：",
             "下一步：",
             "Debug And Audit Mode",
             "Internal recovery references",

@@ -8,12 +8,12 @@ REPO = Path(__file__).resolve().parents[1]
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.5.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.5.2.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_5_1_candidate(self):
+    def test_current_release_surface_is_v1_5_2_candidate(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -21,7 +21,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("当前仓库版本：`v1.5.1`", readme)
+        self.assertIn("当前仓库版本：`v1.5.2`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
         self.assertNotIn("当前仓库版本：`v1.4.6`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.4`", readme)
@@ -35,20 +35,20 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("当前已发布 Stable 是 `v1.5.1`", readme)
-        self.assertIn("可选的 `v1.5.1-roi-beta`", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.5.2`", readme)
+        self.assertIn("可选的 `v1.5.2-roi-beta`", readme)
         self.assertIn("不替代 Stable、不自动迁移现有安装", readme)
-        self.assertIn("mindthus-plugins-1.5.1.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.5.1.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.5.1-roi-beta.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.5.2.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.5.2.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.5.2-roi-beta.tar.gz", readme)
         self.assertNotIn("mindthus-plugins-1.4.6.tar.gz", readme)
         self.assertNotIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.5.1/mindthus-plugins-1.5.1.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-plugins-1.5.2.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.5.1/mindthus-skills-1.5.1.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-skills-1.5.2.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
@@ -56,41 +56,34 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertNotIn("codex plugin list --marketplace mindthus --available\n", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
-        self.assertIn("## v1.5.1", changelog)
-        self.assertIn("[发布说明](docs/releases/v1.5.1.md)", changelog)
-        self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
-        self.assertIn("新增：TPlan 执行过程图与终局交付", changelog)
-        self.assertIn("1.5.1 ROI Beta（GPT/Sol）", changelog)
-        self.assertIn("不改变 Stable 的默认地位", changelog)
-        self.assertIn("一个 1.5.1 GitHub Release 和两份发布包", changelog)
-        self.assertIn("显式调用", changelog)
-        self.assertIn("best-effort", changelog)
-        self.assertIn("execution_trace.jsonl", changelog)
-        self.assertIn("9 -> 3 -> 9", changelog)
-        self.assertIn("ROI.2", changelog)
-        self.assertIn('VERSION = "1.5.1"', builder)
-        self.assertIn('VERSION = "1.5.1"', runtime_logger)
+        self.assertIn("## v1.5.2", changelog)
+        self.assertIn("[发布说明](docs/releases/v1.5.2.md)", changelog)
+        self.assertIn("Bounded Interaction Guard", changelog)
+        self.assertIn("Quiet no-op", changelog)
+        self.assertIn("Validated Outcome Attribution", changelog)
+        self.assertIn("不新增方法论", changelog)
+        self.assertIn("ROI Beta", changelog)
+        self.assertIn('VERSION = "1.5.2"', builder)
+        self.assertIn('VERSION = "1.5.2"', runtime_logger)
 
-        release_log = (REPO / "docs" / "releases" / "v1.5.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.5.2.md").read_text(
             encoding="utf-8"
         )
         for phrase in (
-            "# Mindthus v1.5.1 发布说明",
-            "准备日期：2026-07-19",
+            "# Mindthus v1.5.2 发布说明",
+            "发布日期：2026-07-22",
             "## 版本定位",
-            "## #125：TPlan 状态与成本一致性",
-            "leaf-most usage owner",
-            "## #127：发布包 helper 自定位",
-            "## #126：TVG Atlas 来源绑定",
-            "deterministic structural fixture",
-            "## 独立审计",
+            "## #134：Bounded Interaction Guard",
+            "mutation prevention",
+            "## #135：Quiet no-op heartbeat",
+            "## #136：Validated Outcome Attribution",
             "SHA256SUMS",
             "## 验证",
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover",
             "## 发布边界",
-            "`v1.5.1` GitHub Release 同时提供",
-            "mindthus-beta-1.5.1-roi-beta.tar.gz",
+            "`v1.5.2` GitHub Release 同时提供",
+            "mindthus-beta-1.5.2-roi-beta.tar.gz",
         ):
             self.assertIn(phrase, release_log)
 

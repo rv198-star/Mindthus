@@ -9,6 +9,8 @@ Each Mission directory contains:
 - `evidence.jsonl`: append-only evidence event stream. This is not a process log.
 - `execution_trace.jsonl`: lifecycle and sanitized execution-cost events. This is not
   acceptance evidence or a raw transcript.
+- `.interaction-guard.json`: optional persistent host-interruption guard. It is runtime
+  control state, not Mission business schema; an absent file means no guard is open.
 - `logs/`: active task-local step logs.
 - `archive/`: archived step logs and task summaries when needed.
 - `reports/`: generated progressive execution-cost trees and other read-only reports.
@@ -103,6 +105,38 @@ standalone `span_completed` remains valid for after-the-fact platform telemetry.
 Trace coverage is `exact`, `partial`, or `snapshot_only`. Exact lifecycle coverage does
 not imply that every platform cost was observable. See `execution-trace.md` for the
 span, attribution, privacy, and renderer contracts.
+
+## Interaction Guard Sidecar
+
+When a host can observe an interrupting user message, it opens
+`.interaction-guard.json` before handling that message. The guard records a canonical
+digest of the complete `mission.json`, an evidence-stream boundary digest, the baseline
+active task, a monotonic revision, and opaque message references. The guard protects
+future Mission fields by default, rather than maintaining a fragile allowlist of
+control fields.
+
+While a guard is open, all public runtime Mission mutations, evidence writes, and the
+compatibility Mission writer fail closed unless they are part of a guard resolution.
+Task-local operational logs, sanitized execution telemetry, and read-only reports may
+continue, but they do not gain user authority. A `resume_original` resolution may close
+only if both baseline digests still match and no message remains pending. An authorized
+change needs a persisted proposal followed by a newer pending confirmation message, and
+a one-time receipt bound to the guard identity, revision, baseline, complete decision
+digest, exact mutation digest, and confirmation reference. A raw filesystem writer is
+outside this runtime API boundary and needs host sandboxing if it is in scope.
+
+Guard state is included as `guard_after` in the Mission transaction journal. Recovery
+rolls Mission, trace, evidence, and guard state forward together. Legacy transaction
+`tplan.mission_transaction.v0.1` remains readable; new transactions use v0.2.
+
+The sidecar and dispositions are platform-neutral. Native carriers map their own
+message, before-tool, and turn-end events through
+`resources/interaction-host-contract.md`. A carrier may use a separate
+host-owned runtime marker to distinguish the first prompt of a normal turn from a
+second, mid-turn message. That marker contains only opaque platform
+and message references, is not Mission business state, and must never be treated as
+authority. Native hooks, checkpoint detection, and prompt-only fallback must report
+their real enforcement level separately.
 
 ## Adaptive Runtime Records
 
@@ -228,7 +262,7 @@ logs.
 
 Sparse evidence categories:
 
-- acceptance passed or failed
+- `acceptance_passed` or `acceptance_failed`
 - blocker
 - user feedback
 - decision
@@ -245,6 +279,23 @@ Each line is one JSON object with:
 - `summary`
 - `task_id`
 - `payload`
+
+New qualified acceptance events are fail-closed. Their payload must contain a
+non-empty, distinct `acceptance_ids` list; every id must exist in the Mission, and the
+event `task_id` must name a node whose own declaration or success-critical ancestor
+covers those ids. This validates shape and references only. The Agent or reviewer,
+not the script, remains responsible for deciding whether the acceptance claim is true.
+
+Legacy `acceptance` remains readable. A complete legacy record is classified using the
+same reference rules; an incomplete one is retained as `unclassified_writeback` with
+an audit warning and is never silently upgraded. `decision_applied` is runtime-reserved
+and cannot be appended through the public evidence command.
+
+Validated writeback and countable progress are different. Only qualified acceptance
+and a runtime-applied path decision count as positive progress. Blockers, failures,
+feedback, stops, risk changes, failed acceptance, and unapplied decision recommendations
+are constraint deltas. State changes, artifacts, key findings, and unknown event types
+remain state or unclassified writeback unless a qualified evidence event is written.
 
 `stop_report` evidence events use English payload keys with Chinese user-facing
 content:

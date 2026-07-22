@@ -1,14 +1,14 @@
 {
   "schema_version": "mindthus-beta-composition-v0.2",
   "status": "beta-prerelease",
-  "release_line": "1.5.1-roi-beta",
-  "version": "1.5.1-roi-beta",
+  "release_line": "1.5.2-roi-beta",
+  "version": "1.5.2-roi-beta",
   "package_identity": "mindthus-beta",
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
-    "version": "1.5.1",
-    "ref": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
-    "tree_oid": "55de1b499e41427bb2efc2940f19cae49a4695ba"
+    "version": "1.5.2",
+    "ref": "4372508d0afb41fab95936b92a1d92d0ec9d56b1",
+    "tree_oid": "9fe6050da1217bde0f4a617f297e47fbfa19b2b8"
   },
   "runtime_profile": {
     "name": "roi.2-thin-core",
@@ -34,18 +34,18 @@
     "artifact_path": "capability-register.json"
   },
   "rollback": {
-    "version": "1.5.1",
+    "version": "1.5.2",
     "package_identity": "mindthus",
-    "tag": "v1.5.1"
+    "tag": "v1.5.2"
   },
   "publication": {
     "status": "published",
-    "release_train": "1.5.1",
-    "source_tag": "v1.5.1-roi-beta",
+    "release_train": "1.5.2",
+    "source_tag": "v1.5.2-roi-beta",
     "release_asset_channel": "experimental-roi-beta",
     "allowed_release_shape_if_separately_authorized": "single-github-release-with-stable-and-experimental-roi-packages",
     "github_release": true,
-    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.1",
+    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.2",
     "marketplace": false,
     "automatic_migration": false
   }

@@ -10,17 +10,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+from outcome_attribution import (
+    attribution_audit_lines,
+    attribution_audit_text,
+    attribution_text,
+    build_outcome_attribution,
+    short_attribution_label,
+)
 from tplan_runtime import (
     TplanError,
-    read_execution_trace,
-    read_mission,
+    read_outcome_attribution_snapshot,
     task_map,
     validate_execution_trace,
     validate_mission,
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.5"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.6"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -764,12 +770,14 @@ def build_execution_cost_tree(
     except ValueError as exc:
         raise TplanError("generated_at must be ISO-8601 with timezone") from exc
 
-    mission = read_mission(mission_dir)
+    snapshot = read_outcome_attribution_snapshot(mission_dir)
+    mission = snapshot["mission"]
     mission_errors = validate_mission(mission)
     if mission_errors:
         raise TplanError("; ".join(mission_errors))
-    trace = read_execution_trace(mission_dir)
+    trace = snapshot["trace"]
     _validate_trace(mission, trace)
+    outcome_attribution = build_outcome_attribution(mission, snapshot["events"], trace)
     coverage = _trace_coverage(trace)
     lifecycle = _build_lifecycle(mission, trace, coverage, generated_at)
     tasks = mission.get("tasks", [])
@@ -872,6 +880,7 @@ def build_execution_cost_tree(
             "outcome_summary": state["outcome_summary"],
             "evidence_refs": state["evidence_refs"],
             "artifact_refs": state["artifact_refs"],
+            "outcome_attribution": outcome_attribution["tasks"][task_id],
             "status_history": state["status_history"],
             "direct_cost": direct_cost,
             "inclusive_cost": inclusive_cost,
@@ -911,6 +920,9 @@ def build_execution_cost_tree(
     for node in visible_nodes:
         node.pop("plan_index", None)
         node.pop("active_task_id", None)
+    outcome_attribution["mission"]["node_yield_counts"] = dict(
+        Counter(node["outcome_attribution"]["yield_class"] for node in nodes)
+    )
     overhead_by_attribution = {
         attribution: _span_cost(records, usage_owner_event_ids=usage_owner_event_ids)
         for attribution, records in sorted(overhead_spans.items())
@@ -934,6 +946,7 @@ def build_execution_cost_tree(
             "finished_at": finished_at,
             "cost": mission_cost,
             "elapsed_reconciliation": mission_elapsed_reconciliation,
+            "outcome_attribution": outcome_attribution["mission"],
         },
         "trace": {
             "coverage": coverage,
@@ -1393,6 +1406,7 @@ def _compact_node_summary(node: dict[str, Any], reasons: set[str]) -> str:
         parts.append(f"未结束 {node['direct_open_span_count']}")
     if node["outcome_summary"] and signal_reasons:
         parts.append(f"→ {_shorten(node['outcome_summary'], 52)}")
+    parts.append(short_attribution_label(node["outcome_attribution"]))
     return " · ".join(parts)
 
 
@@ -1411,6 +1425,7 @@ def render_compact_text(report: dict[str, Any]) -> str:
     )
     if mission_token != "—":
         mission_line += f" · Tok {mission_token}"
+    mission_line += f" · {short_attribution_label(mission['outcome_attribution'])}"
     lines = [mission_line, "层级：[T] Task · [ST] SubTask · [P] Step"]
     node_by_id = {node["id"]: node for node in report["nodes"]}
     selection_reasons = {
@@ -1484,13 +1499,13 @@ def render_svg(report: dict[str, Any]) -> str:
     header_x = 32
     header_y = 24
     header_width = width - 64
-    header_height = 192
+    header_height = 288 if view == "audit" else 192
     axis_x = 112
     card_base_x = 270
     depth_indent = 42
     right_margin = 34
-    row_top = 268
-    card_height = {"compact": 164, "standard": 178, "audit": 204}[view]
+    row_top = 364 if view == "audit" else 268
+    card_height = {"compact": 164, "standard": 204, "audit": 296}[view]
     row_gap_by_kind = {"task": 30, "subtask": 18, "step": 12}
     row_ys: list[float] = []
     row_cursor = float(row_top)
@@ -1594,13 +1609,30 @@ def render_svg(report: dict[str, Any]) -> str:
             (
                 f"Token {_fmt_tokens_compact(mission_cost)}"
                 f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
+                f" · 产出归因 P{len(mission['outcome_attribution']['countable_progress'])}"
+                f"/C{len(mission['outcome_attribution']['constraint_deltas'])}"
                 f" · 覆盖 {report['trace']['coverage']} · {view}"
             ),
             "mission-meta",
         ),
+        *(
+            [
+                _svg_text(
+                    58,
+                    212 + index * 24,
+                    ("Mission 审计：" if index == 0 else "") + _shorten(part, 135),
+                    "mission-meta",
+                )
+                for index, part in enumerate(
+                    attribution_audit_lines(mission["outcome_attribution"])
+                )
+            ]
+            if view == "audit"
+            else []
+        ),
         _svg_text(
             32,
-            246,
+            342 if view == "audit" else 246,
             (
                 f"纵向=首次执行；左侧是{time_label}；蓝灰条=起止/持续；"
                 "层级线=Task 主干 6 / SubTask 分支 4 / Step 末梢 2px；中性标签=Task 耗时排名。"
@@ -1887,7 +1919,9 @@ def render_svg(report: dict[str, Any]) -> str:
                     _svg_text(
                         card_x + 18,
                         card_y + 128,
-                        f"结果：{_shorten(node['outcome_summary'], 82) if node['outcome_summary'] else '未记录'}",
+                        (
+                            f"产出归因：{_shorten(attribution_text(node['outcome_attribution']), 74)}"
+                        ),
                         "node-result",
                     ),
                 ]
@@ -1937,23 +1971,29 @@ def render_svg(report: dict[str, Any]) -> str:
                         f"结果：{_shorten(node['outcome_summary'], 82) if node['outcome_summary'] else '未记录'}",
                         "node-result",
                     ),
-                ]
-            )
-            if view == "audit":
-                lines.append(
                     _svg_text(
                         card_x + 18,
                         card_y + 174,
-                        (
-                            f"审计：直接 span {node['direct_cost']['span_count']} · 子树 span {node['inclusive_cost']['span_count']}"
-                            f" · 证据 {len(node['evidence_refs'])} · 产物 {len(node['artifact_refs'])}"
-                        ),
+                        f"产出归因：{_shorten(attribution_text(node['outcome_attribution']), 74)}",
+                        "node-result",
+                    ),
+                ]
+            )
+            if view == "audit":
+                lines.extend(
+                    _svg_text(
+                        card_x + 18,
+                        card_y + 197 + index * 23,
+                        ("审计：" if index == 0 else "") + _shorten(part, 105),
                         "node-meta",
                     )
+                    for index, part in enumerate(
+                        attribution_audit_lines(node["outcome_attribution"])
+                    )
                 )
-                range_y = card_y + 190
+                range_y = card_y + 282
             else:
-                range_y = card_y + 164
+                range_y = card_y + 190
 
         track_x = card_x + 18
         track_width = card_width - 36
@@ -2070,6 +2110,16 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
             f"这是投影视图，省略了 {report['trace']['hidden_node_count']} 个真实节点；"
             "使用 `--view standard` 或 `--view audit` 查看完整拓扑。"
         )
+    mission_attribution = mission["outcome_attribution"]
+    node_yield_counts = mission_attribution.get("node_yield_counts", {})
+    writeback_only_nodes = node_yield_counts.get("writeback_only", 0)
+    telemetry_only_nodes = node_yield_counts.get("telemetry_only", 0)
+    lines.append(
+        "产出归因："
+        f"{len(mission_attribution['countable_progress'])} 项可计推进 · "
+        f"{len(mission_attribution['constraint_deltas'])} 项关键约束 · "
+        f"{writeback_only_nodes} 个仅状态写回节点 · {telemetry_only_nodes} 个仅遥测节点。"
+    )
     lines.extend(
         [
             "",
@@ -2122,13 +2172,76 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
             lines.append(f"- {node['title']} (`{node['id']}`): {'; '.join(details)}")
 
     if report["view"] == "audit":
+        mission_audit_relevant = any(
+            mission_attribution[field]
+            for field in (
+                "countable_progress",
+                "constraint_deltas",
+                "state_writebacks",
+                "unclassified_writebacks",
+                "warnings",
+            )
+        )
+        audit_nodes = [
+            node
+            for node in report["nodes"]
+            if node["outcome_attribution"]["unclassified_writebacks"]
+            or node["outcome_attribution"]["warnings"]
+            or node["outcome_attribution"]["countable_progress"]
+            or node["outcome_attribution"]["constraint_deltas"]
+        ]
+        if mission_audit_relevant or audit_nodes:
+            lines.extend(["", "## 产出归因审计", ""])
+            if mission_audit_relevant:
+                lines.append(
+                    f"- Mission (`{mission['id']}`): {attribution_text(mission_attribution)}；"
+                    f"{attribution_audit_text(mission_attribution)}。"
+                )
+            for node in audit_nodes:
+                attribution = node["outcome_attribution"]
+                evidence_ids = sorted(
+                    {
+                        evidence_id
+                        for bucket in (
+                            "countable_progress",
+                            "constraint_deltas",
+                            "unclassified_writebacks",
+                        )
+                        for item in attribution[bucket]
+                        for evidence_id in item.get("evidence_ids", [])
+                    }
+                )
+                commit_ids = sorted(
+                    {
+                        commit_id
+                        for bucket in (
+                            "countable_progress",
+                            "constraint_deltas",
+                            "state_writebacks",
+                            "unclassified_writebacks",
+                        )
+                        for item in attribution[bucket]
+                        for commit_id in item.get("commit_ids", [])
+                    }
+                )
+                reasons = [
+                    item.get("reason")
+                    for item in attribution["unclassified_writebacks"]
+                    if isinstance(item.get("reason"), str)
+                ]
+                warning_codes = [item["code"] for item in attribution["warnings"]]
+                lines.append(
+                    f"- {node['title']} (`{node['id']}`): {attribution_text(attribution)}；"
+                    f"evidence={evidence_ids or ['none']}；commit={commit_ids or ['none']}；"
+                    f"unclassified={reasons or ['none']}；warnings={warning_codes or ['none']}。"
+                )
         lines.extend(
             [
                 "",
                 "## 审计明细",
                 "",
-                "| 顺序 | 节点 | 状态 | 实际历时 | 活跃时间 | 次数 | 直接资源 | 子树资源 | 子树未精确记录 | 证据 | 产物 |",
-                "| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+                "| 顺序 | 节点 | 状态 | 产出归因 | 实际历时 | 活跃时间 | 次数 | 直接资源 | 子树资源 | 子树未精确记录 | 证据 | 产物 |",
+                "| ---: | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
             ]
         )
         for node in report["nodes"]:
@@ -2139,6 +2252,7 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
                         str(node["execution_order"] or "—"),
                         _markdown_cell(f"{node['title']} ({node['id']})"),
                         _markdown_cell(node["actual_state"]),
+                        _markdown_cell(attribution_text(node["outcome_attribution"])),
                         _fmt_covered_duration(
                             node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
                         ),
