@@ -153,8 +153,9 @@ trace schema. A spawn tool event is deduplicated in favor of the SubAgent lifecy
 pair.
 
 Generation proves only that the Mission/session binding was created. It does not prove
-that the project hook layer was loaded or trusted; coverage stays `not_reported` until
-the adapter observes a real callback. Pairing requires the same turn and event class.
+that the selected hook layer/source was loaded or trusted; coverage stays `not_reported`
+until the adapter observes a real callback. Pairing requires the same turn and event
+class.
 Hook-derived completion status is `unknown` unless a Bash post event supplies a
 structured integer `exit_code`. The command hook emits the valid `{}` JSON response
 required by `SubagentStop`.
