@@ -35,6 +35,38 @@ file. Local-tool and SubAgent coverage therefore remains `not_reported` until th
 adapter observes a callback. A callback without a completed start/stop pair reports
 `available_not_observed`; only a completed pair reports `observed`.
 
+## Codex CLI Installation And Preflight
+
+For a non-interactive `codex exec` run, merge the generated `hooks` object into an
+active, trusted **user** hook layer (normally `~/.codex/hooks.json`) before creating
+the session. Preserve unrelated hooks. A project-local `.codex/hooks.json` is valid
+only when Codex actually discovers that project layer; do not treat a path on disk, a
+`trust_level` override, or `--dangerously-bypass-hook-trust` as proof that the source
+is active.
+
+Before the first measured tool call, inspect Codex's Hooks manager (or the app-server
+`hooks/list` endpoint). The intended source path and every required handler must be
+listed as enabled; review/trust the exact command hash, or use
+`--dangerously-bypass-hook-trust` only for a controlled one-off E2E. If the source is
+not listed, stop: the expected result is `not_reported`, not a telemetry defect in the
+adapter.
+
+When a fresh session ID is not known yet, generate the hook config with a temporary
+safe session id, install and preflight that unchanged config, create a no-tool
+bootstrap session, then rebind the host state with the real session ID before the
+first tool call:
+
+```bash
+python3 skills/tplan/scripts/codex_telemetry_adapter.py bind MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR \
+  --session-id REAL_CODEX_SESSION_ID --replace
+```
+
+The hook command itself does not carry the session ID, so this rebind does not change
+the installed hook definition; it updates host-protected state and refreshes the
+Mission coverage sidecar. Remove the temporary user hook after the recorded session
+ends.
+
 A hook with a wrong session writes no span and returns ordinary hook success so optional
 telemetry cannot block the user's tool. A correctly bound event is attributed:
 
@@ -152,8 +184,9 @@ timing metadata; raw fields are discarded before any write.
 The OTel projection rejects unsupported fields and explicit prompt, response, content,
 command-argument, transcript, stdout/stderr, environment, secret, and connector-payload
 fields. Trace output contains only hashed correlation IDs, safe operation classes,
-numeric timing/usage, status, attribution, and allowed metadata. Raw stable IDs remain
-only in the host-state correlation file.
+numeric timing/usage, status, attribution, and allowed metadata. Raw Codex
+binding/correlation IDs remain only in the host-state file; Mission and task IDs follow
+the normal trace schema.
 
 ## Capability And Degradation Report
 

@@ -139,13 +139,18 @@ python3 skills/tplan/scripts/generate_codex_telemetry_hooks.py MISSION_DIR \
   --output /tmp/tplan-codex-telemetry-hooks.json
 ```
 
-Merge only the generated `hooks` object into a trusted Codex hook layer. The adapter
+For `codex exec`, merge only the generated `hooks` object into an active trusted user
+hook layer (normally `~/.codex/hooks.json`), preserving unrelated hooks. A project hook
+file is an option only after Codex's Hooks manager or app-server `hooks/list` reports
+that exact source as loaded and enabled; a file on disk or a trust override is not
+enough. The adapter
 uses `PreToolUse`/`PostToolUse` for paired local tool/script spans and
 `SubagentStart`/`SubagentStop` for non-additive `agent_turn` envelopes. It hashes
-correlation IDs before trace write, retains raw stable IDs only in the host-state
-sidecar, and never stores tool input/output, prompts, responses, command arguments, or
-connector payloads. A spawn tool event is deduplicated in favor of the SubAgent
-lifecycle pair.
+correlation IDs before trace write, retains raw Codex binding/correlation IDs only in
+the host-state sidecar, and never stores tool input/output, prompts, responses, command
+arguments, or connector payloads. Mission and task IDs continue to follow the normal
+trace schema. A spawn tool event is deduplicated in favor of the SubAgent lifecycle
+pair.
 
 Generation proves only that the Mission/session binding was created. It does not prove
 that the project hook layer was loaded or trusted; coverage stays `not_reported` until
