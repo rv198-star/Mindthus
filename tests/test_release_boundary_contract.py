@@ -21,8 +21,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("当前仓库候选版本：`v1.5.3`", readme)
-        self.assertEqual(readme.count("当前仓库候选版本："), 1)
+        self.assertIn("当前仓库版本：`v1.5.3`", readme)
+        self.assertEqual(readme.count("当前仓库版本："), 1)
         self.assertNotIn("当前仓库版本：`v1.4.6`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.4`", readme)
         self.assertNotIn("当前仓库版本：`v1.4.3`", readme)
@@ -35,23 +35,21 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("输入定框审计", readme)
         self.assertIn("framing-risk", readme)
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
-        self.assertIn("当前已发布 Stable 是 `v1.5.2`", readme)
-        self.assertIn("`v1.5.3` 是待发布 Stable candidate", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.5.3`", readme)
+        self.assertNotIn("待发布 Stable candidate", readme)
         self.assertIn("ROI Beta 没有随本次 TPlan 修复重新资格验证", readme)
-        self.assertIn("mindthus-plugins-1.5.2.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.5.2.tar.gz", readme)
+        self.assertIn("mindthus-plugins-1.5.3.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.5.3.tar.gz", readme)
         self.assertIn("mindthus-beta-1.5.2-roi-beta.tar.gz", readme)
-        self.assertNotIn("mindthus-plugins-1.5.3.tar.gz", readme)
-        self.assertNotIn("mindthus-skills-1.5.3.tar.gz", readme)
         self.assertNotIn("mindthus-beta-1.5.3-roi-beta.tar.gz", readme)
         self.assertNotIn("mindthus-plugins-1.4.6.tar.gz", readme)
         self.assertNotIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-plugins-1.5.2.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-plugins-1.5.3.tar.gz",
             readme,
         )
         self.assertIn(
-            "github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-skills-1.5.2.tar.gz",
+            "github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-skills-1.5.3.tar.gz",
             readme,
         )
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
@@ -84,7 +82,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "python3 scripts/build-release-pack.py",
             "python3 -m unittest discover",
             "## 发布边界",
-            "最终 `v1.5.3` GitHub Release 将提供",
+            "`v1.5.3` GitHub Release 提供",
             "mindthus-plugins-1.5.3.tar.gz",
             "Stable-only",
         ):

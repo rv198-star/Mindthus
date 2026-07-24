@@ -99,17 +99,18 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.5.2`。仓库中的 `v1.5.3` 是待发布 Stable candidate；在 Codex
-host 的实际 callback E2E 完成前，不能把它当作可下载的发布资产。
+当前已发布 Stable 是 `v1.5.3`。本版提供 Stable plugins 与 Stable skills；其 Codex
+local-tool callback E2E 已完成，未观测的 SubAgent host callback 保持 `not_reported`，不被
+表述为已通过。
 
-已发布的 `v1.5.2` Release 提供 Stable plugins、Stable skills 和可选的
-`v1.5.2-roi-beta` 实验包。待发布的 `v1.5.3` 将仅发布 Stable plugins 和 Stable skills；
-ROI Beta 没有随本次 TPlan 修复重新资格验证或升级，不能代替后续 `v1.5.3` Stable。
+已发布的 `v1.5.3` Release 提供 Stable plugins 和 Stable skills。`v1.5.2-roi-beta` 保持
+为上一轮独立实验包；ROI Beta 没有随本次 TPlan 修复重新资格验证或升级，不能代替
+`v1.5.3` Stable。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载已发布的 `mindthus-plugins-1.5.2.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载已发布的 `mindthus-skills-1.5.2.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.3.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.3.tar.gz`。
 - 只在 Codex 上复查上一轮低开销唤起实验：下载 `mindthus-beta-1.5.2-roi-beta.tar.gz`；它是
-  独立的 Codex plugin / marketplace 包，不是通用 skills-pack，也不包含待发布 `v1.5.3` 修复。
+  独立的 Codex plugin / marketplace 包，不是通用 skills-pack，也不包含 `v1.5.3` 修复。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -119,22 +120,22 @@ ROI Beta 没有随本次 TPlan 修复重新资格验证或升级，不能代替�
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.5.2.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-plugins-1.5.2.tar.gz"
+  -o /tmp/mindthus-plugins-1.5.3.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-plugins-1.5.3.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.5.2.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.5.3.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.5.2.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-skills-1.5.2.tar.gz"
+  -o /tmp/mindthus-skills-1.5.3.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-skills-1.5.3.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.5.2.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.5.3.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -279,7 +280,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库候选版本：`v1.5.3`；当前已发布 Stable：`v1.5.2`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.5.3`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
