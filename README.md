@@ -103,14 +103,15 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 local-tool callback E2E 已完成，未观测的 SubAgent host callback 保持 `not_reported`，不被
 表述为已通过。
 
-已发布的 `v1.5.3` Release 提供 Stable plugins 和 Stable skills。`v1.5.2-roi-beta` 保持
-为上一轮独立实验包；ROI Beta 没有随本次 TPlan 修复重新资格验证或升级，不能代替
+已发布的 `v1.5.3` Release 提供 Stable plugins、Stable skills，以及从 `v1.5.3` 的冻结
+Stable core 重新组装并资格验证的 ROI Beta experimental asset。ROI Beta 不能代替
 `v1.5.3` Stable。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.3.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.3.tar.gz`。
-- 只在 Codex 上复查上一轮低开销唤起实验：下载 `mindthus-beta-1.5.2-roi-beta.tar.gz`；它是
-  独立的 Codex plugin / marketplace 包，不是通用 skills-pack，也不包含 `v1.5.3` 修复。
+- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
+  `mindthus-beta-1.5.3-roi-beta.tar.gz`；它是独立的 Codex plugin / marketplace 包，不是
+  通用 skills-pack，但共享本版 TPlan 修复后的产品核心。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -158,17 +159,17 @@ codex plugin marketplace remove mindthus
 
 ### Codex ROI Beta（实验）
 
-只在高能力 Codex / GPT-Sol 上复查上一轮低开销唤起实验时使用。这个 `v1.5.2` 包没有
-本次 `v1.5.3` TPlan 修复；它和 Stable 使用不同的 package、marketplace、cache 与 skill
-namespace，可以独立安装或移除：
+只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个 `v1.5.3` 包从本版冻结
+Stable core 重新组装，保留本次 TPlan 修复；它和 Stable 使用不同的 package、marketplace、
+cache 与 skill namespace，可以独立安装或移除：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-beta-1.5.2-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.2/mindthus-beta-1.5.2-roi-beta.tar.gz"
+  -o /tmp/mindthus-beta-1.5.3-roi-beta.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-beta-1.5.3-roi-beta.tar.gz"
 rm -rf /tmp/mindthus-roi-beta
 mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.5.2-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
+tar -xzf /tmp/mindthus-beta-1.5.3-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
 codex plugin marketplace add /tmp/mindthus-roi-beta
 codex plugin add mindthus-beta@mindthus-beta
 ```

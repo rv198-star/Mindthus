@@ -34,11 +34,18 @@
   capability/degradation sidecar。它只保存匿名关联、类别、数值时长/用量与允许元数据，拒绝
   工具参数、输入输出、prompt、response 等原始内容。
 
+### 补充发布包：1.5.3 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.5.3` Stable core 重新组装；它共享本次 #141、#142、#143 修复，
+  但只替换薄的 `using-mindthus` 入口和一条已经资格验证的 3L5S Anti-Spiral 句子。
+- 发布源码 tag 为 `v1.5.3-roi-beta`。它与 `1.5.3 Stable` 的关系是同一冻结产品核心上
+  的受限实验入口；使用独立的 `mindthus-beta` package、marketplace、cache 与 skill
+  namespace，不是 `1.5.3 Stable` 的替代版，不触发用户安装、配置或工作流的自动迁移。
+
 ### 发布边界
 
-- `v1.5.3` 是 Stable-only：GitHub Release 提供 plugins、skills 与 `SHA256SUMS`。
-- `v1.5.2-roi-beta` 保持为上一轮独立实验包，未声称含本次修复；后续如需升级，必须从
-  冻结 Stable core 重新组装和资格验证。
+- `v1.5.3` GitHub Release 提供 Stable plugins、Stable skills、ROI Beta experimental asset
+  与覆盖三份压缩包的 `SHA256SUMS`。
 
 ## v1.5.2
 

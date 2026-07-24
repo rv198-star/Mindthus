@@ -13,7 +13,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_5_3_stable_only(self):
+    def test_current_release_surface_is_v1_5_3_with_supplemental_roi_beta(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -37,11 +37,10 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("用户价值、偏好、审美和风险姿态", readme)
         self.assertIn("当前已发布 Stable 是 `v1.5.3`", readme)
         self.assertNotIn("待发布 Stable candidate", readme)
-        self.assertIn("ROI Beta 没有随本次 TPlan 修复重新资格验证", readme)
+        self.assertIn("Stable core 重新组装并资格验证的 ROI Beta", readme)
         self.assertIn("mindthus-plugins-1.5.3.tar.gz", readme)
         self.assertIn("mindthus-skills-1.5.3.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.5.2-roi-beta.tar.gz", readme)
-        self.assertNotIn("mindthus-beta-1.5.3-roi-beta.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.5.3-roi-beta.tar.gz", readme)
         self.assertNotIn("mindthus-plugins-1.4.6.tar.gz", readme)
         self.assertNotIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
@@ -63,7 +62,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("#142", changelog)
         self.assertIn("#143", changelog)
         self.assertIn("不新增方法论", changelog)
-        self.assertIn("Stable-only", changelog)
+        self.assertIn("补充发布包：1.5.3 ROI Beta", changelog)
         self.assertIn('VERSION = "1.5.3"', builder)
         self.assertIn('VERSION = "1.5.3"', runtime_logger)
 
@@ -84,7 +83,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "## 发布边界",
             "`v1.5.3` GitHub Release 提供",
             "mindthus-plugins-1.5.3.tar.gz",
-            "Stable-only",
+            "mindthus-beta-1.5.3-roi-beta.tar.gz",
         ):
             self.assertIn(phrase, release_log)
 
