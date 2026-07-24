@@ -47,6 +47,15 @@ acceptance evidence. After completion or handoff, use
 views. Legacy Missions without a trace render as `snapshot_only`; Missions whose trace
 began late render as `partial`.
 
+Every supported writer verifies the immutable `runtime_provenance` before changing
+Mission state, evidence, execution trace, step logs, archives, interaction guards, or
+telemetry sidecars. New Missions pin the creating runtime. A legacy Mission without
+provenance is readable with a warning and is pinned as `legacy_adopted` by its first
+supported unguarded mutation. A known incompatible fingerprint fails before any of
+those canonical artifacts change. Run `scripts/runtime_doctor.py` when selection is
+uncertain; the complete compatibility and recovery contract is in
+`runtime-provenance.md`.
+
 ## Decision State
 
 decision state records PM choices such as split, prune, downgrade, abandon, switch, and

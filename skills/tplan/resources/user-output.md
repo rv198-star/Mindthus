@@ -170,7 +170,16 @@ The command prints two absolute Markdown links. Copy both into the terminal user
 response under a short label such as `TPlan 执行记录` so the user can open the report or
 view the process graph directly. Do not replace the links with a claim that the graph
 exists. If rendering fails, state that the execution graph is unavailable, include the
-recoverable command above, and do not hide the failure behind a completed claim.
+recoverable command above, and do not hide the failure behind a completed claim. Do not
+substitute a hand-authored, alternate, or approximate SVG/diagram for the failed
+Standard renderer.
+
+The report includes the Mission runtime-provenance result. A known incompatible
+fingerprint makes `--completion-handoff` fail before either existing report artifact is
+replaced. Diagnose duplicate roots, selected-versus-installed paths, missing render
+capabilities, and Mission mismatch with `scripts/runtime_doctor.py`; recovery steps are
+defined in `runtime-provenance.md`. A legacy unpinned Mission may render with an
+explicit warning, but that warning must not be presented as a verified creator runtime.
 
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
 to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
@@ -200,10 +209,17 @@ prefixes every real node with `[T]`, `[ST]`, or `[P]` for Task, SubTask, or Step
 prints that legend above the tree. Use `audit` for complete topology plus recovery and
 measurement detail. Unknown measurements must remain unknown.
 
-Execution-cost report JSON uses `tplan.execution_cost_tree.v0.6` and adds a separate
+Execution-cost report JSON uses `tplan.execution_cost_tree.v0.8` and adds a separate
 `outcome_attribution` field to the Mission and every node. Costs remain visible even
 when attribution is `telemetry_only`. Compact uses short labels such as `推进`, `约束`,
 `仅写回`, `仅遥测`, and `未分类`; Standard/Audit explain the attribution. Audit also
 shows evidence ids, commit ids, unclassified reasons, and compatibility warnings.
 Never turn these categories into a completion percentage, score, Token-per-result
 ratio, or causal claim that a particular span produced an evidence event.
+The top-level `runtime` field separately reports exact, relocated, legacy, or
+incompatible runtime provenance and its diagnostics.
+The top-level `telemetry_capture` field separately reports the optional Codex adapter's
+binding and channel coverage. Standard/Audit render this report, including explicit
+`not_reported` reasons for hosted tools, model/turn data, Tokens, waits, or SubAgents
+that the active capture surface did not observe. Missing telemetry is never rendered
+as zero and never changes the one-to-one Mission hierarchy.

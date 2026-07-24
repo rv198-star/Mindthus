@@ -25,7 +25,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         root = Path(cls._tempdir.name)
         cls.stable_out = root / "stable"
         cls.beta_out = root / "beta"
-        cls.beta_archive = root / "mindthus-beta-1.5.1-roi-beta.tar.gz"
+        cls.beta_archive = root / f"mindthus-beta-{PROFILE['version']}.tar.gz"
         cls.beta_checksum = root / "SHA256SUMS"
         stable = subprocess.run(
             [
@@ -66,45 +66,51 @@ class InternalBetaCompositionTests(unittest.TestCase):
 
     def test_internal_identity_and_immutable_refs(self) -> None:
         self.assertEqual(PROFILE["status"], "beta-prerelease")
-        self.assertEqual(PROFILE["version"], "1.5.1-roi-beta")
+        self.assertEqual(
+            PROFILE["version"], f"{PROFILE['shared_core']['version']}-roi-beta"
+        )
         self.assertEqual(PROFILE["package_identity"], "mindthus-beta")
-        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.1")
+        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.3")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "ce2c601822b1f038b59a6cfed0660c3695e3c468",
+            "57319d8da57c367eed42e386b4bfafb477e91bea",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
             "493f9520b75f582aa22f6c8647ec08eab3e122d3",
         )
         self.assertEqual(PROFILE["publication"]["status"], "published")
-        self.assertEqual(PROFILE["publication"]["source_tag"], "v1.5.1-roi-beta")
+        self.assertEqual(
+            PROFILE["publication"]["source_tag"], f"v{PROFILE['version']}"
+        )
         self.assertEqual(
             PROFILE["publication"]["allowed_release_shape_if_separately_authorized"],
             "single-github-release-with-stable-and-experimental-roi-packages",
         )
-        self.assertEqual(PROFILE["publication"]["release_train"], "1.5.1")
+        self.assertEqual(
+            PROFILE["publication"]["release_train"], PROFILE["shared_core"]["version"]
+        )
         self.assertEqual(PROFILE["publication"]["release_asset_channel"], "experimental-roi-beta")
         self.assertTrue(PROFILE["publication"]["github_release"])
         self.assertEqual(
             PROFILE["publication"]["release_url"],
-            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.1",
+            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.3",
         )
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
             PROFILE["runtime_profile"]["convergence_evidence"]["required_at_build"]
         )
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        notes = (REPO / "docs" / "releases" / "v1.5.1-roi-beta.md").read_text(
+        notes = (REPO / "docs" / "releases" / f"v{PROFILE['version']}.md").read_text(
             encoding="utf-8"
         )
         self.assertIn("experimental asset", changelog)
         self.assertIn("experimental asset", notes)
         self.assertIn("发布源码 tag", changelog)
-        self.assertIn("作为 `v1.5.1` GitHub Release", notes)
-        self.assertIn("新增发布包：1.5.1 ROI Beta（GPT/Sol）", changelog)
-        self.assertIn("与 1.5.1 Stable 的关系", changelog)
-        self.assertIn("不是 `1.5.1 Stable` 的替代版", changelog)
+        self.assertIn("作为 `v1.5.3` GitHub Release", notes)
+        self.assertIn("补充发布包：1.5.3 ROI Beta（GPT/Sol）", changelog)
+        self.assertIn("受限实验入口", changelog)
+        self.assertIn("不是 `1.5.3 Stable` 的替代版", changelog)
         self.assertIn("不触发用户安装、配置", changelog)
         self.assertIn("或工作流的自动迁移", changelog)
         self.assertNotIn("预发布日期", changelog + notes)
@@ -218,7 +224,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
             marketplace["plugins"][0]["source"]["path"], "./mindthus-beta"
         )
         self.assertEqual(manifest["name"], "mindthus-beta")
-        self.assertEqual(manifest["version"], "1.5.1-roi-beta")
+        self.assertEqual(manifest["version"], PROFILE["version"])
         prompt = "\n".join(manifest["interface"]["defaultPrompt"])
         self.assertIn("mindthus-beta:using-mindthus", prompt)
         self.assertNotIn("mindthus:using-mindthus", prompt)
@@ -237,7 +243,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 / "cache"
                 / "mindthus-beta"
                 / "mindthus-beta"
-                / "1.5.1-roi-beta"
+                / PROFILE["version"]
             )
             shutil.copytree(self.beta_plugin, cache)
             codex_home.mkdir(exist_ok=True)
@@ -258,10 +264,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
             result = subprocess.run(command, text=True, capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             report = json.loads(result.stdout)
-            self.assertEqual(report["version"], "1.5.1-roi-beta")
+            self.assertEqual(report["version"], PROFILE["version"])
             self.assertEqual(report["summary"]["status"], "ok")
             self.assertIn(
-                "mindthus-beta/mindthus-beta/1.5.1-roi-beta",
+                f"mindthus-beta/mindthus-beta/{PROFILE['version']}",
                 report["locations"]["cache"]["root"],
             )
             self.assertNotIn("/mindthus/mindthus/", json.dumps(report))
@@ -302,18 +308,20 @@ class InternalBetaCompositionTests(unittest.TestCase):
             packaged["capability_register_sha256"],
             hashlib.sha256(register_path.read_bytes()).hexdigest(),
         )
-        states = {
-            item["id"]: item["release_roi_beta"]["state"]
-            for item in register["capabilities"]
-        }
+        states = {item["id"]: item["release_roi_beta"]["state"] for item in register["capabilities"]}
         self.assertEqual(
             states,
             {
                 "tvg-profile-atlas-v1": "included",
                 "tplan-execution-cost-tree-v1": "included",
                 "roi.2-thin-core": "included",
+                "tplan-interaction-guard-and-heartbeat-v1": "included",
+                "tplan-validated-outcome-attribution-v1": "included",
+                "tplan-truth-and-telemetry-boundaries-v1": "included",
             },
         )
+        for item in register["capabilities"]:
+            self.assertEqual(item["release_roi_beta"]["version"], PROFILE["version"])
 
     def test_archive_is_byte_reproducible_from_the_same_commit(self) -> None:
         second_out = Path(self._tempdir.name) / "beta-second"

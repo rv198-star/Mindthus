@@ -2,6 +2,51 @@
 
 ## Unreleased
 
+## v1.5.3
+
+发布 tag：`v1.5.3`
+
+[发布说明](docs/releases/v1.5.3.md)
+
+说明：这是 1.x Stable 线的 TPlan 真实性与运行时边界 patch。它修复时间轴把不完整
+观测窗口写成精确 Mission 时间、正式写入口没有统一运行时来源检查，以及 Codex 遥测在
+状态、关联、隐私与 hook 协议上的缺口；不新增方法论，也不回填历史 Mission。
+
+### #141：时间线真实性
+
+- `partial` 和 `snapshot_only` 生命周期不再生成未经证实的 Mission `started_at`、
+  `finished_at` 或 `elapsed_ms`；若能显示已观测窗口，会明确标注为 `observed_trace`。
+- 时间树严格重放生命周期与终态，缺失或不一致 trace 维持降级状态，不能由成本 span
+  或零值“修复”为精确数据。
+
+### #142：正式写入口 provenance 前置检查
+
+- 新 Mission 固定创建它的 runtime fingerprint；所有正式 Mission mutation、evidence、
+  trace、step log、archive、interaction guard 和遥测 sidecar 在写入前统一验证。
+- 旧 Mission 仅可在第一次非 guard 写入时显式 adoption；已知不兼容 runtime 会在修改
+  canonical artifact 前失败。`runtime_doctor.py` 用于排查重复或过期安装。
+
+### #143：状态、关联、隐私与 hook 协议
+
+- `requires_human` 的恢复 cursor、trace 事务时间和终态校验保持一致；SubAgent 仅记录为
+  非加性执行 envelope，不会变成或篡改 Mission 任务树。
+- Codex telemetry 采用显式 session/thread-to-Mission binding、成对 lifecycle 关联、去重和
+  capability/degradation sidecar。它只保存匿名关联、类别、数值时长/用量与允许元数据，拒绝
+  工具参数、输入输出、prompt、response 等原始内容。
+
+### 补充发布包：1.5.3 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.5.3` Stable core 重新组装；它共享本次 #141、#142、#143 修复，
+  但只替换薄的 `using-mindthus` 入口和一条已经资格验证的 3L5S Anti-Spiral 句子。
+- 发布源码 tag 为 `v1.5.3-roi-beta`。它与 `1.5.3 Stable` 的关系是同一冻结产品核心上
+  的受限实验入口；使用独立的 `mindthus-beta` package、marketplace、cache 与 skill
+  namespace，不是 `1.5.3 Stable` 的替代版，不触发用户安装、配置或工作流的自动迁移。
+
+### 发布边界
+
+- `v1.5.3` GitHub Release 提供 Stable plugins、Stable skills、ROI Beta experimental asset
+  与覆盖三份压缩包的 `SHA256SUMS`。
+
 ## v1.5.2
 
 发布 tag：`v1.5.2`

@@ -29,6 +29,8 @@ class TplanSkillContractTests(unittest.TestCase):
             "resources/hooks.md",
             "resources/user-output.md",
             "resources/execution-trace.md",
+            "resources/runtime-manifest.json",
+            "resources/runtime-provenance.md",
             "resources/subagents.md",
             "templates/mission.json",
             "templates/mission.md",
@@ -42,6 +44,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "scripts/observe_model_call.py",
             "scripts/run_traced_command.py",
             "scripts/render_execution_cost_tree.py",
+            "scripts/runtime_doctor.py",
         ]
         missing = [path for path in required if not (SKILL / path).exists()]
         self.assertEqual(missing, [])
@@ -209,6 +212,7 @@ class TplanSkillContractTests(unittest.TestCase):
             "--completion-handoff",
             "Copy both into the terminal user",
             "execution graph is unavailable",
+            "Do not\nsubstitute a hand-authored",
         ):
             self.assertIn(phrase, resource)
 

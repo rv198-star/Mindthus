@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compose Mindthus 1.5.2 ROI Beta from a frozen shared core and ROI.2."""
+"""Compose a Mindthus ROI Beta from a frozen shared core and ROI.2."""
 
 from __future__ import annotations
 
@@ -152,7 +152,9 @@ def materialize_git_tree(root: Path, ref: str, destination: Path) -> None:
         archive.extractall(destination, members=members, **extract_kwargs)
 
 
-def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
+def rewrite_beta_identity(
+    marketplace_root: Path, stable_version: str, beta_version: str
+) -> Path:
     stable_plugin_root = marketplace_root / "mindthus"
     plugin_root = marketplace_root / "mindthus-beta"
     stable_plugin_root.rename(plugin_root)
@@ -160,7 +162,9 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     marketplace_path = marketplace_root / ".agents" / "plugins" / "marketplace.json"
     marketplace = read_json(marketplace_path)
     marketplace["name"] = "mindthus-beta"
-    marketplace["interface"]["displayName"] = "Mindthus 1.5.2 ROI Beta (GPT/Sol)"
+    marketplace["interface"]["displayName"] = (
+        f"Mindthus {stable_version} ROI Beta (GPT/Sol)"
+    )
     marketplace["plugins"][0]["name"] = "mindthus-beta"
     marketplace["plugins"][0]["source"]["path"] = "./mindthus-beta"
     write_json(marketplace_path, marketplace)
@@ -168,11 +172,15 @@ def rewrite_beta_identity(marketplace_root: Path, version: str) -> Path:
     manifest_path = plugin_root / ".codex-plugin" / "plugin.json"
     manifest = read_json(manifest_path)
     manifest["name"] = "mindthus-beta"
-    manifest["version"] = version
-    manifest["description"] = "ROI-first Mindthus 1.5.2 Beta for high-capability Codex / GPT-Sol."
+    manifest["version"] = beta_version
+    manifest["description"] = (
+        f"ROI-first Mindthus {stable_version} Beta for high-capability Codex / GPT-Sol."
+    )
     interface = manifest["interface"]
-    interface["displayName"] = "Mindthus 1.5.2 ROI Beta (GPT/Sol)"
-    interface["shortDescription"] = "ROI-first thin entry over the 1.5.2 Stable shared core"
+    interface["displayName"] = f"Mindthus {stable_version} ROI Beta (GPT/Sol)"
+    interface["shortDescription"] = (
+        f"ROI-first thin entry over the {stable_version} Stable shared core"
+    )
     prompts = interface.get("defaultPrompt")
     if not isinstance(prompts, list) or not all(isinstance(item, str) for item in prompts):
         raise SystemExit("Codex defaultPrompt is not a string list")
@@ -344,7 +352,9 @@ def build(output: Path, force: bool) -> Path:
         )
         shutil.copytree(stable_out / "codex-plugin", output, dirs_exist_ok=True)
 
-    plugin_root = rewrite_beta_identity(output, profile["version"])
+    plugin_root = rewrite_beta_identity(
+        output, profile["shared_core"]["version"], profile["version"]
+    )
     using_target = plugin_root / "skills" / "using-mindthus" / "SKILL.md"
     using_target.write_bytes(overlay_bytes)
 
@@ -404,7 +414,7 @@ def main() -> int:
         write_checksum(archive_path, checksum_path)
         print(f"built reproducible Beta archive at {archive_path}")
         print(f"wrote Beta archive checksum at {checksum_path}")
-    print(f"built Mindthus 1.5.2 ROI Beta experimental package at {plugin_root}")
+    print(f"built Mindthus {profile['version']} experimental package at {plugin_root}")
     return 0
 
 

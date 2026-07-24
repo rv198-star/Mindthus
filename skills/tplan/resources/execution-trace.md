@@ -28,7 +28,7 @@ produce the wrong result.
 
 `outcome_attribution.py` derives a read-only view from one locked Mission, evidence,
 and trace snapshot. It does not create a sidecar or change Mission/trace schemas. The
-execution-cost report schema is `tplan.execution_cost_tree.v0.6`.
+execution-cost report schema is `tplan.execution_cost_tree.v0.8`.
 
 Telemetry answers what ran and what it cost. Validated writeback answers which legal
 Mission/evidence/state records were committed. Countable progress is narrower: only a
@@ -56,6 +56,12 @@ scripts. Platform and host cost need an explicit observer:
 | script/tool elapsed | host monotonic clock | `run_traced_command.py` |
 | wait/queue elapsed | host/platform | `record_execution_span.py` |
 | state mutation | TPlan runtime | automatic lifecycle event |
+
+Codex may optionally supply paired local-tool and SubAgent lifecycle hooks plus a
+strictly sanitized OTel projection. That adapter requires an explicit
+session/thread-to-Mission binding, correlates only stable lifecycle IDs, and emits a
+separate capability/degradation sidecar. It never turns a SubAgent into a task node.
+See `codex-telemetry.md`.
 
 Missing data stays absent. Never replace an unavailable Token field or duration with a
 fabricated zero. A category with no emitted span is `not reported`, not automatically
@@ -281,12 +287,35 @@ audit envelope and is excluded from cumulative LLM-call and additive resource to
 
 ## Coverage
 
-- `exact`: lifecycle trace started with Mission initialization
-- `partial`: the Mission existed before the first trace record
+- `exact`: lifecycle trace has one leading Mission initialization record, replays every
+  supported node/active-path/Mission status mutation to the current snapshot, preserves
+  non-decreasing lifecycle timestamps, keeps runtime-owned active-path changes complete
+  within their logical commit, and a terminal snapshot has a matching terminal
+  `mission_status_changed` event
+- `partial`: trace exists but initialization, lifecycle tail, terminal event, or replay
+  consistency is incomplete; `finished_at` and exact Mission elapsed remain unavailable,
+  while a separately labelled observed trace window may still be rendered
 - `snapshot_only`: no trace exists; timing and Token cost remain unknown
+
+The active cursor normally names an `active` task. One runtime-owned terminal exception
+is `requires_human`: `stop_report` may retain the blocked task as the recovery cursor.
+When that logical commit changes the current task from `active` to `blocked` and the
+Mission to `requires_human` without changing cursor identity, no
+`active_node_changed` record is required. This exception is source-bound to the
+runtime `stop_report` and interaction-guard stop writers; an ordinary decision that
+blocks a task must still trace its cursor change.
 
 Even `exact` lifecycle coverage reports only cost spans that a host or platform
 actually supplied. The report declares `reported_spans_only` for that reason.
+Zero spans therefore do not downgrade an otherwise exact lifecycle; they leave cost
+fields `not reported`. Conversely, measured spans cannot repair missing lifecycle
+events. Coverage diagnostics are emitted at the top level and must remain visible in
+Standard/Audit output.
+
+Standard/Audit JSON names its displayed time domain explicitly as either
+`mission_lifecycle` or `observed_trace`. The corresponding `window_*` fields never
+promote a partial observed window into Mission `started_at`, `finished_at`, or
+`elapsed_ms`.
 
 ## Privacy Guard
 
