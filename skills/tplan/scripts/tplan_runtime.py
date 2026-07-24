@@ -53,6 +53,10 @@ AUTHORITY_RECEIPT_SCHEMA_VERSION = "tplan.authority_receipt.v0.1"
 SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
 USER_UPDATE_CURSOR_SCHEMA_VERSION = "tplan.user_update_cursor.v0.2"
 OUTCOME_ATTRIBUTION_SCHEMA_VERSION = "tplan.outcome_attribution.v0.1"
+RUNTIME_MANIFEST_SCHEMA_VERSION = "tplan.runtime_manifest.v0.1"
+RUNTIME_FINGERPRINT_SCHEMA_VERSION = "tplan.runtime_fingerprint.v0.1"
+RUNTIME_PROVENANCE_SCHEMA_VERSION = "tplan.runtime_provenance.v0.1"
+RUNTIME_MANIFEST_RELATIVE_PATH = Path("resources/runtime-manifest.json")
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied"}
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
@@ -511,6 +515,386 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def runtime_skill_root(anchor: str | Path = __file__) -> Path:
+    resolved = Path(anchor).resolve()
+    if resolved.is_dir():
+        return resolved
+    return resolved.parents[1]
+
+
+def _runtime_manifest_path(skill_root: Path) -> Path:
+    return skill_root / RUNTIME_MANIFEST_RELATIVE_PATH
+
+
+def load_runtime_manifest(skill_root: Path | None = None) -> dict[str, Any]:
+    root = (skill_root or runtime_skill_root()).resolve()
+    path = _runtime_manifest_path(root)
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise TplanError(f"TPlan runtime manifest is missing: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise TplanError(f"TPlan runtime manifest is invalid JSON: {path}") from exc
+    if not isinstance(manifest, dict):
+        raise TplanError(f"TPlan runtime manifest must be an object: {path}")
+    required = {
+        "schema_version",
+        "package_version",
+        "source_id",
+        "capability_versions",
+        "capabilities",
+        "required_scripts",
+        "fingerprint_files",
+    }
+    if set(manifest) != required:
+        missing = sorted(required - set(manifest))
+        extra = sorted(set(manifest) - required)
+        details = []
+        if missing:
+            details.append("missing " + ", ".join(missing))
+        if extra:
+            details.append("unsupported " + ", ".join(extra))
+        raise TplanError("TPlan runtime manifest fields invalid: " + "; ".join(details))
+    if manifest.get("schema_version") != RUNTIME_MANIFEST_SCHEMA_VERSION:
+        raise TplanError(
+            f"TPlan runtime manifest schema must be {RUNTIME_MANIFEST_SCHEMA_VERSION}"
+        )
+    for field in ("package_version", "source_id"):
+        if not isinstance(manifest.get(field), str) or not manifest[field]:
+            raise TplanError(f"TPlan runtime manifest {field} must be a non-empty string")
+    capability_versions = manifest.get("capability_versions")
+    if (
+        not isinstance(capability_versions, dict)
+        or not capability_versions
+        or not all(
+            isinstance(key, str)
+            and key
+            and isinstance(value, str)
+            and value
+            for key, value in capability_versions.items()
+        )
+    ):
+        raise TplanError(
+            "TPlan runtime manifest capability_versions must map names to versions"
+        )
+    for field in ("capabilities", "required_scripts", "fingerprint_files"):
+        values = manifest.get(field)
+        if (
+            not isinstance(values, list)
+            or not values
+            or not all(isinstance(value, str) and value for value in values)
+            or len(values) != len(set(values))
+        ):
+            raise TplanError(
+                f"TPlan runtime manifest {field} must be a non-empty unique string list"
+            )
+        if field != "capabilities" and any(
+            Path(value).is_absolute() or ".." in Path(value).parts
+            for value in values
+        ):
+            raise TplanError(
+                f"TPlan runtime manifest {field} paths must stay under the skill root"
+            )
+    return manifest
+
+
+def runtime_fingerprint(skill_root: Path | None = None) -> dict[str, Any]:
+    root = (skill_root or runtime_skill_root()).resolve()
+    manifest = load_runtime_manifest(root)
+    missing_scripts = [
+        relative
+        for relative in manifest["required_scripts"]
+        if not (root / relative).is_file()
+    ]
+    if missing_scripts:
+        raise TplanError(
+            "TPlan runtime required scripts are missing under "
+            f"{root}: {', '.join(missing_scripts)}"
+        )
+
+    digest = hashlib.sha256()
+    for relative in manifest["fingerprint_files"]:
+        path = root / relative
+        if not path.is_file():
+            raise TplanError(f"TPlan runtime fingerprint file is missing: {path}")
+        digest.update(relative.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return {
+        "schema_version": RUNTIME_FINGERPRINT_SCHEMA_VERSION,
+        "package_version": manifest["package_version"],
+        "source_id": manifest["source_id"],
+        "skill_root": str(root),
+        "script_root": str((root / "scripts").resolve()),
+        "build_hash": "sha256:" + digest.hexdigest(),
+        "capability_versions": dict(sorted(manifest["capability_versions"].items())),
+        "capabilities": sorted(manifest["capabilities"]),
+    }
+
+
+def validate_runtime_fingerprint(value: Any) -> list[str]:
+    if not isinstance(value, dict):
+        return ["runtime fingerprint must be an object"]
+    required = {
+        "schema_version",
+        "package_version",
+        "source_id",
+        "skill_root",
+        "script_root",
+        "build_hash",
+        "capability_versions",
+        "capabilities",
+    }
+    errors: list[str] = []
+    if set(value) != required:
+        errors.append("runtime fingerprint fields are invalid")
+    if value.get("schema_version") != RUNTIME_FINGERPRINT_SCHEMA_VERSION:
+        errors.append(
+            f"runtime fingerprint schema_version must be {RUNTIME_FINGERPRINT_SCHEMA_VERSION}"
+        )
+    for field in ("package_version", "source_id", "skill_root", "script_root"):
+        if not isinstance(value.get(field), str) or not value[field]:
+            errors.append(f"runtime fingerprint {field} must be a non-empty string")
+    build_hash = value.get("build_hash")
+    if not isinstance(build_hash, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", build_hash) is None:
+        errors.append("runtime fingerprint build_hash must be a sha256 digest")
+    capability_versions = value.get("capability_versions")
+    if (
+        not isinstance(capability_versions, dict)
+        or not capability_versions
+        or not all(
+            isinstance(key, str)
+            and key
+            and isinstance(version, str)
+            and version
+            for key, version in capability_versions.items()
+        )
+    ):
+        errors.append("runtime fingerprint capability_versions are invalid")
+    capabilities = value.get("capabilities")
+    if (
+        not isinstance(capabilities, list)
+        or not capabilities
+        or not all(isinstance(item, str) and item for item in capabilities)
+        or len(capabilities) != len(set(capabilities or []))
+    ):
+        errors.append("runtime fingerprint capabilities are invalid")
+    return errors
+
+
+def runtime_fingerprint_compatibility(
+    recorded: Any,
+    current: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    current = current or runtime_fingerprint()
+    recorded_errors = validate_runtime_fingerprint(recorded)
+    current_errors = validate_runtime_fingerprint(current)
+    if recorded_errors or current_errors:
+        return {
+            "status": "incompatible",
+            "compatible": False,
+            "differences": {
+                "recorded_errors": recorded_errors,
+                "current_errors": current_errors,
+            },
+        }
+    identity_fields = (
+        "package_version",
+        "source_id",
+        "build_hash",
+        "capability_versions",
+        "capabilities",
+    )
+    differences = {
+        field: {"recorded": recorded[field], "current": current[field]}
+        for field in identity_fields
+        if recorded[field] != current[field]
+    }
+    if differences:
+        return {
+            "status": "incompatible",
+            "compatible": False,
+            "differences": differences,
+        }
+    relocated = any(
+        recorded[field] != current[field] for field in ("skill_root", "script_root")
+    )
+    return {
+        "status": "compatible_relocated" if relocated else "exact",
+        "compatible": True,
+        "differences": (
+            {
+                field: {"recorded": recorded[field], "current": current[field]}
+                for field in ("skill_root", "script_root")
+                if recorded[field] != current[field]
+            }
+            if relocated
+            else {}
+        ),
+    }
+
+
+def validate_runtime_provenance(value: Any) -> list[str]:
+    if not isinstance(value, dict):
+        return ["runtime_provenance must be an object"]
+    errors: list[str] = []
+    if set(value) != {"schema_version", "origin", "fingerprint"}:
+        errors.append("runtime_provenance fields are invalid")
+    if value.get("schema_version") != RUNTIME_PROVENANCE_SCHEMA_VERSION:
+        errors.append(
+            f"runtime_provenance schema_version must be {RUNTIME_PROVENANCE_SCHEMA_VERSION}"
+        )
+    if value.get("origin") not in {"native", "legacy_adopted"}:
+        errors.append("runtime_provenance origin must be native or legacy_adopted")
+    errors.extend(validate_runtime_fingerprint(value.get("fingerprint")))
+    return errors
+
+
+def new_runtime_provenance(*, origin: str = "native") -> dict[str, Any]:
+    if origin not in {"native", "legacy_adopted"}:
+        raise TplanError("runtime provenance origin unsupported")
+    return {
+        "schema_version": RUNTIME_PROVENANCE_SCHEMA_VERSION,
+        "origin": origin,
+        "fingerprint": runtime_fingerprint(),
+    }
+
+
+def runtime_provenance_report(
+    mission: dict[str, Any],
+    *,
+    current: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    current = current or runtime_fingerprint()
+    provenance = mission.get("runtime_provenance")
+    if provenance is None:
+        return {
+            "status": "legacy_unpinned",
+            "severity": "warning",
+            "compatible": None,
+            "origin": None,
+            "recorded": None,
+            "current": current,
+            "diagnostics": [
+                {
+                    "code": "runtime_provenance_missing",
+                    "message": (
+                        "Mission predates runtime provenance; the creating runtime "
+                        "cannot be verified"
+                    ),
+                }
+            ],
+        }
+    errors = validate_runtime_provenance(provenance)
+    if errors:
+        return {
+            "status": "incompatible",
+            "severity": "error",
+            "compatible": False,
+            "origin": provenance.get("origin") if isinstance(provenance, dict) else None,
+            "recorded": (
+                provenance.get("fingerprint") if isinstance(provenance, dict) else None
+            ),
+            "current": current,
+            "diagnostics": [
+                {
+                    "code": "runtime_provenance_invalid",
+                    "message": "; ".join(errors),
+                }
+            ],
+        }
+    compatibility = runtime_fingerprint_compatibility(
+        provenance["fingerprint"],
+        current,
+    )
+    diagnostics: list[dict[str, str]] = []
+    severity = "ok"
+    if compatibility["status"] == "compatible_relocated":
+        severity = "warning"
+        diagnostics.append(
+            {
+                "code": "runtime_path_relocated",
+                "message": (
+                    "runtime content is compatible but the selected canonical path "
+                    "differs from the recorded path"
+                ),
+            }
+        )
+    elif not compatibility["compatible"]:
+        severity = "error"
+        diagnostics.append(
+            {
+                "code": "runtime_fingerprint_mismatch",
+                "message": (
+                    "selected TPlan runtime does not match the Mission runtime fingerprint"
+                ),
+            }
+        )
+    if provenance["origin"] == "legacy_adopted":
+        if severity == "ok":
+            severity = "warning"
+        diagnostics.append(
+            {
+                "code": "runtime_legacy_adopted",
+                "message": (
+                    "Mission was first pinned by a later runtime; its original creator "
+                    "remains unknown"
+                ),
+            }
+        )
+    return {
+        "status": (
+            "legacy_adopted_" + compatibility["status"]
+            if provenance["origin"] == "legacy_adopted"
+            else compatibility["status"]
+        ),
+        "severity": severity,
+        "compatible": compatibility["compatible"],
+        "origin": provenance["origin"],
+        "recorded": provenance["fingerprint"],
+        "current": current,
+        "differences": compatibility["differences"],
+        "diagnostics": diagnostics,
+    }
+
+
+def _prepare_runtime_provenance(
+    before: dict[str, Any],
+    after: dict[str, Any],
+    *,
+    allow_legacy_adoption: bool,
+    allow_prepared_legacy_adoption: bool = False,
+) -> None:
+    before_provenance = before.get("runtime_provenance")
+    after_provenance = after.get("runtime_provenance")
+    if before_provenance is None:
+        if not allow_legacy_adoption:
+            raise TplanError(
+                "legacy Mission has no runtime provenance and cannot be adopted "
+                "inside this protected mutation"
+            )
+        if after_provenance is None:
+            after["runtime_provenance"] = new_runtime_provenance(origin="legacy_adopted")
+        elif allow_prepared_legacy_adoption:
+            report = runtime_provenance_report(after)
+            if after_provenance.get("origin") != "legacy_adopted" or report["severity"] == "error":
+                raise TplanError(
+                    "prepared legacy runtime provenance is invalid or incompatible"
+                )
+        else:
+            raise TplanError("runtime_provenance is runtime-owned and cannot be supplied")
+        return
+    if after_provenance != before_provenance:
+        raise TplanError("runtime_provenance is runtime-owned and immutable")
+    report = runtime_provenance_report(before)
+    if report["severity"] == "error":
+        raise TplanError(
+            "TPlan runtime fingerprint mismatch; run runtime_doctor.py and use the "
+            "recorded or explicitly compatible runtime before mutating the Mission"
+        )
+
+
 def slugify(value: str) -> str:
     slug = re.sub(r"[^A-Za-z0-9._-]+", "-", value.strip()).strip("-")
     return slug or "unnamed"
@@ -797,11 +1181,20 @@ def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str 
             _recover_pending_mission_transaction_unlocked(mission_dir)
             if _read_interaction_guard_unlocked(mission_dir) is not None:
                 raise TplanError("interaction guard is open; write_mission cannot bypass protected Mission state")
-            write_json(paths["mission"], data)
-            sync_mission_narrative(mission_dir, data, latest_state=latest_state)
+            before = _read_mission_unlocked(mission_dir)
+            prepared = copy.deepcopy(data)
+            _prepare_runtime_provenance(
+                before,
+                prepared,
+                allow_legacy_adoption=True,
+            )
+            write_json(paths["mission"], prepared)
+            sync_mission_narrative(mission_dir, prepared, latest_state=latest_state)
         return
-    write_json(paths["mission"], data)
-    sync_mission_narrative(mission_dir, data, latest_state=latest_state)
+    prepared = copy.deepcopy(data)
+    prepared.setdefault("runtime_provenance", new_runtime_provenance())
+    write_json(paths["mission"], prepared)
+    sync_mission_narrative(mission_dir, prepared, latest_state=latest_state)
 
 
 def _canonical_json_bytes(value: Any) -> bytes:
@@ -1031,7 +1424,11 @@ def begin_interaction_guard(
         raise TplanError("interaction guard event_seq must be a non-negative integer")
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        mission = _read_mission_unlocked(mission_dir)
+        mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="begin_interaction_guard",
+            allow_interaction_guard=True,
+        )
         guard = _read_interaction_guard_unlocked(mission_dir)
         if guard is not None:
             if guard["platform"] != platform:
@@ -1267,6 +1664,17 @@ def _recover_pending_mission_transaction_unlocked(mission_dir: Path) -> bool:
             _validate_interaction_guard(guard_after)
     elif guard_after is not _GUARD_UNSET:
         raise TplanError("legacy Mission transaction must not define guard_after")
+
+    current = _read_mission_unlocked(mission_dir)
+    _prepare_runtime_provenance(
+        current,
+        mission,
+        allow_legacy_adoption=_read_interaction_guard_unlocked(mission_dir) is None,
+        allow_prepared_legacy_adoption=True,
+    )
+    mission_errors = validate_mission(mission)
+    if mission_errors:
+        raise TplanError("; ".join(mission_errors))
 
     write_text_atomic(paths["trace"], trace_text, durable=True)
     if evidence_text is not None:
@@ -1506,6 +1914,8 @@ def validate_mission(state: Any) -> list[str]:
 
     if state.get("schema_version") != SCHEMA_VERSION:
         errors.append(f"schema_version must be {SCHEMA_VERSION}")
+    if "runtime_provenance" in state:
+        errors.extend(validate_runtime_provenance(state.get("runtime_provenance")))
 
     mission = state.get("mission")
     if not isinstance(mission, dict):
@@ -1863,6 +2273,7 @@ def build_mission(
 ) -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
+        "runtime_provenance": new_runtime_provenance(),
         "mission": {
             "id": mission_id,
             "title": title,
@@ -2245,10 +2656,12 @@ def read_outcome_attribution_snapshot(mission_dir: Path) -> dict[str, Any]:
 
     with execution_trace_lock(mission_dir):
         _require_no_pending_mission_transaction_unlocked(mission_dir, "reading outcome attribution")
+        mission = _read_mission_unlocked(mission_dir)
         return {
-            "mission": _read_mission_unlocked(mission_dir),
+            "mission": mission,
             "events": _read_events_unlocked(mission_dir),
             "trace": _read_execution_trace_unlocked(mission_dir),
+            "runtime_provenance": runtime_provenance_report(mission),
         }
 
 
@@ -2397,10 +2810,12 @@ def append_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     path = mission_paths(mission_dir)["evidence"]
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        if _read_interaction_guard_unlocked(mission_dir) is not None:
-            raise TplanError("interaction guard is open; evidence writes require an authorized resolution")
+        mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="append_event",
+        )
         event = prepare_event(mission_dir, event)
-        errors = validate_evidence_event(_read_mission_unlocked(mission_dir), event)
+        errors = validate_evidence_event(mission, event)
         if errors:
             raise TplanError("; ".join(errors))
         errors = _validate_new_evidence_ids_unlocked(mission_dir, [event])
@@ -2902,7 +3317,10 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
 def append_execution_trace_record(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        _ensure_no_interaction_guard_unlocked(mission_dir, "append_execution_trace_record")
+        _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="append_execution_trace_record",
+        )
         return _append_execution_trace_record_unlocked(mission_dir, record)
 
 
@@ -2945,7 +3363,15 @@ def _initialize_execution_trace_unlocked(
 def initialize_execution_trace(mission_dir: Path, mission: dict[str, Any], *, timestamp: str | None = None) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        return _initialize_execution_trace_unlocked(mission_dir, mission, timestamp=timestamp)
+        prepared_mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="initialize_execution_trace",
+        )
+        return _initialize_execution_trace_unlocked(
+            mission_dir,
+            prepared_mission,
+            timestamp=timestamp,
+        )
 
 
 def _state_change_trace_records(
@@ -3050,6 +3476,7 @@ def _commit_mission_state_unlocked(
     extra_trace_records: list[dict[str, Any]] | None = None,
     guard_after: dict[str, Any] | None | object = _GUARD_UNSET,
     reserved_evidence_authority: object | None = None,
+    allow_prepared_legacy_adoption: bool = False,
 ) -> list[dict[str, Any]]:
     current = _read_mission_unlocked(mission_dir)
     if current != before:
@@ -3059,6 +3486,12 @@ def _commit_mission_state_unlocked(
         raise TplanError("interaction guard is open; Mission mutation requires an authorized resolution")
     if guard_after is not _GUARD_UNSET and guard_after is not None:
         _validate_interaction_guard(guard_after)
+    _prepare_runtime_provenance(
+        before,
+        after,
+        allow_legacy_adoption=active_guard is None,
+        allow_prepared_legacy_adoption=allow_prepared_legacy_adoption,
+    )
     errors = validate_mission(after)
     if errors:
         raise TplanError("; ".join(errors))
@@ -3081,7 +3514,14 @@ def _commit_mission_state_unlocked(
         refs=refs,
         task_details=task_details,
     )
-    records.extend(extra_trace_records or [])
+    extra_records = copy.deepcopy(extra_trace_records or [])
+    if records and extra_records:
+        transaction_timestamp = records[0]["timestamp"]
+        transaction_commit_id = records[0]["commit_id"]
+        for record in extra_records:
+            record["timestamp"] = transaction_timestamp
+            record["commit_id"] = transaction_commit_id
+    records.extend(extra_records)
     for record in records:
         errors = validate_execution_trace_record(after, record)
         if errors:
@@ -3116,6 +3556,38 @@ def _commit_mission_state_unlocked(
     write_json(paths["transaction"], transaction, durable=True)
     _recover_pending_mission_transaction_unlocked(mission_dir)
     return records
+
+
+def _prepare_supported_runtime_write_unlocked(
+    mission_dir: Path,
+    *,
+    operation: str,
+    allow_interaction_guard: bool = False,
+) -> dict[str, Any]:
+    """Apply one provenance gate before any supported non-Mission artifact write."""
+
+    guard = _read_interaction_guard_unlocked(mission_dir)
+    if guard is not None and not allow_interaction_guard:
+        raise TplanError(
+            f"interaction guard is open; {operation} cannot mutate protected Mission artifacts"
+        )
+    before = _read_mission_unlocked(mission_dir)
+    prepared = copy.deepcopy(before)
+    _prepare_runtime_provenance(
+        before,
+        prepared,
+        allow_legacy_adoption=guard is None,
+    )
+    if prepared != before:
+        _commit_mission_state_unlocked(
+            mission_dir,
+            before,
+            prepared,
+            source={"kind": "runtime", "name": "runtime_provenance_adoption"},
+            latest_state=f"Runtime provenance adopted before {operation}.",
+            allow_prepared_legacy_adoption=True,
+        )
+    return prepared
 
 
 def commit_mission_state(
@@ -3763,8 +4235,11 @@ def append_step_log(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
         raise TplanError("step log task_id must be a non-empty string")
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        _ensure_no_interaction_guard_unlocked(mission_dir, "append_step_log")
-        find_task(_read_mission_unlocked(mission_dir), task_id)
+        mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="append_step_log",
+        )
+        find_task(mission, task_id)
         path = step_log_path(mission_dir, task_id)
         path.parent.mkdir(parents=True, exist_ok=True)
         events = read_step_logs(mission_dir, task_id)
@@ -3780,8 +4255,11 @@ def append_step_log(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
 def archive_task_logs(mission_dir: Path, task_id: str, summary: str) -> Path:
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        _ensure_no_interaction_guard_unlocked(mission_dir, "archive_task_logs")
-        find_task(_read_mission_unlocked(mission_dir), task_id)
+        mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="archive_task_logs",
+        )
+        find_task(mission, task_id)
         paths = mission_paths(mission_dir)
         active_log = step_log_path(mission_dir, task_id)
         archive_dir = paths["archive"] / slugify(task_id)

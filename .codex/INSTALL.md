@@ -63,6 +63,18 @@ ls -la "${CODEX_HOME:-$HOME/.codex}/skills/mindthus"
 
 The path should point to the checkout's `skills` directory, for example `~/.codex/mindthus/skills`.
 
+If TPlan may exist in both plugin and skills-pack locations, verify the selected
+runtime explicitly:
+
+```bash
+python3 skills/tplan/scripts/runtime_doctor.py \
+  --selected-root /path/to/selected/skills/tplan \
+  --installed-root /path/to/installed/skills/tplan
+```
+
+Remove or disable stale duplicate paths, or explicitly select the intended installed
+release, then re-run the doctor before Mission mutation or terminal handoff.
+
 For a repository checkout in another location, pass it explicitly:
 
 ```bash

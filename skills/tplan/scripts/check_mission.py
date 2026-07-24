@@ -15,6 +15,7 @@ from tplan_runtime import (
     TplanError,
     read_execution_trace,
     read_mission,
+    runtime_provenance_report,
     validate_execution_trace,
     validate_mission,
     validate_mission_directory_identity,
@@ -30,11 +31,18 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     mission_dir = Path(args.mission_dir)
+    runtime_report = None
     try:
         mission = read_mission(mission_dir)
         errors = validate_mission(mission)
         errors.extend(validate_mission_directory_identity(mission, mission_dir))
         errors.extend(validate_execution_trace(mission, read_execution_trace(mission_dir)))
+        runtime_report = runtime_provenance_report(mission)
+        if runtime_report["severity"] == "error":
+            errors.extend(
+                f"{item['code']}: {item['message']}"
+                for item in runtime_report["diagnostics"]
+            )
     except (OSError, json.JSONDecodeError, TplanError) as exc:
         errors = [str(exc)]
 
@@ -46,6 +54,9 @@ def main() -> int:
         return 1
 
     print("mission_check: ok")
+    if runtime_report is not None and runtime_report["severity"] == "warning":
+        for item in runtime_report["diagnostics"]:
+            print(f"runtime_warning: {item['code']}: {item['message']}")
     print("script_result: no runtime schema violations detected; agentic judgment is still required")
     return 0
 

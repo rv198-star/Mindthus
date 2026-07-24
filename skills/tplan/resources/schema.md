@@ -30,8 +30,18 @@ Required top-level fields:
 - `tasks`: list of runtime nodes. Runtime `v0.1` supports `task`, `subtask`, and
   `step` nodes.
 - `active_task_id`: task id or null.
+- `runtime_provenance`: script-owned immutable creator/runtime fingerprint. It is
+  required on newly initialized Missions. A missing field is accepted only as an
+  explicitly diagnosed legacy Mission and is pinned by its first supported unguarded
+  mutation.
 - `shared_context`: optional runtime index for the project-level Mission shared
   context file and scoped shared risk signals.
+
+Runtime provenance uses `tplan.runtime_provenance.v0.1`; its fingerprint records package
+and source identity, canonical skill/script roots, build hash, capability versions, and
+capabilities. Path relocation alone is compatible when build and capabilities match.
+Version, source, build, or capability differences are incompatible. See
+`runtime-provenance.md` for mutation, render, doctor, and recovery behavior.
 
 Required Mission fields:
 

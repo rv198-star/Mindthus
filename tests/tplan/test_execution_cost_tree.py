@@ -15,7 +15,13 @@ sys.path.insert(0, str(SCRIPTS))
 
 from observe_model_call import ModelCallObserver
 from execution_cost_tree import _counted_tokens, _duration_hotspots, _span_cost, _usage_owner_event_ids
-from tplan_runtime import TplanError, record_execution_span, start_execution_span
+from tplan_runtime import (
+    TplanError,
+    begin_interaction_guard,
+    record_execution_span,
+    start_execution_span,
+    stop_interaction_guard,
+)
 
 
 def run_script(script_name, *args):
@@ -94,6 +100,54 @@ def create_tree_mission(tmp):
     return mission_dir
 
 
+def complete_mission_status(tmp, mission_dir):
+    decision = Path(tmp) / "complete-mission-decision.json"
+    decision.write_text(
+        json.dumps(
+            {
+                "recommendation": "close",
+                "rationale": "All execution-tree acceptance work is complete.",
+                "confidence": 95,
+                "evidence_links": [],
+                "proposed_mutations": [
+                    {"type": "set_mission_status", "status": "completed"},
+                ],
+                "requires_human": False,
+                "mission_alignment": "Closing preserves the completed execution-tree state.",
+                "path_assessment": {
+                    "marginal_roi": "positive",
+                    "path_role": "dominant_path",
+                    "evidence_delta": "new_evidence_expected",
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    result = run_script(
+        "apply_decision.py",
+        str(mission_dir),
+        "--decision",
+        str(decision),
+    )
+    if result.returncode != 0:
+        raise AssertionError(result.stderr)
+
+
+def complete_tree_mission(tmp, mission_dir):
+    for task_id in ("S1", "S2", "T1"):
+        result = run_script(
+            "transition_task.py",
+            str(mission_dir),
+            "--task-id",
+            task_id,
+            "--status",
+            "completed",
+        )
+        if result.returncode != 0:
+            raise AssertionError(result.stderr)
+    complete_mission_status(tmp, mission_dir)
+
+
 def record_span(tmp, mission_dir, raw, name):
     path = Path(tmp) / f"{name}.json"
     path.write_text(json.dumps(raw), encoding="utf-8")
@@ -152,7 +206,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(evidence.returncode, 0, evidence.stderr)
 
             report = render_json(mission_dir)
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
             self.assertEqual(report["mission"]["outcome_attribution"]["yield_class"], "countable_progress")
             by_id = {node["id"]: node for node in report["nodes"]}
             self.assertEqual(by_id["S1"]["outcome_attribution"]["yield_class"], "countable_progress")
@@ -762,7 +816,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
 
             report = render_json(mission_dir, "--view", "standard")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
             self.assertEqual(report["timeline"]["axis"], "vertical")
             self.assertEqual(
                 report["timeline"]["row_positioning"],
@@ -881,6 +935,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 "audit",
             )
             self.assertNotEqual(invalid.returncode, 0)
+            self.assertIn("TPlan terminal handoff rendering failed", invalid.stderr)
             self.assertIn("requires the default Standard Markdown", invalid.stderr)
 
     def test_parent_edges_paint_after_child_edges_at_junctions(self):
@@ -1114,6 +1169,566 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("[ST] Optional untouched path ⛔ 受阻", text.stdout)
             self.assertIn("→ Waiting for an external decision", text.stdout)
 
+    def test_completed_snapshot_with_incomplete_trace_renders_full_tree_as_partial(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["mission"]["status"] = "completed"
+            mission["active_task_id"] = None
+            for task in mission["tasks"]:
+                task["status"] = "completed"
+            mission_path.write_text(
+                json.dumps(mission, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            for view in ("standard", "audit"):
+                report = render_json(mission_dir, "--view", view)
+                self.assertEqual(report["trace"]["coverage"], "partial")
+                self.assertFalse(report["trace"]["snapshot_consistent"])
+                self.assertIsNone(report["mission"]["elapsed_ms"])
+                self.assertIsNone(report["mission"]["finished_at"])
+                self.assertIsNotNone(report["mission"]["observed_elapsed_ms"])
+                self.assertIsNotNone(report["mission"]["observed_finished_at"])
+                self.assertEqual(report["visible_node_ids"], ["T1", "S1", "S2"])
+                self.assertEqual(
+                    report["tree_edges"],
+                    [
+                        {"from": "mission", "to": "T1"},
+                        {"from": "T1", "to": "S1"},
+                        {"from": "T1", "to": "S2"},
+                    ],
+                )
+                self.assertTrue(
+                    all(node["elapsed_coverage"] == "partial" for node in report["nodes"])
+                )
+                diagnostic_codes = {
+                    item["code"] for item in report["trace"]["coverage_diagnostics"]
+                }
+                self.assertIn("trace_task_status_mismatch", diagnostic_codes)
+                self.assertIn("trace_active_task_mismatch", diagnostic_codes)
+                self.assertIn("trace_mission_status_mismatch", diagnostic_codes)
+                self.assertIn("trace_missing_terminal_event", diagnostic_codes)
+                self.assertEqual(
+                    report["timeline"]["range_bar_scale"],
+                    "linear_observed_window",
+                )
+                self.assertEqual(report["timeline"]["window_kind"], "observed_trace")
+                self.assertNotIn("started_at", report["timeline"])
+                self.assertNotIn("finished_at", report["timeline"])
+                self.assertNotIn("elapsed_ms", report["timeline"])
+
+            handoff = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--completion-handoff",
+            )
+            self.assertEqual(handoff.returncode, 0, handoff.stderr)
+            markdown = (
+                mission_dir / "reports" / "execution-cost-tree.md"
+            ).read_text(encoding="utf-8")
+            svg = (
+                mission_dir / "reports" / "execution-cost-tree.svg"
+            ).read_text(encoding="utf-8")
+            self.assertIn("覆盖告警", markdown)
+            self.assertIn("trace_missing_terminal_event", markdown)
+            self.assertIn("生命周期告警", svg)
+            self.assertIn("已观测窗口", svg)
+            self.assertIn("观测窗口结束", svg)
+            self.assertNotIn("Mission 结束", svg)
+            self.assertNotIn("覆盖 exact", svg)
+            self.assertNotIn("实际历时 ≥", svg)
+            self.assertNotIn("精确时间", svg)
+
+            root = ET.fromstring(svg)
+            task_cards = [
+                element
+                for element in root.iter()
+                if element.attrib.get("class") == "task-card"
+            ]
+            self.assertEqual(
+                [element.attrib["data-task-id"] for element in task_cards],
+                ["T1", "S1", "S2"],
+            )
+
+    def test_complete_terminal_lifecycle_is_exact_without_cost_spans(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            complete_tree_mission(tmp, mission_dir)
+
+            report = render_json(mission_dir, "--view", "audit")
+            terminal_record = next(
+                record
+                for record in reversed(read_jsonl(mission_dir / "execution_trace.jsonl"))
+                if record["event_type"] == "mission_status_changed"
+            )
+            self.assertEqual(report["trace"]["coverage"], "exact")
+            self.assertTrue(report["trace"]["snapshot_consistent"])
+            self.assertEqual(report["trace"]["coverage_diagnostics"], [])
+            self.assertEqual(
+                report["mission"]["finished_at"],
+                terminal_record["timestamp"],
+            )
+            self.assertIsNotNone(report["mission"]["elapsed_ms"])
+            self.assertEqual(report["mission"]["cost"]["span_count"], 0)
+            self.assertEqual(
+                report["mission"]["cost"]["usage_coverage"],
+                "not_reported",
+            )
+            self.assertEqual(
+                report["mission"]["elapsed_reconciliation"]["not_exactly_recorded_elapsed_ms"],
+                report["mission"]["elapsed_ms"],
+            )
+            self.assertEqual(report["timeline"]["window_kind"], "mission_lifecycle")
+            self.assertEqual(
+                report["timeline"]["window_elapsed_ms"],
+                report["mission"]["elapsed_ms"],
+            )
+
+    def test_missing_active_path_events_downgrade_lifecycle_coverage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            for task_id in ("S1", "S2", "T1"):
+                active = run_script(
+                    "transition_task.py",
+                    str(mission_dir),
+                    "--task-id",
+                    task_id,
+                    "--status",
+                    "active",
+                )
+                self.assertEqual(active.returncode, 0, active.stderr)
+                completed = run_script(
+                    "transition_task.py",
+                    str(mission_dir),
+                    "--task-id",
+                    task_id,
+                    "--status",
+                    "completed",
+                )
+                self.assertEqual(completed.returncode, 0, completed.stderr)
+            complete_tree_mission(tmp, mission_dir)
+
+            trace_path = mission_dir / "execution_trace.jsonl"
+            records = [
+                record
+                for record in read_jsonl(trace_path)
+                if record["event_type"] != "active_node_changed"
+            ]
+            trace_path.write_text(
+                "".join(json.dumps(record, ensure_ascii=False) + "\n" for record in records),
+                encoding="utf-8",
+            )
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["trace"]["coverage"], "partial")
+            self.assertFalse(report["trace"]["snapshot_consistent"])
+            self.assertIsNone(report["mission"]["elapsed_ms"])
+            diagnostic_codes = {
+                item["code"] for item in report["trace"]["coverage_diagnostics"]
+            }
+            self.assertIn("trace_active_commit_incomplete", diagnostic_codes)
+
+    def test_missing_active_clear_event_downgrades_even_when_snapshot_keeps_stale_cursor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+            completed = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "completed",
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            for task_id in ("S1", "S2"):
+                result = run_script(
+                    "transition_task.py",
+                    str(mission_dir),
+                    "--task-id",
+                    task_id,
+                    "--status",
+                    "completed",
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+            complete_mission_status(tmp, mission_dir)
+
+            trace_path = mission_dir / "execution_trace.jsonl"
+            records = read_jsonl(trace_path)
+            completion = next(
+                record
+                for record in records
+                if record["event_type"] == "task_status_changed"
+                and record.get("task_id") == "T1"
+                and record["payload"].get("to_status") == "completed"
+            )
+            records = [
+                record
+                for record in records
+                if not (
+                    record["event_type"] == "active_node_changed"
+                    and record.get("commit_id") == completion.get("commit_id")
+                )
+            ]
+            trace_path.write_text(
+                "".join(
+                    json.dumps(record, ensure_ascii=False) + "\n"
+                    for record in records
+                ),
+                encoding="utf-8",
+            )
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["active_task_id"] = "T1"
+            mission_path.write_text(
+                json.dumps(mission, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            report = render_json(mission_dir, "--view", "audit")
+            diagnostic_codes = {
+                item["code"] for item in report["trace"]["coverage_diagnostics"]
+            }
+            self.assertEqual(report["trace"]["coverage"], "partial")
+            self.assertIsNone(report["mission"]["elapsed_ms"])
+            self.assertIn("trace_active_commit_incomplete", diagnostic_codes)
+            self.assertIn("snapshot_active_task_not_active", diagnostic_codes)
+
+    def test_atomic_parent_child_activation_with_one_cursor_event_remains_exact(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            decision = Path(tmp) / "activate-parent-child.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "continue",
+                        "rationale": "The parent and selected child form one active path.",
+                        "confidence": 95,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {"type": "set_active_task", "task_id": "T1"},
+                            {"type": "set_active_task", "task_id": "S1"},
+                        ],
+                        "requires_human": False,
+                        "mission_alignment": "The cursor ends on the selected child.",
+                        "path_assessment": {
+                            "marginal_roi": "positive",
+                            "path_role": "dominant_path",
+                            "evidence_delta": "new_evidence_expected",
+                        },
+                        "continuation_authorization": {
+                            "trigger_reasons": ["repeated_same_path_attempt"],
+                            "evidence_shape_lint": "pass",
+                            "defect_classification": "acceptance_blocking",
+                            "expected_evidence_delta": "new_evidence_expected",
+                            "authorized_action": "continue_same_path",
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            activated = run_script(
+                "apply_decision.py",
+                str(mission_dir),
+                "--decision",
+                str(decision),
+            )
+            self.assertEqual(activated.returncode, 0, activated.stderr)
+            activation_records = read_jsonl(
+                mission_dir / "execution_trace.jsonl"
+            )[1:]
+            activation_commit = activation_records[0]["commit_id"]
+            same_commit = [
+                record
+                for record in activation_records
+                if record.get("commit_id") == activation_commit
+            ]
+            self.assertEqual(
+                len(
+                    [
+                        record
+                        for record in same_commit
+                        if record["event_type"] == "task_status_changed"
+                        and record["payload"].get("to_status") == "active"
+                    ]
+                ),
+                2,
+            )
+            self.assertEqual(
+                len(
+                    [
+                        record
+                        for record in same_commit
+                        if record["event_type"] == "active_node_changed"
+                    ]
+                ),
+                1,
+            )
+
+            complete_tree_mission(tmp, mission_dir)
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["trace"]["coverage"], "exact")
+            self.assertEqual(report["trace"]["coverage_diagnostics"], [])
+            self.assertIsNotNone(report["mission"]["elapsed_ms"])
+
+    def test_requires_human_stop_keeps_blocked_recovery_cursor_exact(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+            stopped = run_script(
+                "stop_report.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--summary",
+                "Need operator input",
+                "--current-goal",
+                "Render the execution tree",
+                "--attempt",
+                "Validated the runtime path",
+                "--blocking-issue",
+                "Operator decision is required",
+                "--why-cannot-continue-safely",
+                "Continuing would guess the required policy",
+                "--need-from-human",
+                "Choose the policy",
+                "--resume-condition",
+                "Resume after the policy is supplied",
+            )
+            self.assertEqual(stopped.returncode, 0, stopped.stderr)
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["mission"]["status"], "requires_human")
+            self.assertEqual(report["mission"]["active_task_id"], "T1")
+            self.assertEqual(
+                next(node for node in report["nodes"] if node["id"] == "T1")[
+                    "status"
+                ],
+                "blocked",
+            )
+            self.assertEqual(report["trace"]["coverage"], "exact")
+            self.assertEqual(report["trace"]["coverage_diagnostics"], [])
+            self.assertIsNotNone(report["mission"]["elapsed_ms"])
+            self.assertIsNotNone(report["mission"]["finished_at"])
+
+    def test_requires_human_decision_cannot_masquerade_as_stop_recovery_cursor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+            decision = Path(tmp) / "escalate.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "recommendation": "escalate",
+                        "rationale": "Escalate without granting a recovery cursor.",
+                        "confidence": 90,
+                        "evidence_links": [],
+                        "proposed_mutations": [
+                            {
+                                "type": "transition_task",
+                                "task_id": "T1",
+                                "status": "blocked",
+                            },
+                            {
+                                "type": "set_mission_status",
+                                "status": "requires_human",
+                            },
+                        ],
+                        "requires_human": False,
+                        "mission_alignment": "The escalation preserves the Mission boundary.",
+                        "path_assessment": {
+                            "marginal_roi": "positive",
+                            "path_role": "dominant_path",
+                            "evidence_delta": "new_evidence_expected",
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            escalated = run_script(
+                "apply_decision.py",
+                str(mission_dir),
+                "--decision",
+                str(decision),
+            )
+            self.assertEqual(escalated.returncode, 0, escalated.stderr)
+
+            trace_path = mission_dir / "execution_trace.jsonl"
+            records = read_jsonl(trace_path)
+            blocked = next(
+                record
+                for record in records
+                if record["event_type"] == "task_status_changed"
+                and record.get("task_id") == "T1"
+                and record["payload"].get("to_status") == "blocked"
+            )
+            records = [
+                record
+                for record in records
+                if not (
+                    record["event_type"] == "active_node_changed"
+                    and record.get("commit_id") == blocked.get("commit_id")
+                )
+            ]
+            trace_path.write_text(
+                "".join(
+                    json.dumps(record, ensure_ascii=False) + "\n"
+                    for record in records
+                ),
+                encoding="utf-8",
+            )
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["active_task_id"] = "T1"
+            mission_path.write_text(
+                json.dumps(mission, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            report = render_json(mission_dir, "--view", "audit")
+            diagnostic_codes = {
+                item["code"] for item in report["trace"]["coverage_diagnostics"]
+            }
+            self.assertEqual(report["trace"]["coverage"], "partial")
+            self.assertIn("trace_active_commit_incomplete", diagnostic_codes)
+            self.assertIn("snapshot_active_task_not_active", diagnostic_codes)
+            self.assertIsNone(report["mission"]["elapsed_ms"])
+
+    def test_interaction_guard_stop_is_one_monotonic_exact_lifecycle_commit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            active = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(active.returncode, 0, active.stderr)
+            guard = begin_interaction_guard(
+                mission_dir,
+                platform="test-host",
+                message_ref="M1",
+            )
+            stop_interaction_guard(
+                mission_dir,
+                guard_id=guard["guard_id"],
+                expected_revision=guard["revision"],
+                message_refs=["M1"],
+                task_id="T1",
+                summary="Stop at the recovery cursor.",
+                payload={
+                    "current_goal": "Render the execution tree",
+                    "attempts": ["Opened the interaction guard"],
+                    "blocking_issue": "Operator decision is required",
+                    "why_cannot_continue_safely": "Continuing would guess policy",
+                    "need_from_human": "Choose the policy",
+                    "resume_condition": "Resume after policy is supplied",
+                },
+            )
+
+            records = read_jsonl(mission_dir / "execution_trace.jsonl")
+            stopped = [
+                record
+                for record in records
+                if record.get("source")
+                == {"kind": "interaction_guard", "name": "stop"}
+            ]
+            self.assertEqual(
+                {record["timestamp"] for record in stopped},
+                {stopped[0]["timestamp"]},
+            )
+            self.assertEqual(
+                {record["commit_id"] for record in stopped},
+                {stopped[0]["commit_id"]},
+            )
+            self.assertEqual(
+                {
+                    record["event_type"]
+                    for record in stopped
+                },
+                {
+                    "task_status_changed",
+                    "mission_status_changed",
+                    "interaction_guard_state",
+                },
+            )
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["trace"]["coverage"], "exact")
+            self.assertEqual(report["trace"]["coverage_diagnostics"], [])
+            self.assertEqual(report["mission"]["status"], "requires_human")
+            self.assertEqual(report["mission"]["active_task_id"], "T1")
+
+    def test_non_monotonic_lifecycle_timestamps_downgrade_coverage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            complete_tree_mission(tmp, mission_dir)
+            trace_path = mission_dir / "execution_trace.jsonl"
+            records = read_jsonl(trace_path)
+            initialized_at = parse_time(records[0]["timestamp"])
+            task_change = next(
+                record
+                for record in records
+                if record["event_type"] == "task_status_changed"
+            )
+            terminal = next(
+                record
+                for record in records
+                if record["event_type"] == "mission_status_changed"
+            )
+            task_change["timestamp"] = iso(initialized_at + timedelta(seconds=2))
+            terminal["timestamp"] = iso(initialized_at + timedelta(seconds=1))
+            trace_path.write_text(
+                "".join(json.dumps(record, ensure_ascii=False) + "\n" for record in records),
+                encoding="utf-8",
+            )
+
+            report = render_json(mission_dir, "--view", "audit")
+            self.assertEqual(report["trace"]["coverage"], "partial")
+            self.assertIsNone(report["mission"]["elapsed_ms"])
+            diagnostic_codes = {
+                item["code"] for item in report["trace"]["coverage_diagnostics"]
+            }
+            self.assertIn("trace_lifecycle_timestamp_non_monotonic", diagnostic_codes)
+
     def test_legacy_missions_report_partial_or_snapshot_coverage_without_inventing_cost(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -1138,6 +1753,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(partial["mission"]["cost"]["span_count"], 0)
             self.assertEqual(partial["timeline"]["offset_origin"], "first_observed_trace")
             self.assertEqual(partial["timeline"]["range_bar_scale"], "linear_observed_window")
+            self.assertEqual(partial["timeline"]["window_kind"], "observed_trace")
             audit = run_script(
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
             )
@@ -1325,7 +1941,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("must not enter the trace", raw_trace)
 
             report = render_json(mission_dir, "--view", "audit")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.6")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
             self.assertEqual(report["trace"]["started_span_count"], 1)
             self.assertEqual(report["trace"]["completed_span_count"], 1)
             self.assertEqual(report["trace"]["open_span_count"], 0)

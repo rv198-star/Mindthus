@@ -57,6 +57,18 @@ def main() -> int:
             focus_task_id=args.focus,
             top_cost=args.top_cost,
         )
+        if args.completion_handoff and report["runtime"]["severity"] == "error":
+            diagnostics = "; ".join(
+                f"{item['code']}: {item['message']}"
+                for item in report["runtime"]["diagnostics"]
+            )
+            raise TplanError(
+                "TPlan runtime provenance is incompatible; terminal handoff artifacts "
+                "were not replaced. "
+                + diagnostics
+                + ". Run runtime_doctor.py and select the recorded or an explicitly "
+                "compatible runtime."
+            )
         if args.format == "text":
             rendered = render_compact_text(report)
         elif args.format == "svg":
@@ -83,7 +95,12 @@ def main() -> int:
             print(rendered, end="")
         return 0
     except (OSError, TplanError, ValueError) as exc:
-        print(str(exc), file=sys.stderr)
+        prefix = (
+            "TPlan terminal handoff rendering failed: "
+            if args.completion_handoff
+            else ""
+        )
+        print(prefix + str(exc), file=sys.stderr)
         return 1
 
 

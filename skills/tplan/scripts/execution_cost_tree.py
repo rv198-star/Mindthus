@@ -26,7 +26,8 @@ from tplan_runtime import (
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.6"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.8"
+CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION = "tplan.codex_telemetry_coverage.v0.1"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -68,6 +69,14 @@ COMPACT_KIND_TAGS = {
     "subtask": "[ST]",
     "step": "[P]",
 }
+LIFECYCLE_STATE_EVENT_TYPES = {
+    "mission_initialized",
+    "node_added",
+    "task_status_changed",
+    "active_node_changed",
+    "mission_status_changed",
+    "interaction_guard_state",
+}
 
 
 def _parse_timestamp(value: str) -> datetime:
@@ -85,6 +94,182 @@ def _iso_from_ms(value: int) -> str:
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _default_telemetry_capture(reason: str, *, diagnostic: str | None = None) -> dict[str, Any]:
+    channels = {
+        name: {
+            "status": "not_reported",
+            "observed_span_count": 0,
+            "reason": reason,
+        }
+        for name in (
+            "local_tools",
+            "hosted_tools",
+            "model_turns",
+            "tokens",
+            "waits",
+            "subagents",
+        )
+    }
+    return {
+        "schema_version": CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION,
+        "adapter_version": None,
+        "generated_at": None,
+        "binding": {"status": "not_configured", "scope": None, "mission_id": None},
+        "channels": channels,
+        "deduplication": {
+            "hook_preferred_for_tools": True,
+            "deduplicated_event_count": 0,
+            "agent_turn_is_non_additive_envelope": True,
+        },
+        "privacy": {
+            "raw_prompts": "not_collected",
+            "raw_model_responses": "not_collected",
+            "command_arguments": "not_collected",
+            "tool_inputs_and_outputs": "not_collected",
+            "connector_payloads": "not_collected",
+            "stable_ids": "not_collected",
+        },
+        "diagnostics": {
+            "binding_failure_count": 0,
+            "unpaired_event_count": 0,
+            "trace_write_failure_count": 0,
+            "last_code": diagnostic,
+        },
+    }
+
+
+def _read_telemetry_capture(mission_dir: Path, mission_id: str | None) -> dict[str, Any]:
+    path = mission_dir / "reports" / "codex-telemetry-coverage.json"
+    if not path.exists():
+        return _default_telemetry_capture(
+            "optional Codex telemetry adapter is not configured for this Mission"
+        )
+    try:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return _default_telemetry_capture(
+            "Codex telemetry coverage sidecar is unreadable",
+            diagnostic="coverage_sidecar_unreadable",
+        )
+    required_channels = {
+        "local_tools",
+        "hosted_tools",
+        "model_turns",
+        "tokens",
+        "waits",
+        "subagents",
+    }
+    binding = report.get("binding") if isinstance(report, dict) else None
+    channels = report.get("channels") if isinstance(report, dict) else None
+    deduplication = report.get("deduplication") if isinstance(report, dict) else None
+    privacy = report.get("privacy") if isinstance(report, dict) else None
+    diagnostics = report.get("diagnostics") if isinstance(report, dict) else None
+    if (
+        not isinstance(report, dict)
+        or set(report)
+        != {
+            "schema_version",
+            "adapter_version",
+            "generated_at",
+            "binding",
+            "channels",
+            "deduplication",
+            "privacy",
+            "diagnostics",
+        }
+        or report.get("schema_version") != CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION
+        or not isinstance(report.get("adapter_version"), str)
+        or not isinstance(report.get("generated_at"), str)
+        or not isinstance(binding, dict)
+        or set(binding) != {"status", "scope", "mission_id"}
+        or binding.get("status") != "exact"
+        or binding.get("scope") not in {"session", "session_and_thread"}
+        or binding.get("mission_id") != mission_id
+        or not isinstance(channels, dict)
+        or set(channels) != required_channels
+        or not isinstance(deduplication, dict)
+        or set(deduplication)
+        != {
+            "hook_preferred_for_tools",
+            "deduplicated_event_count",
+            "agent_turn_is_non_additive_envelope",
+        }
+        or deduplication.get("hook_preferred_for_tools") is not True
+        or deduplication.get("agent_turn_is_non_additive_envelope") is not True
+        or isinstance(deduplication.get("deduplicated_event_count"), bool)
+        or not isinstance(deduplication.get("deduplicated_event_count"), int)
+        or deduplication["deduplicated_event_count"] < 0
+        or not isinstance(privacy, dict)
+        or set(privacy)
+        != {
+            "raw_prompts",
+            "raw_model_responses",
+            "command_arguments",
+            "tool_inputs_and_outputs",
+            "connector_payloads",
+            "stable_ids",
+        }
+        or not all(
+            isinstance(value, str)
+            and value
+            and len(value) <= 80
+            and "\n" not in value
+            and "\r" not in value
+            for value in privacy.values()
+        )
+        or not isinstance(diagnostics, dict)
+        or set(diagnostics)
+        != {
+            "binding_failure_count",
+            "unpaired_event_count",
+            "trace_write_failure_count",
+            "last_code",
+        }
+        or not all(
+            not isinstance(diagnostics.get(field), bool)
+            and isinstance(diagnostics.get(field), int)
+            and diagnostics[field] >= 0
+            for field in (
+                "binding_failure_count",
+                "unpaired_event_count",
+                "trace_write_failure_count",
+            )
+        )
+        or (
+            diagnostics.get("last_code") is not None
+            and (
+                not isinstance(diagnostics.get("last_code"), str)
+                or len(diagnostics["last_code"]) > 100
+                or "\n" in diagnostics["last_code"]
+                or "\r" in diagnostics["last_code"]
+            )
+        )
+    ):
+        return _default_telemetry_capture(
+            "Codex telemetry coverage sidecar does not match this Mission or schema",
+            diagnostic="coverage_sidecar_binding_invalid",
+        )
+    for channel in channels.values():
+        if (
+            not isinstance(channel, dict)
+            or channel.get("status")
+            not in {"observed", "available_not_observed", "not_reported"}
+            or isinstance(channel.get("observed_span_count"), bool)
+            or not isinstance(channel.get("observed_span_count"), int)
+            or channel["observed_span_count"] < 0
+            or not isinstance(channel.get("reason"), str)
+            or not channel["reason"]
+            or len(channel["reason"]) > 500
+            or "\n" in channel["reason"]
+            or "\r" in channel["reason"]
+        ):
+            return _default_telemetry_capture(
+                "Codex telemetry coverage sidecar contains invalid channel data",
+                diagnostic="coverage_sidecar_channels_invalid",
+            )
+    return report
 
 
 def _unique_strings(values: Iterable[Any]) -> list[str]:
@@ -196,7 +381,10 @@ def _usage_owner_event_ids(records: Iterable[dict[str, Any]]) -> set[str]:
 
     records = list(records)
     token_records = [
-        record for record in records if record["span"]["kind"] in {"model", "agent_turn"}
+        record
+        for record in records
+        if record["span"]["kind"] == "model"
+        or (record["span"]["kind"] == "agent_turn" and record.get("usage"))
     ]
     by_span_id = {
         record["span"].get("span_id"): record
@@ -312,18 +500,471 @@ def _record_time_ms(record: dict[str, Any]) -> int:
     return _timestamp_ms(record["timestamp"])
 
 
+def _record_bounds_ms(record: dict[str, Any]) -> tuple[int, int]:
+    if record.get("event_type") == "span_completed":
+        return (
+            _timestamp_ms(record["span"]["started_at"]),
+            _timestamp_ms(record["span"]["finished_at"]),
+        )
+    observed_at = _timestamp_ms(record["timestamp"])
+    return observed_at, observed_at
+
+
 def _validate_trace(mission: dict[str, Any], trace: list[dict[str, Any]]) -> None:
     errors = validate_execution_trace(mission, trace)
     if errors:
         raise TplanError("; ".join(errors))
 
 
-def _trace_coverage(trace: list[dict[str, Any]]) -> str:
+def _add_coverage_diagnostic(
+    diagnostics: list[dict[str, str]],
+    code: str,
+    message: str,
+) -> None:
+    diagnostic = {"code": code, "message": message}
+    if diagnostic not in diagnostics:
+        diagnostics.append(diagnostic)
+
+
+def _validate_lifecycle_commit_integrity(
+    trace: list[dict[str, Any]],
+    *,
+    initialization_index: int,
+    initial_active_task_id: str | None,
+    diagnostics: list[dict[str, str]],
+) -> str | None:
+    """Validate ordering and the runtime-owned active-path part of lifecycle commits."""
+
+    lifecycle_records = [
+        (index, record)
+        for index, record in enumerate(trace)
+        if record.get("event_type") in LIFECYCLE_STATE_EVENT_TYPES
+    ]
+    previous_timestamp_ms: int | None = None
+    previous_event_type: str | None = None
+    for _, record in lifecycle_records:
+        timestamp_ms = _timestamp_ms(record["timestamp"])
+        if previous_timestamp_ms is not None and timestamp_ms < previous_timestamp_ms:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_lifecycle_timestamp_non_monotonic",
+                (
+                    f"{record['event_type']} timestamp precedes the earlier "
+                    f"{previous_event_type} lifecycle record"
+                ),
+            )
+        previous_timestamp_ms = timestamp_ms
+        previous_event_type = record["event_type"]
+
+    commit_records: dict[str, list[tuple[int, dict[str, Any]]]] = {}
+    commit_order: list[str] = []
+    for index, record in lifecycle_records:
+        if index <= initialization_index or record.get("event_type") == "mission_initialized":
+            continue
+        commit_id = record.get("commit_id")
+        if not isinstance(commit_id, str):
+            continue
+        if commit_id not in commit_records:
+            commit_records[commit_id] = []
+            commit_order.append(commit_id)
+        commit_records[commit_id].append((index, record))
+
+    replay_active_task_id = initial_active_task_id
+    recovery_cursor_task_id: str | None = None
+    for commit_id in commit_order:
+        records = commit_records[commit_id]
+        timestamps = {record["timestamp"] for _, record in records}
+        if len(timestamps) != 1:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_commit_timestamp_mismatch",
+                f"lifecycle commit {commit_id} contains more than one timestamp",
+            )
+
+        active_records = [
+            record for _, record in records if record.get("event_type") == "active_node_changed"
+        ]
+        if len(active_records) > 1:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_active_commit_ambiguous",
+                (
+                    f"lifecycle commit {commit_id} contains more than one "
+                    "active_node_changed record"
+                ),
+            )
+        activated_task_ids: list[str] = []
+        task_state_records: list[dict[str, Any]] = []
+        current_active_deactivated = False
+        for _, record in records:
+            event_type = record.get("event_type")
+            task_id = record.get("task_id")
+            payload = record.get("payload", {})
+            if event_type == "node_added" and isinstance(task_id, str):
+                task_state_records.append(record)
+                if payload.get("status") == "active":
+                    activated_task_ids.append(task_id)
+            elif event_type == "task_status_changed" and isinstance(task_id, str):
+                task_state_records.append(record)
+                if payload.get("to_status") == "active":
+                    activated_task_ids.append(task_id)
+                if (
+                    task_id == replay_active_task_id
+                    and payload.get("from_status") == "active"
+                    and payload.get("to_status") != "active"
+                ):
+                    current_active_deactivated = True
+
+        distinct_activated = list(dict.fromkeys(activated_task_ids))
+        commit_sources = {
+            (
+                record.get("source", {}).get("kind"),
+                record.get("source", {}).get("name"),
+            )
+            for _, record in records
+            if isinstance(record.get("source"), dict)
+        }
+        authorized_recovery_source = (
+            commit_sources == {("runtime_script", "stop_report")}
+            or commit_sources == {("interaction_guard", "stop")}
+        )
+        retains_blocked_recovery_cursor = (
+            current_active_deactivated
+            and authorized_recovery_source
+            and any(
+                record.get("event_type") == "task_status_changed"
+                and record.get("task_id") == replay_active_task_id
+                and record.get("payload", {}).get("to_status") == "blocked"
+                for _, record in records
+            )
+            and any(
+                record.get("event_type") == "mission_status_changed"
+                and record.get("payload", {}).get("to_status") == "requires_human"
+                for _, record in records
+            )
+        )
+        if active_records:
+            recovery_cursor_task_id = None
+        if retains_blocked_recovery_cursor:
+            recovery_cursor_task_id = replay_active_task_id
+        if (
+            not active_records
+            and current_active_deactivated
+            and not retains_blocked_recovery_cursor
+        ):
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_active_commit_incomplete",
+                (
+                    f"lifecycle commit {commit_id} deactivates current task "
+                    f"{replay_active_task_id} without the matching "
+                    "active_node_changed record"
+                ),
+            )
+        elif (
+            not active_records
+            and len(distinct_activated) == 1
+            and len(task_state_records) == 1
+        ):
+            activated_task_id = distinct_activated[0]
+            if replay_active_task_id != activated_task_id:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_active_commit_incomplete",
+                    (
+                        f"lifecycle commit {commit_id} activates task {activated_task_id} "
+                        "without the matching active_node_changed record"
+                    ),
+                )
+
+        for record in active_records:
+            payload = record.get("payload", {})
+            from_task_id = payload.get("from_task_id")
+            if from_task_id != replay_active_task_id:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_active_transition_mismatch",
+                    (
+                        f"active-node trace expects {from_task_id} "
+                        f"but replay state is {replay_active_task_id}"
+                    ),
+                )
+            replay_active_task_id = payload.get("to_task_id")
+    return recovery_cursor_task_id
+
+
+def _trace_coverage(
+    mission: dict[str, Any],
+    trace: list[dict[str, Any]],
+) -> dict[str, Any]:
     if not trace:
-        return "snapshot_only"
-    if trace[0].get("event_type") == "mission_initialized":
-        return "exact"
-    return "partial"
+        return {
+            "coverage": "snapshot_only",
+            "diagnostics": [],
+            "initialized_at": None,
+            "terminal_at": None,
+            "snapshot_consistent": False,
+        }
+
+    diagnostics: list[dict[str, str]] = []
+    initialization_records = [
+        (index, record)
+        for index, record in enumerate(trace)
+        if record.get("event_type") == "mission_initialized"
+    ]
+    if not initialization_records:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_missing_initialization",
+            "execution trace does not contain mission_initialized",
+        )
+        return {
+            "coverage": "partial",
+            "diagnostics": diagnostics,
+            "initialized_at": None,
+            "terminal_at": None,
+            "snapshot_consistent": False,
+        }
+
+    initialization_index, initialization = initialization_records[0]
+    if initialization_index != 0:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_initialization_not_first",
+            "mission_initialized is not the first trace record",
+        )
+    if len(initialization_records) != 1:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_duplicate_initialization",
+            "execution trace contains more than one mission_initialized record",
+        )
+
+    initialized_at = initialization["timestamp"]
+    initialized_ms = _timestamp_ms(initialized_at)
+    if any(_record_bounds_ms(record)[0] < initialized_ms for record in trace):
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_event_precedes_initialization",
+            "an observed trace interval precedes mission_initialized",
+        )
+
+    payload = initialization.get("payload", {})
+    replay_mission_status = payload.get("mission_status")
+    replay_active_task_id = payload.get("active_task_id")
+    replay_tasks: dict[str, dict[str, Any]] = {}
+    for task_snapshot in payload.get("tasks", []):
+        task_id = task_snapshot.get("id")
+        if task_id in replay_tasks:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_duplicate_initial_task",
+                f"mission_initialized repeats task {task_id}",
+            )
+            continue
+        replay_tasks[task_id] = {
+            "status": task_snapshot.get("status"),
+            "parent_id": task_snapshot.get("parent_id"),
+            "kind": task_snapshot.get("kind"),
+        }
+
+    recovery_cursor_task_id = _validate_lifecycle_commit_integrity(
+        trace,
+        initialization_index=initialization_index,
+        initial_active_task_id=replay_active_task_id,
+        diagnostics=diagnostics,
+    )
+
+    terminal_at: str | None = None
+    terminal_record_index: int | None = None
+    last_state_change_index: int | None = None
+    snapshot_mission_status = mission.get("mission", {}).get("status")
+    for record_index, record in enumerate(
+        trace[initialization_index + 1 :],
+        start=initialization_index + 1,
+    ):
+        event_type = record.get("event_type")
+        if event_type == "mission_initialized":
+            continue
+        task_id = record.get("task_id")
+        event_payload = record.get("payload", {})
+        if event_type == "node_added":
+            last_state_change_index = record_index
+            if task_id in replay_tasks:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_duplicate_node_addition",
+                    f"node_added repeats task {task_id}",
+                )
+            else:
+                replay_tasks[task_id] = {
+                    "status": event_payload.get("status"),
+                    "parent_id": event_payload.get("parent_id"),
+                    "kind": event_payload.get("kind"),
+                }
+            continue
+        if event_type == "task_status_changed":
+            last_state_change_index = record_index
+            if task_id not in replay_tasks:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_task_transition_without_node",
+                    f"task_status_changed references uninitialized task {task_id}",
+                )
+                replay_tasks[task_id] = {
+                    "status": event_payload.get("from_status"),
+                    "parent_id": None,
+                    "kind": None,
+                }
+            replay_status = replay_tasks[task_id].get("status")
+            from_status = event_payload.get("from_status")
+            if replay_status != from_status:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_task_transition_mismatch",
+                    (
+                        f"task {task_id} trace expects {from_status} "
+                        f"but replay state is {replay_status}"
+                    ),
+                )
+            replay_tasks[task_id]["status"] = event_payload.get("to_status")
+            continue
+        if event_type == "active_node_changed":
+            last_state_change_index = record_index
+            from_task_id = event_payload.get("from_task_id")
+            replay_active_task_id = event_payload.get("to_task_id")
+            continue
+        if event_type == "mission_status_changed":
+            last_state_change_index = record_index
+            from_status = event_payload.get("from_status")
+            if replay_mission_status != from_status:
+                _add_coverage_diagnostic(
+                    diagnostics,
+                    "trace_mission_transition_mismatch",
+                    (
+                        f"Mission trace expects {from_status} "
+                        f"but replay state is {replay_mission_status}"
+                    ),
+                )
+            replay_mission_status = event_payload.get("to_status")
+            if replay_mission_status == snapshot_mission_status:
+                terminal_at = record["timestamp"]
+                terminal_record_index = record_index
+
+    snapshot_tasks = task_map(mission)
+    missing_task_ids = sorted(set(snapshot_tasks) - set(replay_tasks))
+    unexpected_task_ids = sorted(set(replay_tasks) - set(snapshot_tasks))
+    if missing_task_ids:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_missing_task_lifecycle",
+            f"snapshot tasks missing from lifecycle trace: {', '.join(missing_task_ids)}",
+        )
+    if unexpected_task_ids:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_unknown_task_lifecycle",
+            f"trace tasks missing from snapshot: {', '.join(unexpected_task_ids)}",
+        )
+    for task_id in sorted(set(snapshot_tasks) & set(replay_tasks)):
+        snapshot_status = snapshot_tasks[task_id].get("status")
+        replay_status = replay_tasks[task_id].get("status")
+        if replay_status != snapshot_status:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_task_status_mismatch",
+                (
+                    f"task {task_id} snapshot status is {snapshot_status} "
+                    f"but trace replays to {replay_status}"
+                ),
+            )
+        snapshot_parent_id = snapshot_tasks[task_id].get("parent_id")
+        replay_parent_id = replay_tasks[task_id].get("parent_id")
+        snapshot_kind = snapshot_tasks[task_id].get("kind")
+        replay_kind = replay_tasks[task_id].get("kind")
+        if replay_parent_id != snapshot_parent_id or replay_kind != snapshot_kind:
+            _add_coverage_diagnostic(
+                diagnostics,
+                "trace_task_structure_mismatch",
+                (
+                    f"task {task_id} snapshot structure is "
+                    f"parent={snapshot_parent_id}, kind={snapshot_kind} but trace replays to "
+                    f"parent={replay_parent_id}, kind={replay_kind}"
+                ),
+            )
+
+    snapshot_active_task_id = mission.get("active_task_id")
+    if snapshot_active_task_id is not None:
+        snapshot_active_task = snapshot_tasks.get(snapshot_active_task_id)
+        snapshot_active_status = (
+            snapshot_active_task.get("status")
+            if snapshot_active_task is not None
+            else None
+        )
+        valid_recovery_cursor = (
+            snapshot_mission_status == "requires_human"
+            and snapshot_active_status == "blocked"
+            and snapshot_active_task_id == recovery_cursor_task_id
+        )
+        if (
+            snapshot_active_task is None
+            or (
+                snapshot_active_status != "active"
+                and not valid_recovery_cursor
+            )
+        ):
+            _add_coverage_diagnostic(
+                diagnostics,
+                "snapshot_active_task_not_active",
+                (
+                    f"snapshot active_task_id {snapshot_active_task_id} does not "
+                    "reference an active task"
+                ),
+            )
+    if replay_active_task_id != snapshot_active_task_id:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_active_task_mismatch",
+            (
+                f"snapshot active_task_id is {snapshot_active_task_id} "
+                f"but trace replays to {replay_active_task_id}"
+            ),
+        )
+    if replay_mission_status != snapshot_mission_status:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_mission_status_mismatch",
+            (
+                f"Mission snapshot status is {snapshot_mission_status} "
+                f"but trace replays to {replay_mission_status}"
+            ),
+        )
+    if snapshot_mission_status in TERMINAL_MISSION_STATUSES and terminal_at is None:
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_missing_terminal_event",
+            (
+                "terminal Mission snapshot has no matching "
+                "mission_status_changed lifecycle event"
+            ),
+        )
+    elif (
+        snapshot_mission_status in TERMINAL_MISSION_STATUSES
+        and terminal_record_index != last_state_change_index
+    ):
+        _add_coverage_diagnostic(
+            diagnostics,
+            "trace_lifecycle_after_terminal",
+            "task or Mission lifecycle changes occur after the matching terminal event",
+        )
+
+    return {
+        "coverage": "exact" if not diagnostics else "partial",
+        "diagnostics": diagnostics,
+        "initialized_at": initialized_at,
+        "terminal_at": terminal_at,
+        "snapshot_consistent": not diagnostics,
+    }
 
 
 def _new_lifecycle_state() -> dict[str, Any]:
@@ -467,7 +1108,7 @@ def _build_lifecycle(
         observed_active_ms = (
             _union_duration_ms(state["active_intervals"]) if coverage != "snapshot_only" else None
         )
-        duration_coverage = "exact" if coverage == "exact" or state["dynamic"] else coverage
+        duration_coverage = coverage
         state["observed_active_duration_ms"] = observed_active_ms
         state["active_duration_ms"] = observed_active_ms if duration_coverage == "exact" else None
         state["active_duration_source"] = duration_coverage
@@ -496,24 +1137,52 @@ def _descendant_ids(task_id: str, children: dict[str | None, list[str]]) -> list
     return output
 
 
-def _mission_elapsed(
-    mission: dict[str, Any], trace: list[dict[str, Any]], coverage: str, generated_at: str
-) -> tuple[int | None, str | None, str | None]:
+def _mission_timing(
+    mission: dict[str, Any],
+    trace: list[dict[str, Any]],
+    coverage_analysis: dict[str, Any],
+    generated_at: str,
+) -> dict[str, Any]:
+    coverage = coverage_analysis["coverage"]
     if coverage == "snapshot_only":
-        return None, None, None
-    start_record = next((record for record in trace if record["event_type"] == "mission_initialized"), trace[0])
-    started_at = start_record["timestamp"]
-    mission_status = mission.get("mission", {}).get("status")
-    finished_at = (
-        max(trace, key=_record_time_ms)["timestamp"]
-        if mission_status in TERMINAL_MISSION_STATUSES
-        else generated_at
-    )
-    if mission_status in TERMINAL_MISSION_STATUSES:
-        latest = max(trace, key=_record_time_ms)
-        if latest["event_type"] == "span_completed":
-            finished_at = latest["span"]["finished_at"]
-    return max(0, _timestamp_ms(finished_at) - _timestamp_ms(started_at)), started_at, finished_at
+        return {
+            "elapsed_ms": None,
+            "observed_elapsed_ms": None,
+            "started_at": None,
+            "finished_at": None,
+            "observed_started_at": None,
+            "observed_finished_at": None,
+        }
+
+    observed_bounds = [_record_bounds_ms(record) for record in trace]
+    observed_start_ms = min(start for start, _ in observed_bounds)
+    observed_finish_ms = max(finish for _, finish in observed_bounds)
+    observed_started_at = _iso_from_ms(observed_start_ms)
+    observed_finished_at = _iso_from_ms(observed_finish_ms)
+    started_at = coverage_analysis.get("initialized_at")
+    finished_at: str | None = None
+    elapsed_ms: int | None = None
+    if coverage == "exact":
+        mission_status = mission.get("mission", {}).get("status")
+        finished_at = (
+            coverage_analysis.get("terminal_at")
+            if mission_status in TERMINAL_MISSION_STATUSES
+            else generated_at
+        )
+        if started_at is not None and finished_at is not None:
+            elapsed_ms = max(0, _timestamp_ms(finished_at) - _timestamp_ms(started_at))
+            observed_started_at = started_at
+            observed_finished_at = finished_at
+            observed_start_ms = _timestamp_ms(started_at)
+            observed_finish_ms = _timestamp_ms(finished_at)
+    return {
+        "elapsed_ms": elapsed_ms,
+        "observed_elapsed_ms": max(0, observed_finish_ms - observed_start_ms),
+        "started_at": started_at,
+        "finished_at": finished_at,
+        "observed_started_at": observed_started_at,
+        "observed_finished_at": observed_finished_at,
+    }
 
 
 def _node_actual_state(status: str, visited: bool) -> str:
@@ -677,12 +1346,17 @@ def _timeline_metadata(
     per-node range bar uses one shared linear Mission scale.
     """
 
-    mission_start = mission.get("started_at")
-    mission_finish = mission.get("finished_at")
-    mission_elapsed = mission.get("elapsed_ms")
-    if mission_elapsed is None:
-        mission_elapsed = mission.get("observed_elapsed_ms")
-    origin_ms = _timestamp_ms(mission_start) if mission_start else None
+    exact_coverage = mission.get("elapsed_coverage") == "exact"
+    window_start = (
+        mission.get("started_at") if exact_coverage else mission.get("observed_started_at")
+    )
+    window_finish = (
+        mission.get("finished_at") if exact_coverage else mission.get("observed_finished_at")
+    )
+    window_elapsed = (
+        mission.get("elapsed_ms") if exact_coverage else mission.get("observed_elapsed_ms")
+    )
+    origin_ms = _timestamp_ms(window_start) if window_start else None
     parent_by_id = {node["id"]: node.get("parent_id") for node in nodes}
 
     def depth_for(task_id: str) -> int:
@@ -736,18 +1410,19 @@ def _timeline_metadata(
         "row_spacing": "ordinal_not_duration_proportional",
         "range_bar_scale": (
             "linear_mission_elapsed"
-            if mission.get("elapsed_coverage") == "exact"
+            if exact_coverage
             else "linear_observed_window"
         ),
         "offset_coverage": mission.get("elapsed_coverage"),
         "offset_origin": (
             "mission_initialized"
-            if mission.get("elapsed_coverage") == "exact"
+            if exact_coverage
             else "first_observed_trace"
         ),
-        "started_at": mission_start,
-        "finished_at": mission_finish,
-        "elapsed_ms": mission_elapsed,
+        "window_kind": "mission_lifecycle" if exact_coverage else "observed_trace",
+        "window_started_at": window_start,
+        "window_finished_at": window_finish,
+        "window_elapsed_ms": window_elapsed,
         "rows": rows,
     }
 
@@ -772,13 +1447,15 @@ def build_execution_cost_tree(
 
     snapshot = read_outcome_attribution_snapshot(mission_dir)
     mission = snapshot["mission"]
+    runtime_provenance = snapshot["runtime_provenance"]
     mission_errors = validate_mission(mission)
     if mission_errors:
         raise TplanError("; ".join(mission_errors))
     trace = snapshot["trace"]
     _validate_trace(mission, trace)
     outcome_attribution = build_outcome_attribution(mission, snapshot["events"], trace)
-    coverage = _trace_coverage(trace)
+    coverage_analysis = _trace_coverage(mission, trace)
+    coverage = coverage_analysis["coverage"]
     lifecycle = _build_lifecycle(mission, trace, coverage, generated_at)
     tasks = mission.get("tasks", [])
     by_id = task_map(mission)
@@ -815,10 +1492,11 @@ def build_execution_cost_tree(
 
     usage_owner_event_ids = _usage_owner_event_ids(all_spans)
 
-    observed_elapsed_ms, started_at, finished_at = _mission_elapsed(
-        mission, trace, coverage, generated_at
-    )
-    mission_elapsed_ms = observed_elapsed_ms if coverage == "exact" else None
+    mission_timing = _mission_timing(mission, trace, coverage_analysis, generated_at)
+    observed_elapsed_ms = mission_timing["observed_elapsed_ms"]
+    started_at = mission_timing["started_at"]
+    finished_at = mission_timing["finished_at"]
+    mission_elapsed_ms = mission_timing["elapsed_ms"]
     mission_cost = _span_cost(all_spans, usage_owner_event_ids=usage_owner_event_ids)
     mission_elapsed_reconciliation = _elapsed_reconciliation(
         all_spans,
@@ -934,6 +1612,10 @@ def build_execution_cost_tree(
         "presentation": "unicode_text_tree" if view == "compact" else "vertical_timeline_svg",
         "focus_task_id": focus_task_id,
         "top_cost": top_cost,
+        "runtime": runtime_provenance,
+        "telemetry_capture": _read_telemetry_capture(
+            mission_dir, mission.get("mission", {}).get("id")
+        ),
         "mission": {
             "id": mission.get("mission", {}).get("id"),
             "title": mission.get("mission", {}).get("title"),
@@ -944,12 +1626,16 @@ def build_execution_cost_tree(
             "elapsed_coverage": coverage,
             "started_at": started_at,
             "finished_at": finished_at,
+            "observed_started_at": mission_timing["observed_started_at"],
+            "observed_finished_at": mission_timing["observed_finished_at"],
             "cost": mission_cost,
             "elapsed_reconciliation": mission_elapsed_reconciliation,
             "outcome_attribution": outcome_attribution["mission"],
         },
         "trace": {
             "coverage": coverage,
+            "coverage_diagnostics": coverage_analysis["diagnostics"],
+            "snapshot_consistent": coverage_analysis["snapshot_consistent"],
             "record_count": len(trace),
             "span_count": len(all_spans),
             "started_span_count": len(started_spans),
@@ -981,7 +1667,9 @@ def build_execution_cost_tree(
             "by_attribution": overhead_by_attribution,
         },
         "metric_semantics": {
-            "actual_elapsed_ms": "natural elapsed time between observed lifecycle boundaries",
+            "actual_elapsed_ms": (
+                "exact natural elapsed time between replay-consistent lifecycle boundaries"
+            ),
             "model_resource_time_ms": (
                 "sum of completed model-call durations; host_measured is caller-visible request "
                 "elapsed, not provider-internal inference time"
@@ -991,6 +1679,9 @@ def build_execution_cost_tree(
             ),
             "not_exactly_recorded_elapsed_ms": (
                 "actual elapsed minus exact interval coverage; not a claim that the remainder is model or script time"
+            ),
+            "observed_trace_window": (
+                "first-to-last observed trace interval; never promoted to exact Mission completion time"
             ),
         },
         "nodes": visible_nodes,
@@ -1049,9 +1740,15 @@ def _fmt_duration(value: int | None) -> str:
 def _fmt_covered_duration(exact_value: int | None, observed_value: int | None, coverage: str) -> str:
     if coverage == "exact":
         return _fmt_duration(exact_value)
-    if coverage == "partial" and observed_value:
+    if coverage == "partial" and observed_value is not None:
         return f"≥{_fmt_duration(observed_value)}"
     return "未知"
+
+
+def _elapsed_scope_label(coverage: str, *, mission: bool = False) -> str:
+    if coverage == "partial":
+        return "已观测窗口" if mission else "已观测区间"
+    return "实际历时"
 
 
 def _fmt_token_number(value: int) -> str:
@@ -1386,6 +2083,8 @@ def _compact_node_summary(node: dict[str, Any], reasons: set[str]) -> str:
     elapsed = _fmt_covered_duration(
         node["elapsed_ms"], node["observed_elapsed_ms"], node["elapsed_coverage"]
     )
+    if node["elapsed_coverage"] == "partial":
+        elapsed = f"观测 {elapsed}"
     kind_tag = COMPACT_KIND_TAGS.get(node["kind"], "[?]")
     parts = [
         f"{kind_tag} {_shorten(node['title'], 40)} "
@@ -1417,6 +2116,8 @@ def render_compact_text(report: dict[str, Any]) -> str:
     mission_elapsed = _fmt_covered_duration(
         mission["elapsed_ms"], mission["observed_elapsed_ms"], mission["elapsed_coverage"]
     )
+    if mission["elapsed_coverage"] == "partial":
+        mission_elapsed = f"观测 {mission_elapsed}"
     mission_token = _fmt_tokens_inline(mission["cost"])
     mission_line = (
         f"Mission · {_shorten(mission['title'], 60)} "
@@ -1473,6 +2174,9 @@ def render_compact_text(report: dict[str, Any]) -> str:
             ),
         ]
     )
+    runtime_text = _runtime_diagnostic_text(report)
+    if runtime_text:
+        lines.extend(["", f"运行时告警：{runtime_text}"])
     return "\n".join(lines) + "\n"
 
 
@@ -1520,7 +2224,7 @@ def render_svg(report: dict[str, Any]) -> str:
     height = content_bottom + footer_height
     axis_start_y = row_ys[0] + card_height / 2 if rows else row_top + card_height / 2
     axis_end_y = row_ys[-1] + card_height / 2 if rows else axis_start_y
-    mission_elapsed = timeline.get("elapsed_ms")
+    mission_elapsed = timeline.get("window_elapsed_ms")
     time_coverage = timeline.get("offset_coverage") or report["trace"]["coverage"]
     time_label = "实际相对时间" if time_coverage == "exact" else "已观测相对时间"
     mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
@@ -1528,6 +2232,8 @@ def render_svg(report: dict[str, Any]) -> str:
     mission_reconciliation = mission["elapsed_reconciliation"]
     report_title = "TPlan 执行时间轴摘要" if view == "compact" else "TPlan 纵向实际执行时间轴"
     visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
+    coverage_warning_count = len(report["trace"].get("coverage_diagnostics", []))
+    runtime = report["runtime"]
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -1579,7 +2285,8 @@ def render_svg(report: dict[str, Any]) -> str:
             58,
             116,
             (
-                f"Mission · {mission_status} · 实际历时 "
+                f"Mission · {mission_status} · "
+                f"{_elapsed_scope_label(mission['elapsed_coverage'], mission=True)} "
                 f"{_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}"
             ),
             "mission-meta",
@@ -1611,7 +2318,10 @@ def render_svg(report: dict[str, Any]) -> str:
                 f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
                 f" · 产出归因 P{len(mission['outcome_attribution']['countable_progress'])}"
                 f"/C{len(mission['outcome_attribution']['constraint_deltas'])}"
-                f" · 覆盖 {report['trace']['coverage']} · {view}"
+                f" · 覆盖 {report['trace']['coverage']}"
+                + (f" · 生命周期告警 {coverage_warning_count}" if coverage_warning_count else "")
+                + f" · 运行时 {runtime['status']}"
+                + f" · {view}"
             ),
             "mission-meta",
         ),
@@ -1894,7 +2604,10 @@ def render_svg(report: dict[str, Any]) -> str:
                     _svg_text(
                         card_x + 18,
                         card_y + 54,
-                        f"{_svg_node_status_details(node, scope_label)} · {range_text} · 实际历时 {elapsed}",
+                        (
+                            f"{_svg_node_status_details(node, scope_label)} · {range_text} · "
+                            f"{_elapsed_scope_label(node['elapsed_coverage'])} {elapsed}"
+                        ),
                         "node-meta",
                     ),
                     _svg_text(
@@ -1932,7 +2645,8 @@ def render_svg(report: dict[str, Any]) -> str:
                 card_x + 18,
                 card_y + 79,
                 (
-                    f"时间 {range_text} · 实际历时 {elapsed}"
+                    f"时间 {range_text} · "
+                    f"{_elapsed_scope_label(node['elapsed_coverage'])} {elapsed}"
                     f" · 未被精确记录 {_fmt_not_exactly_recorded(reconciliation)}"
                 ),
                 "node-metric",
@@ -2022,6 +2736,11 @@ def render_svg(report: dict[str, Any]) -> str:
         lines.append("</g>")
 
     footer_y = content_bottom + 40
+    footer_explanation = (
+        "精确时间由刻度、节点起止值及统一比例时间条表达。"
+        if time_coverage == "exact"
+        else "刻度和时间条仅表达已观测事件的相对位置，不代表完整 Mission 历时。"
+    )
     lines.extend(
         [
             f'<line x1="32" y1="{footer_y - 24}" x2="{width - 32}" y2="{footer_y - 24}" stroke="#e2e8f0"/>',
@@ -2031,7 +2750,7 @@ def render_svg(report: dict[str, Any]) -> str:
                 (
                     f"{'Mission 结束' if time_coverage == 'exact' else '观测窗口结束'} "
                     f"{_fmt_timeline_offset(mission_elapsed, time_coverage)} · 纵向行距不代表持续时间；"
-                    "精确时间由刻度、节点起止值及统一比例时间条表达。"
+                    f"{footer_explanation}"
                 ),
                 "legend",
             ),
@@ -2054,12 +2773,79 @@ def _markdown_cell(value: Any) -> str:
     return str(value).replace("|", "\\|").replace("\n", " ")
 
 
-def _coverage_note(coverage: str) -> str:
+def _coverage_note(report: dict[str, Any]) -> str:
+    coverage = report["trace"]["coverage"]
     if coverage == "exact":
-        return "生命周期追踪从 Mission 初始化开始；各类成本仍只包含宿主实际上报的 span。"
+        return (
+            "生命周期追踪可从 Mission 初始化完整回放到当前快照；"
+            "各类成本仍只包含宿主实际上报的 span。"
+        )
     if coverage == "partial":
-        return "追踪晚于 Mission 创建，因此更早的执行路线与成本保持未知，不做猜测。"
+        return (
+            "生命周期追踪不完整或与当前快照不一致；这里只显示已观测窗口，"
+            "不把最后一条事件当作 Mission 完成时间。"
+        )
     return "没有执行轨迹；当前仅展示 Mission 快照，时间与 Token 成本保持未知。"
+
+
+def _coverage_diagnostic_text(report: dict[str, Any]) -> str | None:
+    diagnostics = report["trace"].get("coverage_diagnostics", [])
+    if not diagnostics:
+        return None
+    return "；".join(
+        f"{item['code']}: {item['message']}" for item in diagnostics
+    )
+
+
+def _runtime_diagnostic_text(report: dict[str, Any]) -> str | None:
+    diagnostics = report["runtime"].get("diagnostics", [])
+    if not diagnostics:
+        return None
+    return "；".join(
+        f"{item['code']}: {item['message']}" for item in diagnostics
+    )
+
+
+def _append_telemetry_capture_markdown(
+    lines: list[str], report: dict[str, Any]
+) -> None:
+    capture = report["telemetry_capture"]
+    labels = {
+        "local_tools": "本地工具/脚本",
+        "hosted_tools": "托管工具",
+        "model_turns": "模型/Turn",
+        "tokens": "Token",
+        "waits": "等待",
+        "subagents": "SubAgent",
+    }
+    lines.extend(
+        [
+            "",
+            "## Codex 遥测覆盖",
+            "",
+            (
+                f"绑定：`{capture['binding']['status']}`；范围："
+                f"`{capture['binding'].get('scope') or 'none'}`。"
+                "没有观测值的类别保持 `not_reported`，不会按零处理。"
+            ),
+            "",
+            "| 通道 | 状态 | 已完成 span | 原因 |",
+            "| --- | --- | ---: | --- |",
+        ]
+    )
+    for name, channel in capture["channels"].items():
+        lines.append(
+            "| "
+            + " | ".join(
+                (
+                    labels[name],
+                    _markdown_cell(channel["status"]),
+                    str(channel["observed_span_count"]),
+                    _markdown_cell(channel["reason"]),
+                )
+            )
+            + " |"
+        )
 
 
 def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = None) -> str:
@@ -2069,7 +2855,7 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
         lines = [
             "# TPlan 执行摘要",
             "",
-            f"> {_coverage_note(report['trace']['coverage'])}",
+            f"> {_coverage_note(report)}",
             "",
             "```text",
             render_compact_text(report).rstrip(),
@@ -2079,6 +2865,12 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
             "",
             "LLM、脚本、工具和等待是累计资源时间，可能相互重叠；逐节点详情见 Standard/Audit。",
         ]
+        diagnostic_text = _coverage_diagnostic_text(report)
+        if diagnostic_text:
+            lines[3:3] = [f"> 覆盖告警：{diagnostic_text}", ""]
+        runtime_text = _runtime_diagnostic_text(report)
+        if runtime_text:
+            lines[3:3] = [f"> 运行时告警：{runtime_text}", ""]
         return "\n".join(lines).rstrip() + "\n"
 
     mission = report["mission"]
@@ -2087,9 +2879,15 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     lines = [
         "# TPlan 实际执行与成本树",
         "",
-        f"> {_coverage_note(report['trace']['coverage'])}",
+        f"> {_coverage_note(report)}",
         "",
     ]
+    diagnostic_text = _coverage_diagnostic_text(report)
+    if diagnostic_text:
+        lines.extend([f"> 覆盖告警：{diagnostic_text}", ""])
+    runtime_text = _runtime_diagnostic_text(report)
+    if runtime_text:
+        lines.extend([f"> 运行时告警：{runtime_text}", ""])
     if timeline_svg_ref:
         lines.extend(
             [
@@ -2100,6 +2898,8 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     else:
         inline_svg = render_svg(report).split("\n", 1)[1].rstrip()
         lines.extend([inline_svg, ""])
+    _append_telemetry_capture_markdown(lines, report)
+    lines.append("")
     visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
     lines.append(
         f"视图：`{report['view']}`；布局：`vertical_execution_timeline`；"
@@ -2123,7 +2923,8 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     lines.extend(
         [
             "",
-            "口径：实际历时按开始到结束的自然经过时间计算；LLM 调用、脚本、工具和等待显示的是"
+            "口径：覆盖 exact 时，实际历时按可回放生命周期的开始到结束计算；覆盖 partial 时，"
+            "这里只显示已观测窗口，不把它当作 Mission 完成时间。LLM 调用、脚本、工具和等待显示的是"
             "各自累计资源时间，嵌套或并行时不可直接相加。调用端实测覆盖完整模型请求，可能包含"
             "排队、网络和流式传输，不等于平台内部纯推理时间。未被精确记录 = 实际历时减去已完成且"
             "时间来源精确的区间并集；它不自动属于 LLM、脚本或其他类别。已缓存输入包含在输入 Token 中，"
@@ -2240,7 +3041,11 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
                 "",
                 "## 审计明细",
                 "",
-                "| 顺序 | 节点 | 状态 | 产出归因 | 实际历时 | 活跃时间 | 次数 | 直接资源 | 子树资源 | 子树未精确记录 | 证据 | 产物 |",
+                (
+                    "| 顺序 | 节点 | 状态 | 产出归因 | "
+                    f"{_elapsed_scope_label(report['trace']['coverage'])} | 活跃时间 | 次数 | "
+                    "直接资源 | 子树资源 | 子树未精确记录 | 证据 | 产物 |"
+                ),
                 "| ---: | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
             ]
         )

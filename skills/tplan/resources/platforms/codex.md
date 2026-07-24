@@ -121,6 +121,44 @@ host also terminates/isolates pre-existing mutable executions and protects hook 
 
 Official hook reference: https://learn.chatgpt.com/docs/hooks
 
+## Optional Execution Telemetry
+
+Interaction protection and execution telemetry are independent adapters. The
+interaction guard controls whether a Mission mutation may continue; the telemetry
+adapter only observes supported runtime events and must never become an authority
+carrier.
+
+For future Mission execution, bind one exact Codex session and generate the optional
+telemetry hooks:
+
+```bash
+mkdir -p HOST_PROTECTED_STATE_DIR
+python3 skills/tplan/scripts/generate_codex_telemetry_hooks.py MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR \
+  --session-id CODEX_SESSION_ID \
+  --output /tmp/tplan-codex-telemetry-hooks.json
+```
+
+Merge only the generated `hooks` object into a trusted Codex hook layer. The adapter
+uses `PreToolUse`/`PostToolUse` for paired local tool/script spans and
+`SubagentStart`/`SubagentStop` for non-additive `agent_turn` envelopes. It hashes
+correlation IDs before trace write, retains raw stable IDs only in the host-state
+sidecar, and never stores tool input/output, prompts, responses, command arguments, or
+connector payloads. A spawn tool event is deduplicated in favor of the SubAgent
+lifecycle pair.
+
+Generation proves only that the Mission/session binding was created. It does not prove
+that the project hook layer was loaded or trusted; coverage stays `not_reported` until
+the adapter observes a real callback. Pairing requires the same turn and event class.
+Hook-derived completion status is `unknown` unless a Bash post event supplies a
+structured integer `exit_code`. The command hook emits the valid `{}` JSON response
+required by `SubagentStop`.
+
+Hosted tools currently have no Codex tool hooks. Model/turn timing and Token data are
+therefore `not_reported` unless an explicitly bound, sanitized OTel projection is
+ingested. See `resources/codex-telemetry.md` for the ingestion schema, fail-closed
+binding rules, deduplication, capability report, and current official coverage.
+
 ## Script
 
 Use `scripts/codex_review_packet.py` to generate concrete Codex review artifacts:
