@@ -31,6 +31,11 @@ data/fidelity-usage-log.jsonl
 
 - `schema_version`: 固定为 `mindthus-fidelity-usage-log-v0.1`
 - `logged_at`: 记录时间
+- `observed_at`: 任务**实际发生**的时间；不传时等于 `logged_at`
+- `collection_mode`: `prospective`（当场观察）、`retrospective`（回溯重建）或 `unknown`
+- `record_id`: 稳定 ID，默认从 `observed_at / logged_at / record_type / method / scenario /
+  model` 派生。汇总复核要按 ID 逐条列出纳入与排除，所以它必须在重排、重排版之后仍然不变；
+  内容派生同时让重复记录表现为重复 ID，而不是被一个新序号盖过去
 - `record_type`: `real_use`、`evaluation` 或 `fixture`
 - `scenario`: 脱敏后的场景摘要
 - `method`: `3L5S`、`SELA`、`MPG`、`EDSP`、`WAE`、`TVG`、`tplan` 或 `using-mindthus`
@@ -114,3 +119,7 @@ still fail, so a typo is not silently accepted.
 - 单条记录不能证明方法有效；只有累积样本才有分析意义。
 - `constraint_helped` 是人工或 judge 的观察，不是自动真相。
 - v0.1 的新增真实使用字段是向后兼容扩展；旧记录没有这些字段仍可校验。
+- `--validate` 只证明字段形状，不能证明任务是真实的、独立的、完整的，也不能证明结果可观察。
+  纳入与否是记录在复核里的人工判断，不是校验器的输出。
+- 冻结退出只按 `collection_mode=prospective` 且发生在 #144 开出之后的 `real_use` 记录计数。
+  回溯记录可以参与分析，但不解冻——否则一个下午的补录就能关掉本该 2–3 周的自然观察窗口。

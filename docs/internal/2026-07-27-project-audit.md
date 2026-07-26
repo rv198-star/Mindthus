@@ -253,6 +253,20 @@ opencode）均正确包含 `_runtime` 与 `runtime_bootstrap.py`；copy 安装�
 要点：不建议直接让 CI 因 0 条而失败——那会把一个战略问题变成 merge 阻塞噪音。目标是让
 每个看仓库的人（包括未来的自己）**撞见**这个 0，而不是让它藏在一条恒绿的 CI 步骤里。
 
+**已实施（2026-07-27，#144 第一阶段）**，并按复核意见把口径从"总数"改成"按类型"：
+
+- `--validate` 现在分别报告 `real_use` / `evaluation` / `fixture`，并单列
+  `Real-use prospective`。阈值参数是 `--min-real-use`，不是无类型的 `--min-records`——
+  后者可以被一堆 `evaluation` 记录满足，而 `real_use` 仍然是 0。
+- `README.md` 的"可选：记录使用效果"一节内嵌生成块，渲染 `真实使用记录：0/10`。数字由
+  `--render-status` 生成，不可手工编辑。
+- 必需 CI 增加 `--check-status`：**只校验渲染值与日志是否一致（新鲜度）**，不含任何关于
+  记录数是否足够的价值判断，0 条时仍然通过。
+- schema 增加 `observed_at` / `collection_mode` / `record_id` / `source`（`source` 原已存在）。
+  冻结退出只数 `prospective`，回溯记录不解冻。
+- 冻结账本：`docs/internal/tplan-feature-freeze-ledger.md`，覆盖窗口内**每一次**合并，
+  包括缺陷修复与发布卫生这类本身就属于例外的类别。
+
 ### R2. 自己用，并补满 10 条记录（本周开始，2–3 周完成）
 
 维护者本人显然在大量使用 Codex / Claude Code 开发本项目。**项目自身的开发任务完全符合

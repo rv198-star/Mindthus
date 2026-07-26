@@ -30,6 +30,10 @@ jobs:
       - name: Primitive and runtime smoke checks
         run: |
           python3 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl
+          # Freshness only: asserts the rendered README count still agrees with the log.
+          # Deliberately not --min-real-use; an empty registry must not block merges, or
+          # the strategic gap becomes CI noise that gets routed around.
+          python3 scripts/log-fidelity-usage.py --check-status --log data/fidelity-usage-log.jsonl
           python3 scripts/log-mindthus-runtime.py --help
           python3 skills/sela/scripts/validate_sela_output.py skills/sela/fixtures/fidelity-smoke-pass.json
           python3 skills/mpg/scripts/validate_mpg_output.py skills/mpg/fixtures/fidelity-smoke-pass.json

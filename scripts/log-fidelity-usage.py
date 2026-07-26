@@ -8,6 +8,7 @@ use. It validates the record shape only; it does not judge method value.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -22,6 +23,12 @@ RECORD_TYPES = ("real_use", "evaluation", "fixture")
 HELPED_VALUES = ("yes", "no", "mixed", "unknown")
 INVOCATION_MODES = ("explicit_router", "explicit_skill", "automatic_best_effort", "unknown")
 OVERHEAD_LEVELS = ("none", "low", "moderate", "high", "unknown")
+
+# Backfill is useful for analysis and dangerous for the freeze: if historical tasks count
+# toward the tenth record, the observation window can be closed in an afternoon. Records
+# therefore declare when the task actually happened (`observed_at`, distinct from
+# `logged_at`) and how it was collected. Only prospective records count toward freeze exit.
+COLLECTION_MODES = ("prospective", "retrospective", "unknown")
 
 
 @dataclass(frozen=True)
@@ -114,6 +121,22 @@ def validate_record(record: Any, line: int) -> list[Finding]:
                     f"{field} must be one of: {', '.join(HELPED_VALUES)}",
                 )
             )
+    collection_mode = record.get("collection_mode")
+    if collection_mode is not None and collection_mode not in COLLECTION_MODES:
+        findings.append(
+            Finding(
+                line,
+                "invalid-collection-mode",
+                f"collection_mode must be one of: {', '.join(COLLECTION_MODES)}",
+            )
+        )
+    for field in ("observed_at", "record_id"):
+        value = record.get(field)
+        if value is not None and not non_empty_string(value):
+            findings.append(
+                Finding(line, "invalid-optional-field", f"{field} must be a non-empty string")
+            )
+
     overhead_level = record.get("overhead_level")
     if overhead_level is not None and overhead_level not in OVERHEAD_LEVELS:
         findings.append(
@@ -162,12 +185,30 @@ def validate_record(record: Any, line: int) -> list[Finding]:
     return findings
 
 
+def derive_record_id(record: dict[str, Any]) -> str:
+    """Derive a stable ID from the fields that identify the task.
+
+    The record-10 review must cite inclusion and exclusion by ID, so an ID has to survive
+    reordering and reformatting of the log. Deriving it from content rather than assigning
+    a counter keeps it reproducible and makes an accidental duplicate record visible as a
+    repeated ID instead of hiding behind a fresh number.
+    """
+    seed = "|".join(
+        str(record.get(field, ""))
+        for field in ("observed_at", "logged_at", "record_type", "method", "scenario", "model")
+    )
+    return "mtu-" + hashlib.sha256(seed.encode("utf-8")).hexdigest()[:12]
+
+
 def build_record(args: argparse.Namespace) -> dict[str, Any]:
     baseline = args.baseline_score
     constrained = args.constrained_score
-    return {
+    logged_at = args.logged_at or now_utc()
+    record: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
-        "logged_at": args.logged_at or now_utc(),
+        "logged_at": logged_at,
+        "observed_at": optional_text(args.observed_at) or logged_at,
+        "collection_mode": args.collection_mode,
         "record_type": args.record_type,
         "scenario": args.scenario.strip(),
         "method": args.method,
@@ -188,6 +229,8 @@ def build_record(args: argparse.Namespace) -> dict[str, Any]:
         "notes": optional_text(args.notes),
         "tags": parse_tags(args.tags),
     }
+    record["record_id"] = optional_text(args.record_id) or derive_record_id(record)
+    return record
 
 
 def is_default_log_path(path: Path) -> bool:
@@ -222,7 +265,27 @@ def print_findings(findings: list[Finding]) -> None:
         print(f"- BLOCK [{finding.code}] {line}: {finding.message}")
 
 
-def validate_log(path: Path) -> int:
+def count_by_type(records: list[dict[str, Any]]) -> dict[str, int]:
+    """Break the record count down by type, and by collection mode within `real_use`.
+
+    An untyped total is not a usable signal: a log holding only `evaluation` and `fixture`
+    records can satisfy a total threshold while `real_use` stays at zero. Freeze exit is
+    counted on prospective real-use records specifically, so that number is reported on
+    its own rather than left to be derived by a reader.
+    """
+    counts = {record_type: 0 for record_type in RECORD_TYPES}
+    prospective = 0
+    for record in records:
+        record_type = record.get("record_type")
+        if record_type in counts:
+            counts[record_type] += 1
+        if record_type == "real_use" and record.get("collection_mode") == "prospective":
+            prospective += 1
+    counts["real_use_prospective"] = prospective
+    return counts
+
+
+def validate_log(path: Path, min_real_use: int = 0) -> int:
     missing_default_log = not path.exists() and is_default_log_path(path)
     records, findings = read_jsonl(path, allow_missing_empty=missing_default_log)
     if findings:
@@ -230,12 +293,100 @@ def validate_log(path: Path) -> int:
         print(f"Log file: {path}")
         print_findings(findings)
         return 1
+    counts = count_by_type(records)
     print("Fidelity Usage Log Report")
     print(f"Log file: {path}")
     print(f"Records: {len(records)}")
+    print(
+        f"By type: real_use={counts['real_use']} "
+        f"evaluation={counts['evaluation']} fixture={counts['fixture']}"
+    )
+    print(f"Real-use prospective: {counts['real_use_prospective']}")
     if missing_default_log:
         print("No usage-log data yet; the default log is optional until the first record is appended.")
     print("No usage-log shape risks detected.")
+    if min_real_use and counts["real_use_prospective"] < min_real_use:
+        # Deliberately not a shape finding: the log is well-formed, there is simply not
+        # enough of it yet. Callers that want this to be fatal opt in with --min-real-use;
+        # required CI must not, or a strategic gap becomes a merge blocker.
+        print(
+            f"- BELOW-THRESHOLD prospective real_use {counts['real_use_prospective']} "
+            f"< required {min_real_use}"
+        )
+        return 1
+    return 0
+
+
+STATUS_BEGIN = "<!-- BEGIN real-use-status (generated by scripts/log-fidelity-usage.py) -->"
+STATUS_END = "<!-- END real-use-status -->"
+FREEZE_EXIT_TARGET = 10
+
+
+def render_status_block(records: list[dict[str, Any]]) -> str:
+    """Render the real-use status block embedded in README.md.
+
+    The point of this surface is that a reader encounters the number, so it states the
+    prospective real-use count against the freeze-exit target rather than a total that
+    evaluation and fixture records could inflate.
+    """
+    counts = count_by_type(records)
+    prospective = counts["real_use_prospective"]
+    lines = [
+        STATUS_BEGIN,
+        f"**真实使用记录：{prospective}/{FREEZE_EXIT_TARGET}**"
+        f"（前瞻记录；另有 retrospective {counts['real_use'] - prospective} 条、"
+        f"evaluation {counts['evaluation']} 条、fixture {counts['fixture']} 条）",
+        "",
+    ]
+    if prospective == 0:
+        lines.append(
+            "目前为 0。这不是失败指标，而是**当前最大的证据缺口**："
+            "`docs/real-use-validation.md` 把\"下一步值得修什么\"的导航权交给真实使用记录，"
+            "而这个登记册还是空的。"
+        )
+    else:
+        lines.append(
+            f"满 {FREEZE_EXIT_TARGET} 条后进行汇总复核，逐条列出纳入/排除的 `record_id` 与理由。"
+        )
+    lines.append("")
+    lines.append(
+        "这个数字由 `python3 scripts/log-fidelity-usage.py --render-status` 生成，"
+        "不要手工编辑。"
+    )
+    lines.append(STATUS_END)
+    return "\n".join(lines)
+
+
+def sync_status(readme: Path, records: list[dict[str, Any]], *, check: bool) -> int:
+    """Write or verify the README status block.
+
+    `--check-status` is what required CI runs: it asserts the rendered surface still agrees
+    with the log, and says nothing about whether the count is adequate. An empty log must
+    keep CI green — turning a strategic gap into a merge blocker converts it into noise
+    that gets routed around.
+    """
+    if not readme.is_file():
+        print(f"- BLOCK [missing-readme] file: {readme} not found")
+        return 1
+    text = readme.read_text(encoding="utf-8")
+    if STATUS_BEGIN not in text or STATUS_END not in text:
+        print(f"- BLOCK [missing-status-block] file: {readme} has no real-use status block")
+        return 1
+
+    head, _, rest = text.partition(STATUS_BEGIN)
+    current, _, tail = rest.partition(STATUS_END)
+    updated = head + render_status_block(records) + tail
+    if updated == text:
+        print(f"real-use status block is current in {readme}")
+        return 0
+    if check:
+        print(
+            f"- BLOCK [stale-status] file: {readme} real-use status block disagrees with the log; "
+            "run scripts/log-fidelity-usage.py --render-status"
+        )
+        return 1
+    readme.write_text(updated, encoding="utf-8")
+    print(f"updated real-use status block in {readme}")
     return 0
 
 
@@ -275,6 +426,35 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--log", type=Path, default=DEFAULT_LOG, help="JSONL usage log path.")
     parser.add_argument("--validate", action="store_true", help="Validate an existing usage log.")
+    parser.add_argument(
+        "--render-status",
+        action="store_true",
+        help="Rewrite the real-use status block in README.md from the log.",
+    )
+    parser.add_argument(
+        "--check-status",
+        action="store_true",
+        help=(
+            "Verify the rendered status block still agrees with the log. Checks freshness "
+            "only, never adequacy, so an empty log keeps required CI green."
+        ),
+    )
+    parser.add_argument(
+        "--readme",
+        type=Path,
+        default=Path("README.md"),
+        help="Status surface to render or check.",
+    )
+    parser.add_argument(
+        "--min-real-use",
+        type=int,
+        default=0,
+        help=(
+            "Exit non-zero when prospective real_use records fall below this count. "
+            "Record-type aware by design; an untyped total would be satisfiable by "
+            "evaluation and fixture records alone. Not used by required CI."
+        ),
+    )
     parser.add_argument("--scenario", help="Redacted scenario summary.")
     parser.add_argument("--method", choices=METHODS, help="Mindthus method or skill used.")
     parser.add_argument("--model", help="Model that produced the method output.")
@@ -316,13 +496,38 @@ def main() -> int:
     parser.add_argument("--mechanism", help="Redacted recurring success or failure mechanism.")
     parser.add_argument("--record-type", default="real_use", choices=RECORD_TYPES, help="Usage record type.")
     parser.add_argument("--logged-at", help="Override timestamp, preferably ISO-8601.")
+    parser.add_argument(
+        "--observed-at",
+        help="When the task actually occurred, if not now. Defaults to logged_at.",
+    )
+    parser.add_argument(
+        "--collection-mode",
+        default="prospective",
+        choices=COLLECTION_MODES,
+        help=(
+            "prospective: observed as it happened. retrospective: reconstructed from an "
+            "earlier task. Only prospective records count toward freeze exit."
+        ),
+    )
+    parser.add_argument(
+        "--record-id",
+        help="Override the derived stable record ID. Normally left unset.",
+    )
     parser.add_argument("--source", help="Optional artifact or issue reference.")
     parser.add_argument("--notes", help="Optional short note.")
     parser.add_argument("--tags", default="", help="Comma-separated tags.")
     args = parser.parse_args()
 
+    if args.render_status or args.check_status:
+        missing_default_log = not args.log.exists() and is_default_log_path(args.log)
+        records, findings = read_jsonl(args.log, allow_missing_empty=missing_default_log)
+        if findings:
+            print_findings(findings)
+            return 1
+        return sync_status(args.readme, records, check=args.check_status)
+
     if args.validate:
-        return validate_log(args.log)
+        return validate_log(args.log, min_real_use=args.min_real_use)
 
     required = {
         "scenario": args.scenario,
