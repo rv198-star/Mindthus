@@ -1,0 +1,122 @@
+{
+  "baseline_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
+  "destination": "benchmark-archive (pinned commit/tag recorded at migration time)",
+  "references": {
+    "details": [
+      {
+        "dangling_after_migration": [
+          "156:answers/<case>.record.json",
+          "157:answers/<case>-turn-*.txt",
+          "158:judge-answers/<case>.record.json",
+          "159:events/<case>-turn-*.jsonl",
+          "160:score-records.jsonl"
+        ],
+        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+      },
+      {
+        "dangling_after_migration": [
+          "18:treatment-cli-clean-v4-empty-home/score-records.jsonl"
+        ],
+        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+      },
+      {
+        "dangling_after_migration": [
+          "18:treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "19:treatment-cli-clean-v4-empty-home/answers/",
+          "20:treatment-cli-clean-v4-empty-home/events/",
+          "21:treatment-cli-clean-v4-empty-home/judge-answers/",
+          "68:answers/mtj-032-turn-1.txt",
+          "68:events/mtj-032-turn-1.jsonl",
+          "68:score-records.jsonl",
+          "69:answers/mtj-013-turn-1.txt",
+          "69:events/mtj-013-turn-1.jsonl",
+          "69:score-records.jsonl",
+          "70:answers/mtj-048-turn-1.txt",
+          "70:events/mtj-048-turn-1.jsonl",
+          "70:score-records.jsonl",
+          "71:answers/mtj-050-turn-1.txt",
+          "71:answers/mtj-050-turn-2.txt",
+          "71:answers/mtj-050-turn-3.txt",
+          "72:answers/mtj-037-turn-1.txt",
+          "72:events/mtj-037-turn-1.jsonl",
+          "73:answers/mtj-008-turn-1.txt",
+          "73:events/mtj-008-turn-1.jsonl",
+          "79:answers/mtj-002-turn-1.txt",
+          "80:answers/mtj-010-turn-1.txt",
+          "80:events/mtj-010-turn-1.jsonl",
+          "81:answers/mtj-033-turn-1.txt",
+          "82:answers/mtj-015-turn-1.txt",
+          "82:events/mtj-015-turn-1.jsonl",
+          "83:answers/mtj-019-turn-1.txt",
+          "83:events/mtj-019-turn-1.jsonl",
+          "84:answers/mtj-049-turn-1.txt",
+          "90:answers/mtj-003-turn-1.txt",
+          "91:answers/mtj-004-turn-1.txt",
+          "92:answers/mtj-017-turn-1.txt",
+          "93:answers/mtj-018-turn-1.txt",
+          "94:answers/mtj-034-turn-1.txt"
+        ],
+        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+      }
+    ],
+    "reports_needing_archive_pointer": 3,
+    "retained_reports": 15
+  },
+  "rows": "docs/benchmarks/artifact-inventory.csv",
+  "rule_reasons": {
+    "policy:aggregate": "aggregate scores or pre-registered gate results",
+    "policy:campaign-report": "campaign report or decision boundary record",
+    "policy:case-register": "case register defining what the campaign tested; report claims are unverifiable without it",
+    "policy:decision-boundary": "records why a run was discarded",
+    "policy:duplicated": "duplicated schema or telemetry; the same content is retained elsewhere or is regenerable from tracked code",
+    "policy:fingerprint": "fingerprint identifying runner, fixture, prompt, model, or code lineage",
+    "policy:manifest": "run or contamination manifest supporting a stated claim",
+    "policy:per-call": "per-call prompt, answer, event stream, stderr, or judge intermediate record",
+    "unmatched": "no rule matched; kept by default and requires explicit human classification"
+  },
+  "runs_root": "docs/benchmarks/runs",
+  "schema_version": "mindthus-benchmark-artifact-inventory-v0.1",
+  "summary": {
+    "by_rule": {
+      "policy:aggregate": {
+        "bytes": 584520,
+        "files": 54
+      },
+      "policy:campaign-report": {
+        "bytes": 94477,
+        "files": 15
+      },
+      "policy:case-register": {
+        "bytes": 5924,
+        "files": 1
+      },
+      "policy:decision-boundary": {
+        "bytes": 124,
+        "files": 1
+      },
+      "policy:duplicated": {
+        "bytes": 222235,
+        "files": 93
+      },
+      "policy:fingerprint": {
+        "bytes": 2073482,
+        "files": 7
+      },
+      "policy:manifest": {
+        "bytes": 126006,
+        "files": 81
+      },
+      "policy:per-call": {
+        "bytes": 26134437,
+        "files": 6241
+      }
+    },
+    "keep_bytes": 2884533,
+    "keep_files": 159,
+    "migrate_bytes": 26356672,
+    "migrate_files": 6334,
+    "total_bytes": 29241205,
+    "total_files": 6493,
+    "unmatched_files": 0
+  }
+}
