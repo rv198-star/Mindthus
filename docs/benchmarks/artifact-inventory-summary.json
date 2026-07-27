@@ -1,88 +1,92 @@
 {
-  "baseline_commit": "f7b8776efd453b1670764eb87ea0c3338d1ba05d",
-  "destination": "benchmark-archive (pinned commit/tag recorded at migration time)",
+  "baseline_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
+  "destination": "git:476053e68b8bbd4fa7c617982a45c097aeddd251",
   "references": {
     "accounting_ok": true,
     "by_category": {
       "breaks_after_migration": 5,
       "rejected_empty": 0,
-      "rejected_not_path_like": 445,
+      "rejected_not_path_like": 455,
       "rejected_numeric_ratio": 11,
       "rejected_url": 3,
       "resolved_outside_migration_scope": 35,
       "resolved_survives": 59,
       "unresolved": 6,
-      "unresolved_absolute_external": 20,
+      "unresolved_absolute_external": 18,
       "unresolved_migrate_class": 36
     },
     "details": [
       {
         "dangling_after_migration": [
-          "156:answers/<case>.record.json",
-          "157:answers/<case>-turn-*.txt",
-          "158:judge-answers/<case>.record.json",
-          "159:events/<case>-turn-*.jsonl",
-          "160:score-records.jsonl"
+          "160:answers/<case>.record.json",
+          "161:answers/<case>-turn-*.txt",
+          "162:judge-answers/<case>.record.json",
+          "163:events/<case>-turn-*.jsonl",
+          "164:score-records.jsonl"
         ],
         "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
       },
       {
         "dangling_after_migration": [
-          "18:treatment-cli-clean-v4-empty-home/score-records.jsonl"
+          "22:treatment-cli-clean-v4-empty-home/score-records.jsonl"
         ],
         "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
       },
       {
         "dangling_after_migration": [
-          "18:treatment-cli-clean-v4-empty-home/score-records.jsonl",
-          "19:treatment-cli-clean-v4-empty-home/answers/",
-          "20:treatment-cli-clean-v4-empty-home/events/",
-          "21:treatment-cli-clean-v4-empty-home/judge-answers/",
-          "68:answers/mtj-032-turn-1.txt",
-          "68:events/mtj-032-turn-1.jsonl",
-          "68:score-records.jsonl",
-          "69:answers/mtj-013-turn-1.txt",
-          "69:events/mtj-013-turn-1.jsonl",
-          "69:score-records.jsonl",
-          "70:answers/mtj-048-turn-1.txt",
-          "70:events/mtj-048-turn-1.jsonl",
-          "70:score-records.jsonl",
-          "71:answers/mtj-050-turn-1.txt",
-          "71:answers/mtj-050-turn-2.txt",
-          "71:answers/mtj-050-turn-3.txt",
-          "72:answers/mtj-037-turn-1.txt",
-          "72:events/mtj-037-turn-1.jsonl",
-          "73:answers/mtj-008-turn-1.txt",
-          "73:events/mtj-008-turn-1.jsonl",
-          "79:answers/mtj-002-turn-1.txt",
-          "80:answers/mtj-010-turn-1.txt",
-          "80:events/mtj-010-turn-1.jsonl",
-          "81:answers/mtj-033-turn-1.txt",
-          "82:answers/mtj-015-turn-1.txt",
-          "82:events/mtj-015-turn-1.jsonl",
-          "83:answers/mtj-019-turn-1.txt",
-          "83:events/mtj-019-turn-1.jsonl",
-          "84:answers/mtj-049-turn-1.txt",
-          "90:answers/mtj-003-turn-1.txt",
-          "91:answers/mtj-004-turn-1.txt",
-          "92:answers/mtj-017-turn-1.txt",
-          "93:answers/mtj-018-turn-1.txt",
-          "94:answers/mtj-034-turn-1.txt"
+          "22:treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "23:treatment-cli-clean-v4-empty-home/answers/",
+          "24:treatment-cli-clean-v4-empty-home/events/",
+          "25:treatment-cli-clean-v4-empty-home/judge-answers/",
+          "72:answers/mtj-032-turn-1.txt",
+          "72:events/mtj-032-turn-1.jsonl",
+          "72:score-records.jsonl",
+          "73:answers/mtj-013-turn-1.txt",
+          "73:events/mtj-013-turn-1.jsonl",
+          "73:score-records.jsonl",
+          "74:answers/mtj-048-turn-1.txt",
+          "74:events/mtj-048-turn-1.jsonl",
+          "74:score-records.jsonl",
+          "75:answers/mtj-050-turn-1.txt",
+          "75:answers/mtj-050-turn-2.txt",
+          "75:answers/mtj-050-turn-3.txt",
+          "76:answers/mtj-037-turn-1.txt",
+          "76:events/mtj-037-turn-1.jsonl",
+          "77:answers/mtj-008-turn-1.txt",
+          "77:events/mtj-008-turn-1.jsonl",
+          "83:answers/mtj-002-turn-1.txt",
+          "84:answers/mtj-010-turn-1.txt",
+          "84:events/mtj-010-turn-1.jsonl",
+          "85:answers/mtj-033-turn-1.txt",
+          "86:answers/mtj-015-turn-1.txt",
+          "86:events/mtj-015-turn-1.jsonl",
+          "87:answers/mtj-019-turn-1.txt",
+          "87:events/mtj-019-turn-1.jsonl",
+          "88:answers/mtj-049-turn-1.txt",
+          "94:answers/mtj-003-turn-1.txt",
+          "95:answers/mtj-004-turn-1.txt",
+          "96:answers/mtj-017-turn-1.txt",
+          "97:answers/mtj-018-turn-1.txt",
+          "98:answers/mtj-034-turn-1.txt"
         ],
         "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
       },
       {
         "dangling_after_migration": [
-          "79:judge-output-schema.json"
+          "83:judge-output-schema.json"
         ],
         "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
       }
     ],
+    "reports_missing_archive_pointer": [],
     "reports_needing_archive_pointer": 4,
-    "retained_reports": 15,
-    "scanned_files": 15,
-    "skipped_files": 144,
-    "total_extracted": 620
+    "reports_requiring_archive_pointer": 14,
+    "reports_with_archive_pointer": 14,
+    "reports_with_dangling_references": 4,
+    "retained_reports": 14,
+    "scanned_files": 14,
+    "skipped_files": 145,
+    "total_extracted": 628
   },
   "rows": "docs/benchmarks/artifact-inventory.csv",
   "rule_reasons": {
@@ -97,7 +101,7 @@
     "unmatched": "no rule matched; kept by default and requires explicit human classification"
   },
   "runs_root": "docs/benchmarks/runs",
-  "schema_version": "mindthus-benchmark-artifact-inventory-v0.2",
+  "schema_version": "mindthus-benchmark-artifact-inventory-v0.3",
   "summary": {
     "by_rule": {
       "policy:aggregate": {

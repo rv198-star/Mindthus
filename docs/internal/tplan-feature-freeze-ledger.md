@@ -1,7 +1,7 @@
 # TPlan Feature Freeze Ledger
 
 Status: active
-Opened: 2026-07-26 (when [#144](https://github.com/rv198-star/Mindthus/issues/144) was filed)
+Opened: 2026-07-26T18:03:23Z (when [#144](https://github.com/rv198-star/Mindthus/issues/144) was filed)
 Closes: when `data/fidelity-usage-log.jsonl` holds 10 prospective `real_use` records and
 the aggregate review in #144 is complete.
 
@@ -38,15 +38,14 @@ not authorize it.
 
 | Date | PR / commit | Category | Why |
 | --- | --- | --- | --- |
-| 2026-07-27 | `3f719157` | #145 | Artifact inventory dry-run. Classification and reference scan only; no deletion, nothing under `docs/benchmarks/runs/` modified. |
-| 2026-07-27 | (this commit) | #144 | Phase 1: typed validator status, schema fields for prospective/retrospective collection, rendered status surface, freshness check, this ledger. |
-| 2026-07-27 | (this commit) | #144 + #145 | External audit repair. 缺陷修复，未新增能力：#144 时间戳校验、稳定 record ID（`logged_at` 移出 seed）、freeze 日期门；#145 引用记账恒等式、派生 basename 索引、CSV 契约与 LF 换行。强制 `source` 提案已驳回——`docs/real-use-validation.md` 无此要求，且 `source` 是自由文本，强制非空只会把"没填"变成"随便填"。不解除冻结，不授权删除。 |
+| — | — | — | No merge has landed on `main` since the freeze opened. Feature-branch commits are recorded here only when they merge. |
 
 ## Boundaries
 
 - This ledger records merges. It does not lift the freeze, and it does not authorize new
   TPlan feature work.
-- Freeze exit is counted on **prospective** records observed after 2026-07-26. Retrospective
-  records may inform the analysis; they do not unlock the freeze.
+- Freeze exit counts unique, traceable **prospective** records observed after
+  `2026-07-26T18:03:23Z`. Retrospective records may inform the analysis; they do not
+  unlock the freeze.
 - Ten records is an observation window, not a statistical claim. It cannot certify
   judgment quality and must not be reported as if it could.

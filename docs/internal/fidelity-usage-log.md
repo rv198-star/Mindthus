@@ -33,9 +33,10 @@ data/fidelity-usage-log.jsonl
 - `logged_at`: 记录时间
 - `observed_at`: 任务**实际发生**的时间；不传时等于 `logged_at`
 - `collection_mode`: `prospective`（当场观察）、`retrospective`（回溯重建）或 `unknown`
-- `record_id`: 稳定 ID，默认从 `observed_at / logged_at / record_type / method / scenario /
-  model` 派生。汇总复核要按 ID 逐条列出纳入与排除，所以它必须在重排、重排版之后仍然不变；
-  内容派生同时让重复记录表现为重复 ID，而不是被一个新序号盖过去
+- `record_id`: 稳定 ID，默认从 `observed_at / record_type / method / scenario / model`
+  派生，不含记录动作发生的 `logged_at`。汇总复核要按 ID 逐条列出纳入与排除；相同 ID 的
+  重复行只计一次。调用方没有显式提供 `observed_at` 时它会回落到 `logged_at`，因此这种
+  默认记录方式不能自动识别同一任务被稍后重复录入
 - `record_type`: `real_use`、`evaluation` 或 `fixture`
 - `scenario`: 脱敏后的场景摘要
 - `method`: `3L5S`、`SELA`、`MPG`、`EDSP`、`WAE`、`TVG`、`tplan` 或 `using-mindthus`
@@ -52,7 +53,8 @@ data/fidelity-usage-log.jsonl
 - `overhead_level`: `none`、`low`、`moderate`、`high` 或 `unknown`
 - `harm_observed`: 是否造成更差判断、延误或额外负担
 - `mechanism`: 脱敏后的重复成功或失败机制，供跨任务聚类
-- `source`: 可复核来源，例如 issue、测试包、artifact 路径
+- `source`: 可复核来源，例如 issue、测试包、artifact 路径；旧记录可以为空，但 prospective
+  `real_use` 缺少它时不计入冻结退出
 - `notes`: 简短备注
 - `tags`: 标签列表
 
@@ -83,7 +85,8 @@ python3 scripts/log-fidelity-usage.py \
   --model "gpt-5-codex" \
   --constrained-score 8 \
   --max-score 10 \
-  --constraint-helped mixed
+  --constraint-helped mixed \
+  --source "#144"
 ```
 
 自然发生的真实任务不需要强造 rubric 分数：
@@ -99,7 +102,8 @@ python3 scripts/log-fidelity-usage.py \
   --rework-reduced unknown \
   --overhead-level low \
   --harm-observed no \
-  --mechanism "纠正了实现层事实接管定义层判断"
+  --mechanism "纠正了实现层事实接管定义层判断" \
+  --source "#144"
 ```
 
 校验日志：
@@ -121,5 +125,7 @@ still fail, so a typo is not silently accepted.
 - v0.1 的新增真实使用字段是向后兼容扩展；旧记录没有这些字段仍可校验。
 - `--validate` 只证明字段形状，不能证明任务是真实的、独立的、完整的，也不能证明结果可观察。
   纳入与否是记录在复核里的人工判断，不是校验器的输出。
-- 冻结退出只按 `collection_mode=prospective` 且发生在 #144 开出之后的 `real_use` 记录计数。
-  回溯记录可以参与分析，但不解冻——否则一个下午的补录就能关掉本该 2–3 周的自然观察窗口。
+- 冻结退出只按唯一 `record_id` 计数，并要求 `collection_mode=prospective`、非空
+  `source`，且 `observed_at > 2026-07-26T18:03:23Z`（#144 的精确创建时间）。
+  `record_id`/`source` 的存在只保证人工复核有对象可查，不证明内容真实。回溯记录可以参与
+  分析，但不解冻——否则一个下午的补录就能关掉本该 2–3 周的自然观察窗口。

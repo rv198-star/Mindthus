@@ -1,5 +1,9 @@
 # V5 Register Action Probes Diagnostic
 
+> **Artifact archive base:** `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
+> ([browse immutable snapshot](https://github.com/rv198-star/Mindthus/tree/476053e68b8bbd4fa7c617982a45c097aeddd251/docs/benchmarks/runs)).
+> Resolve relative artifact paths from this document's directory at that commit.
+
 Status: diagnostic target n>=3 score/action green, but cross-review marked the
 #8/#13/#37/#49 result as narrow-fitting suspect pending #108 resolution.
 

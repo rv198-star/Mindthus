@@ -1,5 +1,9 @@
 # V4 Human Review Packet
 
+> **Artifact archive base:** `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
+> ([browse immutable snapshot](https://github.com/rv198-star/Mindthus/tree/476053e68b8bbd4fa7c617982a45c097aeddd251/docs/benchmarks/runs)).
+> Resolve relative artifact paths from this document's directory at that commit.
+
 Purpose: guide a narrow human adjudication pass over the V4 diagnostic run. This is not
 a second full benchmark. It targets cases where a human decision can change the meaning
 of the result: true product failure, no-load failure, rubric issue, or runner limitation.

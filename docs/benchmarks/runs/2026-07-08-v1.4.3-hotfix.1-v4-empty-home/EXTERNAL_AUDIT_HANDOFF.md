@@ -1,5 +1,9 @@
 # Mindthus V4 Diagnostic Run: External Audit Handoff
 
+> **Artifact archive base:** `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
+> ([browse immutable snapshot](https://github.com/rv198-star/Mindthus/tree/476053e68b8bbd4fa7c617982a45c097aeddd251/docs/benchmarks/runs)).
+> Resolve relative artifact paths from this document's directory at that commit.
+
 Status: ready for external audit as a diagnostic run; not certified as passing.
 
 This handoff packages the V4 machine results plus three independent read-only SubAgent

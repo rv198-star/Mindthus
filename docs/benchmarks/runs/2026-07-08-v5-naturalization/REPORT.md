@@ -1,5 +1,9 @@
 # V5 Naturalization And #17 Layer Probe Report
 
+> **Artifact archive base:** `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
+> ([browse immutable snapshot](https://github.com/rv198-star/Mindthus/tree/476053e68b8bbd4fa7c617982a45c097aeddd251/docs/benchmarks/runs)).
+> Resolve relative artifact paths from this document's directory at that commit.
+
 Status: diagnostic evidence only, not certification. This run validates two bounded tasks after `v1.4.4-diag`: #17 loaded-action layer probe and #104 semantic triage naturalization. It does not touch brake follow-up or #8/#37 register coverage.
 
 ## Code Under Test

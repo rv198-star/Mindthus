@@ -8,6 +8,7 @@ whenever a new campaign lands, but "unknown files are kept" and "this tool never
 must not move.
 """
 
+import csv
 import importlib.util
 import json
 import subprocess
@@ -153,6 +154,28 @@ class ReferenceResolutionTests(unittest.TestCase):
         )
         self.assertLessEqual(references["reports_needing_archive_pointer"], len(flagged) + 1)
 
+    def test_all_required_report_types_require_archive_pointers(self):
+        entries = inventory.build_inventory(REPO)
+        references = inventory.scan_references(REPO, entries)
+        expected = [
+            item
+            for item in entries
+            if item.disposition == "keep"
+            and Path(item.path).name in inventory.ARCHIVE_POINTER_REPORTS
+        ]
+        self.assertEqual(references["reports_requiring_archive_pointer"], len(expected))
+        self.assertEqual(references["retained_reports"], len(expected))
+        self.assertGreater(
+            references["reports_requiring_archive_pointer"],
+            references["reports_with_dangling_references"],
+            "direct-risk reports are only a subset of the pointer obligation",
+        )
+        self.assertEqual(references["reports_missing_archive_pointer"], [])
+        self.assertEqual(
+            references["reports_with_archive_pointer"],
+            references["reports_requiring_archive_pointer"],
+        )
+
 
 class ReferenceAccountingTests(unittest.TestCase):
     """Every extracted reference must land in exactly one category.
@@ -219,11 +242,15 @@ class ReferenceAccountingTests(unittest.TestCase):
         """
         summary = inventory.summarize(self.entries)
         broken = {**self.references, "accounting_ok": False, "total_extracted": 999}
-        text = inventory.render_report(summary, self.entries, "abc1234", broken)
+        text = inventory.render_report(
+            summary, self.entries, "abc1234", broken, "git:abc1234"
+        )
         self.assertNotIn("nothing was dropped", text)
         self.assertIn("floor, not a total", text)
 
-        clean = inventory.render_report(summary, self.entries, "abc1234", self.references)
+        clean = inventory.render_report(
+            summary, self.entries, "abc1234", self.references, "git:abc1234"
+        )
         self.assertIn("nothing was dropped", clean)
 
     def test_numeric_ratios_are_rejected_by_shape_not_by_failed_resolution(self):
@@ -331,8 +358,44 @@ class CsvContractTests(unittest.TestCase):
                 self.assertIn("eol=lf", line)
 
     def test_schema_version_moved_with_the_row_bytes(self):
-        """v0.1 emitted CRLF and derived its header from the first row."""
-        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.2"))
+        """v0.3 adds reason/destination after v0.2 pinned LF and column order."""
+        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.3"))
+
+    def test_every_committed_row_carries_reason_and_destination(self):
+        with self.COMMITTED.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        self.assertTrue(rows)
+        for row in rows:
+            with self.subTest(path=row["path"]):
+                self.assertEqual(row["reason"], inventory.RULE_REASONS[row["rule"]])
+                if row["disposition"] == "keep":
+                    self.assertEqual(row["destination"], "HEAD")
+                else:
+                    self.assertRegex(row["destination"], r"^git:[0-9a-f]{40}$")
+
+    def test_report_pointers_name_the_committed_inventory_destination(self):
+        summary = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        marker = f"`{summary['destination']}`"
+        reports = [
+            item
+            for item in inventory.build_inventory(
+                REPO,
+                revision=summary["baseline_commit"],
+                migrate_destination=summary["destination"],
+            )
+            if item.disposition == "keep"
+            and Path(item.path).name in inventory.ARCHIVE_POINTER_REPORTS
+        ]
+        self.assertEqual(len(reports), 14)
+        for item in reports:
+            with self.subTest(path=item.path):
+                text = (REPO / item.path).read_text(encoding="utf-8")
+                self.assertIn(inventory.ARCHIVE_POINTER_MARKER, text)
+                self.assertIn(marker, text)
 
 
 class DryRunSafetyTests(unittest.TestCase):
@@ -358,17 +421,25 @@ class DryRunSafetyTests(unittest.TestCase):
 
 
 class CommittedInventoryTests(unittest.TestCase):
-    def test_committed_summary_matches_a_fresh_run(self):
+    def test_committed_summary_matches_its_pinned_baseline(self):
         summary_path = REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json"
         self.assertTrue(summary_path.is_file(), "committed inventory summary is missing")
         committed = json.loads(summary_path.read_text(encoding="utf-8"))
         self.assertEqual(committed["schema_version"], inventory.INVENTORY_SCHEMA_VERSION)
+        self.assertRegex(committed["baseline_commit"], r"^[0-9a-f]{40}$")
+        self.assertEqual(committed["destination"], f"git:{committed['baseline_commit']}")
 
-        fresh = inventory.summarize(inventory.build_inventory(REPO))
+        fresh = inventory.summarize(
+            inventory.build_inventory(
+                REPO,
+                revision=committed["baseline_commit"],
+                migrate_destination=committed["destination"],
+            )
+        )
         self.assertEqual(
             committed["summary"],
             fresh,
-            "committed inventory is stale; regenerate it before review",
+            "committed inventory disagrees with its immutable baseline",
         )
 
     def test_committed_inventory_resolves_every_unmatched_path(self):
@@ -379,6 +450,68 @@ class CommittedInventoryTests(unittest.TestCase):
             0,
             "unmatched paths must be classified explicitly before deletion is considered",
         )
+
+    def test_committed_rows_match_every_blob_in_the_pinned_tree(self):
+        summary = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        expected = {
+            item.path: item
+            for item in inventory.build_inventory(
+                REPO,
+                revision=summary["baseline_commit"],
+                migrate_destination=summary["destination"],
+            )
+        }
+        with (
+            REPO / "docs" / "benchmarks" / "artifact-inventory.csv"
+        ).open(encoding="utf-8", newline="") as handle:
+            committed = {row["path"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(set(committed), set(expected))
+        for path, item in expected.items():
+            with self.subTest(path=path):
+                row = committed[path]
+                self.assertEqual(row["blob_oid"], item.blob_oid)
+                self.assertEqual(int(row["size_bytes"]), item.size_bytes)
+                self.assertEqual(row["disposition"], item.disposition)
+                self.assertEqual(row["reason"], item.reason)
+                self.assertEqual(row["destination"], item.destination)
+
+    def test_migration_verifier_uses_pinned_archive_and_current_head_separately(self):
+        """Before deletion it must prove archive OIDs yet refuse a completion claim.
+
+        After deletion the same test continues to use the immutable inventory rather
+        than comparing the committed pre-migration summary with the changed live tree.
+        """
+        summary = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        entries = inventory.build_inventory(
+            REPO,
+            revision=summary["baseline_commit"],
+            migrate_destination=summary["destination"],
+        )
+        verification = inventory.verify_migration(
+            REPO, entries, summary["destination"].removeprefix("git:")
+        )
+        self.assertEqual(
+            verification["archive_verified_files"],
+            summary["summary"]["migrate_files"],
+        )
+        self.assertEqual(verification["archive_missing_files"], 0)
+        self.assertEqual(verification["archive_oid_mismatches"], 0)
+
+        # Phase 1 is deliberately not a completion claim: no deletion is authorized yet.
+        if verification["remaining_migrate_files"]:
+            self.assertFalse(verification["complete"])
+            self.assertEqual(
+                verification["remaining_migrate_files"],
+                summary["summary"]["migrate_files"],
+            )
 
 
 if __name__ == "__main__":

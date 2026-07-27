@@ -31,17 +31,14 @@ OVERHEAD_LEVELS = ("none", "low", "moderate", "high", "unknown")
 # freeze exit; the observation date has to clear FREEZE_OPENED as well. See freeze_eligible.
 COLLECTION_MODES = ("prospective", "retrospective", "unknown")
 
-# The freeze opened when #144 was filed on 2026-07-26. Both
-# docs/internal/tplan-feature-freeze-ledger.md and docs/internal/fidelity-usage-log.md
-# say exit counts records observed *after* that day, so the first eligible instant is
-# 2026-07-27T00:00:00Z and the comparison below is `>=` against it. Writing the boundary
-# as `>= 2026-07-26` would make a record observed on the day the freeze opened count
-# toward opening it.
+# The exact GitHub creation timestamp of #144. The issue requires tasks occurring after
+# it opened, not after the next UTC calendar boundary. Rounding this to 2026-07-27 omitted
+# 5h56m37s of otherwise eligible observation time.
 #
 # Parsed once at import rather than per record: a tz-naive value here raises TypeError on
 # comparison, and a boundary that only fails when someone moves the window is a boundary
 # nobody can move.
-FREEZE_OPENED = datetime(2026, 7, 27, tzinfo=timezone.utc)
+FREEZE_OPENED = datetime(2026, 7, 26, 18, 3, 23, tzinfo=timezone.utc)
 
 
 @dataclass(frozen=True)
@@ -369,7 +366,7 @@ def count_by_type(records: list[dict[str, Any]]) -> dict[str, int]:
     """
     counts = {record_type: 0 for record_type in RECORD_TYPES}
     prospective = 0
-    eligible = 0
+    eligible_ids: set[str] = set()
     for record in records:
         record_type = record.get("record_type")
         if record_type in counts:
@@ -377,9 +374,12 @@ def count_by_type(records: list[dict[str, Any]]) -> dict[str, int]:
         if record_type == "real_use" and record.get("collection_mode") == "prospective":
             prospective += 1
             if freeze_eligible(record):
-                eligible += 1
+                # The observation window is ten independently citable tasks, not ten
+                # lines. A repeated stable ID stays visible in the raw/prospective count
+                # but contributes once to freeze exit.
+                eligible_ids.add(record["record_id"].strip())
     counts["real_use_prospective"] = prospective
-    counts["freeze_eligible"] = eligible
+    counts["freeze_eligible"] = len(eligible_ids)
     return counts
 
 
@@ -389,22 +389,33 @@ def freeze_eligible(record: dict[str, Any]) -> bool:
     `collection_mode=prospective` alone is not enough. It is a self-declared field, and a
     record can declare itself prospective while pointing `observed_at` at a task from
     years before the freeze opened -- which validated, and counted. Requiring the
-    observation to fall on or after FREEZE_OPENED closes that particular hole.
+    observation to fall after FREEZE_OPENED closes that particular hole.
 
-    What it does not close: nothing here can tell whether a task was observed as it
-    happened or reconstructed afterward, or whether `observed_at` was simply typed in
-    wrong. Backdating is now visible; forward-dating and plain fabrication are not. This
-    is a shape check standing in for a claim only the record-10 human review can settle.
+    Eligibility also requires a stable ID and a reviewable source. Their presence does
+    not prove either is truthful; it only ensures that the record-10 human review has an
+    identity and evidence pointer to examine. Semantic inclusion remains human judgment.
 
     A record with no `observed_at` is not eligible. It could be dated from `logged_at`
     instead -- but then omitting the field would be enough to make a backfilled record
     count, which is the hole this closes. The CLI always writes the field, so this only
     reaches hand-written records, and the failure is visible: the count does not move.
     """
+    if record.get("record_type") != "real_use":
+        return False
+    if record.get("collection_mode") != "prospective":
+        return False
+    if not non_empty_string(record.get("record_id")):
+        return False
+    if not non_empty_string(record.get("source")):
+        return False
     observed = parse_timestamp(record.get("observed_at"))
     if observed is None:
         return False
-    return observed >= FREEZE_OPENED
+    return observed > FREEZE_OPENED
+
+
+def freeze_opened_text() -> str:
+    return FREEZE_OPENED.isoformat().replace("+00:00", "Z")
 
 
 def validate_log(path: Path, min_real_use: int = 0) -> int:
@@ -426,7 +437,7 @@ def validate_log(path: Path, min_real_use: int = 0) -> int:
     print(f"Real-use prospective: {counts['real_use_prospective']}")
     print(
         f"Freeze-eligible: {counts['freeze_eligible']} "
-        f"(prospective and observed on or after {FREEZE_OPENED.date().isoformat()})"
+        f"(unique, traceable, prospective, observed after {freeze_opened_text()})"
     )
     if missing_default_log:
         print("No usage-log data yet; the default log is optional until the first record is appended.")
@@ -479,8 +490,9 @@ def render_status_block(records: list[dict[str, Any]]) -> str:
     elif eligible == 0:
         lines.append(
             f"已有 {len(records)} 条记录，但没有一条计入冻结退出："
-            f"退出只按 `collection_mode=prospective` 且 `observed_at` 在 "
-            f"{FREEZE_OPENED.date().isoformat()} 当天或之后的 `real_use` 记录计数。"
+            f"退出只按 `collection_mode=prospective` 且 `observed_at` 晚于 "
+            f"{freeze_opened_text()}、具有 `record_id` 和 `source` 的唯一 "
+            "`real_use` 记录计数。"
             "回溯记录可以参与分析，但不解冻。"
         )
     else:
@@ -590,9 +602,8 @@ def main() -> int:
         default=0,
         help=(
             "Exit non-zero when freeze-eligible real_use records fall below this count. "
-            "Record-type and date aware by design; an untyped total would be satisfiable "
-            "by evaluation and fixture records alone, and a prospective-only count would "
-            "be satisfiable by backdated ones. Not used by required CI."
+            "Record-type, date, traceability, and stable-ID aware by design; repeated IDs "
+            "count once. Not used by required CI."
         ),
     )
     parser.add_argument("--scenario", help="Redacted scenario summary.")
@@ -649,18 +660,25 @@ def main() -> int:
         choices=COLLECTION_MODES,
         help=(
             "prospective: observed as it happened. retrospective: reconstructed from an "
-            "earlier task. Freeze exit needs prospective AND an observed_at on or after "
-            "the day the freeze opened; declaring prospective does not by itself count."
+            "earlier task. Freeze exit needs prospective AND an observed_at after "
+            "the exact time the freeze opened; declaring prospective does not by itself count."
         ),
     )
     parser.add_argument(
         "--record-id",
         help=(
-            "Override the derived record ID. Normally left unset; nothing checks that an "
-            "override is unique or well-formed."
+            "Override the derived record ID. Normally left unset. Repeated IDs remain "
+            "valid log rows but count once toward freeze exit."
         ),
     )
-    parser.add_argument("--source", help="Optional artifact or issue reference.")
+    parser.add_argument(
+        "--source",
+        help=(
+            "Reviewable artifact, issue, incident, or commit pointer. Optional for legacy "
+            "and non-freeze records; a prospective real_use record cannot count toward "
+            "freeze exit without it."
+        ),
+    )
     parser.add_argument("--notes", help="Optional short note.")
     parser.add_argument("--tags", default="", help="Comma-separated tags.")
     args = parser.parse_args()

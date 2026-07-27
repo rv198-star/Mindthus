@@ -3,8 +3,8 @@
 
 This script classifies every tracked file under `docs/benchmarks/runs/` against
 `docs/benchmarks/run-artifact-retention-policy.md` and emits a machine-readable
-inventory: one CSV row per path (`path / blob_oid / size_bytes / disposition / rule`)
-plus a JSON summary holding the totals and the rule dictionary those rows key into.
+inventory: one CSV row per path (`path / blob_oid / size_bytes / disposition / rule /
+reason / destination`). A JSON summary holds totals and scan accounting.
 
 It is an inventory and dry-run tool only. It never deletes, moves, or rewrites
 anything. Deletion is a separate, separately reviewed step.
@@ -22,25 +22,39 @@ from dataclasses import dataclass, asdict
 from pathlib import Path, PurePosixPath
 
 
-# v0.2: CSV rows are written with LF line terminators (v0.1 emitted CRLF via the csv
-# module's default) and the column order below is pinned. Both change the bytes of every
-# row, so the version moves with them -- a consumer that pinned v0.1 must be told the
-# file it validated is not the file it now reads.
-INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.2"
+# v0.3 adds the per-row reason and destination required by #145. v0.2 pinned LF and
+# column order but normalized those two review fields out of the CSV, so a reviewer could
+# not approve one row without joining it to global prose.
+INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.3"
 RUNS_ROOT = "docs/benchmarks/runs"
 
 # Pinned explicitly rather than read off `asdict(entries[0])`. Deriving the header from
 # the first row makes the schema a function of whichever file sorts first and of dataclass
 # field order, so a reordered field silently rewrites 6493 rows with no version change.
-CSV_COLUMNS = ("path", "blob_oid", "size_bytes", "disposition", "rule")
+CSV_COLUMNS = (
+    "path",
+    "blob_oid",
+    "size_bytes",
+    "disposition",
+    "rule",
+    "reason",
+    "destination",
+)
 
-# Reports and decision records. Policy: "the campaign report and decision boundary",
-# "compact human-review or disagreement records".
-KEEP_REPORTS = {
+# These four retained report types must all carry an archive base pointer before
+# migration, whether or not the reference scanner finds a directly dangling token.
+ARCHIVE_POINTER_REPORTS = {
     "REPORT.md",
     "HUMAN_REVIEW_PACKET.md",
     "EXTERNAL_AUDIT_HANDOFF.md",
     "MANUAL_PROBLEM_CASE_AUDIT.md",
+}
+ARCHIVE_POINTER_MARKER = "Artifact archive base:"
+IMMUTABLE_GIT_POINTER = re.compile(r"`git:([0-9a-f]{40})`")
+
+# Reports and decision records. Policy: "the campaign report and decision boundary",
+# "compact human-review or disagreement records".
+KEEP_REPORTS = ARCHIVE_POINTER_REPORTS | {
     "CODEX_HOME_CONFIG_SNAPSHOT.md",
 }
 
@@ -107,10 +121,10 @@ MIGRATE_DUPLICATED = {
 }
 
 
-# Per-rule constants. `reason` and `destination` are properties of the rule, not of the
-# individual path, so they are stored once here and referenced by key from each row.
-# Repeating them on all 6493 rows would add ~0.9 MiB of duplicated strings to an
-# inventory whose purpose is to reduce tracked weight.
+# Per-rule constants. They remain useful for consistent generation, but the resolved
+# reason is repeated in every CSV row because #145 makes each row the review unit. The
+# inventory is evidence supporting a destructive future step; saving bytes is subordinate
+# to making a row independently auditable.
 RULE_REASONS = {
     "policy:campaign-report": "campaign report or decision boundary record",
     "policy:decision-boundary": "records why a run was discarded",
@@ -141,10 +155,8 @@ class Entry:
     size_bytes: int
     disposition: str
     rule: str
-
-    @property
-    def reason(self) -> str:
-        return RULE_REASONS[self.rule]
+    reason: str
+    destination: str
 
 
 def run_git(args: list[str], repo: Path) -> str:
@@ -156,39 +168,25 @@ def run_git(args: list[str], repo: Path) -> str:
     return result.stdout
 
 
-def tracked_files(repo: Path) -> list[tuple[str, str, int]]:
-    """Return (path, blob_oid, size_bytes) for every tracked file under RUNS_ROOT."""
-    raw = run_git(["ls-files", "-s", "-z", RUNS_ROOT], repo)
-    paths: list[tuple[str, str]] = []
+def resolve_commit(repo: Path, revision: str) -> str:
+    """Resolve a revision once so generated evidence never records a moving ref."""
+    return run_git(["rev-parse", f"{revision}^{{commit}}"], repo).strip()
+
+
+def tracked_files(repo: Path, revision: str = "HEAD") -> list[tuple[str, str, int]]:
+    """Return path/OID/size rows from one pinned tree, independent of the live index."""
+    commit = resolve_commit(repo, revision)
+    raw = run_git(["ls-tree", "-r", "-z", "-l", commit, "--", RUNS_ROOT], repo)
+    paths: list[tuple[str, str, int]] = []
     for record in raw.split("\0"):
         if not record.strip():
             continue
         meta, _, path = record.partition("\t")
         fields = meta.split()
-        if len(fields) < 2:
-            raise SystemExit(f"unexpected git ls-files output: {record!r}")
-        paths.append((path, fields[1]))
-
-    if not paths:
-        return []
-
-    # Batch the object sizes so a 6000-file inventory stays a single git call.
-    batch_input = "".join(f"{oid}\n" for _, oid in paths)
-    sizes_raw = subprocess.run(
-        ["git", "cat-file", "--batch-check=%(objectsize)"],
-        cwd=repo,
-        input=batch_input,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if sizes_raw.returncode != 0:
-        raise SystemExit(f"git cat-file failed: {sizes_raw.stderr.strip()}")
-    sizes = [int(line) for line in sizes_raw.stdout.splitlines() if line.strip()]
-    if len(sizes) != len(paths):
-        raise SystemExit(f"size lookup mismatch: {len(sizes)} sizes for {len(paths)} paths")
-
-    return [(path, oid, size) for (path, oid), size in zip(paths, sizes)]
+        if len(fields) != 4 or fields[1] != "blob":
+            raise SystemExit(f"unexpected git ls-tree output: {record!r}")
+        paths.append((path, fields[2], int(fields[3])))
+    return paths
 
 
 def classify(path: str) -> tuple[str, str]:
@@ -223,12 +221,30 @@ def classify(path: str) -> tuple[str, str]:
     return "keep", "unmatched"
 
 
-def build_inventory(repo: Path) -> list[Entry]:
+def build_inventory(
+    repo: Path, revision: str = "HEAD", migrate_destination: str | None = None
+) -> list[Entry]:
+    """Build rows from a pinned tree.
+
+    `git:<commit>` is an immutable repository-local archive base. The row's `path` is
+    resolved under that commit. A later migration may supply another immutable
+    destination, but a moving branch or placeholder is not emitted by default.
+    """
+    baseline_commit = resolve_commit(repo, revision)
+    archive = migrate_destination or f"git:{baseline_commit}"
     entries: list[Entry] = []
-    for path, oid, size in tracked_files(repo):
+    for path, oid, size in tracked_files(repo, baseline_commit):
         disposition, rule = classify(path)
         entries.append(
-            Entry(path=path, blob_oid=oid, size_bytes=size, disposition=disposition, rule=rule)
+            Entry(
+                path=path,
+                blob_oid=oid,
+                size_bytes=size,
+                disposition=disposition,
+                rule=rule,
+                reason=RULE_REASONS[rule],
+                destination="HEAD" if disposition == "keep" else archive,
+            )
         )
     return sorted(entries, key=lambda item: item.path)
 
@@ -284,7 +300,11 @@ REFERENCE_CATEGORIES = (
 REFERENCES_REQUIRED_KEYS = frozenset(
     {
         "retained_reports",
+        "reports_requiring_archive_pointer",
+        "reports_with_dangling_references",
         "reports_needing_archive_pointer",
+        "reports_with_archive_pointer",
+        "reports_missing_archive_pointer",
         "details",
         "scanned_files",
         "skipped_files",
@@ -364,7 +384,7 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
     buckets sum to the number extracted; when it is False the scan dropped something and
     the "N reports need a pointer" line below it cannot be trusted.
 
-    Scope: only files named in `KEEP_REPORTS` are read. `scanned_files` and
+    Scope: only files named in `ARCHIVE_POINTER_REPORTS` are read. `scanned_files` and
     `skipped_files` report that boundary, because `accounting_ok` is a claim about the
     references this scan saw, not about the repository.
     """
@@ -372,18 +392,32 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
     reports = [
         item.path
         for item in entries
-        if item.disposition == "keep" and PurePosixPath(item.path).name in KEEP_REPORTS
+        if item.disposition == "keep"
+        and PurePosixPath(item.path).name in ARCHIVE_POINTER_REPORTS
     ]
     kept = [item.path for item in entries if item.disposition == "keep"]
     repo_tracked = {line for line in run_git(["ls-files"], repo).splitlines() if line}
     migrate_only = migrate_only_basenames(entries)
-
+    archive_destinations = {
+        item.destination for item in entries if item.disposition == "migrate"
+    }
+    if len(archive_destinations) != 1:
+        raise SystemExit(
+            "inventory must name exactly one migrate destination; found "
+            f"{sorted(archive_destinations)}"
+        )
     by_category = {category: 0 for category in REFERENCE_CATEGORIES}
     total_extracted = 0
     affected: list[dict] = []
+    reports_with_pointer: list[str] = []
+    reports_missing_pointer: list[str] = []
     for report in sorted(reports):
         broken: set[str] = set()
         text = (repo / report).read_text(encoding="utf-8", errors="replace")
+        if ARCHIVE_POINTER_MARKER in text and IMMUTABLE_GIT_POINTER.search(text):
+            reports_with_pointer.append(report)
+        else:
+            reports_missing_pointer.append(report)
         for line_number, line in enumerate(text.splitlines(), start=1):
             for raw_ref in BACKTICK_REF.findall(line):
                 total_extracted += 1
@@ -426,7 +460,14 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
 
     return {
         "retained_reports": len(reports),
+        "reports_requiring_archive_pointer": len(reports),
+        "reports_with_dangling_references": len(affected),
+        # Compatibility name retained for existing consumers. It means direct reference
+        # risk, not the total pointer obligation; use reports_requiring_archive_pointer
+        # for the #145 acceptance count.
         "reports_needing_archive_pointer": len(affected),
+        "reports_with_archive_pointer": len(reports_with_pointer),
+        "reports_missing_archive_pointer": reports_missing_pointer,
         "details": affected,
         "scanned_files": len(reports),
         "skipped_files": len(kept) - len(reports),
@@ -457,8 +498,57 @@ def summarize(entries: list[Entry]) -> dict:
     }
 
 
+def verify_migration(repo: Path, entries: list[Entry], archive_revision: str) -> dict:
+    """Verify the physical post-migration state without changing it.
+
+    The inventory stays pinned to its pre-migration tree. This verifier compares that
+    immutable contract with the current HEAD: migrate rows must be absent, keep rows must
+    remain, and every migrate blob must still resolve with the recorded OID at the
+    immutable archive revision.
+    """
+    head = {path: oid for path, oid, _ in tracked_files(repo, "HEAD")}
+    archive = {path: oid for path, oid, _ in tracked_files(repo, archive_revision)}
+    migrate = [item for item in entries if item.disposition == "migrate"]
+    keep = [item for item in entries if item.disposition == "keep"]
+
+    remaining_migrate = [item.path for item in migrate if item.path in head]
+    missing_keep = [item.path for item in keep if item.path not in head]
+    archive_missing = [item.path for item in migrate if item.path not in archive]
+    archive_oid_mismatches = [
+        item.path
+        for item in migrate
+        if item.path in archive and archive[item.path] != item.blob_oid
+    ]
+    deleted_source_bytes = sum(item.size_bytes for item in migrate if item.path not in head)
+    expected_migrate_bytes = sum(item.size_bytes for item in migrate)
+
+    complete = not (
+        remaining_migrate or missing_keep or archive_missing or archive_oid_mismatches
+    ) and deleted_source_bytes == expected_migrate_bytes
+    return {
+        "complete": complete,
+        "remaining_migrate_files": len(remaining_migrate),
+        "remaining_migrate_sample": remaining_migrate[:20],
+        "missing_keep_files": len(missing_keep),
+        "missing_keep_sample": missing_keep[:20],
+        "archive_verified_files": len(migrate)
+        - len(archive_missing)
+        - len(archive_oid_mismatches),
+        "archive_missing_files": len(archive_missing),
+        "archive_missing_sample": archive_missing[:20],
+        "archive_oid_mismatches": len(archive_oid_mismatches),
+        "archive_oid_mismatch_sample": archive_oid_mismatches[:20],
+        "deleted_source_bytes": deleted_source_bytes,
+        "expected_migrate_bytes": expected_migrate_bytes,
+    }
+
+
 def render_report(
-    summary: dict, entries: list[Entry], baseline_commit: str, references: dict
+    summary: dict,
+    entries: list[Entry],
+    baseline_commit: str,
+    references: dict,
+    archive_destination: str,
 ) -> str:
     mib = 1024 * 1024
     lines = [
@@ -466,6 +556,7 @@ def render_report(
         "",
         f"Schema: `{INVENTORY_SCHEMA_VERSION}`",
         f"Baseline commit: `{baseline_commit}`",
+        f"Immutable migrate destination: `{archive_destination}`",
         "",
         "Generated by `scripts/benchmark-artifact-inventory.py`. This is a dry-run",
         "classification only. No file is deleted, moved, or rewritten by this tool.",
@@ -508,11 +599,11 @@ def render_report(
         "",
         "## Reference Resolution",
         "",
-        f"{references['retained_reports']} retained report(s) scanned for backticked path",
+        f"{references['retained_reports']} required retained report(s) scanned for backticked path",
         "references that migration would leave pointing at nothing — either resolving today",
         "only to files marked `migrate`, or resolving nowhere while naming a migrated",
-        "artifact class. Each such report needs an archive base pointer before deletion, or",
-        "its evidence column goes dead.",
+        "artifact class. All required retained reports need an archive base pointer before",
+        "deletion; direct dangling references identify the reports with immediate breakage.",
         "",
         f"Scope: {references['scanned_files']} file(s) scanned, "
         f"{references['skipped_files']} kept file(s) not scanned. The accounting below is a",
@@ -541,14 +632,25 @@ def render_report(
         lines.append("None. No retained report references a migrated artifact.")
     else:
         lines.append(
-            f"**{references['reports_needing_archive_pointer']} report(s) need an archive "
-            "base pointer:**"
+            f"**{references['reports_with_dangling_references']} report(s) have direct "
+            "dangling references:**"
         )
         lines.append("")
         lines.append("| Report | Dangling refs |")
         lines.append("| --- | ---: |")
         for item in references["details"]:
             lines.append(f"| `{item['report']}` | {len(item['dangling_after_migration'])} |")
+
+    lines += [
+        "",
+        f"Archive-pointer obligation: **{references['reports_requiring_archive_pointer']} / "
+        f"{references['retained_reports']}** retained REPORT / HUMAN_REVIEW / "
+        "EXTERNAL_AUDIT / MANUAL_AUDIT files, regardless of direct-risk count.",
+        "",
+        f"Current pointer coverage: **{references['reports_with_archive_pointer']} / "
+        f"{references['reports_requiring_archive_pointer']}**. Missing: "
+        f"{len(references['reports_missing_archive_pointer'])}.",
+    ]
 
     lines += [
         "",
@@ -595,14 +697,32 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--report", type=Path, help="Write a human-readable summary to this path.")
     parser.add_argument(
+        "--baseline-ref",
+        default="origin/main",
+        help=(
+            "Git revision to inventory. It is resolved to a commit before reading; "
+            "default origin/main implements #145's approved baseline."
+        ),
+    )
+    parser.add_argument(
         "--destination",
-        default="benchmark-archive (pinned commit/tag recorded at migration time)",
-        help="Recorded destination for migrated artifacts.",
+        help=(
+            "Immutable migrate destination recorded in every migrate row. Defaults to "
+            "git:<resolved-baseline-commit>; moving branch names and placeholders are unsafe."
+        ),
     )
     parser.add_argument(
         "--fail-on-unmatched",
         action="store_true",
         help="Exit non-zero when any tracked path matches no explicit rule.",
+    )
+    parser.add_argument(
+        "--verify-migration",
+        action="store_true",
+        help=(
+            "Compare current HEAD with the pinned inventory and immutable git destination. "
+            "Exits non-zero until every migrate row is absent and archive OIDs match."
+        ),
     )
     return parser.parse_args()
 
@@ -610,14 +730,15 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     repo = args.repo.resolve()
-    entries = build_inventory(repo)
+    baseline_commit = resolve_commit(repo, args.baseline_ref)
+    archive_destination = args.destination or f"git:{baseline_commit}"
+    entries = build_inventory(repo, baseline_commit, archive_destination)
     if not entries:
         print(f"no tracked files under {RUNS_ROOT}/")
         return 0
 
     summary = summarize(entries)
     references = scan_references(repo, entries)
-    baseline_commit = run_git(["rev-parse", "HEAD"], repo).strip()
 
     if args.csv:
         args.csv.parent.mkdir(parents=True, exist_ok=True)
@@ -639,7 +760,7 @@ def main() -> int:
             "schema_version": INVENTORY_SCHEMA_VERSION,
             "baseline_commit": baseline_commit,
             "runs_root": RUNS_ROOT,
-            "destination": args.destination,
+            "destination": archive_destination,
             "rows": str(args.csv) if args.csv else None,
             "rule_reasons": RULE_REASONS,
             "summary": summary,
@@ -654,7 +775,14 @@ def main() -> int:
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(
-            render_report(summary, entries, baseline_commit, references), encoding="utf-8"
+            render_report(
+                summary,
+                entries,
+                baseline_commit,
+                references,
+                archive_destination,
+            ),
+            encoding="utf-8",
         )
         print(f"wrote inventory report to {args.report}")
 
@@ -665,7 +793,8 @@ def main() -> int:
     print(f"migrate  {summary['migrate_files']:5d} files  {summary['migrate_bytes'] / mib:8.3f} MiB")
     print(
         f"reports  {references['retained_reports']:5d} retained, "
-        f"{references['reports_needing_archive_pointer']} need an archive base pointer"
+        f"{references['reports_with_dangling_references']} have direct dangling references, "
+        f"{references['reports_requiring_archive_pointer']} require archive pointers"
     )
     print(
         f"refs     {references['total_extracted']:5d} extracted from "
@@ -691,6 +820,20 @@ def main() -> int:
     if summary["unmatched_files"]:
         print(f"unmatched {summary['unmatched_files']} file(s) kept by default; resolve before deletion")
         if args.fail_on_unmatched:
+            exit_code = 1
+
+    if args.verify_migration:
+        if not archive_destination.startswith("git:"):
+            print(
+                "- BLOCK [unsupported-destination] --verify-migration currently requires "
+                "a git:<40-hex-commit> destination"
+            )
+            return 1
+        verification = verify_migration(
+            repo, entries, archive_destination.removeprefix("git:")
+        )
+        print(json.dumps(verification, ensure_ascii=False, indent=2, sort_keys=True))
+        if not verification["complete"]:
             exit_code = 1
     return exit_code
 

@@ -10,7 +10,9 @@ data/fidelity-usage-log.jsonl
 
 Each line is one redacted usage record. Do not store full private prompts, private
 customer data, secrets, or unredacted work artifacts here. Use `source` to point to a
-shareable issue, test packet, or local artifact when review context is needed.
+shareable issue, test packet, or local artifact. Legacy and non-freeze records may omit
+it, but a prospective `real_use` record without a reviewable pointer does not count
+toward #144 freeze exit.
 
 Use:
 

@@ -51,7 +51,7 @@ def record(**overrides):
         "max_score": None,
         "score_delta": None,
         "constraint_helped": "yes",
-        "source": "",
+        "source": "issue:#fixture",
         "notes": "",
         "tags": [],
     }
@@ -60,6 +60,8 @@ def record(**overrides):
         base.update(
             {"baseline_score": None, "constrained_score": 8, "max_score": 10, "score_delta": None}
         )
+    if "record_id" not in overrides:
+        base["record_id"] = logger.derive_record_id(base)
     return base
 
 
@@ -232,14 +234,12 @@ class FreezeEligibilityTests(unittest.TestCase):
         """A naive constant raises TypeError on comparison the day someone moves it."""
         self.assertIsNotNone(logger.FREEZE_OPENED.tzinfo)
 
-    def test_boundary_is_strictly_after_the_day_the_freeze_opened(self):
-        """The prose says "observed after 2026-07-26" in two places. The code agrees.
-
-        A record observed on the day #144 was filed would otherwise count toward opening
-        the window it opened.
-        """
-        self.assertFalse(logger.freeze_eligible(record(observed_at="2026-07-26T23:59:59Z")))
-        self.assertTrue(logger.freeze_eligible(record(observed_at="2026-07-27T00:00:00Z")))
+    def test_boundary_is_the_exact_issue_creation_time(self):
+        """Do not round the GitHub creation timestamp to the next UTC day."""
+        self.assertFalse(logger.freeze_eligible(record(observed_at="2026-07-26T18:03:22Z")))
+        self.assertFalse(logger.freeze_eligible(record(observed_at="2026-07-26T18:03:23Z")))
+        self.assertTrue(logger.freeze_eligible(record(observed_at="2026-07-26T18:03:24Z")))
+        self.assertTrue(logger.freeze_eligible(record(observed_at="2026-07-26T23:59:59Z")))
 
     def test_backdated_prospective_record_does_not_count(self):
         """The defect in one line: self-declared prospective, observed years earlier."""
@@ -264,6 +264,40 @@ class FreezeEligibilityTests(unittest.TestCase):
         )
         self.assertEqual(counts["real_use_prospective"], 2)
         self.assertEqual(counts["freeze_eligible"], 1)
+
+    def test_untraceable_records_do_not_count(self):
+        for missing in ("record_id", "source"):
+            candidate = record()
+            candidate.pop(missing)
+            with self.subTest(missing=missing):
+                self.assertFalse(logger.freeze_eligible(candidate))
+
+    def test_duplicate_record_ids_count_once(self):
+        candidate = record()
+        counts = logger.count_by_type([candidate.copy() for _ in range(10)])
+        self.assertEqual(counts["real_use_prospective"], 10)
+        self.assertEqual(counts["freeze_eligible"], 1)
+
+    def test_duplicate_rows_cannot_satisfy_min_real_use(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = record()
+            path = write_log(Path(tmp), [candidate.copy() for _ in range(10)])
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--validate",
+                    "--log",
+                    str(path),
+                    "--min-real-use",
+                    "10",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("Freeze-eligible: 1", result.stdout)
 
 
 class RecordIdTests(unittest.TestCase):
@@ -332,14 +366,14 @@ class SourceFieldTests(unittest.TestCase):
         self.assertEqual(logger.validate_record(empty, 1), logger.validate_record(absent, 1))
         self.assertEqual(logger.validate_record(absent, 1), [])
 
-    def test_source_stays_optional(self):
-        """Mandating it would be new policy, and it would not make the field verifiable.
-
-        `source` is free text: nothing checks that what it points at exists, is
-        reachable, matches the record, or is redacted. Requiring non-empty turns "not
-        filled in" into "filled in with anything".
-        """
-        self.assertIn("Optional artifact or issue reference", USAGE_LOGGER.read_text("utf-8"))
+    def test_source_presence_is_required_only_for_freeze_eligibility(self):
+        """Presence creates something for human review; it does not prove the pointer."""
+        missing = record(source="")
+        self.assertEqual(logger.validate_record(missing, 1), [])
+        self.assertFalse(logger.freeze_eligible(missing))
+        source = USAGE_LOGGER.read_text("utf-8")
+        self.assertIn("prospective real_use record", source)
+        self.assertIn("freeze exit without it", source)
 
     def test_wrong_type_is_still_a_finding(self):
         findings = logger.validate_record(record(source=42), 1)
@@ -377,7 +411,14 @@ class StatusSurfaceTests(unittest.TestCase):
 
     def test_status_block_counts_prospective_not_total(self):
         block = logger.render_status_block(
-            [record(collection_mode="retrospective") for _ in range(9)] + [record()]
+            [
+                record(
+                    collection_mode="retrospective",
+                    observed_at=f"2026-07-{day:02d}T00:00:00Z",
+                )
+                for day in range(1, 10)
+            ]
+            + [record()]
         )
         self.assertIn("1/10", block)
         self.assertNotIn("10/10", block)

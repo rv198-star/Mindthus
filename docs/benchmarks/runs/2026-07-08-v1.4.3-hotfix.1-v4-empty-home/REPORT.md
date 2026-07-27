@@ -1,5 +1,9 @@
 # Mindthus v1.4.3-hotfix.1 V4 Empty-HOME Judgment Benchmark Run
 
+> **Artifact archive base:** `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
+> ([browse immutable snapshot](https://github.com/rv198-star/Mindthus/tree/476053e68b8bbd4fa7c617982a45c097aeddd251/docs/benchmarks/runs)).
+> Resolve relative artifact paths from this document's directory at that commit.
+
 Status: diagnostic V4 execution completed; public pass threshold not met.
 
 This run executed the public 50-case judgment fixture through real Codex CLI calls with
