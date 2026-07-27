@@ -1,6 +1,6 @@
 # Benchmark Run Artifact Inventory
 
-Schema: `mindthus-benchmark-artifact-inventory-v0.3`
+Schema: `mindthus-benchmark-artifact-inventory-v0.4`
 Baseline commit: `476053e68b8bbd4fa7c617982a45c097aeddd251`
 Immutable migrate destination: `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
 
@@ -34,17 +34,18 @@ None. Every tracked path matched an explicit policy rule.
 
 ## Reference Resolution
 
-14 required retained report(s) scanned for backticked path
-references that migration would leave pointing at nothing — either resolving today
-only to files marked `migrate`, or resolving nowhere while naming a migrated
-artifact class. All required retained reports need an archive base pointer before
-deletion; direct dangling references identify the reports with immediate breakage.
+Coverage is reported for two populations and is never blended:
 
-Scope: 14 file(s) scanned, 145 kept file(s) not scanned. The accounting below is a
-claim about the references this scan read, not about the repository.
+- **Baseline tree `476053e68b8bbd4fa7c617982a45c097aeddd251`:** 0 / 14 reports contain pointer syntax; 0 are semantically verified. This is the source inventory before pointer edits.
+- **Workspace candidate:** 14 / 14 reports contain pointer syntax; 14 are semantically verified. `semantic_pointer_coverage_ok` is `True`.
 
-628 reference(s) extracted, each counted into exactly one
-category. `accounting_ok` is `True`: the categories sum to the number extracted, so nothing was dropped between extraction and classification.
+A semantic pass requires a real Git commit, the inventory destination commit,
+all migrate paths at their recorded blob OIDs, and every archive-dependent
+reference resolving to those verified rows. A 40-hex token alone is not a pass.
+
+Workspace scope: 14 file(s) scanned, 145 kept file(s) not scanned.
+
+628 workspace reference(s) extracted, each counted into exactly one category. `accounting_ok` is `True`: the categories sum to the number extracted, so nothing was dropped between extraction and classification.
 
 | Category | Count |
 | --- | ---: |
@@ -56,8 +57,9 @@ category. `accounting_ok` is `True`: the categories sum to the number extracted,
 | `resolved_outside_migration_scope` | 35 |
 | `breaks_after_migration` | 5 |
 | `unresolved_migrate_class` | 36 |
+| `resolved_archive_only` | 2 |
 | `unresolved_absolute_external` | 18 |
-| `unresolved` | 6 |
+| `unresolved` | 4 |
 
 **4 report(s) have direct dangling references:**
 
@@ -68,9 +70,13 @@ category. `accounting_ok` is `True`: the categories sum to the number extracted,
 | `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md` | 34 |
 | `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md` | 1 |
 
-Archive-pointer obligation: **14 / 14** retained REPORT / HUMAN_REVIEW / EXTERNAL_AUDIT / MANUAL_AUDIT files, regardless of direct-risk count.
+### Semantic archive verification
 
-Current pointer coverage: **14 / 14**. Missing: 0.
+- Destination commit exists: `True`.
+- Migrate rows verified by path and blob OID: **6334 / 6334**.
+- Missing archive paths: `0`; OID mismatches: `0`.
+- Archive-dependent references verified: **43 / 43**.
+- Reports failing semantic pointer verification: `0`.
 
 ## Net Accounting
 

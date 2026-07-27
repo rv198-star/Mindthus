@@ -475,6 +475,14 @@ class FreezeLedgerTests(unittest.TestCase):
         text = LEDGER.read_text(encoding="utf-8")
         self.assertIn("does not lift the freeze", text)
 
+    def test_ledger_records_the_two_pending_deliveries_without_calling_them_merges(self):
+        text = LEDGER.read_text(encoding="utf-8")
+        self.assertEqual(text.count("(pending branch delivery)"), 2)
+        for commit in ("3f719157", "f7b8776e", "256f71d5", "0c5f6a3e"):
+            with self.subTest(commit=commit):
+                self.assertIn(commit, text)
+        self.assertIn("do not substitute for the final PR/merge row", text)
+
 
 if __name__ == "__main__":
     unittest.main()

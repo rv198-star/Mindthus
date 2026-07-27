@@ -34,11 +34,16 @@ the window was respected — it only shows which cases someone thought to argue 
 If a merge does not fit an allowed category, it should not merge. Recording it here does
 not authorize it.
 
+Pending branch deliveries may be listed before merge so reviewers can audit freeze
+compliance. They do not substitute for the final PR/merge row; that row is added when
+the branch actually lands.
+
 ## Ledger
 
 | Date | PR / commit | Category | Why |
 | --- | --- | --- | --- |
-| — | — | — | No merge has landed on `main` since the freeze opened. Feature-branch commits are recorded here only when they merge. |
+| 2026-07-27 | `3f719157`, `f7b8776e` (pending branch delivery) | #144 + #145 | Phase 1 inventory/dry-run and real-use registry visibility/schema work. No artifact deletion; no freeze exit. |
+| 2026-07-27 | `256f71d5`, `0c5f6a3e` (pending branch delivery) | #144 + #145 | External-audit repairs, including stable/traceable freeze counting, per-row inventory evidence, and the 14 retained-report archive pointers required by #145. No artifact deletion or migration. |
 
 ## Boundaries
 

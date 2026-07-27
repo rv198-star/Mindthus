@@ -19,13 +19,15 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass, asdict
+from fnmatch import fnmatchcase
 from pathlib import Path, PurePosixPath
 
 
-# v0.3 adds the per-row reason and destination required by #145. v0.2 pinned LF and
-# column order but normalized those two review fields out of the CSV, so a reviewer could
-# not approve one row without joining it to global prose.
-INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.3"
+# v0.4 separates baseline-tree evidence from workspace coverage and verifies archive
+# pointers semantically. v0.3 added per-row reason/destination but its summary mixed a
+# pinned baseline inventory with report text read from the workspace, and treated any
+# 40-hex token as a valid pointer.
+INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.4"
 RUNS_ROOT = "docs/benchmarks/runs"
 
 # Pinned explicitly rather than read off `asdict(entries[0])`. Deriving the header from
@@ -290,21 +292,26 @@ REFERENCE_CATEGORIES = (
     "resolved_outside_migration_scope",
     "breaks_after_migration",
     "unresolved_migrate_class",
+    "resolved_archive_only",
     "unresolved_absolute_external",
     "unresolved",
 )
 
-# The return contract of scan_references(). Three of these have live consumers (main(),
-# render_report(), tests/test_benchmark_artifact_inventory.py), so the contract is
-# additive only: keys may be added, never removed or repurposed.
+# The v0.4 return contract of scan_references(). Names distinguish policy obligation,
+# pointer syntax, semantic verification, and direct dangling-reference risk. Misleading
+# compatibility aliases are deliberately not retained.
 REFERENCES_REQUIRED_KEYS = frozenset(
     {
         "retained_reports",
         "reports_requiring_archive_pointer",
         "reports_with_dangling_references",
-        "reports_needing_archive_pointer",
-        "reports_with_archive_pointer",
-        "reports_missing_archive_pointer",
+        "reports_with_pointer_syntax",
+        "reports_with_verified_archive_pointer",
+        "reports_missing_pointer_syntax",
+        "reports_failed_semantic_pointer_verification",
+        "semantic_pointer_coverage_ok",
+        "archive_destination_verification",
+        "archive_reference_details",
         "details",
         "scanned_files",
         "skipped_files",
@@ -369,7 +376,149 @@ def resolves_outside_runs(ref: str, repo_tracked: set[str]) -> bool:
     return normalized in repo_tracked and not normalized.startswith(f"{RUNS_ROOT}/")
 
 
-def scan_references(repo: Path, entries: list[Entry]) -> dict:
+def try_resolve_commit(repo: Path, revision: str) -> str | None:
+    """Return a commit OID only when Git can resolve and read the object as a commit."""
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", f"{revision}^{{commit}}"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    commit = result.stdout.strip()
+    object_type = subprocess.run(
+        ["git", "cat-file", "-t", commit],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if object_type.returncode != 0 or object_type.stdout.strip() != "commit":
+        return None
+    return commit
+
+
+def read_report_text(
+    repo: Path,
+    report: str,
+    *,
+    content_revision: str | None,
+    overrides: dict[str, str] | None,
+) -> str:
+    if overrides and report in overrides:
+        return overrides[report]
+    if content_revision is None:
+        return (repo / report).read_text(encoding="utf-8", errors="replace")
+    return run_git(["show", f"{content_revision}:{report}"], repo)
+
+
+def tracked_names(repo: Path, content_revision: str | None) -> set[str]:
+    if content_revision is None:
+        return {line for line in run_git(["ls-files"], repo).splitlines() if line}
+    return {
+        line
+        for line in run_git(
+            ["ls-tree", "-r", "--name-only", content_revision], repo
+        ).splitlines()
+        if line
+    }
+
+
+def archive_matches_for_reference(
+    ref: str, report: str, entries: list[Entry]
+) -> list[Entry]:
+    """Resolve one report token against the immutable inventory namespace.
+
+    Exact paths and directories are tried first. Then template placeholders and `*` are
+    expanded, followed by a suffix lookup for review packets whose artifact paths are
+    relative to a variant directory rather than to the report itself.
+    """
+    clean = ref.strip().rstrip("/")
+    if not clean or clean.startswith("/"):
+        return []
+    wildcard = re.sub(r"<[^>]+>", "*", clean)
+    report_parent = str(PurePosixPath(report).parent)
+    bases = (f"{report_parent}/{wildcard}", wildcard)
+    matched: dict[str, Entry] = {}
+
+    for item in entries:
+        for base in bases:
+            if "*" in base:
+                if fnmatchcase(item.path, base) or fnmatchcase(item.path, f"{base}/*"):
+                    matched[item.path] = item
+            elif item.path == base or item.path.startswith(f"{base}/"):
+                matched[item.path] = item
+
+        suffix = f"/{wildcard}"
+        if "*" in wildcard:
+            if fnmatchcase(item.path, f"*{suffix}") or fnmatchcase(
+                item.path, f"*{suffix}/*"
+            ):
+                matched[item.path] = item
+        elif item.path.endswith(suffix) or f"{suffix}/" in item.path:
+            matched[item.path] = item
+
+        if "/" not in wildcard and PurePosixPath(item.path).name == wildcard:
+            matched[item.path] = item
+
+    return [matched[path] for path in sorted(matched)]
+
+
+def verify_archive_destination(repo: Path, entries: list[Entry], destination: str) -> dict:
+    """Verify destination commit reachability and every migrate path/blob OID."""
+    match = re.fullmatch(r"git:([0-9a-f]{40})", destination)
+    requested_commit = match.group(1) if match else None
+    resolved_commit = (
+        try_resolve_commit(repo, requested_commit) if requested_commit is not None else None
+    )
+    migrate = [item for item in entries if item.disposition == "migrate"]
+    if resolved_commit is None:
+        return {
+            "valid": False,
+            "destination": destination,
+            "destination_shape_valid": match is not None,
+            "commit_exists": False,
+            "resolved_commit": None,
+            "expected_migrate_files": len(migrate),
+            "verified_migrate_files": 0,
+            "missing_files": len(migrate),
+            "missing_sample": [item.path for item in migrate[:20]],
+            "oid_mismatches": 0,
+            "oid_mismatch_sample": [],
+        }
+
+    archive = {path: oid for path, oid, _ in tracked_files(repo, resolved_commit)}
+    missing = [item.path for item in migrate if item.path not in archive]
+    mismatches = [
+        item.path
+        for item in migrate
+        if item.path in archive and archive[item.path] != item.blob_oid
+    ]
+    verified = len(migrate) - len(missing) - len(mismatches)
+    return {
+        "valid": not missing and not mismatches,
+        "destination": destination,
+        "destination_shape_valid": True,
+        "commit_exists": True,
+        "resolved_commit": resolved_commit,
+        "expected_migrate_files": len(migrate),
+        "verified_migrate_files": verified,
+        "missing_files": len(missing),
+        "missing_sample": missing[:20],
+        "oid_mismatches": len(mismatches),
+        "oid_mismatch_sample": mismatches[:20],
+    }
+
+
+def scan_references(
+    repo: Path,
+    entries: list[Entry],
+    *,
+    content_revision: str | None = None,
+    report_text_overrides: dict[str, str] | None = None,
+) -> dict:
     """Report which references inside retained reports break once migration happens.
 
     Read-only. A reference is `dangling_after_migration` when migration would leave it
@@ -384,9 +533,14 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
     buckets sum to the number extracted; when it is False the scan dropped something and
     the "N reports need a pointer" line below it cannot be trusted.
 
-    Scope: only files named in `ARCHIVE_POINTER_REPORTS` are read. `scanned_files` and
-    `skipped_files` report that boundary, because `accounting_ok` is a claim about the
-    references this scan saw, not about the repository.
+    `content_revision` selects the evidence population. A pinned revision reads report
+    bytes and tracked names from that tree; None reads the workspace. The two populations
+    are never combined into one coverage number.
+
+    Pointer syntax is not approval. A report is semantically verified only when the
+    pointer resolves to the inventory destination commit, all migrate paths exist there
+    with the recorded OIDs, and each archive-dependent reference resolves to matching
+    inventory rows.
     """
     tracked = {item.path: item.disposition for item in entries}
     reports = [
@@ -396,7 +550,10 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
         and PurePosixPath(item.path).name in ARCHIVE_POINTER_REPORTS
     ]
     kept = [item.path for item in entries if item.disposition == "keep"]
-    repo_tracked = {line for line in run_git(["ls-files"], repo).splitlines() if line}
+    resolved_source = (
+        resolve_commit(repo, content_revision) if content_revision is not None else None
+    )
+    repo_tracked = tracked_names(repo, resolved_source)
     migrate_only = migrate_only_basenames(entries)
     archive_destinations = {
         item.destination for item in entries if item.disposition == "migrate"
@@ -406,18 +563,60 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
             "inventory must name exactly one migrate destination; found "
             f"{sorted(archive_destinations)}"
         )
+    archive_destination = next(iter(archive_destinations))
+    archive_verification = verify_archive_destination(
+        repo, entries, archive_destination
+    )
+    expected_archive_commit = archive_verification["resolved_commit"]
+    archive_oids = (
+        {
+            path: oid
+            for path, oid, _ in tracked_files(repo, expected_archive_commit)
+        }
+        if expected_archive_commit is not None
+        else {}
+    )
+
     by_category = {category: 0 for category in REFERENCE_CATEGORIES}
     total_extracted = 0
     affected: list[dict] = []
-    reports_with_pointer: list[str] = []
-    reports_missing_pointer: list[str] = []
+    reports_with_pointer_syntax: list[str] = []
+    reports_missing_pointer_syntax: list[str] = []
+    reports_with_verified_pointer: list[str] = []
+    reports_failed_semantic_pointer: list[dict] = []
+    archive_reference_details: list[dict] = []
     for report in sorted(reports):
         broken: set[str] = set()
-        text = (repo / report).read_text(encoding="utf-8", errors="replace")
-        if ARCHIVE_POINTER_MARKER in text and IMMUTABLE_GIT_POINTER.search(text):
-            reports_with_pointer.append(report)
+        report_archive_refs: list[dict] = []
+        text = read_report_text(
+            repo,
+            report,
+            content_revision=resolved_source,
+            overrides=report_text_overrides,
+        )
+        pointer_commits = sorted(set(IMMUTABLE_GIT_POINTER.findall(text)))
+        pointer_errors: list[str] = []
+        if ARCHIVE_POINTER_MARKER in text and len(pointer_commits) == 1:
+            reports_with_pointer_syntax.append(report)
+            pointer_commit = pointer_commits[0]
+            if try_resolve_commit(repo, pointer_commit) is None:
+                pointer_errors.append("pointer-commit-unresolvable")
+            elif pointer_commit != expected_archive_commit:
+                pointer_errors.append("pointer-destination-mismatch")
+            if not archive_verification["valid"]:
+                pointer_errors.append("archive-inventory-verification-failed")
         else:
-            reports_missing_pointer.append(report)
+            pointer_commit = None
+            reports_missing_pointer_syntax.append(report)
+            if ARCHIVE_POINTER_MARKER not in text:
+                pointer_errors.append("missing-pointer-marker")
+            if len(pointer_commits) != 1:
+                pointer_errors.append(
+                    "missing-pointer-commit"
+                    if not pointer_commits
+                    else "multiple-pointer-commits"
+                )
+
         for line_number, line in enumerate(text.splitlines(), start=1):
             for raw_ref in BACKTICK_REF.findall(line):
                 total_extracted += 1
@@ -440,10 +639,36 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
                 elif survives is False:
                     by_category["breaks_after_migration"] += 1
                     broken.add(f"{line_number}:{ref}")
+                    matches = archive_matches_for_reference(ref, report, entries)
+                    verified = bool(matches) and all(
+                        archive_oids.get(item.path) == item.blob_oid for item in matches
+                    )
+                    report_archive_refs.append(
+                        {
+                            "line": line_number,
+                            "reference": ref,
+                            "category": "breaks_after_migration",
+                            "archive_matches": len(matches),
+                            "archive_verified": verified,
+                        }
+                    )
                 elif ref.startswith(MIGRATED_REF_PREFIXES) or PurePosixPath(ref).name in migrate_only:
                     # Unresolvable, but aimed squarely at a migrated artifact class.
                     by_category["unresolved_migrate_class"] += 1
                     broken.add(f"{line_number}:{ref}")
+                    matches = archive_matches_for_reference(ref, report, entries)
+                    verified = bool(matches) and all(
+                        archive_oids.get(item.path) == item.blob_oid for item in matches
+                    )
+                    report_archive_refs.append(
+                        {
+                            "line": line_number,
+                            "reference": ref,
+                            "category": "unresolved_migrate_class",
+                            "archive_matches": len(matches),
+                            "archive_verified": verified,
+                        }
+                    )
                 elif resolves_outside_runs(ref, repo_tracked):
                     # A real tracked file, just not under RUNS_ROOT. Migration cannot
                     # touch it, so it is resolved rather than dangling. Reporting these
@@ -454,20 +679,63 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
                     # Nothing in this repository can make them resolve or break.
                     by_category["unresolved_absolute_external"] += 1
                 else:
-                    by_category["unresolved"] += 1
+                    matches = archive_matches_for_reference(ref, report, entries)
+                    if matches:
+                        by_category["resolved_archive_only"] += 1
+                        verified = all(
+                            archive_oids.get(item.path) == item.blob_oid for item in matches
+                        )
+                        report_archive_refs.append(
+                            {
+                                "line": line_number,
+                                "reference": ref,
+                                "category": "resolved_archive_only",
+                                "archive_matches": len(matches),
+                                "archive_verified": verified,
+                            }
+                        )
+                    else:
+                        by_category["unresolved"] += 1
+
+        unresolved_archive_refs = [
+            item for item in report_archive_refs if not item["archive_verified"]
+        ]
+        if unresolved_archive_refs:
+            pointer_errors.append("archive-reference-resolution-failed")
+        if pointer_errors:
+            reports_failed_semantic_pointer.append(
+                {
+                    "report": report,
+                    "pointer_commit": pointer_commit,
+                    "errors": sorted(set(pointer_errors)),
+                    "unverified_archive_references": unresolved_archive_refs,
+                }
+            )
+        else:
+            reports_with_verified_pointer.append(report)
+        for item in report_archive_refs:
+            archive_reference_details.append({"report": report, **item})
         if broken:
             affected.append({"report": report, "dangling_after_migration": sorted(broken)})
 
     return {
+        "scan_source": {
+            "kind": "git-revision" if resolved_source is not None else "workspace",
+            "revision": resolved_source,
+        },
         "retained_reports": len(reports),
         "reports_requiring_archive_pointer": len(reports),
         "reports_with_dangling_references": len(affected),
-        # Compatibility name retained for existing consumers. It means direct reference
-        # risk, not the total pointer obligation; use reports_requiring_archive_pointer
-        # for the #145 acceptance count.
-        "reports_needing_archive_pointer": len(affected),
-        "reports_with_archive_pointer": len(reports_with_pointer),
-        "reports_missing_archive_pointer": reports_missing_pointer,
+        "reports_with_pointer_syntax": len(reports_with_pointer_syntax),
+        "reports_with_verified_archive_pointer": len(reports_with_verified_pointer),
+        "reports_missing_pointer_syntax": reports_missing_pointer_syntax,
+        "reports_failed_semantic_pointer_verification": reports_failed_semantic_pointer,
+        "semantic_pointer_coverage_ok": (
+            len(reports_with_verified_pointer) == len(reports)
+            and not reports_failed_semantic_pointer
+        ),
+        "archive_destination_verification": archive_verification,
+        "archive_reference_details": archive_reference_details,
         "details": affected,
         "scanned_files": len(reports),
         "skipped_files": len(kept) - len(reports),
@@ -547,7 +815,8 @@ def render_report(
     summary: dict,
     entries: list[Entry],
     baseline_commit: str,
-    references: dict,
+    baseline_references: dict,
+    workspace_references: dict,
     archive_destination: str,
 ) -> str:
     mib = 1024 * 1024
@@ -599,57 +868,80 @@ def render_report(
         "",
         "## Reference Resolution",
         "",
-        f"{references['retained_reports']} required retained report(s) scanned for backticked path",
-        "references that migration would leave pointing at nothing — either resolving today",
-        "only to files marked `migrate`, or resolving nowhere while naming a migrated",
-        "artifact class. All required retained reports need an archive base pointer before",
-        "deletion; direct dangling references identify the reports with immediate breakage.",
+        "Coverage is reported for two populations and is never blended:",
         "",
-        f"Scope: {references['scanned_files']} file(s) scanned, "
-        f"{references['skipped_files']} kept file(s) not scanned. The accounting below is a",
-        "claim about the references this scan read, not about the repository.",
+        f"- **Baseline tree `{baseline_commit}`:** "
+        f"{baseline_references['reports_with_pointer_syntax']} / "
+        f"{baseline_references['reports_requiring_archive_pointer']} reports contain pointer "
+        "syntax; "
+        f"{baseline_references['reports_with_verified_archive_pointer']} are semantically "
+        "verified. This is the source inventory before pointer edits.",
+        f"- **Workspace candidate:** {workspace_references['reports_with_pointer_syntax']} / "
+        f"{workspace_references['reports_requiring_archive_pointer']} reports contain pointer "
+        "syntax; "
+        f"{workspace_references['reports_with_verified_archive_pointer']} are semantically "
+        f"verified. `semantic_pointer_coverage_ok` is "
+        f"`{workspace_references['semantic_pointer_coverage_ok']}`.",
         "",
-        f"{references['total_extracted']} reference(s) extracted, each counted into exactly one",
-        f"category. `accounting_ok` is `{references['accounting_ok']}`: "
+        "A semantic pass requires a real Git commit, the inventory destination commit,",
+        "all migrate paths at their recorded blob OIDs, and every archive-dependent",
+        "reference resolving to those verified rows. A 40-hex token alone is not a pass.",
+        "",
+        f"Workspace scope: {workspace_references['scanned_files']} file(s) scanned, "
+        f"{workspace_references['skipped_files']} kept file(s) not scanned.",
+        "",
+        f"{workspace_references['total_extracted']} workspace reference(s) extracted, each "
+        f"counted into exactly one category. `accounting_ok` is "
+        f"`{workspace_references['accounting_ok']}`: "
         + (
             "the categories sum to the number extracted, so nothing was dropped between "
             "extraction and classification."
-            if references["accounting_ok"]
-            else f"the categories sum to {sum(references['by_category'].values())}, not "
-            f"{references['total_extracted']}. References were dropped between extraction "
+            if workspace_references["accounting_ok"]
+            else f"the categories sum to "
+            f"{sum(workspace_references['by_category'].values())}, not "
+            f"{workspace_references['total_extracted']}. References were dropped between extraction "
             "and classification, so every count below is a floor, not a total."
         ),
         "",
         "| Category | Count |",
         "| --- | ---: |",
         *[
-            f"| `{category}` | {references['by_category'][category]} |"
+            f"| `{category}` | {workspace_references['by_category'][category]} |"
             for category in REFERENCE_CATEGORIES
         ],
         "",
     ]
-    if not references["details"]:
+    if not workspace_references["details"]:
         lines.append("None. No retained report references a migrated artifact.")
     else:
         lines.append(
-            f"**{references['reports_with_dangling_references']} report(s) have direct "
+            f"**{workspace_references['reports_with_dangling_references']} report(s) have direct "
             "dangling references:**"
         )
         lines.append("")
         lines.append("| Report | Dangling refs |")
         lines.append("| --- | ---: |")
-        for item in references["details"]:
+        for item in workspace_references["details"]:
             lines.append(f"| `{item['report']}` | {len(item['dangling_after_migration'])} |")
 
+    archive = workspace_references["archive_destination_verification"]
+    verified_archive_refs = sum(
+        item["archive_verified"]
+        for item in workspace_references["archive_reference_details"]
+    )
     lines += [
         "",
-        f"Archive-pointer obligation: **{references['reports_requiring_archive_pointer']} / "
-        f"{references['retained_reports']}** retained REPORT / HUMAN_REVIEW / "
-        "EXTERNAL_AUDIT / MANUAL_AUDIT files, regardless of direct-risk count.",
+        "### Semantic archive verification",
         "",
-        f"Current pointer coverage: **{references['reports_with_archive_pointer']} / "
-        f"{references['reports_requiring_archive_pointer']}**. Missing: "
-        f"{len(references['reports_missing_archive_pointer'])}.",
+        f"- Destination commit exists: `{archive['commit_exists']}`.",
+        f"- Migrate rows verified by path and blob OID: "
+        f"**{archive['verified_migrate_files']} / {archive['expected_migrate_files']}**.",
+        f"- Missing archive paths: `{archive['missing_files']}`; OID mismatches: "
+        f"`{archive['oid_mismatches']}`.",
+        f"- Archive-dependent references verified: **{verified_archive_refs} / "
+        f"{len(workspace_references['archive_reference_details'])}**.",
+        f"- Reports failing semantic pointer verification: "
+        f"`{len(workspace_references['reports_failed_semantic_pointer_verification'])}`.",
     ]
 
     lines += [
@@ -738,7 +1030,10 @@ def main() -> int:
         return 0
 
     summary = summarize(entries)
-    references = scan_references(repo, entries)
+    baseline_references = scan_references(
+        repo, entries, content_revision=baseline_commit
+    )
+    workspace_references = scan_references(repo, entries)
 
     if args.csv:
         args.csv.parent.mkdir(parents=True, exist_ok=True)
@@ -764,7 +1059,10 @@ def main() -> int:
             "rows": str(args.csv) if args.csv else None,
             "rule_reasons": RULE_REASONS,
             "summary": summary,
-            "references": references,
+            "reference_scans": {
+                "baseline": baseline_references,
+                "workspace": workspace_references,
+            },
         }
         args.summary.write_text(
             json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -779,7 +1077,8 @@ def main() -> int:
                 summary,
                 entries,
                 baseline_commit,
-                references,
+                baseline_references,
+                workspace_references,
                 archive_destination,
             ),
             encoding="utf-8",
@@ -792,28 +1091,59 @@ def main() -> int:
     print(f"keep     {summary['keep_files']:5d} files  {summary['keep_bytes'] / mib:8.3f} MiB")
     print(f"migrate  {summary['migrate_files']:5d} files  {summary['migrate_bytes'] / mib:8.3f} MiB")
     print(
-        f"reports  {references['retained_reports']:5d} retained, "
-        f"{references['reports_with_dangling_references']} have direct dangling references, "
-        f"{references['reports_requiring_archive_pointer']} require archive pointers"
+        f"reports  {workspace_references['retained_reports']:5d} retained, "
+        f"{workspace_references['reports_with_dangling_references']} have direct "
+        "dangling references"
     )
     print(
-        f"refs     {references['total_extracted']:5d} extracted from "
-        f"{references['scanned_files']} scanned file(s); "
-        f"{references['skipped_files']} kept file(s) not scanned"
+        "coverage "
+        f"baseline={baseline_references['reports_with_verified_archive_pointer']}/"
+        f"{baseline_references['reports_requiring_archive_pointer']} "
+        f"workspace={workspace_references['reports_with_verified_archive_pointer']}/"
+        f"{workspace_references['reports_requiring_archive_pointer']} semantic"
+    )
+    print(
+        f"refs     {workspace_references['total_extracted']:5d} extracted from "
+        f"{workspace_references['scanned_files']} workspace file(s); "
+        f"{workspace_references['skipped_files']} kept file(s) not scanned"
     )
     for category in REFERENCE_CATEGORIES:
-        print(f"           {category:26s} {references['by_category'][category]:5d}")
-    print(f"           accounting_ok = {references['accounting_ok']}")
+        print(
+            f"           {category:26s} "
+            f"{workspace_references['by_category'][category]:5d}"
+        )
+    print(f"           accounting_ok = {workspace_references['accounting_ok']}")
+    print(
+        "           archive path/OID = "
+        f"{workspace_references['archive_destination_verification']['verified_migrate_files']}/"
+        f"{workspace_references['archive_destination_verification']['expected_migrate_files']}"
+    )
+    print(
+        "           semantic_pointer_coverage_ok = "
+        f"{workspace_references['semantic_pointer_coverage_ok']}"
+    )
 
     exit_code = 0
-    if not references["accounting_ok"]:
+    for label, references in (
+        ("baseline", baseline_references),
+        ("workspace", workspace_references),
+    ):
+        if references["accounting_ok"]:
+            continue
         # The scan lost references between extraction and classification, so every count
         # above it is a floor rather than a total. Fail regardless of --fail-on-unmatched:
         # this is not a policy question a caller opts into, it is a broken scan.
         print(
-            "- BROKEN-ACCOUNTING extracted "
+            f"- BROKEN-ACCOUNTING [{label}] extracted "
             f"{references['total_extracted']} but categorized "
             f"{sum(references['by_category'].values())}; reference counts are not trustworthy"
+        )
+        exit_code = 1
+
+    if not workspace_references["semantic_pointer_coverage_ok"]:
+        print(
+            "- INVALID-ARCHIVE-POINTER workspace reports did not pass commit, path, "
+            "blob-OID, and reference-resolution verification"
         )
         exit_code = 1
 

@@ -32,6 +32,19 @@ def load_module():
 inventory = load_module()
 
 
+def committed_inventory_entries():
+    summary = json.loads(
+        (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    return inventory.build_inventory(
+        REPO,
+        revision=summary["baseline_commit"],
+        migrate_destination=summary["destination"],
+    )
+
+
 class ClassificationContractTests(unittest.TestCase):
     def test_unknown_paths_are_kept_not_deleted(self):
         """A shape no rule anticipated must never be migrated by silent default."""
@@ -144,7 +157,7 @@ class ReferenceResolutionTests(unittest.TestCase):
         self.assertTrue("answers/<case>.record.json".startswith(inventory.MIGRATED_REF_PREFIXES))
 
     def test_live_scan_flags_the_review_packet_whose_evidence_column_dies(self):
-        entries = inventory.build_inventory(REPO)
+        entries = committed_inventory_entries()
         references = inventory.scan_references(REPO, entries)
         flagged = {item["report"] for item in references["details"]}
         self.assertIn(
@@ -152,10 +165,10 @@ class ReferenceResolutionTests(unittest.TestCase):
             "HUMAN_REVIEW_PACKET.md",
             flagged,
         )
-        self.assertLessEqual(references["reports_needing_archive_pointer"], len(flagged) + 1)
+        self.assertEqual(references["reports_with_dangling_references"], len(flagged))
 
     def test_all_required_report_types_require_archive_pointers(self):
-        entries = inventory.build_inventory(REPO)
+        entries = committed_inventory_entries()
         references = inventory.scan_references(REPO, entries)
         expected = [
             item
@@ -170,10 +183,112 @@ class ReferenceResolutionTests(unittest.TestCase):
             references["reports_with_dangling_references"],
             "direct-risk reports are only a subset of the pointer obligation",
         )
-        self.assertEqual(references["reports_missing_archive_pointer"], [])
+        self.assertEqual(references["reports_missing_pointer_syntax"], [])
         self.assertEqual(
-            references["reports_with_archive_pointer"],
+            references["reports_with_verified_archive_pointer"],
             references["reports_requiring_archive_pointer"],
+        )
+        self.assertTrue(references["semantic_pointer_coverage_ok"])
+
+    def test_baseline_and_workspace_pointer_coverage_are_separate_populations(self):
+        summary = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        entries = inventory.build_inventory(
+            REPO,
+            revision=summary["baseline_commit"],
+            migrate_destination=summary["destination"],
+        )
+        baseline = inventory.scan_references(
+            REPO, entries, content_revision=summary["baseline_commit"]
+        )
+        workspace = inventory.scan_references(REPO, entries)
+
+        self.assertEqual(baseline["scan_source"]["kind"], "git-revision")
+        self.assertEqual(baseline["reports_with_pointer_syntax"], 0)
+        self.assertEqual(baseline["reports_with_verified_archive_pointer"], 0)
+        self.assertFalse(baseline["semantic_pointer_coverage_ok"])
+
+        self.assertEqual(workspace["scan_source"]["kind"], "workspace")
+        self.assertEqual(workspace["reports_with_pointer_syntax"], 14)
+        self.assertEqual(workspace["reports_with_verified_archive_pointer"], 14)
+        self.assertTrue(workspace["semantic_pointer_coverage_ok"])
+
+        report = (
+            "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/"
+            "REPORT.md"
+        )
+        baseline_oid = subprocess.run(
+            ["git", "rev-parse", f"{summary['baseline_commit']}:{report}"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        head_oid = subprocess.run(
+            ["git", "rev-parse", f"HEAD:{report}"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        self.assertNotEqual(
+            baseline_oid,
+            head_oid,
+            "the fixture must prove baseline and workspace report bytes differ",
+        )
+
+    def test_forged_40_hex_pointer_fails_semantic_verification(self):
+        summary = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        entries = inventory.build_inventory(
+            REPO,
+            revision=summary["baseline_commit"],
+            migrate_destination=summary["destination"],
+        )
+        report = (
+            "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/"
+            "REPORT.md"
+        )
+        forged = "0" * 40
+        forged_text = (REPO / report).read_text(encoding="utf-8").replace(
+            summary["destination"].removeprefix("git:"), forged
+        )
+        references = inventory.scan_references(
+            REPO, entries, report_text_overrides={report: forged_text}
+        )
+
+        self.assertEqual(references["reports_with_pointer_syntax"], 14)
+        self.assertEqual(references["reports_with_verified_archive_pointer"], 13)
+        self.assertFalse(references["semantic_pointer_coverage_ok"])
+        failed = {
+            item["report"]: item
+            for item in references["reports_failed_semantic_pointer_verification"]
+        }
+        self.assertIn(report, failed)
+        self.assertIn("pointer-commit-unresolvable", failed[report]["errors"])
+        self.assertIsNone(inventory.try_resolve_commit(REPO, forged))
+
+    def test_archive_dependent_references_resolve_to_verified_inventory_oids(self):
+        entries = committed_inventory_entries()
+        references = inventory.scan_references(REPO, entries)
+        self.assertGreater(len(references["archive_reference_details"]), 0)
+        self.assertTrue(
+            all(
+                item["archive_verified"]
+                for item in references["archive_reference_details"]
+            )
+        )
+        archive = references["archive_destination_verification"]
+        self.assertTrue(archive["commit_exists"])
+        self.assertTrue(archive["valid"])
+        self.assertEqual(
+            archive["verified_migrate_files"], archive["expected_migrate_files"]
         )
 
 
@@ -188,7 +303,7 @@ class ReferenceAccountingTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.entries = inventory.build_inventory(REPO)
+        cls.entries = committed_inventory_entries()
         cls.references = inventory.scan_references(REPO, cls.entries)
 
     def test_categories_sum_to_the_number_extracted(self):
@@ -210,7 +325,7 @@ class ReferenceAccountingTests(unittest.TestCase):
         """`accounting_ok` covers the files scanned, not the repository.
 
         Without these two numbers next to it, `accounting_ok: True` reads as a much
-        stronger claim than it is -- 15 of 159 kept files are actually read.
+        stronger claim than it is -- 14 of 159 kept files are actually read.
         """
         kept = len([item for item in self.entries if item.disposition == "keep"])
         self.assertEqual(
@@ -218,20 +333,31 @@ class ReferenceAccountingTests(unittest.TestCase):
         )
         self.assertGreater(self.references["skipped_files"], 0)
 
-    def test_return_contract_is_additive_only(self):
-        """Three keys have live consumers in main(), render_report(), and this file."""
+    def test_return_contract_uses_unambiguous_names(self):
+        """Policy obligation, direct risk, syntax, and verification are separate."""
         self.assertLessEqual(
             inventory.REFERENCES_REQUIRED_KEYS, set(self.references)
         )
-        for key in ("retained_reports", "reports_needing_archive_pointer", "details"):
+        for key in (
+            "retained_reports",
+            "reports_requiring_archive_pointer",
+            "reports_with_dangling_references",
+            "details",
+        ):
             with self.subTest(key=key):
                 self.assertIn(key, self.references)
+        for misleading in (
+            "reports_needing_archive_pointer",
+            "reports_with_archive_pointer",
+        ):
+            with self.subTest(misleading=misleading):
+                self.assertNotIn(misleading, self.references)
 
     def test_broken_accounting_fails_the_run(self):
         """The gate must be an exit code, not a printed line nobody reads."""
         source = SCRIPT.read_text(encoding="utf-8")
         self.assertIn("BROKEN-ACCOUNTING", source)
-        self.assertIn('if not references["accounting_ok"]', source)
+        self.assertIn('if references["accounting_ok"]', source)
 
     def test_report_does_not_assert_cleanliness_when_accounting_is_broken(self):
         """C7 on generated prose: the report must not claim what the numbers deny.
@@ -243,13 +369,23 @@ class ReferenceAccountingTests(unittest.TestCase):
         summary = inventory.summarize(self.entries)
         broken = {**self.references, "accounting_ok": False, "total_extracted": 999}
         text = inventory.render_report(
-            summary, self.entries, "abc1234", broken, "git:abc1234"
+            summary,
+            self.entries,
+            "abc1234",
+            self.references,
+            broken,
+            "git:abc1234",
         )
         self.assertNotIn("nothing was dropped", text)
         self.assertIn("floor, not a total", text)
 
         clean = inventory.render_report(
-            summary, self.entries, "abc1234", self.references, "git:abc1234"
+            summary,
+            self.entries,
+            "abc1234",
+            self.references,
+            self.references,
+            "git:abc1234",
         )
         self.assertIn("nothing was dropped", clean)
 
@@ -358,8 +494,8 @@ class CsvContractTests(unittest.TestCase):
                 self.assertIn("eol=lf", line)
 
     def test_schema_version_moved_with_the_row_bytes(self):
-        """v0.3 adds reason/destination after v0.2 pinned LF and column order."""
-        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.3"))
+        """v0.4 separates evidence populations and verifies pointer semantics."""
+        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.4"))
 
     def test_every_committed_row_carries_reason_and_destination(self):
         with self.COMMITTED.open(encoding="utf-8", newline="") as handle:
@@ -449,6 +585,27 @@ class CommittedInventoryTests(unittest.TestCase):
             committed["summary"]["unmatched_files"],
             0,
             "unmatched paths must be classified explicitly before deletion is considered",
+        )
+
+    def test_committed_summary_separates_baseline_and_workspace_semantics(self):
+        committed = json.loads(
+            (REPO / "docs" / "benchmarks" / "artifact-inventory-summary.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertNotIn("references", committed)
+        self.assertEqual(set(committed["reference_scans"]), {"baseline", "workspace"})
+        baseline = committed["reference_scans"]["baseline"]
+        workspace = committed["reference_scans"]["workspace"]
+        self.assertEqual(baseline["reports_with_pointer_syntax"], 0)
+        self.assertEqual(baseline["reports_with_verified_archive_pointer"], 0)
+        self.assertFalse(baseline["semantic_pointer_coverage_ok"])
+        self.assertEqual(workspace["reports_with_pointer_syntax"], 14)
+        self.assertEqual(workspace["reports_with_verified_archive_pointer"], 14)
+        self.assertTrue(workspace["semantic_pointer_coverage_ok"])
+        self.assertEqual(
+            workspace["archive_destination_verification"]["verified_migrate_files"],
+            committed["summary"]["migrate_files"],
         )
 
     def test_committed_rows_match_every_blob_in_the_pinned_tree(self):

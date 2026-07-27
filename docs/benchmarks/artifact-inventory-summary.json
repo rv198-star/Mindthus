@@ -1,92 +1,1055 @@
 {
   "baseline_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
   "destination": "git:476053e68b8bbd4fa7c617982a45c097aeddd251",
-  "references": {
-    "accounting_ok": true,
-    "by_category": {
-      "breaks_after_migration": 5,
-      "rejected_empty": 0,
-      "rejected_not_path_like": 455,
-      "rejected_numeric_ratio": 11,
-      "rejected_url": 3,
-      "resolved_outside_migration_scope": 35,
-      "resolved_survives": 59,
-      "unresolved": 6,
-      "unresolved_absolute_external": 18,
-      "unresolved_migrate_class": 36
+  "reference_scans": {
+    "baseline": {
+      "accounting_ok": true,
+      "archive_destination_verification": {
+        "commit_exists": true,
+        "destination": "git:476053e68b8bbd4fa7c617982a45c097aeddd251",
+        "destination_shape_valid": true,
+        "expected_migrate_files": 6334,
+        "missing_files": 0,
+        "missing_sample": [],
+        "oid_mismatch_sample": [],
+        "oid_mismatches": 0,
+        "resolved_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
+        "valid": true,
+        "verified_migrate_files": 6334
+      },
+      "archive_reference_details": [
+        {
+          "archive_matches": 631,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 156,
+          "reference": "answers/<case>.record.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 655,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 157,
+          "reference": "answers/<case>-turn-*.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 581,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 158,
+          "reference": "judge-answers/<case>.record.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 661,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 159,
+          "reference": "events/<case>-turn-*.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 160,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 1,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 18,
+          "reference": "treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 1,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 18,
+          "reference": "treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 103,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 19,
+          "reference": "treatment-cli-clean-v4-empty-home/answers/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 53,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 20,
+          "reference": "treatment-cli-clean-v4-empty-home/events/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 100,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 21,
+          "reference": "treatment-cli-clean-v4-empty-home/judge-answers/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 11,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 68,
+          "reference": "answers/mtj-032-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 68,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 11,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 68,
+          "reference": "events/mtj-032-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 69,
+          "reference": "answers/mtj-013-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 69,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 69,
+          "reference": "events/mtj-013-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 70,
+          "reference": "answers/mtj-048-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 70,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 70,
+          "reference": "events/mtj-048-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 71,
+          "reference": "answers/mtj-050-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 71,
+          "reference": "answers/mtj-050-turn-2.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 71,
+          "reference": "answers/mtj-050-turn-3.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 72,
+          "reference": "answers/mtj-037-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 72,
+          "reference": "events/mtj-037-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 73,
+          "reference": "answers/mtj-008-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 73,
+          "reference": "events/mtj-008-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 79,
+          "reference": "answers/mtj-002-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 80,
+          "reference": "answers/mtj-010-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 80,
+          "reference": "events/mtj-010-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 81,
+          "reference": "answers/mtj-033-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 82,
+          "reference": "answers/mtj-015-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 82,
+          "reference": "events/mtj-015-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 83,
+          "reference": "answers/mtj-019-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 83,
+          "reference": "events/mtj-019-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 20,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 84,
+          "reference": "answers/mtj-049-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 90,
+          "reference": "answers/mtj-003-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 91,
+          "reference": "answers/mtj-004-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 23,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 92,
+          "reference": "answers/mtj-017-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 93,
+          "reference": "answers/mtj-018-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 94,
+          "reference": "answers/mtj-034-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 79,
+          "reference": "judge-output-schema.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        },
+        {
+          "archive_matches": 519,
+          "archive_verified": true,
+          "category": "resolved_archive_only",
+          "line": 231,
+          "reference": "baseline-cli-clean-v3-empty-home/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        },
+        {
+          "archive_matches": 519,
+          "archive_verified": true,
+          "category": "resolved_archive_only",
+          "line": 232,
+          "reference": "treatment-cli-clean-v3-empty-home/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        }
+      ],
+      "by_category": {
+        "breaks_after_migration": 5,
+        "rejected_empty": 0,
+        "rejected_not_path_like": 441,
+        "rejected_numeric_ratio": 11,
+        "rejected_url": 3,
+        "resolved_archive_only": 2,
+        "resolved_outside_migration_scope": 35,
+        "resolved_survives": 59,
+        "unresolved": 4,
+        "unresolved_absolute_external": 18,
+        "unresolved_migrate_class": 36
+      },
+      "details": [
+        {
+          "dangling_after_migration": [
+            "156:answers/<case>.record.json",
+            "157:answers/<case>-turn-*.txt",
+            "158:judge-answers/<case>.record.json",
+            "159:events/<case>-turn-*.jsonl",
+            "160:score-records.jsonl"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "dangling_after_migration": [
+            "18:treatment-cli-clean-v4-empty-home/score-records.jsonl"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "dangling_after_migration": [
+            "18:treatment-cli-clean-v4-empty-home/score-records.jsonl",
+            "19:treatment-cli-clean-v4-empty-home/answers/",
+            "20:treatment-cli-clean-v4-empty-home/events/",
+            "21:treatment-cli-clean-v4-empty-home/judge-answers/",
+            "68:answers/mtj-032-turn-1.txt",
+            "68:events/mtj-032-turn-1.jsonl",
+            "68:score-records.jsonl",
+            "69:answers/mtj-013-turn-1.txt",
+            "69:events/mtj-013-turn-1.jsonl",
+            "69:score-records.jsonl",
+            "70:answers/mtj-048-turn-1.txt",
+            "70:events/mtj-048-turn-1.jsonl",
+            "70:score-records.jsonl",
+            "71:answers/mtj-050-turn-1.txt",
+            "71:answers/mtj-050-turn-2.txt",
+            "71:answers/mtj-050-turn-3.txt",
+            "72:answers/mtj-037-turn-1.txt",
+            "72:events/mtj-037-turn-1.jsonl",
+            "73:answers/mtj-008-turn-1.txt",
+            "73:events/mtj-008-turn-1.jsonl",
+            "79:answers/mtj-002-turn-1.txt",
+            "80:answers/mtj-010-turn-1.txt",
+            "80:events/mtj-010-turn-1.jsonl",
+            "81:answers/mtj-033-turn-1.txt",
+            "82:answers/mtj-015-turn-1.txt",
+            "82:events/mtj-015-turn-1.jsonl",
+            "83:answers/mtj-019-turn-1.txt",
+            "83:events/mtj-019-turn-1.jsonl",
+            "84:answers/mtj-049-turn-1.txt",
+            "90:answers/mtj-003-turn-1.txt",
+            "91:answers/mtj-004-turn-1.txt",
+            "92:answers/mtj-017-turn-1.txt",
+            "93:answers/mtj-018-turn-1.txt",
+            "94:answers/mtj-034-turn-1.txt"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "dangling_after_migration": [
+            "79:judge-output-schema.json"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        }
+      ],
+      "reports_failed_semantic_pointer_verification": [
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/MANUAL_PROBLEM_CASE_AUDIT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v5-naturalization/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-08-v5-targeted-validation/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-09-brake-generalization-dev/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md",
+          "unverified_archive_references": []
+        },
+        {
+          "errors": [
+            "missing-pointer-commit",
+            "missing-pointer-marker"
+          ],
+          "pointer_commit": null,
+          "report": "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/REPORT.md",
+          "unverified_archive_references": []
+        }
+      ],
+      "reports_missing_pointer_syntax": [
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/MANUAL_PROBLEM_CASE_AUDIT.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v5-naturalization/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v5-register-action-probes/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v5-register-hints-diagnostic/REPORT.md",
+        "docs/benchmarks/runs/2026-07-08-v5-targeted-validation/REPORT.md",
+        "docs/benchmarks/runs/2026-07-09-brake-generalization-dev/REPORT.md",
+        "docs/benchmarks/runs/2026-07-09-brake-implicit-pressure-dev/REPORT.md",
+        "docs/benchmarks/runs/2026-07-09-issue-108-generalized-probes/REPORT.md"
+      ],
+      "reports_requiring_archive_pointer": 14,
+      "reports_with_dangling_references": 4,
+      "reports_with_pointer_syntax": 0,
+      "reports_with_verified_archive_pointer": 0,
+      "retained_reports": 14,
+      "scan_source": {
+        "kind": "git-revision",
+        "revision": "476053e68b8bbd4fa7c617982a45c097aeddd251"
+      },
+      "scanned_files": 14,
+      "semantic_pointer_coverage_ok": false,
+      "skipped_files": 145,
+      "total_extracted": 614
     },
-    "details": [
-      {
-        "dangling_after_migration": [
-          "160:answers/<case>.record.json",
-          "161:answers/<case>-turn-*.txt",
-          "162:judge-answers/<case>.record.json",
-          "163:events/<case>-turn-*.jsonl",
-          "164:score-records.jsonl"
-        ],
-        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+    "workspace": {
+      "accounting_ok": true,
+      "archive_destination_verification": {
+        "commit_exists": true,
+        "destination": "git:476053e68b8bbd4fa7c617982a45c097aeddd251",
+        "destination_shape_valid": true,
+        "expected_migrate_files": 6334,
+        "missing_files": 0,
+        "missing_sample": [],
+        "oid_mismatch_sample": [],
+        "oid_mismatches": 0,
+        "resolved_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
+        "valid": true,
+        "verified_migrate_files": 6334
       },
-      {
-        "dangling_after_migration": [
-          "22:treatment-cli-clean-v4-empty-home/score-records.jsonl"
-        ],
-        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+      "archive_reference_details": [
+        {
+          "archive_matches": 631,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 160,
+          "reference": "answers/<case>.record.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 655,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 161,
+          "reference": "answers/<case>-turn-*.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 581,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 162,
+          "reference": "judge-answers/<case>.record.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 661,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 163,
+          "reference": "events/<case>-turn-*.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 164,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 1,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 22,
+          "reference": "treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "archive_matches": 1,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 22,
+          "reference": "treatment-cli-clean-v4-empty-home/score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 103,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 23,
+          "reference": "treatment-cli-clean-v4-empty-home/answers/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 53,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 24,
+          "reference": "treatment-cli-clean-v4-empty-home/events/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 100,
+          "archive_verified": true,
+          "category": "breaks_after_migration",
+          "line": 25,
+          "reference": "treatment-cli-clean-v4-empty-home/judge-answers/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 11,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 72,
+          "reference": "answers/mtj-032-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 72,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 11,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 72,
+          "reference": "events/mtj-032-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 73,
+          "reference": "answers/mtj-013-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 73,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 73,
+          "reference": "events/mtj-013-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 74,
+          "reference": "answers/mtj-048-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 74,
+          "reference": "score-records.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 21,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 74,
+          "reference": "events/mtj-048-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 75,
+          "reference": "answers/mtj-050-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 75,
+          "reference": "answers/mtj-050-turn-2.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 75,
+          "reference": "answers/mtj-050-turn-3.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 76,
+          "reference": "answers/mtj-037-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 76,
+          "reference": "events/mtj-037-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 77,
+          "reference": "answers/mtj-008-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 15,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 77,
+          "reference": "events/mtj-008-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 83,
+          "reference": "answers/mtj-002-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 84,
+          "reference": "answers/mtj-010-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 84,
+          "reference": "events/mtj-010-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 85,
+          "reference": "answers/mtj-033-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 86,
+          "reference": "answers/mtj-015-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 86,
+          "reference": "events/mtj-015-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 87,
+          "reference": "answers/mtj-019-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 87,
+          "reference": "events/mtj-019-turn-1.jsonl",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 20,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 88,
+          "reference": "answers/mtj-049-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 94,
+          "reference": "answers/mtj-003-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 95,
+          "reference": "answers/mtj-004-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 23,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 96,
+          "reference": "answers/mtj-017-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 9,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 97,
+          "reference": "answers/mtj-018-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 18,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 98,
+          "reference": "answers/mtj-034-turn-1.txt",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "archive_matches": 50,
+          "archive_verified": true,
+          "category": "unresolved_migrate_class",
+          "line": 83,
+          "reference": "judge-output-schema.json",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        },
+        {
+          "archive_matches": 519,
+          "archive_verified": true,
+          "category": "resolved_archive_only",
+          "line": 235,
+          "reference": "baseline-cli-clean-v3-empty-home/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        },
+        {
+          "archive_matches": 519,
+          "archive_verified": true,
+          "category": "resolved_archive_only",
+          "line": 236,
+          "reference": "treatment-cli-clean-v3-empty-home/",
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        }
+      ],
+      "by_category": {
+        "breaks_after_migration": 5,
+        "rejected_empty": 0,
+        "rejected_not_path_like": 455,
+        "rejected_numeric_ratio": 11,
+        "rejected_url": 3,
+        "resolved_archive_only": 2,
+        "resolved_outside_migration_scope": 35,
+        "resolved_survives": 59,
+        "unresolved": 4,
+        "unresolved_absolute_external": 18,
+        "unresolved_migrate_class": 36
       },
-      {
-        "dangling_after_migration": [
-          "22:treatment-cli-clean-v4-empty-home/score-records.jsonl",
-          "23:treatment-cli-clean-v4-empty-home/answers/",
-          "24:treatment-cli-clean-v4-empty-home/events/",
-          "25:treatment-cli-clean-v4-empty-home/judge-answers/",
-          "72:answers/mtj-032-turn-1.txt",
-          "72:events/mtj-032-turn-1.jsonl",
-          "72:score-records.jsonl",
-          "73:answers/mtj-013-turn-1.txt",
-          "73:events/mtj-013-turn-1.jsonl",
-          "73:score-records.jsonl",
-          "74:answers/mtj-048-turn-1.txt",
-          "74:events/mtj-048-turn-1.jsonl",
-          "74:score-records.jsonl",
-          "75:answers/mtj-050-turn-1.txt",
-          "75:answers/mtj-050-turn-2.txt",
-          "75:answers/mtj-050-turn-3.txt",
-          "76:answers/mtj-037-turn-1.txt",
-          "76:events/mtj-037-turn-1.jsonl",
-          "77:answers/mtj-008-turn-1.txt",
-          "77:events/mtj-008-turn-1.jsonl",
-          "83:answers/mtj-002-turn-1.txt",
-          "84:answers/mtj-010-turn-1.txt",
-          "84:events/mtj-010-turn-1.jsonl",
-          "85:answers/mtj-033-turn-1.txt",
-          "86:answers/mtj-015-turn-1.txt",
-          "86:events/mtj-015-turn-1.jsonl",
-          "87:answers/mtj-019-turn-1.txt",
-          "87:events/mtj-019-turn-1.jsonl",
-          "88:answers/mtj-049-turn-1.txt",
-          "94:answers/mtj-003-turn-1.txt",
-          "95:answers/mtj-004-turn-1.txt",
-          "96:answers/mtj-017-turn-1.txt",
-          "97:answers/mtj-018-turn-1.txt",
-          "98:answers/mtj-034-turn-1.txt"
-        ],
-        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+      "details": [
+        {
+          "dangling_after_migration": [
+            "160:answers/<case>.record.json",
+            "161:answers/<case>-turn-*.txt",
+            "162:judge-answers/<case>.record.json",
+            "163:events/<case>-turn-*.jsonl",
+            "164:score-records.jsonl"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "dangling_after_migration": [
+            "22:treatment-cli-clean-v4-empty-home/score-records.jsonl"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md"
+        },
+        {
+          "dangling_after_migration": [
+            "22:treatment-cli-clean-v4-empty-home/score-records.jsonl",
+            "23:treatment-cli-clean-v4-empty-home/answers/",
+            "24:treatment-cli-clean-v4-empty-home/events/",
+            "25:treatment-cli-clean-v4-empty-home/judge-answers/",
+            "72:answers/mtj-032-turn-1.txt",
+            "72:events/mtj-032-turn-1.jsonl",
+            "72:score-records.jsonl",
+            "73:answers/mtj-013-turn-1.txt",
+            "73:events/mtj-013-turn-1.jsonl",
+            "73:score-records.jsonl",
+            "74:answers/mtj-048-turn-1.txt",
+            "74:events/mtj-048-turn-1.jsonl",
+            "74:score-records.jsonl",
+            "75:answers/mtj-050-turn-1.txt",
+            "75:answers/mtj-050-turn-2.txt",
+            "75:answers/mtj-050-turn-3.txt",
+            "76:answers/mtj-037-turn-1.txt",
+            "76:events/mtj-037-turn-1.jsonl",
+            "77:answers/mtj-008-turn-1.txt",
+            "77:events/mtj-008-turn-1.jsonl",
+            "83:answers/mtj-002-turn-1.txt",
+            "84:answers/mtj-010-turn-1.txt",
+            "84:events/mtj-010-turn-1.jsonl",
+            "85:answers/mtj-033-turn-1.txt",
+            "86:answers/mtj-015-turn-1.txt",
+            "86:events/mtj-015-turn-1.jsonl",
+            "87:answers/mtj-019-turn-1.txt",
+            "87:events/mtj-019-turn-1.jsonl",
+            "88:answers/mtj-049-turn-1.txt",
+            "94:answers/mtj-003-turn-1.txt",
+            "95:answers/mtj-004-turn-1.txt",
+            "96:answers/mtj-017-turn-1.txt",
+            "97:answers/mtj-018-turn-1.txt",
+            "98:answers/mtj-034-turn-1.txt"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+        },
+        {
+          "dangling_after_migration": [
+            "83:judge-output-schema.json"
+          ],
+          "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
+        }
+      ],
+      "reports_failed_semantic_pointer_verification": [],
+      "reports_missing_pointer_syntax": [],
+      "reports_requiring_archive_pointer": 14,
+      "reports_with_dangling_references": 4,
+      "reports_with_pointer_syntax": 14,
+      "reports_with_verified_archive_pointer": 14,
+      "retained_reports": 14,
+      "scan_source": {
+        "kind": "workspace",
+        "revision": null
       },
-      {
-        "dangling_after_migration": [
-          "83:judge-output-schema.json"
-        ],
-        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
-      }
-    ],
-    "reports_missing_archive_pointer": [],
-    "reports_needing_archive_pointer": 4,
-    "reports_requiring_archive_pointer": 14,
-    "reports_with_archive_pointer": 14,
-    "reports_with_dangling_references": 4,
-    "retained_reports": 14,
-    "scanned_files": 14,
-    "skipped_files": 145,
-    "total_extracted": 628
+      "scanned_files": 14,
+      "semantic_pointer_coverage_ok": true,
+      "skipped_files": 145,
+      "total_extracted": 628
+    }
   },
   "rows": "docs/benchmarks/artifact-inventory.csv",
   "rule_reasons": {
@@ -101,7 +1064,7 @@
     "unmatched": "no rule matched; kept by default and requires explicit human classification"
   },
   "runs_root": "docs/benchmarks/runs",
-  "schema_version": "mindthus-benchmark-artifact-inventory-v0.3",
+  "schema_version": "mindthus-benchmark-artifact-inventory-v0.4",
   "summary": {
     "by_rule": {
       "policy:aggregate": {
