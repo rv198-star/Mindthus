@@ -1,6 +1,6 @@
 # Benchmark Run Artifact Inventory
 
-Schema: `mindthus-benchmark-artifact-inventory-v0.4`
+Schema: `mindthus-benchmark-artifact-inventory-v0.5`
 Baseline commit: `476053e68b8bbd4fa7c617982a45c097aeddd251`
 Immutable migrate destination: `git:476053e68b8bbd4fa7c617982a45c097aeddd251`
 
@@ -41,11 +41,13 @@ Coverage is reported for two populations and is never blended:
 
 A semantic pass requires a real Git commit, the inventory destination commit,
 all migrate paths at their recorded blob OIDs, and every archive-dependent
-reference resolving to those verified rows. A 40-hex token alone is not a pass.
+reference resolving within the report's campaign or an explicit repository-rooted
+`docs/benchmarks/runs/` path. Global suffix/basename search is forbidden; a 40-hex token
+alone is not a pass.
 
 Workspace scope: 14 file(s) scanned, 145 kept file(s) not scanned.
 
-628 workspace reference(s) extracted, each counted into exactly one category. `accounting_ok` is `True`: the categories sum to the number extracted, so nothing was dropped between extraction and classification.
+634 workspace reference(s) extracted, each counted into exactly one category. `accounting_ok` is `True`: the categories sum to the number extracted, so nothing was dropped between extraction and classification.
 
 | Category | Count |
 | --- | ---: |
@@ -53,11 +55,11 @@ Workspace scope: 14 file(s) scanned, 145 kept file(s) not scanned.
 | `rejected_not_path_like` | 455 |
 | `rejected_numeric_ratio` | 11 |
 | `rejected_url` | 3 |
-| `resolved_survives` | 59 |
+| `resolved_survives` | 61 |
 | `resolved_outside_migration_scope` | 35 |
-| `breaks_after_migration` | 5 |
-| `unresolved_migrate_class` | 36 |
-| `resolved_archive_only` | 2 |
+| `breaks_after_migration` | 39 |
+| `unresolved_migrate_class` | 0 |
+| `resolved_archive_only` | 8 |
 | `unresolved_absolute_external` | 18 |
 | `unresolved` | 4 |
 
@@ -65,17 +67,17 @@ Workspace scope: 14 file(s) scanned, 145 kept file(s) not scanned.
 
 | Report | Dangling refs |
 | --- | ---: |
-| `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md` | 5 |
+| `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/EXTERNAL_AUDIT_HANDOFF.md` | 2 |
 | `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/EXTERNAL_AUDIT_HANDOFF.md` | 1 |
 | `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md` | 34 |
-| `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md` | 1 |
+| `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md` | 2 |
 
 ### Semantic archive verification
 
 - Destination commit exists: `True`.
 - Migrate rows verified by path and blob OID: **6334 / 6334**.
 - Missing archive paths: `0`; OID mismatches: `0`.
-- Archive-dependent references verified: **43 / 43**.
+- Archive-dependent references verified: **47 / 47**.
 - Reports failing semantic pointer verification: `0`.
 
 ## Net Accounting

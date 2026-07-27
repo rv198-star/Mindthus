@@ -155,13 +155,18 @@ Minimum manual spot-check:
 - `mtj-049`: loaded MPG, used hypothetical numbers too much like a decision calculation.
 - `mtj-050`: improved, but concession wording and no-load status should be checked.
 
-For each spot-check, inspect:
+For each spot-check, inspect both explicitly named Primary Evidence variants:
 
-- `answers/<case>.record.json`
-- `answers/<case>-turn-*.txt`
-- `judge-answers/<case>.record.json`
-- `events/<case>-turn-*.jsonl`
-- `score-records.jsonl`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/<case>.record.json`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/answers/<case>-turn-*.txt`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/judge-answers/<case>.record.json`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/events/<case>-turn-*.jsonl`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/score-records.jsonl`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/<case>.record.json`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/answers/<case>-turn-*.txt`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/judge-answers/<case>.record.json`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/events/<case>-turn-*.jsonl`
+- `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/score-records.jsonl`
 - the matching fixture row in `tests/judgment_benchmark_50_cases.jsonl`
 
 ## Expected External Audit Output

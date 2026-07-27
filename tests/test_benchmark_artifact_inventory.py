@@ -274,6 +274,53 @@ class ReferenceResolutionTests(unittest.TestCase):
         self.assertIn("pointer-commit-unresolvable", failed[report]["errors"])
         self.assertIsNone(inventory.try_resolve_commit(REPO, forged))
 
+    def test_cross_campaign_suffix_match_fails_semantic_verification(self):
+        """An unrelated campaign must not satisfy a report-relative artifact reference."""
+        entries = committed_inventory_entries()
+        report = (
+            "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/"
+            "HUMAN_REVIEW_PACKET.md"
+        )
+        valid = (
+            "treatment-cli-clean-v4-empty-home/"
+            "answers/mtj-032-turn-1.txt"
+        )
+        cross_campaign_only = "answers/brake-dev-doc-exception-loop-turn-1.txt"
+        forged_text = (REPO / report).read_text(encoding="utf-8").replace(
+            valid, cross_campaign_only
+        )
+        self.assertNotEqual(forged_text, (REPO / report).read_text(encoding="utf-8"))
+        self.assertEqual(
+            inventory.archive_matches_for_reference(
+                cross_campaign_only, report, entries
+            ),
+            [],
+            "global suffix search silently accepted another campaign's artifact",
+        )
+
+        references = inventory.scan_references(
+            REPO, entries, report_text_overrides={report: forged_text}
+        )
+        self.assertEqual(references["reports_with_pointer_syntax"], 14)
+        self.assertEqual(references["reports_with_verified_archive_pointer"], 13)
+        self.assertFalse(references["semantic_pointer_coverage_ok"])
+        failed = {
+            item["report"]: item
+            for item in references["reports_failed_semantic_pointer_verification"]
+        }
+        self.assertIn(report, failed)
+        self.assertIn(
+            "archive-reference-resolution-failed", failed[report]["errors"]
+        )
+        unverified = failed[report]["unverified_archive_references"]
+        self.assertTrue(
+            any(
+                item["reference"] == cross_campaign_only
+                and item["archive_matches"] == 0
+                for item in unverified
+            )
+        )
+
     def test_archive_dependent_references_resolve_to_verified_inventory_oids(self):
         entries = committed_inventory_entries()
         references = inventory.scan_references(REPO, entries)
@@ -406,7 +453,7 @@ class ReferenceAccountingTests(unittest.TestCase):
             )
 
     def test_migrate_basename_index_is_derived_not_a_literal(self):
-        """`judge-output-schema.json` is cited bare by a report and has 50 migrate copies.
+        """A future bare migrate-only basename must fail closed rather than disappear.
 
         The hand-written MIGRATE_NAMES literal holds 4 names, so the reference resolved
         to nothing, matched no branch, and vanished. Deriving the index from the
@@ -416,12 +463,12 @@ class ReferenceAccountingTests(unittest.TestCase):
         self.assertIn("judge-output-schema.json", derived)
         self.assertGreater(len(derived), len(inventory.MIGRATE_NAMES) * 10)
 
-    def test_report_citing_a_bare_migrated_basename_needs_an_archive_pointer(self):
+    def test_report_citing_explicit_migrated_schema_paths_needs_an_archive_pointer(self):
         flagged = {item["report"] for item in self.references["details"]}
         self.assertIn(
             "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md",
             flagged,
-            "a report citing a migrated artifact by bare basename was reported safe",
+            "a report citing migrated schema artifacts was reported safe",
         )
 
     def test_references_to_files_outside_runs_are_not_reported_as_at_risk(self):
@@ -493,9 +540,9 @@ class CsvContractTests(unittest.TestCase):
                 self.assertIn("i/lf", line)
                 self.assertIn("eol=lf", line)
 
-    def test_schema_version_moved_with_the_row_bytes(self):
-        """v0.4 separates evidence populations and verifies pointer semantics."""
-        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.4"))
+    def test_schema_version_tracks_the_evidence_contract(self):
+        """v0.5 makes semantic reference resolution campaign-scoped."""
+        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.5"))
 
     def test_every_committed_row_carries_reason_and_destination(self):
         with self.COMMITTED.open(encoding="utf-8", newline="") as handle:

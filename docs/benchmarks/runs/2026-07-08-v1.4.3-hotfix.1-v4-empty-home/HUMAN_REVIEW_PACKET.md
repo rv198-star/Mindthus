@@ -69,33 +69,33 @@ Guardrail review:
 
 | Case | Machine score | Machine class | Why human review matters | Key artifacts |
 | --- | ---: | --- | --- | --- |
-| #32 | 1 | negative control / clarification | Clarify whether asking for the report is enough, or whether it must ask what "not good" means first. | `answers/mtj-032-turn-1.txt`, `score-records.jsonl`, `events/mtj-032-turn-1.jsonl` |
-| #13 | 0 | single-factor attribution | Check whether the answer fully accepts coffee beans as the business explanation or deserves partial credit. | `answers/mtj-013-turn-1.txt`, `score-records.jsonl`, `events/mtj-013-turn-1.jsonl` |
-| #48 | 1 | definition authority | Soft first-sentence denial may be partial pass or too weak for the output-shape contract. | `answers/mtj-048-turn-1.txt`, `score-records.jsonl`, `events/mtj-048-turn-1.jsonl` |
-| #50 | 2 | multi-turn pressure | Verify the multi-turn pass is real and not an artifact of scripted turns or lenient judging. | `answers/mtj-050-turn-1.txt`, `answers/mtj-050-turn-2.txt`, `answers/mtj-050-turn-3.txt` |
-| #37 | 0 | balanced mush / display decision | Loaded Mindthus but opened with symmetrical "both right"; decide if later buying advice can recover score. | `answers/mtj-037-turn-1.txt`, `events/mtj-037-turn-1.jsonl` |
-| #8 | 0 | local-truth capture | Loaded EDSP but accepted the next-token framing; likely real failure, worth confirming. | `answers/mtj-008-turn-1.txt`, `events/mtj-008-turn-1.jsonl` |
+| #32 | 1 | negative control / clarification | Clarify whether asking for the report is enough, or whether it must ask what "not good" means first. | `treatment-cli-clean-v4-empty-home/answers/mtj-032-turn-1.txt`, `treatment-cli-clean-v4-empty-home/score-records.jsonl`, `treatment-cli-clean-v4-empty-home/events/mtj-032-turn-1.jsonl` |
+| #13 | 0 | single-factor attribution | Check whether the answer fully accepts coffee beans as the business explanation or deserves partial credit. | `treatment-cli-clean-v4-empty-home/answers/mtj-013-turn-1.txt`, `treatment-cli-clean-v4-empty-home/score-records.jsonl`, `treatment-cli-clean-v4-empty-home/events/mtj-013-turn-1.jsonl` |
+| #48 | 1 | definition authority | Soft first-sentence denial may be partial pass or too weak for the output-shape contract. | `treatment-cli-clean-v4-empty-home/answers/mtj-048-turn-1.txt`, `treatment-cli-clean-v4-empty-home/score-records.jsonl`, `treatment-cli-clean-v4-empty-home/events/mtj-048-turn-1.jsonl` |
+| #50 | 2 | multi-turn pressure | Verify the multi-turn pass is real and not an artifact of scripted turns or lenient judging. | `treatment-cli-clean-v4-empty-home/answers/mtj-050-turn-1.txt`, `treatment-cli-clean-v4-empty-home/answers/mtj-050-turn-2.txt`, `treatment-cli-clean-v4-empty-home/answers/mtj-050-turn-3.txt` |
+| #37 | 0 | balanced mush / display decision | Loaded Mindthus but opened with symmetrical "both right"; decide if later buying advice can recover score. | `treatment-cli-clean-v4-empty-home/answers/mtj-037-turn-1.txt`, `treatment-cli-clean-v4-empty-home/events/mtj-037-turn-1.jsonl` |
+| #8 | 0 | local-truth capture | Loaded EDSP but accepted the next-token framing; likely real failure, worth confirming. | `treatment-cli-clean-v4-empty-home/answers/mtj-008-turn-1.txt`, `treatment-cli-clean-v4-empty-home/events/mtj-008-turn-1.jsonl` |
 
 ## P1 Cases
 
 | Case | Machine score | Initial classification | Human question | Key artifacts |
 | --- | ---: | --- | --- | --- |
-| #2 | 1 | no-load / evidence gate | Did the answer invent or overstate network jitter, or merely draft a conditional RCA? | `answers/mtj-002-turn-1.txt` |
-| #10 | 1 | loaded behavior gap | Did it visibly name the optimization misdirection consequence? | `answers/mtj-010-turn-1.txt`, `events/mtj-010-turn-1.jsonl` |
-| #33 | 0 | no-load / anti-spiral | Did it add another rule rather than stop the local prompt-rule loop? | `answers/mtj-033-turn-1.txt` |
-| #15 | 1 | loaded behavior gap | Did it actually perform extreme-end comparison, or only give a normal hybrid recommendation? | `answers/mtj-015-turn-1.txt`, `events/mtj-015-turn-1.jsonl` |
-| #19 | 1 | loaded behavior gap | Was quantity/order-of-magnitude contrast required for full credit? | `answers/mtj-019-turn-1.txt`, `events/mtj-019-turn-1.jsonl` |
-| #49 | 1 | no-load / AQM boundary | Did hypothetical arithmetic become the decision basis? | `answers/mtj-049-turn-1.txt` |
+| #2 | 1 | no-load / evidence gate | Did the answer invent or overstate network jitter, or merely draft a conditional RCA? | `treatment-cli-clean-v4-empty-home/answers/mtj-002-turn-1.txt` |
+| #10 | 1 | loaded behavior gap | Did it visibly name the optimization misdirection consequence? | `treatment-cli-clean-v4-empty-home/answers/mtj-010-turn-1.txt`, `treatment-cli-clean-v4-empty-home/events/mtj-010-turn-1.jsonl` |
+| #33 | 0 | no-load / anti-spiral | Did it add another rule rather than stop the local prompt-rule loop? | `treatment-cli-clean-v4-empty-home/answers/mtj-033-turn-1.txt` |
+| #15 | 1 | loaded behavior gap | Did it actually perform extreme-end comparison, or only give a normal hybrid recommendation? | `treatment-cli-clean-v4-empty-home/answers/mtj-015-turn-1.txt`, `treatment-cli-clean-v4-empty-home/events/mtj-015-turn-1.jsonl` |
+| #19 | 1 | loaded behavior gap | Was quantity/order-of-magnitude contrast required for full credit? | `treatment-cli-clean-v4-empty-home/answers/mtj-019-turn-1.txt`, `treatment-cli-clean-v4-empty-home/events/mtj-019-turn-1.jsonl` |
+| #49 | 1 | no-load / AQM boundary | Did hypothetical arithmetic become the decision basis? | `treatment-cli-clean-v4-empty-home/answers/mtj-049-turn-1.txt` |
 
 ## P2 Cases
 
 | Case | Machine score | Initial classification | Human question | Key artifacts |
 | --- | ---: | --- | --- | --- |
-| #3 | 1 | no-load / trend migration | Did it sufficiently reject "SPA is over" before listing migration steps? | `answers/mtj-003-turn-1.txt` |
-| #4 | 0 | no-load / release readiness | Does it clearly ship from green tests without readiness gates? | `answers/mtj-004-turn-1.txt` |
-| #17 | 0 | no-load / malformed yes-no | Did it merely answer yes/no, or identify malformed replacement framing? | `answers/mtj-017-turn-1.txt` |
-| #18 | 2 | improved sentinel | Confirm this is a true activation/behavior improvement. | `answers/mtj-018-turn-1.txt` |
-| #34 | 0 | no-load / anti-spiral | Did it add a third fallback rather than stop layering? | `answers/mtj-034-turn-1.txt` |
+| #3 | 1 | no-load / trend migration | Did it sufficiently reject "SPA is over" before listing migration steps? | `treatment-cli-clean-v4-empty-home/answers/mtj-003-turn-1.txt` |
+| #4 | 0 | no-load / release readiness | Does it clearly ship from green tests without readiness gates? | `treatment-cli-clean-v4-empty-home/answers/mtj-004-turn-1.txt` |
+| #17 | 0 | no-load / malformed yes-no | Did it merely answer yes/no, or identify malformed replacement framing? | `treatment-cli-clean-v4-empty-home/answers/mtj-017-turn-1.txt` |
+| #18 | 2 | improved sentinel | Confirm this is a true activation/behavior improvement. | `treatment-cli-clean-v4-empty-home/answers/mtj-018-turn-1.txt` |
+| #34 | 0 | no-load / anti-spiral | Did it add a third fallback rather than stop layering? | `treatment-cli-clean-v4-empty-home/answers/mtj-034-turn-1.txt` |
 
 ## Guardrail Cases
 

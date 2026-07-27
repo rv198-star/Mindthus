@@ -80,7 +80,9 @@ Generator phase:
 Judge phase:
 
 - The judge saw the rubric and the full executed transcript.
-- The judge returned JSON under `judge-output-schema.json`.
+- The judge returned JSON under
+  `treatment-cli-clean-v2/judge-output-schema.json` and
+  `baseline-cli-clean-v2/judge-output-schema.json`.
 - Local validation rejected case-id mismatches, wrong score types, missing required fields, and
   unexpected fields.
 
@@ -232,8 +234,10 @@ Recommended v3 protocol, when approved:
 - Keep separate `CODEX_HOME` values for baseline and treatment.
 - Treat any `loaded_commands` path containing `superpowers`, benchmark fixture paths, pass
   criteria, fail signals, or judge notes as a hard contamination failure.
-- Keep v3 separate from this run directory, e.g. `baseline-cli-clean-v3-empty-home/` and
-  `treatment-cli-clean-v3-empty-home/`.
+- Keep v3 separate from this run directory, as recorded under
+  `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/baseline-cli-clean-v3-empty-home/`
+  and
+  `docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v3-empty-home/treatment-cli-clean-v3-empty-home/`.
 
 ## Verification
 

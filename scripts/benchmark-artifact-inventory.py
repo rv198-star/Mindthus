@@ -23,11 +23,10 @@ from fnmatch import fnmatchcase
 from pathlib import Path, PurePosixPath
 
 
-# v0.4 separates baseline-tree evidence from workspace coverage and verifies archive
-# pointers semantically. v0.3 added per-row reason/destination but its summary mixed a
-# pinned baseline inventory with report text read from the workspace, and treated any
-# 40-hex token as a valid pointer.
-INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.4"
+# v0.5 makes archive-reference resolution campaign-scoped. v0.4 separated baseline-tree
+# evidence from workspace coverage and verified pointer commits/OIDs, but its global
+# suffix fallback could satisfy a report reference with an unrelated campaign's artifact.
+INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.5"
 RUNS_ROOT = "docs/benchmarks/runs"
 
 # Pinned explicitly rather than read off `asdict(entries[0])`. Deriving the header from
@@ -431,16 +430,23 @@ def archive_matches_for_reference(
 ) -> list[Entry]:
     """Resolve one report token against the immutable inventory namespace.
 
-    Exact paths and directories are tried first. Then template placeholders and `*` are
-    expanded, followed by a suffix lookup for review packets whose artifact paths are
-    relative to a variant directory rather than to the report itself.
+    Only two explicit scopes are legal:
+
+    - a path relative to the retained report's campaign directory;
+    - a repository-rooted path, which must begin under RUNS_ROOT.
+
+    Template placeholders and `*` may expand inside either anchored scope. Global suffix
+    and bare-basename search are intentionally forbidden: they can make a v4 report pass
+    by finding an unrelated v5 campaign's artifact with the same name.
     """
     clean = ref.strip().rstrip("/")
     if not clean or clean.startswith("/"):
         return []
     wildcard = re.sub(r"<[^>]+>", "*", clean)
     report_parent = str(PurePosixPath(report).parent)
-    bases = (f"{report_parent}/{wildcard}", wildcard)
+    bases = [f"{report_parent}/{wildcard}"]
+    if clean.startswith(f"{RUNS_ROOT}/"):
+        bases.append(wildcard)
     matched: dict[str, Entry] = {}
 
     for item in entries:
@@ -450,18 +456,6 @@ def archive_matches_for_reference(
                     matched[item.path] = item
             elif item.path == base or item.path.startswith(f"{base}/"):
                 matched[item.path] = item
-
-        suffix = f"/{wildcard}"
-        if "*" in wildcard:
-            if fnmatchcase(item.path, f"*{suffix}") or fnmatchcase(
-                item.path, f"*{suffix}/*"
-            ):
-                matched[item.path] = item
-        elif item.path.endswith(suffix) or f"{suffix}/" in item.path:
-            matched[item.path] = item
-
-        if "/" not in wildcard and PurePosixPath(item.path).name == wildcard:
-            matched[item.path] = item
 
     return [matched[path] for path in sorted(matched)]
 
@@ -885,7 +879,9 @@ def render_report(
         "",
         "A semantic pass requires a real Git commit, the inventory destination commit,",
         "all migrate paths at their recorded blob OIDs, and every archive-dependent",
-        "reference resolving to those verified rows. A 40-hex token alone is not a pass.",
+        "reference resolving within the report's campaign or an explicit repository-rooted",
+        f"`{RUNS_ROOT}/` path. Global suffix/basename search is forbidden; a 40-hex token",
+        "alone is not a pass.",
         "",
         f"Workspace scope: {workspace_references['scanned_files']} file(s) scanned, "
         f"{workspace_references['skipped_files']} kept file(s) not scanned.",
