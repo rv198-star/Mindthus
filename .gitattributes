@@ -1,0 +1,12 @@
+# Keep committed CSV artifacts byte-identical across platforms on checkout.
+#
+# The inventory CSV is evidence: reviewers compare a fresh run against the committed
+# file. On a Windows checkout with core.autocrlf=true, git rewrites LF to CRLF in the
+# working tree, and the comparison fails for a reason that has nothing to do with the
+# inventory. Pinning eol=lf makes the checked-out bytes match the committed bytes
+# everywhere.
+#
+# This is about the checkout side. autocrlf normalizes to LF at check-in, so it is not
+# what produced the CRLF blob this replaces -- that came from the csv module's RFC-4180
+# default line terminator, fixed in the writer itself.
+*.csv text eol=lf

@@ -131,10 +131,18 @@ class SchemaTests(unittest.TestCase):
         self.assertIn("invalid-collection-mode", [item.code for item in findings])
 
     def test_observed_at_and_record_id_reject_empty_strings(self):
-        for field in ("observed_at", "record_id"):
+        """Empty is rejected for both; the code differs because the fields differ.
+
+        `observed_at` is a timestamp, so an empty one is a missing timestamp.
+        `record_id` is free text and stays an optional-field finding.
+        """
+        for field, expected in (
+            ("observed_at", "missing-field"),
+            ("record_id", "invalid-optional-field"),
+        ):
             with self.subTest(field=field):
                 findings = logger.validate_record(record(**{field: "  "}), 1)
-                self.assertIn("invalid-optional-field", [item.code for item in findings])
+                self.assertIn(expected, [item.code for item in findings])
 
     def test_existing_records_without_new_fields_still_validate(self):
         """The schema version is unchanged, so records written before this change must pass."""
@@ -173,6 +181,169 @@ class SchemaTests(unittest.TestCase):
             self.assertEqual(written["collection_mode"], "retrospective")
             self.assertTrue(written["record_id"].startswith("mtu-"))
             self.assertNotEqual(written["observed_at"], written["logged_at"])
+
+
+class TimestampValidationTests(unittest.TestCase):
+    """Timestamps decide freeze exit, so an unvalidated one is a hole in the freeze.
+
+    Before this, only `""` and non-strings were rejected. `not-a-date`, `2027-13-45`, and
+    a date two years before the freeze opened all validated, and a record claiming to be
+    a prospective observation of a task in 2024 counted toward opening the window.
+    """
+
+    def test_unparseable_timestamps_are_rejected(self):
+        for field in ("logged_at", "observed_at"):
+            for value in ("not-a-date", "2027-13-45", "yesterday", "07/27/2026"):
+                with self.subTest(field=field, value=value):
+                    findings = logger.validate_record(record(**{field: value}), 1)
+                    self.assertIn("invalid-timestamp", [item.code for item in findings])
+
+    def test_type_error_and_format_error_are_separate_codes(self):
+        """Two different mistakes: a writer bug and a human typo."""
+        typed = logger.validate_record(record(observed_at=1), 1)
+        self.assertIn("invalid-field-type", [item.code for item in typed])
+        malformed = logger.validate_record(record(observed_at="not-a-date"), 1)
+        self.assertIn("invalid-timestamp", [item.code for item in malformed])
+
+    def test_observation_cannot_postdate_the_log_entry(self):
+        findings = logger.validate_record(
+            record(observed_at="2026-07-28T00:00:00Z", logged_at="2026-07-27T00:00:00Z"), 1
+        )
+        self.assertIn("impossible-observation-order", [item.code for item in findings])
+
+    def test_both_timestamps_go_through_the_same_validator(self):
+        """`logged_at` was checked for presence only, `observed_at` for emptiness only."""
+        for field in ("logged_at", "observed_at"):
+            with self.subTest(field=field):
+                findings = logger.validate_record(record(**{field: "2026-13-99"}), 1)
+                self.assertTrue(
+                    any(item.code == "invalid-timestamp" for item in findings),
+                    f"{field} accepted an impossible date",
+                )
+
+    def test_valid_timestamps_produce_no_findings(self):
+        for value in ("2026-07-27T00:00:00Z", "2026-07-27T00:00:00+00:00", "2026-07-27"):
+            with self.subTest(value=value):
+                self.assertEqual(logger.validate_record(record(observed_at=value), 1), [])
+
+
+class FreezeEligibilityTests(unittest.TestCase):
+    def test_freeze_opened_is_a_tz_aware_constant(self):
+        """A naive constant raises TypeError on comparison the day someone moves it."""
+        self.assertIsNotNone(logger.FREEZE_OPENED.tzinfo)
+
+    def test_boundary_is_strictly_after_the_day_the_freeze_opened(self):
+        """The prose says "observed after 2026-07-26" in two places. The code agrees.
+
+        A record observed on the day #144 was filed would otherwise count toward opening
+        the window it opened.
+        """
+        self.assertFalse(logger.freeze_eligible(record(observed_at="2026-07-26T23:59:59Z")))
+        self.assertTrue(logger.freeze_eligible(record(observed_at="2026-07-27T00:00:00Z")))
+
+    def test_backdated_prospective_record_does_not_count(self):
+        """The defect in one line: self-declared prospective, observed years earlier."""
+        backdated = record(observed_at="2024-01-01T00:00:00Z", collection_mode="prospective")
+        self.assertEqual(logger.validate_record(backdated, 1), [], "record is well-formed")
+        self.assertFalse(logger.freeze_eligible(backdated))
+        self.assertEqual(logger.count_by_type([backdated])["freeze_eligible"], 0)
+
+    def test_retrospective_records_never_count_however_recent(self):
+        recent = record(observed_at="2026-07-30T00:00:00Z", collection_mode="retrospective")
+        self.assertEqual(logger.count_by_type([recent])["freeze_eligible"], 0)
+
+    def test_record_without_observed_at_is_not_eligible(self):
+        legacy = record()
+        legacy.pop("observed_at")
+        self.assertFalse(logger.freeze_eligible(legacy))
+
+    def test_prospective_count_and_eligible_count_are_reported_separately(self):
+        """Collapsing them would hide exactly the records under discussion."""
+        counts = logger.count_by_type(
+            [record(observed_at="2024-01-01T00:00:00Z"), record(observed_at="2026-07-28T00:00:00Z")]
+        )
+        self.assertEqual(counts["real_use_prospective"], 2)
+        self.assertEqual(counts["freeze_eligible"], 1)
+
+
+class RecordIdTests(unittest.TestCase):
+    def test_id_is_stable_across_when_the_record_was_written(self):
+        """With an explicit observed_at, logging the same task later must not re-ID it.
+
+        `logged_at` used to be in the seed, so the same task registered eight hours later
+        produced a different ID -- and the record-10 review cites records by ID.
+        """
+        task = {
+            "observed_at": "2026-07-27T02:00:00Z",
+            "record_type": "real_use",
+            "method": "SELA",
+            "scenario": "a task",
+            "model": "fixture-model",
+        }
+        first = logger.derive_record_id({**task, "logged_at": "2026-07-27T02:00:00Z"})
+        for later in ("2026-07-27T10:00:00Z", "2026-07-28T09:00:00Z", "2026-08-01T00:00:00Z"):
+            with self.subTest(logged_at=later):
+                self.assertEqual(first, logger.derive_record_id({**task, "logged_at": later}))
+
+    def test_logged_at_is_not_in_the_seed(self):
+        source = USAGE_LOGGER.read_text(encoding="utf-8")
+        seed_block = source.split("def derive_record_id")[1].split("hexdigest")[0]
+        self.assertNotIn('"logged_at"', seed_block)
+
+    def test_distinct_tasks_still_get_distinct_ids(self):
+        base = record()
+        for field, value in (
+            ("scenario", "a different task"),
+            ("method", "MPG"),
+            ("model", "another-model"),
+            ("observed_at", "2026-07-28T00:00:00Z"),
+        ):
+            with self.subTest(field=field):
+                self.assertNotEqual(
+                    logger.derive_record_id(base), logger.derive_record_id(record(**{field: value}))
+                )
+
+    def test_derivation_happens_only_on_the_write_path(self):
+        """--validate must never recompute an ID; a stored ID is the record's identity."""
+        source = USAGE_LOGGER.read_text(encoding="utf-8")
+        self.assertEqual(source.count("derive_record_id("), 2, "expected def + one call site")
+
+    def test_docstring_declares_the_stability_it_actually_provides(self):
+        """C7: a docstring must not claim a property the code does not enforce.
+
+        The old one said duplicates surface as a repeated ID. That is true only when the
+        caller passes --observed-at; on the default path observed_at defaults to the
+        logging time and two IDs result.
+        """
+        doc = logger.derive_record_id.__doc__
+        self.assertIn("--observed-at", doc)
+        self.assertIn("conditional", doc.lower())
+
+
+class SourceFieldTests(unittest.TestCase):
+    def test_absent_and_empty_source_behave_identically(self):
+        """`--source ""` passed silently while omitting the key reported a finding.
+
+        The more careless entry was the one that validated. Both mean "not provided".
+        """
+        empty = record(source="")
+        absent = record()
+        absent.pop("source")
+        self.assertEqual(logger.validate_record(empty, 1), logger.validate_record(absent, 1))
+        self.assertEqual(logger.validate_record(absent, 1), [])
+
+    def test_source_stays_optional(self):
+        """Mandating it would be new policy, and it would not make the field verifiable.
+
+        `source` is free text: nothing checks that what it points at exists, is
+        reachable, matches the record, or is redacted. Requiring non-empty turns "not
+        filled in" into "filled in with anything".
+        """
+        self.assertIn("Optional artifact or issue reference", USAGE_LOGGER.read_text("utf-8"))
+
+    def test_wrong_type_is_still_a_finding(self):
+        findings = logger.validate_record(record(source=42), 1)
+        self.assertIn("invalid-optional-field", [item.code for item in findings])
 
 
 class StatusSurfaceTests(unittest.TestCase):

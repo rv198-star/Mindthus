@@ -3,7 +3,8 @@
 
 This script classifies every tracked file under `docs/benchmarks/runs/` against
 `docs/benchmarks/run-artifact-retention-policy.md` and emits a machine-readable
-inventory (`path / blob OID / keep|migrate / reason / destination`).
+inventory: one CSV row per path (`path / blob_oid / size_bytes / disposition / rule`)
+plus a JSON summary holding the totals and the rule dictionary those rows key into.
 
 It is an inventory and dry-run tool only. It never deletes, moves, or rewrites
 anything. Deletion is a separate, separately reviewed step.
@@ -21,8 +22,17 @@ from dataclasses import dataclass, asdict
 from pathlib import Path, PurePosixPath
 
 
-INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.1"
+# v0.2: CSV rows are written with LF line terminators (v0.1 emitted CRLF via the csv
+# module's default) and the column order below is pinned. Both change the bytes of every
+# row, so the version moves with them -- a consumer that pinned v0.1 must be told the
+# file it validated is not the file it now reads.
+INVENTORY_SCHEMA_VERSION = "mindthus-benchmark-artifact-inventory-v0.2"
 RUNS_ROOT = "docs/benchmarks/runs"
+
+# Pinned explicitly rather than read off `asdict(entries[0])`. Deriving the header from
+# the first row makes the schema a function of whichever file sorts first and of dataclass
+# field order, so a reordered field silently rewrites 6493 rows with no version change.
+CSV_COLUMNS = ("path", "blob_oid", "size_bytes", "disposition", "rule")
 
 # Reports and decision records. Policy: "the campaign report and decision boundary",
 # "compact human-review or disagreement records".
@@ -231,6 +241,14 @@ BACKTICK_REF = re.compile(r"`([^`\n]+)`")
 # backticks (`ok`, `summary`) out of the dangling-reference count.
 PATH_LIKE = re.compile(r"(/|\.(json|jsonl|txt|log|md))")
 
+# Scores and ratios written in backticks -- `0/12`, `1.5 / 2`, `0.467 / 0.600 / 0.667`.
+# The slash makes PATH_LIKE accept them, so they must be rejected by shape rather than
+# left to fail resolution and be counted as unresolved references. The pattern is
+# deliberately anchored and digits-only: it matches none of the 6493 tracked paths, and a
+# looser rule that started swallowing real filenames would be the same class of defect
+# this scan is being repaired for.
+NUMERIC_RATIO = re.compile(r"^\d+(?:\.\d+)?(?:\s*/\s*\d+(?:\.\d+)?)+$")
+
 # Leading path segments that name a migrated artifact class. A reference that starts with
 # one of these is aimed at migrated content even when it resolves to no tracked path --
 # because it is a glob template (`answers/<case>.record.json`) or is written relative to a
@@ -238,6 +256,43 @@ PATH_LIKE = re.compile(r"(/|\.(json|jsonl|txt|log|md))")
 # retained review packets, and both must count: a reference that resolves nowhere today is
 # not evidence of safety.
 MIGRATED_REF_PREFIXES = tuple(f"{name}/" for name in sorted(MIGRATE_DIRS))
+
+# Every extracted reference lands in exactly one of these. The point is the accounting
+# identity below: `sum(by_category.values()) == total_extracted`. Without it a reference
+# that matches no branch simply falls off the loop, and a scan that examined nothing
+# reports the same "clean" result as a scan that examined everything. That is how the
+# first pass of this tool dropped 73 references without a single counter moving.
+#
+# A category is never omitted when its count is zero. A sparse dict lets a disappearing
+# category masquerade as an absent one.
+REFERENCE_CATEGORIES = (
+    "rejected_empty",
+    "rejected_not_path_like",
+    "rejected_numeric_ratio",
+    "rejected_url",
+    "resolved_survives",
+    "resolved_outside_migration_scope",
+    "breaks_after_migration",
+    "unresolved_migrate_class",
+    "unresolved_absolute_external",
+    "unresolved",
+)
+
+# The return contract of scan_references(). Three of these have live consumers (main(),
+# render_report(), tests/test_benchmark_artifact_inventory.py), so the contract is
+# additive only: keys may be added, never removed or repurposed.
+REFERENCES_REQUIRED_KEYS = frozenset(
+    {
+        "retained_reports",
+        "reports_needing_archive_pointer",
+        "details",
+        "scanned_files",
+        "skipped_files",
+        "total_extracted",
+        "by_category",
+        "accounting_ok",
+    }
+)
 
 
 def reference_survives(ref: str, report: str, tracked: dict[str, str]) -> bool | None:
@@ -263,12 +318,55 @@ def reference_survives(ref: str, report: str, tracked: dict[str, str]) -> bool |
     return None
 
 
+def migrate_only_basenames(entries: list[Entry]) -> set[str]:
+    """Basenames whose every tracked copy is classified `migrate`.
+
+    Derived from the classification result rather than hand-listed. A bare basename in a
+    report (`judge-output-schema.json`) carries no directory to resolve against, so the
+    only honest answer to "does this reference survive migration?" is: it survives iff
+    some copy of that name survives.
+
+    The literal `MIGRATE_NAMES` is a classification rule -- an input stating what policy
+    migrates. This is an output, and the two are not interchangeable: the literal holds 4
+    names, the derived index holds several hundred, and the gap between them is where a
+    reference to a migrated artifact hid.
+    """
+    dispositions: dict[str, set[str]] = {}
+    for item in entries:
+        dispositions.setdefault(PurePosixPath(item.path).name, set()).add(item.disposition)
+    return {name for name, seen in dispositions.items() if seen == {"migrate"}}
+
+
+def resolves_outside_runs(ref: str, repo_tracked: set[str]) -> bool:
+    """Whether a reference names a tracked file that migration cannot touch.
+
+    Membership in the git index, not filesystem existence: an untracked file on this
+    working copy tells us nothing about what a reviewer or CI will see. Paths under
+    RUNS_ROOT are excluded because those are exactly the paths migration acts on --
+    resolving one here would answer the wrong question.
+    """
+    normalized = str(PurePosixPath(ref.rstrip("/")))
+    return normalized in repo_tracked and not normalized.startswith(f"{RUNS_ROOT}/")
+
+
 def scan_references(repo: Path, entries: list[Entry]) -> dict:
     """Report which references inside retained reports break once migration happens.
 
-    Read-only. A reference is `dangling_after_migration` when it resolves today but only
-    to files the inventory marks `migrate` — those reports need an archive base pointer
-    before deletion is safe.
+    Read-only. A reference is `dangling_after_migration` when migration would leave it
+    pointing at nothing: either it resolves today but only to files marked `migrate`
+    (`breaks_after_migration`), or it resolves to no tracked path and is aimed at a
+    migrated artifact class (`unresolved_migrate_class`). Both go in the same list because
+    both mean the same thing for the reader of the report — those reports need an archive
+    base pointer before deletion is safe.
+
+    Every extracted reference is counted into exactly one `REFERENCE_CATEGORIES` bucket,
+    including the ones this scan decides to ignore. `accounting_ok` states whether the
+    buckets sum to the number extracted; when it is False the scan dropped something and
+    the "N reports need a pointer" line below it cannot be trusted.
+
+    Scope: only files named in `KEEP_REPORTS` are read. `scanned_files` and
+    `skipped_files` report that boundary, because `accounting_ok` is a claim about the
+    references this scan saw, not about the repository.
     """
     tracked = {item.path: item.disposition for item in entries}
     reports = [
@@ -276,25 +374,53 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
         for item in entries
         if item.disposition == "keep" and PurePosixPath(item.path).name in KEEP_REPORTS
     ]
+    kept = [item.path for item in entries if item.disposition == "keep"]
+    repo_tracked = {line for line in run_git(["ls-files"], repo).splitlines() if line}
+    migrate_only = migrate_only_basenames(entries)
 
+    by_category = {category: 0 for category in REFERENCE_CATEGORIES}
+    total_extracted = 0
     affected: list[dict] = []
     for report in sorted(reports):
         broken: set[str] = set()
         text = (repo / report).read_text(encoding="utf-8", errors="replace")
         for line_number, line in enumerate(text.splitlines(), start=1):
-            for ref in BACKTICK_REF.findall(line):
-                ref = ref.strip()
-                if not ref or not PATH_LIKE.search(ref) or ref.startswith(("http://", "https://")):
+            for raw_ref in BACKTICK_REF.findall(line):
+                total_extracted += 1
+                ref = raw_ref.strip()
+                if not ref:
+                    by_category["rejected_empty"] += 1
+                    continue
+                if ref.startswith(("http://", "https://")):
+                    by_category["rejected_url"] += 1
+                    continue
+                if not PATH_LIKE.search(ref):
+                    by_category["rejected_not_path_like"] += 1
+                    continue
+                if NUMERIC_RATIO.match(ref):
+                    by_category["rejected_numeric_ratio"] += 1
                     continue
                 survives = reference_survives(ref, report, tracked)
-                if survives is False:
+                if survives is True:
+                    by_category["resolved_survives"] += 1
+                elif survives is False:
+                    by_category["breaks_after_migration"] += 1
                     broken.add(f"{line_number}:{ref}")
-                elif survives is None and (
-                    ref.startswith(MIGRATED_REF_PREFIXES)
-                    or PurePosixPath(ref).name in MIGRATE_NAMES
-                ):
+                elif ref.startswith(MIGRATED_REF_PREFIXES) or PurePosixPath(ref).name in migrate_only:
                     # Unresolvable, but aimed squarely at a migrated artifact class.
+                    by_category["unresolved_migrate_class"] += 1
                     broken.add(f"{line_number}:{ref}")
+                elif resolves_outside_runs(ref, repo_tracked):
+                    # A real tracked file, just not under RUNS_ROOT. Migration cannot
+                    # touch it, so it is resolved rather than dangling. Reporting these
+                    # as at-risk was the loudest part of the first pass's noise.
+                    by_category["resolved_outside_migration_scope"] += 1
+                elif ref.startswith("/"):
+                    # Absolute paths on whoever's machine ran the campaign (`/tmp/...`).
+                    # Nothing in this repository can make them resolve or break.
+                    by_category["unresolved_absolute_external"] += 1
+                else:
+                    by_category["unresolved"] += 1
         if broken:
             affected.append({"report": report, "dangling_after_migration": sorted(broken)})
 
@@ -302,6 +428,11 @@ def scan_references(repo: Path, entries: list[Entry]) -> dict:
         "retained_reports": len(reports),
         "reports_needing_archive_pointer": len(affected),
         "details": affected,
+        "scanned_files": len(reports),
+        "skipped_files": len(kept) - len(reports),
+        "total_extracted": total_extracted,
+        "by_category": by_category,
+        "accounting_ok": sum(by_category.values()) == total_extracted,
     }
 
 
@@ -378,8 +509,32 @@ def render_report(
         "## Reference Resolution",
         "",
         f"{references['retained_reports']} retained report(s) scanned for backticked path",
-        "references that resolve today only to files marked `migrate`. Each such report",
-        "needs an archive base pointer before deletion, or its evidence column goes dead.",
+        "references that migration would leave pointing at nothing — either resolving today",
+        "only to files marked `migrate`, or resolving nowhere while naming a migrated",
+        "artifact class. Each such report needs an archive base pointer before deletion, or",
+        "its evidence column goes dead.",
+        "",
+        f"Scope: {references['scanned_files']} file(s) scanned, "
+        f"{references['skipped_files']} kept file(s) not scanned. The accounting below is a",
+        "claim about the references this scan read, not about the repository.",
+        "",
+        f"{references['total_extracted']} reference(s) extracted, each counted into exactly one",
+        f"category. `accounting_ok` is `{references['accounting_ok']}`: "
+        + (
+            "the categories sum to the number extracted, so nothing was dropped between "
+            "extraction and classification."
+            if references["accounting_ok"]
+            else f"the categories sum to {sum(references['by_category'].values())}, not "
+            f"{references['total_extracted']}. References were dropped between extraction "
+            "and classification, so every count below is a floor, not a total."
+        ),
+        "",
+        "| Category | Count |",
+        "| --- | ---: |",
+        *[
+            f"| `{category}` | {references['by_category'][category]} |"
+            for category in REFERENCE_CATEGORIES
+        ],
         "",
     ]
     if not references["details"]:
@@ -467,7 +622,12 @@ def main() -> int:
     if args.csv:
         args.csv.parent.mkdir(parents=True, exist_ok=True)
         with args.csv.open("w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=list(asdict(entries[0]).keys()))
+            # newline="" keeps Python from translating; lineterminator="\n" stops the csv
+            # module writing its RFC-4180 default CRLF. Without the second one this is the
+            # only CRLF file in the repository.
+            writer = csv.DictWriter(
+                handle, fieldnames=list(CSV_COLUMNS), lineterminator="\n"
+            )
             writer.writeheader()
             for item in entries:
                 writer.writerow(asdict(item))
@@ -507,11 +667,32 @@ def main() -> int:
         f"reports  {references['retained_reports']:5d} retained, "
         f"{references['reports_needing_archive_pointer']} need an archive base pointer"
     )
+    print(
+        f"refs     {references['total_extracted']:5d} extracted from "
+        f"{references['scanned_files']} scanned file(s); "
+        f"{references['skipped_files']} kept file(s) not scanned"
+    )
+    for category in REFERENCE_CATEGORIES:
+        print(f"           {category:26s} {references['by_category'][category]:5d}")
+    print(f"           accounting_ok = {references['accounting_ok']}")
+
+    exit_code = 0
+    if not references["accounting_ok"]:
+        # The scan lost references between extraction and classification, so every count
+        # above it is a floor rather than a total. Fail regardless of --fail-on-unmatched:
+        # this is not a policy question a caller opts into, it is a broken scan.
+        print(
+            "- BROKEN-ACCOUNTING extracted "
+            f"{references['total_extracted']} but categorized "
+            f"{sum(references['by_category'].values())}; reference counts are not trustworthy"
+        )
+        exit_code = 1
+
     if summary["unmatched_files"]:
         print(f"unmatched {summary['unmatched_files']} file(s) kept by default; resolve before deletion")
         if args.fail_on_unmatched:
-            return 1
-    return 0
+            exit_code = 1
+    return exit_code
 
 
 if __name__ == "__main__":

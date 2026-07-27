@@ -40,6 +40,7 @@ not authorize it.
 | --- | --- | --- | --- |
 | 2026-07-27 | `3f719157` | #145 | Artifact inventory dry-run. Classification and reference scan only; no deletion, nothing under `docs/benchmarks/runs/` modified. |
 | 2026-07-27 | (this commit) | #144 | Phase 1: typed validator status, schema fields for prospective/retrospective collection, rendered status surface, freshness check, this ledger. |
+| 2026-07-27 | (this commit) | #144 + #145 | External audit repair. 缺陷修复，未新增能力：#144 时间戳校验、稳定 record ID（`logged_at` 移出 seed）、freeze 日期门；#145 引用记账恒等式、派生 basename 索引、CSV 契约与 LF 换行。强制 `source` 提案已驳回——`docs/real-use-validation.md` 无此要求，且 `source` 是自由文本，强制非空只会把"没填"变成"随便填"。不解除冻结，不授权删除。 |
 
 ## Boundaries
 

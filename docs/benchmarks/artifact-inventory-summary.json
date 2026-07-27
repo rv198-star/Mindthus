@@ -1,7 +1,20 @@
 {
-  "baseline_commit": "476053e68b8bbd4fa7c617982a45c097aeddd251",
+  "baseline_commit": "f7b8776efd453b1670764eb87ea0c3338d1ba05d",
   "destination": "benchmark-archive (pinned commit/tag recorded at migration time)",
   "references": {
+    "accounting_ok": true,
+    "by_category": {
+      "breaks_after_migration": 5,
+      "rejected_empty": 0,
+      "rejected_not_path_like": 445,
+      "rejected_numeric_ratio": 11,
+      "rejected_url": 3,
+      "resolved_outside_migration_scope": 35,
+      "resolved_survives": 59,
+      "unresolved": 6,
+      "unresolved_absolute_external": 20,
+      "unresolved_migrate_class": 36
+    },
     "details": [
       {
         "dangling_after_migration": [
@@ -57,10 +70,19 @@
           "94:answers/mtj-034-turn-1.txt"
         ],
         "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1-v4-empty-home/HUMAN_REVIEW_PACKET.md"
+      },
+      {
+        "dangling_after_migration": [
+          "79:judge-output-schema.json"
+        ],
+        "report": "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md"
       }
     ],
-    "reports_needing_archive_pointer": 3,
-    "retained_reports": 15
+    "reports_needing_archive_pointer": 4,
+    "retained_reports": 15,
+    "scanned_files": 15,
+    "skipped_files": 144,
+    "total_extracted": 620
   },
   "rows": "docs/benchmarks/artifact-inventory.csv",
   "rule_reasons": {
@@ -75,7 +97,7 @@
     "unmatched": "no rule matched; kept by default and requires explicit human classification"
   },
   "runs_root": "docs/benchmarks/runs",
-  "schema_version": "mindthus-benchmark-artifact-inventory-v0.1",
+  "schema_version": "mindthus-benchmark-artifact-inventory-v0.2",
   "summary": {
     "by_rule": {
       "policy:aggregate": {

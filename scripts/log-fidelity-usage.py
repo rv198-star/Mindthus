@@ -27,8 +27,21 @@ OVERHEAD_LEVELS = ("none", "low", "moderate", "high", "unknown")
 # Backfill is useful for analysis and dangerous for the freeze: if historical tasks count
 # toward the tenth record, the observation window can be closed in an afternoon. Records
 # therefore declare when the task actually happened (`observed_at`, distinct from
-# `logged_at`) and how it was collected. Only prospective records count toward freeze exit.
+# `logged_at`) and how it was collected. Prospective is necessary but not sufficient for
+# freeze exit; the observation date has to clear FREEZE_OPENED as well. See freeze_eligible.
 COLLECTION_MODES = ("prospective", "retrospective", "unknown")
+
+# The freeze opened when #144 was filed on 2026-07-26. Both
+# docs/internal/tplan-feature-freeze-ledger.md and docs/internal/fidelity-usage-log.md
+# say exit counts records observed *after* that day, so the first eligible instant is
+# 2026-07-27T00:00:00Z and the comparison below is `>=` against it. Writing the boundary
+# as `>= 2026-07-26` would make a record observed on the day the freeze opened count
+# toward opening it.
+#
+# Parsed once at import rather than per record: a tz-naive value here raises TypeError on
+# comparison, and a boundary that only fails when someone moves the window is a boundary
+# nobody can move.
+FREEZE_OPENED = datetime(2026, 7, 27, tzinfo=timezone.utc)
 
 
 @dataclass(frozen=True)
@@ -61,6 +74,51 @@ def optional_text(value: str | None) -> str:
     return value.strip() if value else ""
 
 
+def parse_timestamp(value: Any) -> datetime | None:
+    """Parse an ISO-8601 timestamp, or None if it is not one.
+
+    Returns tz-aware UTC. A naive timestamp is read as UTC rather than rejected: every
+    timestamp this script writes carries `Z`, and rejecting naive values would invalidate
+    a hand-edited record for a reason unrelated to whether the task happened.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
+def validate_timestamp(
+    record: dict[str, Any], field: str, findings: list[Finding], line: int, *, required: bool
+) -> datetime | None:
+    """Validate one timestamp field by type, then by format, as separate findings.
+
+    Two codes rather than one, because they are two different mistakes: a non-string is a
+    writer bug, an unparseable string is a human typo. Collapsing them into "must be a
+    non-empty string" let `not-a-date`, `2027-13-45`, and `yesterday` all validate --
+    which is how a record could claim to be a prospective observation of a task in 2024.
+    """
+    value = record.get(field)
+    if value is None:
+        if required:
+            findings.append(Finding(line, "missing-field", f"{field} must be a non-empty string"))
+        return None
+    if not isinstance(value, str):
+        findings.append(Finding(line, "invalid-field-type", f"{field} must be a string"))
+        return None
+    if not value.strip():
+        findings.append(Finding(line, "missing-field", f"{field} must be a non-empty string"))
+        return None
+    parsed = parse_timestamp(value)
+    if parsed is None:
+        findings.append(
+            Finding(line, "invalid-timestamp", f"{field} must be an ISO-8601 timestamp")
+        )
+    return parsed
+
+
 def validate_score(
     record: dict[str, Any], field: str, max_score: int, findings: list[Finding], line: int
 ) -> None:
@@ -83,7 +141,7 @@ def validate_record(record: Any, line: int) -> list[Finding]:
             Finding(line, "invalid-schema-version", f"schema_version must be {SCHEMA_VERSION}")
         )
 
-    for field in ("logged_at", "scenario", "model"):
+    for field in ("scenario", "model"):
         if not non_empty_string(record.get(field)):
             findings.append(Finding(line, "missing-field", f"{field} must be a non-empty string"))
 
@@ -130,12 +188,25 @@ def validate_record(record: Any, line: int) -> list[Finding]:
                 f"collection_mode must be one of: {', '.join(COLLECTION_MODES)}",
             )
         )
-    for field in ("observed_at", "record_id"):
-        value = record.get(field)
-        if value is not None and not non_empty_string(value):
-            findings.append(
-                Finding(line, "invalid-optional-field", f"{field} must be a non-empty string")
+    # Both timestamps go through the same function. Validating `logged_at` for presence
+    # only while `observed_at` was checked for emptiness only meant the field the freeze
+    # actually counts on was the less validated of the two.
+    logged_at = validate_timestamp(record, "logged_at", findings, line, required=True)
+    observed_at = validate_timestamp(record, "observed_at", findings, line, required=False)
+    if logged_at and observed_at and observed_at > logged_at:
+        findings.append(
+            Finding(
+                line,
+                "impossible-observation-order",
+                "observed_at is after logged_at; a task cannot be recorded before it happened",
             )
+        )
+
+    record_id = record.get("record_id")
+    if record_id is not None and not non_empty_string(record_id):
+        findings.append(
+            Finding(line, "invalid-optional-field", "record_id must be a non-empty string")
+        )
 
     overhead_level = record.get("overhead_level")
     if overhead_level is not None and overhead_level not in OVERHEAD_LEVELS:
@@ -178,24 +249,45 @@ def validate_record(record: Any, line: int) -> list[Finding]:
     if not isinstance(tags, list) or any(not non_empty_string(item) for item in tags):
         findings.append(Finding(line, "invalid-tags", "tags must be a list of non-empty strings"))
 
+    # Absent and empty both mean "not provided" and must be treated the same way. They
+    # were not: `--source ""` passed silently while omitting the key reported a finding,
+    # so the more careless entry was the one that validated. Only a wrong *type* is a
+    # finding. These fields stay optional -- see data/README.md, which describes `source`
+    # as a pointer to use when a redacted record needs one, not as a required field.
     for field in ("judge_model", "source", "notes"):
-        if not isinstance(record.get(field), str):
+        value = record.get(field)
+        if value is not None and not isinstance(value, str):
             findings.append(Finding(line, "invalid-optional-field", f"{field} must be a string"))
 
     return findings
 
 
 def derive_record_id(record: dict[str, Any]) -> str:
-    """Derive a stable ID from the fields that identify the task.
+    """Derive an ID from the fields that identify the task.
 
-    The record-10 review must cite inclusion and exclusion by ID, so an ID has to survive
-    reordering and reformatting of the log. Deriving it from content rather than assigning
-    a counter keeps it reproducible and makes an accidental duplicate record visible as a
-    repeated ID instead of hiding behind a fresh number.
+    Stable under reordering and reformatting of the log, which is what the record-10
+    review needs in order to cite inclusion and exclusion by ID.
+
+    `logged_at` is deliberately not in the seed. It contributed nothing in one case and
+    damage in the other: without `--observed-at` the two fields are equal, so including
+    it was redundant; with `--observed-at` it was the only thing making the same task
+    yield a different ID depending on when someone got around to logging it.
+
+    The stability this buys is conditional, and the condition is the caller's:
+
+    - With an explicit `--observed-at`, the same task logged twice yields the same ID, so
+      an accidental duplicate is visible as a repeated ID.
+    - Without it, `observed_at` defaults to the logging time, so the same task logged
+      twice still yields two IDs. Nothing here can detect that duplicate.
+
+    Two genuinely distinct tasks sharing `observed_at`, type, method, scenario, and model
+    collide into one ID. `scenario` is the discriminator that makes this unlikely, not
+    impossible -- and a collision is not detectable from the ID either. Deduplication
+    remains a human step at review time.
     """
     seed = "|".join(
         str(record.get(field, ""))
-        for field in ("observed_at", "logged_at", "record_type", "method", "scenario", "model")
+        for field in ("observed_at", "record_type", "method", "scenario", "model")
     )
     return "mtu-" + hashlib.sha256(seed.encode("utf-8")).hexdigest()[:12]
 
@@ -269,20 +361,50 @@ def count_by_type(records: list[dict[str, Any]]) -> dict[str, int]:
     """Break the record count down by type, and by collection mode within `real_use`.
 
     An untyped total is not a usable signal: a log holding only `evaluation` and `fixture`
-    records can satisfy a total threshold while `real_use` stays at zero. Freeze exit is
-    counted on prospective real-use records specifically, so that number is reported on
-    its own rather than left to be derived by a reader.
+    records can satisfy a total threshold while `real_use` stays at zero.
+
+    `real_use_prospective` and `freeze_eligible` are reported separately and deliberately.
+    Collapsing them into one number would hide exactly the records worth looking at: a
+    backfilled record declaring itself prospective shows up as the gap between the two.
     """
     counts = {record_type: 0 for record_type in RECORD_TYPES}
     prospective = 0
+    eligible = 0
     for record in records:
         record_type = record.get("record_type")
         if record_type in counts:
             counts[record_type] += 1
         if record_type == "real_use" and record.get("collection_mode") == "prospective":
             prospective += 1
+            if freeze_eligible(record):
+                eligible += 1
     counts["real_use_prospective"] = prospective
+    counts["freeze_eligible"] = eligible
     return counts
+
+
+def freeze_eligible(record: dict[str, Any]) -> bool:
+    """Whether one record counts toward freeze exit.
+
+    `collection_mode=prospective` alone is not enough. It is a self-declared field, and a
+    record can declare itself prospective while pointing `observed_at` at a task from
+    years before the freeze opened -- which validated, and counted. Requiring the
+    observation to fall on or after FREEZE_OPENED closes that particular hole.
+
+    What it does not close: nothing here can tell whether a task was observed as it
+    happened or reconstructed afterward, or whether `observed_at` was simply typed in
+    wrong. Backdating is now visible; forward-dating and plain fabrication are not. This
+    is a shape check standing in for a claim only the record-10 human review can settle.
+
+    A record with no `observed_at` is not eligible. It could be dated from `logged_at`
+    instead -- but then omitting the field would be enough to make a backfilled record
+    count, which is the hole this closes. The CLI always writes the field, so this only
+    reaches hand-written records, and the failure is visible: the count does not move.
+    """
+    observed = parse_timestamp(record.get("observed_at"))
+    if observed is None:
+        return False
+    return observed >= FREEZE_OPENED
 
 
 def validate_log(path: Path, min_real_use: int = 0) -> int:
@@ -302,15 +424,19 @@ def validate_log(path: Path, min_real_use: int = 0) -> int:
         f"evaluation={counts['evaluation']} fixture={counts['fixture']}"
     )
     print(f"Real-use prospective: {counts['real_use_prospective']}")
+    print(
+        f"Freeze-eligible: {counts['freeze_eligible']} "
+        f"(prospective and observed on or after {FREEZE_OPENED.date().isoformat()})"
+    )
     if missing_default_log:
         print("No usage-log data yet; the default log is optional until the first record is appended.")
     print("No usage-log shape risks detected.")
-    if min_real_use and counts["real_use_prospective"] < min_real_use:
+    if min_real_use and counts["freeze_eligible"] < min_real_use:
         # Deliberately not a shape finding: the log is well-formed, there is simply not
         # enough of it yet. Callers that want this to be fatal opt in with --min-real-use;
         # required CI must not, or a strategic gap becomes a merge blocker.
         print(
-            f"- BELOW-THRESHOLD prospective real_use {counts['real_use_prospective']} "
+            f"- BELOW-THRESHOLD freeze-eligible real_use {counts['freeze_eligible']} "
             f"< required {min_real_use}"
         )
         return 1
@@ -326,23 +452,36 @@ def render_status_block(records: list[dict[str, Any]]) -> str:
     """Render the real-use status block embedded in README.md.
 
     The point of this surface is that a reader encounters the number, so it states the
-    prospective real-use count against the freeze-exit target rather than a total that
+    freeze-eligible count against the freeze-exit target rather than a total that
     evaluation and fixture records could inflate.
+
+    "No records at all" and "records exist, none eligible" are rendered as separate
+    sentences. They are different situations and only one of them is "the register is
+    empty"; a status surface that says the empty thing while records exist is stating a
+    falsehood on the project's front page.
     """
     counts = count_by_type(records)
     prospective = counts["real_use_prospective"]
+    eligible = counts["freeze_eligible"]
     lines = [
         STATUS_BEGIN,
-        f"**真实使用记录：{prospective}/{FREEZE_EXIT_TARGET}**"
-        f"（前瞻记录；另有 retrospective {counts['real_use'] - prospective} 条、"
+        f"**真实使用记录：{eligible}/{FREEZE_EXIT_TARGET}**"
+        f"（冻结开出后观察到的前瞻记录；另有 retrospective {counts['real_use'] - prospective} 条、"
         f"evaluation {counts['evaluation']} 条、fixture {counts['fixture']} 条）",
         "",
     ]
-    if prospective == 0:
+    if not records:
         lines.append(
-            "目前为 0。这不是失败指标，而是**当前最大的证据缺口**："
+            "目前还没有任何记录。这不是失败指标，而是**当前最大的证据缺口**："
             "`docs/real-use-validation.md` 把\"下一步值得修什么\"的导航权交给真实使用记录，"
             "而这个登记册还是空的。"
+        )
+    elif eligible == 0:
+        lines.append(
+            f"已有 {len(records)} 条记录，但没有一条计入冻结退出："
+            f"退出只按 `collection_mode=prospective` 且 `observed_at` 在 "
+            f"{FREEZE_OPENED.date().isoformat()} 当天或之后的 `real_use` 记录计数。"
+            "回溯记录可以参与分析，但不解冻。"
         )
     else:
         lines.append(
@@ -450,9 +589,10 @@ def main() -> int:
         type=int,
         default=0,
         help=(
-            "Exit non-zero when prospective real_use records fall below this count. "
-            "Record-type aware by design; an untyped total would be satisfiable by "
-            "evaluation and fixture records alone. Not used by required CI."
+            "Exit non-zero when freeze-eligible real_use records fall below this count. "
+            "Record-type and date aware by design; an untyped total would be satisfiable "
+            "by evaluation and fixture records alone, and a prospective-only count would "
+            "be satisfiable by backdated ones. Not used by required CI."
         ),
     )
     parser.add_argument("--scenario", help="Redacted scenario summary.")
@@ -495,10 +635,13 @@ def main() -> int:
     )
     parser.add_argument("--mechanism", help="Redacted recurring success or failure mechanism.")
     parser.add_argument("--record-type", default="real_use", choices=RECORD_TYPES, help="Usage record type.")
-    parser.add_argument("--logged-at", help="Override timestamp, preferably ISO-8601.")
+    parser.add_argument("--logged-at", help="Override timestamp. Must be ISO-8601; validated.")
     parser.add_argument(
         "--observed-at",
-        help="When the task actually occurred, if not now. Defaults to logged_at.",
+        help=(
+            "When the task actually occurred, if not now. Defaults to logged_at, which "
+            "also means the record ID is only reproducible when this is passed explicitly."
+        ),
     )
     parser.add_argument(
         "--collection-mode",
@@ -506,12 +649,16 @@ def main() -> int:
         choices=COLLECTION_MODES,
         help=(
             "prospective: observed as it happened. retrospective: reconstructed from an "
-            "earlier task. Only prospective records count toward freeze exit."
+            "earlier task. Freeze exit needs prospective AND an observed_at on or after "
+            "the day the freeze opened; declaring prospective does not by itself count."
         ),
     )
     parser.add_argument(
         "--record-id",
-        help="Override the derived stable record ID. Normally left unset.",
+        help=(
+            "Override the derived record ID. Normally left unset; nothing checks that an "
+            "override is unique or well-formed."
+        ),
     )
     parser.add_argument("--source", help="Optional artifact or issue reference.")
     parser.add_argument("--notes", help="Optional short note.")

@@ -154,6 +154,187 @@ class ReferenceResolutionTests(unittest.TestCase):
         self.assertLessEqual(references["reports_needing_archive_pointer"], len(flagged) + 1)
 
 
+class ReferenceAccountingTests(unittest.TestCase):
+    """Every extracted reference must land in exactly one category.
+
+    The first pass of this scanner dropped 73 references without incrementing any
+    counter: a reference that matched no branch fell off the loop. A scan that examined
+    nothing then reported the same clean result as a scan that examined everything. These
+    tests make that failure mode arithmetic rather than a matter of reading the code.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.entries = inventory.build_inventory(REPO)
+        cls.references = inventory.scan_references(REPO, cls.entries)
+
+    def test_categories_sum_to_the_number_extracted(self):
+        by_category = self.references["by_category"]
+        self.assertEqual(
+            sum(by_category.values()),
+            self.references["total_extracted"],
+            "references were dropped between extraction and classification",
+        )
+        self.assertTrue(self.references["accounting_ok"])
+
+    def test_every_category_is_present_even_at_zero(self):
+        """A sparse dict lets a category that stopped being reached look absent."""
+        self.assertEqual(
+            set(self.references["by_category"]), set(inventory.REFERENCE_CATEGORIES)
+        )
+
+    def test_scan_scope_is_reported_not_implied(self):
+        """`accounting_ok` covers the files scanned, not the repository.
+
+        Without these two numbers next to it, `accounting_ok: True` reads as a much
+        stronger claim than it is -- 15 of 159 kept files are actually read.
+        """
+        kept = len([item for item in self.entries if item.disposition == "keep"])
+        self.assertEqual(
+            self.references["scanned_files"] + self.references["skipped_files"], kept
+        )
+        self.assertGreater(self.references["skipped_files"], 0)
+
+    def test_return_contract_is_additive_only(self):
+        """Three keys have live consumers in main(), render_report(), and this file."""
+        self.assertLessEqual(
+            inventory.REFERENCES_REQUIRED_KEYS, set(self.references)
+        )
+        for key in ("retained_reports", "reports_needing_archive_pointer", "details"):
+            with self.subTest(key=key):
+                self.assertIn(key, self.references)
+
+    def test_broken_accounting_fails_the_run(self):
+        """The gate must be an exit code, not a printed line nobody reads."""
+        source = SCRIPT.read_text(encoding="utf-8")
+        self.assertIn("BROKEN-ACCOUNTING", source)
+        self.assertIn('if not references["accounting_ok"]', source)
+
+    def test_report_does_not_assert_cleanliness_when_accounting_is_broken(self):
+        """C7 on generated prose: the report must not claim what the numbers deny.
+
+        An unconditional "nothing was dropped" sentence is the same defect the reference
+        scan was rejected for, one layer up -- a document asserting a property of a scan
+        that did not hold.
+        """
+        summary = inventory.summarize(self.entries)
+        broken = {**self.references, "accounting_ok": False, "total_extracted": 999}
+        text = inventory.render_report(summary, self.entries, "abc1234", broken)
+        self.assertNotIn("nothing was dropped", text)
+        self.assertIn("floor, not a total", text)
+
+        clean = inventory.render_report(summary, self.entries, "abc1234", self.references)
+        self.assertIn("nothing was dropped", clean)
+
+    def test_numeric_ratios_are_rejected_by_shape_not_by_failed_resolution(self):
+        """`0/12` and `1.5 / 2` are scores. The slash makes PATH_LIKE accept them."""
+        for ratio in ("0/12", "1.5 / 2", "0.467 / 0.600 / 0.667"):
+            with self.subTest(ratio=ratio):
+                self.assertTrue(inventory.PATH_LIKE.search(ratio))
+                self.assertTrue(inventory.NUMERIC_RATIO.match(ratio))
+        self.assertGreater(self.references["by_category"]["rejected_numeric_ratio"], 0)
+
+    def test_numeric_ratio_filter_matches_no_real_tracked_path(self):
+        """A filter that started swallowing filenames would be the original defect again."""
+        for item in self.entries:
+            self.assertIsNone(inventory.NUMERIC_RATIO.match(item.path))
+            self.assertIsNone(
+                inventory.NUMERIC_RATIO.match(Path(item.path).name)
+            )
+
+    def test_migrate_basename_index_is_derived_not_a_literal(self):
+        """`judge-output-schema.json` is cited bare by a report and has 50 migrate copies.
+
+        The hand-written MIGRATE_NAMES literal holds 4 names, so the reference resolved
+        to nothing, matched no branch, and vanished. Deriving the index from the
+        classification result is what makes that structurally impossible.
+        """
+        derived = inventory.migrate_only_basenames(self.entries)
+        self.assertIn("judge-output-schema.json", derived)
+        self.assertGreater(len(derived), len(inventory.MIGRATE_NAMES) * 10)
+
+    def test_report_citing_a_bare_migrated_basename_needs_an_archive_pointer(self):
+        flagged = {item["report"] for item in self.references["details"]}
+        self.assertIn(
+            "docs/benchmarks/runs/2026-07-08-v1.4.3-hotfix.1/REPORT.md",
+            flagged,
+            "a report citing a migrated artifact by bare basename was reported safe",
+        )
+
+    def test_references_to_files_outside_runs_are_not_reported_as_at_risk(self):
+        """Migration touches only RUNS_ROOT. Flagging `scripts/foo.py` is a false positive.
+
+        35 of the originally dropped references are ordinary repo files. A scanner that
+        cries wolf 35 times to catch one real risk gets ignored, and then the one real
+        risk is missed too.
+        """
+        tracked = {"scripts/log-mindthus-runtime.py", "docs/benchmarks/latest.md"}
+        for ref in tracked:
+            with self.subTest(ref=ref):
+                self.assertTrue(inventory.resolves_outside_runs(ref, tracked))
+        self.assertFalse(
+            inventory.resolves_outside_runs(
+                f"{inventory.RUNS_ROOT}/c/answers/a.txt",
+                {f"{inventory.RUNS_ROOT}/c/answers/a.txt"},
+            ),
+            "a path under RUNS_ROOT is exactly what migration acts on",
+        )
+
+    def test_unresolved_references_stay_visible_rather_than_being_explained_away(self):
+        """The remainder is prose and env-var names caught by the regex.
+
+        No exemption rule is written for them. A "looks like prose, skip it" heuristic
+        would be another filter a reviewer cannot independently check -- the same defect
+        class being repaired here. A constant, countable, irritating remainder is safer.
+        """
+        self.assertGreater(self.references["by_category"]["unresolved"], 0)
+
+
+class CsvContractTests(unittest.TestCase):
+    COMMITTED = REPO / "docs" / "benchmarks" / "artifact-inventory.csv"
+
+    def test_committed_csv_has_no_carriage_returns(self):
+        """Read as bytes.
+
+        Text mode and `subprocess.run(text=True)` apply universal newlines, which
+        translate CRLF to LF before any assertion sees it -- a check written that way
+        passes against the very file it is supposed to reject.
+        """
+        data = self.COMMITTED.read_bytes()
+        self.assertNotIn(b"\r", data)
+
+    def test_committed_csv_header_is_exact_and_ordered(self):
+        header = self.COMMITTED.read_bytes().split(b"\n", 1)[0].decode("utf-8")
+        self.assertEqual(header.split(","), list(inventory.CSV_COLUMNS))
+
+    def test_csv_columns_match_the_entry_dataclass(self):
+        """Pinning the header is only safe if it is checked against the row source."""
+        from dataclasses import fields
+
+        self.assertEqual(
+            list(inventory.CSV_COLUMNS), [field.name for field in fields(inventory.Entry)]
+        )
+
+    def test_csv_eol_is_pinned_by_gitattributes(self):
+        """Otherwise a Windows checkout rewrites the bytes and the evidence stops matching."""
+        result = subprocess.run(
+            ["git", "ls-files", "--eol", "--", "*.csv"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertTrue(result.stdout.strip(), "no CSV is tracked")
+        for line in result.stdout.splitlines():
+            with self.subTest(line=line):
+                self.assertIn("i/lf", line)
+                self.assertIn("eol=lf", line)
+
+    def test_schema_version_moved_with_the_row_bytes(self):
+        """v0.1 emitted CRLF and derived its header from the first row."""
+        self.assertTrue(inventory.INVENTORY_SCHEMA_VERSION.endswith("v0.2"))
+
+
 class DryRunSafetyTests(unittest.TestCase):
     def test_script_declares_itself_a_dry_run_and_never_deletes(self):
         source = SCRIPT.read_text(encoding="utf-8")
