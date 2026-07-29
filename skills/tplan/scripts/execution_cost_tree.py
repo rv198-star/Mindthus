@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and render a progressive TPlan actual-execution and cost tree."""
+"""Build and render a progressive TPlan observed-execution and cost tree."""
 
 from __future__ import annotations
 
@@ -26,8 +26,8 @@ from tplan_runtime import (
 )
 
 
-REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.8"
-CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION = "tplan.codex_telemetry_coverage.v0.1"
+REPORT_SCHEMA_VERSION = "tplan.execution_cost_tree.v0.9"
+CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION = "tplan.codex_telemetry_coverage.v0.2"
 VIEWS = {"compact", "standard", "audit"}
 TERMINAL_MISSION_STATUSES = {
     "completed",
@@ -42,6 +42,12 @@ LLM_KINDS = {"model"}
 SCRIPT_KINDS = {"script"}
 TOOL_KINDS = {"tool"}
 WAIT_KINDS = {"wait"}
+STANDARD_DURATION_CHANNELS = (
+    ("model_duration", "LLM调用", "LLM调用累计", LLM_KINDS),
+    ("script_duration", "脚本时长", "脚本累计", SCRIPT_KINDS),
+    ("tool_duration", "工具时长", "工具累计", TOOL_KINDS),
+    ("wait_duration", "等待时长", "等待累计", WAIT_KINDS),
+)
 RECONCILABLE_KINDS = {"model", "script", "tool", "wait", "runtime"}
 EXACT_MEASUREMENT_SOURCES = {"platform_reported", "host_measured"}
 STATUS_LABELS = {
@@ -116,7 +122,33 @@ def _default_telemetry_capture(reason: str, *, diagnostic: str | None = None) ->
         "schema_version": CODEX_TELEMETRY_COVERAGE_SCHEMA_VERSION,
         "adapter_version": None,
         "generated_at": None,
-        "binding": {"status": "not_configured", "scope": None, "mission_id": None},
+        "binding": {
+            "status": "not_configured",
+            "scope": None,
+            "mission_id": None,
+            "generation": None,
+        },
+        "activation": {
+            "required": False,
+            "active_surface": None,
+            "status": "not_tested",
+            "reason": reason,
+            "surfaces": {
+                surface: {
+                    "status": "not_tested",
+                    "reason": reason,
+                    "checked_at": None,
+                    "host_build": None,
+                    "codex_version": None,
+                    "app_server_user_agent": None,
+                    "platform_family": None,
+                    "platform_os": None,
+                    "binding_generation": None,
+                    "source": None,
+                }
+                for surface in ("codex_app", "codex_cli")
+            },
+        },
         "channels": channels,
         "deduplication": {
             "hook_preferred_for_tools": True,
@@ -138,6 +170,149 @@ def _default_telemetry_capture(reason: str, *, diagnostic: str | None = None) ->
             "last_code": diagnostic,
         },
     }
+
+
+def _safe_optional_telemetry_text(
+    value: Any, *, limit: int = 500
+) -> bool:
+    return value is None or (
+        isinstance(value, str)
+        and value
+        and len(value) <= limit
+        and "\n" not in value
+        and "\r" not in value
+    )
+
+
+def _valid_telemetry_activation(activation: Any) -> bool:
+    if (
+        not isinstance(activation, dict)
+        or set(activation)
+        != {"required", "active_surface", "status", "reason", "surfaces"}
+        or not isinstance(activation.get("required"), bool)
+        or activation.get("active_surface") not in {None, "codex_app", "codex_cli"}
+        or activation.get("status")
+        not in {
+            "not_tested",
+            "preflight_required",
+            "source_absent",
+            "source_not_enumerated",
+            "needs_trust",
+            "disabled",
+            "binding_mismatch",
+            "inventory_unavailable",
+            "callback_unpaired",
+            "ready",
+            "observed",
+        }
+        or not _safe_optional_telemetry_text(activation.get("reason"))
+        or not isinstance(activation.get("surfaces"), dict)
+        or set(activation["surfaces"]) != {"codex_app", "codex_cli"}
+    ):
+        return False
+    for record in activation["surfaces"].values():
+        if (
+            not isinstance(record, dict)
+            or set(record)
+            != {
+                "status",
+                "reason",
+                "checked_at",
+                "host_build",
+                "codex_version",
+                "app_server_user_agent",
+                "platform_family",
+                "platform_os",
+                "binding_generation",
+                "source",
+            }
+            or record.get("status")
+            not in {
+                "not_tested",
+                "preflight_required",
+                "source_absent",
+                "source_not_enumerated",
+                "needs_trust",
+                "disabled",
+                "binding_mismatch",
+                "inventory_unavailable",
+                "callback_unpaired",
+                "ready",
+                "observed",
+            }
+            or not _safe_optional_telemetry_text(record.get("reason"))
+            or not all(
+                _safe_optional_telemetry_text(record.get(field), limit=1000)
+                for field in (
+                    "checked_at",
+                    "host_build",
+                    "codex_version",
+                    "app_server_user_agent",
+                    "platform_family",
+                    "platform_os",
+                )
+            )
+            or (
+                record.get("binding_generation") is not None
+                and (
+                    isinstance(record.get("binding_generation"), bool)
+                    or not isinstance(record.get("binding_generation"), int)
+                    or record["binding_generation"] < 1
+                )
+            )
+        ):
+            return False
+        source = record.get("source")
+        if source is None:
+            continue
+        if (
+            not isinstance(source, dict)
+            or set(source)
+            != {
+                "scope",
+                "path",
+                "sha256",
+                "enumerated",
+                "handler_hashes",
+                "trust_statuses",
+                "enabled",
+                "created_by_tplan",
+            }
+            or source.get("scope") not in {"user", "project"}
+            or not isinstance(source.get("path"), str)
+            or not Path(source["path"]).is_absolute()
+            or not _safe_optional_telemetry_text(source.get("path"), limit=1000)
+            or (
+                source.get("sha256") is not None
+                and (
+                    not isinstance(source.get("sha256"), str)
+                    or re.fullmatch(r"sha256:[0-9a-f]{64}", source["sha256"])
+                    is None
+                )
+            )
+            or not isinstance(source.get("enumerated"), bool)
+            or (
+                source.get("enabled") is not None
+                and not isinstance(source.get("enabled"), bool)
+            )
+            or not isinstance(source.get("created_by_tplan"), bool)
+            or not isinstance(source.get("handler_hashes"), dict)
+            or any(
+                not isinstance(key, str)
+                or not isinstance(value, str)
+                or not value
+                or len(value) > 200
+                or any(ord(character) < 32 for character in value)
+                for key, value in source["handler_hashes"].items()
+            )
+            or not isinstance(source.get("trust_statuses"), list)
+            or any(
+                status not in {"managed", "untrusted", "trusted", "modified"}
+                for status in source["trust_statuses"]
+            )
+        ):
+            return False
+    return True
 
 
 def _read_telemetry_capture(mission_dir: Path, mission_id: str | None) -> dict[str, Any]:
@@ -162,6 +337,7 @@ def _read_telemetry_capture(mission_dir: Path, mission_id: str | None) -> dict[s
         "subagents",
     }
     binding = report.get("binding") if isinstance(report, dict) else None
+    activation = report.get("activation") if isinstance(report, dict) else None
     channels = report.get("channels") if isinstance(report, dict) else None
     deduplication = report.get("deduplication") if isinstance(report, dict) else None
     privacy = report.get("privacy") if isinstance(report, dict) else None
@@ -174,6 +350,7 @@ def _read_telemetry_capture(mission_dir: Path, mission_id: str | None) -> dict[s
             "adapter_version",
             "generated_at",
             "binding",
+            "activation",
             "channels",
             "deduplication",
             "privacy",
@@ -183,10 +360,14 @@ def _read_telemetry_capture(mission_dir: Path, mission_id: str | None) -> dict[s
         or not isinstance(report.get("adapter_version"), str)
         or not isinstance(report.get("generated_at"), str)
         or not isinstance(binding, dict)
-        or set(binding) != {"status", "scope", "mission_id"}
+        or set(binding) != {"status", "scope", "mission_id", "generation"}
         or binding.get("status") != "exact"
         or binding.get("scope") not in {"session", "session_and_thread"}
         or binding.get("mission_id") != mission_id
+        or isinstance(binding.get("generation"), bool)
+        or not isinstance(binding.get("generation"), int)
+        or binding["generation"] < 1
+        or not _valid_telemetry_activation(activation)
         or not isinstance(channels, dict)
         or set(channels) != required_channels
         or not isinstance(deduplication, dict)
@@ -491,6 +672,107 @@ def _span_cost(
         "measurement_sources": dict(sorted(sources.items())),
         "span_statuses": dict(sorted(statuses.items())),
         "error_span_count": statuses["error"],
+    }
+
+
+def _duration_channel_status(cost: dict[str, Any], kinds: set[str]) -> str:
+    present = [kind for kind in kinds if kind in cost["by_kind_resource_ms"]]
+    if not present:
+        return "not_reported"
+    sources: Counter[str] = Counter()
+    for kind in present:
+        sources.update(cost["by_kind_measurement_sources"].get(kind, {}))
+    observed_count = sum(
+        count for source, count in sources.items() if source != "unavailable"
+    )
+    if observed_count and sources.get("unavailable"):
+        return "partial"
+    if observed_count:
+        return "observed"
+    return "unavailable"
+
+
+def _presentation_density_profile(
+    *,
+    lifecycle_coverage: str,
+    cost: dict[str, Any],
+) -> dict[str, Any]:
+    channels: dict[str, dict[str, str]] = {}
+    for name, label, _render_label, kinds in STANDARD_DURATION_CHANNELS:
+        channels[name] = {
+            "label": label,
+            "status": _duration_channel_status(cost, kinds),
+        }
+    token_status = {
+        "complete": "observed",
+        "partial": "partial",
+        "unavailable": "unavailable",
+        "not_reported": "not_reported",
+    }[cost["usage_coverage"]]
+    channels["tokens"] = {"label": "Token", "status": token_status}
+
+    observed = [
+        channel["label"]
+        for channel in channels.values()
+        if channel["status"] in {"observed", "partial"}
+    ]
+    explicitly_unavailable = [
+        channel["label"]
+        for channel in channels.values()
+        if channel["status"] == "unavailable"
+    ]
+    omitted = [
+        channel["label"]
+        for channel in channels.values()
+        if channel["status"] == "not_reported"
+    ]
+    present_count = len(observed) + len(explicitly_unavailable)
+    has_partial_channel = any(
+        channel["status"] == "partial" for channel in channels.values()
+    )
+    if not omitted:
+        mode = "dense"
+    elif present_count <= 2:
+        mode = "sparse"
+    else:
+        mode = "mixed"
+    if not present_count:
+        telemetry_coverage = "not_reported"
+    elif not omitted and not explicitly_unavailable and not has_partial_channel:
+        telemetry_coverage = "complete"
+    else:
+        telemetry_coverage = "partial"
+
+    if observed:
+        if len(observed) == 1 and omitted:
+            note = f"遥测覆盖：部分，仅采集{observed[0]}"
+        else:
+            coverage_label = {
+                "complete": "完整",
+                "partial": "部分",
+                "not_reported": "未采集",
+            }[telemetry_coverage]
+            note = f"遥测覆盖：{coverage_label}，已采集{'、'.join(observed)}"
+    elif explicitly_unavailable:
+        note = "遥测覆盖：无可用数值"
+    else:
+        note = "遥测覆盖：未采集成本通道"
+    if explicitly_unavailable:
+        note += f"；明确不可用：{'、'.join(explicitly_unavailable)}"
+    if omitted:
+        note += f"；未采集：{'、'.join(omitted)}"
+    note += "；未显示字段不代表 0。"
+
+    return {
+        "mode": mode,
+        "source": "actual_trace_and_cost_coverage",
+        "lifecycle_coverage": lifecycle_coverage,
+        "telemetry_coverage": telemetry_coverage,
+        "channels": channels,
+        "observed_channels": observed,
+        "explicitly_unavailable_channels": explicitly_unavailable,
+        "omitted_standard_channels": omitted,
+        "standard_note": note,
     }
 
 
@@ -1346,7 +1628,8 @@ def _timeline_metadata(
     per-node range bar uses one shared linear Mission scale.
     """
 
-    exact_coverage = mission.get("elapsed_coverage") == "exact"
+    elapsed_coverage = mission.get("elapsed_coverage")
+    exact_coverage = elapsed_coverage == "exact"
     window_start = (
         mission.get("started_at") if exact_coverage else mission.get("observed_started_at")
     )
@@ -1406,20 +1689,34 @@ def _timeline_metadata(
     )
     return {
         "axis": "vertical",
-        "row_positioning": "first_observed_chronological",
+        "row_positioning": (
+            "first_observed_chronological"
+            if elapsed_coverage != "snapshot_only"
+            else "declared_tree_order"
+        ),
         "row_spacing": "ordinal_not_duration_proportional",
         "range_bar_scale": (
             "linear_mission_elapsed"
             if exact_coverage
             else "linear_observed_window"
+            if elapsed_coverage == "partial"
+            else "not_available"
         ),
-        "offset_coverage": mission.get("elapsed_coverage"),
+        "offset_coverage": elapsed_coverage,
         "offset_origin": (
             "mission_initialized"
             if exact_coverage
             else "first_observed_trace"
+            if elapsed_coverage == "partial"
+            else None
         ),
-        "window_kind": "mission_lifecycle" if exact_coverage else "observed_trace",
+        "window_kind": (
+            "mission_lifecycle"
+            if exact_coverage
+            else "observed_trace"
+            if elapsed_coverage == "partial"
+            else "snapshot_only"
+        ),
         "window_started_at": window_start,
         "window_finished_at": window_finish,
         "window_elapsed_ms": window_elapsed,
@@ -1498,6 +1795,10 @@ def build_execution_cost_tree(
     finished_at = mission_timing["finished_at"]
     mission_elapsed_ms = mission_timing["elapsed_ms"]
     mission_cost = _span_cost(all_spans, usage_owner_event_ids=usage_owner_event_ids)
+    presentation_density = _presentation_density_profile(
+        lifecycle_coverage=coverage,
+        cost=mission_cost,
+    )
     mission_elapsed_reconciliation = _elapsed_reconciliation(
         all_spans,
         elapsed_ms=mission_elapsed_ms,
@@ -1616,6 +1917,7 @@ def build_execution_cost_tree(
         "telemetry_capture": _read_telemetry_capture(
             mission_dir, mission.get("mission", {}).get("id")
         ),
+        "presentation_density": presentation_density,
         "mission": {
             "id": mission.get("mission", {}).get("id"),
             "title": mission.get("mission", {}).get("title"),
@@ -1895,6 +2197,147 @@ def _node_cost_view(node: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
     if node["kind"] == "step":
         return node["direct_cost"], node["direct_elapsed_reconciliation"], "直接成本"
     return node["inclusive_cost"], node["subtree_elapsed_reconciliation"], "子树汇总"
+
+
+def _standard_cost_metric_fragments(cost: dict[str, Any]) -> list[str]:
+    fragments: list[str] = []
+    for name, _label, render_label, kinds in STANDARD_DURATION_CHANNELS:
+        if _duration_channel_status(cost, kinds) == "not_reported":
+            continue
+        host_label = "调用端实测" if name == "model_duration" else "宿主实测"
+        fragments.append(
+            f"{render_label} "
+            f"{_fmt_kind_duration(cost, kinds, host_label=host_label)}"
+        )
+    if cost["usage_coverage"] != "not_reported":
+        fragments.append(f"Token {_fmt_tokens_compact(cost)}")
+    return fragments
+
+
+def _chunk_metric_fragments(
+    fragments: list[str],
+    *,
+    size: int = 2,
+) -> list[str]:
+    return [
+        " · ".join(fragments[index : index + size])
+        for index in range(0, len(fragments), size)
+    ]
+
+
+def _execution_presentation_title(report: dict[str, Any]) -> str:
+    coverage = report["trace"]["coverage"]
+    if coverage == "exact":
+        return "TPlan 纵向实际执行时间轴"
+    if coverage == "partial":
+        return "TPlan 已观测执行窗口"
+    return "TPlan Mission 结构快照"
+
+
+def _standard_node_content_lines(
+    node: dict[str, Any],
+    row: dict[str, Any],
+    *,
+    time_coverage: str,
+) -> list[tuple[str, str]]:
+    cost, reconciliation, scope_label = _node_cost_view(node)
+    lines: list[tuple[str, str]] = [
+        (_svg_node_status_details(node, scope_label), "node-meta")
+    ]
+    elapsed = _fmt_covered_duration(
+        node["elapsed_ms"],
+        node["observed_elapsed_ms"],
+        node["elapsed_coverage"],
+    )
+    if elapsed != "未知":
+        time_parts: list[str] = []
+        if (
+            row.get("start_offset_ms") is not None
+            and row.get("finish_offset_ms") is not None
+        ):
+            time_parts.append(
+                "时间 "
+                f"{_fmt_timeline_offset(row['start_offset_ms'], time_coverage)} → "
+                f"{_fmt_timeline_offset(row['finish_offset_ms'], time_coverage)}"
+            )
+        time_parts.append(
+            f"{_elapsed_scope_label(node['elapsed_coverage'])} {elapsed}"
+        )
+        not_exact = _fmt_not_exactly_recorded(reconciliation)
+        if not_exact != "未知":
+            time_parts.append(f"未被精确记录 {not_exact}")
+        lines.append((" · ".join(time_parts), "node-metric"))
+    lines.extend(
+        (fragment_line, "node-metric")
+        for fragment_line in _chunk_metric_fragments(
+            _standard_cost_metric_fragments(cost)
+        )
+    )
+    lines.extend(
+        [
+            (
+                "结果："
+                + (
+                    _shorten(node["outcome_summary"], 82)
+                    if node["outcome_summary"]
+                    else "未记录"
+                ),
+                "node-result",
+            ),
+            (
+                "产出归因："
+                + _shorten(
+                    attribution_text(node["outcome_attribution"]),
+                    74,
+                ),
+                "node-result",
+            ),
+        ]
+    )
+    return lines
+
+
+def _standard_mission_header_lines(report: dict[str, Any]) -> list[str]:
+    mission = report["mission"]
+    mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
+    elapsed = _fmt_covered_duration(
+        mission["elapsed_ms"],
+        mission["observed_elapsed_ms"],
+        mission["elapsed_coverage"],
+    )
+    status_line = f"Mission · {mission_status}"
+    if elapsed != "未知":
+        status_line += (
+            f" · {_elapsed_scope_label(mission['elapsed_coverage'], mission=True)} "
+            f"{elapsed}"
+        )
+    metric_fragments = _standard_cost_metric_fragments(mission["cost"])
+    not_exact = _fmt_not_exactly_recorded(mission["elapsed_reconciliation"])
+    if not_exact != "未知":
+        metric_fragments.append(f"未被精确记录 {not_exact}")
+    mission_attribution = mission["outcome_attribution"]
+    visible_node_label = (
+        "可见真实节点" if report["trace"]["projection"] else "真实节点"
+    )
+    return [
+        status_line,
+        report["presentation_density"]["standard_note"],
+        *_chunk_metric_fragments(metric_fragments),
+        (
+            f"{visible_node_label} "
+            f"{report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
+            f" · 产出归因 P{len(mission_attribution['countable_progress'])}"
+            f"/C{len(mission_attribution['constraint_deltas'])}"
+            f" · 生命周期 {report['trace']['coverage']}"
+            + (
+                f" · 生命周期告警 {len(report['trace'].get('coverage_diagnostics', []))}"
+                if report["trace"].get("coverage_diagnostics")
+                else ""
+            )
+            + f" · 运行时 {report['runtime']['status']}"
+            + " · standard"
+        ),
+    ]
 
 
 def _fmt_timeline_offset(value: int | None, coverage: str = "exact") -> str:
@@ -2199,17 +2642,48 @@ def render_svg(report: dict[str, Any]) -> str:
     hotspot_by_id = {
         item["task_id"]: item for item in report.get("duration_hotspots", {}).get("tasks", [])
     }
+    time_coverage = timeline.get("offset_coverage") or report["trace"]["coverage"]
+    standard_node_lines = (
+        {
+            row["node_id"]: _standard_node_content_lines(
+                node_by_id[row["node_id"]],
+                row,
+                time_coverage=time_coverage,
+            )
+            for row in rows
+        }
+        if view == "standard"
+        else {}
+    )
+    standard_header_lines = (
+        _standard_mission_header_lines(report) if view == "standard" else []
+    )
     width = 1180
     header_x = 32
     header_y = 24
     header_width = width - 64
-    header_height = 288 if view == "audit" else 192
+    header_height = (
+        288
+        if view == "audit"
+        else max(168, 120 + 24 * len(standard_header_lines))
+    )
     axis_x = 112
     card_base_x = 270
     depth_indent = 42
     right_margin = 34
-    row_top = 364 if view == "audit" else 268
-    card_height = {"compact": 164, "standard": 204, "audit": 296}[view]
+    legend_y = header_y + header_height + 30
+    row_top = legend_y + 22
+    card_height = (
+        296
+        if view == "audit"
+        else max(
+            154,
+            54 + 25 * max(
+                (len(lines) for lines in standard_node_lines.values()),
+                default=4,
+            ),
+        )
+    )
     row_gap_by_kind = {"task": 30, "subtask": 18, "step": 12}
     row_ys: list[float] = []
     row_cursor = float(row_top)
@@ -2225,15 +2699,27 @@ def render_svg(report: dict[str, Any]) -> str:
     axis_start_y = row_ys[0] + card_height / 2 if rows else row_top + card_height / 2
     axis_end_y = row_ys[-1] + card_height / 2 if rows else axis_start_y
     mission_elapsed = timeline.get("window_elapsed_ms")
-    time_coverage = timeline.get("offset_coverage") or report["trace"]["coverage"]
-    time_label = "实际相对时间" if time_coverage == "exact" else "已观测相对时间"
+    time_label = (
+        "实际相对时间"
+        if time_coverage == "exact"
+        else "已观测相对时间"
+        if time_coverage == "partial"
+        else "无执行时间刻度"
+    )
     mission_status = STATUS_LABELS.get(mission["status"], mission["status"])
     mission_cost = mission["cost"]
     mission_reconciliation = mission["elapsed_reconciliation"]
-    report_title = "TPlan 执行时间轴摘要" if view == "compact" else "TPlan 纵向实际执行时间轴"
+    report_title = _execution_presentation_title(report)
     visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
     coverage_warning_count = len(report["trace"].get("coverage_diagnostics", []))
     runtime = report["runtime"]
+    time_domain_description = (
+        "左侧刻度显示 Mission 生命周期相对时间，时间条按同一 Mission 历时等比例显示"
+        if time_coverage == "exact"
+        else "左侧刻度只显示已观测窗口相对时间，时间条不代表完整 Mission 历时"
+        if time_coverage == "partial"
+        else "没有执行时间观测，卡片按声明拓扑顺序排列且不显示时间条"
+    )
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -2246,8 +2732,8 @@ def render_svg(report: dict[str, Any]) -> str:
         ),
         f'<title id="tplan-title">{_html(mission["title"])} · {_html(report_title)}</title>',
         (
-            '<desc id="tplan-desc">纵向按首次观测时间排列真实任务节点；左侧刻度显示相对追踪起点的'
-            '时间，卡片底部中性时间条按统一观测窗口等比例显示节点起止范围，弱配色折线保留真实父子关系；'
+            '<desc id="tplan-desc">纵向排列真实任务节点；'
+            f'{time_domain_description}；弱配色折线保留真实父子关系；'
             '缩进、6/4/2px 主干与分支结构线、短层级标记、类型牌及标题字重共同区分 Task、SubTask 与 Step；'
             'Task 主干与分支全线不透明以保持同色；父子线共享接头由父级等效色不透明覆盖，'
             '避免子级颜色透出混色；'
@@ -2281,68 +2767,83 @@ def render_svg(report: dict[str, Any]) -> str:
         ),
         _svg_text(58, 58, report_title, "report-title"),
         _svg_text(58, 88, _shorten(mission["title"], 72), "mission-title"),
-        _svg_text(
-            58,
-            116,
-            (
-                f"Mission · {mission_status} · "
-                f"{_elapsed_scope_label(mission['elapsed_coverage'], mission=True)} "
-                f"{_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}"
-            ),
-            "mission-meta",
-        ),
-        _svg_text(
-            58,
-            140,
-            (
-                f"LLM调用累计 {_fmt_kind_duration(mission_cost, LLM_KINDS, host_label='调用端实测')}"
-                f" · 脚本累计 {_fmt_kind_duration(mission_cost, SCRIPT_KINDS)}"
-            ),
-            "mission-meta",
-        ),
-        _svg_text(
-            58,
-            164,
-            (
-                f"工具累计 {_fmt_kind_duration(mission_cost, TOOL_KINDS)}"
-                f" · 等待累计 {_fmt_kind_duration(mission_cost, WAIT_KINDS)}"
-                f" · 未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
-            ),
-            "mission-meta",
-        ),
-        _svg_text(
-            58,
-            188,
-            (
-                f"Token {_fmt_tokens_compact(mission_cost)}"
-                f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
-                f" · 产出归因 P{len(mission['outcome_attribution']['countable_progress'])}"
-                f"/C{len(mission['outcome_attribution']['constraint_deltas'])}"
-                f" · 覆盖 {report['trace']['coverage']}"
-                + (f" · 生命周期告警 {coverage_warning_count}" if coverage_warning_count else "")
-                + f" · 运行时 {runtime['status']}"
-                + f" · {view}"
-            ),
-            "mission-meta",
-        ),
         *(
             [
                 _svg_text(
                     58,
-                    212 + index * 24,
-                    ("Mission 审计：" if index == 0 else "") + _shorten(part, 135),
+                    116 + index * 24,
+                    _shorten(part, 135),
                     "mission-meta",
                 )
-                for index, part in enumerate(
-                    attribution_audit_lines(mission["outcome_attribution"])
-                )
+                for index, part in enumerate(standard_header_lines)
             ]
-            if view == "audit"
-            else []
+            if view == "standard"
+            else [
+                _svg_text(
+                    58,
+                    116,
+                    (
+                        f"Mission · {mission_status} · "
+                        f"{_elapsed_scope_label(mission['elapsed_coverage'], mission=True)} "
+                        f"{_fmt_covered_duration(mission['elapsed_ms'], mission['observed_elapsed_ms'], mission['elapsed_coverage'])}"
+                    ),
+                    "mission-meta",
+                ),
+                _svg_text(
+                    58,
+                    140,
+                    (
+                        f"LLM调用累计 {_fmt_kind_duration(mission_cost, LLM_KINDS, host_label='调用端实测')}"
+                        f" · 脚本累计 {_fmt_kind_duration(mission_cost, SCRIPT_KINDS)}"
+                    ),
+                    "mission-meta",
+                ),
+                _svg_text(
+                    58,
+                    164,
+                    (
+                        f"工具累计 {_fmt_kind_duration(mission_cost, TOOL_KINDS)}"
+                        f" · 等待累计 {_fmt_kind_duration(mission_cost, WAIT_KINDS)}"
+                        f" · 未被精确记录 {_fmt_not_exactly_recorded(mission_reconciliation)}"
+                    ),
+                    "mission-meta",
+                ),
+                _svg_text(
+                    58,
+                    188,
+                    (
+                        f"Token {_fmt_tokens_compact(mission_cost)}"
+                        f" · {visible_node_label} {report['trace']['visible_node_count']}/{report['trace']['total_node_count']}"
+                        f" · 产出归因 P{len(mission['outcome_attribution']['countable_progress'])}"
+                        f"/C{len(mission['outcome_attribution']['constraint_deltas'])}"
+                        f" · 覆盖 {report['trace']['coverage']}"
+                        + (
+                            f" · 生命周期告警 {coverage_warning_count}"
+                            if coverage_warning_count
+                            else ""
+                        )
+                        + f" · 运行时 {runtime['status']}"
+                        + f" · {view}"
+                    ),
+                    "mission-meta",
+                ),
+                *[
+                    _svg_text(
+                        58,
+                        212 + index * 24,
+                        ("Mission 审计：" if index == 0 else "")
+                        + _shorten(part, 135),
+                        "mission-meta",
+                    )
+                    for index, part in enumerate(
+                        attribution_audit_lines(mission["outcome_attribution"])
+                    )
+                ],
+            ]
         ),
         _svg_text(
             32,
-            342 if view == "audit" else 246,
+            legend_y,
             (
                 f"纵向=首次执行；左侧是{time_label}；蓝灰条=起止/持续；"
                 "层级线=Task 主干 6 / SubTask 分支 4 / Step 末梢 2px；中性标签=Task 耗时排名。"
@@ -2598,48 +3099,19 @@ def render_svg(report: dict[str, Any]) -> str:
                     ),
                 ]
             )
-        if view == "compact":
+        if view == "standard":
             lines.extend(
-                [
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 54,
-                        (
-                            f"{_svg_node_status_details(node, scope_label)} · {range_text} · "
-                            f"{_elapsed_scope_label(node['elapsed_coverage'])} {elapsed}"
-                        ),
-                        "node-meta",
-                    ),
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 80,
-                        (
-                            f"LLM调用累计 {_fmt_kind_duration(cost, LLM_KINDS, host_label='调用端实测')}"
-                            f" · 脚本累计 {_fmt_kind_duration(cost, SCRIPT_KINDS)}"
-                        ),
-                        "node-metric",
-                    ),
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 105,
-                        (
-                            f"工具累计 {_fmt_kind_duration(cost, TOOL_KINDS)}"
-                            f" · 等待累计 {_fmt_kind_duration(cost, WAIT_KINDS)}"
-                            f" · Token {_fmt_tokens_compact(cost)}"
-                        ),
-                        "node-metric",
-                    ),
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 128,
-                        (
-                            f"产出归因：{_shorten(attribution_text(node['outcome_attribution']), 74)}"
-                        ),
-                        "node-result",
-                    ),
-                ]
+                _svg_text(
+                    card_x + 18,
+                    card_y + 54 + index * 25,
+                    text,
+                    class_name,
+                )
+                for index, (text, class_name) in enumerate(
+                    standard_node_lines[node["id"]]
+                )
             )
-            range_y = card_y + 150
+            range_y = card_y + card_height - 14
         else:
             time_metric = _svg_text(
                 card_x + 18,
@@ -2693,21 +3165,18 @@ def render_svg(report: dict[str, Any]) -> str:
                     ),
                 ]
             )
-            if view == "audit":
-                lines.extend(
-                    _svg_text(
-                        card_x + 18,
-                        card_y + 197 + index * 23,
-                        ("审计：" if index == 0 else "") + _shorten(part, 105),
-                        "node-meta",
-                    )
-                    for index, part in enumerate(
-                        attribution_audit_lines(node["outcome_attribution"])
-                    )
+            lines.extend(
+                _svg_text(
+                    card_x + 18,
+                    card_y + 197 + index * 23,
+                    ("审计：" if index == 0 else "") + _shorten(part, 105),
+                    "node-meta",
                 )
-                range_y = card_y + 282
-            else:
-                range_y = card_y + 190
+                for index, part in enumerate(
+                    attribution_audit_lines(node["outcome_attribution"])
+                )
+            )
+            range_y = card_y + 282
 
         track_x = card_x + 18
         track_width = card_width - 36
@@ -2736,22 +3205,30 @@ def render_svg(report: dict[str, Any]) -> str:
         lines.append("</g>")
 
     footer_y = content_bottom + 40
-    footer_explanation = (
-        "精确时间由刻度、节点起止值及统一比例时间条表达。"
-        if time_coverage == "exact"
-        else "刻度和时间条仅表达已观测事件的相对位置，不代表完整 Mission 历时。"
-    )
+    if time_coverage == "exact":
+        footer_text = (
+            f"Mission 结束 {_fmt_timeline_offset(mission_elapsed, time_coverage)}"
+            " · 纵向行距不代表持续时间；"
+            "精确时间由刻度、节点起止值及统一比例时间条表达。"
+        )
+    elif time_coverage == "partial":
+        footer_text = (
+            f"观测窗口结束 {_fmt_timeline_offset(mission_elapsed, time_coverage)}"
+            " · 纵向行距不代表持续时间；"
+            "刻度和时间条仅表达已观测事件的相对位置，不代表完整 Mission 历时。"
+        )
+    else:
+        footer_text = (
+            "没有执行时间观测；纵向行距不代表持续时间；"
+            "卡片仅保留声明拓扑、状态和异常信号，未显示成本不按零处理。"
+        )
     lines.extend(
         [
             f'<line x1="32" y1="{footer_y - 24}" x2="{width - 32}" y2="{footer_y - 24}" stroke="#e2e8f0"/>',
             _svg_text(
                 32,
                 footer_y,
-                (
-                    f"{'Mission 结束' if time_coverage == 'exact' else '观测窗口结束'} "
-                    f"{_fmt_timeline_offset(mission_elapsed, time_coverage)} · 纵向行距不代表持续时间；"
-                    f"{footer_explanation}"
-                ),
+                footer_text,
                 "legend",
             ),
         ]
@@ -2810,6 +3287,7 @@ def _append_telemetry_capture_markdown(
     lines: list[str], report: dict[str, Any]
 ) -> None:
     capture = report["telemetry_capture"]
+    activation = capture["activation"]
     labels = {
         "local_tools": "本地工具/脚本",
         "hosted_tools": "托管工具",
@@ -2825,9 +3303,48 @@ def _append_telemetry_capture_markdown(
             "",
             (
                 f"绑定：`{capture['binding']['status']}`；范围："
-                f"`{capture['binding'].get('scope') or 'none'}`。"
+                f"`{capture['binding'].get('scope') or 'none'}`；generation："
+                f"`{capture['binding'].get('generation') or 'none'}`。"
                 "没有观测值的类别保持 `not_reported`，不会按零处理。"
             ),
+            "",
+            (
+                f"激活：`{activation['status']}`；当前 surface："
+                f"`{activation.get('active_surface') or 'none'}`；"
+                f"原因：{activation['reason']}。"
+            ),
+            "",
+            "| Surface | 激活状态 | Codex build/version | Hook source | 原因 |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+    )
+    for surface_name, surface in activation["surfaces"].items():
+        source = surface.get("source")
+        source_text = "none"
+        if isinstance(source, dict):
+            source_text = (
+                f"{source['scope']}:{source['path']}；"
+                f"hash={source.get('sha256') or 'absent'}；"
+                f"enumerated={str(source['enumerated']).lower()}；"
+                f"trust={','.join(source['trust_statuses']) or 'none'}；"
+                f"enabled={source.get('enabled')}"
+            )
+        build = surface.get("host_build") or surface.get("codex_version") or "none"
+        lines.append(
+            "| "
+            + " | ".join(
+                (
+                    _markdown_cell(surface_name),
+                    _markdown_cell(surface["status"]),
+                    _markdown_cell(build),
+                    _markdown_cell(source_text),
+                    _markdown_cell(surface["reason"]),
+                )
+            )
+            + " |"
+        )
+    lines.extend(
+        [
             "",
             "| 通道 | 状态 | 已完成 span | 原因 |",
             "| --- | --- | ---: | --- |",
@@ -2876,8 +3393,14 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     mission = report["mission"]
     cost = mission["cost"]
     overhead = report["overhead"]["cost"]
+    presentation_title = _execution_presentation_title(report)
+    markdown_title = {
+        "exact": "# TPlan 实际执行与成本树",
+        "partial": "# TPlan 已观测执行窗口与成本树",
+        "snapshot_only": "# TPlan Mission 结构快照与成本边界",
+    }[report["trace"]["coverage"]]
     lines = [
-        "# TPlan 实际执行与成本树",
+        markdown_title,
         "",
         f"> {_coverage_note(report)}",
         "",
@@ -2891,14 +3414,15 @@ def render_markdown(report: dict[str, Any], *, timeline_svg_ref: str | None = No
     if timeline_svg_ref:
         lines.extend(
             [
-                f"![TPlan 纵向实际执行时间轴](<{timeline_svg_ref}>)",
+                f"![{presentation_title}](<{timeline_svg_ref}>)",
                 "",
             ]
         )
     else:
         inline_svg = render_svg(report).split("\n", 1)[1].rstrip()
         lines.extend([inline_svg, ""])
-    _append_telemetry_capture_markdown(lines, report)
+    if report["view"] == "audit":
+        _append_telemetry_capture_markdown(lines, report)
     lines.append("")
     visible_node_label = "可见真实节点" if report["trace"]["projection"] else "真实节点"
     lines.append(

@@ -12,7 +12,8 @@ It cannot repair a historical trace. Missing hooks or OTel events remain visible
 
 ## Explicit Binding
 
-Bind one Codex session to one canonical Mission before installing hooks:
+Choose one persistent host-controlled dispatcher state directory per Codex profile and
+reuse it across Missions. Bind one Codex session to one canonical Mission:
 
 ```bash
 mkdir -p HOST_PROTECTED_STATE_DIR
@@ -26,46 +27,156 @@ Add `--thread-id CODEX_THREAD_ID` when the OTel delivery path has a distinct sta
 thread identity. Hook attribution still requires the exact `session_id` supplied by
 Codex. OTel then requires both the session and thread binding.
 
-The state directory must already exist and must be outside the Mission. Rebinding to a
-different identity is refused unless the operator passes `--replace`. The adapter also
-checks Mission id, canonical path, and runtime provenance.
+The state directory must already exist and must be outside every Mission. Do not create
+a new dispatcher state directory per Mission: its canonical path is part of the stable
+hook command. Rebinding to a different identity is refused unless the operator passes
+`--replace`. The adapter also checks Mission id, canonical path, and runtime
+provenance.
+
+The generated hook definition contains only the stable dispatcher script and this
+persistent state directory. It contains no Mission path, session id, or thread id.
+Raw session ids stay inside the host-controlled state directory, in the dispatcher
+registry and per-Mission binding sidecars; they do not enter Mission
+coverage reports or execution traces. The dispatcher maps one exact session to one
+Mission binding generation. Thus a new Mission updates the registry without changing
+Codex's trusted hook-definition hash. One session cannot be routed to two Missions or
+silently moved with `--replace`; clean the previous Mission route before reusing that
+session for a new Mission.
 
 Binding and generating a hook file do not prove that Codex loaded or trusted that
-file. Local-tool and SubAgent coverage therefore remains `not_reported` until the
-adapter observes a callback. A callback without a completed start/stop pair reports
-`available_not_observed`; only a completed pair reports `observed`.
+file. New generated bindings therefore require activation preflight before hook
+callbacks may write telemetry. Local-tool and SubAgent coverage remains
+`not_reported`; a callback without a completed start/stop pair reports
+`available_not_observed` / `callback_unpaired`, and only a completed pair reports
+`observed`.
 
-## Codex CLI Installation And Preflight
+## Install, Preflight, Rebind, And Cleanup
 
-For a non-interactive `codex exec` run, merge the generated `hooks` object into an
-active, trusted **user** hook layer (normally `~/.codex/hooks.json`) before creating
-the session. Preserve unrelated hooks. A project-local `.codex/hooks.json` is valid
-only when Codex actually discovers that project layer; do not treat a path on disk, a
-`trust_level` override, or `--dangerously-bypass-hook-trust` as proof that the source
-is active.
-
-Before the first measured tool call, inspect Codex's Hooks manager (or the app-server
-`hooks/list` endpoint). The intended source path and every required handler must be
-listed as enabled; review/trust the exact command hash, or use
-`--dangerously-bypass-hook-trust` only for a controlled one-off E2E. If the source is
-not listed, stop: the expected result is `not_reported`, not a telemetry defect in the
-adapter.
-
-When a fresh session ID is not known yet, generate the hook config with a temporary
-safe session id, install and preflight that unchanged config, create a no-tool
-bootstrap session, then rebind the host state with the real session ID before the
-first tool call:
+Use the lifecycle helper instead of copying one generated file over an existing hook
+source. It merges only TPlan's four handlers and preserves unrelated hooks:
 
 ```bash
-python3 skills/tplan/scripts/codex_telemetry_adapter.py bind MISSION_DIR \
+python3 skills/tplan/scripts/codex_telemetry_activation.py install MISSION_DIR \
   --state-dir HOST_PROTECTED_STATE_DIR \
-  --session-id REAL_CODEX_SESSION_ID --replace
+  --surface codex_cli \
+  --source-scope user \
+  --source-path ~/.codex/hooks.json
 ```
 
-The hook command itself does not carry the session ID, so this rebind does not change
-the installed hook definition; it updates host-protected state and refreshes the
-Mission coverage sidecar. Remove the temporary user hook after the recorded session
-ends.
+Use `--surface codex_app` for the App. Use `--source-scope project` plus the
+repository's exact `.codex/hooks.json` path to test project discovery separately.
+Project trust is only a prerequisite; it is not discovery, hook trust, or activation
+evidence.
+
+Before the first measured tool call, run host inventory preflight:
+
+```bash
+python3 skills/tplan/scripts/codex_telemetry_activation.py preflight MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR \
+  --surface codex_cli \
+  --source-scope user \
+  --source-path ~/.codex/hooks.json \
+  --cwd PROJECT_ROOT
+```
+
+The CLI path starts the selected Codex binary's app-server, completes its
+`initialize` handshake, calls `hooks/list`, and records the CLI version and app-server
+user agent. The sidecar records a non-secret binding generation rather than the raw
+Codex session/thread identifiers; replacing the binding increments that generation.
+App integrations must provide an App-exported inventory with
+`--inventory-json`; `codex_app` never falls back to a separately spawned CLI
+app-server. It also requires concrete `--host-build` evidence unless the inventory
+envelope already contains `host_build`. Do not label CLI inventory as App evidence.
+
+The exported App envelope is deliberately narrow:
+
+```json
+{
+  "host_build": "Codex App <concrete build>",
+  "initialize": {
+    "userAgent": "<app-server initialize result>",
+    "platformFamily": "unix",
+    "platformOs": "macos"
+  },
+  "hooks_list": {
+    "data": []
+  }
+}
+```
+
+`hooks_list` is the unmodified `hooks/list` result. Warnings, errors, commands, and
+other inventory fields are inspected in memory but only hashes, source metadata,
+trust/enabled state, and build evidence enter the Mission sidecar.
+
+Preflight succeeds only when the exact source path is enumerated and all four stable
+dispatcher handlers have current hashes, trusted or managed trust state, and
+`enabled=true`. Mission/session correctness remains separately constrained by the
+host registry and binding generation. Preflight records one of:
+
+- `source_absent`
+- `source_not_enumerated`
+- `needs_trust` (including a modified/hash-mismatched handler)
+- `disabled`
+- `binding_mismatch`
+- `inventory_unavailable`
+- `ready`
+- `callback_unpaired`
+- `observed`
+
+Every non-ready preflight fails closed and keeps hook telemetry `not_reported`.
+Hosted tools, model/turn timing, Token usage, and distinct waits remain separate
+platform-boundary statuses; they are not activation failures.
+
+When a fresh session ID is not known yet, generate the stable hook config with a
+temporary safe session id, install and preflight that unchanged config, create a
+no-tool bootstrap session, then run the generator again with the real session ID
+before the first measured tool call:
+
+```bash
+python3 skills/tplan/scripts/generate_codex_telemetry_hooks.py MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR \
+  --session-id REAL_CODEX_SESSION_ID \
+  --replace \
+  --output /tmp/tplan-codex-telemetry-hooks.json
+```
+
+The hook command carries neither session nor Mission identity, so this rebind and
+registry update do not change the installed hook definition. A replaced binding is
+nevertheless marked `binding_mismatch` until preflight re-runs against the new binding
+generation.
+
+After the recorded session ends, clean up through the lifecycle helper:
+
+```bash
+python3 skills/tplan/scripts/codex_telemetry_activation.py cleanup MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR
+```
+
+Default cleanup removes this Mission's registry route, binding state, and coverage
+sidecar, but retains the stable trusted dispatcher for future Missions. With no route,
+callbacks from unrelated sessions fail closed and write nothing.
+
+To uninstall the dispatcher as well, request it explicitly:
+
+```bash
+python3 skills/tplan/scripts/codex_telemetry_activation.py cleanup MISSION_DIR \
+  --state-dir HOST_PROTECTED_STATE_DIR \
+  --remove-dispatcher
+```
+
+If all Missions were already cleaned with the default reusable behavior, uninstall
+without an old Mission binding:
+
+```bash
+python3 skills/tplan/scripts/codex_telemetry_activation.py uninstall \
+  --state-dir HOST_PROTECTED_STATE_DIR
+```
+
+Dispatcher removal runs only when no other Mission bindings remain.
+It removes only the exact TPlan handlers, preserves unrelated hooks, and removes a
+source created solely by TPlan when it becomes empty. Codex may retain a historical
+host-owned trust hash. An empty dispatcher registry is deleted, and no absent source
+or stale Mission claim is represented as active.
 
 A hook with a wrong session writes no span and returns ordinary hook success so optional
 telemetry cannot block the user's tool. A correctly bound event is attributed:
@@ -206,9 +317,13 @@ python3 skills/tplan/scripts/codex_telemetry_adapter.py capabilities MISSION_DIR
 ```
 
 The execution-cost JSON exposes the same sidecar as top-level `telemetry_capture`.
-Standard/Audit render every channel and its reason without changing one-to-one Mission
-hierarchy. An unreadable, stale, or cross-Mission sidecar degrades to `not_reported`;
-it does not prevent the rest of the execution tree from rendering.
+Standard consolidates absent channels into one Mission-level coverage statement and
+shows only observed or explicitly unavailable node metrics. Audit renders every channel
+and its reason, plus the App/CLI build, source path/hash, enumeration, trust, and
+enabled state from coverage schema `tplan.codex_telemetry_coverage.v0.2`. Neither
+changes the one-to-one Mission hierarchy. An unreadable, stale, or cross-Mission
+sidecar degrades to `not_reported`; it does not prevent the rest of the execution tree
+from rendering.
 
 ## Boundary
 

@@ -295,10 +295,20 @@ evidence events, with live state in `mission.shared_context.risk_signals`.
 
 Mission Shared Context Memory is loaded before hooks through Mission identity preflight.
 The project-level file is `.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`.
-Use `preflight_mission.py` to distinguish `continue_existing`, `create_new`, and
-`needs_agentic_selection` before runtime initialization. `source_contexts` may inform a
-new Mission, but they do not create a derived Mission status or transfer acceptance
-authority.
+Use `preflight_mission.py` to discover residual candidates before runtime
+initialization, including runtime-only candidates whose shared Markdown is absent.
+Discovery never authorizes continuation. For a selected candidate,
+provide the current objective and acceptance evidence; an exact match appears as
+`identity_action=continue_existing` plus `candidate_disposition=resume_existing`, while
+the public action remains `needs_agentic_selection`. Only a second explicit
+`--disposition` with `--rationale` selects `resume_existing`,
+`create_new_from_context`, `requires_human`, or `ignore_candidate`.
+The explicit CLI path durably records a decision receipt before any Mission write.
+`resume_existing` is then applied only if the locked Mission, narrative, evidence, and
+trace digests still match the assessed freshness boundary.
+`source_contexts` may inform a new Mission, but they do not create a derived Mission
+status or transfer acceptance authority. This re-entry boundary precedes hooks and is
+not the same as same-path continuation inside an active Mission.
 
 When a high-impact hook output is produced while active shared risks exist, include:
 

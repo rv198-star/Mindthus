@@ -1,38 +1,23 @@
 #!/usr/bin/env python3
-"""Bind a Codex session and generate Mission-scoped telemetry hook configuration."""
+"""Bind a Codex session and generate stable dispatcher hook configuration."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import shlex
 import sys
 from pathlib import Path
 from typing import Any
 
-from codex_telemetry_adapter import bind_session
+from codex_telemetry_adapter import hook_command
+from codex_telemetry_dispatcher import bind_and_register_session
 from tplan_runtime import TplanError
-
-
-def _command(mission_dir: Path, state_dir: Path) -> str:
-    adapter = Path(__file__).resolve().with_name("codex_telemetry_adapter.py")
-    return " ".join(
-        shlex.quote(item)
-        for item in (
-            sys.executable,
-            str(adapter),
-            "hook",
-            str(mission_dir),
-            "--state-dir",
-            str(state_dir),
-        )
-    )
 
 
 def hook_config(mission_dir: Path, state_dir: Path) -> dict[str, Any]:
     hook = {
         "type": "command",
-        "command": _command(mission_dir, state_dir),
+        "command": hook_command(mission_dir, state_dir),
         "timeout": 10,
     }
     return {
@@ -64,12 +49,13 @@ def main() -> int:
     mission_dir = Path(args.mission_dir).resolve()
     state_dir = Path(args.state_dir).resolve()
     try:
-        bind_session(
+        bind_and_register_session(
             mission_dir,
             state_dir,
             session_id=args.session_id,
             thread_id=args.thread_id,
             replace=args.replace,
+            activation_required=True,
         )
         config = hook_config(mission_dir, state_dir)
     except (OSError, ValueError, TplanError) as exc:

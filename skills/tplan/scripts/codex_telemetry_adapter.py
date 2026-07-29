@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
+import shlex
 import sys
 import uuid
 from datetime import datetime
@@ -29,12 +31,27 @@ from tplan_runtime import (
 )
 
 
-BINDING_SCHEMA_VERSION = "tplan.codex_telemetry_binding.v0.1"
-COVERAGE_SCHEMA_VERSION = "tplan.codex_telemetry_coverage.v0.1"
+BINDING_SCHEMA_VERSION = "tplan.codex_telemetry_binding.v0.2"
+LEGACY_BINDING_SCHEMA_VERSIONS = {"tplan.codex_telemetry_binding.v0.1"}
+COVERAGE_SCHEMA_VERSION = "tplan.codex_telemetry_coverage.v0.2"
 OTEL_EVENT_SCHEMA_VERSION = "tplan.codex_otel_event.v0.1"
-ADAPTER_VERSION = "tplan.codex_telemetry_adapter.v0.1"
+ADAPTER_VERSION = "tplan.codex_telemetry_adapter.v0.2"
 CORRELATION_KINDS = {"tool", "subagent"}
 HOOK_EVENTS = {"PreToolUse", "PostToolUse", "SubagentStart", "SubagentStop"}
+CODEX_SURFACES = {"codex_app", "codex_cli"}
+ACTIVATION_STATUSES = {
+    "not_tested",
+    "preflight_required",
+    "source_absent",
+    "source_not_enumerated",
+    "needs_trust",
+    "disabled",
+    "binding_mismatch",
+    "inventory_unavailable",
+    "callback_unpaired",
+    "ready",
+    "observed",
+}
 OTEL_RECORD_TYPES = {"model", "agent_turn", "tool"}
 OTEL_SOURCE_EVENTS = {
     "model": {
@@ -89,6 +106,95 @@ SECRET_VALUE = re.compile(
 )
 TERMINAL_SPAN_STATUSES = {"ok", "error", "cancelled", "unknown"}
 SPAWN_TOOL_NAMES = {"Agent", "spawn_agent", "functions.spawn_agent"}
+
+
+def hook_command(mission_dir: Path, state_dir: Path) -> str:
+    # Mission routing lives in the host-state registry. Keeping Mission/session
+    # identity out of this command makes Codex's exact hook-definition hash stable
+    # across Mission bindings that share one dispatcher state directory.
+    del mission_dir
+    dispatcher = Path(__file__).resolve().with_name("codex_telemetry_dispatcher.py")
+    return " ".join(
+        shlex.quote(item)
+        for item in (
+            sys.executable,
+            str(dispatcher),
+            "hook",
+            "--state-dir",
+            str(state_dir.resolve()),
+        )
+    )
+
+
+def _empty_surface_activation() -> dict[str, Any]:
+    return {
+        "status": "not_tested",
+        "reason": "this Codex surface has not completed activation preflight",
+        "checked_at": None,
+        "host_build": None,
+        "codex_version": None,
+        "app_server_user_agent": None,
+        "platform_family": None,
+        "platform_os": None,
+        "binding_generation": None,
+        "source": None,
+    }
+
+
+def _empty_activation(*, required: bool = False) -> dict[str, Any]:
+    return {
+        "required": required,
+        "active_surface": None,
+        "surfaces": {
+            "codex_app": _empty_surface_activation(),
+            "codex_cli": _empty_surface_activation(),
+        },
+    }
+
+
+def _normalize_activation(state: dict[str, Any]) -> dict[str, Any]:
+    activation = state.get("activation")
+    if not isinstance(activation, dict):
+        activation = _empty_activation()
+        state["activation"] = activation
+        return activation
+    activation.setdefault("required", False)
+    activation.setdefault("active_surface", None)
+    surfaces = activation.setdefault("surfaces", {})
+    if not isinstance(surfaces, dict):
+        surfaces = {}
+        activation["surfaces"] = surfaces
+    for surface in sorted(CODEX_SURFACES):
+        record = surfaces.get(surface)
+        if not isinstance(record, dict):
+            surfaces[surface] = _empty_surface_activation()
+            continue
+        defaults = _empty_surface_activation()
+        for key, value in defaults.items():
+            record.setdefault(key, copy.deepcopy(value))
+    return activation
+
+
+def _active_activation_record(state: dict[str, Any]) -> dict[str, Any] | None:
+    activation = _normalize_activation(state)
+    surface = activation.get("active_surface")
+    if surface not in CODEX_SURFACES:
+        return None
+    record = activation["surfaces"].get(surface)
+    return record if isinstance(record, dict) else None
+
+
+def _set_active_activation_status(
+    state: dict[str, Any], status: str, reason: str
+) -> None:
+    if status not in ACTIVATION_STATUSES:
+        raise TplanError(f"unsupported Codex telemetry activation status: {status}")
+    record = _active_activation_record(state)
+    if record is None:
+        return
+    record["status"] = status
+    record["reason"] = reason
+    record["checked_at"] = now_iso()
 
 
 def _canonical_mission_dir(mission_dir: Path) -> Path:
@@ -159,6 +265,8 @@ def _new_state(
     *,
     session_id: str,
     thread_id: str | None,
+    activation_required: bool = False,
+    binding_generation: int = 1,
 ) -> dict[str, Any]:
     timestamp = now_iso()
     return {
@@ -172,7 +280,9 @@ def _new_state(
             "session_id": session_id,
             "thread_id": thread_id,
             "scope": "session_and_thread" if thread_id else "session",
+            "generation": binding_generation,
         },
+        "activation": _empty_activation(required=activation_required),
         "created_at": timestamp,
         "updated_at": timestamp,
         "correlations": {"tool": {}, "subagent": {}},
@@ -205,8 +315,18 @@ def _read_state(path: Path) -> dict[str, Any]:
         ) from exc
     except json.JSONDecodeError as exc:
         raise TplanError("Codex telemetry binding state is invalid JSON") from exc
-    if not isinstance(state, dict) or state.get("schema_version") != BINDING_SCHEMA_VERSION:
+    if (
+        not isinstance(state, dict)
+        or state.get("schema_version")
+        not in LEGACY_BINDING_SCHEMA_VERSIONS | {BINDING_SCHEMA_VERSION}
+    ):
         raise TplanError("Codex telemetry binding state has an unsupported schema")
+    state["schema_version"] = BINDING_SCHEMA_VERSION
+    state["adapter_version"] = ADAPTER_VERSION
+    binding = state.get("binding")
+    if isinstance(binding, dict):
+        binding.setdefault("generation", 1)
+    _normalize_activation(state)
     counters = state.get("counters")
     if isinstance(counters, dict):
         counters.setdefault("local_tool_hook_callbacks", 0)
@@ -233,8 +353,59 @@ def _write_state(path: Path, state: dict[str, Any]) -> None:
         pass
 
 
+def _activation_coverage(state: dict[str, Any]) -> dict[str, Any]:
+    activation = copy.deepcopy(_normalize_activation(state))
+    active_surface = activation.get("active_surface")
+    counters = state["counters"]
+    active = (
+        activation["surfaces"].get(active_surface)
+        if active_surface in CODEX_SURFACES
+        else None
+    )
+    if isinstance(active, dict):
+        if active.get("binding_generation") != state["binding"].get("generation"):
+            active["status"] = "binding_mismatch"
+            active["reason"] = (
+                "activation evidence belongs to an earlier session/thread binding generation"
+            )
+        elif state.get("last_diagnostic") == "session_binding_mismatch":
+            active["status"] = "binding_mismatch"
+            active["reason"] = (
+                "a hook callback carried a different Codex session than the active Mission binding"
+            )
+        elif counters["local_tool_spans"] or counters["subagent_spans"]:
+            active["status"] = "observed"
+            active["reason"] = (
+                "trusted and enabled hook callbacks produced at least one correlated completed span"
+            )
+        elif (
+            counters["local_tool_hook_callbacks"]
+            or counters["subagent_hook_callbacks"]
+        ):
+            active["status"] = "callback_unpaired"
+            active["reason"] = (
+                "a bound hook callback was observed, but no correlated completed span exists yet"
+            )
+    activation["status"] = (
+        active.get("status")
+        if isinstance(active, dict)
+        else ("preflight_required" if activation["required"] else "not_tested")
+    )
+    activation["reason"] = (
+        active.get("reason")
+        if isinstance(active, dict)
+        else (
+            "activation preflight is required before hook telemetry can be recorded"
+            if activation["required"]
+            else "no Codex activation surface has been selected"
+        )
+    )
+    return activation
+
+
 def _coverage_report(state: dict[str, Any]) -> dict[str, Any]:
     counters = state["counters"]
+    activation = _activation_coverage(state)
 
     def hook_coverage(count: int, callbacks: int, channel: str) -> dict[str, Any]:
         if count:
@@ -245,10 +416,16 @@ def _coverage_report(state: dict[str, Any]) -> dict[str, Any]:
             reason = f"a bound {channel} hook callback was observed; no completed pair was written"
         else:
             status = "not_reported"
-            reason = (
-                f"Mission binding exists, but {channel} hook installation/trust "
-                "has not been observed by the adapter"
-            )
+            if activation["required"]:
+                reason = (
+                    f"Codex hook activation is {activation['status']}: "
+                    f"{activation['reason']}"
+                )
+            else:
+                reason = (
+                    f"Mission binding exists, but {channel} hook installation/trust "
+                    "has not been observed by the adapter"
+                )
         return {
             "status": status,
             "observed_span_count": count,
@@ -274,7 +451,9 @@ def _coverage_report(state: dict[str, Any]) -> dict[str, Any]:
             "status": "exact",
             "scope": state["binding"]["scope"],
             "mission_id": state["mission"]["id"],
+            "generation": state["binding"]["generation"],
         },
+        "activation": activation,
         "channels": {
             "local_tools": hook_coverage(
                 counters["local_tool_spans"],
@@ -334,6 +513,69 @@ def _persist_state_and_coverage(
     write_json(coverage_path(mission_dir), _coverage_report(state), durable=True)
 
 
+def _prepare_bind_session_state_unlocked(
+    mission_dir: Path,
+    state_dir: Path,
+    *,
+    session_id: str,
+    thread_id: str | None = None,
+    replace: bool = False,
+    activation_required: bool = False,
+) -> tuple[Path, dict[str, Any], dict[str, Any]]:
+    path = _state_path(state_dir, mission_dir)
+    _recover_pending_mission_transaction_unlocked(mission_dir)
+    mission = _prepare_supported_runtime_write_unlocked(
+        mission_dir,
+        operation="codex_telemetry_bind",
+    )
+    previous_activation: dict[str, Any] | None = None
+    binding_generation = 1
+    current: dict[str, Any] | None = None
+    if path.exists():
+        current = _read_state(path)
+        previous_activation = copy.deepcopy(_normalize_activation(current))
+        current_generation = current.get("binding", {}).get("generation", 1)
+        if isinstance(current_generation, int) and not isinstance(
+            current_generation, bool
+        ):
+            binding_generation = current_generation + (1 if replace else 0)
+    if current is not None and not replace:
+        current_binding = current.get("binding", {})
+        if (
+            current_binding.get("session_id") != session_id
+            or current_binding.get("thread_id") != thread_id
+        ):
+            raise TplanError(
+                "Codex telemetry is already bound to a different session/thread; use --replace explicitly"
+            )
+        state = current
+    else:
+        state = _new_state(
+            mission_dir,
+            mission,
+            session_id=session_id,
+            thread_id=thread_id,
+            activation_required=activation_required,
+            binding_generation=binding_generation,
+        )
+        if previous_activation is not None:
+            state["activation"] = previous_activation
+            state["activation"]["required"] = (
+                bool(previous_activation.get("required"))
+                or activation_required
+            )
+            if state["activation"]["required"]:
+                _set_active_activation_status(
+                    state,
+                    "binding_mismatch",
+                    "session/thread binding was replaced; activation preflight must run again",
+                )
+    if activation_required:
+        state["activation"]["required"] = True
+    _validate_state_target(state, mission_dir, mission)
+    return path, state, mission
+
+
 def bind_session(
     mission_dir: Path,
     state_dir: Path,
@@ -341,38 +583,22 @@ def bind_session(
     session_id: str,
     thread_id: str | None = None,
     replace: bool = False,
+    activation_required: bool = False,
 ) -> dict[str, Any]:
     mission_dir = _canonical_mission_dir(mission_dir)
     state_dir = _validated_state_dir(state_dir, mission_dir)
     session_id = _safe_id(session_id, "session_id")
     if thread_id is not None:
         thread_id = _safe_id(thread_id, "thread_id")
-    path = _state_path(state_dir, mission_dir)
     with execution_trace_lock(mission_dir):
-        _recover_pending_mission_transaction_unlocked(mission_dir)
-        mission = _prepare_supported_runtime_write_unlocked(
+        path, state, _mission = _prepare_bind_session_state_unlocked(
             mission_dir,
-            operation="codex_telemetry_bind",
+            state_dir,
+            session_id=session_id,
+            thread_id=thread_id,
+            replace=replace,
+            activation_required=activation_required,
         )
-        if path.exists() and not replace:
-            current = _read_state(path)
-            current_binding = current.get("binding", {})
-            if (
-                current_binding.get("session_id") != session_id
-                or current_binding.get("thread_id") != thread_id
-            ):
-                raise TplanError(
-                    "Codex telemetry is already bound to a different session/thread; use --replace explicitly"
-                )
-            state = current
-        else:
-            state = _new_state(
-                mission_dir,
-                mission,
-                session_id=session_id,
-                thread_id=thread_id,
-            )
-        _validate_state_target(state, mission_dir, mission)
         _persist_state_and_coverage(path, mission_dir, state)
     return {
         "status": "bound",
@@ -381,6 +607,149 @@ def bind_session(
         "state_file": str(path),
         "coverage_file": str(coverage_path(mission_dir)),
     }
+
+
+def record_activation(
+    mission_dir: Path,
+    state_dir: Path,
+    *,
+    surface: str,
+    status: str,
+    reason: str,
+    host_build: str | None,
+    codex_version: str | None,
+    app_server_user_agent: str | None,
+    platform_family: str | None,
+    platform_os: str | None,
+    source: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if surface not in CODEX_SURFACES:
+        raise TplanError("Codex telemetry surface must be codex_app or codex_cli")
+    if status not in ACTIVATION_STATUSES:
+        raise TplanError("Codex telemetry activation status is unsupported")
+    if (
+        not isinstance(reason, str)
+        or not reason
+        or len(reason) > 500
+        or "\n" in reason
+        or "\r" in reason
+    ):
+        raise TplanError("Codex telemetry activation reason must be one safe line")
+    for name, value in (
+        ("host_build", host_build),
+        ("codex_version", codex_version),
+        ("app_server_user_agent", app_server_user_agent),
+        ("platform_family", platform_family),
+        ("platform_os", platform_os),
+    ):
+        if value is not None and (
+            not isinstance(value, str)
+            or not value
+            or len(value) > 300
+            or "\n" in value
+            or "\r" in value
+            or SECRET_VALUE.search(value)
+        ):
+            raise TplanError(f"Codex telemetry activation {name} is invalid")
+    if source is not None:
+        required_source_fields = {
+            "scope",
+            "path",
+            "sha256",
+            "enumerated",
+            "handler_hashes",
+            "trust_statuses",
+            "enabled",
+            "created_by_tplan",
+        }
+        if set(source) != required_source_fields:
+            raise TplanError("Codex telemetry activation source has unsupported fields")
+        if source.get("scope") not in {"user", "project"}:
+            raise TplanError("Codex telemetry source scope must be user or project")
+        source_path = source.get("path")
+        if (
+            not isinstance(source_path, str)
+            or not Path(source_path).is_absolute()
+            or len(source_path) > 1000
+            or "\n" in source_path
+            or "\r" in source_path
+            or SECRET_VALUE.search(source_path)
+        ):
+            raise TplanError("Codex telemetry source path must be one absolute path")
+        source_sha256 = source.get("sha256")
+        if source_sha256 is not None and (
+            not isinstance(source_sha256, str)
+            or re.fullmatch(r"sha256:[0-9a-f]{64}", source_sha256) is None
+        ):
+            raise TplanError("Codex telemetry source sha256 is invalid")
+        if not isinstance(source.get("enumerated"), bool):
+            raise TplanError("Codex telemetry source enumerated must be boolean")
+        if source.get("enabled") is not None and not isinstance(
+            source.get("enabled"), bool
+        ):
+            raise TplanError("Codex telemetry source enabled must be boolean or null")
+        if not isinstance(source.get("created_by_tplan"), bool):
+            raise TplanError("Codex telemetry source ownership flag must be boolean")
+        hashes = source.get("handler_hashes")
+        if not isinstance(hashes, dict) or any(
+            not isinstance(key, str)
+            or not isinstance(value, str)
+            or not value
+            or len(value) > 200
+            or any(ord(character) < 32 for character in value)
+            or SECRET_VALUE.search(value)
+            for key, value in hashes.items()
+        ):
+            raise TplanError("Codex telemetry handler hashes are invalid")
+        trust_statuses = source.get("trust_statuses")
+        if (
+            not isinstance(trust_statuses, list)
+            or any(
+                value not in {"managed", "untrusted", "trusted", "modified"}
+                for value in trust_statuses
+            )
+            or len(set(trust_statuses)) != len(trust_statuses)
+        ):
+            raise TplanError("Codex telemetry trust statuses are invalid")
+
+    mission_dir = _canonical_mission_dir(mission_dir)
+    state_dir = _validated_state_dir(state_dir, mission_dir)
+    path = _state_path(state_dir, mission_dir)
+    with execution_trace_lock(mission_dir):
+        _recover_pending_mission_transaction_unlocked(mission_dir)
+        mission = _prepare_supported_runtime_write_unlocked(
+            mission_dir,
+            operation="codex_telemetry_activation",
+        )
+        state = _read_state(path)
+        _validate_state_target(state, mission_dir, mission)
+        activation = _normalize_activation(state)
+        activation["required"] = True
+        activation["active_surface"] = surface
+        previous_source = activation["surfaces"][surface].get("source")
+        if (
+            source is not None
+            and isinstance(previous_source, dict)
+            and previous_source.get("path") == source.get("path")
+            and previous_source.get("created_by_tplan")
+        ):
+            source["created_by_tplan"] = True
+        activation["surfaces"][surface] = {
+            "status": status,
+            "reason": reason,
+            "checked_at": now_iso(),
+            "host_build": host_build,
+            "codex_version": codex_version,
+            "app_server_user_agent": app_server_user_agent,
+            "platform_family": platform_family,
+            "platform_os": platform_os,
+            "binding_generation": state["binding"]["generation"],
+            "source": copy.deepcopy(source),
+        }
+        if status == "ready" and state.get("last_diagnostic") == "session_binding_mismatch":
+            state["last_diagnostic"] = None
+        _persist_state_and_coverage(path, mission_dir, state)
+    return _activation_coverage(state)
 
 
 def _binding_matches(state: dict[str, Any], event: dict[str, Any], *, otel: bool) -> bool:
@@ -636,8 +1005,40 @@ def handle_hook(
         )
         state = _read_state(path)
         _validate_state_target(state, mission_dir, mission)
+        activation = _normalize_activation(state)
+        active_activation = _active_activation_record(state)
+        activation_generation_matches = bool(
+            isinstance(active_activation, dict)
+            and active_activation.get("binding_generation")
+            == state["binding"].get("generation")
+        )
+        if activation["required"] and (
+            active_activation is None
+            or not activation_generation_matches
+            or active_activation.get("status")
+            not in {"ready", "callback_unpaired", "observed"}
+        ):
+            current_status = (
+                "binding_mismatch"
+                if isinstance(active_activation, dict)
+                and not activation_generation_matches
+                else active_activation.get("status")
+                if isinstance(active_activation, dict)
+                else "preflight_required"
+            )
+            _persist_state_and_coverage(path, mission_dir, state)
+            return {
+                "status": "not_reported",
+                "reason": f"activation_{current_status}",
+                "attribution": "none",
+            }
         if not _binding_matches(state, event, otel=False):
             _diagnose(state, "binding_failures", "session_binding_mismatch")
+            _set_active_activation_status(
+                state,
+                "binding_mismatch",
+                "hook callback session does not match the active Mission binding",
+            )
             _persist_state_and_coverage(path, mission_dir, state)
             return {
                 "status": "not_reported",
@@ -1015,6 +1416,7 @@ def parse_args() -> argparse.Namespace:
     bind.add_argument("--session-id", required=True)
     bind.add_argument("--thread-id")
     bind.add_argument("--replace", action="store_true")
+    bind.add_argument("--require-activation-preflight", action="store_true")
 
     hook = subparsers.add_parser("hook", help="Consume one Codex hook JSON object from stdin.")
     hook.add_argument("mission_dir")
@@ -1054,6 +1456,7 @@ def main() -> int:
                 session_id=args.session_id,
                 thread_id=args.thread_id,
                 replace=args.replace,
+                activation_required=args.require_activation_preflight,
             )
         elif args.command == "hook":
             hook_event = _read_stdin_object()

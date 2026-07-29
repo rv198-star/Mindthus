@@ -411,6 +411,18 @@ class TplanSkillContractTests(unittest.TestCase):
         self.assertIn("不是一个独立的派生状态", methodology)
         self.assertIn("继续旧 Mission", methodology)
         self.assertIn("新建 Mission", methodology)
+        self.assertIn("residual", skill_text)
+        self.assertIn("candidate", skill_text)
+        self.assertIn("explicit", skill_text)
+        self.assertIn("`--disposition`", skill_text)
+        self.assertIn("candidate_disposition", resources)
+        self.assertIn("tplan.mission_reentry_receipt.v0.1", resources)
+        self.assertIn("freshness_signals", resources)
+        self.assertIn("user_message", resources)
+        self.assertIn("decision receipt", resources)
+        self.assertIn("重入恢复判断", methodology)
+        self.assertIn("恢复候选", methodology)
+        self.assertIn("decision receipt", methodology)
 
     def test_continuation_authorization_contract_is_documented(self):
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
@@ -598,6 +610,96 @@ class TplanSkillContractTests(unittest.TestCase):
             "mechanical_score",
         ):
             self.assertIn(phrase, combined)
+
+    def test_sparse_telemetry_presentation_contract_is_versioned_and_documented(self):
+        manifest = json.loads(
+            (SKILL / "resources" / "runtime-manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        user_output = (SKILL / "resources" / "user-output.md").read_text(
+            encoding="utf-8"
+        )
+        execution_trace = (
+            SKILL / "resources" / "execution-trace.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(
+            manifest["capability_versions"]["execution_cost_tree"],
+            "tplan.execution_cost_tree.v0.9",
+        )
+        for phrase in (
+            "presentation_density",
+            "Mission-level coverage statement",
+            "an omitted Standard field never means zero",
+            "observed execution window",
+            "Audit renders every channel status and diagnostic reason",
+        ):
+            self.assertIn(phrase, user_output)
+        for phrase in (
+            "`mission_lifecycle`, `observed_trace`, or `snapshot_only`",
+            "absent channels move to one Mission-level coverage",
+            "does not remove any raw JSON fields",
+        ):
+            self.assertIn(phrase, execution_trace)
+
+    def test_codex_telemetry_activation_contract_is_versioned_and_documented(self):
+        manifest = json.loads(
+            (SKILL / "resources" / "runtime-manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        telemetry = (SKILL / "resources" / "codex-telemetry.md").read_text(
+            encoding="utf-8"
+        )
+        platform = (
+            SKILL / "resources" / "platforms" / "codex.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(
+            manifest["capability_versions"]["codex_telemetry_adapter"],
+            "tplan.codex_telemetry_adapter.v0.2",
+        )
+        self.assertEqual(
+            manifest["capability_versions"]["codex_telemetry_dispatcher"],
+            "tplan.codex_telemetry_dispatcher.v0.1",
+        )
+        self.assertIn(
+            "scripts/codex_telemetry_activation.py",
+            manifest["required_scripts"],
+        )
+        self.assertIn(
+            "scripts/codex_telemetry_activation.py",
+            manifest["fingerprint_files"],
+        )
+        for collection in ("required_scripts", "fingerprint_files"):
+            self.assertIn(
+                "scripts/codex_telemetry_dispatcher.py",
+                manifest[collection],
+            )
+        for phrase in (
+            "`source_absent`",
+            "`source_not_enumerated`",
+            "`needs_trust`",
+            "`disabled`",
+            "`binding_mismatch`",
+            "`callback_unpaired`",
+            "`observed`",
+            "tplan.codex_telemetry_coverage.v0.2",
+            "removes only the exact TPlan handlers",
+            "persistent host-controlled dispatcher state directory",
+            "contains no Mission path, session id, or thread id",
+            "retains the stable trusted dispatcher for future Missions",
+        ):
+            self.assertIn(phrase, telemetry)
+        for phrase in (
+            "concrete build/version",
+            "user or project",
+            "preflight_required",
+            "Hosted tools",
+            "without changing the four trusted Hook definition hashes",
+        ):
+            self.assertIn(phrase, platform)
 
 
 if __name__ == "__main__":

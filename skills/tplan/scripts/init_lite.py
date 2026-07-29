@@ -12,13 +12,16 @@ import sys
 from pathlib import Path
 
 from tplan_runtime import (
+    MISSION_REENTRY_DISPOSITIONS,
     TplanError,
     attach_project_shared_context,
     build_mission,
     cleanup_failed_initialization,
+    finalize_mission_reentry_initialization,
     initialize_execution_trace,
     mission_paths,
     parse_acceptance_evidence,
+    record_and_apply_mission_reentry_decision,
     render_lite_runtime_state,
     render_mission_md,
     validate_mission,
@@ -57,6 +60,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--latest-state", default="Not recorded yet.")
     parser.add_argument("--project-root", help="Project root used for .tplan/shared_contexts.")
     parser.add_argument("--source-context", action="append", default=[])
+    parser.add_argument(
+        "--reentry-disposition",
+        choices=sorted(MISSION_REENTRY_DISPOSITIONS),
+        help="Explicit disposition when this mission id has residual shared context.",
+    )
+    parser.add_argument(
+        "--reentry-rationale",
+        help="Required rationale when --reentry-disposition is supplied.",
+    )
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
@@ -103,16 +115,28 @@ def main() -> int:
             tasks=[task],
         )
         mission["active_task_id"] = args.active_task_id
+        reentry_preflight = None
         if args.project_root:
-            attach_project_shared_context(
+            reentry_preflight = attach_project_shared_context(
                 mission,
                 Path(args.project_root),
                 mission_dir=mission_dir,
                 source_contexts=[str(item) for item in args.source_context],
+                reentry_disposition=args.reentry_disposition,
+                reentry_rationale=args.reentry_rationale,
             )
         errors = validate_mission(mission)
         if errors:
             raise TplanError("; ".join(errors))
+        if (
+            args.project_root
+            and isinstance(reentry_preflight, dict)
+            and isinstance(reentry_preflight.get("reentry_decision"), dict)
+        ):
+            reentry_preflight = record_and_apply_mission_reentry_decision(
+                Path(args.project_root),
+                reentry_preflight,
+            )
 
         try:
             paths["dir"].mkdir(parents=True, exist_ok=True)
@@ -128,9 +152,25 @@ def main() -> int:
             initialize_execution_trace(mission_dir, mission)
             if args.project_root:
                 write_project_shared_context(Path(args.project_root), mission)
-        except (KeyError, OSError, TplanError, ValueError):
+        except (KeyError, OSError, TplanError, ValueError) as exc:
+            if args.project_root:
+                try:
+                    finalize_mission_reentry_initialization(
+                        Path(args.project_root),
+                        reentry_preflight,
+                        mission_dir,
+                        error=exc,
+                    )
+                except (OSError, TplanError, ValueError):
+                    pass
             cleanup_failed_initialization(mission_dir)
             raise
+        if args.project_root:
+            finalize_mission_reentry_initialization(
+                Path(args.project_root),
+                reentry_preflight,
+                mission_dir,
+            )
         print(f"initialized_lite_mission: {mission_dir}")
         print("active_task_id: " + args.active_task_id)
         print("script_result: lite runtime files created; agentic Mission judgment is still required")

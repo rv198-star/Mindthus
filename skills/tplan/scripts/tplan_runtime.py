@@ -56,6 +56,8 @@ OUTCOME_ATTRIBUTION_SCHEMA_VERSION = "tplan.outcome_attribution.v0.1"
 RUNTIME_MANIFEST_SCHEMA_VERSION = "tplan.runtime_manifest.v0.1"
 RUNTIME_FINGERPRINT_SCHEMA_VERSION = "tplan.runtime_fingerprint.v0.1"
 RUNTIME_PROVENANCE_SCHEMA_VERSION = "tplan.runtime_provenance.v0.1"
+MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION = "tplan.mission_reentry_preflight.v0.1"
+MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
 RUNTIME_MANIFEST_RELATIVE_PATH = Path("resources/runtime-manifest.json")
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied"}
 _RESERVED_EVIDENCE_AUTHORITY = object()
@@ -87,6 +89,13 @@ MISSION_STATUSES = {
 }
 
 TERMINAL_MISSION_STATUSES = MISSION_STATUSES - {"active"}
+
+MISSION_REENTRY_DISPOSITIONS = {
+    "resume_existing",
+    "create_new_from_context",
+    "requires_human",
+    "ignore_candidate",
+}
 
 TASK_STATUSES = {
     "pending",
@@ -924,10 +933,11 @@ def validate_mission_directory_identity(mission: Any, mission_dir: Path) -> list
     return []
 
 
-def find_project_runtime_dirs(project_root: Path, mission_id: str) -> list[str]:
+def find_project_runtime_candidates(project_root: Path) -> list[dict[str, Any]]:
     if not project_root.exists():
         return []
-    runtime_dirs: set[str] = set()
+    candidates: list[dict[str, Any]] = []
+    seen_runtime_dirs: set[str] = set()
     for path in project_root.rglob("evidence.jsonl"):
         mission_path = path.parent / "mission.json"
         if not mission_path.exists():
@@ -941,9 +951,34 @@ def find_project_runtime_dirs(project_root: Path, mission_id: str) -> list[str]:
         mission_meta = mission.get("mission")
         if not isinstance(mission_meta, dict):
             continue
-        if mission_meta.get("id") == mission_id:
-            runtime_dirs.add(runtime_dir_identity(project_root, mission_path.parent))
-    return sorted(runtime_dirs)
+        mission_id = mission_meta.get("id")
+        if not isinstance(mission_id, str) or not mission_id:
+            continue
+        runtime_dir = runtime_dir_identity(project_root, mission_path.parent)
+        if runtime_dir in seen_runtime_dirs:
+            continue
+        seen_runtime_dirs.add(runtime_dir)
+        candidates.append(
+            {
+                "mission_id": mission_id,
+                "title": mission_meta.get("title"),
+                "objective": mission_meta.get("objective"),
+                "status": mission_meta.get("status"),
+                "runtime_dir": runtime_dir,
+            }
+        )
+    return sorted(
+        candidates,
+        key=lambda item: (str(item.get("mission_id")), str(item.get("runtime_dir"))),
+    )
+
+
+def find_project_runtime_dirs(project_root: Path, mission_id: str) -> list[str]:
+    return [
+        str(candidate["runtime_dir"])
+        for candidate in find_project_runtime_candidates(project_root)
+        if candidate.get("mission_id") == mission_id
+    ]
 
 
 def require_policy_value(name: str, value: int) -> int:
@@ -1768,6 +1803,55 @@ def _validate_shared_context(
         errors.append("shared_context must be an object")
         return
 
+    reentry_decision = shared_context.get("reentry_decision")
+    if reentry_decision is not None:
+        if not isinstance(reentry_decision, dict):
+            errors.append("shared_context reentry_decision must be an object")
+        else:
+            if (
+                reentry_decision.get("schema_version")
+                != MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION
+            ):
+                errors.append(
+                    "shared_context reentry_decision schema_version must be "
+                    f"{MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION}"
+                )
+            disposition = reentry_decision.get("disposition")
+            if disposition not in MISSION_REENTRY_DISPOSITIONS:
+                errors.append("shared_context reentry_decision disposition unsupported")
+            rationale = reentry_decision.get("rationale")
+            if not isinstance(rationale, str) or not rationale.strip():
+                errors.append(
+                    "shared_context reentry_decision rationale must be a non-empty string"
+                )
+            mission_meta = state.get("mission")
+            if (
+                isinstance(mission_meta, dict)
+                and reentry_decision.get("mission_id") != mission_meta.get("id")
+            ):
+                errors.append(
+                    "shared_context reentry_decision mission_id must match Mission id"
+                )
+            assessment_digest = reentry_decision.get("assessment_digest")
+            if not isinstance(assessment_digest, str) or not assessment_digest.startswith(
+                "sha256:"
+            ):
+                errors.append(
+                    "shared_context reentry_decision assessment_digest must be a sha256 digest"
+                )
+            decision_digest = reentry_decision.get("decision_digest")
+            if not isinstance(decision_digest, str) or not decision_digest.startswith(
+                "sha256:"
+            ):
+                errors.append(
+                    "shared_context reentry_decision decision_digest must be a sha256 digest"
+                )
+            recorded_at = reentry_decision.get("recorded_at")
+            if not isinstance(recorded_at, str) or not recorded_at:
+                errors.append(
+                    "shared_context reentry_decision recorded_at must be a non-empty string"
+                )
+
     risk_signals = shared_context.get("risk_signals")
     if not isinstance(risk_signals, list):
         errors.append("shared_context risk_signals must be a list")
@@ -2348,6 +2432,7 @@ def render_shared_context_markdown(
         "source_contexts": source_contexts,
         "runtime_dir": shared_context.get("runtime_dir"),
         "runtime_dir_name": shared_context.get("runtime_dir_name"),
+        "reentry_decision": shared_context.get("reentry_decision"),
         "risk_signals": _risk_signals(mission),
         "updated_at": now_iso(),
     }
@@ -2436,6 +2521,432 @@ def _shared_context_candidate(path: Path) -> dict[str, Any]:
     }
 
 
+def _resolve_project_runtime_dir(project_root: Path, runtime_dir: str) -> Path:
+    path = Path(runtime_dir)
+    return path if path.is_absolute() else project_root / path
+
+
+def _file_content_digest(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _content_digest_from_bytes(content: bytes | None) -> str | None:
+    if content is None:
+        return None
+    return "sha256:" + hashlib.sha256(content).hexdigest()
+
+
+def _runtime_snapshot_file_state_unlocked(path: Path) -> dict[str, Any]:
+    try:
+        content = path.read_bytes()
+    except FileNotFoundError:
+        return {"content": None, "mtime_ns": None}
+    return {"content": content, "mtime_ns": path.stat().st_mtime_ns}
+
+
+def _latest_recovery_boundary(events: list[dict[str, Any]]) -> dict[str, Any] | None:
+    for event in reversed(events):
+        if event.get("event_type") != "stop_report":
+            continue
+        payload = event.get("payload")
+        if not isinstance(payload, dict):
+            continue
+        return {
+            "event_id": event.get("id"),
+            "summary": event.get("summary"),
+            "blocking_issue": payload.get("blocking_issue"),
+            "need_from_human": payload.get("need_from_human"),
+            "resume_condition": payload.get("resume_condition"),
+        }
+    return None
+
+
+def _reentry_blockers(
+    events: list[dict[str, Any]],
+    active_task_id: Any,
+) -> list[dict[str, Any]]:
+    blocker_types = {
+        "blocker",
+        "blocked",
+        "failure",
+        "interruption",
+        "stop_report",
+    }
+    blockers: list[dict[str, Any]] = []
+    for event in reversed(events):
+        if event.get("event_type") not in blocker_types:
+            continue
+        task_id = event.get("task_id")
+        if active_task_id is not None and task_id not in {None, active_task_id}:
+            continue
+        payload = event.get("payload")
+        if not isinstance(payload, dict):
+            payload = {}
+        blockers.append(
+            {
+                "event_id": event.get("id"),
+                "event_type": event.get("event_type"),
+                "timestamp": event.get("timestamp"),
+                "task_id": task_id,
+                "summary": event.get("summary"),
+                "blocking_issue": payload.get("blocking_issue"),
+                "resume_condition": payload.get("resume_condition"),
+            }
+        )
+        if len(blockers) == 5:
+            break
+    return blockers
+
+
+def _runtime_reentry_snapshot(
+    project_root: Path,
+    runtime_dirs: list[str],
+    mission_id: str,
+) -> dict[str, Any] | None:
+    if len(runtime_dirs) != 1:
+        return None
+    runtime_identity = runtime_dirs[0]
+    runtime_dir = _resolve_project_runtime_dir(project_root, runtime_identity)
+    paths = mission_paths(runtime_dir)
+    if not paths["mission"].exists():
+        return {
+            "availability": "missing",
+            "runtime_dir": runtime_identity,
+            "diagnostics": ["runtime mission.json is missing"],
+        }
+    with execution_trace_lock(runtime_dir):
+        if not paths["mission"].exists():
+            return {
+                "availability": "missing",
+                "runtime_dir": runtime_identity,
+                "diagnostics": ["runtime mission.json is missing"],
+            }
+        snapshots = {
+            "mission": _runtime_snapshot_file_state_unlocked(paths["mission"]),
+            "narrative": _runtime_snapshot_file_state_unlocked(paths["narrative"]),
+            "evidence": _runtime_snapshot_file_state_unlocked(paths["evidence"]),
+            "trace": _runtime_snapshot_file_state_unlocked(paths["trace"]),
+        }
+        try:
+            mission_content = snapshots["mission"]["content"]
+            if mission_content is None:
+                raise FileNotFoundError(paths["mission"])
+            mission = json.loads(mission_content.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, ValueError) as exc:
+            return {
+                "availability": "unreadable",
+                "runtime_dir": runtime_identity,
+                "diagnostics": [str(exc)],
+            }
+
+        validation_errors = validate_mission(mission)
+        if paths["transaction"].exists():
+            validation_errors.append(
+                "pending Mission transaction must be resolved before re-entry assessment"
+            )
+        mission_meta = mission.get("mission")
+        if not isinstance(mission_meta, dict):
+            mission_meta = {}
+        active_task_id = mission.get("active_task_id")
+        active_task = next(
+            (
+                task
+                for task in mission.get("tasks", [])
+                if isinstance(task, dict) and task.get("id") == active_task_id
+            ),
+            None,
+        )
+        latest_state = None
+        narrative_content = snapshots["narrative"]["content"]
+        if narrative_content is not None:
+            try:
+                narrative = narrative_content.decode("utf-8")
+            except UnicodeDecodeError:
+                narrative = ""
+            if LITE_RUNTIME_STATE_HEADING in narrative:
+                latest_state = _existing_lite_latest_state(narrative)
+
+        trace_records: list[dict[str, Any]] = []
+        trace_diagnostics: list[str] = []
+        trace_content = snapshots["trace"]["content"]
+        if trace_content is not None:
+            try:
+                for line_number, line in enumerate(
+                    trace_content.decode("utf-8").splitlines(),
+                    start=1,
+                ):
+                    if not line.strip():
+                        continue
+                    value = json.loads(line)
+                    if isinstance(value, dict):
+                        trace_records.append(value)
+                    else:
+                        trace_diagnostics.append(
+                            f"execution trace line {line_number} is not an object"
+                        )
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+                trace_diagnostics.append(str(exc))
+        if trace_records and not trace_diagnostics:
+            trace_diagnostics.extend(validate_execution_trace(mission, trace_records))
+        latest_trace_record = next(
+            (
+                record
+                for record in reversed(trace_records)
+                if record.get("event_type") not in TRACE_SPAN_EVENT_TYPES
+            ),
+            None,
+        )
+        latest_trace_event = (
+            {
+                "event_id": latest_trace_record.get("event_id"),
+                "event_type": latest_trace_record.get("event_type"),
+                "timestamp": latest_trace_record.get("timestamp"),
+                "task_id": latest_trace_record.get("task_id"),
+                "payload": latest_trace_record.get("payload", {}),
+            }
+            if isinstance(latest_trace_record, dict)
+            else None
+        )
+        if latest_state is None and latest_trace_event is not None:
+            latest_state = {
+                "source": "execution_trace",
+                **latest_trace_event,
+            }
+
+        events: list[dict[str, Any]] = []
+        event_diagnostics: list[str] = []
+        evidence_content = snapshots["evidence"]["content"]
+        if evidence_content is not None:
+            try:
+                for line_number, line in enumerate(
+                    evidence_content.decode("utf-8").splitlines(),
+                    start=1,
+                ):
+                    if not line.strip():
+                        continue
+                    value = json.loads(line)
+                    if isinstance(value, dict):
+                        events.append(value)
+                    else:
+                        event_diagnostics.append(
+                            f"evidence line {line_number} is not an object"
+                        )
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+                event_diagnostics.append(str(exc))
+
+        provenance = runtime_provenance_report(mission)
+        shared_context = mission.get("shared_context")
+        risk_signals = (
+            shared_context.get("risk_signals", [])
+            if isinstance(shared_context, dict)
+            else []
+        )
+        active_risks = [
+            signal
+            for signal in risk_signals
+            if isinstance(signal, dict) and signal.get("status") == "active"
+        ]
+        diagnostics = list(validation_errors) + event_diagnostics + trace_diagnostics
+        if mission_meta.get("id") != mission_id:
+            diagnostics.append(
+                f"runtime mission_id {mission_meta.get('id')} does not match {mission_id}"
+            )
+        return {
+            "availability": "loaded",
+            "runtime_dir": runtime_identity,
+            "mission_id": mission_meta.get("id"),
+            "mission_digest": mission_control_digest(mission),
+            "title": mission_meta.get("title"),
+            "objective": mission_meta.get("objective"),
+            "status": mission_meta.get("status"),
+            "acceptance_evidence": _mission_acceptance_evidence(mission),
+            "active_task": (
+                {
+                    "id": active_task.get("id"),
+                    "title": active_task.get("title"),
+                    "status": active_task.get("status"),
+                }
+                if isinstance(active_task, dict)
+                else None
+            ),
+            "latest_state": latest_state,
+            "latest_trace_event": latest_trace_event,
+            "recovery_boundary": _latest_recovery_boundary(events),
+            "blockers": _reentry_blockers(events, active_task_id),
+            "active_risk_signals": active_risks,
+            "runtime_provenance": {
+                "status": provenance["status"],
+                "severity": provenance["severity"],
+                "compatible": provenance["compatible"],
+                "diagnostics": provenance["diagnostics"],
+            },
+            "freshness": {
+                "mission_mtime_ns": snapshots["mission"]["mtime_ns"],
+                "narrative_mtime_ns": snapshots["narrative"]["mtime_ns"],
+                "evidence_mtime_ns": snapshots["evidence"]["mtime_ns"],
+                "trace_mtime_ns": snapshots["trace"]["mtime_ns"],
+                "content_digests": {
+                    key: _content_digest_from_bytes(snapshot["content"])
+                    for key, snapshot in snapshots.items()
+                },
+            },
+            "diagnostics": diagnostics,
+        }
+
+
+def _reentry_candidate_disposition(
+    *,
+    mission_status: Any,
+    conflicts: list[str],
+    missing_current_intent: list[str],
+) -> str | None:
+    if mission_status in {"blocked", "requires_human"}:
+        return "requires_human"
+    if mission_status in TERMINAL_MISSION_STATUSES:
+        return "create_new_from_context"
+    if conflicts or missing_current_intent:
+        return None
+    if mission_status == "active":
+        return "resume_existing"
+    return None
+
+
+def _mission_reentry_user_message(preflight: dict[str, Any]) -> str:
+    decision = preflight.get("reentry_decision")
+    if isinstance(decision, dict):
+        disposition = decision.get("disposition")
+        rationale = decision.get("rationale")
+        messages = {
+            "resume_existing": "已明确选择继续旧 Mission",
+            "create_new_from_context": "已明确选择新建 Mission，旧 Mission 只作为背景",
+            "requires_human": "已明确选择等待人工确认，不继续执行旧 Mission",
+            "ignore_candidate": "已明确忽略该恢复候选",
+        }
+        message = messages.get(str(disposition), "已记录重入处置")
+        return f"{message}。理由：{rationale}"
+
+    mission_id = preflight.get("mission_id")
+    candidates = preflight.get("candidates")
+    if mission_id is None:
+        if isinstance(candidates, list) and candidates:
+            return (
+                f"发现 {len(candidates)} 个旧 Mission 候选；目前没有选择任何一个，"
+                "也没有发生 Mission 写入。"
+            )
+        return "没有发现旧 Mission 候选，可以按当前请求创建新 Mission。"
+
+    packet = preflight.get("reentry_packet")
+    if not isinstance(packet, dict):
+        return "没有发现与该 Mission id 对应的旧状态，可以创建新 Mission。"
+
+    status = packet.get("status")
+    recovery_boundary = packet.get("recovery_boundary")
+    if status in {"blocked", "requires_human"}:
+        resume_condition = (
+            recovery_boundary.get("resume_condition")
+            if isinstance(recovery_boundary, dict)
+            else None
+        )
+        suffix = f"恢复条件：{resume_condition}" if resume_condition else "尚无可验证的恢复条件"
+        return f"旧 Mission 正在等待人工或处于阻塞状态，不能继续。{suffix}。"
+    if status in TERMINAL_MISSION_STATUSES:
+        return (
+            f"旧 Mission 状态为 {status}，默认不能续跑；如需利用旧材料，应新建 "
+            "Mission 并只把它作为背景。"
+        )
+
+    missing = preflight.get("missing_current_intent")
+    if isinstance(missing, list) and missing:
+        labels = {
+            "objective": "当前目标",
+            "acceptance_evidence": "当前验收标准",
+        }
+        missing_text = "、".join(labels.get(str(item), str(item)) for item in missing)
+        return f"缺少{missing_text}，无法判断当前请求是否仍属于旧 Mission，因此不能续跑。"
+
+    conflicts = preflight.get("conflicts")
+    if isinstance(conflicts, list) and conflicts:
+        labels = {
+            "mission_id": "Mission 标识",
+            "objective": "目标",
+            "acceptance_evidence": "验收标准",
+            "runtime_dir": "运行目录",
+            "runtime_snapshot": "运行状态",
+            "runtime_provenance": "运行时来源",
+            "mission_status": "Mission 状态",
+        }
+        conflict_text = "、".join(
+            labels.get(str(item), str(item)) for item in conflicts
+        )
+        return f"旧 Mission 与当前请求在{conflict_text}上存在冲突，不能继续。"
+
+    if preflight.get("candidate_disposition") == "resume_existing":
+        warnings = preflight.get("warnings")
+        warning_text = (
+            "共享上下文快照已落后，将以 runtime 状态为准；"
+            if isinstance(warnings, list) and "shared_context_stale" in warnings
+            else ""
+        )
+        return (
+            f"{warning_text}当前目标和验收标准与旧 Mission 一致，但这仍只是恢复候选；"
+            "必须明确选择 resume_existing 并说明理由后才能继续。"
+        )
+    return "现有信息不足以安全决定是否继续旧 Mission，需要 agent 或人工明确处置。"
+
+
+def _apply_mission_reentry_disposition(
+    preflight: dict[str, Any],
+    *,
+    disposition: str,
+    rationale: str,
+) -> dict[str, Any]:
+    if disposition not in MISSION_REENTRY_DISPOSITIONS:
+        allowed = ", ".join(sorted(MISSION_REENTRY_DISPOSITIONS))
+        raise TplanError(f"re-entry disposition must be one of: {allowed}")
+    if not isinstance(rationale, str) or not rationale.strip():
+        raise TplanError("re-entry disposition requires a non-empty rationale")
+    if preflight.get("reentry_packet") is None:
+        raise TplanError("re-entry disposition requires an existing Mission candidate")
+
+    candidate_disposition = preflight.get("candidate_disposition")
+    if disposition == "resume_existing" and candidate_disposition != "resume_existing":
+        raise TplanError(
+            "residual Mission is not eligible for resume_existing; "
+            "inspect missing_current_intent, conflicts, status, and recovery boundary"
+        )
+    if disposition == "create_new_from_context" and preflight.get("mission_id") is None:
+        raise TplanError("create_new_from_context requires a selected Mission candidate")
+
+    normalized_rationale = " ".join(rationale.split())
+    decision_basis = {
+        "assessment_digest": preflight.get("assessment_digest"),
+        "mission_id": preflight.get("mission_id"),
+        "disposition": disposition,
+        "rationale": normalized_rationale,
+    }
+    decision = {
+        "schema_version": MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION,
+        **decision_basis,
+        "decision_digest": _sha256_digest(decision_basis),
+        "recorded_at": now_iso(),
+        "acceptance_authority": (
+            "preserved"
+            if disposition == "resume_existing"
+            else "not_inherited"
+            if disposition == "create_new_from_context"
+            else "not_applied"
+        ),
+    }
+    selected = copy.deepcopy(preflight)
+    selected["action"] = disposition
+    selected["decision_required"] = False
+    selected["reentry_decision"] = decision
+    selected["user_message"] = _mission_reentry_user_message(selected)
+    return selected
+
+
 def build_mission_preflight(
     project_root: Path,
     *,
@@ -2443,51 +2954,97 @@ def build_mission_preflight(
     objective: str | None = None,
     acceptance_evidence: list[dict[str, Any]] | None = None,
     mission_dir: Path | None = None,
+    disposition: str | None = None,
+    rationale: str | None = None,
 ) -> dict[str, Any]:
+    if rationale is not None and disposition is None:
+        raise TplanError("re-entry rationale requires --disposition")
+
     context_dir = shared_context_dir(project_root)
     if mission_id is None:
-        candidates = []
+        candidate_index: dict[str, dict[str, Any]] = {}
         if context_dir.exists():
-            candidates = [
-                _shared_context_candidate(path)
-                for path in sorted(context_dir.glob("tplan_mission_shared_context-*.md"))
-            ]
-        return {
+            for context_path in sorted(
+                context_dir.glob("tplan_mission_shared_context-*.md")
+            ):
+                candidate = _shared_context_candidate(context_path)
+                candidate["sources"] = ["shared_context"]
+                candidate["runtime_dirs"] = []
+                candidate_index[str(candidate["mission_id"])] = candidate
+        for runtime_candidate in find_project_runtime_candidates(project_root):
+            candidate_id = str(runtime_candidate["mission_id"])
+            candidate = candidate_index.setdefault(
+                candidate_id,
+                {
+                    "mission_id": candidate_id,
+                    "title": runtime_candidate.get("title"),
+                    "objective": runtime_candidate.get("objective"),
+                    "status": runtime_candidate.get("status"),
+                    "context_file": None,
+                    "sources": [],
+                    "runtime_dirs": [],
+                },
+            )
+            if "runtime" not in candidate["sources"]:
+                candidate["sources"].append("runtime")
+            candidate["runtime_dirs"].append(runtime_candidate["runtime_dir"])
+        candidates = [candidate_index[key] for key in sorted(candidate_index)]
+        payload = {
+            "schema_version": MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION,
             "action": "needs_agentic_selection" if candidates else "create_new",
+            "identity_action": "needs_agentic_selection" if candidates else "create_new",
+            "decision_required": bool(candidates),
+            "candidate_disposition": None,
             "mission_id": None,
             "context_file": None,
             "candidates": candidates,
             "conflicts": [],
+            "warnings": [],
+            "missing_current_intent": [],
+            "reason_codes": (
+                ["residual_mission_candidates_require_selection"] if candidates else []
+            ),
+            "assessment_digest": None,
+            "reentry_packet": None,
         }
+        payload["user_message"] = _mission_reentry_user_message(payload)
+        if disposition is not None:
+            raise TplanError("re-entry disposition requires an explicit mission_id")
+        return payload
 
     path = shared_context_path(project_root, mission_id)
     requested_runtime_dir = runtime_dir_identity(project_root, mission_dir) if mission_dir is not None else None
     requested_runtime_dir_name = mission_dir.name if mission_dir is not None else None
-    discovered_runtime_dirs = find_project_runtime_dirs(project_root, mission_id) if requested_runtime_dir is not None else []
-    if not path.exists():
-        conflicts = []
-        if discovered_runtime_dirs and requested_runtime_dir not in discovered_runtime_dirs:
-            conflicts.append("runtime_dir")
-        conflicts = list(dict.fromkeys(conflicts))
-        return {
+    discovered_runtime_dirs = find_project_runtime_dirs(project_root, mission_id)
+    if not path.exists() and not discovered_runtime_dirs:
+        conflicts: list[str] = []
+        payload = {
+            "schema_version": MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION,
             "action": "needs_agentic_selection" if conflicts else "create_new",
+            "identity_action": "needs_agentic_selection" if conflicts else "create_new",
+            "decision_required": bool(conflicts),
+            "candidate_disposition": None,
             "mission_id": mission_id,
             "context_file": str(path),
             "loaded_context": None,
             "runtime_dirs": discovered_runtime_dirs,
             "conflicts": conflicts,
+            "warnings": [],
+            "missing_current_intent": [],
+            "reason_codes": ["runtime_dir_conflict"] if conflicts else [],
+            "assessment_digest": None,
+            "reentry_packet": None,
         }
+        payload["user_message"] = _mission_reentry_user_message(payload)
+        if disposition is not None:
+            raise TplanError("re-entry disposition requires an existing Mission candidate")
+        return payload
 
-    metadata = read_shared_context_metadata(path)
+    metadata = read_shared_context_metadata(path) if path.exists() else {}
     conflicts: list[str] = []
+    warnings: list[str] = []
     if metadata.get("mission_id") not in {None, mission_id}:
         conflicts.append("mission_id")
-    if objective is not None and metadata.get("objective") not in {None, objective}:
-        conflicts.append("objective")
-    if acceptance_evidence is not None:
-        existing = metadata.get("acceptance_evidence")
-        if isinstance(existing, list) and _acceptance_fingerprint(existing) != _acceptance_fingerprint(acceptance_evidence):
-            conflicts.append("acceptance_evidence")
     existing_runtime_dir = metadata.get("runtime_dir")
     existing_runtime_dir_name = metadata.get("runtime_dir_name")
     if requested_runtime_dir is not None:
@@ -2497,15 +3054,423 @@ def build_mission_preflight(
             conflicts.append("runtime_dir")
         elif discovered_runtime_dirs and any(item != requested_runtime_dir for item in discovered_runtime_dirs):
             conflicts.append("runtime_dir")
+    elif len(discovered_runtime_dirs) > 1:
+        conflicts.append("runtime_dir")
+
+    runtime_dirs = discovered_runtime_dirs or [
+        item for item in (existing_runtime_dir,) if isinstance(item, str)
+    ]
+    runtime_snapshot = _runtime_reentry_snapshot(project_root, runtime_dirs, mission_id)
+    authoritative_objective = metadata.get("objective")
+    authoritative_acceptance = metadata.get("acceptance_evidence")
+    authoritative_status = metadata.get("status")
+    authoritative_title = metadata.get("title")
+    authoritative_active_task = (
+        {"id": metadata.get("active_task_id"), "title": None, "status": None}
+        if metadata.get("active_task_id") is not None
+        else None
+    )
+    authoritative_risks = [
+        signal
+        for signal in metadata.get("risk_signals", [])
+        if isinstance(signal, dict) and signal.get("status") == "active"
+    ]
+    recovery_boundary = None
+    blockers: list[dict[str, Any]] = []
+    latest_state = None
+    latest_trace_event = None
+    if isinstance(runtime_snapshot, dict):
+        availability = runtime_snapshot.get("availability")
+        if availability == "loaded":
+            if runtime_snapshot.get("diagnostics"):
+                conflicts.append("runtime_snapshot")
+            provenance = runtime_snapshot.get("runtime_provenance")
+            if isinstance(provenance, dict) and not provenance.get("compatible", False):
+                conflicts.append("runtime_provenance")
+            runtime_objective = runtime_snapshot.get("objective")
+            runtime_acceptance = runtime_snapshot.get("acceptance_evidence")
+            runtime_status = runtime_snapshot.get("status")
+            if (
+                metadata.get("objective") not in {None, runtime_objective}
+                or (
+                    isinstance(metadata.get("acceptance_evidence"), list)
+                    and _acceptance_fingerprint(metadata["acceptance_evidence"])
+                    != _acceptance_fingerprint(runtime_acceptance or [])
+                )
+                or metadata.get("status") not in {None, runtime_status}
+                or metadata.get("active_task_id")
+                not in {
+                    None,
+                    (runtime_snapshot.get("active_task") or {}).get("id")
+                    if isinstance(runtime_snapshot.get("active_task"), dict)
+                    else None,
+                }
+            ):
+                warnings.append("shared_context_stale")
+            authoritative_objective = runtime_objective
+            authoritative_acceptance = runtime_acceptance
+            authoritative_status = runtime_status
+            authoritative_title = runtime_snapshot.get("title")
+            authoritative_active_task = runtime_snapshot.get("active_task")
+            authoritative_risks = runtime_snapshot.get("active_risk_signals", [])
+            recovery_boundary = runtime_snapshot.get("recovery_boundary")
+            blockers = runtime_snapshot.get("blockers", [])
+            latest_state = runtime_snapshot.get("latest_state")
+            latest_trace_event = runtime_snapshot.get("latest_trace_event")
+        elif availability in {"missing", "unreadable"}:
+            conflicts.append("runtime_snapshot")
+
+    missing_current_intent = []
+    if objective is None:
+        missing_current_intent.append("objective")
+    elif authoritative_objective not in {None, objective}:
+        conflicts.append("objective")
+    if acceptance_evidence is None:
+        missing_current_intent.append("acceptance_evidence")
+    elif (
+        isinstance(authoritative_acceptance, list)
+        and _acceptance_fingerprint(authoritative_acceptance)
+        != _acceptance_fingerprint(acceptance_evidence)
+    ):
+        conflicts.append("acceptance_evidence")
+
+    if authoritative_status in TERMINAL_MISSION_STATUSES:
+        conflicts.append("mission_status")
     conflicts = list(dict.fromkeys(conflicts))
-    return {
-        "action": "needs_agentic_selection" if conflicts else "continue_existing",
+    warnings = list(dict.fromkeys(warnings))
+    candidate_disposition = _reentry_candidate_disposition(
+        mission_status=authoritative_status,
+        conflicts=conflicts,
+        missing_current_intent=missing_current_intent,
+    )
+    identity_action = (
+        "continue_existing"
+        if not conflicts and not missing_current_intent and authoritative_status == "active"
+        else "needs_agentic_selection"
+    )
+    reason_codes = ["residual_mission_requires_explicit_reentry_decision"]
+    if not path.exists():
+        reason_codes.append("runtime_only_candidate")
+    if missing_current_intent:
+        reason_codes.append("current_intent_incomplete")
+    if conflicts:
+        reason_codes.append("identity_or_runtime_conflict")
+    if warnings:
+        reason_codes.append("shared_context_snapshot_stale")
+    if authoritative_status in {"blocked", "requires_human"}:
+        reason_codes.append("mission_requires_human")
+    elif authoritative_status in TERMINAL_MISSION_STATUSES:
+        reason_codes.append("mission_terminal")
+    freshness_signals = {
+        "shared_context_updated_at": metadata.get("updated_at"),
+        "runtime_snapshot_availability": (
+            runtime_snapshot.get("availability")
+            if isinstance(runtime_snapshot, dict)
+            else None
+        ),
+        "shared_context_matches_runtime": (
+            "shared_context_stale" not in warnings
+            if path.exists()
+            and isinstance(runtime_snapshot, dict)
+            and runtime_snapshot.get("availability") == "loaded"
+            else None
+        ),
+        "runtime_files": (
+            runtime_snapshot.get("freshness")
+            if isinstance(runtime_snapshot, dict)
+            else None
+        ),
+    }
+    reentry_packet = {
+        "mission_id": mission_id,
+        "title": authoritative_title,
+        "objective": authoritative_objective,
+        "status": authoritative_status,
+        "acceptance_evidence": authoritative_acceptance,
+        "active_task": authoritative_active_task,
+        "latest_state": latest_state,
+        "latest_trace_event": latest_trace_event,
+        "recovery_boundary": recovery_boundary,
+        "blockers": blockers,
+        "active_risk_signals": authoritative_risks,
+        "freshness_signals": freshness_signals,
+        "runtime_snapshot": runtime_snapshot,
+        "current_intent": {
+            "objective": objective,
+            "acceptance_evidence": acceptance_evidence,
+        },
+    }
+    assessment_digest = _sha256_digest(
+        {
+            "reentry_packet": reentry_packet,
+            "conflicts": conflicts,
+            "warnings": warnings,
+            "missing_current_intent": missing_current_intent,
+            "candidate_disposition": candidate_disposition,
+        }
+    )
+    payload = {
+        "schema_version": MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION,
+        "action": "needs_agentic_selection",
+        "identity_action": identity_action,
+        "decision_required": True,
+        "candidate_disposition": candidate_disposition,
         "mission_id": mission_id,
         "context_file": str(path),
-        "loaded_context": metadata,
-        "runtime_dirs": discovered_runtime_dirs or [item for item in (existing_runtime_dir,) if isinstance(item, str)],
+        "loaded_context": metadata if path.exists() else None,
+        "runtime_dirs": runtime_dirs,
         "conflicts": conflicts,
+        "warnings": warnings,
+        "missing_current_intent": missing_current_intent,
+        "reason_codes": reason_codes,
+        "assessment_digest": assessment_digest,
+        "reentry_packet": reentry_packet,
     }
+    payload["user_message"] = _mission_reentry_user_message(payload)
+    if disposition is not None:
+        return _apply_mission_reentry_disposition(
+            payload,
+            disposition=disposition,
+            rationale=rationale or "",
+        )
+    return payload
+
+
+def mission_reentry_receipt_path(
+    project_root: Path,
+    decision: dict[str, Any],
+) -> Path:
+    mission_id = decision.get("mission_id")
+    decision_digest = decision.get("decision_digest")
+    if not isinstance(mission_id, str) or not mission_id:
+        raise TplanError("re-entry decision mission_id must be a non-empty string")
+    if not isinstance(decision_digest, str) or not decision_digest.startswith("sha256:"):
+        raise TplanError("re-entry decision_digest must be a sha256 digest")
+    digest_suffix = decision_digest.removeprefix("sha256:")[:16]
+    return (
+        project_root
+        / ".tplan"
+        / "reentry_decisions"
+        / f"{slugify(mission_id)}-{digest_suffix}.json"
+    )
+
+
+def record_and_apply_mission_reentry_decision(
+    project_root: Path,
+    preflight: dict[str, Any],
+) -> dict[str, Any]:
+    decision = preflight.get("reentry_decision")
+    if not isinstance(decision, dict) or preflight.get("decision_required"):
+        raise TplanError("an explicit re-entry disposition is required before recording")
+    if decision.get("schema_version") != MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION:
+        raise TplanError("re-entry decision schema_version is unsupported")
+    if decision.get("assessment_digest") != preflight.get("assessment_digest"):
+        raise TplanError("re-entry decision assessment_digest does not match preflight")
+    if decision.get("mission_id") != preflight.get("mission_id"):
+        raise TplanError("re-entry decision mission_id does not match preflight")
+    if decision.get("disposition") != preflight.get("action"):
+        raise TplanError("re-entry decision disposition does not match selected action")
+    decision_basis = {
+        "assessment_digest": decision.get("assessment_digest"),
+        "mission_id": decision.get("mission_id"),
+        "disposition": decision.get("disposition"),
+        "rationale": decision.get("rationale"),
+    }
+    if decision.get("decision_digest") != _sha256_digest(decision_basis):
+        raise TplanError("re-entry decision digest does not match its decision fields")
+
+    disposition = decision.get("disposition")
+    reentry_packet = preflight.get("reentry_packet")
+    runtime_snapshot = (
+        reentry_packet.get("runtime_snapshot")
+        if isinstance(reentry_packet, dict)
+        else None
+    )
+    runtime_application: tuple[str, str, dict[str, Any]] | None = None
+    if (
+        disposition == "resume_existing"
+        and isinstance(runtime_snapshot, dict)
+        and runtime_snapshot.get("availability") == "loaded"
+    ):
+        runtime_identity = runtime_snapshot.get("runtime_dir")
+        expected_digest = runtime_snapshot.get("mission_digest")
+        if not isinstance(runtime_identity, str) or not runtime_identity:
+            raise TplanError("resume_existing runtime snapshot is missing runtime_dir")
+        if not isinstance(expected_digest, str) or not expected_digest.startswith("sha256:"):
+            raise TplanError("resume_existing runtime snapshot is missing mission_digest")
+        expected_freshness = runtime_snapshot.get("freshness")
+        expected_content_digests = (
+            expected_freshness.get("content_digests")
+            if isinstance(expected_freshness, dict)
+            else None
+        )
+        if not isinstance(expected_content_digests, dict):
+            raise TplanError(
+                "resume_existing runtime snapshot is missing freshness content digests"
+            )
+        runtime_application = (
+            runtime_identity,
+            expected_digest,
+            expected_content_digests,
+        )
+
+    receipt_path = mission_reentry_receipt_path(project_root, decision)
+    receipt = {
+        "schema_version": MISSION_REENTRY_RECEIPT_SCHEMA_VERSION,
+        "decision": copy.deepcopy(decision),
+        "context_file": preflight.get("context_file"),
+        "runtime_dirs": copy.deepcopy(preflight.get("runtime_dirs", [])),
+        "application": {
+            "status": "recorded",
+            "runtime_dir": None,
+            "mission_digest_before": None,
+            "mission_digest_after": None,
+        },
+    }
+    # The disposition receipt must exist before any Mission mutation begins.
+    write_json(receipt_path, receipt, durable=True)
+
+    if runtime_application is not None:
+        runtime_identity, expected_digest, expected_content_digests = runtime_application
+        runtime_dir = _resolve_project_runtime_dir(project_root, runtime_identity)
+        try:
+            with execution_trace_lock(runtime_dir):
+                _recover_pending_mission_transaction_unlocked(runtime_dir)
+                before = _read_mission_unlocked(runtime_dir)
+                if mission_control_digest(before) != expected_digest:
+                    raise TplanError(
+                        "Mission changed after re-entry assessment; rerun preflight before resuming"
+                    )
+                paths = mission_paths(runtime_dir)
+                current_content_digests = {
+                    "mission": _file_content_digest(paths["mission"]),
+                    "narrative": _file_content_digest(paths["narrative"]),
+                    "evidence": _file_content_digest(paths["evidence"]),
+                    "trace": _file_content_digest(paths["trace"]),
+                }
+                if current_content_digests != expected_content_digests:
+                    raise TplanError(
+                        "Mission artifacts changed after re-entry assessment; "
+                        "rerun preflight before resuming"
+                    )
+                updated = copy.deepcopy(before)
+                shared_context = updated.get("shared_context")
+                if not isinstance(shared_context, dict):
+                    shared_context = {}
+                risk_signals = shared_context.get("risk_signals")
+                if not isinstance(risk_signals, list):
+                    risk_signals = []
+                shared_context["risk_signals"] = risk_signals
+                shared_context["reentry_decision"] = copy.deepcopy(decision)
+                updated["shared_context"] = shared_context
+                _commit_mission_state_unlocked(
+                    runtime_dir,
+                    before,
+                    updated,
+                    source={"kind": "runtime_script", "name": "mission_reentry"},
+                    latest_state=(
+                        "Explicit re-entry decision recorded; "
+                        "the existing Mission may resume."
+                    ),
+                )
+            receipt["application"] = {
+                "status": "applied_to_runtime",
+                "runtime_dir": runtime_identity,
+                "mission_digest_before": expected_digest,
+                "mission_digest_after": mission_control_digest(updated),
+            }
+        except (OSError, TplanError, ValueError) as exc:
+            receipt["application"] = {
+                "status": "application_failed",
+                "runtime_dir": runtime_identity,
+                "mission_digest_before": expected_digest,
+                "mission_digest_after": None,
+                "error": _one_line(exc),
+            }
+            write_json(receipt_path, receipt, durable=True)
+            raise
+    elif disposition == "resume_existing":
+        receipt["application"]["status"] = "recorded_pending_runtime_initialization"
+    elif disposition == "create_new_from_context":
+        receipt["application"]["status"] = "recorded_for_new_mission_context"
+    else:
+        receipt["application"]["status"] = "recorded_without_runtime_mutation"
+
+    write_json(receipt_path, receipt, durable=True)
+    selected = copy.deepcopy(preflight)
+    selected["decision_receipt"] = {
+        "path": str(receipt_path),
+        "schema_version": MISSION_REENTRY_RECEIPT_SCHEMA_VERSION,
+        "application": copy.deepcopy(receipt["application"]),
+    }
+    selected["user_message"] = (
+        _mission_reentry_user_message(selected)
+        + f" 决定已记录在 {receipt_path}，应用状态为 "
+        f"{receipt['application']['status']}。"
+    )
+    return selected
+
+
+def finalize_mission_reentry_initialization(
+    project_root: Path,
+    preflight: dict[str, Any] | None,
+    mission_dir: Path,
+    *,
+    error: BaseException | None = None,
+) -> None:
+    if not isinstance(preflight, dict):
+        return
+    decision = preflight.get("reentry_decision")
+    receipt_info = preflight.get("decision_receipt")
+    if not isinstance(decision, dict) or not isinstance(receipt_info, dict):
+        return
+
+    receipt_path = mission_reentry_receipt_path(project_root, decision)
+    if receipt_info.get("path") != str(receipt_path):
+        raise TplanError("re-entry initialization receipt path does not match decision")
+    receipt = read_json(receipt_path)
+    if receipt.get("schema_version") != MISSION_REENTRY_RECEIPT_SCHEMA_VERSION:
+        raise TplanError("re-entry initialization receipt schema is unsupported")
+    receipt_decision = receipt.get("decision")
+    if (
+        not isinstance(receipt_decision, dict)
+        or receipt_decision.get("decision_digest") != decision.get("decision_digest")
+    ):
+        raise TplanError("re-entry initialization receipt does not match decision")
+
+    runtime_identity = runtime_dir_identity(project_root, mission_dir)
+    if error is not None:
+        receipt["application"] = {
+            "status": "initialization_failed",
+            "runtime_dir": runtime_identity,
+            "mission_digest_before": None,
+            "mission_digest_after": None,
+            "error": _one_line(error),
+        }
+        write_json(receipt_path, receipt, durable=True)
+        return
+
+    mission = read_json(mission_paths(mission_dir)["mission"])
+    shared_context = mission.get("shared_context")
+    stored_decision = (
+        shared_context.get("reentry_decision")
+        if isinstance(shared_context, dict)
+        else None
+    )
+    if (
+        not isinstance(stored_decision, dict)
+        or stored_decision.get("decision_digest") != decision.get("decision_digest")
+    ):
+        raise TplanError(
+            "initialized Mission does not contain the recorded re-entry decision"
+        )
+    receipt["application"] = {
+        "status": "applied_to_initialized_runtime",
+        "runtime_dir": runtime_identity,
+        "mission_digest_before": None,
+        "mission_digest_after": mission_control_digest(mission),
+    }
+    write_json(receipt_path, receipt, durable=True)
 
 
 def attach_project_shared_context(
@@ -2514,6 +3479,8 @@ def attach_project_shared_context(
     *,
     mission_dir: Path | None = None,
     source_contexts: list[str] | None = None,
+    reentry_disposition: str | None = None,
+    reentry_rationale: str | None = None,
 ) -> dict[str, Any]:
     mission_meta = mission["mission"]
     preflight = build_mission_preflight(
@@ -2522,12 +3489,29 @@ def attach_project_shared_context(
         objective=mission_meta["objective"],
         acceptance_evidence=_mission_acceptance_evidence(mission),
         mission_dir=mission_dir,
+        disposition=reentry_disposition,
+        rationale=reentry_rationale,
     )
+    loaded_context = preflight.get("loaded_context")
+    has_reentry_candidate = isinstance(preflight.get("reentry_packet"), dict)
+    if has_reentry_candidate and preflight.get("decision_required"):
+        if preflight.get("conflicts"):
+            conflicts = ", ".join(preflight["conflicts"])
+            raise TplanError(f"shared context preflight conflict: {conflicts}")
+        raise TplanError(
+            "residual Mission requires explicit re-entry disposition and rationale "
+            "before runtime initialization"
+        )
+    if has_reentry_candidate and preflight.get("action") != "resume_existing":
+        raise TplanError(
+            "runtime initialization can only apply resume_existing to the selected "
+            "Mission id; use a new mission_id with --source-context for "
+            f"{preflight.get('action')}"
+        )
     if preflight.get("conflicts"):
         conflicts = ", ".join(preflight["conflicts"])
         raise TplanError(f"shared context preflight conflict: {conflicts}")
 
-    loaded_context = preflight.get("loaded_context")
     loaded_sources = []
     if isinstance(loaded_context, dict) and isinstance(loaded_context.get("source_contexts"), list):
         loaded_sources = [str(item) for item in loaded_context["source_contexts"]]
@@ -2560,6 +3544,9 @@ def attach_project_shared_context(
         "runtime_dir": runtime_dir,
         "runtime_dir_name": runtime_dir_name,
     }
+    reentry_decision = preflight.get("reentry_decision")
+    if isinstance(reentry_decision, dict):
+        mission["shared_context"]["reentry_decision"] = reentry_decision
     return preflight
 
 

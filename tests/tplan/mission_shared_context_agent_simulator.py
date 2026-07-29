@@ -212,6 +212,28 @@ def mission_shared_context_report(source_root: Path, output_dir: Path) -> dict[s
         ],
     )
     run(
+        "preflight_explicit_resume",
+        [
+            sys.executable,
+            str(scripts["preflight_mission.py"]),
+            "--project-root",
+            str(project_root),
+            "--mission-id",
+            "interrupted-validation",
+            "--objective",
+            "Validate repository handoff after interrupted run.",
+            "--acceptance-evidence",
+            "A1:Mission memory is available to a fresh agent.",
+            "--acceptance-evidence",
+            "A2:Shared environment risk is visible before the next action.",
+            "--disposition",
+            "resume_existing",
+            "--rationale",
+            "The fresh request explicitly resumes the same unfinished validation Mission.",
+            "--json",
+        ],
+    )
+    run(
         "init_new_with_source_context",
         [
             sys.executable,
@@ -237,6 +259,7 @@ def mission_shared_context_report(source_root: Path, output_dir: Path) -> dict[s
 
     matching = parse_step_json(steps["preflight_matching"])
     conflict = parse_step_json(steps["preflight_conflict"])
+    explicit_resume = parse_step_json(steps["preflight_explicit_resume"])
     new_mission = read_json(new_dir / "mission.json")
     context_file = project_root / ".tplan" / "shared_contexts" / "tplan_mission_shared_context-interrupted-validation.md"
     markdown = context_file.read_text(encoding="utf-8") if context_file.exists() else ""
@@ -246,7 +269,16 @@ def mission_shared_context_report(source_root: Path, output_dir: Path) -> dict[s
 
     checks = {
         "context_file_exists": context_file.exists(),
-        "matching_continuation": matching.get("action") == "continue_existing",
+        "matching_candidate_is_not_auto_resume": (
+            matching.get("action") == "needs_agentic_selection"
+            and matching.get("candidate_disposition") == "resume_existing"
+            and matching.get("decision_required") is True
+        ),
+        "explicit_resume_selected": (
+            explicit_resume.get("action") == "resume_existing"
+            and explicit_resume.get("reentry_decision", {}).get("disposition")
+            == "resume_existing"
+        ),
         "conflict_blocks_silent_continue": conflict.get("action") == "needs_agentic_selection",
         "source_contexts_recorded": source_contexts == ["interrupted-validation"],
         "new_acceptance_not_inherited": new_acceptance_ids == ["A1"],
@@ -257,6 +289,7 @@ def mission_shared_context_report(source_root: Path, output_dir: Path) -> dict[s
         "identifies_previous_mission": "interrupted-validation" in markdown,
         "objective_without_chat": "Validate repository handoff after interrupted run." in markdown,
         "sees_active_risk": checks["risk_visible_in_markdown"],
+        "requires_explicit_reentry_decision": checks["explicit_resume_selected"],
         "refuses_conflicting_continue": checks["conflict_blocks_silent_continue"],
         "source_context_is_background": checks["source_contexts_recorded"],
         "new_identity_preserved": new_mission["mission"]["id"] == "new-validation-hardening",
@@ -274,6 +307,9 @@ def mission_shared_context_report(source_root: Path, output_dir: Path) -> dict[s
         "scripted_agent_checks": scripted_agent_checks,
         "preflight": {
             "matching_action": matching.get("action"),
+            "matching_identity_action": matching.get("identity_action"),
+            "matching_candidate_disposition": matching.get("candidate_disposition"),
+            "explicit_resume_action": explicit_resume.get("action"),
             "conflict_action": conflict.get("action"),
             "conflict_fields": conflict.get("conflicts", []),
         },

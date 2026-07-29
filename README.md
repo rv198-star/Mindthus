@@ -99,18 +99,19 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.5.3`。本版提供 Stable plugins 与 Stable skills；其 Codex
-local-tool callback E2E 已完成，未观测的 SubAgent host callback 保持 `not_reported`，不被
-表述为已通过。
+当前已发布 Stable 是 `v1.5.4`。本版提供 Stable plugins、Stable skills 与补充发布的
+ROI Beta experimental asset；它修复 TPlan Codex Hook 遥测激活、缺失遥测展示和
+Mission 重入恢复判断问题。未观测的 SubAgent host callback 保持 `not_reported`，
+不被表述为已通过。
 
-已发布的 `v1.5.3` Release 提供 Stable plugins、Stable skills，以及从 `v1.5.3` 的冻结
+已发布的 `v1.5.4` Release 提供 Stable plugins、Stable skills，以及从 `v1.5.4` 冻结
 Stable core 重新组装并资格验证的 ROI Beta experimental asset。ROI Beta 不能代替
-`v1.5.3` Stable。
+`v1.5.4` Stable。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.3.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.3.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.4.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.4.tar.gz`。
 - 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
-  `mindthus-beta-1.5.3-roi-beta.tar.gz`；它是独立的 Codex plugin / marketplace 包，不是
+  `mindthus-beta-1.5.4-roi-beta.tar.gz`；它是独立的 Codex plugin / marketplace 包，不是
   通用 skills-pack，但共享本版 TPlan 修复后的产品核心。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
@@ -121,22 +122,22 @@ Stable core 重新组装并资格验证的 ROI Beta experimental asset。ROI Bet
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.5.3.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-plugins-1.5.3.tar.gz"
+  -o /tmp/mindthus-plugins-1.5.4.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-plugins-1.5.4.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.5.3.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.5.4.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.5.3.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-skills-1.5.3.tar.gz"
+  -o /tmp/mindthus-skills-1.5.4.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-skills-1.5.4.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.5.3.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.5.4.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -159,17 +160,17 @@ codex plugin marketplace remove mindthus
 
 ### Codex ROI Beta（实验）
 
-只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个 `v1.5.3` 包从本版冻结
-Stable core 重新组装，保留本次 TPlan 修复；它和 Stable 使用不同的 package、marketplace、
-cache 与 skill namespace，可以独立安装或移除：
+只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个 `v1.5.4-roi-beta` 包从
+本版冻结 Stable core 重新组装，保留 #146、#147、#148 的 TPlan 修复；它和 Stable 使用
+不同的 package、marketplace、cache 与 skill namespace，可以独立安装或移除：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-beta-1.5.3-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.3/mindthus-beta-1.5.3-roi-beta.tar.gz"
+  -o /tmp/mindthus-beta-1.5.4-roi-beta.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-beta-1.5.4-roi-beta.tar.gz"
 rm -rf /tmp/mindthus-roi-beta
 mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.5.3-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
+tar -xzf /tmp/mindthus-beta-1.5.4-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
 codex plugin marketplace add /tmp/mindthus-roi-beta
 codex plugin add mindthus-beta@mindthus-beta
 ```
@@ -281,7 +282,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.5.3`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.5.4`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

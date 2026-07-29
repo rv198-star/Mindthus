@@ -1,18 +1,18 @@
-# Mindthus 1.5.3 ROI Beta (GPT/Sol) package
+# Mindthus 1.5.4 ROI Beta (GPT/Sol) package
 
-Status: source tag `v1.5.3-roi-beta` is the experimental ROI package in the same
-v1.5.3 GitHub Release as Stable. Marketplace publication remains absent.
+Status: source tag `v1.5.4-roi-beta` is the experimental ROI package in the same
+v1.5.4 GitHub Release as Stable. Marketplace publication remains absent.
 
 This checkpoint composes two immutable inputs:
 
-- Shared Product Core: Mindthus `1.5.3` / `57319d8da57c367eed42e386b4bfafb477e91bea`
+- Shared Product Core: Mindthus `1.5.4` / `17fcfabf697ca104919bb5a87ad7391b8bf52188`
 - Runtime Profile: ROI.2 implementation / `493f9520b75f582aa22f6c8647ec08eab3e122d3`
 
 ROI.2 qualification remains frozen at `4ee3e034`; the later convergence archive
 `9a1c2268` is a historical decision-evidence identifier only. It is not a build
 dependency and does not need to exist in a clean single-branch clone.
 
-The assembly is identified as `1.5.3-roi-beta`. It uses the separate
+The assembly is identified as `1.5.4-roi-beta`. It uses the separate
 `mindthus-beta` package and marketplace identities, rewrites only the namespace mention
 inside the inherited Codex default prompt, replaces the full `using-mindthus` entry with
 the frozen ROI.2 overlay, and applies the one qualified 3L5S Anti-Spiral sentence
@@ -24,15 +24,15 @@ Build locally:
 
 ```bash
 python3 beta/2.0-beta/build-internal-beta.py \
-  --out /tmp/mindthus-1.5.3-roi-beta-marketplace \
-  --archive /tmp/mindthus-beta-1.5.3-roi-beta.tar.gz
+  --out /tmp/mindthus-1.5.4-roi-beta-marketplace \
+  --archive /tmp/mindthus-beta-1.5.4-roi-beta.tar.gz
 ```
 
 This command requires a clean checkout and builds both an inspectable Codex marketplace
 directory and a byte-reproducible archive. It does not install into the user's
 `CODEX_HOME` or update a marketplace.
 
-Rollback target: the paired `v1.5.3` Stable plugin package (or the retained `v1.5.2`
-Stable package). Both packages belong to one 1.5.3 GitHub Release; the ROI package remains
+Rollback target: the paired `v1.5.4` Stable plugin package (or the retained `v1.5.3`
+Stable package). Both packages belong to one 1.5.4 GitHub Release; the ROI package remains
 explicitly experimental. Stable and ROI Beta use
 different package, marketplace, cache, and skill namespaces and can be removed independently.

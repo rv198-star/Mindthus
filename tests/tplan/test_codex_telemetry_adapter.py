@@ -726,7 +726,7 @@ class CodexTelemetryAdapterTests(unittest.TestCase):
             coverage = json.loads(coverage_path(mission_dir).read_text(encoding="utf-8"))
             self.assertEqual(coverage["channels"]["local_tools"]["status"], "not_reported")
             self.assertIn(
-                "installation/trust has not been observed",
+                "preflight_required",
                 coverage["channels"]["local_tools"]["reason"],
             )
 

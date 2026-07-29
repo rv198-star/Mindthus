@@ -70,10 +70,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
             PROFILE["version"], f"{PROFILE['shared_core']['version']}-roi-beta"
         )
         self.assertEqual(PROFILE["package_identity"], "mindthus-beta")
-        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.3")
+        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.4")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "57319d8da57c367eed42e386b4bfafb477e91bea",
+            "17fcfabf697ca104919bb5a87ad7391b8bf52188",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
@@ -94,7 +94,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertTrue(PROFILE["publication"]["github_release"])
         self.assertEqual(
             PROFILE["publication"]["release_url"],
-            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.3",
+            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.4",
         )
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
@@ -107,10 +107,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("experimental asset", changelog)
         self.assertIn("experimental asset", notes)
         self.assertIn("发布源码 tag", changelog)
-        self.assertIn("作为 `v1.5.3` GitHub Release", notes)
-        self.assertIn("补充发布包：1.5.3 ROI Beta（GPT/Sol）", changelog)
+        self.assertIn("作为 `v1.5.4` GitHub Release", notes)
+        self.assertIn("补充发布包：1.5.4 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("受限实验入口", changelog)
-        self.assertIn("不是 `1.5.3 Stable` 的替代版", changelog)
+        self.assertIn("不是 `1.5.4 Stable` 的替代版", changelog)
         self.assertIn("不触发用户安装、配置", changelog)
         self.assertIn("或工作流的自动迁移", changelog)
         self.assertNotIn("预发布日期", changelog + notes)
@@ -318,6 +318,9 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 "tplan-interaction-guard-and-heartbeat-v1": "included",
                 "tplan-validated-outcome-attribution-v1": "included",
                 "tplan-truth-and-telemetry-boundaries-v1": "included",
+                "tplan-codex-telemetry-activation-v1": "included",
+                "tplan-missing-telemetry-simplified-output-v1": "included",
+                "tplan-mission-reentry-resume-decision-v1": "included",
             },
         )
         for item in register["capabilities"]:

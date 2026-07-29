@@ -45,6 +45,17 @@ def iso(value):
     return value.isoformat().replace("+00:00", "Z")
 
 
+def svg_card_text(svg_text, task_id):
+    root = ET.fromstring(svg_text)
+    card = next(
+        element
+        for element in root.iter()
+        if element.attrib.get("data-task-id") == task_id
+        and element.attrib.get("class") == "task-card"
+    )
+    return " ".join(text.strip() for text in card.itertext() if text.strip())
+
+
 def create_tree_mission(tmp):
     mission_dir = Path(tmp) / "execution-tree"
     tasks = Path(tmp) / "tasks.json"
@@ -206,7 +217,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(evidence.returncode, 0, evidence.stderr)
 
             report = render_json(mission_dir)
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.9")
             self.assertEqual(report["mission"]["outcome_attribution"]["yield_class"], "countable_progress")
             by_id = {node["id"]: node for node in report["nodes"]}
             self.assertEqual(by_id["S1"]["outcome_attribution"]["yield_class"], "countable_progress")
@@ -816,7 +827,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
 
             report = render_json(mission_dir, "--view", "standard")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.9")
             self.assertEqual(report["timeline"]["axis"], "vertical")
             self.assertEqual(
                 report["timeline"]["row_positioning"],
@@ -1296,6 +1307,45 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 report["mission"]["elapsed_ms"],
             )
 
+            standard = render_json(mission_dir, "--view", "standard")
+            self.assertEqual(standard["presentation_density"]["mode"], "sparse")
+            self.assertEqual(
+                standard["presentation_density"]["telemetry_coverage"],
+                "not_reported",
+            )
+            self.assertEqual(
+                standard["presentation_density"]["omitted_standard_channels"],
+                ["LLM调用", "脚本时长", "工具时长", "等待时长", "Token"],
+            )
+            standard_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(standard_svg.returncode, 0, standard_svg.stderr)
+            self.assertIn("遥测覆盖：未采集成本通道", standard_svg.stdout)
+            for task_id in ("T1", "S1", "S2"):
+                card_text = svg_card_text(standard_svg.stdout, task_id)
+                self.assertNotIn("LLM调用累计", card_text)
+                self.assertNotIn("脚本累计", card_text)
+                self.assertNotIn("工具累计", card_text)
+                self.assertNotIn("等待累计", card_text)
+                self.assertNotIn("Token ", card_text)
+
+            audit = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "audit",
+            )
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn(
+                "LLM调用累计 未采集 · 脚本累计 未采集",
+                audit.stdout,
+            )
+            self.assertIn("Token 未采集", audit.stdout)
+
     def test_missing_active_path_events_downgrade_lifecycle_coverage(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -1740,6 +1790,34 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIsNone(snapshot["mission"]["elapsed_ms"])
             self.assertTrue(all(node["active_duration_ms"] is None for node in snapshot["nodes"]))
             self.assertEqual(snapshot["mission"]["cost"]["span_count"], 0)
+            snapshot_standard = render_json(mission_dir, "--view", "standard")
+            self.assertEqual(
+                snapshot_standard["timeline"]["window_kind"],
+                "snapshot_only",
+            )
+            self.assertEqual(
+                snapshot_standard["timeline"]["range_bar_scale"],
+                "not_available",
+            )
+            self.assertEqual(
+                snapshot_standard["timeline"]["row_positioning"],
+                "declared_tree_order",
+            )
+            snapshot_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(snapshot_svg.returncode, 0, snapshot_svg.stderr)
+            self.assertIn("TPlan Mission 结构快照", snapshot_svg.stdout)
+            self.assertIn("没有执行时间观测", snapshot_svg.stdout)
+            self.assertNotIn("TPlan 纵向实际执行时间轴", snapshot_svg.stdout)
+            for task_id in ("T1", "S1", "S2"):
+                self.assertNotIn(
+                    "实际历时",
+                    svg_card_text(snapshot_svg.stdout, task_id),
+                )
 
             active = run_script("transition_task.py", str(mission_dir), "--task-id", "S1", "--status", "active")
             self.assertEqual(active.returncode, 0, active.stderr)
@@ -1754,6 +1832,46 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(partial["timeline"]["offset_origin"], "first_observed_trace")
             self.assertEqual(partial["timeline"]["range_bar_scale"], "linear_observed_window")
             self.assertEqual(partial["timeline"]["window_kind"], "observed_trace")
+            partial_standard = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "standard",
+                "--format",
+                "svg",
+            )
+            self.assertEqual(
+                partial_standard.returncode,
+                0,
+                partial_standard.stderr,
+            )
+            self.assertIn("TPlan 已观测执行窗口", partial_standard.stdout)
+            self.assertIn("已观测相对时间", partial_standard.stdout)
+            self.assertIn("观测窗口结束", partial_standard.stdout)
+            self.assertNotIn(
+                "TPlan 纵向实际执行时间轴",
+                partial_standard.stdout,
+            )
+            partial_markdown = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "standard",
+            )
+            self.assertEqual(
+                partial_markdown.returncode,
+                0,
+                partial_markdown.stderr,
+            )
+            self.assertTrue(
+                partial_markdown.stdout.startswith(
+                    "# TPlan 已观测执行窗口与成本树"
+                )
+            )
+            self.assertNotIn(
+                "# TPlan 实际执行与成本树",
+                partial_markdown.stdout,
+            )
             audit = run_script(
                 "render_execution_cost_tree.py", str(mission_dir), "--view", "audit"
             )
@@ -1793,6 +1911,259 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertIn("forbidden raw-content field", result.stderr)
             self.assertEqual(read_jsonl(mission_dir / "execution_trace.jsonl"), records_before)
 
+    def test_standard_sparse_script_coverage_uses_one_mission_note_and_no_empty_node_metrics(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            started = parse_time(
+                read_jsonl(mission_dir / "execution_trace.jsonl")[0]["timestamp"]
+            )
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "script",
+                        "label": "focused renderer tests",
+                        "status": "ok",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "started_at": iso(started),
+                        "finished_at": iso(started + timedelta(milliseconds=20)),
+                        "duration_ms": 20,
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                },
+                "sparse-script",
+            )
+
+            report = render_json(mission_dir, "--view", "standard")
+            profile = report["presentation_density"]
+            self.assertEqual(profile["mode"], "sparse")
+            self.assertEqual(profile["observed_channels"], ["脚本时长"])
+            self.assertEqual(
+                profile["standard_note"],
+                "遥测覆盖：部分，仅采集脚本时长；未采集：LLM调用、工具时长、等待时长、Token；未显示字段不代表 0。",
+            )
+            standard_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(standard_svg.returncode, 0, standard_svg.stderr)
+            self.assertEqual(standard_svg.stdout.count("遥测覆盖："), 1)
+            for absent_zero in (
+                "LLM调用累计 0",
+                "工具累计 0",
+                "等待累计 0",
+                "Token 入 0 / 出 0",
+            ):
+                self.assertNotIn(absent_zero, standard_svg.stdout)
+            s1_text = svg_card_text(standard_svg.stdout, "S1")
+            self.assertIn("脚本累计 20ms（宿主实测）", s1_text)
+            self.assertNotIn("LLM调用累计", s1_text)
+            self.assertNotIn("工具累计", s1_text)
+            self.assertNotIn("等待累计", s1_text)
+            self.assertNotIn("Token ", s1_text)
+            self.assertNotIn("脚本累计", svg_card_text(standard_svg.stdout, "S2"))
+
+            standard_markdown = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+            )
+            self.assertEqual(
+                standard_markdown.returncode,
+                0,
+                standard_markdown.stderr,
+            )
+            self.assertEqual(
+                standard_markdown.stdout.count("遥测覆盖："),
+                1,
+            )
+            self.assertNotIn("## Codex 遥测覆盖", standard_markdown.stdout)
+            audit = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "audit",
+            )
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn("## Codex 遥测覆盖", audit.stdout)
+            self.assertIn(
+                "optional Codex telemetry adapter is not configured for this Mission",
+                audit.stdout,
+            )
+
+    def test_standard_mixed_telemetry_keeps_observed_fields_and_consolidates_absent_ones(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            started = parse_time(
+                read_jsonl(mission_dir / "execution_trace.jsonl")[0]["timestamp"]
+            )
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "script",
+                        "label": "focused renderer tests",
+                        "status": "ok",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "started_at": iso(started),
+                        "finished_at": iso(started + timedelta(milliseconds=20)),
+                        "duration_ms": 20,
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                },
+                "mixed-script",
+            )
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "model",
+                        "label": "renderer classification",
+                        "status": "ok",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "started_at": iso(started),
+                        "finished_at": iso(started + timedelta(milliseconds=15)),
+                        "duration_ms": 15,
+                        "attempt": 1,
+                        "parent_span_id": None,
+                    },
+                    "usage": {"input_tokens": 120, "output_tokens": 30},
+                    "usage_source": "platform_reported",
+                },
+                "mixed-model",
+            )
+
+            report = render_json(mission_dir, "--view", "standard")
+            profile = report["presentation_density"]
+            self.assertEqual(profile["mode"], "mixed")
+            self.assertEqual(
+                profile["observed_channels"],
+                ["LLM调用", "脚本时长", "Token"],
+            )
+            self.assertEqual(
+                profile["omitted_standard_channels"],
+                ["工具时长", "等待时长"],
+            )
+            standard_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(standard_svg.returncode, 0, standard_svg.stderr)
+            s1_text = svg_card_text(standard_svg.stdout, "S1")
+            self.assertIn("LLM调用累计 15ms（调用端实测）", s1_text)
+            self.assertIn("脚本累计 20ms（宿主实测）", s1_text)
+            self.assertIn("Token 入 120 / 出 30", s1_text)
+            self.assertNotIn("工具累计", s1_text)
+            self.assertNotIn("等待累计", s1_text)
+            self.assertIn("未采集：工具时长、等待时长", standard_svg.stdout)
+
+    def test_standard_sparse_mode_preserves_abnormal_signals_and_declared_hierarchy(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = create_tree_mission(tmp)
+            activated = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S1",
+                "--status",
+                "active",
+            )
+            self.assertEqual(activated.returncode, 0, activated.stderr)
+            blocked = run_script(
+                "transition_task.py",
+                str(mission_dir),
+                "--task-id",
+                "S1",
+                "--status",
+                "blocked",
+            )
+            self.assertEqual(blocked.returncode, 0, blocked.stderr)
+            started = parse_time(
+                read_jsonl(mission_dir / "execution_trace.jsonl")[0]["timestamp"]
+            )
+            record_span(
+                tmp,
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "script",
+                        "label": "failed renderer test",
+                        "status": "error",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "started_at": iso(started),
+                        "finished_at": iso(started + timedelta(milliseconds=5)),
+                        "duration_ms": 5,
+                        "attempt": 2,
+                        "parent_span_id": None,
+                    },
+                },
+                "abnormal-script",
+            )
+            start_execution_span(
+                mission_dir,
+                {
+                    "task_id": "S1",
+                    "span": {
+                        "kind": "model",
+                        "label": "interrupted renderer call",
+                        "measurement_source": "host_measured",
+                        "attribution": "exact",
+                        "attempt": 3,
+                        "parent_span_id": None,
+                    },
+                },
+            )
+
+            report = render_json(mission_dir, "--view", "standard")
+            self.assertEqual(report["trace"]["structure_fidelity"], "one_to_one")
+            self.assertEqual(report["visible_node_ids"], ["T1", "S1", "S2"])
+            self.assertEqual(
+                report["tree_edges"],
+                [
+                    {"from": "mission", "to": "T1"},
+                    {"from": "T1", "to": "S1"},
+                    {"from": "T1", "to": "S2"},
+                ],
+            )
+            standard_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(standard_svg.returncode, 0, standard_svg.stderr)
+            s1_text = svg_card_text(standard_svg.stdout, "S1")
+            self.assertIn("受阻", s1_text)
+            self.assertIn("执行次数 3", s1_text)
+            self.assertIn("错误 1", s1_text)
+            self.assertIn("未结束调用 1", s1_text)
+            root = ET.fromstring(standard_svg.stdout)
+            rendered_edges = {
+                (element.attrib["data-tree-from"], element.attrib["data-tree-to"])
+                for element in root.iter()
+                if "data-tree-from" in element.attrib
+            }
+            self.assertEqual(
+                rendered_edges,
+                {(edge["from"], edge["to"]) for edge in report["tree_edges"]},
+            )
+
     def test_unavailable_measurements_render_unknown_instead_of_zero(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = create_tree_mission(tmp)
@@ -1824,11 +2195,43 @@ class ExecutionCostTreeTests(unittest.TestCase):
                 report["mission"]["cost"]["by_kind_measurement_sources"],
                 {"model": {"unavailable": 1}},
             )
+            self.assertEqual(report["presentation_density"]["mode"], "sparse")
+            self.assertEqual(
+                report["presentation_density"]["channels"]["model_duration"]["status"],
+                "unavailable",
+            )
+            self.assertEqual(
+                report["presentation_density"]["channels"]["script_duration"]["status"],
+                "not_reported",
+            )
             self.assertIn("S1", report["visible_node_ids"])
             markdown = run_script("render_execution_cost_tree.py", str(mission_dir))
             self.assertEqual(markdown.returncode, 0, markdown.stderr)
-            self.assertIn("LLM调用累计 未知 · 脚本累计 未采集", markdown.stdout)
+            self.assertIn("LLM调用累计 未知 · Token 未知", markdown.stdout)
+            self.assertNotIn("脚本累计 未采集", markdown.stdout)
             self.assertIn("Token 未知", markdown.stdout)
+            standard_svg = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--format",
+                "svg",
+            )
+            self.assertEqual(standard_svg.returncode, 0, standard_svg.stderr)
+            self.assertIn("LLM调用累计 未知", svg_card_text(standard_svg.stdout, "S1"))
+            self.assertNotIn("脚本累计", svg_card_text(standard_svg.stdout, "S1"))
+            self.assertNotIn("LLM调用累计", svg_card_text(standard_svg.stdout, "S2"))
+
+            audit = run_script(
+                "render_execution_cost_tree.py",
+                str(mission_dir),
+                "--view",
+                "audit",
+            )
+            self.assertEqual(audit.returncode, 0, audit.stderr)
+            self.assertIn(
+                "LLM调用累计 未知 · 脚本累计 未采集",
+                audit.stdout,
+            )
 
     def test_inferred_token_usage_is_visibly_marked_as_estimated(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1941,7 +2344,7 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertNotIn("must not enter the trace", raw_trace)
 
             report = render_json(mission_dir, "--view", "audit")
-            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.8")
+            self.assertEqual(report["schema_version"], "tplan.execution_cost_tree.v0.9")
             self.assertEqual(report["trace"]["started_span_count"], 1)
             self.assertEqual(report["trace"]["completed_span_count"], 1)
             self.assertEqual(report["trace"]["open_span_count"], 0)

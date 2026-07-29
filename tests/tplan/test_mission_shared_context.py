@@ -4,9 +4,13 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 REPO = Path(__file__).resolve().parents[2]
+SCRIPTS = REPO / "skills" / "tplan" / "scripts"
+sys.path.insert(0, str(SCRIPTS))
+import tplan_runtime  # noqa: E402
 
 
 def run_script(script_name, *args):
@@ -32,6 +36,8 @@ def write_context(
     objective="Keep the original mission.",
     acceptance=None,
     *,
+    status="active",
+    active_task_id="T1",
     runtime_dir_name=None,
     risk_signals=None,
 ):
@@ -43,8 +49,8 @@ def write_context(
         "mission_id": mission_id,
         "title": "Original Mission",
         "objective": objective,
-        "status": "active",
-        "active_task_id": "T1",
+        "status": status,
+        "active_task_id": active_task_id,
         "acceptance_evidence": acceptance,
         "source_contexts": [],
         "runtime_dir_name": runtime_dir_name,
@@ -108,7 +114,23 @@ class MissionSharedContextPreflightTests(unittest.TestCase):
             self.assertEqual(payload["conflicts"], [])
             self.assertTrue(payload["context_file"].endswith("tplan_mission_shared_context-m-new.md"))
 
-    def test_preflight_reports_continue_existing_for_matching_context(self):
+    def test_preflight_rejects_rationale_without_disposition(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-new",
+                "--rationale",
+                "A rationale cannot select an action by itself.",
+                "--json",
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("rationale requires --disposition", result.stderr)
+
+    def test_preflight_reports_resume_candidate_without_authorizing_it(self):
         with tempfile.TemporaryDirectory() as tmp:
             write_context(tmp, "m-existing")
 
@@ -127,10 +149,134 @@ class MissionSharedContextPreflightTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             payload = json.loads(result.stdout)
-            self.assertEqual(payload["action"], "continue_existing")
+            self.assertEqual(payload["action"], "needs_agentic_selection")
+            self.assertEqual(payload["identity_action"], "continue_existing")
+            self.assertEqual(payload["candidate_disposition"], "resume_existing")
+            self.assertTrue(payload["decision_required"])
             self.assertEqual(payload["mission_id"], "m-existing")
             self.assertEqual(payload["conflicts"], [])
+            self.assertEqual(payload["missing_current_intent"], [])
+            self.assertTrue(payload["assessment_digest"].startswith("sha256:"))
             self.assertEqual(payload["loaded_context"]["mission_id"], "m-existing")
+
+    def test_preflight_missing_current_intent_never_authorizes_resume(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            write_context(tmp, "m-existing")
+
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-existing",
+                "--json",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["action"], "needs_agentic_selection")
+            self.assertEqual(payload["identity_action"], "needs_agentic_selection")
+            self.assertIsNone(payload["candidate_disposition"])
+            self.assertEqual(
+                payload["missing_current_intent"],
+                ["objective", "acceptance_evidence"],
+            )
+            self.assertIn("current_intent_incomplete", payload["reason_codes"])
+            self.assertIn("缺少当前目标", payload["user_message"])
+
+    def test_explicit_resume_disposition_requires_matching_intent_and_rationale(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            write_context(tmp, "m-existing")
+
+            accepted = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-existing",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--disposition",
+                "resume_existing",
+                "--rationale",
+                "The current request explicitly continues the same unfinished objective.",
+                "--json",
+            )
+
+            self.assertEqual(accepted.returncode, 0, accepted.stderr)
+            payload = json.loads(accepted.stdout)
+            self.assertEqual(payload["action"], "resume_existing")
+            self.assertFalse(payload["decision_required"])
+            self.assertEqual(
+                payload["reentry_decision"]["disposition"],
+                "resume_existing",
+            )
+            self.assertEqual(
+                payload["reentry_decision"]["acceptance_authority"],
+                "preserved",
+            )
+            self.assertEqual(
+                payload["decision_receipt"]["application"]["status"],
+                "recorded_pending_runtime_initialization",
+            )
+            self.assertTrue(Path(payload["decision_receipt"]["path"]).exists())
+            self.assertIn("已明确选择继续旧 Mission", payload["user_message"])
+
+            missing_rationale = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-existing",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--disposition",
+                "resume_existing",
+                "--json",
+            )
+            self.assertNotEqual(missing_rationale.returncode, 0)
+            self.assertIn("requires a non-empty rationale", missing_rationale.stderr)
+
+    def test_failed_context_only_initialization_updates_existing_decision_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp)
+            write_context(project_root, "m-init-failure")
+            payload = tplan_runtime.build_mission_preflight(
+                project_root,
+                mission_id="m-init-failure",
+                objective="Keep the original mission.",
+                acceptance_evidence=[
+                    {"id": "A1", "description": "Original acceptance."}
+                ],
+                disposition="resume_existing",
+                rationale="The current request explicitly continues this Mission.",
+            )
+            recorded = tplan_runtime.record_and_apply_mission_reentry_decision(
+                project_root,
+                payload,
+            )
+
+            tplan_runtime.finalize_mission_reentry_initialization(
+                project_root,
+                recorded,
+                project_root / "runtime",
+                error=OSError("simulated initializer failure"),
+            )
+
+            receipt_path = Path(recorded["decision_receipt"]["path"])
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "initialization_failed",
+            )
+            self.assertIn(
+                "simulated initializer failure",
+                receipt["application"]["error"],
+            )
 
     def test_preflight_reports_conflict_for_same_id_different_objective(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -153,6 +299,306 @@ class MissionSharedContextPreflightTests(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual(payload["action"], "needs_agentic_selection")
             self.assertIn("objective", payload["conflicts"])
+            self.assertIn("存在冲突", payload["user_message"])
+
+            rejected_resume = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-conflict",
+                "--objective",
+                "Do a different Mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--disposition",
+                "resume_existing",
+                "--rationale",
+                "Try to resume despite the mismatch.",
+                "--json",
+            )
+            self.assertNotEqual(rejected_resume.returncode, 0)
+            self.assertIn("not eligible for resume_existing", rejected_resume.stderr)
+
+    def test_terminal_mission_routes_to_new_context_and_cannot_resume(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            write_context(tmp, "m-completed", status="completed", active_task_id=None)
+
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-completed",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--json",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["action"], "needs_agentic_selection")
+            self.assertEqual(
+                payload["candidate_disposition"],
+                "create_new_from_context",
+            )
+            self.assertIn("mission_status", payload["conflicts"])
+            self.assertIn("mission_terminal", payload["reason_codes"])
+            self.assertIn("默认不能续跑", payload["user_message"])
+
+            rejected_resume = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-completed",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--disposition",
+                "resume_existing",
+                "--rationale",
+                "Attempt to reopen a terminal Mission.",
+                "--json",
+            )
+            self.assertNotEqual(rejected_resume.returncode, 0)
+            self.assertIn("not eligible for resume_existing", rejected_resume.stderr)
+
+            selected_new = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-completed",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--disposition",
+                "create_new_from_context",
+                "--rationale",
+                "The prior Mission is terminal; retain it only as background.",
+                "--json",
+            )
+            self.assertEqual(selected_new.returncode, 0, selected_new.stderr)
+            selected_payload = json.loads(selected_new.stdout)
+            self.assertEqual(selected_payload["action"], "create_new_from_context")
+            self.assertEqual(
+                selected_payload["reentry_decision"]["acceptance_authority"],
+                "not_inherited",
+            )
+            self.assertEqual(
+                selected_payload["decision_receipt"]["application"]["status"],
+                "recorded_for_new_mission_context",
+            )
+            self.assertTrue(
+                Path(selected_payload["decision_receipt"]["path"]).exists()
+            )
+
+    def test_requires_human_reentry_exposes_runtime_recovery_boundary(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "m-requires-human"
+            initialized = run_script(
+                "init_lite.py",
+                "--dir",
+                str(mission_dir),
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-requires-human",
+                "--title",
+                "Requires Human Mission",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--active-task-id",
+                "T1",
+                "--active-task-title",
+                "Wait for authority",
+                "--active-task-contribution",
+                "Preserves the authority boundary.",
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            stopped = run_script(
+                "stop_report.py",
+                str(mission_dir),
+                "--task-id",
+                "T1",
+                "--summary",
+                "Need explicit authority.",
+                "--current-goal",
+                "Keep the original mission.",
+                "--attempt",
+                "Inspected the available policy.",
+                "--blocking-issue",
+                "Required authority is absent.",
+                "--why-cannot-continue-safely",
+                "Continuing would invent authority.",
+                "--need-from-human",
+                "Confirm the authority boundary.",
+                "--resume-condition",
+                "A human confirms the authority boundary.",
+            )
+            self.assertEqual(stopped.returncode, 0, stopped.stderr)
+
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-requires-human",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--json",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["candidate_disposition"], "requires_human")
+            self.assertIn("mission_requires_human", payload["reason_codes"])
+            self.assertEqual(
+                payload["reentry_packet"]["recovery_boundary"]["resume_condition"],
+                "A human confirms the authority boundary.",
+            )
+            self.assertEqual(
+                payload["reentry_packet"]["active_task"]["status"],
+                "blocked",
+            )
+            self.assertEqual(
+                payload["reentry_packet"]["blockers"][0]["event_type"],
+                "stop_report",
+            )
+            self.assertIn("不能继续", payload["user_message"])
+            self.assertIn("shared_context_stale", payload["warnings"])
+            self.assertIn("shared_context_snapshot_stale", payload["reason_codes"])
+
+    def test_runtime_provenance_conflict_blocks_resume_candidate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "m-provenance"
+            initialized = run_script(
+                "init_lite.py",
+                "--dir",
+                str(mission_dir),
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-provenance",
+                "--title",
+                "Provenance Mission",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--active-task-id",
+                "T1",
+                "--active-task-title",
+                "Preserve provenance",
+                "--active-task-contribution",
+                "Prevents incompatible runtime continuation.",
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            mission_path = mission_dir / "mission.json"
+            mission = json.loads(mission_path.read_text(encoding="utf-8"))
+            mission["runtime_provenance"]["fingerprint"]["package_version"] = "incompatible-test"
+            mission_path.write_text(
+                json.dumps(mission, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-provenance",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--json",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertIn("runtime_provenance", payload["conflicts"])
+            self.assertIsNone(payload["candidate_disposition"])
+            self.assertEqual(
+                payload["reentry_packet"]["runtime_snapshot"]["runtime_provenance"][
+                    "compatible"
+                ],
+                False,
+            )
+
+    def test_stale_shared_context_never_silently_resumes_over_runtime_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "m-stale"
+            initialized = run_script(
+                "init_lite.py",
+                "--dir",
+                str(mission_dir),
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-stale",
+                "--title",
+                "Stale Context Mission",
+                "--objective",
+                "Use runtime as the authoritative recovery state.",
+                "--acceptance-evidence",
+                "A1:Stale shared context cannot authorize continuation.",
+                "--active-task-id",
+                "T1",
+                "--active-task-title",
+                "Preserve runtime authority",
+                "--active-task-contribution",
+                "Keeps stale memory from controlling re-entry.",
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            shared_path = context_path(project_root, "m-stale")
+            shared_text = shared_path.read_text(encoding="utf-8")
+            shared_path.write_text(
+                shared_text.replace(
+                    '"objective": "Use runtime as the authoritative recovery state."',
+                    '"objective": "Stale objective from old shared memory."',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-stale",
+                "--objective",
+                "Use runtime as the authoritative recovery state.",
+                "--acceptance-evidence",
+                "A1:Stale shared context cannot authorize continuation.",
+                "--json",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["action"], "needs_agentic_selection")
+            self.assertTrue(payload["decision_required"])
+            self.assertEqual(payload["candidate_disposition"], "resume_existing")
+            self.assertIn("shared_context_stale", payload["warnings"])
+            self.assertFalse(
+                payload["reentry_packet"]["freshness_signals"][
+                    "shared_context_matches_runtime"
+                ]
+            )
+            self.assertIn("共享上下文快照已落后", payload["user_message"])
 
     def test_preflight_lists_candidates_without_mission_id(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -170,6 +616,375 @@ class MissionSharedContextPreflightTests(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual(payload["action"], "needs_agentic_selection")
             self.assertEqual([item["mission_id"] for item in payload["candidates"]], ["m-one", "m-two"])
+
+    def test_preflight_discovers_and_assesses_runtime_only_candidate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "runtime-only"
+            tasks = write_tasks(tmp)
+            initialized = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m-runtime-only",
+                "--title",
+                "Runtime-only Mission",
+                "--objective",
+                "Recover from runtime state without shared Markdown.",
+                "--acceptance-evidence",
+                "A1:Runtime-only recovery is explicit.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            mission_path = mission_dir / "mission.json"
+            mission_before_assessment = mission_path.read_bytes()
+            self.assertFalse((project_root / ".tplan").exists())
+
+            discovered = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--json",
+            )
+            self.assertEqual(discovered.returncode, 0, discovered.stderr)
+            candidates = json.loads(discovered.stdout)["candidates"]
+            self.assertEqual(len(candidates), 1)
+            self.assertEqual(candidates[0]["mission_id"], "m-runtime-only")
+            self.assertEqual(candidates[0]["sources"], ["runtime"])
+
+            assessed = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-runtime-only",
+                "--objective",
+                "Recover from runtime state without shared Markdown.",
+                "--acceptance-evidence",
+                "A1:Runtime-only recovery is explicit.",
+                "--json",
+            )
+            self.assertEqual(assessed.returncode, 0, assessed.stderr)
+            payload = json.loads(assessed.stdout)
+            self.assertIsNone(payload["loaded_context"])
+            self.assertEqual(payload["candidate_disposition"], "resume_existing")
+            self.assertIn("runtime_only_candidate", payload["reason_codes"])
+            self.assertEqual(
+                payload["reentry_packet"]["runtime_snapshot"]["availability"],
+                "loaded",
+            )
+            self.assertEqual(
+                payload["reentry_packet"]["latest_state"]["event_type"],
+                "mission_initialized",
+            )
+            self.assertIsInstance(
+                payload["reentry_packet"]["freshness_signals"]["runtime_files"][
+                    "mission_mtime_ns"
+                ],
+                int,
+            )
+            self.assertEqual(mission_path.read_bytes(), mission_before_assessment)
+            self.assertFalse((project_root / ".tplan").exists())
+
+            resumed = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-runtime-only",
+                "--objective",
+                "Recover from runtime state without shared Markdown.",
+                "--acceptance-evidence",
+                "A1:Runtime-only recovery is explicit.",
+                "--disposition",
+                "resume_existing",
+                "--rationale",
+                "The current request explicitly resumes this unfinished Mission.",
+                "--json",
+            )
+            self.assertEqual(resumed.returncode, 0, resumed.stderr)
+            resumed_payload = json.loads(resumed.stdout)
+            self.assertEqual(
+                resumed_payload["decision_receipt"]["application"]["status"],
+                "applied_to_runtime",
+            )
+            receipt_path = Path(resumed_payload["decision_receipt"]["path"])
+            self.assertTrue(receipt_path.exists())
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "applied_to_runtime",
+            )
+            mission_after_resume = read_mission(mission_dir)
+            self.assertEqual(
+                mission_after_resume["shared_context"]["reentry_decision"][
+                    "decision_digest"
+                ],
+                resumed_payload["reentry_decision"]["decision_digest"],
+            )
+
+    def test_plain_text_recovery_output_explains_undecided_candidate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            write_context(tmp, "m-readable")
+            result = run_script(
+                "preflight_mission.py",
+                "--project-root",
+                tmp,
+                "--mission-id",
+                "m-readable",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("message:", result.stdout)
+            self.assertIn("仍只是恢复候选", result.stdout)
+            self.assertIn("必须明确选择 resume_existing", result.stdout)
+
+    def test_failed_runtime_application_keeps_receipt_and_leaves_mission_unchanged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "runtime-only"
+            tasks = write_tasks(tmp)
+            initialized = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m-application-failure",
+                "--title",
+                "Application Failure Mission",
+                "--objective",
+                "Record authority before attempting runtime mutation.",
+                "--acceptance-evidence",
+                "A1:A failed application leaves an auditable receipt.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            mission_path = mission_dir / "mission.json"
+            mission_before = mission_path.read_bytes()
+            payload = tplan_runtime.build_mission_preflight(
+                project_root,
+                mission_id="m-application-failure",
+                objective="Record authority before attempting runtime mutation.",
+                acceptance_evidence=[
+                    {
+                        "id": "A1",
+                        "description": "A failed application leaves an auditable receipt.",
+                    }
+                ],
+                disposition="resume_existing",
+                rationale="The same unfinished Mission was explicitly selected.",
+            )
+
+            with patch.object(
+                tplan_runtime,
+                "_commit_mission_state_unlocked",
+                side_effect=tplan_runtime.TplanError("simulated application failure"),
+            ):
+                with self.assertRaisesRegex(
+                    tplan_runtime.TplanError,
+                    "simulated application failure",
+                ):
+                    tplan_runtime.record_and_apply_mission_reentry_decision(
+                        project_root,
+                        payload,
+                    )
+
+            receipt_path = tplan_runtime.mission_reentry_receipt_path(
+                project_root,
+                payload["reentry_decision"],
+            )
+            self.assertTrue(receipt_path.exists())
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "application_failed",
+            )
+            self.assertEqual(mission_path.read_bytes(), mission_before)
+
+    def test_tampered_reentry_decision_is_rejected_before_receipt_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp)
+            write_context(project_root, "m-tampered-decision")
+            payload = tplan_runtime.build_mission_preflight(
+                project_root,
+                mission_id="m-tampered-decision",
+                objective="Keep the original mission.",
+                acceptance_evidence=[
+                    {"id": "A1", "description": "Original acceptance."}
+                ],
+                disposition="resume_existing",
+                rationale="The same unfinished Mission was explicitly selected.",
+            )
+            payload["reentry_decision"]["rationale"] = "Tampered rationale."
+
+            with self.assertRaisesRegex(
+                tplan_runtime.TplanError,
+                "decision digest does not match",
+            ):
+                tplan_runtime.record_and_apply_mission_reentry_decision(
+                    project_root,
+                    payload,
+                )
+
+            self.assertFalse(
+                (project_root / ".tplan" / "reentry_decisions").exists()
+            )
+
+    def test_artifact_freshness_change_blocks_runtime_application(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "runtime-only"
+            tasks = write_tasks(tmp)
+            initialized = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m-freshness-race",
+                "--title",
+                "Freshness Race Mission",
+                "--objective",
+                "Resume only the exact assessed runtime boundary.",
+                "--acceptance-evidence",
+                "A1:Artifact drift blocks re-entry application.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            payload = tplan_runtime.build_mission_preflight(
+                project_root,
+                mission_id="m-freshness-race",
+                objective="Resume only the exact assessed runtime boundary.",
+                acceptance_evidence=[
+                    {
+                        "id": "A1",
+                        "description": "Artifact drift blocks re-entry application.",
+                    }
+                ],
+                disposition="resume_existing",
+                rationale="The same unfinished Mission was explicitly selected.",
+            )
+            evidence_path = mission_dir / "evidence.jsonl"
+            evidence_path.write_text("\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                tplan_runtime.TplanError,
+                "artifacts changed after re-entry assessment",
+            ):
+                tplan_runtime.record_and_apply_mission_reentry_decision(
+                    project_root,
+                    payload,
+                )
+
+            receipt_path = tplan_runtime.mission_reentry_receipt_path(
+                project_root,
+                payload["reentry_decision"],
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "application_failed",
+            )
+            self.assertNotIn(
+                "reentry_decision",
+                read_mission(mission_dir).get("shared_context", {}),
+            )
+
+    def test_evidence_appended_during_reentry_assessment_blocks_application(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "runtime-only"
+            tasks = write_tasks(tmp)
+            initialized = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m-assessment-race",
+                "--title",
+                "Assessment Race Mission",
+                "--objective",
+                "Resume only an internally consistent assessment snapshot.",
+                "--acceptance-evidence",
+                "A1:Concurrent blocker append is not silently accepted.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            evidence_path = mission_dir / "evidence.jsonl"
+            evidence_path.write_text("", encoding="utf-8")
+            original_snapshot = tplan_runtime._runtime_snapshot_file_state_unlocked
+            injected = {"done": False}
+
+            def racing_snapshot(path):
+                snapshot = original_snapshot(path)
+                if path == evidence_path and not injected["done"]:
+                    injected["done"] = True
+                    event = {
+                        "id": "E-racing-blocker",
+                        "event_type": "blocker",
+                        "timestamp": tplan_runtime.now_iso(),
+                        "task_id": "T1",
+                        "summary": "A blocker appeared during assessment.",
+                        "payload": {
+                            "blocking_issue": "Concurrent blocker.",
+                            "resume_condition": "Review the new blocker.",
+                        },
+                    }
+                    with evidence_path.open("a", encoding="utf-8") as handle:
+                        handle.write(json.dumps(event) + "\n")
+                return snapshot
+
+            with patch.object(
+                tplan_runtime,
+                "_runtime_snapshot_file_state_unlocked",
+                side_effect=racing_snapshot,
+            ):
+                payload = tplan_runtime.build_mission_preflight(
+                    project_root,
+                    mission_id="m-assessment-race",
+                    objective="Resume only an internally consistent assessment snapshot.",
+                    acceptance_evidence=[
+                        {
+                            "id": "A1",
+                            "description": "Concurrent blocker append is not silently accepted.",
+                        }
+                    ],
+                    disposition="resume_existing",
+                    rationale="The same unfinished Mission was explicitly selected.",
+                )
+
+            self.assertTrue(injected["done"])
+            self.assertEqual(payload["reentry_packet"]["blockers"], [])
+            with self.assertRaisesRegex(
+                tplan_runtime.TplanError,
+                "artifacts changed after re-entry assessment",
+            ):
+                tplan_runtime.record_and_apply_mission_reentry_decision(
+                    project_root,
+                    payload,
+                )
+
+            receipt_path = tplan_runtime.mission_reentry_receipt_path(
+                project_root,
+                payload["reentry_decision"],
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "application_failed",
+            )
+            self.assertNotIn(
+                "reentry_decision",
+                read_mission(mission_dir).get("shared_context", {}),
+            )
 
 
 class MissionSharedContextInitTests(unittest.TestCase):
@@ -210,7 +1025,7 @@ class MissionSharedContextInitTests(unittest.TestCase):
             )
             self.assertEqual(mission["shared_context"]["risk_signals"], [])
 
-    def test_init_mission_loads_existing_matching_context(self):
+    def test_init_mission_requires_and_records_explicit_resume_for_matching_context(self):
         with tempfile.TemporaryDirectory() as tmp:
             project_root = Path(tmp) / "project"
             mission_dir = Path(tmp) / "mission"
@@ -240,10 +1055,61 @@ class MissionSharedContextInitTests(unittest.TestCase):
                 str(tasks),
             )
 
-            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "requires explicit re-entry disposition and rationale",
+                result.stderr,
+            )
+            self.assertFalse(mission_dir.exists())
+
+            resumed = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--project-root",
+                str(project_root),
+                "--mission-id",
+                "m-existing",
+                "--title",
+                "Existing Mission",
+                "--objective",
+                "Keep the original mission.",
+                "--acceptance-evidence",
+                "A1:Original acceptance.",
+                "--task-json",
+                str(tasks),
+                "--reentry-disposition",
+                "resume_existing",
+                "--reentry-rationale",
+                "The current request explicitly continues the same unfinished Mission.",
+            )
+
+            self.assertEqual(resumed.returncode, 0, resumed.stderr)
             mission = read_mission(mission_dir)
             self.assertEqual(mission["mission"]["id"], "m-existing")
             self.assertEqual(mission["shared_context"]["context_file"], ".tplan/shared_contexts/tplan_mission_shared_context-m-existing.md")
+            self.assertEqual(
+                mission["shared_context"]["reentry_decision"]["disposition"],
+                "resume_existing",
+            )
+            self.assertEqual(
+                mission["shared_context"]["reentry_decision"]["acceptance_authority"],
+                "preserved",
+            )
+            decision = mission["shared_context"]["reentry_decision"]
+            receipt_path = tplan_runtime.mission_reentry_receipt_path(
+                project_root,
+                decision,
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "applied_to_initialized_runtime",
+            )
+            self.assertEqual(
+                receipt["decision"]["decision_digest"],
+                decision["decision_digest"],
+            )
 
     def test_init_mission_restores_risk_signals_from_existing_context(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -292,6 +1158,10 @@ class MissionSharedContextInitTests(unittest.TestCase):
                 "A1:Original acceptance.",
                 "--task-json",
                 str(tasks),
+                "--reentry-disposition",
+                "resume_existing",
+                "--reentry-rationale",
+                "The current request explicitly resumes the same Mission and risk boundary.",
             )
 
             self.assertEqual(result.returncode, 0, result.stderr)

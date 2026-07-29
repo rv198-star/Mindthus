@@ -1,17 +1,20 @@
 {
   "schema_version": "tplan.runtime_manifest.v0.1",
-  "package_version": "1.5.3",
-  "source_id": "mindthus-v1.5.3",
+  "package_version": "1.5.4",
+  "source_id": "mindthus-v1.5.4",
   "capability_versions": {
     "mission": "tplan.v0.1",
     "execution_trace": "tplan.execution_trace.v0.1",
-    "execution_cost_tree": "tplan.execution_cost_tree.v0.8",
-    "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.1",
+    "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+    "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+    "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
     "runtime_provenance": "tplan.runtime_provenance.v0.1",
     "runtime_doctor": "tplan.runtime_doctor.v0.1"
   },
   "capabilities": [
     "atomic_mission_mutation",
+    "codex_hook_activation_preflight",
+    "codex_hook_stable_dispatcher",
     "codex_hook_telemetry",
     "codex_otel_ingestion",
     "execution_trace",
@@ -23,7 +26,9 @@
   "required_scripts": [
     "scripts/tplan_runtime.py",
     "scripts/execution_cost_tree.py",
+    "scripts/codex_telemetry_activation.py",
     "scripts/codex_telemetry_adapter.py",
+    "scripts/codex_telemetry_dispatcher.py",
     "scripts/generate_codex_telemetry_hooks.py",
     "scripts/render_execution_cost_tree.py",
     "scripts/runtime_doctor.py"
@@ -32,7 +37,9 @@
     "resources/runtime-manifest.json",
     "scripts/tplan_runtime.py",
     "scripts/execution_cost_tree.py",
+    "scripts/codex_telemetry_activation.py",
     "scripts/codex_telemetry_adapter.py",
+    "scripts/codex_telemetry_dispatcher.py",
     "scripts/generate_codex_telemetry_hooks.py",
     "scripts/render_execution_cost_tree.py",
     "scripts/runtime_doctor.py"
