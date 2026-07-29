@@ -9,8 +9,16 @@
 [发布说明](docs/releases/v1.5.4.md)
 
 说明：这是 1.x Stable 线的 TPlan bugfix patch。它修复 #146、#147、#148 中暴露的
-Codex Hook 遥测激活、缺失遥测展示和 Mission 重入恢复判断问题；不新增方法论，不发布新的
-ROI Beta 资产，也不声称历史 Mission 可被自动补齐。
+Codex Hook 遥测激活、缺失遥测展示和 Mission 重入恢复判断问题；不新增方法论，补充发布
+`v1.5.4-roi-beta` ROI Beta experimental asset，也不声称历史 Mission 可被自动补齐。
+
+### 补充发布包：1.5.4 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.5.4` Stable core 重新组装；它共享本次 #146、#147、#148 修复，
+  但只替换薄的 `using-mindthus` 入口和一条已经资格验证的 3L5S Anti-Spiral 句子。
+- 发布源码 tag 为 `v1.5.4-roi-beta`。它与 `1.5.4 Stable` 的关系是同一冻结产品核心上
+  的受限实验入口；使用独立的 `mindthus-beta` package、marketplace、cache 与 skill
+  namespace，不是 `1.5.4 Stable` 的替代版，不触发用户安装、配置或工作流的自动迁移。
 
 ### #146：Codex App / CLI Hook 遥测接入
 
@@ -46,6 +54,11 @@ ROI Beta 资产，也不声称历史 Mission 可被自动补齐。
 - 审计返修后，re-entry runtime snapshot 在同一个 Mission 锁内读取
   Mission/narrative/evidence/trace，并用同一批 bytes 计算内容摘要；assessment 期间新增的
   blocker 不会被 CAS 误认为已经审查。
+
+### 发布边界
+
+- `v1.5.4` GitHub Release 提供 Stable plugins、Stable skills、ROI Beta experimental asset
+  与覆盖三份压缩包的 `SHA256SUMS`。
 
 ## v1.5.3
 

@@ -13,7 +13,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_release_surface_is_v1_5_4_bugfix_stable_only(self):
+    def test_current_release_surface_is_v1_5_4_with_supplemental_roi_beta(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -41,9 +41,9 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("Stable core 重新组装并资格验证的 ROI Beta", readme)
         self.assertIn("mindthus-plugins-1.5.4.tar.gz", readme)
         self.assertIn("mindthus-skills-1.5.4.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.5.3-roi-beta.tar.gz", readme)
-        self.assertIn("不自动继承 `v1.5.4` 的 bugfix", readme)
-        self.assertNotIn("mindthus-beta-1.5.4-roi-beta.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.5.4-roi-beta.tar.gz", readme)
+        self.assertNotIn("mindthus-beta-1.5.3-roi-beta.tar.gz", readme)
+        self.assertNotIn("不自动继承 `v1.5.4` 的 bugfix", readme)
         self.assertNotIn("mindthus-plugins-1.4.6.tar.gz", readme)
         self.assertNotIn("mindthus-skills-1.4.6.tar.gz", readme)
         self.assertIn(
@@ -64,7 +64,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("#146", changelog)
         self.assertIn("#147", changelog)
         self.assertIn("#148", changelog)
-        self.assertIn("不发布新的", changelog)
+        self.assertIn("补充发布包：1.5.4 ROI Beta", changelog)
         self.assertIn("## v1.5.3", changelog)
         self.assertIn("[发布说明](docs/releases/v1.5.3.md)", changelog)
         self.assertIn("#141", changelog)
@@ -93,10 +93,12 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "`v1.5.4` GitHub Release 提供",
             "mindthus-plugins-1.5.4.tar.gz",
             "mindthus-skills-1.5.4.tar.gz",
-            "本版不续发",
+            "mindthus-beta-1.5.4-roi-beta.tar.gz",
+            "补充发布的 ROI Beta experimental asset",
         ):
             self.assertIn(phrase, release_log)
-        self.assertNotIn("mindthus-beta-1.5.4-roi-beta.tar.gz", release_log)
+        self.assertNotIn("mindthus-beta-1.5.3-roi-beta.tar.gz", release_log)
+        self.assertNotIn("本版不续发", release_log)
 
         self.assertNotIn("Release date:", release_log)
 
