@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render an actual-execution and cost tree from a TPlan Mission runtime."""
+"""Render an observed-execution and cost tree from a TPlan Mission runtime."""
 
 from __future__ import annotations
 
@@ -18,7 +18,9 @@ from tplan_runtime import TplanError, write_text_atomic
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Render a tplan actual-execution and cost tree.")
+    parser = argparse.ArgumentParser(
+        description="Render a tplan observed-execution and cost tree."
+    )
     parser.add_argument("mission_dir")
     parser.add_argument("--view", choices=("compact", "standard", "audit"), default="standard")
     parser.add_argument("--format", choices=("markdown", "text", "svg", "json"), default="markdown")

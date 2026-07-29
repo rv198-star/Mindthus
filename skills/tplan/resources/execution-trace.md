@@ -28,7 +28,7 @@ produce the wrong result.
 
 `outcome_attribution.py` derives a read-only view from one locked Mission, evidence,
 and trace snapshot. It does not create a sidecar or change Mission/trace schemas. The
-execution-cost report schema is `tplan.execution_cost_tree.v0.8`.
+execution-cost report schema is `tplan.execution_cost_tree.v0.9`.
 
 Telemetry answers what ran and what it cost. Validated writeback answers which legal
 Mission/evidence/state records were committed. Countable progress is narrower: only a
@@ -255,8 +255,9 @@ python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" --form
   consolidated in one footer; `[T]`, `[ST]`, and `[P]` identify Task, SubTask, and
   Step; SVG output is rejected
 - `standard`: every materialized Mission / Task / SubTask / Step and every declared
-  parent-child edge, with the fixed status, elapsed, cumulative LLM-call, script, tool,
-  wait, Token, and result slots
+  parent-child edge, with fixed status/result/attribution plus conditional
+  elapsed/cost/Token fields; absent channels move to one Mission-level coverage
+  statement and are never rendered as zero
 - `audit`: the same one-to-one topology as `standard`, plus recovery and measurement
   detail
 
@@ -313,9 +314,12 @@ events. Coverage diagnostics are emitted at the top level and must remain visibl
 Standard/Audit output.
 
 Standard/Audit JSON names its displayed time domain explicitly as either
-`mission_lifecycle` or `observed_trace`. The corresponding `window_*` fields never
-promote a partial observed window into Mission `started_at`, `finished_at`, or
-`elapsed_ms`.
+`mission_lifecycle`, `observed_trace`, or `snapshot_only`. The corresponding
+`window_*` fields never promote a partial observed window into Mission `started_at`,
+`finished_at`, or `elapsed_ms`. The additive `presentation_density` profile is derived
+from actual lifecycle/cost coverage, tells Standard which channels to show or
+consolidate, and does not remove any raw JSON fields. Audit ignores that display
+compression and retains every channel status and diagnostic reason.
 
 ## Privacy Guard
 

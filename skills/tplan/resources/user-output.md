@@ -183,13 +183,15 @@ explicit warning, but that warning must not be presented as a verified creator r
 
 After completion or cost review, use `scripts/render_execution_cost_tree.py`. Default
 to `standard`: show every real Mission / Task / SubTask / Step and declared edge, with
-status, actual elapsed, cumulative LLM-call, script, tool, wait, Token, and result slots.
-The primary Standard/Audit layout is a portrait SVG execution timeline: rows follow first-observed
-chronology, the left rail prints observed relative time, every card has a shared-scale
-range bar, and the declared hierarchy is overlaid as tree edges. Exact lifecycle
-coverage makes those offsets Mission-relative; partial coverage visibly uses the
-observed trace window. Vertical row spacing is ordinal and must never be interpreted as
-duration.
+status, result, attribution, and only those elapsed/cost/Token fields that were observed
+or explicitly reported unavailable. Missing cost channels are consolidated into one
+Mission-level coverage statement; an omitted Standard field never means zero.
+The primary Standard/Audit layout is a portrait SVG execution view: rows follow
+first-observed chronology when lifecycle trace exists, every observed card has a
+shared-scale range bar, and the declared hierarchy is overlaid as tree edges. Exact
+lifecycle coverage is labelled an actual execution timeline; partial coverage is an
+observed execution window; no trace is a Mission structure snapshot. Vertical row
+spacing is ordinal and must never be interpreted as duration.
 Keep `host_measured`, `platform_reported`, and `inferred` visibly distinct. A
 host-measured model span is caller-visible request time, not a claim about pure provider
 inference time. Label the uncovered elapsed remainder as not exactly recorded; do not
@@ -209,17 +211,26 @@ prefixes every real node with `[T]`, `[ST]`, or `[P]` for Task, SubTask, or Step
 prints that legend above the tree. Use `audit` for complete topology plus recovery and
 measurement detail. Unknown measurements must remain unknown.
 
-Execution-cost report JSON uses `tplan.execution_cost_tree.v0.8` and adds a separate
-`outcome_attribution` field to the Mission and every node. Costs remain visible even
-when attribution is `telemetry_only`. Compact uses short labels such as `推进`, `约束`,
-`仅写回`, `仅遥测`, and `未分类`; Standard/Audit explain the attribution. Audit also
-shows evidence ids, commit ids, unclassified reasons, and compatibility warnings.
+Execution-cost report JSON uses `tplan.execution_cost_tree.v0.9`. It retains the
+complete lifecycle, cost, Token, Codex channel, diagnostic, and per-node contracts and
+adds `presentation_density`, derived from actual trace/cost coverage rather than a
+platform name. `outcome_attribution` remains separate on the Mission and every node.
+Costs remain visible even when attribution is `telemetry_only`. Compact uses short
+labels such as `推进`, `约束`, `仅写回`, `仅遥测`, and `未分类`; Standard/Audit explain
+the attribution. Audit also shows evidence ids, commit ids, unclassified reasons, and
+compatibility warnings.
 Never turn these categories into a completion percentage, score, Token-per-result
 ratio, or causal claim that a particular span produced an evidence event.
 The top-level `runtime` field separately reports exact, relocated, legacy, or
 incompatible runtime provenance and its diagnostics.
 The top-level `telemetry_capture` field separately reports the optional Codex adapter's
-binding and channel coverage. Standard/Audit render this report, including explicit
-`not_reported` reasons for hosted tools, model/turn data, Tokens, waits, or SubAgents
-that the active capture surface did not observe. Missing telemetry is never rendered
-as zero and never changes the one-to-one Mission hierarchy.
+binding, activation, and channel coverage. Coverage `v0.2` keeps App and CLI records
+separate and retains concrete build/version plus user/project source path, source hash,
+enumeration, handler hash, trust, enabled, binding, and callback-health diagnostics.
+Standard reduces absent channels to one Mission-level statement and conditionally
+renders observed or explicitly unavailable node metrics.
+Audit renders every channel status and diagnostic reason. It also renders every
+activation state, including explicit `not_reported` reasons for hosted tools,
+model/turn data, Tokens, waits, or SubAgents. JSON retains both the complete channel
+report and raw cost/lifecycle fields. Missing telemetry is never rendered as zero and
+never changes the one-to-one Mission hierarchy.

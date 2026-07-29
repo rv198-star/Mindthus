@@ -129,7 +129,8 @@ adapter only observes supported runtime events and must never become an authorit
 carrier.
 
 For future Mission execution, bind one exact Codex session and generate the optional
-telemetry hooks:
+telemetry hooks. Reuse one persistent host-protected state directory across Missions;
+the stable dispatcher command contains that directory but no Mission/session identity:
 
 ```bash
 mkdir -p HOST_PROTECTED_STATE_DIR
@@ -139,11 +140,15 @@ python3 skills/tplan/scripts/generate_codex_telemetry_hooks.py MISSION_DIR \
   --output /tmp/tplan-codex-telemetry-hooks.json
 ```
 
-For `codex exec`, merge only the generated `hooks` object into an active trusted user
-hook layer (normally `~/.codex/hooks.json`), preserving unrelated hooks. A project hook
-file is an option only after Codex's Hooks manager or app-server `hooks/list` reports
-that exact source as loaded and enabled; a file on disk or a trust override is not
-enough. The adapter
+Use `scripts/codex_telemetry_activation.py install` to merge only the generated
+handlers into an active user or project `hooks.json`, preserving unrelated hooks.
+Then run its `preflight` command for the exact `codex_app` or `codex_cli` surface and
+the exact `user` or `project` source before the first measured tool call. It records
+concrete build/version, source path/hash, enumeration, current handler hashes, trust,
+enabled state, Mission/session binding, and callback health. A file on disk, project
+`trust_level`, or a historical trusted hash is not activation evidence. The adapter
+requires App-exported `--inventory-json` for `codex_app` and never substitutes a
+separately spawned CLI app-server inventory as App evidence. The adapter
 uses `PreToolUse`/`PostToolUse` for paired local tool/script spans and
 `SubagentStart`/`SubagentStop` for non-additive `agent_turn` envelopes. It hashes
 correlation IDs before trace write, retains raw Codex binding/correlation IDs only in
@@ -152,10 +157,14 @@ arguments, or connector payloads. Mission and task IDs continue to follow the no
 trace schema. A spawn tool event is deduplicated in favor of the SubAgent lifecycle
 pair.
 
-Generation proves only that the Mission/session binding was created. It does not prove
-that the selected hook layer/source was loaded or trusted; coverage stays `not_reported`
-until the adapter observes a real callback. Pairing requires the same turn and event
-class.
+Generation proves only that the Mission/session binding was created and now marks
+activation `preflight_required`. Failed inventory states remain explicit:
+`source_absent`, `source_not_enumerated`, `needs_trust`, `disabled`,
+`binding_mismatch`, or `inventory_unavailable`. A first callback without its matching
+completion is `callback_unpaired`; only a correlated completed span is `observed`.
+Pairing requires the same session, turn, and event class.
+The dispatcher routes the raw session id through its host-only registry. New Missions
+update that registry without changing the four trusted Hook definition hashes.
 Hook-derived completion status is `unknown` unless a Bash post event supplies a
 structured integer `exit_code`. The command hook emits the valid `{}` JSON response
 required by `SubagentStop`.
@@ -163,7 +172,8 @@ required by `SubagentStop`.
 Hosted tools currently have no Codex tool hooks. Model/turn timing and Token data are
 therefore `not_reported` unless an explicitly bound, sanitized OTel projection is
 ingested. See `resources/codex-telemetry.md` for the ingestion schema, fail-closed
-binding rules, deduplication, capability report, and current official coverage.
+binding rules, App/CLI and user/project preflight commands, cleanup lifecycle,
+deduplication, capability report, and current official coverage.
 
 ## Script
 

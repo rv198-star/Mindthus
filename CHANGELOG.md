@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+- TPlan Codex 遥测新增 fail-closed 激活生命周期：生成 binding 后必须通过
+  `hooks/list` 证明精确 source 被枚举、四个 handler hash 可信且 enabled，才允许
+  App/CLI Hook 写入。稳定 dispatcher 的 Hook 定义不再携带 Mission/session；
+  宿主 registry 负责 session→Mission 代次路由，因此后续 Mission 不会反复改变
+  已授权 hash。coverage `v0.2` 分别记录 App/CLI build、user/project source、
+  `source_absent`、`source_not_enumerated`、`needs_trust`、`disabled`、
+  `binding_mismatch`、`callback_unpaired` 与 `observed`；cleanup 仅移除 TPlan handler，
+  保留无关 Hook，并同步清除 host binding 与误导性 sidecar；默认 cleanup 保留稳定
+  dispatcher，只有无其他绑定且显式请求时才卸载。
+
+- TPlan 执行图 Standard 视图会按实际 lifecycle/cost 覆盖生成呈现密度：未采集的
+  LLM、脚本、工具、等待与 Token 字段不再逐节点重复，而是收束为一条 Mission 级
+  遥测覆盖说明；partial 改称“已观测执行窗口”，snapshot-only 改称结构快照。
+  Audit 继续保留所有通道状态与诊断原因，JSON `v0.9` 保留完整原始合同并新增
+  `presentation_density`。
+
+- TPlan 重入恢复预检把残留 Mission 发现与继续授权分开：旧 runtime/shared-context
+  只产生候选；即使 objective 和 acceptance evidence 完全匹配，也必须显式提交
+  `resume_existing` disposition 与 rationale。缺少当前意图、终态、`requires_human`、
+  stale context 或 runtime provenance 异常都会阻止静默续跑；初始化入口会拒绝
+  未处置候选。显式处置先持久化 decision receipt，再按 Mission/narrative/evidence/
+  trace 内容摘要原子复核并应用到旧 runtime；输出同时给出 freshness、blocker 与人话解释。
+
 ## v1.5.3
 
 发布 tag：`v1.5.3`

@@ -35,10 +35,25 @@ class MissionSharedContextAgentSimulatorTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             report = json.loads((output_dir / "simulation_result.json").read_text(encoding="utf-8"))
             self.assertEqual(report["runtime_profile"], "mission_shared_context")
-            self.assertEqual(report["mechanical_score"], 6)
-            self.assertEqual(report["scripted_agent_score"], 6)
+            self.assertEqual(report["mechanical_score"], 7)
+            self.assertEqual(report["scripted_agent_score"], 7)
             self.assertTrue(report["can_load_mission_memory"])
-            self.assertEqual(report["preflight"]["matching_action"], "continue_existing")
+            self.assertEqual(
+                report["preflight"]["matching_action"],
+                "needs_agentic_selection",
+            )
+            self.assertEqual(
+                report["preflight"]["matching_identity_action"],
+                "continue_existing",
+            )
+            self.assertEqual(
+                report["preflight"]["matching_candidate_disposition"],
+                "resume_existing",
+            )
+            self.assertEqual(
+                report["preflight"]["explicit_resume_action"],
+                "resume_existing",
+            )
             self.assertEqual(report["preflight"]["conflict_action"], "needs_agentic_selection")
             self.assertEqual(report["lineage"]["source_contexts"], ["interrupted-validation"])
             self.assertEqual(report["lineage"]["new_acceptance_evidence"], ["A1"])

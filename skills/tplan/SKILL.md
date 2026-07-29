@@ -74,12 +74,12 @@ with active shared risk must expose `risk_assessment`.
 
 ### Mission Shared Context Memory
 
-Before starting a Mission, run Mission identity preflight with `preflight_mission.py`.
-Project-level memory lives at
-`.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`. Continue only
-when Mission identity is continuous; otherwise create a new Mission. `source_contexts`
-are background memory for a new Mission, not a derived Mission status or inherited
-acceptance authority.
+Run Mission identity preflight with `preflight_mission.py` at
+`.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`. `source_contexts`
+are background only and never inherit acceptance authority.
+
+Re-entry: a residual Mission is only a candidate. Require `--disposition` and
+`--rationale`; record its receipt before mutation. Active-Mission continuation is separate.
 
 ### User-Facing Output Adapter
 

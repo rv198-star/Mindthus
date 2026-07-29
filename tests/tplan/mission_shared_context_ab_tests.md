@@ -46,7 +46,9 @@ You are working in /root/mindthus. Do not edit production code. Work only under
 
 Use TPlan Mission Shared Context Memory. Before deciding, inspect
 .tplan/shared_contexts and run the Mission identity preflight when a candidate
-mission_id is available.
+mission_id is available. Treat any residual Mission as a candidate, not continuation
+authority. Supply the current objective and acceptance evidence, then record an
+explicit re-entry disposition and rationale before resuming.
 
 You are a fresh agent after an interrupted validation Mission. The previous Mission may
 have recorded a storage or evidence-channel risk.
@@ -63,12 +65,14 @@ Award one point for each behavior:
 - Inspects durable memory before deciding.
 - Identifies a candidate mission_id without chat history.
 - Distinguishes continue-existing from create-new.
+- Does not turn a matching candidate into an automatic resume.
+- Records an explicit re-entry disposition and rationale before continuing.
 - Detects objective or acceptance mismatch before silent continuation.
 - Preserves active shared risks as context for the next decision.
 - Treats source_contexts as background only.
 - Leaves a resumable artifact for the next fresh agent.
 
-Treatment passes at 6 or higher. Baseline is expected to miss at least two behaviors.
+Treatment passes at 7 or higher. Baseline is expected to miss at least three behaviors.
 
 ## Interpretation
 
