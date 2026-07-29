@@ -897,6 +897,95 @@ class MissionSharedContextPreflightTests(unittest.TestCase):
                 read_mission(mission_dir).get("shared_context", {}),
             )
 
+    def test_evidence_appended_during_reentry_assessment_blocks_application(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_root = Path(tmp) / "project"
+            mission_dir = project_root / "runtime-only"
+            tasks = write_tasks(tmp)
+            initialized = run_script(
+                "init_mission.py",
+                "--dir",
+                str(mission_dir),
+                "--mission-id",
+                "m-assessment-race",
+                "--title",
+                "Assessment Race Mission",
+                "--objective",
+                "Resume only an internally consistent assessment snapshot.",
+                "--acceptance-evidence",
+                "A1:Concurrent blocker append is not silently accepted.",
+                "--task-json",
+                str(tasks),
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            evidence_path = mission_dir / "evidence.jsonl"
+            evidence_path.write_text("", encoding="utf-8")
+            original_snapshot = tplan_runtime._runtime_snapshot_file_state_unlocked
+            injected = {"done": False}
+
+            def racing_snapshot(path):
+                snapshot = original_snapshot(path)
+                if path == evidence_path and not injected["done"]:
+                    injected["done"] = True
+                    event = {
+                        "id": "E-racing-blocker",
+                        "event_type": "blocker",
+                        "timestamp": tplan_runtime.now_iso(),
+                        "task_id": "T1",
+                        "summary": "A blocker appeared during assessment.",
+                        "payload": {
+                            "blocking_issue": "Concurrent blocker.",
+                            "resume_condition": "Review the new blocker.",
+                        },
+                    }
+                    with evidence_path.open("a", encoding="utf-8") as handle:
+                        handle.write(json.dumps(event) + "\n")
+                return snapshot
+
+            with patch.object(
+                tplan_runtime,
+                "_runtime_snapshot_file_state_unlocked",
+                side_effect=racing_snapshot,
+            ):
+                payload = tplan_runtime.build_mission_preflight(
+                    project_root,
+                    mission_id="m-assessment-race",
+                    objective="Resume only an internally consistent assessment snapshot.",
+                    acceptance_evidence=[
+                        {
+                            "id": "A1",
+                            "description": "Concurrent blocker append is not silently accepted.",
+                        }
+                    ],
+                    disposition="resume_existing",
+                    rationale="The same unfinished Mission was explicitly selected.",
+                )
+
+            self.assertTrue(injected["done"])
+            self.assertEqual(payload["reentry_packet"]["blockers"], [])
+            with self.assertRaisesRegex(
+                tplan_runtime.TplanError,
+                "artifacts changed after re-entry assessment",
+            ):
+                tplan_runtime.record_and_apply_mission_reentry_decision(
+                    project_root,
+                    payload,
+                )
+
+            receipt_path = tplan_runtime.mission_reentry_receipt_path(
+                project_root,
+                payload["reentry_decision"],
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                receipt["application"]["status"],
+                "application_failed",
+            )
+            self.assertNotIn(
+                "reentry_decision",
+                read_mission(mission_dir).get("shared_context", {}),
+            )
+
 
 class MissionSharedContextInitTests(unittest.TestCase):
     def test_init_mission_creates_project_shared_context_file(self):

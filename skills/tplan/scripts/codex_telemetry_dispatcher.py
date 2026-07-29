@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import sys
@@ -24,14 +25,24 @@ except ImportError:  # pragma: no cover - POSIX
 
 from codex_telemetry_adapter import (
     _canonical_mission_dir,
+    _persist_state_and_coverage,
+    _prepare_bind_session_state_unlocked,
     _read_state,
     _safe_id,
     _state_path,
     _validate_state_target,
     _validated_state_dir,
+    coverage_path,
     handle_hook,
 )
-from tplan_runtime import TplanError, _trace_mission_id, now_iso, read_mission, write_json
+from tplan_runtime import (
+    TplanError,
+    _trace_mission_id,
+    execution_trace_lock,
+    now_iso,
+    read_mission,
+    write_json,
+)
 
 
 REGISTRY_SCHEMA_VERSION = "tplan.codex_telemetry_registry.v0.1"
@@ -199,6 +210,148 @@ def registry_lock(state_dir: Path):
                 msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
 
 
+def _validate_registry_session_owner_unlocked(
+    registry: dict[str, Any],
+    mission_dir: Path,
+    session_id: str,
+) -> None:
+    existing = registry["bindings"].get(session_id)
+    if (
+        isinstance(existing, dict)
+        and existing.get("mission_path") != str(mission_dir)
+    ):
+        raise TplanError(
+            "Codex telemetry session is already routed to another Mission; "
+            "clean the previous Mission before reusing that session"
+        )
+
+
+def _apply_registry_binding_unlocked(
+    registry: dict[str, Any],
+    mission_dir: Path,
+    mission: dict[str, Any],
+    *,
+    session_id: str,
+    generation: int,
+) -> None:
+    _validate_registry_session_owner_unlocked(registry, mission_dir, session_id)
+    for registered_session, registered in list(registry["bindings"].items()):
+        if (
+            isinstance(registered, dict)
+            and registered.get("mission_path") == str(mission_dir)
+            and registered_session != session_id
+        ):
+            registry["bindings"].pop(registered_session)
+    registry["bindings"][session_id] = {
+        "mission_id": _trace_mission_id(mission),
+        "mission_path": str(mission_dir),
+        "binding_generation": generation,
+        "registered_at": now_iso(),
+    }
+
+
+def _file_bytes_or_none(path: Path) -> bytes | None:
+    try:
+        return path.read_bytes()
+    except FileNotFoundError:
+        return None
+
+
+def _restore_file_bytes(path: Path, content: bytes | None, *, private: bool = False) -> None:
+    if content is None:
+        path.unlink(missing_ok=True)
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+    if private:
+        try:
+            path.chmod(0o600)
+        except OSError:
+            pass
+
+
+def _binding_generation(state: dict[str, Any]) -> int:
+    binding = state.get("binding", {})
+    generation = binding.get("generation")
+    if isinstance(generation, bool) or not isinstance(generation, int) or generation < 1:
+        raise TplanError("Codex telemetry binding generation is invalid")
+    return generation
+
+
+def bind_and_register_session(
+    mission_dir: Path,
+    state_dir: Path,
+    *,
+    session_id: str,
+    thread_id: str | None = None,
+    replace: bool = False,
+    activation_required: bool = False,
+) -> dict[str, Any]:
+    mission_dir = _canonical_mission_dir(mission_dir)
+    state_dir = _validated_state_dir(state_dir, mission_dir)
+    session_id = _safe_id(session_id, "session_id")
+    if thread_id is not None:
+        thread_id = _safe_id(thread_id, "thread_id")
+    state_path = _state_path(state_dir, mission_dir)
+    sidecar_path = coverage_path(mission_dir)
+    previous_state: bytes | None = None
+    previous_sidecar: bytes | None = None
+    previous_registry: dict[str, Any] | None = None
+    state_written = False
+    registry_written = False
+    try:
+        with execution_trace_lock(mission_dir):
+            previous_state = _file_bytes_or_none(state_path)
+            previous_sidecar = _file_bytes_or_none(sidecar_path)
+            path, state, mission = _prepare_bind_session_state_unlocked(
+                mission_dir,
+                state_dir,
+                session_id=session_id,
+                thread_id=thread_id,
+                replace=replace,
+                activation_required=activation_required,
+            )
+            generation = _binding_generation(state)
+            with registry_lock(state_dir):
+                registry = _read_registry_unlocked(state_dir)
+                previous_registry = copy.deepcopy(registry)
+                _validate_registry_session_owner_unlocked(
+                    registry,
+                    mission_dir,
+                    session_id,
+                )
+                _persist_state_and_coverage(path, mission_dir, state)
+                state_written = True
+                _apply_registry_binding_unlocked(
+                    registry,
+                    mission_dir,
+                    mission,
+                    session_id=session_id,
+                    generation=generation,
+                )
+                _write_registry_unlocked(state_dir, registry)
+                registry_written = True
+                binding_count = len(registry["bindings"])
+    except Exception:
+        if state_written or registry_written:
+            _restore_file_bytes(state_path, previous_state, private=True)
+            _restore_file_bytes(sidecar_path, previous_sidecar)
+            if previous_registry is not None:
+                with registry_lock(state_dir):
+                    _write_registry_unlocked(state_dir, previous_registry)
+        raise
+    return {
+        "status": "registered",
+        "mission_id": _trace_mission_id(mission),
+        "binding_scope": state["binding"]["scope"],
+        "binding_generation": generation,
+        "state_file": str(state_path),
+        "coverage_file": str(sidecar_path),
+        "active_binding_count": binding_count,
+        "registry_file": str(registry_path(state_dir)),
+    }
+
+
 def register_binding(
     mission_dir: Path,
     state_dir: Path,
@@ -217,33 +370,16 @@ def register_binding(
         raise TplanError(
             "Codex telemetry dispatcher registration does not match Mission binding"
         )
-    generation = binding.get("generation")
-    if isinstance(generation, bool) or not isinstance(generation, int) or generation < 1:
-        raise TplanError("Codex telemetry binding generation is invalid")
+    generation = _binding_generation(state)
     with registry_lock(state_dir):
         registry = _read_registry_unlocked(state_dir)
-        existing = registry["bindings"].get(session_id)
-        if (
-            isinstance(existing, dict)
-            and existing.get("mission_path") != str(mission_dir)
-        ):
-            raise TplanError(
-                "Codex telemetry session is already routed to another Mission; "
-                "clean the previous Mission before reusing that session"
-            )
-        for registered_session, registered in list(registry["bindings"].items()):
-            if (
-                isinstance(registered, dict)
-                and registered.get("mission_path") == str(mission_dir)
-                and registered_session != session_id
-            ):
-                registry["bindings"].pop(registered_session)
-        registry["bindings"][session_id] = {
-            "mission_id": _trace_mission_id(mission),
-            "mission_path": str(mission_dir),
-            "binding_generation": generation,
-            "registered_at": now_iso(),
-        }
+        _apply_registry_binding_unlocked(
+            registry,
+            mission_dir,
+            mission,
+            session_id=session_id,
+            generation=generation,
+        )
         _write_registry_unlocked(state_dir, registry)
         binding_count = len(registry["bindings"])
     return {

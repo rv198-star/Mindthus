@@ -513,6 +513,69 @@ def _persist_state_and_coverage(
     write_json(coverage_path(mission_dir), _coverage_report(state), durable=True)
 
 
+def _prepare_bind_session_state_unlocked(
+    mission_dir: Path,
+    state_dir: Path,
+    *,
+    session_id: str,
+    thread_id: str | None = None,
+    replace: bool = False,
+    activation_required: bool = False,
+) -> tuple[Path, dict[str, Any], dict[str, Any]]:
+    path = _state_path(state_dir, mission_dir)
+    _recover_pending_mission_transaction_unlocked(mission_dir)
+    mission = _prepare_supported_runtime_write_unlocked(
+        mission_dir,
+        operation="codex_telemetry_bind",
+    )
+    previous_activation: dict[str, Any] | None = None
+    binding_generation = 1
+    current: dict[str, Any] | None = None
+    if path.exists():
+        current = _read_state(path)
+        previous_activation = copy.deepcopy(_normalize_activation(current))
+        current_generation = current.get("binding", {}).get("generation", 1)
+        if isinstance(current_generation, int) and not isinstance(
+            current_generation, bool
+        ):
+            binding_generation = current_generation + (1 if replace else 0)
+    if current is not None and not replace:
+        current_binding = current.get("binding", {})
+        if (
+            current_binding.get("session_id") != session_id
+            or current_binding.get("thread_id") != thread_id
+        ):
+            raise TplanError(
+                "Codex telemetry is already bound to a different session/thread; use --replace explicitly"
+            )
+        state = current
+    else:
+        state = _new_state(
+            mission_dir,
+            mission,
+            session_id=session_id,
+            thread_id=thread_id,
+            activation_required=activation_required,
+            binding_generation=binding_generation,
+        )
+        if previous_activation is not None:
+            state["activation"] = previous_activation
+            state["activation"]["required"] = (
+                bool(previous_activation.get("required"))
+                or activation_required
+            )
+            if state["activation"]["required"]:
+                _set_active_activation_status(
+                    state,
+                    "binding_mismatch",
+                    "session/thread binding was replaced; activation preflight must run again",
+                )
+    if activation_required:
+        state["activation"]["required"] = True
+    _validate_state_target(state, mission_dir, mission)
+    return path, state, mission
+
+
 def bind_session(
     mission_dir: Path,
     state_dir: Path,
@@ -527,57 +590,15 @@ def bind_session(
     session_id = _safe_id(session_id, "session_id")
     if thread_id is not None:
         thread_id = _safe_id(thread_id, "thread_id")
-    path = _state_path(state_dir, mission_dir)
     with execution_trace_lock(mission_dir):
-        _recover_pending_mission_transaction_unlocked(mission_dir)
-        mission = _prepare_supported_runtime_write_unlocked(
+        path, state, _mission = _prepare_bind_session_state_unlocked(
             mission_dir,
-            operation="codex_telemetry_bind",
+            state_dir,
+            session_id=session_id,
+            thread_id=thread_id,
+            replace=replace,
+            activation_required=activation_required,
         )
-        previous_activation: dict[str, Any] | None = None
-        binding_generation = 1
-        if path.exists():
-            current = _read_state(path)
-            previous_activation = copy.deepcopy(_normalize_activation(current))
-            current_generation = current.get("binding", {}).get("generation", 1)
-            if isinstance(current_generation, int) and not isinstance(
-                current_generation, bool
-            ):
-                binding_generation = current_generation + (1 if replace else 0)
-        if path.exists() and not replace:
-            current_binding = current.get("binding", {})
-            if (
-                current_binding.get("session_id") != session_id
-                or current_binding.get("thread_id") != thread_id
-            ):
-                raise TplanError(
-                    "Codex telemetry is already bound to a different session/thread; use --replace explicitly"
-                )
-            state = current
-        else:
-            state = _new_state(
-                mission_dir,
-                mission,
-                session_id=session_id,
-                thread_id=thread_id,
-                activation_required=activation_required,
-                binding_generation=binding_generation,
-            )
-            if previous_activation is not None:
-                state["activation"] = previous_activation
-                state["activation"]["required"] = (
-                    bool(previous_activation.get("required"))
-                    or activation_required
-                )
-                if state["activation"]["required"]:
-                    _set_active_activation_status(
-                        state,
-                        "binding_mismatch",
-                        "session/thread binding was replaced; activation preflight must run again",
-                    )
-        if activation_required:
-            state["activation"]["required"] = True
-        _validate_state_target(state, mission_dir, mission)
         _persist_state_and_coverage(path, mission_dir, state)
     return {
         "status": "bound",

@@ -35,12 +35,13 @@ provenance.
 
 The generated hook definition contains only the stable dispatcher script and this
 persistent state directory. It contains no Mission path, session id, or thread id.
-Raw session ids live only in
-`tplan-codex-telemetry-registry.json` inside the host-controlled state directory,
-where the dispatcher maps one exact session to one Mission binding generation. Thus a
-new Mission updates the registry without changing Codex's trusted hook-definition
-hash. One session cannot be routed to two Missions or silently moved with `--replace`;
-clean the previous Mission route before reusing that session for a new Mission.
+Raw session ids stay inside the host-controlled state directory, in the dispatcher
+registry and per-Mission binding sidecars; they do not enter Mission
+coverage reports or execution traces. The dispatcher maps one exact session to one
+Mission binding generation. Thus a new Mission updates the registry without changing
+Codex's trusted hook-definition hash. One session cannot be routed to two Missions or
+silently moved with `--replace`; clean the previous Mission route before reusing that
+session for a new Mission.
 
 Binding and generating a hook file do not prove that Codex loaded or trusted that
 file. New generated bindings therefore require activation preflight before hook

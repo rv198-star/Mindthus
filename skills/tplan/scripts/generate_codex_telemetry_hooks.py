@@ -9,8 +9,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from codex_telemetry_adapter import bind_session, hook_command
-from codex_telemetry_dispatcher import register_binding
+from codex_telemetry_adapter import hook_command
+from codex_telemetry_dispatcher import bind_and_register_session
 from tplan_runtime import TplanError
 
 
@@ -49,19 +49,13 @@ def main() -> int:
     mission_dir = Path(args.mission_dir).resolve()
     state_dir = Path(args.state_dir).resolve()
     try:
-        bind_session(
+        bind_and_register_session(
             mission_dir,
             state_dir,
             session_id=args.session_id,
             thread_id=args.thread_id,
             replace=args.replace,
             activation_required=True,
-        )
-        register_binding(
-            mission_dir,
-            state_dir,
-            session_id=args.session_id,
-            replace=args.replace,
         )
         config = hook_config(mission_dir, state_dir)
     except (OSError, ValueError, TplanError) as exc:

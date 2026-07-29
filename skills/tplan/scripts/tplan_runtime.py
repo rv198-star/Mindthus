@@ -2532,6 +2532,20 @@ def _file_content_digest(path: Path) -> str | None:
     return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _content_digest_from_bytes(content: bytes | None) -> str | None:
+    if content is None:
+        return None
+    return "sha256:" + hashlib.sha256(content).hexdigest()
+
+
+def _runtime_snapshot_file_state_unlocked(path: Path) -> dict[str, Any]:
+    try:
+        content = path.read_bytes()
+    except FileNotFoundError:
+        return {"content": None, "mtime_ns": None}
+    return {"content": content, "mtime_ns": path.stat().st_mtime_ns}
+
+
 def _latest_recovery_boundary(events: list[dict[str, Any]]) -> dict[str, Any] | None:
     for event in reversed(events):
         if event.get("event_type") != "stop_report":
@@ -2602,179 +2616,184 @@ def _runtime_reentry_snapshot(
             "runtime_dir": runtime_identity,
             "diagnostics": ["runtime mission.json is missing"],
         }
-    try:
-        mission = read_json(paths["mission"])
-    except (OSError, ValueError) as exc:
-        return {
-            "availability": "unreadable",
-            "runtime_dir": runtime_identity,
-            "diagnostics": [str(exc)],
-        }
-
-    validation_errors = validate_mission(mission)
-    if paths["transaction"].exists():
-        validation_errors.append(
-            "pending Mission transaction must be resolved before re-entry assessment"
-        )
-    mission_meta = mission.get("mission")
-    if not isinstance(mission_meta, dict):
-        mission_meta = {}
-    active_task_id = mission.get("active_task_id")
-    active_task = next(
-        (
-            task
-            for task in mission.get("tasks", [])
-            if isinstance(task, dict) and task.get("id") == active_task_id
-        ),
-        None,
-    )
-    latest_state = None
-    if paths["narrative"].exists():
-        try:
-            narrative = paths["narrative"].read_text(encoding="utf-8")
-        except OSError:
-            narrative = ""
-        if LITE_RUNTIME_STATE_HEADING in narrative:
-            latest_state = _existing_lite_latest_state(narrative)
-
-    trace_records: list[dict[str, Any]] = []
-    trace_diagnostics: list[str] = []
-    if paths["trace"].exists():
-        try:
-            for line_number, line in enumerate(
-                paths["trace"].read_text(encoding="utf-8").splitlines(),
-                start=1,
-            ):
-                if not line.strip():
-                    continue
-                value = json.loads(line)
-                if isinstance(value, dict):
-                    trace_records.append(value)
-                else:
-                    trace_diagnostics.append(
-                        f"execution trace line {line_number} is not an object"
-                    )
-        except (OSError, json.JSONDecodeError, ValueError) as exc:
-            trace_diagnostics.append(str(exc))
-    if trace_records and not trace_diagnostics:
-        trace_diagnostics.extend(validate_execution_trace(mission, trace_records))
-    latest_trace_record = next(
-        (
-            record
-            for record in reversed(trace_records)
-            if record.get("event_type") not in TRACE_SPAN_EVENT_TYPES
-        ),
-        None,
-    )
-    latest_trace_event = (
-        {
-            "event_id": latest_trace_record.get("event_id"),
-            "event_type": latest_trace_record.get("event_type"),
-            "timestamp": latest_trace_record.get("timestamp"),
-            "task_id": latest_trace_record.get("task_id"),
-            "payload": latest_trace_record.get("payload", {}),
-        }
-        if isinstance(latest_trace_record, dict)
-        else None
-    )
-    if latest_state is None and latest_trace_event is not None:
-        latest_state = {
-            "source": "execution_trace",
-            **latest_trace_event,
-        }
-
-    events: list[dict[str, Any]] = []
-    event_diagnostics: list[str] = []
-    if paths["evidence"].exists():
-        try:
-            for line_number, line in enumerate(
-                paths["evidence"].read_text(encoding="utf-8").splitlines(),
-                start=1,
-            ):
-                if not line.strip():
-                    continue
-                value = json.loads(line)
-                if isinstance(value, dict):
-                    events.append(value)
-                else:
-                    event_diagnostics.append(
-                        f"evidence line {line_number} is not an object"
-                    )
-        except (OSError, json.JSONDecodeError, ValueError) as exc:
-            event_diagnostics.append(str(exc))
-
-    provenance = runtime_provenance_report(mission)
-    shared_context = mission.get("shared_context")
-    risk_signals = (
-        shared_context.get("risk_signals", [])
-        if isinstance(shared_context, dict)
-        else []
-    )
-    active_risks = [
-        signal
-        for signal in risk_signals
-        if isinstance(signal, dict) and signal.get("status") == "active"
-    ]
-    diagnostics = list(validation_errors) + event_diagnostics + trace_diagnostics
-    if mission_meta.get("id") != mission_id:
-        diagnostics.append(
-            f"runtime mission_id {mission_meta.get('id')} does not match {mission_id}"
-        )
-    return {
-        "availability": "loaded",
-        "runtime_dir": runtime_identity,
-        "mission_id": mission_meta.get("id"),
-        "mission_digest": mission_control_digest(mission),
-        "title": mission_meta.get("title"),
-        "objective": mission_meta.get("objective"),
-        "status": mission_meta.get("status"),
-        "acceptance_evidence": _mission_acceptance_evidence(mission),
-        "active_task": (
-            {
-                "id": active_task.get("id"),
-                "title": active_task.get("title"),
-                "status": active_task.get("status"),
+    with execution_trace_lock(runtime_dir):
+        if not paths["mission"].exists():
+            return {
+                "availability": "missing",
+                "runtime_dir": runtime_identity,
+                "diagnostics": ["runtime mission.json is missing"],
             }
-            if isinstance(active_task, dict)
+        snapshots = {
+            "mission": _runtime_snapshot_file_state_unlocked(paths["mission"]),
+            "narrative": _runtime_snapshot_file_state_unlocked(paths["narrative"]),
+            "evidence": _runtime_snapshot_file_state_unlocked(paths["evidence"]),
+            "trace": _runtime_snapshot_file_state_unlocked(paths["trace"]),
+        }
+        try:
+            mission_content = snapshots["mission"]["content"]
+            if mission_content is None:
+                raise FileNotFoundError(paths["mission"])
+            mission = json.loads(mission_content.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, ValueError) as exc:
+            return {
+                "availability": "unreadable",
+                "runtime_dir": runtime_identity,
+                "diagnostics": [str(exc)],
+            }
+
+        validation_errors = validate_mission(mission)
+        if paths["transaction"].exists():
+            validation_errors.append(
+                "pending Mission transaction must be resolved before re-entry assessment"
+            )
+        mission_meta = mission.get("mission")
+        if not isinstance(mission_meta, dict):
+            mission_meta = {}
+        active_task_id = mission.get("active_task_id")
+        active_task = next(
+            (
+                task
+                for task in mission.get("tasks", [])
+                if isinstance(task, dict) and task.get("id") == active_task_id
+            ),
+            None,
+        )
+        latest_state = None
+        narrative_content = snapshots["narrative"]["content"]
+        if narrative_content is not None:
+            try:
+                narrative = narrative_content.decode("utf-8")
+            except UnicodeDecodeError:
+                narrative = ""
+            if LITE_RUNTIME_STATE_HEADING in narrative:
+                latest_state = _existing_lite_latest_state(narrative)
+
+        trace_records: list[dict[str, Any]] = []
+        trace_diagnostics: list[str] = []
+        trace_content = snapshots["trace"]["content"]
+        if trace_content is not None:
+            try:
+                for line_number, line in enumerate(
+                    trace_content.decode("utf-8").splitlines(),
+                    start=1,
+                ):
+                    if not line.strip():
+                        continue
+                    value = json.loads(line)
+                    if isinstance(value, dict):
+                        trace_records.append(value)
+                    else:
+                        trace_diagnostics.append(
+                            f"execution trace line {line_number} is not an object"
+                        )
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+                trace_diagnostics.append(str(exc))
+        if trace_records and not trace_diagnostics:
+            trace_diagnostics.extend(validate_execution_trace(mission, trace_records))
+        latest_trace_record = next(
+            (
+                record
+                for record in reversed(trace_records)
+                if record.get("event_type") not in TRACE_SPAN_EVENT_TYPES
+            ),
+            None,
+        )
+        latest_trace_event = (
+            {
+                "event_id": latest_trace_record.get("event_id"),
+                "event_type": latest_trace_record.get("event_type"),
+                "timestamp": latest_trace_record.get("timestamp"),
+                "task_id": latest_trace_record.get("task_id"),
+                "payload": latest_trace_record.get("payload", {}),
+            }
+            if isinstance(latest_trace_record, dict)
             else None
-        ),
-        "latest_state": latest_state,
-        "latest_trace_event": latest_trace_event,
-        "recovery_boundary": _latest_recovery_boundary(events),
-        "blockers": _reentry_blockers(events, active_task_id),
-        "active_risk_signals": active_risks,
-        "runtime_provenance": {
-            "status": provenance["status"],
-            "severity": provenance["severity"],
-            "compatible": provenance["compatible"],
-            "diagnostics": provenance["diagnostics"],
-        },
-        "freshness": {
-            "mission_mtime_ns": paths["mission"].stat().st_mtime_ns,
-            "narrative_mtime_ns": (
-                paths["narrative"].stat().st_mtime_ns
-                if paths["narrative"].exists()
+        )
+        if latest_state is None and latest_trace_event is not None:
+            latest_state = {
+                "source": "execution_trace",
+                **latest_trace_event,
+            }
+
+        events: list[dict[str, Any]] = []
+        event_diagnostics: list[str] = []
+        evidence_content = snapshots["evidence"]["content"]
+        if evidence_content is not None:
+            try:
+                for line_number, line in enumerate(
+                    evidence_content.decode("utf-8").splitlines(),
+                    start=1,
+                ):
+                    if not line.strip():
+                        continue
+                    value = json.loads(line)
+                    if isinstance(value, dict):
+                        events.append(value)
+                    else:
+                        event_diagnostics.append(
+                            f"evidence line {line_number} is not an object"
+                        )
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+                event_diagnostics.append(str(exc))
+
+        provenance = runtime_provenance_report(mission)
+        shared_context = mission.get("shared_context")
+        risk_signals = (
+            shared_context.get("risk_signals", [])
+            if isinstance(shared_context, dict)
+            else []
+        )
+        active_risks = [
+            signal
+            for signal in risk_signals
+            if isinstance(signal, dict) and signal.get("status") == "active"
+        ]
+        diagnostics = list(validation_errors) + event_diagnostics + trace_diagnostics
+        if mission_meta.get("id") != mission_id:
+            diagnostics.append(
+                f"runtime mission_id {mission_meta.get('id')} does not match {mission_id}"
+            )
+        return {
+            "availability": "loaded",
+            "runtime_dir": runtime_identity,
+            "mission_id": mission_meta.get("id"),
+            "mission_digest": mission_control_digest(mission),
+            "title": mission_meta.get("title"),
+            "objective": mission_meta.get("objective"),
+            "status": mission_meta.get("status"),
+            "acceptance_evidence": _mission_acceptance_evidence(mission),
+            "active_task": (
+                {
+                    "id": active_task.get("id"),
+                    "title": active_task.get("title"),
+                    "status": active_task.get("status"),
+                }
+                if isinstance(active_task, dict)
                 else None
             ),
-            "evidence_mtime_ns": (
-                paths["evidence"].stat().st_mtime_ns
-                if paths["evidence"].exists()
-                else None
-            ),
-            "trace_mtime_ns": (
-                paths["trace"].stat().st_mtime_ns
-                if paths["trace"].exists()
-                else None
-            ),
-            "content_digests": {
-                "mission": _file_content_digest(paths["mission"]),
-                "narrative": _file_content_digest(paths["narrative"]),
-                "evidence": _file_content_digest(paths["evidence"]),
-                "trace": _file_content_digest(paths["trace"]),
+            "latest_state": latest_state,
+            "latest_trace_event": latest_trace_event,
+            "recovery_boundary": _latest_recovery_boundary(events),
+            "blockers": _reentry_blockers(events, active_task_id),
+            "active_risk_signals": active_risks,
+            "runtime_provenance": {
+                "status": provenance["status"],
+                "severity": provenance["severity"],
+                "compatible": provenance["compatible"],
+                "diagnostics": provenance["diagnostics"],
             },
-        },
-        "diagnostics": diagnostics,
-    }
+            "freshness": {
+                "mission_mtime_ns": snapshots["mission"]["mtime_ns"],
+                "narrative_mtime_ns": snapshots["narrative"]["mtime_ns"],
+                "evidence_mtime_ns": snapshots["evidence"]["mtime_ns"],
+                "trace_mtime_ns": snapshots["trace"]["mtime_ns"],
+                "content_digests": {
+                    key: _content_digest_from_bytes(snapshot["content"])
+                    for key, snapshot in snapshots.items()
+                },
+            },
+            "diagnostics": diagnostics,
+        }
 
 
 def _reentry_candidate_disposition(

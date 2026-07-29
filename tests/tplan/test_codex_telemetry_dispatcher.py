@@ -11,7 +11,7 @@ SCRIPTS = REPO / "skills" / "tplan" / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from codex_telemetry_adapter import bind_session, coverage_path, hook_command
+from codex_telemetry_adapter import bind_session, coverage_path, hook_command, _state_path
 from codex_telemetry_dispatcher import (
     DISPATCHER_VERSION,
     REGISTRY_SCHEMA_VERSION,
@@ -216,7 +216,68 @@ class CodexTelemetryDispatcherTests(unittest.TestCase):
             self.assertEqual(removed_two["removed_binding_count"], 1)
             self.assertEqual(removed_two["active_binding_count"], 0)
 
-    def test_raw_session_ids_stay_in_host_registry_only(self):
+    def test_failed_generator_replace_preserves_existing_binding_and_route(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            mission_one = create_named_mission(root, "one")
+            mission_two = create_named_mission(root, "two")
+            state_dir = root / "host-state"
+            state_dir.mkdir()
+            bind_session(mission_one, state_dir, session_id="session-old")
+            register_binding(
+                mission_one,
+                state_dir,
+                session_id="session-old",
+            )
+            bind_session(mission_two, state_dir, session_id="session-new")
+            register_binding(
+                mission_two,
+                state_dir,
+                session_id="session-new",
+            )
+            state_one = _state_path(state_dir, mission_one.resolve())
+            state_before = state_one.read_bytes()
+            coverage_before = coverage_path(mission_one).read_bytes()
+            registry_before = registry_path(state_dir).read_bytes()
+
+            replaced = run_script(
+                "generate_codex_telemetry_hooks.py",
+                str(mission_one),
+                "--state-dir",
+                str(state_dir),
+                "--session-id",
+                "session-new",
+                "--replace",
+            )
+            self.assertEqual(replaced.returncode, 2)
+            self.assertIn("another Mission", replaced.stderr)
+            self.assertEqual(state_one.read_bytes(), state_before)
+            self.assertEqual(coverage_path(mission_one).read_bytes(), coverage_before)
+            self.assertEqual(registry_path(state_dir).read_bytes(), registry_before)
+
+            started = dispatch_hook(
+                state_dir,
+                hook(
+                    "PreToolUse",
+                    session="session-old",
+                    tool_name="Bash",
+                    tool_use_id="tool-still-routed",
+                ),
+            )
+            completed = dispatch_hook(
+                state_dir,
+                hook(
+                    "PostToolUse",
+                    session="session-old",
+                    tool_name="Bash",
+                    tool_use_id="tool-still-routed",
+                    tool_response={"exit_code": 0},
+                ),
+            )
+            self.assertEqual(started["status"], "recorded")
+            self.assertEqual(completed["status"], "recorded")
+
+    def test_raw_session_ids_stay_in_host_controlled_state_only(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             mission_dir = create_named_mission(root, "one")
