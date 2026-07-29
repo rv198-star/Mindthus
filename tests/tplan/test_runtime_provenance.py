@@ -135,7 +135,7 @@ class RuntimeProvenanceTests(unittest.TestCase):
         provenance = mission["runtime_provenance"]
         fingerprint = provenance["fingerprint"]
         self.assertEqual(provenance["origin"], "native")
-        self.assertEqual(fingerprint["package_version"], "1.5.3")
+        self.assertEqual(fingerprint["package_version"], "1.5.4")
         self.assertEqual(fingerprint["skill_root"], str(SKILL.resolve()))
         self.assertEqual(fingerprint["script_root"], str(SCRIPTS.resolve()))
         self.assertEqual(
@@ -264,7 +264,7 @@ class RuntimeProvenanceTests(unittest.TestCase):
             self.assertEqual(transition.returncode, 0, transition.stderr)
             adopted = read_mission(mission_dir)["runtime_provenance"]
             self.assertEqual(adopted["origin"], "legacy_adopted")
-            self.assertEqual(adopted["fingerprint"]["package_version"], "1.5.3")
+            self.assertEqual(adopted["fingerprint"]["package_version"], "1.5.4")
 
     def test_terminal_handoff_fails_closed_before_replacing_artifacts(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -378,7 +378,7 @@ class RuntimeProvenanceTests(unittest.TestCase):
         )
         self.assertEqual(by_root[str(stale.resolve())]["capability_source"], "filesystem_probe")
         self.assertEqual(by_root[str(stale.resolve())]["capabilities"], [])
-        self.assertEqual(by_root[str(SKILL.resolve())]["package_version"], "1.5.3")
+        self.assertEqual(by_root[str(SKILL.resolve())]["package_version"], "1.5.4")
         self.assertIn("scripts/render_execution_cost_tree.py", by_root[str(stale.resolve())]["missing_scripts"])
         self.assertIn("selected_runtime_missing_renderer", codes)
         self.assertIn("selected_runtime_incompatible_capabilities", codes)

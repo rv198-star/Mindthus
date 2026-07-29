@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.5.3"
+VERSION = "1.5.4"
 PACKAGE_IDENTITY = "mindthus"
 MARKETPLACE_IDENTITY = "mindthus"
 RELATIVE_FILES = (

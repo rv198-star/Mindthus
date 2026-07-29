@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## v1.5.4
+
+发布 tag：`v1.5.4`
+
+[发布说明](docs/releases/v1.5.4.md)
+
+说明：这是 1.x Stable 线的 TPlan bugfix patch。它修复 #146、#147、#148 中暴露的
+Codex Hook 遥测激活、缺失遥测展示和 Mission 重入恢复判断问题；不新增方法论，不发布新的
+ROI Beta 资产，也不声称历史 Mission 可被自动补齐。
+
+### #146：Codex App / CLI Hook 遥测接入
+
 - TPlan Codex 遥测新增 fail-closed 激活生命周期：生成 binding 后必须通过
   `hooks/list` 证明精确 source 被枚举、四个 handler hash 可信且 enabled，才允许
   App/CLI Hook 写入。稳定 dispatcher 的 Hook 定义不再携带 Mission/session；
@@ -11,6 +23,11 @@
   `binding_mismatch`、`callback_unpaired` 与 `observed`；cleanup 仅移除 TPlan handler，
   保留无关 Hook，并同步清除 host binding 与误导性 sidecar；默认 cleanup 保留稳定
   dispatcher，只有无其他绑定且显式请求时才卸载。
+- 审计返修后，hook generator 的 binding state、coverage sidecar 与 dispatcher registry
+  通过单入口提交：在写入 Mission sidecar 前先预检 session 是否已属于其他 Mission，失败时
+  原 binding、coverage、registry 和旧 session 路由保持不变。
+
+### #147：缺失遥测数据的简化输出
 
 - TPlan 执行图 Standard 视图会按实际 lifecycle/cost 覆盖生成呈现密度：未采集的
   LLM、脚本、工具、等待与 Token 字段不再逐节点重复，而是收束为一条 Mission 级
@@ -18,12 +35,17 @@
   Audit 继续保留所有通道状态与诊断原因，JSON `v0.9` 保留完整原始合同并新增
   `presentation_density`。
 
+### #148：TPlan 重入恢复判断
+
 - TPlan 重入恢复预检把残留 Mission 发现与继续授权分开：旧 runtime/shared-context
   只产生候选；即使 objective 和 acceptance evidence 完全匹配，也必须显式提交
   `resume_existing` disposition 与 rationale。缺少当前意图、终态、`requires_human`、
   stale context 或 runtime provenance 异常都会阻止静默续跑；初始化入口会拒绝
   未处置候选。显式处置先持久化 decision receipt，再按 Mission/narrative/evidence/
   trace 内容摘要原子复核并应用到旧 runtime；输出同时给出 freshness、blocker 与人话解释。
+- 审计返修后，re-entry runtime snapshot 在同一个 Mission 锁内读取
+  Mission/narrative/evidence/trace，并用同一批 bytes 计算内容摘要；assessment 期间新增的
+  blocker 不会被 CAS 误认为已经审查。
 
 ## v1.5.3
 
