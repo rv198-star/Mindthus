@@ -1,0 +1,43 @@
+{
+  "schema_version": "mindthus.judgment-trace.v1",
+  "trace_id": "fixture-direct-execution-001",
+  "timestamp_utc": "2026-08-06T00:00:00+00:00",
+  "provenance": {
+    "producer": "canonical-fixture",
+    "source_type": "author_annotation",
+    "source_ref": "direct-execution"
+  },
+  "input_shape": {
+    "judgment_object": "direct_task",
+    "hard_judgment_point": false,
+    "frame_status": "clean",
+    "active_constraints": [
+      "low-risk",
+      "fact-sufficient"
+    ]
+  },
+  "routing": {
+    "judgment_owner": "direct_execution",
+    "routing_decision": "direct_execute",
+    "loaded_methods": []
+  },
+  "evidence": {
+    "available_evidence_classes": [
+      "user-provided-input"
+    ],
+    "missing_evidence_classes": [],
+    "claim_ceiling": "Direct execution only; no broader judgment claim."
+  },
+  "decision_delta": {
+    "strategy_changed": false,
+    "risk_handling_changed": false,
+    "evidence_requirement_changed": false,
+    "next_action_changed": false,
+    "stopping_condition_changed": false,
+    "handoff_changed": false
+  },
+  "outcome": {
+    "status": "not_evaluated",
+    "validator_status": "fixture-only"
+  }
+}

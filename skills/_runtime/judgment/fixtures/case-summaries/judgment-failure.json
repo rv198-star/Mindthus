@@ -1,0 +1,23 @@
+{
+  "schema_version": "mindthus.case-summary.v1",
+  "decision_context": "An agent was asked to improve a repeated local prompt patch after several unsuccessful iterations.",
+  "observed_failure_or_value_delta": "The agent proposed another local rule instead of checking whether the task definition or evidence was wrong.",
+  "active_judgment_object": "problem_definition",
+  "selected_route_or_method": "direct local patching; Anti-Spiral was missed",
+  "signal": "Repeated same-class repair with weak evidence delta.",
+  "evidence_available": [
+    "Three prior local modifications",
+    "No measurable improvement after the prior changes"
+  ],
+  "evidence_missing": [
+    "Validated task objective",
+    "Evidence that another prompt rule would address the root cause"
+  ],
+  "decision_delta": [
+    "Expected repair should stop another local patch",
+    "Next action should return to task definition and evidence"
+  ],
+  "learning_hypothesis": "A regression case should verify that repeated local repair activates an upstream review before another additive patch.",
+  "uncertainty": "The case does not prove which upstream definition is correct.",
+  "redaction_notes": "No raw prompt, answer, user identity, private path, or attachment is included."
+}

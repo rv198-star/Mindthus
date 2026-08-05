@@ -163,6 +163,7 @@ def write_runtime_tree(
     runtime_root = root / ("_runtime" if runtime_layout == "top-level" else "skills/_runtime")
     (runtime_root / "core").mkdir(parents=True)
     (runtime_root / "fidelity").mkdir(parents=True)
+    (runtime_root / "judgment" / "resources").mkdir(parents=True)
     (root / "skills" / "using-mindthus" / "SKILL.md").write_text(using_text, encoding="utf-8")
     (root / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml").write_text(
         "schema_version: mindthus-calibration-pairs-v0.1\n"
@@ -208,6 +209,13 @@ def write_runtime_tree(
         'SPEC = "using-mindthus-fidelity-v0.1"\n',
         encoding="utf-8",
     )
+    for script_name in (
+        "runtime_import.py",
+        "validate-judgment-trace.py",
+        "export-mindthus-case.py",
+        "validate-mindthus-case.py",
+    ):
+        (root / "scripts" / script_name).write_text("# judgment runtime fixture\n", encoding="utf-8")
     for runtime_path in (
         runtime_root / "__init__.py",
         runtime_root / "core" / "__init__.py",
@@ -216,6 +224,13 @@ def write_runtime_tree(
         runtime_root / "core" / "shape.py",
         runtime_root / "fidelity" / "__init__.py",
         runtime_root / "fidelity" / "core.py",
+        runtime_root / "judgment" / "__init__.py",
+        runtime_root / "judgment" / "benchmark.py",
+        runtime_root / "judgment" / "case_export.py",
+        runtime_root / "judgment" / "trace.py",
+        runtime_root / "judgment" / "resources" / "README.md",
+        runtime_root / "judgment" / "resources" / "judgment-trace.schema.json",
+        runtime_root / "judgment" / "resources" / "case-export-manifest.schema.json",
     ):
         runtime_path.write_text("# runtime fixture\n", encoding="utf-8")
 

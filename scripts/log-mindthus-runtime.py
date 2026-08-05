@@ -4,10 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import configparser
 import hashlib
 import json
 import os
-import tomllib
+
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 local compatibility; CI uses Python 3.11.
+    tomllib = None
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
@@ -39,6 +44,17 @@ RELATIVE_FILES = (
     "skills/_runtime/core/shape.py",
     "skills/_runtime/fidelity/__init__.py",
     "skills/_runtime/fidelity/core.py",
+    "skills/_runtime/judgment/__init__.py",
+    "skills/_runtime/judgment/benchmark.py",
+    "skills/_runtime/judgment/case_export.py",
+    "skills/_runtime/judgment/trace.py",
+    "skills/_runtime/judgment/resources/README.md",
+    "skills/_runtime/judgment/resources/judgment-trace.schema.json",
+    "skills/_runtime/judgment/resources/case-export-manifest.schema.json",
+    "scripts/runtime_import.py",
+    "scripts/validate-judgment-trace.py",
+    "scripts/export-mindthus-case.py",
+    "scripts/validate-mindthus-case.py",
 )
 
 RUNTIME_TOP_LEVEL_ALIASES = {
@@ -49,7 +65,32 @@ RUNTIME_TOP_LEVEL_ALIASES = {
     "skills/_runtime/core/shape.py": "_runtime/core/shape.py",
     "skills/_runtime/fidelity/__init__.py": "_runtime/fidelity/__init__.py",
     "skills/_runtime/fidelity/core.py": "_runtime/fidelity/core.py",
+    "skills/_runtime/judgment/__init__.py": "_runtime/judgment/__init__.py",
+    "skills/_runtime/judgment/benchmark.py": "_runtime/judgment/benchmark.py",
+    "skills/_runtime/judgment/case_export.py": "_runtime/judgment/case_export.py",
+    "skills/_runtime/judgment/trace.py": "_runtime/judgment/trace.py",
+    "skills/_runtime/judgment/resources/README.md": "_runtime/judgment/resources/README.md",
+    "skills/_runtime/judgment/resources/judgment-trace.schema.json": "_runtime/judgment/resources/judgment-trace.schema.json",
+    "skills/_runtime/judgment/resources/case-export-manifest.schema.json": "_runtime/judgment/resources/case-export-manifest.schema.json",
 }
+
+
+def relative_path_aliases(rel: str) -> list[str]:
+    """Return supported package-layout aliases for one canonical repo path."""
+
+    aliases: list[str] = []
+    top_level = RUNTIME_TOP_LEVEL_ALIASES.get(rel)
+    if top_level:
+        aliases.append(top_level)
+    if rel.startswith("skills/"):
+        suffix = rel.removeprefix("skills/")
+        aliases.extend(
+            [
+                f"skills/mindthus/{suffix}",
+                f".opencode/skills/mindthus/{suffix}",
+            ]
+        )
+    return aliases
 REQUIRED_MARKERS = (
     "Original Prompt Contract / 原始有效提示词合同",
     "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
@@ -125,13 +166,33 @@ def default_marketplace_root(codex_home: Path) -> Path:
     return codex_home / "local-marketplaces" / f"mindthus-v{VERSION}" / "codex-plugin" / "mindthus"
 
 
+def load_codex_config(config_path: Path) -> dict[str, Any]:
+    text = config_path.read_text(encoding="utf-8")
+    if tomllib is not None:
+        return tomllib.loads(text)
+
+    parser = configparser.ConfigParser(interpolation=None)
+    parser.read_string(text)
+    section_name = f"marketplaces.{MARKETPLACE_IDENTITY}"
+    if not parser.has_section(section_name):
+        return {}
+    marketplace: dict[str, Any] = {}
+    for key, value in parser.items(section_name):
+        stripped = value.strip()
+        try:
+            marketplace[key] = json.loads(stripped)
+        except json.JSONDecodeError:
+            marketplace[key] = stripped
+    return {"marketplaces": {MARKETPLACE_IDENTITY: marketplace}}
+
+
 def configured_marketplace_root(codex_home: Path) -> Path:
     fallback = default_marketplace_root(codex_home)
     config_path = codex_home / "config.toml"
     if not config_path.is_file():
         return fallback
     try:
-        config = tomllib.loads(config_path.read_text(encoding="utf-8"))
+        config = load_codex_config(config_path)
         marketplace = config["marketplaces"][MARKETPLACE_IDENTITY]
         if marketplace.get("source_type") != "local":
             return fallback
@@ -148,7 +209,7 @@ def configured_marketplace_root(codex_home: Path) -> Path:
         if plugin_source.get("source") != "local":
             return fallback
         return (source_root / plugin_source["path"]).resolve()
-    except (KeyError, StopIteration, OSError, tomllib.TOMLDecodeError, TypeError, ValueError):
+    except (KeyError, StopIteration, OSError, configparser.Error, TypeError, ValueError):
         return fallback
 
 
@@ -167,9 +228,8 @@ def iso_mtime(path: Path) -> str:
 
 
 def inspect_file(root: Path, rel: str) -> dict[str, Any]:
-    candidates = [root / rel]
-    if rel in RUNTIME_TOP_LEVEL_ALIASES:
-        candidates.append(root / RUNTIME_TOP_LEVEL_ALIASES[rel])
+    alias_paths = relative_path_aliases(rel)
+    candidates = [root / rel, *(root / alias for alias in alias_paths)]
     path = next((candidate for candidate in candidates if candidate.is_file()), candidates[0])
     exists = path.is_file()
     info: dict[str, Any] = {
@@ -178,7 +238,7 @@ def inspect_file(root: Path, rel: str) -> dict[str, Any]:
         "exists": exists,
     }
     if path != candidates[0]:
-        info["resolved_relative_path"] = RUNTIME_TOP_LEVEL_ALIASES[rel]
+        info["resolved_relative_path"] = path.relative_to(root).as_posix()
     if not exists:
         info["markers"] = {marker: False for marker in REQUIRED_MARKERS}
         return info

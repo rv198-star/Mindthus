@@ -1,0 +1,44 @@
+{
+  "schema_version": "mindthus.judgment-trace.v1",
+  "trace_id": "fixture-information-acquisition-001",
+  "timestamp_utc": "2026-08-06T00:00:00+00:00",
+  "provenance": {
+    "producer": "canonical-fixture",
+    "source_type": "author_annotation",
+    "source_ref": "information-acquisition"
+  },
+  "input_shape": {
+    "judgment_object": "information_gap",
+    "hard_judgment_point": false,
+    "frame_status": "not_assessed",
+    "active_constraints": [
+      "runtime-proof-missing"
+    ]
+  },
+  "routing": {
+    "judgment_owner": "information_acquisition",
+    "routing_decision": "acquire_information",
+    "loaded_methods": []
+  },
+  "evidence": {
+    "available_evidence_classes": [
+      "user-claim"
+    ],
+    "missing_evidence_classes": [
+      "runtime-proof"
+    ],
+    "claim_ceiling": "Do not diagnose before runtime evidence is acquired."
+  },
+  "decision_delta": {
+    "strategy_changed": false,
+    "risk_handling_changed": false,
+    "evidence_requirement_changed": true,
+    "next_action_changed": true,
+    "stopping_condition_changed": false,
+    "handoff_changed": false
+  },
+  "outcome": {
+    "status": "not_evaluated",
+    "validator_status": "fixture-only"
+  }
+}

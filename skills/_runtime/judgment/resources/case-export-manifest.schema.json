@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.example/schemas/case-export.v1.json",
+  "title": "Mindthus Case Export Manifest v1",
+  "description": "Local-only, user-requested case export manifest. Automatic upload is forbidden.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "case_type",
+    "created_at_utc",
+    "source_client",
+    "source_method",
+    "consent",
+    "privacy",
+    "links",
+    "files"
+  ],
+  "properties": {
+    "schema_version": {"const": "mindthus.case-export.v1"},
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"
+    },
+    "case_type": {
+      "enum": [
+        "judgment_failure",
+        "judgment_repair",
+        "value_delta",
+        "routing_ambiguity",
+        "test_regression_candidate"
+      ]
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "source_client": {"type": ["string", "null"]},
+    "source_method": {"type": ["string", "null"]},
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "export_requested_by_user",
+        "review_required_before_share",
+        "automatic_upload"
+      ],
+      "properties": {
+        "export_requested_by_user": {"const": true},
+        "review_required_before_share": {"const": true},
+        "automatic_upload": {"const": false}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contains_raw_prompt",
+        "contains_raw_answer",
+        "contains_attachments",
+        "contains_user_selected_excerpts",
+        "redaction_status",
+        "pattern_scan_status"
+      ],
+      "properties": {
+        "contains_raw_prompt": {"const": false},
+        "contains_raw_answer": {"const": false},
+        "contains_attachments": {"const": false},
+        "contains_user_selected_excerpts": {"type": "boolean"},
+        "redaction_status": {"const": "review_required"},
+        "pattern_scan_status": {"enum": ["passed", "warnings"]}
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["benchmark_case_id", "related_test_id", "related_issue"],
+      "properties": {
+        "benchmark_case_id": {"type": ["string", "null"]},
+        "related_test_id": {"type": ["string", "null"]},
+        "related_issue": {"type": ["string", "null"]}
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "judgment_trace",
+        "case_summary",
+        "privacy_notice",
+        "privacy_scan",
+        "excerpts"
+      ],
+      "properties": {
+        "judgment_trace": {"const": "judgment-trace.json"},
+        "case_summary": {"const": "case.md"},
+        "privacy_notice": {"const": "README.md"},
+        "privacy_scan": {"const": "privacy-scan.json"},
+        "excerpts": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^excerpts/[A-Za-z0-9][A-Za-z0-9._-]*$"}
+        }
+      }
+    }
+  }
+}

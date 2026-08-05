@@ -1,0 +1,21 @@
+{
+  "schema_version": "mindthus.case-summary.v1",
+  "decision_context": "A generalized routing decision was reviewed after user-requested redaction.",
+  "observed_failure_or_value_delta": "The route remained ambiguous because the available evidence did not distinguish structural ambiguity from an information gap.",
+  "active_judgment_object": "unknown",
+  "selected_route_or_method": "block pending evidence",
+  "signal": "Competing owners would change the evidence request and next action.",
+  "evidence_available": [
+    "Redacted route label"
+  ],
+  "evidence_missing": [
+    "Original domain facts"
+  ],
+  "decision_delta": [
+    "No method was granted ownership",
+    "The next action became evidence acquisition"
+  ],
+  "learning_hypothesis": "Keep the case as a routing ambiguity example until enough non-identifying evidence can distinguish the owners.",
+  "uncertainty": "Heavy redaction limits semantic evaluation.",
+  "redaction_notes": "All names, paths, organization details, credentials, and raw conversation text were removed."
+}
