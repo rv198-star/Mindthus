@@ -9,8 +9,9 @@ This directory records architecture and infrastructure work that is not yet repr
 | 1 | [Judgment Trace Infrastructure](judgment-trace-infrastructure.md) | Implemented v1.1 | P0 | Three-state delta and provenance upgrade complete |
 | 2 | [Test Lifecycle Management](test-lifecycle-management.md) | Implemented wave 1 | P0 | Registry, policy, review, and first consolidation complete |
 | 3 | [Case Export Contract](case-export-contract.md) | Implemented v1 | P1 | Local export and validation complete |
-| 4 | [Progressive Disclosure Runtime Exploration](progressive-disclosure-runtime-exploration.md) | Placeholder | P3 | Record alternatives; do not implement |
-| 5 | [Failure Learning Loop](placeholder-failure-learning-loop.md) | Placeholder | Future | Wait for real case evidence, consent, governance, and learning-loop design |
+| 4 | [Case Prep Skill](case-prep-skill.md) | Implemented v1 | P1 | Explicit low-interaction case preparation complete |
+| 5 | [Progressive Disclosure Runtime Exploration](progressive-disclosure-runtime-exploration.md) | Placeholder | P3 | Record alternatives; do not implement |
+| 6 | [Failure Learning Loop](placeholder-failure-learning-loop.md) | Placeholder | Future | Wait for real case evidence, consent, governance, and learning-loop design |
 
 ## Dependency Map
 
@@ -21,6 +22,9 @@ Judgment Trace Infrastructure
         |                      |
         v                      v
 Case Export Contract     Test Lifecycle Management
+        |
+        v
+Case Prep Skill
         |
         v
 reviewed real cases
@@ -55,7 +59,8 @@ Progressive Disclosure Runtime experiments
 1. The judgment benchmark emits per-case Judgment Trace records.
 2. The test lifecycle registry is active in the canonical suite, and cleanup Wave 1 consolidated duplicate release assertions.
 3. Local-only case export requires explicit user review and never uploads.
-4. Export-to-benchmark admission remains a separate manual proof-of-flow task; it should use a real reviewed case rather than promoting a synthetic fixture automatically.
+4. Case Prep is the explicit low-interaction wrapper for judgment, benchmark, and bounded TPlan cases.
+5. Export-to-benchmark admission remains a separate manual proof-of-flow task; it should use a real reviewed case rather than promoting a synthetic fixture automatically.
 
 ### Phase 3 — Evidence Before Architecture Change
 

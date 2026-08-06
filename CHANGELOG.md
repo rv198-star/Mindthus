@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- 新增显式内部 `case-prep` skill：把当前判断、归档 benchmark case 或 TPlan Mission
+  事件整理成可复核的本地目录与 `.tar.gz`。Judgment/Benchmark 路径复用 Judgment Trace
+  v1.1 与 Case Export v1；TPlan 路径使用独立的 bounded `tplan.case-packet.v1`，只导出
+  active path、Pulse、少量 evidence brief、runtime provenance 与可选 Judgment Trace，
+  不复制完整 Mission、任务树、evidence stream、step logs、execution trace 或 telemetry。
+- `case-prep` 只显式调用，默认不带原始对话/附件，不自动上传，也不自动进入 benchmark；
+  可选文本摘录仍需明确选择、确认脱敏并通过分享前复核。
+
 - Judgment Trace 升级为 `mindthus.judgment-trace.v1.1`：decision delta 支持
   `true / false / unknown`，新增 comparison basis / reference 与关键字段来源标签；
   benchmark 新产物使用 v1.1，validator 与 Case Export 继续兼容 legacy v1。

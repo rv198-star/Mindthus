@@ -196,6 +196,126 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(package_check.returncode, 0, package_check.stderr + package_check.stdout)
             self.assertIn("review_required_before_share: true", package_check.stdout)
 
+    def test_release_pack_runs_case_prep_across_supported_layouts(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr + built.stdout)
+            layouts = (
+                (
+                    "codex-plugin",
+                    out / "codex-plugin" / "mindthus" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "codex-plugin" / "mindthus" / "_runtime",
+                ),
+                (
+                    "claude-plugin",
+                    out / "claude-code" / "claude-plugin" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "claude-code" / "claude-plugin" / "skills" / "_runtime",
+                ),
+                (
+                    "claude-portable",
+                    out / "claude-code" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "claude-code" / "skills" / "_runtime",
+                ),
+                (
+                    "codex-portable",
+                    out / "codex" / "skills" / "mindthus" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "codex" / "skills" / "mindthus" / "_runtime",
+                ),
+                (
+                    "opencode-portable",
+                    out / "opencode" / ".opencode" / "skills" / "mindthus" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "opencode" / ".opencode" / "skills" / "mindthus" / "_runtime",
+                ),
+            )
+            for label, prepare, runtime in layouts:
+                with self.subTest(layout=label):
+                    self.assertTrue(prepare.is_file(), prepare)
+                    trace = runtime / "judgment" / "fixtures" / "traces" / "intervention.json"
+                    summary = runtime / "judgment" / "fixtures" / "case-summaries" / "judgment-failure.json"
+                    export_root = root / f"exports-{label}"
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(prepare),
+                            "judgment",
+                            "--trace",
+                            str(trace),
+                            "--summary",
+                            str(summary),
+                            "--case-type",
+                            "judgment_failure",
+                            "--case-id",
+                            f"packaged-{label}",
+                            "--out-dir",
+                            str(export_root),
+                            "--json",
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+                    payload = json.loads(result.stdout)
+                    self.assertTrue(Path(payload["archive_path"]).is_file())
+                    self.assertTrue(payload["review_required_before_share"])
+                    self.assertFalse(payload["automatic_upload"])
+
+            plugin = out / "codex-plugin" / "mindthus"
+            mission = root / "packaged-mission"
+            initialized = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "tplan" / "scripts" / "init_lite.py"),
+                    "--dir",
+                    str(mission),
+                    "--mission-id",
+                    "packaged-case-prep",
+                    "--title",
+                    "Packaged Case Prep",
+                    "--objective",
+                    "Verify packaged TPlan case preparation.",
+                    "--acceptance-evidence",
+                    "A1:Packet validates",
+                    "--active-task-id",
+                    "T1",
+                    "--active-task-title",
+                    "Prepare packet",
+                    "--active-task-contribution",
+                    "Create a bounded packet.",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr + initialized.stdout)
+            tplan_result = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "case-prep" / "scripts" / "prepare_case.py"),
+                    "tplan",
+                    "--mission-dir",
+                    str(mission),
+                    "--case-id",
+                    "packaged-tplan-case",
+                    "--out-dir",
+                    str(root / "tplan-export"),
+                    "--json",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(tplan_result.returncode, 0, tplan_result.stderr + tplan_result.stdout)
+            tplan_payload = json.loads(tplan_result.stdout)
+            packet = Path(tplan_payload["package_dir"])
+            self.assertTrue((packet / "manifest.json").is_file())
+            self.assertFalse((packet / "mission.json").exists())
+            self.assertTrue(Path(tplan_payload["archive_path"]).is_file())
+
     def test_release_pack_rejects_repository_and_nested_output_paths(self):
         script = REPO / "scripts" / "build-release-pack.py"
         for output in (REPO, REPO / "release-inside-repository"):

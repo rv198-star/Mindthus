@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.example/schemas/tplan-case-packet.v1.json",
+  "title": "TPlan Case Packet v1 Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "created_at_utc",
+    "mode",
+    "focus",
+    "consent",
+    "privacy",
+    "source",
+    "selection",
+    "links",
+    "files"
+  ],
+  "properties": {
+    "schema_version": {"const": "tplan.case-packet.v1"},
+    "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "mode": {"const": "tplan"},
+    "focus": {
+      "enum": ["blocker", "acceptance", "continuation", "authority", "recovery", "provenance", "telemetry", "general"]
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["export_requested_by_user", "review_required_before_share", "automatic_upload"],
+      "properties": {
+        "export_requested_by_user": {"const": true},
+        "review_required_before_share": {"const": true},
+        "automatic_upload": {"const": false}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contains_full_mission",
+        "contains_full_task_tree",
+        "contains_full_evidence_stream",
+        "contains_execution_trace",
+        "contains_step_logs",
+        "contains_user_selected_excerpts",
+        "redaction_status",
+        "pattern_scan_status"
+      ],
+      "properties": {
+        "contains_full_mission": {"const": false},
+        "contains_full_task_tree": {"const": false},
+        "contains_full_evidence_stream": {"const": false},
+        "contains_execution_trace": {"const": false},
+        "contains_step_logs": {"const": false},
+        "contains_user_selected_excerpts": {"type": "boolean"},
+        "redaction_status": {"const": "review_required"},
+        "pattern_scan_status": {"enum": ["passed", "warnings"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mission_binding", "runtime_provenance_status"],
+      "properties": {
+        "mission_binding": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "runtime_provenance_status": {"type": ["string", "null"]}
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_event_id", "selected_evidence_ids", "reason"],
+      "properties": {
+        "selected_event_id": {"type": ["string", "null"]},
+        "selected_evidence_ids": {"type": "array", "maxItems": 5, "items": {"type": ["string", "null"]}},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["judgment_trace"],
+      "properties": {
+        "judgment_trace": {"type": ["string", "null"]}
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mission_summary_json",
+        "mission_summary_markdown",
+        "selected_event",
+        "selected_evidence",
+        "pulse",
+        "privacy_scan",
+        "privacy_notice",
+        "excerpts"
+      ],
+      "properties": {
+        "mission_summary_json": {"const": "mission-summary.json"},
+        "mission_summary_markdown": {"const": "mission-summary.md"},
+        "selected_event": {"const": "selected-event.json"},
+        "selected_evidence": {"const": "selected-evidence.json"},
+        "pulse": {"const": "pulse.json"},
+        "privacy_scan": {"const": "privacy-scan.json"},
+        "privacy_notice": {"const": "README.md"},
+        "excerpts": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^excerpts/[A-Za-z0-9._-]+$"}
+        }
+      }
+    }
+  }
+}

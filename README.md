@@ -68,6 +68,10 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 如果你只是想试一下，建议从 `using-mindthus` 开始。它会告诉 agent：什么时候直接做，什么时候先取证，什么时候进入某个 Mindthus 方法。
 
+需要把一次判断、benchmark case 或 TPlan Mission 事件整理成可复核案例时，显式调用
+`case-prep`（插件模式可用 `mindthus:case-prep`）。它只准备本地案例包，不参与被动路由，
+也不会自动上传。
+
 ### 使用合同
 
 Mindthus 当前最可靠的主路径是**显式调用**：安装后，直接点名
@@ -229,7 +233,7 @@ done
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/{3l5s,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
 rm -f ~/.claude/skills/runtime_bootstrap.py
 ```

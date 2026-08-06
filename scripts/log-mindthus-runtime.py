@@ -57,6 +57,11 @@ RELATIVE_FILES = (
     "scripts/validate-judgment-trace.py",
     "scripts/export-mindthus-case.py",
     "scripts/validate-mindthus-case.py",
+    "skills/case-prep/SKILL.md",
+    "skills/case-prep/scripts/case_prep_core.py",
+    "skills/case-prep/scripts/prepare_case.py",
+    "skills/case-prep/scripts/validate_case_packet.py",
+    "skills/case-prep/resources/tplan-case-packet.schema.json",
 )
 
 RUNTIME_TOP_LEVEL_ALIASES = {

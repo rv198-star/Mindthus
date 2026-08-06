@@ -112,12 +112,13 @@
       "test_id": "judgment-observability-and-case-export",
       "paths": [
         "tests/test_case_export.py",
+        "tests/test_case_prep.py",
         "tests/test_judgment_trace.py",
         "tests/test_test_lifecycle.py"
       ],
       "owner": "runtime",
       "protects": [
-        "Judgment Trace v1.1 plus v1 compatibility, local-only case export, consent flags, privacy boundaries, and lifecycle registry coverage"
+        "Judgment Trace v1.1 plus v1 compatibility, local-only case export, explicit case preparation, consent flags, privacy boundaries, and lifecycle registry coverage"
       ],
       "introduced_by": "P0/P1 observability implementation 2026-08-06",
       "lifecycle_status": "active_gate",

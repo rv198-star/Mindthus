@@ -160,6 +160,8 @@ def write_runtime_tree(
     (root / "docs" / "methodologies" / "primitives").mkdir(parents=True)
     (root / "scripts" / "primitives").mkdir(parents=True)
     (root / "skills" / "using-mindthus" / "scripts").mkdir(parents=True)
+    (root / "skills" / "case-prep" / "scripts").mkdir(parents=True)
+    (root / "skills" / "case-prep" / "resources").mkdir(parents=True)
     runtime_root = root / ("_runtime" if runtime_layout == "top-level" else "skills/_runtime")
     (runtime_root / "core").mkdir(parents=True)
     (runtime_root / "fidelity").mkdir(parents=True)
@@ -209,6 +211,14 @@ def write_runtime_tree(
         'SPEC = "using-mindthus-fidelity-v0.1"\n',
         encoding="utf-8",
     )
+    for case_prep_path in (
+        root / "skills" / "case-prep" / "SKILL.md",
+        root / "skills" / "case-prep" / "scripts" / "case_prep_core.py",
+        root / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+        root / "skills" / "case-prep" / "scripts" / "validate_case_packet.py",
+        root / "skills" / "case-prep" / "resources" / "tplan-case-packet.schema.json",
+    ):
+        case_prep_path.write_text("# case-prep runtime fixture\n", encoding="utf-8")
     for script_name in (
         "runtime_import.py",
         "validate-judgment-trace.py",
