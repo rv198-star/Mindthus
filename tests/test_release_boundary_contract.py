@@ -13,7 +13,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_v1_6_0_release_candidate_preserves_published_and_tplan_boundaries(self):
+    def test_v1_6_0_release_preserves_tplan_generation_boundary(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -27,24 +27,24 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("当前仓库版本：`v1.6.0`（Release candidate）", readme)
+        self.assertIn("当前仓库版本：`v1.6.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("当前已发布 Stable 仍是 `v1.5.4`", readme)
-        self.assertIn("正式 tag/assets 发布前", readme)
-        self.assertIn("TPlan runtime generation", readme)
-        self.assertIn("保持 `1.5.4`", readme)
-        self.assertIn("mindthus-plugins-1.5.4.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.5.4.tar.gz", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.6.0`", readme)
+        self.assertIn("TPlan runtime generation 保持", readme)
+        self.assertIn("mindthus-plugins-1.6.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.6.0.tar.gz", readme)
         self.assertIn("mindthus-beta-1.5.4-roi-beta.tar.gz", readme)
-        self.assertNotIn("releases/download/v1.6.0", readme)
+        self.assertIn("releases/download/v1.6.0/mindthus-plugins-1.6.0.tar.gz", readme)
+        self.assertIn("releases/download/v1.6.0/mindthus-skills-1.6.0.tar.gz", readme)
         self.assertNotIn("mindthus-beta-1.6.0", readme)
         self.assertIn("codex plugin marketplace add /tmp/mindthus-plugins/codex-plugin", readme)
         self.assertIn("claude plugin marketplace add /tmp/mindthus-plugins/claude-code", readme)
         self.assertIn("cp -R /tmp/mindthus-skills/opencode/.opencode", readme)
 
         self.assertIn("## v1.6.0", changelog)
-        self.assertIn("目标 tag：`v1.6.0`", changelog)
-        self.assertIn("[Release candidate 说明](docs/releases/v1.6.0.md)", changelog)
+        self.assertIn("发布 tag：`v1.6.0`", changelog)
+        self.assertIn("[发布说明](docs/releases/v1.6.0.md)", changelog)
+        self.assertIn("发布日期：2026-08-06", changelog)
         for phrase in (
             "### 版本定位",
             "### Judgment Trace v1.1",
@@ -71,9 +71,9 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
 
         for phrase in (
-            "# Mindthus v1.6.0 Release Candidate 说明",
-            "目标发布日期：2026-08-06",
-            "状态：Release candidate",
+            "# Mindthus v1.6.0 发布说明",
+            "发布日期：2026-08-06",
+            "发布 tag：`v1.6.0`",
             "## Judgment Trace v1.1",
             "## Case Export v1",
             "## case-prep",
@@ -81,10 +81,11 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "TPlan runtime generation 保持 `1.5.4`",
             "mindthus-plugins-1.6.0.tar.gz",
             "mindthus-skills-1.6.0.tar.gz",
-            "本版不计划发布新的 ROI Beta",
-            "实际发布前仍需创建 tag",
+            "本版不发布新的 ROI Beta",
+            "`v1.6.0` GitHub Release 提供",
         ):
             self.assertIn(phrase, release_log)
+        self.assertNotIn("Release candidate", release_log)
         self.assertNotIn("Release date:", release_log)
 
     def test_v1_4_6_release_surface_is_preserved(self):

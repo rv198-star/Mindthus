@@ -618,7 +618,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.6.0`（Release candidate）",
+            "当前仓库版本：`v1.6.0`",
             "GitHub Releases",
             "局部正确",
             "输入定框审计",

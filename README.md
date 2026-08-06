@@ -108,22 +108,20 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前仓库已进入 `v1.6.0` Release candidate；当前已发布 Stable 仍是 `v1.5.4`。
-`v1.6.0` candidate 新增 Judgment Trace v1.1、用户控制的 Case Export、显式
-`case-prep` 与批量 case collection、Test Lifecycle 基线和第一波清理。它不新增判断方法，
-不引入集中遥测，也不自动上传案例。
+当前已发布 Stable 是 `v1.6.0`。本版新增 Judgment Trace v1.1、用户控制的
+Case Export、显式 `case-prep` 与批量 case collection，以及 Test Lifecycle 基线和第一波
+清理。它不新增判断方法，不引入集中遥测，也不自动上传案例。
 
-已发布的 `v1.5.4` Release 继续提供 Stable plugins、Stable skills，以及从 `v1.5.4`
-冻结 Stable core 重新组装并资格验证的 ROI Beta experimental asset。Release candidate
-正式 tag/assets 发布前，下面的公开下载仍指向 `v1.5.4` Stable。TPlan runtime generation
-保持 `1.5.4`，因为本轮没有修改 TPlan runtime；这避免仅因发行版号变化让既有 Mission
-被误判为 incompatible。
+`v1.6.0` Release 提供 Stable plugins 与 Stable skills。TPlan runtime generation 保持
+`1.5.4`，因为本轮没有修改 TPlan runtime fingerprint files；这避免仅因发行版号变化让
+既有 Mission 被误判为 incompatible。`v1.5.4-roi-beta` 仍作为历史 experimental asset
+保留在 `v1.5.4` Release，不自动升级为 v1.6.0。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.4.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.4.tar.gz`。
-- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.6.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.6.0.tar.gz`。
+- 只在高能力 Codex / GPT-Sol 上复查历史低开销唤起实验：仍可下载
   `mindthus-beta-1.5.4-roi-beta.tar.gz`；它是独立的 Codex plugin / marketplace 包，不是
-  通用 skills-pack，但共享本版 TPlan 修复后的产品核心。
+  v1.6.0 Stable 的替代品。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -133,22 +131,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.5.4.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-plugins-1.5.4.tar.gz"
+  -o /tmp/mindthus-plugins-1.6.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.6.0/mindthus-plugins-1.6.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.5.4.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.6.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.5.4.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-skills-1.5.4.tar.gz"
+  -o /tmp/mindthus-skills-1.6.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.6.0/mindthus-skills-1.6.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.5.4.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.6.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -171,9 +169,10 @@ codex plugin marketplace remove mindthus
 
 ### Codex ROI Beta（实验）
 
-只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个 `v1.5.4-roi-beta` 包从
-本版冻结 Stable core 重新组装，保留 #146、#147、#148 的 TPlan 修复；它和 Stable 使用
-不同的 package、marketplace、cache 与 skill namespace，可以独立安装或移除：
+只在高能力 Codex / GPT-Sol 上复查历史低开销唤起实验时使用。这个
+`v1.5.4-roi-beta` 包来自 `v1.5.4` 冻结 Stable core，不包含 v1.6.0 的 Judgment Trace、
+Case Export、case-prep 或 Test Lifecycle 新能力；它和 Stable 使用不同的 package、
+marketplace、cache 与 skill namespace，可以独立安装或移除：
 
 ```bash
 curl -L \
@@ -293,7 +292,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.6.0`（Release candidate）；当前已发布 Stable 是 `v1.5.4`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.6.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

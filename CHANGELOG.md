@@ -4,11 +4,11 @@
 
 ## v1.6.0
 
-目标 tag：`v1.6.0`
+发布 tag：`v1.6.0`
 
-[Release candidate 说明](docs/releases/v1.6.0.md)
+[发布说明](docs/releases/v1.6.0.md)
 
-状态：Release candidate；tag 与公开 assets 尚未发布。
+发布日期：2026-08-06
 
 ### 版本定位
 
@@ -84,10 +84,10 @@
 - 验证 Codex plugin、Claude Code plugin、Claude portable、Codex portable 和 OpenCode
   portable 五种布局，以及 strict runtime fingerprint。
 - 发行包排除 tests、`docs/internal`、缓存、日志和 bytecode。
-- 计划发布 `mindthus-plugins-1.6.0.tar.gz`、`mindthus-skills-1.6.0.tar.gz` 和
-  `SHA256SUMS`；本版不新增 ROI Beta。
-- Release candidate 不声称 Trace 能证明判断正确、隐私扫描能证明匿名、collection 中所有
-  候选都值得进入 benchmark，或 Test Lifecycle 已完成大规模测试删除。
+- `v1.6.0` GitHub Release 提供 `mindthus-plugins-1.6.0.tar.gz`、
+  `mindthus-skills-1.6.0.tar.gz` 和 `SHA256SUMS`；本版不新增 ROI Beta。
+- 本版不声称 Trace 能证明判断正确、隐私扫描能证明匿名、collection 中所有候选都值得进入
+  benchmark，或 Test Lifecycle 已完成大规模测试删除。
 
 ## v1.5.4
 

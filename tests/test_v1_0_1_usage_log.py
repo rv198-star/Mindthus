@@ -239,7 +239,7 @@ class V101UsageLogTests(unittest.TestCase):
         )
 
         for phrase in (
-            "当前仓库版本：`v1.6.0`（Release candidate）",
+            "当前仓库版本：`v1.6.0`",
             "scripts/log-fidelity-usage.py",
             "data/fidelity-usage-log.jsonl",
             "可选：记录使用效果",
