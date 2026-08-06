@@ -101,12 +101,14 @@ Implemented on 2026-08-06:
 - seven logical ownership groups covering all 68 `test_*.py` files exactly once;
 - explicit separation of executable tests from Markdown reports and JSONL fixtures;
 - first review record in `docs/internal/test-lifecycle-review-2026-08-06.md`;
-- evidence-backed review candidate for `tests/test_v0_9_acceptance.py`.
+- first consolidation record in `docs/internal/test-lifecycle-cleanup-wave-1-2026-08-06.md`;
+- removal of one duplicate public-doc test method and two misplaced current-version assertions;
+- replacement ownership moved to packaging, release-boundary, and fidelity-contract tests;
+- the unique v0.9 historical acceptance guard retained.
 
-No executable test was archived in this batch. The first review documents why the
-candidate is not yet safe to remove: historical release ownership and replacement
-coverage have not been approved. This is an intentional outcome, not an incomplete
-mass-cleanup attempt.
+No executable test file was archived in Wave 1. The earlier whole-file archive candidate
+was closed after review showed that consolidation, not deletion, preserved the correct
+owner boundary. This is actual maintenance reduction without erasing historical evidence.
 
 ## Acceptance Criteria
 
@@ -114,7 +116,8 @@ mass-cleanup attempt.
 - [x] The initial registry covers every executable test file through defined groups.
 - [x] Historical Markdown reports and executable gates are distinguishable.
 - [x] A candidate is identified with evidence rather than intuition.
-- [x] The review documents why no safe archive change exists in the first batch.
+- [x] The initial review documents why whole-file archival was unsafe.
+- [x] The first cleanup wave removes duplicate assertions and records replacement ownership.
 - [x] CI and policy documentation state which lifecycle states are operationally gating.
 - [x] New test contribution guidance requires an owner and protected invariant.
 

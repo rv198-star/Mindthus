@@ -145,6 +145,8 @@ class PackagingDocsTests(unittest.TestCase):
                 "scripts/export-mindthus-case.py",
                 "scripts/validate-mindthus-case.py",
                 "_runtime/judgment/resources/judgment-trace.schema.json",
+                "_runtime/judgment/resources/judgment-trace-v1.schema.json",
+                "_runtime/judgment/resources/judgment-trace-v1.1.schema.json",
                 "_runtime/judgment/resources/case-export-manifest.schema.json",
             ):
                 self.assertTrue((plugin / rel).is_file(), rel)
@@ -471,6 +473,7 @@ class PackagingDocsTests(unittest.TestCase):
             "mindthus:tplan",
             "mindthus:*",
             "当前仓库版本：`v1.5.4`",
+            "GitHub Releases",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -484,6 +487,7 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertNotIn("judge JSON", readme)
         self.assertNotIn("not_applicable", readme)
         self.assertNotIn("方法分层纪律", readme)
+        self.assertNotIn("Pre-1.0", readme)
 
     def test_readme_keeps_release_details_out_of_new_user_intro(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")

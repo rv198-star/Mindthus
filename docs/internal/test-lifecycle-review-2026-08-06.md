@@ -83,7 +83,10 @@ applies only to `test_*.py`.
 
 ## First Review Outcome
 
-No executable test is safely archived in this batch. The candidate above is documented
-with evidence and an explicit blocker. This satisfies the first review's purpose:
-create a retirement path without pretending that old or overlapping-looking tests are
-already safe to remove.
+No executable test was safely archived in this initial review. The candidate above was
+documented with evidence and an explicit blocker. A subsequent replacement-coverage
+review resolved it through consolidation rather than whole-file archival; see
+`test-lifecycle-cleanup-wave-1-2026-08-06.md`.
+
+This preserves the initial decision record: the file was not safe to delete, but its
+duplicate current-release assertions were safe to move to their active owners.

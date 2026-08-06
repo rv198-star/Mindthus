@@ -1,19 +1,18 @@
-# Judgment Runtime Contracts
+# Judgment Runtime Schemas
 
-This directory publishes the machine-readable contracts for observable Mindthus
-judgment records.
+These schemas describe portable, shape-only Mindthus runtime contracts.
 
-- `judgment-trace.schema.json` describes `mindthus.judgment-trace.v1`.
+- `judgment-trace.schema.json` is the current alias for `mindthus.judgment-trace.v1.1`.
+- `judgment-trace-v1.1.schema.json` is the explicit v1.1 contract.
+- `judgment-trace-v1.schema.json` preserves the legacy v1 contract for compatibility.
 - `case-export-manifest.schema.json` describes `mindthus.case-export.v1`.
 
-The Python validators under `skills/_runtime/judgment/` are the executable source of
-truth for the current repository. The JSON schemas are interoperability surfaces.
-Neither validator nor schema proves that a judgment is true, good, anonymous, or
-caused by Mindthus.
+Judgment Trace v1.1 adds:
 
-## TPlan Boundary
+- `true / false / unknown` decision-delta states;
+- an explicit delta `basis` and `comparison_ref`;
+- field-level source labels for critical observable fields.
 
-TPlan Mission, Task, Step, evidence, checkpoint, telemetry, cost, and recovery state
-remain in TPlan contracts. A TPlan hook may reference a Judgment Trace identifier or
-emit a bounded Judgment Trace for a particular decision, but TPlan runtime records do
-not move into this schema.
+The Python validator accepts v1 and v1.1. New producers must emit v1.1. Schema or
+validator success proves only structural validity; it does not prove judgment truth,
+causality, anonymity, or real-world value.

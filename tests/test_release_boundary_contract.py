@@ -283,6 +283,9 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
 
         self.assertIn("## v1.0", changelog)
+        self.assertIn("v1.0 Method Fidelity Framework", changelog)
+        self.assertIn("约束关键判断动作，不约束判断结论", changelog)
+        self.assertIn("v0.9", changelog)
         self.assertIn("[完整发布日志](docs/releases/v1.0.md)", changelog)
         self.assertIn("LICENSE blocker closed", changelog)
         self.assertIn("judge automation blocker closed", changelog)

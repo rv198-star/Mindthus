@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a Mindthus Judgment Trace v1 without judging semantic truth."""
+"""Validate a Mindthus Judgment Trace v1.1 or legacy v1 without judging semantic truth."""
 
 from __future__ import annotations
 

@@ -230,6 +230,8 @@ def write_runtime_tree(
         runtime_root / "judgment" / "trace.py",
         runtime_root / "judgment" / "resources" / "README.md",
         runtime_root / "judgment" / "resources" / "judgment-trace.schema.json",
+        runtime_root / "judgment" / "resources" / "judgment-trace-v1.schema.json",
+        runtime_root / "judgment" / "resources" / "judgment-trace-v1.1.schema.json",
         runtime_root / "judgment" / "resources" / "case-export-manifest.schema.json",
     ):
         runtime_path.write_text("# runtime fixture\n", encoding="utf-8")

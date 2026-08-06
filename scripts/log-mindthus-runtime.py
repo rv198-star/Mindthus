@@ -50,6 +50,8 @@ RELATIVE_FILES = (
     "skills/_runtime/judgment/trace.py",
     "skills/_runtime/judgment/resources/README.md",
     "skills/_runtime/judgment/resources/judgment-trace.schema.json",
+    "skills/_runtime/judgment/resources/judgment-trace-v1.schema.json",
+    "skills/_runtime/judgment/resources/judgment-trace-v1.1.schema.json",
     "skills/_runtime/judgment/resources/case-export-manifest.schema.json",
     "scripts/runtime_import.py",
     "scripts/validate-judgment-trace.py",
@@ -71,6 +73,8 @@ RUNTIME_TOP_LEVEL_ALIASES = {
     "skills/_runtime/judgment/trace.py": "_runtime/judgment/trace.py",
     "skills/_runtime/judgment/resources/README.md": "_runtime/judgment/resources/README.md",
     "skills/_runtime/judgment/resources/judgment-trace.schema.json": "_runtime/judgment/resources/judgment-trace.schema.json",
+    "skills/_runtime/judgment/resources/judgment-trace-v1.schema.json": "_runtime/judgment/resources/judgment-trace-v1.schema.json",
+    "skills/_runtime/judgment/resources/judgment-trace-v1.1.schema.json": "_runtime/judgment/resources/judgment-trace-v1.1.schema.json",
     "skills/_runtime/judgment/resources/case-export-manifest.schema.json": "_runtime/judgment/resources/case-export-manifest.schema.json",
 }
 

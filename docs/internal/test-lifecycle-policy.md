@@ -76,7 +76,11 @@ A test may move to archive or removal only when one of these is demonstrated:
 5. maintenance cost exceeds protection value and residual risk is accepted.
 
 The change must record replacement coverage, superseded contract, or accepted residual
-risk. Green status alone is not retirement evidence.
+risk. Consolidation is a valid outcome when a file still protects one unique invariant
+but contains assertions owned elsewhere. Green status alone is not retirement evidence.
+
+The first completed consolidation is recorded in
+`test-lifecycle-cleanup-wave-1-2026-08-06.md`.
 
 ## Historical Reports
 

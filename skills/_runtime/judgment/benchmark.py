@@ -1,7 +1,7 @@
-"""Narrow adapter from the existing judgment benchmark to Judgment Trace v1.
+"""Narrow adapter from the judgment benchmark to Judgment Trace v1.1.
 
-The adapter intentionally records conservative evaluator-visible deltas. It does
-not infer a full reasoning path from answer text.
+The adapter records conservative evaluator-visible deltas. It does not infer a full
+reasoning path from answer text, and it writes ``unknown`` when a delta was not assessed.
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from _runtime.judgment.trace import (
+    DELTA_UNKNOWN,
     JUDGMENT_TRACE_SCHEMA_VERSION,
     METHODS,
     validate_judgment_trace_or_raise,
@@ -55,6 +56,15 @@ OWNER_NORMALIZATION = {
     "expression_discipline": "using-mindthus",
     "approximate_quantified_mapping": "using-mindthus",
 }
+STRATEGY_DELTA_OWNERS = {"sela", "sela_boundary", "mpg"}
+RISK_DELTA_OWNERS = {"wae", "mpg"}
+EVIDENCE_DELTA_OWNERS = {
+    "information_acquisition",
+    "input_framing_audit",
+    "whole_elephant",
+    "approximate_quantified_mapping",
+}
+STOP_DELTA_OWNERS = {"anti_spiral"}
 
 
 def _stable_trace_id(case_id: str, variant: str, timestamp: str) -> str:
@@ -81,12 +91,31 @@ def _outcome_status(score: dict[str, Any]) -> str:
     return "not_evaluated"
 
 
+def _visible_action_state(score: dict[str, Any]) -> bool | str:
+    value = score.get("required_visible_action_present")
+    return value if isinstance(value, bool) else DELTA_UNKNOWN
+
+
+def _relevant_delta_state(
+    expected_owner: str,
+    relevant_owners: set[str],
+    visible_action_state: bool | str,
+) -> bool | str:
+    if expected_owner not in relevant_owners:
+        return DELTA_UNKNOWN
+    return visible_action_state
+
+
+def _delta_source(delta_state: bool | str) -> str:
+    return "evaluator_label" if isinstance(delta_state, bool) else "unknown"
+
+
 def judgment_trace_from_benchmark(
     case: dict[str, Any],
     response: dict[str, Any],
     score: dict[str, Any],
 ) -> dict[str, Any]:
-    """Build a conservative, evaluator-labeled trace for one benchmark case."""
+    """Build a conservative, evaluator-labeled v1.1 trace for one benchmark case."""
 
     expected_owner = str(case.get("expected_owner") or "unknown")
     stay_asleep = bool(case.get("stay_asleep_expected"))
@@ -106,7 +135,42 @@ def judgment_trace_from_benchmark(
         if judgment_owner not in METHODS:
             judgment_owner = "unknown"
 
-    visible_delta = score.get("required_visible_action_present") is True
+    visible_action_state = _visible_action_state(score)
+    delta_values: dict[str, bool | str] = {
+        "strategy_changed": _relevant_delta_state(
+            expected_owner, STRATEGY_DELTA_OWNERS, visible_action_state
+        ),
+        "risk_handling_changed": _relevant_delta_state(
+            expected_owner, RISK_DELTA_OWNERS, visible_action_state
+        ),
+        "evidence_requirement_changed": _relevant_delta_state(
+            expected_owner, EVIDENCE_DELTA_OWNERS, visible_action_state
+        ),
+        "next_action_changed": visible_action_state,
+        "stopping_condition_changed": _relevant_delta_state(
+            expected_owner, STOP_DELTA_OWNERS, visible_action_state
+        ),
+        "handoff_changed": DELTA_UNKNOWN,
+    }
+    field_sources = {
+        "input_shape.judgment_object": "inferred",
+        "input_shape.hard_judgment_point": "evaluator_label",
+        "routing.judgment_owner": "inferred",
+        "routing.loaded_methods": "runtime_observation",
+        "routing.routing_decision": "inferred",
+        "decision_delta.basis": "inferred",
+        "decision_delta.comparison_ref": "unknown",
+        **{
+            f"decision_delta.{field}": _delta_source(value)
+            for field, value in delta_values.items()
+        },
+        "outcome.status": "evaluator_label",
+    }
+    if timestamp:
+        field_sources["timestamp_utc"] = "runtime_observation"
+    if loaded_methods:
+        field_sources["routing.selected_method"] = "runtime_observation"
+
     trace: dict[str, Any] = {
         "schema_version": JUDGMENT_TRACE_SCHEMA_VERSION,
         "trace_id": _stable_trace_id(str(case.get("case_id") or "unknown"), variant, timestamp),
@@ -114,6 +178,7 @@ def judgment_trace_from_benchmark(
             "producer": "run-judgment-benchmark-cli",
             "source_type": "mixed",
             "source_ref": str(case.get("case_id") or "unknown"),
+            "field_sources": field_sources,
         },
         "input_shape": {
             "judgment_object": OWNER_OBJECT_MAP.get(expected_owner, "direct_task" if stay_asleep else "unknown"),
@@ -134,21 +199,16 @@ def judgment_trace_from_benchmark(
         },
         "evidence": {
             "available_evidence_classes": ["benchmark_case", "generator_response", "judge_score"],
-            "missing_evidence_classes": ["real_world_outcome"],
-            "claim_ceiling": "Benchmark evaluator label; not proof of semantic truth or real-world outcome.",
+            "missing_evidence_classes": ["real_world_outcome", "counterfactual_comparison"],
+            "claim_ceiling": (
+                "Single-output benchmark evaluator label; not a baseline comparison, "
+                "causal attribution, semantic truth proof, or real-world outcome."
+            ),
         },
         "decision_delta": {
-            "strategy_changed": visible_delta and expected_owner in {"sela", "sela_boundary", "mpg"},
-            "risk_handling_changed": visible_delta and expected_owner in {"wae", "mpg"},
-            "evidence_requirement_changed": visible_delta and expected_owner in {
-                "information_acquisition",
-                "input_framing_audit",
-                "whole_elephant",
-                "approximate_quantified_mapping",
-            },
-            "next_action_changed": visible_delta,
-            "stopping_condition_changed": visible_delta and expected_owner == "anti_spiral",
-            "handoff_changed": False,
+            "basis": "single_output_evaluator",
+            "comparison_ref": None,
+            **delta_values,
         },
         "outcome": {
             "status": _outcome_status(score),

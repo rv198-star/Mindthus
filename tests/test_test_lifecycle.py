@@ -11,6 +11,7 @@ SCRIPT = REPO / "scripts" / "check-test-lifecycle.py"
 REGISTRY = REPO / "tests" / "test-lifecycle-registry.json"
 POLICY = REPO / "docs" / "internal" / "test-lifecycle-policy.md"
 REVIEW = REPO / "docs" / "internal" / "test-lifecycle-review-2026-08-06.md"
+CLEANUP = REPO / "docs" / "internal" / "test-lifecycle-cleanup-wave-1-2026-08-06.md"
 
 
 def load_checker():
@@ -33,7 +34,7 @@ class TestLifecycleTests(unittest.TestCase):
             report["registered_executable_test_file_count"],
             report["executable_test_file_count"],
         )
-        self.assertGreaterEqual(report["review_candidate_count"], 1)
+        self.assertEqual(report["review_candidate_count"], 0)
         self.assertIn("historical_guard", report["gating_states"])
 
     def test_registry_validator_rejects_unregistered_test(self):
@@ -68,6 +69,7 @@ class TestLifecycleTests(unittest.TestCase):
     def test_policy_names_gating_and_new_test_contract(self):
         policy = POLICY.read_text(encoding="utf-8")
         review = REVIEW.read_text(encoding="utf-8")
+        cleanup = CLEANUP.read_text(encoding="utf-8")
 
         for phrase in (
             "active_gate",
@@ -82,9 +84,17 @@ class TestLifecycleTests(unittest.TestCase):
             "tests/test_v0_9_acceptance.py",
             "candidate_archive",
             "keep it as `historical_guard` for now",
-            "No executable test is safely archived in this batch",
+            "No executable test was safely archived in this initial review",
         ):
             self.assertIn(phrase, review)
+        for phrase in (
+            "Test Lifecycle Cleanup Wave 1",
+            "test_public_docs_preserve_v0_9_history_and_name_v1_0_release_surface",
+            "Replacement Ownership",
+            "remains `historical_guard`",
+            "No test file is deleted in Wave 1",
+        ):
+            self.assertIn(phrase, cleanup)
 
 
 if __name__ == "__main__":

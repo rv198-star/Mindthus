@@ -14,6 +14,8 @@ from _runtime.judgment.benchmark import (  # noqa: E402
     write_benchmark_judgment_traces,
 )
 from _runtime.judgment.trace import (  # noqa: E402
+    JUDGMENT_TRACE_SCHEMA_VERSION,
+    LEGACY_JUDGMENT_TRACE_SCHEMA_VERSION,
     TraceValidationError,
     load_judgment_trace,
     validate_judgment_trace,
@@ -23,21 +25,44 @@ from _runtime.judgment.trace import (  # noqa: E402
 
 FIXTURES = REPO / "skills" / "_runtime" / "judgment" / "fixtures" / "traces"
 VALIDATOR = REPO / "scripts" / "validate-judgment-trace.py"
+SCHEMAS = REPO / "skills" / "_runtime" / "judgment" / "resources"
 
 
 class JudgmentTraceTests(unittest.TestCase):
-    def test_three_canonical_trace_fixtures_validate(self):
+    def test_current_and_legacy_trace_fixtures_validate(self):
         names = {path.name for path in FIXTURES.glob("*.json")}
         self.assertEqual(
             names,
-            {"direct-execution.json", "information-acquisition.json", "intervention.json"},
+            {
+                "direct-execution.json",
+                "information-acquisition.json",
+                "intervention.json",
+                "legacy-v1.json",
+            },
         )
-        for path in sorted(FIXTURES.glob("*.json")):
-            with self.subTest(path=path.name):
-                trace = load_judgment_trace(path)
-                self.assertEqual(trace["schema_version"], "mindthus.judgment-trace.v1")
+        for name in ("direct-execution.json", "information-acquisition.json", "intervention.json"):
+            with self.subTest(path=name):
+                trace = load_judgment_trace(FIXTURES / name)
+                self.assertEqual(trace["schema_version"], JUDGMENT_TRACE_SCHEMA_VERSION)
+                self.assertIn("field_sources", trace["provenance"])
+                self.assertIn("basis", trace["decision_delta"])
+                self.assertIn("comparison_ref", trace["decision_delta"])
+        legacy = load_judgment_trace(FIXTURES / "legacy-v1.json")
+        self.assertEqual(legacy["schema_version"], LEGACY_JUDGMENT_TRACE_SCHEMA_VERSION)
 
-    def test_validator_rejects_private_transcript_and_malformed_delta(self):
+    def test_current_schema_alias_matches_v11_and_legacy_schema_is_preserved(self):
+        current = json.loads((SCHEMAS / "judgment-trace.schema.json").read_text(encoding="utf-8"))
+        explicit = json.loads((SCHEMAS / "judgment-trace-v1.1.schema.json").read_text(encoding="utf-8"))
+        legacy = json.loads((SCHEMAS / "judgment-trace-v1.schema.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(current, explicit)
+        self.assertEqual(current["properties"]["schema_version"]["const"], JUDGMENT_TRACE_SCHEMA_VERSION)
+        self.assertEqual(
+            legacy["properties"]["schema_version"]["const"],
+            LEGACY_JUDGMENT_TRACE_SCHEMA_VERSION,
+        )
+
+    def test_v11_validator_rejects_private_transcript_and_malformed_delta(self):
         trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
         trace["raw_prompt"] = "private prompt"
         trace["decision_delta"]["next_action_changed"] = "yes"
@@ -47,9 +72,42 @@ class JudgmentTraceTests(unittest.TestCase):
 
         self.assertIn("unknown-field", codes)
         self.assertIn("prohibited-field", codes)
-        self.assertIn("invalid-field", codes)
+        self.assertIn("invalid-delta-state", codes)
         with self.assertRaises(TraceValidationError):
             validate_judgment_trace_or_raise(trace)
+
+    def test_v11_requires_comparison_reference_for_comparative_basis(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        trace["decision_delta"]["basis"] = "baseline_comparison"
+        trace["decision_delta"]["comparison_ref"] = None
+
+        findings = validate_judgment_trace(trace)
+
+        self.assertTrue(any(item.code == "comparison-ref-required" for item in findings))
+
+    def test_v11_accepts_comparative_basis_with_reference_and_known_source(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        trace["decision_delta"]["basis"] = "baseline_comparison"
+        trace["decision_delta"]["comparison_ref"] = "benchmark-run:baseline-vs-treatment"
+        trace["provenance"]["field_sources"]["decision_delta.comparison_ref"] = "author_annotation"
+
+        self.assertEqual(validate_judgment_trace(trace), [])
+
+    def test_v11_requires_sources_for_critical_fields(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        del trace["provenance"]["field_sources"]["decision_delta.next_action_changed"]
+
+        findings = validate_judgment_trace(trace)
+
+        self.assertTrue(any(item.code == "missing-field-source" for item in findings))
+
+    def test_v11_blocks_assessed_delta_with_unknown_source(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        trace["provenance"]["field_sources"]["decision_delta.next_action_changed"] = "unknown"
+
+        findings = validate_judgment_trace(trace)
+
+        self.assertTrue(any(item.code == "source-value-mismatch" for item in findings))
 
     def test_tplan_runtime_state_is_not_part_of_judgment_trace(self):
         trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
@@ -100,8 +158,10 @@ class JudgmentTraceTests(unittest.TestCase):
         self.assertEqual(trace["routing"]["routing_decision"], "acquire_information")
         self.assertEqual(trace["routing"]["judgment_owner"], "information_acquisition")
         self.assertFalse(trace["input_shape"]["hard_judgment_point"])
+        self.assertTrue(trace["decision_delta"]["evidence_requirement_changed"])
+        self.assertEqual(trace["decision_delta"]["strategy_changed"], "unknown")
 
-    def test_benchmark_adapter_records_observed_method_and_evaluator_boundary(self):
+    def test_benchmark_adapter_records_observed_method_evaluator_basis_and_unknowns(self):
         case = {
             "case_id": "mtj-fixture",
             "case_type": "positive",
@@ -124,11 +184,56 @@ class JudgmentTraceTests(unittest.TestCase):
 
         trace = judgment_trace_from_benchmark(case, response, score)
 
+        self.assertEqual(trace["schema_version"], JUDGMENT_TRACE_SCHEMA_VERSION)
         self.assertEqual(trace["routing"]["selected_method"], "using-mindthus")
         self.assertEqual(trace["routing"]["routing_decision"], "intervene")
+        self.assertEqual(trace["decision_delta"]["basis"], "single_output_evaluator")
+        self.assertIsNone(trace["decision_delta"]["comparison_ref"])
         self.assertTrue(trace["decision_delta"]["next_action_changed"])
-        self.assertEqual(trace["provenance"]["source_type"], "mixed")
-        self.assertIn("not proof", trace["evidence"]["claim_ceiling"])
+        self.assertTrue(trace["decision_delta"]["evidence_requirement_changed"])
+        self.assertEqual(trace["decision_delta"]["strategy_changed"], "unknown")
+        self.assertEqual(trace["decision_delta"]["handoff_changed"], "unknown")
+        self.assertEqual(
+            trace["provenance"]["field_sources"]["routing.loaded_methods"],
+            "runtime_observation",
+        )
+        self.assertEqual(
+            trace["provenance"]["field_sources"]["decision_delta.strategy_changed"],
+            "unknown",
+        )
+        self.assertIn("not a baseline comparison", trace["evidence"]["claim_ceiling"])
+
+    def test_benchmark_absent_delta_label_stays_unknown_not_false(self):
+        trace = judgment_trace_from_benchmark(
+            {
+                "case_id": "mtj-direct",
+                "case_type": "negative_control",
+                "expected_owner": "direct_execution",
+                "stay_asleep_expected": True,
+            },
+            {"case_id": "mtj-direct", "variant": "fixture"},
+            {
+                "case_id": "mtj-direct",
+                "score": 2,
+                "variant": "fixture",
+                "loaded_owner": [],
+                "required_visible_action_present": None,
+            },
+        )
+
+        self.assertTrue(
+            all(
+                trace["decision_delta"][field] == "unknown"
+                for field in (
+                    "strategy_changed",
+                    "risk_handling_changed",
+                    "evidence_requirement_changed",
+                    "next_action_changed",
+                    "stopping_condition_changed",
+                    "handoff_changed",
+                )
+            )
+        )
 
     def test_benchmark_writer_emits_one_trace_per_judged_case(self):
         case = {
@@ -160,7 +265,9 @@ class JudgmentTraceTests(unittest.TestCase):
             self.assertEqual(len(traces), 1)
             self.assertTrue(trace_path.is_file())
             self.assertTrue(index_path.is_file())
-            self.assertEqual(load_judgment_trace(trace_path)["routing"]["routing_decision"], "direct_execute")
+            trace = load_judgment_trace(trace_path)
+            self.assertEqual(trace["schema_version"], JUDGMENT_TRACE_SCHEMA_VERSION)
+            self.assertEqual(trace["routing"]["routing_decision"], "direct_execute")
             self.assertEqual(len(index_path.read_text(encoding="utf-8").splitlines()), 1)
 
 

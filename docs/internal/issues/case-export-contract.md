@@ -124,7 +124,7 @@ Implemented on 2026-08-06:
 - local package implementation in `skills/_runtime/judgment/case_export.py`;
 - versioned manifest schema under `skills/_runtime/judgment/resources/`;
 - `scripts/export-mindthus-case.py` and `scripts/validate-mindthus-case.py`;
-- Judgment Trace v1 as the structured core;
+- Judgment Trace v1.1 as the current structured core, with legacy v1 validation;
 - failure, value-delta, and minimal-redacted summary fixtures;
 - explicit excerpt selection plus `--confirm-excerpts-redacted`;
 - blocking scans for common private-key and credential patterns and bounded warnings for
@@ -145,7 +145,7 @@ privacy and content-type design.
 - [x] Users can explicitly include selected, confirmed-redacted text excerpts.
 - [x] Three canonical case intents validate successfully.
 - [x] Documentation explains export, review, contribution, and deletion steps.
-- [x] Judgment Trace v1 is used as the structured core.
+- [x] Judgment Trace v1.1 is used as the current structured core and legacy v1 remains importable.
 - [x] No centralized collection, upload endpoint, or background telemetry was introduced.
 
 ## Dependencies

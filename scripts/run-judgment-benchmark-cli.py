@@ -1461,7 +1461,7 @@ def main() -> int:
             scores,
         )
         summary = summarize(scores)
-        summary["judgment_trace_schema_version"] = "mindthus.judgment-trace.v1"
+        summary["judgment_trace_schema_version"] = "mindthus.judgment-trace.v1.1"
         summary["judgment_trace_count"] = len(judgment_traces)
         summary["judgment_trace_index"] = "judgment-traces.jsonl"
         cached_judge_reused_count = sum(1 for score in scores if score.get("cached_judge_reused"))

@@ -5,7 +5,7 @@ precondition for later voluntary contribution, not a telemetry or upload system.
 
 ## Create A Package
 
-Use a validated Judgment Trace and a structured case summary:
+Use a validated Judgment Trace v1.1 (or a legacy v1 trace) and a structured case summary:
 
 ```bash
 python3 scripts/export-mindthus-case.py \
@@ -57,8 +57,9 @@ implicitly.
 python3 scripts/validate-mindthus-case.py /tmp/mindthus-case-exports/mindthus-case-...
 ```
 
-A passing validator means only that the package follows the current shape and no known
-blocking pattern was detected. The manifest always keeps:
+A passing validator means only that the package follows a supported trace/package shape and no known
+blocking pattern was detected. New exports normally carry Judgment Trace v1.1; v1 is accepted for
+backward compatibility. The manifest always keeps:
 
 ```text
 review_required_before_share: true

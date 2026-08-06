@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mindthus.example/schemas/judgment-trace.v1.1.json",
-  "title": "Mindthus Judgment Trace v1.1",
-  "description": "Observable judgment facts with three-state decision deltas, explicit comparison basis, and field-level source labels. This schema does not represent private reasoning or prove semantic truth.",
+  "$id": "https://mindthus.example/schemas/judgment-trace.v1.json",
+  "title": "Mindthus Judgment Trace v1",
+  "description": "Legacy observable judgment facts only; not private chain of thought or semantic truth proof.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -16,46 +16,23 @@
     "outcome"
   ],
   "properties": {
-    "schema_version": {"const": "mindthus.judgment-trace.v1.1"},
+    "schema_version": {"const": "mindthus.judgment-trace.v1"},
     "trace_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"},
     "timestamp_utc": {"type": "string", "format": "date-time"},
     "provenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["producer", "source_type", "field_sources"],
+      "required": ["producer", "source_type"],
       "properties": {
         "producer": {"type": "string", "minLength": 1},
         "source_type": {"enum": ["runtime_observation", "evaluator_label", "author_annotation", "mixed"]},
-        "source_ref": {"type": "string", "minLength": 1},
-        "field_sources": {
-          "type": "object",
-          "required": [
-            "input_shape.judgment_object",
-            "input_shape.hard_judgment_point",
-            "routing.judgment_owner",
-            "routing.loaded_methods",
-            "routing.routing_decision",
-            "decision_delta.basis",
-            "decision_delta.comparison_ref",
-            "decision_delta.strategy_changed",
-            "decision_delta.risk_handling_changed",
-            "decision_delta.evidence_requirement_changed",
-            "decision_delta.next_action_changed",
-            "decision_delta.stopping_condition_changed",
-            "decision_delta.handoff_changed",
-            "outcome.status"
-          ],
-          "propertyNames": {"pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)*$"},
-          "additionalProperties": {
-            "enum": ["runtime_observation", "evaluator_label", "author_annotation", "inferred", "unknown"]
-          }
-        }
+        "source_ref": {"type": "string", "minLength": 1}
       }
     },
     "input_shape": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["judgment_object", "hard_judgment_point"],
+      "required": ["hard_judgment_point"],
       "properties": {
         "judgment_object": {"enum": ["direct_task", "information_gap", "problem_definition", "structural_ambiguity", "whole_object_definition", "decision_context", "strategy_direction", "path_carrying", "controller_boundary", "artifact_value", "mission_runtime", "unknown"]},
         "hard_judgment_point": {"type": "boolean"},
@@ -66,7 +43,7 @@
     "routing": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["judgment_owner", "loaded_methods", "routing_decision"],
+      "required": ["routing_decision"],
       "properties": {
         "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan", "human", "unknown"]},
         "selected_method": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]},
@@ -87,32 +64,15 @@
     "decision_delta": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "basis",
-        "comparison_ref",
-        "strategy_changed",
-        "risk_handling_changed",
-        "evidence_requirement_changed",
-        "next_action_changed",
-        "stopping_condition_changed",
-        "handoff_changed"
-      ],
+      "required": ["strategy_changed", "risk_handling_changed", "evidence_requirement_changed", "next_action_changed", "stopping_condition_changed", "handoff_changed"],
       "properties": {
-        "basis": {"enum": ["runtime_observation", "single_output_evaluator", "baseline_comparison", "repair_sequence", "author_annotation", "not_assessed"]},
-        "comparison_ref": {"type": ["string", "null"], "minLength": 1},
-        "strategy_changed": {"enum": [true, false, "unknown"]},
-        "risk_handling_changed": {"enum": [true, false, "unknown"]},
-        "evidence_requirement_changed": {"enum": [true, false, "unknown"]},
-        "next_action_changed": {"enum": [true, false, "unknown"]},
-        "stopping_condition_changed": {"enum": [true, false, "unknown"]},
-        "handoff_changed": {"enum": [true, false, "unknown"]}
-      },
-      "allOf": [
-        {
-          "if": {"properties": {"basis": {"enum": ["baseline_comparison", "repair_sequence"]}}},
-          "then": {"properties": {"comparison_ref": {"type": "string", "minLength": 1}}}
-        }
-      ]
+        "strategy_changed": {"type": "boolean"},
+        "risk_handling_changed": {"type": "boolean"},
+        "evidence_requirement_changed": {"type": "boolean"},
+        "next_action_changed": {"type": "boolean"},
+        "stopping_condition_changed": {"type": "boolean"},
+        "handoff_changed": {"type": "boolean"}
+      }
     },
     "outcome": {
       "type": "object",

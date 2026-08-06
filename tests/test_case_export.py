@@ -52,6 +52,23 @@ class CaseExportTests(unittest.TestCase):
                     self.assertFalse(manifest["privacy"]["contains_raw_answer"])
                     self.assertFalse(manifest["privacy"]["contains_attachments"])
 
+    def test_case_export_accepts_legacy_v1_trace_for_backward_compatibility(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            package = create_case_package(
+                output_root=Path(tmp),
+                trace_path=TRACES / "legacy-v1.json",
+                summary_path=SUMMARIES / "minimal-redacted.json",
+                case_type="routing_ambiguity",
+                case_id="legacy-v1-export",
+            )
+            findings = validate_case_package(package)
+            exported_trace = json.loads(
+                (package / "judgment-trace.json").read_text(encoding="utf-8")
+            )
+
+        self.assertFalse([item for item in findings if item.severity == "block"])
+        self.assertEqual(exported_trace["schema_version"], "mindthus.judgment-trace.v1")
+
     def test_excerpt_requires_explicit_redaction_confirmation(self):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(CaseExportError) as caught:

@@ -93,7 +93,7 @@ Raw prompts, answers, attachments, files, task logs, and TPlan mission state mus
 
 Completed prerequisites:
 
-- `judgment-trace-infrastructure.md` — Judgment Trace v1 is active;
+- `judgment-trace-infrastructure.md` — Judgment Trace v1.1 is active and legacy v1 remains readable;
 - `case-export-contract.md` — local, review-required Case Export v1 is active.
 
 Remaining blockers:

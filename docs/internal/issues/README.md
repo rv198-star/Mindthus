@@ -6,8 +6,8 @@ This directory records architecture and infrastructure work that is not yet repr
 
 | Order | Issue | Status | Priority | Execution |
 |---:|---|---|---|---|
-| 1 | [Judgment Trace Infrastructure](judgment-trace-infrastructure.md) | Implemented v1 | P0 | Initial production slice complete |
-| 2 | [Test Lifecycle Management](test-lifecycle-management.md) | Implemented baseline | P0 | Registry, policy, and first review complete |
+| 1 | [Judgment Trace Infrastructure](judgment-trace-infrastructure.md) | Implemented v1.1 | P0 | Three-state delta and provenance upgrade complete |
+| 2 | [Test Lifecycle Management](test-lifecycle-management.md) | Implemented wave 1 | P0 | Registry, policy, review, and first consolidation complete |
 | 3 | [Case Export Contract](case-export-contract.md) | Implemented v1 | P1 | Local export and validation complete |
 | 4 | [Progressive Disclosure Runtime Exploration](progressive-disclosure-runtime-exploration.md) | Placeholder | P3 | Record alternatives; do not implement |
 | 5 | [Failure Learning Loop](placeholder-failure-learning-loop.md) | Placeholder | Future | Wait for real case evidence, consent, governance, and learning-loop design |
@@ -46,14 +46,14 @@ Progressive Disclosure Runtime experiments
 ### Phase 1 — Observable Judgment Foundation — Complete
 
 1. Existing trace-like fields were inventoried across routing, benchmark, runtime, and fidelity surfaces.
-2. Judgment Trace v1 and three canonical fixtures are validated.
+2. Judgment Trace v1.1 and three current fixtures are validated; legacy v1 remains readable.
 3. All executable tests are classified without mass deletion.
 4. Case Export v1 defines consent, redaction defaults, privacy scans, and fixtures.
 
 ### Phase 2 — Narrow Integration — Core Complete
 
 1. The judgment benchmark emits per-case Judgment Trace records.
-2. The first test lifecycle registry and review batch are active in CI.
+2. The test lifecycle registry is active in the canonical suite, and cleanup Wave 1 consolidated duplicate release assertions.
 3. Local-only case export requires explicit user review and never uploads.
 4. Export-to-benchmark admission remains a separate manual proof-of-flow task; it should use a real reviewed case rather than promoting a synthetic fixture automatically.
 
@@ -66,11 +66,11 @@ Progressive Disclosure Runtime experiments
 
 ### Future — Distributed Learning
 
-Judgment Trace v1 and local Case Export v1 now exist. Only after real exports prove useful and a governance model is approved should the project evaluate opt-in collection or contribution mechanisms under the Failure Learning Loop issue.
+Judgment Trace v1.1 (with v1 compatibility) and local Case Export v1 now exist. Only after real exports prove useful and a governance model is approved should the project evaluate opt-in collection or contribution mechanisms under the Failure Learning Loop issue.
 
 ## Status Meaning
 
-- `Implemented v1` / `Implemented baseline`: the initial bounded contract is active; future extension needs new evidence.
+- `Implemented v1.1` / `Implemented wave 1`: the current bounded contract and first maintenance cycle are active; future extension needs new evidence.
 - `Ready`: scoped well enough to begin implementation or detailed design.
 - `Placeholder`: preserve the problem and alternatives, but do not start implementation.
 - `Future`: blocked by product, consent, governance, or prerequisite infrastructure.

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Judgment Trace 升级为 `mindthus.judgment-trace.v1.1`：decision delta 支持
+  `true / false / unknown`，新增 comparison basis / reference 与关键字段来源标签；
+  benchmark 新产物使用 v1.1，validator 与 Case Export 继续兼容 legacy v1。
+- Test Lifecycle 完成第一波实际清理：把 v0.9 历史 guard 与当前 release assertion
+  分开，移除一条重复 public-doc test method 和两条错位版本断言，并把替代覆盖收束到
+  packaging、release boundary 与 fidelity contract owners。
+
 ## v1.5.4
 
 发布 tag：`v1.5.4`

@@ -106,7 +106,7 @@
       "lifecycle_status": "historical_guard",
       "suite_role": "acceptance",
       "runtime_cost": "medium",
-      "notes": "Still operationally gating because canonical CI discovers all test_*.py files. Review before archive."
+      "notes": "Wave 1 removed duplicate current-release assertions from the v0.9 and v1.0 readiness surfaces while preserving the unique historical acceptance and licensing contracts."
     },
     {
       "test_id": "judgment-observability-and-case-export",
@@ -117,7 +117,7 @@
       ],
       "owner": "runtime",
       "protects": [
-        "Judgment Trace v1, local-only case export, consent flags, privacy boundaries, and lifecycle registry coverage"
+        "Judgment Trace v1.1 plus v1 compatibility, local-only case export, consent flags, privacy boundaries, and lifecycle registry coverage"
       ],
       "introduced_by": "P0/P1 observability implementation 2026-08-06",
       "lifecycle_status": "active_gate",
@@ -141,14 +141,7 @@
       "notes": "Kept separate from Judgment Trace lifecycle because TPlan is a stateful runtime rather than a judgment lens."
     }
   ],
-  "review_candidates": [
-    {
-      "test_id": "tests/test_v0_9_acceptance.py",
-      "proposed_status": "candidate_archive",
-      "evidence": "It primarily asserts a static pre-1.0 acceptance record and overlaps current version/history surfaces protected elsewhere.",
-      "current_blocker": "Release-history ownership and replacement coverage have not yet been explicitly approved; keep as historical_guard."
-    }
-  ],
+  "review_candidates": [],
   "historical_artifacts": [
     {
       "path_globs": [
