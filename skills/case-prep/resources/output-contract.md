@@ -10,7 +10,24 @@ archive_path
 review_required_before_share: true
 automatic_upload: false
 warnings
+item_count                 # collection only
 ```
+
+Collection mode produces one `mindthus.case-collection.v1` directory and `.tar.gz`:
+
+```text
+mindthus-case-collection-<id>/
+├── manifest.json
+├── index.md
+├── privacy-scan.json
+├── README.md
+└── cases/
+    ├── mindthus-case-<id>/
+    └── mindthus-tplan-case-<id>/
+```
+
+Every nested case remains independently validated and review-required. The collection
+is not a combined Judgment Trace.
 
 Judgment and benchmark modes produce a Case Export v1 directory plus `.tar.gz`.
 

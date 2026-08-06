@@ -217,6 +217,7 @@ def write_runtime_tree(
         root / "skills" / "case-prep" / "scripts" / "prepare_case.py",
         root / "skills" / "case-prep" / "scripts" / "validate_case_packet.py",
         root / "skills" / "case-prep" / "resources" / "tplan-case-packet.schema.json",
+        root / "skills" / "case-prep" / "resources" / "case-collection.schema.json",
     ):
         case_prep_path.write_text("# case-prep runtime fixture\n", encoding="utf-8")
     for script_name in (

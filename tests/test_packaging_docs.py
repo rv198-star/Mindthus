@@ -266,6 +266,32 @@ class PackagingDocsTests(unittest.TestCase):
                     self.assertTrue(payload["review_required_before_share"])
                     self.assertFalse(payload["automatic_upload"])
 
+                    collection_result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(prepare),
+                            "collection",
+                            "--case-dir",
+                            payload["package_dir"],
+                            "--collection-id",
+                            f"packaged-collection-{label}",
+                            "--out-dir",
+                            str(root / f"collections-{label}"),
+                            "--json",
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(
+                        collection_result.returncode,
+                        0,
+                        collection_result.stderr + collection_result.stdout,
+                    )
+                    collection_payload = json.loads(collection_result.stdout)
+                    self.assertEqual(collection_payload["mode"], "collection")
+                    self.assertEqual(collection_payload["item_count"], 1)
+                    self.assertTrue(Path(collection_payload["archive_path"]).is_file())
+
             plugin = out / "codex-plugin" / "mindthus"
             mission = root / "packaged-mission"
             initialized = subprocess.run(

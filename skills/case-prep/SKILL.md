@@ -1,15 +1,20 @@
 ---
 name: case-prep
-description: "Use only when the user explicitly asks to prepare, export, package, or contribute a Mindthus judgment case, benchmark case, or bounded TPlan Mission case for analysis."
+description: "Use only when the user explicitly asks to prepare, export, package, or contribute one or all current Mindthus judgment, benchmark, or bounded TPlan cases for analysis."
 ---
 
 # case-prep
 
 ## Core Claim
 
-`case-prep` turns an explicitly requested judgment, benchmark, or TPlan event into a
-local review-required case archive. It unifies the user interaction, not the underlying
-data models.
+`case-prep` turns explicitly requested judgment, benchmark, or TPlan events into local
+review-required case archives. The default batch request is:
+
+```text
+/mindthus:case-prep 导出当前所有mindthus相关案例
+```
+
+It unifies the user interaction, not the underlying data models.
 
 Judgment cases use Judgment Trace v1.1 and Case Export v1. TPlan cases use a separate
 bounded `tplan.case-packet.v1` contract and may only reference an optional Judgment
@@ -19,14 +24,41 @@ Trace. No automatic upload or benchmark admission is allowed.
 
 ### 1. Select Mode From Concrete Context
 
+- `collection`: the user asks for all current Mindthus-related cases.
 - `benchmark`: the user names a benchmark run directory and case ID.
 - `tplan`: the user names or clearly refers to a Mission directory/current TPlan Mission.
-- `judgment`: the user asks to package the current or previous judgment interaction.
+- `judgment`: the user asks to package one current or previous judgment interaction.
 
-Do not ask the user to choose a schema or case type. Ask at most one question only when
-multiple candidate failure events are genuinely ambiguous.
+Do not ask the user to choose a schema or case type. For `collection`, identify all
+bounded, reusable cases in the current conversation and referenced current Mission,
+deduplicate repeated discussion of the same root event, and omit ambiguous candidates
+rather than starting a questionnaire. Ask at most one question only when the user named
+a narrower target but multiple concrete events remain indistinguishable.
 
-### 2. Judgment Mode
+### 2. Collection Mode — Default For “All Current Cases”
+
+When the request is “导出当前所有mindthus相关案例” or equivalent:
+
+1. Scan the current conversation for material Mindthus events: judgment failure,
+   judgment repair, value delta, routing ambiguity, regression candidate, named
+   benchmark case, or current TPlan blocker/acceptance/continuation/authority/recovery/
+   provenance/telemetry event.
+2. Exclude ordinary acknowledgements, feature requests without an observed judgment
+   event, and repeated turns that describe the same root case.
+3. Prepare every retained item through its existing `judgment`, `benchmark`, or `tplan`
+   contract. Never build one synthetic mega-trace.
+4. Package the prepared directories with:
+
+```bash
+python3 skills/case-prep/scripts/prepare_case.py collection \
+  --case-dir <prepared-case-1> \
+  --case-dir <prepared-case-2>
+```
+
+5. Return one collection `.tar.gz`, the included case count and short inventory, and
+   keep every nested case independently reviewable.
+
+### 3. Judgment Mode
 
 Create temporary, bounded inputs on behalf of the user:
 
@@ -45,7 +77,7 @@ python3 skills/case-prep/scripts/prepare_case.py judgment \
   --out-dir /tmp/mindthus-case-exports
 ```
 
-### 3. Benchmark Mode
+### 4. Benchmark Mode
 
 Run:
 
@@ -58,7 +90,7 @@ python3 skills/case-prep/scripts/prepare_case.py benchmark \
 The runtime locates or reconstructs the trace and summary from bounded archived
 response/score telemetry. It does not copy the full prompt or answer by default.
 
-### 4. TPlan Mode
+### 5. TPlan Mode
 
 Run:
 
@@ -76,7 +108,7 @@ events, a compact Pulse view, runtime-provenance status, and an optional linked 
 Trace. It must not export the complete Mission, task tree, evidence stream, step logs,
 execution trace, telemetry stream, or Mission directory.
 
-### 5. Review And Deliver
+### 6. Review And Deliver
 
 Inspect the generated preview and validator result. Tell the user:
 
@@ -115,6 +147,7 @@ package before delivery.
 
 Read only the resource that matches the active mode:
 
+- `resources/collection-mode.md`
 - `resources/judgment-mode.md`
 - `resources/benchmark-mode.md`
 - `resources/tplan-mode.md`

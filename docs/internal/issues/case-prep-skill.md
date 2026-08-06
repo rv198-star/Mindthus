@@ -37,15 +37,28 @@ Judgment Trace.
 A user should be able to ask:
 
 ```text
+/mindthus:case-prep 导出当前所有mindthus相关案例
 /mindthus:case-prep 把刚才这次判断失败整理成案例
 /mindthus:case-prep 导出这个 benchmark run 里的 mtj-002
 /mindthus:case-prep 把当前 TPlan Mission 的阻塞整理成案例
 ```
 
-The skill should infer the mode from concrete context and use defaults. It may ask at
-most one question when multiple failure events are genuinely ambiguous.
+The skill should infer the mode from concrete context and use defaults. The all-current
+request should identify bounded cases, deduplicate repeated turns, omit ambiguous weak
+candidates, and return one collection archive without asking the user to choose schemas
+or paths. It may ask at most one question for a narrower request when multiple concrete
+events remain indistinguishable.
 
 ## Mainline
+
+### Collection / All Current Cases
+
+The agent inventories material Mindthus judgment failures, repairs, value deltas,
+routing ambiguities, regression candidates, named benchmark cases, and current TPlan
+review events. It prepares each item through the existing adapter and wraps the
+independently valid packages in `mindthus.case-collection.v1`.
+
+The collection is an index and delivery envelope, not a combined Judgment Trace.
 
 ### Judgment / Current Context
 
@@ -101,19 +114,23 @@ No network operation or automatic issue/benchmark submission is permitted.
 
 Implemented on 2026-08-06:
 
-- explicit-only `skills/case-prep/SKILL.md` with judgment, benchmark, and TPlan modes;
+- explicit-only `skills/case-prep/SKILL.md` with collection, judgment, benchmark, and TPlan modes;
 - one `prepare_case.py` entry that creates local review-required directories and
-  `.tar.gz` archives;
+  `.tar.gz` archives, including one collection archive from multiple validated cases;
+- published `mindthus.case-collection.v1` schema, nested revalidation, duplicate blocking,
+  aggregate privacy warnings, and a 20-case ceiling;
 - benchmark reconstruction from bounded archived response/score records;
 - separate bounded `tplan.case-packet.v1` manifest and validator;
 - TPlan active-path/Pulse/provenance/event selection without raw Mission/runtime dumps;
 - optional linked Judgment Trace and confirmed-redacted text excerpts;
 - runtime fingerprint and all supported release-layout coverage;
-- contract/privacy and integration/release audit records.
+- contract/privacy and integration/release audit records, including the collection
+  audits under `docs/internal/audits/2026-08-06-case-prep-collection-*.md`.
 
 ## Acceptance Criteria
 
 - [x] `skills/case-prep/SKILL.md` defines an explicit-only, low-interaction workflow.
+- [x] The all-current command produces a deduplicated `mindthus.case-collection.v1` archive.
 - [x] Judgment mode wraps Case Export v1 and creates an archive.
 - [x] Benchmark mode accepts a run directory and case ID without requiring manual trace
       or summary construction.

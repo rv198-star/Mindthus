@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a review-required Mindthus judgment, benchmark, or TPlan case."""
+"""Prepare a review-required Mindthus case, TPlan packet, or case collection."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from case_prep_core import (
     CasePrepError,
     _excerpt_arg,
     prepare_benchmark_case,
+    prepare_case_collection,
     prepare_judgment_case,
     prepare_tplan_case,
 )
@@ -58,6 +59,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     tplan.add_argument("--mission-dir", type=Path, required=True)
     tplan.add_argument("--focus", choices=sorted(TPLAN_FOCI), default="auto")
     tplan.add_argument("--judgment-trace", type=Path, default=None)
+
+    collection = sub.add_parser("collection")
+    collection.add_argument("--out-dir", type=Path, default=Path(tempfile.gettempdir()) / "mindthus-case-exports")
+    collection.add_argument("--collection-id", default=None)
+    collection.add_argument("--title", default="Current Mindthus Case Collection")
+    collection.add_argument("--case-dir", action="append", type=Path, required=True)
+    collection.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -89,7 +97,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 excerpts=args.excerpt,
                 excerpts_confirmed_redacted=args.confirm_excerpts_redacted,
             )
-        else:
+        elif args.mode == "tplan":
             result = prepare_tplan_case(
                 mission_dir=args.mission_dir,
                 output_root=args.out_dir,
@@ -98,6 +106,13 @@ def main(argv: Sequence[str] | None = None) -> int:
                 judgment_trace_path=args.judgment_trace,
                 excerpts=args.excerpt,
                 excerpts_confirmed_redacted=args.confirm_excerpts_redacted,
+            )
+        else:
+            result = prepare_case_collection(
+                case_dirs=args.case_dir,
+                output_root=args.out_dir,
+                collection_id=args.collection_id,
+                title=args.title,
             )
     except CasePrepError as exc:
         if args.json:
@@ -115,6 +130,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"archive_path: {result['archive_path']}")
         print("review_required_before_share: true")
         print("automatic_upload: false")
+        if result.get("item_count") is not None:
+            print(f"item_count: {result['item_count']}")
         if result.get("warnings"):
             print("warnings: " + ", ".join(result["warnings"]))
     return 0

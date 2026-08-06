@@ -62,6 +62,7 @@ RELATIVE_FILES = (
     "skills/case-prep/scripts/prepare_case.py",
     "skills/case-prep/scripts/validate_case_packet.py",
     "skills/case-prep/resources/tplan-case-packet.schema.json",
+    "skills/case-prep/resources/case-collection.schema.json",
 )
 
 RUNTIME_TOP_LEVEL_ALIASES = {

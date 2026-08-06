@@ -43,8 +43,16 @@ from _runtime.judgment.trace import (  # noqa: E402
 
 
 CASE_PREP_RESULT_SCHEMA_VERSION = "mindthus.case-prep-result.v1"
+CASE_COLLECTION_SCHEMA_VERSION = "mindthus.case-collection.v1"
 TPLAN_CASE_PACKET_SCHEMA_VERSION = "tplan.case-packet.v1"
 TPLAN_CASE_SUMMARY_SCHEMA_VERSION = "tplan.case-summary.v1"
+MAX_COLLECTION_CASES = 20
+COLLECTION_ALLOWED_ROOT_FILES = {
+    "manifest.json",
+    "index.md",
+    "privacy-scan.json",
+    "README.md",
+}
 TPLAN_FOCI = {
     "auto",
     "blocker",
@@ -212,8 +220,9 @@ def _judgment_result(
     case_type: str,
     focus: str | None = None,
     warnings: list[str] | None = None,
+    item_count: int | None = None,
 ) -> dict[str, Any]:
-    return {
+    result = {
         "schema_version": CASE_PREP_RESULT_SCHEMA_VERSION,
         "mode": mode,
         "case_type": case_type,
@@ -224,6 +233,9 @@ def _judgment_result(
         "automatic_upload": False,
         "warnings": warnings or [],
     }
+    if item_count is not None:
+        result["item_count"] = item_count
+    return result
 
 
 def prepare_judgment_case(
@@ -1170,4 +1182,422 @@ def validate_tplan_case_packet(package_dir: Path) -> list[Finding]:
         if manifest and isinstance(manifest.get("privacy"), dict):
             if manifest["privacy"].get("pattern_scan_status") != expected_status:
                 findings.append(finding("block", "scan-status-mismatch", "manifest pattern_scan_status does not match actual scan", "manifest.json"))
+    return findings
+
+
+def _case_package_descriptor(package_dir: Path) -> tuple[dict[str, Any], list[Finding]]:
+    """Return a bounded collection descriptor after validating one case package."""
+
+    manifest_path = package_dir / "manifest.json"
+    if not package_dir.is_dir() or package_dir.is_symlink() or not manifest_path.is_file():
+        raise CasePrepError(f"case package must be a regular directory with manifest.json: {package_dir}")
+    manifest = _json_load(manifest_path)
+    if not isinstance(manifest, dict):
+        raise CasePrepError(f"case package manifest must be an object: {manifest_path}")
+    schema = manifest.get("schema_version")
+    if schema == "mindthus.case-export.v1":
+        findings = validate_case_package(package_dir)
+        descriptor = {
+            "case_id": manifest.get("case_id"),
+            "mode": "judgment",
+            "case_type": manifest.get("case_type"),
+            "focus": None,
+            "source_schema": schema,
+            "package_name": package_dir.name,
+        }
+    elif schema == TPLAN_CASE_PACKET_SCHEMA_VERSION:
+        findings = validate_tplan_case_packet(package_dir)
+        descriptor = {
+            "case_id": manifest.get("case_id"),
+            "mode": "tplan",
+            "case_type": "tplan_case",
+            "focus": manifest.get("focus"),
+            "source_schema": schema,
+            "package_name": package_dir.name,
+        }
+    else:
+        raise CasePrepError(f"unsupported case package schema {schema!r}: {manifest_path}")
+    blocks = [item for item in findings if item.severity == "block"]
+    if blocks:
+        raise CasePrepError(blocks)
+    case_id = descriptor.get("case_id")
+    if not isinstance(case_id, str) or not CASE_ID_RE.fullmatch(case_id):
+        raise CasePrepError(f"case package has invalid case_id: {package_dir}")
+    descriptor["path"] = f"cases/{package_dir.name}"
+    return descriptor, findings
+
+
+def _collection_index(title: str, items: list[dict[str, Any]]) -> str:
+    lines = [f"# {title}", "", "Every item remains an independently validated case package.", ""]
+    for index, item in enumerate(items, 1):
+        details = [f"mode={item['mode']}", f"type={item['case_type']}"]
+        if item.get("focus"):
+            details.append(f"focus={item['focus']}")
+        lines.append(f"{index}. `{item['case_id']}` — " + ", ".join(details))
+        lines.append(f"   - `{item['path']}`")
+    lines.extend(
+        [
+            "",
+            "This index is an inventory, not proof that every candidate is distinct, correct, or ready for benchmark admission.",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def _collection_readme() -> str:
+    return """# Mindthus Case Collection
+
+This collection was prepared locally at the user's explicit request. It has not been uploaded.
+
+Before sharing:
+
+1. Read `index.md` and every nested case package.
+2. Confirm duplicated or low-value candidates were not included.
+3. Review each nested `privacy-scan.json`, manifest, summary, trace, and excerpt.
+4. Run the collection validator again after any manual edit.
+5. Share the archive only through a separate explicit action.
+
+The collection preserves separate Judgment and TPlan contracts. It does not merge all
+cases into one Judgment Trace, and it does not prove anonymity or analytical value.
+"""
+
+
+def _nested_warning_codes(package_dir: Path, findings: list[Finding]) -> list[str]:
+    codes = {item.code for item in findings if item.severity == "warn"}
+    privacy_path = package_dir / "privacy-scan.json"
+    if privacy_path.is_file():
+        value = _json_load(privacy_path)
+        if isinstance(value, dict) and isinstance(value.get("warning_codes"), list):
+            codes.update(str(code) for code in value["warning_codes"] if isinstance(code, str))
+    return sorted(codes)
+
+
+def prepare_case_collection(
+    *,
+    case_dirs: list[Path],
+    output_root: Path,
+    collection_id: str | None = None,
+    title: str = "Current Mindthus Case Collection",
+) -> dict[str, Any]:
+    """Package independently validated cases into one review-required collection."""
+
+    if not case_dirs:
+        raise CasePrepError("collection requires at least one prepared case directory")
+    if len(case_dirs) > MAX_COLLECTION_CASES:
+        raise CasePrepError(f"collection supports at most {MAX_COLLECTION_CASES} cases")
+    if not isinstance(title, str) or not title.strip():
+        raise CasePrepError("collection title must be a non-empty string")
+
+    sources: list[Path] = []
+    descriptors: list[dict[str, Any]] = []
+    warning_codes: set[str] = set()
+    seen_paths: set[Path] = set()
+    seen_case_ids: set[str] = set()
+    for raw in case_dirs:
+        source = raw.expanduser().resolve()
+        if source in seen_paths:
+            raise CasePrepError(f"duplicate case package path: {source}")
+        seen_paths.add(source)
+        descriptor, findings = _case_package_descriptor(source)
+        if descriptor["case_id"] in seen_case_ids:
+            raise CasePrepError(f"duplicate case_id in collection: {descriptor['case_id']}")
+        seen_case_ids.add(descriptor["case_id"])
+        sources.append(source)
+        descriptors.append(descriptor)
+        warning_codes.update(_nested_warning_codes(source, findings))
+
+    resolved_id = _safe_case_id(
+        collection_id
+        or f"collection-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}-{secrets.token_hex(3)}"
+    )
+    output_root = output_root.expanduser().resolve()
+    package_dir = output_root / f"mindthus-case-collection-{resolved_id}"
+    for source in sources:
+        if source == package_dir or source in package_dir.parents or package_dir in source.parents:
+            raise CasePrepError("collection output must stay outside every source case package")
+    if package_dir.exists():
+        raise CasePrepError(f"refusing to overwrite existing collection: {package_dir}")
+
+    index_text = _collection_index(title.strip(), descriptors)
+    root_findings = scan_text(index_text + _collection_readme(), "collection metadata")
+    root_blocks = [item for item in root_findings if item.severity == "block"]
+    if root_blocks:
+        raise CasePrepError(root_blocks)
+    warning_codes.update(item.code for item in root_findings if item.severity == "warn")
+    scan_status = "warnings" if warning_codes else "passed"
+
+    output_root.mkdir(parents=True, exist_ok=True)
+    package_dir.mkdir()
+    try:
+        cases_root = package_dir / "cases"
+        cases_root.mkdir()
+        for source in sources:
+            shutil.copytree(source, cases_root / source.name)
+        (package_dir / "index.md").write_text(index_text, encoding="utf-8")
+        (package_dir / "README.md").write_text(_collection_readme(), encoding="utf-8")
+        _write_json(
+            package_dir / "privacy-scan.json",
+            {
+                "schema_version": "mindthus.case-collection-privacy-scan.v1",
+                "status": scan_status,
+                "warning_codes": sorted(warning_codes),
+                "note": "Aggregate of collection metadata and nested case warnings; manual review remains required.",
+            },
+        )
+        manifest = {
+            "schema_version": CASE_COLLECTION_SCHEMA_VERSION,
+            "collection_id": resolved_id,
+            "created_at_utc": now_iso(),
+            "mode": "collection",
+            "title": title.strip(),
+            "consent": {
+                "export_requested_by_user": True,
+                "review_required_before_share": True,
+                "automatic_upload": False,
+            },
+            "privacy": {
+                "contains_raw_conversation": False,
+                "contains_full_tplan_runtime": False,
+                "redaction_status": "review_required",
+                "pattern_scan_status": scan_status,
+            },
+            "items": descriptors,
+            "files": {
+                "index": "index.md",
+                "privacy_scan": "privacy-scan.json",
+                "privacy_notice": "README.md",
+                "cases": [item["path"] for item in descriptors],
+            },
+        }
+        _write_json(package_dir / "manifest.json", manifest)
+    except Exception:
+        shutil.rmtree(package_dir, ignore_errors=True)
+        raise
+
+    findings = validate_case_collection(package_dir)
+    blocks = [item for item in findings if item.severity == "block"]
+    if blocks:
+        shutil.rmtree(package_dir, ignore_errors=True)
+        raise CasePrepError(blocks)
+    archive_path = _archive_directory(package_dir)
+    return _judgment_result(
+        mode="collection",
+        package_dir=package_dir,
+        archive_path=archive_path,
+        case_type="case_collection",
+        warnings=sorted({item.code for item in findings if item.severity == "warn"}),
+        item_count=len(descriptors),
+    )
+
+
+def _validate_collection_manifest(manifest: Any) -> list[Finding]:
+    findings: list[Finding] = []
+    if not isinstance(manifest, dict):
+        return [finding("block", "invalid-manifest", "collection manifest root must be an object")]
+    required = {
+        "schema_version",
+        "collection_id",
+        "created_at_utc",
+        "mode",
+        "title",
+        "consent",
+        "privacy",
+        "items",
+        "files",
+    }
+    for field in sorted(required - set(manifest)):
+        findings.append(finding("block", "missing-field", f"missing collection field: {field}", "manifest.json"))
+    for field in sorted(set(manifest) - required):
+        findings.append(finding("block", "unknown-field", f"unsupported collection field: {field}", "manifest.json"))
+    if manifest.get("schema_version") != CASE_COLLECTION_SCHEMA_VERSION:
+        findings.append(finding("block", "unsupported-schema", "unsupported case collection schema", "manifest.json"))
+    collection_id = manifest.get("collection_id")
+    if not isinstance(collection_id, str) or not CASE_ID_RE.fullmatch(collection_id):
+        findings.append(finding("block", "invalid-collection-id", "collection_id is invalid", "manifest.json"))
+    if manifest.get("mode") != "collection":
+        findings.append(finding("block", "invalid-mode", "collection mode must be collection", "manifest.json"))
+    if not isinstance(manifest.get("title"), str) or not manifest["title"].strip():
+        findings.append(finding("block", "invalid-title", "collection title must be non-empty", "manifest.json"))
+    consent = manifest.get("consent")
+    if not isinstance(consent, dict) or set(consent) != {
+        "export_requested_by_user",
+        "review_required_before_share",
+        "automatic_upload",
+    }:
+        findings.append(finding("block", "invalid-consent", "collection consent fields are invalid", "manifest.json"))
+    else:
+        if consent.get("export_requested_by_user") is not True:
+            findings.append(finding("block", "consent-required", "export_requested_by_user must be true", "manifest.json"))
+        if consent.get("review_required_before_share") is not True:
+            findings.append(finding("block", "review-required", "review_required_before_share must be true", "manifest.json"))
+        if consent.get("automatic_upload") is not False:
+            findings.append(finding("block", "automatic-upload-forbidden", "automatic_upload must be false", "manifest.json"))
+    privacy = manifest.get("privacy")
+    if not isinstance(privacy, dict) or set(privacy) != {
+        "contains_raw_conversation",
+        "contains_full_tplan_runtime",
+        "redaction_status",
+        "pattern_scan_status",
+    }:
+        findings.append(finding("block", "invalid-privacy", "collection privacy fields are invalid", "manifest.json"))
+    else:
+        if privacy.get("contains_raw_conversation") is not False:
+            findings.append(finding("block", "raw-conversation-forbidden", "contains_raw_conversation must be false", "manifest.json"))
+        if privacy.get("contains_full_tplan_runtime") is not False:
+            findings.append(finding("block", "raw-runtime-forbidden", "contains_full_tplan_runtime must be false", "manifest.json"))
+        if privacy.get("redaction_status") != "review_required":
+            findings.append(finding("block", "review-required", "redaction_status must remain review_required", "manifest.json"))
+        if privacy.get("pattern_scan_status") not in {"passed", "warnings"}:
+            findings.append(finding("block", "invalid-scan-status", "pattern_scan_status must be passed or warnings", "manifest.json"))
+    created_at = manifest.get("created_at_utc")
+    if not isinstance(created_at, str):
+        findings.append(finding("block", "invalid-created-at", "created_at_utc must be an ISO-8601 string", "manifest.json"))
+    else:
+        try:
+            parsed_created_at = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+        except ValueError:
+            findings.append(finding("block", "invalid-created-at", "created_at_utc must be ISO-8601", "manifest.json"))
+        else:
+            if parsed_created_at.tzinfo is None:
+                findings.append(finding("block", "invalid-created-at", "created_at_utc must include a timezone", "manifest.json"))
+    items = manifest.get("items")
+    if not isinstance(items, list) or not 1 <= len(items) <= MAX_COLLECTION_CASES:
+        findings.append(finding("block", "invalid-items", f"items must contain 1-{MAX_COLLECTION_CASES} cases", "manifest.json"))
+    else:
+        expected_item_fields = {
+            "case_id",
+            "mode",
+            "case_type",
+            "focus",
+            "source_schema",
+            "package_name",
+            "path",
+        }
+        case_ids: set[str] = set()
+        paths: set[str] = set()
+        for index, item in enumerate(items):
+            subject = f"manifest.items[{index}]"
+            if not isinstance(item, dict) or set(item) != expected_item_fields:
+                findings.append(finding("block", "invalid-item", "collection item fields are invalid", subject))
+                continue
+            case_id = item.get("case_id")
+            if not isinstance(case_id, str) or not CASE_ID_RE.fullmatch(case_id):
+                findings.append(finding("block", "invalid-case-id", "collection item case_id is invalid", subject))
+            elif case_id in case_ids:
+                findings.append(finding("block", "duplicate-case-id", f"duplicate case_id: {case_id}", subject))
+            else:
+                case_ids.add(case_id)
+            mode = item.get("mode")
+            schema = item.get("source_schema")
+            if mode not in {"judgment", "tplan"}:
+                findings.append(finding("block", "invalid-item-mode", "collection item mode is invalid", subject))
+            if schema not in {"mindthus.case-export.v1", TPLAN_CASE_PACKET_SCHEMA_VERSION}:
+                findings.append(finding("block", "invalid-item-schema", "collection item source_schema is invalid", subject))
+            if mode == "judgment" and schema != "mindthus.case-export.v1":
+                findings.append(finding("block", "item-contract-mismatch", "judgment item must use Case Export v1", subject))
+            if mode == "tplan" and schema != TPLAN_CASE_PACKET_SCHEMA_VERSION:
+                findings.append(finding("block", "item-contract-mismatch", "TPlan item must use tplan.case-packet.v1", subject))
+            if not isinstance(item.get("case_type"), str) or not item["case_type"].strip():
+                findings.append(finding("block", "invalid-case-type", "collection item case_type is invalid", subject))
+            if item.get("focus") is not None and (not isinstance(item.get("focus"), str) or not item["focus"].strip()):
+                findings.append(finding("block", "invalid-focus", "collection item focus must be null or non-empty", subject))
+            package_name = item.get("package_name")
+            path = item.get("path")
+            if not isinstance(package_name, str) or not re.fullmatch(r"[A-Za-z0-9._-]+", package_name):
+                findings.append(finding("block", "invalid-package-name", "collection item package_name is invalid", subject))
+            expected_path = f"cases/{package_name}" if isinstance(package_name, str) else None
+            if path != expected_path or not isinstance(path, str) or not re.fullmatch(r"cases/[A-Za-z0-9._-]+", path):
+                findings.append(finding("block", "invalid-case-path", "collection item path is invalid", subject))
+            elif path in paths:
+                findings.append(finding("block", "duplicate-case-path", f"duplicate case path: {path}", subject))
+            else:
+                paths.add(path)
+    return findings
+
+
+def validate_case_collection(package_dir: Path) -> list[Finding]:
+    """Validate a collection and every independently packaged nested case."""
+
+    findings: list[Finding] = []
+    if not package_dir.is_dir() or package_dir.is_symlink():
+        return [finding("block", "invalid-package", f"collection must be a regular directory: {package_dir}")]
+    for path in package_dir.rglob("*"):
+        if path.is_symlink():
+            findings.append(finding("block", "symlink-forbidden", f"symlink is not allowed: {path}", str(path)))
+    for child in package_dir.iterdir():
+        if child.is_file() and child.name not in COLLECTION_ALLOWED_ROOT_FILES:
+            findings.append(finding("block", "unexpected-file", f"unexpected collection file: {child.name}", child.name))
+        elif child.is_dir() and child.name != "cases":
+            findings.append(finding("block", "unexpected-directory", f"unexpected collection directory: {child.name}", child.name))
+    for name in COLLECTION_ALLOWED_ROOT_FILES:
+        if not (package_dir / name).is_file():
+            findings.append(finding("block", "missing-file", f"missing collection file: {name}", name))
+    cases_root = package_dir / "cases"
+    if not cases_root.is_dir() or cases_root.is_symlink():
+        findings.append(finding("block", "missing-cases", "collection cases directory is missing or invalid", "cases"))
+
+    manifest = _validation_json(package_dir / "manifest.json", findings, "manifest.json") if (package_dir / "manifest.json").is_file() else None
+    findings.extend(_validate_collection_manifest(manifest))
+    if isinstance(manifest, dict) and isinstance(manifest.get("collection_id"), str):
+        expected_name = f"mindthus-case-collection-{manifest['collection_id']}"
+        if package_dir.name != expected_name:
+            findings.append(finding("block", "package-name-mismatch", f"collection directory must be named {expected_name}", package_dir.name))
+
+    actual_descriptors: list[dict[str, Any]] = []
+    nested_warning_codes: set[str] = set()
+    if cases_root.is_dir():
+        for child in sorted(cases_root.iterdir()):
+            if not child.is_dir() or child.is_symlink():
+                findings.append(finding("block", "invalid-case-entry", f"nested case must be a directory: {child.name}", child.name))
+                continue
+            try:
+                descriptor, nested_findings = _case_package_descriptor(child)
+            except CasePrepError as exc:
+                findings.extend(
+                    finding(item.severity, f"nested-{item.code}", item.message, f"cases/{child.name}")
+                    for item in exc.findings
+                )
+                continue
+            actual_descriptors.append(descriptor)
+            nested_warning_codes.update(_nested_warning_codes(child, nested_findings))
+    actual_descriptors.sort(key=lambda item: item["path"])
+
+    if isinstance(manifest, dict) and isinstance(manifest.get("items"), list):
+        declared = sorted(manifest["items"], key=lambda item: str(item.get("path")) if isinstance(item, dict) else "")
+        if declared != actual_descriptors:
+            findings.append(finding("block", "collection-index-mismatch", "manifest items do not match nested case packages", "manifest.json"))
+        files = manifest.get("files")
+        expected_files = {
+            "index": "index.md",
+            "privacy_scan": "privacy-scan.json",
+            "privacy_notice": "README.md",
+            "cases": [item["path"] for item in manifest["items"]],
+        }
+        if files != expected_files:
+            findings.append(finding("block", "invalid-files-index", "collection files index is invalid", "manifest.json"))
+
+    root_findings: list[Finding] = []
+    for name in ("index.md", "README.md"):
+        path = package_dir / name
+        if path.is_file():
+            try:
+                root_findings.extend(scan_text(path.read_text(encoding="utf-8"), name))
+            except UnicodeDecodeError:
+                findings.append(finding("block", "non-utf8-content", f"{name} must be UTF-8", name))
+    findings.extend(root_findings)
+    expected_warning_codes = sorted(
+        nested_warning_codes | {item.code for item in root_findings if item.severity == "warn"}
+    )
+    expected_scan_status = "warnings" if expected_warning_codes else "passed"
+    privacy_scan = _validation_json(package_dir / "privacy-scan.json", findings, "privacy-scan.json") if (package_dir / "privacy-scan.json").is_file() else None
+    if not isinstance(privacy_scan, dict):
+        findings.append(finding("block", "invalid-privacy-scan", "collection privacy-scan.json must be an object", "privacy-scan.json"))
+    else:
+        if privacy_scan.get("status") != expected_scan_status:
+            findings.append(finding("block", "scan-status-mismatch", f"collection scan status should be {expected_scan_status}", "privacy-scan.json"))
+        if sorted(privacy_scan.get("warning_codes") or []) != expected_warning_codes:
+            findings.append(finding("block", "scan-warning-mismatch", "collection warning_codes do not match nested cases", "privacy-scan.json"))
+    if isinstance(manifest, dict) and isinstance(manifest.get("privacy"), dict):
+        if manifest["privacy"].get("pattern_scan_status") != expected_scan_status:
+            findings.append(finding("block", "scan-status-mismatch", "manifest pattern_scan_status does not match collection", "manifest.json"))
     return findings

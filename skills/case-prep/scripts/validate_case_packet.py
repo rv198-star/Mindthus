@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a bounded TPlan Case Packet v1 before manual sharing."""
+"""Validate a bounded TPlan Case Packet or Mindthus Case Collection before sharing."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from case_prep_core import validate_tplan_case_packet
+from case_prep_core import CASE_COLLECTION_SCHEMA_VERSION, validate_case_collection, validate_tplan_case_packet
 
 
 def main() -> int:
@@ -15,10 +15,23 @@ def main() -> int:
     parser.add_argument("package", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
-    findings = validate_tplan_case_packet(args.package)
+    manifest_path = args.package / "manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        manifest = None
+    is_collection = (
+        args.package.name.startswith("mindthus-case-collection-")
+        or (isinstance(manifest, dict) and manifest.get("schema_version") == CASE_COLLECTION_SCHEMA_VERSION)
+    )
+    findings = validate_case_collection(args.package) if is_collection else validate_tplan_case_packet(args.package)
     blocks = [item for item in findings if item.severity == "block"]
     payload = {
-        "schema_version": "tplan.case-packet-validation.v1",
+        "schema_version": (
+            "mindthus.case-collection-validation.v1"
+            if is_collection
+            else "tplan.case-packet-validation.v1"
+        ),
         "status": "invalid" if blocks else "review_required",
         "package": str(args.package),
         "block_count": len(blocks),

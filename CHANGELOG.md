@@ -9,6 +9,10 @@
   不复制完整 Mission、任务树、evidence stream、step logs、execution trace 或 telemetry。
 - `case-prep` 只显式调用，默认不带原始对话/附件，不自动上传，也不自动进入 benchmark；
   可选文本摘录仍需明确选择、确认脱敏并通过分享前复核。
+- 新增 `collection` 批量入口，支持直接请求
+  `/mindthus:case-prep 导出当前所有mindthus相关案例`：agent 识别并去重当前会话中的
+  bounded Judgment / benchmark / TPlan 候选，逐个走原合同，再生成一个
+  `mindthus.case-collection.v1` 集合压缩包；集合不会把多个案例合并成 mega-trace。
 
 - Judgment Trace 升级为 `mindthus.judgment-trace.v1.1`：decision delta 支持
   `true / false / unknown`，新增 comparison basis / reference 与关键字段来源标签；
