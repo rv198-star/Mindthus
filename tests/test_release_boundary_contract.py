@@ -45,9 +45,25 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.6.0", changelog)
         self.assertIn("目标 tag：`v1.6.0`", changelog)
         self.assertIn("[Release candidate 说明](docs/releases/v1.6.0.md)", changelog)
-        self.assertIn("Judgment Trace", changelog)
-        self.assertIn("case-prep", changelog)
-        self.assertIn("Test Lifecycle", changelog)
+        for phrase in (
+            "### 版本定位",
+            "### Judgment Trace v1.1",
+            "### Case Export v1",
+            "### case-prep",
+            "### Test Lifecycle Management",
+            "### 兼容性与运行边界",
+            "### 验证与发布边界",
+            "true / false / unknown",
+            "review_required_before_share: true",
+            "automatic_upload: false",
+            "pending Mission transaction",
+            "mindthus.case-collection.v1",
+            "TPlan runtime generation 保持 `1.5.4`",
+            "mindthus-plugins-1.6.0.tar.gz",
+            "mindthus-skills-1.6.0.tar.gz",
+            "本版不新增 ROI Beta",
+        ):
+            self.assertIn(phrase, changelog)
         self.assertIn("## v1.5.4", changelog)
         self.assertIn('VERSION = "1.6.0"', builder)
         self.assertIn('VERSION = "1.6.0"', runtime_logger)
