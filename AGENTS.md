@@ -153,6 +153,12 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 边界：TVG 不负责战略方向，不重开整个问题空间；它只转换命名清楚、有边界的产物。脚本只能做记录和校验，不能替代 judgment。
 TVG 的 audit 是内部退出检查，用来判断 active TVG loop 里的产物能否 freeze、return-remediate 或 blocked；不是通用外部审计路线。外部审计先按对象路由：代码、release、workflow、结构、证据、战略或 Mission runtime。
 
+### `skills/case-prep/` — Case Prep（显式调用）
+
+内部案例准备工具，用来把用户明确指定的判断、benchmark case 或 TPlan Mission
+事件整理成可复核的本地案例包。它统一交互入口，但不合并 Judgment Trace 与 TPlan
+runtime 合同；不参与被动路由，不自动上传，也不自动进入 benchmark。
+
 ## 组合方式
 
 这些 skill 不需要串成固定流程。常见组合是：

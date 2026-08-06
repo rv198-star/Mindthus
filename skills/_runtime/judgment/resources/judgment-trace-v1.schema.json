@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.example/schemas/judgment-trace.v1.json",
+  "title": "Mindthus Judgment Trace v1",
+  "description": "Legacy observable judgment facts only; not private chain of thought or semantic truth proof.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "trace_id",
+    "provenance",
+    "input_shape",
+    "routing",
+    "evidence",
+    "decision_delta",
+    "outcome"
+  ],
+  "properties": {
+    "schema_version": {"const": "mindthus.judgment-trace.v1"},
+    "trace_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"},
+    "timestamp_utc": {"type": "string", "format": "date-time"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "source_type"],
+      "properties": {
+        "producer": {"type": "string", "minLength": 1},
+        "source_type": {"enum": ["runtime_observation", "evaluator_label", "author_annotation", "mixed"]},
+        "source_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "input_shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hard_judgment_point"],
+      "properties": {
+        "judgment_object": {"enum": ["direct_task", "information_gap", "problem_definition", "structural_ambiguity", "whole_object_definition", "decision_context", "strategy_direction", "path_carrying", "controller_boundary", "artifact_value", "mission_runtime", "unknown"]},
+        "hard_judgment_point": {"type": "boolean"},
+        "frame_status": {"enum": ["clean", "biased", "overloaded", "malformed", "not_assessed"]},
+        "active_constraints": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routing_decision"],
+      "properties": {
+        "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan", "human", "unknown"]},
+        "selected_method": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]},
+        "loaded_methods": {"type": "array", "items": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]}},
+        "routing_decision": {"enum": ["direct_execute", "acquire_information", "intervene", "block", "stop"]},
+        "supporting_primitives": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "available_evidence_classes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "missing_evidence_classes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "claim_ceiling": {"type": "string", "minLength": 1}
+      }
+    },
+    "decision_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy_changed", "risk_handling_changed", "evidence_requirement_changed", "next_action_changed", "stopping_condition_changed", "handoff_changed"],
+      "properties": {
+        "strategy_changed": {"type": "boolean"},
+        "risk_handling_changed": {"type": "boolean"},
+        "evidence_requirement_changed": {"type": "boolean"},
+        "next_action_changed": {"type": "boolean"},
+        "stopping_condition_changed": {"type": "boolean"},
+        "handoff_changed": {"type": "boolean"}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["not_evaluated", "accepted", "rejected", "inconclusive"]},
+        "validator_status": {"type": "string", "minLength": 1},
+        "benchmark_case_id": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

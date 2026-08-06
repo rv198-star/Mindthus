@@ -3,6 +3,7 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
+EXPLICIT_ONLY_TOOL_SKILLS = {"case-prep"}
 
 
 def _read_shared_primitive_docs() -> str:
@@ -1068,9 +1069,18 @@ class MindthusRouterContractTests(unittest.TestCase):
         routed_methods = {
             path.parent.name
             for path in (REPO / "skills").glob("*/SKILL.md")
-            if path.parent.name not in {"using-mindthus"}
+            if path.parent.name not in {"using-mindthus", *EXPLICIT_ONLY_TOOL_SKILLS}
         }
         self.assertEqual(set(_parse_using_mindthus_routes(using)), routed_methods)
+
+    def test_explicit_only_tool_skills_are_not_passive_router_owners(self):
+        using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
+        routes = _parse_using_mindthus_routes(using)
+        for skill_name in EXPLICIT_ONLY_TOOL_SKILLS:
+            self.assertNotIn(skill_name, routes)
+            skill = (REPO / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("explicit", skill.lower())
+            self.assertIn("do not add passive wake-up routing", skill.lower())
 
     def test_tvg_and_tplan_are_non_proactive_routes(self):
         text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")

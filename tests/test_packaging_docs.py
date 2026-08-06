@@ -54,7 +54,7 @@ class PackagingDocsTests(unittest.TestCase):
             root = Path(tmp)
             out = root / "release"
             codex_home = root / "home"
-            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.5.4"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.6.0"
             result = subprocess.run(
                 [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
                 text=True,
@@ -88,6 +88,259 @@ class PackagingDocsTests(unittest.TestCase):
                 Path(payload["locations"]["marketplace"]["root"]),
                 (out / "codex-plugin" / "mindthus").resolve(),
             )
+
+    def test_generated_portable_packs_runtime_diagnostic_accepts_namespaced_layouts(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--package", "skills", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr + built.stdout)
+
+            for pack_root in (out / "codex", out / "opencode"):
+                with self.subTest(pack_root=str(pack_root)):
+                    diagnostic = subprocess.run(
+                        [
+                            sys.executable,
+                            str(pack_root / "scripts" / "log-mindthus-runtime.py"),
+                            "--repo-root",
+                            str(pack_root),
+                            "--marketplace-root",
+                            str(pack_root),
+                            "--cache-root",
+                            str(pack_root),
+                            "--json",
+                            "--strict",
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(diagnostic.returncode, 0, diagnostic.stderr + diagnostic.stdout)
+                    payload = json.loads(diagnostic.stdout)
+                    self.assertEqual(payload["summary"]["status"], "ok")
+                    resolved = payload["locations"]["repo"]["files"][
+                        "skills/_runtime/judgment/trace.py"
+                    ]["resolved_relative_path"]
+                    self.assertIn("mindthus/_runtime/judgment/trace.py", resolved)
+
+    def test_generated_plugin_carries_judgment_trace_and_case_export_tools(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr + built.stdout)
+            plugin = out / "codex-plugin" / "mindthus"
+            for rel in (
+                "scripts/runtime_import.py",
+                "scripts/validate-judgment-trace.py",
+                "scripts/export-mindthus-case.py",
+                "scripts/validate-mindthus-case.py",
+                "_runtime/judgment/resources/judgment-trace.schema.json",
+                "_runtime/judgment/resources/judgment-trace-v1.schema.json",
+                "_runtime/judgment/resources/judgment-trace-v1.1.schema.json",
+                "_runtime/judgment/resources/case-export-manifest.schema.json",
+            ):
+                self.assertTrue((plugin / rel).is_file(), rel)
+
+            trace = plugin / "_runtime" / "judgment" / "fixtures" / "traces" / "intervention.json"
+            summary = (
+                plugin
+                / "_runtime"
+                / "judgment"
+                / "fixtures"
+                / "case-summaries"
+                / "value-delta.json"
+            )
+            trace_check = subprocess.run(
+                [sys.executable, str(plugin / "scripts" / "validate-judgment-trace.py"), str(trace)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(trace_check.returncode, 0, trace_check.stderr + trace_check.stdout)
+
+            export_root = root / "exports"
+            exported = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "scripts" / "export-mindthus-case.py"),
+                    "--trace",
+                    str(trace),
+                    "--summary",
+                    str(summary),
+                    "--case-type",
+                    "value_delta",
+                    "--case-id",
+                    "packaged-case-export",
+                    "--out-dir",
+                    str(export_root),
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(exported.returncode, 0, exported.stderr + exported.stdout)
+            package = export_root / "mindthus-case-packaged-case-export"
+            package_check = subprocess.run(
+                [sys.executable, str(plugin / "scripts" / "validate-mindthus-case.py"), str(package)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(package_check.returncode, 0, package_check.stderr + package_check.stdout)
+            self.assertIn("review_required_before_share: true", package_check.stdout)
+
+    def test_release_pack_runs_case_prep_across_supported_layouts(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "release"
+            built = subprocess.run(
+                [sys.executable, str(script), "--out", str(out)],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr + built.stdout)
+            layouts = (
+                (
+                    "codex-plugin",
+                    out / "codex-plugin" / "mindthus" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "codex-plugin" / "mindthus" / "_runtime",
+                ),
+                (
+                    "claude-plugin",
+                    out / "claude-code" / "claude-plugin" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "claude-code" / "claude-plugin" / "skills" / "_runtime",
+                ),
+                (
+                    "claude-portable",
+                    out / "claude-code" / "skills" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "claude-code" / "skills" / "_runtime",
+                ),
+                (
+                    "codex-portable",
+                    out / "codex" / "skills" / "mindthus" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "codex" / "skills" / "mindthus" / "_runtime",
+                ),
+                (
+                    "opencode-portable",
+                    out / "opencode" / ".opencode" / "skills" / "mindthus" / "case-prep" / "scripts" / "prepare_case.py",
+                    out / "opencode" / ".opencode" / "skills" / "mindthus" / "_runtime",
+                ),
+            )
+            for label, prepare, runtime in layouts:
+                with self.subTest(layout=label):
+                    self.assertTrue(prepare.is_file(), prepare)
+                    trace = runtime / "judgment" / "fixtures" / "traces" / "intervention.json"
+                    summary = runtime / "judgment" / "fixtures" / "case-summaries" / "judgment-failure.json"
+                    export_root = root / f"exports-{label}"
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(prepare),
+                            "judgment",
+                            "--trace",
+                            str(trace),
+                            "--summary",
+                            str(summary),
+                            "--case-type",
+                            "judgment_failure",
+                            "--case-id",
+                            f"packaged-{label}",
+                            "--out-dir",
+                            str(export_root),
+                            "--json",
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+                    payload = json.loads(result.stdout)
+                    self.assertTrue(Path(payload["archive_path"]).is_file())
+                    self.assertTrue(payload["review_required_before_share"])
+                    self.assertFalse(payload["automatic_upload"])
+
+                    collection_result = subprocess.run(
+                        [
+                            sys.executable,
+                            str(prepare),
+                            "collection",
+                            "--case-dir",
+                            payload["package_dir"],
+                            "--collection-id",
+                            f"packaged-collection-{label}",
+                            "--out-dir",
+                            str(root / f"collections-{label}"),
+                            "--json",
+                        ],
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(
+                        collection_result.returncode,
+                        0,
+                        collection_result.stderr + collection_result.stdout,
+                    )
+                    collection_payload = json.loads(collection_result.stdout)
+                    self.assertEqual(collection_payload["mode"], "collection")
+                    self.assertEqual(collection_payload["item_count"], 1)
+                    self.assertTrue(Path(collection_payload["archive_path"]).is_file())
+
+            plugin = out / "codex-plugin" / "mindthus"
+            mission = root / "packaged-mission"
+            initialized = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "tplan" / "scripts" / "init_lite.py"),
+                    "--dir",
+                    str(mission),
+                    "--mission-id",
+                    "packaged-case-prep",
+                    "--title",
+                    "Packaged Case Prep",
+                    "--objective",
+                    "Verify packaged TPlan case preparation.",
+                    "--acceptance-evidence",
+                    "A1:Packet validates",
+                    "--active-task-id",
+                    "T1",
+                    "--active-task-title",
+                    "Prepare packet",
+                    "--active-task-contribution",
+                    "Create a bounded packet.",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr + initialized.stdout)
+            tplan_result = subprocess.run(
+                [
+                    sys.executable,
+                    str(plugin / "skills" / "case-prep" / "scripts" / "prepare_case.py"),
+                    "tplan",
+                    "--mission-dir",
+                    str(mission),
+                    "--case-id",
+                    "packaged-tplan-case",
+                    "--out-dir",
+                    str(root / "tplan-export"),
+                    "--json",
+                ],
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(tplan_result.returncode, 0, tplan_result.stderr + tplan_result.stdout)
+            tplan_payload = json.loads(tplan_result.stdout)
+            packet = Path(tplan_payload["package_dir"])
+            self.assertTrue((packet / "manifest.json").is_file())
+            self.assertFalse((packet / "mission.json").exists())
+            self.assertTrue(Path(tplan_payload["archive_path"]).is_file())
 
     def test_release_pack_rejects_repository_and_nested_output_paths(self):
         script = REPO / "scripts" / "build-release-pack.py"
@@ -365,7 +618,8 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.5.4`",
+            "当前仓库版本：`v1.6.0`",
+            "GitHub Releases",
             "局部正确",
             "输入定框审计",
             "framing-risk",
@@ -379,6 +633,7 @@ class PackagingDocsTests(unittest.TestCase):
         self.assertNotIn("judge JSON", readme)
         self.assertNotIn("not_applicable", readme)
         self.assertNotIn("方法分层纪律", readme)
+        self.assertNotIn("Pre-1.0", readme)
 
     def test_readme_keeps_release_details_out_of_new_user_intro(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -1058,7 +1313,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.5.4")
+            self.assertEqual(plugin["version"], "1.6.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
@@ -1146,7 +1401,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.5.4")
+            self.assertEqual(codex_plugin_manifest["version"], "1.6.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1281,8 +1536,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.5.4"
-            skills = tmp_dir / "mindthus-skills-1.5.4"
+            plugins = tmp_dir / "mindthus-plugins-1.6.0"
+            skills = tmp_dir / "mindthus-skills-1.6.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

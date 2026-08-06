@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mindthus.example/schemas/case-collection.v1.json",
+  "title": "Mindthus Case Collection v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "collection_id",
+    "created_at_utc",
+    "mode",
+    "title",
+    "consent",
+    "privacy",
+    "items",
+    "files"
+  ],
+  "properties": {
+    "schema_version": {"const": "mindthus.case-collection.v1"},
+    "collection_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "mode": {"const": "collection"},
+    "title": {"type": "string", "minLength": 1},
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["export_requested_by_user", "review_required_before_share", "automatic_upload"],
+      "properties": {
+        "export_requested_by_user": {"const": true},
+        "review_required_before_share": {"const": true},
+        "automatic_upload": {"const": false}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contains_raw_conversation",
+        "contains_full_tplan_runtime",
+        "redaction_status",
+        "pattern_scan_status"
+      ],
+      "properties": {
+        "contains_raw_conversation": {"const": false},
+        "contains_full_tplan_runtime": {"const": false},
+        "redaction_status": {"const": "review_required"},
+        "pattern_scan_status": {"enum": ["passed", "warnings"]}
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "mode", "case_type", "focus", "source_schema", "package_name", "path"],
+        "properties": {
+          "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+          "mode": {"enum": ["judgment", "tplan"]},
+          "case_type": {"type": "string", "minLength": 1},
+          "focus": {"type": ["string", "null"]},
+          "source_schema": {"enum": ["mindthus.case-export.v1", "tplan.case-packet.v1"]},
+          "package_name": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "pattern": "^cases/[A-Za-z0-9._-]+$"}
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "privacy_scan", "privacy_notice", "cases"],
+      "properties": {
+        "index": {"const": "index.md"},
+        "privacy_scan": {"const": "privacy-scan.json"},
+        "privacy_notice": {"const": "README.md"},
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {"type": "string", "pattern": "^cases/[A-Za-z0-9._-]+$"}
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,104 @@
 
 ## Unreleased
 
+## v1.6.0
+
+发布 tag：`v1.6.0`
+
+[发布说明](docs/releases/v1.6.0.md)
+
+发布日期：2026-08-06
+
+### 版本定位
+
+这是 1.x Stable 线的判断可观测性、案例准备和测试治理 minor release。
+
+本版不新增判断方法，而是把已有判断、benchmark 和 TPlan 运行事件整理成可验证、可复核、
+用户控制的案例材料，并为后续真实案例分析和测试治理建立基础设施。它不引入集中遥测、
+自动案例上传或自动 benchmark admission。
+
+### Judgment Trace v1.1
+
+- 新增 `mindthus.judgment-trace.v1.1`，同时保留 legacy
+  `mindthus.judgment-trace.v1` 的读取兼容。
+- decision delta 从布尔值升级为 `true / false / unknown`，避免把“没有评估”错误写成
+  “确认没有变化”。
+- 新增 comparison basis、comparison reference 和关键字段来源标签，区分 runtime
+  observation、evaluator label、author annotation、inferred 与 unknown。
+- judgment benchmark runner 为每个已评分案例输出独立 Trace 和 JSONL 索引。
+- Trace 只记录可观察判断事实和有限标签，不记录完整 prompt、完整 answer、原始对话或
+  private chain of thought；结构通过也不代表判断正确或具有因果价值。
+
+### Case Export v1
+
+- 新增本地、用户主动触发的 `mindthus.case-export.v1` 案例包和 validator。
+- 默认排除完整 prompt、完整 answer、附件、任务日志、环境变量、凭据和私有文件内容。
+- 显式文本摘录必须单独选择并确认经过人工检查和脱敏；常见 private key、token、Bearer
+  credential 和密码形态会被阻断，潜在身份信息会产生复核 warning。
+- 导出和分享保持为两个独立动作；manifest 始终要求
+  `review_required_before_share: true` 和 `automatic_upload: false`。
+
+### case-prep
+
+- 新增显式工具 skill `case-prep`，不进入 `using-mindthus` 的被动判断 owner 路由。
+- Judgment 模式自动包装 Judgment Trace v1.1 与 Case Export v1。
+- Benchmark 模式可从归档 run 的 bounded response/score 记录重建案例，无需用户手工编写
+  Trace 或 summary，也不会默认复制完整 prompt/answer。
+- TPlan 模式输出独立的 bounded `tplan.case-packet.v1`：只包含 Mission/active path 摘要、
+  一个分析焦点、少量 evidence brief、runtime provenance 状态、从同一原子只读 snapshot
+  派生的 Pulse-compatible view，以及可选 Judgment Trace。
+- TPlan 案例不会复制完整 Mission、任务树、`evidence.jsonl`、step logs、
+  `execution_trace.jsonl` 或 telemetry payload；存在 pending Mission transaction 时
+  fail-closed，不自动恢复或修改 Mission。
+- 新增 collection 批量入口，支持直接请求
+  `/mindthus:case-prep 导出当前所有mindthus相关案例`。agent 识别并去重当前会话中的
+  bounded Judgment、benchmark 和 TPlan 候选，逐个按原合同生成案例，再封装为一个
+  `mindthus.case-collection.v1` 集合压缩包；集合不会生成 mega-trace，并会重新验证所有
+  嵌套案例。
+
+### Test Lifecycle Management
+
+- 新增 `tests/test-lifecycle-registry.json` 和 `scripts/check-test-lifecycle.py`。
+- 每个 `tests/**/test_*.py` 文件必须恰好属于一个 lifecycle group，并声明 owner、保护的
+  invariant、suite role、运行成本和 lifecycle 状态。
+- 区分 `active_gate`、`active_regression`、`historical_guard`、
+  `candidate_consolidate`、`candidate_archive` 与 `obsolete`。
+- 完成第一波实际清理：将 v0.9 历史 guard 与当前 release assertion 分开，移除一条重复
+  public-doc test method 和两条错位版本断言，同时把替代覆盖收束到 packaging、release
+  boundary 和 fidelity contract owners；没有为减少数量而删除唯一历史证据。
+
+### 补充发布包：1.6.0 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.6.0` Stable core 重新组装，继承 Judgment Trace v1.1、
+  Case Export v1、`case-prep`、case collection、Test Lifecycle 和现有 TPlan 能力。
+- 运行时差异仍严格限制为经资格验证的 `using-mindthus` ROI.2 薄入口、一条 3L5S
+  Anti-Spiral 句子、Beta identity / namespace 与 runtime diagnostic 坐标。
+- 发布源码 tag 为 `v1.6.0-roi-beta`；package、marketplace、cache 与 skill namespace 均为
+  `mindthus-beta`。它是受限实验入口，不是 `v1.6.0 Stable` 的替代版，也不触发用户安装、
+  配置或工作流的自动迁移。
+
+### 兼容性与运行边界
+
+- Case Export v1 可以携带 Judgment Trace v1.1 或 legacy v1。
+- Python 3.10 的 runtime config 读取增加受限 fallback；CI 继续使用 Python 3.11。
+- 插件和发行包 manifest 使用 `1.6.0`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本版没有修改 TPlan
+  runtime fingerprint files；不能只因为发行版号升为 1.6.0 就让既有 v1.5.4 Mission
+  被判 incompatible。
+
+### 验证与发布边界
+
+- 覆盖 Judgment Trace v1/v1.1、Case Export、case-prep 的 judgment / benchmark / TPlan /
+  collection 四种模式和 Test Lifecycle registry。
+- 验证 Codex plugin、Claude Code plugin、Claude portable、Codex portable 和 OpenCode
+  portable 五种布局，以及 strict runtime fingerprint。
+- 发行包排除 tests、`docs/internal`、缓存、日志和 bytecode。
+- `v1.6.0` GitHub Release 提供 `mindthus-plugins-1.6.0.tar.gz`、
+  `mindthus-skills-1.6.0.tar.gz`、`mindthus-beta-1.6.0-roi-beta.tar.gz` 和覆盖三份资产的
+  `SHA256SUMS`。
+- 本版不声称 Trace 能证明判断正确、隐私扫描能证明匿名、collection 中所有候选都值得进入
+  benchmark，或 Test Lifecycle 已完成大规模测试删除。
+
 ## v1.5.4
 
 发布 tag：`v1.5.4`

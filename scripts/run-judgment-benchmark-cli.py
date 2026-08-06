@@ -14,6 +14,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +22,10 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "skills"))
+
+from _runtime.judgment.benchmark import write_benchmark_judgment_traces
+
 DEFAULT_CASES = ROOT / "tests" / "judgment_benchmark_50_cases.jsonl"
 V5_TARGET_TRIGGER_REGISTER = ROOT / "docs" / "benchmarks" / "v5-target-trigger-register.json"
 CONTAMINATION_RE = re.compile(
@@ -1449,7 +1454,16 @@ def main() -> int:
                 print(f"judged {record['case_id']} score={record['score']}", flush=True)
         scores.sort(key=lambda item: int(item["case_number"]))
         write_jsonl(args.out_dir / "score-records.jsonl", scores)
+        judgment_traces = write_benchmark_judgment_traces(
+            args.out_dir,
+            cases,
+            responses,
+            scores,
+        )
         summary = summarize(scores)
+        summary["judgment_trace_schema_version"] = "mindthus.judgment-trace.v1.1"
+        summary["judgment_trace_count"] = len(judgment_traces)
+        summary["judgment_trace_index"] = "judgment-traces.jsonl"
         cached_judge_reused_count = sum(1 for score in scores if score.get("cached_judge_reused"))
         summary["certification_status"] = manifest["certification_status"]
         summary["certification_candidate_requested"] = args.certification_candidate

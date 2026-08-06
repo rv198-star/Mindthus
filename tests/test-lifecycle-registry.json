@@ -1,0 +1,159 @@
+{
+  "schema_version": "mindthus.test-lifecycle.v1",
+  "gating_states": [
+    "active_gate",
+    "active_regression",
+    "historical_guard"
+  ],
+  "entries": [
+    {
+      "test_id": "judgment-method-contracts",
+      "paths": [
+        "tests/test_anti_spiral_pressure_contract.py",
+        "tests/test_before_after_case_pages.py",
+        "tests/test_edsp_contract.py",
+        "tests/test_existing_validator_report_contract.py",
+        "tests/test_fidelity_harness_contract.py",
+        "tests/test_method_layering_contract.py",
+        "tests/test_mindthus_router_contract.py",
+        "tests/test_mpg_contract.py",
+        "tests/test_multi_role_ab_contract.py",
+        "tests/test_primitive_activation.py",
+        "tests/test_sela_contract.py",
+        "tests/test_sela_mpg_smoke_fixtures.py",
+        "tests/test_thin_core_adapters.py",
+        "tests/test_tplan_discovery_contract.py",
+        "tests/test_tvg_contract.py",
+        "tests/test_using_mindthus_whole_elephant_contract.py",
+        "tests/test_v3_audit_optimization_contract.py",
+        "tests/test_wae_contract.py"
+      ],
+      "owner": "shared",
+      "protects": [
+        "current skill contracts, method layering, primitive boundaries, and cross-skill adapters"
+      ],
+      "introduced_by": "pre-registry baseline",
+      "lifecycle_status": "active_gate",
+      "suite_role": "contract",
+      "runtime_cost": "medium",
+      "notes": "Grouped at the cross-skill contract surface; individual method owners remain visible in filenames."
+    },
+    {
+      "test_id": "method-fidelity-validation",
+      "paths": [
+        "tests/test_fidelity_core.py",
+        "tests/test_mpg_fidelity.py",
+        "tests/test_remaining_skill_fidelity.py",
+        "tests/test_sela_fidelity.py"
+      ],
+      "owner": "skill",
+      "protects": [
+        "method fidelity validators and method-specific judgment move contracts"
+      ],
+      "introduced_by": "v0.9-v1.0 fidelity framework",
+      "lifecycle_status": "active_gate",
+      "suite_role": "fidelity",
+      "runtime_cost": "medium",
+      "notes": "Shape and method-move validation only; green results do not prove semantic truth."
+    },
+    {
+      "test_id": "judgment-benchmark-and-router",
+      "paths": [
+        "tests/test_judgment_benchmark_cases.py",
+        "tests/test_judgment_benchmark_cli_runner.py",
+        "tests/test_router_wakeup_ab_runner.py"
+      ],
+      "owner": "benchmark",
+      "protects": [
+        "benchmark fixture integrity, isolation, route telemetry, wake-up controls, and judgment trace emission"
+      ],
+      "introduced_by": "public judgment benchmark and router wake-up experiments",
+      "lifecycle_status": "active_regression",
+      "suite_role": "mixed",
+      "runtime_cost": "high",
+      "notes": "High-cost classification reflects file breadth; unit tests mock external model execution."
+    },
+    {
+      "test_id": "packaging-release-and-ci",
+      "paths": [
+        "tests/test_beta_2_0_internal_composition.py",
+        "tests/test_beta_2_0_roi_thin_core.py",
+        "tests/test_ci_workflow.py",
+        "tests/test_log_mindthus_runtime.py",
+        "tests/test_packaging_docs.py",
+        "tests/test_release_boundary_contract.py"
+      ],
+      "owner": "release",
+      "protects": [
+        "Stable and ROI Beta package composition, installed runtime diagnostics, public release boundaries, and CI commands"
+      ],
+      "introduced_by": "release infrastructure",
+      "lifecycle_status": "active_gate",
+      "suite_role": "acceptance",
+      "runtime_cost": "high",
+      "notes": "The release surface is validated on Python 3.11 CI and retains a tested Python 3.10 config-parser fallback for local runtime diagnostics."
+    },
+    {
+      "test_id": "historical-version-guards",
+      "paths": [
+        "tests/test_v0_9_acceptance.py",
+        "tests/test_v1_0_1_usage_log.py",
+        "tests/test_v1_0_readiness.py"
+      ],
+      "owner": "release",
+      "protects": [
+        "intentional historical release records and compatibility wording"
+      ],
+      "introduced_by": "v0.9-v1.0.1 release history",
+      "lifecycle_status": "historical_guard",
+      "suite_role": "acceptance",
+      "runtime_cost": "medium",
+      "notes": "Wave 1 removed duplicate current-release assertions from the v0.9 and v1.0 readiness surfaces while preserving the unique historical acceptance and licensing contracts."
+    },
+    {
+      "test_id": "judgment-observability-and-case-export",
+      "paths": [
+        "tests/test_case_export.py",
+        "tests/test_case_prep.py",
+        "tests/test_judgment_trace.py",
+        "tests/test_test_lifecycle.py"
+      ],
+      "owner": "runtime",
+      "protects": [
+        "Judgment Trace v1.1 plus v1 compatibility, local-only case export, explicit case preparation, consent flags, privacy boundaries, and lifecycle registry coverage"
+      ],
+      "introduced_by": "P0/P1 observability implementation 2026-08-06",
+      "lifecycle_status": "active_gate",
+      "suite_role": "contract",
+      "runtime_cost": "low",
+      "notes": "These tests protect structural contracts and local packaging; they do not prove judgment quality or anonymity."
+    },
+    {
+      "test_id": "tplan-stateful-runtime-suite",
+      "path_globs": [
+        "tests/tplan/test_*.py"
+      ],
+      "owner": "tplan",
+      "protects": [
+        "TPlan Mission state, evidence, telemetry, interaction guard, recovery, cost tree, and platform adapters"
+      ],
+      "introduced_by": "TPlan runtime evolution",
+      "lifecycle_status": "active_gate",
+      "suite_role": "mixed",
+      "runtime_cost": "high",
+      "notes": "Kept separate from Judgment Trace lifecycle because TPlan is a stateful runtime rather than a judgment lens."
+    }
+  ],
+  "review_candidates": [],
+  "historical_artifacts": [
+    {
+      "path_globs": [
+        "tests/**/*.md",
+        "tests/**/*.jsonl"
+      ],
+      "lifecycle_status": "historical_guard",
+      "suite_role": "historical_report",
+      "notes": "Non-executable evidence and fixtures; not part of exact executable-test coverage."
+    }
+  ]
+}

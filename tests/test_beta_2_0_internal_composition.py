@@ -70,10 +70,10 @@ class InternalBetaCompositionTests(unittest.TestCase):
             PROFILE["version"], f"{PROFILE['shared_core']['version']}-roi-beta"
         )
         self.assertEqual(PROFILE["package_identity"], "mindthus-beta")
-        self.assertEqual(PROFILE["shared_core"]["version"], "1.5.4")
+        self.assertEqual(PROFILE["shared_core"]["version"], "1.6.0")
         self.assertEqual(
             PROFILE["shared_core"]["ref"],
-            "17fcfabf697ca104919bb5a87ad7391b8bf52188",
+            "cb7057957660f042aff09a180cf0a9633e65088f",
         )
         self.assertEqual(
             PROFILE["runtime_profile"]["implementation_ref"],
@@ -94,7 +94,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertTrue(PROFILE["publication"]["github_release"])
         self.assertEqual(
             PROFILE["publication"]["release_url"],
-            "https://github.com/rv198-star/Mindthus/releases/tag/v1.5.4",
+            "https://github.com/rv198-star/Mindthus/releases/tag/v1.6.0",
         )
         self.assertFalse(PROFILE["publication"]["marketplace"])
         self.assertFalse(
@@ -107,23 +107,29 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("experimental asset", changelog)
         self.assertIn("experimental asset", notes)
         self.assertIn("发布源码 tag", changelog)
-        self.assertIn("作为 `v1.5.4` GitHub Release", notes)
-        self.assertIn("补充发布包：1.5.4 ROI Beta（GPT/Sol）", changelog)
+        self.assertIn("作为 `v1.6.0` GitHub Release", notes)
+        self.assertIn("补充发布包：1.6.0 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("受限实验入口", changelog)
-        self.assertIn("不是 `1.5.4 Stable` 的替代版", changelog)
+        self.assertIn("不是 `v1.6.0 Stable` 的替代版", changelog)
         self.assertIn("不触发用户安装、配置", changelog)
         self.assertIn("或工作流的自动迁移", changelog)
         self.assertNotIn("预发布日期", changelog + notes)
 
-    def test_shared_1_5_capabilities_are_present_and_identical(self) -> None:
+    def test_shared_1_6_capabilities_are_present_and_identical(self) -> None:
         shared_paths = (
             Path("skills/tplan/scripts/render_execution_cost_tree.py"),
             Path("skills/tplan/resources/execution-trace.md"),
             Path("skills/tvg/resources/atlas-search-contract.json"),
             Path("skills/tvg/scripts/atlas/validate_trace.py"),
-            Path(
-                "skills/tvg/resources/value-profiles/cinematic-visual-direction/profile.md"
-            ),
+            Path("skills/tvg/resources/value-profiles/cinematic-visual-direction/profile.md"),
+            Path("skills/_runtime/judgment/trace.py"),
+            Path("skills/_runtime/judgment/case_export.py"),
+            Path("skills/case-prep/SKILL.md"),
+            Path("skills/case-prep/scripts/prepare_case.py"),
+            Path("skills/case-prep/resources/case-collection.schema.json"),
+            Path("scripts/validate-judgment-trace.py"),
+            Path("scripts/export-mindthus-case.py"),
+            Path("scripts/validate-mindthus-case.py"),
         )
         for relative in shared_paths:
             self.assertTrue((self.beta_plugin / relative).is_file(), relative)
@@ -133,8 +139,8 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 relative,
             )
 
-    def test_all_non_corrected_owner_trees_match_stable_1_5(self) -> None:
-        for owner in ("edsp", "sela", "mpg", "wae", "tvg", "tplan"):
+    def test_all_non_corrected_owner_trees_match_stable_1_6(self) -> None:
+        for owner in ("edsp", "sela", "mpg", "wae", "tvg", "tplan", "case-prep"):
             stable_tree = self.stable_plugin / "skills" / owner
             beta_tree = self.beta_plugin / "skills" / owner
             stable_files = sorted(
@@ -200,7 +206,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
             (HISTORICAL / "skills/using-mindthus/SKILL.md").read_bytes(),
         )
 
-    def test_qualified_three_l5s_replacement_applies_to_1_5(self) -> None:
+    def test_qualified_three_l5s_replacement_applies_to_1_6(self) -> None:
         correction = HISTORICAL_PROFILE["package_time_contract_correction"]
         stable = (self.stable_plugin / correction["path"]).read_text(encoding="utf-8")
         beta = (self.beta_plugin / correction["path"]).read_text(encoding="utf-8")
@@ -321,6 +327,11 @@ class InternalBetaCompositionTests(unittest.TestCase):
                 "tplan-codex-telemetry-activation-v1": "included",
                 "tplan-missing-telemetry-simplified-output-v1": "included",
                 "tplan-mission-reentry-resume-decision-v1": "included",
+                "judgment-trace-v1.1": "included",
+                "case-export-v1": "included",
+                "case-prep-v1": "included",
+                "case-collection-v1": "included",
+                "test-lifecycle-v1": "included",
             },
         )
         for item in register["capabilities"]:

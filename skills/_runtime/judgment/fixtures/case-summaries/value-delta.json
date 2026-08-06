@@ -1,0 +1,22 @@
+{
+  "schema_version": "mindthus.case-summary.v1",
+  "decision_context": "A baseline answer accepted a single local mechanism as the full explanation of an agent capability.",
+  "observed_failure_or_value_delta": "The Mindthus path preserved the local mechanism but moved definition authority to the whole system and changed the recommended evidence target.",
+  "active_judgment_object": "whole_object_definition",
+  "selected_route_or_method": "using-mindthus with Whole Elephant support",
+  "signal": "A locally true implementation detail claimed authority over the whole-object capability definition.",
+  "evidence_available": [
+    "The local mechanism is present",
+    "The target capability depends on additional result controllers"
+  ],
+  "evidence_missing": [
+    "Real-world outcome comparison"
+  ],
+  "decision_delta": [
+    "Definition authority changed",
+    "Evidence collection moved from mechanism presence to whole-system outcome"
+  ],
+  "learning_hypothesis": "Counterfactual evaluation should score whether the intervention changes the decision target rather than merely adding explanation length.",
+  "uncertainty": "This is a structured evaluator claim, not causal proof that Mindthus alone produced the better path.",
+  "redaction_notes": "The summary contains no raw transcript and uses generalized objects."
+}

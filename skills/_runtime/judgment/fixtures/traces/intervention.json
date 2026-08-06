@@ -1,0 +1,71 @@
+{
+  "schema_version": "mindthus.judgment-trace.v1.1",
+  "trace_id": "fixture-intervention-001",
+  "timestamp_utc": "2026-08-06T00:00:00+00:00",
+  "provenance": {
+    "producer": "canonical-fixture",
+    "source_type": "author_annotation",
+    "source_ref": "mindthus-intervention",
+    "field_sources": {
+      "timestamp_utc": "author_annotation",
+      "input_shape.judgment_object": "author_annotation",
+      "input_shape.hard_judgment_point": "author_annotation",
+      "routing.judgment_owner": "author_annotation",
+      "routing.selected_method": "author_annotation",
+      "routing.loaded_methods": "author_annotation",
+      "routing.routing_decision": "author_annotation",
+      "decision_delta.basis": "author_annotation",
+      "decision_delta.comparison_ref": "unknown",
+      "decision_delta.strategy_changed": "author_annotation",
+      "decision_delta.risk_handling_changed": "unknown",
+      "decision_delta.evidence_requirement_changed": "author_annotation",
+      "decision_delta.next_action_changed": "author_annotation",
+      "decision_delta.stopping_condition_changed": "unknown",
+      "decision_delta.handoff_changed": "unknown",
+      "outcome.status": "author_annotation"
+    }
+  },
+  "input_shape": {
+    "judgment_object": "whole_object_definition",
+    "hard_judgment_point": true,
+    "frame_status": "overloaded",
+    "active_constraints": [
+      "local-frame-claims-definition-authority"
+    ]
+  },
+  "routing": {
+    "judgment_owner": "using-mindthus",
+    "selected_method": "using-mindthus",
+    "loaded_methods": [
+      "using-mindthus"
+    ],
+    "routing_decision": "intervene",
+    "supporting_primitives": [
+      "frame-fitness-check",
+      "whole-elephant-protocol"
+    ]
+  },
+  "evidence": {
+    "available_evidence_classes": [
+      "local-observation"
+    ],
+    "missing_evidence_classes": [
+      "whole-object-result-controller"
+    ],
+    "claim_ceiling": "Qualify the local truth; do not grant whole-object definition authority."
+  },
+  "decision_delta": {
+    "basis": "author_annotation",
+    "comparison_ref": null,
+    "strategy_changed": true,
+    "risk_handling_changed": "unknown",
+    "evidence_requirement_changed": true,
+    "next_action_changed": true,
+    "stopping_condition_changed": "unknown",
+    "handoff_changed": "unknown"
+  },
+  "outcome": {
+    "status": "accepted",
+    "validator_status": "fixture-reviewed"
+  }
+}
