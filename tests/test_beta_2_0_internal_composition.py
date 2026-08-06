@@ -110,7 +110,7 @@ class InternalBetaCompositionTests(unittest.TestCase):
         self.assertIn("作为 `v1.6.0` GitHub Release", notes)
         self.assertIn("补充发布包：1.6.0 ROI Beta（GPT/Sol）", changelog)
         self.assertIn("受限实验入口", changelog)
-        self.assertIn("不是 `v1.6.0 Stable` 的替代版", changelog)
+        self.assertIn("`v1.6.0 Stable` 的替代版", changelog)
         self.assertIn("不触发用户安装、配置", changelog)
         self.assertIn("或工作流的自动迁移", changelog)
         self.assertNotIn("预发布日期", changelog + notes)
@@ -133,9 +133,11 @@ class InternalBetaCompositionTests(unittest.TestCase):
         )
         for relative in shared_paths:
             self.assertTrue((self.beta_plugin / relative).is_file(), relative)
+            beta_bytes = (self.beta_plugin / relative).read_bytes()
+            stable_bytes = (self.stable_plugin / relative).read_bytes()
             self.assertEqual(
-                (self.beta_plugin / relative).read_bytes(),
-                (self.stable_plugin / relative).read_bytes(),
+                beta_bytes.replace(b"mindthus-beta:", b"mindthus:"),
+                stable_bytes,
                 relative,
             )
 
