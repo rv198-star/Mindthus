@@ -74,13 +74,12 @@ case without copying the full prompt or answer by default.
 
 ### TPlan
 
-Given a Mission directory, the runtime uses TPlan's read-only Mission Pulse and snapshot
-surfaces. It exports only:
+Given a Mission directory, the runtime uses one atomic read-only TPlan snapshot and derives a bounded Pulse-compatible view from that same snapshot. It exports only:
 
 - a bounded Mission/active-path summary;
 - one selected focus and selection rationale;
 - at most five brief evidence events;
-- a bounded Pulse view;
+- a bounded read-only Pulse-compatible view;
 - runtime-provenance status and diagnostic codes;
 - an optional linked Judgment Trace;
 - optional explicitly selected and confirmed-redacted text excerpts.
@@ -121,7 +120,7 @@ Implemented on 2026-08-06:
   aggregate privacy warnings, and a 20-case ceiling;
 - benchmark reconstruction from bounded archived response/score records;
 - separate bounded `tplan.case-packet.v1` manifest and validator;
-- TPlan active-path/Pulse/provenance/event selection without raw Mission/runtime dumps;
+- TPlan active-path/read-only-Pulse-view/provenance/event selection without raw Mission/runtime dumps or transaction recovery;
 - optional linked Judgment Trace and confirmed-redacted text excerpts;
 - runtime fingerprint and all supported release-layout coverage;
 - contract/privacy and integration/release audit records, including the collection

@@ -108,14 +108,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.5.4`。本版提供 Stable plugins、Stable skills 与补充发布的
-ROI Beta experimental asset；它修复 TPlan Codex Hook 遥测激活、缺失遥测展示和
-Mission 重入恢复判断问题。未观测的 SubAgent host callback 保持 `not_reported`，
-不被表述为已通过。
+当前仓库已进入 `v1.6.0` Release candidate；当前已发布 Stable 仍是 `v1.5.4`。
+`v1.6.0` candidate 新增 Judgment Trace v1.1、用户控制的 Case Export、显式
+`case-prep` 与批量 case collection、Test Lifecycle 基线和第一波清理。它不新增判断方法，
+不引入集中遥测，也不自动上传案例。
 
-已发布的 `v1.5.4` Release 提供 Stable plugins、Stable skills，以及从 `v1.5.4` 冻结
-Stable core 重新组装并资格验证的 ROI Beta experimental asset。ROI Beta 不能代替
-`v1.5.4` Stable。
+已发布的 `v1.5.4` Release 继续提供 Stable plugins、Stable skills，以及从 `v1.5.4`
+冻结 Stable core 重新组装并资格验证的 ROI Beta experimental asset。Release candidate
+正式 tag/assets 发布前，下面的公开下载仍指向 `v1.5.4` Stable。TPlan runtime generation
+保持 `1.5.4`，因为本轮没有修改 TPlan runtime；这避免仅因发行版号变化让既有 Mission
+被误判为 incompatible。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.5.4.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.5.4.tar.gz`。
@@ -291,7 +293,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.5.4`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.6.0`（Release candidate）；当前已发布 Stable 是 `v1.5.4`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

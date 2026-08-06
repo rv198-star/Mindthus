@@ -1,6 +1,6 @@
 # TPlan Case Preparation
 
-TPlan mode uses documented read-only Mission snapshot and Pulse surfaces. It preserves
+TPlan mode uses one atomic read-only Mission snapshot and derives a bounded Pulse-compatible view from that same snapshot. It preserves
 TPlan as a stateful runtime rather than translating the Mission into Judgment Trace.
 
 Supported focuses:
@@ -14,10 +14,10 @@ Supported focuses:
 - `telemetry`
 - `general`
 
-`auto` selects one focus from Mission status, runtime provenance, re-entry state, Pulse
+`auto` selects one focus from Mission status, runtime provenance, re-entry state, the read-only Pulse view,
 signals, and recent evidence event classes.
 
-The packet includes only a Mission policy/active-path summary, a compact Pulse view,
+The packet includes only a Mission policy/active-path summary, a compact read-only Pulse-compatible view,
 one primary event, at most five brief evidence events, runtime-provenance status and
 diagnostic codes, optional redacted excerpts, and an optional linked Judgment Trace.
 

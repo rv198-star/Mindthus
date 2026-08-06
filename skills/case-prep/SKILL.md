@@ -104,7 +104,7 @@ Use an explicit `--focus` only when the user named blocker, acceptance, continua
 authority, recovery, provenance, telemetry, or general investigation.
 
 TPlan mode exports a bounded active-path summary, one focus, at most five brief evidence
-events, a compact Pulse view, runtime-provenance status, and an optional linked Judgment
+events, a compact Pulse-compatible view derived from the same atomic read-only snapshot, runtime-provenance status, and an optional linked Judgment
 Trace. It must not export the complete Mission, task tree, evidence stream, step logs,
 execution trace, telemetry stream, or Mission directory.
 

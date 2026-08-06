@@ -498,10 +498,106 @@ def _runtime_provenance_brief(report: Any) -> dict[str, Any]:
     }
 
 
+def _read_only_pulse_view(
+    tplan_runtime: Any,
+    mission: dict[str, Any],
+    events: list[dict[str, Any]],
+    provenance: dict[str, Any],
+) -> dict[str, Any]:
+    """Build a bounded Pulse-compatible view from one atomic read-only snapshot.
+
+    This deliberately does not call ``build_mission_pulse`` because that normal runtime
+    path may recover a pending Mission transaction before reading. Case preparation must
+    fail closed rather than mutate the Mission it is trying to export.
+    """
+
+    mission_meta = mission.get("mission") if isinstance(mission.get("mission"), dict) else {}
+    status = str(mission_meta.get("status") or "unknown")
+    validation_findings = tplan_runtime.validate_mission(mission)
+    active = tplan_runtime.active_task(mission)
+    signals: list[str] = []
+    source_ids: list[str] = []
+    next_gate = "continue"
+    rationale = "No bounded review signal was mechanically observed in the read-only snapshot."
+    gate_owner = "agentic_review"
+
+    if provenance.get("severity") == "error":
+        signals.append("runtime_provenance_error")
+        next_gate = "stop"
+        rationale = "Runtime provenance is incompatible or invalid; diagnose before mutation."
+        gate_owner = "runtime_doctor"
+    elif status == "requires_human":
+        signals.append("mission_requires_human")
+        next_gate = "escalate"
+        rationale = "Mission status requires explicit human authority."
+        gate_owner = "human"
+    elif status == "blocked":
+        signals.append("mission_blocked")
+        next_gate = "stop"
+        rationale = "Mission status is blocked."
+        gate_owner = "tplan"
+    else:
+        for event in reversed(events):
+            event_type = str(event.get("event_type") or "")
+            event_id = event.get("id")
+            if event_type in FOCUS_EVENT_TYPES["blocker"]:
+                signals.append(f"evidence:{event_type}")
+                if isinstance(event_id, str):
+                    source_ids.append(event_id)
+                next_gate = "review_blocker"
+                rationale = f"Latest bounded review signal is evidence event {event_type}."
+                break
+            if event_type in FOCUS_EVENT_TYPES["acceptance"]:
+                signals.append(f"acceptance:{event_type}")
+                if isinstance(event_id, str):
+                    source_ids.append(event_id)
+                next_gate = "review_acceptance"
+                rationale = f"Latest bounded review signal is acceptance event {event_type}."
+                break
+            if event_type in FOCUS_EVENT_TYPES["continuation"]:
+                signals.append(f"continuation:{event_type}")
+                if isinstance(event_id, str):
+                    source_ids.append(event_id)
+                next_gate = "review_continuation"
+                rationale = f"Latest bounded review signal is continuation event {event_type}."
+                break
+
+    winning_candidate = (
+        {
+            "signal": signals[0],
+            "priority_class": "bounded_snapshot_signal",
+            "candidate_next_gate": next_gate,
+            "source_ids": source_ids,
+        }
+        if signals
+        else None
+    )
+    return {
+        "schema_version": "tplan.case-pulse-view.v1",
+        "snapshot_boundary": "read_outcome_attribution_snapshot",
+        "official_mission_pulse": False,
+        "script_verdict": "shape_only",
+        "agentic_judgment_required": True,
+        "mission_pulse": {
+            "signals": signals,
+            "scope": "active_node" if active else "mission",
+            "next_gate": next_gate,
+            "rationale": rationale,
+        },
+        "gate_owner": gate_owner,
+        "winning_candidate": winning_candidate,
+        "validation_findings": validation_findings,
+        "pulse_shape_findings": [],
+    }
+
+
 def _pulse_brief(pulse: dict[str, Any]) -> dict[str, Any]:
     route = pulse.get("mission_pulse") if isinstance(pulse.get("mission_pulse"), dict) else {}
     winning = pulse.get("winning_candidate") if isinstance(pulse.get("winning_candidate"), dict) else None
     return {
+        "schema_version": pulse.get("schema_version"),
+        "snapshot_boundary": pulse.get("snapshot_boundary"),
+        "official_mission_pulse": pulse.get("official_mission_pulse"),
         "script_verdict": pulse.get("script_verdict"),
         "agentic_judgment_required": pulse.get("agentic_judgment_required"),
         "signals": list(route.get("signals") or []),
@@ -543,9 +639,9 @@ def _infer_tplan_focus(
     route = pulse.get("mission_pulse") if isinstance(pulse.get("mission_pulse"), dict) else {}
     signals = [str(value) for value in route.get("signals") or []]
     if any("acceptance" in value for value in signals):
-        return "acceptance", "Mission Pulse selected an acceptance-related signal."
+        return "acceptance", "The read-only Pulse view selected an acceptance-related signal."
     if any(token in value for value in signals for token in ("repeat", "spiral", "continuation", "additive")):
-        return "continuation", "Mission Pulse selected a repeated-path or continuation signal."
+        return "continuation", "The read-only Pulse view selected a repeated-path or continuation signal."
     for event in reversed(events):
         event_type = str(event.get("event_type") or "")
         if event_type in FOCUS_EVENT_TYPES["blocker"]:
@@ -553,7 +649,7 @@ def _infer_tplan_focus(
         if event_type in FOCUS_EVENT_TYPES["acceptance"]:
             return "acceptance", f"Latest relevant evidence event is {event_type}."
     if route.get("next_gate") in {"stop", "escalate", "anti_spiral_audit"}:
-        return "continuation", f"Mission Pulse routed to {route.get('next_gate')}."
+        return "continuation", f"The read-only Pulse view routed to {route.get('next_gate')}."
     return "general", "No stronger bounded case focus was mechanically observed."
 
 
@@ -626,7 +722,7 @@ def _tplan_summary_markdown(summary: dict[str, Any]) -> str:
 - active task status: {active.get('status') or 'none'}
 - parent path: {' -> '.join(item.get('title') or str(item.get('id')) for item in summary['parent_chain']) or 'none'}
 
-## Mission Pulse
+## Read-Only Pulse View
 
 - signals: {pulse.get('signals')}
 - next gate: {pulse.get('next_gate')}
@@ -747,9 +843,8 @@ def prepare_tplan_case(
         raise CasePrepError("TPlan case output must stay outside the Mission directory")
     try:
         snapshot = tplan_runtime.read_outcome_attribution_snapshot(mission_dir)
-        pulse = tplan_runtime.build_mission_pulse(mission_dir, trigger="manual")
     except (OSError, ValueError) as exc:
-        raise CasePrepError(f"failed to read TPlan Mission: {exc}") from exc
+        raise CasePrepError(f"failed to read TPlan Mission without mutation: {exc}") from exc
 
     mission = snapshot.get("mission")
     events = snapshot.get("events")
@@ -757,6 +852,7 @@ def prepare_tplan_case(
     if not isinstance(mission, dict) or not isinstance(events, list):
         raise CasePrepError("TPlan snapshot is missing Mission or evidence state")
     provenance_brief = _runtime_provenance_brief(provenance)
+    pulse = _read_only_pulse_view(tplan_runtime, mission, events, provenance_brief)
     selected_focus, focus_reason = (
         _infer_tplan_focus(mission, events, pulse, provenance_brief)
         if focus == "auto"

@@ -262,6 +262,56 @@ class CasePrepTests(unittest.TestCase):
         self.assertEqual(trace["schema_version"], "mindthus.judgment-trace.v1.1")
         self.assertNotIn("mission", trace)
 
+    def test_tplan_case_prep_uses_one_fail_closed_read_only_snapshot(self):
+        source = (SCRIPTS / "case_prep_core.py").read_text(encoding="utf-8")
+        self.assertIn("read_outcome_attribution_snapshot", source)
+        self.assertNotIn("tplan_runtime.build_mission_pulse", source)
+        self.assertIn("official_mission_pulse", source)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            mission = init_mission(root)
+            before = {
+                path.relative_to(mission).as_posix(): path.read_bytes()
+                for path in mission.rglob("*")
+                if path.is_file()
+            }
+            result = prepare_tplan_case(
+                mission_dir=mission,
+                output_root=root / "out",
+                case_id="tplan-read-only-snapshot",
+            )
+            after = {
+                path.relative_to(mission).as_posix(): path.read_bytes()
+                for path in mission.rglob("*")
+                if path.is_file()
+            }
+            pulse = json.loads(
+                (Path(result["package_dir"]) / "pulse.json").read_text(encoding="utf-8")
+            )
+
+        self.assertEqual(before, after)
+        self.assertEqual(pulse["snapshot_boundary"], "read_outcome_attribution_snapshot")
+        self.assertFalse(pulse["official_mission_pulse"])
+
+    def test_tplan_case_prep_blocks_pending_transaction_without_recovery(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            mission = init_mission(root)
+            transaction = mission / ".mission-transaction.json"
+            transaction.write_text("{}\n", encoding="utf-8")
+
+            with self.assertRaises(CasePrepError) as caught:
+                prepare_tplan_case(
+                    mission_dir=mission,
+                    output_root=root / "out",
+                    case_id="tplan-pending-transaction",
+                )
+
+            self.assertTrue(transaction.is_file())
+            self.assertEqual(transaction.read_text(encoding="utf-8"), "{}\n")
+        self.assertIn("pending Mission transaction", str(caught.exception))
+
     def test_tplan_output_cannot_be_written_inside_mission_runtime(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

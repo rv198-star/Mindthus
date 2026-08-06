@@ -77,12 +77,15 @@ python3 skills/case-prep/scripts/validate_case_packet.py \
 
 ## TPlan Bounded Packet
 
+TPlan export is fail-closed read-only: it uses `read_outcome_attribution_snapshot` once and derives its Pulse-compatible view from that snapshot. It does not call the normal Mission Pulse path, because normal runtime reads may recover a pending transaction. A pending transaction therefore blocks export instead of being repaired by case preparation.
+
+
 The TPlan adapter exports:
 
 - Mission policy and active-path summary;
 - one focus and selection reason;
 - one primary event and at most five brief evidence events;
-- compact Mission Pulse fields;
+- a compact Pulse-compatible view derived from the same atomic read-only Mission snapshot;
 - runtime-provenance status and diagnostic codes;
 - optional linked Judgment Trace;
 - optional confirmed-redacted text excerpts.
