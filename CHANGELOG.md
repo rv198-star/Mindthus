@@ -68,6 +68,16 @@
   public-doc test method 和两条错位版本断言，同时把替代覆盖收束到 packaging、release
   boundary 和 fidelity contract owners；没有为减少数量而删除唯一历史证据。
 
+### 补充发布包：1.6.0 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.6.0` Stable core 重新组装，继承 Judgment Trace v1.1、
+  Case Export v1、`case-prep`、case collection、Test Lifecycle 和现有 TPlan 能力。
+- 运行时差异仍严格限制为经资格验证的 `using-mindthus` ROI.2 薄入口、一条 3L5S
+  Anti-Spiral 句子、Beta identity / namespace 与 runtime diagnostic 坐标。
+- 发布源码 tag 为 `v1.6.0-roi-beta`；package、marketplace、cache 与 skill namespace 均为
+  `mindthus-beta`。它是 supplemental experimental asset 和受限实验入口，不是
+  `v1.6.0 Stable` 的替代版，也不触发用户安装、配置或工作流的自动迁移。
+
 ### 兼容性与运行边界
 
 - Case Export v1 可以携带 Judgment Trace v1.1 或 legacy v1。
@@ -85,7 +95,8 @@
   portable 五种布局，以及 strict runtime fingerprint。
 - 发行包排除 tests、`docs/internal`、缓存、日志和 bytecode。
 - `v1.6.0` GitHub Release 提供 `mindthus-plugins-1.6.0.tar.gz`、
-  `mindthus-skills-1.6.0.tar.gz` 和 `SHA256SUMS`；本版不新增 ROI Beta。
+  `mindthus-skills-1.6.0.tar.gz`、`mindthus-beta-1.6.0-roi-beta.tar.gz` 和覆盖三份资产的
+  `SHA256SUMS`。
 - 本版不声称 Trace 能证明判断正确、隐私扫描能证明匿名、collection 中所有候选都值得进入
   benchmark，或 Test Lifecycle 已完成大规模测试删除。
 

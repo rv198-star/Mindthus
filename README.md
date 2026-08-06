@@ -112,16 +112,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 Case Export、显式 `case-prep` 与批量 case collection，以及 Test Lifecycle 基线和第一波
 清理。它不新增判断方法，不引入集中遥测，也不自动上传案例。
 
-`v1.6.0` Release 提供 Stable plugins 与 Stable skills。TPlan runtime generation 保持
-`1.5.4`，因为本轮没有修改 TPlan runtime fingerprint files；这避免仅因发行版号变化让
-既有 Mission 被误判为 incompatible。`v1.5.4-roi-beta` 仍作为历史 experimental asset
-保留在 `v1.5.4` Release，不自动升级为 v1.6.0。
+`v1.6.0` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
+experimental asset。ROI Beta 从冻结的 `v1.6.0` Stable core 重新组装，因此继承本版
+Judgment Trace、Case Export、case-prep 和测试治理能力；它只替换经资格验证的薄入口与
+一条 3L5S Anti-Spiral 合同，不取代 Stable。TPlan runtime generation 仍保持 `1.5.4`。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.6.0.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.6.0.tar.gz`。
-- 只在高能力 Codex / GPT-Sol 上复查历史低开销唤起实验：仍可下载
-  `mindthus-beta-1.5.4-roi-beta.tar.gz`；它是独立的 Codex plugin / marketplace 包，不是
-  v1.6.0 Stable 的替代品。
+- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
+  `mindthus-beta-1.6.0-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
+  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.6.0 Stable 的替代品。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -169,18 +169,19 @@ codex plugin marketplace remove mindthus
 
 ### Codex ROI Beta（实验）
 
-只在高能力 Codex / GPT-Sol 上复查历史低开销唤起实验时使用。这个
-`v1.5.4-roi-beta` 包来自 `v1.5.4` 冻结 Stable core，不包含 v1.6.0 的 Judgment Trace、
-Case Export、case-prep 或 Test Lifecycle 新能力；它和 Stable 使用不同的 package、
-marketplace、cache 与 skill namespace，可以独立安装或移除：
+只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个
+`v1.6.0-roi-beta` 包从冻结的 `v1.6.0` Stable core 重新组装，继承 Judgment Trace、
+Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；它只替换经资格验证的
+`using-mindthus` 薄入口和一条 3L5S Anti-Spiral 句子。Stable 与 ROI Beta 使用不同的
+package、marketplace、cache 与 skill namespace，可以独立安装或移除：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-beta-1.5.4-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.5.4/mindthus-beta-1.5.4-roi-beta.tar.gz"
+  -o /tmp/mindthus-beta-1.6.0-roi-beta.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.6.0/mindthus-beta-1.6.0-roi-beta.tar.gz"
 rm -rf /tmp/mindthus-roi-beta
 mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.5.4-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
+tar -xzf /tmp/mindthus-beta-1.6.0-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
 codex plugin marketplace add /tmp/mindthus-roi-beta
 codex plugin add mindthus-beta@mindthus-beta
 ```
