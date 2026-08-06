@@ -122,8 +122,8 @@ class InternalBetaCompositionTests(unittest.TestCase):
             Path("skills/tvg/resources/atlas-search-contract.json"),
             Path("skills/tvg/scripts/atlas/validate_trace.py"),
             Path("skills/tvg/resources/value-profiles/cinematic-visual-direction/profile.md"),
-            Path("skills/_runtime/judgment/trace.py"),
-            Path("skills/_runtime/judgment/case_export.py"),
+            Path("_runtime/judgment/trace.py"),
+            Path("_runtime/judgment/case_export.py"),
             Path("skills/case-prep/SKILL.md"),
             Path("skills/case-prep/scripts/prepare_case.py"),
             Path("skills/case-prep/resources/case-collection.schema.json"),
@@ -455,10 +455,23 @@ class InternalBetaCompositionTests(unittest.TestCase):
     def test_dirty_checkout_is_rejected_before_assembly(self) -> None:
         with tempfile.TemporaryDirectory(prefix="mindthus-beta-dirty-") as temporary:
             clone = Path(temporary) / "clone"
+            shutil.copytree(BETA, clone / "beta" / "2.0-beta")
+            subprocess.run(["git", "init"], cwd=clone, check=True, capture_output=True)
             subprocess.run(
-                ["git", "clone", "--local", "--no-hardlinks", str(REPO), str(clone)],
+                ["git", "config", "user.name", "Mindthus Test"],
+                cwd=clone,
                 check=True,
-                text=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.email", "test@example.invalid"],
+                cwd=clone,
+                check=True,
+            )
+            subprocess.run(["git", "add", "."], cwd=clone, check=True)
+            subprocess.run(
+                ["git", "commit", "-m", "fixture"],
+                cwd=clone,
+                check=True,
                 capture_output=True,
             )
             profile = clone / "beta" / "2.0-beta" / "profile.json"

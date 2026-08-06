@@ -75,8 +75,8 @@
 - 运行时差异仍严格限制为经资格验证的 `using-mindthus` ROI.2 薄入口、一条 3L5S
   Anti-Spiral 句子、Beta identity / namespace 与 runtime diagnostic 坐标。
 - 发布源码 tag 为 `v1.6.0-roi-beta`；package、marketplace、cache 与 skill namespace 均为
-  `mindthus-beta`。它是受限实验入口，不是 `v1.6.0 Stable` 的替代版，也不触发用户安装、
-  配置或工作流的自动迁移。
+  `mindthus-beta`。它是 supplemental experimental asset 和受限实验入口，不是
+  `v1.6.0 Stable` 的替代版，也不触发用户安装、配置或工作流的自动迁移。
 
 ### 兼容性与运行边界
 
