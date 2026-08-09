@@ -1,0 +1,108 @@
+{
+  "schema_version": "mindthus-capability-register-v0.2",
+  "shared_core_ref": "cb7057957660f042aff09a180cf0a9633e65088f",
+  "capabilities": [
+    {
+      "id": "tvg-profile-atlas-v1",
+      "source_commit": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-execution-cost-tree-v1",
+      "source_commit": "ce2c601822b1f038b59a6cfed0660c3695e3c468",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "roi.2-thin-core",
+      "source_commit": "493f9520b75f582aa22f6c8647ec08eab3e122d3",
+      "ownership": "roi-beta-runtime-profile",
+      "release_1x": {
+        "state": "not-applicable",
+        "version": "1.6.0",
+        "reason": "Stable keeps the full using-mindthus runtime profile."
+      },
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-interaction-guard-and-heartbeat-v1",
+      "source_commit": "3c5552ee0a67f91e7200a9c4934f94e641a91498",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-validated-outcome-attribution-v1",
+      "source_commit": "887a481a7e0b80b9e86609289e432a791d801472",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-truth-and-telemetry-boundaries-v1",
+      "source_commit": "1901946148781526b87c9b5799691aa786247869",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-codex-telemetry-activation-v1",
+      "source_commit": "17fcfabf697ca104919bb5a87ad7391b8bf52188",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-missing-telemetry-simplified-output-v1",
+      "source_commit": "17fcfabf697ca104919bb5a87ad7391b8bf52188",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "tplan-mission-reentry-resume-decision-v1",
+      "source_commit": "17fcfabf697ca104919bb5a87ad7391b8bf52188",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "judgment-trace-v1.1",
+      "source_commit": "8a6796ba",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "case-export-v1",
+      "source_commit": "83bbc0b3",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "case-prep-v1",
+      "source_commit": "fb185348",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "case-collection-v1",
+      "source_commit": "653dd76e",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    },
+    {
+      "id": "test-lifecycle-v1",
+      "source_commit": "8a6796ba",
+      "ownership": "shared-product-core",
+      "release_1x": {"state": "included", "version": "1.6.0"},
+      "release_roi_beta": {"state": "included", "version": "1.6.0-roi-beta"}
+    }
+  ]
+}

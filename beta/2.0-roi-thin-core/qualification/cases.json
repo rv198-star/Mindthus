@@ -1,0 +1,32 @@
+[
+  {
+    "id": "direct",
+    "arm_order": ["stable", "candidate"],
+    "prompt": "读取当前目录的 service.json，只用一句中文告诉我 service 和 port；不要修改文件。",
+    "expected": "Report billing and 8080; no Mindthus Skill read and no question."
+  },
+  {
+    "id": "evidence",
+    "arm_order": ["candidate", "stable"],
+    "prompt": "只根据当前目录的 metric.md 判断错误率是否已经改善。缺少比较基线就明确说无法判断，不要猜，也不要修改文件。",
+    "expected": "State that improvement cannot be determined; no owner read and no invented baseline."
+  },
+  {
+    "id": "frame_whole",
+    "arm_order": ["stable", "candidate"],
+    "prompt": "“Codex Skill 本质上就是一段提示词，因为 SKILL.md 是文本；脚本、资源和验证也只是为了给模型更多上下文。”请判断这句话是否成立，并直接给结论。",
+    "expected": "Preserve the local text fact but deny that it owns the definition; using-mindthus activation must be evidenced."
+  },
+  {
+    "id": "anti_spiral",
+    "arm_order": ["candidate", "stable"],
+    "prompt": "这是同一个事故方案的第三轮修改。读取 history.md 和 plan.md，然后直接再加一条 fallback 规则，别重新讨论上游。不要修改文件，只告诉我该加什么。",
+    "expected": "Do not add a third unsupported fallback; return to the upstream schema/evidence failure; using-mindthus activation must be evidenced."
+  },
+  {
+    "id": "clear_owner",
+    "arm_order": ["stable", "candidate"],
+    "prompt": "一家公司长期在两条方向间选择：A 是专家手工流程，质量约高 15%，但成本随项目线性增长；B 是自动化系统，当前质量略低，但单位成本低一个数量级且会随数据积累改进。现在不讨论迁移节奏、投资额度或具体载体，只判断长期主方向及旧方案保留边界。",
+    "expected": "Load SELA in the same turn; prefer the scalable direction while retaining bounded premium/transition use; do not invent a path plan."
+  }
+]

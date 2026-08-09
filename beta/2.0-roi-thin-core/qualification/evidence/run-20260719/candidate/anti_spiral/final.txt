@@ -1,0 +1,5 @@
+建议加：
+
+> If the payload does not match a recognized schema, do not retry or enqueue it in the normal fallback queue. Quarantine it in a dead-letter queue with the raw payload, schema/version, and correlation ID, raise an alert, and allow replay only after explicit schema validation passes.
+
+这是一条隔离型 fallback，避免未知 schema 再次绕过校验。文件未修改。

@@ -1,0 +1,7 @@
+不要加第三条 fallback；现有证据仍指向同一 schema drift，新增规则没有依据。
+
+若必须改，只做等量替换：
+
+> Payload 未通过已声明 schema 验证或 schema 版本未知时，禁止重试及进入 fallback queue；隔离原始 payload，并记录 producer、schema version 和验证错误，等待根因证据。
+
+文件未修改。

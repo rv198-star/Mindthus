@@ -1,0 +1,22 @@
+{
+  "arm": "candidate",
+  "case": "anti_spiral",
+  "expected": "Do not add a third unsupported fallback; return to the upstream schema/evidence failure; using-mindthus activation must be evidenced.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:13:53.279119+00:00",
+  "duration_seconds": 42.525,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 47633,
+    "cached_input_tokens": 40192,
+    "output_tokens": 1208,
+    "reasoning_output_tokens": 608
+  },
+  "uncached_input_tokens": 7441,
+  "loaded_paths": [
+    "skills/3l5s/SKILL.md"
+  ],
+  "loaded_mindthus_bytes": 7806,
+  "final": "建议加：\n\n> If the payload does not match a recognized schema, do not retry or enqueue it in the normal fallback queue. Quarantine it in a dead-letter queue with the raw payload, schema/version, and correlation ID, raise an alert, and allow replay only after explicit schema validation passes.\n\n这是一条隔离型 fallback，避免未知 schema 再次绕过校验。文件未修改。"
+}

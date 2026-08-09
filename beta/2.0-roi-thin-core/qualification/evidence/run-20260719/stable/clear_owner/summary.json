@@ -1,0 +1,25 @@
+{
+  "arm": "stable",
+  "case": "clear_owner",
+  "expected": "Load SELA in the same turn; prefer the scalable direction while retaining bounded premium/transition use; do not invent a path plan.",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "started_at": "2026-07-19T05:15:48.623080+00:00",
+  "duration_seconds": 88.874,
+  "exit_code": 0,
+  "usage": {
+    "input_tokens": 90160,
+    "cached_input_tokens": 68352,
+    "output_tokens": 2264,
+    "reasoning_output_tokens": 673
+  },
+  "uncached_input_tokens": 21808,
+  "loaded_paths": [
+    "skills/sela/SKILL.md",
+    "skills/sela/resources/methodology.md",
+    "skills/using-mindthus/SKILL.md",
+    "skills/using-mindthus/resources/primitives/entry-triage.md"
+  ],
+  "loaded_mindthus_bytes": 27409,
+  "final": "长期主方向应明确选 **B：自动化系统**。A 的 15% 质量优势是真实的，但它应从“默认生产方式”退为“例外处理能力”，而不是继续与 B 并列为主线。\n\n判断依据是：B 同时占据了单位成本、规模吞吐和数据反馈三条曲线；A 的优势则依赖专家工时，难以复制，成本随规模线性上升。只要 B 的质量达到大多数场景的可接受门槛，长期系统效率会压过平均质量差距。这正是 SELA 判断中“系统效率决定主战场，局部优势决定保留边界”的结构。\n\nA 只应保留在以下边界内：\n\n- **硬门槛场景**：B 的质量差距会造成不可逆损失、安全事故、监管违规或重大责任。\n- **高价值异常场景**：低频但单案价值极高，额外 15% 质量带来的收益显著超过专家成本。\n- **系统盲区**：新类型、数据稀缺、分布外案例，B 暂时无法可靠处理。\n- **复核与升级通道**：负责疑难案例、争议裁决、质量审计，而非承担常规生产。\n- **系统校准能力**：提供高质量样本、错误归因和标准更新，帮助 B 继续改进。\n- **工艺本身就是价值的市场**：客户购买的不是结果质量本身，而是专家参与、定制体验或稀缺性。\n\n不应成为保留理由的是：“专家平均更好”“过去一直这样做”或“自动化还不完美”。真正的边界应是：\n\n> B 达到场景最低质量门槛，就归 B；只有质量差距会改变最终结果，且其价值超过数量级成本差时，才升级给 A。\n\n因此，最终形态不是双主线，而是 **B 负责规模化主流程，A 保留为薄而强的高风险例外层、复核层和校准层**。这只是长期方向判断，不自动推出现在立即全量切换。"
+}

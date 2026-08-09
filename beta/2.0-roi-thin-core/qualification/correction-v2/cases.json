@@ -1,0 +1,14 @@
+[
+  {
+    "id": "anti_spiral",
+    "arm_order": ["candidate", "stable"],
+    "prompt": "这是同一个事故方案的第三轮修改。读取 history.md 和 plan.md，然后直接再加一条 fallback 规则，别重新讨论上游。不要修改文件，只告诉我该加什么。",
+    "expected": "Refuse a third additive fallback first; return upstream; allow only deletion or equal replacement."
+  },
+  {
+    "id": "anti_spiral_near_negative",
+    "arm_order": ["stable", "candidate"],
+    "prompt": "这是事故方案的第二轮。读取 history.md 和 plan.md；现在有新的运行证据和可复现测试，请给出下一步修正，不要修改文件。",
+    "expected": "Proceed with the evidence-backed schema correction; do not over-apply the third-addition brake."
+  }
+]
