@@ -1,0 +1,407 @@
+name: Prepare v1.7.0
+
+on:
+  push:
+    branches:
+      - release/v1.7.0-prepare
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: ${{ !contains(github.event.head_commit.message, '[release-prepared]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Prepare release source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          ROOT = Path('.')
+          VERSION = '1.7.0'
+          BETA = '1.7.0-roi-beta'
+          DATE = '2026-08-09'
+
+          def read(path):
+              return Path(path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(text, encoding='utf-8')
+
+          def replace_once(path, before, after):
+              text = read(path)
+              if text.count(before) != 1:
+                  raise SystemExit(f'{path}: expected exactly one occurrence of {before!r}, got {text.count(before)}')
+              write(path, text.replace(before, after))
+
+          replace_once('scripts/build-release-pack.py', 'VERSION = "1.6.0"', 'VERSION = "1.7.0"')
+          replace_once('scripts/log-mindthus-runtime.py', 'VERSION = "1.6.0"', 'VERSION = "1.7.0"')
+
+          readme = read('README.md')
+          readme = readme.replace('v1.6.0', 'v1.7.0').replace('1.6.0', '1.7.0')
+          old_summary = '''当前已发布 Stable 是 `v1.7.0`。本版新增 Judgment Trace v1.1、用户控制的
+Case Export、显式 `case-prep` 与批量 case collection，以及 Test Lifecycle 基线和第一波
+清理。它不新增判断方法，不引入集中遥测，也不自动上传案例。'''
+          new_summary = '''当前已发布 Stable 是 `v1.7.0`。本版升级 WAE：在第一层 control assignment 之后，
+当 delegation 仍可能隐藏会改变结果的语义选择时，可条件性进入 `Ownership Closure`；新增
+`Semantic Ownership Leakage` 诊断、`Mechanical Boundary` 停止条件，以及 Evidence 发现
+semantic remainder 后重新打开边界的规则。普通 WAE 不增加额外 ceremony，TPlan runtime
+边界保持不变。'''
+          if old_summary not in readme:
+              raise SystemExit('README current-release summary shape changed')
+          readme = readme.replace(old_summary, new_summary)
+          old_beta = '''`v1.7.0` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
+experimental asset。ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承本版
+Judgment Trace、Case Export、case-prep 和测试治理能力；它只替换经资格验证的薄入口与
+一条 3L5S Anti-Spiral 合同，不取代 Stable。TPlan runtime generation 仍保持 `1.5.4`.'''
+          # README uses Chinese full stop; normalize by matching the actual block separately.
+          actual_old_beta = '''`v1.7.0` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
+experimental asset。ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承本版
+Judgment Trace、Case Export、case-prep 和测试治理能力；它只替换经资格验证的薄入口与
+一条 3L5S Anti-Spiral 合同，不取代 Stable。TPlan runtime generation 仍保持 `1.5.4`。'''
+          new_beta = '''`v1.7.0` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
+experimental asset。ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承 WAE
+Ownership Closure，以及 Judgment Trace、Case Export、case-prep、Test Lifecycle 与现有
+TPlan 能力；运行时差异仍只允许经资格验证的 ROI.2 薄入口、一条 3L5S Anti-Spiral 合同和
+Beta identity / namespace / diagnostic 坐标。TPlan runtime generation 仍保持 `1.5.4`。'''
+          if actual_old_beta not in readme:
+              raise SystemExit('README ROI Beta summary shape changed')
+          readme = readme.replace(actual_old_beta, new_beta)
+          beta_install_old = '''`v1.7.0-roi-beta` 包从冻结的 `v1.7.0` Stable core 重新组装，继承 Judgment Trace、
+Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；它只替换经资格验证的
+`using-mindthus` 薄入口和一条 3L5S Anti-Spiral 句子。Stable 与 ROI Beta 使用不同的
+package、marketplace、cache 与 skill namespace，可以独立安装或移除：'''
+          beta_install_new = '''`v1.7.0-roi-beta` 包从冻结的 `v1.7.0` Stable core 重新组装，继承 WAE Ownership
+Closure、Judgment Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；它只
+替换经资格验证的 `using-mindthus` 薄入口和一条 3L5S Anti-Spiral 句子。Stable 与 ROI Beta
+使用不同的 package、marketplace、cache 与 skill namespace，可以独立安装或移除：'''
+          if beta_install_old not in readme:
+              raise SystemExit('README ROI Beta install block shape changed')
+          readme = readme.replace(beta_install_old, beta_install_new)
+          write('README.md', readme)
+
+          changelog = read('CHANGELOG.md')
+          marker = '## Unreleased\n'
+          if changelog.count(marker) != 1:
+              raise SystemExit('CHANGELOG Unreleased marker changed')
+          release_section = f'''## v{VERSION}
+
+发布 tag：`v{VERSION}`
+
+[发布说明](docs/releases/v{VERSION}.md)
+
+发布日期：{DATE}
+
+### 版本定位
+
+这是 1.x Stable 线的 WAE 方法能力 minor release。它把 WAE 从第一层 control assignment
+扩展为条件性的 `Ownership Closure / 所有权闭合`：只有在 delegation 可能继续携带会改变
+结果的 semantic choice 时才向下检查，不把普通 WAE、执行重试或代码深度变成额外 Loop。
+
+### WAE Ownership Closure
+
+- 新增 `Ownership Closure` 条件模式：第一层 Owner 分配后，必要时继续检查 delegation
+  boundary 是否仍有未归属的 result-changing semantic choice。
+- 新增 `Semantic Ownership Leakage`：名义 semantic owner 已经存在，但 helper、adapter、
+  mapper、generator 等下游仍需自行解释业务语义或从多个合理结果中选择。
+- 新增 `Mechanical Boundary` 停止条件：结构化输入完整、允许输入下行为唯一、不再需要领域
+  判断、机械验证足够且未知输入 fail-closed 时，必须停止 refinement，保留 Workflow 控制。
+- 明确 Evidence 可以在真实 runtime 暴露 semantic remainder 时推翻此前 closure 判断；
+  syntax error、错误 placeholder、timeout 或其他已明确语义下的 implementation defect 只是
+  execution repair，不属于 Ownership Boundary Refinement。
+- 明确 Ownership 跟随 semantic choice，而不是 implementation depth；复杂 SQL、transaction、
+  renderer 或 protocol stack 在语义已完整后仍可保持 mechanical。
+
+### Acceptance-first 与方法边界
+
+- #149 先冻结 OC-01～OC-08 验收场景，再修改 WAE；覆盖普通 WAE 不误触发、隐藏语义泄漏、
+  Mechanical Boundary 停止、Evidence reopen、执行重试负例、TPlan 边界、跨领域泛化和
+  unknown-input fail-closed。
+- WAE 没有新增 Mission、Task、checkpoint、recovery、persistent ledger、Schema 或新 Gate。
+- TPlan 继续负责长任务 runtime state、ordering、blocker、checkpoint、recovery 与 resumption；
+  WAE 只负责 semantic control boundary 与 ownership closure。
+- `wae-fidelity-v0.1` 不新增无条件必填字段，因为 Closure 是条件动作；本版用 WAE contract
+  tests 与冻结 casebook 保护该边界。
+
+### 补充发布包：1.7.0 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承本版 WAE Ownership Closure
+  以及此前 Judgment Trace、Case Export、`case-prep`、Test Lifecycle 和 TPlan 能力。
+- 运行时差异继续严格限制为经资格验证的 `using-mindthus` ROI.2 薄入口、一条 3L5S
+  Anti-Spiral 句子、Beta identity / namespace 与 runtime diagnostic 坐标。
+- 发布源码 tag 为 `v1.7.0-roi-beta`；package、marketplace、cache 与 skill namespace 均为
+  `mindthus-beta`。它是 supplemental experimental asset 和受限实验入口，不是
+  `v1.7.0 Stable` 的替代版，也不触发用户安装、配置或工作流的自动迁移。
+
+### 兼容性与运行边界
+
+- Stable 插件和发行包 manifest 使用 `1.7.0`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本版没有修改 TPlan
+  runtime fingerprint files；不能仅因 Stable 版本升级就让既有 Mission 失配。
+- 本版不把 Ownership Closure 描述成通用 Agent Loop，也不声称 casebook 本身证明跨模型
+  判断质量；它定义并回归保护方法行为边界。
+
+### 验证与发布边界
+
+- 运行 compileall、Test Lifecycle validator、完整 unittest、Stable plugins/skills 构建与
+  strict runtime fingerprint。
+- ROI Beta 必须从同一冻结 Stable core 重组，并通过 composition、namespace isolation、
+  reproducible archive 与 shared-capability 一致性验证。
+- `v1.7.0` GitHub Release 提供 `mindthus-plugins-1.7.0.tar.gz`、
+  `mindthus-skills-1.7.0.tar.gz`、`mindthus-beta-1.7.0-roi-beta.tar.gz` 和覆盖三份资产的
+  `SHA256SUMS`。
+
+'''
+          changelog = changelog.replace(marker, marker + '\n' + release_section)
+          write('CHANGELOG.md', changelog)
+
+          stable_notes = f'''# Mindthus v{VERSION} 发布说明
+
+发布日期：{DATE}
+
+发布 tag：`v{VERSION}`
+
+## 版本定位
+
+`v{VERSION}` 是 1.x Stable 线的 WAE 方法能力 minor release。
+
+本版解决的是一个第一层 control assignment 之后仍可能存在的缺口：名义 semantic owner
+已经分配正确，但 delegation 链中的 helper / adapter / mapper / generator 仍可能自行决定
+会改变最终结果的语义。WAE 现在可以在这种信号出现时条件性进入 `Ownership Closure`，
+继续细化 ownership，直到最后一个非机械决策点。
+
+## Ownership Closure
+
+核心规则：
+
+> Ownership follows semantic choice; Workflow follows deterministic consequence.
+
+新增能力包括：
+
+- `Ownership Closure`：条件性的 WAE 第二层，而不是所有任务都必须运行的新 ceremony；
+- `Semantic Ownership Leakage`：识别 semantic choice 通过 delegation 泄漏到 nominal helper；
+- `Ownership Boundary Refinement`：只沿可能携带语义选择的 delegation boundary 收敛；
+- `Mechanical Boundary`：语义 remainder 为零后停止，让确定性后果回到 Workflow；
+- Evidence-driven reopening：真实 evidence 若暴露新的 semantic remainder，可以推翻此前的
+  closure 判断；普通 implementation defect 不会自动移动 ownership。
+
+## Acceptance-first
+
+#149 在实现前先冻结 OC-01～OC-08 八类验收场景，覆盖：
+
+- 普通 WAE 已足够时不误触发；
+- generic helper 后隐藏 semantic choice；
+- Mechanical Boundary 后停止，不无限 Agentic 化；
+- runtime evidence 推翻 nominal closure；
+- execution retry 与 ownership refinement 的区分；
+- WAE / TPlan runtime 边界；
+- API / UI / integration 跨领域泛化；
+- unknown mechanical input fail-closed。
+
+实现后又按冻结案例逐项回看，并由 WAE contract tests 保持这些边界。
+
+## WAE / TPlan 边界
+
+本版没有把 WAE 变成 TPlan Lite。
+
+- WAE：谁拥有 result-changing semantic choice，这个 ownership 是否闭合；
+- TPlan：Mission/task state 如何继续，负责 ordering、blocker、checkpoint、recovery、
+  resumption 与 lifecycle control。
+
+WAE 没有新增 Mission、任务树、checkpoint、persistent ledger、Schema 或新 Gate。
+
+## v1.7.0 ROI Beta（GPT/Sol）
+
+同一个 GitHub Release 同时提供 `mindthus-beta-{BETA}.tar.gz`。
+
+ROI Beta 从冻结的 `v{VERSION}` Stable core 重新组装，因此继承 WAE Ownership Closure，
+并继续继承 Judgment Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力。
+它保留既有资格验证的 ROI.2 薄入口，只允许以下 runtime delta：
+
+- `using-mindthus` ROI.2 薄入口；
+- 一条已资格验证的 3L5S Anti-Spiral 句子；
+- Beta package / marketplace / cache / skill namespace；
+- 对应的 runtime diagnostic 坐标。
+
+Beta 使用独立 `mindthus-beta` identity，不替代 Stable，也不自动迁移用户安装或工作流。
+详细边界见 [v1.7.0 ROI Beta 发布说明](v1.7.0-roi-beta.md)。
+
+## 兼容性与运行边界
+
+- Stable package version：`1.7.0`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本次 WAE 方法升级没有修改
+  TPlan runtime fingerprint files。
+- `wae-fidelity-v0.1` 保持兼容；Ownership Closure 是条件动作，不升级为所有 WAE 输出的
+  无条件 shape requirement。
+
+## 验证
+
+发布前验证：
+
+```bash
+python3 -m compileall -q scripts skills tests
+python3 scripts/check-test-lifecycle.py
+python3 -m unittest discover -s tests -q
+python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-plugins
+python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-skills
+```
+
+发布资产：
+
+- `mindthus-plugins-1.7.0.tar.gz`
+- `mindthus-skills-1.7.0.tar.gz`
+- `mindthus-beta-1.7.0-roi-beta.tar.gz`
+- `SHA256SUMS`
+
+`SHA256SUMS` 覆盖三份压缩包。ROI Beta 是 supplemental experimental asset，不是第二个
+Stable release。
+'''
+          write(f'docs/releases/v{VERSION}.md', stable_notes)
+
+          beta_notes = f'''# Mindthus v{VERSION} ROI Beta 发布说明
+
+发布日期：{DATE}
+
+`v{BETA}` 是作为 `v{VERSION}` GitHub Release 的 supplemental experimental asset 发布的
+可复现源码 tag，不是独立 Stable release，也不取代 `v{VERSION} Stable`。
+
+## 组成与边界
+
+- Shared Product Core 固定为 `v{VERSION}` 发布 commit；Beta profile 记录精确 commit 与 tree oid。
+- ROI.2 的 `using-mindthus` 薄入口继续固定到已资格验证的历史 implementation / qualification
+  refs；另保留一条固定 3L5S Anti-Spiral contract correction。
+- 除上述两处 runtime contract、Beta identity、namespace 与 runtime diagnostic 坐标外，
+  其他产品文件均从 `v{VERSION}` Stable core 构建。
+
+因此 Beta 会继承 `v{VERSION}` 的 WAE Ownership Closure、Judgment Trace、Case Export、
+case-prep、Test Lifecycle 与现有 TPlan 能力，而不会复制一套独立产品核心。
+
+## WAE Ownership Closure 继承
+
+Beta 中 WAE 与 Stable 保持同源：
+
+- `Ownership Closure` 仍然是条件模式；
+- `Semantic Ownership Leakage`、`Mechanical Boundary` 与 Evidence reopening 规则一致；
+- execution repair 不会被改写成 generic ownership loop；
+- TPlan runtime ownership 不发生变化。
+
+ROI overlay 不拥有或改写 WAE 方法语义。
+
+## Runtime delta
+
+允许的 runtime delta 仅包括：
+
+1. `skills/using-mindthus/SKILL.md` 使用历史 ROI.2 thin-core overlay；
+2. `skills/3l5s/SKILL.md` 应用资格验证过的单句 Anti-Spiral correction；
+3. `.codex-plugin/plugin.json` 改为 `mindthus-beta` identity / `{BETA}` version；
+4. `scripts/log-mindthus-runtime.py` 改到 Beta version / marketplace / cache 坐标；
+5. plugin 内 textual `mindthus:` skill references 重写为 `mindthus-beta:`。
+
+其他 shared owner tree 必须与 Stable 一致（namespace rewrite 归一化后逐字节一致）。
+
+## 发布形态
+
+- 源码 tag：`v{BETA}`；
+- GitHub Release：与 Stable 共用 `v{VERSION}` Release；
+- asset：`mindthus-beta-{BETA}.tar.gz`；
+- package / marketplace / cache / skill namespace：`mindthus-beta`；
+- Marketplace 自动发布：否；
+- 自动迁移：否。
+
+## 验证
+
+Beta 构建必须证明：
+
+- shared core commit / tree identity 精确匹配 Stable；
+- ROI.2 implementation / qualification refs 仍然有效且历史 qualification tree 未变；
+- runtime delta 不超出声明范围；
+- WAE 等非 overlay owner tree 与 Stable 保持一致；
+- Beta namespace 与 Stable 隔离；
+- runtime diagnostic 在 Beta coordinates 下 strict pass；
+- archive 同一 commit 重建时 byte reproducible；
+- package profile / capability register 可审计。
+
+这些验证证明构建组成和边界，不证明 ROI Beta 在所有模型或 host 上都优于 Stable。
+'''
+          write(f'docs/releases/v{BETA}.md', beta_notes)
+
+          tests = read('tests/test_release_boundary_contract.py')
+          tests = tests.replace(
+              'REPO / "docs" / "releases" / "v1.6.0.md"',
+              'REPO / "docs" / "releases" / "v1.7.0.md"',
+              1,
+          )
+          start = tests.index('    def test_v1_6_0_release_with_supplemental_roi_beta(self):')
+          end = tests.index('    def test_v1_4_6_release_surface_is_preserved(self):', start)
+          replacement = '''    def test_v1_7_0_release_with_supplemental_roi_beta(self):
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
+        runtime_logger = (REPO / "scripts" / "log-mindthus-runtime.py").read_text(encoding="utf-8")
+        tplan_manifest = (REPO / "skills" / "tplan" / "resources" / "runtime-manifest.json").read_text(encoding="utf-8")
+        release_log = (REPO / "docs" / "releases" / "v1.7.0.md").read_text(encoding="utf-8")
+        beta_notes = (REPO / "docs" / "releases" / "v1.7.0-roi-beta.md").read_text(encoding="utf-8")
+
+        self.assertIn("当前仓库版本：`v1.7.0`", readme)
+        self.assertEqual(readme.count("当前仓库版本："), 1)
+        self.assertIn("当前已发布 Stable 是 `v1.7.0`", readme)
+        self.assertIn("mindthus-plugins-1.7.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.7.0.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.7.0-roi-beta.tar.gz", readme)
+        self.assertIn("Ownership Closure", readme)
+        self.assertIn("## v1.7.0", changelog)
+        self.assertIn("补充发布包：1.7.0 ROI Beta", changelog)
+        self.assertIn("v1.7.0-roi-beta", changelog)
+        self.assertIn('VERSION = "1.7.0"', builder)
+        self.assertIn('VERSION = "1.7.0"', runtime_logger)
+        self.assertIn('"package_version": "1.5.4"', tplan_manifest)
+        self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
+
+        for phrase in (
+            "# Mindthus v1.7.0 发布说明",
+            "发布日期：2026-08-09",
+            "WAE 方法能力 minor release",
+            "Ownership Closure",
+            "Semantic Ownership Leakage",
+            "Mechanical Boundary",
+            "execution repair",
+            "TPlan runtime generation 保持 `1.5.4`",
+            "mindthus-plugins-1.7.0.tar.gz",
+            "mindthus-skills-1.7.0.tar.gz",
+            "mindthus-beta-1.7.0-roi-beta.tar.gz",
+        ):
+            self.assertIn(phrase, release_log)
+        self.assertIn("作为 `v1.7.0` GitHub Release", beta_notes)
+        self.assertIn("WAE Ownership Closure", beta_notes)
+        self.assertIn("mindthus-beta-1.7.0-roi-beta.tar.gz", beta_notes)
+        self.assertNotIn("Release candidate", release_log + beta_notes)
+        self.assertNotIn("Release date:", release_log)
+
+'''
+          tests = tests[:start] + replacement + tests[end:]
+          write('tests/test_release_boundary_contract.py', tests)
+
+          Path('.github/workflows/prepare-v1.7.0.yml').unlink()
+          PY
+      - name: Pre-commit validation
+        run: |
+          python3 -m compileall -q scripts skills tests
+          python3 scripts/check-test-lifecycle.py
+          python3 -m unittest discover -s tests -q
+      - name: Commit prepared release
+        run: |
+          git config user.name "Mindthus Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(release): prepare v1.7.0 [release-prepared]"
+          git push origin HEAD:release/v1.7.0-prepare
