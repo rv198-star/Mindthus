@@ -12,7 +12,7 @@ def replace_all(path: str, before: str, after: str, expected: int) -> None:
 
 
 # These are current-release assertions, not historical v1.6.0 guards.
-replace_all("tests/test_packaging_docs.py", "1.6.0", "1.7.0", 5)
+replace_all("tests/test_packaging_docs.py", "1.6.0", "1.7.0", 6)
 replace_all("tests/test_v1_0_1_usage_log.py", "1.6.0", "1.7.0", 2)
 
 notes = Path("docs/releases/v1.7.0.md")
