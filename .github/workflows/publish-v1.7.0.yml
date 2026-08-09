@@ -1,0 +1,77 @@
+name: Publish v1.7.0
+
+on:
+  push:
+    branches:
+      - release/v1.7.0-publish-ops
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ contains(github.event.head_commit.message, '[publish-v1.7.0]') }}
+    runs-on: ubuntu-latest
+    env:
+      STABLE_SHA: 71c8e8a2a2edb4b9c2ea7df24fb083a9e0a317d6
+      BETA_SHA: a55c8bde3d10f0eb1825b9897e45a7fe92f03044
+      EXPECTED_PLUGINS_SHA256: 2a414800f6545a37811142effff2babe5bfee9b9ed9e646d2f3e51d9a521e8fd
+      EXPECTED_SKILLS_SHA256: 12e3d5dd3b3cbfd371b96b38b38b88edd708499b6fa42dea6206f2b1212e410d
+      EXPECTED_BETA_SHA256: dfe71b05816e13b6250ae3efcf55223aa7681bddea8861afb51b0e634b7d42cb
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out exact ROI Beta source
+        uses: actions/checkout@v4
+        with:
+          ref: a55c8bde3d10f0eb1825b9897e45a7fe92f03044
+          fetch-depth: 0
+          path: beta-src
+      - name: Check out publication controls
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.0-publish-ops
+          fetch-depth: 1
+          path: ops
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Rebuild and revalidate exact assets
+        run: python3 ops/scripts/validate-v1.7.0-assets.py --repo beta-src --out dist
+      - name: Require candidate SHA256 identity
+        run: |
+          cd dist
+          test "$(sha256sum mindthus-plugins-1.7.0.tar.gz | awk '{print $1}')" = "$EXPECTED_PLUGINS_SHA256"
+          test "$(sha256sum mindthus-skills-1.7.0.tar.gz | awk '{print $1}')" = "$EXPECTED_SKILLS_SHA256"
+          test "$(sha256sum mindthus-beta-1.7.0-roi-beta.tar.gz | awk '{print $1}')" = "$EXPECTED_BETA_SHA256"
+          sha256sum -c SHA256SUMS
+      - name: Create exact source tags
+        working-directory: beta-src
+        run: |
+          git config user.name "Mindthus Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git rev-parse -q --verify refs/tags/v1.7.0 >/dev/null; then
+            test "$(git rev-list -n 1 v1.7.0)" = "$STABLE_SHA"
+          else
+            git tag -a v1.7.0 "$STABLE_SHA" -m "Mindthus v1.7.0"
+          fi
+          if git rev-parse -q --verify refs/tags/v1.7.0-roi-beta >/dev/null; then
+            test "$(git rev-list -n 1 v1.7.0-roi-beta)" = "$BETA_SHA"
+          else
+            git tag -a v1.7.0-roi-beta "$BETA_SHA" -m "Mindthus v1.7.0 ROI Beta source"
+          fi
+          git push origin refs/tags/v1.7.0 refs/tags/v1.7.0-roi-beta
+      - name: Publish Stable release with ROI Beta asset
+        run: |
+          if gh release view v1.7.0 --repo rv198-star/Mindthus >/dev/null 2>&1; then
+            echo "v1.7.0 release already exists; refusing duplicate publication" >&2
+            exit 1
+          fi
+          gh release create v1.7.0 \
+            --repo rv198-star/Mindthus \
+            --verify-tag \
+            --title "Mindthus v1.7.0" \
+            --notes-file beta-src/docs/releases/v1.7.0.md \
+            dist/mindthus-plugins-1.7.0.tar.gz \
+            dist/mindthus-skills-1.7.0.tar.gz \
+            dist/mindthus-beta-1.7.0-roi-beta.tar.gz \
+            dist/SHA256SUMS
