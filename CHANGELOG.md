@@ -2,6 +2,70 @@
 
 ## Unreleased
 
+## v1.7.0
+
+发布 tag：`v1.7.0`
+
+[发布说明](docs/releases/v1.7.0.md)
+
+发布日期：2026-08-09
+
+### 版本定位
+
+这是 1.x Stable 线的 WAE 方法能力 minor release。它把 WAE 从第一层 control assignment
+扩展为条件性的 `Ownership Closure / 所有权闭合`：只有在 delegation 可能继续携带会改变
+结果的 semantic choice 时才向下检查，不把普通 WAE、执行重试或代码深度变成额外 Loop。
+
+### WAE Ownership Closure
+
+- 新增 `Ownership Closure` 条件模式：第一层 Owner 分配后，必要时继续检查 delegation
+  boundary 是否仍有未归属的 result-changing semantic choice。
+- 新增 `Semantic Ownership Leakage`：名义 semantic owner 已经存在，但 helper、adapter、
+  mapper、generator 等下游仍需自行解释业务语义或从多个合理结果中选择。
+- 新增 `Mechanical Boundary` 停止条件：结构化输入完整、允许输入下行为唯一、不再需要领域
+  判断、机械验证足够且未知输入 fail-closed 时，必须停止 refinement，保留 Workflow 控制。
+- Evidence 只在真实 runtime 暴露 semantic remainder 时重开 closure；syntax error、错误
+  placeholder、timeout 等已明确语义下的 implementation defect 只是 execution repair。
+- Ownership 跟随 semantic choice，而不是 implementation depth。
+
+### Acceptance-first 与方法边界
+
+- #149 先冻结 OC-01～OC-08 验收场景，再修改 WAE；覆盖普通 WAE 不误触发、隐藏语义泄漏、
+  Mechanical Boundary 停止、Evidence reopen、执行重试负例、TPlan 边界、跨领域泛化和
+  unknown-input fail-closed。
+- WAE 没有新增 Mission、Task、checkpoint、recovery、persistent ledger、Schema 或新 Gate。
+- TPlan 继续负责长任务 runtime state、ordering、blocker、checkpoint、recovery 与 resumption。
+- `wae-fidelity-v0.1` 不新增无条件必填字段，因为 Closure 是条件动作。
+
+### 补充发布包：1.7.0 ROI Beta（GPT/Sol）
+
+- ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承本版 WAE Ownership Closure
+  以及此前 Judgment Trace、Case Export、`case-prep`、Test Lifecycle 和 TPlan 能力。
+- 运行时差异继续严格限制为经资格验证的 `using-mindthus` ROI.2 薄入口、一条 3L5S
+  Anti-Spiral 句子、Beta identity / namespace 与 runtime diagnostic 坐标。
+- 发布源码 tag 为 `v1.7.0-roi-beta`；package、marketplace、cache 与 skill namespace 均为
+  `mindthus-beta`。它是 supplemental experimental asset 和受限实验入口，不是
+  `v1.7.0 Stable` 的替代版，也不触发用户安装、配置或工作流的自动迁移。
+
+### 兼容性与运行边界
+
+- Stable 插件和发行包 manifest 使用 `1.7.0`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本版没有修改 TPlan
+  runtime fingerprint files；不能仅因 Stable 版本升级就让既有 Mission 失配。
+- 本版不把 Ownership Closure 描述成通用 Agent Loop，也不声称 casebook 本身证明跨模型
+  判断质量。
+
+### 验证与发布边界
+
+- 运行 compileall、Test Lifecycle validator、完整 unittest、Stable plugins/skills 构建与
+  strict runtime fingerprint。
+- ROI Beta 必须从同一冻结 Stable core 重组，并通过 composition、namespace isolation、
+  reproducible archive 与 shared-capability 一致性验证。
+- `v1.7.0` GitHub Release 提供 `mindthus-plugins-1.7.0.tar.gz`、
+  `mindthus-skills-1.7.0.tar.gz`、`mindthus-beta-1.7.0-roi-beta.tar.gz` 和覆盖三份资产的
+  `SHA256SUMS`。
+
+
 ## v1.6.0
 
 发布 tag：`v1.6.0`
