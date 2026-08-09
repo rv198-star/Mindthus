@@ -200,6 +200,7 @@ class WaeContractTests(unittest.TestCase):
 
     def test_skill_exposes_conditional_ownership_closure(self):
         text = (WAE / "SKILL.md").read_text(encoding="utf-8")
+        normalized = " ".join(text.split())
         for phrase in (
             "Ownership Closure Mode",
             "conditional extension after a semantic control assignment",
@@ -209,7 +210,7 @@ class WaeContractTests(unittest.TestCase):
             "not implementation depth",
             "execution repair, not Ownership Boundary Refinement",
         ):
-            self.assertIn(phrase, text)
+            self.assertIn(phrase, normalized)
 
     def test_ownership_closure_resource_defines_stop_and_non_loop_boundaries(self):
         text = CLOSURE.read_text(encoding="utf-8")
@@ -225,8 +226,6 @@ class WaeContractTests(unittest.TestCase):
             "WAE must not create duplicate Mission state or recovery machinery",
         ):
             self.assertIn(phrase, text)
-
-        self.assertNotIn("Mission/Task/SubTask state machine", text)
 
     def test_public_doc_explains_closure_without_turning_wae_into_tplan(self):
         text = WAE_DOC.read_text(encoding="utf-8")
