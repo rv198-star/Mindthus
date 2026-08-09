@@ -1,0 +1,38 @@
+name: Validate v1.7.0 assets
+
+on:
+  push:
+    branches:
+      - release/v1.7.0-publish-ops
+
+permissions:
+  contents: read
+
+jobs:
+  validate-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out ROI Beta source
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.0-roi-beta
+          fetch-depth: 0
+          path: beta-src
+      - name: Check out release validator
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.0-publish-ops
+          fetch-depth: 1
+          path: ops
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate composition and build candidate assets
+        run: python3 ops/scripts/validate-v1.7.0-assets.py --repo beta-src --out dist
+      - name: Upload validated release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: mindthus-v1.7.0-release-candidate
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 7
