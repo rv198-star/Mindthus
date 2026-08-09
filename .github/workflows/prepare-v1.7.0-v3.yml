@@ -1,0 +1,38 @@
+name: Prepare v1.7.0 v3
+
+on:
+  push:
+    branches:
+      - release/v1.7.0-prepare
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Prepare source
+        run: |
+          python3 scripts/prepare-v1.7.0.py
+          python3 scripts/prepare-v1.7.0-fixes.py
+      - name: Validate source
+        run: |
+          python3 -m compileall -q scripts skills tests
+          python3 scripts/check-test-lifecycle.py
+          python3 -m unittest discover -s tests -q
+      - name: Commit prepared source
+        run: |
+          rm -f .github/workflows/prepare-v1.7.0.yml .github/workflows/prepare-v1.7.0-v2.yml .github/workflows/prepare-v1.7.0-v3.yml
+          rm -f scripts/prepare-v1.7.0.py scripts/prepare-v1.7.0-fixes.py
+          git config user.name "Mindthus Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(release): prepare v1.7.0"
+          git push origin HEAD:release/v1.7.0-prepare
