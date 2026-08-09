@@ -4,6 +4,9 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 WAE = REPO / "skills" / "wae"
+WAE_DOC = REPO / "docs" / "methodologies" / "wae.md"
+CLOSURE = WAE / "resources" / "ownership-closure.md"
+CLOSURE_CASES = REPO / "tests" / "wae" / "ownership_closure_acceptance_cases.md"
 
 
 class WaeContractTests(unittest.TestCase):
@@ -194,6 +197,65 @@ class WaeContractTests(unittest.TestCase):
         for text in (methodology, worksheet):
             self.assertIn("A complete worksheet where every Expanded Field was filled", text)
             self.assertIn("regression signal, not a quality signal", text)
+
+    def test_skill_exposes_conditional_ownership_closure(self):
+        text = (WAE / "SKILL.md").read_text(encoding="utf-8")
+        normalized = " ".join(text.split())
+        for phrase in (
+            "Ownership Closure Mode",
+            "conditional extension after a semantic control assignment",
+            "Semantic Ownership Leakage",
+            "Mechanical Boundary",
+            "Ownership follows semantic choice; Workflow follows deterministic consequence",
+            "not implementation depth",
+            "execution repair, not Ownership Boundary Refinement",
+        ):
+            self.assertIn(phrase, normalized)
+
+    def test_ownership_closure_resource_defines_stop_and_non_loop_boundaries(self):
+        text = CLOSURE.read_text(encoding="utf-8")
+        for phrase in (
+            "Ownership must extend to the last non-mechanical decision point",
+            "Trigger signals",
+            "Semantic Ownership Leakage",
+            "Mechanical Boundary / 停止条件",
+            "Unknown input fails closed",
+            "Not a generic loop",
+            "Evidence is feedback, not WAE state",
+            "Boundary with TPlan",
+            "WAE must not create duplicate Mission state or recovery machinery",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_public_doc_explains_closure_without_turning_wae_into_tplan(self):
+        text = WAE_DOC.read_text(encoding="utf-8")
+        for phrase in (
+            "Ownership Closure / 所有权闭合",
+            "Semantic Ownership Leakage / 语义所有权泄漏",
+            "Mechanical Boundary / 机械边界",
+            "Ownership 追随的是**语义选择**，不是 implementation depth",
+            "Ownership Closure 不是 `fix -> test -> fix` 的泛化 Loop",
+            "TPlan：下一步发生什么、什么状态要继续？",
+            "WAE：这个语义决定由谁拥有、这个 ownership 是否已经闭合？",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_ownership_closure_acceptance_casebook_is_frozen_and_complete(self):
+        text = CLOSURE_CASES.read_text(encoding="utf-8")
+        for case_id in range(1, 9):
+            self.assertIn(f"OC-{case_id:02d}", text)
+
+        for phrase in (
+            "frozen acceptance design before implementation",
+            "negative control / no escalation",
+            "Semantic Ownership Leakage",
+            "Mechanical Boundary stops refinement",
+            "Execution retry is not Ownership Refinement",
+            "TPlan hosts recurrence but does not own closure semantics",
+            "Unknown mechanical input fails closed",
+            "Freeze rule",
+        ):
+            self.assertIn(phrase, text)
 
 
 if __name__ == "__main__":
