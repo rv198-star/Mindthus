@@ -37,3 +37,69 @@ jobs:
       - name: Full unittest suite
         # unittest is canonical here because README documents unittest commands as the release surface.
         run: python3 -m unittest discover -s tests -q
+
+  prepare-v171:
+    if: github.event_name == 'pull_request' && github.event.pull_request.number == 153
+    needs: unittest-smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out PR head branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prepare Stable v1.7.1 source
+        run: python3 scripts/prepare-v1.7.1.py
+
+      - name: Validate prepared source
+        run: |
+          python3 -m compileall -q scripts skills tests
+          python3 scripts/check-test-lifecycle.py
+          python3 -m unittest tests.test_bidirectional_steelman_contract -q
+          python3 -m unittest tests.test_packaging_docs -q
+          python3 -m unittest discover -s tests -q
+
+      - name: Build and inspect Stable release packs
+        run: |
+          rm -rf /tmp/mindthus-plugins-1.7.1 /tmp/mindthus-skills-1.7.1
+          python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-plugins-1.7.1
+          python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-skills-1.7.1
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          codex = Path('/tmp/mindthus-plugins-1.7.1/codex-plugin/mindthus/.codex-plugin/plugin.json')
+          claude = Path('/tmp/mindthus-plugins-1.7.1/claude-code/claude-plugin/.claude-plugin/plugin.json')
+          assert json.loads(codex.read_text())['version'] == '1.7.1'
+          assert json.loads(claude.read_text())['version'] == '1.7.1'
+
+          pressure = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/resources/primitives/expression-pressure-and-gates.md').read_text()
+          entry = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/SKILL.md').read_text()
+          for marker in (
+              'Competitive-frame convergence / 竞争框架收敛',
+              'Decisive discriminator / 决定性判别变量',
+              'Visible Translation Boundary / 可见表达翻译边界',
+          ):
+              assert marker in pressure, marker
+          assert 'material competing frame remains' in entry
+          assert 'Visible Translation / 可见表达翻译' in entry
+          PY
+
+      - name: Commit only validated release source
+        run: |
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git checkout origin/main -- .github/workflows/python-validation.yml
+          git rm scripts/prepare-v1.7.1.py
+          git add -A
+          git diff --cached --check
+          git commit -m 'fix: promote competitive-frame convergence for v1.7.1'
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
