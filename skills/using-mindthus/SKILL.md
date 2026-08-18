@@ -93,9 +93,7 @@ upstream problem, evidence, and stopping condition.
   implements memory nor overrides current input.
 - Judgment Constraint Recognition / 判断约束识别: facts constrain claims; values set
   priorities; risk sets action strength; authority determines who decides.
-- Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner.
-- Bidirectional Steelman Convergence / 双向钢人收敛: real competing-frame judgment only;
-  same object/evidence ceiling; malformed binary reframe; acquire evidence or ask at most one user-owned question; support only, does not become the judgment owner.
+- Pressure Surface Check / 施压面检查: assign its owner; real competing frames may use Bidirectional Steelman Convergence / 双向钢人收敛.
 - Approximate Quantified Mapping / 非精准量化显影 exposes variables inside an existing
   owner. Hypothetical numbers must not prove facts or compute decisions.
 - MPG Scalar Commitment Unpack is support-only: expose
@@ -129,7 +127,6 @@ Portable alias: `resources/primitives/`.
 - actor/timing/target/tradeoff: `docs/methodologies/primitives/decision-context-calibration.md`;
 - local truth claiming whole-object authority:
   `docs/methodologies/primitives/whole-elephant-protocol.md`;
-- competing frames: `docs/methodologies/primitives/bidirectional-steelman-convergence.md`;
 - pressure or AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
 - scalar commitment: `docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`;
 - activation shape: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
