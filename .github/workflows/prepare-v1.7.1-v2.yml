@@ -1,0 +1,373 @@
+name: Prepare v1.7.1 productization v2
+
+on:
+  push:
+    branches:
+      - research/bidirectional-steelman-convergence
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: contains(github.event.head_commit.message, '[prepare-v1.7.1-v2]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Productize C-lite and prepare v1.7.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          def read(path):
+              return Path(path).read_text(encoding="utf-8")
+
+          def write(path, text):
+              Path(path).write_text(text, encoding="utf-8")
+
+          def replace_once(path, old, new):
+              text = read(path)
+              if old not in text:
+                  raise AssertionError(f"marker missing in {path}: {old[:100]!r}")
+              write(path, text.replace(old, new, 1))
+
+          # Thin Stable entrypoint: activate only within the existing pressure surface.
+          path = "skills/using-mindthus/SKILL.md"
+          replace_once(
+              path,
+              "- Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner.\n",
+              "- Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner. "
+              "If a material competing frame remains, strengthen the strongest counter-frame, "
+              "identify what could actually change the verdict or action, then return to that owner.\n",
+          )
+          replace_once(
+              path,
+              "- Social pressure raises the evidence bar; it never transfers definition authority.\n",
+              "- Social pressure raises the evidence bar; it never transfers definition authority.\n"
+              "- Visible Translation / 可见表达翻译: keep internal weights, target functions, and "
+              "discriminators internal; state the concrete choice, tradeoff, evidence move, or overturn "
+              "condition in ordinary language.\n",
+          )
+
+          # Product behavior lives in the existing pressure primitive, not a new method/route.
+          path = "docs/methodologies/primitives/expression-pressure-and-gates.md"
+          marker = "Pressure is not a standalone route; low-risk deterministic work should stay direct.\n\n## Gate Probes / 冻结前定位自省\n"
+          addition = '''Pressure is not a standalone route; low-risk deterministic work should stay direct.
+
+### Competitive-frame convergence / 竞争框架收敛
+
+When a material competing-frame judgment remains after framing and routing, pressure must
+create decision value instead of balanced prose. This is support inside the existing owner,
+not a standalone method, route, owner, or mandatory debate.
+
+Use two moves only when the competition is real:
+
+1. **Competitive steelman / 竞争框架钢人** — preserve the strongest defensible active frame
+   and construct the strongest materially relevant counter-frame that could genuinely win
+   under the same judgment object, decision context, and Evidence / Claim Ceiling. Do not
+   reduce the counter-frame to objections, and do not force symmetry after evidence becomes
+   asymmetric.
+2. **Decisive discriminator / 决定性判别变量** — name the one fact, result-controller
+   difference, target/tradeoff, failure prediction, or observable condition that can change
+   the verdict, evidence requirement, next action, stopping condition, or handoff. If none
+   can change any of those, stop the pressure pass.
+
+Return immediately to the existing judgment owner. Existing Stable behavior still decides
+whether to acquire evidence, ask for user-owned context, reframe a malformed binary, decide
+now, or stay direct.
+
+#### Visible Translation Boundary / 可见表达翻译边界
+
+The discriminator is an internal judgment representation, not automatically user-facing
+language. Before visible output, translate it into the concrete choice, loss, condition,
+consequence, evidence move, or action the user actually faces.
+
+Prefer ordinary language such as `5K 多花的钱，值不值得换更锐的文字？` or
+`先跑完整回归；只要还有旧路径独有的正确行为，就先别删。` Do not expose terms such as
+`target function`, `relative weight`, `decisive discriminator`, `definition authority`,
+`result controller`, or `evidence ceiling` unless the user is discussing the method itself.
+
+## Gate Probes / 冻结前定位自省
+'''
+          replace_once(path, marker, addition)
+
+          # Preserve the research evidence boundary while recording the maintainer's patch decision.
+          path = "docs/internal/research/bidirectional-steelman-convergence.md"
+          text = read(path)
+          status_pattern = re.compile(
+              r"Status: experimental \*\*C-lite\*\* research candidate for issue #152\. It is not part of the\n"
+              r"Stable cognitive-primitive index or runtime routing surface\. Promotion still requires\n"
+              r"independent P2 behavioral evidence\."
+          )
+          status_new = (
+              "Status: **promoted as minimal Stable pressure support for v1.7.1 by maintainer release decision**.\n"
+              "The contaminated-session runs remain debugging evidence only. Independent P2 is deferred\n"
+              "post-release validation and is not evidence claimed by this release."
+          )
+          text, n = status_pattern.subn(status_new, text, count=1)
+          if n != 1:
+              raise AssertionError(f"candidate status replacement count={n}")
+          acceptance_pattern = re.compile(
+              r"Independent promotion requires the preregistered 13-case comparison plus independently\n"
+              r"owned or surface-changed variants\..*?prefer the simpler source-derived\n"
+              r"treatment\.\s*$",
+              re.S,
+          )
+          acceptance_new = (
+              "v1.7.1 promotion is a maintainer-authorized bugfix decision based on the observed residual\n"
+              "failure and contaminated-session protocol debugging. It does not upgrade that evidence to\n"
+              "independent proof. The preregistered P2 comparison and frozen holdouts remain useful\n"
+              "post-release validation; a negative result should trigger rollback or simplification in a\n"
+              "later patch rather than being rewritten as evidence for this release.\n"
+          )
+          text, n = acceptance_pattern.subn(acceptance_new, text, count=1)
+          if n != 1:
+              raise AssertionError(f"candidate acceptance replacement count={n}")
+          write(path, text)
+
+          path = "tests/bidirectional_steelman_pressure_tests.md"
+          anchor = (
+              "session runs are debugging evidence only. The independent P2 treatment named `C` below\n"
+              "now means **C-lite**, not the retired larger adaptation.\n"
+          )
+          note = anchor + (
+              "\nRelease decision for `v1.7.1`: the maintainer authorized the minimal pressure support as a\n"
+              "bugfix before independent P2. P2 remains post-release validation; this document must not\n"
+              "present the release decision itself as independent behavioral evidence.\n"
+          )
+          replace_once(path, anchor, note)
+
+          # Contract protects the minimal Stable activation and the no-new-route boundary.
+          path = "tests/test_bidirectional_steelman_contract.py"
+          text = read(path)
+          text = text.replace(
+              '"Status: experimental **C-lite** research candidate",',
+              '"Status: **promoted as minimal Stable pressure support for v1.7.1 by maintainer release decision**",',
+              1,
+          )
+          pattern = re.compile(
+              r"    def test_candidate_is_not_promoted_to_stable_surfaces_before_behavior_evidence\(self\):\n.*?\n(?=    def test_preregistered_pressure_surface_targets_clite_p2)",
+              re.S,
+          )
+          replacement = '''    def test_clite_is_promoted_as_pressure_support_without_new_route(self):
+        shared = SHARED.read_text(encoding="utf-8")
+        using = USING.read_text(encoding="utf-8")
+        pressure = (REPO / "docs" / "methodologies" / "primitives" / "expression-pressure-and-gates.md").read_text(encoding="utf-8")
+        for stable_text in (shared, using, pressure):
+            self.assertNotIn("Bidirectional Steelman Convergence / 双向钢人收敛", stable_text)
+        self.assertIn("Pressure Surface Check / 施压面检查", using)
+        self.assertIn("material competing frame remains", using)
+        self.assertIn("Visible Translation / 可见表达翻译", using)
+        self.assertIn("ordinary language", using)
+        self.assertIn("Competitive-frame convergence / 竞争框架收敛", pressure)
+        self.assertIn("Competitive steelman / 竞争框架钢人", pressure)
+        self.assertIn("Decisive discriminator / 决定性判别变量", pressure)
+        self.assertIn("Visible Translation Boundary / 可见表达翻译边界", pressure)
+        self.assertIn("not a standalone method, route, owner, or mandatory debate", pressure)
+
+'''
+          text, n = pattern.subn(replacement, text, count=1)
+          if n != 1:
+              raise AssertionError(f"contract promotion replacement count={n}")
+          write(path, text)
+
+          # Patch version surfaces.
+          replace_once("scripts/build-release-pack.py", 'VERSION = "1.7.0"', 'VERSION = "1.7.1"')
+          path = "tests/test_packaging_docs.py"
+          text = read(path)
+          if "1.7.0" not in text:
+              raise AssertionError("packaging current-version markers missing")
+          write(path, text.replace("1.7.0", "1.7.1"))
+          replace_once("README.md", "当前仓库版本：`v1.7.0`", "当前仓库版本：`v1.7.1`")
+
+          release_path = Path("docs/releases/v1.7.1.md")
+          if release_path.exists():
+              raise AssertionError("v1.7.1 release notes already exist")
+          release_path.write_text('''# Mindthus v1.7.1 发布说明
+
+发布日期：2026-08-18
+
+发布 tag：`v1.7.1`
+
+## 版本定位
+
+`v1.7.1` 是 1.x Stable 线的小型判断质量 bugfix patch，不新增方法论、route 或 judgment owner。
+
+它修复两个相邻的可见失败：当一个真实竞争框架仍未被充分构造时，回答可能给出弱反方或停在
+“双方都对”；即使内部找到了会改变结论的变量，也可能把 `权重 / target function /
+decisive discriminator` 一类内部抽象直接漏给用户，形成正确但不自然的表达。
+
+## 修复内容
+
+- `Pressure Surface Check` 在真实 competing-frame judgment 尚未收敛时，要求构造一个真正
+  可能获胜的最强竞争框架，而不是只列 objection。
+- 随后只找一个真正能改变 verdict、evidence、action、stop 或 handoff 的 decisive
+  discriminator；如果没有任何差异会改变行动，就停止压力检查，不制造平衡 prose。
+- 结果立即交回原有 judgment owner；Frame Fitness、Whole Elephant、Decision Context、
+  Evidence / Claim Ceiling、EDSP 等原 owner 继续负责 framing、定义权、用户目标、取证和
+  malformed binary。
+- Visible Translation Boundary：内部可以保留抽象判断表示，对外必须翻译成用户实际面对的
+  选择、损失、条件、证据或行动，例如“5K 多花的钱，值不值得换更锐的文字？”。
+- 低风险 direct / deterministic / preference 任务继续保持 sleep，不新增 mandatory question
+  或 mandatory debate。
+
+## 证据边界
+
+本修复来自 #152 的预注册案例、当前会话 P0/P1/C-lite 调试和用户可见表达回看。当前会话
+已经知道研究假设与 rubric，因此这些结果是 protocol-debug evidence，不是独立 P2 证明。
+维护者决定将最小修复作为 `v1.7.1` 发布；独立 P2 与冻结 holdout 保留为 post-release
+validation，不能被倒写成发布前已完成的独立证据。
+
+## 兼容性
+
+- Stable package / plugin manifest version：`1.7.1`。
+- **TPlan runtime generation 继续保持 `1.5.4` / `mindthus-v1.5.4`。** 本 patch 不修改 Mission
+  runtime fingerprint，不让既有 Mission 因 Stable patch 版本变化而失配。
+- 不新增 schema、method route、judgment owner、persistent state 或 interaction ceremony。
+
+## 验证
+
+```bash
+python3 -m compileall -q scripts skills tests
+python3 scripts/check-test-lifecycle.py
+python3 -m unittest discover -s tests -q
+python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-plugins-1.7.1
+python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-skills-1.7.1
+```
+
+发布资产：
+
+- `mindthus-plugins-1.7.1.tar.gz`
+- `mindthus-skills-1.7.1.tar.gz`
+- `SHA256SUMS`
+
+本 patch 只发布 Stable 资产；ROI Beta 如需同步将在独立补充发布中处理。
+''', encoding="utf-8")
+
+          path = "CHANGELOG.md"
+          text = read(path)
+          anchor = "## Unreleased\n\n"
+          if anchor not in text:
+              raise AssertionError("CHANGELOG Unreleased marker missing")
+          changelog = '''## v1.7.1
+
+发布 tag：`v1.7.1`
+
+[发布说明](docs/releases/v1.7.1.md)
+
+发布日期：2026-08-18
+
+### 版本定位
+
+这是 1.x Stable 线的小型判断质量 bugfix patch。它不新增方法、route 或 judgment owner，
+而是修复 competing-frame pressure 可能过弱、判断停在“双方都对”，以及内部抽象直接泄漏到
+用户可见表达的问题。
+
+### Competitive-frame convergence
+
+- `Pressure Surface Check` 在真实竞争框架仍未收敛时，构造真正可能获胜的 strongest
+  counter-frame，再找一个会改变 verdict / evidence / action / stop / handoff 的 decisive
+  discriminator。
+- 结果立即交还原有 Stable owner；不复制 Frame Fitness、Whole Elephant、Decision Context、
+  Evidence / Claim Ceiling 或 EDSP 的职责。
+- malformed binary 继续先由既有 framing/EDSP 重构；证据已经不对称时不强迫双向对称；
+  direct / deterministic / preference 任务继续直接执行。
+
+### Visible Translation Boundary
+
+- 内部可以保留 `weight / target function / discriminator` 等抽象表示，但用户可见答案必须
+  翻译成具体选择、损失、条件、证据或行动。
+- 典型表达从“文字锐度敏感程度相对于 5K 溢价的权重”改为“5K 多花的钱，值不值得换更锐的文字？”。
+- 不新增 mandatory question 或新的输出模板。
+
+### 证据与兼容性边界
+
+- #152 当前会话 P0/P1/C-lite 是 protocol-debug evidence；独立 P2 仍未完成，本版不声称
+  已获得独立行为增益证明。维护者决定先作为最小 bugfix 发布，冻结 holdout 保留为后续验证。
+- Stable package / plugin manifest 使用 `1.7.1`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本 patch 不修改 Mission
+  runtime fingerprint。
+
+### 验证与发布资产
+
+- compileall、Test Lifecycle、完整 unittest、Stable plugins/skills build 均通过后发布。
+- GitHub Release 提供 `mindthus-plugins-1.7.1.tar.gz`、`mindthus-skills-1.7.1.tar.gz` 和
+  `SHA256SUMS`。
+- 本 patch 不包含新的 ROI Beta 资产。
+
+'''
+          write(path, text.replace(anchor, anchor + changelog, 1))
+          PY
+
+      - name: Validate contracts and full suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q scripts skills tests
+          python3 scripts/check-test-lifecycle.py
+          python3 -m unittest tests.test_bidirectional_steelman_contract -q
+          python3 -m unittest tests.test_packaging_docs -q
+          python3 -m unittest discover -s tests -q
+
+      - name: Build and inspect Stable release packs
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/mindthus-plugins-1.7.1 /tmp/mindthus-skills-1.7.1
+          python3 scripts/build-release-pack.py --package plugins --out /tmp/mindthus-plugins-1.7.1
+          python3 scripts/build-release-pack.py --package skills --out /tmp/mindthus-skills-1.7.1
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          codex = Path('/tmp/mindthus-plugins-1.7.1/codex-plugin/mindthus/.codex-plugin/plugin.json')
+          claude = Path('/tmp/mindthus-plugins-1.7.1/claude-code/claude-plugin/.claude-plugin/plugin.json')
+          assert json.loads(codex.read_text())['version'] == '1.7.1'
+          assert json.loads(claude.read_text())['version'] == '1.7.1'
+          pressure = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/resources/primitives/expression-pressure-and-gates.md').read_text()
+          entry = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/SKILL.md').read_text()
+          for marker in ('Competitive-frame convergence / 竞争框架收敛', 'Decisive discriminator / 决定性判别变量', 'Visible Translation Boundary / 可见表达翻译边界'):
+              assert marker in pressure, marker
+          assert 'material competing frame remains' in entry
+          assert 'Visible Translation / 可见表达翻译' in entry
+          PY
+
+      - name: Commit validated v1.7.1 source and remove temporary prep workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git rm .github/workflows/prepare-v1.7.1.yml .github/workflows/prepare-v1.7.1-v2.yml
+          git add -A
+          git diff --cached --check
+          git commit -m 'fix: promote competitive-frame convergence for v1.7.1'
+          git push origin HEAD:research/bidirectional-steelman-convergence
+
+      - name: Persist observable failure marker
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          mkdir -p docs/internal/research/results
+          cat > docs/internal/research/results/v1.7.1-prepare-failure.txt <<EOF
+          v1.7.1 preparation failed.
+          run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          sha: $GITHUB_SHA
+          EOF
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git add docs/internal/research/results/v1.7.1-prepare-failure.txt
+          git commit -m 'research: record v1.7.1 preparation failure' || exit 0
+          git push origin HEAD:research/bidirectional-steelman-convergence || true
