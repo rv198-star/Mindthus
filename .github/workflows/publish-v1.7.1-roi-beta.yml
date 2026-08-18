@@ -1,0 +1,175 @@
+name: Publish v1.7.1 ROI Beta
+
+on:
+  push:
+    branches:
+      - release/v1.7.1-publish-ops
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ contains(github.event.head_commit.message, '[publish-v1.7.1-roi-beta]') }}
+    runs-on: ubuntu-latest
+    env:
+      STABLE_SHA: dca73c1ff1710eca3d5b56216c374ce6c2240117
+      BETA_SHA: 0a73dbdfbeec7b1b9dfb78ad63ca1eb3f3ad6f4b
+      EXPECTED_PLUGINS_SHA256: 2cfbaad7909706f27a85a7a5e662952a2860e995ea902149a644b44d54598cdc
+      EXPECTED_SKILLS_SHA256: 9f0fe49c08c341e4cfc31ce0c573e05004d80fb5e7184af54bf79c07e137b98d
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out exact ROI Beta source
+        uses: actions/checkout@v4
+        with:
+          ref: 0a73dbdfbeec7b1b9dfb78ad63ca1eb3f3ad6f4b
+          fetch-depth: 0
+          path: beta-src
+
+      - name: Check out exact Stable source
+        uses: actions/checkout@v4
+        with:
+          ref: dca73c1ff1710eca3d5b56216c374ce6c2240117
+          fetch-depth: 0
+          path: stable-src
+
+      - name: Check out publication controls
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.1-publish-ops
+          fetch-depth: 1
+          path: ops
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate composition and build reproducible Beta twice
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          python3 ops/scripts/validate-v1.7.1-roi-beta.py \
+            --beta-src beta-src \
+            --stable-src stable-src \
+            --dist dist
+
+      - name: Download and pin already-published Stable assets
+        run: |
+          mkdir -p dist/stable
+          gh release download v1.7.1 \
+            --repo rv198-star/Mindthus \
+            --pattern 'mindthus-plugins-1.7.1.tar.gz' \
+            --pattern 'mindthus-skills-1.7.1.tar.gz' \
+            --dir dist/stable
+          test "$(sha256sum dist/stable/mindthus-plugins-1.7.1.tar.gz | awk '{print $1}')" = "$EXPECTED_PLUGINS_SHA256"
+          test "$(sha256sum dist/stable/mindthus-skills-1.7.1.tar.gz | awk '{print $1}')" = "$EXPECTED_SKILLS_SHA256"
+          cp dist/stable/mindthus-plugins-1.7.1.tar.gz dist/
+          cp dist/stable/mindthus-skills-1.7.1.tar.gz dist/
+          cd dist
+          sha256sum \
+            mindthus-plugins-1.7.1.tar.gz \
+            mindthus-skills-1.7.1.tar.gz \
+            mindthus-beta-1.7.1-roi-beta.tar.gz > SHA256SUMS
+          sha256sum -c SHA256SUMS
+
+      - name: Create exact ROI Beta source tag
+        working-directory: beta-src
+        run: |
+          git config user.name "Mindthus Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git rev-parse -q --verify refs/tags/v1.7.1-roi-beta >/dev/null; then
+            test "$(git rev-list -n 1 v1.7.1-roi-beta)" = "$BETA_SHA"
+          else
+            git tag -a v1.7.1-roi-beta "$BETA_SHA" -m "Mindthus v1.7.1 ROI Beta source"
+          fi
+          git push origin refs/tags/v1.7.1-roi-beta
+
+      - name: Add ROI Beta to the existing v1.7.1 Release
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          stable = Path('stable-src/docs/releases/v1.7.1.md').read_text(encoding='utf-8')
+          stable = stable.replace(
+              '- `mindthus-skills-1.7.1.tar.gz`\n- `SHA256SUMS`\n\n本 patch 只发布 Stable 资产；ROI Beta 如需同步将在独立补充发布中处理。',
+              '- `mindthus-skills-1.7.1.tar.gz`\n- `mindthus-beta-1.7.1-roi-beta.tar.gz`\n- `SHA256SUMS`\n\n本 patch 按默认发布规则同步提供 ROI Beta supplemental experimental asset。'
+          )
+          beta = Path('beta-src/docs/releases/v1.7.1-roi-beta.md').read_text(encoding='utf-8')
+          Path('dist/RELEASE_NOTES.md').write_text(stable + '\n\n---\n\n' + beta, encoding='utf-8')
+          PY
+          gh release upload v1.7.1 \
+            --repo rv198-star/Mindthus \
+            dist/mindthus-beta-1.7.1-roi-beta.tar.gz \
+            dist/SHA256SUMS \
+            --clobber
+          gh release edit v1.7.1 \
+            --repo rv198-star/Mindthus \
+            --notes-file dist/RELEASE_NOTES.md
+
+      - name: Verify downloaded final release assets
+        run: |
+          rm -rf verify
+          mkdir verify
+          gh release download v1.7.1 \
+            --repo rv198-star/Mindthus \
+            --pattern 'mindthus-plugins-1.7.1.tar.gz' \
+            --pattern 'mindthus-skills-1.7.1.tar.gz' \
+            --pattern 'mindthus-beta-1.7.1-roi-beta.tar.gz' \
+            --pattern 'SHA256SUMS' \
+            --dir verify
+          cd verify
+          sha256sum -c SHA256SUMS
+          test "$(sha256sum mindthus-plugins-1.7.1.tar.gz | awk '{print $1}')" = "$EXPECTED_PLUGINS_SHA256"
+          test "$(sha256sum mindthus-skills-1.7.1.tar.gz | awk '{print $1}')" = "$EXPECTED_SKILLS_SHA256"
+          cd ..
+          gh release view v1.7.1 --repo rv198-star/Mindthus --json isDraft,isPrerelease,assets,url > dist/release-view.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          view = json.loads(Path('dist/release-view.json').read_text())
+          assert view['isDraft'] is False
+          assert view['isPrerelease'] is False
+          names = {item['name'] for item in view['assets']}
+          expected = {
+              'mindthus-plugins-1.7.1.tar.gz',
+              'mindthus-skills-1.7.1.tar.gz',
+              'mindthus-beta-1.7.1-roi-beta.tar.gz',
+              'SHA256SUMS',
+          }
+          assert expected.issubset(names), (expected, names)
+          PY
+
+      - name: Persist publication verification on ops branch
+        run: |
+          BETA_DIGEST="$(sha256sum verify/mindthus-beta-1.7.1-roi-beta.tar.gz | awk '{print $1}')"
+          mkdir -p ops/docs/internal/research/results
+          BETA_DIGEST="$BETA_DIGEST" python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          validation = json.loads(Path('dist/roi-beta-validation.json').read_text())
+          view = json.loads(Path('dist/release-view.json').read_text())
+          payload = {
+              'schema_version': 'mindthus-release-verification-v0.1',
+              'status': 'verified',
+              'version': '1.7.1-roi-beta',
+              'stable_tag': 'v1.7.1',
+              'source_tag': 'v1.7.1-roi-beta',
+              'stable_sha': validation['stable_sha'],
+              'beta_sha': validation['beta_sha'],
+              'release_url': view['url'],
+              'draft': view['isDraft'],
+              'prerelease': view['isPrerelease'],
+              'beta_archive_sha256': os.environ['BETA_DIGEST'],
+              'downloaded_checksum_verification': True,
+              'reproducible_beta_archive': True,
+              'shared_core_capability_verified': True,
+          }
+          Path('ops/docs/internal/research/results/v1.7.1-roi-beta-release-verification.json').write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+          PY
+          cd ops
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git add docs/internal/research/results/v1.7.1-roi-beta-release-verification.json
+          git commit -m 'chore(release): record v1.7.1 ROI Beta verification'
+          git push origin HEAD:release/v1.7.1-publish-ops
