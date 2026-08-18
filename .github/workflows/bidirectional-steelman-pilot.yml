@@ -16,7 +16,7 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       MODEL: gpt-5.6-sol
       PILOT_CASES: bsc-001,bsc-006,bsc-007,bsc-010
-      RESULT_DIR: docs/internal/research/results/bsc-codex-pilot-next
+      RESULT_DIR: docs/internal/research/results/bsc-codex-clite-pilot-next
     steps:
       - name: Check out research branch
         uses: actions/checkout@v4
@@ -42,7 +42,8 @@ jobs:
             echo 'available=false' >> "$GITHUB_OUTPUT"
             cat > "$RESULT_DIR/environment.json" <<'JSON'
           {
-            "schema_version": "mindthus-bsc-codex-environment-v0.1",
+            "schema_version": "mindthus-bsc-codex-clite-environment-v0.1",
+            "candidate": "C-lite",
             "credential_gate": "blocked",
             "reason": "OPENAI_API_KEY repository secret is not configured",
             "behavioral_results_available": false
@@ -52,7 +53,8 @@ jobs:
             echo 'available=true' >> "$GITHUB_OUTPUT"
             cat > "$RESULT_DIR/environment.json" <<'JSON'
           {
-            "schema_version": "mindthus-bsc-codex-environment-v0.1",
+            "schema_version": "mindthus-bsc-codex-clite-environment-v0.1",
+            "candidate": "C-lite",
             "credential_gate": "pass",
             "behavioral_results_available": null
           }
@@ -65,7 +67,7 @@ jobs:
           npm install -g @openai/codex
           codex --version | tee "$RESULT_DIR/codex-version.txt"
 
-      - name: Run preregistered A/B/C pilot
+      - name: Run preregistered A/B/C-lite pilot
         id: pilot
         if: steps.credential.outputs.available == 'true'
         shell: bash
@@ -88,7 +90,7 @@ jobs:
               fi
             fi
 
-            python3 scripts/run-bidirectional-steelman-experiment.py \
+            python3 scripts/run-bidirectional-steelman-clite-experiment.py \
               --variant "$variant" \
               --case-ids "$PILOT_CASES" \
               --out-dir "$OUT" \
@@ -136,7 +138,8 @@ jobs:
                       "contamination_flags": record.get("contamination_flags"),
                   })
           payload = {
-              "schema_version": "mindthus-bsc-codex-pilot-public-result-v0.1",
+              "schema_version": "mindthus-bsc-codex-clite-pilot-public-result-v0.1",
+              "candidate": "C-lite" if variant == "C" else None,
               "variant": variant,
               "model": os.environ["MODEL"],
               "pilot_case_ids": ["bsc-001", "bsc-006", "bsc-007", "bsc-010"],
@@ -191,14 +194,14 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m 'research: record Codex BSC pilot evidence'
+          git commit -m 'research: record Codex BSC C-lite pilot evidence'
           git push origin HEAD:research/bidirectional-steelman-convergence
 
       - name: Upload full pilot evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bsc-codex-pilot-full
+          name: bsc-codex-clite-pilot-full
           path: ${{ runner.temp }}/bsc-*
           if-no-files-found: warn
           retention-days: 14
