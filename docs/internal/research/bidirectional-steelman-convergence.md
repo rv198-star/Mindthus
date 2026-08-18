@@ -1,161 +1,144 @@
 # Bidirectional Steelman Convergence / 双向钢人收敛
 
-Status: experimental research candidate for issue #152. This document is not part of the
-Stable cognitive-primitive index or runtime routing surface. Promotion requires the
-preregistered behavioral comparison in `tests/bidirectional_steelman_pressure_tests.md`.
+Status: experimental **C-lite** research candidate for issue #152. It is not part of the
+Stable cognitive-primitive index or runtime routing surface. Promotion still requires
+independent P2 behavioral evidence.
 
-Bidirectional Steelman Convergence is a candidate cross-cutting support protocol for real
-competing-frame judgments. It is not a standalone method, not a new route, and not a
-judgment owner.
+The contaminated-session P0/P1 sweeps are recorded under
+`docs/internal/research/results/bsc-session-pilot-2026-08-18-*`. They are debugging
+evidence, not acceptance evidence.
 
-Its purpose is narrow: after the active object and decision context are fit enough to
-compare, strengthen the active position and the strongest relevant counter-position,
-then converge through the disagreement that can actually change the verdict.
+## Why the candidate was simplified
+
+The source material showed a real useful move, but the larger first Mindthus adaptation
+duplicated controls that Stable Mindthus already owns: frame correction, malformed-binary
+escape, decision context, evidence acquisition, direct-task sleep, question discipline,
+and final judgment ownership.
+
+The current candidate keeps only the two observed novel moves.
+
+It is not a standalone method, not a new route, not a judgment owner, and not a runtime
+role model.
 
 ## Core Rule
 
-> 先把双方都加强到最难被轻易击败，再找真正会翻转结论的那个变量。
+> 让真正能赢的竞争框架出现，再找真正能定胜负的那个变量。
 
-Do not use this candidate merely because two opinions are mentioned. It is intended for
-a material judgment that risks either:
+Only run this support when current Stable framing/routing leaves a **material competing-
+frame judgment** unresolved. Stable Mindthus decides whether such a judgment exists.
 
-- accepting the user's or agent's current frame too easily; or
-- ending in symmetrical `both sides are right` framing even though the decision needs a
-  sharper owner, condition, evidence move, or action.
+## Move 1 — Competitive Steelman / 竞争框架钢人
 
-The active judgment owner remains `EDSP`, `SELA`, `Whole Elephant`, `Decision Context
-Calibration`, or another routed owner. This candidate only supplies competing-frame
-pressure and convergence.
+Preserve the strongest defensible form of the active/current frame, then construct the
+strongest materially relevant counter-frame that could genuinely win.
 
-## Prerequisite: Lock Before Steelman
-
-Do not steelman a malformed question as if its offered sides were exhaustive.
-
-Before this candidate runs, lock the comparison surface:
+The comparison must inherit the active Stable constraints:
 
 - same judgment object;
-- same decision actor/timing/target when the judgment is situated;
-- same evidence / claim ceiling;
-- no unresolved frame error that would make the A/B comparison synthetic.
+- same situated decision context when relevant;
+- same Evidence / Claim Ceiling;
+- same active judgment owner.
 
-If Frame Fitness or EDSP finds a malformed binary, reframe first. A third-frame escape
-is valid and preferred over strengthening a false binary.
+This is not `find objections`. The counter-frame must explain or predict an important
+result better enough that the current judgment could change if it wins.
 
-## Mainline
+Do not force symmetry after evidence becomes asymmetric. If Stable Whole Elephant already
+shows that the local mechanism genuinely owns the complete target result, no steelman
+ceremony is required. If Stable Frame Fitness / EDSP says the offered A/B is malformed,
+reframe first rather than polishing the bad binary.
 
-### 1. Steelman A
+## Move 2 — Decisive Discriminator / 决定性判别变量
 
-Construct the strongest defensible version of the active/current position.
+Name the **one** disagreement with the highest judgment value: a fact, result controller,
+definition-authority difference, actor/timing/target/tradeoff variable, failure
+prediction, or other observable condition that can change at least one of:
 
-Preserve what is genuinely true. Do not weaken it to make the later verdict easy.
-Name the strongest support, the result it predicts, and the boundary it must survive.
+- verdict;
+- evidence requirement;
+- next action;
+- stopping condition;
+- handoff.
 
-### 2. Steelman B
+If no difference can change any of those, stop the pressure pass instead of adding more
+balanced prose.
 
-Construct the strongest relevant counter-position under the same object, context, and
-evidence ceiling.
+## Return To Stable Owner
 
-This is not `find objections to A`. The counter-position should be able to win if its
-view of the result controller, evidence, or decision target is actually better.
+After the discriminator is exposed, return immediately to the existing Stable owner.
+This candidate does **not** decide the information move or final answer protocol.
 
-### 3. Decisive Discriminator
+Existing Stable behavior remains authoritative:
 
-Do not summarize ten differences. Name the disagreement with the highest verdict value:
+- externally verifiable uncertainty -> acquire evidence;
+- user-owned target/tradeoff -> clarify only when needed;
+- malformed frame/binary -> reframe through the existing owner;
+- sufficient context -> decide now;
+- direct/deterministic/preference task -> stay asleep;
+- final verdict -> active Stable judgment owner.
 
-- a fact that would change the conclusion;
-- a result controller or definition-authority difference;
-- an actor/timing/target/tradeoff variable that flips situated advice;
-- a failure prediction that distinguishes the frames;
-- or another observable condition that changes strategy, evidence, next action, stop,
-  or handoff.
+There is no mandatory question. `0 or 1` questions is an outcome of existing Stable
+judgment, not a C-lite rule.
 
-If no identified difference can change the verdict or action, the steelman pass has not
-created decision value and should stop rather than add prose.
+## Minimal Debug Shape
 
-### 4. One Information-Gain Move
-
-Resolve the decisive discriminator with the smallest useful next move:
-
-- externally verifiable fact or runtime result -> acquire evidence;
-- user-owned goal, value, acceptable loss, or authority -> ask at most one decisive
-  question;
-- facts/context already sufficient -> ask nothing and decide now;
-- evidence cannot currently resolve the difference -> lower the claim ceiling or return
-  an explicit conditional / blocked disposition.
-
-`One question` is an upper bound, not a requirement.
-
-### 5. Commit
-
-Return control to the active judgment owner and commit to the strongest supported
-visible result:
-
-- verdict or active conditional branch;
-- why that frame wins for the current object/decision;
-- the main overturn condition;
-- next action.
-
-Do not end with a generic 50/50 synthesis merely because both steelmanned positions
-contain local truths.
-
-## Minimal Internal Shape
-
-When useful for validation or debugging, keep the internal shape small:
+When validation/debugging needs an observable record, keep it bounded:
 
 ```yaml
-active_position:
-strongest_counter_position:
-comparison_lock:
-  judgment_object:
-  decision_context:
-  evidence_ceiling:
-third_frame_escape:
-true_disagreement:
+active_frame:
+strongest_counter_frame:
 decisive_discriminator:
-resolution_move: acquire_evidence | ask_one_user_question | decide_now | conditional_or_blocked
-one_question:
-overturn_condition:
+changed_surface: verdict | evidence | action | stop | handoff
+stable_owner_handoff:
 ```
 
-This is not a reasoning transcript. Keep fields as bounded claims or references.
+This is not a reasoning transcript.
 
 ## Boundaries
 
-- No real competing-frame judgment, no steelman pass.
-- No frame lock, no steelman pass.
-- Missing facts are not an invitation to invent stronger arguments; acquire evidence.
-- User preferences, values, aesthetics, and risk posture are legitimate constraints,
-  not opposing positions that require steelmanning by default.
-- Low-risk deterministic execution should remain direct.
-- Do not force symmetry after the evidence becomes asymmetric.
-- Do not require consensus. A strong counter-position may still lose clearly.
-- Do not create a new method route, judgment owner, or runtime role model.
+- No real competing-frame judgment, no C-lite support.
+- No new method route or owner.
+- No mandatory positive/negative role play.
+- No mandatory question.
+- No invented evidence to strengthen a weak factual position.
+- No pressure against explicit user aesthetics/preferences unless they make factual
+  claims that require judgment.
+- No symmetry requirement after one frame clearly wins on evidence.
+- No claim that a second model/prompt instance is independent evidence merely because it
+  generated a different wording.
 
-## Relationship To Existing Stable Primitives
+## Relationship To Stable Mindthus
 
-This section describes the proposed handoff if the candidate is later promoted. It does
-not modify Stable routing today.
+This section describes proposed support relationships only; Stable routing is unchanged.
 
-- `Frame Fitness Check` runs earlier when the question itself may be captured or
-  malformed.
-- `Whole Elephant Protocol` still owns definition-authority judgments; steelman would
-  help it compare a local-definition claim with the strongest competing whole-object
-  account.
-- `Decision Context Calibration` still owns situated decisions; steelman would help
-  expose which context variable actually flips the answer.
-- `Perspective Pressure` remains useful inside SELA/EDSP. This candidate is narrower and
-  explicitly requires symmetric strengthening plus decisive convergence.
-- `Evidence / Claim Ceiling` decides how far either position may claim facts.
-- `Aspect Ownership Matrix` still chooses the visible judgment owner; steelman cannot
-  average or override owners.
+- `Frame Fitness Check` owns bad framing and malformed offered binaries.
+- `Whole Elephant Protocol` owns definition-authority / partial-truth judgments.
+- `Decision Context Calibration` owns actor/timing/target/tradeoff answer flips.
+- `Evidence / Claim Ceiling` owns factual claim strength.
+- `Aspect Ownership Matrix` keeps one visible judgment owner.
+- `Perspective Pressure` remains the existing method-local pressure surface. C-lite is
+  being tested as a smaller cross-owner competing-frame construction move, not as a new
+  pressure owner.
 
-## Validation Boundary
+## P2 Treatment Contract
 
-The presence of this document or its contract test proves only that the candidate is
-specified and preregistered. It does not prove behavioral improvement or justify Stable
-activation.
+Independent P2 should compare fresh sessions:
 
-Behavioral acceptance requires preregistered comparison against current Mindthus and the
-source bidirectional-steelman protocol on known regressions, surface-changed variants,
-and negative controls. If the source protocol performs as well as or better than the
-Mindthus adaptation, keep the simpler treatment instead of preserving extra machinery.
+- **A — current Stable Mindthus**;
+- **B — source bidirectional-steelman protocol**;
+- **C — C-lite:** Stable Mindthus + only `Competitive Steelman` +
+  `Decisive Discriminator` when a real competing-frame judgment remains;
+- **D — existing single-agent multi-role pressure** only as an optional diagnostic
+  control where Stable methods already call for it.
+
+The retired larger C adaptation remains preserved only in the session-pilot records; it
+is no longer the primary product candidate.
+
+## Acceptance Boundary
+
+Contract markers and session pilots do not prove behavioral improvement.
+
+Independent promotion requires the preregistered 13-case comparison plus independently
+owned or surface-changed variants. C-lite should be rejected if it cannot improve
+counter-frame/discriminator quality over Stable Mindthus without increasing false wake-up,
+ceremony, or material cost. If the source B performs as well or better after controlling
+its overactivation, prefer the simpler source-derived treatment.
