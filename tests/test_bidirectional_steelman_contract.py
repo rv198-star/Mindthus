@@ -3,19 +3,20 @@ from pathlib import Path
 
 
 REPO = Path(__file__).resolve().parents[1]
-PRIMITIVE = REPO / "docs" / "methodologies" / "primitives" / "bidirectional-steelman-convergence.md"
+CANDIDATE = REPO / "docs" / "internal" / "research" / "bidirectional-steelman-convergence.md"
 SHARED = REPO / "docs" / "methodologies" / "shared-primitives.md"
 USING = REPO / "skills" / "using-mindthus" / "SKILL.md"
 PRESSURE = REPO / "tests" / "bidirectional_steelman_pressure_tests.md"
 
 
 class BidirectionalSteelmanContractTests(unittest.TestCase):
-    def test_primitive_exposes_core_boundaries(self):
-        text = PRIMITIVE.read_text(encoding="utf-8")
+    def test_candidate_exposes_core_boundaries(self):
+        text = CANDIDATE.read_text(encoding="utf-8")
         for phrase in (
+            "Status: experimental research candidate",
             "Bidirectional Steelman Convergence / 双向钢人收敛",
             "not a standalone method",
-            "not a judgment owner",
+            "The active judgment owner remains",
             "Lock Before Steelman",
             "Steelman A",
             "Steelman B",
@@ -29,17 +30,14 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_shared_index_exposes_primitive_as_support_not_owner(self):
-        text = SHARED.read_text(encoding="utf-8")
-        self.assertIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
-        self.assertIn("primitives/bidirectional-steelman-convergence.md", text)
-        self.assertIn("最强竞争立场", text)
-
-    def test_using_mindthus_references_competing_frame_pressure_without_expanding_contract(self):
-        text = USING.read_text(encoding="utf-8")
-        self.assertIn("Pressure Surface Check / 施压面检查", text)
-        self.assertIn("competing frames", text)
-        self.assertIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
+    def test_candidate_is_not_promoted_to_stable_surfaces_before_behavior_evidence(self):
+        shared = SHARED.read_text(encoding="utf-8")
+        using = USING.read_text(encoding="utf-8")
+        for text in (shared, using):
+            self.assertNotIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
+        self.assertIn("Pressure Surface Check / 施压面检查", using)
+        self.assertIn("pressure is not a route", using)
+        self.assertIn("assign its owner", using)
 
     def test_preregistered_pressure_surface_is_present(self):
         text = PRESSURE.read_text(encoding="utf-8")
