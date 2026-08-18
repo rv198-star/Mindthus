@@ -7,17 +7,16 @@ on:
 
 permissions:
   contents: write
-  models: read
 
 jobs:
   pilot:
     if: contains(github.event.head_commit.message, '[run-bsc-pilot]')
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      MODEL: openai/gpt-5
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      MODEL: gpt-5.6-sol
       PILOT_CASES: bsc-001,bsc-006,bsc-007,bsc-010
-      RESULT_DIR: docs/internal/research/results/bsc-github-models-pilot-2026-08-18-1
+      RESULT_DIR: docs/internal/research/results/bsc-codex-pilot-next
     steps:
       - name: Check out research branch
         uses: actions/checkout@v4
@@ -29,36 +28,129 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run preregistered A/B/C direct-inference pilot
-        id: pilot
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Credential gate
+        id: credential
         shell: bash
         run: |
           mkdir -p "$RESULT_DIR"
+          if [[ -z "${OPENAI_API_KEY:-}" ]]; then
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            cat > "$RESULT_DIR/environment.json" <<'JSON'
+          {
+            "schema_version": "mindthus-bsc-codex-environment-v0.1",
+            "credential_gate": "blocked",
+            "reason": "OPENAI_API_KEY repository secret is not configured",
+            "behavioral_results_available": false
+          }
+          JSON
+          else
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+            cat > "$RESULT_DIR/environment.json" <<'JSON'
+          {
+            "schema_version": "mindthus-bsc-codex-environment-v0.1",
+            "credential_gate": "pass",
+            "behavioral_results_available": null
+          }
+          JSON
+          fi
+
+      - name: Install Codex CLI
+        if: steps.credential.outputs.available == 'true'
+        run: |
+          npm install -g @openai/codex
+          codex --version | tee "$RESULT_DIR/codex-version.txt"
+
+      - name: Run preregistered A/B/C pilot
+        id: pilot
+        if: steps.credential.outputs.available == 'true'
+        shell: bash
+        run: |
           set +e
           overall_rc=0
           for variant in A B C; do
-            echo "=== variant $variant ==="
-            OUT="$RUNNER_TEMP/bsc-github-models-$variant"
-            mkdir -p "$OUT"
-            python3 scripts/run-bidirectional-steelman-github-models.py \
+            GEN_HOME="$RUNNER_TEMP/codex-$variant"
+            JUDGE_HOME="$RUNNER_TEMP/codex-judge-$variant"
+            OUT="$RUNNER_TEMP/bsc-$variant"
+            mkdir -p "$GEN_HOME" "$JUDGE_HOME" "$OUT"
+
+            if [[ "$variant" != 'B' ]]; then
+              CODEX_HOME="$GEN_HOME" scripts/install-skills.sh codex --repo "$GITHUB_WORKSPACE" --force
+              install_rc=$?
+              if [[ $install_rc -ne 0 ]]; then
+                overall_rc=1
+                printf '{"variant":"%s","stage":"install_mindthus","returncode":%s}\n' "$variant" "$install_rc" > "$RESULT_DIR/$variant.failure.json"
+                continue
+              fi
+            fi
+
+            python3 scripts/run-bidirectional-steelman-experiment.py \
               --variant "$variant" \
+              --case-ids "$PILOT_CASES" \
+              --out-dir "$OUT" \
+              --phase all \
+              --auto-followup \
+              --codex-home "$GEN_HOME" \
+              --judge-codex-home "$JUDGE_HOME" \
+              --empty-home-root "$RUNNER_TEMP/empty-gen-$variant" \
+              --judge-empty-home-root "$RUNNER_TEMP/empty-judge-$variant" \
               --model "$MODEL" \
               --judge-model "$MODEL" \
-              --case-ids "$PILOT_CASES" \
-              --out-dir "$OUT"
+              --timeout 300 \
+              --force
             rc=$?
-            if [[ -f "$OUT/$variant.json" ]]; then
-              cp "$OUT/$variant.json" "$RESULT_DIR/$variant.json"
-            fi
             if [[ $rc -ne 0 ]]; then
               overall_rc=1
-              printf '{"variant":"%s","stage":"github_models_experiment","returncode":%s}\n' "$variant" "$rc" > "$RESULT_DIR/$variant.failure.json"
+              printf '{"variant":"%s","stage":"experiment","returncode":%s}\n' "$variant" "$rc" > "$RESULT_DIR/$variant.failure.json"
             fi
+
+            VARIANT="$variant" OUT="$OUT" RESULT_DIR="$RESULT_DIR" MODEL="$MODEL" python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          variant = os.environ["VARIANT"]
+          out = Path(os.environ["OUT"])
+          root = Path(os.environ["RESULT_DIR"])
+          summary_path = out / "summary.json"
+          scores_path = out / "scores.jsonl"
+          summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.is_file() else None
+          scores = [json.loads(line) for line in scores_path.read_text(encoding="utf-8").splitlines() if line.strip()] if scores_path.is_file() else []
+          cases = []
+          records_dir = out / "records"
+          if records_dir.is_dir():
+              for path in sorted(records_dir.glob("*.json")):
+                  record = json.loads(path.read_text(encoding="utf-8"))
+                  cases.append({
+                      "case_id": record.get("case_id"),
+                      "case_type": record.get("case_type"),
+                      "title": record.get("title"),
+                      "final_answer": record.get("final_answer"),
+                      "returncode": record.get("returncode"),
+                      "duration_seconds": record.get("duration_seconds"),
+                      "usage": record.get("usage"),
+                      "contamination_flags": record.get("contamination_flags"),
+                  })
+          payload = {
+              "schema_version": "mindthus-bsc-codex-pilot-public-result-v0.1",
+              "variant": variant,
+              "model": os.environ["MODEL"],
+              "pilot_case_ids": ["bsc-001", "bsc-006", "bsc-007", "bsc-010"],
+              "summary": summary,
+              "scores": scores,
+              "cases": cases,
+          }
+          (root / f"{variant}.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
           done
           echo "returncode=$overall_rc" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Build pilot overview
+      - name: Finalize environment evidence
         if: always()
         shell: bash
         run: |
@@ -66,40 +158,27 @@ jobs:
           import json
           import os
           from pathlib import Path
-
-          root = Path(os.environ["RESULT_DIR"])
-          variants = {}
-          for variant in "ABC":
-              result_path = root / f"{variant}.json"
-              failure_path = root / f"{variant}.failure.json"
-              if result_path.is_file():
-                  result = json.loads(result_path.read_text(encoding="utf-8"))
-                  summary = result.get("summary") or {}
-                  variants[variant] = {
-                      "status": "completed" if summary.get("judged_case_count") else "incomplete",
-                      "model": result.get("model"),
-                      "judged_case_count": summary.get("judged_case_count"),
-                      "positive_behavioral_pass_rate": summary.get("positive_behavioral_pass_rate"),
-                      "negative_control_pass_rate": summary.get("negative_control_pass_rate"),
-                      "hard_fail_rate": summary.get("hard_fail_rate"),
-                      "generation_error_count": summary.get("generation_error_count"),
-                      "judge_error_count": summary.get("judge_error_count"),
-                  }
-              elif failure_path.is_file():
-                  variants[variant] = {"status": "failed", "failure_file": failure_path.name}
-              else:
-                  variants[variant] = {"status": "missing"}
-
-          overview = {
-              "schema_version": "mindthus-bsc-github-models-pilot-overview-v0.1",
-              "substrate": "github-models-direct-inference",
-              "runtime_equivalence_claim": False,
-              "model": os.environ["MODEL"],
-              "pilot_case_ids": ["bsc-001", "bsc-006", "bsc-007", "bsc-010"],
-              "variants": variants,
-              "interpretation_boundary": "This pilot compares treatment prompts on an independent direct-inference substrate. It does not certify Codex or ChatGPT Stable runtime behavior.",
-          }
-          (root / "overview.json").write_text(json.dumps(overview, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          path = Path(os.environ["RESULT_DIR"]) / "environment.json"
+          data = json.loads(path.read_text(encoding="utf-8"))
+          if data.get("credential_gate") == "pass":
+              variants = {}
+              for variant in "ABC":
+                  result_path = path.parent / f"{variant}.json"
+                  failure_path = path.parent / f"{variant}.failure.json"
+                  if result_path.is_file():
+                      result = json.loads(result_path.read_text(encoding="utf-8"))
+                      summary = result.get("summary") or {}
+                      variants[variant] = {
+                          "status": "completed" if summary.get("judged_case_count") else "incomplete",
+                          "judged_case_count": summary.get("judged_case_count"),
+                      }
+                  elif failure_path.is_file():
+                      variants[variant] = {"status": "failed", "failure_file": failure_path.name}
+                  else:
+                      variants[variant] = {"status": "missing"}
+              data["variants"] = variants
+              data["behavioral_results_available"] = any(v.get("status") == "completed" for v in variants.values())
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           PY
 
       - name: Persist pilot evidence to research branch
@@ -110,18 +189,17 @@ jobs:
           git config user.email 'mindthus-experiment-bot@users.noreply.github.com'
           git add "$RESULT_DIR"
           if git diff --cached --quiet; then
-            echo 'No pilot evidence to commit.'
             exit 0
           fi
-          git commit -m 'research: record GitHub Models BSC pilot evidence'
+          git commit -m 'research: record Codex BSC pilot evidence'
           git push origin HEAD:research/bidirectional-steelman-convergence
 
       - name: Upload full pilot evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bsc-github-models-pilot-full
-          path: ${{ runner.temp }}/bsc-github-models-*
+          name: bsc-codex-pilot-full
+          path: ${{ runner.temp }}/bsc-*
           if-no-files-found: warn
           retention-days: 14
 
@@ -129,7 +207,11 @@ jobs:
         if: always()
         shell: bash
         run: |
+          if [[ '${{ steps.credential.outputs.available }}' != 'true' ]]; then
+            echo 'Behavioral pilot blocked at credential gate.' >&2
+            exit 2
+          fi
           if [[ '${{ steps.pilot.outputs.returncode }}' != '0' ]]; then
-            echo 'At least one GitHub Models pilot variant failed.' >&2
+            echo 'At least one pilot variant failed.' >&2
             exit 1
           fi
