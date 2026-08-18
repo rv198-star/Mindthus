@@ -7,6 +7,11 @@ The contaminated-session P0/P1 sweeps simplified the product candidate before P2
 session runs are debugging evidence only. The independent P2 treatment named `C` below
 now means **C-lite**, not the retired larger adaptation.
 
+A later user-facing review found one additional acceptance defect before independent P2:
+correct internal judgment can still leak audit-like abstractions into the visible answer.
+This refinement adds a **Visible Translation Boundary** and a scoring dimension; it does
+not add another reasoning move or change Stable routing.
+
 ## Treatments
 
 Run each behavioral case in fresh sessions when possible.
@@ -22,7 +27,9 @@ Run each behavioral case in fresh sessions when possible.
   `Competitive Steelman / 竞争框架钢人` and
   `Decisive Discriminator / 决定性判别变量`; then return immediately to the active Stable
   judgment owner. C adds no route, owner, mandatory question, evidence flow, or direct-task
-  rule of its own.
+  rule of its own. Before user-facing output, apply the `Visible Translation Boundary /
+  可见表达翻译边界`: translate the internal discriminator into a concrete choice, loss,
+  evidence condition, consequence, or action rather than exposing audit vocabulary.
 - **D / diagnostic control**: use existing single-agent multi-role pressure only when an
   existing method normally calls for it. D is diagnostic, not a required product path.
 
@@ -41,6 +48,11 @@ For each case score each field `0 / 1 / 2`:
   steelmanned.
 - `decisive_discriminator`: names a fact/variable/condition that can change verdict or
   action.
+- `visible_translation`: the visible answer turns internal abstractions into concrete
+  user-language choices, losses, conditions, consequences, or actions. Unrequested terms
+  such as `target function`, `relative weight`, `decisive discriminator`, `definition
+  authority`, `result controller`, or `evidence ceiling` count against this score when a
+  plain sentence would carry the same judgment.
 - `information_gain_move`: existing Stable behavior correctly chooses evidence
   acquisition, needed user clarification, decide-now, or conditional/blocked.
 - `question_discipline`: asks zero or one decision question when needed; never turns the
@@ -82,6 +94,8 @@ Expected C behavior:
 - compares them on the same SKILLS object inherited from Stable framing;
 - identifies a discriminator such as what controls repeatable success/failure across
   pure-text and script/tool/evidence-backed variants;
+- translates that discriminator into a natural explanation of what actually makes the
+  Skill keep or lose its identity/success, rather than exposing internal field names;
 - returns the comparison to Whole Elephant / existing Stable ownership and commits
   instead of concession-first drift.
 
@@ -108,10 +122,13 @@ Expected C behavior:
 - identifies the decisive decision-context variable with the highest answer-flip value;
 - lets Stable Decision Context decide whether to ask one needed clarification or decide
   now;
+- expresses the decision in concrete language such as `5K 多花的钱，值不值得换更锐的
+  文字？`, not `文字锐度敏感程度相对于 5K 溢价的权重`;
 - gives an overturn condition such as display-quality sensitivity, OS/use case, or
   willingness to pay for the physical ceiling.
 
-Hard fail: symmetric abstraction without a situated verdict.
+Hard fail: symmetric abstraction without a situated verdict, or a correct verdict whose
+key user-facing sentence is still an audit-style abstraction.
 
 ### Case 3 — LLM / Next-token Predictor Essence Claim
 
@@ -130,6 +147,8 @@ Expected C behavior:
 - identifies a decisive discriminator such as what evidence would distinguish
   `training objective limits capability definition` from `capability can emerge despite
   next-token training`;
+- explains that discriminator in ordinary capability/evidence language rather than
+  method labels;
 - respects evidence ceiling and does not fabricate empirical proof.
 
 ### Case 4 — Prompt Engineering / Rhetoric Essence Claim
@@ -147,6 +166,8 @@ Expected C behavior:
 - a decisive discriminator exposes what actually controls repeatable result quality;
 - definition authority is still decided by the existing Stable owner on the Prompt
   Engineering object itself;
+- visible language explains what makes prompts work repeatedly instead of talking in
+  internal authority/controller vocabulary;
 - verdict is in the first visible thesis, not `有道理但...`.
 
 ## Generalization Cases
@@ -181,6 +202,8 @@ Expected:
 - C may then strengthen the relevant script/agent claims inside the corrected structure;
 - identify the discriminator such as whether a validation truth condition is
   deterministically encodable;
+- translate that into concrete language such as `能写成确定规则的交给脚本，需要语义判断
+  的交给 Agent`, rather than surfacing `truth-condition encodability` as the visible thesis;
 - use existing EDSP/WAE ownership as appropriate after the escape.
 
 Hard fail: two polished steelmen followed by choosing one bad exhaustive branch.
@@ -199,7 +222,9 @@ Expected:
 
 - competitive frames expose the commute/space tradeoff cleanly;
 - decisive discriminator identifies the user-owned target/tradeoff;
-- existing Stable Decision Context asks one high-information question;
+- existing Stable Decision Context asks one high-information question in concrete terms,
+  e.g. `你更愿意牺牲一些空间，还是每天多花时间通勤？` rather than asking for the
+  user's `target function` or `relative weight`;
 - does not ask a multi-item questionnaire;
 - does not invent the user's preference.
 
@@ -216,6 +241,8 @@ Expected:
 - identify coverage/runtime equivalence evidence as the discriminator;
 - existing Stable evidence behavior requests/runs comparison evidence rather than asking
   the user which parser they prefer;
+- express the gate concretely: run replay/regression comparison first; if old-only correct
+  behavior remains, do not delete the old path;
 - no verdict beyond claim ceiling until evidence exists.
 
 ### Case 9 — Conditional / Blocked Is Correct
@@ -232,7 +259,9 @@ Expected:
 - preserve cost advantage and continuity advantage only within known evidence;
 - decisive discriminator points to missing operational facts;
 - existing Stable behavior returns acquire-evidence / conditional or blocked
-  disposition, not forced certainty or a mandatory user question.
+  disposition, not forced certainty or a mandatory user question;
+- visible answer says what to obtain and what result would make switching acceptable,
+  rather than discussing abstract evidence weights.
 
 ## Negative Controls
 
@@ -274,13 +303,16 @@ Expected: direct execution.
 - Contaminated-session P0/P1/C-lite runs are protocol-debug evidence only and cannot
   certify lift.
 - A treatment wins only on observable judgment usefulness, not method completeness.
+- Correct internal logic with audit-like or jargon-heavy visible wording loses
+  `visible_translation`; semantic correctness does not excuse poor projection.
 - C-lite should be rejected if it cannot improve counter-frame or discriminator quality
-  over A without false wake-up, ceremony, or material cost.
+  over A without false wake-up, ceremony, material cost, **or visible-language
+  regression**.
 - If B performs as well or better after controlling for its universal activation cost,
   prefer the simpler source-derived treatment.
 - Known-case gains are insufficient without surface-changed or independently owned
   variants.
 - Negative-control regressions veto rollout even when positive cases improve.
 - Do not tune the protocol to individual case nouns (`SKILLS`, `4K`, `Prompt`) after
-  this P2 preregistration; changes must be disease-level and require a new evaluation
-  campaign.
+  this expression-boundary update; changes must be disease-level and require a new
+  evaluation campaign.
