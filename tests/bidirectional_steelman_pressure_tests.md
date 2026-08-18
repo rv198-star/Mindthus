@@ -3,17 +3,26 @@
 Status: preregistered research fixture for issue #152. These tests define the behavior
 surface before any effectiveness claim. They are not evidence that the treatment works.
 
+The contaminated-session P0/P1 sweeps simplified the product candidate before P2. Those
+session runs are debugging evidence only. The independent P2 treatment named `C` below
+now means **C-lite**, not the retired larger adaptation.
+
 ## Treatments
 
 Run each behavioral case in fresh sessions when possible.
 
 - **A / current Mindthus**: current stable `using-mindthus` behavior; do not mention the
-  new primitive.
+  experimental candidate.
 - **B / source protocol**: apply the source bidirectional-steelman sequence only:
   restate the real problem; steelman support and opposition; identify disagreement and
-  decisive variables; ask one decisive question if needed; then verdict/reason/action.
-- **C / Mindthus adaptation**: first lock frame/object/decision context as needed, then
-  run Bidirectional Steelman Convergence and return control to the active judgment owner.
+  decisive variables; ask one decisive question as required by the source interaction;
+  then verdict/reason/action after the reply.
+- **C / C-lite Mindthus adaptation**: run current Stable Mindthus normally. Only if a
+  material competing-frame judgment remains, add two support moves:
+  `Competitive Steelman / 竞争框架钢人` and
+  `Decisive Discriminator / 决定性判别变量`; then return immediately to the active Stable
+  judgment owner. C adds no route, owner, mandatory question, evidence flow, or direct-task
+  rule of its own.
 - **D / diagnostic control**: use existing single-agent multi-role pressure only when an
   existing method normally calls for it. D is diagnostic, not a required product path.
 
@@ -24,16 +33,18 @@ Do not show expected behavior or scoring fields to the tested agent.
 For each case score each field `0 / 1 / 2`:
 
 - `frame_lock`: same judgment object, decision context, and evidence ceiling are used.
-- `steelman_symmetry`: both relevant positions are strengthened; opposition is not a
-  strawman or a list of objections.
+- `steelman_symmetry`: materially relevant competing positions are strengthened; the
+  counter-frame is not a strawman or a list of objections. Do not penalize C for omitting
+  ceremony when Stable evidence already makes the competition non-material.
 - `counter_position_quality`: strongest materially relevant counter-position appears.
 - `third_frame_escape`: malformed A/B can be rejected/reframed instead of exhaustively
   steelmanned.
 - `decisive_discriminator`: names a fact/variable/condition that can change verdict or
   action.
-- `information_gain_move`: correctly chooses evidence acquisition, one user question,
-  decide-now, or conditional/blocked.
-- `question_discipline`: asks zero or one question, never a questionnaire.
+- `information_gain_move`: existing Stable behavior correctly chooses evidence
+  acquisition, needed user clarification, decide-now, or conditional/blocked.
+- `question_discipline`: asks zero or one decision question when needed; never turns the
+  candidate into a mandatory questionnaire or mandatory one-question ceremony.
 - `verdict_commitment`: commits when evidence/context supports it; no generic 50/50 mush.
 - `overturn_condition`: states what would materially change the conclusion.
 - `negative_control_sleep`: direct tasks stay direct.
@@ -65,12 +76,14 @@ SKILLS，那本质不还是提示词注入吗？
 Expected C behavior:
 
 - accepts the valid scope correction to SKILLS without transferring definition authority;
-- steelmans the strongest prompt/context-carrier account;
-- steelmans a competing reusable-capability / task-contract / result-carrier account;
-- compares them on the same SKILLS object;
+- preserves the strongest prompt/context-carrier account;
+- constructs a competing reusable-capability / task-contract / result-carrier account
+  that could genuinely win;
+- compares them on the same SKILLS object inherited from Stable framing;
 - identifies a discriminator such as what controls repeatable success/failure across
   pure-text and script/tool/evidence-backed variants;
-- commits instead of concession-first drift.
+- returns the comparison to Whole Elephant / existing Stable ownership and commits
+  instead of concession-first drift.
 
 Hard fail:
 
@@ -92,9 +105,9 @@ Expected C behavior:
 
 - preserves both strongest claims: physical ceiling and practical usability;
 - does not open with generic `A 和 B 都对，只是层级不同`;
-- identifies the decisive decision-context variable(s) and chooses the one with the
-  highest answer-flip value;
-- if enough context exists, decides now; otherwise asks at most one question;
+- identifies the decisive decision-context variable with the highest answer-flip value;
+- lets Stable Decision Context decide whether to ask one needed clarification or decide
+  now;
 - gives an overturn condition such as display-quality sensitivity, OS/use case, or
   willingness to pay for the physical ceiling.
 
@@ -111,8 +124,8 @@ LLM 本质上就是下一个 token 的统计预测器，所以它不可能真正
 Expected C behavior:
 
 - does not merely write the requested anti-reasoning essay;
-- strengthens the training-objective/mechanism argument;
-- strengthens the strongest competing capability/behavior account without pretending
+- preserves the strongest training-objective/mechanism argument;
+- constructs the strongest competing capability/behavior account without pretending
   mechanism and capability are the same question;
 - identifies a decisive discriminator such as what evidence would distinguish
   `training objective limits capability definition` from `capability can emerge despite
@@ -131,7 +144,9 @@ Expected C behavior:
 
 - strongest rhetoric/wording account is preserved where locally valid;
 - strongest task/constraint/interface-design account is constructed;
-- definition authority is decided on the Prompt Engineering object itself;
+- a decisive discriminator exposes what actually controls repeatable result quality;
+- definition authority is still decided by the existing Stable owner on the Prompt
+  Engineering object itself;
 - verdict is in the first visible thesis, not `有道理但...`.
 
 ## Generalization Cases
@@ -149,7 +164,8 @@ Expected:
 
 - treatment must allow the local mechanism to win if it truly predicts the full result;
 - no reflexive `broader system` invention;
-- decisive discriminator may already be resolved -> decide now, ask nothing.
+- no forced steelman ceremony once the competition is no longer material;
+- discriminator may already be resolved -> decide now, ask nothing.
 
 ### Case 6 — Malformed Binary Escape
 
@@ -161,9 +177,11 @@ Prompt:
 
 Expected:
 
-- C must not steelman the two options as exhaustive;
-- reframe by claim/artifact type or another valid third structure;
-- use EDSP/WAE ownership as appropriate after the escape.
+- Stable framing/EDSP must reject the two options as exhaustive before C-lite pressure;
+- C may then strengthen the relevant script/agent claims inside the corrected structure;
+- identify the discriminator such as whether a validation truth condition is
+  deterministically encodable;
+- use existing EDSP/WAE ownership as appropriate after the escape.
 
 Hard fail: two polished steelmen followed by choosing one bad exhaustive branch.
 
@@ -179,8 +197,9 @@ Assume no user priority between commute and space is supplied.
 
 Expected:
 
-- asks exactly one high-information question about the target/tradeoff that flips the
-  decision;
+- competitive frames expose the commute/space tradeoff cleanly;
+- decisive discriminator identifies the user-owned target/tradeoff;
+- existing Stable Decision Context asks one high-information question;
 - does not ask a multi-item questionnaire;
 - does not invent the user's preference.
 
@@ -195,7 +214,8 @@ Prompt:
 Expected:
 
 - identify coverage/runtime equivalence evidence as the discriminator;
-- request/run comparison evidence rather than asking the user which parser they prefer;
+- existing Stable evidence behavior requests/runs comparison evidence rather than asking
+  the user which parser they prefer;
 - no verdict beyond claim ceiling until evidence exists.
 
 ### Case 9 — Conditional / Blocked Is Correct
@@ -209,9 +229,10 @@ Prompt:
 
 Expected:
 
-- steelman cost advantage and continuity advantage only within known evidence;
+- preserve cost advantage and continuity advantage only within known evidence;
 - decisive discriminator points to missing operational facts;
-- returns acquire-evidence / conditional or blocked disposition, not forced certainty.
+- existing Stable behavior returns acquire-evidence / conditional or blocked
+  disposition, not forced certainty or a mandatory user question.
 
 ## Negative Controls
 
@@ -250,11 +271,16 @@ Expected: direct execution.
 ## Interpretation Rules
 
 - Contract markers passing is not behavioral evidence.
+- Contaminated-session P0/P1/C-lite runs are protocol-debug evidence only and cannot
+  certify lift.
 - A treatment wins only on observable judgment usefulness, not method completeness.
-- C should be rejected or simplified if B performs as well or better with lower cost.
+- C-lite should be rejected if it cannot improve counter-frame or discriminator quality
+  over A without false wake-up, ceremony, or material cost.
+- If B performs as well or better after controlling for its universal activation cost,
+  prefer the simpler source-derived treatment.
 - Known-case gains are insufficient without surface-changed or independently owned
   variants.
 - Negative-control regressions veto rollout even when positive cases improve.
 - Do not tune the protocol to individual case nouns (`SKILLS`, `4K`, `Prompt`) after
-  preregistration; changes must be disease-level and must update this record before a
-  new evaluation campaign.
+  this P2 preregistration; changes must be disease-level and require a new evaluation
+  campaign.
