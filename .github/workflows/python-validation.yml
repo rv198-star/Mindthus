@@ -37,3 +37,44 @@ jobs:
       - name: Full unittest suite
         # unittest is canonical here because README documents unittest commands as the release surface.
         run: python3 -m unittest discover -s tests -q
+
+  sync-v171-roi-beta-docs:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'docs/v1.7.1-roi-beta-sync'
+    needs: unittest-smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out docs branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs/v1.7.1-roi-beta-sync
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Apply release-contract correction
+        run: |
+          git fetch origin release/v1.7.1-roi-beta
+          python3 scripts/sync-v1.7.1-roi-beta-docs.py
+
+      - name: Validate corrected docs and full suite
+        run: |
+          python3 -m unittest tests.test_release_boundary_contract -q
+          python3 -m unittest tests.test_packaging_docs -q
+          python3 -m unittest discover -s tests -q
+
+      - name: Commit only validated docs
+        run: |
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git checkout origin/main -- .github/workflows/python-validation.yml
+          git rm -f scripts/sync-v1.7.1-roi-beta-docs.py
+          git rm -f .github/workflows/sync-v1.7.1-roi-beta-docs.yml || true
+          git add README.md CHANGELOG.md docs/releases/v1.7.1.md docs/releases/v1.7.1-roi-beta.md docs/internal/release-defaults.md tests/test_release_boundary_contract.py .github/workflows/python-validation.yml
+          git diff --cached --check
+          git commit -m 'docs(release): make ROI Beta the Stable release default'
+          git push origin HEAD:docs/v1.7.1-roi-beta-sync
