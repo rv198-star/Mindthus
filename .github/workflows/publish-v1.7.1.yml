@@ -1,0 +1,84 @@
+name: Publish v1.7.1
+
+on:
+  push:
+    branches:
+      - release/v1.7.1-publish-ops
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ contains(github.event.head_commit.message, '[publish-v1.7.1]') }}
+    runs-on: ubuntu-latest
+    env:
+      STABLE_SHA: dca73c1ff1710eca3d5b56216c374ce6c2240117
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out exact Stable source
+        uses: actions/checkout@v4
+        with:
+          ref: dca73c1ff1710eca3d5b56216c374ce6c2240117
+          fetch-depth: 0
+          path: stable-src
+
+      - name: Check out publication controls
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.1-publish-ops
+          fetch-depth: 1
+          path: ops
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Revalidate exact Stable source
+        working-directory: stable-src
+        run: |
+          python3 -m compileall -q scripts skills tests
+          python3 scripts/check-test-lifecycle.py
+          python3 -m unittest tests.test_packaging_docs -q
+          python3 -m unittest tests.test_release_boundary_contract -q
+          python3 -m unittest tests.test_bidirectional_steelman_contract -q
+          python3 -m unittest discover -s tests -q
+
+      - name: Rebuild reproducible Stable assets twice
+        run: python3 ops/scripts/validate-v1.7.1-assets.py --repo stable-src --out dist
+
+      - name: Verify checksums
+        run: |
+          cd dist
+          sha256sum -c SHA256SUMS
+          test -s release-audit.json
+
+      - name: Create exact Stable source tag
+        working-directory: stable-src
+        run: |
+          git config user.name "Mindthus Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+          existing="$(git ls-remote --tags origin refs/tags/v1.7.1 | awk '{print $1}')"
+          if [ -n "$existing" ]; then
+            git fetch origin refs/tags/v1.7.1:refs/tags/v1.7.1
+            test "$(git rev-list -n 1 v1.7.1)" = "$STABLE_SHA"
+          else
+            git tag -a v1.7.1 "$STABLE_SHA" -m "Mindthus v1.7.1"
+            git push origin refs/tags/v1.7.1
+          fi
+
+      - name: Publish Stable release
+        run: |
+          if gh release view v1.7.1 --repo rv198-star/Mindthus >/dev/null 2>&1; then
+            echo "v1.7.1 release already exists; refusing duplicate publication" >&2
+            exit 1
+          fi
+          gh release create v1.7.1 \
+            --repo rv198-star/Mindthus \
+            --verify-tag \
+            --title "Mindthus v1.7.1" \
+            --notes-file stable-src/docs/releases/v1.7.1.md \
+            dist/mindthus-plugins-1.7.1.tar.gz \
+            dist/mindthus-skills-1.7.1.tar.gz \
+            dist/SHA256SUMS
