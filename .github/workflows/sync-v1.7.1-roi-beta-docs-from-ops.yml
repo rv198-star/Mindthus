@@ -1,0 +1,61 @@
+name: Sync v1.7.1 ROI Beta docs from ops
+
+on:
+  push:
+    branches:
+      - release/v1.7.1-publish-ops
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: contains(github.event.head_commit.message, '[sync-v1.7.1-roi-beta-docs-from-ops]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out docs target branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs/v1.7.1-roi-beta-sync
+          fetch-depth: 0
+          path: target
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Extract and run the already-reviewed sync script
+        run: |
+          git -C target fetch origin release/v1.7.1-roi-beta
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path('target/.github/workflows/sync-v1.7.1-roi-beta-docs.yml').read_text(encoding='utf-8')
+          marker = "          python3 - <<'PY'\n"
+          start = source.index(marker) + len(marker)
+          end = source.index("\n          PY\n", start)
+          block = source[start:end]
+          lines = []
+          for line in block.splitlines():
+              lines.append(line[10:] if line.startswith('          ') else line)
+          Path('/tmp/sync-v171-beta-docs.py').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          cd target
+          python3 /tmp/sync-v171-beta-docs.py
+
+      - name: Validate release docs and full regression suite
+        working-directory: target
+        run: |
+          python3 -m unittest tests.test_release_boundary_contract -q
+          python3 -m unittest tests.test_packaging_docs -q
+          python3 -m unittest discover -s tests -q
+
+      - name: Commit validated release-contract correction
+        working-directory: target
+        run: |
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git rm .github/workflows/sync-v1.7.1-roi-beta-docs.yml
+          git add README.md CHANGELOG.md docs/releases/v1.7.1.md docs/releases/v1.7.1-roi-beta.md docs/internal/release-defaults.md tests/test_release_boundary_contract.py
+          git diff --cached --check
+          git commit -m 'docs(release): make ROI Beta the Stable release default'
+          git push origin HEAD:docs/v1.7.1-roi-beta-sync
