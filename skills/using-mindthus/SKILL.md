@@ -51,6 +51,27 @@ and `misdirection_if_local_wins`.
 Compare `local_frame_wins`, `whole_object_wins`, and `better_direction_for_target` before
 narrower routing.
 
+### Competing-Frame Convergence / 竞争框架收敛
+
+Bidirectional Steelman Convergence / 双向钢人收敛 is conditional support, not a route and
+does not become the judgment owner. Use it only for a real competing-frame judgment after
+the frame/object is fit enough to compare.
+
+Lock the comparison first: same object, same decision context when situated, and same
+evidence ceiling. If the original A/B is a malformed binary, reframe or allow a third-frame
+escape before steelmanning.
+
+Then strengthen both the active/current position and the strongest relevant
+counter-position. Do not merely attack the current view. Identify the one fact, result
+controller, target/tradeoff, failure prediction, or other decisive discriminator most
+likely to flip the verdict or action.
+
+Resolve with the smallest information-gain move: externally verifiable uncertainty ->
+acquire evidence; user-owned goal/value/acceptable loss -> ask at most one decisive
+question; sufficient information -> ask nothing and decide now; unresolved evidence ->
+return a conditional or blocked claim. Hand the result back to the active judgment owner
+for verdict, overturn condition, and next action; do not end in generic 50/50 balance.
+
 Formal Answer Gate:
 
 - Core Thesis Extraction / 主判断收束: global thesis, result owner, and consequence first;
@@ -94,6 +115,10 @@ upstream problem, evidence, and stopping condition.
 - Judgment Constraint Recognition / 判断约束识别: facts constrain claims; values set
   priorities; risk sets action strength; authority determines who decides.
 - Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner.
+- Bidirectional Steelman Convergence / 双向钢人收敛: only after a real competing-frame
+  judgment is locked to the same object/context/evidence ceiling; strengthen both sides,
+  find the decisive discriminator, acquire evidence or ask at most one user-owned
+  question, then return the decision to the active owner.
 - Approximate Quantified Mapping / 非精准量化显影 exposes variables inside an existing
   owner. Hypothetical numbers must not prove facts or compute decisions.
 - MPG Scalar Commitment Unpack is support-only: expose
@@ -127,6 +152,8 @@ Portable alias: `resources/primitives/`.
 - actor/timing/target/tradeoff: `docs/methodologies/primitives/decision-context-calibration.md`;
 - local truth claiming whole-object authority:
   `docs/methodologies/primitives/whole-elephant-protocol.md`;
+- real competing frames after frame/object lock:
+  `docs/methodologies/primitives/bidirectional-steelman-convergence.md`;
 - pressure or AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
 - scalar commitment: `docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`;
 - activation shape: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
