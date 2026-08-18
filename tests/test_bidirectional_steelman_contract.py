@@ -17,7 +17,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
     def test_candidate_exposes_simplified_clite_boundaries(self):
         text = CANDIDATE.read_text(encoding="utf-8")
         for phrase in (
-            "Status: experimental **C-lite** research candidate",
+            "Status: **promoted as minimal Stable pressure support for v1.7.1 by maintainer release decision**",
             "Bidirectional Steelman Convergence / 双向钢人收敛",
             "not a standalone method",
             "Competitive Steelman / 竞争框架钢人",
@@ -44,17 +44,23 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
         ):
             self.assertNotIn(retired_marker, text)
 
-    def test_candidate_is_not_promoted_to_stable_surfaces_before_behavior_evidence(self):
+    def test_clite_is_promoted_as_pressure_support_without_new_route(self):
         shared = SHARED.read_text(encoding="utf-8")
         using = USING.read_text(encoding="utf-8")
-        for text in (shared, using):
-            self.assertNotIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
-            self.assertNotIn("Competitive Steelman / 竞争框架钢人", text)
-            self.assertNotIn("Decisive Discriminator / 决定性判别变量", text)
-            self.assertNotIn("Visible Translation Boundary / 可见表达翻译边界", text)
+        pressure = (REPO / "docs" / "methodologies" / "primitives" / "expression-pressure-and-gates.md").read_text(encoding="utf-8")
+        for stable_text in (shared, using, pressure):
+            self.assertNotIn("Bidirectional Steelman Convergence / 双向钢人收敛", stable_text)
+        self.assertIn("Perspective Pressure", shared)
+        self.assertIn("competitive-frame convergence", shared)
         self.assertIn("Pressure Surface Check / 施压面检查", using)
         self.assertIn("pressure is not a route", using)
         self.assertIn("assign its owner", using)
+        self.assertIn("expression-pressure-and-gates.md", using)
+        self.assertIn("Competitive-frame convergence / 竞争框架收敛", pressure)
+        self.assertIn("Competitive steelman / 竞争框架钢人", pressure)
+        self.assertIn("Decisive discriminator / 决定性判别变量", pressure)
+        self.assertIn("Visible Translation Boundary / 可见表达翻译边界", pressure)
+        self.assertIn("not a standalone method, route, owner, or mandatory debate", pressure)
 
     def test_preregistered_pressure_surface_targets_clite_p2(self):
         text = PRESSURE.read_text(encoding="utf-8")

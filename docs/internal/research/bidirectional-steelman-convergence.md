@@ -1,8 +1,8 @@
 # Bidirectional Steelman Convergence / 双向钢人收敛
 
-Status: experimental **C-lite** research candidate for issue #152. It is not part of the
-Stable cognitive-primitive index or runtime routing surface. Promotion still requires
-independent P2 behavioral evidence.
+Status: **promoted as minimal Stable pressure support for v1.7.1 by maintainer release decision**.
+The contaminated-session runs remain debugging evidence only. Independent P2 is deferred
+post-release validation and is not evidence claimed by this release.
 
 The contaminated-session P0/P1 sweeps are recorded under
 `docs/internal/research/results/bsc-session-pilot-2026-08-18-*`. They are debugging
@@ -169,9 +169,8 @@ is no longer the primary product candidate.
 
 Contract markers and session pilots do not prove behavioral improvement.
 
-Independent promotion requires the preregistered 13-case comparison plus independently
-owned or surface-changed variants. C-lite should be rejected if it cannot improve
-counter-frame/discriminator quality over Stable Mindthus without increasing false wake-up,
-ceremony, material cost, or user-visible abstraction leakage. If the source B performs
-as well or better after controlling its overactivation, prefer the simpler source-derived
-treatment.
+v1.7.1 promotion is a maintainer-authorized bugfix decision based on the observed residual
+failure and contaminated-session protocol debugging. It does not upgrade that evidence to
+independent proof. The preregistered P2 comparison and frozen holdouts remain useful
+post-release validation; a negative result should trigger rollback or simplification in a
+later patch rather than being rewritten as evidence for this release.

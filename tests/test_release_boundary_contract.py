@@ -13,7 +13,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_v1_7_0_release_with_supplemental_roi_beta(self):
+    def test_current_v1_7_1_release_preserves_v1_7_0_roi_beta_history(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -22,18 +22,19 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.7.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.7.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.7.0`", readme)
+        self.assertIn("当前仓库版本：`v1.7.1`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("当前已发布 Stable 是 `v1.7.0`", readme)
-        self.assertIn("mindthus-plugins-1.7.0.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.7.0.tar.gz", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.7.1`", readme)
+        self.assertIn("mindthus-plugins-1.7.1.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.7.1.tar.gz", readme)
         self.assertIn("mindthus-beta-1.7.0-roi-beta.tar.gz", readme)
         self.assertIn("Ownership Closure", readme)
+        self.assertIn("## v1.7.1", changelog)
         self.assertIn("## v1.7.0", changelog)
         self.assertIn("补充发布包：1.7.0 ROI Beta", changelog)
         self.assertIn("v1.7.0-roi-beta", changelog)
-        self.assertIn('VERSION = "1.7.0"', builder)
-        self.assertIn('VERSION = "1.7.0"', runtime_logger)
+        self.assertIn('VERSION = "1.7.1"', builder)
+        self.assertIn('VERSION = "1.7.1"', runtime_logger)
         self.assertIn('"package_version": "1.5.4"', tplan_manifest)
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
         for phrase in (

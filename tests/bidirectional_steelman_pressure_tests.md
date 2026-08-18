@@ -7,6 +7,10 @@ The contaminated-session P0/P1 sweeps simplified the product candidate before P2
 session runs are debugging evidence only. The independent P2 treatment named `C` below
 now means **C-lite**, not the retired larger adaptation.
 
+Release decision for `v1.7.1`: the maintainer authorized the minimal pressure support as a
+bugfix before independent P2. P2 remains post-release validation; this document must not
+present the release decision itself as independent behavioral evidence.
+
 A later user-facing review found one additional acceptance defect before independent P2:
 correct internal judgment can still leak audit-like abstractions into the visible answer.
 This refinement adds a **Visible Translation Boundary** and a scoring dimension; it does
