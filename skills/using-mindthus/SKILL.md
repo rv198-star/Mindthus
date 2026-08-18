@@ -26,7 +26,7 @@ Before routing, classify:
 强约束入口协议: Run only with both frame-risk and execution impact; then
 在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级.
 
-Frame Fitness Check / 定框适配检查 tests whether a locally true frame claims global authority.
+Frame Fitness Check / 定框适检查 tests whether a locally true frame claims global authority.
 This is not a keyword rule. Set `frame_status` to `clean / biased /
 overloaded / malformed`, then `preserve frame`, `qualify frame`, `reframe`, or
 `block pending evidence`. Triggered audits record `routing_decision`. No frame-risk
@@ -93,7 +93,7 @@ upstream problem, evidence, and stopping condition.
   implements memory nor overrides current input.
 - Judgment Constraint Recognition / 判断约束识别: facts constrain claims; values set
   priorities; risk sets action strength; authority determines who decides.
-- Pressure Surface Check / 施压面检查: competing frames use Bidirectional Steelman Convergence / 双向钢人收敛.
+- Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner.
 - Approximate Quantified Mapping / 非精准量化显影 exposes variables inside an existing
   owner. Hypothetical numbers must not prove facts or compute decisions.
 - MPG Scalar Commitment Unpack is support-only: expose
