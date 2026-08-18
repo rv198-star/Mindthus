@@ -26,7 +26,7 @@ Before routing, classify:
 强约束入口协议: Run only with both frame-risk and execution impact; then
 在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级.
 
-Frame Fitness Check / 定框适检查 tests whether a locally true frame claims global authority.
+Frame Fitness Check / 定框适配检查 tests whether a locally true frame claims global authority.
 This is not a keyword rule. Set `frame_status` to `clean / biased /
 overloaded / malformed`, then `preserve frame`, `qualify frame`, `reframe`, or
 `block pending evidence`. Triggered audits record `routing_decision`. No frame-risk
