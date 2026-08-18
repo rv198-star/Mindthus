@@ -40,8 +40,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
         for phrase in (
             "Bidirectional Steelman Convergence / 双向钢人收敛",
             "real competing-frame judgment",
-            "same object",
-            "same evidence ceiling",
+            "same object/evidence ceiling",
             "ask at most one",
             "acquire evidence",
             "malformed binary",
