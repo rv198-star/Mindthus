@@ -1,0 +1,88 @@
+name: Bidirectional steelman pilot
+
+on:
+  push:
+    branches:
+      - research/bidirectional-steelman-convergence
+
+jobs:
+  pilot:
+    if: contains(github.event.head_commit.message, '[run-bsc-pilot]')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [A, B, C]
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      MODEL: gpt-5.6-sol
+      PILOT_CASES: bsc-001,bsc-006,bsc-007,bsc-010
+    steps:
+      - name: Check out research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Credential gate
+        shell: bash
+        run: |
+          if [[ -z "${OPENAI_API_KEY:-}" ]]; then
+            echo 'OPENAI_API_KEY repository secret is not configured; behavioral pilot cannot run.' >&2
+            exit 2
+          fi
+
+      - name: Install Codex CLI
+        run: |
+          npm install -g @openai/codex
+          codex --version
+
+      - name: Prepare isolated Codex homes
+        shell: bash
+        run: |
+          GEN_HOME="$RUNNER_TEMP/codex-${{ matrix.variant }}"
+          JUDGE_HOME="$RUNNER_TEMP/codex-judge-${{ matrix.variant }}"
+          mkdir -p "$GEN_HOME" "$JUDGE_HOME"
+          echo "GEN_HOME=$GEN_HOME" >> "$GITHUB_ENV"
+          echo "JUDGE_HOME=$JUDGE_HOME" >> "$GITHUB_ENV"
+          if [[ '${{ matrix.variant }}' != 'B' ]]; then
+            CODEX_HOME="$GEN_HOME" scripts/install-skills.sh codex --repo "$GITHUB_WORKSPACE" --force
+          fi
+
+      - name: Run preregistered pilot
+        shell: bash
+        run: |
+          OUT="$RUNNER_TEMP/bsc-${{ matrix.variant }}"
+          python3 scripts/run-bidirectional-steelman-experiment.py \
+            --variant '${{ matrix.variant }}' \
+            --case-ids "$PILOT_CASES" \
+            --out-dir "$OUT" \
+            --phase all \
+            --auto-followup \
+            --codex-home "$GEN_HOME" \
+            --judge-codex-home "$JUDGE_HOME" \
+            --empty-home-root "$RUNNER_TEMP/empty-gen-${{ matrix.variant }}" \
+            --judge-empty-home-root "$RUNNER_TEMP/empty-judge-${{ matrix.variant }}" \
+            --model "$MODEL" \
+            --judge-model "$MODEL" \
+            --timeout 300 \
+            --force
+          echo "OUT=$OUT" >> "$GITHUB_ENV"
+
+      - name: Upload pilot evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bsc-pilot-${{ matrix.variant }}
+          path: ${{ env.OUT || format('{0}/bsc-{1}', runner.temp, matrix.variant) }}
+          if-no-files-found: warn
+          retention-days: 14
