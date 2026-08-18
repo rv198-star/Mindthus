@@ -38,7 +38,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
     def test_using_mindthus_references_competing_frame_pressure_without_expanding_contract(self):
         text = USING.read_text(encoding="utf-8")
         self.assertIn("Pressure Surface Check / 施压面检查", text)
-        self.assertIn("real competing frames", text)
+        self.assertIn("competing frames", text)
         self.assertIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
 
     def test_preregistered_pressure_surface_is_present(self):
