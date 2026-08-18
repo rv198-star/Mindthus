@@ -55,6 +55,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 | Minimal Sufficient Lens | `using-mindthus` | 能直接判断就不要开方法；一个 skill 足够就不要串联；轻量检查足够就不要展开完整流程。 |
 | Evidence / Claim Ceiling | `WAE` | 结论强度不能超过证据；缺事实、领域输入、运行证明或 stakeholder 判断时，降级或阻断。 |
 | Perspective Pressure | `SELA` / `EDSP` | 单一视角过度自洽时，用角色压力或激励检查挑战判断。 |
+| Bidirectional Steelman Convergence / 双向钢人收敛 | `shared-primitives` support | 在真实竞争框架判断中，先把当前立场与最强竞争立场都加强到可辩护版本，再找最可能翻转结论的变量；不成为 judgment owner。 |
 | Anti-Spiral | `anti-spiral-self-audit` / `tplan` | 同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。 |
 | No Abstract Jargon Wall | `AGENTS.md` | 先做表达定位：我代表什么立场、文字直接服务谁、要把对方带到哪里；先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。 |
 | Approximate Quantified Mapping / 非精准量化显影 | `AGENTS.md` / `using-mindthus` | 数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。 |
@@ -72,6 +73,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 - [Frame Fitness Check / 定框适配检查](primitives/frame-fitness-check.md): input framing, local-frame capture, and the Original Prompt Contract / 原始有效提示词合同.
 - [Decision Context Calibration / 决策语境校准](primitives/decision-context-calibration.md): actor/timing/target/tradeoff answer flip and `global_for_this_decision`.
 - [Whole Elephant Protocol / 全象流程](primitives/whole-elephant-protocol.md): Partial Truth Capture, Compact Semantic Triad / 三根硬支柱, Result Controller Viewpoint / 结果主控视角, and validator boundaries.
+- [Bidirectional Steelman Convergence / 双向钢人收敛](primitives/bidirectional-steelman-convergence.md): symmetric strengthening of the active position and strongest counter-position, decisive discriminator, one-information-gain move, and committed handoff to the existing judgment owner.
 - [MPG Scalar Commitment Unpack / MPG 标量承诺显影](primitives/mpg-scalar-commitment-unpack.md): Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影 and `mainline / carrier / path_volatility / exposure / commitment`.
 - [Expression, Pressure, And Gate Primitives](primitives/expression-pressure-and-gates.md): Approximate Quantified Mapping / 非精准量化显影, Pressure Surface Consolidation / 施压面收束, Gate Probes / 冻结前定位自省, and Failure Smells / 误用信号.
 
@@ -93,6 +95,7 @@ See [Aspect Ownership Matrix](primitives/aspect-ownership.md).
 - Frame Fitness Check catches local-frame capture: a locally true frame may be claiming global authority. Framing-risk signals are not keyword rules.
 - Decision Context Calibration owns situated decision judgments when the answer would flip by actor, timing, target function, or acceptable tradeoff.
 - Whole Elephant Protocol owns definition-authority judgments when local truth claims whole-object essence.
+- Bidirectional Steelman Convergence is support-only: after frame/object lock, it strengthens the active position and the strongest counter-position under the same evidence ceiling, then exposes the decisive discriminator; it never owns the verdict.
 - MPG Scalar Commitment Unpack is support-only; it shapes MPG route input and never decides the path-carrying judgment.
 
 ## 具体案例
@@ -125,6 +128,8 @@ See [Aspect Ownership Matrix](primitives/aspect-ownership.md).
 
 第六种误用，是把 Failure Smells 当成机械阻断表。普通误用信号只要求暂停自审和调整行动；
 只有触发证据、权限、安全、用户约束或 claim ceiling 底线时，才升级为 hard veto。
+
+第七种误用，是把双向钢人当成默认辩论流程。没有真实竞争框架时不触发；A/B malformed 时先重构；事实可验证时先取证；用户偏好也不需要自动制造反方。
 
 ## 边界
 
