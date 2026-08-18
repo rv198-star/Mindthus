@@ -11,6 +11,7 @@
       "paths": [
         "tests/test_anti_spiral_pressure_contract.py",
         "tests/test_before_after_case_pages.py",
+        "tests/test_bidirectional_steelman_contract.py",
         "tests/test_edsp_contract.py",
         "tests/test_existing_validator_report_contract.py",
         "tests/test_fidelity_harness_contract.py",
@@ -30,13 +31,13 @@
       ],
       "owner": "shared",
       "protects": [
-        "current skill contracts, method layering, primitive boundaries, and cross-skill adapters"
+        "current skill contracts, method layering, primitive boundaries, cross-skill adapters, and research-candidate promotion boundaries"
       ],
-      "introduced_by": "pre-registry baseline",
+      "introduced_by": "pre-registry baseline plus issue #152 research contract",
       "lifecycle_status": "active_gate",
       "suite_role": "contract",
       "runtime_cost": "medium",
-      "notes": "Grouped at the cross-skill contract surface; individual method owners remain visible in filenames."
+      "notes": "Grouped at the cross-skill contract surface; the steelman research test explicitly protects non-promotion to Stable routing before behavioral evidence."
     },
     {
       "test_id": "method-fidelity-validation",

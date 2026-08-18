@@ -64,6 +64,39 @@ When pressure is used, name the owner and the reason:
 
 Pressure is not a standalone route; low-risk deterministic work should stay direct.
 
+### Competitive-frame convergence / 竞争框架收敛
+
+When a material competing-frame judgment remains after framing and routing, pressure must
+create decision value instead of balanced prose. This is support inside the existing owner,
+not a standalone method, route, owner, or mandatory debate.
+
+Use two moves only when the competition is real:
+
+1. **Competitive steelman / 竞争框架钢人** — preserve the strongest defensible active frame
+   and construct the strongest materially relevant counter-frame that could genuinely win
+   under the same judgment object, decision context, and Evidence / Claim Ceiling. Do not
+   reduce the counter-frame to objections, and do not force symmetry after evidence becomes
+   asymmetric.
+2. **Decisive discriminator / 决定性判别变量** — name the one fact, result-controller
+   difference, target/tradeoff, failure prediction, or observable condition that can change
+   the verdict, evidence requirement, next action, stopping condition, or handoff. If none
+   can change any of those, stop the pressure pass.
+
+Return immediately to the existing judgment owner. Existing Stable behavior still decides
+whether to acquire evidence, ask for user-owned context, reframe a malformed binary, decide
+now, or stay direct.
+
+#### Visible Translation Boundary / 可见表达翻译边界
+
+The discriminator is an internal judgment representation, not automatically user-facing
+language. Before visible output, translate it into the concrete choice, loss, condition,
+consequence, evidence move, or action the user actually faces.
+
+Prefer ordinary language such as `5K 多花的钱，值不值得换更锐的文字？` or
+`先跑完整回归；只要还有旧路径独有的正确行为，就先别删。` Do not expose terms such as
+`target function`, `relative weight`, `decisive discriminator`, `definition authority`,
+`result controller`, or `evidence ceiling` unless the user is discussing the method itself.
+
 ## Gate Probes / 冻结前定位自省
 
 Gate Probes 不是独立方法，不是新 skill，也不是 Gate 本身。它是 agent 在关键动作前做的一次短定位：

@@ -1,0 +1,176 @@
+# Bidirectional Steelman Convergence / 双向钢人收敛
+
+Status: **promoted as minimal Stable pressure support for v1.7.1 by maintainer release decision**.
+The contaminated-session runs remain debugging evidence only. Independent P2 is deferred
+post-release validation and is not evidence claimed by this release.
+
+The contaminated-session P0/P1 sweeps are recorded under
+`docs/internal/research/results/bsc-session-pilot-2026-08-18-*`. They are debugging
+evidence, not acceptance evidence.
+
+## Why the candidate was simplified
+
+The source material showed a real useful move, but the larger first Mindthus adaptation
+duplicated controls that Stable Mindthus already owns: frame correction, malformed-binary
+escape, decision context, evidence acquisition, direct-task sleep, question discipline,
+and final judgment ownership.
+
+The current candidate keeps only the two observed novel moves.
+
+It is not a standalone method, not a new route, not a judgment owner, and not a runtime
+role model.
+
+## Core Rule
+
+> 让真正能赢的竞争框架出现，再找真正能定胜负的那个变量。
+
+Only run this support when current Stable framing/routing leaves a **material competing-
+frame judgment** unresolved. Stable Mindthus decides whether such a judgment exists.
+
+## Move 1 — Competitive Steelman / 竞争框架钢人
+
+Preserve the strongest defensible form of the active/current frame, then construct the
+strongest materially relevant counter-frame that could genuinely win.
+
+The comparison must inherit the active Stable constraints:
+
+- same judgment object;
+- same situated decision context when relevant;
+- same Evidence / Claim Ceiling;
+- same active judgment owner.
+
+This is not `find objections`. The counter-frame must explain or predict an important
+result well enough that the current judgment could change if it wins.
+
+Do not force symmetry after evidence becomes asymmetric. If Stable Whole Elephant already
+shows that the local mechanism genuinely owns the complete target result, no steelman
+ceremony is required. If Stable Frame Fitness / EDSP says the offered A/B is malformed,
+reframe first rather than polishing the bad binary.
+
+## Move 2 — Decisive Discriminator / 决定性判别变量
+
+Name the **one** disagreement with the highest judgment value: a fact, result controller,
+definition-authority difference, actor/timing/target/tradeoff variable, failure
+prediction, or other observable condition that can change at least one of:
+
+- verdict;
+- evidence requirement;
+- next action;
+- stopping condition;
+- handoff.
+
+If no difference can change any of those, stop the pressure pass instead of adding more
+balanced prose.
+
+## Visible Translation Boundary / 可见表达翻译边界
+
+`decisive_discriminator` is an **internal judgment representation**, not prescribed
+user-facing wording. C-lite does not gain a third reasoning move here; this is only a
+projection boundary for the answer returned by the existing Stable owner.
+
+Before the discriminator appears in the visible answer, translate it into the user's
+concrete choice, loss, evidence condition, or action:
+
+- abstract tradeoff -> `X 值不值得换 Y`;
+- user-owned preference -> `你更愿意牺牲 X，还是接受 Y`;
+- evidence gate -> `先验证 Z；如果不过，就不要切 / 删 / 上线`;
+- overturn condition -> `只有当 Z 发生时，才改选另一边`.
+
+Unless the user is explicitly discussing methodology, keep internal vocabulary out of
+the visible answer. In particular, do not casually surface phrases such as
+`decisive discriminator`, `target function`, `relative weight`, `definition authority`,
+`result controller`, or `Evidence / Claim Ceiling` when a concrete sentence can carry
+the same judgment.
+
+Example for the 4K / 5K decision:
+
+- internal: `文字锐度敏感程度相对于 5K 价格溢价的权重`;
+- visible: `5K 多花的钱，值不值得换更锐的文字？`
+
+The visible version should preserve the decision logic without making the user decode an
+audit field.
+
+## Return To Stable Owner
+
+After the discriminator is exposed, return immediately to the existing Stable owner.
+This candidate does **not** decide the information move or final answer protocol.
+
+Existing Stable behavior remains authoritative:
+
+- externally verifiable uncertainty -> acquire evidence;
+- user-owned target/tradeoff -> clarify only when needed;
+- malformed frame/binary -> reframe through the existing owner;
+- sufficient context -> decide now;
+- direct/deterministic/preference task -> stay asleep;
+- final verdict -> active Stable judgment owner.
+
+There is no mandatory question. `0 or 1` questions is an outcome of existing Stable
+judgment, not a C-lite rule.
+
+## Minimal Debug Shape
+
+When validation/debugging needs an observable record, keep it bounded:
+
+```yaml
+active_frame:
+strongest_counter_frame:
+decisive_discriminator:
+visible_translation:
+changed_surface: verdict | evidence | action | stop | handoff
+stable_owner_handoff:
+```
+
+`visible_translation` records the concrete user-facing projection, not another reasoning
+step. This shape is not a reasoning transcript.
+
+## Boundaries
+
+- No real competing-frame judgment, no C-lite support.
+- No new method route or owner.
+- No mandatory positive/negative role play.
+- No mandatory question.
+- No invented evidence to strengthen a weak factual position.
+- No pressure against explicit user aesthetics/preferences unless they make factual
+  claims that require judgment.
+- No symmetry requirement after one frame clearly wins on evidence.
+- No claim that a second model/prompt instance is independent evidence merely because it
+  generated a different wording.
+- Internal analytical vocabulary does not automatically belong in the visible answer.
+
+## Relationship To Stable Mindthus
+
+This section describes proposed support relationships only; Stable routing is unchanged.
+
+- `Frame Fitness Check` owns bad framing and malformed offered binaries.
+- `Whole Elephant Protocol` owns definition-authority / partial-truth judgments.
+- `Decision Context Calibration` owns actor/timing/target/tradeoff answer flips.
+- `Evidence / Claim Ceiling` owns factual claim strength.
+- `Aspect Ownership Matrix` keeps one visible judgment owner.
+- `Perspective Pressure` remains the existing method-local pressure surface. C-lite is
+  being tested as a smaller cross-owner competing-frame construction move, not as a new
+  pressure owner.
+
+## P2 Treatment Contract
+
+Independent P2 should compare fresh sessions:
+
+- **A — current Stable Mindthus**;
+- **B — source bidirectional-steelman protocol**;
+- **C — C-lite:** Stable Mindthus + only `Competitive Steelman` +
+  `Decisive Discriminator` when a real competing-frame judgment remains, with the
+  `Visible Translation Boundary` applied before user-facing output;
+- **D — existing single-agent multi-role pressure** only as an optional diagnostic
+  control where Stable methods already call for it.
+
+The retired larger C adaptation remains preserved only in the session-pilot records; it
+is no longer the primary product candidate.
+
+## Acceptance Boundary
+
+Contract markers and session pilots do not prove behavioral improvement.
+
+v1.7.1 promotion is a maintainer-authorized bugfix decision based on the observed residual
+failure and contaminated-session protocol debugging. It does not upgrade that evidence to
+independent proof. The preregistered P2 comparison and frozen holdouts remain useful
+post-release validation; a negative result should trigger rollback or simplification in a
+later patch rather than being rewritten as evidence for this release.

@@ -2,6 +2,52 @@
 
 ## Unreleased
 
+## v1.7.1
+
+发布 tag：`v1.7.1`
+
+[发布说明](docs/releases/v1.7.1.md)
+
+发布日期：2026-08-18
+
+### 版本定位
+
+这是 1.x Stable 线的小型判断质量 bugfix patch。它不新增方法、route 或 judgment owner，
+而是修复 competing-frame pressure 可能过弱、判断停在“双方都对”，以及内部抽象直接泄漏到
+用户可见表达的问题。
+
+### Competitive-frame convergence
+
+- `Pressure Surface Check` 在真实竞争框架仍未收敛时，构造真正可能获胜的 strongest
+  counter-frame，再找一个会改变 verdict / evidence / action / stop / handoff 的 decisive
+  discriminator。
+- 结果立即交还原有 Stable owner；不复制 Frame Fitness、Whole Elephant、Decision Context、
+  Evidence / Claim Ceiling 或 EDSP 的职责。
+- malformed binary 继续先由既有 framing/EDSP 重构；证据已经不对称时不强迫双向对称；
+  direct / deterministic / preference 任务继续直接执行。
+
+### Visible Translation Boundary
+
+- 内部可以保留 `weight / target function / discriminator` 等抽象表示，但用户可见答案必须
+  翻译成具体选择、损失、条件、证据或行动。
+- 典型表达从“文字锐度敏感程度相对于 5K 溢价的权重”改为“5K 多花的钱，值不值得换更锐的文字？”。
+- 不新增 mandatory question 或新的输出模板。
+
+### 证据与兼容性边界
+
+- #152 当前会话 P0/P1/C-lite 是 protocol-debug evidence；独立 P2 仍未完成，本版不声称
+  已获得独立行为增益证明。维护者决定先作为最小 bugfix 发布，冻结 holdout 保留为后续验证。
+- Stable package / plugin manifest 使用 `1.7.1`。
+- **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本 patch 不修改 Mission
+  runtime fingerprint。
+
+### 验证与发布资产
+
+- compileall、Test Lifecycle、完整 unittest、Stable plugins/skills build 均通过后发布。
+- GitHub Release 提供 `mindthus-plugins-1.7.1.tar.gz`、`mindthus-skills-1.7.1.tar.gz` 和
+  `SHA256SUMS`。
+- 本 patch 不包含新的 ROI Beta 资产。
+
 ## v1.7.0
 
 发布 tag：`v1.7.0`

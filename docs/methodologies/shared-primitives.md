@@ -73,7 +73,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 - [Decision Context Calibration / 决策语境校准](primitives/decision-context-calibration.md): actor/timing/target/tradeoff answer flip and `global_for_this_decision`.
 - [Whole Elephant Protocol / 全象流程](primitives/whole-elephant-protocol.md): Partial Truth Capture, Compact Semantic Triad / 三根硬支柱, Result Controller Viewpoint / 结果主控视角, and validator boundaries.
 - [MPG Scalar Commitment Unpack / MPG 标量承诺显影](primitives/mpg-scalar-commitment-unpack.md): Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影 and `mainline / carrier / path_volatility / exposure / commitment`.
-- [Expression, Pressure, And Gate Primitives](primitives/expression-pressure-and-gates.md): Approximate Quantified Mapping / 非精准量化显影, Pressure Surface Consolidation / 施压面收束, Gate Probes / 冻结前定位自省, and Failure Smells / 误用信号.
+- [Expression, Pressure, And Gate Primitives](primitives/expression-pressure-and-gates.md): Approximate Quantified Mapping / 非精准量化显影, Pressure Surface Consolidation / 施压面收束, competitive-frame convergence, Visible Translation Boundary / 可见表达翻译边界, Gate Probes / 冻结前定位自省, and Failure Smells / 误用信号.
 
 ## Aspect Ownership Summary / 切面主导摘要
 

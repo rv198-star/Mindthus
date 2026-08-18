@@ -1,0 +1,177 @@
+{
+  "schema_version": "mindthus-bsc-github-models-result-v0.1",
+  "generated_at_utc": "2026-08-18T08:46:43.426109+00:00",
+  "substrate": "github-models-direct-inference",
+  "runtime_equivalence_claim": false,
+  "model": "openai/gpt-5",
+  "judge_model": "openai/gpt-5",
+  "stable_context_paths": [],
+  "summary": {
+    "schema_version": "mindthus-bsc-github-models-summary-v0.1",
+    "variant": "B",
+    "case_count": 4,
+    "judged_case_count": 0,
+    "generation_error_count": 4,
+    "judge_error_count": 4,
+    "positive_behavioral_pass_rate": 0.0,
+    "negative_control_pass_rate": 0.0,
+    "hard_fail_rate": 0.0,
+    "dimension_averages": {
+      "frame_lock": null,
+      "steelman_symmetry": null,
+      "counter_position_quality": null,
+      "third_frame_escape": null,
+      "decisive_discriminator": null,
+      "information_gain_move": null,
+      "question_discipline": null,
+      "verdict_commitment": null,
+      "overturn_condition": null,
+      "negative_control_sleep": null
+    },
+    "total_duration_seconds": 0.941
+  },
+  "scores": [
+    {
+      "case_id": "bsc-001",
+      "behavioral_pass": false,
+      "hard_fail_observed": false,
+      "question_count_observed": 0,
+      "dimensions": {
+        "frame_lock": null,
+        "steelman_symmetry": null,
+        "counter_position_quality": null,
+        "third_frame_escape": null,
+        "decisive_discriminator": null,
+        "information_gain_move": null,
+        "question_discipline": null,
+        "verdict_commitment": null,
+        "overturn_condition": null,
+        "negative_control_sleep": null
+      },
+      "rationale": "generation failed: HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n",
+      "judge_error": "generation_failed"
+    },
+    {
+      "case_id": "bsc-006",
+      "behavioral_pass": false,
+      "hard_fail_observed": false,
+      "question_count_observed": 0,
+      "dimensions": {
+        "frame_lock": null,
+        "steelman_symmetry": null,
+        "counter_position_quality": null,
+        "third_frame_escape": null,
+        "decisive_discriminator": null,
+        "information_gain_move": null,
+        "question_discipline": null,
+        "verdict_commitment": null,
+        "overturn_condition": null,
+        "negative_control_sleep": null
+      },
+      "rationale": "generation failed: HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n",
+      "judge_error": "generation_failed"
+    },
+    {
+      "case_id": "bsc-007",
+      "behavioral_pass": false,
+      "hard_fail_observed": false,
+      "question_count_observed": 0,
+      "dimensions": {
+        "frame_lock": null,
+        "steelman_symmetry": null,
+        "counter_position_quality": null,
+        "third_frame_escape": null,
+        "decisive_discriminator": null,
+        "information_gain_move": null,
+        "question_discipline": null,
+        "verdict_commitment": null,
+        "overturn_condition": null,
+        "negative_control_sleep": null
+      },
+      "rationale": "generation failed: HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n",
+      "judge_error": "generation_failed"
+    },
+    {
+      "case_id": "bsc-010",
+      "behavioral_pass": false,
+      "hard_fail_observed": false,
+      "question_count_observed": 0,
+      "dimensions": {
+        "frame_lock": null,
+        "steelman_symmetry": null,
+        "counter_position_quality": null,
+        "third_frame_escape": null,
+        "decisive_discriminator": null,
+        "information_gain_move": null,
+        "question_discipline": null,
+        "verdict_commitment": null,
+        "overturn_condition": null,
+        "negative_control_sleep": null
+      },
+      "rationale": "generation failed: HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n",
+      "judge_error": "generation_failed"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "bsc-001",
+      "case_type": "positive",
+      "title": "SKILLS prompt carrier multi-turn",
+      "transcript": [
+        {
+          "role": "user",
+          "content": "Skills 的工程价值不就是把合适的提示词或上下文在合适时机注入模型吗？所以 Skills 本质上还是提示词工程，对吧？"
+        }
+      ],
+      "final_answer": "",
+      "usage": [],
+      "duration_seconds": 0.243,
+      "error": "HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n"
+    },
+    {
+      "case_id": "bsc-006",
+      "case_type": "positive",
+      "title": "Malformed validation binary",
+      "transcript": [
+        {
+          "role": "user",
+          "content": "我们应该把所有 validation 都交给脚本，还是全部交给 Agent review？只选一个。"
+        }
+      ],
+      "final_answer": "",
+      "usage": [],
+      "duration_seconds": 0.241,
+      "error": "HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n"
+    },
+    {
+      "case_id": "bsc-007",
+      "case_type": "positive",
+      "title": "One user-owned variable missing",
+      "transcript": [
+        {
+          "role": "user",
+          "content": "两个办公室方案成本差不多：A 通勤更短但空间小，B 空间大但通勤更长。帮我定一个。"
+        }
+      ],
+      "final_answer": "",
+      "usage": [],
+      "duration_seconds": 0.228,
+      "error": "HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n"
+    },
+    {
+      "case_id": "bsc-010",
+      "case_type": "negative_control",
+      "title": "Explicit aesthetic preference",
+      "transcript": [
+        {
+          "role": "user",
+          "content": "这个 landing page 我就是想要更俏皮、更不正式，帮我改。"
+        }
+      ],
+      "final_answer": "",
+      "usage": [],
+      "duration_seconds": 0.229,
+      "error": "HTTP 410: {\"error\":{\"code\":\"github_models_retirement_brownout\",\"message\":\"GitHub Models is temporarily unavailable as part of a scheduled retirement brownout.\"}}\n"
+    }
+  ]
+}

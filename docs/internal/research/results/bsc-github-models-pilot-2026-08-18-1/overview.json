@@ -1,0 +1,45 @@
+{
+  "schema_version": "mindthus-bsc-github-models-pilot-overview-v0.1",
+  "substrate": "github-models-direct-inference",
+  "runtime_equivalence_claim": false,
+  "model": "openai/gpt-5",
+  "pilot_case_ids": [
+    "bsc-001",
+    "bsc-006",
+    "bsc-007",
+    "bsc-010"
+  ],
+  "variants": {
+    "A": {
+      "status": "incomplete",
+      "model": "openai/gpt-5",
+      "judged_case_count": 0,
+      "positive_behavioral_pass_rate": 0.0,
+      "negative_control_pass_rate": 0.0,
+      "hard_fail_rate": 0.0,
+      "generation_error_count": 4,
+      "judge_error_count": 4
+    },
+    "B": {
+      "status": "incomplete",
+      "model": "openai/gpt-5",
+      "judged_case_count": 0,
+      "positive_behavioral_pass_rate": 0.0,
+      "negative_control_pass_rate": 0.0,
+      "hard_fail_rate": 0.0,
+      "generation_error_count": 4,
+      "judge_error_count": 4
+    },
+    "C": {
+      "status": "incomplete",
+      "model": "openai/gpt-5",
+      "judged_case_count": 0,
+      "positive_behavioral_pass_rate": 0.0,
+      "negative_control_pass_rate": 0.0,
+      "hard_fail_rate": 0.0,
+      "generation_error_count": 4,
+      "judge_error_count": 4
+    }
+  },
+  "interpretation_boundary": "This pilot compares treatment prompts on an independent direct-inference substrate. It does not certify Codex or ChatGPT Stable runtime behavior."
+}
