@@ -108,22 +108,25 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
+**发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。
+
 当前已发布 Stable 是 `v1.7.1`。这是 1.x Stable 的小型判断质量 bugfix：当真实竞争
 框架仍未收敛时，在现有 Pressure Surface 内构造真正可能获胜的竞争解释，再找会改变判断或
 行动的关键条件；用户可见答案把内部抽象翻译成具体选择、损失、证据或行动。它不新增方法、
 route、judgment owner、mandatory question 或 debate。本版继承 `v1.7.0` 的 WAE Ownership
 Closure；TPlan runtime generation 仍保持 `1.5.4`。
 
-`v1.7.0` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
-experimental asset。ROI Beta 从冻结的 `v1.7.0` Stable core 重新组装，因此继承 WAE
-Ownership Closure，以及 Judgment Trace、Case Export、case-prep、Test Lifecycle 与现有
-TPlan 能力；运行时差异仍只允许经资格验证的 ROI.2 薄入口、一条 3L5S Anti-Spiral 合同和
-Beta identity / namespace / diagnostic 坐标。TPlan runtime generation 仍保持 `1.5.4`。
+`v1.7.1` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
+experimental asset。ROI Beta 从冻结的 `v1.7.1` Stable core 重新组装，因此继承本版
+Competitive-frame convergence / Visible Translation 修复、WAE Ownership Closure、Judgment
+Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；运行时差异仍只允许经资格
+验证的 ROI.2 薄入口、一条 3L5S Anti-Spiral 合同和 Beta identity / namespace / diagnostic
+坐标。TPlan runtime generation 仍保持 `1.5.4`。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.7.1.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.7.1.tar.gz`。
 - 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
-  `mindthus-beta-1.7.0-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
+  `mindthus-beta-1.7.1-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
   `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.7.1 Stable 的替代品。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
@@ -173,18 +176,19 @@ codex plugin marketplace remove mindthus
 ### Codex ROI Beta（实验）
 
 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个
-`v1.7.0-roi-beta` 包从冻结的 `v1.7.0` Stable core 重新组装，继承 WAE Ownership
-Closure、Judgment Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；它只
-替换经资格验证的 `using-mindthus` 薄入口和一条 3L5S Anti-Spiral 句子。Stable 与 ROI Beta
-使用不同的 package、marketplace、cache 与 skill namespace，可以独立安装或移除：
+`v1.7.1-roi-beta` 包从冻结的 `v1.7.1` Stable core 重新组装，继承本版 competing-frame /
+visible-translation 修复、WAE Ownership Closure、Judgment Trace、Case Export、case-prep、
+Test Lifecycle 与现有 TPlan 能力；它只替换经资格验证的 `using-mindthus` 薄入口和一条
+3L5S Anti-Spiral 句子。Stable 与 ROI Beta 使用不同的 package、marketplace、cache 与
+skill namespace，可以独立安装或移除：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-beta-1.7.0-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.7.0/mindthus-beta-1.7.0-roi-beta.tar.gz"
+  -o /tmp/mindthus-beta-1.7.1-roi-beta.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.7.1/mindthus-beta-1.7.1-roi-beta.tar.gz"
 rm -rf /tmp/mindthus-roi-beta
 mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.7.0-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
+tar -xzf /tmp/mindthus-beta-1.7.1-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
 codex plugin marketplace add /tmp/mindthus-roi-beta
 codex plugin add mindthus-beta@mindthus-beta
 ```
