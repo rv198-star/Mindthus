@@ -7,6 +7,8 @@ CANDIDATE = REPO / "docs" / "internal" / "research" / "bidirectional-steelman-co
 SHARED = REPO / "docs" / "methodologies" / "shared-primitives.md"
 USING = REPO / "skills" / "using-mindthus" / "SKILL.md"
 PRESSURE = REPO / "tests" / "bidirectional_steelman_pressure_tests.md"
+CLITE_RUNNER = REPO / "scripts" / "run-bidirectional-steelman-clite-experiment.py"
+PILOT_WORKFLOW = REPO / ".github" / "workflows" / "bidirectional-steelman-pilot.yml"
 
 
 class BidirectionalSteelmanContractTests(unittest.TestCase):
@@ -65,6 +67,24 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "Contaminated-session P0/P1/C-lite runs are protocol-debug evidence only",
         ):
             self.assertIn(phrase, text)
+
+    def test_independent_runner_changes_only_variant_c_treatment(self):
+        text = CLITE_RUNNER.read_text(encoding="utf-8")
+        for phrase in (
+            "Run the preregistered BSC experiment with the simplified C-lite treatment",
+            "run-bidirectional-steelman-experiment.py",
+            "Competitive Steelman / 竞争框架钢人",
+            "Decisive Discriminator / 决定性判别变量",
+            "There is no mandatory question",
+            "module.ADAPTED_PROTOCOL = C_LITE_PROTOCOL",
+            "return int(module.main())",
+        ):
+            self.assertIn(phrase, text)
+
+        workflow = PILOT_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Run preregistered A/B/C-lite pilot", workflow)
+        self.assertIn("run-bidirectional-steelman-clite-experiment.py", workflow)
+        self.assertIn('"candidate": "C-lite"', workflow)
 
 
 if __name__ == "__main__":
