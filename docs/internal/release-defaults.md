@@ -3,6 +3,7 @@
 ## Stable + ROI Beta
 
 Mindthus Stable release 默认同步发布同版本 ROI Beta supplemental experimental asset。
+该默认规则适用于 Stable 的 patch、minor 和 major 发版。
 
 - Stable `vX.Y.Z` -> source tag `vX.Y.Z` + Stable plugins/skills assets；
 - 默认同时 -> ROI Beta source tag `vX.Y.Z-roi-beta` + `mindthus-beta-X.Y.Z-roi-beta.tar.gz`；
