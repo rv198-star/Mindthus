@@ -41,12 +41,21 @@
 - **TPlan runtime generation 保持 `1.5.4` / `mindthus-v1.5.4`。** 本 patch 不修改 Mission
   runtime fingerprint。
 
+### 补充发布包：1.7.1 ROI Beta（GPT/Sol）
+
+- Stable release 默认同步提供同版本 ROI Beta，除非该版本发布前显式声明例外；v1.7.1 未声明例外。
+- ROI Beta 从冻结的 `v1.7.1` Stable core 重新组装，因此继承 competing-frame convergence、
+  Visible Translation Boundary、WAE Ownership Closure 与其余 shared-product-core 能力。
+- runtime delta 继续限制为资格验证过的 ROI.2 `using-mindthus` 薄入口、单句 3L5S
+  Anti-Spiral correction、Beta identity / namespace 与 runtime diagnostic 坐标。
+- 源码 tag：`v1.7.1-roi-beta`；资产：`mindthus-beta-1.7.1-roi-beta.tar.gz`；不自动迁移，
+  不自动发布 marketplace。
+
 ### 验证与发布资产
 
 - compileall、Test Lifecycle、完整 unittest、Stable plugins/skills build 均通过后发布。
-- GitHub Release 提供 `mindthus-plugins-1.7.1.tar.gz`、`mindthus-skills-1.7.1.tar.gz` 和
-  `SHA256SUMS`。
-- 本 patch 不包含新的 ROI Beta 资产。
+- GitHub Release 提供 `mindthus-plugins-1.7.1.tar.gz`、`mindthus-skills-1.7.1.tar.gz`、
+  `mindthus-beta-1.7.1-roi-beta.tar.gz` 和覆盖三份归档的 `SHA256SUMS`。
 
 ## v1.7.0
 

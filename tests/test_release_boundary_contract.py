@@ -27,7 +27,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("当前已发布 Stable 是 `v1.7.1`", readme)
         self.assertIn("mindthus-plugins-1.7.1.tar.gz", readme)
         self.assertIn("mindthus-skills-1.7.1.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.7.0-roi-beta.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.7.1-roi-beta.tar.gz", readme)
         self.assertIn("Ownership Closure", readme)
         self.assertIn("## v1.7.1", changelog)
         self.assertIn("## v1.7.0", changelog)
@@ -56,6 +56,22 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("mindthus-beta-1.7.0-roi-beta.tar.gz", beta_notes)
         self.assertNotIn("Release candidate", release_log + beta_notes)
         self.assertNotIn("Release date:", release_log)
+
+    def test_release_defaults_publish_roi_beta_unless_explicitly_exempted(self):
+        policy = (REPO / "docs" / "internal" / "release-defaults.md").read_text(encoding="utf-8")
+        release = (REPO / "docs" / "releases" / "v1.7.1.md").read_text(encoding="utf-8")
+        beta = (REPO / "docs" / "releases" / "v1.7.1-roi-beta.md").read_text(encoding="utf-8")
+        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
+        for phrase in (
+            "Stable release 默认同步发布同版本 ROI Beta",
+            "只有当某个版本在**发布前**明确记录",
+            "没有明确例外，就按默认规则发布",
+        ):
+            self.assertIn(phrase, policy)
+        self.assertIn("mindthus-beta-1.7.1-roi-beta.tar.gz", release)
+        self.assertIn("v1.7.1-roi-beta", beta)
+        self.assertIn("补充发布包：1.7.1 ROI Beta", changelog)
+        self.assertIn("覆盖三份归档的 `SHA256SUMS`", changelog)
 
     def test_v1_4_6_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
