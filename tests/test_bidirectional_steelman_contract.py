@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -7,6 +8,7 @@ CANDIDATE = REPO / "docs" / "internal" / "research" / "bidirectional-steelman-co
 SHARED = REPO / "docs" / "methodologies" / "shared-primitives.md"
 USING = REPO / "skills" / "using-mindthus" / "SKILL.md"
 PRESSURE = REPO / "tests" / "bidirectional_steelman_pressure_tests.md"
+HOLDOUT = REPO / "tests" / "bidirectional_steelman_p2_holdout_cases.jsonl"
 CLITE_RUNNER = REPO / "scripts" / "run-bidirectional-steelman-clite-experiment.py"
 PILOT_WORKFLOW = REPO / ".github" / "workflows" / "bidirectional-steelman-pilot.yml"
 
@@ -65,6 +67,31 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "Negative Controls",
             "C-lite should be rejected",
             "Contaminated-session P0/P1/C-lite runs are protocol-debug evidence only",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_p2_surface_changed_holdouts_are_frozen_before_independent_run(self):
+        rows = [
+            json.loads(line)
+            for line in HOLDOUT.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(rows), 7)
+        self.assertEqual(
+            {row["case_id"] for row in rows},
+            {"bsc-h01", "bsc-h02", "bsc-h03", "bsc-h04", "bsc-h05", "bsc-h06", "bsc-h07"},
+        )
+        self.assertEqual(sum(row["case_type"] == "positive" for row in rows), 5)
+        self.assertEqual(sum(row["case_type"] == "negative_control" for row in rows), 2)
+        text = HOLDOUT.read_text(encoding="utf-8")
+        for phrase in (
+            "RAG 本质上不就是",
+            "所有发布要么一次性全量上线",
+            "故障域更集中",
+            "新搜索索引看起来已经",
+            "checksum verifier",
+            "按钮我就是想改成红色",
+            "翻译成英文",
         ):
             self.assertIn(phrase, text)
 
