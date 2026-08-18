@@ -22,6 +22,10 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "not a standalone method",
             "Competitive Steelman / 竞争框架钢人",
             "Decisive Discriminator / 决定性判别变量",
+            "Visible Translation Boundary / 可见表达翻译边界",
+            "internal judgment representation",
+            "X 值不值得换 Y",
+            "5K 多花的钱，值不值得换更锐的文字？",
             "same judgment object",
             "same Evidence / Claim Ceiling",
             "Do not force symmetry after evidence becomes asymmetric",
@@ -29,6 +33,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "direct/deterministic/preference task -> stay asleep",
             "Return To Stable Owner",
             "P2 Treatment Contract",
+            "user-visible abstraction leakage",
             "The retired larger C adaptation",
         ):
             self.assertIn(phrase, text)
@@ -47,6 +52,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             self.assertNotIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
             self.assertNotIn("Competitive Steelman / 竞争框架钢人", text)
             self.assertNotIn("Decisive Discriminator / 决定性判别变量", text)
+            self.assertNotIn("Visible Translation Boundary / 可见表达翻译边界", text)
         self.assertIn("Pressure Surface Check / 施压面检查", using)
         self.assertIn("pressure is not a route", using)
         self.assertIn("assign its owner", using)
@@ -59,6 +65,9 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "C / C-lite Mindthus adaptation",
             "Competitive Steelman / 竞争框架钢人",
             "Decisive Discriminator / 决定性判别变量",
+            "Visible Translation Boundary",
+            "visible_translation",
+            "5K 多花的钱，值不值得换更锐的",
             "SKILLS / Prompt Carrier Multi-turn",
             "27-inch 4K / 5K / BetterDisplay",
             "Malformed Binary Escape",
@@ -66,6 +75,7 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "Decisive Variable Is Externally Verifiable",
             "Negative Controls",
             "C-lite should be rejected",
+            "visible-language",
             "Contaminated-session P0/P1/C-lite runs are protocol-debug evidence only",
         ):
             self.assertIn(phrase, text)
@@ -95,15 +105,19 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-    def test_independent_runner_changes_only_variant_c_treatment(self):
+    def test_independent_runner_changes_only_variant_c_treatment_and_shared_expression_score(self):
         text = CLITE_RUNNER.read_text(encoding="utf-8")
         for phrase in (
             "Run the preregistered BSC experiment with the simplified C-lite treatment",
             "run-bidirectional-steelman-experiment.py",
             "Competitive Steelman / 竞争框架钢人",
             "Decisive Discriminator / 决定性判别变量",
+            "Visible Translation Boundary / 可见表达翻译边界",
             "There is no mandatory question",
+            "visible_translation",
             "module.ADAPTED_PROTOCOL = C_LITE_PROTOCOL",
+            "module.DIMENSIONS = tuple(module.DIMENSIONS) + (\"visible_translation\",)",
+            "module.DIMENSION_GUIDANCE[\"visible_translation\"]",
             "return int(module.main())",
         ):
             self.assertIn(phrase, text)
