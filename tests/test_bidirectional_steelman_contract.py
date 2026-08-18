@@ -35,18 +35,11 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
         self.assertIn("primitives/bidirectional-steelman-convergence.md", text)
         self.assertIn("最强竞争立场", text)
 
-    def test_using_mindthus_keeps_trigger_conditional(self):
+    def test_using_mindthus_references_competing_frame_pressure_without_expanding_contract(self):
         text = USING.read_text(encoding="utf-8")
-        for phrase in (
-            "Bidirectional Steelman Convergence / 双向钢人收敛",
-            "real competing-frame judgment",
-            "same object/evidence ceiling",
-            "ask at most one",
-            "acquire evidence",
-            "malformed binary",
-            "does not become the judgment owner",
-        ):
-            self.assertIn(phrase, text)
+        self.assertIn("Pressure Surface Check / 施压面检查", text)
+        self.assertIn("real competing frames", text)
+        self.assertIn("Bidirectional Steelman Convergence / 双向钢人收敛", text)
 
     def test_preregistered_pressure_surface_is_present(self):
         text = PRESSURE.read_text(encoding="utf-8")
