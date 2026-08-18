@@ -57,7 +57,9 @@ jobs:
           python-version: "3.11"
 
       - name: Prepare Stable v1.7.1 source
-        run: python3 scripts/prepare-v1.7.1.py
+        run: |
+          python3 scripts/prepare-v1.7.1.py
+          python3 scripts/fixup-v1.7.1.py
 
       - name: Validate prepared source
         run: |
@@ -83,14 +85,16 @@ jobs:
 
           pressure = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/resources/primitives/expression-pressure-and-gates.md').read_text()
           entry = Path('/tmp/mindthus-skills-1.7.1/codex/skills/mindthus/using-mindthus/SKILL.md').read_text()
+          diagnostic = Path('/tmp/mindthus-skills-1.7.1/codex/scripts/log-mindthus-runtime.py').read_text()
           for marker in (
               'Competitive-frame convergence / 竞争框架收敛',
               'Decisive discriminator / 决定性判别变量',
               'Visible Translation Boundary / 可见表达翻译边界',
           ):
               assert marker in pressure, marker
-          assert 'material competing frame remains' in entry
-          assert 'Visible Translation / 可见表达翻译' in entry
+          assert 'Pressure Surface Check / 施压面检查' in entry
+          assert 'expression-pressure-and-gates.md' in entry
+          assert 'VERSION = "1.7.1"' in diagnostic
           PY
 
       - name: Commit only validated release source
@@ -98,7 +102,7 @@ jobs:
           git config user.name 'mindthus-release-bot'
           git config user.email 'mindthus-release-bot@users.noreply.github.com'
           git checkout origin/main -- .github/workflows/python-validation.yml
-          git rm scripts/prepare-v1.7.1.py
+          git rm scripts/prepare-v1.7.1.py scripts/fixup-v1.7.1.py
           git add -A
           git diff --cached --check
           git commit -m 'fix: promote competitive-frame convergence for v1.7.1'
