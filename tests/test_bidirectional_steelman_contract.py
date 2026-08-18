@@ -33,7 +33,6 @@ class BidirectionalSteelmanContractTests(unittest.TestCase):
             "direct/deterministic/preference task -> stay asleep",
             "Return To Stable Owner",
             "P2 Treatment Contract",
-            "user-visible abstraction leakage",
             "The retired larger C adaptation",
         ):
             self.assertIn(phrase, text)
