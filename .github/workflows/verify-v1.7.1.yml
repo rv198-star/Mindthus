@@ -1,0 +1,103 @@
+name: Verify v1.7.1 release
+
+on:
+  push:
+    branches:
+      - release/v1.7.1-publish-ops
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: ${{ contains(github.event.head_commit.message, '[verify-v1.7.1]') }}
+    runs-on: ubuntu-latest
+    env:
+      STABLE_SHA: dca73c1ff1710eca3d5b56216c374ce6c2240117
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out release controls
+        uses: actions/checkout@v4
+        with:
+          ref: release/v1.7.1-publish-ops
+          fetch-depth: 0
+
+      - name: Verify exact tag target
+        run: |
+          git fetch origin refs/tags/v1.7.1:refs/tags/v1.7.1 --force
+          test "$(git rev-list -n 1 v1.7.1)" = "$STABLE_SHA"
+
+      - name: Verify release metadata and asset names
+        run: |
+          gh api repos/rv198-star/Mindthus/releases/tags/v1.7.1 > /tmp/release.json
+          python3 - <<'PY'
+          import json
+          data = json.load(open('/tmp/release.json'))
+          assert data['tag_name'] == 'v1.7.1'
+          assert data['name'] == 'Mindthus v1.7.1'
+          assert data['draft'] is False
+          assert data['prerelease'] is False
+          names = {asset['name'] for asset in data['assets']}
+          assert names == {
+              'mindthus-plugins-1.7.1.tar.gz',
+              'mindthus-skills-1.7.1.tar.gz',
+              'SHA256SUMS',
+          }, names
+          PY
+
+      - name: Download and verify release assets
+        run: |
+          rm -rf /tmp/v171-release
+          mkdir -p /tmp/v171-release
+          gh release download v1.7.1 \
+            --repo rv198-star/Mindthus \
+            --dir /tmp/v171-release \
+            --pattern 'mindthus-plugins-1.7.1.tar.gz' \
+            --pattern 'mindthus-skills-1.7.1.tar.gz' \
+            --pattern 'SHA256SUMS'
+          cd /tmp/v171-release
+          sha256sum -c SHA256SUMS
+          mkdir plugins skills
+          tar -xzf mindthus-plugins-1.7.1.tar.gz -C plugins --strip-components=1
+          tar -xzf mindthus-skills-1.7.1.tar.gz -C skills --strip-components=1
+          grep -q '"version": "1.7.1"' plugins/codex-plugin/mindthus/.codex-plugin/plugin.json
+          grep -q 'Competitive-frame convergence / 竞争框架收敛' skills/codex/skills/mindthus/using-mindthus/resources/primitives/expression-pressure-and-gates.md
+          grep -q 'Visible Translation Boundary / 可见表达翻译边界' skills/codex/skills/mindthus/using-mindthus/resources/primitives/expression-pressure-and-gates.md
+
+      - name: Persist verification record on ops branch
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          release = json.load(open('/tmp/release.json'))
+          root = Path('/tmp/v171-release')
+          def digest(name):
+              return hashlib.sha256((root / name).read_bytes()).hexdigest()
+          payload = {
+              'schema_version': 'mindthus-release-verification-v0.1',
+              'status': 'verified',
+              'version': '1.7.1',
+              'tag': 'v1.7.1',
+              'stable_sha': 'dca73c1ff1710eca3d5b56216c374ce6c2240117',
+              'release_url': release['html_url'],
+              'draft': release['draft'],
+              'prerelease': release['prerelease'],
+              'published_at': release['published_at'],
+              'assets': {
+                  'mindthus-plugins-1.7.1.tar.gz': digest('mindthus-plugins-1.7.1.tar.gz'),
+                  'mindthus-skills-1.7.1.tar.gz': digest('mindthus-skills-1.7.1.tar.gz'),
+                  'SHA256SUMS': digest('SHA256SUMS'),
+              },
+              'downloaded_checksum_verification': True,
+              'packaged_behavior_markers_verified': True,
+          }
+          path = Path('docs/internal/research/results/v1.7.1-release-verification.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'mindthus-release-bot'
+          git config user.email 'mindthus-release-bot@users.noreply.github.com'
+          git add docs/internal/research/results/v1.7.1-release-verification.json
+          git commit -m 'ops: record verified v1.7.1 release'
+          git push origin HEAD:release/v1.7.1-publish-ops
