@@ -40,7 +40,7 @@ The comparison must inherit the active Stable constraints:
 - same active judgment owner.
 
 This is not `find objections`. The counter-frame must explain or predict an important
-result better enough that the current judgment could change if it wins.
+result well enough that the current judgment could change if it wins.
 
 Do not force symmetry after evidence becomes asymmetric. If Stable Whole Elephant already
 shows that the local mechanism genuinely owns the complete target result, no steelman
@@ -61,6 +61,34 @@ prediction, or other observable condition that can change at least one of:
 
 If no difference can change any of those, stop the pressure pass instead of adding more
 balanced prose.
+
+## Visible Translation Boundary / 可见表达翻译边界
+
+`decisive_discriminator` is an **internal judgment representation**, not prescribed
+user-facing wording. C-lite does not gain a third reasoning move here; this is only a
+projection boundary for the answer returned by the existing Stable owner.
+
+Before the discriminator appears in the visible answer, translate it into the user's
+concrete choice, loss, evidence condition, or action:
+
+- abstract tradeoff -> `X 值不值得换 Y`;
+- user-owned preference -> `你更愿意牺牲 X，还是接受 Y`;
+- evidence gate -> `先验证 Z；如果不过，就不要切 / 删 / 上线`;
+- overturn condition -> `只有当 Z 发生时，才改选另一边`.
+
+Unless the user is explicitly discussing methodology, keep internal vocabulary out of
+the visible answer. In particular, do not casually surface phrases such as
+`decisive discriminator`, `target function`, `relative weight`, `definition authority`,
+`result controller`, or `Evidence / Claim Ceiling` when a concrete sentence can carry
+the same judgment.
+
+Example for the 4K / 5K decision:
+
+- internal: `文字锐度敏感程度相对于 5K 价格溢价的权重`;
+- visible: `5K 多花的钱，值不值得换更锐的文字？`
+
+The visible version should preserve the decision logic without making the user decode an
+audit field.
 
 ## Return To Stable Owner
 
@@ -87,11 +115,13 @@ When validation/debugging needs an observable record, keep it bounded:
 active_frame:
 strongest_counter_frame:
 decisive_discriminator:
+visible_translation:
 changed_surface: verdict | evidence | action | stop | handoff
 stable_owner_handoff:
 ```
 
-This is not a reasoning transcript.
+`visible_translation` records the concrete user-facing projection, not another reasoning
+step. This shape is not a reasoning transcript.
 
 ## Boundaries
 
@@ -105,6 +135,7 @@ This is not a reasoning transcript.
 - No symmetry requirement after one frame clearly wins on evidence.
 - No claim that a second model/prompt instance is independent evidence merely because it
   generated a different wording.
+- Internal analytical vocabulary does not automatically belong in the visible answer.
 
 ## Relationship To Stable Mindthus
 
@@ -126,7 +157,8 @@ Independent P2 should compare fresh sessions:
 - **A — current Stable Mindthus**;
 - **B — source bidirectional-steelman protocol**;
 - **C — C-lite:** Stable Mindthus + only `Competitive Steelman` +
-  `Decisive Discriminator` when a real competing-frame judgment remains;
+  `Decisive Discriminator` when a real competing-frame judgment remains, with the
+  `Visible Translation Boundary` applied before user-facing output;
 - **D — existing single-agent multi-role pressure** only as an optional diagnostic
   control where Stable methods already call for it.
 
@@ -140,5 +172,6 @@ Contract markers and session pilots do not prove behavioral improvement.
 Independent promotion requires the preregistered 13-case comparison plus independently
 owned or surface-changed variants. C-lite should be rejected if it cannot improve
 counter-frame/discriminator quality over Stable Mindthus without increasing false wake-up,
-ceremony, or material cost. If the source B performs as well or better after controlling
-its overactivation, prefer the simpler source-derived treatment.
+ceremony, material cost, or user-visible abstraction leakage. If the source B performs
+as well or better after controlling its overactivation, prefer the simpler source-derived
+treatment.
