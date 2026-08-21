@@ -2,6 +2,58 @@
 
 ## Unreleased
 
+## v1.8.0
+
+发布 tag：`v1.8.0`
+
+[发布说明](docs/releases/v1.8.0.md)
+
+发布日期：2026-08-21
+
+### 版本定位
+
+这是 1.x Stable 线的根因恢复语义 minor release。新增 `Root-Cause Replacement / 根因替换`
+认知原语，补齐 Anti-Spiral 在停止局部修补之后的恢复动作；它是兼容性的能力新增，不是
+新的独立 Skill、root-cause finder 或 mandatory refactor。
+
+### Root-Cause Replacement
+
+- 根因与 canonical owner 已有证据确认后，优先通过 delete / rewrite / equal-replace 直接
+  替换错误规则，并同步移除由旧模型产生的冗余 exception、fallback 或 override。
+- canonical mainline 直接描述目标行为、有效状态、controller、contract 和成功路径；真实
+  boundary / veto / safety / authority 继续使用明确禁止性语言。
+- 根因仍是假设时先服从 Evidence / Claim Ceiling；明确局部 bug 继续按局部根因修复，不把
+  本原语解释成大范围重构许可。
+
+### 方法链与 Runtime 接入
+
+- Anti-Spiral 继续负责刹车，Root-Cause Replacement 只接管根因确认后的 recovery shape。
+- WAE 在 evidence-confirmed controller mismatch 后重写正确 owner；迁移 adapter 只服务真实
+  外部 contract 或 staged migration，并需要 removal condition。
+- TVG 遇到错误 canonical model 时先退出 value-gain loop，稳定上游后再恢复强化。
+- `using-mindthus` 不新增 judgment owner；`before-continue` primitive activation 增加
+  Root-Cause Replacement reminder，但 checker 继续保持 `shape_only`，不判断真正根因。
+- 保留 v1.7.0 WAE Ownership Closure 与 v1.7.1 competitive-frame / Visible Translation
+  Boundary，不回退现有判断能力。
+
+### ROI Beta 发布前显式例外
+
+- Stable release 默认同步提供同版本 ROI Beta；v1.8.0 在发布前显式声明例外，不发布
+  `v1.8.0-roi-beta`。
+- 原因是 ROI.2 薄入口会覆盖 Stable `using-mindthus` / Anti-Spiral 表面，而本次能力正好改变
+  evidence-confirmed root cause 之后的恢复动作；未经 overlay 更新与独立资格验证，不能把
+  shared-core 文件存在等同于薄入口行为已经完整继承。
+- 当前 ROI Beta 继续保持 `v1.7.1-roi-beta`；后续同步需要先重新验证 action-changing
+  regression、Anti-Spiral near-negative 与 namespace/runtime contract。
+
+### 兼容性、验证与发布资产
+
+- Stable package / plugin manifest 使用 `1.8.0`；TPlan runtime generation 继续保持
+  `1.5.4` / `mindthus-v1.5.4`。
+- compileall、Test Lifecycle、完整 unittest、Stable plugins/skills build 均通过后发布。
+- `v1.8.0` GitHub Release 提供 `mindthus-plugins-1.8.0.tar.gz`、
+  `mindthus-skills-1.8.0.tar.gz` 与覆盖两份归档的 `SHA256SUMS`。
+
 ## v1.7.1
 
 发布 tag：`v1.7.1`

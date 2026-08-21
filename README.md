@@ -110,24 +110,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 **发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。
 
-当前已发布 Stable 是 `v1.7.1`。这是 1.x Stable 的小型判断质量 bugfix：当真实竞争
-框架仍未收敛时，在现有 Pressure Surface 内构造真正可能获胜的竞争解释，再找会改变判断或
-行动的关键条件；用户可见答案把内部抽象翻译成具体选择、损失、证据或行动。它不新增方法、
-route、judgment owner、mandatory question 或 debate。本版继承 `v1.7.0` 的 WAE Ownership
-Closure；TPlan runtime generation 仍保持 `1.5.4`。
+当前已发布 Stable 是 `v1.8.0`。这是 1.x Stable 的根因恢复语义 minor release：新增
+`Root-Cause Replacement / 根因替换` 认知原语。当证据已经确认错误的 canonical rule、
+owner、contract 或 controller 时，优先直接重写正确逻辑，而不是继续通过 exception、
+fallback、override 或反向规则维持旧模型。它是 recovery primitive，不是新的 Skill、
+root-cause finder 或 mandatory refactor；TPlan runtime generation 仍保持 `1.5.4`。
 
-`v1.7.1` Release 同时提供 Stable plugins、Stable skills 与补充发布的 ROI Beta
-experimental asset。ROI Beta 从冻结的 `v1.7.1` Stable core 重新组装，因此继承本版
-Competitive-frame convergence / Visible Translation 修复、WAE Ownership Closure、Judgment
-Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；运行时差异仍只允许经资格
-验证的 ROI.2 薄入口、一条 3L5S Anti-Spiral 合同和 Beta identity / namespace / diagnostic
-坐标。TPlan runtime generation 仍保持 `1.5.4`。
+`v1.8.0` Release 提供 Stable plugins 与 Stable skills，并在发布前显式声明 ROI Beta 例外：
+Root-Cause Replacement 改变了 ROI.2 正在覆盖的 `using-mindthus` / Anti-Spiral 恢复语义，
+如果不重新资格验证薄入口，就不能诚实宣称同版本 Beta 已完整继承本次能力。因此当前 ROI Beta
+继续保持 `v1.7.1-roi-beta`；Stable 1.8.0 不自动发布 `v1.8.0-roi-beta`。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.7.1.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.7.1.tar.gz`。
-- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.8.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.8.0.tar.gz`。
+- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：仍下载
   `mindthus-beta-1.7.1-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
-  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.7.1 Stable 的替代品。
+  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.8.0 Stable 的替代品。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -137,22 +135,22 @@ Trace、Case Export、case-prep、Test Lifecycle 与现有 TPlan 能力；运行
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.7.1.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.7.1/mindthus-plugins-1.7.1.tar.gz"
+  -o /tmp/mindthus-plugins-1.8.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.8.0/mindthus-plugins-1.8.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.7.1.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.8.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.7.1.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.7.1/mindthus-skills-1.7.1.tar.gz"
+  -o /tmp/mindthus-skills-1.8.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.8.0/mindthus-skills-1.8.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.7.1.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.8.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -300,7 +298,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.7.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.8.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

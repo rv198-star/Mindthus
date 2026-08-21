@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.7.1"
+VERSION = "1.8.0"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
