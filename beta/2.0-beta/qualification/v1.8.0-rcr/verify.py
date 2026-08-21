@@ -74,6 +74,7 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
     register = read_json(REGISTER)
     historical = read_json(HISTORICAL)
     overlay = OVERLAY.read_text(encoding="utf-8")
+    overlay_compact = " ".join(overlay.split())
 
     if profile["version"] != "1.8.0-roi-beta":
         fail("composition version is not 1.8.0-roi-beta")
@@ -84,7 +85,7 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
     if OVERLAY.stat().st_size > MAX_BYTES:
         fail(f"Thin Core exceeds {MAX_BYTES} bytes: {OVERLAY.stat().st_size}")
     for marker in REQUIRED_OVERLAY_MARKERS:
-        if marker not in overlay:
+        if " ".join(marker.split()) not in overlay_compact:
             fail(f"Thin Core missing marker: {marker}")
 
     if historical.get("candidate") != "2.0.0-roi.2":
