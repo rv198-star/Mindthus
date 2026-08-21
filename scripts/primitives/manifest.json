@@ -94,6 +94,7 @@
       "active_primitives": [
         "gate_probes",
         "anti_spiral",
+        "root_cause_replacement",
         "failure_smells"
       ],
       "conditional_primitives": [
@@ -106,6 +107,7 @@
         "why_same_path_is_still_authorized",
         "next_round_positive_value_or_evidence_delta",
         "local_repair_spiral_risk",
+        "if_root_cause_confirmed_replace_canonical_owner",
         "failure_smell_scan",
         "stop_or_handoff_condition"
       ]
@@ -568,6 +570,27 @@
         "automatic-stop-rule"
       ],
       "owner": "anti-spiral-self-audit"
+    },
+    "root_cause_replacement": {
+      "name": "Root-Cause Replacement / 根因替换",
+      "short_rule": "根因与 canonical owner 确认后，修根因、换规则、直接写正确逻辑；mainline 正面描述目标行为，禁止性语言归入真实 boundary / veto。",
+      "trigger": [
+        "before-continue"
+      ],
+      "action_effect": [
+        "replace-canonical-logic",
+        "rewrite-canonical-owner",
+        "subtract-obsolete-exceptions",
+        "affirm-mainline",
+        "preserve-real-boundaries",
+        "revalidate-downstream"
+      ],
+      "not_a": [
+        "root-cause-finder",
+        "semantic-judge",
+        "mandatory-refactor"
+      ],
+      "owner": "shared-primitives"
     },
     "continuation_authorization": {
       "name": "Continuation Authorization / 继续授权",

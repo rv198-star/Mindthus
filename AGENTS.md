@@ -64,7 +64,9 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 长任务中启用反螺旋入口：如果同一局部对象第三次被处理、用户反馈变差、
 或下一步准备新增一层结构，先暂停并做 Anti-Spiral Self-Audit。默认假设
 自己可能正在用局部修补替代核心目标推进；下一步优先回到上游、做减法，
-或等量替换，而不是继续加层。
+或等量替换。上游证据确认 canonical logic 错误后，使用 Root-Cause Replacement：
+修根因，换规则，直接写正确逻辑；mainline 用肯定式描述目标行为，禁止性语言归入
+真实 boundary / veto / safety / authority 约束。
 
 ## 方法分层纪律 / Method Layering Discipline
 

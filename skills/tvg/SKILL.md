@@ -54,6 +54,9 @@ audits by object first: code correctness, release readiness, workflow health, fa
 verification, method correctness, strategic direction, or requirement boundaries need
 their own evidence, review, or Mindthus owner before TVG is considered.
 
+If artifact thinness comes from a broken canonical model, exit the value-gain loop and
+use Root-Cause Replacement before further strengthening.
+
 ### Operating Flow
 
 1. Name the smallest module that can be frozen, returned, or blocked.

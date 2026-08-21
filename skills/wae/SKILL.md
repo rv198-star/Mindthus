@@ -159,6 +159,10 @@ Ownership Closure must not become a generic `act -> test -> fix` loop, a recursi
 
 If a WAE output becomes cleaner but thinner, treat that as a regression.
 
+When evidence confirms controller mismatch as the root cause, use Root-Cause Replacement:
+move canonical logic to the correct owner and rewrite that owner directly; migration adapters
+serve only real external compatibility windows.
+
 ### Worksheet
 
 Use `templates/control-boundary-worksheet.md` when a concrete work item needs a lightweight control-boundary analysis.

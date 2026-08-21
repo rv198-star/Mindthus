@@ -52,6 +52,7 @@ USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
     "whole-elephant-protocol.md",
     "expression-pressure-and-gates.md",
     "mpg-scalar-commitment-unpack.md",
+    "root-cause-replacement.md",
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "遇事不要慌，先搞清楚情况再说。This is a light Mindthus activation router, not a mandatory workflow. "

@@ -298,8 +298,10 @@ Default WAE reading:
 > subjective score as the feedback controller for another local repair loop.
 
 When Anti-Spiral fires red, prefer rollback, deletion, upstream redefinition, or equal
-replacement. Do not add a new fallback layer until the upstream cause and evidence
-surface are clear.
+replacement. Once evidence establishes a broken canonical controller or rule, hand the
+recovery shape to `Root-Cause Replacement`: rewrite the owning logic directly, state the
+intended mainline positively, and keep prohibitions in true boundary / veto constraints.
+Fallback or compatibility layers serve only verified external contracts or staged migration.
 
 ### Failure Attribution
 

@@ -1019,6 +1019,10 @@ Its main role is to prevent unsupported extra rounds, not to replace the value-g
 
 Use it as a guardrail against continuing without a named source of positive value.
 
+When the next round would compensate for a broken canonical model, leave TVG first.
+`Root-Cause Replacement` owns the recovery shape after evidence identifies the broken
+upstream rule or owner; TVG can resume only after the canonical model is stable again.
+
 ## Minimum Trace Record
 
 When this method materially affects a module, record:

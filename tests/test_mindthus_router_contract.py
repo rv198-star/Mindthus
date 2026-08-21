@@ -621,6 +621,29 @@ class MindthusRouterContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, combined)
 
+    def test_root_cause_replacement_calibration_covers_rewrite_and_negative_controls(self):
+        calibration = (
+            REPO / "skills" / "using-mindthus" / "resources" / "calibration-pairs.yaml"
+        ).read_text(encoding="utf-8")
+        primitive = (
+            REPO / "docs" / "methodologies" / "primitives" / "root-cause-replacement.md"
+        ).read_text(encoding="utf-8")
+        combined = " ".join("\n".join((calibration, primitive)).split())
+
+        for phrase in (
+            "root-replacement-permission-owner",
+            "root-replacement-prompt-task-contract",
+            "root-replacement-local-bug-negative-control",
+            "root-replacement-agent-controller",
+            "root-replacement-affirmative-boundary-separation",
+            "mandatory refactor",
+            "Affirmative Canonicalization / 肯定式正则化",
+            "Boundary / veto / safety / authority",
+            "Root-Cause Replacement 不要求每个 bug 都重构",
+            "兼容层需要明确 owner、期限或 removal condition",
+        ):
+            self.assertIn(phrase, combined)
+
     def test_core_thesis_first_sentence_must_carry_decisive_point(self):
         using = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(encoding="utf-8")
         primitives = _read_shared_primitive_docs()
@@ -1778,6 +1801,11 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影",
                 "mainline / carrier / path_volatility / exposure / commitment",
             ),
+            "primitives/root-cause-replacement.md": (
+                "Root-Cause Replacement / 根因替换",
+                "Affirmative Canonicalization / 肯定式正则化",
+                "Fix the cause. Replace the rule. State the intended behavior directly.",
+            ),
             "primitives/expression-pressure-and-gates.md": (
                 "Approximate Quantified Mapping / 非精准量化显影",
                 "Pressure Surface Consolidation / 施压面收束",
@@ -1820,6 +1848,10 @@ class MindthusRouterContractTests(unittest.TestCase):
                 "Anti-Spiral": (
                     "`anti-spiral-self-audit` / `tplan`",
                     "同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。",
+                ),
+                "Root-Cause Replacement / 根因替换": (
+                    "`shared-primitives` / `WAE`",
+                    "根因与 canonical owner 明确后，直接替换错误规则；mainline 正面描述目标行为，禁止性语言归入真实 boundary / veto。",
                 ),
                 "No Abstract Jargon Wall": (
                     "`AGENTS.md`",

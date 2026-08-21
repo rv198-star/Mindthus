@@ -1979,6 +1979,24 @@ class PrimitiveActivationTests(unittest.TestCase):
         )
         self.assertIn("gate_success", report["script_must_not_decide"])
 
+    def test_before_continue_activates_root_cause_replacement_without_semantic_judgment(self) -> None:
+        result = run_check("--event", "before-continue", "--method", "wae", "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        active_ids = [item["id"] for item in report["active_primitives"]]
+
+        self.assertIn("anti_spiral", active_ids)
+        self.assertIn("root_cause_replacement", active_ids)
+        primitive = next(
+            item for item in report["active_primitives"] if item["id"] == "root_cause_replacement"
+        )
+        self.assertIn("replace-canonical-logic", primitive["action_effect"])
+        self.assertIn("affirm-mainline", primitive["action_effect"])
+        self.assertIn("preserve-real-boundaries", primitive["action_effect"])
+        self.assertIn("root-cause-finder", primitive["not_a"])
+        self.assertEqual(report["script_verdict"], "shape_only")
+        self.assertIs(report["agentic_judgment_required"], True)
+
     def test_before_continue_adds_tplan_continuation_authorization_only_for_tplan(self) -> None:
         tplan_result = run_check("--event", "before-continue", "--method", "tplan", "--json")
         self.assertEqual(tplan_result.returncode, 0, tplan_result.stderr + tplan_result.stdout)

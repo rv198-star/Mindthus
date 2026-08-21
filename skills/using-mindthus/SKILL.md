@@ -82,8 +82,8 @@ Route by the active judgment object, not method name, keyword, or artifact.
 Method Reference Boundary / 方法引用边界: a method named in evidence review sets scope,
 not route ownership. Separate target session from confirmation.
 
-Repeated local repair triggers Anti-Spiral / 反螺旋入口: before another patch, return to
-upstream problem, evidence, and stopping condition.
+Repeated local repair triggers Anti-Spiral / 反螺旋入口: return upstream before patching.
+Evidence-confirmed canonical error activates Root-Cause Replacement: rewrite owner.
 
 ### Supporting Primitives
 
@@ -117,7 +117,7 @@ Guardrails support the mainline; they do not become a new judgment center.
 
 ### Conditional Resources / Runtime Support
 
-Do not preload every resource. Read only what resolves active uncertainty:
+Do not preload every resource. Read only for uncertainty:
 
 Portable alias: `resources/primitives/`.
 
@@ -129,8 +129,9 @@ Portable alias: `resources/primitives/`.
   `docs/methodologies/primitives/whole-elephant-protocol.md`;
 - pressure or AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
 - scalar commitment: `docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`;
-- activation shape: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
-  rerun with `--event before-answer` after frame/partial-truth activation; never decides semantics;
+- root-cause recovery: `docs/methodologies/primitives/root-cause-replacement.md`;
+- activation: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
+  use `--event before-answer` after frame/partial-truth activation; never decides semantics;
 - structured runtime validation: read the fidelity contract at
   `resources/fidelity-contract.md`; use `templates/fidelity-output.json` and
   `validate_using_mindthus_output.py`.
@@ -138,4 +139,4 @@ Portable alias: `resources/primitives/`.
 ## Boundaries
 
 No hard judgment point, no Mindthus. Missing facts first. Stop when another method owns
-the decision or continued analysis lacks a value-gain hypothesis.
+the decision or analysis lacks a value-gain hypothesis.

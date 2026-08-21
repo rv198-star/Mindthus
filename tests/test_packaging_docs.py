@@ -18,6 +18,7 @@ USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
     "whole-elephant-protocol.md",
     "expression-pressure-and-gates.md",
     "mpg-scalar-commitment-unpack.md",
+    "root-cause-replacement.md",
 )
 
 

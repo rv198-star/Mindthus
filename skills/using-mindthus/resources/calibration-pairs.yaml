@@ -161,3 +161,48 @@ pairs:
       - "防止把 verdict rate 做成裸指标后过度落锤。"
       - "把价值选择还给用户，同时保留可执行分支。"
       - "负例护栏要求果断本身可能是失败。"
+  - id: root-replacement-permission-owner
+    failure_mode: patch_accumulation_preserves_wrong_canonical_owner
+    adversarial_input: "权限判断已经在 Controller 里加了 admin、super_admin、temporary_admin 三层例外，现在 partner_admin 又过不了，再补一个 if 吧。"
+    regression_output_shape: "继续在 Controller 增加 partner_admin 特例。"
+    target_output_shape: "已有例外增长是权限定义权可能放错位置的信号；先用现有失败证据确认权限策略是根因，再把访问判定收归 canonical Authorization Policy，由 Controller 调用统一决策。"
+    why_target_wins:
+      - "把新增角色特例从修复动作降级为症状。"
+      - "先绑定根因证据，再重写 canonical owner。"
+      - "正确模型独立成立，不依赖反向限制旧 Controller 规则。"
+  - id: root-replacement-prompt-task-contract
+    failure_mode: prompt_counter_rule_preserves_bad_task_contract
+    adversarial_input: "系统 prompt 已经写了两条‘不要输出内部实现’，模型还是会写。再加一句‘绝对禁止解释实现细节’。"
+    regression_output_shape: "增加第三条禁止式 prompt 规则。"
+    target_output_shape: "先回到任务 contract：明确回答面只包含用户可见结论、证据和行动，把内部实现从允许输出集合中移出；若现有两轮证据支持 contract 是根因，直接重写 canonical task definition。"
+    why_target_wins:
+      - "从反复 counter-rule 回到输出 contract。"
+      - "用肯定式描述允许的主路径。"
+      - "Anti-Spiral 负责刹车，Root-Cause Replacement 负责重写。"
+  - id: root-replacement-local-bug-negative-control
+    failure_mode: unnecessary_refactor_when_root_cause_is_local
+    adversarial_input: "测试明确显示 config 初始化漏掉 timeout 字段，补上默认值后测试应能恢复。要不要趁机重构整个配置系统？"
+    regression_output_shape: "把根因修复理解成必须重构配置架构。"
+    target_output_shape: "根因就在局部初始化遗漏；直接补齐 timeout 默认值并跑对应测试。Root-Cause Replacement 不扩大已经定位清楚的修复面。"
+    why_target_wins:
+      - "保护正常 debugging。"
+      - "根因局部时，局部修改就是正确替换。"
+      - "避免把 primitive 变成 mandatory refactor。"
+  - id: root-replacement-agent-controller
+    failure_mode: fallback_growth_hides_controller_mismatch
+    adversarial_input: "Agent 连续两次在证据不足时自己宣布 PASS，我们已有 reviewer fallback，再加一个 second-review fallback 会不会更稳？"
+    regression_output_shape: "增加第二 reviewer fallback 并继续保留 Agent 自己决定 PASS。"
+    target_output_shape: "如果运行记录已证明 PASS authority 放错层，直接把最终通过权交给 evidence-bound review gate；Agent 生成候选判断，Workflow 根据可验证证据决定是否通过。"
+    why_target_wins:
+      - "WAE 先确认 controller mismatch。"
+      - "Root-Cause Replacement 直接重写 authority owner。"
+      - "减少 fallback 链而不是扩大控制层。"
+  - id: root-replacement-affirmative-boundary-separation
+    failure_mode: negative_counter_rules_replace_canonical_truth
+    adversarial_input: "把规则写成：系统不能在没有审批时不阻止高风险删除，而且不要允许绕过审批。这样够严了吗？"
+    regression_output_shape: "继续叠加否定句，让规则看起来更严格。"
+    target_output_shape: "mainline 直接写：高风险删除在审批通过后执行；approval gate 拥有放行权。boundary 单独写：禁止绕过审批。"
+    why_target_wins:
+      - "肯定式 mainline 直接表达有效行为。"
+      - "真实 hard veto 保留明确禁止语言。"
+      - "避免否定套否定掩盖 controller 和成功路径。"

@@ -61,12 +61,13 @@ Anti-Spiral 的核心判断是：局部改动次数、加层冲动和弱证据�
 - `3+ yes`：红色；停止当前路径，进入退出协议。
 - `Q3 yes`：单独视为红色一轮，因为自评分不是稳定 continuation signal。
 
-红色时只允许两类修复：
+红色时进入恢复路径：
 
 1. 修改已有 prompt、参数、规则、任务或步骤。
 2. 删除已有层、规则、分支、任务或处理阶段。
+3. 如果上游证据已经确认错误 canonical logic，转入 `Root-Cause Replacement`，直接重写拥有定义权的规则或 owner。
 
-禁止继续新增 fallback、特殊分支或再开一层。
+恢复动作以减法、重写和等量替换为主；新的兼容层只服务真实外部 contract，并带 removal condition。
 
 ## 具体案例
 
@@ -74,7 +75,7 @@ Anti-Spiral 的核心判断是：局部改动次数、加层冲动和弱证据�
 
 一个 agent 为了让输出更好，第一次改 prompt，第二次加格式要求，第三次又准备新增 fallback 规则。此时虽然每一步都像在优化，但可观察 trace 已经触发 repeat trigger 和 layer trigger。
 
-Anti-Spiral 要求先停下来：重述 root problem，检查最近稳定状态，判断是不是 prompt 本身不该再补，而应该回到任务定义、输入样例或验收标准。下一步优先删除或等量替换，而不是继续加规则。
+Anti-Spiral 要求先停下来：重述 root problem，检查最近稳定状态，判断问题应该落在 prompt、任务定义、输入样例还是验收标准。证据确认 canonical rule 错误后，直接重写正确规则；mainline 描述目标行为，boundary / veto 承载禁止行为。
 
 ### 案例 B：明确 failing test 不一定是螺旋
 
@@ -96,12 +97,13 @@ Anti-Spiral 不替代正常调试。明确的 failing test、明确的报错、�
 
 它也不要求每个小任务都审计。触发条件是长任务、重复局部对象、负反馈、加层冲动或证据增量不足。
 
-当红色触发时，优先回到上游：重述 root problem，找到最近稳定状态，做减法或等量替换，然后只跑一次机械验证和一次真实反馈面。
+当红色触发时，优先回到上游：重述 root problem，找到最近稳定状态，做减法或等量替换。根因与 canonical owner 已被证据确认时，使用 [Root-Cause Replacement](primitives/root-cause-replacement.md) 直接替换错误逻辑，然后只跑一次机械验证和一次真实反馈面。
 
 ## 与其他方法的关系
 
 - `3L5S` 帮助从局部症状回到 signal、problem 和 action。
 - `WAE` 解释为什么 agentic judgment 必须被 workflow 和 evidence gate 约束。
+- `Root-Cause Replacement` 接管根因已确认后的恢复形态：修根因、换规则、直接写正确逻辑。
 - `tplan` 可以从 step logs、object touch count、feedback 和 evidence delta 中触发 Anti-Spiral runtime gate。
 - `TVG` 可以在路径稳定后加深 bounded artifact，但不能成为继续局部打磨的理由。
 

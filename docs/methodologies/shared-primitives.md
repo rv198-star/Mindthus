@@ -56,6 +56,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 | Evidence / Claim Ceiling | `WAE` | 结论强度不能超过证据；缺事实、领域输入、运行证明或 stakeholder 判断时，降级或阻断。 |
 | Perspective Pressure | `SELA` / `EDSP` | 单一视角过度自洽时，用角色压力或激励检查挑战判断。 |
 | Anti-Spiral | `anti-spiral-self-audit` / `tplan` | 同一局部对象第三次、负反馈或加层冲动出现时，先停下回看上游。 |
+| Root-Cause Replacement / 根因替换 | `shared-primitives` / `WAE` | 根因与 canonical owner 明确后，直接替换错误规则；mainline 正面描述目标行为，禁止性语言归入真实 boundary / veto。 |
 | No Abstract Jargon Wall | `AGENTS.md` | 先做表达定位：我代表什么立场、文字直接服务谁、要把对方带到哪里；先用例子、类比或直接后果讲清楚，再使用 Mindthus 术语。 |
 | Approximate Quantified Mapping / 非精准量化显影 | `AGENTS.md` / `using-mindthus` | 数字是假设，关系才是重点；用假设数字显影变量、方向、主导项、敏感项和口径差，不用数字证明或计算结论。 |
 | Frame Fitness Check / 定框适配检查 | `using-mindthus` / `shared-primitives` | 当局部框架可能接管全局判断时，先判断应保留、限定、重构还是因证据不足阻断。 |
@@ -73,6 +74,7 @@ Do not copy the full definition into each skill. 如果某个规则需要长流�
 - [Decision Context Calibration / 决策语境校准](primitives/decision-context-calibration.md): actor/timing/target/tradeoff answer flip and `global_for_this_decision`.
 - [Whole Elephant Protocol / 全象流程](primitives/whole-elephant-protocol.md): Partial Truth Capture, Compact Semantic Triad / 三根硬支柱, Result Controller Viewpoint / 结果主控视角, and validator boundaries.
 - [MPG Scalar Commitment Unpack / MPG 标量承诺显影](primitives/mpg-scalar-commitment-unpack.md): Scalar Commitment Under Path Volatility / 路径波动下的标量承诺显影 and `mainline / carrier / path_volatility / exposure / commitment`.
+- [Root-Cause Replacement / 根因替换](primitives/root-cause-replacement.md): evidence-bound canonical replacement after root cause is established, with affirmative mainline expression and explicit boundary/veto separation.
 - [Expression, Pressure, And Gate Primitives](primitives/expression-pressure-and-gates.md): Approximate Quantified Mapping / 非精准量化显影, Pressure Surface Consolidation / 施压面收束, competitive-frame convergence, Visible Translation Boundary / 可见表达翻译边界, Gate Probes / 冻结前定位自省, and Failure Smells / 误用信号.
 
 ## Aspect Ownership Summary / 切面主导摘要
@@ -94,6 +96,7 @@ See [Aspect Ownership Matrix](primitives/aspect-ownership.md).
 - Decision Context Calibration owns situated decision judgments when the answer would flip by actor, timing, target function, or acceptable tradeoff.
 - Whole Elephant Protocol owns definition-authority judgments when local truth claims whole-object essence.
 - MPG Scalar Commitment Unpack is support-only; it shapes MPG route input and never decides the path-carrying judgment.
+- Root-Cause Replacement is recovery-only; it activates after evidence establishes a broken upstream model or owner and shapes the repair without becoming a root-cause judge.
 
 ## 具体案例
 
