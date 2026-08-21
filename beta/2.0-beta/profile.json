@@ -1,0 +1,52 @@
+{
+  "schema_version": "mindthus-beta-composition-v0.3",
+  "status": "beta-prerelease",
+  "release_line": "1.8.0-roi-beta",
+  "version": "1.8.0-roi-beta",
+  "package_identity": "mindthus-beta",
+  "marketplace_identity": "mindthus-beta",
+  "shared_core": {
+    "version": "1.8.0",
+    "ref": "42887387800806b08796c5972590272414c28c97",
+    "tree_oid": "276c1df23a2503bd2a202a6d22cf6ff982c1c9d2"
+  },
+  "runtime_profile": {
+    "name": "roi.2-rcr-thin-core",
+    "implementation_ref": "64df52651fcc710929ec5fff0e629eedd7b38b2a",
+    "qualification_ref": "64df52651fcc710929ec5fff0e629eedd7b38b2a",
+    "base_qualification_ref": "4ee3e034db6bf8d1e34002d7f162e2b008516490",
+    "convergence_evidence": {
+      "identifier": "9a1c2268d26c30905d7ada9ee206d722214e3a7b",
+      "role": "historical-decision-reference",
+      "required_at_build": false
+    },
+    "overlay_path": "beta/2.0-beta/overlays/using-mindthus-v1.8.0-rcr/SKILL.md",
+    "historical_profile_path": "beta/2.0-roi-thin-core/profile.json"
+  },
+  "declared_runtime_deltas": [
+    "skills/using-mindthus/SKILL.md uses the compact ROI.2-compatible RCR overlay",
+    "skills/3l5s/SKILL.md keeps the qualified ROI.2 Anti-Spiral correction",
+    ".codex-plugin/plugin.json",
+    "scripts/log-mindthus-runtime.py",
+    "all textual plugin skill references use the Beta namespace"
+  ],
+  "capability_register": {
+    "source_path": "beta/2.0-beta/capability-register.json",
+    "artifact_path": "capability-register.json"
+  },
+  "rollback": {
+    "version": "1.8.0",
+    "package_identity": "mindthus",
+    "tag": "v1.8.0"
+  },
+  "publication": {
+    "status": "planned",
+    "release_train": "1.8.0",
+    "source_tag": "v1.8.0-roi-beta",
+    "release_asset_channel": "experimental-roi-beta",
+    "github_release": true,
+    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.8.0",
+    "marketplace": false,
+    "automatic_migration": false
+  }
+}
