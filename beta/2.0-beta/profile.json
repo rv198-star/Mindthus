@@ -13,7 +13,9 @@
   "runtime_profile": {
     "name": "roi.2-rcr-thin-core",
     "implementation_ref": "64df52651fcc710929ec5fff0e629eedd7b38b2a",
-    "qualification_ref": "64df52651fcc710929ec5fff0e629eedd7b38b2a",
+    "qualification_ref": "641a7f3b865864b01b26676b58d540aa8c0d2c5b",
+    "qualification_mode": "deterministic-rcr-compatibility",
+    "qualification_result_path": "beta/2.0-beta/qualification/v1.8.0-rcr/RESULT.md",
     "base_qualification_ref": "4ee3e034db6bf8d1e34002d7f162e2b008516490",
     "convergence_evidence": {
       "identifier": "9a1c2268d26c30905d7ada9ee206d722214e3a7b",
