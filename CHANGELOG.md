@@ -36,15 +36,18 @@
 - 保留 v1.7.0 WAE Ownership Closure 与 v1.7.1 competitive-frame / Visible Translation
   Boundary，不回退现有判断能力。
 
-### ROI Beta 发布前显式例外
+### 补充发布包：1.8.0 ROI Beta（GPT/Sol）
 
-- Stable release 默认同步提供同版本 ROI Beta；v1.8.0 在发布前显式声明例外，不发布
-  `v1.8.0-roi-beta`。
-- 原因是 ROI.2 薄入口会覆盖 Stable `using-mindthus` / Anti-Spiral 表面，而本次能力正好改变
-  evidence-confirmed root cause 之后的恢复动作；未经 overlay 更新与独立资格验证，不能把
-  shared-core 文件存在等同于薄入口行为已经完整继承。
-- 当前 ROI Beta 继续保持 `v1.7.1-roi-beta`；后续同步需要先重新验证 action-changing
-  regression、Anti-Spiral near-negative 与 namespace/runtime contract。
+- Stable release 按默认规则同步提供 `v1.8.0-roi-beta` supplemental experimental asset。
+- Beta 从精确 `v1.8.0` Stable shared core 组装；历史 ROI.2 runtime shape 与单句 3L5S
+  Anti-Spiral correction 保持冻结。
+- 新增 2292-byte RCR-compatible Thin Core：证据确认 canonical rule / owner 错误后直接替换
+  canonical logic、移除旧例外，以肯定式 mainline 表达正确行为，同时保留真实 veto；明确
+  局部 bug 继续局部 Debug。
+- compatibility qualification 验证 exact shared core、非声明 delta 同源、namespace isolation、
+  strict runtime diagnostic 与 byte-reproducible archive。OCI 节点无 Codex API credential，
+  fresh `gpt-5.6-sol / xhigh` matched calls 返回 401，故本版不宣称新增模型质量或 Token ROI 证据。
+- source tag：`v1.8.0-roi-beta`；asset：`mindthus-beta-1.8.0-roi-beta.tar.gz`。
 
 ### 兼容性、验证与发布资产
 
@@ -52,7 +55,8 @@
   `1.5.4` / `mindthus-v1.5.4`。
 - compileall、Test Lifecycle、完整 unittest、Stable plugins/skills build 均通过后发布。
 - `v1.8.0` GitHub Release 提供 `mindthus-plugins-1.8.0.tar.gz`、
-  `mindthus-skills-1.8.0.tar.gz` 与覆盖两份归档的 `SHA256SUMS`。
+  `mindthus-skills-1.8.0.tar.gz`、`mindthus-beta-1.8.0-roi-beta.tar.gz` 与覆盖三份归档的
+  `SHA256SUMS`。
 
 ## v1.7.1
 
