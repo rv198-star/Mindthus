@@ -27,9 +27,11 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("当前已发布 Stable 是 `v1.8.0`", readme)
         self.assertIn("mindthus-plugins-1.8.0.tar.gz", readme)
         self.assertIn("mindthus-skills-1.8.0.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.7.1-roi-beta.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.8.0-roi-beta.tar.gz", readme)
         self.assertIn("Root-Cause Replacement", readme)
         self.assertIn("## v1.8.0", changelog)
+        self.assertIn("补充发布包：1.8.0 ROI Beta", changelog)
+        self.assertIn("v1.8.0-roi-beta", changelog)
         self.assertIn("## v1.7.1", changelog)
         self.assertIn("## v1.7.0", changelog)
         self.assertIn("补充发布包：1.7.0 ROI Beta", changelog)
@@ -61,7 +63,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
     def test_release_defaults_publish_roi_beta_unless_explicitly_exempted(self):
         policy = (REPO / "docs" / "internal" / "release-defaults.md").read_text(encoding="utf-8")
         release = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
-        prior_release = (REPO / "docs" / "releases" / "v1.7.1.md").read_text(encoding="utf-8")
+        beta = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
         prior_beta = (REPO / "docs" / "releases" / "v1.7.1-roi-beta.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         for phrase in (
@@ -70,15 +72,16 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             "没有明确例外，就按默认规则发布",
         ):
             self.assertIn(phrase, policy)
-        self.assertIn("v1.8.0 不同步发布 `v1.8.0-roi-beta`", release)
-        self.assertIn("Root-Cause Replacement 恰好改变了这一被覆盖表面的恢复语义", release)
+        self.assertIn("ROI Beta 同步发布", release)
         self.assertIn("mindthus-plugins-1.8.0.tar.gz", release)
         self.assertIn("mindthus-skills-1.8.0.tar.gz", release)
-        self.assertNotIn("mindthus-beta-1.8.0-roi-beta.tar.gz`\n-", release)
-        self.assertIn("mindthus-beta-1.7.1-roi-beta.tar.gz", prior_release)
+        self.assertIn("mindthus-beta-1.8.0-roi-beta.tar.gz", release)
+        self.assertIn("v1.8.0-roi-beta", beta)
+        self.assertIn("2292 / 2300", beta)
+        self.assertIn("HTTP 401", beta)
         self.assertIn("v1.7.1-roi-beta", prior_beta)
-        self.assertIn("ROI Beta 发布前显式例外", changelog)
-        self.assertIn("覆盖两份归档的 `SHA256SUMS`", changelog)
+        self.assertIn("补充发布包：1.8.0 ROI Beta", changelog)
+        self.assertIn("覆盖三份归档的 `SHA256SUMS`", changelog)
 
     def test_v1_4_6_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
