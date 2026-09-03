@@ -406,6 +406,23 @@ class SraContextCalibrationTests(unittest.TestCase):
             ):
                 self.assertNotIn(forbidden, text)
 
+    def test_challenge_relations_use_aliases_not_original_candidate_ids(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            data = template_data()
+            data["candidates"][0]["depends_on"] = ["payment-validation"]
+            data["candidates"][1]["unlocks"] = ["page-polish"]
+            data["candidates"][2]["substitutes_for"] = ["page-polish"]
+            run_dir = prepare_run(Path(tmp), data)
+            packet = json.loads(
+                (run_dir / "challenge-packet.json").read_text(encoding="utf-8")
+            )
+            original_ids = {item["candidate_id"] for item in data["candidates"]}
+            aliases = {item["challenge_id"] for item in packet["candidates"]}
+            for candidate in packet["candidates"]:
+                for relation in ("depends_on", "unlocks", "substitutes_for"):
+                    self.assertTrue(set(candidate[relation]) <= aliases)
+                    self.assertFalse(set(candidate[relation]) & original_ids)
+
     def test_situated_packet_does_not_receive_challenge_judgment(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))

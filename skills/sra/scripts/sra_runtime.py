@@ -612,15 +612,23 @@ def build_packets(data: dict[str, Any]) -> dict[str, Any]:
         "instruction_data_boundary": instruction_boundary,
     })
     ordered = sorted(data["candidates"], key=_candidate_sort_key)
-    challenge_map: dict[str, str] = {}
+    challenge_map = {
+        f"C{index:02d}": candidate["candidate_id"]
+        for index, candidate in enumerate(ordered, 1)
+    }
+    original_to_challenge = {
+        candidate_id: alias for alias, candidate_id in challenge_map.items()
+    }
     challenge_candidates: list[dict[str, Any]] = []
-    for index, candidate in enumerate(ordered, 1):
-        alias = f"C{index:02d}"
-        challenge_map[alias] = candidate["candidate_id"]
+    for alias, candidate in zip(challenge_map, ordered):
         value = {key: candidate.get(key) for key in (
-            "action_statement", "expected_target_effect", "resource_demand", "depends_on",
-            "unlocks", "substitutes_for", "deadline_or_window", "downside", "reversibility",
+            "action_statement", "expected_target_effect", "resource_demand",
+            "deadline_or_window", "downside", "reversibility",
             "evidence_refs", "assumption_refs")}
+        for relation in ("depends_on", "unlocks", "substitutes_for"):
+            value[relation] = [
+                original_to_challenge[item] for item in candidate.get(relation, [])
+            ]
         value["challenge_id"] = alias
         challenge_candidates.append(value)
     challenge_context: list[dict[str, Any]] = []

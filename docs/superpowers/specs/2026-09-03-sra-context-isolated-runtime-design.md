@@ -457,10 +457,10 @@ contract remains active.
 ## Deterministic Qualification Evidence
 
 ```text
-SRA context-calibration tests             26 PASS
-SRA + method-layering focused suite       49 PASS
+SRA context-calibration tests             27 PASS
+SRA + method-layering focused suite       50 PASS
 Test Lifecycle executable coverage        72 / 72
-full unittest suite                       918 PASS, 5 skipped
+full unittest suite                       919 PASS, 5 skipped
 release-pack build                        PASS across all supported layouts
 SRA Skill entry                           10,107 / 10,240 bytes
 TPlan hook/schema/runtime diff             EMPTY
