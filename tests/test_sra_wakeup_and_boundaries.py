@@ -11,6 +11,7 @@ CASES = REPO / "tests" / "sra_wakeup_holdout_cases.jsonl"
 DESIGN = REPO / "tests" / "sra_wakeup_experiment_design.md"
 SRA_SKILL = REPO / "skills" / "sra" / "SKILL.md"
 USING = REPO / "skills" / "using-mindthus" / "SKILL.md"
+EDSP_SKILL = REPO / "skills" / "edsp" / "SKILL.md"
 ENTRY_TRIAGE = REPO / "docs" / "methodologies" / "primitives" / "entry-triage.md"
 RUNNER = REPO / "scripts" / "run-judgment-benchmark-cli.py"
 
@@ -146,11 +147,22 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
         using_frontmatter = USING.read_text(encoding="utf-8").split("---", 2)[1]
         sra = SRA_SKILL.read_text(encoding="utf-8")
 
-        self.assertIn("not ordinary missing facts", using_frontmatter)
+        self.assertIn("Never load for an ordinary request lacking facts", using_frontmatter)
+        self.assertIn("ask directly", using_frontmatter)
         self.assertIn(
-            "SRA only after multiple candidates share a scarce resource",
+            "SRA only after multiple judgeable candidates share a scarce resource",
             using_frontmatter,
         )
+
+    def test_edsp_forced_binary_withholds_winner_until_structure_is_stable(self):
+        text = " ".join(EDSP_SKILL.read_text(encoding="utf-8").split())
+        for phrase in (
+            "first sentence must diagnose the malformed binary and withhold a winner",
+            "Do not name a provisional winner",
+            "operating default follows the structural diagnosis",
+            "is not the answer to which side is right",
+        ):
+            self.assertIn(phrase, text)
 
     def test_router_and_entry_triage_expose_the_same_sra_signature(self):
         using = USING.read_text(encoding="utf-8")

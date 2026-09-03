@@ -406,6 +406,17 @@ class SraContextCalibrationTests(unittest.TestCase):
             ):
                 self.assertNotIn(forbidden, text)
 
+            prompt = " ".join(
+                (run_dir / "challenge-agent-prompt.md").read_text(encoding="utf-8").split()
+            )
+            self.assertIn("Do not invent or infer candidate identifiers", prompt)
+            self.assertIn("ordinary descriptions without identifier-style slugs", prompt)
+
+    def test_prepare_creates_agentic_output_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = prepare_run(Path(tmp))
+            self.assertTrue((run_dir / "judgments").is_dir())
+
     def test_challenge_relations_use_aliases_not_original_candidate_ids(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
