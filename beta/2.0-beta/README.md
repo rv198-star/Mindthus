@@ -1,7 +1,7 @@
 # Mindthus 1.9.0 ROI Beta (GPT/Sol) package
 
-Status: planned supplemental experimental asset for the `v1.9.0` GitHub Release.
-Marketplace publication remains absent.
+Status: source tag `v1.9.0-roi-beta` is the synchronized supplemental experimental asset
+for the `v1.9.0` GitHub Release. Marketplace publication remains absent.
 
 This checkpoint composes two controlled inputs:
 
@@ -24,7 +24,7 @@ case-prep, Test Lifecycle and TPlan.
 All textual plugin namespace references are rewritten to `mindthus-beta:` and the
 packaged runtime diagnostic inspects Beta coordinates only.
 
-Build from a clean Beta source checkout after the composition profile is frozen:
+Build from a clean `v1.9.0-roi-beta` source checkout:
 
 ```bash
 python3 beta/2.0-beta/build-internal-beta.py \
