@@ -16,6 +16,7 @@ Use Entry Triage when one of these high-frequency shapes appears:
 - forced binary prediction
 - no-data numeric comparison
 - trend-driven migration
+- multiple valid actions competing for one constrained resource
 
 These families are wake-up candidates, not automatic method calls. A clear, low-risk,
 fact-sufficient task still stays direct.
@@ -31,6 +32,7 @@ Representative v3 audit triggers:
 - who is right plus active buy or decide context -> Decision Context Calibration
 - no-data numeric comparison -> AQM evidence ceiling
 - trend-driven migration -> Input Framing Audit, then SELA or MPG only if the object fits
+- current work versus another valid action for one constrained tranche -> SRA, once candidates are judgeable
 
 Every new trigger must pass public negative and shadow controls. If a change improves
 positive wake-up but regresses negative controls, it fails.
@@ -69,12 +71,17 @@ direct.
 | third prompt rule, third fallback, or next local patch after instability | Anti-Spiral | stop adding; move upstream, subtract, or equal-replace | normal debugging with new evidence delta can continue |
 | essence claim about prompt engineering, skills, scripts, or local carrier | Expression Discipline plus Whole Elephant | first sentence must name definition owner before local truth | user-owned terminology can be marked as local convention |
 | no-data numeric comparison | AQM evidence ceiling | numbers may expose relationships only as assumptions; no computed verdict | measured data or user-provided inputs can be calculated normally |
+| several judgeable actions compete for one constrained time, money, person, attention, or risk tranche | SRA | name the shared resource, current floor, next tranche, displaced work, and rerank trigger | one clear blocker, undefined candidates, independent resources, or a cheaper reversible trial stays direct or routes elsewhere |
 
 ## Ownership Tie-Breaks
 
 EDSP owns bare A/B structural choice. SELA owns local expertise versus automation
 scale. If both appear, EDSP exposes the axis before SELA checks system efficiency; do
 not split the final answer into half EDSP and half SELA.
+
+SRA owns allocation only after the candidates and comparison structure are sufficiently
+stable and they compete for one shared resource. If structure is unstable, EDSP acts
+before SRA; do not split structure and allocation into parallel final owners.
 
 AQM stays inside the active judgment owner. Hypothetical numbers must not decide, and
 invented arithmetic must not become the decision basis.
@@ -98,6 +105,7 @@ Loaded-action probes:
   copy, strategy, or essence claims.
 - EDSP must show the two decisive extremes before the practical branch.
 - SELA must show cost, throughput, and scale contrast when local excellence is real.
+- SRA must change the next allocation, ceiling, defer/stop, reserve, or rerank condition; a priority label alone is insufficient.
 - Anti-Spiral must refuse the third additive rule/fallback before proposing repair.
 - AQM may use hypothetical numbers only to expose relationships, not to compute the
   final verdict.

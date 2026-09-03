@@ -180,6 +180,7 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 - Do not use WAE to slow down low-risk formatting or deterministic work.
 - Do not let worksheet completion, schema shape, or clean structure replace judgment.
 - Do not treat human escalation as a routine fourth control layer.
+- If control is settled and valid actions compete for one scarce resource, use SRA; WAE constrains the runtime but does not allocate.
 
 ## Runtime Support / 支撑材料
 
