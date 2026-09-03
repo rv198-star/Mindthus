@@ -72,7 +72,7 @@ Route by the active judgment object.
 | Owner | Dominates when |
 | --- | --- |
 | `3l5s` | Problem-definition failure or work too large to execute. |
-| `sra` | Multiple valid candidates share a common scarce resource; choose next tranche, ceiling, defer/stop, reserve, or rerank. |
+| `sra` | Multiple valid candidates share a common scarce resource and are judgeable; choose next tranche, ceiling, defer/stop, reserve, or rerank. |
 | `edsp` | False binary or structural ambiguity; A/B 都像对. |
 | `sela` | Long-term system efficiency versus local advantage; carrier/path action defers to MPG. |
 | `mpg` | Mainline plus carrier, exposure, path volatility, and commitment; no carrier/exposure/path, no MPG. |
@@ -102,8 +102,9 @@ activates Root-Cause Replacement.
 
 ### Method Arbitration / 方法仲裁
 
-Use `dominate`, `defer`, `degrade`, `block`, or `stop`. SRA owns cross-candidate
-allocation; SELA owns direction pressure; MPG owns path-carrying action.
+`dominate`, `defer`, `degrade`, `block`, or `stop`. SRA owns allocation;
+3L5S/EDSP definition/structure, WAE control, TPlan runtime; SELA owns direction pressure;
+MPG owns path-carrying action.
 
 ### Execution Impact / 执行影响
 
@@ -113,7 +114,7 @@ information, clarify, or reroute.
 
 ## Guardrails
 
-Guardrails support mainline; they do not become a new judgment center.
+Guardrails support mainline, not judgment center.
 
 ### Conditional Resources / Runtime Support
 
