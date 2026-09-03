@@ -191,6 +191,24 @@ active question:
 The validator can accept explicit exits. It cannot determine whether the transfer is
 semantically correct.
 
+## Context-Calibrated Runtime Relationship
+
+The hybrid runtime in `context-isolation.md` controls context admission, candidate
+structural alignment, independent challenge/situated packet generation, typed
+comparison, one-pass reconciliation gating, hashes, references, carrier records, and
+rendering. It does not reduce or pre-compute any required SRA semantic move.
+
+Ordinary Lite may use one situated judgment. Full or material contamination uses a
+challenge and a situated judgment that cannot see each other's output. Agreement is
+corroboration rather than proof; conflict opens one targeted reconciliation that may
+remain blocked.
+
+A runtime-integrity pass proves only that recorded judgments stayed bound to their
+packets and declared workflow. It does not prove complete context, correct context
+classification, absent hidden host context, or correct priority. Packet-bound runs remain
+logical separation; fresh carriers without persisted receipts remain declared but
+unverified.
+
 ## Claim Ceiling
 
 Allowed first-release claim:

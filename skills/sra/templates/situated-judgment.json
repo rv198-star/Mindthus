@@ -1,0 +1,127 @@
+{
+  "schema_version": "sra.situated-judgment.v0.2",
+  "stage": "situated",
+  "packet_hash": "COPY_FROM_SITUATED_PACKET",
+  "allocation_outcome": "allocate",
+  "candidate_assessments": [
+    {
+      "candidate_id": "payment-validation",
+      "feasibility": "feasible",
+      "candidate_role": "threshold_essential",
+      "contraction_result": "retained",
+      "first_break_point": "Removing validation leaves the launch threshold unsupported.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-payment-duration"
+      ]
+    },
+    {
+      "candidate_id": "page-polish",
+      "feasibility": "feasible",
+      "candidate_role": "value_expanding",
+      "contraction_result": "removed",
+      "first_break_point": "Removing the next polish tranche does not change current launch acceptance.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": [
+        "A-polish-value"
+      ]
+    },
+    {
+      "candidate_id": "incident-reserve",
+      "feasibility": "conditional",
+      "candidate_role": "maintenance_or_option",
+      "contraction_result": "capped",
+      "first_break_point": "Reserve becomes necessary only if an incident signal appears.",
+      "evidence_refs": [],
+      "assumption_refs": [
+        "A-incident"
+      ]
+    }
+  ],
+  "state_considerations": [
+    {
+      "kind": "switching_cost",
+      "finding": "The recorded switch is bounded and does not outweigh the unresolved launch requirement.",
+      "state_refs": [
+        "COPY_SWITCHING_COST_STATE_ID"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": [
+        "A-switch-cost"
+      ]
+    },
+    {
+      "kind": "reusable_asset",
+      "finding": "Completed page work remains reusable after switching.",
+      "state_refs": [
+        "COPY_REUSABLE_ASSET_STATE_ID"
+      ],
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": []
+    },
+    {
+      "kind": "sunk_cost_rejected",
+      "finding": "Historical page effort is not used to justify continuation.",
+      "state_refs": [
+        "COPY_SUNK_COST_STATE_ID"
+      ],
+      "evidence_refs": [
+        "E-spend"
+      ],
+      "assumption_refs": []
+    }
+  ],
+  "current_floor": [
+    "payment-validation"
+  ],
+  "next_tranche": {
+    "candidate_id": "payment-validation",
+    "description": "Allocate one engineer-day to payment validation and produce a reproducible result.",
+    "reason": "Payment acceptance remains unresolved and real state costs do not justify continuing polish."
+  },
+  "investment_ceiling": "One engineer-day before reranking.",
+  "authorization_horizon": "one_tranche",
+  "maintenance": [
+    "page-polish"
+  ],
+  "reserve": {
+    "status": "none",
+    "candidate_id": "none",
+    "reason": "No observed incident currently justifies withholding the full tranche.",
+    "release_trigger": "Not applicable while reserve is none.",
+    "review_time": "At the payment validation checkpoint."
+  },
+  "defer": [
+    "page-polish"
+  ],
+  "stop": [],
+  "rerank_triggers": [
+    "Payment validation passes.",
+    "Payment validation reveals a broader blocker.",
+    "A release-blocking page defect appears."
+  ],
+  "missing_information": [],
+  "state_refs": [
+    "COPY_SWITCHING_COST_STATE_ID",
+    "COPY_REUSABLE_ASSET_STATE_ID",
+    "COPY_SUNK_COST_STATE_ID"
+  ],
+  "evidence_refs": [
+    "E-page",
+    "E-payment",
+    "E-spend"
+  ],
+  "assumption_refs": [
+    "A-payment-duration",
+    "A-switch-cost",
+    "A-incident"
+  ],
+  "sunk_cost_used_as_reason": false,
+  "claim_ceiling": "This decision applies to the current release-window allocation only."
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "sra.coverage-judgment.v0.2",
+  "stage": "coverage",
+  "packet_hash": "COPY_FROM_COVERAGE_PACKET",
+  "outcome": "packet_ready_with_warning",
+  "missing_candidate_classes": [],
+  "missing_evidence": [
+    "No production conversion measurement is available."
+  ],
+  "classification_challenges": [],
+  "warnings": [
+    "The missing conversion measurement limits claims about polish value but does not prevent a release-window allocation."
+  ],
+  "evidence_refs": [
+    "E-page",
+    "E-payment"
+  ],
+  "assumption_refs": [
+    "A-polish-value"
+  ],
+  "claim_ceiling": "This review checks packet readiness only and does not choose an allocation."
+}

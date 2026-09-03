@@ -147,6 +147,44 @@ cash-runway decision, or an irreversible construction path may justify Full.
 `auto` starts from Lite and expands only when a named escalation condition is
 load-bearing. It is a mode selector, not a third analysis depth.
 
+## Context-Calibrated Hybrid Runtime
+
+SRA is independent from inherited conclusions, not from relevant context. It keeps the
+current objective, user constraints, authority, evidence, assumptions, and real
+execution state while removing inherited decision authority from prior conclusions,
+advocacy, ambient inference, and sunk-cost narrative.
+
+Workflow:
+
+1. records a context-admission ledger;
+2. separates current authority, evidence, assumptions, scoped history, advocacy, and
+   prior conclusions;
+3. aligns candidate structure without equalizing real evidence differences;
+4. rejects candidate cards that pre-label SRA roles or scores;
+5. builds independent challenge and situated packets with hashes and packet-specific
+   output schemas;
+6. compares only typed allocation fields;
+7. opens one targeted reconciliation only when the views materially conflict.
+
+Agentic SRA owns relevance challenges, feasibility, candidate roles, necessity,
+contraction, current floor, replenishment, situated state interpretation, and conflict
+reconciliation. Scripts own packet construction, hashes, references, status transitions,
+typed comparison, carrier artifacts, and rendering.
+
+View plans:
+
+- `situated_only`: ordinary reversible Lite; one context-calibrated situated judgment;
+- `dual_view`: contaminated Lite and Full; a de-anchored challenge and a situated
+  judgment are generated independently and cannot see each other's result;
+- optional coverage review checks packet readiness but cannot choose allocation.
+
+The challenge is a calibration view, not default final authority. The situated judgment
+is action-bearing because it retains real future switching cost, reusable assets,
+remaining cost, commitments, and authority. Agreement finalizes the situated result;
+conflict receives one bounded reconciliation that may remain blocked. Fresh read-only
+carriers are preferred when their cost is justified, but fresh-context execution is a
+carrier property rather than proof of better judgment. See `context-isolation.md`.
+
 ## Allocation Frame
 
 Every applicable SRA judgment establishes the smallest sufficient frame:
@@ -198,13 +236,22 @@ Full mode uses a minimum comparable candidate card:
 
 ```text
 candidate_id
-objective_contribution
-resource_demand_vector
-dependency_or_bundle_role
-evidence_state
-delay_cost_or_opportunity_window
-irreversibility_or_downside
+action_statement
+expected_target_effect
+resource_demand
+depends_on
+unlocks
+substitutes_for
+deadline_or_window
+downside
+reversibility
+evidence_refs
+assumption_refs
 ```
+
+The input describes observable actions, relations, evidence, and claims. It must not
+pre-label `hard_gate`, `threshold_essential`, `value_expanding`, another SRA role, or a
+priority/ROI score; those are Agentic SRA outputs.
 
 This is not a full 3L5S Definition. It is the minimum information needed to decide
 whether candidates can share a comparison surface.
@@ -656,8 +703,10 @@ selected mainline. SRA does not redesign the carrier.
 
 ### WAE
 
-WAE applies only to agentic controller mismatch. SRA allocation judgment remains
-Agentic or human; scripts validate shape and references only.
+SRA uses a WAE-shaped hybrid runtime: Workflow owns admission mechanics, candidate
+structural alignment, packet hashes, typed comparison, status transitions, and reference
+checks; Agentic SRA owns semantic allocation and conflict reconciliation; Evidence
+constrains claims. WAE re-enters only when those controller boundaries are misassigned.
 
 ### TVG
 
@@ -714,17 +763,28 @@ The first release does not claim that SRA:
 
 Scripts may:
 
-- validate required fields and enums;
-- check that applicable Lite and Full outputs contain their required carriers;
-- flag empty evidence surfaces and missing reranking triggers;
-- accept direct or blocked exits when their reasons are explicit;
-- report shape and evidence risks.
+- build a context-admission ledger and shared decision base;
+- align candidate cards and create input-order-independent challenge aliases;
+- reject pre-decided semantic role or score fields;
+- generate independent challenge and situated packets plus packet-specific schemas;
+- generate packet-bound, fresh-subagent, and ephemeral-CLI carrier artifacts;
+- manage orthogonal coverage, challenge, situated, comparison, reconciliation, and
+  finalization status;
+- compare stable typed allocation fields without selecting a winner;
+- generate one targeted reconciliation packet on conflict;
+- lock packet and judgment hashes;
+- validate candidate, evidence, assumption, and state references;
+- check that sunk cost is rejected as a continuation basis;
+- render the finalized decision without recomputing it;
+- validate fidelity fields, enums, evidence surfaces, and reranking triggers.
 
 Scripts do not:
 
+- classify semantic context truth or guarantee complete context;
 - choose the priority;
 - compute semantic ROI;
 - decide whether a bundle is genuinely sufficient;
 - prove a hard gate applies;
 - determine the strongest alternative;
-- authorize a real allocation.
+- authorize or mutate a real project or TPlan allocation;
+- claim fresh-context isolation without an observable carrier boundary.

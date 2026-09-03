@@ -1,0 +1,346 @@
+{
+  "schema_version": "sra.decision-context-input.v0.2",
+  "run_id": "release-payment-allocation",
+  "mode": "auto",
+  "view_plan": "auto",
+  "coverage_review": "auto",
+  "view_plan_override_reason": "",
+  "escalation_signals": [],
+  "contamination_signals": [
+    "active_task_richness",
+    "prior_agent_conclusion"
+  ],
+  "coverage_signals": [],
+  "allocation_frame": {
+    "parent_objective": "Launch a purchasable product page in the current release window.",
+    "target_threshold": "The page is usable and the payment path is validated for launch.",
+    "time_window": "Current release window.",
+    "risk_floor": "Do not launch with an unvalidated payment path or a release-blocking page defect.",
+    "decision_owner": "Release owner.",
+    "contested_resources": [
+      "one engineer-day"
+    ],
+    "evidence_ceiling": "Current evidence supports release-window allocation only; it does not prove production revenue or long-term conversion impact."
+  },
+  "active_candidate_id": "page-polish",
+  "candidates": [
+    {
+      "candidate_id": "page-polish",
+      "action_statement": "Spend the next engineer-day improving animation polish.",
+      "expected_target_effect": "May improve presentation after the current page usability threshold has been reached.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1"
+        }
+      ],
+      "depends_on": [],
+      "unlocks": [],
+      "substitutes_for": [],
+      "deadline_or_window": "Can be delayed until after launch validation.",
+      "downside": "Consumes the only engineer-day before payment acceptance is complete.",
+      "reversibility": "High; completed polish remains reusable if work pauses.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": [
+        "A-polish-value"
+      ]
+    },
+    {
+      "candidate_id": "payment-validation",
+      "action_statement": "Spend the next engineer-day validating the payment path.",
+      "expected_target_effect": "May close the launch acceptance item that is currently incomplete.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1"
+        }
+      ],
+      "depends_on": [],
+      "unlocks": [],
+      "substitutes_for": [],
+      "deadline_or_window": "Delay consumes the current release window.",
+      "downside": "The first validation attempt may reveal a broader implementation defect.",
+      "reversibility": "High for the validation action; any discovered defect creates a new decision.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-payment-duration"
+      ]
+    },
+    {
+      "candidate_id": "incident-reserve",
+      "action_statement": "Keep the engineer-day uncommitted for a possible release incident.",
+      "expected_target_effect": "May preserve response capacity if a release-blocking incident appears.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1 reserved"
+        }
+      ],
+      "depends_on": [],
+      "unlocks": [],
+      "substitutes_for": [],
+      "deadline_or_window": "Reserve value expires at the payment validation checkpoint.",
+      "downside": "Unused reserve delays payment validation without producing evidence.",
+      "reversibility": "High; reserve can be released at its named trigger.",
+      "evidence_refs": [],
+      "assumption_refs": [
+        "A-incident"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E-page",
+      "kind": "acceptance_status",
+      "source": "current release checklist",
+      "statement": "The product page meets the current usability threshold.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports current page usability only."
+    },
+    {
+      "evidence_id": "E-payment",
+      "kind": "acceptance_status",
+      "source": "current release checklist",
+      "statement": "Payment validation has not passed launch acceptance.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports payment-path acceptance status for this release window only."
+    },
+    {
+      "evidence_id": "E-history",
+      "kind": "historical_incident",
+      "source": "prior release incident summary",
+      "statement": "A previous release window was missed after acceptance validation started late.",
+      "observed_at": "2026-08-01T00:00:00Z",
+      "claim_ceiling": "Supports scoped historical delay risk only; it does not prove the current release will fail."
+    },
+    {
+      "evidence_id": "E-spend",
+      "kind": "work_log",
+      "source": "current task log",
+      "statement": "Several engineer-days have already been spent on page work.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports historical spend only; historical spend is not a continuation reason."
+    },
+    {
+      "evidence_id": "E-commitment",
+      "kind": "release_authority",
+      "source": "release acceptance policy",
+      "statement": "The release owner requires payment acceptance before launch.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports the current launch authority boundary only."
+    }
+  ],
+  "assumptions": [
+    {
+      "assumption_id": "A-payment-duration",
+      "statement": "One engineer-day is enough to produce a decision-relevant payment validation result.",
+      "overturn_condition": "The first validation attempt reveals a broader implementation defect."
+    },
+    {
+      "assumption_id": "A-polish-value",
+      "statement": "Another engineer-day of animation work would improve presentation but is not known to change launch acceptance.",
+      "overturn_condition": "New acceptance criteria or measured user evidence make animation a launch requirement."
+    },
+    {
+      "assumption_id": "A-incident",
+      "statement": "A release incident is possible but not currently observed.",
+      "overturn_condition": "A confirmed incident activates response capacity or the payment checkpoint passes without an incident."
+    },
+    {
+      "assumption_id": "A-switch-cost",
+      "statement": "Switching from page polish to payment validation requires only a short context change within the same engineer-day.",
+      "overturn_condition": "The engineer reports a larger setup or dependency cost."
+    },
+    {
+      "assumption_id": "A-polish-remaining",
+      "statement": "One additional engineer-day is the next meaningful polish tranche.",
+      "overturn_condition": "The remaining work estimate changes."
+    }
+  ],
+  "context_items": [
+    {
+      "context_id": "C-current",
+      "kind": "current_instruction",
+      "statement": "Decide where the next engineer-day should go.",
+      "source": "current user request",
+      "decision_relevance": "Defines the active allocation question.",
+      "requested_disposition": "consider",
+      "candidate_ids": [],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-quality",
+      "kind": "user_constraint",
+      "statement": "The user values release quality and does not want presentation work to delay an unresolved launch requirement.",
+      "source": "current user instruction",
+      "decision_relevance": "Constrains acceptable trade-offs without proving factual status.",
+      "requested_disposition": "consider",
+      "candidate_ids": [],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-authority",
+      "kind": "authority_decision",
+      "statement": "The release owner controls launch acceptance and this allocation window.",
+      "source": "release ownership policy",
+      "decision_relevance": "Defines the decision authority.",
+      "requested_disposition": "consider",
+      "authority_scope": "Current release-window allocation and launch acceptance.",
+      "authority_expiry": "End of the current release window.",
+      "candidate_ids": [],
+      "evidence_refs": [
+        "E-commitment"
+      ],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-prior",
+      "kind": "previous_conclusion",
+      "statement": "A previous agent recommended finishing animation polish because it was nearly complete.",
+      "source": "prior agent response",
+      "decision_relevance": "Potential incumbent-path anchoring signal.",
+      "requested_disposition": "consider",
+      "candidate_ids": [
+        "page-polish"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-advocacy",
+      "kind": "candidate_advocacy",
+      "statement": "The designer says the animation is the most visible sign of quality.",
+      "source": "candidate advocate",
+      "decision_relevance": "Represents advocacy but not accepted evidence.",
+      "requested_disposition": "consider",
+      "candidate_ids": [
+        "page-polish"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-history",
+      "kind": "historical_context",
+      "statement": "The team previously lost a release window because acceptance validation started too late.",
+      "source": "historical incident summary",
+      "decision_relevance": "Scoped background for delay risk; it does not inherit current authority.",
+      "requested_disposition": "admit",
+      "candidate_ids": [
+        "payment-validation"
+      ],
+      "evidence_refs": [
+        "E-history"
+      ],
+      "assumption_refs": []
+    }
+  ],
+  "state_context": {
+    "switching_costs": [
+      {
+        "from_candidate_id": "page-polish",
+        "to_candidate_id": "payment-validation",
+        "cost": "A short context switch within the same engineer-day.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-switch-cost"
+        ]
+      }
+    ],
+    "reusable_assets": [
+      {
+        "candidate_id": "page-polish",
+        "asset": "The completed page and existing animation work remain reusable after switching.",
+        "evidence_refs": [
+          "E-page"
+        ],
+        "assumption_refs": []
+      }
+    ],
+    "remaining_costs": [
+      {
+        "candidate_id": "page-polish",
+        "cost": "One engineer-day for the next polish tranche.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-polish-remaining"
+        ]
+      },
+      {
+        "candidate_id": "payment-validation",
+        "cost": "One engineer-day for a decision-relevant validation result.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-payment-duration"
+        ]
+      }
+    ],
+    "historical_spend": [
+      {
+        "candidate_id": "page-polish",
+        "spent": "Several prior engineer-days; sunk-cost-only.",
+        "evidence_refs": [
+          "E-spend"
+        ],
+        "assumption_refs": []
+      }
+    ],
+    "commitments": [
+      {
+        "candidate_ids": [
+          "payment-validation"
+        ],
+        "statement": "Payment acceptance is required before launch.",
+        "evidence_refs": [
+          "E-commitment"
+        ],
+        "assumption_refs": []
+      }
+    ]
+  },
+  "source_inventory": [
+    {
+      "source_id": "SRC-release-checklist",
+      "kind": "acceptance_record",
+      "summary": "Current page and payment acceptance status.",
+      "decision_relevance": "Supports the current target threshold and unresolved acceptance item.",
+      "candidate_ids": [
+        "page-polish",
+        "payment-validation"
+      ],
+      "evidence_refs": [
+        "E-page",
+        "E-payment"
+      ],
+      "assumption_refs": []
+    },
+    {
+      "source_id": "SRC-task-state",
+      "kind": "execution_state",
+      "summary": "Current work, switching estimate, remaining costs, and historical spend.",
+      "decision_relevance": "Supports situated judgment only.",
+      "candidate_ids": [
+        "page-polish",
+        "payment-validation"
+      ],
+      "evidence_refs": [
+        "E-page",
+        "E-spend"
+      ],
+      "assumption_refs": [
+        "A-switch-cost",
+        "A-payment-duration",
+        "A-polish-remaining"
+      ]
+    }
+  ],
+  "known_omissions": [
+    "No production conversion data is available."
+  ]
+}
