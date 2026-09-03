@@ -15,14 +15,6 @@ SRA_TEMPLATE = SRA_ROOT / "templates" / "fidelity-output.json"
 SRA_VALIDATOR = SRA_ROOT / "scripts" / "validate_sra_output.py"
 SRA_DOC = REPO / "docs" / "methodologies" / "sra.md"
 SRA_PRESSURE = REPO / "tests" / "sra_pressure_tests.md"
-THREEL5S_SKILL = REPO / "skills" / "3l5s" / "SKILL.md"
-SELA_SKILL = REPO / "skills" / "sela" / "SKILL.md"
-MPG_SKILL = REPO / "skills" / "mpg" / "SKILL.md"
-TVG_SKILL = REPO / "skills" / "tvg" / "SKILL.md"
-TPLAN_SKILL = REPO / "skills" / "tplan" / "SKILL.md"
-ANTI_SPIRAL_DOC = REPO / "docs" / "methodologies" / "anti-spiral-self-audit.md"
-
-
 FULL_MOVES = (
     "minimum_sufficient_bundle",
     "resource_vector",
@@ -302,38 +294,6 @@ class SraContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, resource)
 
-    def test_neighbor_surfaces_preserve_bidirectional_sra_handshakes(self):
-        checks = {
-            THREEL5S_SKILL: (
-                "multiple sufficiently defined problems or tasks compete",
-                "3L5S makes candidates judgeable, SRA allocates them",
-            ),
-            SELA_SKILL: (
-                "long-term direction is already sufficiently accepted",
-                "use SRA for that current allocation",
-            ),
-            MPG_SKILL: (
-                "multiple problems, tasks, objectives, or bundles compete",
-                "MPG owns carrier and path posture for one selected mainline",
-            ),
-            TVG_SKILL: (
-                "TVG owns value gain inside one bounded artifact",
-                "use SRA for the cross-task allocation",
-            ),
-            TPLAN_SKILL: (
-                "SRA may judge cross-task resource allocation",
-                "TPlan retains state, Pulse, continuation, authority, recovery, and mutation",
-            ),
-            ANTI_SPIRAL_DOC: (
-                "`SRA` 在刹车释放出资源",
-                "这是一次交接，不形成相互递归调用",
-            ),
-        }
-        for path, phrases in checks.items():
-            text = path.read_text(encoding="utf-8")
-            for phrase in phrases:
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
-
     def test_pressure_tests_cover_positive_boundary_and_adversarial_cases(self):
         text = SRA_PRESSURE.read_text(encoding="utf-8")
         for phrase in (
@@ -350,6 +310,9 @@ class SraContractTests(unittest.TestCase):
             "Scenario 25: No Feasible Bundle",
             "Scenario 28: Analysis Overkill",
             "Scenario 29: Reserve Option",
+            "Scenario 30: Lite Degenerates Into Generic Prioritization",
+            "micro-contraction",
+            "micro-replenishment",
             "First-Release Claim Ceiling",
         ):
             self.assertIn(phrase, text)

@@ -38,6 +38,18 @@
       "failure_criteria_response": "The necessity claim expires when payment validation passes or the launch threshold is explicitly changed by the release owner.",
       "evidence_surface": "Current acceptance criteria and payment validation status."
     },
+    "contraction": {
+      "status": "addressed",
+      "finding": "The current page allocation contracts to release-blocking-defect-only maintenance while preserving the page usability threshold and risk floor.",
+      "failure_criteria_response": "The first further reduction would leave a release-blocking page defect unresolved; animation polish is not part of the current floor.",
+      "evidence_surface": "Current page acceptance status, defect list, and release threshold."
+    },
+    "replenishment": {
+      "status": "addressed",
+      "finding": "From the contracted page-maintenance floor, the next engineer-day goes to payment validation rather than renewed polish or idle reserve.",
+      "failure_criteria_response": "The next tranche is compared from the current floor and produces a decision-relevant validation result.",
+      "evidence_surface": "Payment acceptance gap, engineer availability, and expected validation artifact."
+    },
     "meaningful_tranche": {
       "status": "addressed",
       "finding": "The next tranche is one bounded engineer-day ending in a reproducible payment validation result.",
@@ -87,6 +99,7 @@
       "Switch to payment validation.",
       "Maintain the page for release-blocking defects only."
     ],
+    "current_floor": "Keep the product page at release-blocking-defect-only maintenance; animation polish is outside the current target floor.",
     "next_tranche": "Allocate one engineer-day to payment validation and produce a reproducible result.",
     "investment_ceiling": "One engineer-day before reranking.",
     "authorization_horizon": "one_tranche",

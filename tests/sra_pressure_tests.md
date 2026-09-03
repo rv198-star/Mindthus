@@ -14,16 +14,18 @@ For applicable cases, review:
 2. `candidate_horizon`: the active task does not monopolize the candidate set;
 3. `priority_order`: hard gates and target feasibility precede ROI-style comparison;
 4. `resource_contention`: candidates really share a scarce resource;
-5. `action_change`: the output changes the next tranche, ceiling, displaced work, or
+5. `contraction`: the current floor is discovered while target and risk floor stay fixed;
+6. `replenishment`: the next meaningful tranche is chosen from that floor;
+7. `action_change`: the output changes the next tranche, ceiling, displaced work, or
    reranking trigger;
-6. `claim_ceiling`: the answer does not claim universal or mathematically optimal
+8. `claim_ceiling`: the answer does not claim universal or mathematically optimal
    priority.
 
-For Full cases also review:
+Lite uses one micro-contraction and one micro-replenishment. For Full cases also review:
 
 - minimum sufficient bundle;
 - resource vector and dominant constraint;
-- contraction and replenishment;
+- expanded contraction and replenishment;
 - feasibility and dominance;
 - reserve and decision lifetime.
 
@@ -42,7 +44,8 @@ not yet passed launch acceptance. What should happen next?
 - chooses Lite;
 - surfaces payment validation even though polish is the active task;
 - classifies payment validation as threshold-essential and polish as value-expanding;
-- switches one bounded engineer-day to payment validation;
+- micro-contracts page work to release-blocking-defect-only maintenance;
+- micro-replenishes one bounded engineer-day to payment validation;
 - limits page work to release-blocking defects;
 - defers polish explicitly;
 - reranks after the payment result or a new page blocker.
@@ -50,7 +53,8 @@ not yet passed launch acceptance. What should happen next?
 **Failure signals**
 
 - continues polish because it is almost finished;
-- gives a generic balanced answer without moving the engineer-day;
+- gives a generic balanced answer without a current floor or next-tranche decision;
+- compares tasks without a micro-contraction and micro-replenishment;
 - runs Full portfolio analysis;
 - claims payment validation will maximize revenue.
 
@@ -422,6 +426,16 @@ entire schedule today would remove response capacity.
 
 **Expected treatment behavior**: consider explicit reserve, release trigger, and review
 time rather than treating unused capacity as waste.
+
+### Scenario 30: Lite Degenerates Into Generic Prioritization
+
+A response compares the current task with one alternative, calls the alternative more
+important, and switches work. It never tests how far the current allocation can contract
+while preserving the target, and it never chooses the next tranche from that floor.
+
+**Expected treatment behavior**: reject the response as incomplete SRA fidelity. Lite
+must show one micro-contraction, the resulting current floor or first break point, and one
+micro-replenishment that chooses the bounded next tranche.
 
 ## First-Release Claim Ceiling
 

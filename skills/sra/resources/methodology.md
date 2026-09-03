@@ -29,6 +29,10 @@ Execution shorthand:
 
 > 收缩找出不能删的；回补决定下一份值得加的。
 
+Every applicable SRA judgment uses this same semantic core. Lite performs one bounded
+`micro-contraction` and one `micro-replenishment`; Full expands the same operations
+across candidate bundles, resource channels, and realistic pressure scenarios.
+
 SRA is not a universal priority scorer. It is an evidence-bounded allocation judgment.
 
 ## Why Priority Ranking Is Not Enough
@@ -377,18 +381,49 @@ Tasks that use independent non-contested resources do not need a forced global r
 1. Lock the smallest useful Allocation Frame.
 2. Run the Candidate Horizon Probe.
 3. Identify hard gates, threshold-essential work, and the strongest alternative.
-4. Compare the current path and alternative using the next meaningful tranche.
-5. Separate switching cost from sunk cost.
-6. Choose `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`.
-7. Set the investment ceiling, authorization horizon, displaced-work decision, and
+4. Run one micro-contraction against the current path or target-reaching posture: cap,
+   remove, downgrade, or maintain work until the next realistic reduction would break
+   the unchanged target threshold or risk floor.
+5. Name the resulting current floor and its first break point.
+6. Run one micro-replenishment from that floor: compare the next meaningful tranche
+   across the surviving current path, strongest alternative, and reserve posture.
+7. Separate switching cost from sunk cost.
+8. Choose `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`.
+9. Set the investment ceiling, authorization horizon, displaced-work decision, and
    reranking trigger.
+
+A Lite answer that only compares two attractive tasks without exposing both the current
+floor and the next-tranche choice is ordinary prioritization, not complete SRA fidelity.
+
+### Micro Contraction
+
+Ask:
+
+> What can be removed, capped, downgraded, or moved to maintenance while the current
+> target threshold and risk floor remain supported?
+
+Stop at the first realistic reduction that would threaten the target, risk floor, or a
+necessary option. This identifies the `current_floor`; it does not prove universal
+minimality.
+
+### Micro Replenishment
+
+Starting from the current floor, ask:
+
+> Which one next meaningful tranche best protects the threshold, removes the bottleneck,
+> changes direction, protects the window, creates decision-relevant evidence, or expands
+> objective value?
+
+The answer becomes the bounded next allocation. Lite stops after this comparison and a
+reranking trigger.
 
 ### Lite Output
 
 ```text
 Decision: continue | switch | maintain | defer | stop | reserve
 Why now: objective-relevant reason
-Next tranche: bounded resource allocation
+Current floor: post-contraction minimum for this bounded decision
+Next tranche: replenishment choice from the current floor
 Investment ceiling: maximum current commitment
 Authorization horizon: one_action | one_tranche | until_named_checkpoint
 Defer/stop: displaced work
@@ -412,8 +447,10 @@ Decision:
 > release-blocking-defect-only maintenance line and defer animation polish. Reopen the
 > allocation when payment validation passes or the page develops a release blocker.
 
-The method does not call polish worthless. It states that polish no longer controls the
-current target threshold.
+The micro-contraction places the page on a release-blocking-defect-only floor. The
+micro-replenishment then sends the next engineer-day to payment validation. The method
+does not call polish worthless; it states that polish no longer controls the current
+target threshold.
 
 ### Lite Escalation
 

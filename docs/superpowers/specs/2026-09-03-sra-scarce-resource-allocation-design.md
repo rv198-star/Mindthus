@@ -31,6 +31,10 @@ SRA uses two reasoning depths:
 `auto` is the default selector. It starts from `Lite` and expands to `Full` only when an
 explicit escalation condition is present.
 
+Both depths preserve one semantic identity: Lite runs one bounded micro-contraction and
+one micro-replenishment; Full expands the same contraction–replenishment logic across
+bundles, resource channels, pressure scenarios, and decision lifetimes.
+
 ## Goal
 
 Make scarce-resource allocation an explicit, action-changing judgment without turning
@@ -302,8 +306,9 @@ Lite is the default execution-time allocation checkpoint. It answers:
 > the strongest alternative, maintain the current result, defer the work, stop it, or
 > remain reserved?
 
-Lite is intentionally small. It does not enumerate the full portfolio, build a complex
-score, or run the complete contraction-replenishment loop.
+Lite is intentionally small. It does not enumerate the full portfolio or build a
+complex score. It keeps the method core by running one micro-contraction and one
+micro-replenishment instead of the repeated Full loop.
 
 ### Lite Mainline
 
@@ -311,14 +316,26 @@ score, or run the complete contraction-replenishment loop.
 2. Run the Candidate Horizon Probe.
 3. Identify hard gates, threshold-essential work, and the strongest feasible
    alternative.
-4. Compare the current path and alternative using the next meaningful resource tranche.
-5. Separate real switching cost from sunk cost.
-6. Choose one action: `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`.
-7. Set an authorization horizon and a reranking trigger.
+4. Run one micro-contraction: cap, remove, downgrade, or move current work to maintenance
+   until the next realistic reduction would threaten the unchanged target or risk floor.
+5. Name the current floor and first break point.
+6. Run one micro-replenishment from that floor: compare the next meaningful tranche
+   across the surviving current path, strongest alternative, and reserve posture.
+7. Separate real switching cost from sunk cost.
+8. Choose one action: `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`.
+9. Set an investment ceiling, authorization horizon, displaced-work decision, and a
+   reranking trigger.
+
+A Lite result without both a contraction result and a replenishment result is ordinary
+prioritization, not complete SRA fidelity.
 
 ### Lite Questions
 
 - What target threshold does the next tranche serve?
+- What can be removed, capped, downgraded, or moved to maintenance while the target and
+  risk floor remain supported?
+- Where is the first realistic break point?
+- From that current floor, where should one next meaningful tranche go?
 - Does the current path still change target attainment, or only improve completion?
 - Is a hard gate, blocker, direction test, or closing window currently more decisive?
 - What is the strongest credible alternative use of the same resource?
@@ -334,7 +351,8 @@ A user-visible Lite answer should normally fit in one paragraph or a short block
 ```text
 Decision: continue | switch | maintain | defer | stop | reserve
 Why now: objective-relevant reason
-Next tranche: bounded resource allocation
+Current floor: result of one bounded micro-contraction
+Next tranche: result of one micro-replenishment from that floor
 Investment ceiling: maximum current commitment
 Authorization horizon: one action | one tranche | until named checkpoint
 Defer/stop: explicit displaced work
@@ -546,8 +564,9 @@ between total historical spend on each path.
 
 ### Lite Stop
 
-Lite stops after one bounded allocation is authorized and a reranking trigger is named.
-It does not keep searching for a theoretically perfect alternative.
+Lite stops after one micro-contraction has identified the current floor, one
+micro-replenishment has selected the next bounded tranche, and a reranking trigger is
+named. It does not keep searching for a theoretically perfect alternative.
 
 ### Full Stop
 
@@ -586,8 +605,10 @@ currency for values, probabilities, safety, or stakeholder authority.
 
 ### Guardrail: Limit Analysis Cost
 
-Protects ordinary work from methodology overhead. Lite is the default; Full expands
-only under named escalation conditions and stops under an explicit value-gain rule.
+Protects ordinary work from methodology overhead. Lite preserves one micro-contraction
+and one micro-replenishment while limiting candidate width and authorization horizon;
+Full expands only under named escalation conditions and stops under an explicit
+value-gain rule.
 
 ### Guardrail: Preserve Partial Orders
 
@@ -845,6 +866,7 @@ Required behavior:
 - fixed priority order;
 - evidence-bounded minimum sufficient bundle;
 - meaningful tranche, reserve, switching-cost, and authorization-horizon contracts;
+- one Lite micro-contraction and micro-replenishment;
 - Full contraction-replenishment loop;
 - positive, boundary, and adversarial pressure cases.
 
@@ -893,6 +915,8 @@ The initial SRA implementation does not include:
 - [ ] SRA exists as an independent Judgment Kernel Skill.
 - [ ] The core judgment is allocation among valid candidates sharing a scarce resource.
 - [ ] Lite is the default; Full expands only under named escalation conditions.
+- [ ] Lite and Full share the contraction-replenishment core; Lite performs one bounded
+      micro-contraction and one micro-replenishment rather than generic task ranking.
 - [ ] Direct and blocked outcomes prevent unnecessary or unsupported method use.
 
 ### Priority Effectiveness
@@ -906,7 +930,9 @@ The initial SRA implementation does not include:
       redundancy, conditionality, and infeasibility.
 - [ ] Different resource channels, fixed thresholds, parallelism, switching cost, sunk
       cost, and reserve capacity are represented without a universal score.
-- [ ] Lite authorizes only one action, one meaningful tranche, or one named checkpoint.
+- [ ] Lite names the post-contraction current floor, chooses the next tranche through
+      micro-replenishment, and authorizes only one action, one meaningful tranche, or
+      one named checkpoint.
 - [ ] Full produces main allocation, support, maintenance, defer, stop, reserve, and
       reranking conditions.
 

@@ -73,6 +73,8 @@ Every applicable run requires these moves:
 - `priority_order`
 - `resource_contention`
 - `evidence_bounded_necessity`
+- `contraction`
+- `replenishment`
 - `meaningful_tranche`
 - `switching_vs_sunk_cost`
 - `authorization_horizon`
@@ -85,10 +87,12 @@ Full mode additionally requires:
 
 - `minimum_sufficient_bundle`
 - `resource_vector`
-- `contraction`
-- `replenishment`
 - `feasibility_and_dominance`
 - `reserve_capacity`
+
+For Lite, `contraction` records one bounded micro-contraction and `replenishment` records
+one next-tranche comparison from the resulting current floor. For Full, the same moves
+expand across candidate bundles and realistic pressure scenarios.
 
 Each move includes:
 
@@ -104,6 +108,7 @@ A non-empty move remains a shape carrier, not proof that the reasoning is true.
 Lite requires `lite_decision` with:
 
 - `considered_candidates`: two to four non-empty candidate or posture labels;
+- `current_floor`;
 - `next_tranche`;
 - `investment_ceiling`;
 - `authorization_horizon`;
@@ -116,8 +121,9 @@ Allowed `authorization_horizon` values:
 - `one_tranche`
 - `until_named_checkpoint`
 
-Lite fails its method contract when it authorizes an open-ended continuation without a
-bounded horizon and reranking trigger.
+Lite fails its method contract when it omits the post-contraction current floor, omits
+the replenishment choice, or authorizes an open-ended continuation without a bounded
+horizon and reranking trigger.
 
 ## Full Decision Carrier
 
@@ -157,11 +163,13 @@ An applicable run has a shape or evidence risk when:
 - necessity is asserted without an evidence surface or overturn condition;
 - the next resource unit is not a bounded meaningful tranche;
 - sunk cost and switching cost are not separated;
+- Lite omits one bounded micro-contraction, one micro-replenishment, or the resulting
+  current floor;
 - Lite has no bounded authorization horizon;
 - defer, stop, maintenance, or reserve consequences are hidden;
 - no reranking trigger is named;
-- Full omits minimum sufficient bundle, contraction, replenishment, resource vector,
-  feasibility, dominance, or reserve-capacity moves;
+- Full omits minimum sufficient bundle, expanded contraction, expanded replenishment,
+  resource vector, feasibility, dominance, or reserve-capacity moves;
 - Full lacks a decision lifetime or authorization boundary;
 - numeric scoring is presented as semantic proof rather than an evidence-linked support
   surface.

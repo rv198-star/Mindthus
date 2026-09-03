@@ -46,6 +46,8 @@ BASE_MOVES = (
     "priority_order",
     "resource_contention",
     "evidence_bounded_necessity",
+    "contraction",
+    "replenishment",
     "meaningful_tranche",
     "switching_vs_sunk_cost",
     "authorization_horizon",
@@ -57,13 +59,12 @@ BASE_MOVES = (
 FULL_MOVES = (
     "minimum_sufficient_bundle",
     "resource_vector",
-    "contraction",
-    "replenishment",
     "feasibility_and_dominance",
     "reserve_capacity",
 )
 LITE_DECISION_FIELDS = (
     "considered_candidates",
+    "current_floor",
     "next_tranche",
     "investment_ceiling",
     "authorization_horizon",
@@ -227,7 +228,12 @@ def _validate_lite(data: dict[str, Any]) -> list[Finding]:
     for field_name in LITE_DECISION_FIELDS:
         if field_name not in decision:
             findings.append(_missing_field(f"lite_decision.{field_name}"))
-    for field_name in ("next_tranche", "investment_ceiling", "rerank_trigger"):
+    for field_name in (
+        "current_floor",
+        "next_tranche",
+        "investment_ceiling",
+        "rerank_trigger",
+    ):
         if field_name in decision and not non_empty_string(decision.get(field_name)):
             findings.append(
                 _invalid_field(f"lite_decision.{field_name}", "a non-empty string")
