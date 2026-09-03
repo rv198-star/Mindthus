@@ -1,0 +1,285 @@
+{
+  "schema_version": "sra.context-input.v0.1",
+  "run_id": "release-payment-allocation",
+  "mode": "auto",
+  "isolation_profile": "auto",
+  "escalation_signals": [],
+  "contamination_signals": [
+    "active_task_richness",
+    "prior_agent_conclusion"
+  ],
+  "allocation_frame": {
+    "parent_objective": "Launch a purchasable product page in the current release window.",
+    "target_threshold": "The page is usable and the payment path is validated for launch.",
+    "time_window": "Current release window.",
+    "risk_floor": "Do not launch with an unvalidated payment path or a release-blocking page defect.",
+    "decision_owner": "Release owner.",
+    "contested_resources": [
+      "one engineer-day"
+    ],
+    "evidence_ceiling": "Current evidence supports release-window allocation only; it does not prove production revenue or long-term conversion impact."
+  },
+  "active_candidate_id": "page-polish",
+  "candidates": [
+    {
+      "candidate_id": "page-polish",
+      "title": "Continue animation polish",
+      "objective_contribution": "Improves presentation after the current page usability threshold has been reached.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1"
+        }
+      ],
+      "dependency_or_bundle_role": "value-expanding after release usability threshold",
+      "delay_cost_or_opportunity_window": "Can be delayed until after launch validation.",
+      "irreversibility_or_downside": "Low; completed polish remains reusable.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": []
+    },
+    {
+      "candidate_id": "payment-validation",
+      "title": "Validate the payment path",
+      "objective_contribution": "Closes a launch acceptance requirement that currently blocks the target threshold.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1"
+        }
+      ],
+      "dependency_or_bundle_role": "threshold-essential launch validation",
+      "delay_cost_or_opportunity_window": "Delay consumes the current release window.",
+      "irreversibility_or_downside": "Launching without validation violates the risk floor.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-duration"
+      ]
+    },
+    {
+      "candidate_id": "incident-reserve",
+      "title": "Keep the engineer-day reserved",
+      "objective_contribution": "Preserves response capacity if a release-blocking incident appears.",
+      "resource_demand": [
+        {
+          "resource": "engineer-day",
+          "amount": "1 reserved"
+        }
+      ],
+      "dependency_or_bundle_role": "maintenance or option capacity",
+      "delay_cost_or_opportunity_window": "Reserve expires at the payment validation checkpoint.",
+      "irreversibility_or_downside": "Unused reserve can delay payment validation if no incident occurs.",
+      "evidence_refs": [],
+      "assumption_refs": [
+        "A-incident"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E-page",
+      "kind": "acceptance_status",
+      "source": "current release checklist",
+      "statement": "The product page meets the current usability threshold.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports current page usability only."
+    },
+    {
+      "evidence_id": "E-payment",
+      "kind": "acceptance_status",
+      "source": "current release checklist",
+      "statement": "Payment validation has not passed launch acceptance.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports payment-path blocker status for this release window only."
+    },
+    {
+      "evidence_id": "E-history",
+      "kind": "historical_incident",
+      "source": "prior release incident summary",
+      "statement": "A previous release window was missed after acceptance validation started late.",
+      "observed_at": "2026-08-01T00:00:00Z",
+      "claim_ceiling": "Supports scoped historical delay risk only; it does not prove the current release will fail."
+    },
+    {
+      "evidence_id": "E-spend",
+      "kind": "work_history",
+      "source": "current branch history",
+      "statement": "Several engineer-days have already been spent on page polish.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports historical spend only; the spend is sunk cost and does not justify continuation."
+    },
+    {
+      "evidence_id": "E-owner",
+      "kind": "authority_contract",
+      "source": "current release acceptance contract",
+      "statement": "The release owner requires payment acceptance before launch in the current release window.",
+      "observed_at": "2026-09-03T07:00:00Z",
+      "claim_ceiling": "Supports the current release authority boundary only."
+    }
+  ],
+  "assumptions": [
+    {
+      "assumption_id": "A-duration",
+      "statement": "One engineer-day is enough to produce a decision-relevant payment validation result.",
+      "overturn_condition": "The first validation attempt reveals a broader implementation defect."
+    },
+    {
+      "assumption_id": "A-incident",
+      "statement": "A release incident is possible but not currently observed.",
+      "overturn_condition": "No incident signal appears before the payment checkpoint or a confirmed incident activates the reserve."
+    },
+    {
+      "assumption_id": "A-switching",
+      "statement": "Switching from page polish to payment validation requires only a short context handoff.",
+      "overturn_condition": "The first handoff reveals a materially larger setup or ownership transfer cost."
+    },
+    {
+      "assumption_id": "A-reusable",
+      "statement": "Completed page and animation work remain reusable after the allocation switch.",
+      "overturn_condition": "The release path or implementation changes in a way that invalidates the completed work."
+    },
+    {
+      "assumption_id": "A-polish-duration",
+      "statement": "A further meaningful polish tranche consumes one engineer-day.",
+      "overturn_condition": "A bounded estimate or first action shows a materially different remaining cost."
+    }
+  ],
+  "context_items": [
+    {
+      "context_id": "C-current",
+      "kind": "current_instruction",
+      "statement": "Decide where the next engineer-day should go.",
+      "source": "current user request",
+      "decision_relevance": "Defines the current allocation question.",
+      "candidate_ids": [],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-quality",
+      "kind": "user_constraint",
+      "statement": "The user values release quality but does not want polish to delay a blocked launch path.",
+      "source": "current user instruction",
+      "decision_relevance": "Constrains acceptable trade-offs without proving factual status.",
+      "candidate_ids": [],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-prior",
+      "kind": "previous_conclusion",
+      "statement": "A previous agent recommended finishing animation polish because it was nearly complete.",
+      "source": "prior agent response",
+      "decision_relevance": "Potential incumbent-path contamination signal.",
+      "candidate_ids": [
+        "page-polish"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-advocacy",
+      "kind": "candidate_advocacy",
+      "statement": "The designer says the animation is the most visible sign of quality.",
+      "source": "candidate advocate",
+      "decision_relevance": "Represents advocacy but not accepted evidence.",
+      "candidate_ids": [
+        "page-polish"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": []
+    },
+    {
+      "context_id": "C-history",
+      "kind": "historical_context",
+      "statement": "The team previously lost a release window because acceptance validation started too late.",
+      "source": "historical incident summary",
+      "decision_relevance": "Relevant scoped history for delay risk; it does not inherit current factual authority.",
+      "requested_disposition": "admit",
+      "candidate_ids": [
+        "payment-validation"
+      ],
+      "evidence_refs": [
+        "E-history"
+      ],
+      "assumption_refs": []
+    }
+  ],
+  "state_context": {
+    "switching_costs": [
+      {
+        "from_candidate_id": "page-polish",
+        "to_candidate_id": "payment-validation",
+        "cost": "A short context switch within the same engineer-day.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-switching"
+        ]
+      }
+    ],
+    "reusable_assets": [
+      {
+        "candidate_id": "page-polish",
+        "asset": "Completed page and existing animation work remain reusable after switching.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-reusable"
+        ]
+      }
+    ],
+    "remaining_costs": [
+      {
+        "candidate_id": "page-polish",
+        "cost": "One engineer-day for further polish.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-polish-duration"
+        ]
+      },
+      {
+        "candidate_id": "payment-validation",
+        "cost": "One engineer-day under assumption A-duration.",
+        "evidence_refs": [],
+        "assumption_refs": [
+          "A-duration"
+        ]
+      }
+    ],
+    "historical_spend": [
+      {
+        "candidate_id": "page-polish",
+        "spent": "Several prior engineer-days; sunk-cost-only.",
+        "evidence_refs": [
+          "E-spend"
+        ],
+        "assumption_refs": []
+      }
+    ],
+    "commitments": [
+      {
+        "scope": "release window",
+        "statement": "The release owner requires payment acceptance before launch.",
+        "evidence_refs": [
+          "E-owner"
+        ],
+        "assumption_refs": []
+      }
+    ],
+    "authority_boundaries": [
+      {
+        "scope": "current release allocation",
+        "statement": "Only the release owner may lower the payment acceptance threshold or authorize launch without it.",
+        "evidence_refs": [
+          "E-owner"
+        ],
+        "assumption_refs": []
+      }
+    ]
+  },
+  "known_omissions": [
+    "No production conversion data is available."
+  ]
+}

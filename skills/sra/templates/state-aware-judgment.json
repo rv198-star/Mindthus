@@ -1,0 +1,85 @@
+{
+  "schema_version": "sra.state-judgment.v0.1",
+  "stage": "state_aware",
+  "packet_hash": "COPY_FROM_STATE_PACKET",
+  "blind_judgment_hash": "COPY_FROM_STATE_PACKET",
+  "decision": "switch",
+  "blind_result_changed": false,
+  "change_reason": "Real switching cost is small, existing page work remains reusable, and historical spend is sunk cost, so state information does not overturn the blind allocation.",
+  "sunk_cost_used_as_reason": false,
+  "state_adjustments": [
+    {
+      "kind": "switching_cost",
+      "finding": "The context switch is bounded and smaller than the cost of delaying the threshold-essential validation.",
+      "state_refs": [
+        "COPY_SWITCHING_COST_STATE_ID"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": [
+        "A-duration"
+      ]
+    },
+    {
+      "kind": "reusable_asset",
+      "finding": "Completed page work remains usable after the allocation switch.",
+      "state_refs": [
+        "COPY_REUSABLE_ASSET_STATE_ID"
+      ],
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": []
+    },
+    {
+      "kind": "sunk_cost_rejected",
+      "finding": "Prior time spent on page polish is not used as a continuation reason.",
+      "state_refs": [
+        "COPY_SUNK_COST_STATE_ID"
+      ],
+      "evidence_refs": [],
+      "assumption_refs": []
+    }
+  ],
+  "current_floor": [
+    "payment-validation"
+  ],
+  "next_tranche": {
+    "candidate_id": "payment-validation",
+    "description": "Allocate one engineer-day to payment validation and produce a reproducible result.",
+    "reason": "Payment validation remains threshold-essential and state information does not justify continuing polish."
+  },
+  "investment_ceiling": "One engineer-day before reranking.",
+  "authorization_horizon": "one_tranche",
+  "maintenance": [
+    "Keep the product page on a release-blocking-defect-only maintenance line."
+  ],
+  "reserve": {
+    "status": "none",
+    "reason": "No observed incident currently justifies withholding the entire engineer-day.",
+    "release_trigger": "Not applicable while reserve status is none.",
+    "review_time": "At the payment validation checkpoint."
+  },
+  "defer": [
+    "Further animation polish."
+  ],
+  "stop": [],
+  "rerank_triggers": [
+    "Payment validation passes.",
+    "Payment validation reveals a broader blocker.",
+    "A release-blocking page defect appears."
+  ],
+  "state_refs": [
+    "COPY_SWITCHING_COST_STATE_ID",
+    "COPY_REUSABLE_ASSET_STATE_ID",
+    "COPY_SUNK_COST_STATE_ID"
+  ],
+  "evidence_refs": [
+    "E-page",
+    "E-payment"
+  ],
+  "assumption_refs": [
+    "A-duration",
+    "A-incident"
+  ],
+  "claim_ceiling": "This decision supports the current release-window allocation only and does not prove production revenue or universal priority correctness."
+}

@@ -20,7 +20,11 @@ lifetimes.
 SRA owns allocation among sufficiently judgeable candidates; neighboring methods retain
 problem definition, structural truth, direction, carrier strategy, control, artifact
 quality, and runtime state. Use the smallest reasoning depth whose cost is lower than
-the plausible loss from a wrong allocation.
+the plausible loss from a wrong allocation. Build a sealed, provenance-bearing packet;
+quarantine prior conclusions and advocacy. Explicit independence, context asymmetry,
+prior advocacy/conclusion, Full, or major redirection activates
+`resources/context-isolation.md`: blind first, state second; use a fresh read-only
+carrier when available.
 
 ## Mainline / 主路径
 
@@ -197,7 +201,9 @@ they do not compute priority, ROI, necessity, or allocation correctness.
 
 - `resources/methodology.md` — complete Lite/Full method and ownership details.
 - `resources/fidelity-contract.md` — first-release fidelity and claim ceiling.
+- `resources/context-isolation.md` — sealed packet, blind/state judgment, and carrier boundary.
 - `templates/fidelity-output.json` — passing Lite audit example.
-- `scripts/validate_sra_output.py` — shape-only validator.
+- `scripts/prepare_sra_run.py`, `record_sra_judgment.py`, `check_sra_run.py`, and
+  `render_sra_decision.py` — hybrid workflow shell; scripts never decide priority.
 - `../../docs/methodologies/sra.md` — public explanation.
 - `../../tests/sra_pressure_tests.md` — positive, boundary, and adversarial cases.

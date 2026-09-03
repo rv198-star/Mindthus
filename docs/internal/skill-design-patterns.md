@@ -40,7 +40,8 @@ It asks:
   impact.
 - `3L5S`: problem discovery, problem definition, and executable decomposition.
 - `SRA`: scarce-resource allocation among sufficiently judgeable candidates, with a
-  bounded Lite decision and expanded Full bundle analysis.
+  packet-bound Workflow shell, Agentic semantic owner, bounded Lite decision, and
+  expanded Full bundle analysis.
 - `EDSP`: structural judgment when a proposition, boundary, or binary is unstable.
 - `SELA`: strategic direction when local advantage and system-level efficiency conflict.
 
@@ -120,7 +121,7 @@ Mindthus skills may still use common implementation shapes:
 
 | General pattern | Mindthus usage |
 |---|---|
-| Tool wrapper | Scripts and resources support `tplan`, `TVG`, and `3L5S`, but scripts do not own semantic judgment. |
+| Tool wrapper | Scripts and resources support `tplan`, `TVG`, `3L5S`, and SRA's context-isolated packet workflow, but scripts do not own semantic judgment. |
 | Generator | Templates, decision packets, stop reports, worksheets, and traces may be generated as support artifacts. |
 | Reviewer | `WAE`, `TVG`, `SRA`, `SELA`, and `EDSP` can review control, value, allocation, timing, or structure. |
 | Inversion | `using-mindthus` and `3L5S` often ask what the real problem is before acting. |
@@ -149,7 +150,7 @@ describe cognitive role.
 |---|---|---|
 | `using-mindthus` | Judgment Kernel | Inversion, reviewer-like routing |
 | `3L5S` | Judgment Kernel | Inversion, generator, light pipeline |
-| `SRA` | Judgment Kernel | Reviewer, generator |
+| `SRA` | Judgment Kernel | Reviewer, generator, hybrid Workflow shell |
 | `EDSP` | Judgment Kernel | Reviewer, generator |
 | `SELA` | Judgment Kernel | Reviewer |
 | `WAE` | Cognitive Control | Reviewer |

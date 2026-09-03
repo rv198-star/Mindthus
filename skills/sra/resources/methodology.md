@@ -147,6 +147,44 @@ cash-runway decision, or an irreversible construction path may justify Full.
 `auto` starts from Lite and expands only when a named escalation condition is
 load-bearing. It is a mode selector, not a third analysis depth.
 
+## Context-Isolated Hybrid Runtime
+
+SRA should not let the same ambient context that created or defended current work
+silently decide whether that work keeps receiving resources. Every applicable judgment
+therefore uses a minimal allocation packet, whether that packet is held logically in the
+current turn or persisted by the runtime shell.
+
+The outer caller collects raw candidates and sources. Workflow then:
+
+1. records a context-admission ledger;
+2. admits current instructions, scoped constraints, evidence, authority, assumptions,
+   and relevant history in their correct lanes;
+3. quarantines candidate advocacy, previous conclusions, and ambient inferences by
+   default;
+4. normalizes candidates into equal cards and deterministic blind aliases;
+5. seals and hashes the packet and generates packet-specific Agent output schemas;
+6. exposes active-path state only after a blind contraction/replenishment result is
+   recorded.
+
+Agentic SRA still decides relevance, necessity, feasibility, contraction, current floor,
+replenishment, and final allocation. Scripts own order, packet construction, hashes,
+references, state transitions, carrier artifacts, and rendering.
+
+Isolation profiles:
+
+- `packet_bound`: same-context logical isolation; the result may cite packet IDs only and
+  cannot claim the model forgot ambient context;
+- `fresh_context`: a read-only fresh subagent or ephemeral CLI receives the packet
+  without the task conversation;
+- `blind_then_state`: lock a blind result first, then reconcile it with switching cost,
+  reusable assets, remaining cost, commitments, and historical spend labelled as sunk
+  cost. Prefer separate fresh contexts for both passes when the host supports them.
+
+Lite uses the smallest packet-bound form and upgrades isolation only when contamination
+risk justifies the added cost. Full targets a persisted blind-then-state trace. See
+`context-isolation.md` for the runtime files, commands, threat model, and evidence
+boundary.
+
 ## Allocation Frame
 
 Every applicable SRA judgment establishes the smallest sufficient frame:
@@ -656,8 +694,10 @@ selected mainline. SRA does not redesign the carrier.
 
 ### WAE
 
-WAE applies only to agentic controller mismatch. SRA allocation judgment remains
-Agentic or human; scripts validate shape and references only.
+SRA uses a WAE-shaped hybrid runtime: Workflow owns admission mechanics, normalization,
+packet hashes, stage order, and reference checks; Agentic SRA owns semantic allocation;
+Evidence constrains claims. WAE re-enters only when those controller boundaries are
+misassigned.
 
 ### TVG
 
@@ -714,17 +754,24 @@ The first release does not claim that SRA:
 
 Scripts may:
 
-- validate required fields and enums;
-- check that applicable Lite and Full outputs contain their required carriers;
-- flag empty evidence surfaces and missing reranking triggers;
-- accept direct or blocked exits when their reasons are explicit;
-- report shape and evidence risks.
+- build a context-admission ledger and sealed allocation packet;
+- normalize candidate cards and create input-order-independent blind aliases;
+- generate packet-specific Agent output schemas;
+- generate packet-bound, fresh-subagent, and ephemeral-CLI carrier artifacts;
+- enforce `prepared -> blind_recorded -> finalized` stage order;
+- lock packet and judgment hashes;
+- validate candidate, evidence, and assumption references;
+- check that sunk cost is rejected as a continuation basis;
+- render the finalized decision without recomputing it;
+- validate fidelity fields, enums, evidence surfaces, and reranking triggers.
 
 Scripts do not:
 
+- classify semantic context truth or guarantee complete context;
 - choose the priority;
 - compute semantic ROI;
 - decide whether a bundle is genuinely sufficient;
 - prove a hard gate applies;
 - determine the strongest alternative;
-- authorize a real allocation.
+- authorize or mutate a real project or TPlan allocation;
+- claim fresh-context isolation without an observable carrier boundary.

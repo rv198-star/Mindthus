@@ -481,6 +481,11 @@ class PackagingDocsTests(unittest.TestCase):
                 Path("3l5s/scripts/validate_3l5s_output.py"),
                 Path("sela/scripts/validate_sela_output.py"),
                 Path("mpg/scripts/validate_mpg_output.py"),
+                Path("sra/scripts/validate_sra_output.py"),
+                Path("sra/scripts/prepare_sra_run.py"),
+                Path("sra/scripts/record_sra_judgment.py"),
+                Path("sra/scripts/check_sra_run.py"),
+                Path("sra/scripts/render_sra_decision.py"),
                 Path("edsp/scripts/validate_edsp_output.py"),
                 Path("wae/scripts/validate_wae_output.py"),
                 Path("tvg/scripts/validate_tvg_output.py"),
@@ -613,6 +618,22 @@ class PackagingDocsTests(unittest.TestCase):
                     linked_contract.resolve().is_file(),
                     f"broken packaged fidelity link: {packaged} -> {linked_contract}",
                 )
+
+    def assert_packaged_sra_context_runtime(self, skill_dir: Path) -> None:
+        required = (
+            "resources/context-isolation.md",
+            "templates/context-input.json",
+            "templates/blind-judgment.json",
+            "templates/state-aware-judgment.json",
+            "scripts/sra_runtime.py",
+            "scripts/prepare_sra_run.py",
+            "scripts/record_sra_judgment.py",
+            "scripts/check_sra_run.py",
+            "scripts/render_sra_decision.py",
+        )
+        for relative in required:
+            path = skill_dir / relative
+            self.assertTrue(path.is_file(), f"missing packaged SRA runtime surface: {path}")
 
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -1303,6 +1324,15 @@ class PackagingDocsTests(unittest.TestCase):
                 / "using-mindthus",
             ):
                 self.assert_packaged_using_mindthus_primitives(skill_dir)
+
+            for skill_dir in (
+                out / "claude-code" / "claude-plugin" / "skills" / "sra",
+                out / "claude-code" / "skills" / "sra",
+                out / "codex-plugin" / "mindthus" / "skills" / "sra",
+                out / "codex" / "skills" / "mindthus" / "sra",
+                out / "opencode" / ".opencode" / "skills" / "mindthus" / "sra",
+            ):
+                self.assert_packaged_sra_context_runtime(skill_dir)
 
             marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
             plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"

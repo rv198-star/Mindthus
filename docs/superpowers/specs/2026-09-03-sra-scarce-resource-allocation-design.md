@@ -870,6 +870,26 @@ Required behavior:
 - Full contraction-replenishment loop;
 - positive, boundary, and adversarial pressure cases.
 
+### Phase 1.5: Context-Isolated Hybrid Runtime
+
+After the standalone semantic contract is stable, add a Workflow shell around the
+Agentic allocation owner:
+
+- classify supplied context into admitted, quarantined, and excluded lanes;
+- normalize candidate cards and generate deterministic blind aliases;
+- seal and hash the admitted allocation packet;
+- record a blind contraction/replenishment judgment before current-path state is shown;
+- reconcile the blind result with switching cost, reusable assets, remaining cost,
+  commitments, and sunk-cost rejection;
+- support `packet_bound`, `fresh_context`, and `blind_then_state` carriers;
+- validate packet/judgment hashes and references;
+- render the final allocation without recomputing semantics.
+
+The runtime reduces ambient-context influence without claiming complete context or
+absolute host isolation. Scripts control deterministic order and evidence plumbing;
+Agentic SRA retains necessity, feasibility, contraction, replenishment, and allocation
+judgment. Detailed design: `2026-09-03-sra-context-isolated-runtime-design.md` and #157.
+
 ### Phase 2: Routing And Packaging
 
 After Phase 1 pressure tests pass:
@@ -903,6 +923,8 @@ The initial SRA implementation does not include:
 - exhaustive project-management planning;
 - automatic target reduction;
 - automatic task-tree mutation;
+- automatic model invocation or full-conversation scraping;
+- a claim of context-free or absolutely isolated judgment;
 - global replacement of TPlan selection or subtraction;
 - a requirement to run 3L5S before every allocation;
 - a requirement to run SRA after every task or checkpoint;
@@ -955,8 +977,13 @@ The initial SRA implementation does not include:
 - [ ] No script computes semantic priority, ROI, or allocation correctness.
 - [ ] A shape pass is not reported as semantic approval.
 - [ ] The first-release claim ceiling is explicit.
-- [ ] Pressure cases include positive, boundary, adversarial, and analysis-overhead
-      controls.
+- [ ] Every applicable hybrid run records a context-admission ledger and sealed packet.
+- [ ] Previous conclusions and advocacy are quarantined by default; user constraints
+      remain constraints rather than factual proof.
+- [ ] Blind judgment precedes state-aware reconciliation and uses packet-bound IDs.
+- [ ] Same-context runs cannot claim fresh-context isolation.
+- [ ] Pressure cases include positive, boundary, adversarial, contamination, and
+      analysis-overhead controls.
 
 ### Project Readiness
 

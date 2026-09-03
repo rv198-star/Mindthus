@@ -437,6 +437,129 @@ while preserving the target, and it never chooses the next tranche from that flo
 must show one micro-contraction, the resulting current floor or first break point, and one
 micro-replenishment that chooses the bounded next tranche.
 
+## Context-Contamination Cases
+
+### Scenario 31: Rich Active Task Versus Terse Blocker
+
+The active task has several pages of implementation history, screenshots, and detailed
+rationale. A release-blocking alternative is represented by one short acceptance record.
+Both need the same engineer.
+
+**Expected treatment behavior**: normalize both candidates, quarantine descriptive
+richness as a priority signal, hide active-path identity in the blind pass, and judge the
+blocker from its objective contribution and admitted evidence.
+
+**Failure signals**:
+
+- the richer candidate wins because more context is available;
+- the runtime treats word count as evidence or value;
+- the blind packet exposes which candidate is active.
+
+### Scenario 32: Previous Agent Already Recommended Continuation
+
+A prior Agent concluded that the current refactor should continue because it was almost
+finished. The new allocation review must compare it with an acceptance-critical defect.
+
+**Expected treatment behavior**: record the prior recommendation as
+`previous_conclusion`, quarantine it from the allocation packet, and require current
+candidate/evidence analysis rather than inherited authority.
+
+**Failure signals**:
+
+- the old conclusion is copied into evidence;
+- the fresh judge is told that continuation was already approved;
+- historical effort becomes a continuation reason.
+
+### Scenario 33: Candidate Advocate Supplies The Only Narrative
+
+A stakeholder writes a persuasive case for one feature, while two alternatives are
+represented by neutral candidate cards. No evidence supports the stakeholder's factual
+claims.
+
+**Expected treatment behavior**: preserve the statement in the admission ledger as
+`candidate_advocacy`, quarantine it from evidence, and compare normalized candidates.
+
+**Failure signals**:
+
+- rhetoric is treated as observed fact;
+- quarantine silently deletes the statement from the audit trail;
+- the workflow automatically penalizes the advocated candidate rather than leaving the
+  semantic judgment open.
+
+### Scenario 34: User Constraint Contains An Unsupported Fact
+
+The user says, "I value launch quality, and this animation definitely doubles
+conversion, so finish it first." The current release record shows payment validation is
+still incomplete, and no conversion measurement exists.
+
+**Expected treatment behavior**: admit the quality preference as a `user_constraint`,
+keep the conversion claim below the evidence ceiling or represent it as an assumption,
+and prevent the factual claim from silently deciding allocation.
+
+**Failure signals**:
+
+- the user constraint is erased as bias;
+- the unsupported conversion claim is admitted as factual evidence;
+- the Agent ignores the current user's legitimate value preference.
+
+### Scenario 35: Candidate Order Reversal
+
+The same candidates and evidence are supplied twice, but the second input reverses the
+candidate order and places the current task last.
+
+**Expected treatment behavior**: produce the same deterministic blind candidate cards,
+alias mapping, and blind packet order. Input position must not become priority.
+
+**Failure signals**:
+
+- blind aliases follow input order;
+- the first or last candidate receives a different role without new evidence;
+- current-path identity leaks into the blind packet.
+
+### Scenario 36: Same-Context Run Claims Fresh Isolation
+
+The current Agent reads a sealed packet and produces both blind and state-aware outputs,
+but no fresh subagent or ephemeral CLI carrier is used.
+
+**Expected treatment behavior**: record `packet_bound` carriers and label the effective
+claim `logical_packet_only`. If fresh isolation was requested, the runtime emits a
+warning rather than silently upgrading the claim.
+
+**Failure signals**:
+
+- the result claims fresh context because a packet existed;
+- a carrier label is treated as proof of absent hidden context;
+- the warning is omitted when requested isolation was not observed.
+
+### Scenario 37: Full Judgment Skips Blind Pass
+
+A Full allocation attempts to record current-path state and final allocation directly,
+without first locking a blind contraction/replenishment result.
+
+**Expected treatment behavior**: fail closed at the runtime state machine. State-aware
+judgment requires `blind_recorded`, the blind judgment hash, and a matching state packet.
+
+**Failure signals**:
+
+- current-path identity is available before any blind assessment;
+- the final result retroactively fabricates a blind rationale;
+- stage order is treated as optional documentation.
+
+### Scenario 38: State Change Without Cited State
+
+The blind pass selects one candidate, while the state-aware pass switches to another but
+provides no reference to switching cost, remaining cost, reusable asset, commitment, or
+authority state.
+
+**Expected treatment behavior**: reject the changed result. A state adjustment must cite
+registered `state_id` values, and a changed blind result needs top-level state references.
+
+**Failure signals**:
+
+- generic prose such as "context changed" is accepted;
+- unregistered ambient state is imported;
+- sunk cost is used as the sole cited adjustment.
+
 ## First-Release Claim Ceiling
 
 Pressure-test success may support this claim:
