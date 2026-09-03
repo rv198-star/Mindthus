@@ -1,6 +1,6 @@
 ---
 name: sra
-description: "Use when multiple valid problems, tasks, branches, projects, or continuation choices compete for the same scarce resource, or current work competes with switching, maintaining, deferring, stopping, or reserving it. Default to Lite for one bounded tranche; expand to Full for bundles, major commitments, multiple constrained resources, direction-changing uncertainty, fixed thresholds, or irreversible exposure."
+description: "Use when multiple valid actions or bundles compete for the same scarce resource. Default to Lite for one bounded tranche; use Full for bundles, multiple constrained resources, fixed thresholds, or major or irreversible commitments."
 ---
 
 # SRA / Scarce Resource Allocation / 稀缺资源优先分配
@@ -17,12 +17,10 @@ compresses it into one `micro-contraction` and one `micro-replenishment`; Full e
 the same logic across bundles, resource channels, pressure scenarios, and decision
 lifetimes.
 
-SRA owns allocation among sufficiently judgeable candidates. It does not own problem
-definition, structural truth, long-term trend, carrier strategy, agentic control,
-artifact quality, or durable runtime state.
-
-The method is itself resource-constrained: use the smallest reasoning depth whose cost
-is lower than the plausible loss from a wrong allocation.
+SRA owns allocation among sufficiently judgeable candidates; neighboring methods retain
+problem definition, structural truth, direction, carrier strategy, control, artifact
+quality, and runtime state. Use the smallest reasoning depth whose cost is lower than
+the plausible loss from a wrong allocation.
 
 ## Mainline / 主路径
 
@@ -30,32 +28,22 @@ is lower than the plausible loss from a wrong allocation.
 
 Choose one outcome before analysis:
 
-- `direct`: one obvious low-risk action dominates, resources are not actually
-  contested, or trying costs less than analyzing.
-- `lite`: authorize one bounded action, meaningful tranche, or named checkpoint.
-- `full`: bundles, major or irreversible commitment, multiple constrained resource
-  pools, direction-changing uncertainty, fixed thresholds, or material path dependency
-  control the decision.
-- `blocked`: target, evidence, authority, candidate readiness, or resource boundaries
-  are too incomplete to allocate responsibly.
+- `direct`: one obvious low-risk action dominates, resources are independent, or trying
+  costs less than analyzing.
+- `lite`: authorize one bounded action, tranche, or checkpoint.
+- `full`: bundles, multi-resource constraints, fixed thresholds, direction changes, or
+  major/irreversible commitments control the decision.
+- `blocked`: a load-bearing target, evidence, authority, candidate, or resource boundary
+  is incomplete.
 
 `auto` starts from Lite and expands only when a named Full condition is load-bearing.
 `direct` is an intervention outcome, not a third reasoning mode.
 
 ### Allocation Frame
 
-Name only what the allocation needs:
-
-- `parent_objective`
-- `target_threshold`
-- `time_window`
-- `risk_floor`
-- `decision_owner`
-- `contested_resource`
-- `evidence_ceiling`
-
-Resource pressure keeps the target threshold visible. Changing the target is a separate
-authorized decision.
+Name only `parent_objective`, `target_threshold`, `time_window`, `risk_floor`,
+`decision_owner`, `contested_resource`, and `evidence_ceiling`. Resource pressure keeps
+the target visible; changing it is a separate authorized decision.
 
 ### Candidate Horizon Probe
 
@@ -137,32 +125,16 @@ or the decision authorizes more than one tranche or checkpoint.
 10. State main allocation, support, maintenance, defer, stop, next tranche,
     authorization boundary, decision lifetime, and reranking triggers.
 
-Minimum candidate card:
-
-```text
-candidate_id
-objective_contribution
-resource_demand_vector
-dependency_or_bundle_role
-evidence_state
-delay_cost_or_opportunity_window
-irreversibility_or_downside
-```
-
-Splitting one candidate into more rows does not increase its allocation claim.
+Use the minimum comparable candidate card in `resources/methodology.md`; splitting one
+candidate into more rows does not increase its allocation claim.
 
 ### Resource Contraction And Replenishment
 
-Contraction finds what remains indispensable, substitutable, parallelizable, degradable,
-or merely value-expanding while target and risk floor stay fixed.
-
-Replenishment asks which next meaningful tranche removes the bottleneck, unlocks
-options, produces decision-relevant evidence, protects a closing window, or creates the
-largest objective-relevant gain.
-
-When removal and addition orders differ, preserve dependency, complementarity, fixed
-threshold, switching-cost, or uncertainty explanations. Return a partial or conditional
-order rather than a false total ranking.
+Contraction finds the current floor while target and risk stay fixed. Replenishment
+selects the next meaningful tranche by bottleneck, evidence, window, optionality, and
+objective gain. When removal and addition orders differ, preserve dependency,
+complementarity, fixed-threshold, switching-cost, or uncertainty explanations; return a
+partial or conditional order rather than a false total ranking.
 
 ### Human-Readable First
 
@@ -173,72 +145,53 @@ decision. Keep internal fields for audit, validation, or handoff.
 
 ### Shared Core Across Lite And Full
 
-Lite reduces analysis width, not method identity. It must still expose the current
-floor found by one bounded contraction and the next tranche chosen by one replenishment
-comparison. Full repeats and expands those moves across credible bundle hypotheses.
-
-Before contraction, a bundle or current posture is only a target-reaching hypothesis.
-Call it a current floor only after the contraction test identifies the first realistic
-break point.
+Lite reduces analysis width, not method identity: expose the current floor from one
+bounded contraction and the next tranche from one replenishment comparison. Full expands
+both across credible bundles. Before contraction, a posture is only a target-reaching
+hypothesis; the first realistic break point establishes the floor.
 
 ### Evidence-Bounded Necessity
 
-A `current minimum sufficient bundle` is sufficient only under current evidence,
-explicit assumptions, the declared window, and the risk floor. Record why each
-load-bearing part is necessary now and what makes that claim false or obsolete.
-
-Backup, rollback, review, and redundancy may be threshold-essential. Keep substitutes
-as separate bundles. When no bundle reaches the unchanged target and risk floor, return
-`infeasible` rather than lowering the target silently.
+A `current minimum sufficient bundle` is bounded by evidence, assumptions, window, and
+risk floor. Record why each load-bearing part is necessary and what overturns it.
+Backup, rollback, review, and redundancy may be essential; substitutes stay separate.
+Return `infeasible` when no bundle reaches the unchanged target and risk floor.
 
 ### Resource Vector And Meaningful Tranche
 
-Keep time, money, specialist capacity, general labor, management attention, risk or
-exposure budget, and opportunity window as distinct channels. Identify real contention,
-parallel work, and any fixed threshold.
-
-The next unit is a decision-relevant tranche: a complete experiment, engineer-day,
-review cycle, deliverable package, or the smallest block producing an observable result.
+Keep time, money, specialist capacity, labor, attention, exposure, and opportunity
+windows as distinct channels. Identify real contention, parallel work, and any fixed
+threshold. A meaningful tranche is the smallest complete experiment, engineer-day,
+review cycle, deliverable, or other block producing an observable result.
 
 ### Switching Cost, Sunk Cost, And Reserve
 
-Compare future consequences from the current state:
-
-- `sunk_cost` does not justify continuation;
-- `switching_cost` is the future cost of changing paths;
-- `reusable_asset` retains future value;
-- `remaining_cost` is the new resource needed to finish;
-- `reserve` has a reason, release trigger, and review time.
+Compare future consequences: `sunk_cost` never justifies continuation;
+`switching_cost` is future change cost; `reusable_asset` retains future value;
+`remaining_cost` is new completion cost; `reserve` needs a reason, release trigger, and
+review time.
 
 ### Stop And Evidence Discipline
 
 Lite stops after one bounded allocation and reranking trigger. Full stops when the
-selected bundle is stable across adjacent realistic pressure scenarios, the first
-tranche is clear, remaining uncertainty cannot change the current action, and another
-round has no named positive-value hypothesis.
-
-Scripts validate fields, enums, references, and empty evidence surfaces. They do not
-compute semantic priority, ROI, necessity, or allocation correctness. A passing report
-is not semantic approval.
+bundle is stable across adjacent realistic pressure, the first tranche is clear, and
+another round has no action-changing value hypothesis. Scripts validate shape only;
+they do not compute priority, ROI, necessity, or allocation correctness.
 
 ## Boundaries / 边界
 
-- Use `3l5s` when the problem or candidate needs definition or decomposition. SRA asks
-  only for the minimum comparable candidate card.
-- Use `edsp` for an unstable proposition, false binary, or structural coordinate system.
-- Use `sela` for long-term system-efficiency versus local-advantage direction pressure.
-- Use `mpg` when one selected mainline needs carrier, exposure, timing, optionality, and
-  path posture under volatility.
-- Use `wae` only for an agentic-system controller mismatch.
-- Use `tvg` for value gain inside one bounded artifact; use SRA only when that artifact
-  competes with external work for the same resource.
-- Anti-Spiral supplies a brake and allowed action set; SRA decides where released
-  resources go. Do not create recursive handoff.
-- `tplan` owns Mission state, Pulse arbitration, Mission identity, continuation,
-  authority, recovery, and task mutation. SRA supplies allocation judgment only when
-  real candidates contest a common resource.
-- Stay direct for one known blocker, independent parallel resources, or a reversible
-  choice cheaper to try than analyze.
+- Use `3l5s` for candidate definition/decomposition; SRA asks only for minimum
+  comparability.
+- Use `edsp` for unstable structure, `sela` for long-term efficiency direction, and
+  `mpg` for one selected mainline's carrier/path posture.
+- Use `wae` for agentic controller mismatch and `tvg` for value gain inside one bounded
+  artifact.
+- Anti-Spiral supplies the brake and allowed actions; SRA allocates released resources
+  without recursive handoff.
+- `tplan` owns Mission state, Pulse arbitration, identity, continuation, authority,
+  recovery, and mutation; SRA supplies cross-candidate allocation judgment.
+- Stay direct for one known blocker, independent resources, or a cheaper reversible
+  trial.
 
 ## Runtime Support / 支撑材料
 

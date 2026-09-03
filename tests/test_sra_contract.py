@@ -271,17 +271,17 @@ class SraContractTests(unittest.TestCase):
     def test_method_boundaries_preserve_neighbor_ownership(self):
         skill = SRA_SKILL.read_text(encoding="utf-8")
         for phrase in (
-            "Use `3l5s`",
-            "Use `edsp`",
-            "Use `sela`",
-            "Use `mpg`",
-            "Use `wae`",
-            "Use `tvg`",
-            "Anti-Spiral supplies a brake",
+            "`3l5s`",
+            "`edsp`",
+            "`sela`",
+            "`mpg`",
+            "`wae`",
+            "`tvg`",
+            "Anti-Spiral supplies the brake",
             "`tplan` owns Mission state",
             "Pulse arbitration",
             "continuation",
-            "task mutation",
+            "mutation",
         ):
             self.assertIn(phrase, skill)
 
