@@ -1,0 +1,164 @@
+{
+  "schema_version": "sra-fidelity-v0.1",
+  "method": "SRA",
+  "applicability": "applicable",
+  "plain_language_conclusion": "Keep the launch-critical payment validation bundle at its current floor and put the next engineer-day into completing the blocking validation rather than adding more visual polish.",
+  "action_posture": "allocate",
+  "required_judgment_moves": {
+    "allocation_frame": {
+      "status": "addressed",
+      "finding": "The launch threshold, risk floor, decision owner, evidence ceiling, time window, and contested engineer-day are explicit.",
+      "failure_criteria_response": "The target is not silently reduced because the resource is scarce.",
+      "evidence_surface": "Launch remains blocked until payment validation meets the named release threshold."
+    },
+    "candidate_horizon": {
+      "status": "addressed",
+      "finding": "The active visual-polish path, payment-validation blocker, and reserve posture are compared at bundle level.",
+      "failure_criteria_response": "The active task does not own the candidate set merely because work has started.",
+      "evidence_surface": "The same engineer-day cannot complete both payment validation and additional visual polish."
+    },
+    "bundle_hypotheses": {
+      "status": "addressed",
+      "finding": "Payment launch readiness is represented as a target-reaching bundle hypothesis before contraction.",
+      "failure_criteria_response": "The bundle is not called minimum before the contraction test.",
+      "evidence_surface": "The bundle includes the validation, rollback note, and release evidence needed for the declared threshold."
+    },
+    "contraction": {
+      "status": "addressed",
+      "finding": "The candidate launch bundle is reduced until removing the payment validation would break the unchanged launch threshold.",
+      "failure_criteria_response": "Contraction is not replaced by a generic current-versus-alternative comparison.",
+      "evidence_surface": "Visual polish can be deferred without blocking launch; payment validation cannot."
+    },
+    "floor_bundle_selection": {
+      "status": "addressed",
+      "finding": "The post-contraction launch bundle qualifies and visual polish remains value-expanding rather than threshold-essential.",
+      "failure_criteria_response": "Qualification, dependency, candidate role, and bundle selection are not collapsed into one score.",
+      "evidence_surface": "The release threshold and dependency chain distinguish the two bundles."
+    },
+    "replenishment": {
+      "status": "addressed",
+      "finding": "The next meaningful tranche is one engineer-day completing the blocking payment validation.",
+      "failure_criteria_response": "The output includes a next-tranche comparison after the floor bundle is discovered.",
+      "evidence_surface": "That tranche removes the launch bottleneck; another polish tranche does not change launch readiness."
+    },
+    "allocation_lanes": {
+      "status": "addressed",
+      "finding": "Main allocation, necessary support, maintenance, reserve, defer, and stop lanes are explicit.",
+      "failure_criteria_response": "Useful displaced work is not left implicitly competing for the same engineer-day.",
+      "evidence_surface": "Visual polish is deferred while minimal rollback and monitoring support remain."
+    },
+    "authorization_and_rerank": {
+      "status": "addressed",
+      "finding": "The allocation is authorized for one engineer-day and will be reranked after validation evidence arrives.",
+      "failure_criteria_response": "The result does not authorize open-ended continuation.",
+      "evidence_surface": "The named checkpoint is the payment-validation result."
+    },
+    "evidence_boundary": {
+      "status": "addressed",
+      "finding": "The output claims only a current evidence-bounded allocation, not optimal ROI or universal priority truth.",
+      "failure_criteria_response": "A shape-valid trace is not reported as semantic allocation approval.",
+      "evidence_surface": "The decision is limited to the declared launch window and current release evidence."
+    }
+  },
+  "allocation_trace": {
+    "outcome": "allocate",
+    "allocation_frame": {
+      "parent_objective": "Launch the product page with working payment and minimum release safety.",
+      "target_threshold": "Payment validation, rollback evidence, and release checks pass.",
+      "time_window": "Current launch window.",
+      "risk_floor": "Do not launch with an unvalidated payment path or without minimum rollback support.",
+      "decision_owner": "Release owner.",
+      "contested_resources": [
+        "one engineer-day"
+      ]
+    },
+    "candidate_horizon": [
+      {
+        "candidate_id": "payment-launch-readiness",
+        "objective_contribution": "Removes the remaining launch blocker.",
+        "resource_demand_vector": {
+          "engineer_time": "one engineer-day"
+        },
+        "dependency_or_bundle_role": "threshold-reaching bundle",
+        "evidence_state": "Payment validation is incomplete.",
+        "delay_cost_or_window": "Launch remains blocked.",
+        "irreversibility_or_downside": "Unvalidated payment can create customer and rollback risk."
+      },
+      {
+        "candidate_id": "visual-polish",
+        "objective_contribution": "Improves appearance beyond the current release threshold.",
+        "resource_demand_vector": {
+          "engineer_time": "one engineer-day"
+        },
+        "dependency_or_bundle_role": "value expansion",
+        "evidence_state": "The page is already usable.",
+        "delay_cost_or_window": "Can be deferred until after launch readiness.",
+        "irreversibility_or_downside": "Low."
+      }
+    ],
+    "bundle_hypotheses": [
+      {
+        "bundle_id": "launch-floor-hypothesis",
+        "components": [
+          "payment validation",
+          "minimum rollback evidence",
+          "release check"
+        ],
+        "target_reaching_basis": "Together these components support the unchanged launch threshold."
+      }
+    ],
+    "contraction": {
+      "target_held_constant": true,
+      "floor_bundle_basis": "post_contraction",
+      "tested_changes": [
+        "Defer additional visual polish.",
+        "Keep only minimum rollback evidence.",
+        "Test removal of payment validation and reject that contraction because launch readiness fails."
+      ],
+      "floor_bundle": [
+        "payment validation",
+        "minimum rollback evidence",
+        "release check"
+      ],
+      "first_break_point": "Removing payment validation makes the unchanged launch threshold unsupported."
+    },
+    "qualification_and_selection": {
+      "qualification_result": "The launch-floor bundle satisfies the declared target and risk floor; visual polish is not threshold-essential.",
+      "selection_reason": "The launch-floor bundle removes the dominant blocker with the contested engineer-day without lowering the target."
+    },
+    "replenishment": {
+      "status": "selected",
+      "options_considered": [
+        "one engineer-day completing payment validation",
+        "one engineer-day of additional visual polish",
+        "reserve the engineer-day"
+      ],
+      "selected_next_tranche": "One engineer-day completing payment validation.",
+      "selection_reason": "It removes the launch bottleneck and produces release evidence; polish does not change target attainment."
+    },
+    "allocation_lanes": {
+      "main_allocation": [
+        "complete payment validation"
+      ],
+      "necessary_support": [
+        "retain minimum rollback evidence",
+        "run release check"
+      ],
+      "maintenance": [],
+      "reserve": [],
+      "defer": [
+        "additional visual polish"
+      ],
+      "stop": []
+    },
+    "investment_ceiling": "One engineer-day before reranking.",
+    "authorization_horizon": "Until the payment-validation checkpoint completes.",
+    "evidence_ceiling": "Current release evidence supports this launch-window allocation only; it does not prove optimal business ROI.",
+    "reranking_triggers": [
+      "payment validation passes or fails",
+      "launch threshold changes",
+      "a new safety or compliance blocker appears",
+      "the available engineer capacity changes"
+    ]
+  }
+}
