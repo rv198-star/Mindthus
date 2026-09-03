@@ -665,6 +665,7 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
             [
                 "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
                 "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
+                "/bin/zsh -lc \"sed -n '1,220p' /tmp/codex-home/skills/mindthus/sra/SKILL.md\"",
                 "Read mindthus:edsp",
                 "Read mindthus:sra",
                 "echo edsp and sra are mentioned but not loaded",
