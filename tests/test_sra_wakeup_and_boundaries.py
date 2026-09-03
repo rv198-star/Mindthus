@@ -99,7 +99,9 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
         frontmatter = text.split("---", 2)[1]
         self.assertIn("Use directly when", frontmatter)
         self.assertIn("already-judgeable actions or bundles", frontmatter)
-        self.assertIn("same scarce resource", frontmatter)
+        self.assertIn("one named scarce resource", frontmatter)
+        self.assertIn("missing comparison facts/resource", frontmatter)
+        self.assertIn("one selected mainline's carrier, exposure, timing, or exit", frontmatter)
         for forbidden in (
             "must use 3l5s",
             "requires 3l5s",
@@ -139,6 +141,16 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
                 text = path.read_text(encoding="utf-8")
                 self.assertIn("Use directly when", text)
                 self.assertIn("already-judgeable actions or bundles", text)
+
+    def test_passive_descriptions_reject_missing_inputs_and_single_mainline_carriers(self):
+        using_frontmatter = USING.read_text(encoding="utf-8").split("---", 2)[1]
+        sra = SRA_SKILL.read_text(encoding="utf-8")
+
+        self.assertIn("not ordinary missing facts", using_frontmatter)
+        self.assertIn(
+            "SRA only after multiple candidates share a scarce resource",
+            using_frontmatter,
+        )
 
     def test_router_and_entry_triage_expose_the_same_sra_signature(self):
         using = USING.read_text(encoding="utf-8")
