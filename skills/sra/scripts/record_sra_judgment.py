@@ -22,7 +22,6 @@ from sra_runtime import (
     coverage_blocked_decision,
     create_final_decision,
     digest_data,
-    hidden_original_identity_findings,
     load_json,
     load_run,
     make_runtime_event,
@@ -326,9 +325,7 @@ def record_challenge(
     if state["view_plan"] != "dual_view" or state["statuses"]["challenge"] != "pending":
         raise SraRuntimeError("challenge judgment is not required or not pending")
     packet = load_json(run_dir / "challenge-packet.json")
-    raw = load_json(run_dir / "raw-input.json")
     findings = validate_challenge_judgment(judgment, packet)
-    findings.extend(hidden_original_identity_findings(judgment, raw.get("candidates", [])))
     if findings:
         raise SraValidationError(findings)
     receipt = receipt_record(receipt_path, run_dir=run_dir, stage="challenge")

@@ -409,8 +409,37 @@ class SraContextCalibrationTests(unittest.TestCase):
             prompt = " ".join(
                 (run_dir / "challenge-agent-prompt.md").read_text(encoding="utf-8").split()
             )
-            self.assertIn("Do not invent or infer candidate identifiers", prompt)
-            self.assertIn("ordinary descriptions without identifier-style slugs", prompt)
+            self.assertIn("supplied challenge IDs in every identifier-bearing field", prompt)
+            self.assertIn("prose is not identity evidence", prompt)
+            self.assertIn("a reranking trigger alone does not make the allocation conditional", prompt)
+            self.assertIn("merely reusable baseline is not a floor member", prompt)
+            self.assertIn("Use `defer` for a feasible zero-allocation candidate", prompt)
+            self.assertIn("Use `one_tranche` for exactly one fixed resource block", prompt)
+
+            situated_prompt = " ".join(
+                (run_dir / "situated-agent-prompt.md").read_text(encoding="utf-8").split()
+            )
+            for phrase in (
+                "a reranking trigger alone does not make the allocation conditional",
+                "merely reusable baseline is not a floor member",
+                "Use `defer` for a feasible zero-allocation candidate",
+                "Use `one_tranche` for exactly one fixed resource block",
+            ):
+                self.assertIn(phrase, situated_prompt)
+
+            # The same stable coding contract must survive into the only conflict pass.
+            data = template_data()
+            run_dir = prepare_run(Path(tmp), data, "conflict")
+            record_valid_views(run_dir, conflict=True)
+            reconciliation_prompt = " ".join(
+                (run_dir / "reconciliation-agent-prompt.md")
+                .read_text(encoding="utf-8")
+                .split()
+            )
+            self.assertIn(
+                "Use `one_tranche` for exactly one fixed resource block",
+                reconciliation_prompt,
+            )
 
     def test_prepare_creates_agentic_output_directory(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -580,14 +609,74 @@ class SraContextCalibrationTests(unittest.TestCase):
             final = json.loads((run_dir / "final-decision.json").read_text(encoding="utf-8"))
             self.assertEqual(final["final_source"], "reconciliation")
 
-    def test_challenge_rejects_original_candidate_id_leak(self):
+    def test_challenge_accepts_descriptive_prose_collision_with_hidden_candidate_slug(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             judgment = build_challenge_judgment(run_dir)
             judgment["claim_ceiling"] = "The page-polish path should stop."
             result = record_stage(run_dir, "challenge", judgment)
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_challenge_rejects_original_candidate_id_in_structured_identity_field(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = prepare_run(Path(tmp))
+            judgment = build_challenge_judgment(run_dir)
+            judgment["next_tranche"]["challenge_id"] = "page-polish"
+            result = record_stage(run_dir, "challenge", judgment)
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("hidden original candidate ID", result.stderr)
+            self.assertIn("next_tranche.challenge_id must reference", result.stderr)
+
+    def test_context_contract_limits_mechanical_identity_checks_to_structured_fields(self):
+        text = " ".join(CONTEXT_RESOURCE.read_text(encoding="utf-8").split())
+        for phrase in (
+            "challenge packet omits original IDs",
+            "every identifier-bearing judgment field uses only the packet's aliases",
+            "a prose collision is not evidence of hidden-context access",
+            "Prose remains Agentic reasoning",
+            "the current floor and maintenance sets include only nonzero use",
+            "one fixed resource block is `one_tranche`",
+            "Workflow validates and compares the resulting fields",
+            "each `state_considerations` item single-kind",
+            "output schema exposes this mapping before generation",
+        ):
+            self.assertIn(phrase, text)
+
+    def test_state_consideration_schema_exposes_same_kind_reference_contract(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = prepare_run(Path(tmp))
+            packet = json.loads((run_dir / "situated-packet.json").read_text(encoding="utf-8"))
+            schema = json.loads((run_dir / "situated-output-schema.json").read_text(encoding="utf-8"))
+            variants = schema["properties"]["state_considerations"]["items"]["anyOf"]
+            by_kind = {item["properties"]["kind"]["const"]: item for item in variants}
+            state_refs = _state_refs_by_kind(packet)
+
+            self.assertEqual(
+                by_kind["active_path_identity"]["properties"]["state_refs"]["items"]["enum"],
+                state_refs["active_candidate"],
+            )
+            self.assertEqual(
+                by_kind["switching_cost"]["properties"]["state_refs"]["items"]["enum"],
+                state_refs["switching_cost"],
+            )
+            self.assertEqual(
+                by_kind["authority_boundary"]["properties"]["state_refs"]["items"]["enum"],
+                state_refs["current_commitment"],
+            )
+            self.assertEqual(
+                by_kind["none"]["properties"]["state_refs"]["maxItems"],
+                0,
+            )
+
+    def test_situated_rejects_cross_kind_state_reference(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = prepare_run(Path(tmp))
+            packet = json.loads((run_dir / "situated-packet.json").read_text(encoding="utf-8"))
+            refs = _state_refs_by_kind(packet)
+            judgment = build_situated_judgment(run_dir)
+            judgment["state_considerations"][0]["state_refs"].append(refs["reusable_asset"][0])
+            result = record_stage(run_dir, "situated", judgment)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("do not match consideration kind switching_cost", result.stderr)
 
     def test_situated_rejects_sunk_cost_as_reason(self):
         with tempfile.TemporaryDirectory() as tmp:
