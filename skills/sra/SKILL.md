@@ -1,6 +1,6 @@
 ---
 name: sra
-description: "Use directly when multiple already-judgeable actions or bundles compete for the same scarce resource. Default to Lite for one bounded tranche; use Full for bundles, multiple constrained resources, fixed thresholds, or major or irreversible commitments."
+description: "Use directly when multiple already-judgeable actions or bundles compete for one named scarce resource; choose the next tranche. Default Lite; Full for bundles or multiple resource constraints. Do not use with missing comparison facts/resource, or for one selected mainline's carrier, exposure, timing, or exit."
 ---
 
 # SRA / Scarce Resource Allocation / 稀缺资源优先分配

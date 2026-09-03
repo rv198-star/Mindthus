@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; allocation ambiguity before choosing SRA; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues;whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
+description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues include whole-object reduction, forced structural binary, repeated local repair, and no-data numeric comparison; not ordinary missing facts; SRA only after multiple candidates share a scarce resource.
 ---
 
 ## Core Claim
@@ -11,7 +11,7 @@ signal, constraint, or hypothesis; not evidence by itself.
 ## Mainline
 
 Premise Calibration / 前置校准 is not a method. Before lens choice, check
-真实对象, 底层约束, and 目标函数.
+真实对象, 底层约束, 目标函数.
 
 Before routing, classify:
 
@@ -114,11 +114,11 @@ information, clarify, or reroute.
 
 ## Guardrails
 
-Guardrails support mainline, not judgment center.
+Supports mainline.
 
 ### Conditional Resources / Runtime Support
 
-Do not preload every resource. Read only for uncertainty:
+Do not preload every resource:
 
 Portable alias: `resources/primitives/`.
 
@@ -139,5 +139,5 @@ Portable alias: `resources/primitives/`.
 
 ## Boundaries
 
-No hard judgment point, no Mindthus. Missing facts first. Stop when another method owns
-the decision or analysis lacks a value-gain hypothesis.
+No hard judgment, no Mindthus. Missing facts first. Stop when another method owns the
+decision or no value-gain hypothesis exists.
