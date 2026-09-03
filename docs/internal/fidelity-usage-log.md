@@ -33,7 +33,7 @@ data/fidelity-usage-log.jsonl
 - `logged_at`: 记录时间
 - `record_type`: `real_use`、`evaluation` 或 `fixture`
 - `scenario`: 脱敏后的场景摘要
-- `method`: `3L5S`、`SELA`、`MPG`、`EDSP`、`WAE`、`TVG`、`tplan` 或 `using-mindthus`
+- `method`: `3L5S`、`SELA`、`MPG`、`SRA`、`EDSP`、`WAE`、`TVG`、`tplan` 或 `using-mindthus`
 - `model`: 产出方法结果的模型
 - `judge_model`: judge 来源，可为空
 - `baseline_score`: 未加约束版本分数；没有 baseline 时可为空

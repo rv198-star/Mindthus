@@ -4,7 +4,7 @@
 
 Root-Cause Replacement 是一个 cross-cutting execution primitive。它处理这样一种恢复动作：证据已经把问题定位到错误的上游假设、canonical rule、controller、contract 或 ownership，而继续修改下游症状只会保留错误模型。
 
-它不是 root-cause finder，也不是新的 judgment owner。问题定义仍归 `3L5S`，结构判断仍归 `EDSP`，控制边界仍归 `WAE`，反复局部修补由 `Anti-Spiral` 触发刹车；本原语只规定根因明确后的修复形态。
+它不是 root-cause finder，也不是新的 judgment owner。问题定义仍归 `3L5S`，结构判断仍归 `EDSP`，稀缺资源分配仍归 `SRA`，控制边界仍归 `WAE`，反复局部修补由 `Anti-Spiral` 触发刹车；本原语只规定根因明确后的修复形态。
 
 Short rule:
 

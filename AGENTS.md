@@ -85,7 +85,7 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 
 一句话理解：
 
-> `SELA` 看整体趋势与局部优势的关系；`MPG` 处理主线穿越路径波动的主线承载方案；`3L5S` 处理问题从发现到落地；`EDSP` 处理悬而不决的结构判断；`WAE` 处理 Agentic / Workflow / Evidence 的控制边界；`TVG` 让形式完整但价值不足的产物更接近某个“好”的标准。
+> `SELA` 看整体趋势与局部优势的关系；`MPG` 处理主线穿越路径波动的主线承载方案；`3L5S` 处理问题从发现到落地；`SRA` 处理多个有效事项竞争同一稀缺资源时的当前分配；`EDSP` 处理悬而不决的结构判断；`WAE` 处理 Agentic / Workflow / Evidence 的控制边界；`TVG` 让形式完整但价值不足的产物更接近某个“好”的标准。
 
 ## Skill 地图
 
@@ -122,7 +122,17 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 边界：不要为了形式跑完整三层；如果问题已明确，单层 BTGSB 就是高价值形态。
 
 唤醒边界：3L5S 是默认问题内核，不是默认判断归宿。如果活跃对象已经是
-结构歧义、战略系统/局部取舍、主线承载，不要先绕回 3L5S；直接唤醒 `EDSP`、`SELA` 或 `MPG`。
+结构歧义、战略系统/局部取舍、主线承载或已定义候选间的稀缺资源分配，不要先绕回 3L5S；结构、战略或承载判断直接唤醒 `EDSP`、`SELA` 或 `MPG`，稀缺资源分配直接唤醒 `SRA`。
+
+### `skills/sra/` — SRA / 稀缺资源分配
+
+稀缺资源分配判断内核，用来处理多个有效行动或行动组合竞争同一批时间、资金、专家能力、注意力、风险额度或机会窗口。
+
+目标和风险底线保持不变：先对可能达标的组合做收缩，直到再减一步就不能合理支撑目标；再从当前最低可行底座回补下一份有意义资源。收缩负责发现底座，回补负责决定增量。
+
+适合：多个已定义事项争用同一资源、组合价值高于单项价值、方向性未知可能使后续投入失效、需要明确主投入/保底/储备/延后/停止与重排条件。
+
+边界：只有一个明确动作时直接执行；资源不冲突时并行；候选问题还未定义时先用 3L5S 或 EDSP；SRA 不接管 TPlan 的 Mission 状态、Pulse、selection、subtraction 或任务变更权。
 
 ### `skills/edsp/` — EDSP / 极限推演与场景投影
 
@@ -168,6 +178,7 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 - 战略判断前，用 `SELA` 防短视。
 - SELA 看整体趋势后，如果主线需要穿过复杂路径、对抗力量或载体风险，用 `MPG` 做主线承载方案。
 - 具体处理问题时，用 `3L5S` 做默认问题内核。
+- 多个已定义事项竞争同一稀缺资源时，用 `SRA` 先收缩发现当前底座，再回补下一份资源。
 - 3L5S 中遇到模糊结构判断，用 `EDSP`。
 - agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
   “控制/边界/流程”字样自动唤醒 WAE。
@@ -183,5 +194,6 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 变量显影时，才进入当前回答。
 
 - `3L5S + EDSP`：problem shape -> structural judgment。3L5S 先定义问题形状；如果 Definition 暴露伪二分、结构摇摆或 A/B 都像对，再让 EDSP 补结构推演。
+- `3L5S + SRA`：comparable candidates -> scarce-resource allocation。3L5S 只把问题定义到最低可比较程度；SRA 决定当前底座、下一份资源和被延后或停止的事项。
 - `TVG + Anti-Spiral`：Anti-Spiral 是 TVG 的停止纪律，不是另一个强化 skill。下一轮没有明确 value-gain hypothesis 时，Anti-Spiral 应阻止继续加深。
 - `SELA + MPG + AQM`：direction + carrier + visibility。SELA 校准方向压力，MPG 决定路径承载动作，AQM 只显影变量关系，不夺取 judgment_owner。

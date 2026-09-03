@@ -141,6 +141,45 @@ class V101UsageLogTests(unittest.TestCase):
             self.assertEqual(record["constrained_score"], 8)
             self.assertIsNone(record["score_delta"])
 
+    def test_usage_logger_accepts_sra_real_use_records(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log_path = Path(tmp) / "usage.jsonl"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--log",
+                    str(log_path),
+                    "--scenario",
+                    "多个有效事项竞争同一工程师日",
+                    "--method",
+                    "SRA",
+                    "--model",
+                    "gpt-5-codex",
+                    "--constraint-helped",
+                    "yes",
+                    "--decision-changed",
+                    "yes",
+                    "--mechanism",
+                    "收缩发现当前底座，回补决定下一份资源",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            record = json.loads(log_path.read_text(encoding="utf-8").strip())
+            self.assertEqual(record["method"], "SRA")
+            self.assertEqual(record["decision_changed"], "yes")
+
+            validation = subprocess.run(
+                ["python3", str(USAGE_LOGGER), "--validate", "--log", str(log_path)],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+            self.assertEqual(validation.returncode, 0, validation.stderr + validation.stdout)
+
     def test_real_use_record_captures_product_outcomes_without_forced_score(self):
         with tempfile.TemporaryDirectory() as tmp:
             log_path = Path(tmp) / "usage.jsonl"

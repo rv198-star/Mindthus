@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues;whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
+description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing/resource-allocation ambiguity before choosing SELA, MPG, SRA, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues; whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
 ---
 
 ## Core Claim
@@ -75,6 +75,7 @@ Route by the active judgment object, not method name, keyword, or artifact.
 | `edsp` | False binary or structural ambiguity; A/B 都像对. |
 | `sela` | Long-term system efficiency versus local advantage; carrier/path action defers to MPG. |
 | `mpg` | Mainline plus carrier, exposure, path volatility, and commitment; no carrier/exposure/path, no MPG. |
+| `sra` | Valid candidates share one scarce resource and allocation changes; one clear action or independent resources stay direct. |
 | `wae` | Agentic-system Workflow / Agentic / Evidence mismatch; no controller mismatch, no WAE. |
 | `tvg` | Bounded artifact is thin with a named value-gain target; TVG audit needs an active loop; external audits stay object-routed. |
 | `tplan` | Durable Mission state, recovery, or human authority; ordinary complexity is insufficient. |
@@ -102,8 +103,7 @@ Evidence-confirmed canonical error activates Root-Cause Replacement: rewrite own
 ### Method Arbitration / 方法仲裁
 
 Use `dominate`, `defer`, `degrade`, `block`, or `stop`. SELA owns direction pressure; MPG
-owns path-carrying action. Other conflicts belong to the owner changing the problem,
-evidence gate, action, or stop.
+owns path-carrying action. Other conflicts go to owner changing problem, evidence, action, or stop.
 
 ### Execution Impact / 执行影响
 
@@ -113,30 +113,28 @@ acquire information, clarify, or reroute.
 
 ## Guardrails
 
-Guardrails support the mainline; they do not become a new judgment center.
+Guardrails support the mainline; they cannot own the judgment.
 
 ### Conditional Resources / Runtime Support
 
-Do not preload every resource. Read only for uncertainty:
+Do not preload every resource; read only for uncertainty:
 
 Portable alias: `resources/primitives/`.
 
-- frame or level: `docs/methodologies/primitives/frame-fitness-check.md`;
-- trigger family or route: `docs/methodologies/primitives/entry-triage.md`;
-- competing owners: `docs/methodologies/primitives/aspect-ownership.md`;
-- actor/timing/target/tradeoff: `docs/methodologies/primitives/decision-context-calibration.md`;
-- local truth claiming whole-object authority:
-  `docs/methodologies/primitives/whole-elephant-protocol.md`;
-- pressure or AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
+- frame: `docs/methodologies/primitives/frame-fitness-check.md`;
+- trigger/route: `docs/methodologies/primitives/entry-triage.md`;
+- owner conflict: `docs/methodologies/primitives/aspect-ownership.md`;
+- decision context: `docs/methodologies/primitives/decision-context-calibration.md`;
+- whole-object capture: `docs/methodologies/primitives/whole-elephant-protocol.md`;
+- pressure/AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
 - scalar commitment: `docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`;
 - root-cause recovery: `docs/methodologies/primitives/root-cause-replacement.md`;
 - activation: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
-  use `--event before-answer` after frame/partial-truth activation; never decides semantics;
-- structured runtime validation: read the fidelity contract at
-  `resources/fidelity-contract.md`; use `templates/fidelity-output.json` and
-  `validate_using_mindthus_output.py`.
+  after frame/partial-truth activation use `--event before-answer`; never decides semantics;
+- fidelity contract/runtime: `resources/fidelity-contract.md`, `templates/fidelity-output.json`,
+  and `validate_using_mindthus_output.py`.
 
 ## Boundaries
 
-No hard judgment point, no Mindthus. Missing facts first. Stop when another method owns
-the decision or analysis lacks a value-gain hypothesis.
+No hard judgment point, no Mindthus. Missing facts first. Stop when another owner takes
+the decision or no value-gain hypothesis remains.

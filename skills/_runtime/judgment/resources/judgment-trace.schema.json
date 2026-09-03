@@ -68,9 +68,9 @@
       "additionalProperties": false,
       "required": ["judgment_owner", "loaded_methods", "routing_decision"],
       "properties": {
-        "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan", "human", "unknown"]},
-        "selected_method": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]},
-        "loaded_methods": {"type": "array", "items": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]}},
+        "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "edsp", "sela", "mpg", "sra", "wae", "tvg", "tplan", "human", "unknown"]},
+        "selected_method": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "sra", "wae", "tvg", "tplan"]},
+        "loaded_methods": {"type": "array", "items": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "sra", "wae", "tvg", "tplan"]}},
         "routing_decision": {"enum": ["direct_execute", "acquire_information", "intervene", "block", "stop"]},
         "supporting_primitives": {"type": "array", "items": {"type": "string", "minLength": 1}}
       }

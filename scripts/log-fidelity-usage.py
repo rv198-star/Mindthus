@@ -17,7 +17,7 @@ from typing import Any
 
 SCHEMA_VERSION = "mindthus-fidelity-usage-log-v0.1"
 DEFAULT_LOG = Path("data/fidelity-usage-log.jsonl")
-METHODS = ("3L5S", "SELA", "MPG", "EDSP", "WAE", "TVG", "tplan", "using-mindthus")
+METHODS = ("3L5S", "SELA", "MPG", "SRA", "EDSP", "WAE", "TVG", "tplan", "using-mindthus")
 RECORD_TYPES = ("real_use", "evaluation", "fixture")
 HELPED_VALUES = ("yes", "no", "mixed", "unknown")
 INVOCATION_MODES = ("explicit_router", "explicit_skill", "automatic_best_effort", "unknown")

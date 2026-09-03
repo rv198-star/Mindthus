@@ -53,13 +53,14 @@ JUDGMENT_OWNERS = {
     "edsp",
     "sela",
     "mpg",
+    "sra",
     "wae",
     "tvg",
     "tplan",
     "human",
     "unknown",
 }
-METHODS = {"using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}
+METHODS = {"using-mindthus", "3l5s", "edsp", "sela", "mpg", "sra", "wae", "tvg", "tplan"}
 OUTCOME_STATUSES = {"not_evaluated", "accepted", "rejected", "inconclusive"}
 SOURCE_TYPES = {"runtime_observation", "evaluator_label", "author_annotation", "mixed"}
 FIELD_SOURCE_TYPES = {

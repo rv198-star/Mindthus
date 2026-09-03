@@ -62,6 +62,15 @@ class JudgmentTraceTests(unittest.TestCase):
             LEGACY_JUDGMENT_TRACE_SCHEMA_VERSION,
         )
 
+    def test_current_trace_accepts_sra_as_judgment_owner_and_selected_method(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        trace["routing"]["judgment_owner"] = "sra"
+        trace["routing"]["selected_method"] = "sra"
+        trace["routing"]["loaded_methods"] = ["using-mindthus", "sra"]
+        trace["input_shape"]["judgment_object"] = "decision_context"
+
+        self.assertEqual(validate_judgment_trace(trace), [])
+
     def test_v11_validator_rejects_private_transcript_and_malformed_delta(self):
         trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
         trace["raw_prompt"] = "private prompt"

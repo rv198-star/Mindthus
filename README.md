@@ -59,6 +59,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对时，先检查命题、边界和评价轴，避免温吞折中。
 - [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：旧方式局部很好时，判断它会不会被更高效的系统长期压过。
 - [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：长期方向看对了，还要判断当前载体能不能穿过波动、成本和时机。
+- [`SRA / 稀缺资源分配`](docs/methodologies/sra.md)：多个正确事项竞争同一稀缺资源时，先收缩发现当前最低可行底座，再回补下一份资源。
 - [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在管事时，分清流程、判断和证据各该控制哪一段。
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：产物已经成形但价值薄时，补判断、取舍、证据边界、失败路径和下游可用性。
 - [`TPlan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务需要持续对齐目标、证据、任务状态和验收责任时，用它保持 Mission 不漂移。
@@ -246,7 +247,7 @@ done
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
 rm -f ~/.claude/skills/runtime_bootstrap.py
 ```

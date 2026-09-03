@@ -124,7 +124,7 @@ Use the smallest pass whose cost is lower than the plausible loss from a wrong
 allocation. Stop when the floor bundle, next tranche, authorization horizon, and rerank
 trigger are clear enough to act.
 
-## Outcomes And Allocation Lanes
+### Outcomes And Allocation Lanes
 
 Allowed outcomes:
 
@@ -147,7 +147,7 @@ The allocation separates:
 `maintain`, `reserve`, `defer`, and `stop` are lanes, not substitutes for the main
 outcome.
 
-## Default Visible Output
+### Default Visible Output
 
 Keep the ordinary answer short and action-changing:
 

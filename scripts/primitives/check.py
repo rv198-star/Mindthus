@@ -22,6 +22,7 @@ ALLOWED_METHODS = {
     "edsp",
     "sela",
     "mpg",
+    "sra",
     "wae",
     "tvg",
     "tplan",

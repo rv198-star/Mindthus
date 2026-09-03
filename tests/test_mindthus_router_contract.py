@@ -90,11 +90,12 @@ class MindthusRouterContractTests(unittest.TestCase):
         using_desc = _skill_description("using-mindthus")
         sela_desc = _skill_description("sela")
         mpg_desc = _skill_description("mpg")
+        sra_desc = _skill_description("sra")
 
         for phrase in (
             "any Mindthus judgment lens",
-            "strategic/path/control/framing ambiguity",
-            "before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan",
+            "strategic/path/control/framing/resource-allocation ambiguity",
+            "before choosing SELA, MPG, SRA, EDSP, WAE, TVG, 3L5S, or tplan",
             "Entry Triage hard-judgment cues",
             "whole-object reduction",
             "forced structural binary",
@@ -121,6 +122,16 @@ class MindthusRouterContractTests(unittest.TestCase):
             "path volatility, costs, delays, fragility, or counter-forces",
         ):
             self.assertIn(phrase, mpg_desc)
+
+        for phrase in (
+            "multiple valid actions or bundles compete for the same scarce resource",
+            "the next allocation must change",
+            "hold the target and risk floor fixed",
+            "contract credible bundles to their current floor",
+            "replenish the next meaningful resource tranche",
+            "one obvious action, independent resources, or undefined candidate problems",
+        ):
+            self.assertIn(phrase, sra_desc)
 
     def test_mindthus_states_truth_orientation_as_core_principle(self):
         surfaces = (
@@ -1082,6 +1093,9 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertIn("False binary or structural ambiguity", routes["edsp"])
         self.assertIn("Long-term system efficiency versus local advantage", routes["sela"])
         self.assertIn("carrier, exposure, path volatility, and commitment", routes["mpg"])
+        self.assertIn("share one scarce resource", routes["sra"])
+        self.assertIn("allocation changes", routes["sra"])
+        self.assertIn("one clear action or independent resources stay direct", routes["sra"])
         self.assertIn("Agentic-system", routes["wae"])
         self.assertIn("Bounded artifact", routes["tvg"])
         self.assertIn("Mission state", routes["tplan"])
@@ -1280,7 +1294,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         )
         self.assertIn("cue conflict is unnecessary", text_compact)
         routes = _parse_using_mindthus_routes(text)
-        self.assertEqual(set(routes), {"3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"})
+        self.assertEqual(set(routes), {"3l5s", "edsp", "sela", "mpg", "sra", "wae", "tvg", "tplan"})
         for phrase in (
             "These families are wake-up candidates, not automatic method calls",
             "It is not a keyword router",
@@ -1894,6 +1908,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         expected_routes = {
             "sela": ("system efficiency", "local advantage"),
             "mpg": ("carrier", "path volatility", "commitment"),
+            "sra": ("share one scarce resource", "allocation changes", "independent resources stay direct"),
             "3l5s": ("Problem-definition failure", "too large to execute"),
             "tplan": ("Mission state", "human authority"),
             "edsp": ("A/B 都像对", "structural ambiguity"),

@@ -12,6 +12,7 @@ The classification vocabulary is: `public methodology`, `skill runtime instructi
 | --- | --- | --- | --- |
 | `docs/methodologies/sela.md` Twin-Lens Handshake | public methodology | SELA 校准方向、MPG 决定路径动作，以及两者的边界 | direct-load companion 读取、默认输出形状和 debug 可见性 |
 | `docs/methodologies/mpg.md` Twin-Lens Handshake | public methodology | 趋势主线需先校准，长期方向与当前载体必须分开 | direct-load companion 读取、默认输出形状和内部标签处理 |
+| `docs/methodologies/sra.md` contraction–replenishment core | public methodology | 固定目标与风险底线，收缩发现当前底座，回补决定下一份资源 | `skills/sra/` 承担 discovery、结构化 trace、shape validator 和证据边界 |
 | `docs/methodologies/primitives/whole-elephant-protocol.md` core and audit package | public methodology | 整体对象、结果主控、局部真相边界和 validator 能力上限 | 审计 schema、命令执行、失败阻断、fallback、路径解析和 trace 可见性 |
 | `docs/methodologies/wae.md` Domain Gate and Control Gate | public methodology and boundary | WAE 只处理 agentic system 的 controller mismatch | 没有额外 runtime gate；具体 skill 路由仍由 `skills/wae/SKILL.md` 承担 |
 | Method cases and sample theses | example | 帮助读者理解规则，不自动升级为规则 | runtime contract 不从单个例句反推新义务 |

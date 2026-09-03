@@ -41,6 +41,7 @@ It asks:
 - `3L5S`: problem discovery, problem definition, and executable decomposition.
 - `EDSP`: structural judgment when a proposition, boundary, or binary is unstable.
 - `SELA`: strategic direction when local advantage and system-level efficiency conflict.
+- `SRA`: current allocation when valid candidates compete for the same scarce resource.
 
 ### Boundary
 
@@ -146,6 +147,7 @@ describe cognitive role.
 | `3L5S` | Judgment Kernel | Inversion, generator, light pipeline |
 | `EDSP` | Judgment Kernel | Reviewer, generator |
 | `SELA` | Judgment Kernel | Reviewer |
+| `SRA` | Judgment Kernel | Inversion, reviewer, generator |
 | `WAE` | Cognitive Control | Reviewer |
 | `TVG` | Cognitive Control | Reviewer, generator |
 | `tplan` | Runtime Governance | Pipeline, tool wrapper, generator |

@@ -1437,6 +1437,10 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((codex_plugin_root / "skills" / "sra" / "SKILL.md").exists())
+            self.assertTrue(
+                (codex_plugin_root / "skills" / "sra" / "scripts" / "validate_sra_output.py").exists()
+            )
             self.assertTrue(
                 (
                     codex_plugin_root
@@ -1481,6 +1485,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists()
             )
+            self.assertTrue(
+                (out / "opencode" / ".opencode" / "skills" / "mindthus" / "sra" / "SKILL.md").exists()
+            )
             for path in sorted((out / "opencode" / ".opencode" / "skills" / "mindthus").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
@@ -1503,7 +1510,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertFalse((out / "opencode-plugin").exists())
 
-            skill_names = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            skill_names = ("3l5s", "sela", "mpg", "sra", "edsp", "wae", "tvg", "tplan", "using-mindthus")
             for platform_dir in (out / "codex", out / "opencode"):
                 markdown = "\n".join(
                     path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))
@@ -1561,9 +1568,14 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(skills_result.returncode, 0, skills_result.stderr)
             self.assert_release_pack_excludes_runtime_artifacts(skills)
             self.assertTrue((skills / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((skills / "codex" / "skills" / "mindthus" / "sra" / "SKILL.md").exists())
             self.assertTrue((skills / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assertTrue((skills / "claude-code" / "skills" / "sra" / "SKILL.md").exists())
             self.assertTrue(
                 (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
+            )
+            self.assertTrue(
+                (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "sra" / "SKILL.md").exists()
             )
             self.assertTrue(
                 (
@@ -1632,6 +1644,22 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(validator_help.returncode, 0, validator_help.stderr)
             self.assertIn("Validate using-mindthus fidelity output shape", validator_help.stdout)
+
+            codex_sra = skills / "codex" / "skills" / "mindthus" / "sra"
+            sra_validation = subprocess.run(
+                [
+                    "python3",
+                    str(codex_sra / "scripts" / "validate_sra_output.py"),
+                    str(codex_sra / "templates" / "fidelity-output.json"),
+                ],
+                cwd=tmp_dir,
+                env={**os.environ, "PYTHONPATH": str(tmp_dir)},
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(sra_validation.returncode, 0, sra_validation.stderr + sra_validation.stdout)
+            self.assertIn("SRA Shape & Evidence Risk Report", sra_validation.stdout)
+            self.assertIn("does not validate allocation semantic truth", sra_validation.stdout)
             self.assertFalse((skills / "codex-plugin").exists())
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())

@@ -24,8 +24,8 @@ shape and evidence-risk findings.
 
 Structured reports should map to these fields even when the CLI output is plain text:
 
-- `method`: the method surface being checked, such as `SELA`, `MPG`, `3L5S`, `TVG`, or
-  `tplan`.
+- `method`: the method surface being checked, such as `SELA`, `MPG`, `SRA`, `3L5S`,
+  `TVG`, or `tplan`.
 - `artifact path`: the file or artifact being inspected.
 - `input source`: prompt, trace, markdown draft, JSON audit artifact, hook output, or
   mission state.

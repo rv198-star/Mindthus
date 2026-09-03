@@ -131,7 +131,7 @@ See [Aspect Ownership Matrix](primitives/aspect-ownership.md).
 
 ## 边界
 
-认知原语不替代 `SELA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan`。
+认知原语不替代 `SELA`、`MPG`、`SRA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan`。
 
 它也不替代 Gate、事实、领域研究、运行证明、用户判断或授权。遇到缺输入的问题，
 正确动作通常是补输入、降级结论或停止，而不是新增方法层。
