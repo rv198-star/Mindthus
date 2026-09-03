@@ -54,7 +54,8 @@ REPAIR_ACTION_RE = re.compile(
 PATCH_SEGMENT_RE = re.compile(r"(?P<verb>补)(?P<unit>一段|段)(?P<object>[\u4e00-\u9fffA-Za-z]{0,4})")
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
-    r"(?:mindthus:|skills/)(using-mindthus|3l5s|sra|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
+    r"(?:mindthus:|skills/(?:mindthus/)?)"
+    r"(using-mindthus|3l5s|sra|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
     re.IGNORECASE,
 )
 
