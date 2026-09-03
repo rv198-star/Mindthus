@@ -1,53 +1,7 @@
 {
-  "schema_version": "sra.blind-judgment.v0.1",
-  "stage": "blind",
-  "packet_hash": "COPY_FROM_BLIND_PACKET",
-  "mode": "lite",
-  "candidate_assessments": [
-    {
-      "blind_id": "B01",
-      "feasibility": "feasible",
-      "candidate_role": "value_expanding",
-      "contraction_result": "removed",
-      "first_break_point": "Removing this candidate does not break the current target threshold under the admitted evidence.",
-      "evidence_refs": [
-        "E-page"
-      ],
-      "assumption_refs": []
-    },
-    {
-      "blind_id": "B02",
-      "feasibility": "feasible",
-      "candidate_role": "threshold_essential",
-      "contraction_result": "retained",
-      "first_break_point": "Removing this candidate leaves the launch acceptance threshold unsupported.",
-      "evidence_refs": [
-        "E-payment"
-      ],
-      "assumption_refs": [
-        "A-duration"
-      ]
-    },
-    {
-      "blind_id": "B03",
-      "feasibility": "conditional",
-      "candidate_role": "maintenance_or_option",
-      "contraction_result": "capped",
-      "first_break_point": "Reserve beyond the named checkpoint would delay threshold-essential validation without observed incident evidence.",
-      "evidence_refs": [],
-      "assumption_refs": [
-        "A-incident"
-      ]
-    }
-  ],
-  "current_floor": [
-    "B02"
-  ],
-  "provisional_next_tranche": {
-    "blind_id": "B02",
-    "description": "Allocate one decision-relevant engineer-day to the threshold-essential candidate.",
-    "reason": "It is the admitted candidate whose removal first breaks the current launch threshold."
-  },
-  "missing_information": [],
-  "claim_ceiling": "This blind result is provisional and may change only when admitted state information is applied."
+  "status": "superseded",
+  "superseded_contract": "sra.blind-judgment.v0.1",
+  "replacement": "challenge-judgment.json",
+  "reason": "The linear blind-to-state override topology was replaced by mutually hidden challenge and situated judgments with typed comparison and conflict-only reconciliation.",
+  "runtime_support": false
 }

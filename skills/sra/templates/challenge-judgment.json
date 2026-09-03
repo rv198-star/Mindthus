@@ -1,0 +1,46 @@
+{
+  "schema_version": "sra.challenge-judgment.v0.2",
+  "stage": "challenge",
+  "packet_hash": "COPY_FROM_CHALLENGE_PACKET",
+  "allocation_outcome": "allocate",
+  "candidate_assessments": [
+    {
+      "challenge_id": "COPY_CHALLENGE_ID_1",
+      "feasibility": "feasible",
+      "candidate_role": "threshold_essential",
+      "contraction_result": "retained",
+      "first_break_point": "Removing this action leaves the declared target threshold unsupported.",
+      "evidence_refs": [
+        "COPY_PACKET_EVIDENCE_ID"
+      ],
+      "assumption_refs": []
+    }
+  ],
+  "current_floor": [
+    "COPY_SELECTED_CHALLENGE_ID"
+  ],
+  "next_tranche": {
+    "challenge_id": "COPY_SELECTED_CHALLENGE_ID",
+    "description": "Allocate one bounded decision-relevant tranche.",
+    "reason": "The action remains in the current floor after contraction."
+  },
+  "investment_ceiling": "One meaningful tranche before reranking.",
+  "authorization_horizon": "one_tranche",
+  "maintenance": [],
+  "reserve": {
+    "status": "none",
+    "challenge_id": "none",
+    "reason": "No packet evidence supports reserving the next tranche.",
+    "release_trigger": "Not applicable while reserve is none.",
+    "review_time": "At the next tranche checkpoint."
+  },
+  "defer": [],
+  "stop": [],
+  "rerank_triggers": [
+    "The next tranche produces a new blocker or closes the target gap."
+  ],
+  "missing_information": [],
+  "evidence_refs": [],
+  "assumption_refs": [],
+  "claim_ceiling": "This is a de-anchored challenge view, not automatic final authority."
+}

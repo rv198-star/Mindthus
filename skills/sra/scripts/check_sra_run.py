@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check SRA context-isolated runtime integrity without judging priority."""
+"""Check a context-calibrated SRA run without judging semantic priority."""
 
 from __future__ import annotations
 
@@ -13,12 +13,12 @@ from sra_runtime import run_check
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Validate SRA run files, hashes, stage order, references, and observable "
-            "isolation claims. This does not judge semantic priority."
+            "Validate SRA packets, independent-view state, typed comparison, references, "
+            "hashes, carrier records, and finalization."
         )
     )
     parser.add_argument("--dir", required=True, help="SRA run directory.")
-    parser.add_argument("--json", action="store_true", help="Emit JSON report.")
+    parser.add_argument("--json", action="store_true")
     return parser.parse_args()
 
 
@@ -28,16 +28,18 @@ def main() -> int:
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:
-        print("SRA Context-Isolated Runtime Check")
+        print("SRA Context-Calibrated Runtime Check")
         print(f"Run: {report.get('run_dir')}")
-        print(f"Stage: {report.get('stage', 'unknown')}")
+        print(f"Mode: {report.get('mode', 'unknown')}")
+        print(f"View plan: {report.get('view_plan', 'unknown')}")
+        print(f"Coverage plan: {report.get('coverage_plan', 'unknown')}")
+        print(f"Statuses: {report.get('statuses', {})}")
         print(f"Status: {report.get('status')}")
-        print(f"Isolation requested: {report.get('isolation_profile', 'unknown')}")
-        print(f"Recorded carriers: {report.get('recorded_carriers', {})}")
+        print(f"Context boundary: {report.get('observed_context_boundary', 'unknown')}")
         print()
         findings = report.get("findings", [])
         if not findings:
-            print("No runtime shape, reference, hash, or stage risks detected.")
+            print("No runtime packet, reference, hash, comparison, or stage risks detected.")
         else:
             for item in findings:
                 print(

@@ -406,13 +406,22 @@ Full does not require complete 3L5S Definition for every candidate. It requires 
 
 ```text
 candidate_id
-objective_contribution
-resource_demand_vector
-dependency_or_bundle_role
-evidence_state
-delay_cost_or_opportunity_window
-irreversibility_or_downside
+action_statement
+expected_target_effect
+resource_demand
+depends_on
+unlocks
+substitutes_for
+deadline_or_window
+downside
+reversibility
+evidence_refs
+assumption_refs
 ```
+
+The card aligns observable candidate structure without pre-deciding SRA roles. Fields
+such as `hard_gate`, `threshold_essential`, `value_expanding`, priority, or ROI score are
+Agentic SRA outputs and are rejected from the input contract.
 
 Candidate descriptions should remain granularity-stable. Splitting one candidate into
 five subtasks must not increase its allocation merely because it occupies more rows.
@@ -870,25 +879,31 @@ Required behavior:
 - Full contraction-replenishment loop;
 - positive, boundary, and adversarial pressure cases.
 
-### Phase 1.5: Context-Isolated Hybrid Runtime
+### Phase 1.5: Context-Calibrated Hybrid Runtime
 
 After the standalone semantic contract is stable, add a Workflow shell around the
 Agentic allocation owner:
 
 - classify supplied context into admitted, quarantined, and excluded lanes;
-- normalize candidate cards and generate deterministic blind aliases;
-- seal and hash the admitted allocation packet;
-- record a blind contraction/replenishment judgment before current-path state is shown;
-- reconcile the blind result with switching cost, reusable assets, remaining cost,
-  commitments, and sunk-cost rejection;
-- support `packet_bound`, `fresh_context`, and `blind_then_state` carriers;
+- align candidate structure while preserving real evidence differences;
+- reject candidate cards that pre-label SRA roles or priority scores;
+- build a shared decision base plus independent challenge and situated packets;
+- use `situated_only` for ordinary reversible Lite decisions;
+- use `dual_view` for Full, material contamination, or major redirection;
+- keep challenge and situated judgments mutually hidden;
+- compare typed allocation fields without selecting a winner;
+- generate one targeted reconciliation only when the views conflict;
+- run optional packet-coverage review when omission risk can change the allocation;
 - validate packet/judgment hashes and references;
 - render the final allocation without recomputing semantics.
 
-The runtime reduces ambient-context influence without claiming complete context or
-absolute host isolation. Scripts control deterministic order and evidence plumbing;
-Agentic SRA retains necessity, feasibility, contraction, replenishment, and allocation
-judgment. Detailed design: `2026-09-03-sra-context-isolated-runtime-design.md` and #157.
+The runtime reduces inherited-conclusion and narrative authority without discarding
+relevant facts, constraints, user values, authority, evidence, or execution state.
+Scripts control deterministic workflow and evidence plumbing; Agentic SRA retains
+coverage challenges, necessity, feasibility, contraction, replenishment, situated
+judgment, and conflict reconciliation. Fresh contexts are optional read-only carriers,
+not proof of objective judgment. Detailed design:
+`2026-09-03-sra-context-isolated-runtime-design.md` and #157.
 
 ### Phase 2: Routing And Packaging
 
@@ -977,13 +992,18 @@ The initial SRA implementation does not include:
 - [ ] No script computes semantic priority, ROI, or allocation correctness.
 - [ ] A shape pass is not reported as semantic approval.
 - [ ] The first-release claim ceiling is explicit.
-- [ ] Every applicable hybrid run records a context-admission ledger and sealed packet.
-- [ ] Previous conclusions and advocacy are quarantined by default; user constraints
-      remain constraints rather than factual proof.
-- [ ] Blind judgment precedes state-aware reconciliation and uses packet-bound IDs.
-- [ ] Same-context runs cannot claim fresh-context isolation.
-- [ ] Pressure cases include positive, boundary, adversarial, contamination, and
-      analysis-overhead controls.
+- [ ] Every applicable hybrid run records a context-admission ledger and decision base.
+- [ ] Previous conclusions and advocacy are quarantined by default; their valid evidence
+      may be admitted separately; user constraints remain constraints rather than proof.
+- [ ] Candidate inputs contain observable relations, not pre-decided SRA roles or scores.
+- [ ] Ordinary Lite may use one situated judgment; Full and material contamination use
+      mutually hidden challenge and situated judgments.
+- [ ] Typed comparison selects no winner; conflict creates at most one targeted
+      reconciliation that may remain blocked.
+- [ ] Packet-coverage review checks readiness only and cannot allocate resources.
+- [ ] Same-context runs cannot claim fresh-context execution.
+- [ ] Pressure cases include positive, boundary, adversarial, contamination,
+      dual-view-conflict, coverage, and analysis-overhead controls.
 
 ### Project Readiness
 

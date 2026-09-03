@@ -623,8 +623,10 @@ class PackagingDocsTests(unittest.TestCase):
         required = (
             "resources/context-isolation.md",
             "templates/context-input.json",
-            "templates/blind-judgment.json",
-            "templates/state-aware-judgment.json",
+            "templates/coverage-judgment.json",
+            "templates/challenge-judgment.json",
+            "templates/situated-judgment.json",
+            "templates/reconciliation-judgment.json",
             "scripts/sra_runtime.py",
             "scripts/prepare_sra_run.py",
             "scripts/record_sra_judgment.py",

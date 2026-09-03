@@ -20,11 +20,11 @@ lifetimes.
 SRA owns allocation among sufficiently judgeable candidates; neighboring methods retain
 problem definition, structural truth, direction, carrier strategy, control, artifact
 quality, and runtime state. Use the smallest reasoning depth whose cost is lower than
-the plausible loss from a wrong allocation. Build a sealed, provenance-bearing packet;
-quarantine prior conclusions and advocacy. Explicit independence, context asymmetry,
-prior advocacy/conclusion, Full, or major redirection activates
-`resources/context-isolation.md`: blind first, state second; use a fresh read-only
-carrier when available.
+the plausible loss from a wrong allocation. Organize relevant context into sourced,
+structurally aligned packets without flattening evidence differences. Ordinary Lite uses
+one situated judgment; Full or material narrative contamination uses mutually hidden
+challenge and situated views, with one targeted reconciliation only when typed results
+conflict. See `resources/context-isolation.md`.
 
 ## Mainline / 主路径
 
@@ -179,8 +179,9 @@ review time.
 
 Lite stops after one bounded allocation and reranking trigger. Full stops when the
 bundle is stable across adjacent realistic pressure, the first tranche is clear, and
-another round has no action-changing value hypothesis. Scripts validate shape only;
-they do not compute priority, ROI, necessity, or allocation correctness.
+another round has no action-changing value hypothesis. Scripts control packets, stage,
+references, typed comparison, and rendering; they do not compute priority, ROI,
+necessity, or allocation correctness.
 
 ## Boundaries / 边界
 
@@ -201,7 +202,7 @@ they do not compute priority, ROI, necessity, or allocation correctness.
 
 - `resources/methodology.md` — complete Lite/Full method and ownership details.
 - `resources/fidelity-contract.md` — first-release fidelity and claim ceiling.
-- `resources/context-isolation.md` — sealed packet, blind/state judgment, and carrier boundary.
+- `resources/context-isolation.md` — context calibration, independent dual views, typed comparison, and carrier boundary.
 - `templates/fidelity-output.json` — passing Lite audit example.
 - `scripts/prepare_sra_run.py`, `record_sra_judgment.py`, `check_sra_run.py`, and
   `render_sra_decision.py` — hybrid workflow shell; scripts never decide priority.

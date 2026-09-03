@@ -1,181 +1,351 @@
-# SRA Context Isolation / 上下文隔离运行合同
+# SRA Context Calibration / 上下文校准运行合同
 
 ## Purpose
 
-SRA should make the allocation judgment relatively independently from the context that
-created, defended, or prolonged the current work.
+SRA should be independent from inherited conclusions and narrative momentum without
+becoming detached from the real decision context.
 
-Relative independence is not context-free judgment. SRA still needs the current
-objective, target threshold, risk floor, user values, authority, candidates, resource
-constraints, evidence, and explicit assumptions.
+Core rule:
 
-The runtime boundary is:
+> Independent from inherited conclusions, not independent from relevant context.
+>
+> Isolate narrative authority, not facts, constraints, evidence, or execution state.
+>
+> Align candidate structure without flattening real evidence differences.
+>
+> Use the de-anchored challenge as calibration; use the situated judgment as the
+> action-bearing view.
 
-> Only decision-relevant, classified, provenance-bearing context enters the allocation
-> packet. Ambient conversation, previous conclusions, candidate advocacy, current-task
-> richness, and sunk-cost narrative do not silently gain evidential authority.
+The runtime therefore organizes one bounded allocation question into typed packets and
+independent Agentic views. It does not treat the full ambient conversation as decision
+authority, and it does not treat less context as automatically more objective.
 
 ## WAE Assignment
 
-SRA uses a hybrid control shape.
-
 ### Workflow owns
 
-- context-kind admission policy;
-- admitted / quarantined / excluded ledgers;
-- stable candidate IDs and normalized cards;
-- deterministic blind aliases and order;
+- context-kind admission policy and the admitted / quarantined / excluded ledger;
+- candidate structural alignment, stable IDs, and deterministic challenge aliases;
 - packet-specific Agent output schemas;
 - packet and judgment hashes;
-- runtime stage order;
-- evidence and assumption reference checks;
-- fresh-context carrier artifacts;
-- concise decision rendering.
+- view-plan and coverage-plan state;
+- typed comparison of stable allocation fields;
+- one-pass reconciliation gating;
+- evidence, assumption, and state-reference validation;
+- read-only fresh-context carrier artifacts;
+- concise final rendering.
 
 ### Agentic owns
 
-- context relevance challenges;
-- candidate-surface sufficiency;
-- hard-gate and target-feasibility judgment;
-- necessity and bundle sufficiency;
-- contraction and first break point;
-- replenishment and next tranche;
-- state-aware adjustment;
-- final allocation recommendation.
+- packet-coverage judgment when requested;
+- challenges to context relevance or candidate completeness;
+- feasibility, candidate role, necessity, and bundle sufficiency;
+- contraction, first break point, current floor, and replenishment;
+- real switching-cost, commitment, remaining-cost, and reusable-asset interpretation;
+- final allocation recommendation;
+- conflict reconciliation when the independent views materially disagree.
 
 ### Evidence owns
 
-- observable sources;
+- observable sources and timestamps;
 - claim ceilings;
 - explicit assumptions and overturn conditions;
-- references used by each load-bearing judgment;
+- references supporting load-bearing judgments;
 - observable carrier receipts where available.
 
 ### Outer caller owns
 
-- raw context and candidate collection;
+- raw source and candidate collection;
+- current user instruction and value constraints;
 - execution authority;
 - TPlan or project mutation;
-- any final human-authority decision.
+- final human-authority decisions when required.
 
-## Threat Model
+Workflow follows deterministic consequence. Agentic owns result-changing semantic
+choice. Evidence limits what either may claim.
 
-The packet boundary reduces:
+## Context Admission Ledger
 
-- active-task capture;
-- previous-Agent conclusion reuse;
-- candidate advocacy asymmetry;
-- recency and input-order effects;
-- sunk-cost continuation pressure;
-- cross-project historical leakage;
-- unsupported factual claims embedded inside value constraints;
-- clean but post-hoc completion of a final SRA form.
+Every supplied context item uses one kind:
 
-It cannot prove that the outer caller supplied every relevant fact or candidate.
+- `current_instruction`
+- `user_constraint`
+- `authority_decision`
+- `observed_fact`
+- `runtime_evidence`
+- `assumption`
+- `historical_context`
+- `candidate_advocacy`
+- `previous_conclusion`
+- `ambient_inference`
 
-## Context Admission Kinds
+Default treatment:
 
-| Kind | Default treatment |
+| Kind | Treatment |
 |---|---|
-| `current_instruction` | admitted as current authority |
-| `user_constraint` | admitted as a value, target, or risk constraint; not factual proof |
-| `authority_decision` | admitted inside declared scope and expiry |
-| `observed_fact` | admitted inside source and claim ceiling |
-| `runtime_evidence` | admitted inside source and claim ceiling |
-| `assumption` | admitted as an assumption with overturn condition |
-| `historical_context` | quarantined by default; admitted only by explicit scoped admission with evidence/assumption support; no inherited authority |
-| `candidate_advocacy` | quarantined as a claim |
-| `previous_conclusion` | quarantined as a prior conclusion |
-| `ambient_inference` | quarantined unless restated as an explicit assumption |
+| current instruction | admitted as current authority |
+| user constraint | admitted as a value, target, or risk constraint; not factual proof |
+| authority decision | admitted inside declared scope and expiry |
+| observed fact / runtime evidence | admitted inside source and claim ceiling |
+| assumption | admitted with an overturn condition |
+| historical context | quarantined by default; explicit scoped admission requires evidence or assumption support |
+| candidate advocacy | quarantined as a claim, not evidence |
+| previous conclusion | quarantined; its underlying evidence may be admitted separately |
+| ambient inference | quarantined unless restated as an explicit assumption |
 
-Historical context uses `requested_disposition: admit` only when the outer caller has
-identified current decision relevance and bound it to evidence or an explicit
-assumption. Otherwise it remains quarantined.
+At least one `current_instruction` anchors every applicable run. Current instructions,
+current user constraints, and authority decisions cannot be silently excluded.
 
-The ledger preserves excluded items. Nothing disappears silently. At least one
-`current_instruction` anchors every applicable run, and current instructions, current
-user constraints, and authority decisions cannot be silently excluded by the outer
-caller.
+Quarantine removes inherited authority, not audit visibility. A prior conclusion can be
+split into:
 
-Scripts can apply the kind-based policy. They cannot determine that an item was
-classified correctly or that admitted evidence is true.
+```text
+old recommendation          -> previous_conclusion, quarantined
+reproducible failing test    -> evidence, admitted
+verified current progress    -> situated state, admitted with source
+past effort                  -> sunk-cost-only
+future rollback cost         -> switching cost, admitted with evidence or assumption
+```
 
-## Candidate Symmetry
+Scripts apply the declared-kind policy. They cannot prove that the outer caller
+classified every item correctly. Agentic coverage or allocation judgment may challenge
+classification and request a new packet.
 
-Every candidate uses the same card:
+## Candidate Structural Alignment
+
+Every candidate uses the same observable card:
 
 ```text
 candidate_id
-title
-objective_contribution
+action_statement
+expected_target_effect
 resource_demand
-dependency_or_bundle_role
-delay_cost_or_opportunity_window
-irreversibility_or_downside
+depends_on
+unlocks
+substitutes_for
+deadline_or_window
+downside
+reversibility
 evidence_refs
 assumption_refs
 ```
 
-Workflow generates blind aliases from deterministic content ordering. Input order and
-current-task position do not control blind ordering.
+Input must not pre-label a candidate as:
 
-A large candidate-context imbalance produces a warning. It does not automatically make
-the richer or thinner candidate better.
+- hard gate;
+- threshold-essential;
+- bottleneck;
+- value-expanding;
+- maintenance;
+- defer or stop;
+- high priority;
+- high ROI.
 
-## Isolation Profiles
+Those are SRA outputs. Workflow rejects explicit role or score fields rather than
+allowing the outer caller to perform the core judgment in advance.
 
-### `packet_bound`
+Structural alignment means equal fields, stable IDs, resolvable references, and
+input-order-independent aliases. It does not mean equal word count, equal evidence, or
+fake neutrality. A reproducible failure may legitimately outweigh an unsupported
+benefit assumption.
 
-The current Agent uses only a sealed packet and cites packet IDs. This is logical
-isolation. It does not prove the model forgot ambient context.
+A large presentation asymmetry produces a warning. Workflow neither rewards the richer
+candidate nor penalizes the terser one.
 
-Use it for ordinary Lite decisions when fresh execution costs more than the reversible
-allocation error. If Full or declared contamination pressure exists, an explicit
-`packet_bound` override requires a recorded `isolation_override_reason` and remains a
-visible degraded-isolation warning.
+## View Plans
 
-### `fresh_context`
+### `situated_only`
 
-A fresh, read-only subagent or ephemeral CLI receives the packet and judge contract
-without the task conversation.
+Ordinary reversible Lite decisions use one packet-bound situated judgment:
 
-The generated carrier uses:
+```text
+context ledger
+    -> structurally aligned situated packet
+    -> one micro-contraction
+    -> one micro-replenishment
+    -> bounded allocation
+```
 
-- `fork_context: false` for subagent dispatch;
-- read-only authority;
-- no file, Mission, task, memory, or external-system mutation;
-- ephemeral CLI execution;
-- ignored project rules and user configuration where the host supports those flags;
-- an empty review workspace.
+Use this when the allocation error is cheap, no material contamination signal exists,
+and a second view would cost more than the decision it protects.
 
-The runtime gives fresh carriers packet-specific output schemas whose constants and
-enums bind packet hashes and candidate/evidence/assumption/state IDs. It records the
-requested carrier and persists any supplied receipt. A fresh carrier without a receipt
-remains a declared claim and produces a warning. A carrier
-label or receipt does not prove the absence of hidden host context.
+### `dual_view`
 
-### `blind_then_state`
+Full, high-impact, major-redirection, or contamination-sensitive decisions use two
+independent views:
 
-This is the strongest initial profile.
+```text
+                 -> de-anchored challenge
+shared base -----|
+                 -> situated judgment
 
-1. Blind pass: normalized candidates, no original title/ID, no active identity, no
-   switching cost, no reusable assets, no remaining cost, no historical spend, and no
-   current commitment.
-2. State-aware pass: reveal the locked blind result plus current identity, switching
-   cost, reusable assets, remaining cost, commitments, authority, and historical spend
-   labelled as sunk-cost-only.
+challenge + situated
+    -> typed comparison
+    -> agree: finalize situated judgment
+    -> conflict: one targeted reconciliation
+```
 
-When possible, run each pass in a separate fresh context.
+The two views may share the same decision base, but neither receives the other's output.
+They may be recorded in either order.
 
-The second pass states whether state information changed the blind result and why. Each
-state adjustment cites stable `state_id` values of the matching state kind; a changed
-result without cited admitted state is blocked.
+Fresh, read-only, no-fork Agentic carriers are preferred when the host supports them.
+A same-context packet-bound run remains logical separation and cannot claim fresh
+context. A carrier label or receipt does not prove absence of hidden host context.
+
+## De-Anchored Challenge
+
+The challenge packet includes:
+
+- current objective, target threshold, time window, risk floor, values, and authority;
+- structurally aligned candidates under deterministic aliases;
+- candidate-linked evidence and explicit assumptions;
+- admitted common context;
+- known omissions.
+
+It omits:
+
+- original candidate IDs;
+- active candidate identity;
+- historical spend;
+- switching costs;
+- reusable assets;
+- remaining costs;
+- current commitments;
+- prior allocation conclusions;
+- candidate advocacy.
+
+The challenge judge asks:
+
+> Without granting extra authority to work merely because it is already active,
+> defended, detailed, or expensive in the past, what survives contraction and where
+> should the next tranche go?
+
+The challenge result is a calibration view. It is not default final authority because
+it intentionally omits execution-state costs.
+
+## Situated Judgment
+
+The situated packet includes the shared decision base plus:
+
+- original candidate IDs;
+- active candidate identity;
+- evidence- or assumption-bound switching costs;
+- reusable assets;
+- remaining costs;
+- current commitments and authority boundaries;
+- historical spend labelled as sunk-cost-only.
+
+It excludes:
+
+- the challenge judgment;
+- prior allocation conclusions;
+- candidate advocacy.
+
+The situated judge asks:
+
+> Given the real future consequences from the current state, what allocation should be
+> executed now?
+
+The situated judgment is the action-bearing view. It must cite state items when state
+changes the decision, and it must state `sunk_cost_used_as_reason=false`.
+
+## Packet Coverage Review
+
+Coverage review is conditional. It activates when:
+
+- Full mode has known omissions;
+- the candidate surface is explicitly uncertain;
+- cross-project scope or high omission risk exists;
+- the user requests a coverage challenge.
+
+The coverage reviewer sees the source inventory, context ledger, candidates, evidence,
+assumptions, and known omissions. It may return only:
+
+- `packet_ready`
+- `packet_ready_with_warning`
+- `packet_incomplete`
+
+It cannot assign SRA roles or choose an allocation. `packet_incomplete` blocks the run
+and requires a new packet rather than a deeper loop inside the same run.
+
+## Typed Comparison
+
+Workflow compares only stable fields:
+
+- allocation outcome;
+- current floor candidate IDs;
+- next-tranche candidate ID;
+- authorization horizon;
+- reserve posture;
+- maintenance, defer, and stop sets.
+
+It does not compare prose semantically and does not choose a winner.
+
+Agreement means the challenge corroborates the independent situated allocation. It does
+not prove candidate coverage or correct priority.
+
+Conflict means one or more typed fields differ. Workflow then produces a bounded
+reconciliation packet.
+
+## Targeted Reconciliation
+
+The reconciliation packet contains:
+
+- the common decision frame;
+- original candidates;
+- the two normalized decision cores;
+- exact conflict fields;
+- evidence, assumptions, and state items cited by either view;
+- known omissions.
+
+It excludes ambient conversation, unrelated reasoning prose, prior conclusions, and
+candidate advocacy.
+
+The reconciler resolves every named conflict and may return:
+
+- `allocate`
+- `conditional`
+- `infeasible`
+- `blocked`
+- `request_missing_context`
+
+It is not a majority vote or forced-closure mechanism. One packet version permits one
+reconciliation only. New material context creates a new SRA run.
+
+## Runtime State
+
+The state is orthogonal rather than one linear blind-to-state chain:
+
+```json
+{
+  "coverage": "not_required | pending | recorded_ready | recorded_warning | recorded_incomplete",
+  "challenge": "not_required | pending | recorded",
+  "situated": "pending | recorded",
+  "comparison": "not_required | pending | agree | conflict",
+  "reconciliation": "not_required | pending | recorded",
+  "finalization": "pending | finalized | blocked"
+}
+```
+
+Normal semantic cost is bounded:
+
+```text
+ordinary Lite:
+  situated
+
+contaminated Lite:
+  challenge + situated
+  + reconciliation only on conflict
+
+Full:
+  optional coverage review
+  + challenge + situated
+  + reconciliation only on conflict
+```
+
+There is no recursive Agentic loop.
 
 ## Runtime Files
-
-For project-local use, prefer `.sra/<run-id>/`; the repository ignores `.sra/` so
-runtime packets and receipts do not enter source control accidentally. An explicit
-external or temporary directory is also valid.
 
 A prepared run contains:
 
@@ -183,111 +353,31 @@ A prepared run contains:
 run.json
 raw-input.json
 context-admission.json
-sealed-packet.json
-blind-packet.json
-blind-agent-prompt.md
-blind-output-schema.json
-blind-subagent-dispatch.json
-blind-codex-command.sh
-fresh-context-workspace/
+base-packet.json
+coverage-packet.json
+challenge-packet.json
+situated-packet.json
+*-agent-prompt.md
+*-output-schema.json
+*-subagent-dispatch.json
+*-codex-command.sh
 trace.jsonl
 ```
 
-After blind judgment:
+After judgment:
 
 ```text
-judgments/blind.json
-state-packet.json
-state-aware-agent-prompt.md
-state-aware-output-schema.json
-state-aware-subagent-dispatch.json
-state-aware-codex-command.sh
-fresh-context-workspace-state/
-```
-
-After state-aware reconciliation:
-
-```text
-judgments/state-aware.json
+judgments/coverage.json        # only when required
+judgments/challenge.json       # dual_view only
+judgments/situated.json
+comparison-report.json         # dual_view only
+reconciliation-packet.json     # conflict only
+judgments/reconciliation.json  # conflict only
 final-decision.json
 ```
 
-## State Machine
-
-```text
-prepared -> blind_recorded -> finalized
-```
-
-A later stage cannot be recorded before its predecessor. Recorded judgments are not
-overwritten.
-
-## Blind Boundary
-
-The blind packet omits:
-
-- original candidate title and ID;
-- active candidate identity;
-- switching cost;
-- reusable assets;
-- remaining cost;
-- historical spend;
-- current commitments;
-- quarantined context statements;
-- evidence and assumptions used only by state-aware switching, spend, commitment, or
-  authority records.
-
-The blind Agent evaluates every candidate alias, runs contraction, names a current
-floor, and proposes a replenishment tranche.
-
-References outside the packet are blocked.
-
-## State-Aware Boundary
-
-The state packet adds only state information relevant to future consequences:
-
-- blind-to-original candidate mapping;
-- active candidate identity;
-- switching costs;
-- reusable assets;
-- remaining costs;
-- current commitments and authority;
-- historical spend explicitly labelled as sunk-cost-only;
-- the locked blind judgment and hash.
-
-Every switching-cost, reusable-asset, remaining-cost, commitment, historical-spend, or
-authority state item must cite admitted evidence or an explicit assumption before it can
-influence reconciliation. A structured state sentence without provenance remains
-inadmissible context, not stronger evidence.
-
-The final judgment records:
-
-- whether the result changed;
-- state adjustments and evidence/assumption references;
-- rejection of sunk cost as a continuation basis;
-- current floor and next tranche;
-- investment ceiling and authorization horizon;
-- maintenance, reserve, defer, and stop lanes;
-- reranking triggers and claim ceiling.
-
-## Lite And Full
-
-### Lite
-
-- uses one micro-contraction and one micro-replenishment;
-- remains packet-bound even when it uses the current Agent;
-- prefers a fresh blind pass when contamination signals are present;
-- authorizes one action, one tranche, or one named checkpoint;
-- does not require a complete fidelity artifact for ordinary visible output.
-
-### Full
-
-- targets `blind_then_state`;
-- persists both judgments and their hashes;
-- records a decision lifetime, reserve, and reranking conditions;
-- prefers two fresh contexts when available.
-
-The Analysis-Cost Gate remains active. Isolation is a means to improve allocation, not
-an excuse for a larger planning ceremony.
+For project-local use, prefer `.sra/<run-id>/`. Runtime packets and receipts remain
+outside source control.
 
 ## Script Commands
 
@@ -299,24 +389,36 @@ python3 skills/sra/scripts/prepare_sra_run.py \
   --dir /tmp/sra-run
 ```
 
-Record blind Agentic output:
+Record a required coverage review:
 
 ```bash
 python3 skills/sra/scripts/record_sra_judgment.py \
   --dir /tmp/sra-run \
-  --stage blind \
-  --input /tmp/blind-judgment.json \
-  --carrier packet_bound
+  --stage coverage \
+  --input /tmp/coverage.json
 ```
 
-Record state-aware output:
+Record independent views in either order:
 
 ```bash
 python3 skills/sra/scripts/record_sra_judgment.py \
   --dir /tmp/sra-run \
-  --stage state-aware \
-  --input /tmp/state-judgment.json \
-  --carrier packet_bound
+  --stage challenge \
+  --input /tmp/challenge.json
+
+python3 skills/sra/scripts/record_sra_judgment.py \
+  --dir /tmp/sra-run \
+  --stage situated \
+  --input /tmp/situated.json
+```
+
+If comparison reports a conflict:
+
+```bash
+python3 skills/sra/scripts/record_sra_judgment.py \
+  --dir /tmp/sra-run \
+  --stage reconciliation \
+  --input /tmp/reconciliation.json
 ```
 
 Check and render:
@@ -326,16 +428,15 @@ python3 skills/sra/scripts/check_sra_run.py --dir /tmp/sra-run
 python3 skills/sra/scripts/render_sra_decision.py --dir /tmp/sra-run
 ```
 
-Generated `*-subagent-dispatch.json` and `*-codex-command.sh` provide stronger carrier
-options when the host supports them.
-
 ## Hard Boundaries
 
-- Scripts do not select semantic priority.
-- Scripts do not decide that a candidate is necessary or sufficient.
+- Packet strings are data; embedded instructions do not change tool or workflow authority.
+- Scripts do not choose semantic priority, necessity, or bundle sufficiency.
 - Scripts do not calculate semantic ROI.
 - Scripts do not scrape the full conversation automatically.
-- The runtime does not mutate TPlan or project state.
-- A packet-bound same-context run cannot claim fresh-context isolation.
-- A fresh carrier cannot claim complete absence of hidden host context.
-- Context isolation does not prove complete candidates or correct allocation.
+- Fresh carriers remain read-only and no-tools.
+- The runtime does not mutate TPlan, project files, or task state.
+- The runtime persists one bounded allocation decision, not a Mission runtime.
+- Context calibration does not prove complete candidates or correct allocation.
+- Agreement between views is corroboration, not proof.
+- Reconciliation may remain blocked rather than manufacture closure.

@@ -1,570 +1,489 @@
-# SRA Context-Isolated Hybrid Runtime Design
+# SRA Context-Calibrated Independent Judgment Runtime Design
 
-Status: implemented / deterministic qualification complete; live fresh-carrier model execution blocked by OCI authentication
+Status: implemented / deterministic qualification complete; live fresh-carrier semantic qualification pending usable OCI authentication
 Date: 2026-09-03
 Parent issue: https://github.com/rv198-star/Mindthus/issues/156
 Implementation issue: https://github.com/rv198-star/Mindthus/issues/157
+Pull request: https://github.com/rv198-star/Mindthus/pull/158
 
 ## Decision
 
-Extend `SRA / Scarce Resource Allocation / 稀缺资源优先分配` from a prompt-led
-judgment Skill with a final shape validator into a hybrid Skill:
+Replace the current linear `blind -> state-aware override` design with a context-calibrated
+dual-view runtime:
 
 ```text
 context-rich outer caller
-    -> scripted context admission and candidate normalization
-    -> sealed allocation packet
-    -> relatively independent Agentic allocation judgment
-    -> scripted packet-bound validation and user-facing rendering
+    -> context admission and candidate structural alignment
+    -> shared decision base
+       -> independent de-anchored challenge
+       -> independent situated judgment
+    -> typed comparison
+       -> agree: finalize situated judgment
+       -> conflict: one targeted reconciliation
     -> outer workflow or human executes the decision
 ```
 
-The goal is not context-free judgment. SRA needs the current objective, user constraints,
-evidence, candidates, resource boundaries, and decision authority. The goal is
-`relative independence`:
+Core principle:
 
-> The allocation owner receives only decision-relevant, explicitly classified,
-> provenance-bearing context; ambient conversation, prior conclusions, advocacy,
-> current-task richness, and sunk-cost narrative do not silently gain evidential or
-> decision authority.
+> SRA is independent from inherited conclusions, not independent from relevant context.
+> It isolates narrative authority while retaining facts, constraints, evidence, user
+> values, decision authority, and real execution state.
 
-SRA remains the semantic allocation owner. Scripts own deterministic workflow,
-normalization, hashes, state transitions, reference checks, and rendering. Evidence
-constrains claims. The outer caller or TPlan retains execution and mutation authority.
+Candidate structure is aligned without flattening evidence differences. The challenge
+view calibrates incumbent-context bias. The situated view remains action-bearing because
+it includes future switching cost, remaining cost, reusable assets, current commitments,
+and path state. Neither view receives the other view's output.
+
+## Why The Previous Topology Was Rejected
+
+The previous runtime improved on ambient-context judgment but introduced a new anchor:
+
+```text
+blind judgment locked first
+    -> state-aware Agent sees blind conclusion
+    -> state-aware Agent must explain whether it changed the blind result
+```
+
+That structure implicitly granted the blind judgment default authority. Real execution
+state became an exception that had to overturn the baseline, even though switching cost,
+path dependency, remaining cost, and commitments are normal parts of allocation.
+
+It also allowed the outer candidate card to include fields such as
+`dependency_or_bundle_role`, which could disclose `threshold-essential` or
+`value-expanding` before SRA performed its own semantic judgment.
+
+The replacement removes both defects directly. There is no compatibility mode for the
+old judgment topology.
+
+## Audit Basis
+
+Two independent audits approved this replacement with mandatory conditions:
+
+- `docs/internal/audits/2026-09-03-sra-dual-view-priority-audit.md`
+- `docs/internal/audits/2026-09-03-sra-dual-view-wae-architecture-audit.md`
+
+The first audit evaluated priority quality, omission risk, evidence asymmetry, anchoring,
+and analysis cost. The second evaluated Workflow / Agentic / Evidence ownership,
+ownership closure, instruction/data separation, TPlan boundaries, and runtime cost.
+
+Both concluded that the topology is sound only when the two judgments are mutually
+hidden, input roles are not pre-decided, comparison is mechanical, reconciliation is
+bounded, and ordinary Lite does not pay Full runtime cost.
 
 ## WAE Diagnosis
 
-SRA currently occupies this WAE quadrant:
+SRA occupies:
 
 ```text
 workflow certainty: high
 context certainty: low or mixed
 ```
 
-The method order is stable:
+Workflow owns:
 
-1. define the allocation frame;
-2. scan the candidate horizon;
-3. contract current allocation or bundle hypotheses;
-4. identify the current floor;
-5. replenish the next meaningful tranche;
-6. bound the commitment and reranking trigger.
+- context-kind lanes;
+- stable packet construction;
+- candidate structural alignment;
+- deterministic challenge aliases;
+- packet-specific output schemas;
+- hashes and references;
+- view-plan and coverage-plan state;
+- typed comparison;
+- one-pass reconciliation gating;
+- user-facing rendering.
 
-The semantic answers remain contextual and uncertain:
+Agentic owns:
 
-- which candidate is truly threshold-essential;
-- which evidence is strong enough;
-- which unknown can change direction;
-- which bundle is currently sufficient;
-- where the next tranche creates the most value;
-- whether switching cost changes the result.
+- context relevance challenges;
+- packet-coverage judgment when requested;
+- feasibility and candidate role;
+- necessity and minimum sufficient bundle judgment;
+- contraction and first break point;
+- replenishment and next tranche;
+- situated execution-state interpretation;
+- conflict reconciliation.
 
-The current implementation leaves both the deterministic order and semantic judgment to
-the same Agent, then validates only the final artifact. This creates two control
-mismatches:
+Evidence owns:
 
-- `Workflow underreach`: stable method order and recoverable state remain implicit in
-  Agent memory;
-- `Agentic contamination risk`: the same context that generated or defended current
-  work also decides whether that work should continue receiving resources.
+- source and observed time;
+- claim ceiling;
+- explicit assumptions and overturn conditions;
+- references supporting load-bearing claims;
+- observable carrier receipts.
 
-The repair is a fixed workflow shell around a packet-bound Agentic core.
+The outer caller, TPlan, or human owns execution and mutation. SRA does not mutate a
+project, task tree, Mission state, or external system.
 
 ## Threat Model
 
-The runtime should reduce these common allocation distortions.
+The runtime reduces:
 
-### Active-task capture
+- active-task capture;
+- prior Agent conclusion inheritance;
+- candidate advocacy asymmetry;
+- input-order and recency bias;
+- sunk-cost continuation pressure;
+- cross-project historical leakage;
+- unsupported facts hidden inside user preference statements;
+- post-hoc completion of a method form after an intuitive decision;
+- challenge-view anchoring of the situated judge.
 
-The current task has more detail, emotional salience, and implementation history than
-alternatives. Richness is mistaken for priority.
+It cannot prove complete candidates, complete facts, correct context classification,
+absence of hidden host context, or correct priority.
 
-### Prior-conclusion authority
+## Context Admission
 
-A previous Agent or stakeholder conclusion appears in the context and is silently reused
-as evidence rather than treated as a claim to review.
+Kinds:
 
-### Advocacy asymmetry
+```text
+current_instruction
+user_constraint
+authority_decision
+observed_fact
+runtime_evidence
+assumption
+historical_context
+candidate_advocacy
+previous_conclusion
+ambient_inference
+```
 
-One candidate is described by its advocate while alternatives are represented by terse
-labels or objections.
+Default lanes:
 
-### Recency and presentation-order bias
-
-The last-mentioned or first-listed candidate receives more attention without a valid
-resource reason.
-
-### Sunk-cost narrative
-
-Historical effort is presented as a reason to continue, while future switching cost,
-remaining cost, and reusable assets are not separated.
-
-### Cross-project or historical leakage
-
-Older goals, preferences, unresolved tasks, or another project's context influence the
-current allocation without being admitted as relevant inputs.
-
-### User-frame overreach
-
-Current user values and explicit constraints should influence the allocation. User or
-stakeholder factual claims still require evidence and must not become facts merely
-because they are strongly framed.
-
-### Packet omission
-
-The outer caller can still omit a real candidate or relevant fact. The runtime cannot
-prove complete world coverage, but it can require a candidate-horizon declaration,
-known omissions, source inventory, and a blocked result when the comparison surface is
-not credible.
-
-## Definition Of Relative Independence
-
-SRA supports three isolation profiles.
-
-### `packet_bound`
-
-The current Agent judges from a sealed packet and must cite packet IDs only. This is the
-minimum supported profile and the lowest-cost default for ordinary Lite decisions.
-
-It provides logical isolation and traceability. It does not prove that the model has
-forgotten ambient context. Explicitly retaining `packet_bound` under Full or declared
-contamination pressure requires an `isolation_override_reason`; the runtime preserves a
-degraded-isolation warning rather than silently treating the weaker profile as equivalent.
-
-### `fresh_context`
-
-A fresh subagent or ephemeral CLI receives the sealed packet and SRA judge contract
-without the surrounding task conversation. The generated carrier is read-only and may
-not mutate files, tasks, Mission state, or external systems.
-
-This is preferred when:
-
-- SRA is explicitly asked for an independent judgment;
-- a previous Agent conclusion or strong candidate advocacy exists;
-- one candidate has materially richer context;
-- the decision will stop or redirect heavily invested work;
-- the commitment is major or hard to reverse.
-
-The runtime records the requested carrier and persists any supplied receipt. A fresh
-carrier without a receipt remains a declared claim and produces a warning. A receipt is
-still only an observable artifact; it does not prove the host supplied no hidden
-context.
-
-### `blind_then_state`
-
-Use two packet-bound Agentic passes:
-
-1. `blind`: compare normalized candidates without active-path identity, historical
-   spend, switching cost, reusable assets, remaining-cost state, or evidence and
-   assumptions used only by those state records;
-2. `state_aware`: reconcile the blind result with current-path identity, real switching
-   cost, reusable assets, remaining cost, commitments, and authority.
-
-When the host supports fresh contexts, each pass should run in a separate fresh context.
-This is the strongest initial profile and the default target for Full or high-contamination
-cases.
-
-The second pass must state whether state information changed the blind result and why.
-Each adjustment cites registered `state_id` values; changing the blind result without
-cited admitted state fails closed. Every state item must itself cite admitted evidence
-or an explicit assumption. Structured state prose without provenance cannot influence
-reconciliation. Sunk cost is visible only as a rejected continuation basis; it cannot
-justify the adjustment.
-
-## Control Ownership
-
-| Surface | Owner | Boundary |
-|---|---|---|
-| Raw context and candidate collection | Outer caller | Supplies claims and sources; does not decide final allocation |
-| Context-kind policy and admission mechanics | Workflow | Classifies allowed lanes, quarantines default-risk kinds, records overrides |
-| Context relevance and candidate sufficiency | Agentic SRA | May challenge admission, request missing candidate data, or return blocked |
-| Candidate normalization and ordering | Workflow | Stable IDs, equal fields, deterministic order, blind aliases, packet-specific output schemas |
-| Necessity, feasibility, contraction, replenishment | Agentic SRA | Semantic allocation judgment |
-| Evidence references and claim ceilings | Evidence bridge | Claims cite admitted evidence or explicit assumptions |
-| Packet hashes, stage order, ID/reference validation | Workflow | Deterministic and fail-closed |
-| Final execution or task mutation | Outer workflow, TPlan, or human | SRA provides the decision; it does not mutate Mission/task state |
-
-## Context Admission Ledger
-
-Every supplied context item uses one semantic kind:
-
-- `current_instruction`
-- `user_constraint`
-- `authority_decision`
-- `observed_fact`
-- `runtime_evidence`
-- `assumption`
-- `historical_context`
-- `candidate_advocacy`
-- `previous_conclusion`
-- `ambient_inference`
-
-Deterministic default policy:
-
-| Kind | Default treatment |
+| Kind | Default |
 |---|---|
 | current instruction | admitted as current authority |
-| user constraint | admitted as a value/risk/target constraint, not factual proof |
-| authority decision | admitted inside its declared scope and expiry |
-| observed fact / runtime evidence | admitted with source and claim ceiling |
-| assumption | admitted as assumption with overturn condition |
-| historical context | quarantined by default; requires explicit scoped admission plus evidence/assumption support; never inherits current authority |
-| candidate advocacy | quarantined as a candidate claim, not evidence |
-| previous conclusion | quarantined; may be inspected as a claim, not reused as proof |
-| ambient inference | quarantined unless explicitly restated as an assumption |
+| user constraint | admitted as a value/target/risk constraint, not factual proof |
+| authority decision | admitted inside declared scope and expiry |
+| observed fact / runtime evidence | admitted inside source and claim ceiling |
+| assumption | admitted with overturn condition |
+| historical context | quarantined unless explicitly scoped and evidence/assumption-bound |
+| candidate advocacy | quarantined as a claim |
+| previous conclusion | quarantined; supporting evidence is extracted separately |
+| ambient inference | quarantined unless restated as an assumption |
 
-The ledger retains admitted, quarantined, and excluded items. Nothing disappears silently.
-Every applicable run contains at least one `current_instruction`. Current instructions,
-current user constraints, and authority decisions cannot be silently excluded by the
-outer caller. Historical context uses `requested_disposition: admit` only after the outer
-caller binds it to current decision relevance and admitted evidence or an explicit
-assumption. An override requires an explicit rationale and does not convert advocacy or
-a previous conclusion into observed fact.
+Protected current instruction, user constraints, and authority decisions cannot be
+silently excluded. Quarantine removes inherited authority, not audit visibility.
 
-## Candidate Normalization
+## Candidate Structural Alignment
 
-Every candidate must use the same minimum card:
+Input card:
 
 ```text
 candidate_id
-title
-objective_contribution
+action_statement
+expected_target_effect
 resource_demand
-dependency_or_bundle_role
-delay_cost_or_opportunity_window
-irreversibility_or_downside
+depends_on
+unlocks
+substitutes_for
+deadline_or_window
+downside
+reversibility
 evidence_refs
 assumption_refs
 ```
 
-Workflow rules:
-
-- candidate IDs are stable;
-- blind aliases are generated deterministically from a content-derived ordering, not
-  current task order;
-- every candidate exposes the same fields;
-- missing fields remain explicit;
-- evidence and assumption references must resolve;
-- large description/evidence asymmetry produces a warning;
-- row count never creates a stronger resource claim;
-- the blind packet excludes active candidate identity and state-only fields.
-
-The Agentic judge may still conclude that the candidate surface is insufficient. The
-script does not decide that the strongest alternative has truly been found.
-
-## Sealed Allocation Packet
-
-`prepare_sra_run.py` creates a run directory containing:
+Input rejects semantic result fields, including:
 
 ```text
-run.json
-raw-input.json
-context-admission.json
-sealed-packet.json
-blind-packet.json
-blind-agent-prompt.md
-blind-output-schema.json
-blind-subagent-dispatch.json
-blind-codex-command.sh
-fresh-context-workspace/
-trace.jsonl
+candidate_role
+dependency_or_bundle_role
+hard_gate
+threshold_essential
+value_expanding
+priority
+priority_score
+roi_score
 ```
 
-The sealed packet contains only:
+Workflow aligns fields, IDs, ordering, and references. It does not equalize evidence or
+description length. Presentation asymmetry creates a warning, not a verdict.
 
-- the allocation frame;
-- normalized candidates;
-- admitted constraints, evidence, assumptions, and scoped history;
-- declared contamination signals;
-- known omissions;
-- packet and context-manifest hashes.
+## View Selection
 
-The packet excludes raw ambient conversation and quarantined conclusions from the
-judgment surface.
+### Ordinary Lite
 
-## Blind Judgment
-
-The blind judge receives aliases and normalized cards, not original titles or current
-path identity. It must return:
+Default:
 
 ```text
-packet_hash
-candidate assessments
-feasibility / role / contraction result
-first break point
-current floor
-provisional next tranche
-missing information
-evidence and assumption references
-claim ceiling
+situated_only
 ```
 
-Every candidate must appear in the assessment. References outside the sealed packet are
-rejected.
+Use one packet-bound situated judgment when the decision is local, reversible, and free
+of material incumbent-context contamination. It still performs one micro-contraction and
+one micro-replenishment and authorizes only one action, one tranche, or one checkpoint.
 
-The blind result is itself hashed and locked before state-aware information is exposed.
+### Contaminated Lite
 
-## State-Aware Reconciliation
-
-After a valid blind result is recorded, the runtime produces:
+Use:
 
 ```text
-state-packet.json
-state-aware-agent-prompt.md
-state-aware-output-schema.json
-state-aware-subagent-dispatch.json
-state-aware-codex-command.sh
+dual_view
 ```
 
-The state packet adds only:
-
-- blind-to-original candidate mapping;
-- current candidate identity;
-- switching costs;
-- reusable assets;
-- remaining costs;
-- current commitments and authority boundaries;
-- historical spend labelled as sunk-cost-only;
-- the locked blind judgment and its hash.
-
-The final Agentic judgment must state:
-
-- whether the blind result changed;
-- which admitted state facts caused the change;
-- why sunk cost did not control the result;
-- current floor;
-- next tranche;
-- investment ceiling and authorization horizon;
-- maintenance, reserve, defer, and stop lanes;
-- reranking triggers;
-- evidence/assumption references and claim ceiling.
-
-## Runtime State Machine
-
-```text
-prepared
-    -> blind_recorded
-    -> finalized
-```
-
-Scripts fail closed when:
-
-- a packet or judgment hash does not match;
-- a stage is skipped or repeated inconsistently;
-- candidate/evidence/assumption references are unknown;
-- a blind judgment uses original candidate IDs or state-only information;
-- a state judgment omits the blind hash;
-- the final decision authorizes an unbounded Lite continuation;
-- state adjustment cites historical spend as a continuation reason;
-- a state adjustment cites an unknown or wrong-kind `state_id`;
-- the blind result changes without cited admitted state;
-- a packet claims stronger isolation than its observable carrier supports.
-
-## Script Surface
-
-### `sra_runtime.py`
-
-Shared deterministic helpers for canonical JSON, hashes, admission policy, packet
-construction, packet-specific Agent output schemas, run state, trace events, prompt
-generation, and validation.
-
-### `prepare_sra_run.py`
-
-Validates raw input, applies deterministic context-admission policy, normalizes
-candidates, seals the packet, creates blind aliases, generates a packet-bound output
-schema, and creates logical/fresh-context carrier artifacts.
-
-### `record_sra_judgment.py`
-
-Records and validates `blind` or `state-aware` Agentic output. Recording the blind result
-generates the state-aware packet and its output schema. Recording the state-aware result
-finalizes the run.
-
-### `check_sra_run.py`
-
-Validates run files, hashes, stage order, reference integrity, context isolation claims,
-and recoverability. It does not judge semantic priority.
-
-### `render_sra_decision.py`
-
-Renders the final decision in a short user-facing form without exposing the entire
-internal packet.
-
-## Agentic Contract
-
-The SRA judge owns semantic allocation inside the packet boundary.
-
-It must:
-
-- use packet IDs for factual and assumption support;
-- challenge an incomplete or asymmetric candidate surface;
-- run contraction before naming the current floor;
-- run replenishment from that floor;
-- preserve target and risk floor;
-- distinguish switching cost, reusable assets, remaining cost, and sunk cost;
-- return `blocked` rather than invent missing priority;
-- keep claims below the admitted evidence ceiling.
-
-It must not:
-
-- import ambient facts or prior conclusions without packet admission;
-- treat user values as factual proof;
-- compute a universal weighted priority score;
-- mutate project or Mission state;
-- claim optimal ROI or universally correct prioritization.
-
-## Lite And Full
-
-Both modes use the context-admission and sealed-packet boundary.
-
-### Lite
-
-- defaults to `packet_bound`;
-- upgrades to `fresh_context` when contamination signals are present and a fresh carrier
-  is available;
-- performs one micro-contraction and one micro-replenishment;
-- authorizes one action, one tranche, or one named checkpoint;
-- may use one fresh pass when two-pass isolation costs more than the reversible allocation
-  error.
+when prior conclusions, active-task richness, advocacy asymmetry, sunk-cost narrative,
+presentation order, cross-project context, explicit independent review, or major
+redirection can materially distort the result.
 
 ### Full
 
-- targets `blind_then_state`;
-- persists packet, blind result, state reconciliation, and final decision;
-- may use two fresh contexts when the host supports them;
-- records a decision lifetime and explicit reranking triggers.
+Full defaults to `dual_view`. A conditional packet-coverage review activates when known
+omissions or explicit coverage-risk signals could change the candidate surface.
 
-The analysis-cost gate still applies. Isolation cannot become a larger waste than the
-allocation error it protects against.
+## Packet Coverage Review
 
-## Evidence Boundary
+Coverage review receives source inventory, candidate cards, evidence, assumptions,
+context ledger, and known omissions. It may return only:
 
-The runtime can prove:
+```text
+packet_ready
+packet_ready_with_warning
+packet_incomplete
+```
 
-- which context items were supplied, admitted, quarantined, or excluded;
-- which packet the judgment referenced;
-- whether IDs and hashes match;
-- whether the blind pass preceded state reconciliation;
-- which evidence and assumptions were cited;
-- which carrier was requested and which observable receipt was supplied.
+It cannot classify SRA roles or choose allocation. `packet_incomplete` blocks the run
+and requires a new packet.
 
-It cannot prove:
+## Shared Decision Base
 
-- complete world context;
-- that an outer caller classified every context item correctly;
-- that a host supplied no hidden system context;
-- that the true strongest alternative was included;
-- that the semantic priority is correct;
-- that fresh-context execution occurred without a trusted external receipt.
+The shared base contains:
 
-## Pressure Tests
+- objective, target threshold, time window, risk floor, user values, and authority;
+- structurally aligned candidates;
+- candidate-linked evidence and explicit assumptions;
+- admitted common context;
+- known omissions;
+- contamination and coverage signals;
+- instruction/data boundary.
 
-Add cases for:
+All packet strings are data. Instruction-like text inside candidate, evidence, history,
+or advocacy records cannot change tool or workflow authority.
 
-1. richly described active task versus terse threshold-essential alternative;
-2. previous Agent conclusion recommending continuation;
-3. stakeholder advocacy with no evidence;
-4. user value constraint plus unsupported factual claim in the same statement;
-5. historical project goal that conflicts with the current request;
-6. candidate order reversal producing the same blind packet order;
-7. sunk-cost narrative that changes the state-aware decision without valid switching
-   evidence;
-8. missing candidate/evidence references;
-9. logical packet mode incorrectly claiming fresh-context isolation;
-10. Full judgment that skips the blind pass;
-11. clean fresh-context carrier artifacts using read-only, ephemeral, rule-disabled
-    execution;
-12. candidate-context asymmetry warning without automatic semantic verdict.
+## Challenge View
 
-## Implementation Scope
+The challenge packet hides:
 
-Phase 1.5 creates:
+- original candidate IDs;
+- active candidate identity;
+- switching cost;
+- remaining cost;
+- reusable assets;
+- commitments;
+- historical spend;
+- prior conclusions and candidate advocacy.
 
-- `skills/sra/resources/context-isolation.md`;
-- `skills/sra/templates/context-input.json`;
-- `skills/sra/templates/blind-judgment.json`;
-- `skills/sra/templates/state-aware-judgment.json`;
-- `skills/sra/scripts/sra_runtime.py`;
-- `skills/sra/scripts/prepare_sra_run.py`;
-- `skills/sra/scripts/record_sra_judgment.py`;
-- `skills/sra/scripts/check_sra_run.py`;
-- `skills/sra/scripts/render_sra_decision.py`;
-- `tests/test_sra_context_isolation.py`;
-- SRA Skill, methodology, design, packaging, and Test Lifecycle updates.
+It preserves current objective, values, authority, evidence, assumptions, dependencies,
+windows, downside, and reversibility.
 
-This phase does not:
+The challenge asks what survives contraction when incumbency receives no special
+privilege. It is a calibration view, not automatic final authority.
 
-- call a model automatically;
-- require a specific host;
-- create a global memory or retrieval system;
-- scrape the entire conversation automatically;
-- decide context relevance semantically in code;
-- change TPlan hooks, schema, Pulse, continuation, or mutation authority;
-- claim absolute isolation or correct priority.
+## Situated View
+
+The situated packet includes the common decision base and evidence- or
+assumption-bound:
+
+- active candidate identity;
+- switching costs;
+- remaining costs;
+- reusable assets;
+- current commitments and authority state;
+- historical spend labelled as sunk-cost-only.
+
+It does not include the challenge judgment, prior allocation conclusions, or advocacy.
+It independently produces the action-bearing allocation.
+
+## Typed Comparison
+
+Workflow maps challenge aliases to original candidate IDs and compares only:
+
+```text
+allocation_outcome
+current_floor
+next_tranche_candidate
+authorization_horizon
+reserve
+maintenance
+defer
+stop
+```
+
+Workflow does not compare prose semantically and does not choose a winner.
+
+- `agree`: finalize the situated judgment; record challenge corroboration.
+- `conflict`: generate a targeted reconciliation packet.
+
+Agreement is not proof of candidate completeness or correct priority.
+
+## Targeted Reconciliation
+
+The reconciliation packet contains:
+
+- common frame and candidates;
+- normalized challenge and situated decision cores;
+- exact conflict fields;
+- evidence, assumptions, and state items cited by either view;
+- known omissions.
+
+It excludes ambient conversation, prior conclusions, candidate advocacy, and unrelated
+reasoning prose.
+
+Allowed outcomes:
+
+```text
+allocate
+conditional
+infeasible
+blocked
+request_missing_context
+```
+
+The reconciler resolves each conflict field or remains blocked. One packet version
+allows one reconciliation only. New material context creates a new run rather than an
+Agentic loop.
+
+## Runtime Status Model
+
+```json
+{
+  "coverage": "not_required | pending | recorded_ready | recorded_warning | recorded_incomplete",
+  "challenge": "not_required | pending | recorded",
+  "situated": "pending | recorded",
+  "comparison": "not_required | pending | agree | conflict",
+  "reconciliation": "not_required | pending | recorded",
+  "finalization": "pending | finalized | blocked"
+}
+```
+
+Challenge and situated judgments may be recorded in either order. They are generated
+from independent packets before either result exists.
+
+## Runtime Files
+
+```text
+raw-input.json
+context-admission.json
+base-packet.json
+coverage-packet.json
+challenge-packet.json
+situated-packet.json
+coverage/challenge/situated prompts and packet-specific schemas
+judgments/*.json
+comparison-report.json
+reconciliation-packet.json       # conflict only
+final-decision.json
+trace.jsonl
+```
+
+## Carrier Boundary
+
+Generated carriers use:
+
+- `fork_context: false` for subagent dispatch;
+- no tools;
+- read-only authority;
+- no file, Mission, task, memory, or external-system mutation;
+- ephemeral CLI execution with an empty workspace;
+- packet-specific output schemas.
+
+Recorded carrier labels and receipts establish only observable execution facts. They do
+not prove that the host supplied no hidden system context.
+
+## Analysis-Cost Boundary
+
+Maximum normal Agentic path:
+
+```text
+ordinary Lite:
+  situated
+
+contaminated Lite:
+  challenge + situated
+  + reconciliation only on conflict
+
+Full:
+  optional coverage
+  + challenge + situated
+  + reconciliation only on conflict
+```
+
+No recursive loop exists. Another round requires a new material packet and a new run.
+
+## Implementation Surface
+
+Canonical runtime:
+
+```text
+skills/sra/resources/context-isolation.md
+skills/sra/templates/context-input.json
+skills/sra/templates/coverage-judgment.json
+skills/sra/templates/challenge-judgment.json
+skills/sra/templates/situated-judgment.json
+skills/sra/templates/reconciliation-judgment.json
+skills/sra/scripts/sra_runtime.py
+skills/sra/scripts/prepare_sra_run.py
+skills/sra/scripts/record_sra_judgment.py
+skills/sra/scripts/check_sra_run.py
+skills/sra/scripts/render_sra_decision.py
+tests/test_sra_context_isolation.py
+```
+
+The resource and design file paths retain their existing branch paths, but their
+canonical semantics are context calibration and dual-view judgment. No old runtime
+contract remains active.
 
 ## Acceptance Criteria
 
-- [x] SRA explicitly defines relative independence as admitted packet context, not
-      context-free judgment.
-- [x] Every applicable run creates a context-admission ledger and sealed packet.
-- [x] Previous conclusions, advocacy, and ambient inferences are quarantined by default.
-- [x] Current user constraints remain decision constraints without becoming factual
-      evidence.
-- [x] Blind candidate ordering is deterministic and independent of input order.
-- [x] Blind packets omit active-path identity, historical spend, switching cost,
-      reusable assets, remaining cost, commitments, authority state, and state-only
-      evidence or assumptions.
-- [x] A valid blind result is recorded and hashed before state-aware reconciliation.
-- [x] State reconciliation may change the blind result only with cited admitted
-      `state_id` references of the matching adjustment kind, and each state item is
-      evidence- or assumption-bound.
-- [x] Packet and judgment references fail closed on unknown IDs or hash mismatch.
-- [x] Lite remains bounded and low-cost; Full persists the two-stage trace.
-- [x] Generated fresh-context carriers use fresh/no-fork semantics where available,
-      read-only authority, and no project mutation.
-- [x] Fresh carrier claims without persisted receipts remain explicitly unverified and
-      produce a warning.
-- [x] Same-context packet mode is labelled logical isolation and cannot claim fresh
-      context; Full or contamination-pressure overrides require a recorded reason and
-      remain visibly degraded.
-- [x] Scripts validate workflow and evidence shape only; semantic allocation remains
-      Agentic.
-- [x] TPlan runtime ownership remains unchanged.
-- [x] All new executable tests are registered in Test Lifecycle.
-- [x] Full repository suite remains green.
+- [x] Two independent audits approve the topology with explicit conditions.
+- [x] Input rejects pre-decided SRA role and score fields.
+- [x] Candidate structural alignment preserves real evidence asymmetry.
+- [x] Current instructions, user constraints, and scoped authority remain admitted.
+- [x] Prior conclusions and advocacy remain visible but lack inherited authority.
+- [x] Ordinary Lite can use situated-only judgment.
+- [x] Full and contaminated cases use dual view by default.
+- [x] Challenge and situated packets do not include each other's results.
+- [x] Challenge omits active-path identity and state-only costs.
+- [x] Situated judgment retains real execution state and rejects sunk-cost authority.
+- [x] Comparison is typed and chooses no winner.
+- [x] Conflict creates at most one targeted reconciliation.
+- [x] Coverage review cannot choose allocation.
+- [x] Packet content remains data and cannot alter tool authority.
+- [x] Scripts do not compute semantic priority or ROI.
+- [x] TPlan hooks, schema, continuation, Pulse, and mutation remain unchanged.
+- [x] Full repository regression and release-pack qualification pass after replacement.
+- [ ] Live fresh-carrier semantic tests run when a usable credential is available.
 
-## Implementation Evidence
-
-Deterministic qualification on 2026-09-03:
+## Deterministic Qualification Evidence
 
 ```text
-git diff --check                         PASS
-python3 -m compileall -q skills scripts PASS
-Test Lifecycle executable coverage      72 / 72
-full unittest suite                      920 PASS, 5 skipped
-release-pack all-platform build          PASS
-SRA entry size                           9,983 / 10,240 bytes
-TPlan hooks/schema/runtime diff          EMPTY
+SRA context-calibration tests             26 PASS
+SRA + method-layering focused suite       49 PASS
+Test Lifecycle executable coverage        72 / 72
+full unittest suite                       918 PASS, 5 skipped
+release-pack build                        PASS across all supported layouts
+SRA Skill entry                           10,107 / 10,240 bytes
+TPlan hook/schema/runtime diff             EMPTY
 ```
 
-A real generated Codex fresh-context carrier was invoked from its empty read-only
-workspace with packet-specific output schema. The CLI reached the model transport but
-returned HTTP 401 because the OCI node has no usable API credential. No model judgment
-was produced, and this is recorded as an environment limitation rather than a semantic
-or isolation pass.
+A generated fresh-context Codex carrier remains blocked by HTTP 401 before model
+execution. The deterministic suite therefore supports the workflow and ownership claim,
+not natural-model priority accuracy.
 
-## Release Claim Ceiling
+## Claim Ceiling
 
-Supported claim after implementation and deterministic tests:
+Supported after deterministic qualification:
 
-> SRA can run through a packet-bound hybrid workflow that classifies context, normalizes
-> candidates, separates blind and state-aware judgment, validates references and hashes,
-> and supports fresh-context carriers without giving scripts semantic priority authority.
+> SRA can organize relevant context into structurally aligned packets, obtain an
+> independent de-anchored challenge and an independent situated allocation, compare
+> typed results, and reconcile only material conflicts without giving scripts semantic
+> priority authority.
 
-Unsupported claims:
+Unsupported:
 
-- SRA is free from all context influence;
-- the packet contains all relevant facts or candidates;
-- a fresh-context carrier guarantees absence of hidden host context;
-- context isolation proves the resulting priority is correct;
-- the workflow maximizes ROI or replaces human decision authority.
+- dual views guarantee correct priority;
+- challenge is objective truth;
+- agreement proves complete candidates;
+- fresh carriers prove absence of hidden host context;
+- the runtime computes optimal ROI;
+- SRA replaces human or TPlan execution authority.

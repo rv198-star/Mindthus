@@ -147,43 +147,43 @@ cash-runway decision, or an irreversible construction path may justify Full.
 `auto` starts from Lite and expands only when a named escalation condition is
 load-bearing. It is a mode selector, not a third analysis depth.
 
-## Context-Isolated Hybrid Runtime
+## Context-Calibrated Hybrid Runtime
 
-SRA should not let the same ambient context that created or defended current work
-silently decide whether that work keeps receiving resources. Every applicable judgment
-therefore uses a minimal allocation packet, whether that packet is held logically in the
-current turn or persisted by the runtime shell.
+SRA is independent from inherited conclusions, not from relevant context. It keeps the
+current objective, user constraints, authority, evidence, assumptions, and real
+execution state while removing inherited decision authority from prior conclusions,
+advocacy, ambient inference, and sunk-cost narrative.
 
-The outer caller collects raw candidates and sources. Workflow then:
+Workflow:
 
 1. records a context-admission ledger;
-2. admits current instructions, scoped constraints, evidence, authority, assumptions,
-   and relevant history in their correct lanes;
-3. quarantines candidate advocacy, previous conclusions, and ambient inferences by
-   default;
-4. normalizes candidates into equal cards and deterministic blind aliases;
-5. seals and hashes the packet and generates packet-specific Agent output schemas;
-6. exposes active-path state only after a blind contraction/replenishment result is
-   recorded.
+2. separates current authority, evidence, assumptions, scoped history, advocacy, and
+   prior conclusions;
+3. aligns candidate structure without equalizing real evidence differences;
+4. rejects candidate cards that pre-label SRA roles or scores;
+5. builds independent challenge and situated packets with hashes and packet-specific
+   output schemas;
+6. compares only typed allocation fields;
+7. opens one targeted reconciliation only when the views materially conflict.
 
-Agentic SRA still decides relevance, necessity, feasibility, contraction, current floor,
-replenishment, and final allocation. Scripts own order, packet construction, hashes,
-references, state transitions, carrier artifacts, and rendering.
+Agentic SRA owns relevance challenges, feasibility, candidate roles, necessity,
+contraction, current floor, replenishment, situated state interpretation, and conflict
+reconciliation. Scripts own packet construction, hashes, references, status transitions,
+typed comparison, carrier artifacts, and rendering.
 
-Isolation profiles:
+View plans:
 
-- `packet_bound`: same-context logical isolation; the result may cite packet IDs only and
-  cannot claim the model forgot ambient context;
-- `fresh_context`: a read-only fresh subagent or ephemeral CLI receives the packet
-  without the task conversation;
-- `blind_then_state`: lock a blind result first, then reconcile it with switching cost,
-  reusable assets, remaining cost, commitments, and historical spend labelled as sunk
-  cost. Prefer separate fresh contexts for both passes when the host supports them.
+- `situated_only`: ordinary reversible Lite; one context-calibrated situated judgment;
+- `dual_view`: contaminated Lite and Full; a de-anchored challenge and a situated
+  judgment are generated independently and cannot see each other's result;
+- optional coverage review checks packet readiness but cannot choose allocation.
 
-Lite uses the smallest packet-bound form and upgrades isolation only when contamination
-risk justifies the added cost. Full targets a persisted blind-then-state trace. See
-`context-isolation.md` for the runtime files, commands, threat model, and evidence
-boundary.
+The challenge is a calibration view, not default final authority. The situated judgment
+is action-bearing because it retains real future switching cost, reusable assets,
+remaining cost, commitments, and authority. Agreement finalizes the situated result;
+conflict receives one bounded reconciliation that may remain blocked. Fresh read-only
+carriers are preferred when their cost is justified, but fresh-context execution is a
+carrier property rather than proof of better judgment. See `context-isolation.md`.
 
 ## Allocation Frame
 
@@ -236,13 +236,22 @@ Full mode uses a minimum comparable candidate card:
 
 ```text
 candidate_id
-objective_contribution
-resource_demand_vector
-dependency_or_bundle_role
-evidence_state
-delay_cost_or_opportunity_window
-irreversibility_or_downside
+action_statement
+expected_target_effect
+resource_demand
+depends_on
+unlocks
+substitutes_for
+deadline_or_window
+downside
+reversibility
+evidence_refs
+assumption_refs
 ```
+
+The input describes observable actions, relations, evidence, and claims. It must not
+pre-label `hard_gate`, `threshold_essential`, `value_expanding`, another SRA role, or a
+priority/ROI score; those are Agentic SRA outputs.
 
 This is not a full 3L5S Definition. It is the minimum information needed to decide
 whether candidates can share a comparison surface.
@@ -694,10 +703,10 @@ selected mainline. SRA does not redesign the carrier.
 
 ### WAE
 
-SRA uses a WAE-shaped hybrid runtime: Workflow owns admission mechanics, normalization,
-packet hashes, stage order, and reference checks; Agentic SRA owns semantic allocation;
-Evidence constrains claims. WAE re-enters only when those controller boundaries are
-misassigned.
+SRA uses a WAE-shaped hybrid runtime: Workflow owns admission mechanics, candidate
+structural alignment, packet hashes, typed comparison, status transitions, and reference
+checks; Agentic SRA owns semantic allocation and conflict reconciliation; Evidence
+constrains claims. WAE re-enters only when those controller boundaries are misassigned.
 
 ### TVG
 
@@ -754,13 +763,17 @@ The first release does not claim that SRA:
 
 Scripts may:
 
-- build a context-admission ledger and sealed allocation packet;
-- normalize candidate cards and create input-order-independent blind aliases;
-- generate packet-specific Agent output schemas;
+- build a context-admission ledger and shared decision base;
+- align candidate cards and create input-order-independent challenge aliases;
+- reject pre-decided semantic role or score fields;
+- generate independent challenge and situated packets plus packet-specific schemas;
 - generate packet-bound, fresh-subagent, and ephemeral-CLI carrier artifacts;
-- enforce `prepared -> blind_recorded -> finalized` stage order;
+- manage orthogonal coverage, challenge, situated, comparison, reconciliation, and
+  finalization status;
+- compare stable typed allocation fields without selecting a winner;
+- generate one targeted reconciliation packet on conflict;
 - lock packet and judgment hashes;
-- validate candidate, evidence, and assumption references;
+- validate candidate, evidence, assumption, and state references;
 - check that sunk cost is rejected as a continuation basis;
 - render the finalized decision without recomputing it;
 - validate fidelity fields, enums, evidence surfaces, and reranking triggers.
