@@ -19,6 +19,7 @@ SCHEMA_VERSION = "mindthus-primitive-activation-v0.1"
 ALLOWED_METHODS = {
     "using-mindthus",
     "3l5s",
+    "sra",
     "edsp",
     "sela",
     "mpg",

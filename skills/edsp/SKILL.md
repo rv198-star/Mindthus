@@ -77,6 +77,7 @@ For very high-impact or long-term decisions, separate agents are an escalation o
 - Do not use EDSP to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment.
 - Do not run Scenario Projection before Extreme Deduction has produced a stable coordinate system.
 - If the output becomes elegant but does not improve a decision, treat the method use as failed.
+- If candidate structure is already stable and several valid actions compete for one shared scarce resource, use SRA for allocation; EDSP only stabilizes a malformed proposition or comparison axis.
 
 ## Runtime Support / 支撑材料
 

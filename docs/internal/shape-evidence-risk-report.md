@@ -24,8 +24,8 @@ shape and evidence-risk findings.
 
 Structured reports should map to these fields even when the CLI output is plain text:
 
-- `method`: the method surface being checked, such as `SELA`, `MPG`, `3L5S`, `TVG`, or
-  `tplan`.
+- `method`: the method surface being checked, such as `SELA`, `MPG`, `SRA`, `3L5S`,
+  `TVG`, or `tplan`.
 - `artifact path`: the file or artifact being inspected.
 - `input source`: prompt, trace, markdown draft, JSON audit artifact, hook output, or
   mission state.
@@ -50,6 +50,9 @@ Structured reports should map to these fields even when the CLI output is plain 
 - `SELA`: v0.9 pilot validator checks required judgment moves and failure criteria.
 - `MPG`: v0.9 second-method pilot checks path-carrying moves, AQM boundary, and
   mainline/carrier separation.
+- `SRA`: validates Lite/Full allocation carriers, bounded authorization, minimum
+  sufficient bundle moves, contraction/replenishment, and reranking surfaces without
+  deciding semantic priority.
 
 ## Forbidden Claims
 

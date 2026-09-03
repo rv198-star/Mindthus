@@ -111,6 +111,7 @@ surfaces.
 
 Do not apply SELA as the main principle when:
 
+- the long-term direction is already sufficiently accepted and the active question is how multiple candidates share one scarce resource; use SRA for that current allocation
 - irreversible harm dominates efficiency, such as core medical decisions, final judicial decisions, or nuclear safety
 - dignity, experience, or ethical bottom lines are the actual value anchor
 - the decision is about a short transition window where the local advantage still has

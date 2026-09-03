@@ -190,6 +190,13 @@ class PrimitiveActivationTests(unittest.TestCase):
             result.stdout,
         )
 
+    def test_primitive_activation_accepts_sra_method_surface(self) -> None:
+        result = run_check("--event", "before-route", "--method", "sra", "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["method"], "sra")
+        self.assertEqual(report["script_verdict"], "shape_only")
+
     def test_before_answer_activates_aop_answer_aspects(self) -> None:
         result = run_check("--event", "before-answer", "--method", "using-mindthus", "--json")
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)

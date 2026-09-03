@@ -141,6 +141,41 @@ class V101UsageLogTests(unittest.TestCase):
             self.assertEqual(record["constrained_score"], 8)
             self.assertIsNone(record["score_delta"])
 
+    def test_usage_logger_accepts_sra_method(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log_path = Path(tmp) / "usage.jsonl"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(USAGE_LOGGER),
+                    "--log",
+                    str(log_path),
+                    "--scenario",
+                    "SRA Lite 将下一资源批次从界面润色切换到支付验证",
+                    "--method",
+                    "SRA",
+                    "--model",
+                    "gpt-5-codex",
+                    "--constraint-helped",
+                    "yes",
+                    "--invocation-mode",
+                    "explicit_skill",
+                    "--decision-changed",
+                    "yes",
+                    "--overhead-level",
+                    "low",
+                ],
+                text=True,
+                capture_output=True,
+                cwd=REPO,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            record = json.loads(log_path.read_text(encoding="utf-8").strip())
+            self.assertEqual(record["method"], "SRA")
+            self.assertEqual(record["invocation_mode"], "explicit_skill")
+            self.assertEqual(record["decision_changed"], "yes")
+
     def test_real_use_record_captures_product_outcomes_without_forced_score(self):
         with tempfile.TemporaryDirectory() as tmp:
             log_path = Path(tmp) / "usage.jsonl"

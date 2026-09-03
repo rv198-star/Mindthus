@@ -176,6 +176,7 @@ survival alone is not success. Surviving by abandoning mainline, core advantage,
 
 ## Boundaries / 边界
 
+- If multiple problems, tasks, objectives, or bundles compete for one shared scarce resource, use SRA; MPG owns carrier and path posture for one selected mainline.
 - If the mainline itself is unclear, use EDSP or SELA before MPG.
 - If the issue is “which layer should control this work,” Use WAE.
 - If the missing input is facts, domain research, runtime proof, stakeholder judgment,

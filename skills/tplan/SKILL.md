@@ -10,16 +10,17 @@ description: "Use when an AI agent needs an OKR-Runtime: a Mission needs script-
 `tplan` is an OKR-Runtime for AI agents: it keeps a long-running Mission attached to
 task state, acceptance evidence, decision hooks, and recovery authority.
 
-Use OKR language as the primary public explanation: Mission maps to Objective,
-acceptance criteria and acceptance evidence map to Key Results, and Task, SubTask, and Step map to initiatives and actions. It is not a human OKR management system. It keeps
-current runtime terms unless a schema migration explicitly remaps them; the reason is runtime precision, not existing user familiarity.
+Use OKR language as the primary public explanation: Mission maps to Objective;
+acceptance criteria and acceptance evidence map to Key Results; Task, SubTask, and Step map to initiatives and actions. It is not a human OKR management system. Keep runtime
+terms unless a schema migration explicitly remaps them: the reason is runtime precision,
+not existing user familiarity.
 
 Its cycle is shorter than ordinary OKR management: checkpoint, evidence, blocker,
 feedback, or decision hook can update the active path while the Mission stays stable.
 Treat it as a dynamic workflow runtime.
 
 Scripts must not decide semantic truth. They validate shape, legality, references, and
-authority. Semantic judgment routes to `3l5s`, `sela`, `edsp`, `wae`, or `tvg`.
+authority. Semantic judgment routes to `3l5s`, `sra`, `sela`, `edsp`, `wae`, or `tvg`.
 
 ## Mainline / 主路径
 
@@ -39,17 +40,15 @@ Run as a thin Mission state machine by default. `runtime level may reduce record
 - `normal`: default Mission work with meaningful Task/SubTask/Step state.
 - `strict`: high-risk, long-running, audit-heavy, or authority-sensitive work.
 
-Lite Startup Default means checkpoint-first startup; Delayed Step Materialization means
-ordinary actions become Steps only when they need recovery, acceptance, rollback,
-evidence reference, or decomposition. Sparse Evidence means routine notes stay in logs;
-only acceptance, blocker, feedback, decision, state-change, or key finding records
-become evidence. Checkpoint Command means `scripts/checkpoint.py` may bundle a local log,
-optional sparse evidence, and survey output, without bypassing gates.
-Mission Pulse means `scripts/mission_pulse.py` may build a read-only Snapshot/Pulse/Gate
-route note before continuation, freeze, handoff, stop, branch cleanup, or risk review.
-Role-Separated Review Policy keeps important Mission claims from collapsing doing,
-direction-checking, acceptance, and learning into one cognitive flow. It is
-responsibility separation, not a new runtime role model.
+Lite Startup Default is checkpoint-first startup. Delayed Step Materialization creates
+Steps only for recovery, acceptance, rollback, evidence reference, or decomposition.
+Sparse Evidence keeps routine notes in logs and records only acceptance, blocker,
+feedback, decision, state change, or key findings as evidence. Checkpoint Command lets
+`scripts/checkpoint.py` bundle a log, optional evidence, and survey without bypassing
+gates. Mission Pulse lets `scripts/mission_pulse.py` build a read-only Snapshot/Pulse/Gate
+route before continuation, freeze, handoff, stop, cleanup, or risk review.
+Role-Separated Review Policy separates doing, direction-checking, acceptance, and
+learning; it is responsibility separation, not a new runtime role model.
 
 ### Runtime Loop
 
@@ -139,14 +138,15 @@ context.
 ## Boundaries / 边界
 
 - `tplan` is runtime governance, not a standalone reasoning engine.
+- SRA may judge cross-task resource allocation; TPlan retains state, Pulse, continuation, authority, recovery, and mutation.
 - Scripts validate bookkeeping only; they do not prove semantic correctness.
 - Evidence is not a process log.
 - Execution trace is cost/lifecycle telemetry, not evidence or a raw transcript.
 - Shared Risk Context is not a cross-task transcript.
 - Mission shared context Markdown is memory; `mission.json.shared_context` is the
   runtime index.
-- Lite mode reduces ceremony only; it cannot bypass high-impact gates.
-- Autonomous mode still stops when no authorized, ROI-defensible next action remains.
+- Lite reduces ceremony; it cannot bypass high-impact gates.
+- Autonomous mode stops when no authorized, ROI-defensible action remains.
 
 ## Runtime Support / 支撑材料
 

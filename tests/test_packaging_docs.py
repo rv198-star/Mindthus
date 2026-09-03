@@ -481,6 +481,11 @@ class PackagingDocsTests(unittest.TestCase):
                 Path("3l5s/scripts/validate_3l5s_output.py"),
                 Path("sela/scripts/validate_sela_output.py"),
                 Path("mpg/scripts/validate_mpg_output.py"),
+                Path("sra/scripts/validate_sra_output.py"),
+                Path("sra/scripts/prepare_sra_run.py"),
+                Path("sra/scripts/record_sra_judgment.py"),
+                Path("sra/scripts/check_sra_run.py"),
+                Path("sra/scripts/render_sra_decision.py"),
                 Path("edsp/scripts/validate_edsp_output.py"),
                 Path("wae/scripts/validate_wae_output.py"),
                 Path("tvg/scripts/validate_tvg_output.py"),
@@ -613,6 +618,24 @@ class PackagingDocsTests(unittest.TestCase):
                     linked_contract.resolve().is_file(),
                     f"broken packaged fidelity link: {packaged} -> {linked_contract}",
                 )
+
+    def assert_packaged_sra_context_runtime(self, skill_dir: Path) -> None:
+        required = (
+            "resources/context-isolation.md",
+            "templates/context-input.json",
+            "templates/coverage-judgment.json",
+            "templates/challenge-judgment.json",
+            "templates/situated-judgment.json",
+            "templates/reconciliation-judgment.json",
+            "scripts/sra_runtime.py",
+            "scripts/prepare_sra_run.py",
+            "scripts/record_sra_judgment.py",
+            "scripts/check_sra_run.py",
+            "scripts/render_sra_decision.py",
+        )
+        for relative in required:
+            path = skill_dir / relative
+            self.assertTrue(path.is_file(), f"missing packaged SRA runtime surface: {path}")
 
     def test_readme_names_current_skill_pack_and_tplan(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -1304,6 +1327,15 @@ class PackagingDocsTests(unittest.TestCase):
             ):
                 self.assert_packaged_using_mindthus_primitives(skill_dir)
 
+            for skill_dir in (
+                out / "claude-code" / "claude-plugin" / "skills" / "sra",
+                out / "claude-code" / "skills" / "sra",
+                out / "codex-plugin" / "mindthus" / "skills" / "sra",
+                out / "codex" / "skills" / "mindthus" / "sra",
+                out / "opencode" / ".opencode" / "skills" / "mindthus" / "sra",
+            ):
+                self.assert_packaged_sra_context_runtime(skill_dir)
+
             marketplace_path = out / "claude-code" / ".claude-plugin" / "marketplace.json"
             plugin_path = out / "claude-code" / "claude-plugin" / ".claude-plugin" / "plugin.json"
             self.assertTrue(marketplace_path.exists())
@@ -1317,6 +1349,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(plugin["version"], "1.8.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "sra" / "SKILL.md").exists())
             claude_hook_config_path = out / "claude-code" / "claude-plugin" / "hooks" / "hooks.json"
             claude_hook_script_path = out / "claude-code" / "claude-plugin" / "hooks" / "session-start"
             self.assertTrue(claude_hook_config_path.exists())
@@ -1335,12 +1368,14 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("upstream brainstorming/design workflow", claude_hook_script)
             self.assertIn("Superpowers Brainstorm", claude_hook_script)
             self.assertIn("hard judgment point", claude_hook_script)
+            self.assertIn("scarce-resource allocation", claude_hook_script)
             self.assertIn("directly", claude_hook_script)
             self.assertNotIn("v3", claude_hook_script.lower())
             for path in sorted((out / "claude-code" / "claude-plugin" / "skills").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((out / "claude-code" / "skills" / "sra" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "docs" / "methodologies" / "shared-primitives.md").exists())
             self.assertTrue(
                 (out / "claude-code" / "claude-plugin" / "scripts" / "run-fidelity-judge.py").exists()
@@ -1366,6 +1401,7 @@ class PackagingDocsTests(unittest.TestCase):
 
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "codex" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((out / "codex" / "skills" / "mindthus" / "sra" / "SKILL.md").exists())
             for path in sorted((out / "codex" / "skills" / "mindthus").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "codex" / "AGENTS.md").exists())
@@ -1375,12 +1411,19 @@ class PackagingDocsTests(unittest.TestCase):
             codex_agents = (out / "codex" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`skills/mindthus/sela/`", codex_agents)
             self.assertIn("`skills/mindthus/mpg/`", codex_agents)
+            self.assertIn("`skills/mindthus/sra/`", codex_agents)
             self.assertNotIn("`skills/sela/`", codex_agents)
+            self.assertNotIn("`skills/sra/`", codex_agents)
             codex_sela_doc = (out / "codex" / "docs" / "methodologies" / "sela.md").read_text(
                 encoding="utf-8"
             )
             self.assertIn("../../skills/mindthus/sela/SKILL.md", codex_sela_doc)
             self.assertNotIn("../../skills/sela/SKILL.md", codex_sela_doc)
+            codex_sra_doc = (out / "codex" / "docs" / "methodologies" / "sra.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("../../skills/mindthus/sra/SKILL.md", codex_sra_doc)
+            self.assertNotIn("../../skills/sra/SKILL.md", codex_sra_doc)
             codex_tvg_skill = (out / "codex" / "skills" / "mindthus" / "tvg" / "SKILL.md").read_text(
                 encoding="utf-8"
             )
@@ -1424,19 +1467,20 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(
                 codex_plugin_manifest["interface"]["defaultPrompt"],
                 [
-                    "Mindthus: frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-                    "method-ref direct; evidence 1st; defer Superpowers."
+                    "Mindthus: frame/whole/binary/spiral/alloc/no-data->mindthus:using-mindthus;"
+                    "method-ref direct;evidence1st;Superpowers first."
                 ],
             )
             codex_default_prompt = codex_plugin_manifest["interface"]["defaultPrompt"][0]
             self.assertIn("Superpowers", codex_default_prompt)
             self.assertIn("method-ref direct", codex_default_prompt)
-            self.assertIn("frame/whole/binary/spiral/no-data", codex_default_prompt)
+            self.assertIn("frame/whole/binary/spiral/alloc/no-data", codex_default_prompt)
             self.assertLessEqual(len(codex_default_prompt), 123)
             self.assertLessEqual(len(codex_default_prompt.encode("utf-8")), 123)
             self.assertNotIn("v3", codex_default_prompt.lower())
             self.assertTrue((codex_plugin_root / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((codex_plugin_root / "skills" / "mpg" / "SKILL.md").exists())
+            self.assertTrue((codex_plugin_root / "skills" / "sra" / "SKILL.md").exists())
             self.assertTrue(
                 (
                     codex_plugin_root
@@ -1481,6 +1525,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(
                 (out / "opencode" / ".opencode" / "skills" / "mindthus" / "mpg" / "SKILL.md").exists()
             )
+            self.assertTrue(
+                (out / "opencode" / ".opencode" / "skills" / "mindthus" / "sra" / "SKILL.md").exists()
+            )
             for path in sorted((out / "opencode" / ".opencode" / "skills" / "mindthus").glob("*/SKILL.md")):
                 self.assert_skill_frontmatter_is_parseable(path)
             self.assertTrue((out / "opencode" / "AGENTS.md").exists())
@@ -1490,12 +1537,19 @@ class PackagingDocsTests(unittest.TestCase):
             opencode_agents = (out / "opencode" / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("`.opencode/skills/mindthus/sela/`", opencode_agents)
             self.assertIn("`.opencode/skills/mindthus/mpg/`", opencode_agents)
+            self.assertIn("`.opencode/skills/mindthus/sra/`", opencode_agents)
             self.assertNotIn("`skills/sela/`", opencode_agents)
+            self.assertNotIn("`skills/sra/`", opencode_agents)
             opencode_sela_doc = (
                 out / "opencode" / "docs" / "methodologies" / "sela.md"
             ).read_text(encoding="utf-8")
             self.assertIn("../../.opencode/skills/mindthus/sela/SKILL.md", opencode_sela_doc)
             self.assertNotIn("../../skills/sela/SKILL.md", opencode_sela_doc)
+            opencode_sra_doc = (
+                out / "opencode" / "docs" / "methodologies" / "sra.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("../../.opencode/skills/mindthus/sra/SKILL.md", opencode_sra_doc)
+            self.assertNotIn("../../skills/sra/SKILL.md", opencode_sra_doc)
             opencode_tvg_skill = (
                 out / "opencode" / ".opencode" / "skills" / "mindthus" / "tvg" / "SKILL.md"
             ).read_text(encoding="utf-8")
@@ -1503,7 +1557,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertFalse((out / "opencode-plugin").exists())
 
-            skill_names = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            skill_names = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
             for platform_dir in (out / "codex", out / "opencode"):
                 markdown = "\n".join(
                     path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))

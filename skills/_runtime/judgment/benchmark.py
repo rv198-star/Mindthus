@@ -32,6 +32,7 @@ DIRECT_EXPECTED_OWNERS = {
 OWNER_OBJECT_MAP = {
     "input_framing_audit": "whole_object_definition",
     "whole_elephant": "whole_object_definition",
+    "sra": "scarce_resource_allocation",
     "edsp": "structural_ambiguity",
     "sela": "strategy_direction",
     "sela_boundary": "strategy_direction",
@@ -56,7 +57,7 @@ OWNER_NORMALIZATION = {
     "expression_discipline": "using-mindthus",
     "approximate_quantified_mapping": "using-mindthus",
 }
-STRATEGY_DELTA_OWNERS = {"sela", "sela_boundary", "mpg"}
+STRATEGY_DELTA_OWNERS = {"sra", "sela", "sela_boundary", "mpg"}
 RISK_DELTA_OWNERS = {"wae", "mpg"}
 EVIDENCE_DELTA_OWNERS = {
     "information_acquisition",

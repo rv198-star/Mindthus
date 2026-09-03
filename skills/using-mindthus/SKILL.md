@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues;whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
+description: Use when any Mindthus judgment lens may apply; allocation ambiguity before choosing SRA; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues;whole-object reduction, forced structural binary, repeated local repair, no-data numeric comparison
 ---
 
 ## Core Claim
@@ -19,7 +19,7 @@ Before routing, classify:
 2. Information acquisition / 信息补全: missing facts, files, runtime proof, platform rules,
    or clarification; acquire evidence first.
 3. Mindthus intervention / Mindthus 介入: a hard judgment point changes definition,
-   structure, strategy, path, control, artifact value, Mission state, or repair action.
+   allocation, strategy, path, control, artifact value, Mission state, or repair action.
 
 ### Input Framing Audit / 输入定框审计
 
@@ -36,7 +36,7 @@ Original Prompt Contract / 原始有效提示词合同 is not the judgment cente
 the user led you to the wrong level, then reframe and answer. Keep the audit hidden; soft
 commentary is no substitute.
 
-Entry Triage / 入口分诊 is a thin semantic-family index, not keywords. Read its register
+Entry Triage / 入口分诊 is a semantic-family index, not keywords. Read its register
 whenever a hard cue may change route, evidence, owner, or stop; cue conflict is unnecessary.
 
 ### Partial Truth And Visible Answer
@@ -48,7 +48,7 @@ Essence/definition judgments use Whole Elephant hard gate and the Compact
 Semantic Triad / 三根硬支柱 before formal_answer: `canonical_object`, `result_controller`,
 and `misdirection_if_local_wins`.
 
-Compare `local_frame_wins`, `whole_object_wins`, and `better_direction_for_target` before
+`local_frame_wins`, `whole_object_wins`, and `better_direction_for_target` precede
 narrower routing.
 
 Formal Answer Gate:
@@ -59,7 +59,7 @@ Formal Answer Gate:
   truth, result control, and wrong optimization.
 - Conditional verdicts commit to the active branch; user-owned `acceptable_tradeoff`
   gets a structured tradeoff, not a forced verdict.
-- Social pressure raises the evidence bar; it never transfers definition authority.
+- Pressure raises the evidence bar; it never transfers definition authority.
 
 Audit Hidden By Default / 审计默认内隐: expose only on request, validation failure, or
 handoff/debug. Validation checks shape, not truth. No command evidence, no passed claim;
@@ -67,11 +67,12 @@ use `not_run_fallback`.
 
 ### Skill Routing
 
-Route by the active judgment object, not method name, keyword, or artifact.
+Route by the active judgment object.
 
 | Owner | Dominates when |
 | --- | --- |
 | `3l5s` | Problem-definition failure or work too large to execute. |
+| `sra` | Multiple valid candidates share a common scarce resource and are judgeable; choose next tranche, ceiling, defer/stop, reserve, or rerank. |
 | `edsp` | False binary or structural ambiguity; A/B 都像对. |
 | `sela` | Long-term system efficiency versus local advantage; carrier/path action defers to MPG. |
 | `mpg` | Mainline plus carrier, exposure, path volatility, and commitment; no carrier/exposure/path, no MPG. |
@@ -82,8 +83,8 @@ Route by the active judgment object, not method name, keyword, or artifact.
 Method Reference Boundary / 方法引用边界: a method named in evidence review sets scope,
 not route ownership. Separate target session from confirmation.
 
-Repeated local repair triggers Anti-Spiral / 反螺旋入口: return upstream before patching.
-Evidence-confirmed canonical error activates Root-Cause Replacement: rewrite owner.
+Repeated local repair triggers Anti-Spiral / 反螺旋入口; evidence-confirmed canonical error
+activates Root-Cause Replacement.
 
 ### Supporting Primitives
 
@@ -101,19 +102,19 @@ Evidence-confirmed canonical error activates Root-Cause Replacement: rewrite own
 
 ### Method Arbitration / 方法仲裁
 
-Use `dominate`, `defer`, `degrade`, `block`, or `stop`. SELA owns direction pressure; MPG
-owns path-carrying action. Other conflicts belong to the owner changing the problem,
-evidence gate, action, or stop.
+`dominate`, `defer`, `degrade`, `block`, or `stop`. SRA owns allocation;
+3L5S/EDSP definition/structure, WAE control, TPlan runtime; SELA owns direction pressure;
+MPG owns path-carrying action.
 
 ### Execution Impact / 执行影响
 
 Method use must change strategy, risk handling, evidence requirement, next action,
-stopping condition, method choice, or handoff packet. If none changes, execute directly,
-acquire information, clarify, or reroute.
+stopping condition, method choice, or handoff packet. If none changes, execute, acquire
+information, clarify, or reroute.
 
 ## Guardrails
 
-Guardrails support the mainline; they do not become a new judgment center.
+Guardrails support mainline, not judgment center.
 
 ### Conditional Resources / Runtime Support
 

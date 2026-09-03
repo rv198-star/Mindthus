@@ -59,7 +59,7 @@ DIMENSION_GUIDANCE = {
 
 QUESTION_RE = re.compile(r"[?？]\s*$")
 MINDTHUS_COMMAND_RE = re.compile(
-    r"mindthus:|skills/(?:using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)",
+    r"mindthus:|skills/(?:using-mindthus|3l5s|sra|edsp|sela|mpg|wae|tvg|tplan)",
     re.IGNORECASE,
 )
 RESEARCH_LEAK_RE = re.compile(

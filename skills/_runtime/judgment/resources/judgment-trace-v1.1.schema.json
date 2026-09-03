@@ -57,7 +57,7 @@
       "additionalProperties": false,
       "required": ["judgment_object", "hard_judgment_point"],
       "properties": {
-        "judgment_object": {"enum": ["direct_task", "information_gap", "problem_definition", "structural_ambiguity", "whole_object_definition", "decision_context", "strategy_direction", "path_carrying", "controller_boundary", "artifact_value", "mission_runtime", "unknown"]},
+        "judgment_object": {"enum": ["direct_task", "information_gap", "problem_definition", "scarce_resource_allocation", "structural_ambiguity", "whole_object_definition", "decision_context", "strategy_direction", "path_carrying", "controller_boundary", "artifact_value", "mission_runtime", "unknown"]},
         "hard_judgment_point": {"type": "boolean"},
         "frame_status": {"enum": ["clean", "biased", "overloaded", "malformed", "not_assessed"]},
         "active_constraints": {"type": "array", "items": {"type": "string", "minLength": 1}}
@@ -68,9 +68,9 @@
       "additionalProperties": false,
       "required": ["judgment_owner", "loaded_methods", "routing_decision"],
       "properties": {
-        "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan", "human", "unknown"]},
-        "selected_method": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]},
-        "loaded_methods": {"type": "array", "items": {"enum": ["using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]}},
+        "judgment_owner": {"enum": ["direct_execution", "information_acquisition", "using-mindthus", "3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan", "human", "unknown"]},
+        "selected_method": {"enum": ["using-mindthus", "3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]},
+        "loaded_methods": {"type": "array", "items": {"enum": ["using-mindthus", "3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan"]}},
         "routing_decision": {"enum": ["direct_execute", "acquire_information", "intervene", "block", "stop"]},
         "supporting_primitives": {"type": "array", "items": {"type": "string", "minLength": 1}}
       }

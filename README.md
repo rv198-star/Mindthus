@@ -43,7 +43,7 @@ Mindthus 的工作方式很简单：**先纠偏，再路由；先判断控制面
 
 1. **看清输入**：用户的话是问题、约束、偏好，还是已经打包好的结论？
 2. **看清层级**：现在讨论的是实现方式、定义、本质、证据、价值，还是行动方案？
-3. **看清缺口**：缺的是事实、结构判断、长期方向、路径承载、控制边界，还是验收证据？
+3. **看清缺口**：缺的是事实、结构判断、资源分配、长期方向、路径承载、控制边界，还是验收证据？
 4. **选择最小方法**：能直接做就直接做；缺事实先取证；framing 歪了先纠偏；长任务漂移就回到 Mission。
 
 Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹车和镜头：该快的时候快，该停的时候停，该反问问题层级的时候，不继续陪着错误叙事往下走。
@@ -56,6 +56,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。
+- [`SRA / 稀缺资源优先分配`](docs/methodologies/sra.md)：多个有效事项争夺同一批时间、人力或资金时，决定现在先投什么、哪些只保底、哪些延后或停止；普通执行用 Lite，重大组合决策用 Full。
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对时，先检查命题、边界和评价轴，避免温吞折中。
 - [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：旧方式局部很好时，判断它会不会被更高效的系统长期压过。
 - [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：长期方向看对了，还要判断当前载体能不能穿过波动、成本和时机。
@@ -246,7 +247,7 @@ done
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
 rm -f ~/.claude/skills/runtime_bootstrap.py
 ```

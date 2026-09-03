@@ -1,0 +1,112 @@
+{
+  "schema_version": "sra-fidelity-v0.1",
+  "method": "SRA",
+  "entry_outcome": "lite",
+  "plain_language_conclusion": "Stop visual polish for this tranche and switch the engineer-day to payment validation; keep the page on a release-blocking-defect-only maintenance line.",
+  "allocation_action": "switch",
+  "allocation_frame": {
+    "parent_objective": "Launch a purchasable product page in the current release window.",
+    "target_threshold": "The page is usable and the payment path is validated for launch.",
+    "time_window": "Current release window.",
+    "risk_floor": "Do not launch with an unvalidated payment path or a release-blocking page defect.",
+    "decision_owner": "Release owner.",
+    "contested_resource": "One engineer-day.",
+    "evidence_ceiling": "The page meets the current usability threshold; payment validation remains incomplete. This does not prove production revenue or long-term conversion impact."
+  },
+  "required_judgment_moves": {
+    "candidate_horizon_probe": {
+      "status": "addressed",
+      "finding": "Compared the active polish path with payment validation, defect-only maintenance, defer, and stop postures.",
+      "failure_criteria_response": "The active task did not own the candidate set merely because it was already in progress.",
+      "evidence_surface": "Release checklist and current page/payment status."
+    },
+    "priority_order": {
+      "status": "addressed",
+      "finding": "Payment validation is threshold-essential; animation polish is value-expanding after the page usability threshold has been reached.",
+      "failure_criteria_response": "Target feasibility and threshold necessity were considered before incremental polish value.",
+      "evidence_surface": "Launch threshold and unresolved payment acceptance item."
+    },
+    "resource_contention": {
+      "status": "addressed",
+      "finding": "Both actions require the same engineer-day in the same release window.",
+      "failure_criteria_response": "The candidates genuinely contest one scarce resource rather than independent pools.",
+      "evidence_surface": "Named engineer assignment and release schedule."
+    },
+    "evidence_bounded_necessity": {
+      "status": "addressed",
+      "finding": "Payment validation is necessary for the current launch threshold under the stated release contract.",
+      "failure_criteria_response": "The necessity claim expires when payment validation passes or the launch threshold is explicitly changed by the release owner.",
+      "evidence_surface": "Current acceptance criteria and payment validation status."
+    },
+    "contraction": {
+      "status": "addressed",
+      "finding": "The current page allocation contracts to release-blocking-defect-only maintenance while preserving the page usability threshold and risk floor.",
+      "failure_criteria_response": "The first further reduction would leave a release-blocking page defect unresolved; animation polish is not part of the current floor.",
+      "evidence_surface": "Current page acceptance status, defect list, and release threshold."
+    },
+    "replenishment": {
+      "status": "addressed",
+      "finding": "From the contracted page-maintenance floor, the next engineer-day goes to payment validation rather than renewed polish or idle reserve.",
+      "failure_criteria_response": "The next tranche is compared from the current floor and produces a decision-relevant validation result.",
+      "evidence_surface": "Payment acceptance gap, engineer availability, and expected validation artifact."
+    },
+    "meaningful_tranche": {
+      "status": "addressed",
+      "finding": "The next tranche is one bounded engineer-day ending in a reproducible payment validation result.",
+      "failure_criteria_response": "The comparison unit can produce an observable outcome rather than an arbitrary hour.",
+      "evidence_surface": "Validation task scope and expected test artifact."
+    },
+    "switching_vs_sunk_cost": {
+      "status": "addressed",
+      "finding": "Completed page work remains reusable; time already spent on polish is sunk, while context switching is limited to the current engineer handoff.",
+      "failure_criteria_response": "Past spend was not used as a reason to continue, and real switching cost was still represented.",
+      "evidence_surface": "Current branch state and remaining work estimate."
+    },
+    "authorization_horizon": {
+      "status": "addressed",
+      "finding": "Authorization ends after one engineer-day or the payment validation checkpoint, whichever comes first.",
+      "failure_criteria_response": "Lite does not authorize open-ended continuation.",
+      "evidence_surface": "Named tranche and checkpoint."
+    },
+    "defer_stop_or_reserve": {
+      "status": "addressed",
+      "finding": "Animation polish is explicitly deferred; page maintenance is limited to release-blocking defects.",
+      "failure_criteria_response": "Displaced work is visible rather than silently remaining active.",
+      "evidence_surface": "Updated allocation decision."
+    },
+    "rerank_trigger": {
+      "status": "addressed",
+      "finding": "Rerank when payment validation passes, fails with a new blocker, or the page develops a release-blocking defect.",
+      "failure_criteria_response": "The decision has observable conditions that reopen allocation.",
+      "evidence_surface": "Payment test result and page defect status."
+    },
+    "mode_boundary": {
+      "status": "addressed",
+      "finding": "Lite is sufficient because the choice is bounded, reversible, and compares one current path with one strong alternative.",
+      "failure_criteria_response": "No multiple-bundle, irreversible, or multi-resource condition requires Full.",
+      "evidence_surface": "Decision scope and resource boundary."
+    },
+    "claim_ceiling": {
+      "status": "addressed",
+      "finding": "The result supports this release-window allocation only.",
+      "failure_criteria_response": "The output does not claim universal priority accuracy, optimal ROI, or future revenue improvement.",
+      "evidence_surface": "Current acceptance criteria and explicit uncertainty statement."
+    }
+  },
+  "lite_decision": {
+    "considered_candidates": [
+      "Continue animation polish.",
+      "Switch to payment validation.",
+      "Maintain the page for release-blocking defects only."
+    ],
+    "current_floor": "Keep the product page at release-blocking-defect-only maintenance; animation polish is outside the current target floor.",
+    "next_tranche": "Allocate one engineer-day to payment validation and produce a reproducible result.",
+    "investment_ceiling": "One engineer-day before reranking.",
+    "authorization_horizon": "one_tranche",
+    "displaced_work": [
+      "Defer animation polish.",
+      "Maintain the page only for release-blocking defects."
+    ],
+    "rerank_trigger": "Payment validation passes or fails with a new blocker, or a release-blocking page defect appears."
+  }
+}

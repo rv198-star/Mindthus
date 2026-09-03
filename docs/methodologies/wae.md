@@ -169,7 +169,7 @@ WAE 会要求把关键 claim 单独接到 evidence 上。例如“安装说明�
 
 低风险、低不确定性、确定性的格式化工作不需要套 WAE。直接脚本化即可。
 
-WAE 也不负责定义问题本身。如果还不知道问题是什么，用 `3L5S`。如果争论的是长期趋势和局部优势，用 `SELA`。如果命题结构摇摆，用 `EDSP`。
+WAE 也不负责定义问题本身。如果还不知道问题是什么，用 `3L5S`。如果争论的是长期趋势和局部优势，用 `SELA`。如果命题结构摇摆，用 `EDSP`。如果控制边界已经明确，真正的问题是多个有效行动争夺同一稀缺资源，用 `SRA` 做分配。
 
 当 evidence 不足时，WAE 不会替你补事实。它只会指出“这个 claim 还没有被约束”，然后要求补证据、降级结论或停止。
 
@@ -179,6 +179,7 @@ Ownership Closure 也不是长任务 runtime：它不建立 Mission、任务树�
 
 - `3L5S` 处理问题发现与落地，WAE 处理其中的控制边界。
 - `SELA` 给长期方向，WAE 判断方向落地时哪些步骤能自动化、哪些必须保留判断。
+- `SRA` 在控制边界已经闭合后决定跨候选资源投向；WAE 只约束 SRA 的 Workflow / Agentic / Evidence 分工，不替它选优先级。
 - `tplan` 是 WAE 的典型落地和承载场景：TPlan 管 Mission/task state、顺序、blocker、checkpoint、recovery 和 resumption；WAE 管 semantic control boundary，以及在必要时判断 ownership 是否闭合。长 Mission 可以反复调用 WAE，但这种 recurrence 由 TPlan 承载，不会把 WAE 变成第二套 runtime。
 - `Anti-Spiral` 可以被理解为 WAE 的失败保护：当 agentic 判断开始用局部修补替代证据进展时，必须刹车。
 

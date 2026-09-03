@@ -1,0 +1,50 @@
+{
+  "schema_version": "sra.reconciliation-judgment.v0.2",
+  "stage": "reconciliation",
+  "packet_hash": "COPY_FROM_RECONCILIATION_PACKET",
+  "allocation_outcome": "conditional",
+  "conflict_resolutions": [
+    {
+      "field": "COPY_CONFLICT_FIELD",
+      "resolution": "The cited execution-state constraint changes the immediate tranche without granting historical spend any authority.",
+      "evidence_refs": [
+        "COPY_RECONCILIATION_EVIDENCE_ID"
+      ],
+      "assumption_refs": [],
+      "state_refs": [
+        "COPY_RECONCILIATION_STATE_ID"
+      ]
+    }
+  ],
+  "candidate_assessments": [],
+  "state_considerations": [],
+  "current_floor": [],
+  "next_tranche": {
+    "candidate_id": "none",
+    "description": "No allocation is authorized until the named condition clears.",
+    "reason": "The two independent views expose a material unresolved conflict."
+  },
+  "investment_ceiling": "No additional growth allocation before the named evidence condition.",
+  "authorization_horizon": "one_action",
+  "maintenance": [],
+  "reserve": {
+    "status": "none",
+    "candidate_id": "none",
+    "reason": "No reserve posture is supported by the conflict packet.",
+    "release_trigger": "Resolve the named conflict.",
+    "review_time": "Next SRA run or evidence event."
+  },
+  "defer": [],
+  "stop": [],
+  "rerank_triggers": [
+    "The missing evidence or state constraint is resolved."
+  ],
+  "missing_information": [
+    "COPY_MISSING_CONTEXT_IF_ANY"
+  ],
+  "state_refs": [],
+  "evidence_refs": [],
+  "assumption_refs": [],
+  "sunk_cost_used_as_reason": false,
+  "claim_ceiling": "Reconciliation is limited to the named conflict and may remain blocked."
+}

@@ -121,6 +121,7 @@ Resources: `resources/methodology.md`, `resources/exit-audit-template.md`, `reso
 
 ## Boundaries / 边界
 
+- TVG owns value gain inside one bounded artifact. When that artifact competes with external work for the same scarce resource, use SRA for the cross-task allocation.
 - Do not deepen for length, polish, or template completeness.
 - Do not require a supplied `value_profile` for ordinary tasks.
 - Block rather than deepen when missing input is evidence, domain input, runtime proof, or stakeholder judgment.
