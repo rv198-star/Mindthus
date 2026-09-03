@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic v1.8.0 ROI Beta RCR compatibility qualification."""
+"""Deterministic v1.9.0 ROI Beta SRA compatibility qualification."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[4]
 PROFILE = REPO / "beta" / "2.0-beta" / "profile.json"
 REGISTER = REPO / "beta" / "2.0-beta" / "capability-register.json"
-OVERLAY = REPO / "beta" / "2.0-beta" / "overlays" / "using-mindthus-v1.8.0-rcr" / "SKILL.md"
+OVERLAY = REPO / "beta" / "2.0-beta" / "overlays" / "using-mindthus-v1.9.0-sra" / "SKILL.md"
 HISTORICAL = REPO / "beta" / "2.0-roi-thin-core" / "profile.json"
 MAX_BYTES = 2300
 ALLOWED_DELTAS = {
@@ -34,6 +34,7 @@ REQUIRED_OVERLAY_MARKERS = (
     "intended mainline positively",
     "real vetoes stay explicit",
     "Clear local bugs stay local",
+    "Multiple judgeable candidates sharing one scarce resource belong to SRA",
     "no method catalog",
 )
 
@@ -76,12 +77,12 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
     overlay = OVERLAY.read_text(encoding="utf-8")
     overlay_compact = " ".join(overlay.split())
 
-    if profile["version"] != "1.8.0-roi-beta":
-        fail("composition version is not 1.8.0-roi-beta")
-    if profile["shared_core"]["version"] != "1.8.0":
-        fail("shared-core version is not 1.8.0")
-    if profile["shared_core"]["ref"] != "42887387800806b08796c5972590272414c28c97":
-        fail("shared-core ref is not the frozen v1.8.0 Stable tag commit")
+    if profile["version"] != "1.9.0-roi-beta":
+        fail("composition version is not 1.9.0-roi-beta")
+    if profile["shared_core"]["version"] != "1.9.0":
+        fail("shared-core version is not 1.9.0")
+    if profile["shared_core"]["ref"] != "3dfbd563315b761bae0ea2d1a9e0f04d9ff1b946":
+        fail("shared-core ref is not the frozen v1.9.0 Stable tag commit")
     if OVERLAY.stat().st_size > MAX_BYTES:
         fail(f"Thin Core exceeds {MAX_BYTES} bytes: {OVERLAY.stat().st_size}")
     for marker in REQUIRED_OVERLAY_MARKERS:
@@ -96,15 +97,45 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
 
     if register["shared_core_ref"] != profile["shared_core"]["ref"]:
         fail("capability register shared_core_ref does not match profile")
-    rcr = [item for item in register["capabilities"] if item["id"] == "root-cause-replacement-v1"]
-    if len(rcr) != 1 or rcr[0]["release_roi_beta"]["version"] != "1.8.0-roi-beta":
-        fail("RCR capability is not registered for v1.8.0 ROI Beta")
+    sra_ids = {
+        "sra-scarce-resource-allocation-v1",
+        "sra-context-isolated-runtime-v1",
+    }
+    registered_sra = {
+        item["id"]
+        for item in register["capabilities"]
+        if item["id"] in sra_ids
+        and item["release_roi_beta"]["version"] == "1.9.0-roi-beta"
+    }
+    if registered_sra != sra_ids:
+        fail("SRA capabilities are not registered for v1.9.0 ROI Beta")
 
     manifest = read_json(candidate / ".codex-plugin" / "plugin.json")
-    if manifest.get("name") != "mindthus-beta" or manifest.get("version") != "1.8.0-roi-beta":
+    if manifest.get("name") != "mindthus-beta" or manifest.get("version") != "1.9.0-roi-beta":
         fail("Beta plugin identity/version mismatch")
     if (candidate / "skills" / "using-mindthus" / "SKILL.md").read_bytes() != OVERLAY.read_bytes():
         fail("packaged Thin Core differs from the frozen overlay")
+
+    sra_surfaces = (
+        "skills/sra/SKILL.md",
+        "skills/sra/resources/methodology.md",
+        "skills/sra/resources/context-isolation.md",
+        "skills/sra/templates/context-input.json",
+        "skills/sra/templates/challenge-judgment.json",
+        "skills/sra/templates/situated-judgment.json",
+        "skills/sra/templates/reconciliation-judgment.json",
+        "skills/sra/scripts/sra_runtime.py",
+        "skills/sra/scripts/prepare_sra_run.py",
+        "skills/sra/scripts/record_sra_judgment.py",
+        "docs/methodologies/sra.md",
+    )
+    for relative in sra_surfaces:
+        if not (candidate / relative).is_file():
+            fail(f"packaged SRA shared-core surface is missing: {relative}")
+    sra_entry = (candidate / "skills" / "sra" / "SKILL.md").read_text(encoding="utf-8")
+    for marker in ("Candidate Horizon Probe", "micro-contraction", "micro-replenishment"):
+        if marker not in sra_entry:
+            fail(f"packaged SRA entry is missing core marker: {marker}")
 
     primitive_doc = candidate / "skills" / "using-mindthus" / "resources" / "primitives" / "root-cause-replacement.md"
     if not primitive_doc.is_file():
@@ -153,7 +184,7 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
         if sha256(archive_a) != sha256(archive_b):
             fail("two Beta archive builds are not byte-reproducible")
 
-    print("PASS: v1.8.0 ROI Beta deterministic RCR compatibility qualification")
+    print("PASS: v1.9.0 ROI Beta deterministic SRA compatibility qualification")
     print(f"thin_core_bytes={OVERLAY.stat().st_size}")
     if archive_a:
         print(f"archive_sha256={sha256(archive_a)}")

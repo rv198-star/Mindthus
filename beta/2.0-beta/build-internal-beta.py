@@ -32,6 +32,7 @@ BETA_DIAGNOSTIC_MARKERS = (
     "Anti-Spiral:",
     "wrong canonical rule or owner",
     "real vetoes stay explicit",
+    "scarce resource belong to SRA",
     "no method catalog",
     "Anti-Spiral hard brake",
     "same local repair count >= 3",

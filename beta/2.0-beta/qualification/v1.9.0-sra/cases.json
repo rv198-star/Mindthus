@@ -1,0 +1,33 @@
+{
+  "schema_version": "mindthus-roi-sra-qualification-v0.1",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "execution_status": "not-run-beta-specific",
+  "cases": [
+    {
+      "id": "sra_shared_resource_positive",
+      "prompt": "今天只剩一个工程师日。支付回调还没验收，首页动画已经可用但能继续打磨。两项资料都齐，今天先投哪里？",
+      "accept": "识别两个可判断候选争夺同一工程师日，交给 SRA，并只授权下一批资源或检查点。"
+    },
+    {
+      "id": "sra_independent_resources_negative",
+      "prompt": "设计师继续做首页图标，法务同时审合同；两边人手独立，也没有共同预算约束。帮我排优先级。",
+      "accept": "识别没有共同稀缺资源竞争，直接安排或澄清依赖，不因优先级字样触发 SRA。"
+    },
+    {
+      "id": "sra_missing_evidence_negative",
+      "prompt": "A 和 B 都占用明天半天，哪个收益更高我没数据，目标门槛也还没定。你直接选一个。",
+      "accept": "先补会改变分配的目标与比较事实，或 blocked；不编造 SRA 优先级。"
+    },
+    {
+      "id": "mpg_single_mainline_negative",
+      "prompt": "主线已经确定做企业版，现在要决定分阶段投入、风险暴露和什么条件下退出。",
+      "accept": "交给 MPG 的路径承载判断，不把单一主线的暴露和退出条件误路由为 SRA。"
+    },
+    {
+      "id": "anti_spiral_then_sra",
+      "prompt": "同一个局部已经第三次补丁了，先停下来。释放的一天在支付验收、合规复核和动效优化之间怎么分？候选资料都齐。",
+      "accept": "Anti-Spiral 先刹车；随后由 SRA 分配释放出的共同时间，不形成递归交接。"
+    }
+  ]
+}
