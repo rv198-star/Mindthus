@@ -19,7 +19,7 @@ Codex's system `skill-installer` is useful for individual skills, but it install
 
 轻量路由纪律：
 
-> 当问题涉及战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
+> 当问题涉及资源竞争、战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
 
 ## Codex Plugin Mode
 
@@ -50,6 +50,7 @@ After installation, Codex should discover:
 - `mindthus:sela`
 - `mindthus:mpg`
 - `mindthus:3l5s`
+- `mindthus:sra`
 - `mindthus:edsp`
 - `mindthus:wae`
 - `mindthus:tvg`

@@ -33,6 +33,7 @@ JUDGMENT_OBJECTS = {
     "direct_task",
     "information_gap",
     "problem_definition",
+    "scarce_resource_allocation",
     "structural_ambiguity",
     "whole_object_definition",
     "decision_context",
@@ -50,6 +51,7 @@ JUDGMENT_OWNERS = {
     "information_acquisition",
     "using-mindthus",
     "3l5s",
+    "sra",
     "edsp",
     "sela",
     "mpg",
@@ -59,7 +61,10 @@ JUDGMENT_OWNERS = {
     "human",
     "unknown",
 }
-METHODS = {"using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}
+METHODS = {"using-mindthus", "3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}
+LEGACY_JUDGMENT_OBJECTS = JUDGMENT_OBJECTS - {"scarce_resource_allocation"}
+LEGACY_JUDGMENT_OWNERS = JUDGMENT_OWNERS - {"sra"}
+LEGACY_METHODS = METHODS - {"sra"}
 OUTCOME_STATUSES = {"not_evaluated", "accepted", "rejected", "inconclusive"}
 SOURCE_TYPES = {"runtime_observation", "evaluator_label", "author_annotation", "mixed"}
 FIELD_SOURCE_TYPES = {
@@ -349,6 +354,9 @@ def validate_judgment_trace(data: Any) -> list[Finding]:
         )
     is_v11 = schema_version == JUDGMENT_TRACE_SCHEMA_VERSION
     section_fields = V11_SECTION_FIELDS if is_v11 else LEGACY_SECTION_FIELDS
+    judgment_objects = JUDGMENT_OBJECTS if is_v11 else LEGACY_JUDGMENT_OBJECTS
+    judgment_owners = JUDGMENT_OWNERS if is_v11 else LEGACY_JUDGMENT_OWNERS
+    methods = METHODS if is_v11 else LEGACY_METHODS
 
     trace_id = _require_non_empty_string(data, "trace_id", findings, "trace", required=True)
     if trace_id is not None and not TRACE_ID_RE.fullmatch(trace_id):
@@ -391,7 +399,7 @@ def validate_judgment_trace(data: Any) -> list[Finding]:
         _require_enum(
             input_shape,
             "judgment_object",
-            JUDGMENT_OBJECTS,
+            judgment_objects,
             findings,
             "input_shape",
             required=is_v11,
@@ -405,16 +413,16 @@ def validate_judgment_trace(data: Any) -> list[Finding]:
         _require_enum(
             routing,
             "judgment_owner",
-            JUDGMENT_OWNERS,
+            judgment_owners,
             findings,
             "routing",
             required=is_v11,
         )
-        _require_enum(routing, "selected_method", METHODS, findings, "routing")
+        _require_enum(routing, "selected_method", methods, findings, "routing")
         _validate_string_list(routing, "loaded_methods", findings, "routing", required=is_v11)
         if isinstance(routing.get("loaded_methods"), list):
             for method in routing["loaded_methods"]:
-                if isinstance(method, str) and method not in METHODS:
+                if isinstance(method, str) and method not in methods:
                     findings.append(
                         finding(
                             "block",

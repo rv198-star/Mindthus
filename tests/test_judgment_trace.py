@@ -62,6 +62,72 @@ class JudgmentTraceTests(unittest.TestCase):
             LEGACY_JUDGMENT_TRACE_SCHEMA_VERSION,
         )
 
+    def test_v11_accepts_sra_owner_and_scarce_resource_allocation_object(self):
+        trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
+        trace["input_shape"]["judgment_object"] = "scarce_resource_allocation"
+        trace["routing"]["judgment_owner"] = "sra"
+        trace["routing"]["selected_method"] = "sra"
+        trace["routing"]["loaded_methods"] = ["sra"]
+
+        self.assertEqual(validate_judgment_trace(trace), [])
+
+        current = json.loads((SCHEMAS / "judgment-trace.schema.json").read_text(encoding="utf-8"))
+        routing = current["properties"]["routing"]["properties"]
+        judgment_object = current["properties"]["input_shape"]["properties"]["judgment_object"]["enum"]
+        self.assertIn("scarce_resource_allocation", judgment_object)
+        self.assertIn("sra", routing["judgment_owner"]["enum"])
+        self.assertIn("sra", routing["selected_method"]["enum"])
+        self.assertIn("sra", routing["loaded_methods"]["items"]["enum"])
+
+    def test_legacy_v1_contract_does_not_expand_to_sra(self):
+        trace = json.loads((FIXTURES / "legacy-v1.json").read_text(encoding="utf-8"))
+        trace["input_shape"]["judgment_object"] = "scarce_resource_allocation"
+        trace["routing"]["judgment_owner"] = "sra"
+        trace["routing"]["selected_method"] = "sra"
+        trace["routing"]["loaded_methods"] = ["sra"]
+
+        findings = validate_judgment_trace(trace)
+        unsupported = [item for item in findings if item.code == "unsupported-enum"]
+        self.assertGreaterEqual(len(unsupported), 4)
+
+        legacy = json.loads((SCHEMAS / "judgment-trace-v1.schema.json").read_text(encoding="utf-8"))
+        routing = legacy["properties"]["routing"]["properties"]
+        judgment_object = legacy["properties"]["input_shape"]["properties"]["judgment_object"]["enum"]
+        self.assertNotIn("scarce_resource_allocation", judgment_object)
+        self.assertNotIn("sra", routing["judgment_owner"]["enum"])
+        self.assertNotIn("sra", routing["selected_method"]["enum"])
+        self.assertNotIn("sra", routing["loaded_methods"]["items"]["enum"])
+
+    def test_benchmark_adapter_maps_sra_to_allocation_object(self):
+        trace = judgment_trace_from_benchmark(
+            {
+                "case_id": "mtj-sra",
+                "case_type": "positive",
+                "expected_owner": "sra",
+                "stay_asleep_expected": False,
+            },
+            {
+                "case_id": "mtj-sra",
+                "variant": "fixture",
+                "generated_at_utc": "2026-09-03T00:00:00+00:00",
+            },
+            {
+                "case_id": "mtj-sra",
+                "score": 2,
+                "variant": "fixture",
+                "judged_at_utc": "2026-09-03T00:01:00+00:00",
+                "loaded_owner": ["sra"],
+                "required_visible_action_present": True,
+            },
+        )
+
+        self.assertEqual(trace["input_shape"]["judgment_object"], "scarce_resource_allocation")
+        self.assertEqual(trace["routing"]["judgment_owner"], "sra")
+        self.assertEqual(trace["routing"]["selected_method"], "sra")
+        self.assertEqual(trace["routing"]["loaded_methods"], ["sra"])
+        self.assertTrue(trace["decision_delta"]["strategy_changed"])
+        self.assertTrue(trace["decision_delta"]["next_action_changed"])
+
     def test_v11_validator_rejects_private_transcript_and_malformed_delta(self):
         trace = json.loads((FIXTURES / "intervention.json").read_text(encoding="utf-8"))
         trace["raw_prompt"] = "private prompt"

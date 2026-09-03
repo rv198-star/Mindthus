@@ -85,7 +85,7 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 
 一句话理解：
 
-> `SELA` 看整体趋势与局部优势的关系；`MPG` 处理主线穿越路径波动的主线承载方案；`3L5S` 处理问题从发现到落地；`EDSP` 处理悬而不决的结构判断；`WAE` 处理 Agentic / Workflow / Evidence 的控制边界；`TVG` 让形式完整但价值不足的产物更接近某个“好”的标准。
+> `SELA` 看整体趋势与局部优势的关系；`MPG` 处理主线穿越路径波动的主线承载方案；`3L5S` 处理问题从发现到落地；`SRA` 决定多个有效事项争夺同一稀缺资源时先投什么、保什么、停什么；`EDSP` 处理悬而不决的结构判断；`WAE` 处理 Agentic / Workflow / Evidence 的控制边界；`TVG` 让形式完整但价值不足的产物更接近某个“好”的标准。
 
 ## Skill 地图
 
@@ -123,6 +123,17 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 
 唤醒边界：3L5S 是默认问题内核，不是默认判断归宿。如果活跃对象已经是
 结构歧义、战略系统/局部取舍、主线承载，不要先绕回 3L5S；直接唤醒 `EDSP`、`SELA` 或 `MPG`。
+如果活跃对象是多个已足够清楚的候选争夺同一稀缺资源，直接唤醒 `SRA`。
+
+### `skills/sra/` — SRA / 稀缺资源优先分配
+
+资源分配判断内核，用来在多个有效事项竞争同一批时间、资金、人力、注意力、风险额度或机会窗口时，决定当前资源投向。
+
+普通执行过程默认使用 Lite，只授权下一动作、下一资源批次或一个明确检查点；涉及多个可行组合、重大承诺、固定投入门槛、多资源约束或不可逆风险时使用 Full。
+
+适合：当前任务继续还是切换、哪些事项构成达标组合、哪些只保底、哪些延后或停止、是否保留机动资源。
+
+边界：没有真实共同资源竞争时直接执行；候选还不清楚时先用 3L5S；单一已选主线的载体、暴露和路径由 MPG 判断；Mission 状态、Pulse 仲裁、继续授权和任务变更仍由 TPlan 管理。
 
 ### `skills/edsp/` — EDSP / 极限推演与场景投影
 
@@ -168,13 +179,14 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 - 战略判断前，用 `SELA` 防短视。
 - SELA 看整体趋势后，如果主线需要穿过复杂路径、对抗力量或载体风险，用 `MPG` 做主线承载方案。
 - 具体处理问题时，用 `3L5S` 做默认问题内核。
+- 多个已足够清楚的候选争夺同一稀缺资源时，用 `SRA` 决定先投、保底、延后和停止；普通执行优先 Lite。
 - 3L5S 中遇到模糊结构判断，用 `EDSP`。
 - agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
   “控制/边界/流程”字样自动唤醒 WAE。
 - 任一方法产出物看似完整但价值不足，用 `TVG` 做定向强化。
 - 长任务出现第三次处理同一局部对象、负反馈、只加不减或新增层冲动时，
   激活反螺旋自检；它不是独立 skill，而是防止目标函数被局部循环吞掉的
-  执行纪律。
+  执行纪律。刹车后若多个候选争夺释放出的资源，再由 `SRA` 分配。
 
 ### Companion Lens / 握手镜头
 
@@ -182,6 +194,7 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 补位镜头不自动夺取主导权；只有当它改变问题定义、结构判断、停止条件、路径动作或
 变量显影时，才进入当前回答。
 
+- `3L5S + SRA`：problem shape -> scarce-resource allocation。3L5S 让候选达到最低可判断程度；SRA 决定哪些候选获得当前资源，选定后再回到 3L5S 深入落实。
 - `3L5S + EDSP`：problem shape -> structural judgment。3L5S 先定义问题形状；如果 Definition 暴露伪二分、结构摇摆或 A/B 都像对，再让 EDSP 补结构推演。
 - `TVG + Anti-Spiral`：Anti-Spiral 是 TVG 的停止纪律，不是另一个强化 skill。下一轮没有明确 value-gain hypothesis 时，Anti-Spiral 应阻止继续加深。
 - `SELA + MPG + AQM`：direction + carrier + visibility。SELA 校准方向压力，MPG 决定路径承载动作，AQM 只显影变量关系，不夺取 judgment_owner。

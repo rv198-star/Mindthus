@@ -301,10 +301,13 @@ Pulse 不是每个 active task 后的固定复盘。低风险普通 checkpoint �
 
 当问题定义不清时，先用 `3L5S`。当控制边界不清时，用 `WAE`。当同一路径反复修补时，先触发 `Anti-Spiral`，不要继续加任务节点。
 
+多个真实任务或分支争夺同一稀缺资源时，可以由 `SRA` 提供分配判断；Mission 状态、Pulse 仲裁、继续授权、权限、恢复和任务变更仍由 `tplan` 负责。
+
 ## 与其他方法的关系
 
 - `3L5S` 给 `tplan` 提供问题定义和任务拆解。
-- `SELA` 可用于 Mission 级取舍，例如继续投入、试点、暂停或转向。
+- `SRA` 在真实任务或分支竞争同一资源池时提供语义分配，不接管 TPlan 的运行时权威。
+- `SELA` 只在系统效率与局部优势构成方向压力时支持 Mission 级取舍；一般跨候选资源分配由 SRA 负责。
 - `EDSP` 可作为 decision hook 处理结构判断。
 - `WAE` 解释为什么 `tplan` 要区分脚本状态、agent 判断和 evidence。
 - `TVG` 可用于审计 `tplan` 产出的文档、计划或 stop report 是否有下游价值。

@@ -1,4 +1,4 @@
-# SRA Scarce Resource Allocation Design
+# SRA Scarce Resource Allocation / 稀缺资源优先分配 Design
 
 Status: approved design / implementation-ready after issue registration
 Date: 2026-09-03
@@ -6,7 +6,7 @@ Issue: https://github.com/rv198-star/Mindthus/issues/156
 
 ## Decision
 
-Create `SRA / Scarce Resource Allocation / 稀缺资源分配` as an independent Mindthus
+Create `SRA / Scarce Resource Allocation / 稀缺资源优先分配` as an independent Mindthus
 Judgment Kernel Skill.
 
 SRA owns this judgment:

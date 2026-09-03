@@ -39,6 +39,8 @@ It asks:
 - `using-mindthus`: entry judgment, routing, constraints, arbitration, and execution
   impact.
 - `3L5S`: problem discovery, problem definition, and executable decomposition.
+- `SRA`: scarce-resource allocation among sufficiently judgeable candidates, with a
+  bounded Lite decision and expanded Full bundle analysis.
 - `EDSP`: structural judgment when a proposition, boundary, or binary is unstable.
 - `SELA`: strategic direction when local advantage and system-level efficiency conflict.
 
@@ -120,7 +122,7 @@ Mindthus skills may still use common implementation shapes:
 |---|---|
 | Tool wrapper | Scripts and resources support `tplan`, `TVG`, and `3L5S`, but scripts do not own semantic judgment. |
 | Generator | Templates, decision packets, stop reports, worksheets, and traces may be generated as support artifacts. |
-| Reviewer | `WAE`, `TVG`, `SELA`, and `EDSP` can review control, value, timing, or structure. |
+| Reviewer | `WAE`, `TVG`, `SRA`, `SELA`, and `EDSP` can review control, value, allocation, timing, or structure. |
 | Inversion | `using-mindthus` and `3L5S` often ask what the real problem is before acting. |
 | Pipeline | `tplan` uses runtime order and gates, but it is not a fixed business workflow. |
 
@@ -137,6 +139,9 @@ describe cognitive role.
   consider whether it belongs in cognitive primitives.
 - If a new skill mainly manages state, authority, evidence, and continuation, consider
   whether it is Runtime Governance rather than a normal pipeline.
+- If it chooses among sufficiently judgeable candidates under a common scarce-resource
+  constraint but does not own durable state or mutation, treat it as Judgment Kernel,
+  not Runtime Governance.
 
 ## Quick Classification
 
@@ -144,6 +149,7 @@ describe cognitive role.
 |---|---|---|
 | `using-mindthus` | Judgment Kernel | Inversion, reviewer-like routing |
 | `3L5S` | Judgment Kernel | Inversion, generator, light pipeline |
+| `SRA` | Judgment Kernel | Reviewer, generator |
 | `EDSP` | Judgment Kernel | Reviewer, generator |
 | `SELA` | Judgment Kernel | Reviewer |
 | `WAE` | Cognitive Control | Reviewer |

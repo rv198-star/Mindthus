@@ -1079,6 +1079,9 @@ class MindthusRouterContractTests(unittest.TestCase):
         self.assertLess(text.index("Route by the active judgment object"), text.index("| Owner |"))
         routes = _parse_using_mindthus_routes(text)
         self.assertIn("Problem-definition failure", routes["3l5s"])
+        self.assertIn("Multiple valid candidates", routes["sra"])
+        self.assertIn("common scarce resource", routes["sra"])
+        self.assertIn("next tranche", routes["sra"])
         self.assertIn("False binary or structural ambiguity", routes["edsp"])
         self.assertIn("Long-term system efficiency versus local advantage", routes["sela"])
         self.assertIn("carrier, exposure, path volatility, and commitment", routes["mpg"])
@@ -1280,7 +1283,10 @@ class MindthusRouterContractTests(unittest.TestCase):
         )
         self.assertIn("cue conflict is unnecessary", text_compact)
         routes = _parse_using_mindthus_routes(text)
-        self.assertEqual(set(routes), {"3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"})
+        self.assertEqual(
+            set(routes),
+            {"3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan"},
+        )
         for phrase in (
             "These families are wake-up candidates, not automatic method calls",
             "It is not a keyword router",

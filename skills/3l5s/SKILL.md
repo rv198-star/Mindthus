@@ -155,6 +155,7 @@ Full boundary: `resources/script-boundary.md`.
 
 ### Relationship To Other Mindthus Skills
 
+- Use `sra` when multiple sufficiently defined problems or tasks compete for the same scarce resource; 3L5S makes candidates judgeable, SRA allocates them.
 - Use `edsp` when a 3L5S `Gap` or `Strategy` contains a fuzzy structural choice.
 - Use `wae` when deciding whether a 3L5S step should be controlled by workflow, agentic judgment, evidence, or a combination.
 - Use `tvg` after a bounded 3L5S output exists but may still be thin in practical value.

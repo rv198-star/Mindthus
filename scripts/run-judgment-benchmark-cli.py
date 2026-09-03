@@ -54,7 +54,7 @@ REPAIR_ACTION_RE = re.compile(
 PATCH_SEGMENT_RE = re.compile(r"(?P<verb>补)(?P<unit>一段|段)(?P<object>[\u4e00-\u9fffA-Za-z]{0,4})")
 FORCED_MINDTHUS_RE = re.compile(r"\$mindthus:|mindthus:", re.IGNORECASE)
 MINDTHUS_SKILL_RE = re.compile(
-    r"(?:mindthus:|skills/)(using-mindthus|3l5s|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
+    r"(?:mindthus:|skills/)(using-mindthus|3l5s|sra|edsp|sela|mpg|wae|tvg|tplan)(?:/SKILL\.md)?",
     re.IGNORECASE,
 )
 
@@ -72,6 +72,7 @@ DIRECT_EXPECTED_OWNERS = {
 OWNER_ACCEPTED_SKILLS = {
     "input_framing_audit": {"using-mindthus"},
     "whole_elephant": {"using-mindthus"},
+    "sra": {"sra"},
     "edsp": {"edsp"},
     "sela": {"sela"},
     "sela_boundary": {"sela"},
@@ -845,7 +846,7 @@ def expected_owner_skills(case: dict[str, Any]) -> set[str]:
         return set()
     if owner in OWNER_ACCEPTED_SKILLS:
         return set(OWNER_ACCEPTED_SKILLS[owner])
-    if owner in {"using-mindthus", "3l5s", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}:
+    if owner in {"using-mindthus", "3l5s", "sra", "edsp", "sela", "mpg", "wae", "tvg", "tplan"}:
         return {owner}
     return set()
 

@@ -666,11 +666,12 @@ class JudgmentBenchmarkCliRunnerTests(unittest.TestCase):
                 "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/using-mindthus/SKILL.md\"",
                 "/bin/zsh -lc \"sed -n '1,220p' /tmp/plugins/cache/mindthus/mindthus/1.4.3/skills/edsp/SKILL.md\"",
                 "Read mindthus:edsp",
-                "echo edsp is mentioned but not loaded",
+                "Read mindthus:sra",
+                "echo edsp and sra are mentioned but not loaded",
             ]
         )
 
-        self.assertEqual(owners, ["using-mindthus", "edsp"])
+        self.assertEqual(owners, ["using-mindthus", "edsp", "sra"])
 
     def test_activation_summary_records_loaded_owner(self):
         runner = load_runner()

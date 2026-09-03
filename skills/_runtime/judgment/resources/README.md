@@ -13,6 +13,7 @@ Judgment Trace v1.1 adds:
 - an explicit delta `basis` and `comparison_ref`;
 - field-level source labels for critical observable fields.
 
-The Python validator accepts v1 and v1.1. New producers must emit v1.1. Schema or
-validator success proves only structural validity; it does not prove judgment truth,
-causality, anonymity, or real-world value.
+The Python validator accepts v1 and v1.1. New producers must emit v1.1. New method and
+judgment-object enums enter the current contract; the legacy v1 schema remains frozen
+for compatibility. Schema or validator success proves only structural validity; it does
+not prove judgment truth, causality, anonymity, or real-world value.

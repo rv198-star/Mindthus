@@ -15,7 +15,7 @@ primitive，规则正文留在 `shared-primitives.md`、`manifest.json` 和 vali
 
 这比纯文档提醒更硬一点，因为它给原语稳定 `id`、触发事件和行动影响；
 但它不是重型 AOP，不做全生命周期注入，不做通用 hook engine，也不替代
-`SELA`、`MPG`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan` 的主判断。
+`SELA`、`MPG`、`SRA`、`3L5S`、`EDSP`、`WAE`、`TVG` 或 `tplan` 的主判断。
 
 ## 为什么不是纯文档
 

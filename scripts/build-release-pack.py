@@ -24,7 +24,7 @@ EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".
 EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
-SKILL_NAMES = ("3l5s", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep")
+SKILL_NAMES = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
 CODEX_PLUGIN_VISUAL_ASSETS = (
     Path("assets/mindthus-icon.svg"),
@@ -56,8 +56,8 @@ USING_MINDTHUS_CONDITIONAL_PRIMITIVES = (
 )
 CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "遇事不要慌，先搞清楚情况再说。This is a light Mindthus activation router, not a mandatory workflow. "
-    "Use mindthus:using-mindthus only at hard judgment points: problem definition, structural ambiguity, "
-    "strategic trend/local-advantage tradeoff, path-carrying risk, workflow/agent/evidence control boundary, "
+    "Use mindthus:using-mindthus only at hard judgment points: problem definition, scarce-resource allocation, "
+    "structural ambiguity, strategic trend/local-advantage tradeoff, path-carrying risk, workflow/agent/evidence control boundary, "
     "thin artifact value, mission drift, or repeated local repair. Clear, low-risk, fact-sufficient tasks "
     "should be done directly; when facts, files, runtime behavior, or platform rules are missing, acquire "
     "evidence first. If an upstream brainstorming/design workflow such as Superpowers Brainstorm is active "
@@ -65,8 +65,8 @@ CLAUDE_ACTIVATION_ROUTER_PROMPT = (
     "brainstorming and should intervene only at remaining hard judgment points."
 )
 CODEX_ACTIVATION_ROUTER_PROMPT = (
-    "Mindthus: frame/whole/binary/spiral/no-data -> mindthus:using-mindthus; "
-    "method-ref direct; evidence 1st; defer Superpowers."
+    "Mindthus: frame/whole/binary/spiral/alloc/no-data->mindthus:using-mindthus;"
+    "method-ref direct;evidence1st;Superpowers first."
 )
 
 
@@ -337,6 +337,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
                 "tplan",
                 "sela",
                 "mpg",
+                "sra",
             ],
             "skills": "./skills/",
             "interface": {

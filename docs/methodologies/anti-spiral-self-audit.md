@@ -104,6 +104,7 @@ Anti-Spiral 不替代正常调试。明确的 failing test、明确的报错、�
 - `3L5S` 帮助从局部症状回到 signal、problem 和 action。
 - `WAE` 解释为什么 agentic judgment 必须被 workflow 和 evidence gate 约束。
 - `Root-Cause Replacement` 接管根因已确认后的恢复形态：修根因、换规则、直接写正确逻辑。
+- `SRA` 在刹车释放出资源且多个候选争夺同一资源时，决定接下来投向哪里；这是一次交接，不形成相互递归调用。
 - `tplan` 可以从 step logs、object touch count、feedback 和 evidence delta 中触发 Anti-Spiral runtime gate。
 - `TVG` 可以在路径稳定后加深 bounded artifact，但不能成为继续局部打磨的理由。
 
