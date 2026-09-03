@@ -223,6 +223,13 @@ The challenge judge asks:
 The challenge result is a calibration view. It is not default final authority because
 it intentionally omits execution-state costs.
 
+Workflow proves this identity boundary mechanically by checking that the challenge
+packet omits original IDs and that every identifier-bearing judgment field uses only
+the packet's aliases. It must not classify ordinary descriptive prose as identity
+leakage: a semantic candidate ID can be independently reconstructed from the visible
+action, so a prose collision is not evidence of hidden-context access. Prose remains
+Agentic reasoning and never becomes an accepted identifier.
+
 ## Situated Judgment
 
 The situated packet includes the shared decision base plus:
@@ -286,6 +293,30 @@ not prove candidate coverage or correct priority.
 
 Conflict means one or more typed fields differ. Workflow then produces a bounded
 reconciliation packet.
+
+Before comparison, both Agentic views use the same coding contract:
+
+- `allocate` means the tranche can start now; `conditional` means an unresolved
+  prerequisite prevents that start, not merely that a reranking trigger exists;
+- the current floor and maintenance sets include only nonzero use of the contested
+  resource now, not completed or merely reusable baselines;
+- `defer` means feasible with zero allocation now and eligible to return; `stop` removes
+  a candidate from future consideration;
+- one fixed resource block is `one_tranche` even when it ends at a named result;
+  `until_named_checkpoint` is reserved for authorization whose amount is not fixed.
+
+These are Agentic coding semantics made explicit before delegation. Workflow validates
+and compares the resulting fields; it does not infer which code the facts deserve.
+
+Situated and reconciliation judgments also keep each `state_considerations` item
+single-kind. Its `state_refs` may cite only the matching packet state kind:
+`active_path_identity -> active_candidate`, `switching_cost -> switching_cost`,
+`reusable_asset -> reusable_asset`, `remaining_cost -> remaining_cost`,
+`sunk_cost_rejected -> sunk_cost`, and `current_commitment` or `authority_boundary ->
+current_commitment`. Cross-kind reasoning uses separate consideration items; top-level
+`state_refs` and conflict resolutions may still combine kinds. The packet-specific
+output schema exposes this mapping before generation, and Workflow revalidates it when
+recording.
 
 ## Targeted Reconciliation
 
