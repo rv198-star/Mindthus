@@ -33,6 +33,11 @@ Use this skill when facing questions like:
 - `Which option is becoming the natural mainline under current drift?`
 
 Do not use it to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment when those are the actual missing inputs.
+When a prompt forces A/B but the dimensions or risk boundaries are unstable, the first
+sentence must diagnose the malformed binary and withhold a winner. Do not name a
+provisional winner merely because the user says to choose first; any conservative
+operating default follows the structural diagnosis and is not the answer to which side
+is right.
 When the prompt asks who is right for an active buy/use/commit decision, first name
 which frame owns that current decision. Do not open with a balanced "both sides are
 right" abstraction unless the user's value tradeoff truly owns the choice.

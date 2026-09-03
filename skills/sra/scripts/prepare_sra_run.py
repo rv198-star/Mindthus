@@ -59,6 +59,7 @@ def _write_surface(
     output_path = run_dir / "judgments" / f"{stage}.candidate.json"
     workspace_path = run_dir / f"fresh-context-workspace-{stage}"
 
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     prompt_path.write_text(prompt_builder(packet), encoding="utf-8")
     write_json(schema_path, schema_builder(packet))
     write_json(

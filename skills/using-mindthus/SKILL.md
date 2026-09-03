@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use when any Mindthus judgment lens may apply; strategic/path/control/framing ambiguity before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan. Entry Triage hard-judgment cues include whole-object reduction, forced structural binary, repeated local repair, and no-data numeric comparison; not ordinary missing facts; SRA only after multiple candidates share a scarce resource.
+description: Use only for fact-sufficient hard-judgment routing among Mindthus lenses; structural, strategic, path, control, artifact, problem-definition, Mission-state, or allocation ambiguity. Never load for an ordinary request lacking facts or resource bounds to compare candidates; ask directly. SRA only after multiple judgeable candidates share a scarce resource.
 ---
 
 ## Core Claim

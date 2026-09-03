@@ -92,14 +92,11 @@ class MindthusRouterContractTests(unittest.TestCase):
         mpg_desc = _skill_description("mpg")
 
         for phrase in (
-            "any Mindthus judgment lens",
-            "strategic/path/control/framing ambiguity",
-            "before choosing SELA, MPG, EDSP, WAE, TVG, 3L5S, or tplan",
-            "Entry Triage hard-judgment cues",
-            "whole-object reduction",
-            "forced structural binary",
-            "repeated local repair",
-            "no-data numeric comparison",
+            "fact-sufficient hard-judgment routing",
+            "structural, strategic, path, control",
+            "Never load for an ordinary request lacking facts",
+            "ask directly",
+            "SRA only after multiple judgeable candidates share a scarce resource",
         ):
             self.assertIn(phrase, using_desc)
 
@@ -272,7 +269,7 @@ class MindthusRouterContractTests(unittest.TestCase):
         primitives = _read_shared_primitive_docs()
 
         for phrase in (
-            "description: Use when any Mindthus judgment lens may apply",
+            "description: Use only for fact-sufficient hard-judgment routing",
             "Original Prompt Contract / 原始有效提示词合同",
             "not the judgment center",
             "Judge whether the user led you to the wrong level",
