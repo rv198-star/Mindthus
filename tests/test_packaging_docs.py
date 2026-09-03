@@ -55,7 +55,7 @@ class PackagingDocsTests(unittest.TestCase):
             root = Path(tmp)
             out = root / "release"
             codex_home = root / "home"
-            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.8.0"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.9.0"
             result = subprocess.run(
                 [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
                 text=True,
@@ -642,7 +642,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.8.0`",
+            "当前仓库版本：`v1.9.0`",
             "GitHub Releases",
             "局部正确",
             "输入定框审计",
@@ -1346,7 +1346,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.8.0")
+            self.assertEqual(plugin["version"], "1.9.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "sra" / "SKILL.md").exists())
@@ -1445,7 +1445,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.8.0")
+            self.assertEqual(codex_plugin_manifest["version"], "1.9.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1591,8 +1591,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.8.0"
-            skills = tmp_dir / "mindthus-skills-1.8.0"
+            plugins = tmp_dir / "mindthus-plugins-1.9.0"
+            skills = tmp_dir / "mindthus-skills-1.9.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

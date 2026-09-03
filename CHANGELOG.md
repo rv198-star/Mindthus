@@ -2,6 +2,71 @@
 
 ## Unreleased
 
+## v1.9.0
+
+发布 tag：`v1.9.0`
+
+[发布说明](docs/releases/v1.9.0.md)
+
+发布日期：2026-09-04
+
+### 版本定位
+
+这是 1.x Stable 线的稀缺资源分配能力 minor release。新增独立
+`SRA / Scarce Resource Allocation / 稀缺资源优先分配` Judgment Kernel，在多个已足够清楚的
+候选争夺同一批时间、资金、人力、注意力、风险额度或机会窗口时，决定当前资源先投什么、
+保什么、延后什么和停止什么。
+
+### SRA Lite / Full
+
+- Lite 是普通执行默认路径：只授权下一动作、下一份有意义的资源批次或一个明确检查点，并明确
+  当前底座、投入上限、被挤出的工作与重新排序条件。
+- Full 只在多个可行组合、多资源约束、固定投入门槛、重大承诺、方向变化或不可逆风险控制结果时
+  展开主攻、支撑、维护、延后、停止与机动资源方案。
+- 两档共享收缩—回补核心：先在目标门槛和风险底线不变时找到不能再删的底座，再决定下一份资源
+  投向哪里；不使用通用加权分数或自动 ROI 计算器替代判断。
+- Candidate Horizon Probe 防止当前任务占据全部视野；硬 Gate、可行组合和达标必要项先于
+  ROI-style comparison。
+
+### 上下文隔离与控制边界
+
+- 普通、低风险、可逆的 Lite 使用一次 situated judgment；Full 或存在重要叙事污染时，使用互相
+  不可见的 challenge / situated 两视角，只在 typed result 冲突时允许一次定向 reconciliation。
+- Workflow 负责密封输入、结构比较、完整性检查和渲染；Agentic judgment 负责候选角色、组合、
+  收缩、回补和最终分配；脚本不计算语义优先级或宣称分配正确。
+- 既有结论、候选宣传、环境推断与沉没成本叙事不会进入去锚定挑战；真实目标、用户约束、权限、
+  证据和执行状态仍保留在正确上下文层。
+- TPlan 继续拥有 Mission identity、Pulse arbitration、继续授权和任务变更；本版没有增加全局
+  `allocation_review` Hook，也没有改动 TPlan runtime generation。
+
+### 行为验收与证据上限
+
+- 24 个自然弱提示样本中，SRA 正例自然唤醒 10/12（83.3%），非 SRA 误触发 0/12；相邻方法归属
+  8/8，直接任务保持休眠 4/4，需要可见动作的回答 19/20。
+- 12 个显式独立 SRA 样本全部加载 SRA、达到最高量表等级并给出可见动作。
+- 最终 SHA 上复放 ordinary Lite、polluted Lite、Full agreement、Full conflict 和
+  evidence-insufficient 五类 Agentic 场景；冲突只协调一次，证据不足阻断最终化。
+- 这些结果支持本版声明的发布阈值，不证明普适路由正确、最优 ROI、生产收入或长期转化效果。
+
+### 补充发布包：1.9.0 ROI Beta（GPT/Sol）
+
+- Stable release 按默认规则同步提供 `v1.9.0-roi-beta` supplemental experimental asset。
+- Beta 从精确 `v1.9.0` Stable shared core 组装，继承完整 SRA Skill 和上下文隔离运行时；
+  ROI Thin Core 只增加 SRA 资源竞争入口，并保留历史 ROI.2 3L5S Anti-Spiral correction。
+- deterministic compatibility qualification 验证 exact shared core、SRA 包装面、薄入口边界、
+  namespace isolation、strict runtime diagnostic 与 byte-reproducible archive。
+- Beta-specific 自然唤醒率和相对胜率未单独测量，因此不作新增模型质量或 Token ROI 声明。
+
+### 兼容性、验证与发布资产
+
+- Stable package / plugin manifest 使用 `1.9.0`；TPlan runtime generation 继续保持
+  `1.5.4` / `mindthus-v1.5.4`。
+- compileall、Test Lifecycle、完整 unittest、Stable plugins/skills 与 ROI Beta 可复现构建
+  全部通过后发布。
+- `v1.9.0` GitHub Release 提供 `mindthus-plugins-1.9.0.tar.gz`、
+  `mindthus-skills-1.9.0.tar.gz`、`mindthus-beta-1.9.0-roi-beta.tar.gz` 与覆盖三份归档的
+  `SHA256SUMS`。
+
 ## v1.8.0
 
 发布 tag：`v1.8.0`
