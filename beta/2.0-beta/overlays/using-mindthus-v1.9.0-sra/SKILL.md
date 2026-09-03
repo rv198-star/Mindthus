@@ -1,6 +1,6 @@
 ---
 name: using-mindthus
-description: Use at hard judgment points where framing, evidence, decision context, or repeated repair can change action. Skip clear low-risk execution; owner skills may activate directly. This is a thin shared judgment floor.
+description: Use at hard judgment points where framing, evidence, decision context, scarce-resource allocation, or repeated repair can change action. Skip clear low-risk execution; owner skills may activate directly.
 ---
 
 # using-mindthus — Thin Core
@@ -13,11 +13,9 @@ may set goals, values, risk, or authority, but it does not prove factual claims.
 ## Mainline
 
 1. Execute clear, low-risk, fact-sufficient work directly.
-2. Acquire missing facts, runtime proof, platform rules, or one action-changing
-   clarification.
-3. If native Skill discovery makes one owner clear, load it directly; do not route
-   through this entry first.
-4. Otherwise apply only the smallest active obligation below.
+2. Acquire missing facts, runtime proof, platform rules, or one action-changing question.
+3. If one owner is clear, load it directly. Multiple judgeable candidates sharing one
+   scarce resource belong to SRA; otherwise apply the smallest active obligation below.
 
 ## Decision-Changing Obligations
 
