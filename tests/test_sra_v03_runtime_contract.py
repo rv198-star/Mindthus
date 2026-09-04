@@ -666,6 +666,112 @@ class SraV03RuntimeContractTests(unittest.TestCase):
             findings,
         )
 
+    def test_candidate_ids_cannot_collide_with_runtime_sentinels(self):
+        for reserved in ("none", "reserve"):
+            data = input_data()
+            original = data["candidates"][0]["candidate_id"]
+            data["candidates"][0]["candidate_id"] = reserved
+            if data.get("active_candidate_id") == original:
+                data["active_candidate_id"] = reserved
+            for candidate in data["candidates"]:
+                for field in ("depends_on", "unlocks", "substitutes_for"):
+                    candidate[field] = [
+                        reserved if item == original else item
+                        for item in candidate.get(field, [])
+                    ]
+            for item in data["context_items"]:
+                item["candidate_ids"] = [
+                    reserved if candidate_id == original else candidate_id
+                    for candidate_id in item.get("candidate_ids", [])
+                ]
+            findings = validate_context_input(data)
+            self.assertTrue(
+                any("reserved" in item and "candidate" in item for item in findings),
+                (reserved, findings),
+            )
+
+    def test_bundle_id_cannot_use_none_sentinel(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        bundle = judgment["bundle_decision"]["bundle_assessments"][0]
+        old_id = bundle["bundle_id"]
+        bundle["bundle_id"] = "none"
+        judgment["bundle_decision"]["selected_bundle_id"] = "none"
+        for other in judgment["bundle_decision"]["bundle_assessments"]:
+            other["dominated_by"] = [
+                "none" if item == old_id else item
+                for item in other["dominated_by"]
+            ]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("bundle_id" in item and "reserved" in item for item in findings),
+            findings,
+        )
+
+    def test_evidence_time_is_parseable_utc_or_timeless(self):
+        for observed_at in (
+            "yesterday",
+            "2026-09-04",
+            "2026-09-04T08:00:00+08:00",
+        ):
+            data = input_data()
+            data["evidence"][0]["observed_at"] = observed_at
+            findings = validate_context_input(data)
+            self.assertTrue(
+                any("observed_at" in item and "UTC" in item for item in findings),
+                (observed_at, findings),
+            )
+        data = input_data()
+        data["evidence"][0]["observed_at"] = "timeless"
+        self.assertFalse(
+            any("observed_at" in item for item in validate_context_input(data))
+        )
+
+    def test_override_expiry_cannot_extend_authority_expiry(self):
+        data = input_data()
+        data["escalation_signals"] = ["major_commitment"]
+        data["mode"] = "lite"
+        data["context_items"].append(
+            {
+                "context_id": "AUTH-mode",
+                "kind": "authority_decision",
+                "authority_holder": "Release owner",
+                "authority_scope": "May approve one run's depth downgrade.",
+                "authority_expiry": "End of this run.",
+                "statement": "Release owner authorizes one bounded downgrade.",
+                "challenge_projection": "The decision owner authorizes one bounded downgrade.",
+                "projection_basis": "Preserves authority without candidate identity.",
+                "source": "current authority record",
+                "decision_relevance": "Controls downgrade authority.",
+                "requested_disposition": "admit",
+                "candidate_ids": [],
+                "evidence_refs": [],
+                "assumption_refs": [],
+            }
+        )
+        data["overrides"]["mode"] = {
+            "override_reason": "Only one reversible tranche is authorized.",
+            "approved_by": "Release owner",
+            "authority_ref": "AUTH-mode",
+            "risk_acceptance_scope": "This run only.",
+            "expiry": "Never expires.",
+        }
+        findings = validate_context_input(data)
+        self.assertTrue(
+            any("expiry" in item and "authority" in item for item in findings),
+            findings,
+        )
+
+    def test_candidate_cannot_depend_on_itself(self):
+        data = input_data()
+        candidate_id = data["candidates"][0]["candidate_id"]
+        data["candidates"][0]["depends_on"] = [candidate_id]
+        findings = validate_context_input(data)
+        self.assertTrue(
+            any("self" in item and "depends_on" in item for item in findings),
+            findings,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -290,7 +290,11 @@ def _validate_resource_pools(
         contract = pool.get("quantity_contract")
         validate_quantity_contract(contract, f"{path}.quantity_contract", findings)  # noqa: F405
         validate_quantity_for_contract(
-            pool.get("capacity"), contract, f"{path}.capacity", findings
+            pool.get("capacity"),
+            contract,
+            f"{path}.capacity",
+            findings,
+            allow_zero=True,
         )  # noqa: F405
     return resource_ids, pools
 
@@ -321,7 +325,12 @@ def _validate_candidates(
             continue
         candidate_id = candidate.get("candidate_id")
         if _is_non_empty_string(candidate_id):
-            candidates_by_id[str(candidate_id)] = candidate
+            candidate_id = str(candidate_id)
+            candidates_by_id[candidate_id] = candidate
+            if candidate_id in RESERVED_CANDIDATE_IDS:  # noqa: F405
+                findings.append(
+                    f"{path}.candidate_id uses reserved runtime candidate ID {candidate_id!r}"
+                )
         forbidden = sorted(set(candidate) & FORBIDDEN_CANDIDATE_FIELDS)  # noqa: F405
         if forbidden:
             findings.append(
@@ -356,6 +365,10 @@ def _validate_candidates(
                     findings.append(
                         f"{path}.{relation} contains unknown candidate IDs: {unknown}"
                     )
+                if candidate_id in values:
+                    findings.append(
+                        f"{path}.{relation} must not contain the candidate itself"
+                    )
     if candidate_ids and not any(len(users) >= 2 for users in resource_users.values()):
         findings.append(
             "at least one declared resource pool must be contested by two or more candidates"
@@ -382,6 +395,10 @@ def _validate_evidence_and_assumptions(
             for field in ("kind", "source", "statement", "observed_at", "claim_ceiling"):
                 if not _is_non_empty_string(item.get(field)):
                     findings.append(f"{path}.{field} must be a non-empty string")
+            if not is_utc_timestamp_or_timeless(item.get("observed_at")):  # noqa: F405
+                findings.append(
+                    f"{path}.observed_at must be 'timeless' or a parseable UTC timestamp"
+                )
 
     assumption_ids = _validate_unique_ids(
         data.get("assumptions", []),
@@ -524,6 +541,11 @@ def _validate_override_governance(
         if holder != owner:
             findings.append(
                 f"overrides.{key}.authority_ref holder must match allocation decision_owner"
+            )
+        authority_expiry = authority.get("authority_expiry")
+        if value.get("expiry") != authority_expiry:
+            findings.append(
+                f"overrides.{key}.expiry must match authority expiry {authority_expiry!r}"
             )
 
     default_mode = "full" if data.get("escalation_signals") else "lite"
@@ -1308,7 +1330,11 @@ def _bundle_assessment_schema(
             "target_support", "evidence_refs", "assumption_refs",
         ],
         "properties": {
-            "bundle_id": {"type": "string", "pattern": ID_RE.pattern},
+            "bundle_id": {
+                "type": "string",
+                "pattern": ID_RE.pattern,
+                "not": {"enum": sorted(RESERVED_BUNDLE_IDS)},  # noqa: F405
+            },
             "member_ids": _string_array_schema(candidate_ids, min_items=1),
             "feasibility": {"type": "string", "enum": sorted(BUNDLE_FEASIBILITY)},  # noqa: F405
             "dominance_status": {"type": "string", "enum": sorted(DOMINANCE_STATUSES)},  # noqa: F405
@@ -1794,6 +1820,10 @@ def _validate_bundle_decision(
         _validate_id(bundle_id, f"{path}.bundle_id", findings)
         if _is_non_empty_string(bundle_id):
             bundle_id = str(bundle_id)
+            if bundle_id in RESERVED_BUNDLE_IDS:  # noqa: F405
+                findings.append(
+                    f"{path}.bundle_id uses reserved runtime bundle ID {bundle_id!r}"
+                )
             if bundle_id in bundles_by_id:
                 findings.append(f"duplicate bundle_id: {bundle_id}")
             else:

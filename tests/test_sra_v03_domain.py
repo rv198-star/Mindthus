@@ -127,6 +127,19 @@ class SraV03DomainTests(unittest.TestCase):
                 validate_quantity_contract(contract, "contract", findings)
                 self.assertTrue(any(expected in item for item in findings), findings)
 
+    def test_nonfinite_measured_numbers_are_rejected(self):
+        for amount in (float("inf"), float("-inf"), float("nan")):
+            findings: list[str] = []
+            validate_quantity(
+                {"quantity_kind": "exact", "amount": amount, "unit": "day"},
+                "quantity",
+                findings,
+            )
+            self.assertTrue(
+                any("finite" in item for item in findings),
+                (amount, findings),
+            )
+
     def test_measured_quantity_accepts_exact_and_bounded_in_one_unit(self):
         findings: list[str] = []
         validate_quantity_for_contract(
@@ -192,6 +205,16 @@ class SraV03DomainTests(unittest.TestCase):
             findings=findings,
         )
         self.assertTrue(findings)
+
+    def test_zero_exact_capacity_is_representable(self):
+        findings: list[str] = []
+        validate_quantity(
+            {"quantity_kind": "exact", "amount": 0, "unit": "engineer-day"},
+            "capacity",
+            findings,
+            allow_zero=True,
+        )
+        self.assertEqual(findings, [])
 
     def test_bounded_capacity_uses_upper_bound_as_hard_envelope(self):
         pools = [

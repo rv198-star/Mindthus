@@ -174,16 +174,18 @@ Examples:
 }
 ```
 
-Workflow compares quantities only inside the declared resource contract. Measured
+Workflow compares finite quantities only inside the declared resource contract. Measured
 resources use additive `sum`, ordinal resources use `exclusive` single-allocation
-semantics, and indivisible resources use block-set allocation. It does not convert unlike
-resources into one score.
+semantics, and indivisible resources use block-set allocation. Resource capacity may be
+exactly zero; candidate demands and actual allocations remain positive when present. It
+does not convert unlike resources into one score.
 
 ### Candidate Demand
 
-Each candidate declares typed `resource_demand` against resource pool IDs. At least one
-pool must be demanded by two or more candidates; otherwise SRA has no demonstrated shared
-resource contention.
+Each candidate declares typed `resource_demand` against resource pool IDs. Candidate IDs
+`none` and `reserve` are runtime sentinels and cannot name work; a candidate also cannot
+depend on, unlock, or substitute for itself. At least one pool must be demanded by two or
+more candidates; otherwise SRA has no demonstrated shared resource contention.
 
 Actual current allocation, next tranche, and bundle requirements must reference resources
 contained in the relevant candidate demand. Measured and bounded quantities cannot exceed
@@ -203,8 +205,9 @@ observed_at
 claim_ceiling
 ```
 
-A source without observation time is not current evidence. Timeless evidence should say
-so explicitly in `observed_at` rather than silently omitting the field.
+A source without observation time is not current evidence. `observed_at` is either a
+parseable UTC timestamp or the explicit marker `timeless`; local-time and date-only values
+do not silently become current evidence.
 
 ### State Context
 
@@ -239,7 +242,8 @@ expiry
 ```
 
 `authority_ref` must resolve to an admitted authority decision. Its holder must match
-both `approved_by` and the Allocation Frame's `decision_owner`.
+both `approved_by` and the Allocation Frame's `decision_owner`, and the override expiry
+must equal the authority expiry so the downgrade cannot outlive its authority.
 
 The override is retained in packets, run state, final decision, trace, and human-readable
 output. It is never a silent mode switch.
@@ -483,11 +487,12 @@ Agentic judgments:
 - run cache;
 - trace.
 
-It never edits Agentic judgment files. Prepared packet hashes anchor the raw input;
-recorded judgment-event hashes anchor Agentic judgments; trace carrier facts take
-precedence over the mutable run cache. Repair refuses changed raw input, changed Agentic
-judgments, invalid or illegally ordered judgments, another runtime version, invalid
-stage receipt paths, or missing unrecoverable carrier facts.
+It never edits Agentic judgment files. Prepared packet hashes anchor the raw input; recorded judgment-event hashes anchor
+Agentic judgments; trace carrier facts take precedence over the mutable run cache. Repair
+requires at least one prepared-input anchor and accepts only regular in-run authoritative
+files and judgment directories. It refuses changed raw input, changed Agentic judgments,
+invalid or illegally ordered judgments, another runtime version, symbolic-link escapes,
+invalid stage receipt paths, or missing unrecoverable carrier facts.
 
 ## Carrier Boundary
 

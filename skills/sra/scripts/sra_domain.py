@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 from collections import Counter
+from datetime import datetime, timezone
+import math
 from typing import Any, Iterable
 
 INPUT_SCHEMA = "sra.decision-context-input.v0.3"
@@ -92,6 +94,8 @@ CONTRACTION_RESULTS = {
     "retained", "capped", "downgraded", "substituted", "removed", "unclear",
 }
 ALLOCATION_POSTURES = {"floor", "maintenance", "candidate", "defer", "stop"}
+RESERVED_CANDIDATE_IDS = {"none", "reserve"}
+RESERVED_BUNDLE_IDS = {"none"}
 ALLOCATION_OUTCOMES = {"allocate", "conditional", "infeasible", "blocked"}
 RECONCILIATION_OUTCOMES = ALLOCATION_OUTCOMES | {"request_missing_context"}
 BUNDLE_FEASIBILITY = FEASIBILITY
@@ -148,11 +152,27 @@ def is_string_list(value: Any) -> bool:
 
 
 def is_number(value: Any) -> bool:
-    return isinstance(value, (int, float)) and not isinstance(value, bool)
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(float(value))
+    )
 
 
 def _positive_number(value: Any) -> bool:
     return is_number(value) and value > 0
+
+
+def is_utc_timestamp_or_timeless(value: Any) -> bool:
+    if value == "timeless":
+        return True
+    if not isinstance(value, str) or not value.strip():
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timezone.utc.utcoffset(parsed)
 
 
 def validate_quantity_contract(value: Any, path: str, findings: list[str]) -> None:
@@ -199,7 +219,13 @@ def validate_quantity_contract(value: Any, path: str, findings: list[str]) -> No
             findings.append(f"{path}.blocks must not contain duplicate block IDs")
 
 
-def validate_quantity(value: Any, path: str, findings: list[str]) -> None:
+def validate_quantity(
+    value: Any,
+    path: str,
+    findings: list[str],
+    *,
+    allow_zero: bool = False,
+) -> None:
     if not isinstance(value, dict):
         findings.append(f"{path} must be a quantity object")
         return
@@ -219,15 +245,39 @@ def validate_quantity(value: Any, path: str, findings: list[str]) -> None:
     if unexpected:
         findings.append(f"{path} contains unsupported fields for {kind}: {unexpected}")
     if kind == "exact":
-        if not _positive_number(value.get("amount")):
+        amount = value.get("amount")
+        if (
+            isinstance(amount, (int, float))
+            and not isinstance(amount, bool)
+            and not math.isfinite(float(amount))
+        ):
+            findings.append(f"{path}.amount must be finite")
+        elif allow_zero:
+            if not is_number(amount) or amount < 0:
+                findings.append(
+                    f"{path}.amount must be a non-negative number for exact quantity"
+                )
+        elif not _positive_number(amount):
             findings.append(f"{path}.amount must be a positive number for exact quantity")
         if not is_non_empty_string(value.get("unit")):
             findings.append(f"{path}.unit must be a non-empty string for exact quantity")
     elif kind == "bounded":
         lower, upper = value.get("lower_bound"), value.get("upper_bound")
-        if not is_number(lower) or lower < 0:
+        if (
+            isinstance(lower, (int, float))
+            and not isinstance(lower, bool)
+            and not math.isfinite(float(lower))
+        ):
+            findings.append(f"{path}.lower_bound must be finite")
+        elif not is_number(lower) or lower < 0:
             findings.append(f"{path}.lower_bound must be a non-negative number")
-        if not _positive_number(upper):
+        if (
+            isinstance(upper, (int, float))
+            and not isinstance(upper, bool)
+            and not math.isfinite(float(upper))
+        ):
+            findings.append(f"{path}.upper_bound must be finite")
+        elif not _positive_number(upper):
             findings.append(f"{path}.upper_bound must be a positive number")
         if is_number(lower) and is_number(upper) and lower > upper:
             findings.append(f"{path}.lower_bound must not exceed upper_bound")
@@ -249,9 +299,11 @@ def validate_quantity_for_contract(
     contract: Any,
     path: str,
     findings: list[str],
+    *,
+    allow_zero: bool = False,
 ) -> None:
     before = len(findings)
-    validate_quantity(value, path, findings)
+    validate_quantity(value, path, findings, allow_zero=allow_zero)
     validate_quantity_contract(contract, f"{path}.contract", findings)
     if len(findings) != before or not isinstance(value, dict) or not isinstance(contract, dict):
         return

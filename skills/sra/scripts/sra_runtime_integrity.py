@@ -27,17 +27,71 @@ RECEIPT_KEYS = frozenset({
 })
 
 
-def _is_parseable_utc_timestamp(value: Any) -> bool:
+def _parse_utc_timestamp(value: Any) -> datetime | None:
     if not isinstance(value, str) or not value.strip():
-        return False
+        return None
     try:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     except ValueError:
-        return False
-    return parsed.tzinfo is not None and parsed.utcoffset() == timezone.utc.utcoffset(parsed)
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() != timezone.utc.utcoffset(parsed):
+        return None
+    return parsed
+
+
+def _is_parseable_utc_timestamp(value: Any) -> bool:
+    return _parse_utc_timestamp(value) is not None
+
+
+def _path_uses_symlink(path: Path, run_dir: Path) -> bool:
+    if run_dir.is_symlink():
+        return True
+    try:
+        relative = path.relative_to(run_dir)
+    except ValueError:
+        return True
+    current = run_dir
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            return True
+    return False
+
+
+def _blocked_preflight_report(
+    run_dir: Path,
+    state: dict[str, Any],
+    findings: list[dict[str, str]],
+) -> dict[str, Any]:
+    carriers = state.get("carriers", {})
+    receipts = state.get("carrier_receipts", {})
+    if not isinstance(carriers, dict):
+        carriers = {}
+    if not isinstance(receipts, dict):
+        receipts = {}
+    return {
+        "schema_version": CHECK_REPORT_SCHEMA,  # noqa: F405
+        "run_dir": str(run_dir),
+        "run_id": state.get("run_id"),
+        "mode": state.get("mode"),
+        "view_plan": state.get("view_plan"),
+        "coverage_plan": state.get("coverage_plan"),
+        "statuses": state.get("statuses", {}),
+        "governance_overrides": state.get("governance_overrides", {}),
+        "recorded_carriers": carriers,
+        "observed_context_boundary": observed_context_boundary(carriers, receipts),  # noqa: F405
+        "status": "blocked",
+        "findings": findings,
+        "truth_boundary": (
+            "Integrity does not prove complete coverage, absent hidden context, "
+            "semantic necessity, correct priority, or optimal ROI."
+        ),
+    }
 
 
 def _optional_json(path: Path) -> dict[str, Any] | None:
+    if path.is_symlink() or path.parent.is_symlink():
+        raise SraRuntimeError(f"authoritative JSON path must not use a symbolic link: {path}")  # noqa: F405
     if not path.is_file():
         return None
     value = load_json(path)  # noqa: F405
@@ -455,6 +509,9 @@ def _check_json_file(
     code: str,
 ) -> None:
     path = run_dir / relative_path
+    if _path_uses_symlink(path, run_dir):
+        add("block", "surface-path", f"derived surface uses a symbolic link: {relative_path}")
+        return
     if not path.is_file():
         add("block", "missing-file", f"missing required run file: {relative_path}")
         return
@@ -475,6 +532,9 @@ def _check_text_file(
     code: str,
 ) -> None:
     path = run_dir / relative_path
+    if _path_uses_symlink(path, run_dir):
+        add("block", "surface-path", f"derived surface uses a symbolic link: {relative_path}")
+        return
     if not path.is_file():
         add("block", "missing-file", f"missing required run file: {relative_path}")
         return
@@ -550,6 +610,14 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
     def add(severity: str, code: str, message: str) -> None:
         findings.append({"severity": severity, "code": code, "message": message})
 
+    run_state_path = run_dir / "run.json"
+    if _path_uses_symlink(run_state_path, run_dir):
+        add(
+            "block",
+            "authoritative-path",
+            "run.json must be a regular file inside the run directory",
+        )
+        return _blocked_preflight_report(run_dir, {}, findings)
     state = load_run(run_dir)  # noqa: F405
     missing_state_keys = sorted(RUN_STATE_KEYS - set(state))
     extra_state_keys = sorted(set(state) - RUN_STATE_KEYS)
@@ -570,12 +638,35 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
         if not _is_parseable_utc_timestamp(state.get(field)):
             add("block", "run-time", f"run state {field} must be a parseable UTC timestamp")
     judgments_dir = run_dir / "judgments"
-    if not judgments_dir.is_dir() or judgments_dir.is_symlink():
+    if judgments_dir.is_symlink():
+        add(
+            "block",
+            "authoritative-path",
+            "judgments directory must not use a symbolic link",
+        )
+        return _blocked_preflight_report(run_dir, state, findings)
+    if not judgments_dir.is_dir():
         add(
             "block",
             "output-directory",
             "judgments output directory must exist inside the run directory",
         )
+    authoritative_paths = [run_dir / "raw-input.json", run_dir / "trace.jsonl"]
+    authoritative_paths.extend(
+        judgments_dir / f"{stage}.json"
+        for stage in ("coverage", "challenge", "situated", "reconciliation")
+        if (judgments_dir / f"{stage}.json").exists()
+        or (judgments_dir / f"{stage}.json").is_symlink()
+    )
+    for authoritative_path in authoritative_paths:
+        if _path_uses_symlink(authoritative_path, run_dir):
+            add(
+                "block",
+                "authoritative-path",
+                f"authoritative path must be a regular in-run path: {authoritative_path}",
+            )
+    if any(item["code"] == "authoritative-path" for item in findings):
+        return _blocked_preflight_report(run_dir, state, findings)
     raw_path = run_dir / "raw-input.json"
     if not raw_path.is_file():
         raise SraRuntimeError("raw-input.json is required for reconstruction")  # noqa: F405
@@ -826,18 +917,28 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
         for message in _trace_order_findings(event_types):
             add("block", "trace-order", message)
         by_type: dict[str, dict[str, Any]] = {}
+        previous_recorded_at: datetime | None = None
         for index, event in enumerate(trace):
             event_type = str(event.get("event_type"))
             if event.get("schema_version") != TRACE_SCHEMA:  # noqa: F405
                 add("block", "trace-schema", f"trace event {index} has unsupported schema")
             if event.get("run_id") != raw.get("run_id"):
                 add("block", "trace-run", f"trace event {index} has wrong run_id")
-            if not _is_parseable_utc_timestamp(event.get("recorded_at")):
+            recorded_at = _parse_utc_timestamp(event.get("recorded_at"))
+            if recorded_at is None:
                 add(
                     "block",
                     "trace-time",
                     f"trace event {index} must use a parseable UTC recorded_at timestamp",
                 )
+            elif previous_recorded_at is not None and recorded_at < previous_recorded_at:
+                add(
+                    "block",
+                    "trace-time",
+                    f"trace event {index} recorded_at precedes the prior event",
+                )
+            if recorded_at is not None:
+                previous_recorded_at = recorded_at
             if event.get("event_id") != expected_runtime_event_id(event):  # noqa: F405
                 add("block", "trace-event-id", f"trace event {index} has an invalid event_id")
             if event_type in by_type:
@@ -921,14 +1022,21 @@ def _repair_trace_anchors(run_dir: Path, run_id: str) -> dict[str, Any]:
         "situated_judgment_recorded": "situated",
         "reconciliation_judgment_recorded": "reconciliation",
     }
+    previous_recorded_at: datetime | None = None
     for index, event in enumerate(trace):
         event_type = event.get("event_type")
         if event.get("schema_version") != TRACE_SCHEMA:  # noqa: F405
             raise SraRuntimeError(f"trace event {index} has unsupported schema")  # noqa: F405
         if event.get("run_id") != run_id:
             raise SraRuntimeError(f"trace event {index} has wrong run_id")  # noqa: F405
-        if not _is_parseable_utc_timestamp(event.get("recorded_at")):
+        recorded_at = _parse_utc_timestamp(event.get("recorded_at"))
+        if recorded_at is None:
             raise SraRuntimeError(f"trace event {index} has invalid recorded_at")  # noqa: F405
+        if previous_recorded_at is not None and recorded_at < previous_recorded_at:
+            raise SraRuntimeError(  # noqa: F405
+                f"trace event {index} recorded_at precedes the prior event"
+            )
+        previous_recorded_at = recorded_at
         if event.get("event_id") != expected_runtime_event_id(event):  # noqa: F405
             raise SraRuntimeError(f"trace event {index} has invalid event_id")  # noqa: F405
         if not isinstance(event_type, str):
@@ -971,6 +1079,10 @@ def _validate_repair_anchors(
         "challenge_packet_hash": rebuilt["challenge_packet"]["packet_hash"],
         "situated_packet_hash": rebuilt["situated_packet"]["packet_hash"],
     }
+    if not isinstance(prepared, dict) and not state:
+        raise SraRuntimeError(  # noqa: F405
+            "cannot repair without a prepared-input anchor in trace or run state"
+        )
     if isinstance(prepared, dict):
         for field, current in packet_fields.items():
             if prepared.get(field) != current:
@@ -1078,13 +1190,34 @@ def _write_rebuilt_trace(
 
 def repair_run(run_dir: Path) -> dict[str, Any]:
     """Rebuild SRA caches and derived artifacts without editing Agentic judgments."""
+    if run_dir.is_symlink():
+        raise SraRuntimeError("run directory must not be a symbolic link")  # noqa: F405
     raw_path = run_dir / "raw-input.json"
+    state_path = run_dir / "run.json"
+    trace_path = run_dir / "trace.jsonl"
+    judgments_dir = run_dir / "judgments"
+    for authoritative_path in (raw_path, state_path, trace_path):
+        if (authoritative_path.exists() or authoritative_path.is_symlink()) and (
+            _path_uses_symlink(authoritative_path, run_dir)
+        ):
+            raise SraRuntimeError(  # noqa: F405
+                f"authoritative path must not use a symbolic link: {authoritative_path}"
+            )
+    if judgments_dir.is_symlink():
+        raise SraRuntimeError("judgments directory must not use a symbolic link")  # noqa: F405
+    for stage in ("coverage", "challenge", "situated", "reconciliation"):
+        judgment_path = judgments_dir / f"{stage}.json"
+        if (judgment_path.exists() or judgment_path.is_symlink()) and (
+            _path_uses_symlink(judgment_path, run_dir)
+        ):
+            raise SraRuntimeError(  # noqa: F405
+                f"Agentic judgment path must not use a symbolic link: {judgment_path}"
+            )
     raw = load_json(raw_path)  # noqa: F405
     if not isinstance(raw, dict):
         raise SraRuntimeError("raw-input.json must contain an object")  # noqa: F405
     rebuilt = build_packets(raw)  # noqa: F405
 
-    state_path = run_dir / "run.json"
     existing_state: dict[str, Any] = {}
     if state_path.is_file():
         value = load_json(state_path)  # noqa: F405

@@ -1,8 +1,11 @@
 import copy
 import json
+import os
+import stat
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -505,6 +508,114 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         result = repair_run(run_dir)
         self.assertTrue(result["repaired"], result)
         self.assertTrue(judgments.is_dir())
+
+    def test_repair_requires_a_prepared_input_anchor(self):
+        run_dir = self.prepare_run()
+        (run_dir / "run.json").unlink()
+        (run_dir / "trace.jsonl").unlink()
+        raw_path = run_dir / "raw-input.json"
+        raw = load_json(raw_path)
+        raw["allocation_frame"]["parent_objective"] = "A replacement objective."
+        raw_path.write_text(json.dumps(raw), encoding="utf-8")
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_raw_input_must_be_regular_in_run_file(self):
+        run_dir = self.prepare_run()
+        raw_path = run_dir / "raw-input.json"
+        external = run_dir.parent / "raw-external.json"
+        external.write_bytes(raw_path.read_bytes())
+        raw_path.unlink()
+        raw_path.symlink_to(external)
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "authoritative-path" for item in report["findings"])
+        )
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_recorded_judgment_must_be_regular_in_run_file(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        record_situated(
+            run_dir,
+            situated_judgment(packet),
+            carrier="packet_bound",
+            receipt_path=None,
+        )
+        judgment_path = run_dir / "judgments" / "situated.json"
+        external = run_dir.parent / "situated-external.json"
+        external.write_bytes(judgment_path.read_bytes())
+        judgment_path.unlink()
+        judgment_path.symlink_to(external)
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "authoritative-path" for item in report["findings"])
+        )
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_repair_refuses_symlinked_judgments_directory(self):
+        run_dir = self.prepare_run()
+        judgments = run_dir / "judgments"
+        judgments.rmdir()
+        external = run_dir.parent / "external-judgments"
+        external.mkdir()
+        judgments.symlink_to(external, target_is_directory=True)
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+        self.assertEqual(list(external.iterdir()), [])
+
+    def test_generated_command_must_remain_executable(self):
+        run_dir = self.prepare_run()
+        command_path = run_dir / "situated-codex-command.sh"
+        command_path.chmod(stat.S_IRUSR | stat.S_IWUSR)
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(
+                item["code"] == "situated-command-mode"
+                for item in report["findings"]
+            )
+        )
+        repaired = repair_run(run_dir)
+        self.assertTrue(repaired["repaired"], repaired)
+        self.assertTrue(os.access(command_path, os.X_OK))
+
+    def test_trace_timestamps_are_nondecreasing(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        record_situated(
+            run_dir,
+            situated_judgment(packet),
+            carrier="packet_bound",
+            receipt_path=None,
+        )
+        trace_path = run_dir / "trace.jsonl"
+        events = [
+            json.loads(line)
+            for line in trace_path.read_text(encoding="utf-8").splitlines()
+        ]
+        first = datetime.fromisoformat(events[0]["recorded_at"])
+        events[-1]["recorded_at"] = (
+            first - timedelta(seconds=1)
+        ).astimezone(timezone.utc).isoformat()
+        events[-1]["event_id"] = expected_runtime_event_id(events[-1])
+        trace_path.write_text(
+            "\n".join(json.dumps(event) for event in events) + "\n",
+            encoding="utf-8",
+        )
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "trace-time" for item in report["findings"])
+        )
 
     def test_governed_override_remains_visible_in_terminal_output(self):
         data = input_data()
