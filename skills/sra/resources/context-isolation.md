@@ -1,473 +1,547 @@
-# SRA Context Calibration / 上下文校准运行合同
+# SRA v0.3 Context-Calibrated Runtime
 
 ## Purpose
 
-SRA should be independent from inherited conclusions and narrative momentum without
-becoming detached from the real decision context.
+SRA should be independent from inherited conclusions without becoming blind to the
+current objective, values, authority, evidence, assumptions, and real execution state.
+The v0.3 runtime separates those concerns into explicit data surfaces and makes every
+allocation commitment mechanically recoverable.
 
-Core rule:
+The runtime does not decide priority. It provides a trustworthy carrier for Agentic SRA
+judgment.
 
-> Independent from inherited conclusions, not independent from relevant context.
->
-> Isolate narrative authority, not facts, constraints, evidence, or execution state.
->
-> Align candidate structure without flattening real evidence differences.
->
-> Use the de-anchored challenge as calibration; use the situated judgment as the
-> action-bearing view.
+## Controller Ownership
 
-The runtime therefore organizes one bounded allocation question into typed packets and
-independent Agentic views. It does not treat the full ambient conversation as decision
-authority, and it does not treat less context as automatically more objective.
+### Agentic SRA Owns
 
-## WAE Assignment
+- normalizing the current question into situated wording and a de-anchored challenge
+  projection;
+- separating source text into decision-relevant context fragments;
+- judging relevance and factual sufficiency;
+- candidate feasibility and role;
+- minimum sufficient bundle claims;
+- contraction and replenishment;
+- semantic risk, value, and necessity;
+- conflict reconciliation.
 
-### Workflow owns
+### Workflow Owns
 
-- context-kind admission policy and the admitted / quarantined / excluded ledger;
-- candidate structural alignment, stable IDs, and deterministic challenge aliases;
-- packet-specific Agent output schemas;
-- packet and judgment hashes;
-- view-plan and coverage-plan state;
-- typed comparison of stable allocation fields;
-- one-pass reconciliation gating;
-- evidence, assumption, and state-reference validation;
-- read-only fresh-context carrier artifacts;
-- concise final rendering.
+- schema versions and version-bound runs;
+- declared context admission lanes;
+- resource and candidate references;
+- quantity-contract compatibility;
+- candidate demand and actual allocation compatibility;
+- one posture per candidate;
+- Full bundle members, IDs, feasibility/dominance code consistency, and selected-bundle
+  references;
+- capacity and investment-ceiling consequences that follow mechanically from declared
+  quantities;
+- independent packet construction;
+- typed comparison;
+- legal state transitions and finalization;
+- Prompt, schema, Dispatch, command, packet, judgment, comparison, final-copy, and trace
+  reconstruction;
+- repair of derived artifacts without rewriting Agentic judgments.
 
-### Agentic owns
+### Evidence Owns
 
-- packet-coverage judgment when requested;
-- challenges to context relevance or candidate completeness;
-- feasibility, candidate role, necessity, and bundle sufficiency;
-- contraction, first break point, current floor, and replenishment;
-- real switching-cost, commitment, remaining-cost, and reusable-asset interpretation;
-- final allocation recommendation;
-- conflict reconciliation when the independent views materially disagree.
+- observable facts and source identity;
+- observation time;
+- claim ceiling;
+- explicit assumptions and overturn conditions.
 
-### Evidence owns
+Workflow validates the declared structure. It does not infer whether a bundle is truly
+sufficient, whether a risk is acceptable, or which candidate deserves priority.
 
-- observable sources and timestamps;
-- claim ceilings;
-- explicit assumptions and overturn conditions;
-- references supporting load-bearing judgments;
-- observable carrier receipts where available.
+## Version Boundary
 
-### Outer caller owns
+All active runtime artifacts use v0.3 identifiers. A prepared v0.2 run cannot be resumed
+or repaired under v0.3 because its resource carrier, context boundary, bundle model,
+comparison core, and finalization semantics differ.
 
-- raw source and candidate collection;
-- current user instruction and value constraints;
-- execution authority;
-- TPlan or project mutation;
-- final human-authority decisions when required.
+Start a new v0.3 run from the source decision context. Historical v0.2 release artifacts
+remain historical evidence; they are not silently rewritten.
 
-Workflow follows deterministic consequence. Agentic owns result-changing semantic
-choice. Evidence limits what either may claim.
+## Input Contract
 
-## Context Admission Ledger
+### Decision Question
 
-Every supplied context item uses one kind:
+The caller supplies one object:
 
-- `current_instruction`
-- `user_constraint`
-- `authority_decision`
-- `observed_fact`
-- `runtime_evidence`
-- `assumption`
-- `historical_context`
-- `candidate_advocacy`
-- `previous_conclusion`
-- `ambient_inference`
-
-Default treatment:
-
-| Kind | Treatment |
-|---|---|
-| current instruction | admitted as current authority |
-| user constraint | admitted as a value, target, or risk constraint; not factual proof |
-| authority decision | admitted inside declared scope and expiry |
-| observed fact / runtime evidence | admitted inside source and claim ceiling |
-| assumption | admitted with an overturn condition |
-| historical context | quarantined by default; explicit scoped admission requires evidence or assumption support |
-| candidate advocacy | quarantined as a claim, not evidence |
-| previous conclusion | quarantined; its underlying evidence may be admitted separately |
-| ambient inference | quarantined unless restated as an explicit assumption |
-
-At least one `current_instruction` anchors every applicable run. Current instructions,
-current user constraints, and authority decisions cannot be silently excluded.
-
-Quarantine removes inherited authority, not audit visibility. A prior conclusion can be
-split into:
-
-```text
-old recommendation          -> previous_conclusion, quarantined
-reproducible failing test    -> evidence, admitted
-verified current progress    -> situated state, admitted with source
-past effort                  -> sunk-cost-only
-future rollback cost         -> switching cost, admitted with evidence or assumption
+```json
+{
+  "situated_question": "full current-state wording",
+  "challenge_projection": "same allocation question without active identity, prior conclusions, or sunk-cost narrative",
+  "source": "where the question came from",
+  "projection_basis": "what was removed and what meaning was preserved"
+}
 ```
 
-Scripts apply the declared-kind policy. They cannot prove that the outer caller
-classified every item correctly. Agentic coverage or allocation judgment may challenge
-classification and request a new packet.
+Workflow never performs semantic text splitting. The caller or an Agentic intake step
+owns the projection. Workflow rejects a challenge projection that directly contains a
+stable original candidate ID.
 
-## Candidate Structural Alignment
+This check is intentionally bounded. It prevents direct structured identity leakage; it
+does not prove that prose is perfectly de-anchored.
 
-Every candidate uses the same observable card:
+### Context Fragments
+
+Each context item has one declared kind:
+
+- `user_constraint`;
+- `authority_decision`;
+- `observed_fact`;
+- `runtime_evidence`;
+- `assumption`;
+- `historical_context`;
+- `candidate_advocacy`;
+- `previous_conclusion`;
+- `ambient_inference`.
+
+Every admitted item carries:
 
 ```text
-candidate_id
-action_statement
-expected_target_effect
-resource_demand
-depends_on
-unlocks
-substitutes_for
-deadline_or_window
-downside
-reversibility
+statement
+challenge_projection
+projection_basis
+source
+decision_relevance
+candidate_ids
 evidence_refs
 assumption_refs
 ```
 
-Input must not pre-label a candidate as:
+The situated packet receives `statement`. The challenge packet receives only
+`challenge_projection`, with candidate references mapped to challenge aliases.
 
-- hard gate;
-- threshold-essential;
-- bottleneck;
-- value-expanding;
-- maintenance;
-- defer or stop;
-- high priority;
-- high ROI.
+Deterministic lanes:
 
-Those are SRA outputs. Workflow rejects explicit role or score fields rather than
-allowing the outer caller to perform the core judgment in advance.
+| Kind | Default lane |
+|---|---|
+| user constraint | admitted as decision constraint |
+| authority decision | admitted as scoped authority |
+| observed fact / runtime evidence | admitted as evidence claim |
+| assumption | admitted as explicit assumption |
+| historical context | quarantined unless explicitly admitted with evidence or assumption |
+| advocacy / previous conclusion / ambient inference | quarantined |
 
-Structural alignment means equal fields, stable IDs, resolvable references, and
-input-order-independent aliases. It does not mean equal word count, equal evidence, or
-fake neutrality. A reproducible failure may legitimately outweigh an unsupported
-benefit assumption.
+An admitted authority decision also carries `authority_holder`, `authority_scope`, and
+`authority_expiry`.
 
-A large presentation asymmetry produces a warning. Workflow neither rewards the richer
-candidate nor penalizes the terser one.
+### Resource Pools
 
-## View Plans
-
-### `situated_only`
-
-Ordinary reversible Lite decisions use one packet-bound situated judgment:
+Each resource pool declares:
 
 ```text
-context ledger
-    -> structurally aligned situated packet
-    -> one micro-contraction
-    -> one micro-replenishment
-    -> bounded allocation
+resource_id
+label
+quantity_contract
+capacity
+window
 ```
 
-Use this when the allocation error is cheap, no material contamination signal exists,
-and a second view would cost more than the decision it protects.
-
-### `dual_view`
-
-Full, high-impact, major-redirection, or contamination-sensitive decisions use two
-independent views:
+Quantity contracts are explicit:
 
 ```text
-                 -> de-anchored challenge
-shared base -----|
-                 -> situated judgment
-
-challenge + situated
-    -> typed comparison
-    -> agree: finalize situated judgment
-    -> conflict: one targeted reconciliation
+measured    -> exact or bounded quantity in one unit
+ordinal     -> one level from a declared ordered scale
+indivisible -> one or more named blocks
 ```
 
-The two views may share the same decision base, but neither receives the other's output.
-They may be recorded in either order.
-
-Fresh, read-only, no-fork Agentic carriers are preferred when the host supports them.
-A same-context packet-bound run remains logical separation and cannot claim fresh
-context. A carrier label or receipt does not prove absence of hidden host context.
-
-## De-Anchored Challenge
-
-The challenge packet includes:
-
-- current objective, target threshold, time window, risk floor, values, and authority;
-- structurally aligned candidates under deterministic aliases;
-- candidate-linked evidence and explicit assumptions;
-- admitted common context;
-- known omissions.
-
-It omits:
-
-- original candidate IDs;
-- active candidate identity;
-- historical spend;
-- switching costs;
-- reusable assets;
-- remaining costs;
-- current commitments;
-- prior allocation conclusions;
-- candidate advocacy.
-
-The challenge judge asks:
-
-> Without granting extra authority to work merely because it is already active,
-> defended, detailed, or expensive in the past, what survives contraction and where
-> should the next tranche go?
-
-The challenge result is a calibration view. It is not default final authority because
-it intentionally omits execution-state costs.
-
-Workflow proves this identity boundary mechanically by checking that the challenge
-packet omits original IDs and that every identifier-bearing judgment field uses only
-the packet's aliases. It must not classify ordinary descriptive prose as identity
-leakage: a semantic candidate ID can be independently reconstructed from the visible
-action, so a prose collision is not evidence of hidden-context access. Prose remains
-Agentic reasoning and never becomes an accepted identifier.
-
-## Situated Judgment
-
-The situated packet includes the shared decision base plus:
-
-- original candidate IDs;
-- active candidate identity;
-- evidence- or assumption-bound switching costs;
-- reusable assets;
-- remaining costs;
-- current commitments and authority boundaries;
-- historical spend labelled as sunk-cost-only.
-
-It excludes:
-
-- the challenge judgment;
-- prior allocation conclusions;
-- candidate advocacy.
-
-The situated judge asks:
-
-> Given the real future consequences from the current state, what allocation should be
-> executed now?
-
-The situated judgment is the action-bearing view. It must cite state items when state
-changes the decision, and it must state `sunk_cost_used_as_reason=false`.
-
-## Packet Coverage Review
-
-Coverage review is conditional. It activates when:
-
-- Full mode has known omissions;
-- the candidate surface is explicitly uncertain;
-- cross-project scope or high omission risk exists;
-- the user requests a coverage challenge.
-
-The coverage reviewer sees the source inventory, context ledger, candidates, evidence,
-assumptions, and known omissions. It may return only:
-
-- `packet_ready`
-- `packet_ready_with_warning`
-- `packet_incomplete`
-
-It cannot assign SRA roles or choose an allocation. `packet_incomplete` blocks the run
-and requires a new packet rather than a deeper loop inside the same run.
-
-## Typed Comparison
-
-Workflow compares only stable fields:
-
-- allocation outcome;
-- current floor candidate IDs;
-- next-tranche candidate ID;
-- authorization horizon;
-- reserve posture;
-- maintenance, defer, and stop sets.
-
-It does not compare prose semantically and does not choose a winner.
-
-Agreement means the challenge corroborates the independent situated allocation. It does
-not prove candidate coverage or correct priority.
-
-Conflict means one or more typed fields differ. Workflow then produces a bounded
-reconciliation packet.
-
-Before comparison, both Agentic views use the same coding contract:
-
-- `allocate` means the tranche can start now; `conditional` means an unresolved
-  prerequisite prevents that start, not merely that a reranking trigger exists;
-- the current floor and maintenance sets include only nonzero use of the contested
-  resource now, not completed or merely reusable baselines;
-- `defer` means feasible with zero allocation now and eligible to return; `stop` removes
-  a candidate from future consideration;
-- one fixed resource block is `one_tranche` even when it ends at a named result;
-  `until_named_checkpoint` is reserved for authorization whose amount is not fixed.
-
-These are Agentic coding semantics made explicit before delegation. Workflow validates
-and compares the resulting fields; it does not infer which code the facts deserve.
-
-Situated and reconciliation judgments also keep each `state_considerations` item
-single-kind. Its `state_refs` may cite only the matching packet state kind:
-`active_path_identity -> active_candidate`, `switching_cost -> switching_cost`,
-`reusable_asset -> reusable_asset`, `remaining_cost -> remaining_cost`,
-`sunk_cost_rejected -> sunk_cost`, and `current_commitment` or `authority_boundary ->
-current_commitment`. Cross-kind reasoning uses separate consideration items; top-level
-`state_refs` and conflict resolutions may still combine kinds. The packet-specific
-output schema exposes this mapping before generation, and Workflow revalidates it when
-recording.
-
-## Targeted Reconciliation
-
-The reconciliation packet contains:
-
-- the common decision frame;
-- original candidates;
-- the two normalized decision cores;
-- exact conflict fields;
-- evidence, assumptions, and state items cited by either view;
-- known omissions.
-
-It excludes ambient conversation, unrelated reasoning prose, prior conclusions, and
-candidate advocacy.
-
-The reconciler resolves every named conflict and may return:
-
-- `allocate`
-- `conditional`
-- `infeasible`
-- `blocked`
-- `request_missing_context`
-
-It is not a majority vote or forced-closure mechanism. One packet version permits one
-reconciliation only. New material context creates a new SRA run.
-
-## Runtime State
-
-The state is orthogonal rather than one linear blind-to-state chain:
+Examples:
 
 ```json
 {
-  "coverage": "not_required | pending | recorded_ready | recorded_warning | recorded_incomplete",
-  "challenge": "not_required | pending | recorded",
-  "situated": "pending | recorded",
-  "comparison": "not_required | pending | agree | conflict",
-  "reconciliation": "not_required | pending | recorded",
-  "finalization": "pending | finalized | blocked"
+  "resource_id": "engineer-time",
+  "quantity_contract": {"family": "measured", "aggregation": "sum", "unit": "engineer-day"},
+  "capacity": {"quantity_kind": "exact", "amount": 2, "unit": "engineer-day"}
 }
 ```
 
-Normal semantic cost is bounded:
-
-```text
-ordinary Lite:
-  situated
-
-contaminated Lite:
-  challenge + situated
-  + reconciliation only on conflict
-
-Full:
-  optional coverage review
-  + challenge + situated
-  + reconciliation only on conflict
+```json
+{
+  "resource_id": "management-attention",
+  "quantity_contract": {"family": "ordinal", "aggregation": "exclusive", "scale": ["low", "medium", "high"]},
+  "capacity": {"quantity_kind": "ordinal", "level": "medium"}
+}
 ```
 
-There is no recursive Agentic loop.
-
-## Runtime Files
-
-A prepared run contains:
-
-```text
-run.json
-raw-input.json
-context-admission.json
-base-packet.json
-coverage-packet.json
-challenge-packet.json
-situated-packet.json
-*-agent-prompt.md
-*-output-schema.json
-*-subagent-dispatch.json
-*-codex-command.sh
-trace.jsonl
+```json
+{
+  "resource_id": "review-slot",
+  "quantity_contract": {"family": "indivisible", "aggregation": "set", "blocks": ["slot-a", "slot-b"]},
+  "capacity": {"quantity_kind": "indivisible", "blocks": ["slot-a", "slot-b"]}
+}
 ```
 
-After judgment:
+Workflow compares finite quantities only inside the declared resource contract. Measured
+resources use additive `sum`, ordinal resources use `exclusive` single-allocation
+semantics, and indivisible resources use block-set allocation. Resource capacity may be
+exactly zero; candidate demands and actual allocations remain positive when present. It
+does not convert unlike resources into one score.
+
+### Candidate Demand
+
+Each candidate declares typed `resource_demand` against resource pool IDs. Candidate IDs
+`none` and `reserve` are runtime sentinels and cannot name work; a candidate also cannot
+depend on, unlock, or substitute for itself. At least one pool must be demanded by two or
+more candidates; otherwise SRA has no demonstrated shared resource contention.
+
+Actual current allocation, next tranche, and bundle requirements must reference resources
+contained in the relevant candidate demand. Measured and bounded quantities cannot exceed
+that demand; ordinal levels and indivisible blocks must remain within the declared
+candidate boundary.
+
+### Evidence
+
+Every evidence item records:
 
 ```text
-judgments/coverage.json        # only when required
-judgments/challenge.json       # dual_view only
-judgments/situated.json
-comparison-report.json         # dual_view only
-reconciliation-packet.json     # conflict only
-judgments/reconciliation.json  # conflict only
-final-decision.json
+evidence_id
+kind
+source
+statement
+observed_at
+claim_ceiling
 ```
 
-For project-local use, prefer `.sra/<run-id>/`. Runtime packets and receipts remain
-outside source control.
+A source without observation time is not current evidence. `observed_at` is either a
+parseable UTC timestamp or the explicit marker `timeless`; local-time and date-only values
+do not silently become current evidence.
 
-## Script Commands
+### State Context
 
-Prepare:
+Situated judgment may receive:
+
+- switching costs;
+- reusable assets;
+- remaining costs;
+- historical spend;
+- current commitments;
+- active-candidate identity.
+
+Historical spend is marked `sunk_cost` and cannot justify continuation. Current
+commitments bind to a declared authority decision.
+
+## Governed Downgrades
+
+A caller may intentionally downgrade:
+
+- Full to Lite;
+- dual view to situated-only;
+- required coverage to skipped coverage.
+
+Each downgrade needs:
+
+```text
+override_reason
+approved_by
+authority_ref
+risk_acceptance_scope
+expiry
+```
+
+`authority_ref` must resolve to an admitted authority decision. Its holder must match
+both `approved_by` and the Allocation Frame's `decision_owner`, and the override expiry
+must equal the authority expiry so the downgrade cannot outlive its authority.
+
+The override is retained in packets, run state, final decision, trace, and human-readable
+output. It is never a silent mode switch.
+
+## Packet Topology
+
+### Base Packet
+
+The base packet contains the situated question, Allocation Frame, candidates, shared
+evidence and assumptions, admitted situated context, omissions, contamination/coverage
+signals, governance overrides, and warnings.
+
+### Coverage Packet
+
+Coverage review is orthogonal to allocation. It checks whether the question projection,
+candidate surface, bundle opportunity, resources, evidence, and authority are ready.
+
+Allowed outcomes:
+
+- `packet_ready`;
+- `packet_ready_with_warning`;
+- `packet_incomplete`.
+
+`packet_incomplete` finalizes the run as blocked with zero allocation.
+
+### Challenge Packet
+
+The challenge packet:
+
+- replaces original candidate IDs with input-order-independent aliases;
+- uses only the challenge question projection;
+- uses only challenge projections of admitted context;
+- omits active-candidate identity, switching cost, reusable assets, remaining cost,
+  historical spend, current commitments, prior conclusions, and advocacy;
+- retains real candidate actions, relations, typed resource demand, evidence, and
+  assumptions.
+
+The challenge view is calibration, not final authority.
+
+### Situated Packet
+
+The situated packet retains:
+
+- full current-state question wording;
+- original candidate IDs;
+- admitted situated context;
+- active identity;
+- future switching cost;
+- reusable assets;
+- remaining cost;
+- scoped commitments;
+- sunk-cost records under an explicit rejection policy.
+
+It never receives the challenge judgment or comparison report.
+
+## Judgment Carrier
+
+### Candidate Assessments
+
+Each view assesses every packet candidate exactly once:
+
+```text
+candidate ID or challenge alias
+feasibility
+candidate_role
+contraction_result
+first_break_point
+evidence_refs
+assumption_refs
+```
+
+An infeasible candidate cannot receive current resource, the next tranche, or membership
+in a selected actionable bundle.
+
+### Allocation Ledger
+
+Every candidate receives exactly one row:
+
+```text
+candidate_id or challenge_id
+posture: floor | maintenance | candidate | defer | stop
+current_allocations[]
+reason
+```
+
+Mechanical rules:
+
+- `floor` and `maintenance` carry nonzero current allocation;
+- `candidate`, `defer`, and `stop` carry zero current allocation;
+- deferred or stopped work cannot receive the next tranche;
+- the next-tranche resource must be part of that candidate's demand;
+- current plus next commitment cannot exceed the typed investment ceiling;
+- current, next, and reserve allocations cannot exceed declared resource capacity.
+
+### Full Bundle Decision
+
+Lite records:
+
+```text
+status: not_applicable
+bundle_assessments: []
+selected_bundle_id: none
+```
+
+Full requires bundle assessments. Each bundle records:
+
+```text
+bundle_id
+bundle members
+feasibility
+dominance_status
+dominated_by
+resource_requirements
+contraction_result
+target_support
+evidence_refs
+assumption_refs
+```
+
+Full actionable outcomes select one feasible or conditional, non-dominated bundle.
+Dominance references are acyclic and point only to feasible or conditional bundles.
+`infeasible` means no bundle remains coded feasible or conditional, even when such a
+bundle was marked dominated; an infeasible bundle may therefore contain members also
+assessed infeasible. The selected resource vector bounds its members' current plus next
+commitment. The next-tranche candidate and every `floor` posture belong to the selected
+member set; maintenance outside it remains allowed. Two bundle rows with the same member
+set are duplicates even when their local IDs differ.
+
+Workflow validates these coded consequences. Agentic SRA remains responsible for whether
+the claimed target support, feasibility, dominance, and minimum sufficiency are true.
+
+### Next Tranche, Ceiling, And Reserve
+
+The next tranche records:
+
+```text
+target_id
+resource_allocations
+window
+completion_signal
+start_condition
+reason
+```
+
+`allocate` carries a nonempty tranche and no unresolved start condition. `conditional`
+carries a named start condition or explicitly records that no target is authorized yet.
+`blocked`, `request_missing_context`, and `infeasible` carry no current allocation, next
+tranche, new reserve, or investment ceiling.
+
+Reserve is one separate posture:
+
+```text
+status
+resource_allocations
+reason
+release_trigger
+review_time
+```
+
+It is not duplicated as an ordinary candidate. When `next_tranche.target_id=reserve`,
+the next-tranche allocation and reserve record describe the same resource commitment,
+must match exactly, and count once against capacity and the investment ceiling.
+
+## Typed Dual-View Comparison
+
+Challenge aliases are mapped back to original candidate IDs. Workflow compares:
+
+- allocation outcome;
+- candidate feasibility, role, and contraction result;
+- Full bundle member sets, resource requirements, feasibility, dominance, and selected
+  bundle;
+- allocation-ledger posture and current resource allocation;
+- next target, quantity, window, completion signal, and start condition;
+- investment ceiling;
+- authorization horizon;
+- reserve resources and release boundary;
+- missing information.
+
+Explanation prose is not compared. Local bundle IDs are not compared; canonical bundle
+identity comes from sorted bundle members.
+
+One engineer-hour and six engineer-months to the same candidate are a conflict. A
+mechanically different bundle or candidate-role assignment is also a conflict.
+
+Agreement is corroboration of the same typed commitment. It is not proof of semantic
+truth. Conflict selects no winner and opens one targeted reconciliation.
+
+## Outcome And Finalization
+
+| Outcome | Immediate authorization | Runtime finalization |
+|---|---|---|
+| `allocate` | yes | `finalized` |
+| `conditional` | only after named condition | `conditional` |
+| `infeasible` | none | `finalized` |
+| `blocked` | none | `blocked` |
+| `request_missing_context` | none | `blocked` |
+
+The human-readable renderer follows this table. A blocked or infeasible result never says
+that work may start immediately.
+
+## Deterministic Integrity
+
+`run.json` is a cache, not independent authority. `check_sra_run.py` reconstructs from:
+
+- `raw-input.json`;
+- deterministic packet construction;
+- recorded Agentic judgments;
+- legal typed transitions.
+
+The checker verifies:
+
+- the exact v0.3 run-state field set and canonical Workflow claim ceiling;
+- selected mode, view plan, and coverage plan;
+- context admission and all packets;
+- Prompt text;
+- output schema;
+- Dispatch JSON;
+- generated CLI command;
+- candidate aliases;
+- judgment validation and hashes;
+- comparison and reconciliation packet;
+- final source and final copy;
+- trace event type, order, identity, payload, and parseable UTC timestamp;
+- stage-bound, non-symlink carrier receipts with canonical metadata and observable
+  context boundary;
+- governance override visibility;
+- the in-run `judgments/` output directory required by generated carriers.
+
+Any malformed or extended state fails closed as a structured blocked report rather than
+a traceback.
+
+The runtime claims deterministic reconstruction and detectable contract drift. It does
+not claim tamper-proof storage against an adversary who can rewrite every local artifact.
+
+## Repair
+
+`repair_sra_run.py` rebuilds derived artifacts from valid raw input plus valid recorded
+Agentic judgments:
+
+- admission and packets;
+- Prompt, schema, Dispatch, and command surfaces;
+- comparison and reconciliation;
+- final copy;
+- run cache;
+- trace.
+
+It never edits Agentic judgment files. Prepared packet hashes anchor the raw input; recorded judgment-event hashes anchor
+Agentic judgments; trace carrier facts take precedence over the mutable run cache. Repair
+requires at least one prepared-input anchor and accepts only regular in-run authoritative
+files and judgment directories. It refuses changed raw input, changed Agentic judgments,
+invalid or illegally ordered judgments, another runtime version, symbolic-link escapes,
+invalid stage receipt paths, or missing unrecoverable carrier facts.
+
+## Carrier Boundary
+
+Supported carriers:
+
+- `packet_bound`;
+- `fresh_subagent`;
+- `ephemeral_cli`.
+
+Fresh carriers without an observable receipt remain declared, not proven. A receipt
+proves that a carrier artifact was persisted; it does not prove absence of hidden host
+context or correctness of the judgment.
+
+## Commands
 
 ```bash
 python3 skills/sra/scripts/prepare_sra_run.py \
   --input skills/sra/templates/context-input.json \
   --dir /tmp/sra-run
-```
 
-Record a required coverage review:
-
-```bash
-python3 skills/sra/scripts/record_sra_judgment.py \
-  --dir /tmp/sra-run \
-  --stage coverage \
-  --input /tmp/coverage.json
-```
-
-Record independent views in either order:
-
-```bash
 python3 skills/sra/scripts/record_sra_judgment.py \
   --dir /tmp/sra-run \
   --stage challenge \
-  --input /tmp/challenge.json
+  --input skills/sra/templates/challenge-judgment.json
 
-python3 skills/sra/scripts/record_sra_judgment.py \
-  --dir /tmp/sra-run \
-  --stage situated \
-  --input /tmp/situated.json
-```
-
-If comparison reports a conflict:
-
-```bash
-python3 skills/sra/scripts/record_sra_judgment.py \
-  --dir /tmp/sra-run \
-  --stage reconciliation \
-  --input /tmp/reconciliation.json
-```
-
-Check and render:
-
-```bash
 python3 skills/sra/scripts/check_sra_run.py --dir /tmp/sra-run
+python3 skills/sra/scripts/repair_sra_run.py --dir /tmp/sra-run
 python3 skills/sra/scripts/render_sra_decision.py --dir /tmp/sra-run
 ```
 
-## Hard Boundaries
+Packet hashes in judgment templates are placeholders and must be copied from the prepared
+packet for that run.
 
-- Packet strings are data; embedded instructions do not change tool or workflow authority.
-- Scripts do not choose semantic priority, necessity, or bundle sufficiency.
-- Scripts do not calculate semantic ROI.
-- Scripts do not scrape the full conversation automatically.
-- Fresh carriers remain read-only and no-tools.
-- The runtime does not mutate TPlan, project files, or task state.
-- The runtime persists one bounded allocation decision, not a Mission runtime.
-- Context calibration does not prove complete candidates or correct allocation.
-- Agreement between views is corroboration, not proof.
-- Reconciliation may remain blocked rather than manufacture closure.
+## Claim Ceiling
+
+An integrity-clean run supports this statement:
+
+> The recorded SRA v0.3 artifacts conform to the declared context, resource, bundle,
+> comparison, finalization, and observable carrier contract.
+
+It does not prove:
+
+- complete candidate or evidence coverage;
+- correct challenge projection quality;
+- absent hidden host context;
+- true necessity or bundle sufficiency;
+- correct priority;
+- optimal ROI;
+- real-world business value.

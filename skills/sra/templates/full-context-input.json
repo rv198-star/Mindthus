@@ -1,28 +1,26 @@
 {
   "schema_version": "sra.decision-context-input.v0.3",
-  "run_id": "release-priority-sample",
+  "run_id": "release-bundle-sample",
   "decision_question": {
-    "situated_question": "Should the release engineer continue optional page polish or move the next engineer-day to payment validation?",
-    "challenge_projection": "Which eligible release action should receive the next engineer-day?",
-    "source": "current user request",
-    "projection_basis": "Removes active-path identity, prior conclusions, and historical spend while preserving the allocation question."
+    "situated_question": "Which release bundle should receive the only engineer-day in the current window?",
+    "challenge_projection": "Which eligible release bundle should receive the only engineer-day in the current window?",
+    "source": "current release allocation request",
+    "projection_basis": "Preserves the bundle-allocation question without active-path identity, prior conclusions, or historical spend."
   },
-  "mode": "auto",
+  "mode": "full",
   "view_plan": "auto",
   "coverage_review": "auto",
   "overrides": {},
-  "escalation_signals": [],
-  "contamination_signals": [
-    "active_task_richness",
-    "prior_agent_conclusion",
-    "sunk_cost_narrative"
+  "escalation_signals": [
+    "multiple_feasible_bundles"
   ],
+  "contamination_signals": [],
   "coverage_signals": [],
   "allocation_frame": {
     "parent_objective": "Launch a purchasable product page in the current release window.",
     "target_threshold": "The page is usable and the payment path is validated for launch.",
     "time_window": "Current release window.",
-    "risk_floor": "Do not launch with an unvalidated payment path or a release-blocking page defect.",
+    "risk_floor": "Do not launch with an unvalidated payment path.",
     "decision_owner": "Release owner",
     "resource_pools": [
       {
@@ -41,14 +39,14 @@
         "window": "Current release window."
       }
     ],
-    "evidence_ceiling": "Current release-window acceptance evidence only; no production revenue or long-term conversion measurement is claimed."
+    "evidence_ceiling": "Current release-window acceptance evidence only."
   },
   "active_candidate_id": "page-polish",
   "candidates": [
     {
       "candidate_id": "page-polish",
-      "action_statement": "Spend the next engineer-day improving optional animation polish.",
-      "expected_target_effect": "Improves presentation after the page usability threshold has already been reached.",
+      "action_statement": "Spend the engineer-day improving optional animation polish.",
+      "expected_target_effect": "Improves presentation after usability acceptance has passed.",
       "resource_demand": [
         {
           "resource_id": "engineer-time",
@@ -63,7 +61,7 @@
       "unlocks": [],
       "substitutes_for": [],
       "deadline_or_window": "Can wait until after launch.",
-      "downside": "Consumes the only engineer-day in the release window.",
+      "downside": "Consumes the only engineer-day without closing payment acceptance.",
       "reversibility": "High.",
       "evidence_refs": [
         "E-page"
@@ -74,8 +72,8 @@
     },
     {
       "candidate_id": "payment-validation",
-      "action_statement": "Spend the next engineer-day validating the payment path.",
-      "expected_target_effect": "Closes an unresolved launch requirement and produces a reproducible validation result.",
+      "action_statement": "Spend the engineer-day validating the payment path.",
+      "expected_target_effect": "Closes the remaining launch requirement.",
       "resource_demand": [
         {
           "resource_id": "engineer-time",
@@ -90,7 +88,7 @@
       "unlocks": [],
       "substitutes_for": [],
       "deadline_or_window": "Required in the current release window.",
-      "downside": "May reveal a larger defect that changes the launch plan.",
+      "downside": "May reveal a larger payment defect.",
       "reversibility": "High for the validation action.",
       "evidence_refs": [
         "E-payment"
@@ -121,8 +119,8 @@
   "assumptions": [
     {
       "assumption_id": "A-polish-value",
-      "statement": "Additional animation polish can wait without changing the current launch threshold.",
-      "overturn_condition": "A release-blocking page defect appears or the authorized launch threshold changes."
+      "statement": "Optional animation polish can wait without changing the launch threshold.",
+      "overturn_condition": "A release-blocking page defect appears."
     },
     {
       "assumption_id": "A-payment-duration",
@@ -134,39 +132,13 @@
     {
       "context_id": "CTX-quality",
       "kind": "user_constraint",
-      "statement": "Release threshold and payment integrity matter more than optional polish in this window.",
-      "challenge_projection": "The release threshold and payment integrity take precedence over optional improvement.",
-      "projection_basis": "Preserves the current value constraint without naming an active candidate.",
+      "statement": "Launch integrity matters more than optional presentation improvement in this window.",
+      "challenge_projection": "Launch integrity takes precedence over optional presentation improvement in this window.",
+      "projection_basis": "Preserves the current value constraint without naming a candidate.",
       "source": "current user constraint",
-      "decision_relevance": "Constrains the trade-off.",
+      "decision_relevance": "Constrains bundle comparison.",
       "requested_disposition": "consider",
       "candidate_ids": [],
-      "evidence_refs": [],
-      "assumption_refs": []
-    },
-    {
-      "context_id": "CTX-prior",
-      "kind": "previous_conclusion",
-      "statement": "A previous agent recommended continuing page polish.",
-      "source": "prior response",
-      "decision_relevance": "Potential anchoring only.",
-      "requested_disposition": "consider",
-      "candidate_ids": [
-        "page-polish"
-      ],
-      "evidence_refs": [],
-      "assumption_refs": []
-    },
-    {
-      "context_id": "CTX-advocacy",
-      "kind": "candidate_advocacy",
-      "statement": "The design advocate describes the current polish path in much greater detail.",
-      "source": "stakeholder note",
-      "decision_relevance": "Candidate claim only.",
-      "requested_disposition": "consider",
-      "candidate_ids": [
-        "page-polish"
-      ],
       "evidence_refs": [],
       "assumption_refs": []
     }
@@ -178,22 +150,6 @@
     "historical_spend": [],
     "commitments": []
   },
-  "source_inventory": [
-    {
-      "source_id": "SRC-release-checklist",
-      "kind": "release_acceptance",
-      "summary": "Current page and payment acceptance status.",
-      "decision_relevance": "Defines which release requirements remain open.",
-      "candidate_ids": [
-        "page-polish",
-        "payment-validation"
-      ],
-      "evidence_refs": [
-        "E-page",
-        "E-payment"
-      ],
-      "assumption_refs": []
-    }
-  ],
+  "source_inventory": [],
   "known_omissions": []
 }

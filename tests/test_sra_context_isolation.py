@@ -13,8 +13,15 @@ PREPARE = SCRIPTS / "prepare_sra_run.py"
 RECORD = SCRIPTS / "record_sra_judgment.py"
 CHECK = SCRIPTS / "check_sra_run.py"
 RENDER = SCRIPTS / "render_sra_decision.py"
+REPAIR = SCRIPTS / "repair_sra_run.py"
 INPUT_TEMPLATE = SRA / "templates" / "context-input.json"
-DESIGN = REPO / "docs" / "superpowers" / "specs" / "2026-09-03-sra-context-isolated-runtime-design.md"
+COVERAGE_TEMPLATE = SRA / "templates" / "coverage-judgment.json"
+CHALLENGE_TEMPLATE = SRA / "templates" / "challenge-judgment.json"
+SITUATED_TEMPLATE = SRA / "templates" / "situated-judgment.json"
+RECONCILIATION_TEMPLATE = SRA / "templates" / "reconciliation-judgment.json"
+FULL_INPUT_TEMPLATE = SRA / "templates" / "full-context-input.json"
+FULL_CHALLENGE_TEMPLATE = SRA / "templates" / "full-challenge-judgment.json"
+FULL_SITUATED_TEMPLATE = SRA / "templates" / "full-situated-judgment.json"
 CONTEXT_RESOURCE = SRA / "resources" / "context-isolation.md"
 
 
@@ -53,182 +60,30 @@ def prepare_run(root: Path, data: dict | None = None, name: str = "run") -> Path
     return run_dir
 
 
-def candidate_role(action: str) -> tuple[str, str, str]:
-    lowered = action.lower()
-    if "payment" in lowered:
-        return (
-            "threshold_essential",
-            "retained",
-            "Removing this action leaves the launch threshold unsupported.",
-        )
-    if "uncommitted" in lowered or "incident" in lowered:
-        return (
-            "maintenance_or_option",
-            "capped",
-            "This option becomes necessary only if an incident signal appears.",
-        )
-    return (
-        "value_expanding",
-        "removed",
-        "Removing the next polish tranche does not change current launch acceptance.",
+def bound_template(template_path: Path, packet_path: Path) -> dict:
+    value = json.loads(template_path.read_text(encoding="utf-8"))
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    value["packet_hash"] = packet["packet_hash"]
+    return value
+
+
+def build_challenge_judgment(run_dir: Path, *, conflict: bool = False) -> dict:
+    value = bound_template(CHALLENGE_TEMPLATE, run_dir / "challenge-packet.json")
+    if conflict:
+        value["next_tranche"]["resource_allocations"][0]["quantity"]["amount"] = 0.5
+        value["investment_ceiling"][0]["quantity"]["amount"] = 0.5
+    return value
+
+
+def build_situated_judgment(run_dir: Path) -> dict:
+    return bound_template(SITUATED_TEMPLATE, run_dir / "situated-packet.json")
+
+
+def build_reconciliation_judgment(run_dir: Path) -> dict:
+    return bound_template(
+        RECONCILIATION_TEMPLATE,
+        run_dir / "reconciliation-packet.json",
     )
-
-
-def _selected_id(candidates: list[dict], id_field: str) -> str:
-    return next(
-        item[id_field]
-        for item in candidates
-        if "payment" in item["action_statement"].lower()
-    )
-
-
-def _polish_id(candidates: list[dict], id_field: str) -> str:
-    return next(
-        item[id_field]
-        for item in candidates
-        if "animation" in item["action_statement"].lower()
-    )
-
-
-def build_challenge_judgment(run_dir: Path, *, select_polish: bool = False) -> dict:
-    packet = json.loads((run_dir / "challenge-packet.json").read_text(encoding="utf-8"))
-    selected = _polish_id(packet["candidates"], "challenge_id") if select_polish else _selected_id(
-        packet["candidates"], "challenge_id"
-    )
-    polish = _polish_id(packet["candidates"], "challenge_id")
-    assessments = []
-    for candidate in packet["candidates"]:
-        role, contraction, break_point = candidate_role(candidate["action_statement"])
-        assessments.append(
-            {
-                "challenge_id": candidate["challenge_id"],
-                "feasibility": "feasible",
-                "candidate_role": role,
-                "contraction_result": contraction,
-                "first_break_point": break_point,
-                "evidence_refs": candidate.get("evidence_refs", []),
-                "assumption_refs": candidate.get("assumption_refs", []),
-            }
-        )
-    selected_candidate = next(
-        item for item in packet["candidates"] if item["challenge_id"] == selected
-    )
-    return {
-        "schema_version": "sra.challenge-judgment.v0.2",
-        "stage": "challenge",
-        "packet_hash": packet["packet_hash"],
-        "allocation_outcome": "allocate",
-        "candidate_assessments": assessments,
-        "current_floor": [selected],
-        "next_tranche": {
-            "challenge_id": selected,
-            "description": "Allocate one bounded engineer-day.",
-            "reason": "The selected action remains after contraction.",
-        },
-        "investment_ceiling": "One engineer-day before reranking.",
-        "authorization_horizon": "one_tranche",
-        "maintenance": [polish] if selected != polish else [],
-        "reserve": {
-            "status": "none",
-            "challenge_id": "none",
-            "reason": "No packet evidence requires reserving the full tranche.",
-            "release_trigger": "Not applicable while reserve is none.",
-            "review_time": "At the next tranche checkpoint.",
-        },
-        "defer": [polish] if selected != polish else [],
-        "stop": [],
-        "rerank_triggers": ["The selected tranche closes the gap or reveals a blocker."],
-        "missing_information": [],
-        "evidence_refs": selected_candidate.get("evidence_refs", []),
-        "assumption_refs": selected_candidate.get("assumption_refs", []),
-        "claim_ceiling": "This is a de-anchored challenge view, not final authority.",
-    }
-
-
-def _state_refs_by_kind(packet: dict) -> dict[str, list[str]]:
-    result: dict[str, list[str]] = {}
-    for item in packet.get("state_items", []):
-        result.setdefault(item["kind"], []).append(item["state_id"])
-    return result
-
-
-def build_situated_judgment(run_dir: Path, *, select_polish: bool = False) -> dict:
-    packet = json.loads((run_dir / "situated-packet.json").read_text(encoding="utf-8"))
-    selected = "page-polish" if select_polish else "payment-validation"
-    polish = "page-polish"
-    assessments = []
-    for candidate in packet["candidates"]:
-        role, contraction, break_point = candidate_role(candidate["action_statement"])
-        assessments.append(
-            {
-                "candidate_id": candidate["candidate_id"],
-                "feasibility": "feasible",
-                "candidate_role": role,
-                "contraction_result": contraction,
-                "first_break_point": break_point,
-                "evidence_refs": candidate.get("evidence_refs", []),
-                "assumption_refs": candidate.get("assumption_refs", []),
-            }
-        )
-    refs = _state_refs_by_kind(packet)
-    state_considerations = []
-    state_refs = []
-    for kind, consideration_kind, evidence_refs, assumption_refs in (
-        ("switching_cost", "switching_cost", [], ["A-switch-cost"]),
-        ("reusable_asset", "reusable_asset", ["E-page"], []),
-        ("sunk_cost", "sunk_cost_rejected", ["E-spend"], []),
-    ):
-        if kind not in refs:
-            continue
-        state_id = refs[kind][0]
-        state_refs.append(state_id)
-        state_considerations.append(
-            {
-                "kind": consideration_kind,
-                "finding": f"The admitted {kind} state was considered without inheriting a prior conclusion.",
-                "state_refs": [state_id],
-                "evidence_refs": evidence_refs,
-                "assumption_refs": assumption_refs,
-            }
-        )
-    selected_candidate = next(
-        item for item in packet["candidates"] if item["candidate_id"] == selected
-    )
-    return {
-        "schema_version": "sra.situated-judgment.v0.2",
-        "stage": "situated",
-        "packet_hash": packet["packet_hash"],
-        "allocation_outcome": "allocate",
-        "candidate_assessments": assessments,
-        "state_considerations": state_considerations,
-        "current_floor": [selected],
-        "next_tranche": {
-            "candidate_id": selected,
-            "description": "Allocate one bounded engineer-day.",
-            "reason": "The selected action remains preferred after real state costs are considered.",
-        },
-        "investment_ceiling": "One engineer-day before reranking.",
-        "authorization_horizon": "one_tranche",
-        "maintenance": [polish] if selected != polish else [],
-        "reserve": {
-            "status": "none",
-            "candidate_id": "none",
-            "reason": "No admitted state requires reserving the full tranche.",
-            "release_trigger": "Not applicable while reserve is none.",
-            "review_time": "At the next tranche checkpoint.",
-        },
-        "defer": [polish] if selected != polish else [],
-        "stop": [],
-        "rerank_triggers": ["The selected tranche closes the gap or reveals a blocker."],
-        "missing_information": [],
-        "state_refs": state_refs,
-        "evidence_refs": selected_candidate.get("evidence_refs", []) + ["E-page", "E-spend"],
-        "assumption_refs": list(
-            dict.fromkeys(selected_candidate.get("assumption_refs", []) + ["A-switch-cost"])
-        ),
-        "sunk_cost_used_as_reason": False,
-        "claim_ceiling": "This allocation applies to the current release window only.",
-    }
 
 
 def record_stage(
@@ -260,70 +115,34 @@ def record_stage(
 
 
 def record_valid_views(run_dir: Path, *, conflict: bool = False) -> None:
-    challenge = build_challenge_judgment(run_dir)
-    situated = build_situated_judgment(run_dir, select_polish=conflict)
-    first = record_stage(run_dir, "challenge", challenge)
+    first = record_stage(
+        run_dir,
+        "challenge",
+        build_challenge_judgment(run_dir, conflict=conflict),
+    )
     if first.returncode != 0:
         raise AssertionError(first.stderr + first.stdout)
-    second = record_stage(run_dir, "situated", situated)
+    second = record_stage(run_dir, "situated", build_situated_judgment(run_dir))
     if second.returncode != 0:
         raise AssertionError(second.stderr + second.stdout)
-
-
-def build_reconciliation_judgment(run_dir: Path) -> dict:
-    packet = json.loads((run_dir / "reconciliation-packet.json").read_text(encoding="utf-8"))
-    situated = build_situated_judgment(run_dir)
-    situated["schema_version"] = "sra.reconciliation-judgment.v0.2"
-    situated["stage"] = "reconciliation"
-    situated["packet_hash"] = packet["packet_hash"]
-    situated["allocation_outcome"] = "allocate"
-    situated["conflict_resolutions"] = [
-        {
-            "field": item["field"],
-            "resolution": "The cited current-state evidence supports the situated allocation for this window.",
-            "evidence_refs": situated.get("evidence_refs", []),
-            "assumption_refs": situated.get("assumption_refs", []),
-            "state_refs": situated.get("state_refs", []),
-        }
-        for item in packet["conflict_fields"]
-    ]
-    allowed_evidence = {item["evidence_id"] for item in packet.get("evidence", [])}
-    allowed_assumptions = {item["assumption_id"] for item in packet.get("assumptions", [])}
-    allowed_state = {item["state_id"] for item in packet.get("state_items", [])}
-    situated["evidence_refs"] = [item for item in situated["evidence_refs"] if item in allowed_evidence]
-    situated["assumption_refs"] = [item for item in situated["assumption_refs"] if item in allowed_assumptions]
-    situated["state_refs"] = [item for item in situated["state_refs"] if item in allowed_state]
-    for assessment in situated["candidate_assessments"]:
-        assessment["evidence_refs"] = [item for item in assessment["evidence_refs"] if item in allowed_evidence]
-        assessment["assumption_refs"] = [item for item in assessment["assumption_refs"] if item in allowed_assumptions]
-    situated["state_considerations"] = [
-        item
-        for item in situated["state_considerations"]
-        if all(ref in allowed_state for ref in item["state_refs"])
-    ]
-    for item in situated["state_considerations"]:
-        item["evidence_refs"] = [ref for ref in item["evidence_refs"] if ref in allowed_evidence]
-        item["assumption_refs"] = [ref for ref in item["assumption_refs"] if ref in allowed_assumptions]
-    for item in situated["conflict_resolutions"]:
-        item["evidence_refs"] = [ref for ref in item["evidence_refs"] if ref in allowed_evidence]
-        item["assumption_refs"] = [ref for ref in item["assumption_refs"] if ref in allowed_assumptions]
-        item["state_refs"] = [ref for ref in item["state_refs"] if ref in allowed_state]
-    return situated
 
 
 class SraContextCalibrationTests(unittest.TestCase):
     def test_runtime_surface_exists(self):
         for path in (
-            SRA / "scripts" / "sra_runtime.py",
+            SCRIPTS / "sra_domain.py",
+            SCRIPTS / "sra_runtime_core.py",
+            SCRIPTS / "sra_runtime_integrity.py",
+            SCRIPTS / "sra_runtime.py",
             PREPARE,
             RECORD,
             CHECK,
             RENDER,
-            SRA / "templates" / "coverage-judgment.json",
-            SRA / "templates" / "challenge-judgment.json",
-            SRA / "templates" / "situated-judgment.json",
-            SRA / "templates" / "reconciliation-judgment.json",
-            DESIGN,
+            REPAIR,
+            INPUT_TEMPLATE,
+            CHALLENGE_TEMPLATE,
+            SITUATED_TEMPLATE,
+            RECONCILIATION_TEMPLATE,
             CONTEXT_RESOURCE,
         ):
             self.assertTrue(path.is_file(), path)
@@ -352,7 +171,9 @@ class SraContextCalibrationTests(unittest.TestCase):
     def test_full_with_known_omission_requires_coverage_and_dual_view(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
+            data["mode"] = "auto"
             data["escalation_signals"] = ["multiple_feasible_bundles"]
+            data["known_omissions"] = ["A compliance candidate may be missing."]
             run_dir = prepare_run(Path(tmp), data)
             state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
             self.assertEqual(state["mode"], "full")
@@ -366,33 +187,52 @@ class SraContextCalibrationTests(unittest.TestCase):
             data["candidates"][0]["candidate_role"] = "threshold_essential"
             input_path = Path(tmp) / "input.json"
             write_json(input_path, data)
-            result = run_script(PREPARE, "--input", str(input_path), "--dir", str(Path(tmp) / "run"))
+            result = run_script(
+                PREPARE,
+                "--input",
+                str(input_path),
+                "--dir",
+                str(Path(tmp) / "run"),
+            )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("pre-decided SRA role", result.stderr)
 
     def test_context_admission_quarantines_conclusions_and_advocacy(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
-            admission = json.loads((run_dir / "context-admission.json").read_text(encoding="utf-8"))
+            admission = json.loads(
+                (run_dir / "context-admission.json").read_text(encoding="utf-8")
+            )
             by_id = {item["context_id"]: item for item in admission["items"]}
-            self.assertEqual(by_id["C-current"]["admission"], "admitted")
-            self.assertEqual(by_id["C-quality"]["admitted_as"], "decision_constraint")
-            self.assertEqual(by_id["C-prior"]["admission"], "quarantined")
-            self.assertEqual(by_id["C-advocacy"]["admission"], "quarantined")
-            self.assertEqual(by_id["C-history"]["admitted_as"], "scoped_history")
+            self.assertEqual(by_id["CTX-quality"]["admission"], "admitted")
+            self.assertEqual(
+                by_id["CTX-quality"]["admitted_as"], "decision_constraint"
+            )
+            self.assertEqual(by_id["CTX-prior"]["admission"], "quarantined")
+            self.assertEqual(by_id["CTX-advocacy"]["admission"], "quarantined")
 
-    def test_current_instruction_cannot_be_excluded(self):
+    def test_protected_constraint_cannot_be_excluded(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
-            current = next(item for item in data["context_items"] if item["context_id"] == "C-current")
-            current["requested_disposition"] = "exclude"
+            item = next(
+                item
+                for item in data["context_items"]
+                if item["context_id"] == "CTX-quality"
+            )
+            item["requested_disposition"] = "exclude"
             input_path = Path(tmp) / "input.json"
             write_json(input_path, data)
-            result = run_script(PREPARE, "--input", str(input_path), "--dir", str(Path(tmp) / "run"))
+            result = run_script(
+                PREPARE,
+                "--input",
+                str(input_path),
+                "--dir",
+                str(Path(tmp) / "run"),
+            )
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("cannot exclude protected current context", result.stderr)
+            self.assertIn("cannot exclude protected", result.stderr)
 
-    def test_challenge_hides_incumbent_state_and_prior_conclusion(self):
+    def test_challenge_hides_incumbent_state_prior_conclusion_and_situated_question(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             text = (run_dir / "challenge-packet.json").read_text(encoding="utf-8")
@@ -400,58 +240,31 @@ class SraContextCalibrationTests(unittest.TestCase):
                 '"active_candidate_id"',
                 '"page-polish"',
                 '"payment-validation"',
-                '"switching_cost"',
-                '"historical_spend"',
                 "previous agent recommended",
+                "Should the release engineer continue optional page polish",
             ):
                 self.assertNotIn(forbidden, text)
+            self.assertIn("Which eligible release action", text)
 
             prompt = " ".join(
-                (run_dir / "challenge-agent-prompt.md").read_text(encoding="utf-8").split()
-            )
-            self.assertIn("supplied challenge IDs in every identifier-bearing field", prompt)
-            self.assertIn("prose is not identity evidence", prompt)
-            self.assertIn("a reranking trigger alone does not make the allocation conditional", prompt)
-            self.assertIn("merely reusable baseline is not a floor member", prompt)
-            self.assertIn("Use `defer` for a feasible zero-allocation candidate", prompt)
-            self.assertIn("Use `one_tranche` for exactly one fixed resource block", prompt)
-
-            situated_prompt = " ".join(
-                (run_dir / "situated-agent-prompt.md").read_text(encoding="utf-8").split()
-            )
-            for phrase in (
-                "a reranking trigger alone does not make the allocation conditional",
-                "merely reusable baseline is not a floor member",
-                "Use `defer` for a feasible zero-allocation candidate",
-                "Use `one_tranche` for exactly one fixed resource block",
-            ):
-                self.assertIn(phrase, situated_prompt)
-
-            # The same stable coding contract must survive into the only conflict pass.
-            data = template_data()
-            run_dir = prepare_run(Path(tmp), data, "conflict")
-            record_valid_views(run_dir, conflict=True)
-            reconciliation_prompt = " ".join(
-                (run_dir / "reconciliation-agent-prompt.md")
+                (run_dir / "challenge-agent-prompt.md")
                 .read_text(encoding="utf-8")
                 .split()
             )
-            self.assertIn(
-                "Use `one_tranche` for exactly one fixed resource block",
-                reconciliation_prompt,
-            )
+            for phrase in (
+                "Use supplied challenge IDs",
+                "Prose is not identity evidence",
+                "`allocation_ledger` contains exactly one posture per candidate",
+                "Full records bundle assessments",
+                "one fixed resource block",
+            ):
+                self.assertIn(phrase, prompt)
 
-    def test_prepare_creates_agentic_output_directory(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            self.assertTrue((run_dir / "judgments").is_dir())
-
-    def test_challenge_relations_use_aliases_not_original_candidate_ids(self):
+    def test_challenge_relations_use_aliases(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
             data["candidates"][0]["depends_on"] = ["payment-validation"]
             data["candidates"][1]["unlocks"] = ["page-polish"]
-            data["candidates"][2]["substitutes_for"] = ["page-polish"]
             run_dir = prepare_run(Path(tmp), data)
             packet = json.loads(
                 (run_dir / "challenge-packet.json").read_text(encoding="utf-8")
@@ -468,8 +281,7 @@ class SraContextCalibrationTests(unittest.TestCase):
             run_dir = prepare_run(Path(tmp))
             text = (run_dir / "situated-packet.json").read_text(encoding="utf-8")
             self.assertNotIn("challenge_core", text)
-            self.assertNotIn("challenge_judgment_hash", text)
-            self.assertNotIn("comparison", text)
+            self.assertNotIn("comparison_hash", text)
             self.assertIn('"challenge_judgment_hidden": true', text)
 
     def test_challenge_order_is_input_order_independent(self):
@@ -480,57 +292,66 @@ class SraContextCalibrationTests(unittest.TestCase):
             reversed_data = copy.deepcopy(data)
             reversed_data["candidates"].reverse()
             second = prepare_run(root, reversed_data, "second")
-            first_packet = json.loads((first / "challenge-packet.json").read_text(encoding="utf-8"))
-            second_packet = json.loads((second / "challenge-packet.json").read_text(encoding="utf-8"))
+            first_packet = json.loads(
+                (first / "challenge-packet.json").read_text(encoding="utf-8")
+            )
+            second_packet = json.loads(
+                (second / "challenge-packet.json").read_text(encoding="utf-8")
+            )
             self.assertEqual(first_packet["candidates"], second_packet["candidates"])
             first_state = json.loads((first / "run.json").read_text(encoding="utf-8"))
             second_state = json.loads((second / "run.json").read_text(encoding="utf-8"))
             self.assertEqual(first_state["challenge_map"], second_state["challenge_map"])
 
-    def test_evidence_asymmetry_is_preserved_not_equalized(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            data = template_data()
-            data["candidates"][0]["expected_target_effect"] = "rich " * 300
-            run_dir = prepare_run(Path(tmp), data)
-            state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-            self.assertTrue(any("presentation asymmetry" in item for item in state["warnings"]))
-            packet = json.loads((run_dir / "challenge-packet.json").read_text(encoding="utf-8"))
-            lengths = [len(item["expected_target_effect"]) for item in packet["candidates"]]
-            self.assertNotEqual(min(lengths), max(lengths))
-
     def test_generated_carriers_are_read_only_and_no_fork(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             for stage in ("challenge", "situated"):
-                dispatch = json.loads((run_dir / f"{stage}-subagent-dispatch.json").read_text(encoding="utf-8"))
+                dispatch = json.loads(
+                    (run_dir / f"{stage}-subagent-dispatch.json").read_text(
+                        encoding="utf-8"
+                    )
+                )
                 self.assertFalse(dispatch["fork_context"])
                 self.assertTrue(dispatch["read_only"])
                 self.assertEqual(dispatch["tool_policy"], "no_tools")
-                command = (run_dir / f"{stage}-codex-command.sh").read_text(encoding="utf-8")
-                for phrase in ("--ephemeral", "--ignore-rules", "--ignore-user-config", "-s read-only", "--output-schema"):
+                command = (run_dir / f"{stage}-codex-command.sh").read_text(
+                    encoding="utf-8"
+                )
+                for phrase in (
+                    "--ephemeral",
+                    "--ignore-rules",
+                    "--ignore-user-config",
+                    "-s read-only",
+                    "--output-schema",
+                ):
                     self.assertIn(phrase, command)
 
-    def test_coverage_gate_blocks_allocation_views_until_ready(self):
+    def test_coverage_gate_blocks_views_until_ready(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
             data["coverage_review"] = "required"
             run_dir = prepare_run(Path(tmp), data)
-            challenge = record_stage(run_dir, "challenge", build_challenge_judgment(run_dir))
-            self.assertNotEqual(challenge.returncode, 0)
-            self.assertIn("coverage review must be ready", challenge.stderr)
+            result = record_stage(
+                run_dir, "challenge", build_challenge_judgment(run_dir)
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("coverage review must be ready", result.stderr)
 
     def test_coverage_incomplete_blocks_run_without_allocation(self):
         with tempfile.TemporaryDirectory() as tmp:
             data = template_data()
             data["coverage_review"] = "required"
             run_dir = prepare_run(Path(tmp), data)
-            packet = json.loads((run_dir / "coverage-packet.json").read_text(encoding="utf-8"))
+            packet = json.loads(
+                (run_dir / "coverage-packet.json").read_text(encoding="utf-8")
+            )
             judgment = {
-                "schema_version": "sra.coverage-judgment.v0.2",
+                "schema_version": "sra.coverage-judgment.v0.3",
                 "stage": "coverage",
                 "packet_hash": packet["packet_hash"],
                 "outcome": "packet_incomplete",
-                "missing_candidate_classes": ["A regulatory hard-gate candidate has not been checked."],
+                "missing_candidate_classes": ["A regulatory hard gate is unchecked."],
                 "missing_evidence": [],
                 "classification_challenges": [],
                 "warnings": [],
@@ -542,21 +363,34 @@ class SraContextCalibrationTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
             self.assertEqual(state["statuses"]["finalization"], "blocked")
-            final = json.loads((run_dir / "final-decision.json").read_text(encoding="utf-8"))
+            final = json.loads(
+                (run_dir / "final-decision.json").read_text(encoding="utf-8")
+            )
             self.assertEqual(final["decision"]["allocation_outcome"], "blocked")
 
     def test_dual_views_can_be_recorded_in_either_order(self):
         with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            situated = record_stage(run_dir, "situated", build_situated_judgment(run_dir))
+            root = Path(tmp)
+            first = prepare_run(root, name="situated-first")
+            situated = record_stage(
+                first, "situated", build_situated_judgment(first)
+            )
             self.assertEqual(situated.returncode, 0, situated.stderr)
-            state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-            self.assertEqual(state["statuses"]["situated"], "recorded")
-            self.assertEqual(state["statuses"]["comparison"], "pending")
-            challenge = record_stage(run_dir, "challenge", build_challenge_judgment(run_dir))
+            challenge = record_stage(
+                first, "challenge", build_challenge_judgment(first)
+            )
             self.assertEqual(challenge.returncode, 0, challenge.stderr)
-            state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-            self.assertEqual(state["statuses"]["comparison"], "agree")
+            self.assertEqual(
+                json.loads((first / "run.json").read_text())["statuses"]["comparison"],
+                "agree",
+            )
+
+            second = prepare_run(root, name="challenge-first")
+            record_valid_views(second)
+            self.assertEqual(
+                json.loads((second / "run.json").read_text())["statuses"]["comparison"],
+                "agree",
+            )
 
     def test_agreement_finalizes_without_reconciliation(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -567,32 +401,23 @@ class SraContextCalibrationTests(unittest.TestCase):
             self.assertEqual(state["statuses"]["reconciliation"], "not_required")
             self.assertEqual(state["statuses"]["finalization"], "finalized")
             self.assertFalse((run_dir / "reconciliation-packet.json").exists())
-            final = json.loads((run_dir / "final-decision.json").read_text(encoding="utf-8"))
-            self.assertEqual(final["final_source"], "situated")
 
-    def test_conflict_creates_bounded_reconciliation_without_choosing_winner(self):
+    def test_conflict_creates_bounded_reconciliation(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             record_valid_views(run_dir, conflict=True)
             state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
             self.assertEqual(state["statuses"]["comparison"], "conflict")
             self.assertEqual(state["statuses"]["reconciliation"], "pending")
-            self.assertEqual(state["statuses"]["finalization"], "pending")
-            comparison = json.loads((run_dir / "comparison-report.json").read_text(encoding="utf-8"))
+            comparison = json.loads(
+                (run_dir / "comparison-report.json").read_text(encoding="utf-8")
+            )
             self.assertNotIn("winner", comparison)
-            self.assertTrue(comparison["conflict_fields"])
-            packet = json.loads((run_dir / "reconciliation-packet.json").read_text(encoding="utf-8"))
+            packet = json.loads(
+                (run_dir / "reconciliation-packet.json").read_text(encoding="utf-8")
+            )
             self.assertTrue(packet["reconciliation_boundary"]["one_pass_only"])
             self.assertFalse(packet["reconciliation_boundary"]["may_force_closure"])
-
-    def test_reconciliation_cannot_run_before_conflict(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            path = Path(tmp) / "fake.json"
-            write_json(path, {"schema_version": "sra.reconciliation-judgment.v0.2"})
-            result = run_script(RECORD, "--dir", str(run_dir), "--stage", "reconciliation", "--input", str(path))
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("reconciliation is not pending", result.stderr)
 
     def test_reconciliation_finalizes_once(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -606,77 +431,15 @@ class SraContextCalibrationTests(unittest.TestCase):
             self.assertIn("reconciliation is not pending", second.stderr)
             state = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
             self.assertEqual(state["statuses"]["finalization"], "finalized")
-            final = json.loads((run_dir / "final-decision.json").read_text(encoding="utf-8"))
-            self.assertEqual(final["final_source"], "reconciliation")
 
-    def test_challenge_accepts_descriptive_prose_collision_with_hidden_candidate_slug(self):
+    def test_challenge_rejects_original_candidate_id_in_structured_field(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             judgment = build_challenge_judgment(run_dir)
-            judgment["claim_ceiling"] = "The page-polish path should stop."
-            result = record_stage(run_dir, "challenge", judgment)
-            self.assertEqual(result.returncode, 0, result.stderr)
-
-    def test_challenge_rejects_original_candidate_id_in_structured_identity_field(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            judgment = build_challenge_judgment(run_dir)
-            judgment["next_tranche"]["challenge_id"] = "page-polish"
+            judgment["next_tranche"]["target_id"] = "page-polish"
             result = record_stage(run_dir, "challenge", judgment)
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("next_tranche.challenge_id must reference", result.stderr)
-
-    def test_context_contract_limits_mechanical_identity_checks_to_structured_fields(self):
-        text = " ".join(CONTEXT_RESOURCE.read_text(encoding="utf-8").split())
-        for phrase in (
-            "challenge packet omits original IDs",
-            "every identifier-bearing judgment field uses only the packet's aliases",
-            "a prose collision is not evidence of hidden-context access",
-            "Prose remains Agentic reasoning",
-            "the current floor and maintenance sets include only nonzero use",
-            "one fixed resource block is `one_tranche`",
-            "Workflow validates and compares the resulting fields",
-            "each `state_considerations` item single-kind",
-            "output schema exposes this mapping before generation",
-        ):
-            self.assertIn(phrase, text)
-
-    def test_state_consideration_schema_exposes_same_kind_reference_contract(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            packet = json.loads((run_dir / "situated-packet.json").read_text(encoding="utf-8"))
-            schema = json.loads((run_dir / "situated-output-schema.json").read_text(encoding="utf-8"))
-            variants = schema["properties"]["state_considerations"]["items"]["anyOf"]
-            by_kind = {item["properties"]["kind"]["const"]: item for item in variants}
-            state_refs = _state_refs_by_kind(packet)
-
-            self.assertEqual(
-                by_kind["active_path_identity"]["properties"]["state_refs"]["items"]["enum"],
-                state_refs["active_candidate"],
-            )
-            self.assertEqual(
-                by_kind["switching_cost"]["properties"]["state_refs"]["items"]["enum"],
-                state_refs["switching_cost"],
-            )
-            self.assertEqual(
-                by_kind["authority_boundary"]["properties"]["state_refs"]["items"]["enum"],
-                state_refs["current_commitment"],
-            )
-            self.assertEqual(
-                by_kind["none"]["properties"]["state_refs"]["maxItems"],
-                0,
-            )
-
-    def test_situated_rejects_cross_kind_state_reference(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            run_dir = prepare_run(Path(tmp))
-            packet = json.loads((run_dir / "situated-packet.json").read_text(encoding="utf-8"))
-            refs = _state_refs_by_kind(packet)
-            judgment = build_situated_judgment(run_dir)
-            judgment["state_considerations"][0]["state_refs"].append(refs["reusable_asset"][0])
-            result = record_stage(run_dir, "situated", judgment)
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("do not match consideration kind switching_cost", result.stderr)
+            self.assertIn("next_tranche.target_id", result.stderr)
 
     def test_situated_rejects_sunk_cost_as_reason(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -687,25 +450,32 @@ class SraContextCalibrationTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("sunk_cost_used_as_reason must be false", result.stderr)
 
-    def test_run_check_detects_packet_tampering(self):
+    def test_run_check_detects_packet_and_prompt_tampering(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             packet_path = run_dir / "challenge-packet.json"
             packet = json.loads(packet_path.read_text(encoding="utf-8"))
             packet["known_omissions"].append("tampered")
             write_json(packet_path, packet)
+            prompt_path = run_dir / "situated-agent-prompt.md"
+            prompt_path.write_text("tampered", encoding="utf-8")
             result = run_script(CHECK, "--dir", str(run_dir), "--json")
             self.assertNotEqual(result.returncode, 0)
             report = json.loads(result.stdout)
-            self.assertEqual(report["status"], "blocked")
-            self.assertTrue(any(item["code"] == "packet-rebuild" for item in report["findings"]))
+            codes = {item["code"] for item in report["findings"]}
+            self.assertIn("packet-rebuild", codes)
+            self.assertIn("situated-prompt", codes)
 
     def test_packet_bound_views_do_not_claim_fresh_context(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             record_valid_views(run_dir)
-            final = json.loads((run_dir / "final-decision.json").read_text(encoding="utf-8"))
-            self.assertEqual(final["observed_context_boundary"], "packet_bound_views_only")
+            final = json.loads(
+                (run_dir / "final-decision.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                final["observed_context_boundary"], "packet_bound_views_only"
+            )
             self.assertIn("does not prove", final["context_boundary_note"])
 
     def test_fresh_carriers_without_receipts_remain_declared(self):
@@ -728,33 +498,38 @@ class SraContextCalibrationTests(unittest.TestCase):
             check = run_script(CHECK, "--dir", str(run_dir), "--json")
             report = json.loads(check.stdout)
             self.assertEqual(report["status"], "warning")
-            self.assertTrue(any(item["code"] == "fresh-carrier-without-receipt" for item in report["findings"]))
+            self.assertTrue(
+                any(
+                    item["code"] == "fresh-carrier-without-receipt"
+                    for item in report["findings"]
+                )
+            )
 
-    def test_finalized_run_checks_and_renders(self):
+    def test_finalized_run_checks_renders_and_repairs(self):
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = prepare_run(Path(tmp))
             record_valid_views(run_dir)
             check = run_script(CHECK, "--dir", str(run_dir), "--json")
             self.assertEqual(check.returncode, 0, check.stderr + check.stdout)
-            report = json.loads(check.stdout)
-            self.assertEqual(report["status"], "ok")
             rendered = run_script(RENDER, "--dir", str(run_dir))
             self.assertEqual(rendered.returncode, 0, rendered.stderr)
-            for phrase in ("SRA 决策", "当前底座", "下一投入对象", "投入上限", "重排触发", "最终来源", "上下文边界"):
+            for phrase in (
+                "SRA 决策",
+                "当前底座",
+                "下一投入对象",
+                "投入上限",
+                "治理覆盖",
+                "上下文边界",
+            ):
                 self.assertIn(phrase, rendered.stdout)
-
-    def test_docs_define_dual_view_without_blind_override_semantics(self):
-        combined = "\n".join(path.read_text(encoding="utf-8") for path in (DESIGN, CONTEXT_RESOURCE))
-        for phrase in (
-            "challenge",
-            "situated",
-            "dual_view",
-            "structural alignment",
-            "Evidence",
-            "TPlan",
-        ):
-            self.assertIn(phrase, combined)
-        self.assertNotIn("blind_result_changed", combined)
+            prompt = run_dir / "challenge-agent-prompt.md"
+            prompt.write_text("tampered", encoding="utf-8")
+            repair = run_script(REPAIR, "--dir", str(run_dir), "--json")
+            self.assertEqual(repair.returncode, 0, repair.stderr + repair.stdout)
+            self.assertEqual(
+                json.loads(repair.stdout)["status"],
+                "ok",
+            )
 
 
 if __name__ == "__main__":

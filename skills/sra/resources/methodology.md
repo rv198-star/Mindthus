@@ -149,41 +149,50 @@ load-bearing. It is a mode selector, not a third analysis depth.
 
 ## Context-Calibrated Hybrid Runtime
 
-SRA is independent from inherited conclusions, not from relevant context. It keeps the
-current objective, user constraints, authority, evidence, assumptions, and real
-execution state while removing inherited decision authority from prior conclusions,
-advocacy, ambient inference, and sunk-cost narrative.
+SRA is independent from inherited conclusions, not from relevant context. The v0.3
+runtime keeps the current objective, user constraints, authority, evidence, assumptions,
+and real execution state while removing inherited decision authority from prior
+conclusions, advocacy, ambient inference, and sunk-cost narrative.
+
+The caller or an Agentic intake step supplies:
+
+- situated wording for the real current decision;
+- a sourced `challenge_projection` that preserves the allocation question while removing
+  active-path identity, prior conclusions, and historical spend;
+- separately sourced context fragments and challenge projections;
+- declared resource pools, quantity contracts, capacities, and candidate demand.
 
 Workflow:
 
-1. records a context-admission ledger;
-2. separates current authority, evidence, assumptions, scoped history, advocacy, and
-   prior conclusions;
-3. aligns candidate structure without equalizing real evidence differences;
+1. validates declared question and context projections without attempting semantic text
+   splitting;
+2. records context admission and quarantine lanes;
+3. validates measured, ordinal, and indivisible resource contracts;
 4. rejects candidate cards that pre-label SRA roles or scores;
-5. builds independent challenge and situated packets with hashes and packet-specific
-   output schemas;
-6. compares only typed allocation fields;
-7. opens one targeted reconciliation only when the views materially conflict.
+5. builds independent challenge and situated packets plus deterministic Prompt, schema,
+   Dispatch, and command surfaces;
+6. records one allocation-ledger posture per candidate;
+7. requires explicit Full bundle assessments and selected-bundle membership;
+8. compares candidate roles, bundle identity, resource commitments, reserve, missing
+   information, and authorization as typed fields;
+9. opens one targeted reconciliation only when the views materially conflict;
+10. reconstructs state and final output from raw input plus valid recorded judgments.
 
-Agentic SRA owns relevance challenges, feasibility, candidate roles, necessity,
-contraction, current floor, replenishment, situated state interpretation, and conflict
-reconciliation. Scripts own packet construction, hashes, references, status transitions,
-typed comparison, carrier artifacts, and rendering.
+Agentic SRA owns relevance, feasibility, candidate roles, necessity, bundle sufficiency,
+contraction, replenishment, situated state interpretation, and conflict reconciliation.
+Workflow owns deterministic structure and consequences. Evidence constrains claims.
 
 View plans:
 
-- `situated_only`: ordinary reversible Lite; one context-calibrated situated judgment;
-- `dual_view`: contaminated Lite and Full; a de-anchored challenge and a situated
-  judgment are generated independently and cannot see each other's result;
+- `situated_only`: ordinary reversible Lite;
+- `dual_view`: contaminated Lite and Full, with mutually hidden challenge and situated
+  judgments;
 - optional coverage review checks packet readiness but cannot choose allocation.
 
-The challenge is a calibration view, not default final authority. The situated judgment
-is action-bearing because it retains real future switching cost, reusable assets,
-remaining cost, commitments, and authority. Agreement finalizes the situated result;
-conflict receives one bounded reconciliation that may remain blocked. Fresh read-only
-carriers are preferred when their cost is justified, but fresh-context execution is a
-carrier property rather than proof of better judgment. See `context-isolation.md`.
+Agreement means the same typed commitment survived both views; it remains corroboration,
+not proof. Conflict receives one bounded reconciliation that may remain conditional or
+blocked. Fresh-context execution is a carrier property rather than proof of better
+judgment. See `context-isolation.md`.
 
 ## Allocation Frame
 
@@ -196,7 +205,7 @@ Every applicable SRA judgment establishes the smallest sufficient frame:
 | `time_window` | How long is this decision valid? |
 | `risk_floor` | What safety, compliance, ethics, authority, survival, or other limit cannot be crossed? |
 | `decision_owner` | Who can authorize allocation, stopping, or a target change? |
-| `contested_resource` | Which specific resource is actually shared and scarce? |
+| `resource_pools` | Which specific resources are shared and scarce, what capacity exists, and under which measured, ordinal, or indivisible quantity contract? |
 | `evidence_ceiling` | What can current evidence support, and what remains assumption? |
 
 The target threshold remains fixed during allocation pressure tests. A cheaper survival
@@ -238,7 +247,7 @@ Full mode uses a minimum comparable candidate card:
 candidate_id
 action_statement
 expected_target_effect
-resource_demand
+resource_demand -> resource_id + exact | bounded | ordinal | indivisible quantity
 depends_on
 unlocks
 substitutes_for
@@ -301,7 +310,7 @@ Task size is not priority.
 
 ### 5. Risk-Adjusted Bundle Value
 
-Among remaining feasible bundles, compare:
+Use risk-adjusted bundle value among remaining feasible bundles. Compare:
 
 - objective contribution;
 - downside and irreversibility;
@@ -350,6 +359,9 @@ reserve_reason
 release_trigger
 expiry_or_review_time
 ```
+
+When the next tranche itself is `reserve`, the next-tranche and reserve records describe
+one identical commitment. Workflow requires an exact typed match and counts it once.
 
 ## Candidate Roles
 
@@ -416,6 +428,28 @@ Before ranking, identify:
 - which tasks require a fixed or indivisible resource block.
 
 Tasks that use independent non-contested resources do not need a forced global rank.
+
+Runtime quantities preserve their native meaning:
+
+- `measured`: exact or bounded amount in one declared unit with additive `sum`;
+- `ordinal`: one level from a declared ordered scale with `exclusive` allocation;
+- `indivisible`: one or more named resource blocks with block-set allocation.
+
+Candidate demand, current allocation, bundle requirements, next tranche, reserve, and
+investment ceiling all reference the same resource-pool contract. Workflow checks
+mechanical compatibility and capacity; Agentic SRA still decides semantic value.
+
+The runtime records one allocation-ledger row per candidate:
+
+```text
+candidate_id
+posture: floor | maintenance | candidate | defer | stop
+current_allocations[]
+reason
+```
+
+This single ledger replaces overlapping posture lists. `floor` and `maintenance` carry
+nonzero current resource; `candidate`, `defer`, and `stop` carry zero.
 
 ## Lite Mode
 
@@ -605,12 +639,19 @@ Preserve a partial or conditional order rather than forcing a false total rank.
 
 1. Remove bundles violating a hard gate.
 2. Remove bundles unable to reach the target threshold.
-3. Remove a bundle when another uses no more of every contested resource and is strictly
-   better on at least one load-bearing dimension.
-4. Compare the remaining non-dominated bundles by evidence, downside, delay cost,
+3. Remove a bundle when another feasible or conditional bundle uses no more of every
+   contested resource and is strictly better on at least one load-bearing dimension.
+4. Keep dominance references acyclic and evidence-linked.
+5. Compare the remaining non-dominated bundles by evidence, downside, delay cost,
    information value, optionality, and objective contribution.
-5. Return a conditional allocation when no single bundle dominates across plausible
+6. Return a conditional allocation when no single bundle dominates across plausible
    states.
+
+A Full `infeasible` outcome means every bundle is coded infeasible or unresolved; a
+feasible bundle cannot be hidden behind a `dominated` label. An infeasible bundle may
+contain members also assessed infeasible. The selected bundle's resource vector bounds
+its members' current and next commitment. `floor` belongs to the selected bundle, while
+maintenance may remain outside it.
 
 ### Full Output
 
@@ -745,13 +786,14 @@ the decision. Internal field names belong in audit, validation, or handoff views
 
 ## Claim Ceiling
 
-Allowed first-release claim:
+Allowed runtime claim:
 
 > SRA provides lightweight and expanded contracts for making scarce-resource allocation
-> explicit, evidence-bounded, and action-changing, with tested routing boundaries against
-> neighboring Mindthus methods.
+> explicit, evidence-bounded, and action-changing, with typed resource pools, explicit
+> Full bundle assessments, deterministic allocation invariants, and tested routing
+> boundaries against neighboring Mindthus methods.
 
-The first release does not claim that SRA:
+The runtime does not claim that SRA:
 
 - always finds the correct priority;
 - maximizes ROI;
@@ -763,23 +805,31 @@ The first release does not claim that SRA:
 
 Scripts may:
 
-- build a context-admission ledger and shared decision base;
+- validate caller-supplied situated wording and challenge projections;
+- build a declared-fragment context-admission ledger and shared decision base;
 - align candidate cards and create input-order-independent challenge aliases;
+- validate measured, ordinal, and indivisible resource contracts;
+- bind actual allocation and bundle requirements to candidate demand;
 - reject pre-decided semantic role or score fields;
-- generate independent challenge and situated packets plus packet-specific schemas;
-- generate packet-bound, fresh-subagent, and ephemeral-CLI carrier artifacts;
-- manage orthogonal coverage, challenge, situated, comparison, reconciliation, and
-  finalization status;
-- compare stable typed allocation fields without selecting a winner;
+- generate independent challenge and situated packets plus deterministic Prompt, schema,
+  Dispatch, and command surfaces;
+- validate one candidate posture per allocation-ledger row;
+- validate Full bundle members, coded feasibility/dominance consistency, acyclic
+  dominance references, selected-bundle postures, and resource capacity;
+- compare candidate roles, bundle identity, resources, reserve, missing information, and
+  authorization without selecting a winner;
 - generate one targeted reconciliation packet on conflict;
-- lock packet and judgment hashes;
-- validate candidate, evidence, assumption, and state references;
+- reconstruct the exact run-state shape, canonical claim boundary, plans, hashes,
+  comparison, reconciliation, final source, carrier receipts, and trace;
+- repair derived artifacts only while prepared-input and judgment-event anchors still
+  match, without changing Agentic judgments;
 - check that sunk cost is rejected as a continuation basis;
-- render the finalized decision without recomputing it;
-- validate fidelity fields, enums, evidence surfaces, and reranking triggers.
+- render terminal authorization without recomputing priority;
+- validate method-fidelity evidence by reference to the canonical runtime decision.
 
 Scripts do not:
 
+- semantically split raw conversation text into projections;
 - classify semantic context truth or guarantee complete context;
 - choose the priority;
 - compute semantic ROI;
@@ -788,3 +838,6 @@ Scripts do not:
 - determine the strongest alternative;
 - authorize or mutate a real project or TPlan allocation;
 - claim fresh-context isolation without an observable carrier boundary.
+
+Prepared v0.2 run directories are version-bound and are not resumed under v0.3. The
+caller prepares a new run from the source decision context.
