@@ -1,0 +1,489 @@
+import copy
+import json
+import sys
+import unittest
+from pathlib import Path
+
+
+REPO = Path(__file__).resolve().parents[1]
+SCRIPTS = REPO / "skills" / "sra" / "scripts"
+sys.path.insert(0, str(SCRIPTS.resolve()))
+
+from sra_domain import (  # type: ignore[import-not-found]
+    CHALLENGE_JUDGMENT_SCHEMA,
+    INPUT_SCHEMA,
+    SITUATED_JUDGMENT_SCHEMA,
+)
+from sra_runtime import (  # type: ignore[import-not-found]
+    build_packets,
+    compare_views,
+    situated_output_schema,
+    validate_context_input,
+    validate_situated_judgment,
+)
+
+
+def exact(amount: float, unit: str = "engineer-day") -> dict:
+    return {"quantity_kind": "exact", "amount": amount, "unit": unit}
+
+
+def allocation(resource_id: str, amount: float, unit: str = "engineer-day") -> dict:
+    return {"resource_id": resource_id, "quantity": exact(amount, unit)}
+
+
+def input_data(*, mode: str = "lite") -> dict:
+    return {
+        "schema_version": INPUT_SCHEMA,
+        "run_id": "sra-v03-runtime-contract",
+        "decision_question": {
+            "situated_question": "Should the release engineer continue page polish or validate payment?",
+            "challenge_projection": "Which eligible release action should receive the next engineer-day?",
+            "source": "current user request",
+            "projection_basis": "Removes active-path identity, prior conclusions, and historical spend.",
+        },
+        "mode": mode,
+        "view_plan": "auto",
+        "coverage_review": "auto",
+        "overrides": {},
+        "escalation_signals": ["multiple_feasible_bundles"] if mode == "full" else [],
+        "contamination_signals": ["prior_agent_conclusion"],
+        "coverage_signals": [],
+        "allocation_frame": {
+            "parent_objective": "Launch a purchasable product page.",
+            "target_threshold": "Usable page and validated payment path.",
+            "time_window": "Current release window.",
+            "risk_floor": "No launch with an unvalidated payment path.",
+            "decision_owner": "Release owner",
+            "resource_pools": [
+                {
+                    "resource_id": "engineer-time",
+                    "label": "Backend engineer time",
+                    "quantity_contract": {
+                        "family": "measured",
+                        "unit": "engineer-day",
+                    },
+                    "capacity": exact(1),
+                    "window": "Current release window.",
+                },
+                {
+                    "resource_id": "review-slot",
+                    "label": "Compliance review slot",
+                    "quantity_contract": {
+                        "family": "indivisible",
+                        "blocks": ["slot-a"],
+                    },
+                    "capacity": {
+                        "quantity_kind": "indivisible",
+                        "blocks": ["slot-a"],
+                    },
+                    "window": "Current release window.",
+                },
+            ],
+            "evidence_ceiling": "Current release-window evidence only.",
+        },
+        "active_candidate_id": "page-polish",
+        "candidates": [
+            {
+                "candidate_id": "page-polish",
+                "action_statement": "Improve animation polish.",
+                "expected_target_effect": "Improves presentation beyond launch threshold.",
+                "resource_demand": [allocation("engineer-time", 1)],
+                "depends_on": [],
+                "unlocks": [],
+                "substitutes_for": [],
+                "deadline_or_window": "Can wait until after launch.",
+                "downside": "Consumes the only engineer-day.",
+                "reversibility": "High.",
+                "evidence_refs": ["E-page"],
+                "assumption_refs": [],
+            },
+            {
+                "candidate_id": "payment-validation",
+                "action_statement": "Validate the payment path.",
+                "expected_target_effect": "Closes an unresolved launch requirement.",
+                "resource_demand": [allocation("engineer-time", 1)],
+                "depends_on": [],
+                "unlocks": [],
+                "substitutes_for": [],
+                "deadline_or_window": "Needed in the current release window.",
+                "downside": "May reveal a larger defect.",
+                "reversibility": "High for the validation action.",
+                "evidence_refs": ["E-payment"],
+                "assumption_refs": [],
+            },
+        ],
+        "evidence": [
+            {
+                "evidence_id": "E-page",
+                "kind": "acceptance_status",
+                "source": "release checklist",
+                "statement": "The page meets the usability threshold.",
+                "observed_at": "2026-09-04T00:00:00Z",
+                "claim_ceiling": "Current page acceptance only.",
+            },
+            {
+                "evidence_id": "E-payment",
+                "kind": "acceptance_status",
+                "source": "release checklist",
+                "statement": "Payment validation has not passed.",
+                "observed_at": "2026-09-04T00:00:00Z",
+                "claim_ceiling": "Current payment acceptance only.",
+            },
+        ],
+        "assumptions": [],
+        "context_items": [
+            {
+                "context_id": "CTX-quality",
+                "kind": "user_constraint",
+                "statement": "Release quality matters more than optional polish in this window.",
+                "challenge_projection": "The release threshold takes precedence over optional improvement.",
+                "projection_basis": "Preserves the value constraint without naming a candidate.",
+                "source": "current user constraint",
+                "decision_relevance": "Constrains the trade-off.",
+                "requested_disposition": "consider",
+                "candidate_ids": [],
+                "evidence_refs": [],
+                "assumption_refs": [],
+            },
+            {
+                "context_id": "CTX-prior",
+                "kind": "previous_conclusion",
+                "statement": "A prior agent recommended continuing page-polish.",
+                "source": "prior response",
+                "decision_relevance": "Potential anchoring only.",
+                "requested_disposition": "consider",
+                "candidate_ids": ["page-polish"],
+                "evidence_refs": [],
+                "assumption_refs": [],
+            },
+        ],
+        "state_context": {
+            "switching_costs": [],
+            "reusable_assets": [],
+            "remaining_costs": [],
+            "historical_spend": [],
+            "commitments": [],
+        },
+        "source_inventory": [],
+        "known_omissions": [],
+    }
+
+
+def assessment(candidate_id: str, *, feasibility: str = "feasible") -> dict:
+    return {
+        "candidate_id": candidate_id,
+        "feasibility": feasibility,
+        "candidate_role": (
+            "threshold_essential"
+            if candidate_id == "payment-validation"
+            else "value_expanding"
+        ),
+        "contraction_result": "retained" if candidate_id == "payment-validation" else "removed",
+        "first_break_point": "Named break point.",
+        "evidence_refs": [],
+        "assumption_refs": [],
+    }
+
+
+def bundle_decision(mode: str) -> dict:
+    if mode == "lite":
+        return {
+            "status": "not_applicable",
+            "bundle_assessments": [],
+            "selected_bundle_id": "none",
+        }
+    return {
+        "status": "assessed",
+        "bundle_assessments": [
+            {
+                "bundle_id": "B-launch",
+                "member_ids": ["payment-validation"],
+                "feasibility": "feasible",
+                "dominance_status": "non_dominated",
+                "dominated_by": [],
+                "resource_requirements": [allocation("engineer-time", 0.9)],
+                "contraction_result": "retained",
+                "target_support": "Closes the remaining launch requirement.",
+                "evidence_refs": ["E-payment"],
+                "assumption_refs": [],
+            },
+            {
+                "bundle_id": "B-polish",
+                "member_ids": ["page-polish"],
+                "feasibility": "infeasible",
+                "dominance_status": "infeasible",
+                "dominated_by": [],
+                "resource_requirements": [allocation("engineer-time", 1)],
+                "contraction_result": "removed",
+                "target_support": "Does not close payment acceptance.",
+                "evidence_refs": ["E-page"],
+                "assumption_refs": [],
+            },
+        ],
+        "selected_bundle_id": "B-launch",
+    }
+
+
+def situated_judgment(packet: dict) -> dict:
+    mode = packet["mode"]
+    return {
+        "schema_version": SITUATED_JUDGMENT_SCHEMA,
+        "stage": "situated",
+        "packet_hash": packet["packet_hash"],
+        "allocation_outcome": "allocate",
+        "candidate_assessments": [
+            assessment("page-polish"),
+            assessment("payment-validation"),
+        ],
+        "bundle_decision": bundle_decision(mode),
+        "state_considerations": [],
+        "allocation_ledger": [
+            {
+                "candidate_id": "page-polish",
+                "posture": "defer",
+                "current_allocations": [],
+                "reason": "Optional polish is outside the current launch floor.",
+            },
+            {
+                "candidate_id": "payment-validation",
+                "posture": "candidate",
+                "current_allocations": [],
+                "reason": "Eligible for the next replenishment tranche.",
+            },
+        ],
+        "next_tranche": {
+            "target_id": "payment-validation",
+            "resource_allocations": [allocation("engineer-time", 0.9)],
+            "window": "Current release window.",
+            "completion_signal": "A reproducible payment validation result.",
+            "start_condition": "",
+            "reason": "Payment remains the launch blocker.",
+        },
+        "investment_ceiling": [allocation("engineer-time", 0.9)],
+        "authorization_horizon": "one_tranche",
+        "reserve": {
+            "status": "none",
+            "resource_allocations": [],
+            "reason": "No observed incident requires reserve.",
+            "release_trigger": "Not applicable.",
+            "review_time": "At the payment checkpoint.",
+        },
+        "rerank_triggers": ["Payment validation completes or reveals a blocker."],
+        "missing_information": [],
+        "state_refs": [],
+        "evidence_refs": ["E-page", "E-payment"],
+        "assumption_refs": [],
+        "sunk_cost_used_as_reason": False,
+        "claim_ceiling": "Current release-window allocation only.",
+    }
+
+
+def challenge_from_situated(challenge_packet: dict, situated: dict, mapping: dict) -> dict:
+    original_to_alias = {candidate_id: alias for alias, candidate_id in mapping.items()}
+    result = copy.deepcopy(situated)
+    result["schema_version"] = CHALLENGE_JUDGMENT_SCHEMA
+    result["stage"] = "challenge"
+    result["packet_hash"] = challenge_packet["packet_hash"]
+    result.pop("state_considerations", None)
+    result.pop("state_refs", None)
+    result.pop("sunk_cost_used_as_reason", None)
+    for item in result["candidate_assessments"]:
+        item["challenge_id"] = original_to_alias[item.pop("candidate_id")]
+    for item in result["allocation_ledger"]:
+        item["challenge_id"] = original_to_alias[item.pop("candidate_id")]
+    result["next_tranche"]["target_id"] = original_to_alias[
+        result["next_tranche"]["target_id"]
+    ]
+    for bundle in result["bundle_decision"]["bundle_assessments"]:
+        bundle["member_ids"] = [original_to_alias[item] for item in bundle["member_ids"]]
+    return result
+
+
+class SraV03RuntimeContractTests(unittest.TestCase):
+    def test_valid_v03_input_passes(self):
+        self.assertEqual(validate_context_input(input_data()), [])
+
+    def test_challenge_receives_projection_not_situated_question_or_prior_conclusion(self):
+        packet = build_packets(input_data())["challenge_packet"]
+        text = json.dumps(packet, ensure_ascii=False)
+        self.assertIn("Which eligible release action", text)
+        self.assertNotIn("Should the release engineer continue page polish", text)
+        self.assertNotIn("prior agent recommended", text.casefold())
+
+    def test_challenge_projection_rejects_original_candidate_identifier(self):
+        data = input_data()
+        data["decision_question"]["challenge_projection"] = (
+            "Should page-polish continue or should another action receive the resource?"
+        )
+        findings = validate_context_input(data)
+        self.assertTrue(any("challenge_projection" in item for item in findings))
+
+    def test_context_projection_is_required_for_admitted_context(self):
+        data = input_data()
+        del data["context_items"][0]["challenge_projection"]
+        findings = validate_context_input(data)
+        self.assertTrue(any("challenge_projection" in item for item in findings))
+
+    def test_shared_resource_contention_is_required(self):
+        data = input_data()
+        data["candidates"][0]["resource_demand"] = [
+            {
+                "resource_id": "review-slot",
+                "quantity": {
+                    "quantity_kind": "indivisible",
+                    "blocks": ["slot-a"],
+                },
+            }
+        ]
+        findings = validate_context_input(data)
+        self.assertTrue(any("contested" in item for item in findings))
+
+    def test_override_must_bind_declared_authority_holder(self):
+        data = input_data()
+        data["mode"] = "lite"
+        data["escalation_signals"] = ["major_commitment"]
+        data["context_items"].append(
+            {
+                "context_id": "AUTH-release",
+                "kind": "authority_decision",
+                "authority_holder": "Release owner",
+                "authority_scope": "May approve this run's analysis-depth downgrade.",
+                "authority_expiry": "End of this run.",
+                "statement": "Release owner may approve a bounded downgrade.",
+                "challenge_projection": "The decision owner permits a bounded analysis-depth downgrade.",
+                "projection_basis": "Retains authority without candidate identity.",
+                "source": "current authority record",
+                "decision_relevance": "Controls downgrade authority.",
+                "requested_disposition": "admit",
+                "candidate_ids": [],
+                "evidence_refs": [],
+                "assumption_refs": [],
+            }
+        )
+        data["overrides"]["mode"] = {
+            "override_reason": "One reversible tranche only.",
+            "approved_by": "Someone else",
+            "authority_ref": "AUTH-release",
+            "risk_acceptance_scope": "This run only.",
+            "expiry": "End of this run.",
+        }
+        findings = validate_context_input(data)
+        self.assertTrue(any("approved_by" in item for item in findings))
+
+    def test_lite_schema_marks_bundle_decision_not_applicable(self):
+        packet = build_packets(input_data())["situated_packet"]
+        schema = situated_output_schema(packet)
+        bundle_schema = schema["properties"]["bundle_decision"]
+        self.assertEqual(
+            bundle_schema["properties"]["status"]["const"], "not_applicable"
+        )
+
+    def test_full_schema_requires_bundle_assessments(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        schema = situated_output_schema(packet)
+        bundle_schema = schema["properties"]["bundle_decision"]
+        self.assertEqual(bundle_schema["properties"]["status"]["const"], "assessed")
+        self.assertGreaterEqual(
+            bundle_schema["properties"]["bundle_assessments"]["minItems"], 1
+        )
+
+    def test_valid_full_bundle_judgment_passes(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        self.assertEqual(validate_situated_judgment(situated_judgment(packet), packet), [])
+
+    def test_full_without_bundle_surface_is_rejected(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["bundle_decision"] = {
+            "status": "not_applicable",
+            "bundle_assessments": [],
+            "selected_bundle_id": "none",
+        }
+        self.assertTrue(validate_situated_judgment(judgment, packet))
+
+    def test_infeasible_candidate_cannot_receive_resource(self):
+        packet = build_packets(input_data())["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["candidate_assessments"][1]["feasibility"] = "infeasible"
+        self.assertTrue(validate_situated_judgment(judgment, packet))
+
+    def test_candidate_cannot_receive_resource_not_declared_in_its_demand(self):
+        packet = build_packets(input_data())["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["next_tranche"] = {
+            "target_id": "payment-validation",
+            "resource_allocations": [
+                {
+                    "resource_id": "review-slot",
+                    "quantity": {
+                        "quantity_kind": "indivisible",
+                        "blocks": ["slot-a"],
+                    },
+                }
+            ],
+            "window": "Current release window.",
+            "completion_signal": "Review completed.",
+            "start_condition": "",
+            "reason": "Attempt to allocate an unrelated resource.",
+        }
+        judgment["investment_ceiling"] = copy.deepcopy(
+            judgment["next_tranche"]["resource_allocations"]
+        )
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(any("resource demand" in item for item in findings))
+
+    def test_selected_full_bundle_must_contain_next_candidate(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["bundle_decision"]["selected_bundle_id"] = "B-polish"
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(any("selected bundle" in item for item in findings))
+
+    def test_different_resource_commitments_are_a_conflict(self):
+        built = build_packets(input_data())
+        situated = situated_judgment(built["situated_packet"])
+        challenge = challenge_from_situated(
+            built["challenge_packet"], situated, built["challenge_map"]
+        )
+        challenge["next_tranche"]["resource_allocations"] = [
+            allocation("engineer-time", 0.1)
+        ]
+        comparison = compare_views(
+            run_id=input_data()["run_id"],
+            challenge_packet_hash=built["challenge_packet"]["packet_hash"],
+            situated_packet_hash=built["situated_packet"]["packet_hash"],
+            challenge_judgment=challenge,
+            situated_judgment=situated,
+            challenge_map=built["challenge_map"],
+        )
+        self.assertEqual(comparison["status"], "conflict")
+        self.assertIn(
+            "next_tranche",
+            {item["field"] for item in comparison["conflict_fields"]},
+        )
+
+    def test_bundle_comparison_uses_members_not_local_bundle_id(self):
+        built = build_packets(input_data(mode="full"))
+        situated = situated_judgment(built["situated_packet"])
+        challenge = challenge_from_situated(
+            built["challenge_packet"], situated, built["challenge_map"]
+        )
+        challenge["bundle_decision"]["bundle_assessments"][0]["bundle_id"] = "X1"
+        challenge["bundle_decision"]["bundle_assessments"][1]["bundle_id"] = "X2"
+        challenge["bundle_decision"]["selected_bundle_id"] = "X1"
+        comparison = compare_views(
+            run_id=input_data(mode="full")["run_id"],
+            challenge_packet_hash=built["challenge_packet"]["packet_hash"],
+            situated_packet_hash=built["situated_packet"]["packet_hash"],
+            challenge_judgment=challenge,
+            situated_judgment=situated,
+            challenge_map=built["challenge_map"],
+        )
+        self.assertNotIn(
+            "bundle_decision",
+            {item["field"] for item in comparison["conflict_fields"]},
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

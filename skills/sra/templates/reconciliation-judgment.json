@@ -1,50 +1,130 @@
 {
-  "schema_version": "sra.reconciliation-judgment.v0.2",
+  "schema_version": "sra.reconciliation-judgment.v0.3",
   "stage": "reconciliation",
   "packet_hash": "COPY_FROM_RECONCILIATION_PACKET",
-  "allocation_outcome": "conditional",
+  "allocation_outcome": "allocate",
   "conflict_resolutions": [
     {
-      "field": "COPY_CONFLICT_FIELD",
-      "resolution": "The cited execution-state constraint changes the immediate tranche without granting historical spend any authority.",
+      "field": "next_tranche",
+      "resolution": "The situated resource commitment is selected for the current release window based on the cited acceptance state.",
       "evidence_refs": [
-        "COPY_RECONCILIATION_EVIDENCE_ID"
+        "E-page",
+        "E-payment"
       ],
-      "assumption_refs": [],
-      "state_refs": [
-        "COPY_RECONCILIATION_STATE_ID"
+      "assumption_refs": [
+        "A-payment-duration"
+      ],
+      "state_refs": []
+    },
+    {
+      "field": "investment_ceiling",
+      "resolution": "The one-engineer-day ceiling matches the smallest decision-relevant validation tranche.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-payment-duration"
+      ],
+      "state_refs": []
+    }
+  ],
+  "candidate_assessments": [
+    {
+      "candidate_id": "page-polish",
+      "feasibility": "feasible",
+      "candidate_role": "value_expanding",
+      "contraction_result": "removed",
+      "first_break_point": "Optional polish can be removed without changing current launch acceptance.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": [
+        "A-polish-value"
+      ]
+    },
+    {
+      "candidate_id": "payment-validation",
+      "feasibility": "feasible",
+      "candidate_role": "threshold_essential",
+      "contraction_result": "retained",
+      "first_break_point": "Removing payment validation leaves the launch threshold unsupported.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-payment-duration"
       ]
     }
   ],
-  "candidate_assessments": [],
-  "state_considerations": [],
-  "current_floor": [],
-  "next_tranche": {
-    "candidate_id": "none",
-    "description": "No allocation is authorized until the named condition clears.",
-    "reason": "The two independent views expose a material unresolved conflict."
+  "bundle_decision": {
+    "status": "not_applicable",
+    "bundle_assessments": [],
+    "selected_bundle_id": "none"
   },
-  "investment_ceiling": "No additional growth allocation before the named evidence condition.",
-  "authorization_horizon": "one_action",
-  "maintenance": [],
+  "state_considerations": [],
+  "allocation_ledger": [
+    {
+      "candidate_id": "page-polish",
+      "posture": "defer",
+      "current_allocations": [],
+      "reason": "Optional improvement receives no current resource."
+    },
+    {
+      "candidate_id": "payment-validation",
+      "posture": "candidate",
+      "current_allocations": [],
+      "reason": "Eligible for the next replenishment tranche."
+    }
+  ],
+  "next_tranche": {
+    "target_id": "payment-validation",
+    "resource_allocations": [
+      {
+        "resource_id": "engineer-time",
+        "quantity": {
+          "quantity_kind": "exact",
+          "amount": 1,
+          "unit": "engineer-day"
+        }
+      }
+    ],
+    "window": "Current release window.",
+    "completion_signal": "A reproducible payment validation result.",
+    "start_condition": "",
+    "reason": "The cited release state supports the situated commitment."
+  },
+  "investment_ceiling": [
+    {
+      "resource_id": "engineer-time",
+      "quantity": {
+        "quantity_kind": "exact",
+        "amount": 1,
+        "unit": "engineer-day"
+      }
+    }
+  ],
+  "authorization_horizon": "one_tranche",
   "reserve": {
     "status": "none",
-    "candidate_id": "none",
-    "reason": "No reserve posture is supported by the conflict packet.",
-    "release_trigger": "Resolve the named conflict.",
-    "review_time": "Next SRA run or evidence event."
+    "resource_allocations": [],
+    "reason": "No cited conflict evidence supports an uncommitted reserve.",
+    "release_trigger": "Not applicable while reserve is none.",
+    "review_time": "At the next tranche checkpoint."
   },
-  "defer": [],
-  "stop": [],
   "rerank_triggers": [
-    "The missing evidence or state constraint is resolved."
+    "Payment validation completes or reveals a new blocker.",
+    "A release-blocking page defect appears."
   ],
-  "missing_information": [
-    "COPY_MISSING_CONTEXT_IF_ANY"
-  ],
+  "missing_information": [],
   "state_refs": [],
-  "evidence_refs": [],
-  "assumption_refs": [],
+  "evidence_refs": [
+    "E-page",
+    "E-payment"
+  ],
+  "assumption_refs": [
+    "A-polish-value",
+    "A-payment-duration"
+  ],
   "sunk_cost_used_as_reason": false,
-  "claim_ceiling": "Reconciliation is limited to the named conflict and may remain blocked."
+  "claim_ceiling": "This reconciliation resolves only the typed conflict for the current release window."
 }

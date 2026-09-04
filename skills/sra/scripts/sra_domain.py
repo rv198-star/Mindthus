@@ -129,7 +129,7 @@ STATE_REF_KINDS_BY_CONSIDERATION = {
     "none": set(),
 }
 COMPARISON_FIELDS = (
-    "allocation_outcome", "bundle_decision", "allocation_ledger",
+    "allocation_outcome", "candidate_assessments", "bundle_decision", "allocation_ledger",
     "next_tranche", "investment_ceiling", "authorization_horizon", "reserve",
     "missing_information",
 )
