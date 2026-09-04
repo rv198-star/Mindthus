@@ -49,6 +49,22 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         report = run_check(run_dir)
         self.assertEqual(report["status"], "ok", report)
 
+    def test_run_prepared_trace_carries_complete_input_anchor(self):
+        run_dir = self.prepare_run()
+        event = json.loads(
+            (run_dir / "trace.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        )
+        for field in (
+            "raw_input_hash",
+            "context_admission_hash",
+            "base_packet_hash",
+            "coverage_packet_hash",
+            "challenge_packet_hash",
+            "situated_packet_hash",
+        ):
+            self.assertIn(field, event["payload"])
+            self.assertTrue(event["payload"][field])
+
     def test_prompt_tamper_is_detected(self):
         run_dir = self.prepare_run()
         path = run_dir / "challenge-agent-prompt.md"
@@ -518,6 +534,58 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         raw["allocation_frame"]["parent_objective"] = "A replacement objective."
         raw_path.write_text(json.dumps(raw), encoding="utf-8")
         with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_repair_rejects_incomplete_state_anchor_when_trace_is_missing(self):
+        run_dir = self.prepare_run()
+        (run_dir / "trace.jsonl").unlink()
+        state_path = run_dir / "run.json"
+        state = load_json(state_path)
+        for field in (
+            "raw_input_hash",
+            "context_admission_hash",
+            "base_packet_hash",
+            "coverage_packet_hash",
+            "challenge_packet_hash",
+            "situated_packet_hash",
+        ):
+            state.pop(field, None)
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        raw_path = run_dir / "raw-input.json"
+        raw = load_json(raw_path)
+        raw["allocation_frame"]["parent_objective"] = "A replacement objective."
+        raw_path.write_text(json.dumps(raw), encoding="utf-8")
+        with self.assertRaisesRegex(SraRuntimeError, "prepared-input anchor"):
+            repair_run(run_dir)
+
+    def test_repair_accepts_complete_state_anchor_when_trace_is_missing(self):
+        run_dir = self.prepare_run()
+        (run_dir / "trace.jsonl").unlink()
+        prompt_path = run_dir / "situated-agent-prompt.md"
+        prompt_path.write_text("tampered", encoding="utf-8")
+        result = repair_run(run_dir)
+        self.assertTrue(result["repaired"], result)
+        self.assertEqual(run_check(run_dir)["status"], "ok")
+        self.assertNotEqual(prompt_path.read_text(encoding="utf-8"), "tampered")
+
+    def test_repair_accepts_complete_trace_anchor_when_state_is_missing(self):
+        run_dir = self.prepare_run()
+        (run_dir / "run.json").unlink()
+        prompt_path = run_dir / "situated-agent-prompt.md"
+        prompt_path.write_text("tampered", encoding="utf-8")
+        result = repair_run(run_dir)
+        self.assertTrue(result["repaired"], result)
+        self.assertEqual(run_check(run_dir)["status"], "ok")
+        self.assertNotEqual(prompt_path.read_text(encoding="utf-8"), "tampered")
+
+    def test_repair_rejects_changed_raw_input_with_state_only_anchor(self):
+        run_dir = self.prepare_run()
+        (run_dir / "trace.jsonl").unlink()
+        raw_path = run_dir / "raw-input.json"
+        raw = load_json(raw_path)
+        raw["allocation_frame"]["parent_objective"] = "A replacement objective."
+        raw_path.write_text(json.dumps(raw), encoding="utf-8")
+        with self.assertRaisesRegex(SraRuntimeError, "run state raw_input_hash"):
             repair_run(run_dir)
 
     def test_raw_input_must_be_regular_in_run_file(self):

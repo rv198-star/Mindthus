@@ -103,6 +103,11 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 本仓库不是 Python library；安装的含义是把 `skills/` 暴露给目标 agent client。
 
+开发、测试和发版验证要求 **CPython 3.10+**。GitHub Actions 固定使用 Python 3.11；
+本地验证不要默认系统中的 `python3` 一定满足要求，应先运行 `python3 --version`，
+版本较低时使用明确的受支持解释器，例如 `python3.10`、`python3.11` 或 `python3.12`。
+完整测试命令中的解释器名称也应使用同一个受支持版本。
+
 ## 安装
 
 ### 选择下载包
@@ -268,22 +273,29 @@ cp -R /tmp/mindthus-skills/opencode/.opencode /path/to/your/opencode-project/
 - [Mindthus Judgment Benchmark Latest](docs/benchmarks/latest.md)
 - [Before/after explanatory examples](docs/cases/before-after/) show what the benchmark is trying to measure; they are not quantitative proof.
 
+先固定本轮验证使用的受支持解释器：
+
+```bash
+export MINDTHUS_PYTHON=python3.11
+"$MINDTHUS_PYTHON" --version
+```
+
 运行文档与打包检查：
 
 ```bash
-python3 -m unittest tests.test_packaging_docs -v
+"$MINDTHUS_PYTHON" -m unittest tests.test_packaging_docs -v
 ```
 
 运行 `tplan` runtime 检查：
 
 ```bash
-python3 -m unittest discover -s tests/tplan -v
+"$MINDTHUS_PYTHON" -m unittest discover -s tests/tplan -v
 ```
 
 运行完整测试：
 
 ```bash
-python3 -m unittest discover -s tests -v
+"$MINDTHUS_PYTHON" -m unittest discover -s tests -v
 ```
 
 ## 可选：记录使用效果

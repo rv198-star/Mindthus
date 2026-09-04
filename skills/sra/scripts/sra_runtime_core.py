@@ -2205,6 +2205,22 @@ def _validate_decision_judgment(
         if not isinstance(start_condition, str):
             findings.append("next_tranche.start_condition must be a string")
 
+    for candidate_id in sorted(str(item) for item in allowed_candidates):
+        current_allocations = ledger_by_id.get(candidate_id, {}).get(
+            "current_allocations", []
+        )
+        candidate_next_allocations = (
+            next_allocations if target_id == candidate_id else []
+        )
+        validate_cumulative_allocations_against_demand(
+            current_allocations,
+            candidate_next_allocations,
+            demands=demands.get(candidate_id, []),
+            path=f"candidate {candidate_id} cumulative commitment",
+            resource_pools=resource_pools,
+            findings=findings,
+        )  # noqa: F405
+
     investment_ceiling = judgment.get("investment_ceiling")
     validate_resource_allocations(
         investment_ceiling,

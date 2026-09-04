@@ -168,8 +168,9 @@ continuation is best.
 
 ### Keep Workflow Deterministic
 
-Workflow validates references, resource contracts, candidate demand, bundle membership,
-posture consistency, capacity, ceilings, state transitions, and typed disagreement. It
+Workflow validates references, resource contracts, each candidate's cumulative current
+plus next-tranche demand, bundle membership, posture consistency, capacity, ceilings,
+state transitions, and typed disagreement. It
 does not decide semantic necessity, risk acceptance, bundle sufficiency, strongest
 alternative, or priority.
 

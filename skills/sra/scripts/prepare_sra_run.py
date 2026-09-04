@@ -137,6 +137,8 @@ def prepare(input_path: Path, run_dir: Path) -> dict[str, object]:
                 "mode": built["mode"],
                 "view_plan": built["view_plan"],
                 "coverage_plan": built["coverage_plan"],
+                "raw_input_hash": built["raw_input_hash"],
+                "context_admission_hash": built["context_admission_hash"],
                 "base_packet_hash": built["base_packet"]["packet_hash"],
                 "coverage_packet_hash": built["coverage_packet"]["packet_hash"],
                 "challenge_packet_hash": built["challenge_packet"]["packet_hash"],

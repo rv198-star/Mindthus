@@ -25,6 +25,14 @@ RUN_STATE_KEYS = frozenset({
 RECEIPT_KEYS = frozenset({
     "source_path", "stored_path", "sha256", "bytes", "boundary",
 })
+PREPARED_INPUT_ANCHOR_FIELDS = (
+    "raw_input_hash",
+    "context_admission_hash",
+    "base_packet_hash",
+    "coverage_packet_hash",
+    "challenge_packet_hash",
+    "situated_packet_hash",
+)
 
 
 def _parse_utc_timestamp(value: Any) -> datetime | None:
@@ -295,6 +303,8 @@ def expected_trace_events(
             "mode": rebuilt["mode"],
             "view_plan": rebuilt["view_plan"],
             "coverage_plan": rebuilt["coverage_plan"],
+            "raw_input_hash": rebuilt["raw_input_hash"],
+            "context_admission_hash": rebuilt["context_admission_hash"],
             "base_packet_hash": rebuilt["base_packet"]["packet_hash"],
             "coverage_packet_hash": rebuilt["coverage_packet"]["packet_hash"],
             "challenge_packet_hash": rebuilt["challenge_packet"]["packet_hash"],
@@ -1066,39 +1076,43 @@ def _repair_trace_anchors(run_dir: Path, run_id: str) -> dict[str, Any]:
 
 def _validate_repair_anchors(
     *,
-    raw: dict[str, Any],
     rebuilt: dict[str, Any],
     expectation: dict[str, Any],
     state: dict[str, Any],
     trace_anchors: dict[str, Any],
 ) -> None:
     prepared = trace_anchors.get("prepared")
-    packet_fields = {
+    expected_input_anchor = {
+        "raw_input_hash": rebuilt["raw_input_hash"],
+        "context_admission_hash": rebuilt["context_admission_hash"],
         "base_packet_hash": rebuilt["base_packet"]["packet_hash"],
         "coverage_packet_hash": rebuilt["coverage_packet"]["packet_hash"],
         "challenge_packet_hash": rebuilt["challenge_packet"]["packet_hash"],
         "situated_packet_hash": rebuilt["situated_packet"]["packet_hash"],
     }
-    if not isinstance(prepared, dict) and not state:
-        raise SraRuntimeError(  # noqa: F405
-            "cannot repair without a prepared-input anchor in trace or run state"
+
+    def complete_input_anchor(value: Any) -> bool:
+        return isinstance(value, dict) and all(
+            isinstance(value.get(field), str) and bool(value.get(field))
+            for field in PREPARED_INPUT_ANCHOR_FIELDS
         )
-    if isinstance(prepared, dict):
-        for field, current in packet_fields.items():
-            if prepared.get(field) != current:
-                raise SraRuntimeError(  # noqa: F405
-                    f"cannot repair changed raw input: prepared {field} does not match"
-                )
-    elif state:
-        raw_hash = state.get("raw_input_hash")
-        if isinstance(raw_hash, str) and raw_hash != digest_data(raw):  # noqa: F405
-            raise SraRuntimeError("cannot repair changed raw-input.json")  # noqa: F405
-        for field, current in packet_fields.items():
-            anchored = state.get(field)
-            if isinstance(anchored, str) and anchored != current:
-                raise SraRuntimeError(  # noqa: F405
-                    f"cannot repair changed raw input: run state {field} does not match"
-                )
+
+    if complete_input_anchor(prepared):
+        anchor_name = "prepared trace"
+        input_anchor = prepared
+    elif complete_input_anchor(state):
+        anchor_name = "run state"
+        input_anchor = state
+    else:
+        raise SraRuntimeError(  # noqa: F405
+            "cannot repair without a complete prepared-input anchor in trace or run state"
+        )
+
+    for field in PREPARED_INPUT_ANCHOR_FIELDS:
+        if input_anchor.get(field) != expected_input_anchor[field]:
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair changed raw input: {anchor_name} {field} does not match"
+            )
 
     trace_hashes = trace_anchors.get("judgment_hashes", {})
     if not isinstance(trace_hashes, dict):
@@ -1238,7 +1252,6 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
             + "; ".join(expectation["issues"])
         )
     _validate_repair_anchors(
-        raw=raw,
         rebuilt=rebuilt,
         expectation=expectation,
         state=existing_state,
