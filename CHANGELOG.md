@@ -2,6 +2,56 @@
 
 ## Unreleased
 
+## v1.9.1
+
+发布 tag：`v1.9.1`
+
+[发布说明](docs/releases/v1.9.1.md)
+
+发布日期：2026-09-05
+
+### 版本定位
+
+这是 `v1.9.0` SRA minor release 的兼容性 Bugfix patch。它不新增独立 Skill、route、
+judgment owner 或 TPlan runtime generation，而是重建并收紧 SRA v0.3 的方法域与运行时合同，
+使资源数量、Bundle、授权边界、证据权威和 Repair 行为保持一致。
+
+### SRA v0.3 合同与完整性修复
+
+- Lite / Full 共用明确的 resource contract；Full 对 Bundle、Allocation Ledger、Reserve、
+  Outcome / Finalization 使用同一组可检查不变量。
+- Challenge Projection 不接收当前路径、既有结论和沉没成本叙事；双视图比较会显式识别候选相同
+  但资源数量、Bundle 或授权边界不同的结果。
+- Allocation Ledger 同时校验单次与累计 Demand，关闭“当前投入已耗尽需求、下一批仍被授权”的
+  反例。
+- prepared-input anchor 必须来自完整 Trace 或完整 run cache；仅有 schema 的 `run.json` 不能作为
+  Repair 依据。
+- `run.json` 继续只是缓存；Trace 和 Agentic Judgment 保持权威。Prompt、Schema、Dispatch、
+  Command、Receipt、Final Decision 与 Trace 的完整性失败都会阻断最终化。
+- Repair 只重建派生产物，不改写 raw input 或 Agentic Judgment。
+
+### 独立复验
+
+- 在 `origin/main@1a48f70f` 上重新执行累计 Demand 与 prepared-input anchor 两个原始反例，
+  两者均按预期被阻断。
+- 完整 unittest、Test Lifecycle、`git diff --check` 与 Stable 全包构建通过。
+- 验收只证明本版合同与门禁覆盖的行为，不声明新的自然唤醒率、模型质量或商业效果。
+
+### 补充发布包：1.9.1 ROI Beta（GPT/Sol）
+
+- Stable release 按默认规则同步提供 `v1.9.1-roi-beta` supplemental experimental asset。
+- Beta 从精确 `v1.9.1` Stable shared core 组装并继承本次 SRA 修复；ROI runtime delta、独立
+  identity / namespace 与历史 ROI.2 3L5S Anti-Spiral correction 保持不变。
+- Beta-specific 自然唤醒率和相对胜率未重新测量，因此不作新增模型质量或 Token ROI 声明。
+
+### 兼容性、验证与发布资产
+
+- Stable package / plugin manifest 使用 `1.9.1`；TPlan runtime generation 继续保持
+  `1.5.4` / `mindthus-v1.5.4`。
+- `v1.9.1` GitHub Release 提供 `mindthus-plugins-1.9.1.tar.gz`、
+  `mindthus-skills-1.9.1.tar.gz`、`mindthus-beta-1.9.1-roi-beta.tar.gz` 与覆盖三份归档的
+  `SHA256SUMS`。
+
 ## v1.9.0
 
 发布 tag：`v1.9.0`

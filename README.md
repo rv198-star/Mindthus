@@ -116,23 +116,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 **发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。
 
-当前已发布 Stable 是 `v1.9.0`。这是 1.x Stable 的稀缺资源分配能力 minor release：新增
-独立 `SRA / Scarce Resource Allocation / 稀缺资源优先分配` Skill，在多个已足够清楚的候选
-争夺同一批时间、资金、人力、注意力或风险额度时，决定当前先投什么、保什么、延后什么和
-停止什么。普通执行默认 Lite，只授权下一动作、下一资源批次或一个明确检查点；组合、多资源、
-重大承诺或不可逆风险才升级 Full。TPlan 的 Mission、Pulse、继续授权和 runtime generation
-仍保持原 owner 与 `1.5.4` 代际。
+当前已发布 Stable 是 `v1.9.1`。这是 `v1.9.0` SRA minor release 的兼容性 Bugfix patch：
+重建并收紧 `SRA / Scarce Resource Allocation / 稀缺资源优先分配` v0.3 的资源、Bundle、
+Allocation Ledger、Reserve、Outcome / Finalization 与上下文隔离运行时合同，并关闭累计
+Demand 与 prepared-input anchor 两个最终阻断反例。它不新增方法、route 或 TPlan owner；
+TPlan 的 Mission、Pulse、继续授权和 runtime generation 仍保持原 owner 与 `1.5.4` 代际。
 
-`v1.9.0` Release 同步提供 Stable plugins、Stable skills 与 ROI Beta supplemental
-experimental asset。ROI Beta 从精确 `v1.9.0` Stable shared core 组装，继承完整 SRA Skill
+`v1.9.1` Release 同步提供 Stable plugins、Stable skills 与 ROI Beta supplemental
+experimental asset。ROI Beta 从精确 `v1.9.1` Stable shared core 组装，继承完整 SRA Skill
 和上下文隔离运行时；它的薄入口只增加经过边界校验的 SRA 分配唤起，并继续保留历史 ROI.2
 3L5S Anti-Spiral correction。Beta 使用独立 identity / namespace，不取代 Stable，也不自动迁移。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.9.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.9.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.9.1.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.9.1.tar.gz`。
 - 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
-  `mindthus-beta-1.9.0-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
-  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.9.0 Stable 的替代品。
+  `mindthus-beta-1.9.1-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
+  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.9.1 Stable 的替代品。
 
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
@@ -142,22 +141,22 @@ experimental asset。ROI Beta 从精确 `v1.9.0` Stable shared core 组装，继
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.9.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.0/mindthus-plugins-1.9.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.9.1.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.1/mindthus-plugins-1.9.1.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.9.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.9.1.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.9.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.0/mindthus-skills-1.9.0.tar.gz"
+  -o /tmp/mindthus-skills-1.9.1.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.1/mindthus-skills-1.9.1.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.9.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.9.1.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -181,7 +180,7 @@ codex plugin marketplace remove mindthus
 ### Codex ROI Beta（实验）
 
 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个
-`v1.9.0-roi-beta` 包从精确 `v1.9.0` Stable shared core 组装，继承完整 SRA Skill、
+`v1.9.1-roi-beta` 包从精确 `v1.9.1` Stable shared core 组装，继承完整 SRA Skill、
 上下文隔离的 situated/challenge 判断运行时、Root-Cause Replacement、competitive-frame
 convergence、WAE Ownership Closure、Judgment Trace、Case Export、case-prep、Test Lifecycle
 与现有 TPlan 能力；运行时差异限定为 SRA-compatible ROI Thin Core、历史 ROI.2 单句 3L5S
@@ -190,11 +189,11 @@ Stable 与 ROI Beta 可以独立安装或移除：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-beta-1.9.0-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.0/mindthus-beta-1.9.0-roi-beta.tar.gz"
+  -o /tmp/mindthus-beta-1.9.1-roi-beta.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.9.1/mindthus-beta-1.9.1-roi-beta.tar.gz"
 rm -rf /tmp/mindthus-roi-beta
 mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.9.0-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
+tar -xzf /tmp/mindthus-beta-1.9.1-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
 codex plugin marketplace add /tmp/mindthus-roi-beta
 codex plugin add mindthus-beta@mindthus-beta
 ```
@@ -313,7 +312,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.9.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.9.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
