@@ -14,6 +14,7 @@ REPO = Path(__file__).resolve().parents[4]
 PROFILE = REPO / "beta" / "2.0-beta" / "profile.json"
 REGISTER = REPO / "beta" / "2.0-beta" / "capability-register.json"
 OVERLAY = REPO / "beta" / "2.0-beta" / "overlays" / "using-mindthus-v1.9.0-sra" / "SKILL.md"
+HISTORICAL = REPO / "beta" / "2.0-roi-thin-core" / "profile.json"
 STABLE_REF = "d735d11c14d92325607fe6b844eb29f7c426df62"
 STABLE_TREE = "9c301753689d5ceb5f9fa2019ca41b4425f583bd"
 MAX_BYTES = 2300
@@ -80,6 +81,7 @@ def git_output(*args: str) -> str:
 def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Path | None) -> None:
     profile = read_json(PROFILE)
     register = read_json(REGISTER)
+    historical = read_json(HISTORICAL)
 
     if profile["version"] != "1.9.1-roi-beta":
         fail("composition version is not 1.9.1-roi-beta")
@@ -97,13 +99,13 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
     if OVERLAY.stat().st_size > MAX_BYTES:
         fail(f"Thin Core exceeds {MAX_BYTES} bytes: {OVERLAY.stat().st_size}")
     overlay = OVERLAY.read_text(encoding="utf-8")
+    overlay_compact = " ".join(overlay.split())
     for marker in (
         "using-mindthus — Thin Core",
         "Pursue facts over agreement",
         "Multiple judgeable candidates sharing one scarce resource belong to SRA",
-        "Anti-Spiral hard brake",
     ):
-        if marker not in overlay:
+        if " ".join(marker.split()) not in overlay_compact:
             fail(f"Thin Core missing marker: {marker}")
 
     if register["shared_core_ref"] != STABLE_REF:
@@ -122,6 +124,10 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
         fail("packaged profile shared-core identity mismatch")
     if (candidate / "skills" / "using-mindthus" / "SKILL.md").read_bytes() != OVERLAY.read_bytes():
         fail("packaged Thin Core differs from the qualified overlay")
+    correction = historical["package_time_contract_correction"]
+    corrected_3l5s = (candidate / correction["path"]).read_text(encoding="utf-8")
+    if correction["after"] not in corrected_3l5s or correction["before"] in corrected_3l5s:
+        fail("qualified ROI.2 3L5S Anti-Spiral correction is not exact")
 
     for relative in REQUIRED_SRA_SURFACES:
         if not (candidate / relative).is_file():
