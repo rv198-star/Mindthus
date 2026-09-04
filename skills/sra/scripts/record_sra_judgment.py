@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record independent SRA judgments and advance the context-calibrated workflow."""
+"""Record independent SRA v0.3 judgments and advance the typed workflow."""
 
 from __future__ import annotations
 
@@ -15,19 +15,15 @@ from sra_runtime import (
     SraValidationError,
     append_jsonl,
     build_reconciliation_packet,
-    carrier_command,
-    carrier_dispatch,
-    challenge_output_schema,
     compare_views,
     coverage_blocked_decision,
     create_final_decision,
     digest_data,
+    finalization_status_for_outcome,
     load_json,
     load_run,
     make_runtime_event,
-    prompt_for_reconciliation,
     receipt_record,
-    reconciliation_output_schema,
     run_check,
     save_run_state,
     validate_challenge_judgment,
@@ -35,6 +31,7 @@ from sra_runtime import (
     validate_reconciliation_judgment,
     validate_situated_judgment,
     write_json,
+    write_stage_surface,
 )
 
 STAGES = ("coverage", "challenge", "situated", "reconciliation")
@@ -43,8 +40,8 @@ STAGES = ("coverage", "challenge", "situated", "reconciliation")
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Record an SRA coverage, challenge, situated, or reconciliation judgment. "
-            "Scripts validate workflow and references; they never decide priority."
+            "Record an SRA v0.3 coverage, challenge, situated, or reconciliation "
+            "judgment. Scripts validate deterministic consequences and never choose priority."
         )
     )
     parser.add_argument("--dir", required=True, help="Prepared SRA run directory.")
@@ -95,18 +92,31 @@ def _write_judgment(run_dir: Path, stage: str, judgment: dict[str, Any]) -> str:
     return digest_data(judgment)
 
 
+def _terminal_event_type(status: str) -> str:
+    return {
+        "finalized": "run_finalized",
+        "conditional": "run_conditional",
+        "blocked": "run_blocked",
+    }[status]
+
+
 def _finalize(
     run_dir: Path,
     state: dict[str, Any],
     *,
     source: str,
     decision: dict[str, Any],
-    blocked: bool = False,
-) -> None:
-    state["statuses"]["finalization"] = "blocked" if blocked else "finalized"
-    final = create_final_decision(run_state=state, final_source=source, decision=decision)
+) -> str:
+    status = finalization_status_for_outcome(str(decision.get("allocation_outcome")))
+    state["statuses"]["finalization"] = status
+    final = create_final_decision(
+        run_state=state,
+        final_source=source,
+        decision=decision,
+    )
     write_json(run_dir / "final-decision.json", final)
     state["paths"]["final_decision"] = str(run_dir / "final-decision.json")
+    return status
 
 
 def _write_reconciliation_surface(
@@ -115,44 +125,31 @@ def _write_reconciliation_surface(
     packet: dict[str, Any],
 ) -> None:
     packet_path = run_dir / "reconciliation-packet.json"
-    prompt_path = run_dir / "reconciliation-agent-prompt.md"
-    schema_path = run_dir / "reconciliation-output-schema.json"
-    dispatch_path = run_dir / "reconciliation-subagent-dispatch.json"
-    command_path = run_dir / "reconciliation-codex-command.sh"
-    output_path = run_dir / "judgments" / "reconciliation.candidate.json"
-    workspace_path = run_dir / "fresh-context-workspace-reconciliation"
-
     write_json(packet_path, packet)
-    prompt_path.write_text(prompt_for_reconciliation(packet), encoding="utf-8")
-    write_json(schema_path, reconciliation_output_schema(packet))
-    write_json(
-        dispatch_path,
-        carrier_dispatch(
-            prompt_path.resolve(),
-            stage="reconciliation",
-            output_path=output_path.resolve(),
-            output_schema_path=schema_path.resolve(),
-        ),
-    )
-    command_path.write_text(
-        carrier_command(
-            prompt_path=prompt_path.resolve(),
-            output_path=output_path.resolve(),
-            output_schema_path=schema_path.resolve(),
-            workspace_path=workspace_path.resolve(),
-        ),
-        encoding="utf-8",
-    )
-    command_path.chmod(0o755)
-    workspace_path.mkdir(parents=True, exist_ok=True)
+    state["paths"]["reconciliation_packet"] = str(packet_path)
     state["paths"].update(
-        {
-            "reconciliation_packet": str(packet_path),
-            "reconciliation_prompt": str(prompt_path),
-            "reconciliation_output_schema": str(schema_path),
-            "reconciliation_dispatch": str(dispatch_path),
-            "reconciliation_cli_command": str(command_path),
-        }
+        write_stage_surface(
+            run_dir=run_dir,
+            stage="reconciliation",
+            packet=packet,
+        )
+    )
+
+
+def _append_terminal_event(
+    run_dir: Path,
+    state: dict[str, Any],
+    *,
+    status: str,
+    payload: dict[str, Any],
+) -> None:
+    append_jsonl(
+        run_dir / "trace.jsonl",
+        make_runtime_event(
+            state["run_id"],
+            _terminal_event_type(status),
+            payload,
+        ),
     )
 
 
@@ -163,16 +160,22 @@ def _advance_after_view(run_dir: Path, state: dict[str, Any]) -> str:
     if state["view_plan"] == "situated_only":
         if statuses["situated"] == "recorded" and statuses["finalization"] == "pending":
             situated = load_json(run_dir / "judgments" / "situated.json")
-            _finalize(run_dir, state, source="situated", decision=situated)
-            append_jsonl(
-                run_dir / "trace.jsonl",
-                make_runtime_event(
-                    state["run_id"],
-                    "run_finalized",
-                    {"source": "situated", "situated_judgment_hash": state["situated_judgment_hash"]},
-                ),
+            status = _finalize(
+                run_dir,
+                state,
+                source="situated",
+                decision=situated,
             )
-            return "Run finalized from the independent situated judgment."
+            _append_terminal_event(
+                run_dir,
+                state,
+                status=status,
+                payload={
+                    "source": "situated",
+                    "situated_judgment_hash": state["situated_judgment_hash"],
+                },
+            )
+            return f"Run reached {status} from the situated judgment."
         return "Record the situated judgment."
 
     if statuses["challenge"] != "recorded" or statuses["situated"] != "recorded":
@@ -190,10 +193,14 @@ def _advance_after_view(run_dir: Path, state: dict[str, Any]) -> str:
         situated_judgment=situated,
         challenge_map=state["challenge_map"],
     )
-    write_json(run_dir / "comparison-report.json", comparison)
+    comparison_path = run_dir / "comparison-report.json"
+    write_json(comparison_path, comparison)
     state["comparison_hash"] = comparison["comparison_hash"]
     statuses["comparison"] = comparison["status"]
-    state["paths"]["comparison_report"] = str(run_dir / "comparison-report.json")
+    state["paths"]["comparison_report"] = str(comparison_path)
+    conflict_fields = [
+        item["field"] for item in comparison["conflict_fields"]
+    ]
     append_jsonl(
         run_dir / "trace.jsonl",
         make_runtime_event(
@@ -202,22 +209,28 @@ def _advance_after_view(run_dir: Path, state: dict[str, Any]) -> str:
             {
                 "status": comparison["status"],
                 "comparison_hash": comparison["comparison_hash"],
-                "conflict_fields": [item["field"] for item in comparison["conflict_fields"]],
+                "conflict_fields": conflict_fields,
             },
         ),
     )
     if comparison["status"] == "agree":
         statuses["reconciliation"] = "not_required"
-        _finalize(run_dir, state, source="situated", decision=situated)
-        append_jsonl(
-            run_dir / "trace.jsonl",
-            make_runtime_event(
-                state["run_id"],
-                "run_finalized",
-                {"source": "situated", "challenge_status": "corroborated"},
-            ),
+        status = _finalize(
+            run_dir,
+            state,
+            source="situated",
+            decision=situated,
         )
-        return "Views agree; run finalized from the situated judgment with challenge corroboration."
+        _append_terminal_event(
+            run_dir,
+            state,
+            status=status,
+            payload={"source": "situated", "challenge_status": "corroborated"},
+        )
+        return (
+            f"Views agree; run reached {status} from the situated judgment with "
+            "challenge corroboration."
+        )
 
     base_packet = load_json(run_dir / "base-packet.json")
     situated_packet = load_json(run_dir / "situated-packet.json")
@@ -238,7 +251,7 @@ def _advance_after_view(run_dir: Path, state: dict[str, Any]) -> str:
             "reconciliation_requested",
             {
                 "packet_hash": reconciliation["packet_hash"],
-                "conflict_fields": [item["field"] for item in comparison["conflict_fields"]],
+                "conflict_fields": conflict_fields,
             },
         ),
     )
@@ -279,22 +292,19 @@ def record_coverage(
         ),
     )
     if outcome == "packet_incomplete":
-        _finalize(
+        status = _finalize(
             run_dir,
             state,
             source="coverage",
-            decision=coverage_blocked_decision(judgment),
-            blocked=True,
+            decision=coverage_blocked_decision(judgment, packet),
         )
-        append_jsonl(
-            run_dir / "trace.jsonl",
-            make_runtime_event(
-                state["run_id"],
-                "run_blocked",
-                {"source": "coverage", "judgment_hash": judgment_hash},
-            ),
+        _append_terminal_event(
+            run_dir,
+            state,
+            status=status,
+            payload={"source": "coverage", "judgment_hash": judgment_hash},
         )
-        next_action = "Prepare a new SRA run with the missing candidate or evidence surface."
+        next_action = "Prepare a new SRA run with the missing decision surface."
     else:
         next_action = (
             "Record both challenge and situated judgments independently."
@@ -311,33 +321,41 @@ def record_coverage(
     }
 
 
-def record_challenge(
+def _record_view(
     run_dir: Path,
     judgment: dict[str, Any],
     *,
+    stage: str,
     carrier: str,
     receipt_path: str | None,
 ) -> dict[str, Any]:
     _require_integrity(run_dir)
     state = load_run(run_dir)
     if not _coverage_ready(state):
-        raise SraRuntimeError("coverage review must be ready before challenge judgment")
-    if state["view_plan"] != "dual_view" or state["statuses"]["challenge"] != "pending":
-        raise SraRuntimeError("challenge judgment is not required or not pending")
-    packet = load_json(run_dir / "challenge-packet.json")
-    findings = validate_challenge_judgment(judgment, packet)
+        raise SraRuntimeError("coverage review must be ready before allocation judgment")
+    if stage == "challenge":
+        if state["view_plan"] != "dual_view" or state["statuses"]["challenge"] != "pending":
+            raise SraRuntimeError("challenge judgment is not required or not pending")
+        packet = load_json(run_dir / "challenge-packet.json")
+        findings = validate_challenge_judgment(judgment, packet)
+    else:
+        if state["statuses"]["situated"] != "pending":
+            raise SraRuntimeError("situated judgment is not pending")
+        packet = load_json(run_dir / "situated-packet.json")
+        findings = validate_situated_judgment(judgment, packet)
     if findings:
         raise SraValidationError(findings)
-    receipt = receipt_record(receipt_path, run_dir=run_dir, stage="challenge")
-    judgment_hash = _write_judgment(run_dir, "challenge", judgment)
-    state["challenge_judgment_hash"] = judgment_hash
-    state["statuses"]["challenge"] = "recorded"
-    _record_carrier(state, stage="challenge", carrier=carrier, receipt=receipt)
+
+    receipt = receipt_record(receipt_path, run_dir=run_dir, stage=stage)
+    judgment_hash = _write_judgment(run_dir, stage, judgment)
+    state[f"{stage}_judgment_hash"] = judgment_hash
+    state["statuses"][stage] = "recorded"
+    _record_carrier(state, stage=stage, carrier=carrier, receipt=receipt)
     append_jsonl(
         run_dir / "trace.jsonl",
         make_runtime_event(
             state["run_id"],
-            "challenge_judgment_recorded",
+            f"{stage}_judgment_recorded",
             {"judgment_hash": judgment_hash, "carrier": carrier},
         ),
     )
@@ -345,10 +363,26 @@ def record_challenge(
     save_run_state(run_dir / "run.json", state)
     return {
         "run_id": state["run_id"],
-        "stage": "challenge",
+        "stage": stage,
         "judgment_hash": judgment_hash,
         "next_action": next_action,
     }
+
+
+def record_challenge(
+    run_dir: Path,
+    judgment: dict[str, Any],
+    *,
+    carrier: str,
+    receipt_path: str | None,
+) -> dict[str, Any]:
+    return _record_view(
+        run_dir,
+        judgment,
+        stage="challenge",
+        carrier=carrier,
+        receipt_path=receipt_path,
+    )
 
 
 def record_situated(
@@ -358,37 +392,13 @@ def record_situated(
     carrier: str,
     receipt_path: str | None,
 ) -> dict[str, Any]:
-    _require_integrity(run_dir)
-    state = load_run(run_dir)
-    if not _coverage_ready(state):
-        raise SraRuntimeError("coverage review must be ready before situated judgment")
-    if state["statuses"]["situated"] != "pending":
-        raise SraRuntimeError("situated judgment is not pending")
-    packet = load_json(run_dir / "situated-packet.json")
-    findings = validate_situated_judgment(judgment, packet)
-    if findings:
-        raise SraValidationError(findings)
-    receipt = receipt_record(receipt_path, run_dir=run_dir, stage="situated")
-    judgment_hash = _write_judgment(run_dir, "situated", judgment)
-    state["situated_judgment_hash"] = judgment_hash
-    state["statuses"]["situated"] = "recorded"
-    _record_carrier(state, stage="situated", carrier=carrier, receipt=receipt)
-    append_jsonl(
-        run_dir / "trace.jsonl",
-        make_runtime_event(
-            state["run_id"],
-            "situated_judgment_recorded",
-            {"judgment_hash": judgment_hash, "carrier": carrier},
-        ),
+    return _record_view(
+        run_dir,
+        judgment,
+        stage="situated",
+        carrier=carrier,
+        receipt_path=receipt_path,
     )
-    next_action = _advance_after_view(run_dir, state)
-    save_run_state(run_dir / "run.json", state)
-    return {
-        "run_id": state["run_id"],
-        "stage": "situated",
-        "judgment_hash": judgment_hash,
-        "next_action": next_action,
-    }
 
 
 def record_reconciliation(
@@ -410,8 +420,18 @@ def record_reconciliation(
     judgment_hash = _write_judgment(run_dir, "reconciliation", judgment)
     state["reconciliation_judgment_hash"] = judgment_hash
     state["statuses"]["reconciliation"] = "recorded"
-    _record_carrier(state, stage="reconciliation", carrier=carrier, receipt=receipt)
-    _finalize(run_dir, state, source="reconciliation", decision=judgment)
+    _record_carrier(
+        state,
+        stage="reconciliation",
+        carrier=carrier,
+        receipt=receipt,
+    )
+    status = _finalize(
+        run_dir,
+        state,
+        source="reconciliation",
+        decision=judgment,
+    )
     append_jsonl(
         run_dir / "trace.jsonl",
         make_runtime_event(
@@ -420,13 +440,11 @@ def record_reconciliation(
             {"judgment_hash": judgment_hash, "carrier": carrier},
         ),
     )
-    append_jsonl(
-        run_dir / "trace.jsonl",
-        make_runtime_event(
-            state["run_id"],
-            "run_finalized",
-            {"source": "reconciliation", "judgment_hash": judgment_hash},
-        ),
+    _append_terminal_event(
+        run_dir,
+        state,
+        status=status,
+        payload={"source": "reconciliation", "judgment_hash": judgment_hash},
     )
     save_run_state(run_dir / "run.json", state)
     return {
@@ -434,6 +452,7 @@ def record_reconciliation(
         "stage": "reconciliation",
         "judgment_hash": judgment_hash,
         "allocation_outcome": judgment["allocation_outcome"],
+        "finalization": status,
         "next_action": "Run check_sra_run.py and render_sra_decision.py.",
     }
 
@@ -467,7 +486,7 @@ def main() -> int:
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
-        print("SRA judgment recorded")
+        print("SRA v0.3 judgment recorded")
         for key, value in result.items():
             print(f"{key}: {value}")
     return 0

@@ -9,7 +9,7 @@
       "feasibility": "feasible",
       "candidate_role": "value_expanding",
       "contraction_result": "removed",
-      "first_break_point": "Optional polish can be removed without changing current launch acceptance.",
+      "first_break_point": "Optional presentation work can be removed without changing current launch acceptance.",
       "evidence_refs": [
         "E-page"
       ],
@@ -32,9 +32,64 @@
     }
   ],
   "bundle_decision": {
-    "status": "not_applicable",
-    "bundle_assessments": [],
-    "selected_bundle_id": "none"
+    "status": "assessed",
+    "bundle_assessments": [
+      {
+        "bundle_id": "B-launch",
+        "member_ids": [
+          "payment-validation"
+        ],
+        "feasibility": "feasible",
+        "dominance_status": "non_dominated",
+        "dominated_by": [],
+        "resource_requirements": [
+          {
+            "resource_id": "engineer-time",
+            "quantity": {
+              "quantity_kind": "exact",
+              "amount": 1,
+              "unit": "engineer-day"
+            }
+          }
+        ],
+        "contraction_result": "retained",
+        "target_support": "This bundle closes the remaining launch requirement.",
+        "evidence_refs": [
+          "E-payment"
+        ],
+        "assumption_refs": [
+          "A-payment-duration"
+        ]
+      },
+      {
+        "bundle_id": "B-polish",
+        "member_ids": [
+          "page-polish"
+        ],
+        "feasibility": "infeasible",
+        "dominance_status": "infeasible",
+        "dominated_by": [],
+        "resource_requirements": [
+          {
+            "resource_id": "engineer-time",
+            "quantity": {
+              "quantity_kind": "exact",
+              "amount": 1,
+              "unit": "engineer-day"
+            }
+          }
+        ],
+        "contraction_result": "removed",
+        "target_support": "This bundle does not close the payment acceptance requirement.",
+        "evidence_refs": [
+          "E-page"
+        ],
+        "assumption_refs": [
+          "A-polish-value"
+        ]
+      }
+    ],
+    "selected_bundle_id": "B-launch"
   },
   "state_considerations": [],
   "allocation_ledger": [
@@ -42,13 +97,13 @@
       "candidate_id": "page-polish",
       "posture": "defer",
       "current_allocations": [],
-      "reason": "Optional improvement receives no current resource."
+      "reason": "Outside the selected target-reaching bundle for this window."
     },
     {
       "candidate_id": "payment-validation",
       "posture": "candidate",
       "current_allocations": [],
-      "reason": "Eligible for the next replenishment tranche."
+      "reason": "Member of the selected bundle and eligible for the next tranche."
     }
   ],
   "next_tranche": {
@@ -66,7 +121,7 @@
     "window": "Current release window.",
     "completion_signal": "A reproducible payment validation result.",
     "start_condition": "",
-    "reason": "Payment validation remains the unresolved launch requirement after current state is considered."
+    "reason": "The selected bundle remains feasible and non-dominated after current-state considerations."
   },
   "investment_ceiling": [
     {
@@ -82,13 +137,13 @@
   "reserve": {
     "status": "none",
     "resource_allocations": [],
-    "reason": "No admitted state requires an uncommitted reserve.",
+    "reason": "The only engineer-day is assigned to the selected bundle.",
     "release_trigger": "Not applicable while reserve is none.",
     "review_time": "At the next tranche checkpoint."
   },
   "rerank_triggers": [
     "Payment validation completes or reveals a new blocker.",
-    "A release-blocking page defect appears."
+    "The release threshold or available capacity changes."
   ],
   "missing_information": [],
   "state_refs": [],
@@ -101,5 +156,5 @@
     "A-payment-duration"
   ],
   "sunk_cost_used_as_reason": false,
-  "claim_ceiling": "This allocation applies to the current release window only."
+  "claim_ceiling": "This Full allocation applies to the current release window only."
 }

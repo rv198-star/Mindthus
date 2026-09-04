@@ -1,46 +1,102 @@
 {
-  "schema_version": "sra.challenge-judgment.v0.2",
+  "schema_version": "sra.challenge-judgment.v0.3",
   "stage": "challenge",
   "packet_hash": "COPY_FROM_CHALLENGE_PACKET",
   "allocation_outcome": "allocate",
   "candidate_assessments": [
     {
-      "challenge_id": "COPY_CHALLENGE_ID_1",
+      "challenge_id": "C01",
       "feasibility": "feasible",
       "candidate_role": "threshold_essential",
       "contraction_result": "retained",
-      "first_break_point": "Removing this action leaves the declared target threshold unsupported.",
+      "first_break_point": "Removing payment validation leaves the launch threshold unsupported.",
       "evidence_refs": [
-        "COPY_PACKET_EVIDENCE_ID"
+        "E-payment"
       ],
-      "assumption_refs": []
+      "assumption_refs": [
+        "A-payment-duration"
+      ]
+    },
+    {
+      "challenge_id": "C02",
+      "feasibility": "feasible",
+      "candidate_role": "value_expanding",
+      "contraction_result": "removed",
+      "first_break_point": "Optional polish can be removed without changing current launch acceptance.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": [
+        "A-polish-value"
+      ]
     }
   ],
-  "current_floor": [
-    "COPY_SELECTED_CHALLENGE_ID"
+  "bundle_decision": {
+    "status": "not_applicable",
+    "bundle_assessments": [],
+    "selected_bundle_id": "none"
+  },
+  "allocation_ledger": [
+    {
+      "challenge_id": "C01",
+      "posture": "candidate",
+      "current_allocations": [],
+      "reason": "Eligible for the next replenishment tranche."
+    },
+    {
+      "challenge_id": "C02",
+      "posture": "defer",
+      "current_allocations": [],
+      "reason": "Optional improvement receives no current resource."
+    }
   ],
   "next_tranche": {
-    "challenge_id": "COPY_SELECTED_CHALLENGE_ID",
-    "description": "Allocate one bounded decision-relevant tranche.",
-    "reason": "The action remains in the current floor after contraction."
+    "target_id": "C01",
+    "resource_allocations": [
+      {
+        "resource_id": "engineer-time",
+        "quantity": {
+          "quantity_kind": "exact",
+          "amount": 1,
+          "unit": "engineer-day"
+        }
+      }
+    ],
+    "window": "Current release window.",
+    "completion_signal": "A reproducible payment validation result.",
+    "start_condition": "",
+    "reason": "The selected action remains threshold-essential after contraction."
   },
-  "investment_ceiling": "One meaningful tranche before reranking.",
+  "investment_ceiling": [
+    {
+      "resource_id": "engineer-time",
+      "quantity": {
+        "quantity_kind": "exact",
+        "amount": 1,
+        "unit": "engineer-day"
+      }
+    }
+  ],
   "authorization_horizon": "one_tranche",
-  "maintenance": [],
   "reserve": {
     "status": "none",
-    "challenge_id": "none",
-    "reason": "No packet evidence supports reserving the next tranche.",
+    "resource_allocations": [],
+    "reason": "No packet evidence requires an uncommitted reserve.",
     "release_trigger": "Not applicable while reserve is none.",
     "review_time": "At the next tranche checkpoint."
   },
-  "defer": [],
-  "stop": [],
   "rerank_triggers": [
-    "The next tranche produces a new blocker or closes the target gap."
+    "Payment validation completes or reveals a new blocker.",
+    "A release-blocking page defect appears."
   ],
   "missing_information": [],
-  "evidence_refs": [],
-  "assumption_refs": [],
-  "claim_ceiling": "This is a de-anchored challenge view, not automatic final authority."
+  "evidence_refs": [
+    "E-page",
+    "E-payment"
+  ],
+  "assumption_refs": [
+    "A-polish-value",
+    "A-payment-duration"
+  ],
+  "claim_ceiling": "This is a de-anchored calibration view for the current release window."
 }

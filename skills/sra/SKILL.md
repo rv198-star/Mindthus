@@ -1,210 +1,220 @@
 ---
 name: sra
-description: "Use directly when multiple already-judgeable actions or bundles compete for one named scarce resource; choose the next tranche. Default Lite; Full for bundles or multiple resource constraints. Do not use with missing comparison facts/resource, or for one selected mainline's carrier, exposure, timing, or exit."
+description: "Use directly when multiple already-judgeable actions or bundles compete for one named scarce resource; choose the current floor and next meaningful tranche. Default Lite; use Full for explicit bundles, multiple resource constraints, fixed thresholds, or major commitments. Do not use with missing comparison facts/resource, or for one selected mainline's carrier, exposure, timing, or exit."
 ---
 
 # SRA / Scarce Resource Allocation / 稀缺资源优先分配
 
-## Core Claim / 核心判断
-
-SRA decides which valid work receives a shared scarce resource now.
+## Core Claim
 
 > 先排除不可行，再保护达标必要项；方向、依赖、瓶颈和窗口决定先后；
 > 组合价值决定本轮投哪套；边际价值决定下一份资源投哪里。
 
-Every applicable SRA judgment uses the same contraction–replenishment core. Lite
-compresses it into one `micro-contraction` and one `micro-replenishment`; Full expands
-the same logic across bundles, resource channels, pressure scenarios, and decision
-lifetimes.
+Execution shorthand:
 
-SRA owns allocation among sufficiently judgeable candidates; neighboring methods retain
-problem definition, structural truth, direction, carrier strategy, control, artifact
-quality, and runtime state. Use the smallest reasoning depth whose cost is lower than
-the plausible loss from a wrong allocation. Organize relevant context into sourced,
-structurally aligned packets without flattening evidence differences. Ordinary Lite uses
-one situated judgment; Full or material narrative contamination uses mutually hidden
-challenge and situated views, with one targeted reconciliation only when typed results
-conflict. See `resources/context-isolation.md`.
+> 收缩找出不能删的；回补决定下一份值得加的。
 
-## Mainline / 主路径
+SRA allocates a shared scarce resource among sufficiently judgeable work. It is an
+evidence-bounded judgment, not a universal score or optimizer.
 
-### Entry Outcome And Analysis-Cost Gate
+## Mainline
 
-Choose one outcome before analysis:
+### Entry And Analysis-Cost Gate
 
-- `direct`: one obvious low-risk action dominates, resources are independent, or trying
-  costs less than analyzing.
-- `lite`: authorize one bounded action, tranche, or checkpoint.
-- `full`: bundles, multi-resource constraints, fixed thresholds, direction changes, or
-  major/irreversible commitments control the decision.
-- `blocked`: a load-bearing target, evidence, authority, candidate, or resource boundary
-  is incomplete.
+Choose one entry outcome:
 
-`auto` starts from Lite and expands only when a named Full condition is load-bearing.
-`direct` is an intervention outcome, not a third reasoning mode.
+- `direct`: one required next action exists, no credible competing use of the same
+  resource exists, or direct trial is cheaper than analysis;
+- `lite`: one bounded action, resource tranche, or named checkpoint is enough;
+- `full`: explicit candidate bundles, multiple constrained resources, fixed thresholds,
+  direction-changing uncertainty, or a major/hard-to-reverse commitment is load-bearing;
+- `blocked`: allocation would require inventing a target, authority, shared resource,
+  candidate contribution, evidence, question projection, or risk boundary.
+
+`auto` starts from Lite and expands only under named escalation conditions. It is a mode
+selector, not a third reasoning mode.
+
+Use a depth whose cost is lower than the plausible loss from a wrong allocation.
 
 ### Allocation Frame
 
-Name only `parent_objective`, `target_threshold`, `time_window`, `risk_floor`,
-`decision_owner`, `contested_resource`, and `evidence_ceiling`. Resource pressure keeps
-the target visible; changing it is a separate authorized decision.
+Lock the smallest sufficient frame:
+
+```text
+parent_objective
+target_threshold
+time_window
+risk_floor
+decision_owner
+resource_pools[]
+evidence_ceiling
+```
+
+Each resource pool has a stable `resource_id`, a decision window, capacity, and one
+quantity contract:
+
+- `measured`: exact or bounded amount with additive `sum`;
+- `ordinal`: one ordered level with `exclusive` allocation;
+- `indivisible`: named blocks with block-set allocation.
+
+Do not translate unlike resources into one synthetic score.
 
 ### Candidate Horizon Probe
 
-Before choosing, scan beyond the active task:
+Scan only far enough to avoid active-task capture:
 
 1. current path;
 2. hard gate, blocker, or threshold-essential predecessor;
-3. direction-changing unknown, irreversible risk, or closing opportunity window;
-4. strongest feasible alternative contribution to the same objective;
-5. maintain, reserve, defer, and stop postures.
+3. direction-changing unknown, irreversible risk, or closing opportunity;
+4. strongest feasible alternative serving the same objective;
+5. maintenance, reserve, defer, and stop postures.
 
-Lite normally keeps two to four actionable candidates. Ask only for missing fields that
-can change the allocation. An incomparable credible candidate causes Full escalation or
-`blocked`, not an invented priority.
+Lite normally keeps two to four actionable candidates. Full expands only when bundle or
+resource-channel structure requires it.
+
+Candidate cards carry observable action, effect, demand, dependency, window, downside,
+reversibility, evidence, and assumptions. Inputs do not pre-label priority, ROI,
+hard-gate status, necessity, or another SRA role.
 
 ### Priority Order
 
-Apply this order before ROI-style comparison:
+Apply this order:
 
-1. `hard_gate`
-2. `feasible_bundle`
-3. `threshold_essential`
-4. `direction_or_bottleneck`
-5. `risk_adjusted_bundle_value`
-6. `marginal_tranche_value`
-7. `reserve`
+1. `hard_gate` and authority;
+2. `feasible_bundle` capable of reaching the target inside the window and risk floor;
+3. `threshold_essential` work whose removal breaks that bundle;
+4. `direction_or_bottleneck` action that changes the viable path, removes the dominant
+   constraint, protects a closing window, or creates decision-enabling evidence;
+5. `risk_adjusted_bundle_value` — risk-adjusted bundle value among remaining non-dominated feasible bundles;
+6. `marginal_tranche_value` of the next decision-relevant resource block;
+7. `reserve` when uncommitted capacity has greater option or recovery value.
 
-A necessary item receives enough resource to satisfy the current target and evidence
-threshold. Further improvement competes as `value_expanding` work.
+Compare fixed or indivisible thresholds as complete meaningful tranches.
 
-### Lite / 快速优先级决策
+### Lite
 
-Lite asks where the next meaningful resource tranche should go.
+Lite runs the shared method core once: lock the frame, probe candidates, run one
+`micro-contraction` to expose the current floor, then one `micro-replenishment` to choose
+the next meaningful tranche. Separate future switching cost from sunk cost and set the
+ceiling, horizon, displaced-work posture, and rerank trigger.
 
-1. Lock the minimal Allocation Frame.
-2. Run the Candidate Horizon Probe.
-3. Identify hard gates, threshold-essential work, and the strongest alternative.
-4. Run one `micro-contraction`: cap, remove, or downgrade the current allocation until
-   the next reduction would threaten the unchanged target threshold or risk floor.
-5. Run one `micro-replenishment`: from that current floor, compare the next meaningful
-   tranche across the surviving current path, strongest alternative, and reserve.
-6. Separate switching cost from sunk cost.
-7. Choose `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`.
-8. Set an investment ceiling, authorization horizon, displaced-work decision, and
-   reranking trigger.
-
-A Lite answer without both a contraction result and a replenishment result is ordinary
-priority discussion, not a complete SRA judgment.
-
-Lite authorizes only `one_action`, `one_tranche`, or `until_named_checkpoint`:
+Lite uses:
 
 ```text
-当前决定：continue | switch | maintain | defer | stop | reserve
-为什么现在：与目标门槛直接相关的理由
-当前底座：微型收缩后仍能守住目标与风险底线的最低投入
-下一投入批次：从当前底座出发，微型回补选择的最小资源块
-当前投入上限：本次最多投入多少
-授权边界：one_action | one_tranche | until_named_checkpoint
-延后或停止：被挤出的工作
-重排触发：什么变化会重新打开判断
+one_action | one_tranche | until_named_checkpoint
 ```
 
-Escalate to Full when direction can change, multiple feasible bundles exist, commitment
-is major or hard to reverse, fixed threshold or bundle effects control value, resource
-channels disagree, switching cost is material, a credible alternative is incomparable,
-or the decision authorizes more than one tranche or checkpoint.
+A Lite result without both contraction and replenishment is ordinary prioritization, not
+complete SRA fidelity.
 
-### Full / 完整资源分配
+### Full
 
-1. Lock objective, threshold, window, risk floor, authority, and evidence ceiling.
-2. Identify contested resource pools and the dominant constraint.
-3. Build minimum comparable candidate cards.
-4. Route direction-changing unknowns only to the point needed for current action.
-5. Construct an evidence-bounded `current minimum sufficient bundle` or alternatives.
-6. Eliminate `infeasible` and dominated bundles.
-7. Run resource contraction while preserving target and risk floor.
-8. Run replenishment from the lowest feasible bundle by meaningful tranches.
-9. Select a risk-adjusted allocation and reserve.
-10. State main allocation, support, maintenance, defer, stop, next tranche,
-    authorization boundary, decision lifetime, and reranking triggers.
+Full expands the same logic across explicit bundles and resource channels. It records
+bundle assessments, removes infeasible or dominated bundles, runs Resource Contraction
+and Resource Replenishment, selects one feasible or conditional non-dominated bundle,
+and records the ledger, tranche, reserve, ceiling, and authorization boundary.
 
-Use the minimum comparable candidate card in `resources/methodology.md`; splitting one
-candidate into more rows does not increase its allocation claim.
+Full may use `bounded_decision_window` in addition to Lite horizons. It must not merely
+produce a longer Lite explanation: explicit bundle members and bundle assessments are
+required.
 
-### Resource Contraction And Replenishment
+### Allocation Ledger And Outcome
 
-Contraction finds the current floor while target and risk stay fixed. Replenishment
-selects the next meaningful tranche by bottleneck, evidence, window, optionality, and
-objective gain. When removal and addition orders differ, preserve dependency,
-complementarity, fixed-threshold, switching-cost, or uncertainty explanations; return a
-partial or conditional order rather than a false total ranking.
+Every candidate receives exactly one posture in the current window:
 
-### Human-Readable First
+```text
+floor | maintenance | candidate | defer | stop
+```
 
-Lead with what receives the resource now, what is displaced, and what reopens the
-decision. Keep internal fields for audit, validation, or handoff.
+`floor` and `maintenance` carry nonzero current allocation. `candidate`, `defer`, and
+`stop` carry zero. The next tranche is separate from current allocation.
 
-## Guardrails / 从属补漏
+`allocate` authorizes the typed tranche; `conditional` waits for its named condition;
+`infeasible`, `blocked`, and `request_missing_context` authorize no target-reaching work.
 
-### Shared Core Across Lite And Full
+### Stop
 
-Lite reduces analysis width, not method identity: expose the current floor from one
-bounded contraction and the next tranche from one replenishment comparison. Full expands
-both across credible bundles. Before contraction, a posture is only a target-reaching
-hypothesis; the first realistic break point establishes the floor.
+Lite stops after one bounded allocation and rerank trigger. Full stops when the selected
+bundle is stable across adjacent realistic pressure, the first tranche is clear,
+remaining uncertainty cannot change the current action, and another analysis round has
+no named positive-value hypothesis.
 
-### Evidence-Bounded Necessity
+## Guardrails
 
-A `current minimum sufficient bundle` is bounded by evidence, assumptions, window, and
-risk floor. Record why each load-bearing part is necessary and what overturns it.
-Backup, rollback, review, and redundancy may be essential; substitutes stay separate.
-Return `infeasible` when no bundle reaches the unchanged target and risk floor.
+### Protect The Target Threshold
 
-### Resource Vector And Meaningful Tranche
+Keep the requested target and risk floor fixed during contraction. A cheaper survival
+state becomes valid only through an explicit authorized target change.
 
-Keep time, money, specialist capacity, labor, attention, exposure, and opportunity
-windows as distinct channels. Identify real contention, parallel work, and any fixed
-threshold. A meaningful tranche is the smallest complete experiment, engineer-day,
-review cycle, deliverable, or other block producing an observable result.
+### Protect Small But Decisive Actions
 
-### Switching Cost, Sunk Cost, And Reserve
+Keep direction tests, bottleneck removal, irreversible-risk prevention, and option
+creation visible. This does not make every small task critical.
 
-Compare future consequences: `sunk_cost` never justifies continuation;
-`switching_cost` is future change cost; `reusable_asset` retains future value;
-`remaining_cost` is new completion cost; `reserve` needs a reason, release trigger, and
-review time.
+### Judge Bundles Before Isolated Tasks
 
-### Stop And Evidence Discipline
+Preserve complementarity and fixed thresholds, then test every claimed member through
+contraction. A weak component cannot hide inside a large bundle.
 
-Lite stops after one bounded allocation and reranking trigger. Full stops when the
-bundle is stable across adjacent realistic pressure, the first tranche is clear, and
-another round has no action-changing value hypothesis. Scripts control packets, stage,
-references, typed comparison, and rendering; they do not compute priority, ROI,
-necessity, or allocation correctness.
+### Preserve Partial Orders
 
-## Boundaries / 边界
+Dependency, parallel resources, threshold effects, and uncertainty may justify parallel
+or conditional allocation. Do not force a total ranking.
 
-- Use `3l5s` for candidate definition/decomposition; SRA asks only for minimum
-  comparability.
-- Use `edsp` for unstable structure, `sela` for long-term efficiency direction, and
-  `mpg` for one selected mainline's carrier/path posture.
-- Use `wae` for agentic controller mismatch and `tvg` for value gain inside one bounded
-  artifact.
-- Anti-Spiral supplies the brake and allowed actions; SRA allocates released resources
-  without recursive handoff.
-- `tplan` owns Mission state, Pulse arbitration, identity, continuation, authority,
-  recovery, and mutation; SRA supplies cross-candidate allocation judgment.
-- Stay direct for one known blocker, independent resources, or a cheaper reversible
-  trial.
+### Separate Switching And Sunk Cost
 
-## Runtime Support / 支撑材料
+Compare future consequences from the current state. Historical spend never proves that
+continuation is best.
 
-- `resources/methodology.md` — complete Lite/Full method and ownership details.
-- `resources/fidelity-contract.md` — first-release fidelity and claim ceiling.
-- `resources/context-isolation.md` — context calibration, independent dual views, typed comparison, and carrier boundary.
-- `templates/fidelity-output.json` — passing Lite audit example.
-- `scripts/prepare_sra_run.py`, `record_sra_judgment.py`, `check_sra_run.py`, and
-  `render_sra_decision.py` — hybrid workflow shell; scripts never decide priority.
-- `../../docs/methodologies/sra.md` — public explanation.
-- `../../tests/sra_pressure_tests.md` — positive, boundary, and adversarial cases.
+### Keep Workflow Deterministic
+
+Workflow validates references, resource contracts, each candidate's cumulative current
+plus next-tranche demand, bundle membership, posture consistency, capacity, ceilings,
+state transitions, and typed disagreement. It
+does not decide semantic necessity, risk acceptance, bundle sufficiency, strongest
+alternative, or priority.
+
+## Boundaries
+
+- `3L5S` defines or decomposes candidates that are not yet judgeable.
+- `EDSP` owns an unstable proposition, false binary, or structural coordinate system.
+- `SELA` owns long-term system-efficiency versus local-advantage direction pressure.
+- `MPG` owns carrier, exposure, timing, optionality, and path posture for one selected
+  mainline.
+- `WAE` owns an Agentic/Workflow/Evidence controller mismatch.
+- `TVG` owns another value-gain round inside one bounded artifact.
+- Anti-Spiral supplies the brake when repeated repair replaces objective progress; SRA
+  allocates the released resource.
+- `TPlan` owns Mission state, Pulse arbitration, continuation, recovery, authority, and
+  mutation. SRA returns semantic allocation; it does not mutate the Mission.
+
+Do not use SRA when there is no real shared resource contention. Do not treat the words
+“priority”, “important”, “ROI”, or “resource” as sufficient wake-up evidence.
+
+## Runtime Support
+
+The version-bound v0.3 runtime uses:
+
+```text
+prepare_sra_run.py
+record_sra_judgment.py
+check_sra_run.py
+repair_sra_run.py
+render_sra_decision.py
+```
+
+The caller supplies separated question/context projections, declared resource pools and
+candidate demands, timestamped evidence, assumptions, and authority-bound downgrade
+overrides. Ordinary reversible Lite may use `situated_only`; contaminated Lite and Full
+use mutually hidden `dual_view`. Typed disagreement opens one bounded reconciliation.
+
+`run.json` is a cache. The checker reconstructs deterministic surfaces and state from raw
+input plus judgments; the repair command rebuilds derived artifacts without changing
+Agentic judgments. Full details live in `resources/context-isolation.md`.
+
+Prepared v0.2 runs are not resumed under v0.3. Start a new version-bound run from the
+source decision context.
+
+The runtime proves contract and observable carrier integrity only. It does not prove
+complete context, correct projection quality, absent hidden host context, semantic
+necessity, correct priority, optimal ROI, or real-world business value.

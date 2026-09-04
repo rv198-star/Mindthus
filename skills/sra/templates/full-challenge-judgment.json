@@ -1,0 +1,157 @@
+{
+  "schema_version": "sra.challenge-judgment.v0.3",
+  "stage": "challenge",
+  "packet_hash": "COPY_FROM_CHALLENGE_PACKET",
+  "allocation_outcome": "allocate",
+  "candidate_assessments": [
+    {
+      "challenge_id": "C01",
+      "feasibility": "feasible",
+      "candidate_role": "threshold_essential",
+      "contraction_result": "retained",
+      "first_break_point": "Removing this action leaves the launch threshold unsupported.",
+      "evidence_refs": [
+        "E-payment"
+      ],
+      "assumption_refs": [
+        "A-payment-duration"
+      ]
+    },
+    {
+      "challenge_id": "C02",
+      "feasibility": "feasible",
+      "candidate_role": "value_expanding",
+      "contraction_result": "removed",
+      "first_break_point": "Optional presentation work can be removed without changing current launch acceptance.",
+      "evidence_refs": [
+        "E-page"
+      ],
+      "assumption_refs": [
+        "A-polish-value"
+      ]
+    }
+  ],
+  "bundle_decision": {
+    "status": "assessed",
+    "bundle_assessments": [
+      {
+        "bundle_id": "B-challenge-launch",
+        "member_ids": [
+          "C01"
+        ],
+        "feasibility": "feasible",
+        "dominance_status": "non_dominated",
+        "dominated_by": [],
+        "resource_requirements": [
+          {
+            "resource_id": "engineer-time",
+            "quantity": {
+              "quantity_kind": "exact",
+              "amount": 1,
+              "unit": "engineer-day"
+            }
+          }
+        ],
+        "contraction_result": "retained",
+        "target_support": "This bundle closes the remaining launch requirement.",
+        "evidence_refs": [
+          "E-payment"
+        ],
+        "assumption_refs": [
+          "A-payment-duration"
+        ]
+      },
+      {
+        "bundle_id": "B-challenge-polish",
+        "member_ids": [
+          "C02"
+        ],
+        "feasibility": "infeasible",
+        "dominance_status": "infeasible",
+        "dominated_by": [],
+        "resource_requirements": [
+          {
+            "resource_id": "engineer-time",
+            "quantity": {
+              "quantity_kind": "exact",
+              "amount": 1,
+              "unit": "engineer-day"
+            }
+          }
+        ],
+        "contraction_result": "removed",
+        "target_support": "This bundle does not close the payment acceptance requirement.",
+        "evidence_refs": [
+          "E-page"
+        ],
+        "assumption_refs": [
+          "A-polish-value"
+        ]
+      }
+    ],
+    "selected_bundle_id": "B-challenge-launch"
+  },
+  "allocation_ledger": [
+    {
+      "challenge_id": "C01",
+      "posture": "candidate",
+      "current_allocations": [],
+      "reason": "Member of the selected bundle and eligible for the next tranche."
+    },
+    {
+      "challenge_id": "C02",
+      "posture": "defer",
+      "current_allocations": [],
+      "reason": "Outside the selected target-reaching bundle for this window."
+    }
+  ],
+  "next_tranche": {
+    "target_id": "C01",
+    "resource_allocations": [
+      {
+        "resource_id": "engineer-time",
+        "quantity": {
+          "quantity_kind": "exact",
+          "amount": 1,
+          "unit": "engineer-day"
+        }
+      }
+    ],
+    "window": "Current release window.",
+    "completion_signal": "A reproducible payment validation result.",
+    "start_condition": "",
+    "reason": "The selected bundle remains feasible and non-dominated after contraction."
+  },
+  "investment_ceiling": [
+    {
+      "resource_id": "engineer-time",
+      "quantity": {
+        "quantity_kind": "exact",
+        "amount": 1,
+        "unit": "engineer-day"
+      }
+    }
+  ],
+  "authorization_horizon": "one_tranche",
+  "reserve": {
+    "status": "none",
+    "resource_allocations": [],
+    "reason": "The only engineer-day is assigned to the selected bundle.",
+    "release_trigger": "Not applicable while reserve is none.",
+    "review_time": "At the next tranche checkpoint."
+  },
+  "rerank_triggers": [
+    "Payment validation completes or reveals a new blocker.",
+    "The release threshold or available capacity changes."
+  ],
+  "missing_information": [],
+  "evidence_refs": [
+    "E-page",
+    "E-payment"
+  ],
+  "assumption_refs": [
+    "A-polish-value",
+    "A-payment-duration"
+  ],
+  "claim_ceiling": "This is a de-anchored Full bundle calibration for the current release window."
+}

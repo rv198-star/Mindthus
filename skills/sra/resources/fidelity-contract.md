@@ -1,228 +1,244 @@
-# SRA Fidelity Contract
+# SRA Method-Fidelity Contract
 
-This contract supports the first SRA / Scarce Resource Allocation / 稀缺资源优先分配
-implementation.
+## Purpose
 
-SRA fidelity checks whether a run executed the required allocation moves at the chosen
-reasoning depth. It does not validate whether the selected priority, necessity claim,
-ROI judgment, or allocation is semantically correct.
+This contract checks whether an applicable SRA judgment executed the required method
+moves at the selected reasoning depth. It does not define a second resource-allocation result.
+
+The canonical resource pools, quantities, candidate ledger, Full bundle decision, next
+tranche, investment ceiling, reserve, outcome, finalization, comparison, and integrity
+rules belong to the v0.3 runtime contract in `context-isolation.md` and
+`scripts/sra_domain.py`.
 
 Short rule:
 
-> Validate the allocation shape; keep priority quality agentic and evidence-bounded.
+> Audit whether SRA reasoning happened; reference the canonical runtime decision instead
+> of copying its allocation fields.
+
+A method-fidelity pass does not prove that the selected priority, necessity claim, ROI
+judgment, bundle, or allocation is semantically correct.
 
 ## Entry Outcomes
 
-Every SRA artifact uses one `entry_outcome`:
+Every fidelity artifact uses one `entry_outcome`:
 
-- `direct`: no real resource competition, or direct trial is cheaper than analysis;
-- `lite`: one bounded action, tranche, or checkpoint is authorized;
-- `full`: bundle-level or major allocation is required;
-- `blocked`: a load-bearing target, evidence, authority, candidate, or resource boundary
-  is missing.
+- `direct`: no real shared-resource competition exists, or direct trial is cheaper than
+  analysis;
+- `lite`: one bounded action, tranche, or checkpoint was judged;
+- `full`: bundle-level, multi-resource, major, or hard-to-reverse allocation was judged;
+- `blocked`: a load-bearing target, evidence, authority, candidate, projection, or
+  resource boundary was missing before applicable allocation began.
 
-`direct` and `blocked` are accepted exits. They require a plain-language conclusion and
-an explicit `exit_reason`, but they do not require applicable-run judgment moves.
+`direct` and `blocked` are accepted method exits. They require:
 
-## Analysis-Cost Boundary
+```text
+plain_language_conclusion
+exit_reason
+transfer_to            # optional string
+```
 
-The selected depth must remain proportionate to the possible loss from a wrong
-allocation. A reversible local trial should stay direct or Lite; bundle-level, major,
-fixed-threshold, multi-resource, or irreversible decisions may justify Full. The
-validator can check the recorded `mode_boundary` move, but it cannot determine whether
-the chosen depth was substantively correct.
+They do not require a runtime decision reference or applicable-run judgment moves.
 
-## Applicable Output Shape
+## Applicable Fidelity Shape
 
-Applicable Lite and Full artifacts require:
+Applicable `lite` and `full` artifacts require:
 
-- `schema_version`: `sra-fidelity-v0.1`;
-- `method`: `SRA`;
-- `entry_outcome`: `lite` or `full`;
-- `plain_language_conclusion`;
-- `allocation_action`;
-- `allocation_frame`;
-- `required_judgment_moves`.
+```text
+schema_version: sra-fidelity-v0.2
+method: SRA
+entry_outcome: lite | full
+plain_language_conclusion
+runtime_decision_ref
+required_judgment_moves
+```
 
-Allowed `allocation_action` values depend on mode:
+The fidelity artifact does not repeat:
 
-- Lite: `continue`, `switch`, `maintain`, `defer`, `stop`, or `reserve`;
-- Full: `allocate`, `conditional`, `infeasible`, or `blocked`, matching
-  `full_decision.allocation_outcome`.
+- the Allocation Frame;
+- resource-pool or quantity contracts;
+- candidate assessments or allocation ledger;
+- current-floor or maintenance resource amounts;
+- Full bundle members, feasibility, dominance, or selected bundle;
+- next-tranche resources;
+- investment ceiling;
+- reserve allocation;
+- allocation outcome or finalization table.
 
-## Allocation Frame
+Those fields are validated only by the canonical v0.3 runtime.
 
-Applicable artifacts require non-empty fields:
+## Runtime Decision Reference
 
-- `parent_objective`
-- `target_threshold`
-- `time_window`
-- `risk_floor`
-- `decision_owner`
-- `contested_resource`
-- `evidence_ceiling`
+`runtime_decision_ref` records metadata for the terminal runtime artifact used by the
+fidelity audit:
 
-The validator checks only that these fields are present and non-empty. It cannot prove
-that the target, owner, risk floor, or resource boundary is correct.
+```text
+schema_version: sra.final-decision.v0.3
+artifact_path
+artifact_hash: sha256:<64 lowercase hex>
+mode: lite | full
+allocation_outcome
+authorization_horizon
+finalization_status
+```
+
+The standalone fidelity validator checks metadata shape and deterministic consistency.
+It does not open the referenced artifact or recompute its digest. Runtime integrity is
+owned by `check_sra_run.py`.
+
+The referenced mode must match `entry_outcome`.
+
+Outcome and finalization must agree:
+
+| Runtime outcome | Finalization |
+|---|---|
+| `allocate` | `finalized` |
+| `conditional` | `conditional` |
+| `infeasible` | `finalized` |
+| `blocked` | `blocked` |
+| `request_missing_context` | `blocked` |
+
+Lite accepts only:
+
+- `one_action`;
+- `one_tranche`;
+- `until_named_checkpoint`.
+
+Full may additionally reference `bounded_decision_window`.
 
 ## Required Judgment Moves
 
-Every applicable run requires these moves:
+Every applicable run requires:
 
-- `candidate_horizon_probe`
-- `priority_order`
-- `resource_contention`
-- `evidence_bounded_necessity`
-- `contraction`
-- `replenishment`
-- `meaningful_tranche`
-- `switching_vs_sunk_cost`
-- `authorization_horizon`
-- `defer_stop_or_reserve`
-- `rerank_trigger`
-- `mode_boundary`
-- `claim_ceiling`
+- `candidate_horizon_probe`;
+- `priority_order`;
+- `resource_contention`;
+- `evidence_bounded_necessity`;
+- `contraction`;
+- `replenishment`;
+- `meaningful_tranche`;
+- `switching_vs_sunk_cost`;
+- `authorization_horizon`;
+- `defer_stop_or_reserve`;
+- `rerank_trigger`;
+- `mode_boundary`;
+- `claim_ceiling`.
 
-Full mode additionally requires:
+Full additionally requires:
 
-- `minimum_sufficient_bundle`
-- `resource_vector`
-- `feasibility_and_dominance`
-- `reserve_capacity`
+- `minimum_sufficient_bundle`;
+- `resource_vector`;
+- `feasibility_and_dominance`;
+- `reserve_capacity`.
 
 For Lite, `contraction` records one bounded micro-contraction and `replenishment` records
-one next-tranche comparison from the resulting current floor. For Full, the same moves
-expand across candidate bundles and realistic pressure scenarios.
+one next-tranche comparison from the resulting floor. For Full, the same method core
+expands across explicit candidate bundles and resource channels.
 
 Each move includes:
 
-- `status`: `addressed`, `not_applicable`, `transfer`, or `challenge_premise`;
-- `finding`;
-- `failure_criteria_response`;
-- `evidence_surface`.
+```text
+status: addressed | not_applicable | transfer | challenge_premise
+finding
+failure_criteria_response
+evidence_surface
+```
 
-A non-empty move remains a shape carrier, not proof that the reasoning is true.
+A non-empty move is an auditable carrier, not proof that the reasoning is true.
 
-## Lite Decision Carrier
+## Analysis-Cost Boundary
 
-Lite requires `lite_decision` with:
+The selected depth remains proportionate to the plausible loss from a wrong allocation.
+A reversible local trial should stay direct or Lite. Bundle-level, major,
+fixed-threshold, multi-resource, or irreversible decisions may justify Full.
 
-- `considered_candidates`: two to four non-empty candidate or posture labels;
-- `current_floor`;
-- `next_tranche`;
-- `investment_ceiling`;
-- `authorization_horizon`;
-- `displaced_work` as a list;
-- `rerank_trigger`.
-
-Allowed `authorization_horizon` values:
-
-- `one_action`
-- `one_tranche`
-- `until_named_checkpoint`
-
-Lite fails its method contract when it omits the post-contraction current floor, omits
-the replenishment choice, or authorizes an open-ended continuation without a bounded
-horizon and reranking trigger.
-
-## Full Decision Carrier
-
-Full requires `full_decision` with:
-
-- `allocation_outcome`: `allocate`, `conditional`, `infeasible`, or `blocked`;
-- `allocation_scope`: `problem_portfolio` or `execution_portfolio`;
-- `contested_resources` as a non-empty list;
-- `dominant_constraint`;
-- `candidate_bundles` as a non-empty list of objects carrying a non-empty `bundle_id`
-  and `status`: `feasible`, `infeasible`, `dominated`, or `conditional`;
-- `contraction_findings` as a list;
-- `replenishment_findings` as a list;
-- `selected_main_allocation`;
-- `necessary_support` as a list;
-- `minimum_maintenance` as a list;
-- `explicit_defer` as a list;
-- `explicit_stop` as a list;
-- `reserved_capacity` as an object;
-- `next_tranche`;
-- `authorization_boundary`;
-- `decision_lifetime`;
-- `rerank_triggers` as a non-empty list.
-
-The validator does not require every list to be non-empty because a legitimate case may
-have no maintenance, defer, stop, or reserve item. It checks required carriers and the
-fields whose absence would make the decision unrecoverable.
+The fidelity validator confirms that `mode_boundary` is recorded and Lite does not
+reference a Full-only authorization horizon. It cannot determine whether the depth choice
+was substantively correct.
 
 ## Failure Criteria
 
-An applicable run has a shape or evidence risk when:
+An applicable fidelity artifact has a shape or evidence risk when:
 
-- the Allocation Frame is incomplete;
+- no canonical runtime decision reference is recorded;
+- the reference uses a non-v0.3 final-decision schema;
+- its path or digest is malformed;
+- its mode differs from the fidelity entry outcome;
+- its outcome, finalization, or authorization horizon is inconsistent;
 - no Candidate Horizon Probe is recorded;
 - hard gates and target feasibility are not represented before ROI-style comparison;
-- the common contested resource is absent;
-- necessity is asserted without an evidence surface or overturn condition;
-- the next resource unit is not a bounded meaningful tranche;
+- shared resource contention is not addressed;
+- necessity is asserted without evidence or an overturn condition;
+- Lite omits contraction or replenishment;
 - sunk cost and switching cost are not separated;
-- Lite omits one bounded micro-contraction, one micro-replenishment, or the resulting
-  current floor;
-- Lite has no bounded authorization horizon;
-- defer, stop, maintenance, or reserve consequences are hidden;
+- maintenance, defer, stop, or reserve consequences are not addressed;
 - no reranking trigger is named;
-- Full omits minimum sufficient bundle, expanded contraction, expanded replenishment,
-  resource vector, feasibility, dominance, or reserve-capacity moves;
-- Full lacks a decision lifetime or authorization boundary;
-- numeric scoring is presented as semantic proof rather than an evidence-linked support
-  surface.
+- Full omits minimum sufficient bundle, resource vector, feasibility/dominance, or
+  reserve-capacity moves;
+- numeric scoring is presented as semantic proof.
 
 ## Routing Boundaries
 
-A complete SRA artifact should transfer or stay direct when another owner controls the
+A fidelity artifact may record a transfer or direct exit when another owner controls the
 active question:
 
 - 3L5S: problem definition or decomposition;
 - EDSP: unstable proposition or structural binary;
 - SELA: long-term system efficiency versus local advantage;
 - MPG: carrier, exposure, timing, and path posture for one selected mainline;
-- WAE: agentic controller mismatch;
+- WAE: Agentic controller mismatch;
 - TVG: value gain inside one bounded artifact;
 - TPlan: Mission state, Pulse arbitration, continuation, authority, recovery, and
   mutation.
 
-The validator can accept explicit exits. It cannot determine whether the transfer is
+The validator can accept an explicit exit. It cannot determine whether the transfer is
 semantically correct.
 
-## Context-Calibrated Runtime Relationship
+## Runtime Relationship
 
-The hybrid runtime in `context-isolation.md` controls context admission, candidate
-structural alignment, independent challenge/situated packet generation, typed
-comparison, one-pass reconciliation gating, hashes, references, carrier records, and
-rendering. It does not reduce or pre-compute any required SRA semantic move.
+The canonical v0.3 runtime owns:
+
+- situated and challenge question surfaces;
+- declared context projections;
+- declared resource pools and quantity contracts;
+- candidate demand and allocation compatibility;
+- one candidate allocation ledger;
+- Full bundle members, feasibility, dominance, and selected bundle;
+- independent challenge and situated packets;
+- typed comparison and one-pass reconciliation;
+- outcome/finalization mapping;
+- deterministic state, Prompt, Dispatch, command, final-source, and trace
+  reconstruction;
+- bounded repair of derived artifacts;
+- human-readable rendering.
 
 Ordinary Lite may use one situated judgment. Full or material contamination uses a
-challenge and a situated judgment that cannot see each other's output. Agreement is
-corroboration rather than proof; conflict opens one targeted reconciliation that may
-remain blocked.
+challenge and situated judgment that cannot see each other's output. Agreement means the
+same typed commitment survived both views; it remains corroboration rather than proof.
+Conflict opens one targeted reconciliation that may remain conditional or blocked.
 
-A runtime-integrity pass proves only that recorded judgments stayed bound to their
-packets and declared workflow. It does not prove complete context, correct context
-classification, absent hidden host context, or correct priority. Packet-bound runs remain
-logical separation; fresh carriers without persisted receipts remain declared but
-unverified.
+A runtime-integrity pass proves only that recorded artifacts conform to the declared
+workflow. It does not prove complete context, correct projection quality, absent hidden
+host context, or correct priority.
 
 ## Claim Ceiling
 
-Allowed first-release claim:
+Supported claim:
 
-> SRA provides lightweight and expanded contracts for making scarce-resource allocation
-> explicit, evidence-bounded, and action-changing, with tested routing boundaries.
+> SRA method-fidelity validation verifies that required Lite or Full judgment moves were
+> recorded and linked to canonical v0.3 terminal runtime-decision metadata.
 
-The contract does not support claims that SRA always finds the correct priority,
-maximizes ROI, computes an optimal allocation, or proves real-world business value.
+Unsupported claims:
+
+- SRA always finds the correct priority;
+- SRA maximizes ROI or computes an optimal allocation;
+- the fidelity artifact independently validates resource or bundle semantics;
+- a referenced digest proves the runtime artifact exists or is correct;
+- pressure tests prove real-world business value.
 
 ## Script Boundary
 
-`scripts/validate_sra_output.py` emits an `SRA Shape & Evidence Risk Report`.
+`scripts/validate_sra_output.py` emits an
+`SRA Method-Fidelity & Evidence Risk Report`.
 
-A shape pass is not semantic approval. The script cannot judge priority quality,
-necessity truth, semantic ROI, bundle sufficiency, strongest-alternative quality, or real
-allocation correctness.
+It validates fidelity evidence and canonical reference metadata. It does not validate or recreate the runtime allocation carrier, judge priority quality, determine necessity,
+calculate semantic ROI, prove bundle sufficiency, or choose the strongest alternative.
