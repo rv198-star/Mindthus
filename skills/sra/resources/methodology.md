@@ -437,7 +437,8 @@ Runtime quantities preserve their native meaning:
 
 Candidate demand, current allocation, bundle requirements, next tranche, reserve, and
 investment ceiling all reference the same resource-pool contract. Workflow checks
-mechanical compatibility and capacity; Agentic SRA still decides semantic value.
+mechanical compatibility, capacity, and each candidate's cumulative current-plus-next
+commitment against its declared demand; Agentic SRA still decides semantic value.
 
 The runtime records one allocation-ledger row per candidate:
 
@@ -809,7 +810,8 @@ Scripts may:
 - build a declared-fragment context-admission ledger and shared decision base;
 - align candidate cards and create input-order-independent challenge aliases;
 - validate measured, ordinal, and indivisible resource contracts;
-- bind actual allocation and bundle requirements to candidate demand;
+- bind actual allocation and bundle requirements to candidate demand, including each
+  candidate's cumulative current-plus-next commitment;
 - reject pre-decided semantic role or score fields;
 - generate independent challenge and situated packets plus deterministic Prompt, schema,
   Dispatch, and command surfaces;

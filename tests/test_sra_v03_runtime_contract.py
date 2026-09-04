@@ -434,6 +434,90 @@ class SraV03RuntimeContractTests(unittest.TestCase):
         findings = validate_situated_judgment(judgment, packet)
         self.assertTrue(any("resource demand" in item for item in findings))
 
+    def test_lite_cumulative_candidate_commitment_cannot_exceed_demand(self):
+        data = input_data()
+        engineer_pool = next(
+            item
+            for item in data["allocation_frame"]["resource_pools"]
+            if item["resource_id"] == "engineer-time"
+        )
+        engineer_pool["capacity"] = exact(2)
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        payment_row = next(
+            item
+            for item in judgment["allocation_ledger"]
+            if item["candidate_id"] == "payment-validation"
+        )
+        payment_row["posture"] = "floor"
+        payment_row["current_allocations"] = [allocation("engineer-time", 0.6)]
+        judgment["investment_ceiling"] = [allocation("engineer-time", 1.5)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("cumulative" in item and "candidate resource demand" in item for item in findings),
+            findings,
+        )
+
+    def test_lite_cumulative_candidate_commitment_equal_to_demand_passes(self):
+        data = input_data()
+        engineer_pool = next(
+            item
+            for item in data["allocation_frame"]["resource_pools"]
+            if item["resource_id"] == "engineer-time"
+        )
+        engineer_pool["capacity"] = exact(2)
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        payment_row = next(
+            item
+            for item in judgment["allocation_ledger"]
+            if item["candidate_id"] == "payment-validation"
+        )
+        payment_row["posture"] = "floor"
+        payment_row["current_allocations"] = [allocation("engineer-time", 0.1)]
+        judgment["investment_ceiling"] = [allocation("engineer-time", 1)]
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
+
+    def test_lite_bounded_demand_applies_to_cumulative_commitment(self):
+        data = input_data()
+        engineer_pool = next(
+            item
+            for item in data["allocation_frame"]["resource_pools"]
+            if item["resource_id"] == "engineer-time"
+        )
+        engineer_pool["capacity"] = exact(2)
+        payment = next(
+            item
+            for item in data["candidates"]
+            if item["candidate_id"] == "payment-validation"
+        )
+        payment["resource_demand"] = [
+            {
+                "resource_id": "engineer-time",
+                "quantity": {
+                    "quantity_kind": "bounded",
+                    "lower_bound": 0,
+                    "upper_bound": 1,
+                    "unit": "engineer-day",
+                },
+            }
+        ]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        payment_row = next(
+            item
+            for item in judgment["allocation_ledger"]
+            if item["candidate_id"] == "payment-validation"
+        )
+        payment_row["posture"] = "floor"
+        payment_row["current_allocations"] = [allocation("engineer-time", 0.2)]
+        judgment["investment_ceiling"] = [allocation("engineer-time", 1.1)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("cumulative" in item and "candidate resource demand" in item for item in findings),
+            findings,
+        )
+
     def test_selected_full_bundle_must_contain_next_candidate(self):
         packet = build_packets(input_data(mode="full"))["situated_packet"]
         judgment = situated_judgment(packet)

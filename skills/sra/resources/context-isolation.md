@@ -188,8 +188,9 @@ depend on, unlock, or substitute for itself. At least one pool must be demanded 
 more candidates; otherwise SRA has no demonstrated shared resource contention.
 
 Actual current allocation, next tranche, and bundle requirements must reference resources
-contained in the relevant candidate demand. Measured and bounded quantities cannot exceed
-that demand; ordinal levels and indivisible blocks must remain within the declared
+contained in the relevant candidate demand. A candidate's current allocation plus its
+next tranche is one cumulative commitment for the decision window and must remain within
+that demand. Ordinal levels and indivisible blocks remain within the same declared
 candidate boundary.
 
 ### Evidence
@@ -490,12 +491,15 @@ Agentic judgments:
 - run cache;
 - trace.
 
-It never edits Agentic judgment files. Prepared packet hashes anchor the raw input; recorded judgment-event hashes anchor
-Agentic judgments; trace carrier facts take precedence over the mutable run cache. Repair
-requires at least one prepared-input anchor and accepts only regular in-run authoritative
-files and judgment directories. It refuses changed raw input, changed Agentic judgments,
-invalid or illegally ordered judgments, another runtime version, symbolic-link escapes,
-invalid stage receipt paths, or missing unrecoverable carrier facts.
+It never edits Agentic judgment files. A complete prepared-input anchor contains the raw
+input hash, context-admission hash, and every initial packet hash. Repair requires that
+complete anchor from either the `run_prepared` trace event or the run-state cache and
+requires it to match the current raw input. Recorded judgment-event hashes anchor Agentic
+judgments; valid trace carrier facts take precedence over the mutable run cache. Repair
+accepts only regular in-run authoritative files and judgment directories. It refuses
+changed raw input, incomplete prepared-input anchors, changed Agentic judgments, invalid
+or illegally ordered judgments, another runtime version, symbolic-link escapes, invalid
+stage receipt paths, or missing unrecoverable carrier facts.
 
 ## Carrier Boundary
 

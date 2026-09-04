@@ -606,6 +606,57 @@ def validate_allocations_against_demand(
             )
 
 
+def validate_cumulative_allocations_against_demand(
+    *allocation_groups: Any,
+    demands: Any,
+    path: str,
+    resource_pools: Iterable[dict[str, Any]],
+    findings: list[str],
+) -> None:
+    """Validate one candidate's total current-window commitment against its demand."""
+    contracts = resource_contracts(resource_pools)
+    demand_by_resource = _allocation_map(demands)
+    cumulative = _quantities_by_resource(*allocation_groups)
+    for resource_id, quantities in cumulative.items():
+        demand = demand_by_resource.get(resource_id)
+        contract = contracts.get(resource_id)
+        if demand is None:
+            findings.append(
+                f"{path}.{resource_id} is not declared in the candidate resource demand"
+            )
+            continue
+        if contract is None:
+            continue
+        family = contract.get("family")
+        if family == "measured":
+            total = _combined_measured_upper(quantities)
+            limit = _quantity_upper(demand)
+            if total is None or limit is None or total > limit + 1e-12:
+                findings.append(
+                    f"{path}.{resource_id} cumulative allocation exceeds or conflicts "
+                    "with the candidate resource demand"
+                )
+        elif family == "ordinal":
+            if len(quantities) != 1 or not quantity_within(
+                quantities[0], demand, contract
+            ):
+                findings.append(
+                    f"{path}.{resource_id} cumulative allocation exceeds or conflicts "
+                    "with the candidate resource demand"
+                )
+        elif family == "indivisible":
+            blocks = [
+                block for quantity in quantities for block in (_block_set(quantity) or set())
+            ]
+            demand_blocks = _block_set(demand) or set()
+            duplicates = any(count > 1 for count in Counter(blocks).values())
+            if duplicates or not set(blocks) <= demand_blocks:
+                findings.append(
+                    f"{path}.{resource_id} cumulative allocation exceeds or conflicts "
+                    "with the candidate resource demand"
+                )
+
+
 def _quantities_by_resource(*allocation_groups: Any) -> dict[str, list[dict[str, Any]]]:
     result: dict[str, list[dict[str, Any]]] = {}
     for group in allocation_groups:
