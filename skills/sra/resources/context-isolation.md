@@ -359,9 +359,13 @@ evidence_refs
 assumption_refs
 ```
 
-Full actionable outcomes select one feasible or conditional, non-dominated bundle. The
-next-tranche candidate must be one of its members. Two bundle rows with the same member
-set are duplicates even when their local IDs differ.
+Full actionable outcomes select one feasible or conditional, non-dominated bundle.
+Dominance references are acyclic and point only to feasible or conditional bundles.
+`infeasible` means no bundle remains coded feasible or conditional, even when such a
+bundle was marked dominated. The selected resource vector bounds its members' current
+plus next commitment. The next-tranche candidate and every `floor` posture belong to the
+selected member set; maintenance outside it remains allowed. Two bundle rows with the
+same member set are duplicates even when their local IDs differ.
 
 Workflow validates these coded consequences. Agentic SRA remains responsible for whether
 the claimed target support, feasibility, dominance, and minimum sufficiency are true.
@@ -444,6 +448,7 @@ that work may start immediately.
 
 The checker verifies:
 
+- the exact v0.3 run-state field set and canonical Workflow claim ceiling;
 - selected mode, view plan, and coverage plan;
 - context admission and all packets;
 - Prompt text;
@@ -454,11 +459,14 @@ The checker verifies:
 - judgment validation and hashes;
 - comparison and reconciliation packet;
 - final source and final copy;
-- trace event type, order, identity, and payload;
-- carrier receipts and observable context boundary;
-- governance override visibility.
+- trace event type, order, identity, payload, and parseable UTC timestamp;
+- stage-bound, non-symlink carrier receipts with canonical metadata and observable
+  context boundary;
+- governance override visibility;
+- the in-run `judgments/` output directory required by generated carriers.
 
-Any malformed state fails closed as a structured blocked report rather than a traceback.
+Any malformed or extended state fails closed as a structured blocked report rather than
+a traceback.
 
 The runtime claims deterministic reconstruction and detectable contract drift. It does
 not claim tamper-proof storage against an adversary who can rewrite every local artifact.

@@ -582,6 +582,90 @@ class SraV03RuntimeContractTests(unittest.TestCase):
             findings,
         )
 
+    @staticmethod
+    def _remove_full_authorization(judgment: dict) -> None:
+        judgment["bundle_decision"]["selected_bundle_id"] = "none"
+        judgment["next_tranche"] = {
+            "target_id": "none",
+            "resource_allocations": [],
+            "window": "Current release window.",
+            "completion_signal": "No allocation starts.",
+            "start_condition": "",
+            "reason": "Contract probe.",
+        }
+        judgment["investment_ceiling"] = []
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+
+    def test_infeasible_rejects_any_bundle_coded_feasible_even_if_dominated(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        bundles = judgment["bundle_decision"]["bundle_assessments"]
+        bundles[0]["dominance_status"] = "dominated"
+        bundles[0]["dominated_by"] = [bundles[1]["bundle_id"]]
+        bundles[1]["feasibility"] = "infeasible"
+        bundles[1]["dominance_status"] = "infeasible"
+        bundles[1]["dominated_by"] = []
+        judgment["allocation_outcome"] = "infeasible"
+        self._remove_full_authorization(judgment)
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("infeasible" in item and "feasible" in item for item in findings),
+            findings,
+        )
+
+    def test_dominator_must_not_be_infeasible_or_unclear(self):
+        for feasibility in ("infeasible", "unclear"):
+            packet = build_packets(input_data(mode="full"))["situated_packet"]
+            judgment = situated_judgment(packet)
+            bundles = judgment["bundle_decision"]["bundle_assessments"]
+            bundles[0]["dominance_status"] = "dominated"
+            bundles[0]["dominated_by"] = [bundles[1]["bundle_id"]]
+            bundles[1]["feasibility"] = feasibility
+            bundles[1]["dominance_status"] = (
+                "infeasible" if feasibility == "infeasible" else "unclear"
+            )
+            bundles[1]["dominated_by"] = []
+            judgment["allocation_outcome"] = "blocked"
+            judgment["missing_information"] = ["Dominance evidence is incomplete."]
+            self._remove_full_authorization(judgment)
+            findings = validate_situated_judgment(judgment, packet)
+            self.assertTrue(
+                any("dominated_by" in item and feasibility in item for item in findings),
+                (feasibility, findings),
+            )
+
+    def test_selected_bundle_resource_vector_bounds_actual_commitment(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["bundle_decision"]["bundle_assessments"][0][
+            "resource_requirements"
+        ] = [allocation("engineer-time", 0.1)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("selected bundle" in item and "resource" in item for item in findings),
+            findings,
+        )
+
+    def test_floor_allocation_outside_selected_bundle_is_rejected(self):
+        data = input_data(mode="full")
+        data["allocation_frame"]["resource_pools"][0]["capacity"]["amount"] = 1.1
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        page = next(
+            row for row in judgment["allocation_ledger"]
+            if row["candidate_id"] == "page-polish"
+        )
+        page["posture"] = "floor"
+        page["current_allocations"] = [allocation("engineer-time", 0.1)]
+        judgment["investment_ceiling"] = [allocation("engineer-time", 1.1)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("outside selected bundle" in item for item in findings),
+            findings,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

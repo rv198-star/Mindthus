@@ -412,6 +412,100 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
             any(item["code"] == "trace-time" for item in report["findings"])
         )
 
+    def _finalize_with_receipt(self) -> tuple[Path, Path]:
+        holder = tempfile.TemporaryDirectory()
+        self.addCleanup(holder.cleanup)
+        root = Path(holder.name)
+        data = input_data()
+        data["contamination_signals"] = []
+        input_path = root / "input.json"
+        input_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        run_dir = root / "run"
+        prepare(input_path, run_dir)
+        receipt = root / "receipt.json"
+        receipt.write_text('{"carrier":"fresh"}', encoding="utf-8")
+        packet = load_json(run_dir / "situated-packet.json")
+        record_situated(
+            run_dir,
+            situated_judgment(packet),
+            carrier="fresh_subagent",
+            receipt_path=str(receipt),
+        )
+        return root, run_dir
+
+    def test_receipt_boundary_metadata_is_canonical(self):
+        _, run_dir = self._finalize_with_receipt()
+        state_path = run_dir / "run.json"
+        final_path = run_dir / "final-decision.json"
+        state = load_json(state_path)
+        final = load_json(final_path)
+        state["carrier_receipts"]["situated"]["boundary"] = (
+            "This proves the model had no hidden host context."
+        )
+        final["carrier_receipts"]["situated"]["boundary"] = (
+            "This proves the model had no hidden host context."
+        )
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        final_path.write_text(json.dumps(final), encoding="utf-8")
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "receipt-boundary" for item in report["findings"])
+        )
+
+    def test_receipt_file_cannot_be_symlinked_outside_run(self):
+        root, run_dir = self._finalize_with_receipt()
+        stored = run_dir / "receipts" / "situated.receipt"
+        external = root / "external-receipt.json"
+        external.write_bytes(stored.read_bytes())
+        stored.unlink()
+        stored.symlink_to(external)
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "receipt-path" for item in report["findings"])
+        )
+
+    def test_run_claim_ceiling_is_reconstructed(self):
+        run_dir = self.prepare_run()
+        state_path = run_dir / "run.json"
+        state = load_json(state_path)
+        state["claim_ceiling"] = "Workflow proves the allocation is correct."
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(
+                item["code"] == "claim-ceiling-rebuild"
+                for item in report["findings"]
+            )
+        )
+
+    def test_unknown_run_state_fields_are_rejected(self):
+        run_dir = self.prepare_run()
+        state_path = run_dir / "run.json"
+        state = load_json(state_path)
+        state["allocation_authorized"] = True
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "run-state-shape" for item in report["findings"])
+        )
+
+    def test_prepared_run_keeps_agent_output_directory_available(self):
+        run_dir = self.prepare_run()
+        judgments = run_dir / "judgments"
+        judgments.rmdir()
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "output-directory" for item in report["findings"])
+        )
+        result = repair_run(run_dir)
+        self.assertTrue(result["repaired"], result)
+        self.assertTrue(judgments.is_dir())
+
     def test_governed_override_remains_visible_in_terminal_output(self):
         data = input_data()
         data["contamination_signals"] = []

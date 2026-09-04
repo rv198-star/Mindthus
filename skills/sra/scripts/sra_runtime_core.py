@@ -15,6 +15,14 @@ from sra_domain import *  # noqa: F403
 
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$")
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$")
+RUN_CLAIM_CEILING = (
+    "Workflow proves deterministic packet, surface, reference, transition, comparison, "
+    "and observable-carrier integrity only. It does not prove complete context, absent "
+    "hidden host context, or correct priority."
+)
+RECEIPT_BOUNDARY = (
+    "Receipt proves an observable carrier artifact, not absent hidden host context."
+)
 
 TYPED_VIEW_CODING = """Use the canonical typed allocation carrier consistently:
 - `allocation_outcome=allocate` means the typed next tranche may start now.
@@ -1815,6 +1823,12 @@ def _validate_bundle_decision(
         if not _is_non_empty_string(bundle.get("target_support")):
             findings.append(f"{path}.target_support must be a non-empty string")
         requirements = bundle.get("resource_requirements")
+        if bundle.get("feasibility") in {"feasible", "conditional"} and (
+            not isinstance(requirements, list) or not requirements
+        ):
+            findings.append(
+                f"{path}.resource_requirements must be non-empty for a feasible or conditional bundle"
+            )
         validate_resource_allocations(
             requirements,
             f"{path}.resource_requirements",
@@ -1871,6 +1885,17 @@ def _validate_bundle_decision(
             if bundle_id in dominated_by:
                 findings.append(f"{path}.dominated_by cannot reference itself")
         dominance = bundle.get("dominance_status")
+        if isinstance(dominated_by, list):
+            for dominator_id in dominated_by:
+                dominator = bundles_by_id.get(str(dominator_id))
+                if dominator is None:
+                    continue
+                dominator_feasibility = dominator.get("feasibility")
+                if dominator_feasibility not in {"feasible", "conditional"}:
+                    findings.append(
+                        f"{path}.dominated_by references {dominator_id} assessed "
+                        f"{dominator_feasibility}; a dominator must be feasible or conditional"
+                    )
         if dominance == "dominated" and not dominated_by:
             findings.append(f"{path}.dominance_status=dominated requires dominated_by")
         if dominance != "dominated" and dominated_by:
@@ -1896,7 +1921,6 @@ def _validate_bundle_decision(
             bundle_id
             for bundle_id, bundle in bundles_by_id.items()
             if bundle.get("feasibility") in {"feasible", "conditional"}
-            and bundle.get("dominance_status") in {"non_dominated", "conditional"}
         ]
         if viable:
             findings.append(
@@ -1931,6 +1955,24 @@ def _validate_bundle_decision(
                 f"selected bundle member {member_id} must be feasible or conditional"
             )
     return selected_members
+
+
+def _selected_bundle_requirements(judgment: dict[str, Any]) -> list[dict[str, Any]]:
+    decision = judgment.get("bundle_decision")
+    if not isinstance(decision, dict):
+        return []
+    selected_id = decision.get("selected_bundle_id")
+    assessments = decision.get("bundle_assessments")
+    if not isinstance(assessments, list):
+        return []
+    for assessment in assessments:
+        if (
+            isinstance(assessment, dict)
+            and assessment.get("bundle_id") == selected_id
+            and isinstance(assessment.get("resource_requirements"), list)
+        ):
+            return assessment["resource_requirements"]
+    return []
 
 
 def _validate_decision_judgment(
@@ -2089,6 +2131,14 @@ def _validate_decision_judgment(
                 findings.append(
                     f"selected bundle member {member_id} cannot use posture {posture}"
                 )
+        for candidate_id, entry in sorted(ledger_by_id.items()):
+            if (
+                entry.get("posture") == "floor"
+                and candidate_id not in selected_bundle_members
+            ):
+                findings.append(
+                    f"candidate {candidate_id} uses floor posture outside selected bundle"
+                )
 
     next_tranche = judgment.get("next_tranche")
     target_id: Any = None
@@ -2246,6 +2296,41 @@ def _validate_decision_judgment(
         if outcome in {"blocked", "request_missing_context"} and not missing_information:
             findings.append(f"allocation_outcome={outcome} requires named missing information")
 
+    if (
+        packet.get("mode") == "full"
+        and outcome in {"allocate", "conditional"}
+        and selected_bundle_members
+    ):
+        selected_current_allocations: list[dict[str, Any]] = []
+        for member_id in selected_bundle_members:
+            entry = ledger_by_id.get(str(member_id), {})
+            allocations = entry.get("current_allocations")
+            if isinstance(allocations, list):
+                selected_current_allocations.extend(
+                    item for item in allocations if isinstance(item, dict)
+                )
+        selected_next_allocations = (
+            next_allocations
+            if target_id in selected_bundle_members and isinstance(next_allocations, list)
+            else []
+        )
+        bundle_envelope_findings: list[str] = []
+        validate_resource_envelope(
+            resource_pools=resource_pools,
+            current_allocations=selected_current_allocations,
+            next_allocations=selected_next_allocations,
+            reserve_allocations=[],
+            investment_ceiling=_selected_bundle_requirements(judgment),
+            outcome=outcome,
+            findings=bundle_envelope_findings,
+        )  # noqa: F405
+        for message in bundle_envelope_findings:
+            if "investment_ceiling" in message or "investment ceiling" in message:
+                findings.append(
+                    "selected bundle resource requirements do not bound actual "
+                    f"commitment: {message}"
+                )
+
     validate_resource_envelope(
         resource_pools=resource_pools,
         current_allocations=current_allocations_flat,
@@ -2255,7 +2340,6 @@ def _validate_decision_judgment(
         outcome=outcome,
         findings=findings,
     )  # noqa: F405
-
 
     if require_state:
         if judgment.get("sunk_cost_used_as_reason") is not False:
@@ -2935,9 +3019,7 @@ def receipt_record(
         "stored_path": str(stored_relative),
         "sha256": _receipt_hash(stored),
         "bytes": stored.stat().st_size,
-        "boundary": (
-            "Receipt proves an observable carrier artifact, not absent hidden host context."
-        ),
+        "boundary": RECEIPT_BOUNDARY,
     }
 
 

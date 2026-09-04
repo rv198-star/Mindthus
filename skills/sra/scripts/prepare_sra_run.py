@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from sra_runtime import (
+    RUN_CLAIM_CEILING,
     RUN_SCHEMA,
     SraRuntimeError,
     SraValidationError,
@@ -124,11 +125,7 @@ def prepare(input_path: Path, run_dir: Path) -> dict[str, object]:
         "carriers": {},
         "carrier_receipts": {},
         "paths": paths,
-        "claim_ceiling": (
-            "Workflow proves deterministic packet, surface, reference, transition, "
-            "comparison, and observable-carrier integrity only. It does not prove "
-            "complete context, absent hidden host context, or correct priority."
-        ),
+        "claim_ceiling": RUN_CLAIM_CEILING,
     }
     save_run_state(run_dir / "run.json", state)
     append_jsonl(

@@ -12,6 +12,20 @@ from sra_domain import *  # noqa: F403
 from sra_runtime_core import *  # noqa: F403
 from sra_runtime_core import _receipt_hash
 
+RUN_STATE_KEYS = frozenset({
+    "schema_version", "run_id", "created_at", "updated_at", "mode", "view_plan",
+    "coverage_plan", "statuses", "raw_input_hash", "context_admission_hash",
+    "base_packet_hash", "coverage_packet_hash", "challenge_packet_hash",
+    "situated_packet_hash", "coverage_judgment_hash", "challenge_judgment_hash",
+    "situated_judgment_hash", "comparison_hash", "reconciliation_packet_hash",
+    "reconciliation_judgment_hash", "challenge_map", "context_weights",
+    "governance_overrides", "warnings", "carriers", "carrier_receipts", "paths",
+    "claim_ceiling",
+})
+RECEIPT_KEYS = frozenset({
+    "source_path", "stored_path", "sha256", "bytes", "boundary",
+})
+
 
 def _is_parseable_utc_timestamp(value: Any) -> bool:
     if not isinstance(value, str) or not value.strip():
@@ -537,6 +551,31 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
         findings.append({"severity": severity, "code": code, "message": message})
 
     state = load_run(run_dir)  # noqa: F405
+    missing_state_keys = sorted(RUN_STATE_KEYS - set(state))
+    extra_state_keys = sorted(set(state) - RUN_STATE_KEYS)
+    if missing_state_keys or extra_state_keys:
+        add(
+            "block",
+            "run-state-shape",
+            "run state fields differ from the v0.3 contract: "
+            f"missing={missing_state_keys}, extra={extra_state_keys}",
+        )
+    if state.get("claim_ceiling") != RUN_CLAIM_CEILING:  # noqa: F405
+        add(
+            "block",
+            "claim-ceiling-rebuild",
+            "run claim_ceiling does not match the canonical Workflow claim boundary",
+        )
+    for field in ("created_at", "updated_at"):
+        if not _is_parseable_utc_timestamp(state.get(field)):
+            add("block", "run-time", f"run state {field} must be a parseable UTC timestamp")
+    judgments_dir = run_dir / "judgments"
+    if not judgments_dir.is_dir() or judgments_dir.is_symlink():
+        add(
+            "block",
+            "output-directory",
+            "judgments output directory must exist inside the run directory",
+        )
     raw_path = run_dir / "raw-input.json"
     if not raw_path.is_file():
         raise SraRuntimeError("raw-input.json is required for reconstruction")  # noqa: F405
@@ -694,6 +733,23 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
         if not isinstance(receipt, dict):
             add("block", "receipt-shape", f"{stage} receipt must be an object")
             continue
+        missing_receipt_keys = sorted(RECEIPT_KEYS - set(receipt))
+        extra_receipt_keys = sorted(set(receipt) - RECEIPT_KEYS)
+        if missing_receipt_keys or extra_receipt_keys:
+            add(
+                "block",
+                "receipt-shape",
+                f"{stage} receipt fields differ from the canonical contract: "
+                f"missing={missing_receipt_keys}, extra={extra_receipt_keys}",
+            )
+        if receipt.get("boundary") != RECEIPT_BOUNDARY:  # noqa: F405
+            add(
+                "block",
+                "receipt-boundary",
+                f"{stage} receipt boundary differs from the canonical claim ceiling",
+            )
+        if not isinstance(receipt.get("source_path"), str) or not receipt.get("source_path"):
+            add("block", "receipt-shape", f"{stage} receipt source_path must be non-empty")
         stored_path = receipt.get("stored_path")
         expected_stored_path = str(Path("receipts") / f"{stage}.receipt")
         if stored_path != expected_stored_path:
@@ -704,6 +760,14 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
             )
             continue
         stored = run_dir / expected_stored_path
+        receipts_dir = run_dir / "receipts"
+        if receipts_dir.is_symlink() or stored.is_symlink():
+            add(
+                "block",
+                "receipt-path",
+                f"{stage} receipt path must not traverse a symbolic link",
+            )
+            continue
         if not stored.is_file():
             add("block", "receipt-missing", f"{stage} receipt is not recoverable")
         elif _receipt_hash(stored) != receipt.get("sha256"):
@@ -1071,12 +1135,28 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
         if stage in carriers and isinstance(receipt, dict)
     }
     for stage, receipt in receipts.items():
+        if set(receipt) != RECEIPT_KEYS:
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair invalid {stage} receipt shape"
+            )
+        if receipt.get("boundary") != RECEIPT_BOUNDARY:  # noqa: F405
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair changed {stage} receipt boundary"
+            )
+        if not isinstance(receipt.get("source_path"), str) or not receipt.get("source_path"):
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair invalid {stage} receipt source_path"
+            )
         expected_stored_path = str(Path("receipts") / f"{stage}.receipt")
         if receipt.get("stored_path") != expected_stored_path:
             raise SraRuntimeError(  # noqa: F405
                 f"cannot repair invalid {stage} receipt path"
             )
         stored = run_dir / expected_stored_path
+        if (run_dir / "receipts").is_symlink() or stored.is_symlink():
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair symbolic-link {stage} receipt path"
+            )
         if not stored.is_file():
             raise SraRuntimeError(  # noqa: F405
                 f"cannot repair missing {stage} receipt"
@@ -1100,6 +1180,7 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
         for relative_path in _surface_rel_paths(stage):
             _remove_path(run_dir / relative_path)
 
+    (run_dir / "judgments").mkdir(parents=True, exist_ok=True)
     write_json(run_dir / "context-admission.json", rebuilt["admission"])  # noqa: F405
     write_json(run_dir / "base-packet.json", rebuilt["base_packet"])  # noqa: F405
     write_json(run_dir / "coverage-packet.json", rebuilt["coverage_packet"])  # noqa: F405
@@ -1154,11 +1235,7 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
         "carriers": carriers,
         "carrier_receipts": receipts,
         "paths": expected_paths(run_dir, rebuilt, expectation),
-        "claim_ceiling": (
-            "Workflow proves deterministic packet, surface, reference, transition, "
-            "comparison, and observable-carrier integrity only. It does not prove "
-            "complete context, absent hidden host context, or correct priority."
-        ),
+        "claim_ceiling": RUN_CLAIM_CEILING,  # noqa: F405
     }
     if expectation.get("final_source") is not None:
         final = create_final_decision(  # noqa: F405

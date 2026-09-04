@@ -636,12 +636,18 @@ Preserve a partial or conditional order rather than forcing a false total rank.
 
 1. Remove bundles violating a hard gate.
 2. Remove bundles unable to reach the target threshold.
-3. Remove a bundle when another uses no more of every contested resource and is strictly
-   better on at least one load-bearing dimension.
-4. Compare the remaining non-dominated bundles by evidence, downside, delay cost,
+3. Remove a bundle when another feasible or conditional bundle uses no more of every
+   contested resource and is strictly better on at least one load-bearing dimension.
+4. Keep dominance references acyclic and evidence-linked.
+5. Compare the remaining non-dominated bundles by evidence, downside, delay cost,
    information value, optionality, and objective contribution.
-5. Return a conditional allocation when no single bundle dominates across plausible
+6. Return a conditional allocation when no single bundle dominates across plausible
    states.
+
+A Full `infeasible` outcome means every bundle is coded infeasible or unresolved; a
+feasible bundle cannot be hidden behind a `dominated` label. The selected bundle's
+resource vector bounds its members' current and next commitment. `floor` belongs to the
+selected bundle, while maintenance may remain outside it.
 
 ### Full Output
 
@@ -809,7 +815,8 @@ Scripts may:
 - compare candidate roles, bundle identity, resources, reserve, missing information, and
   authorization without selecting a winner;
 - generate one targeted reconciliation packet on conflict;
-- reconstruct plans, state, hashes, comparison, reconciliation, final source, and trace;
+- reconstruct the exact run-state shape, canonical claim boundary, plans, hashes,
+  comparison, reconciliation, final source, carrier receipts, and trace;
 - repair derived artifacts only while prepared-input and judgment-event anchors still
   match, without changing Agentic judgments;
 - check that sunk cost is rejected as a continuation basis;
