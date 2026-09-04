@@ -1,0 +1,13 @@
+{
+  "schema_version": "mindthus-beta-qualification-cases-v0.1",
+  "release": "1.9.1-roi-beta",
+  "mode": "deterministic-sra-compatibility",
+  "cases": [
+    {"id": "exact-shared-core", "kind": "composition"},
+    {"id": "declared-delta-only", "kind": "artifact-comparison"},
+    {"id": "sra-v0.3-surfaces", "kind": "surface-inheritance"},
+    {"id": "final-counterexample-regressions", "kind": "test-inheritance"},
+    {"id": "namespace-isolation", "kind": "identity"},
+    {"id": "archive-reproducibility", "kind": "reproducibility"}
+  ]
+}

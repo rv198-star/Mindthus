@@ -1,21 +1,21 @@
 {
   "schema_version": "mindthus-beta-composition-v0.3",
   "status": "beta-prerelease",
-  "release_line": "1.9.0-roi-beta",
-  "version": "1.9.0-roi-beta",
+  "release_line": "1.9.1-roi-beta",
+  "version": "1.9.1-roi-beta",
   "package_identity": "mindthus-beta",
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
-    "version": "1.9.0",
-    "ref": "3dfbd563315b761bae0ea2d1a9e0f04d9ff1b946",
-    "tree_oid": "a9dcdfd9a7fb435ba6f0bdf2bf38fd894d36ffea"
+    "version": "1.9.1",
+    "ref": "d735d11c14d92325607fe6b844eb29f7c426df62",
+    "tree_oid": "9c301753689d5ceb5f9fa2019ca41b4425f583bd"
   },
   "runtime_profile": {
     "name": "roi.2-sra-thin-core",
     "implementation_ref": "0bd58701fd36f33d5640ff2d00aa5e208026dbfa",
     "qualification_ref": "e1f4ea7d1a9c9132a8b7ad6b9707e7ec7607c640",
     "qualification_mode": "deterministic-sra-compatibility",
-    "qualification_result_path": "beta/2.0-beta/qualification/v1.9.0-sra/RESULT.md",
+    "qualification_result_path": "beta/2.0-beta/qualification/v1.9.1-sra/RESULT.md",
     "base_qualification_ref": "4ee3e034db6bf8d1e34002d7f162e2b008516490",
     "convergence_evidence": {
       "identifier": "9a1c2268d26c30905d7ada9ee206d722214e3a7b",
@@ -37,17 +37,17 @@
     "artifact_path": "capability-register.json"
   },
   "rollback": {
-    "version": "1.9.0",
+    "version": "1.9.1",
     "package_identity": "mindthus",
-    "tag": "v1.9.0"
+    "tag": "v1.9.1"
   },
   "publication": {
-    "status": "published",
-    "release_train": "1.9.0",
-    "source_tag": "v1.9.0-roi-beta",
+    "status": "pending",
+    "release_train": "1.9.1",
+    "source_tag": "v1.9.1-roi-beta",
     "release_asset_channel": "experimental-roi-beta",
     "github_release": true,
-    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.9.0",
+    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.9.1",
     "marketplace": false,
     "automatic_migration": false
   }
