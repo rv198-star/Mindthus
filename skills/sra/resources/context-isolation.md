@@ -366,10 +366,11 @@ assumption_refs
 Full actionable outcomes select one feasible or conditional, non-dominated bundle.
 Dominance references are acyclic and point only to feasible or conditional bundles.
 `infeasible` means no bundle remains coded feasible or conditional, even when such a
-bundle was marked dominated. The selected resource vector bounds its members' current
-plus next commitment. The next-tranche candidate and every `floor` posture belong to the
-selected member set; maintenance outside it remains allowed. Two bundle rows with the
-same member set are duplicates even when their local IDs differ.
+bundle was marked dominated; an infeasible bundle may therefore contain members also
+assessed infeasible. The selected resource vector bounds its members' current plus next
+commitment. The next-tranche candidate and every `floor` posture belong to the selected
+member set; maintenance outside it remains allowed. Two bundle rows with the same member
+set are duplicates even when their local IDs differ.
 
 Workflow validates these coded consequences. Agentic SRA remains responsible for whether
 the claimed target support, feasibility, dominance, and minimum sufficiency are true.
@@ -402,7 +403,9 @@ release_trigger
 review_time
 ```
 
-It is not duplicated as an ordinary candidate.
+It is not duplicated as an ordinary candidate. When `next_tranche.target_id=reserve`,
+the next-tranche allocation and reserve record describe the same resource commitment,
+must match exactly, and count once against capacity and the investment ceiling.
 
 ## Typed Dual-View Comparison
 

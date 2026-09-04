@@ -666,6 +666,85 @@ class SraV03RuntimeContractTests(unittest.TestCase):
             findings,
         )
 
+    def test_reserve_can_receive_next_tranche_without_double_counting_capacity(self):
+        packet = build_packets(input_data())["situated_packet"]
+        judgment = situated_judgment(packet)
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+        reserved = [allocation("engineer-time", 1)]
+        judgment["next_tranche"] = {
+            "target_id": "reserve",
+            "resource_allocations": copy.deepcopy(reserved),
+            "window": "Current release window.",
+            "completion_signal": "Capacity remains available for the named trigger.",
+            "start_condition": "",
+            "reason": "Option value exceeds immediate allocation.",
+        }
+        judgment["reserve"] = {
+            "status": "reserved",
+            "resource_allocations": copy.deepcopy(reserved),
+            "reason": "Preserve response capacity.",
+            "release_trigger": "A production incident or confirmed opportunity appears.",
+            "review_time": "End of current release window.",
+        }
+        judgment["investment_ceiling"] = copy.deepcopy(reserved)
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
+
+    def test_reserve_target_and_reserve_record_must_name_same_resources(self):
+        packet = build_packets(input_data())["situated_packet"]
+        judgment = situated_judgment(packet)
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+        judgment["next_tranche"] = {
+            "target_id": "reserve",
+            "resource_allocations": [allocation("engineer-time", 1)],
+            "window": "Current release window.",
+            "completion_signal": "Capacity remains available.",
+            "start_condition": "",
+            "reason": "Reserve the tranche.",
+        }
+        judgment["reserve"] = {
+            "status": "reserved",
+            "resource_allocations": [allocation("engineer-time", 0.5)],
+            "reason": "Preserve response capacity.",
+            "release_trigger": "A production incident appears.",
+            "review_time": "End of current release window.",
+        }
+        judgment["investment_ceiling"] = [allocation("engineer-time", 1)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("reserve target" in item and "same" in item for item in findings),
+            findings,
+        )
+
+    def test_full_infeasible_is_valid_when_every_bundle_is_infeasible(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["allocation_outcome"] = "infeasible"
+        judgment["bundle_decision"]["selected_bundle_id"] = "none"
+        for bundle in judgment["bundle_decision"]["bundle_assessments"]:
+            bundle["feasibility"] = "infeasible"
+            bundle["dominance_status"] = "infeasible"
+            bundle["dominated_by"] = []
+            bundle["resource_requirements"] = []
+        for assessment in judgment["candidate_assessments"]:
+            assessment["feasibility"] = "infeasible"
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+        judgment["next_tranche"] = {
+            "target_id": "none",
+            "resource_allocations": [],
+            "window": "Current release window.",
+            "completion_signal": "No target-reaching bundle exists.",
+            "start_condition": "",
+            "reason": "All declared bundles violate current feasibility.",
+        }
+        judgment["investment_ceiling"] = []
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
+
     def test_candidate_ids_cannot_collide_with_runtime_sentinels(self):
         for reserved in ("none", "reserve"):
             data = input_data()

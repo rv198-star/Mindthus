@@ -1897,12 +1897,13 @@ def _validate_bundle_decision(
                 allowed_assumptions=allowed_assumptions,
             )
         )
-        for member_id in members:
-            assessment = candidate_assessments.get(str(member_id), {})
-            if assessment.get("feasibility") == "infeasible":
-                findings.append(
-                    f"{path} contains candidate {member_id} assessed as infeasible"
-                )
+        if bundle.get("feasibility") in {"feasible", "conditional"}:
+            for member_id in members:
+                assessment = candidate_assessments.get(str(member_id), {})
+                if assessment.get("feasibility") == "infeasible":
+                    findings.append(
+                        f"{path} contains candidate {member_id} assessed as infeasible"
+                    )
 
     bundle_ids = set(bundles_by_id)
     for bundle_id, bundle in bundles_by_id.items():
@@ -2290,7 +2291,9 @@ def _validate_decision_judgment(
             if reserve_status != "reserved":
                 findings.append("a reserve next tranche requires reserve.status=reserved")
             elif normalize_resource_allocations(next_allocations) != normalize_resource_allocations(reserve_allocations):  # noqa: F405
-                findings.append("reserve next tranche must match the reserved resource allocation")
+                findings.append(
+                    "reserve target and reserve record must name the same resource allocation"
+                )
     elif outcome == "conditional":
         if any(entry.get("current_allocations") for entry in ledger if isinstance(entry, dict)):
             findings.append("conditional outcome cannot authorize current allocation")
@@ -2361,11 +2364,18 @@ def _validate_decision_judgment(
                     f"commitment: {message}"
                 )
 
+    reserve_matches_next = (
+        target_id == "reserve"
+        and isinstance(next_allocations, list)
+        and isinstance(reserve_allocations, list)
+        and normalize_resource_allocations(next_allocations)  # noqa: F405
+        == normalize_resource_allocations(reserve_allocations)  # noqa: F405
+    )
     validate_resource_envelope(
         resource_pools=resource_pools,
         current_allocations=current_allocations_flat,
         next_allocations=next_allocations,
-        reserve_allocations=reserve_allocations,
+        reserve_allocations=[] if reserve_matches_next else reserve_allocations,
         investment_ceiling=investment_ceiling,
         outcome=outcome,
         findings=findings,

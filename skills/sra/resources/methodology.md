@@ -360,6 +360,9 @@ release_trigger
 expiry_or_review_time
 ```
 
+When the next tranche itself is `reserve`, the next-tranche and reserve records describe
+one identical commitment. Workflow requires an exact typed match and counts it once.
+
 ## Candidate Roles
 
 For the current allocation window, each candidate or bundle takes one primary role:
@@ -645,9 +648,10 @@ Preserve a partial or conditional order rather than forcing a false total rank.
    states.
 
 A Full `infeasible` outcome means every bundle is coded infeasible or unresolved; a
-feasible bundle cannot be hidden behind a `dominated` label. The selected bundle's
-resource vector bounds its members' current and next commitment. `floor` belongs to the
-selected bundle, while maintenance may remain outside it.
+feasible bundle cannot be hidden behind a `dominated` label. An infeasible bundle may
+contain members also assessed infeasible. The selected bundle's resource vector bounds
+its members' current and next commitment. `floor` belongs to the selected bundle, while
+maintenance may remain outside it.
 
 ### Full Output
 
