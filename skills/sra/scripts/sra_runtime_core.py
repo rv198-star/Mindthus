@@ -1711,6 +1711,35 @@ def _quantity_upper_for_runtime(value: Any) -> float | None:
     return None
 
 
+def _find_dominance_cycle(graph: dict[str, list[str]]) -> list[str]:
+    state: dict[str, int] = {}
+    stack: list[str] = []
+
+    def visit(node: str) -> list[str]:
+        state[node] = 1
+        stack.append(node)
+        for neighbor in graph.get(node, []):
+            if neighbor not in graph:
+                continue
+            if state.get(neighbor) == 1:
+                start = stack.index(neighbor)
+                return stack[start:] + [neighbor]
+            if state.get(neighbor, 0) == 0:
+                cycle = visit(neighbor)
+                if cycle:
+                    return cycle
+        stack.pop()
+        state[node] = 2
+        return []
+
+    for node in sorted(graph):
+        if state.get(node, 0) == 0:
+            cycle = visit(node)
+            if cycle:
+                return cycle
+    return []
+
+
 def _validate_bundle_decision(
     judgment: dict[str, Any],
     packet: dict[str, Any],
@@ -1800,6 +1829,22 @@ def _validate_bundle_decision(
             f"{path}.resource_requirements",
             findings,
         )
+        if bundle.get("feasibility") in {"feasible", "conditional"}:
+            capacity_findings: list[str] = []
+            validate_resource_envelope(
+                resource_pools=resource_pools,
+                current_allocations=[],
+                next_allocations=requirements,
+                reserve_allocations=[],
+                investment_ceiling=requirements,
+                outcome="allocate",
+                findings=capacity_findings,
+            )  # noqa: F405
+            for message in capacity_findings:
+                if "capacity" in message or "allocated more than once" in message:
+                    findings.append(
+                        f"{path}.resource_requirements violates bundle capacity: {message}"
+                    )
         findings.extend(
             _validate_refs(
                 bundle,
@@ -1836,7 +1881,28 @@ def _validate_bundle_decision(
         if dominance == "infeasible" and feasibility != "infeasible":
             findings.append(f"{path} dominance_status=infeasible requires infeasible bundle")
 
+    dominance_graph = {
+        bundle_id: list(bundle.get("dominated_by", []))
+        for bundle_id, bundle in bundles_by_id.items()
+        if isinstance(bundle.get("dominated_by", []), list)
+    }
+    cycle = _find_dominance_cycle(dominance_graph)
+    if cycle:
+        findings.append("bundle dominance cycle detected: " + " -> ".join(cycle))
+
     outcome = judgment.get("allocation_outcome")
+    if outcome == "infeasible":
+        viable = [
+            bundle_id
+            for bundle_id, bundle in bundles_by_id.items()
+            if bundle.get("feasibility") in {"feasible", "conditional"}
+            and bundle.get("dominance_status") in {"non_dominated", "conditional"}
+        ]
+        if viable:
+            findings.append(
+                "allocation_outcome=infeasible conflicts with feasible or conditional "
+                f"non-dominated bundles: {sorted(viable)}"
+            )
     if outcome in {"allocate", "conditional"}:
         if selected_id not in bundles_by_id:
             findings.append("Full actionable outcome requires a selected bundle")
@@ -1853,7 +1919,18 @@ def _validate_bundle_decision(
         findings.append("selected bundle must be non-dominated or conditional")
     if outcome == "allocate" and selected.get("feasibility") != "feasible":
         findings.append("allocate requires a feasible selected bundle")
-    return set(selected.get("member_ids", []))
+    selected_members = set(selected.get("member_ids", []))
+    for member_id in sorted(selected_members):
+        feasibility = candidate_assessments.get(str(member_id), {}).get("feasibility")
+        if outcome == "allocate" and feasibility != "feasible":
+            findings.append(
+                f"selected bundle member {member_id} must be feasible for allocate, got {feasibility}"
+            )
+        if outcome == "conditional" and feasibility not in {"feasible", "conditional"}:
+            findings.append(
+                f"selected bundle member {member_id} must be feasible or conditional"
+            )
+    return selected_members
 
 
 def _validate_decision_judgment(
@@ -2005,7 +2082,13 @@ def _validate_decision_judgment(
             )
     if set(ledger_by_id) != set(allowed_candidates):
         findings.append("allocation_ledger must cover every packet candidate exactly once")
-
+    if packet.get("mode") == "full" and outcome in {"allocate", "conditional"}:
+        for member_id in sorted(selected_bundle_members):
+            posture = ledger_by_id.get(str(member_id), {}).get("posture")
+            if posture in {"defer", "stop"}:
+                findings.append(
+                    f"selected bundle member {member_id} cannot use posture {posture}"
+                )
 
     next_tranche = judgment.get("next_tranche")
     target_id: Any = None
@@ -2098,8 +2181,17 @@ def _validate_decision_judgment(
     target_assessment = assessments_by_id.get(str(target_id), {})
     target_ledger = ledger_by_id.get(str(target_id), {})
     if target_id in allowed_candidates:
-        if target_assessment.get("feasibility") == "infeasible":
+        target_feasibility = target_assessment.get("feasibility")
+        if target_feasibility == "infeasible":
             findings.append("the next-tranche candidate cannot be assessed infeasible")
+        if outcome == "allocate" and target_feasibility != "feasible":
+            findings.append(
+                f"the next-tranche candidate assessed {target_feasibility} cannot receive immediate allocate"
+            )
+        if outcome == "conditional" and target_feasibility not in {"feasible", "conditional"}:
+            findings.append(
+                f"the next-tranche candidate assessed {target_feasibility} cannot receive conditional allocation"
+            )
         if target_ledger.get("posture") in {"defer", "stop"}:
             findings.append("the next-tranche candidate cannot be deferred or stopped")
         if packet.get("mode") == "full" and target_id not in selected_bundle_members:

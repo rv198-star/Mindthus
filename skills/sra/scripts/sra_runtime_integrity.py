@@ -4,12 +4,23 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from sra_domain import *  # noqa: F403
 from sra_runtime_core import *  # noqa: F403
 from sra_runtime_core import _receipt_hash
+
+
+def _is_parseable_utc_timestamp(value: Any) -> bool:
+    if not isinstance(value, str) or not value.strip():
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timezone.utc.utcoffset(parsed)
 
 
 def _optional_json(path: Path) -> dict[str, Any] | None:
@@ -684,10 +695,15 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
             add("block", "receipt-shape", f"{stage} receipt must be an object")
             continue
         stored_path = receipt.get("stored_path")
-        if not isinstance(stored_path, str):
-            add("block", "receipt-path", f"{stage} receipt has no stored_path")
+        expected_stored_path = str(Path("receipts") / f"{stage}.receipt")
+        if stored_path != expected_stored_path:
+            add(
+                "block",
+                "receipt-path",
+                f"{stage} receipt stored_path must be {expected_stored_path}",
+            )
             continue
-        stored = run_dir / stored_path
+        stored = run_dir / expected_stored_path
         if not stored.is_file():
             add("block", "receipt-missing", f"{stage} receipt is not recoverable")
         elif _receipt_hash(stored) != receipt.get("sha256"):
@@ -752,8 +768,12 @@ def _run_check_impl(run_dir: Path) -> dict[str, Any]:
                 add("block", "trace-schema", f"trace event {index} has unsupported schema")
             if event.get("run_id") != raw.get("run_id"):
                 add("block", "trace-run", f"trace event {index} has wrong run_id")
-            if not isinstance(event.get("recorded_at"), str) or not event.get("recorded_at"):
-                add("block", "trace-time", f"trace event {index} has no recorded_at")
+            if not _is_parseable_utc_timestamp(event.get("recorded_at")):
+                add(
+                    "block",
+                    "trace-time",
+                    f"trace event {index} must use a parseable UTC recorded_at timestamp",
+                )
             if event.get("event_id") != expected_runtime_event_id(event):  # noqa: F405
                 add("block", "trace-event-id", f"trace event {index} has an invalid event_id")
             if event_type in by_type:
@@ -820,9 +840,118 @@ def run_check(run_dir: Path) -> dict[str, Any]:
         }
 
 
-def _recover_carriers(
-    run_dir: Path,
+def _repair_trace_anchors(run_dir: Path, run_id: str) -> dict[str, Any]:
+    anchors: dict[str, Any] = {
+        "prepared": None,
+        "judgment_hashes": {},
+        "carriers": {},
+    }
+    trace_path = run_dir / "trace.jsonl"
+    if not trace_path.is_file():
+        return anchors
+    trace = load_jsonl(trace_path)  # noqa: F405
+    seen: set[str] = set()
+    judgment_events = {
+        "coverage_judgment_recorded": "coverage",
+        "challenge_judgment_recorded": "challenge",
+        "situated_judgment_recorded": "situated",
+        "reconciliation_judgment_recorded": "reconciliation",
+    }
+    for index, event in enumerate(trace):
+        event_type = event.get("event_type")
+        if event.get("schema_version") != TRACE_SCHEMA:  # noqa: F405
+            raise SraRuntimeError(f"trace event {index} has unsupported schema")  # noqa: F405
+        if event.get("run_id") != run_id:
+            raise SraRuntimeError(f"trace event {index} has wrong run_id")  # noqa: F405
+        if not _is_parseable_utc_timestamp(event.get("recorded_at")):
+            raise SraRuntimeError(f"trace event {index} has invalid recorded_at")  # noqa: F405
+        if event.get("event_id") != expected_runtime_event_id(event):  # noqa: F405
+            raise SraRuntimeError(f"trace event {index} has invalid event_id")  # noqa: F405
+        if not isinstance(event_type, str):
+            raise SraRuntimeError(f"trace event {index} has no event_type")  # noqa: F405
+        payload = event.get("payload")
+        if not isinstance(payload, dict):
+            raise SraRuntimeError(f"trace event {index} payload must be an object")  # noqa: F405
+        if event_type == "run_prepared":
+            if event_type in seen:
+                raise SraRuntimeError("trace repeats run_prepared")  # noqa: F405
+            anchors["prepared"] = payload
+        if event_type in judgment_events:
+            if event_type in seen:
+                raise SraRuntimeError(f"trace repeats {event_type}")  # noqa: F405
+            stage = judgment_events[event_type]
+            judgment_hash = payload.get("judgment_hash")
+            carrier = payload.get("carrier")
+            if not isinstance(judgment_hash, str) or not judgment_hash:
+                raise SraRuntimeError(f"trace {event_type} has no judgment_hash")  # noqa: F405
+            if carrier not in CARRIERS:  # noqa: F405
+                raise SraRuntimeError(f"trace {event_type} has invalid carrier")  # noqa: F405
+            anchors["judgment_hashes"][stage] = judgment_hash
+            anchors["carriers"][stage] = carrier
+        seen.add(event_type)
+    return anchors
+
+
+def _validate_repair_anchors(
+    *,
+    raw: dict[str, Any],
+    rebuilt: dict[str, Any],
+    expectation: dict[str, Any],
     state: dict[str, Any],
+    trace_anchors: dict[str, Any],
+) -> None:
+    prepared = trace_anchors.get("prepared")
+    packet_fields = {
+        "base_packet_hash": rebuilt["base_packet"]["packet_hash"],
+        "coverage_packet_hash": rebuilt["coverage_packet"]["packet_hash"],
+        "challenge_packet_hash": rebuilt["challenge_packet"]["packet_hash"],
+        "situated_packet_hash": rebuilt["situated_packet"]["packet_hash"],
+    }
+    if isinstance(prepared, dict):
+        for field, current in packet_fields.items():
+            if prepared.get(field) != current:
+                raise SraRuntimeError(  # noqa: F405
+                    f"cannot repair changed raw input: prepared {field} does not match"
+                )
+    elif state:
+        raw_hash = state.get("raw_input_hash")
+        if isinstance(raw_hash, str) and raw_hash != digest_data(raw):  # noqa: F405
+            raise SraRuntimeError("cannot repair changed raw-input.json")  # noqa: F405
+        for field, current in packet_fields.items():
+            anchored = state.get(field)
+            if isinstance(anchored, str) and anchored != current:
+                raise SraRuntimeError(  # noqa: F405
+                    f"cannot repair changed raw input: run state {field} does not match"
+                )
+
+    trace_hashes = trace_anchors.get("judgment_hashes", {})
+    if not isinstance(trace_hashes, dict):
+        trace_hashes = {}
+    for stage in ("coverage", "challenge", "situated", "reconciliation"):
+        field = f"{stage}_judgment_hash"
+        current = expectation["hashes"].get(field)
+        trace_anchor = trace_hashes.get(stage)
+        state_anchor = state.get(field) if state else None
+        anchor = trace_anchor if isinstance(trace_anchor, str) else state_anchor
+        if current is None:
+            if isinstance(anchor, str) and anchor:
+                raise SraRuntimeError(  # noqa: F405
+                    f"cannot repair missing Agentic {stage} judgment"
+                )
+            continue
+        if not isinstance(anchor, str) or not anchor:
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot verify Agentic {stage} judgment before repair"
+            )
+        if current != anchor:
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair changed Agentic {stage} judgment"
+            )
+
+
+def _recover_carriers(
+    state: dict[str, Any],
+    trace_anchors: dict[str, Any],
 ) -> dict[str, str]:
     recovered: dict[str, str] = {}
     state_carriers = state.get("carriers", {})
@@ -830,27 +959,11 @@ def _recover_carriers(
         for stage, carrier in state_carriers.items():
             if carrier in CARRIERS:  # noqa: F405
                 recovered[str(stage)] = str(carrier)
-    trace_path = run_dir / "trace.jsonl"
-    if not trace_path.is_file():
-        return recovered
-    try:
-        trace = load_jsonl(trace_path)  # noqa: F405
-    except Exception:
-        return recovered
-    for event in trace:
-        event_type = event.get("event_type")
-        if event_type not in {
-            "coverage_judgment_recorded",
-            "challenge_judgment_recorded",
-            "situated_judgment_recorded",
-            "reconciliation_judgment_recorded",
-        }:
-            continue
-        stage = str(event_type).split("_judgment_recorded", 1)[0]
-        payload = event.get("payload", {})
-        carrier = payload.get("carrier") if isinstance(payload, dict) else None
-        if carrier in CARRIERS:  # noqa: F405
-            recovered.setdefault(stage, str(carrier))
+    trace_carriers = trace_anchors.get("carriers", {})
+    if isinstance(trace_carriers, dict):
+        for stage, carrier in trace_carriers.items():
+            if carrier in CARRIERS:  # noqa: F405
+                recovered[str(stage)] = str(carrier)
     return recovered
 
 
@@ -920,13 +1033,21 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
             )
         existing_state = value
 
+    trace_anchors = _repair_trace_anchors(run_dir, str(raw["run_id"]))
     expectation = reconstruct_runtime_expectation(run_dir, rebuilt)
     if expectation["issues"]:
         raise SraRuntimeError(  # noqa: F405
             "cannot repair a run with invalid or illegally ordered Agentic judgments: "
             + "; ".join(expectation["issues"])
         )
-    carriers = _recover_carriers(run_dir, existing_state)
+    _validate_repair_anchors(
+        raw=raw,
+        rebuilt=rebuilt,
+        expectation=expectation,
+        state=existing_state,
+        trace_anchors=trace_anchors,
+    )
+    carriers = _recover_carriers(existing_state, trace_anchors)
     recorded_stages = {
         stage
         for stage, judgment in expectation["judgments"].items()
@@ -949,6 +1070,25 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
         for stage, receipt in receipts.items()
         if stage in carriers and isinstance(receipt, dict)
     }
+    for stage, receipt in receipts.items():
+        expected_stored_path = str(Path("receipts") / f"{stage}.receipt")
+        if receipt.get("stored_path") != expected_stored_path:
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair invalid {stage} receipt path"
+            )
+        stored = run_dir / expected_stored_path
+        if not stored.is_file():
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair missing {stage} receipt"
+            )
+        if _receipt_hash(stored) != receipt.get("sha256"):
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair changed {stage} receipt"
+            )
+        if stored.stat().st_size != receipt.get("bytes"):
+            raise SraRuntimeError(  # noqa: F405
+                f"cannot repair changed {stage} receipt size"
+            )
 
     for relative_path in (
         "comparison-report.json",

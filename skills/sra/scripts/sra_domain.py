@@ -166,13 +166,22 @@ def validate_quantity_contract(value: Any, path: str, findings: list[str]) -> No
         )
         return
     allowed = {
-        "measured": {"family", "unit"},
-        "ordinal": {"family", "scale"},
-        "indivisible": {"family", "blocks"},
+        "measured": {"family", "aggregation", "unit"},
+        "ordinal": {"family", "aggregation", "scale"},
+        "indivisible": {"family", "aggregation", "blocks"},
     }[str(family)]
     unexpected = sorted(set(value) - allowed)
     if unexpected:
         findings.append(f"{path} contains unsupported fields for {family}: {unexpected}")
+    required_aggregation = {
+        "measured": "sum",
+        "ordinal": "exclusive",
+        "indivisible": "set",
+    }[str(family)]
+    if value.get("aggregation") != required_aggregation:
+        findings.append(
+            f"{path}.aggregation must be {required_aggregation!r} for {family} resources"
+        )
     if family == "measured":
         if not is_non_empty_string(value.get("unit")):
             findings.append(f"{path}.unit must be a non-empty string for measured resources")
@@ -615,6 +624,10 @@ def validate_resource_envelope(
                     f"resource {resource_id} allocation {total:g} exceeds declared capacity {limit:g}"
                 )
         elif family == "ordinal":
+            if len(quantities) > 1:
+                findings.append(
+                    f"resource {resource_id} uses exclusive ordinal aggregation and cannot be allocated more than once"
+                )
             used_rank = _combined_ordinal_max(quantities, contract)
             capacity_rank = _ordinal_rank(capacity, contract)
             if used_rank is not None and capacity_rank is not None and used_rank > capacity_rank:

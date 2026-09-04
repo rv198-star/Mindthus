@@ -428,9 +428,9 @@ Tasks that use independent non-contested resources do not need a forced global r
 
 Runtime quantities preserve their native meaning:
 
-- `measured`: exact or bounded amount in one declared unit;
-- `ordinal`: one level from a declared ordered scale;
-- `indivisible`: one or more named resource blocks.
+- `measured`: exact or bounded amount in one declared unit with additive `sum`;
+- `ordinal`: one level from a declared ordered scale with `exclusive` allocation;
+- `indivisible`: one or more named resource blocks with block-set allocation.
 
 Candidate demand, current allocation, bundle requirements, next tranche, reserve, and
 investment ceiling all reference the same resource-pool contract. Workflow checks
@@ -804,13 +804,14 @@ Scripts may:
 - generate independent challenge and situated packets plus deterministic Prompt, schema,
   Dispatch, and command surfaces;
 - validate one candidate posture per allocation-ledger row;
-- validate Full bundle members, coded feasibility/dominance consistency, and selected
-  bundle references;
+- validate Full bundle members, coded feasibility/dominance consistency, acyclic
+  dominance references, selected-bundle postures, and resource capacity;
 - compare candidate roles, bundle identity, resources, reserve, missing information, and
   authorization without selecting a winner;
 - generate one targeted reconciliation packet on conflict;
 - reconstruct plans, state, hashes, comparison, reconciliation, final source, and trace;
-- repair derived artifacts without changing Agentic judgments;
+- repair derived artifacts only while prepared-input and judgment-event anchors still
+  match, without changing Agentic judgments;
 - check that sunk cost is rejected as a continuation basis;
 - render terminal authorization without recomputing priority;
 - validate method-fidelity evidence by reference to the canonical runtime decision.

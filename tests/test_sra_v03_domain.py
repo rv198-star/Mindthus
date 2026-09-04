@@ -20,6 +20,7 @@ from sra_domain import (  # type: ignore[import-not-found]
     resource_allocation_schema,
     validate_override_record,
     validate_quantity,
+    validate_quantity_contract,
     validate_quantity_for_contract,
     validate_resource_allocations,
     validate_resource_envelope,
@@ -27,15 +28,23 @@ from sra_domain import (  # type: ignore[import-not-found]
 
 
 def measured_contract(unit: str = "engineer-day") -> dict:
-    return {"family": "measured", "unit": unit}
+    return {"family": "measured", "aggregation": "sum", "unit": unit}
 
 
 def ordinal_contract() -> dict:
-    return {"family": "ordinal", "scale": ["low", "medium", "high"]}
+    return {
+        "family": "ordinal",
+        "aggregation": "exclusive",
+        "scale": ["low", "medium", "high"],
+    }
 
 
 def indivisible_contract() -> dict:
-    return {"family": "indivisible", "blocks": ["slot-a", "slot-b"]}
+    return {
+        "family": "indivisible",
+        "aggregation": "set",
+        "blocks": ["slot-a", "slot-b"],
+    }
 
 
 def exact(amount: float, unit: str = "engineer-day") -> dict:
@@ -102,6 +111,21 @@ class SraV03DomainTests(unittest.TestCase):
         self.assertIn("next_tranche", COMPARISON_FIELDS)
         self.assertIn("investment_ceiling", COMPARISON_FIELDS)
         self.assertIn("reserve", COMPARISON_FIELDS)
+
+    def test_quantity_contract_requires_family_specific_aggregation(self):
+        cases = (
+            ({"family": "measured", "unit": "engineer-day"}, "aggregation"),
+            ({"family": "ordinal", "scale": ["low", "high"]}, "aggregation"),
+            ({"family": "indivisible", "blocks": ["slot-a"]}, "aggregation"),
+            ({"family": "measured", "aggregation": "exclusive", "unit": "engineer-day"}, "sum"),
+            ({"family": "ordinal", "aggregation": "sum", "scale": ["low", "high"]}, "exclusive"),
+            ({"family": "indivisible", "aggregation": "sum", "blocks": ["slot-a"]}, "set"),
+        )
+        for contract, expected in cases:
+            with self.subTest(contract=contract):
+                findings: list[str] = []
+                validate_quantity_contract(contract, "contract", findings)
+                self.assertTrue(any(expected in item for item in findings), findings)
 
     def test_measured_quantity_accepts_exact_and_bounded_in_one_unit(self):
         findings: list[str] = []

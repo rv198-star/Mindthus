@@ -13,7 +13,13 @@ sys.path.insert(0, str(SCRIPTS.resolve()))
 from prepare_sra_run import prepare
 from record_sra_judgment import record_challenge, record_coverage, record_situated
 from render_sra_decision import render
-from sra_runtime import load_json, repair_run, run_check
+from sra_runtime import (
+    SraRuntimeError,
+    expected_runtime_event_id,
+    load_json,
+    repair_run,
+    run_check,
+)
 from tests.test_sra_v03_runtime_contract import (
     challenge_from_situated,
     input_data,
@@ -299,6 +305,112 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         _, text = render(run_dir, "zh")
         self.assertIn("0.9 engineer-day", text)
         self.assertIn("可立即开始", text)
+
+    def test_repair_refuses_changed_raw_input_anchor(self):
+        run_dir = self.prepare_run()
+        raw_path = run_dir / "raw-input.json"
+        raw = load_json(raw_path)
+        raw["allocation_frame"]["parent_objective"] = (
+            "A different still-valid objective."
+        )
+        raw_path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        self.assertEqual(run_check(run_dir)["status"], "blocked")
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_repair_refuses_changed_agentic_judgment_anchor(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        record_situated(
+            run_dir,
+            situated_judgment(packet),
+            carrier="packet_bound",
+            receipt_path=None,
+        )
+        judgment_path = run_dir / "judgments" / "situated.json"
+        judgment = load_json(judgment_path)
+        judgment["claim_ceiling"] = (
+            "A different but still shape-valid claim ceiling."
+        )
+        judgment_path.write_text(
+            json.dumps(judgment, ensure_ascii=False), encoding="utf-8"
+        )
+        self.assertEqual(run_check(run_dir)["status"], "blocked")
+        with self.assertRaises(SraRuntimeError):
+            repair_run(run_dir)
+
+    def test_repair_uses_trace_over_conflicting_carrier_cache(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        record_situated(
+            run_dir,
+            situated_judgment(packet),
+            carrier="packet_bound",
+            receipt_path=None,
+        )
+        state_path = run_dir / "run.json"
+        state = load_json(state_path)
+        state["carriers"]["situated"] = "fresh_subagent"
+        state_path.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+        self.assertEqual(run_check(run_dir)["status"], "blocked")
+        result = repair_run(run_dir)
+        self.assertTrue(result["repaired"], result)
+        repaired_state = load_json(state_path)
+        self.assertEqual(repaired_state["carriers"]["situated"], "packet_bound")
+        self.assertEqual(run_check(run_dir)["status"], "ok")
+
+    def test_receipt_path_is_stage_bound_inside_run_directory(self):
+        with tempfile.TemporaryDirectory() as receipt_tmp:
+            receipt_source = Path(receipt_tmp) / "source-receipt.json"
+            receipt_source.write_text('{"carrier":"fresh"}', encoding="utf-8")
+            data = input_data()
+            data["contamination_signals"] = []
+            run_dir = self.prepare_run(data)
+            packet = load_json(run_dir / "situated-packet.json")
+            record_situated(
+                run_dir,
+                situated_judgment(packet),
+                carrier="fresh_subagent",
+                receipt_path=str(receipt_source),
+            )
+            state_path = run_dir / "run.json"
+            final_path = run_dir / "final-decision.json"
+            state = load_json(state_path)
+            final = load_json(final_path)
+            state["carrier_receipts"]["situated"]["stored_path"] = str(
+                receipt_source
+            )
+            final["carrier_receipts"]["situated"]["stored_path"] = str(
+                receipt_source
+            )
+            state_path.write_text(
+                json.dumps(state, ensure_ascii=False), encoding="utf-8"
+            )
+            final_path.write_text(
+                json.dumps(final, ensure_ascii=False), encoding="utf-8"
+            )
+            report = run_check(run_dir)
+            self.assertEqual(report["status"], "blocked", report)
+            self.assertTrue(
+                any(item["code"] == "receipt-path" for item in report["findings"])
+            )
+
+    def test_trace_timestamp_requires_parseable_utc_time(self):
+        run_dir = self.prepare_run()
+        trace_path = run_dir / "trace.jsonl"
+        event = json.loads(trace_path.read_text(encoding="utf-8").strip())
+        event["recorded_at"] = "not-a-time"
+        event["event_id"] = expected_runtime_event_id(event)
+        trace_path.write_text(json.dumps(event) + "\n", encoding="utf-8")
+        report = run_check(run_dir)
+        self.assertEqual(report["status"], "blocked", report)
+        self.assertTrue(
+            any(item["code"] == "trace-time" for item in report["findings"])
+        )
 
     def test_governed_override_remains_visible_in_terminal_output(self):
         data = input_data()

@@ -53,9 +53,9 @@ evidence_ceiling
 Each resource pool has a stable `resource_id`, a decision window, capacity, and one
 quantity contract:
 
-- `measured`: exact or bounded amount in one declared unit;
-- `ordinal`: one level from a declared ordered scale;
-- `indivisible`: one or more named blocks that cannot be split without changing meaning.
+- `measured`: exact or bounded amount with additive `sum`;
+- `ordinal`: one ordered level with `exclusive` allocation;
+- `indivisible`: named blocks with block-set allocation.
 
 Do not translate unlike resources into one synthetic score.
 

@@ -60,6 +60,7 @@ def input_data(*, mode: str = "lite") -> dict:
                     "label": "Backend engineer time",
                     "quantity_contract": {
                         "family": "measured",
+                        "aggregation": "sum",
                         "unit": "engineer-day",
                     },
                     "capacity": exact(1),
@@ -70,6 +71,7 @@ def input_data(*, mode: str = "lite") -> dict:
                     "label": "Compliance review slot",
                     "quantity_contract": {
                         "family": "indivisible",
+                        "aggregation": "set",
                         "blocks": ["slot-a"],
                     },
                     "capacity": {
@@ -482,6 +484,102 @@ class SraV03RuntimeContractTests(unittest.TestCase):
         self.assertNotIn(
             "bundle_decision",
             {item["field"] for item in comparison["conflict_fields"]},
+        )
+
+    def test_infeasible_outcome_cannot_coexist_with_feasible_nondominated_bundle(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["allocation_outcome"] = "infeasible"
+        judgment["bundle_decision"]["selected_bundle_id"] = "none"
+        judgment["next_tranche"] = {
+            "target_id": "none",
+            "resource_allocations": [],
+            "window": "Current release window.",
+            "completion_signal": "No target-reaching allocation exists.",
+            "start_condition": "",
+            "reason": "Declared infeasible for the contract probe.",
+        }
+        judgment["investment_ceiling"] = []
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("feasible" in item and "infeasible" in item for item in findings),
+            findings,
+        )
+
+    def test_selected_bundle_cannot_include_stopped_or_deferred_member(self):
+        for posture in ("stop", "defer"):
+            packet = build_packets(input_data(mode="full"))["situated_packet"]
+            judgment = situated_judgment(packet)
+            selected = judgment["bundle_decision"]["bundle_assessments"][0]
+            selected["member_ids"] = ["page-polish", "payment-validation"]
+            selected["resource_requirements"] = [allocation("engineer-time", 0.9)]
+            judgment["bundle_decision"]["bundle_assessments"] = [selected]
+            page_row = next(
+                row for row in judgment["allocation_ledger"]
+                if row["candidate_id"] == "page-polish"
+            )
+            page_row["posture"] = posture
+            findings = validate_situated_judgment(judgment, packet)
+            self.assertTrue(
+                any("selected bundle" in item and posture in item for item in findings),
+                (posture, findings),
+            )
+
+    def test_bundle_dominance_cycle_is_rejected(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        judgment = situated_judgment(packet)
+        bundles = judgment["bundle_decision"]["bundle_assessments"]
+        bundles[0]["dominance_status"] = "dominated"
+        bundles[0]["dominated_by"] = [bundles[1]["bundle_id"]]
+        bundles[1]["feasibility"] = "feasible"
+        bundles[1]["dominance_status"] = "dominated"
+        bundles[1]["dominated_by"] = [bundles[0]["bundle_id"]]
+        judgment["allocation_outcome"] = "blocked"
+        judgment["bundle_decision"]["selected_bundle_id"] = "none"
+        judgment["next_tranche"]["target_id"] = "none"
+        judgment["next_tranche"]["resource_allocations"] = []
+        judgment["investment_ceiling"] = []
+        judgment["missing_information"] = ["Dominance relation cannot be resolved."]
+        for row in judgment["allocation_ledger"]:
+            row["posture"] = "defer"
+            row["current_allocations"] = []
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(any("cycle" in item for item in findings), findings)
+
+    def test_allocate_rejects_conditional_or_unclear_next_candidate(self):
+        for feasibility in ("conditional", "unclear"):
+            packet = build_packets(input_data())["situated_packet"]
+            judgment = situated_judgment(packet)
+            target = next(
+                item for item in judgment["candidate_assessments"]
+                if item["candidate_id"] == "payment-validation"
+            )
+            target["feasibility"] = feasibility
+            findings = validate_situated_judgment(judgment, packet)
+            self.assertTrue(
+                any("next-tranche candidate" in item and feasibility in item for item in findings),
+                (feasibility, findings),
+            )
+
+    def test_selected_bundle_requirements_must_fit_resource_capacity(self):
+        data = input_data(mode="full")
+        payment = next(
+            item for item in data["candidates"]
+            if item["candidate_id"] == "payment-validation"
+        )
+        payment["resource_demand"] = [allocation("engineer-time", 3)]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["bundle_decision"]["bundle_assessments"][0][
+            "resource_requirements"
+        ] = [allocation("engineer-time", 2)]
+        findings = validate_situated_judgment(judgment, packet)
+        self.assertTrue(
+            any("bundle" in item and "capacity" in item for item in findings),
+            findings,
         )
 
 

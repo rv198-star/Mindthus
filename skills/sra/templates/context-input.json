@@ -30,6 +30,7 @@
         "label": "Backend engineer time",
         "quantity_contract": {
           "family": "measured",
+          "aggregation": "sum",
           "unit": "engineer-day"
         },
         "capacity": {

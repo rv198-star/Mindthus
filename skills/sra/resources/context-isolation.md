@@ -153,7 +153,7 @@ Examples:
 ```json
 {
   "resource_id": "engineer-time",
-  "quantity_contract": {"family": "measured", "unit": "engineer-day"},
+  "quantity_contract": {"family": "measured", "aggregation": "sum", "unit": "engineer-day"},
   "capacity": {"quantity_kind": "exact", "amount": 2, "unit": "engineer-day"}
 }
 ```
@@ -161,7 +161,7 @@ Examples:
 ```json
 {
   "resource_id": "management-attention",
-  "quantity_contract": {"family": "ordinal", "scale": ["low", "medium", "high"]},
+  "quantity_contract": {"family": "ordinal", "aggregation": "exclusive", "scale": ["low", "medium", "high"]},
   "capacity": {"quantity_kind": "ordinal", "level": "medium"}
 }
 ```
@@ -169,13 +169,15 @@ Examples:
 ```json
 {
   "resource_id": "review-slot",
-  "quantity_contract": {"family": "indivisible", "blocks": ["slot-a", "slot-b"]},
+  "quantity_contract": {"family": "indivisible", "aggregation": "set", "blocks": ["slot-a", "slot-b"]},
   "capacity": {"quantity_kind": "indivisible", "blocks": ["slot-a", "slot-b"]}
 }
 ```
 
-Workflow compares quantities only inside the declared resource contract. It does not
-convert unlike resources into one score.
+Workflow compares quantities only inside the declared resource contract. Measured
+resources use additive `sum`, ordinal resources use `exclusive` single-allocation
+semantics, and indivisible resources use block-set allocation. It does not convert unlike
+resources into one score.
 
 ### Candidate Demand
 
@@ -473,8 +475,11 @@ Agentic judgments:
 - run cache;
 - trace.
 
-It never edits Agentic judgment files. It refuses repair when a judgment is invalid,
-illegally ordered, from another runtime version, or missing unrecoverable carrier facts.
+It never edits Agentic judgment files. Prepared packet hashes anchor the raw input;
+recorded judgment-event hashes anchor Agentic judgments; trace carrier facts take
+precedence over the mutable run cache. Repair refuses changed raw input, changed Agentic
+judgments, invalid or illegally ordered judgments, another runtime version, invalid
+stage receipt paths, or missing unrecoverable carrier facts.
 
 ## Carrier Boundary
 
