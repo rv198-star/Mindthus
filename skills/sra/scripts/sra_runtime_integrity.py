@@ -1125,53 +1125,6 @@ def _validate_repair_anchors(
             )
 
 
-def _assert_repair_carrier_metadata_consistent(
-    run_dir: Path,
-    state: dict[str, Any],
-) -> None:
-    """Refuse repair when state and an intact trace disagree about a judgment carrier."""
-    state_carriers = state.get("carriers", {})
-    if not isinstance(state_carriers, dict):
-        raise SraRuntimeError(
-            "cannot reconcile carrier metadata because run state carriers is not an object"
-        )
-    trace_path = run_dir / "trace.jsonl"
-    if not trace_path.is_file():
-        return
-    trace_carriers: dict[str, str] = {}
-    for event in load_jsonl(trace_path):
-        event_type = event.get("event_type")
-        if event_type not in {
-            "coverage_judgment_recorded",
-            "challenge_judgment_recorded",
-            "situated_judgment_recorded",
-            "reconciliation_judgment_recorded",
-        }:
-            continue
-        if event.get("event_id") != expected_runtime_event_id(event):
-            raise SraRuntimeError(
-                "cannot reconcile carrier metadata from a trace event with an invalid event_id"
-            )
-        stage = str(event_type).split("_judgment_recorded", 1)[0]
-        payload = event.get("payload", {})
-        carrier = payload.get("carrier") if isinstance(payload, dict) else None
-        if carrier not in CARRIERS:
-            raise SraRuntimeError(
-                f"cannot reconcile carrier metadata for {stage}: unsupported trace carrier"
-            )
-        prior = trace_carriers.get(stage)
-        if prior is not None and prior != carrier:
-            raise SraRuntimeError(
-                f"conflicting carrier metadata for {stage} inside trace"
-            )
-        trace_carriers[stage] = str(carrier)
-    for stage in sorted(set(state_carriers) & set(trace_carriers)):
-        if state_carriers.get(stage) != trace_carriers[stage]:
-            raise SraRuntimeError(
-                f"conflicting carrier metadata for {stage} between run state and trace"
-            )
-
-
 def _recover_carriers(
     state: dict[str, Any],
     trace_anchors: dict[str, Any],
@@ -1278,7 +1231,6 @@ def repair_run(run_dir: Path) -> dict[str, Any]:
         existing_state = value
 
     trace_anchors = _repair_trace_anchors(run_dir, str(raw["run_id"]))
-    _assert_repair_carrier_metadata_consistent(run_dir, existing_state)
     expectation = reconstruct_runtime_expectation(run_dir, rebuilt)
     if expectation["issues"]:
         raise SraRuntimeError(  # noqa: F405
