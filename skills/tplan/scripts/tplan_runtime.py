@@ -1837,6 +1837,8 @@ def add_task_node(mission_dir: Path, raw: dict[str, Any]) -> dict[str, Any]:
     node = normalize_task_for_mission(mission, raw)
     updated = copy.deepcopy(mission)
     updated["tasks"] = list(mission.get("tasks", [])) + [node]
+    if node["status"] == "active":
+        set_task_status(updated, node["id"], "active")
     commit_mission_state(
         mission_dir,
         mission,

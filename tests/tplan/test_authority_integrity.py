@@ -81,6 +81,54 @@ class AuthorityTestCase(unittest.TestCase):
         self.assertEqual(snapshot(self.mission), before)
 
 
+def added_node(node_id="T3", *, status="pending", parent=None):
+    value = {"id": node_id, "title": node_id, "status": status, "role": "supporting"}
+    if parent is None:
+        value.update(kind="task", mission_contribution="Supports existing work.", acceptance_evidence=[])
+    else:
+        value.update(kind="subtask", parent_id=parent,
+                     parent_contribution="Supports the selected parent.",
+                     parent_acceptance="Parent receives the result.", mission_trace="via parent")
+    return value
+
+
+class ActivePathAtomicityTests(AuthorityTestCase):
+    def test_create_and_activate_updates_cursor_and_events_in_one_commit(self):
+        runtime.transition_task_status(self.mission, "T1", "active")
+        for node in (added_node("T3", status="active"), added_node("T3.1", status="active", parent="T3")):
+            with self.subTest(node=node["id"]):
+                runtime.add_task_node(self.mission, node)
+                state = runtime.read_mission(self.mission)
+                self.assertEqual(state["active_task_id"], node["id"])
+                records = runtime.read_execution_trace(self.mission)
+                added = next(r for r in records if r["event_type"] == "node_added" and r["task_id"] == node["id"])
+                selected = next(r for r in records if r["event_type"] == "active_node_changed" and r["task_id"] == node["id"])
+                self.assertEqual(added["commit_id"], selected["commit_id"])
+                self.assertEqual(added["timestamp"], selected["timestamp"])
+        self.assertEqual(runtime.find_task(state, "T3")["status"], "active")
+
+    def test_pending_creation_preserves_selection_and_blocked_recovery_cursor(self):
+        runtime.transition_task_status(self.mission, "T1", "active")
+        runtime.add_task_node(self.mission, added_node())
+        self.assertEqual(runtime.read_mission(self.mission)["active_task_id"], "T1")
+        runtime.record_stop_report(self.mission, "T1", "Needs a decision.", {
+            "current_goal": "Finish the Mission.", "attempts": ["Inspected evidence."],
+            "blocking_issue": "Missing authority.", "why_cannot_continue_safely": "User decision is required.",
+            "need_from_human": "Confirm the boundary.", "resume_condition": "Decision received.",
+        })
+        runtime.add_task_node(self.mission, added_node("T4"))
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(state["active_task_id"], "T1")
+        self.assertEqual(runtime.find_task(state, "T1")["status"], "blocked")
+
+    def test_failed_create_and_activate_has_no_orphan_or_partial_cursor(self):
+        before = snapshot(self.mission)
+        with mock.patch.object(runtime, "write_json", side_effect=OSError("journal unavailable")):
+            with self.assertRaisesRegex(OSError, "journal unavailable"):
+                runtime.add_task_node(self.mission, added_node(status="active"))
+        self.assertEqual(snapshot(self.mission), before)
+
+
 class EvidenceReferenceIntegrityTests(AuthorityTestCase):
     def test_missing_path_and_cross_mission_ids_are_rejected_atomically(self):
         other = create_mission(self.root / "other")
