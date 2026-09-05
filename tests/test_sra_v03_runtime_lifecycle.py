@@ -44,6 +44,24 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         prepare(input_path, run_dir)
         return run_dir
 
+    def test_invalid_judgment_structure_leaves_run_byte_identical(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        before = {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+        for field in ("unrecognized_authorization_override", "next_tranche"):
+            with self.subTest(field=field):
+                judgment = situated_judgment(packet)
+                if field == "next_tranche":
+                    judgment[field]["undeclared"] = "value"
+                else:
+                    judgment[field] = True
+                with self.assertRaises(SraRuntimeError):
+                    record_situated(run_dir, judgment, carrier="packet_bound", receipt_path=None)
+                after = {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+                self.assertEqual(after, before)
+
     def test_fresh_prepared_run_checks_cleanly(self):
         run_dir = self.prepare_run()
         report = run_check(run_dir)
