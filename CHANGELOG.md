@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+## v1.10.1
+
+发布 tag：`v1.10.1`
+
+[发布说明](docs/releases/v1.10.1.md)
+
+发布日期：2026-09-05
+
+### TPlan Authority Integrity Bugfix
+
+- 修复新 lifecycle `refs.evidence_ids` 只校验字符串形状、未在同一 Mission 事务边界解析真实证据的问题；缺失、跨 Mission、歧义重复和误填文件路径的 evidence ID 现在会在写入前失败，合法既有证据和同事务新增证据继续可用。
+- 修复动态 `add_node --status active` 可产生 active 节点但 `active_task_id` 为空的问题；创建并激活现在复用 canonical activation，在一个逻辑事务中同步节点、游标和 lifecycle consequence。
+- 修复 `continuation_authorization.authorized_action` 与实际 mutation 可机械矛盾的问题；`stop`、`mission_review`、`anti_spiral_audit` 不再能静默授权继续执行，普通 apply 与 Interaction Guard 授权路径共享同一 consequence validator。
+- 修复 Mission 可在 success-critical 工作未完成、验收缺失或最新合格观察为失败时进入 `completed` 的问题；新完成事务必须满足所有 success-critical 节点完成且每个 Mission acceptance ID 的最新 qualified observation 为正。
+- 评审中同时关闭旧 `write_mission()` 兼容写入和独立 trace append 对上述新约束的旁路；历史记录保持可读，不回写伪造证据或重新解释既有 pending transaction。
+
+### 补充发布包：1.10.1 ROI Beta（GPT/Sol）
+
+- Stable release 按默认规则同步提供 `v1.10.1-roi-beta` supplemental experimental asset。
+- Beta 从精确 `v1.10.1` Stable shared core 组装并继承本版 TPlan authority-integrity 修复；ROI runtime delta 不新增能力，继续限定为 SRA-compatible ROI Thin Core、历史 ROI.2 3L5S Anti-Spiral correction、独立 identity / namespace 与 diagnostic 坐标。
+- 本 patch 不新增 Beta-specific 自然唤醒率、相对胜率、真实任务收益或 Token ROI 声明。
+
+### 兼容性、验证与发布资产
+
+- 这是 `v1.10.0` 的向后兼容 Bugfix patch；SRA Proportionate Allocation 与 v0.4 合同保持不变，TPlan runtime generation 继续为 `1.5.4` / `mindthus-v1.5.4`。
+- 修复分支 fresh-worktree 全套回归、Test Lifecycle、五布局 release pack 与 GitHub CI 已通过；补丁发布只追加版本面与打包校验，不重复另开资格验证。
+- `v1.10.1` GitHub Release 提供 `mindthus-plugins-1.10.1.tar.gz`、`mindthus-skills-1.10.1.tar.gz`、`mindthus-beta-1.10.1-roi-beta.tar.gz` 与覆盖三份归档的 `SHA256SUMS`。
+
+### Claim ceiling
+
+- 四项修复关闭的是确定性 TPlan authority-integrity 缺陷，不等于已经通过真实 Codex App / Sol High 重跑证明类似约16小时执行过载不会再发生。
+- 跨工作区续投/资源 tranche、Codex App Hook 激活可靠性和宿主原生 mutation prevention 仍由 #200、#146、#140 等后续议题负责；本 patch 不扩张这些边界。
+
 ## v1.10.0
 
 发布 tag：`v1.10.0`
