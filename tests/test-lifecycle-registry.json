@@ -113,7 +113,7 @@
       "lifecycle_status": "historical_guard",
       "suite_role": "acceptance",
       "runtime_cost": "medium",
-      "notes": "Wave 1 removed duplicate current-release assertions from the v0.9 and v1.0 readiness surfaces while preserving the unique historical acceptance and licensing contracts."
+      "notes": "Waves 1 and 2 preserve unique historical acceptance and licensing contracts. Current package asset checks formerly in v1.0 readiness now share the active packaging owner and a 17-path missing-asset fault-injection table; see test-lifecycle-cleanup-wave-2-2026-09-05.md."
     },
     {
       "test_id": "judgment-observability-and-case-export",

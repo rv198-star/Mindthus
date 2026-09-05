@@ -131,52 +131,6 @@ class V10ReadinessTests(unittest.TestCase):
         self.assertIn("SPDX `AGPL-3.0-only`", readme)
         self.assertIn("rather than encoded in the SPDX field", readme)
 
-    def test_release_pack_carries_license_judge_script_and_rubric(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            result = subprocess.run(
-                ["python3", "scripts/build-release-pack.py", "--out", tmp, "--force"],
-                text=True,
-                capture_output=True,
-                cwd=REPO,
-            )
-            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
-            root = Path(tmp)
-            for platform_root in (
-                root / "claude-code" / "claude-plugin",
-                root / "codex",
-                root / "opencode",
-            ):
-                self.assertTrue((platform_root / "LICENSE").is_file(), platform_root)
-                self.assertTrue((platform_root / "COMMERCIAL-LICENSE.md").is_file(), platform_root)
-                self.assertTrue((platform_root / "scripts" / "run-fidelity-judge.py").is_file(), platform_root)
-
-            self.assertTrue(
-                (
-                    root
-                    / "claude-code"
-                    / "claude-plugin"
-                    / "skills"
-                    / "sela"
-                    / "rubrics"
-                    / "judge.md"
-                ).is_file()
-            )
-            self.assertTrue(
-                (root / "codex" / "skills" / "mindthus" / "sela" / "rubrics" / "judge.md").is_file()
-            )
-            self.assertTrue(
-                (
-                    root
-                    / "opencode"
-                    / ".opencode"
-                    / "skills"
-                    / "mindthus"
-                    / "sela"
-                    / "rubrics"
-                    / "judge.md"
-                ).is_file()
-            )
-
     def test_sela_judge_rubric_reviews_method_exit_legitimacy(self):
         rubric = (REPO / "skills" / "sela" / "rubrics" / "judge.md").read_text(
             encoding="utf-8"
