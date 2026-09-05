@@ -3272,6 +3272,26 @@ def _validate_new_evidence_ids_unlocked(
     return errors
 
 
+def _validate_trace_evidence_references(
+    records: list[dict[str, Any]], events: list[dict[str, Any]]
+) -> list[str]:
+    """Resolve typed IDs against one supplied evidence snapshot, without changing it."""
+    counts = Counter(
+        event.get("id") for event in events
+        if isinstance(event, dict) and isinstance(event.get("id"), str)
+    )
+    referenced = {
+        evidence_id
+        for record in records
+        for evidence_id in record.get("refs", {}).get("evidence_ids", [])
+    }
+    return [
+        f"evidence reference {evidence_id!r} must resolve to exactly one Mission event "
+        f"(found {counts[evidence_id]})"
+        for evidence_id in sorted(referenced) if counts[evidence_id] != 1
+    ]
+
+
 def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     event = dict(event)
     event.setdefault("id", _next_event_id(mission_dir))
@@ -4001,6 +4021,11 @@ def _commit_mission_state_unlocked(
         errors = validate_execution_trace_record(after, record)
         if errors:
             raise TplanError("; ".join(errors))
+
+    evidence_snapshot = _read_events_unlocked(mission_dir) + list(prepared_evidence_events or [])
+    reference_errors = _validate_trace_evidence_references(records, evidence_snapshot)
+    if reference_errors:
+        raise TplanError("; ".join(reference_errors))
 
     paths = mission_paths(mission_dir)
     previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""

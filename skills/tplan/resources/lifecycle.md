@@ -56,6 +56,13 @@ those canonical artifacts change. Run `scripts/runtime_doctor.py` when selection
 uncertain; the complete compatibility and recovery contract is in
 `runtime-provenance.md`.
 
+Before a new lifecycle transaction is journaled, its `refs.evidence_ids` resolve
+uniquely against the locked Mission evidence stream plus that transaction's prepared
+events. Artifact paths belong in `artifact_refs`. Historical references remain intact;
+only references used by the new transaction must resolve. Reference existence is a
+structural property, separate from acceptance sufficiency. Recovery replays the
+already-prepared transaction contents rather than reinterpreting later evidence.
+
 ## Decision State
 
 decision state records PM choices such as split, prune, downgrade, abandon, switch, and
