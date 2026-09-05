@@ -92,6 +92,80 @@ def added_node(node_id="T3", *, status="pending", parent=None):
     return value
 
 
+def guarded_apply(root, proposed):
+    """Prepare a genuinely bound receipt; return the final application operation."""
+    guard = runtime.begin_interaction_guard(root, platform="test-host", message_ref="M1")
+    runtime.resolve_interaction_guard(
+        root, guard_id=guard["guard_id"], expected_revision=guard["revision"], message_refs=["M1"],
+        disposition="await_clarification", proposal_id="P1", proposal_decision=proposed,
+    )
+    confirmed = runtime.begin_interaction_guard(root, platform="test-host", message_ref="M2")
+    receipt = runtime.issue_authority_receipt(
+        root, guard_id=confirmed["guard_id"], guard_revision=confirmed["revision"],
+        proposal_id="P1", decision=proposed, confirmation_ref="M2", secret="test-only-secret",
+    )
+    return lambda: runtime.resolve_interaction_guard(
+        root, guard_id=confirmed["guard_id"], expected_revision=confirmed["revision"],
+        message_refs=["M2"], disposition="apply_authorized_change", decision=proposed,
+        authority_receipt=receipt, receipt_secret="test-only-secret",
+    )
+
+
+class ContinuationConsequenceTests(AuthorityTestCase):
+    def test_stop_and_review_ceiling_reject_execution_even_with_changed_recommendation(self):
+        mutations = [
+            {"type": "set_active_task", "task_id": "T1"},
+            {"type": "transition_task", "task_id": "T1", "status": "active"},
+            {"type": "transition_task", "task_id": "T1", "status": "pending"},
+            {"type": "transition_task", "task_id": "T1", "status": "completed"},
+            {"type": "set_mission_status", "status": "active"},
+            {"type": "set_mission_status", "status": "completed"},
+        ]
+        for action in ("stop", "mission_review", "anti_spiral_audit"):
+            for mutation in mutations:
+                with self.subTest(action=action, mutation=mutation):
+                    proposed = decision(recommendation="escalate", action=action, mutations=[mutation])
+                    self.assertTrue(runtime.validate_hook_output(proposed))
+                    self.assert_rejected_without_writes(
+                        lambda: runtime.apply_decision(self.mission, proposed), "continuation.*consequence")
+
+    def test_stop_cannot_authorize_continue_by_omitting_mutations(self):
+        for recommendation in ("continue", "switch", "add"):
+            with self.subTest(recommendation=recommendation):
+                proposed = decision(recommendation=recommendation, action="stop")
+                self.assert_rejected_without_writes(
+                    lambda: runtime.apply_decision(self.mission, proposed), "continuation.*consequence")
+
+    def test_consistent_continue_and_narrowing_dispositions_remain_usable(self):
+        for action in ("continue_same_path", "targeted_fix", "batch_details"):
+            with self.subTest(action=action):
+                proposed = decision(recommendation="continue", action=action)
+                proposed["path_assessment"]["marginal_roi"] = "weak"
+                proposed["continuation_authorization"]["evidence_shape_lint"] = "fail"
+                proposed["continuation_authorization"]["expected_evidence_delta"] = "unclear"
+                self.assertEqual(runtime.apply_decision(self.mission, proposed), "applied_decision")
+        proposed = decision(recommendation="escalate", action="stop", mutations=[
+            {"type": "set_mission_status", "status": "requires_human"}])
+        self.assertEqual(runtime.apply_decision(self.mission, proposed), "applied_decision")
+        self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "requires_human")
+
+    def test_consistent_review_is_recordable_without_execution(self):
+        for action in ("stop", "mission_review", "anti_spiral_audit"):
+            with self.subTest(action=action):
+                proposed = decision(recommendation="escalate", action=action)
+                proposed["requires_human"] = True
+                mission_before = runtime.mission_paths(self.mission)["mission"].read_bytes()
+                self.assertEqual(runtime.apply_decision(self.mission, proposed), "recorded_recommendation")
+                self.assertEqual(runtime.mission_paths(self.mission)["mission"].read_bytes(), mission_before)
+
+    def test_real_guard_receipt_cannot_override_stop_contradiction(self):
+        proposed = decision(recommendation="continue", action="stop", mutations=[
+            {"type": "set_active_task", "task_id": "T1"}])
+        apply = guarded_apply(self.mission, proposed)
+        self.assert_rejected_without_writes(apply, "continuation.*consequence")
+        self.assertIsNotNone(runtime.read_interaction_guard(self.mission))
+
+
 class ActivePathAtomicityTests(AuthorityTestCase):
     def test_create_and_activate_updates_cursor_and_events_in_one_commit(self):
         runtime.transition_task_status(self.mission, "T1", "active")

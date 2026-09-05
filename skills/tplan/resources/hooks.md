@@ -272,6 +272,14 @@ separate pressure-case-specific lint, generation, rerun, or defect-queue workflo
 }
 ```
 
+The shared decision validator treats `stop`, `mission_review`, and `anti_spiral_audit`
+as non-execution ceilings. They permit a consistent escalation/closure/subtraction
+record and narrowing state changes (pause, block, or non-completion exit), while
+rejecting activation, re-queueing, completion, or an outer continue/switch/add request.
+Both ordinary and receipt-bound Guard application use this rule. A recorded no-mutation
+review request is not evidence that a review ran or that an external process stopped.
+Qualitative ROI, lint and evidence-delta values remain inputs to Agentic judgment.
+
 count-based reminders are triggers, not decisions. A third touch, repeated same-path
 attempt, post-continuation defect, repeated negative feedback, high-cost or
 high-blast-radius continuation, or weak evidence delta only routes the decision into

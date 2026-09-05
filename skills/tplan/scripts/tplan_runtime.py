@@ -6148,6 +6148,41 @@ def _validate_continuation_authorization(decision: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _validate_decision_consequences(decision: dict[str, Any]) -> list[str]:
+    """Enforce explicit stop/review ceilings without grading ROI or evidence quality."""
+    authorization = decision.get("continuation_authorization")
+    if not isinstance(authorization, dict):
+        return []  # Shape errors belong to the authorization validator.
+    action = authorization.get("authorized_action")
+    if not isinstance(action, str) or action not in {"stop", "mission_review", "anti_spiral_audit"}:
+        return []
+    narrowing = {
+        "transition_task": {"blocked", "paused", "pruned", "abandoned", "superseded"},
+        "set_mission_status": {"blocked", "requires_human", "budget_exhausted", "abandoned", "superseded"},
+    }
+    errors: list[str] = []
+    if decision.get("recommendation") in {"continue", "switch", "add"}:
+        errors.append(
+            f"continuation consequence: {action} cannot authorize recommendation "
+            f"{decision['recommendation']}"
+        )
+    mutations = decision.get("proposed_mutations")
+    if not isinstance(mutations, list):
+        return errors  # The shared shape check reports this separately.
+    for index, mutation in enumerate(mutations):
+        if not isinstance(mutation, dict):
+            errors.append(f"continuation consequence: mutation {index} must be an object")
+            continue
+        mutation_type, status = mutation.get("type"), mutation.get("status")
+        allowed = narrowing.get(mutation_type, set()) if isinstance(mutation_type, str) else set()
+        if not isinstance(status, str) or status not in allowed:
+            errors.append(
+                f"continuation consequence: {action} permits only narrowing mutations; "
+                f"mutation {index} requests {mutation.get('type')} / {mutation.get('status')}"
+            )
+    return errors
+
+
 def _validate_hook_output_messages(
     decision: Any,
     active_shared_risks: list[dict[str, Any]] | None = None,
@@ -6200,6 +6235,7 @@ def _validate_hook_output_messages(
         errors.extend(_validate_path_assessment(decision))
         errors.extend(_validate_risk_assessment(decision, active_shared_risks))
         errors.extend(_validate_continuation_authorization(decision))
+        errors.extend(_validate_decision_consequences(decision))
     return errors
 
 
