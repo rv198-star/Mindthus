@@ -1,8 +1,9 @@
 # TPlan 执行过载案例：合同修复与接入方案
 
 Date: 2026-09-05
-Status: evidence admitted; #196–#200 registered; runtime implementation not performed in this change.
-Base: `407112ded87377b5b7dd351c49dd0d20b1d598d4` (TPlan source identical to v1.10.0).
+Status: evidence admitted; #196–#200 registered; repair contract audited and frozen; runtime implementation not yet performed.
+Original reproduction base: `407112ded87377b5b7dd351c49dd0d20b1d598d4` (TPlan source identical to v1.10.0).
+Repair audit: `docs/internal/audits/2026-09-05-tplan-authority-contract-repair-audit.md` on `2501e8ac3f55b24478abefa68b864f8472744af0`.
 
 案例：[RU-20260905-SLIDETHUS-VQ-OVERRUN-01](../../../data/cases/slidethus-vq-execution-overrun-20260905/README.md)。
 复现：[reproduce.py](../../../data/cases/slidethus-vq-execution-overrun-20260905/reproduce.py)；
@@ -89,10 +90,13 @@ A. 所有写入Mission completed的规范路径，在同一锁定快照中检查
 rationale中的“已完成”取代。非完成退出继续使用blocked/budget_exhausted/abandoned/
 superseded等现有结果，不改写目标来凑成功。
 
-B. 关键Task/验收的充分性由Agent或具名review负责。设计一个最小验收声明映射：
-要满足的具体条件 -> 支持它的证据ID/产物版本 -> 声明范围与评审者。复用现有
-acceptance_ids和evidence，而不是重建一套验收数据库。检查引用、范围、当前性及
-已知反证的处理；脚本不判断PPT好不好，也不把字段齐全视为质量合格。
+B. 关键Task/验收的实质充分性仍由Agent或具名review负责。修复前审计进一步做了减法：
+第一阶段不新增验收映射数据库或schema，直接复用现有 acceptance ID 与 qualified
+`acceptance_passed` / `acceptance_failed`（以及完整 legacy `acceptance` 兼容读）。
+对每个Mission acceptance ID，以证据流顺序读取最新合格观察；最新为失败或不存在则
+不能关闭，后续新的合格通过可以重新满足。脚本只判断引用、范围和机械正反状态，
+不判断PPT好不好，也不把字段齐全视为质量合格。只有后续真实证据证明还缺产物版本/
+更细 freshness 绑定时，才另行扩展。
 
 普通支持性动作的“执行完成”可以仅有相应artifact/done-condition依据，不强迫每次
 读文件都做全Mission验收。任何key_finding、path_delta、decision_applied或计数增加，
@@ -186,8 +190,8 @@ provider调用应根本不发生，而不是调用完才打warning。随后才�
 ## 6. 执行顺序和共同出口
 
 1. 入库原件、审批、一次回溯usage记录和当前反例；保持原日志不可变。
-2. R1/R2/R4可以独立小PR，逐项先失败回归、再根因修复、再正反例与当前全套验证。
-3. R3先完成关闭规则评审，再实现；不是在renderer里掩盖completed。
+2. 修复前 Authority Contract Audit 已通过；无需再开架构轮。按 `#196 -> #197 -> #199 -> #198` 推进，每项先失败回归、再根因修复、再正反例与当前全套验证。
+3. R3 的最小关闭规则已在审计中冻结：success-critical 节点全部 completed，且每个 Mission acceptance ID 的最新合格观察为正；第一阶段不新建验收schema。
 4. 四项合并后做统一v1.10.x兼容/包验证，按实际合同变更再决定版本，当前不发版。
 5. D1只做单入口设计和有界实验计划，真实接入与功能实现另行批准。
 
