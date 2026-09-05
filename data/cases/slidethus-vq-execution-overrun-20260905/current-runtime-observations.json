@@ -1,0 +1,35 @@
+{
+  "packet_validation": {
+    "source_file_hashes_matched": 10,
+    "packet_status": "review_required",
+    "block_count": 0,
+    "warning_count": 0,
+    "validation_location": "fresh temporary copy with original export directory name",
+    "repository_packet_modified": false,
+    "source_consent_flags_preserved": true
+  },
+  "case_id": "slidethus-vq-execution-overrun-20260905",
+  "probe_kind": "synthetic_current_runtime_boundary_check",
+  "product_base_commit": "407112ded87377b5b7dd351c49dd0d20b1d598d4",
+  "python": "3.10.12",
+  "claim_ceiling": "Only current supported API behavior; not original run replay, model behavior or causal ROI.",
+  "reference_probes": [
+    {"kind":"missing_evidence","disposition":"accepted","error":null,"task_status":"completed","unresolved_evidence_ref_count":1,"writes_if_rejected":null},
+    {"kind":"artifact_as_evidence","disposition":"accepted","error":null,"task_status":"completed","unresolved_evidence_ref_count":1,"writes_if_rejected":null},
+    {"kind":"existing_evidence","disposition":"accepted","error":null,"task_status":"completed","unresolved_evidence_ref_count":0,"writes_if_rejected":null},
+    {"kind":"artifact_as_artifact","disposition":"accepted","error":null,"task_status":"completed","unresolved_evidence_ref_count":0,"writes_if_rejected":null}
+  ],
+  "node_addition": [
+    {"requested_status":"active","disposition":"accepted","error":null,"created_status":"active","active_task_id":null,"matching_active_node_event":false,"shape_findings":[],"writes_if_rejected":null},
+    {"requested_status":"pending","disposition":"accepted","error":null,"created_status":"pending","active_task_id":null,"matching_active_node_event":false,"shape_findings":[],"writes_if_rejected":null}
+  ],
+  "ordinary_activation": {"task_status":"active","active_task_id":"T1","active_node_changed_events":1},
+  "completion": [
+    {"with_failed_acceptance":false,"result":"applied_decision","error":null,"mission_status":"completed","success_critical_statuses":{"T1":"pending","T2":"pending"},"passed_acceptance_events":0,"failed_acceptance_events":0,"shape_findings":[],"writes_if_rejected":null},
+    {"with_failed_acceptance":true,"result":"applied_decision","error":null,"mission_status":"completed","success_critical_statuses":{"T1":"pending","T2":"pending"},"passed_acceptance_events":0,"failed_acceptance_events":1,"shape_findings":[],"writes_if_rejected":null}
+  ],
+  "continuation_consistency": {
+    "authorized_action":"stop","recommendation":"continue","validation_findings":[],
+    "result":"applied_decision","error":null,"active_task_id":"T1","task_status":"active","writes_if_rejected":null
+  }
+}
