@@ -66,6 +66,7 @@
     {
       "test_id": "judgment-benchmark-and-router",
       "paths": [
+        "tests/test_benchmark_archive.py",
         "tests/test_judgment_benchmark_cases.py",
         "tests/test_judgment_benchmark_cli_runner.py",
         "tests/test_router_wakeup_ab_runner.py"

@@ -3,6 +3,15 @@
 Status: diagnostic dev pass only. This does not close the brake pathology and does
 not replace the external shadow retest.
 
+## Archive recovery (2026-09-05)
+
+The repeat-1 per-call files are covered by the reviewed [37-file inventory](../../archive-pilot-20260905.json).
+Their immutable archive base is commit `d735d11c14d92325607fe6b844eb29f7c426df62`, under the
+same `docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/` path.
+The repeat-1 summary, activation/contamination reports, run manifest and judge schema stay
+in HEAD; repeat-2, repeat-3 and the aggregate are unchanged. See [recovery commands](../../archive-recovery.md).
+This navigation addition does not revise the historical results or certification boundary.
+
 ## Why
 
 External shadow validation reported that the brake semantic features were still
