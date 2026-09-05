@@ -1,9 +1,10 @@
 # TPlan 执行过载案例：合同修复与接入方案
 
 Date: 2026-09-05
-Status: evidence admitted; #196–#200 registered; repair contract audited and frozen; runtime implementation not yet performed.
+Status: #196/#197/#199/#198 implemented and self-tested in candidate `45c0ac0b1cdc80465deeb2accba5ad80bf919535`; implementation review passed; merge/release pending. #200 remains design-only.
 Original reproduction base: `407112ded87377b5b7dd351c49dd0d20b1d598d4` (TPlan source identical to v1.10.0).
 Repair audit: `docs/internal/audits/2026-09-05-tplan-authority-contract-repair-audit.md` on `2501e8ac3f55b24478abefa68b864f8472744af0`.
+Implementation review: [four-contract repairs and final verification](../audits/2026-09-05-tplan-authority-contract-implementation-review.md).
 
 案例：[RU-20260905-SLIDETHUS-VQ-OVERRUN-01](../../../data/cases/slidethus-vq-execution-overrun-20260905/README.md)。
 复现：[reproduce.py](../../../data/cases/slidethus-vq-execution-overrun-20260905/reproduce.py)；
@@ -206,10 +207,10 @@ provenance、稀疏呈现和re-entry，不把本次新问题混成这些旧issue
 
 | 项目 | Issue | 状态 |
 |---|---|---|
-| R1 事务内证据引用解析 | #196 | P1缺陷已复现，待修复 |
-| R2 创建/激活与活动游标原子一致 | #197 | P1缺陷已复现，待修复 |
-| R3 Mission完成前置与验收范围 | #198 | P1矛盾已复现，关闭合同需先评审 |
-| R4 续行授权与实际mutation一致 | #199 | P1缺陷已复现，待修复 |
+| R1 事务内证据引用解析 | #196 | 已实现、自测及评审通过，待合并 |
+| R2 创建/激活与活动游标原子一致 | #197 | 已实现、自测及评审通过，待合并 |
+| R3 Mission完成前置与验收范围 | #198 | 冻结的最小关闭合同已实现及验证，待合并 |
+| R4 续行授权与实际mutation一致 | #199 | 已实现、自测及评审通过，待合并 |
 | D1 外部受管执行与跨root续投边界 | #200 | 设计/验证候选，未批准实施 |
 
 父证据入口复用#144，不新增一个大总纲。#144已补入库记录和分母排除说明。
