@@ -34,9 +34,12 @@ RAW_NAMES = {"raw-responses.jsonl", "score-records.jsonl", "runner.stdout.log", 
 
 def safe_path(value: str) -> str:
     path = PurePosixPath(value)
-    if not value.startswith(ROOT) or path.is_absolute() or ".." in path.parts or "\\" in value or str(path) != value.rstrip("/"):
+    normalized = str(path)
+    root = ROOT.rstrip("/")
+    inside_root = normalized == root or normalized.startswith(ROOT)
+    if not inside_root or path.is_absolute() or ".." in path.parts or "\\" in value or normalized != value.rstrip("/"):
         raise ValueError(f"archive path must be canonical and inside {ROOT}: {value}")
-    return str(path)
+    return normalized
 
 
 def git(repo: Path, *args: str) -> bytes:

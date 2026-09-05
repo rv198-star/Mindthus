@@ -64,6 +64,8 @@ class BenchmarkArchiveTests(unittest.TestCase):
             verify_manifest(self.repo, self.manifest, check_index=True)
 
     def test_scopes_are_bounded_and_committed_pilot_has_a_complete_reference(self):
+        self.assertEqual(safe_path("docs/benchmarks/runs"), "docs/benchmarks/runs")
+        self.assertEqual(safe_path("docs/benchmarks/runs/"), "docs/benchmarks/runs")
         for path in ("/tmp/escape", "docs/benchmarks/runs/../../secrets", "docs/benchmarks/runs-other/fixture", "docs/benchmarks/runs/x\\y"):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 safe_path(path)
