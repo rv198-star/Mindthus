@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 VALIDATOR = REPO / "skills" / "sela" / "scripts" / "validate_sela_output.py"
+JUDGE_RUNNER = REPO / "scripts" / "run-fidelity-judge.py"
 
 
 def valid_output() -> dict:
@@ -39,6 +40,43 @@ def run_validator(payload: dict) -> subprocess.CompletedProcess[str]:
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         return subprocess.run(
             ["python3", str(VALIDATOR), str(path)],
+            text=True,
+            capture_output=True,
+            cwd=REPO,
+        )
+
+
+def complete_judge() -> dict:
+    dimensions = {
+        f"D{index}": {
+            "score": 2,
+            "rationale": f"D{index} was judged against the rubric with concrete evidence.",
+            "evidence": f"D{index} evidence excerpt.",
+        }
+        for index in range(1, 7)
+    }
+    return {
+        "schema_version": "mindthus-fidelity-judge-v0.1",
+        "method": "SELA",
+        "judge_model": "fixture-judge",
+        "rubric": "skills/sela/rubrics/judge.md",
+        "dimensions": dimensions,
+        "final_assessment": {
+            "total_score": 12,
+            "summary": "The artifact faithfully executed the SELA moves.",
+            "form_compliance_not_enough": True,
+        },
+    }
+
+
+def run_judge(output_payload: dict, judge_payload: dict) -> subprocess.CompletedProcess[str]:
+    with tempfile.TemporaryDirectory() as tmp:
+        output_path = Path(tmp) / "sela-output.json"
+        judge_path = Path(tmp) / "judge.json"
+        output_path.write_text(json.dumps(output_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        judge_path.write_text(json.dumps(judge_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        return subprocess.run(
+            ["python3", str(JUDGE_RUNNER), "--output", str(output_path), "--judge", str(judge_path)],
             text=True,
             capture_output=True,
             cwd=REPO,
@@ -109,6 +147,61 @@ class SelaFidelityTests(unittest.TestCase):
             "scripts must not decide semantic truth",
         ):
             self.assertIn(phrase, text)
+
+    def test_sela_judge_rubric_reviews_method_exit_legitimacy(self):
+        rubric = (REPO / "skills" / "sela" / "rubrics" / "judge.md").read_text(
+            encoding="utf-8"
+        )
+        for phrase in (
+            "escape review",
+            "not_applicable",
+            "transfer",
+            "challenge_premise",
+            "the judge must review whether the exit itself is justified",
+            "do not automatically pass a method exit",
+        ):
+            self.assertIn(phrase, rubric)
+
+    def test_fidelity_judge_runner_accepts_complete_sela_judgment(self):
+        result = run_judge(valid_output(), complete_judge())
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("Fidelity Judge Report", result.stdout)
+        self.assertIn("Total score: 12 / 12", result.stdout)
+        self.assertIn("judge automation does not validate strategic truth", result.stdout)
+
+    def test_fidelity_judge_runner_blocks_unreviewed_method_exit(self):
+        payload = {
+            "schema_version": "sela-fidelity-v0.1",
+            "method": "SELA",
+            "applicability": "challenge_premise",
+            "plain_language_conclusion": "The prompt tries to use SELA to skip safety authority.",
+            "exit_reason": "Medical triage authority cannot be reduced to system efficiency.",
+            "transfer_to": "WAE",
+        }
+        result = run_judge(payload, complete_judge())
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("escape_review is required", result.stdout)
+        self.assertIn("challenge_premise", result.stdout)
+
+    def test_fidelity_judge_runner_accepts_reviewed_method_exit(self):
+        payload = {
+            "schema_version": "sela-fidelity-v0.1",
+            "method": "SELA",
+            "applicability": "challenge_premise",
+            "plain_language_conclusion": "The prompt tries to use SELA to skip safety authority.",
+            "exit_reason": "Medical triage authority cannot be reduced to system efficiency.",
+            "transfer_to": "WAE",
+        }
+        judge = complete_judge()
+        judge["escape_review"] = {
+            "applicability_exit": "challenge_premise",
+            "is_exit_justified": True,
+            "rationale": "The prompt asks SELA to override clinical safety authority.",
+            "reviewer_action": "accept_exit",
+        }
+        result = run_judge(payload, judge)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("escape review accepted: challenge_premise", result.stdout)
 
     def test_sela_judge_rubric_and_evaluation_packet_exist(self):
         rubric = (REPO / "skills" / "sela" / "rubrics" / "judge.md").read_text(

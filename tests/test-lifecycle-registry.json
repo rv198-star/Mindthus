@@ -24,6 +24,7 @@
         "tests/test_sela_mpg_smoke_fixtures.py",
         "tests/test_sra_context_isolation.py",
         "tests/test_sra_contract.py",
+        "tests/test_sra_proportionate.py",
         "tests/test_sra_v03_domain.py",
         "tests/test_sra_v03_runtime_contract.py",
         "tests/test_sra_v03_runtime_lifecycle.py",
@@ -66,6 +67,7 @@
     {
       "test_id": "judgment-benchmark-and-router",
       "paths": [
+        "tests/test_benchmark_archive.py",
         "tests/test_judgment_benchmark_cases.py",
         "tests/test_judgment_benchmark_cli_runner.py",
         "tests/test_router_wakeup_ab_runner.py"
@@ -113,7 +115,7 @@
       "lifecycle_status": "historical_guard",
       "suite_role": "acceptance",
       "runtime_cost": "medium",
-      "notes": "Wave 1 removed duplicate current-release assertions from the v0.9 and v1.0 readiness surfaces while preserving the unique historical acceptance and licensing contracts."
+      "notes": "Waves 1-3 preserve unique historical acceptance records while current install, licensing, package-asset, and SELA judge contracts live under their active owners. See test-lifecycle-cleanup-wave-2-2026-09-05.md and test-lifecycle-cleanup-wave-3-2026-09-05.md."
     },
     {
       "test_id": "judgment-observability-and-case-export",

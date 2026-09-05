@@ -10,7 +10,9 @@ from typing import Any
 
 from sra_domain import *  # noqa: F403
 from sra_runtime_core import *  # noqa: F403
-from sra_runtime_core import _receipt_hash
+from sra_packets import *  # noqa: F403
+from sra_carriers import *  # noqa: F403
+from sra_carriers import _receipt_hash
 
 RUN_STATE_KEYS = frozenset({
     "schema_version", "run_id", "created_at", "updated_at", "mode", "view_plan",
@@ -233,6 +235,7 @@ def reconstruct_runtime_expectation(
                 challenge_judgment=challenge,
                 situated_judgment=situated,
                 challenge_map=rebuilt["challenge_map"],
+                detailed="execution_policy" in rebuilt["base_packet"],
             )
             statuses["comparison"] = comparison["status"]
             if comparison["status"] == "agree":

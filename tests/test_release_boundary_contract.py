@@ -7,13 +7,41 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
+    def test_dual_license_public_boundary_is_declared(self):
+        license_text = (REPO / "LICENSE").read_text(encoding="utf-8")
+        commercial_text = (REPO / "COMMERCIAL-LICENSE.md").read_text(encoding="utf-8")
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        for phrase in (
+            "GNU AFFERO GENERAL PUBLIC LICENSE",
+            "Version 3, 19 November 2007",
+            "TERMS AND CONDITIONS",
+            "END OF TERMS AND CONDITIONS",
+        ):
+            self.assertIn(phrase, license_text)
+        for phrase in (
+            "AGPLv3",
+            "commercial dual licensing",
+            "closed-source commercial",
+            "private SaaS",
+            "commercial integration",
+            "separate commercial license",
+            "not legal advice",
+        ):
+            self.assertIn(phrase, commercial_text)
+        self.assertIn("https://github.com/rv198-star/Mindthus/issues", commercial_text)
+        self.assertIn("prompt-level", commercial_text)
+        self.assertIn("AGPLv3 + commercial dual licensing", readme)
+        self.assertIn("closed-source commercial use requires a separate commercial license", readme)
+        self.assertIn("SPDX `AGPL-3.0-only`", readme)
+        self.assertIn("rather than encoded in the SPDX field", readme)
+
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.9.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.10.0.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_v1_9_1_release_preserves_prior_roi_beta_history(self):
+    def test_current_v1_10_0_release_preserves_prior_roi_beta_history(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -22,23 +50,22 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.9.1`", readme)
+        self.assertIn("当前仓库版本：`v1.10.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("当前已发布 Stable 是 `v1.9.1`", readme)
-        self.assertIn("mindthus-plugins-1.9.1.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.9.1.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.9.1-roi-beta.tar.gz", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.10.0`", readme)
+        self.assertIn("mindthus-plugins-1.10.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.10.0.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.10.0-roi-beta.tar.gz", readme)
         self.assertIn("Scarce Resource Allocation", readme)
+        self.assertIn("## v1.10.0", changelog)
+        self.assertIn("补充发布包：1.10.0 ROI Beta", changelog)
+        self.assertIn("v1.10.0-roi-beta", changelog)
         self.assertIn("## v1.9.1", changelog)
+        self.assertIn("## v1.8.0", changelog)
         self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
         self.assertIn("v1.9.1-roi-beta", changelog)
-        self.assertIn("## v1.8.0", changelog)
-        self.assertIn("## v1.7.1", changelog)
-        self.assertIn("## v1.7.0", changelog)
-        self.assertIn("补充发布包：1.8.0 ROI Beta", changelog)
-        self.assertIn("v1.8.0-roi-beta", changelog)
-        self.assertIn('VERSION = "1.9.1"', builder)
-        self.assertIn('VERSION = "1.9.1"', runtime_logger)
+        self.assertIn('VERSION = "1.10.0"', builder)
+        self.assertIn('VERSION = "1.10.0"', runtime_logger)
         self.assertIn('"package_version": "1.5.4"', tplan_manifest)
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
         for phrase in (
@@ -61,9 +88,9 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
     def test_release_defaults_publish_roi_beta_unless_explicitly_exempted(self):
         policy = (REPO / "docs" / "internal" / "release-defaults.md").read_text(encoding="utf-8")
-        release = (REPO / "docs" / "releases" / "v1.9.1.md").read_text(encoding="utf-8")
-        beta = (REPO / "docs" / "releases" / "v1.9.1-roi-beta.md").read_text(encoding="utf-8")
-        prior_beta = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
+        release = (REPO / "docs" / "releases" / "v1.10.0.md").read_text(encoding="utf-8")
+        beta = (REPO / "docs" / "releases" / "v1.10.0-roi-beta.md").read_text(encoding="utf-8")
+        prior_beta = (REPO / "docs" / "releases" / "v1.9.1-roi-beta.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         for phrase in (
             "Stable release 默认同步发布同版本 ROI Beta",
@@ -72,14 +99,14 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, policy)
         self.assertIn("ROI Beta 同步发布", release)
-        self.assertIn("mindthus-plugins-1.9.1.tar.gz", release)
-        self.assertIn("mindthus-skills-1.9.1.tar.gz", release)
-        self.assertIn("mindthus-beta-1.9.1-roi-beta.tar.gz", release)
-        self.assertIn("v1.9.1-roi-beta", beta)
+        self.assertIn("mindthus-plugins-1.10.0.tar.gz", release)
+        self.assertIn("mindthus-skills-1.10.0.tar.gz", release)
+        self.assertIn("mindthus-beta-1.10.0-roi-beta.tar.gz", release)
+        self.assertIn("v1.10.0-roi-beta", beta)
         self.assertIn("SRA-compatible ROI Thin Core", beta)
         self.assertIn("Beta-specific", beta)
-        self.assertIn("v1.8.0-roi-beta", prior_beta)
-        self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
+        self.assertIn("v1.9.1-roi-beta", prior_beta)
+        self.assertIn("补充发布包：1.10.0 ROI Beta", changelog)
         self.assertIn("覆盖三份归档的 `SHA256SUMS`", changelog)
 
     def test_v1_4_6_release_surface_is_preserved(self):

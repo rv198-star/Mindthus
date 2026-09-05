@@ -8,6 +8,18 @@ tests/tplan/*_run_*.md
 __pycache__/
 *.py[cod]
 
+# Reviewed archive pilot (#145); historical originals remain at the pinned source SHA.
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/answers/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/events/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/judge-answers/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/judge-events/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/judge-prompts/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/judge-stderr/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/prompts/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/stderr/
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/raw-responses.jsonl
+/docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1/score-records.jsonl
+
 # Local TVG pilot outputs and generated storyboard images.
 .tplan/missions/clean-room-issue31-value-profile-*/
 tests/artifacts/tvg_*.png

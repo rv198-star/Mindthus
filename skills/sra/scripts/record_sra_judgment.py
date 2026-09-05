@@ -192,6 +192,7 @@ def _advance_after_view(run_dir: Path, state: dict[str, Any]) -> str:
         challenge_judgment=challenge,
         situated_judgment=situated,
         challenge_map=state["challenge_map"],
+        detailed="execution_policy" in load_json(run_dir / "base-packet.json"),
     )
     comparison_path = run_dir / "comparison-report.json"
     write_json(comparison_path, comparison)

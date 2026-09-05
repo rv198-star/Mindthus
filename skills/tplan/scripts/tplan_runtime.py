@@ -41,6 +41,19 @@ activate_runtime(__file__)
 from _runtime.core.io import load_json
 from _runtime.core.report import Finding
 from _runtime.core.shape import findings_from_messages
+from tplan_errors import TplanError
+from tplan_identity import (
+    RUNTIME_MANIFEST_SCHEMA_VERSION, RUNTIME_FINGERPRINT_SCHEMA_VERSION,
+    RUNTIME_PROVENANCE_SCHEMA_VERSION, RUNTIME_MANIFEST_RELATIVE_PATH,
+    runtime_skill_root, load_runtime_manifest, runtime_fingerprint,
+    validate_runtime_fingerprint, runtime_fingerprint_compatibility,
+    validate_runtime_provenance, new_runtime_provenance, runtime_provenance_report,
+)
+from tplan_task_contract import (
+    TASK_STATUSES, TASK_ROLES, NODE_KINDS, PARENT_ALIGNED_TASK_FIELDS, STEP_TASK_FIELDS,
+    parse_acceptance_evidence, load_task_json, require_string_list, require_task_enum,
+    require_task_level, require_task_kind, normalize_task, render_mission_md,
+)
 
 
 SCHEMA_VERSION = "tplan.v0.1"
@@ -53,12 +66,8 @@ AUTHORITY_RECEIPT_SCHEMA_VERSION = "tplan.authority_receipt.v0.1"
 SHARED_CONTEXT_SCHEMA_VERSION = "tplan.shared_context.v0.1"
 USER_UPDATE_CURSOR_SCHEMA_VERSION = "tplan.user_update_cursor.v0.2"
 OUTCOME_ATTRIBUTION_SCHEMA_VERSION = "tplan.outcome_attribution.v0.1"
-RUNTIME_MANIFEST_SCHEMA_VERSION = "tplan.runtime_manifest.v0.1"
-RUNTIME_FINGERPRINT_SCHEMA_VERSION = "tplan.runtime_fingerprint.v0.1"
-RUNTIME_PROVENANCE_SCHEMA_VERSION = "tplan.runtime_provenance.v0.1"
 MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION = "tplan.mission_reentry_preflight.v0.1"
 MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
-RUNTIME_MANIFEST_RELATIVE_PATH = Path("resources/runtime-manifest.json")
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied"}
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
@@ -97,16 +106,6 @@ MISSION_REENTRY_DISPOSITIONS = {
     "ignore_candidate",
 }
 
-TASK_STATUSES = {
-    "pending",
-    "active",
-    "blocked",
-    "completed",
-    "paused",
-    "pruned",
-    "abandoned",
-    "superseded",
-}
 TERMINAL_TASK_STATUSES = {"completed", "pruned", "abandoned", "superseded"}
 ALLOWED_TASK_TRANSITIONS = {
     "pending": TASK_STATUSES,
@@ -118,9 +117,6 @@ ALLOWED_TASK_TRANSITIONS = {
     "abandoned": {"abandoned"},
     "superseded": {"superseded"},
 }
-
-TASK_ROLES = {"success-critical", "supporting", "exploratory"}
-NODE_KINDS = {"task", "subtask", "step"}
 
 TRACE_EVENT_TYPES = {
     "mission_initialized",
@@ -489,19 +485,6 @@ MISSION_ALIGNED_TASK_FIELDS = {
     "acceptance_evidence",
 }
 
-PARENT_ALIGNED_TASK_FIELDS = {
-    "parent_contribution",
-    "parent_acceptance",
-    "mission_trace",
-}
-
-STEP_TASK_FIELDS = {
-    "parent_contribution",
-    "mission_trace",
-    "step_action",
-    "done_condition",
-}
-
 POLICY_FIELDS = ("human_in_loop", "risk_tolerance", "resource_sufficiency")
 MISSION_STRING_FIELDS = ("id", "title", "objective")
 TASK_STRING_FIELDS = (
@@ -516,356 +499,8 @@ TASK_STRING_FIELDS = (
 )
 
 
-class TplanError(ValueError):
-    """Runtime contract violation."""
-
-
 def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
-
-
-def runtime_skill_root(anchor: str | Path = __file__) -> Path:
-    resolved = Path(anchor).resolve()
-    if resolved.is_dir():
-        return resolved
-    return resolved.parents[1]
-
-
-def _runtime_manifest_path(skill_root: Path) -> Path:
-    return skill_root / RUNTIME_MANIFEST_RELATIVE_PATH
-
-
-def load_runtime_manifest(skill_root: Path | None = None) -> dict[str, Any]:
-    root = (skill_root or runtime_skill_root()).resolve()
-    path = _runtime_manifest_path(root)
-    try:
-        manifest = json.loads(path.read_text(encoding="utf-8"))
-    except FileNotFoundError as exc:
-        raise TplanError(f"TPlan runtime manifest is missing: {path}") from exc
-    except json.JSONDecodeError as exc:
-        raise TplanError(f"TPlan runtime manifest is invalid JSON: {path}") from exc
-    if not isinstance(manifest, dict):
-        raise TplanError(f"TPlan runtime manifest must be an object: {path}")
-    required = {
-        "schema_version",
-        "package_version",
-        "source_id",
-        "capability_versions",
-        "capabilities",
-        "required_scripts",
-        "fingerprint_files",
-    }
-    if set(manifest) != required:
-        missing = sorted(required - set(manifest))
-        extra = sorted(set(manifest) - required)
-        details = []
-        if missing:
-            details.append("missing " + ", ".join(missing))
-        if extra:
-            details.append("unsupported " + ", ".join(extra))
-        raise TplanError("TPlan runtime manifest fields invalid: " + "; ".join(details))
-    if manifest.get("schema_version") != RUNTIME_MANIFEST_SCHEMA_VERSION:
-        raise TplanError(
-            f"TPlan runtime manifest schema must be {RUNTIME_MANIFEST_SCHEMA_VERSION}"
-        )
-    for field in ("package_version", "source_id"):
-        if not isinstance(manifest.get(field), str) or not manifest[field]:
-            raise TplanError(f"TPlan runtime manifest {field} must be a non-empty string")
-    capability_versions = manifest.get("capability_versions")
-    if (
-        not isinstance(capability_versions, dict)
-        or not capability_versions
-        or not all(
-            isinstance(key, str)
-            and key
-            and isinstance(value, str)
-            and value
-            for key, value in capability_versions.items()
-        )
-    ):
-        raise TplanError(
-            "TPlan runtime manifest capability_versions must map names to versions"
-        )
-    for field in ("capabilities", "required_scripts", "fingerprint_files"):
-        values = manifest.get(field)
-        if (
-            not isinstance(values, list)
-            or not values
-            or not all(isinstance(value, str) and value for value in values)
-            or len(values) != len(set(values))
-        ):
-            raise TplanError(
-                f"TPlan runtime manifest {field} must be a non-empty unique string list"
-            )
-        if field != "capabilities" and any(
-            Path(value).is_absolute() or ".." in Path(value).parts
-            for value in values
-        ):
-            raise TplanError(
-                f"TPlan runtime manifest {field} paths must stay under the skill root"
-            )
-    return manifest
-
-
-def runtime_fingerprint(skill_root: Path | None = None) -> dict[str, Any]:
-    root = (skill_root or runtime_skill_root()).resolve()
-    manifest = load_runtime_manifest(root)
-    missing_scripts = [
-        relative
-        for relative in manifest["required_scripts"]
-        if not (root / relative).is_file()
-    ]
-    if missing_scripts:
-        raise TplanError(
-            "TPlan runtime required scripts are missing under "
-            f"{root}: {', '.join(missing_scripts)}"
-        )
-
-    digest = hashlib.sha256()
-    for relative in manifest["fingerprint_files"]:
-        path = root / relative
-        if not path.is_file():
-            raise TplanError(f"TPlan runtime fingerprint file is missing: {path}")
-        digest.update(relative.encode("utf-8"))
-        digest.update(b"\0")
-        digest.update(path.read_bytes())
-        digest.update(b"\0")
-    return {
-        "schema_version": RUNTIME_FINGERPRINT_SCHEMA_VERSION,
-        "package_version": manifest["package_version"],
-        "source_id": manifest["source_id"],
-        "skill_root": str(root),
-        "script_root": str((root / "scripts").resolve()),
-        "build_hash": "sha256:" + digest.hexdigest(),
-        "capability_versions": dict(sorted(manifest["capability_versions"].items())),
-        "capabilities": sorted(manifest["capabilities"]),
-    }
-
-
-def validate_runtime_fingerprint(value: Any) -> list[str]:
-    if not isinstance(value, dict):
-        return ["runtime fingerprint must be an object"]
-    required = {
-        "schema_version",
-        "package_version",
-        "source_id",
-        "skill_root",
-        "script_root",
-        "build_hash",
-        "capability_versions",
-        "capabilities",
-    }
-    errors: list[str] = []
-    if set(value) != required:
-        errors.append("runtime fingerprint fields are invalid")
-    if value.get("schema_version") != RUNTIME_FINGERPRINT_SCHEMA_VERSION:
-        errors.append(
-            f"runtime fingerprint schema_version must be {RUNTIME_FINGERPRINT_SCHEMA_VERSION}"
-        )
-    for field in ("package_version", "source_id", "skill_root", "script_root"):
-        if not isinstance(value.get(field), str) or not value[field]:
-            errors.append(f"runtime fingerprint {field} must be a non-empty string")
-    build_hash = value.get("build_hash")
-    if not isinstance(build_hash, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", build_hash) is None:
-        errors.append("runtime fingerprint build_hash must be a sha256 digest")
-    capability_versions = value.get("capability_versions")
-    if (
-        not isinstance(capability_versions, dict)
-        or not capability_versions
-        or not all(
-            isinstance(key, str)
-            and key
-            and isinstance(version, str)
-            and version
-            for key, version in capability_versions.items()
-        )
-    ):
-        errors.append("runtime fingerprint capability_versions are invalid")
-    capabilities = value.get("capabilities")
-    if (
-        not isinstance(capabilities, list)
-        or not capabilities
-        or not all(isinstance(item, str) and item for item in capabilities)
-        or len(capabilities) != len(set(capabilities or []))
-    ):
-        errors.append("runtime fingerprint capabilities are invalid")
-    return errors
-
-
-def runtime_fingerprint_compatibility(
-    recorded: Any,
-    current: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    current = current or runtime_fingerprint()
-    recorded_errors = validate_runtime_fingerprint(recorded)
-    current_errors = validate_runtime_fingerprint(current)
-    if recorded_errors or current_errors:
-        return {
-            "status": "incompatible",
-            "compatible": False,
-            "differences": {
-                "recorded_errors": recorded_errors,
-                "current_errors": current_errors,
-            },
-        }
-    identity_fields = (
-        "package_version",
-        "source_id",
-        "build_hash",
-        "capability_versions",
-        "capabilities",
-    )
-    differences = {
-        field: {"recorded": recorded[field], "current": current[field]}
-        for field in identity_fields
-        if recorded[field] != current[field]
-    }
-    if differences:
-        return {
-            "status": "incompatible",
-            "compatible": False,
-            "differences": differences,
-        }
-    relocated = any(
-        recorded[field] != current[field] for field in ("skill_root", "script_root")
-    )
-    return {
-        "status": "compatible_relocated" if relocated else "exact",
-        "compatible": True,
-        "differences": (
-            {
-                field: {"recorded": recorded[field], "current": current[field]}
-                for field in ("skill_root", "script_root")
-                if recorded[field] != current[field]
-            }
-            if relocated
-            else {}
-        ),
-    }
-
-
-def validate_runtime_provenance(value: Any) -> list[str]:
-    if not isinstance(value, dict):
-        return ["runtime_provenance must be an object"]
-    errors: list[str] = []
-    if set(value) != {"schema_version", "origin", "fingerprint"}:
-        errors.append("runtime_provenance fields are invalid")
-    if value.get("schema_version") != RUNTIME_PROVENANCE_SCHEMA_VERSION:
-        errors.append(
-            f"runtime_provenance schema_version must be {RUNTIME_PROVENANCE_SCHEMA_VERSION}"
-        )
-    if value.get("origin") not in {"native", "legacy_adopted"}:
-        errors.append("runtime_provenance origin must be native or legacy_adopted")
-    errors.extend(validate_runtime_fingerprint(value.get("fingerprint")))
-    return errors
-
-
-def new_runtime_provenance(*, origin: str = "native") -> dict[str, Any]:
-    if origin not in {"native", "legacy_adopted"}:
-        raise TplanError("runtime provenance origin unsupported")
-    return {
-        "schema_version": RUNTIME_PROVENANCE_SCHEMA_VERSION,
-        "origin": origin,
-        "fingerprint": runtime_fingerprint(),
-    }
-
-
-def runtime_provenance_report(
-    mission: dict[str, Any],
-    *,
-    current: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    current = current or runtime_fingerprint()
-    provenance = mission.get("runtime_provenance")
-    if provenance is None:
-        return {
-            "status": "legacy_unpinned",
-            "severity": "warning",
-            "compatible": None,
-            "origin": None,
-            "recorded": None,
-            "current": current,
-            "diagnostics": [
-                {
-                    "code": "runtime_provenance_missing",
-                    "message": (
-                        "Mission predates runtime provenance; the creating runtime "
-                        "cannot be verified"
-                    ),
-                }
-            ],
-        }
-    errors = validate_runtime_provenance(provenance)
-    if errors:
-        return {
-            "status": "incompatible",
-            "severity": "error",
-            "compatible": False,
-            "origin": provenance.get("origin") if isinstance(provenance, dict) else None,
-            "recorded": (
-                provenance.get("fingerprint") if isinstance(provenance, dict) else None
-            ),
-            "current": current,
-            "diagnostics": [
-                {
-                    "code": "runtime_provenance_invalid",
-                    "message": "; ".join(errors),
-                }
-            ],
-        }
-    compatibility = runtime_fingerprint_compatibility(
-        provenance["fingerprint"],
-        current,
-    )
-    diagnostics: list[dict[str, str]] = []
-    severity = "ok"
-    if compatibility["status"] == "compatible_relocated":
-        severity = "warning"
-        diagnostics.append(
-            {
-                "code": "runtime_path_relocated",
-                "message": (
-                    "runtime content is compatible but the selected canonical path "
-                    "differs from the recorded path"
-                ),
-            }
-        )
-    elif not compatibility["compatible"]:
-        severity = "error"
-        diagnostics.append(
-            {
-                "code": "runtime_fingerprint_mismatch",
-                "message": (
-                    "selected TPlan runtime does not match the Mission runtime fingerprint"
-                ),
-            }
-        )
-    if provenance["origin"] == "legacy_adopted":
-        if severity == "ok":
-            severity = "warning"
-        diagnostics.append(
-            {
-                "code": "runtime_legacy_adopted",
-                "message": (
-                    "Mission was first pinned by a later runtime; its original creator "
-                    "remains unknown"
-                ),
-            }
-        )
-    return {
-        "status": (
-            "legacy_adopted_" + compatibility["status"]
-            if provenance["origin"] == "legacy_adopted"
-            else compatibility["status"]
-        ),
-        "severity": severity,
-        "compatible": compatibility["compatible"],
-        "origin": provenance["origin"],
-        "recorded": provenance["fingerprint"],
-        "current": current,
-        "differences": compatibility["differences"],
-        "diagnostics": diagnostics,
-    }
 
 
 def _prepare_runtime_provenance(
@@ -2191,138 +1826,6 @@ def validate_mission(state: Any) -> list[str]:
     return errors
 
 
-def parse_acceptance_evidence(values: list[str]) -> list[dict[str, str]]:
-    evidence = []
-    for index, raw in enumerate(values, start=1):
-        if ":" in raw:
-            evidence_id, description = raw.split(":", 1)
-        else:
-            evidence_id, description = f"A{index}", raw
-        evidence.append({"id": evidence_id.strip(), "description": description.strip()})
-    return evidence
-
-
-def load_task_json(path: Path | None) -> list[dict[str, Any]]:
-    if path is None:
-        return []
-    tasks = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(tasks, list):
-        raise TplanError("task JSON must be a list")
-    for index, task in enumerate(tasks, start=1):
-        if not isinstance(task, dict):
-            raise TplanError(f"task {index} must be an object")
-    return tasks
-
-
-def require_string_list(task_id: str, name: str, value: Any) -> list[str]:
-    if not isinstance(value, list):
-        raise TplanError(f"task {task_id} {name} must be a list")
-    if not all(isinstance(item, str) for item in value):
-        raise TplanError(f"task {task_id} {name} items must be strings")
-    return list(value)
-
-
-def require_task_enum(task_id: str, name: str, value: Any, allowed_values: set[str]) -> str:
-    if not isinstance(value, str):
-        raise TplanError(f"task {task_id} {name} must be a string")
-    if value not in allowed_values:
-        allowed = ", ".join(sorted(allowed_values))
-        raise TplanError(f"task {task_id} {name} must be one of: {allowed}")
-    return value
-
-
-def require_task_level(task_id: str, value: Any) -> int:
-    if isinstance(value, bool) or not isinstance(value, int):
-        raise TplanError(f"task {task_id} level must be an integer")
-    return value
-
-
-def require_task_kind(task_id: str, value: Any) -> str:
-    if not isinstance(value, str):
-        raise TplanError(f"task {task_id} kind must be a string")
-    if value not in NODE_KINDS:
-        allowed = ", ".join(sorted(NODE_KINDS))
-        raise TplanError(f"task {task_id} kind must be one of: {allowed}")
-    return value
-
-
-def _default_kind(raw: dict[str, Any]) -> str:
-    return "task" if raw.get("parent_id") is None else "subtask"
-
-
-def _default_level(raw: dict[str, Any], kind: str, raw_tasks_by_id: dict[str, dict[str, Any]]) -> int:
-    if kind == "task":
-        return 1
-    if kind == "subtask":
-        return 2
-    parent_id = raw.get("parent_id")
-    parent = raw_tasks_by_id.get(str(parent_id)) if parent_id is not None else None
-    if parent is None:
-        return 2
-    parent_kind = parent.get("kind", _default_kind(parent))
-    return 3 if parent_kind == "subtask" else 2
-
-
-def normalize_task(
-    raw: dict[str, Any],
-    default_level: int = 1,
-    raw_tasks_by_id: dict[str, dict[str, Any]] | None = None,
-) -> dict[str, Any]:
-    if "id" not in raw:
-        raise TplanError("task is missing id")
-    if "title" not in raw:
-        raise TplanError(f"task {raw['id']} is missing title")
-
-    raw_tasks_by_id = raw_tasks_by_id or {}
-    task_id = str(raw["id"])
-    parent_id = raw.get("parent_id")
-    kind = require_task_kind(task_id, raw.get("kind", _default_kind(raw)))
-    default_role = "success-critical" if kind == "task" else "supporting"
-    status = require_task_enum(task_id, "status", raw.get("status", "pending"), TASK_STATUSES)
-    role = require_task_enum(task_id, "role", raw.get("role", default_role), TASK_ROLES)
-    inferred_level = _default_level(raw, kind, raw_tasks_by_id) if "level" not in raw else default_level
-    level = require_task_level(task_id, raw.get("level", inferred_level))
-
-    task = {
-        "id": task_id,
-        "parent_id": parent_id,
-        "kind": kind,
-        "level": level,
-        "title": str(raw["title"]),
-        "status": status,
-        "role": role,
-        "evidence_links": require_string_list(task_id, "evidence_links", raw.get("evidence_links", [])),
-    }
-    if kind == "task":
-        task["mission_contribution"] = str(raw.get("mission_contribution", ""))
-        task["acceptance_evidence"] = require_string_list(
-            task_id, "acceptance_evidence", raw.get("acceptance_evidence", [])
-        )
-    elif kind == "subtask":
-        for field in sorted(PARENT_ALIGNED_TASK_FIELDS):
-            if field not in raw:
-                raise TplanError(f"task {task_id} is missing {field}")
-            value = raw[field]
-            if not isinstance(value, str):
-                raise TplanError(f"task {task_id} {field} must be a string")
-            task[field] = value
-        if "acceptance_evidence" in raw:
-            task["acceptance_evidence"] = require_string_list(task_id, "acceptance_evidence", raw["acceptance_evidence"])
-        if "mission_contribution" in raw:
-            if not isinstance(raw["mission_contribution"], str):
-                raise TplanError(f"task {task_id} mission_contribution must be a string")
-            task["mission_contribution"] = raw["mission_contribution"]
-    else:
-        for field in sorted(STEP_TASK_FIELDS):
-            if field not in raw:
-                raise TplanError(f"task {task_id} is missing {field}")
-            value = raw[field]
-            if not isinstance(value, str):
-                raise TplanError(f"task {task_id} {field} must be a string")
-            task[field] = value
-    return task
-
-
 def normalize_task_for_mission(mission: dict[str, Any], raw: dict[str, Any]) -> dict[str, Any]:
     raw_tasks_by_id = task_map(mission)
     raw_tasks_by_id[str(raw.get("id"))] = raw
@@ -2374,21 +1877,6 @@ def build_mission(
         ],
         "active_task_id": None,
     }
-
-
-def render_mission_md(mission: dict[str, Any]) -> str:
-    policy = mission["mission"]
-    return (
-        f"# {policy['title']}\n\n"
-        "## Objective\n\n"
-        f"{policy['objective']}\n\n"
-        "## Policy\n\n"
-        f"- human_in_loop: {policy['human_in_loop']}\n"
-        f"- risk_tolerance: {policy['risk_tolerance']}\n"
-        f"- resource_sufficiency: {policy['resource_sufficiency']}\n\n"
-        "## Decision Log\n\n"
-        "No decisions recorded yet.\n"
-    )
 
 
 def shared_context_dir(project_root: Path) -> Path:

@@ -1,5 +1,9 @@
 # V5 Naturalization And #17 Layer Probe Report
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: diagnostic evidence only, not certification. This run validates two bounded tasks after `v1.4.4-diag`: #17 loaded-action layer probe and #104 semantic triage naturalization. It does not touch brake follow-up or #8/#37 register coverage.
 
 ## Code Under Test

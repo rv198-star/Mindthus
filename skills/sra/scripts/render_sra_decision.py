@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
 from sra_runtime import FINAL_DECISION_SCHEMA, SraRuntimeError, load_json, run_check
+from sra_criteria import resolved_completion
 
 
 def parse_args() -> argparse.Namespace:
@@ -18,6 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--language", choices=("zh", "en"), default="zh")
     parser.add_argument("--output", help="Optional Markdown output path.")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--view", choices=("card", "full"), help="Defaults to card for proportionate runs; full for legacy runs.")
     return parser.parse_args()
 
 
@@ -298,7 +301,81 @@ def _render(
     )
 
 
-def render(run_dir: Path, language: str) -> tuple[dict[str, Any], str]:
+def _render_card(final: dict[str, Any], raw: dict[str, Any], language: str) -> str:
+    """Project one checked decision; never decide or hide authorization boundaries."""
+    zh = language == "zh"
+    label = lambda cn, en: cn if zh else en
+    decision = final["decision"]
+    frame = raw["allocation_frame"]
+    candidate_labels, resource_labels = _candidate_labels(raw), _resource_labels(raw)
+    next_tranche = decision["next_tranche"]
+    none = label("无", "none")
+    allocations = lambda values: _allocations_text(values, resource_labels, language, empty=none)
+    outcome = decision["allocation_outcome"]
+    ledger_summary = []
+    for title, postures in ((label('当前已分配', 'Current commitments'), {'floor', 'maintenance'}),
+                            (label('延后', 'Deferred'), {'defer'}), (label('停止', 'Stopped'), {'stop'})):
+        if _ledger_rows(decision, postures):
+            ledger_summary.append(f"{title}：{_ledger_text(decision, candidate_labels, resource_labels, language, postures=postures, empty=none)}")
+    if decision.get('bundle_decision', {}).get('status') == 'assessed':
+        ledger_summary.insert(0, f"{label('选中组合', 'Selected bundle')}：{_bundle_text(decision, candidate_labels, language)}")
+    constraints = [c['statement'] for c in raw.get('context_items', []) if c.get('kind') in {'user_constraint', 'authority_decision'}]
+    status = {
+        "allocate": label("本轮投入", "Current allocation"),
+        "conditional": label("有条件计划，当前未授权启动", "Conditional plan; no start now"),
+        "infeasible": label("当前资源下不可行", "Infeasible under current resources"),
+        "blocked": label("已阻断，当前未授权启动", "Blocked; no start authorized"),
+        "request_missing_context": label("需补信息，当前未授权启动", "Missing context; no start authorized"),
+    }[outcome]
+    lines = [
+        f"# SRA — {status}", "",
+        f"**{label('目标', 'Objective')}**：{frame['parent_objective']}",
+        f"{label('达标条件', 'Threshold')}：{frame['target_threshold']}",
+        f"{label('保护底线', 'Protected boundary')}：{frame['risk_floor']}",
+        *([f"{label('当前约束', 'Current constraints')}：{_items(constraints, language, none)}"] if constraints else []), "",
+        f"## {label('当前决定', 'Decision')}",
+        f"{_candidate_label(next_tranche['target_id'], candidate_labels, language)} — {allocations(next_tranche['resource_allocations'])}",
+        f"{label('判断理由', 'Why')}：{next_tranche['reason']}",
+        *ledger_summary, "",
+        f"## {label('执行边界', 'Execution boundary')}",
+        f"{label('授权状态', 'Authorization')}：{_authorization_text(decision, language)}",
+        f"{label('本轮窗口', 'Decision window')}：{frame['time_window']}",
+        f"{label('下一批窗口', 'Tranche window')}：{next_tranche['window']}",
+        f"{label('投入上限', 'Investment ceiling')}：{allocations(decision['investment_ceiling'])}",
+        f"{label('授权边界', 'Authorization horizon')}：{decision['authorization_horizon']}",
+        f"{label('完成条件', 'Completion')}：{next_tranche.get('completion_signal', none)}",
+    ]
+    used_resources = {r['resource_id'] for row in decision['allocation_ledger'] for r in row['current_allocations']}
+    used_resources.update(r['resource_id'] for r in next_tranche['resource_allocations'])
+    reserve = decision['reserve']
+    used_resources.update(r['resource_id'] for r in reserve['resource_allocations'])
+    for pool in frame['resource_pools']:
+        if pool['resource_id'] in used_resources:
+            lines.append(f"{label('资源窗口', 'Resource window')} {pool['resource_id']}：{pool['window']}")
+    for resolution in decision.get('dependency_resolutions', []):
+        dependent = _candidate_label(resolution['dependent_id'], candidate_labels, language)
+        prerequisite = _candidate_label(resolution['prerequisite_id'], candidate_labels, language)
+        lines.append(f"{label('前置', 'Prerequisite')} {dependent} ← {prerequisite}：{resolution['status']} [{', '.join(resolution['evidence_refs'])}]")
+    if reserve['status'] == 'reserved':
+        lines.append(f"{label('保留资源', 'Reserve')}：{allocations(reserve['resource_allocations'])}；{reserve['reason']}；{reserve['release_trigger']}；{reserve['review_time']}")
+    if final.get('governance_overrides'):
+        lines.append(f"{label('降级授权', 'Governance override')}：{_override_text(final['governance_overrides'], language)}")
+    lines.extend([
+        "", f"## {label('重新判断', 'Reconsider')}",
+        _items(decision.get('rerank_triggers'), language, none),
+    ])
+    if decision.get('missing_information'):
+        lines.append(f"**{label('尚缺', 'Missing')}**：{_items(decision['missing_information'], language, none)}")
+    lines.extend([
+        "", f"{label('证据上限', 'Claim ceiling')}：{decision.get('claim_ceiling', frame['evidence_ceiling'])}",
+        f"{label('判断视角', 'View plan')}：{final['view_plan']} / {final['observed_context_boundary']}",
+        f"{label('详情', 'Details')}：run `{final['run_id']}` / `final-decision.json`；`--view full`",
+        label("SRA 分配结论不替代实际执行权限。", "An SRA allocation does not replace execution authority."), "",
+    ])
+    return '\n'.join(lines)
+
+
+def render(run_dir: Path, language: str, view: str = "full") -> tuple[dict[str, Any], str]:
     report = run_check(run_dir)
     blocking = [
         item["message"]
@@ -316,11 +393,13 @@ def render(run_dir: Path, language: str) -> tuple[dict[str, Any], str]:
     if not isinstance(final.get("decision"), dict):
         raise SraRuntimeError("terminal decision has no decision object")
     raw = _raw_input(run_dir)
-    text = _render(
-        final,
-        _candidate_labels(raw),
-        _resource_labels(raw),
-        language,
+    if view not in {"card", "full"}:
+        raise SraRuntimeError("unsupported result view")
+    display = copy.deepcopy(final)
+    if "completion_criterion_ref" in display["decision"]["next_tranche"]:
+        display["decision"]["next_tranche"]["completion_signal"] = resolved_completion(final["decision"], raw)
+    text = _render_card(display, raw, language) if view == "card" else _render(
+        display, _candidate_labels(raw), _resource_labels(raw), language,
     )
     return final, text
 
@@ -328,7 +407,9 @@ def render(run_dir: Path, language: str) -> tuple[dict[str, Any], str]:
 def main() -> int:
     args = parse_args()
     try:
-        final, text = render(Path(args.dir), args.language)
+        run_dir = Path(args.dir)
+        view = args.view or ("card" if "execution_policy" in _raw_input(run_dir) else "full")
+        final, text = render(run_dir, args.language, view)
     except SraRuntimeError as exc:
         print(f"BLOCK: {exc}", file=sys.stderr)
         return 1

@@ -100,8 +100,8 @@ class SraContractTests(unittest.TestCase):
                 "SRA",
                 "Scarce Resource Allocation",
                 "稀缺资源优先分配",
-                "先排除不可行",
-                "达标必要项",
+                "先保护目标成立所必需的投入",
+                "风险调整后边际价值最高的用途",
                 "下一份资源",
             ):
                 self.assertIn(phrase, text, f"{path} missing {phrase!r}")

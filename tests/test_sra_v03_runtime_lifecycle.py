@@ -44,6 +44,47 @@ class SraV03RuntimeLifecycleTests(unittest.TestCase):
         prepare(input_path, run_dir)
         return run_dir
 
+    def test_dependency_block_and_valid_dual_view_replay(self):
+        data = input_data()
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        judgment = situated_judgment(packet)
+        judgment["dependency_resolutions"] = [{
+            "dependent_id": "payment-validation", "prerequisite_id": "page-polish",
+            "status": "unknown", "evidence_refs": [], "reason": "Missing prerequisite evidence.",
+        }]
+        before = {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+        with self.assertRaises(SraRuntimeError):
+            record_situated(run_dir, judgment, carrier="packet_bound", receipt_path=None)
+        self.assertEqual(before, {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()})
+        judgment["dependency_resolutions"][0].update(status="satisfied", evidence_refs=["E-page"])
+        state = load_json(run_dir / "run.json")
+        challenge = challenge_from_situated(load_json(run_dir / "challenge-packet.json"), judgment, state["challenge_map"])
+        record_challenge(run_dir, challenge, carrier="packet_bound", receipt_path=None)
+        record_situated(run_dir, judgment, carrier="packet_bound", receipt_path=None)
+        self.assertEqual(run_check(run_dir)["status"], "ok")
+        self.assertEqual(load_json(run_dir / "run.json")["statuses"]["finalization"], "finalized")
+        self.assertTrue(repair_run(run_dir)["repaired"])
+
+    def test_invalid_judgment_structure_leaves_run_byte_identical(self):
+        data = input_data()
+        data["contamination_signals"] = []
+        run_dir = self.prepare_run(data)
+        packet = load_json(run_dir / "situated-packet.json")
+        before = {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+        for field in ("unrecognized_authorization_override", "next_tranche"):
+            with self.subTest(field=field):
+                judgment = situated_judgment(packet)
+                if field == "next_tranche":
+                    judgment[field]["undeclared"] = "value"
+                else:
+                    judgment[field] = True
+                with self.assertRaises(SraRuntimeError):
+                    record_situated(run_dir, judgment, carrier="packet_bound", receipt_path=None)
+                after = {str(p.relative_to(run_dir)): p.read_bytes() for p in run_dir.rglob("*") if p.is_file()}
+                self.assertEqual(after, before)
+
     def test_fresh_prepared_run_checks_cleanly(self):
         run_dir = self.prepare_run()
         report = run_check(run_dir)

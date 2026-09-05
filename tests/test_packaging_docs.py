@@ -55,7 +55,7 @@ class PackagingDocsTests(unittest.TestCase):
             root = Path(tmp)
             out = root / "release"
             codex_home = root / "home"
-            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.9.1"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.10.0"
             result = subprocess.run(
                 [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
                 text=True,
@@ -642,7 +642,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.9.1`",
+            "当前仓库版本：`v1.10.0`",
             "GitHub Releases",
             "局部正确",
             "输入定框审计",
@@ -1108,6 +1108,7 @@ class PackagingDocsTests(unittest.TestCase):
         script = (REPO / "scripts" / "install-skills.sh").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", install)
         self.assertIn("scripts/install-skills.sh", install)
+        self.assertNotIn("private `rv198-star/Mindthus` repository", install)
         for text in (install, readme, script):
             self.assertIn("CODEX_HOME", text)
             self.assertIn("skills/mindthus", text)
@@ -1286,6 +1287,39 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertIn("repo-local _runtime", result.stdout)
             self.assertIn("copy _runtime plus runtime_bootstrap.py", result.stdout)
 
+    @staticmethod
+    def _static_release_asset_paths(root):
+        paths = []
+        for platform, skill_prefix in (("claude-code/claude-plugin", "skills"),
+                                       ("codex", "skills/mindthus"),
+                                       ("opencode", ".opencode/skills/mindthus")):
+            base = root / platform
+            paths.extend(base / name for name in ("LICENSE", "COMMERCIAL-LICENSE.md", "scripts/run-fidelity-judge.py"))
+            paths.append(base / skill_prefix / "sela/rubrics/judge.md")
+        for platform in ("claude-code", "claude-code/claude-plugin", "codex", "codex-plugin/mindthus", "opencode"):
+            paths.append(root / platform / "docs/methodologies/primitives/whole-elephant-protocol.md")
+        return paths
+
+    def _assert_packaged_fidelity_assets(self, root):
+        for path in self._static_release_asset_paths(root):
+            self.assertTrue(path.is_file(), str(path.relative_to(root)))
+
+    def test_fidelity_asset_coverage_detects_each_missing_packaged_file(self):
+        # Retirement evidence: every assertion moved from v1.0 still detects its loss.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            paths = self._static_release_asset_paths(root)
+            for path in paths:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("fixture", encoding="utf-8")
+            self._assert_packaged_fidelity_assets(root)
+            for path in paths:
+                with self.subTest(asset=str(path.relative_to(root))):
+                    path.unlink()
+                    with self.assertRaises(AssertionError):
+                        self._assert_packaged_fidelity_assets(root)
+                    path.write_text("fixture", encoding="utf-8")
+
     def test_release_pack_builder_creates_claude_marketplace_root_layout(self):
         script = REPO / "scripts" / "build-release-pack.py"
         self.assertTrue(script.exists())
@@ -1312,6 +1346,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assert_release_pack_excludes_runtime_artifacts(out)
+            self._assert_packaged_fidelity_assets(out)
 
             for skill_dir in (
                 out / "claude-code" / "claude-plugin" / "skills" / "using-mindthus",
@@ -1346,7 +1381,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.9.1")
+            self.assertEqual(plugin["version"], "1.10.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "sra" / "SKILL.md").exists())
@@ -1445,7 +1480,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.9.1")
+            self.assertEqual(codex_plugin_manifest["version"], "1.10.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1565,34 +1600,12 @@ class PackagingDocsTests(unittest.TestCase):
                 for skill_name in skill_names:
                     self.assertNotIn(f"skills/{skill_name}/", markdown)
 
-    def test_release_pack_includes_split_primitive_docs(self):
-        script = REPO / "scripts" / "build-release-pack.py"
-        with tempfile.TemporaryDirectory() as tmp:
-            out = Path(tmp) / "release"
-            result = subprocess.run(
-                ["python3", str(script), "--out", str(out)],
-                text=True,
-                capture_output=True,
-            )
-            self.assertEqual(result.returncode, 0, result.stderr)
-
-            primitive_doc = Path("docs") / "methodologies" / "primitives" / "whole-elephant-protocol.md"
-            expected_roots = (
-                out / "claude-code",
-                out / "claude-code" / "claude-plugin",
-                out / "codex",
-                out / "codex-plugin" / "mindthus",
-                out / "opencode",
-            )
-            for root in expected_roots:
-                self.assertTrue((root / primitive_doc).exists(), f"{root} missing {primitive_doc}")
-
     def test_release_pack_builder_can_split_plugin_and_skills_packages(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.9.1"
-            skills = tmp_dir / "mindthus-skills-1.9.1"
+            plugins = tmp_dir / "mindthus-plugins-1.10.0"
+            skills = tmp_dir / "mindthus-skills-1.10.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

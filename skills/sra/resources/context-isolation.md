@@ -55,12 +55,31 @@ sufficient, whether a risk is acceptable, or which candidate deserves priority.
 
 ## Version Boundary
 
-All active runtime artifacts use v0.3 identifiers. A prepared v0.2 run cannot be resumed
+Derived runtime artifacts retain v0.3 identifiers. Legacy raw inputs use v0.3; the named
+proportionate extensions use `sra.decision-context-input.v0.4` so older readers reject
+them explicitly. A prepared v0.2 run cannot be resumed
 or repaired under v0.3 because its resource carrier, context boundary, bundle model,
 comparison core, and finalization semantics differ.
 
 Start a new v0.3 run from the source decision context. Historical v0.2 release artifacts
 remain historical evidence; they are not silently rewritten.
+
+## Named Proportionate Extensions
+
+`proportionate-runtime.md` documents the explicit `sra.proportionate.v1` execution policy,
+`sra.completion-criteria.v1` catalog, and `sra.rerank-lineage.v1` draft link. Existing
+v0.3 inputs without these extensions keep the conservative policy and replay shape.
+The policy is part of immutable, versioned raw input and packet hashes. It changes calibration
+selection, not resource invariants or execution authority. Structural Full may be single
+only after an explicit ordinary/reversible assessment; uncertain, consequential or
+contaminated contexts remain dual. Coverage remains separate.
+
+Completion references bind identity, content, candidate scope, window and view packet.
+They replace the free-text completion carrier in that tranche; incompatible carriers
+cannot coexist. Free text keeps conservative comparison. New policy comparisons include
+precise diagnostic paths while retaining the existing conflict-resolution fields.
+Re-ranking creates a new draft from refreshed caller input; the parent decision is a
+reference, never inherited priority or permission. Repair does not migrate inputs.
 
 ## Input Contract
 
@@ -192,6 +211,26 @@ contained in the relevant candidate demand. A candidate's current allocation plu
 next tranche is one cumulative commitment for the decision window and must remain within
 that demand. Ordinal levels and indivisible blocks remain within the same declared
 candidate boundary.
+
+### Dependency Authorization
+
+`depends_on` records hard prerequisites. When the packet contains dependency edges,
+every judgment includes `dependency_resolutions`, one record per edge:
+`dependent_id`, `prerequisite_id`, `status`, `evidence_refs`, and `reason`.
+`status` is `satisfied`, `unmet`, or `unknown`. Satisfied edges cite evidence already
+bound to the prerequisite candidate. Reference checks do not prove semantic completion.
+
+Current allocations and immediately authorized next tranches require satisfied
+prerequisites. Selecting a prerequisite in a bundle is planning, not completion. A
+satisfied prerequisite may receive zero new resources. An unresolved prerequisite can
+be executed first; a successor may instead be conditional on named completion evidence.
+Unresolved cycles cannot define an executable selected path. Satisfied edges stop
+traversal, so completed historical cycles do not create false deadlocks.
+
+No-dependency v0.3 inputs retain their existing shape. Dependency-bearing old judgments
+without resolutions are insufficient for new authorization; prepare a new run from source
+evidence. Repair never adds dependency evidence or rewrites old Agentic judgments.
+This contract does not add a self-issued waiver/permission channel.
 
 ### Evidence
 
@@ -444,6 +483,15 @@ truth. Conflict selects no winner and opens one targeted reconciliation.
 
 The human-readable renderer follows this table. A blocked or infeasible result never says
 that work may start immediately.
+
+## Structural Reception Contract
+
+Every Agentic judgment is checked against the same packet-specific output schema that
+is supplied to its carrier. The bounded `sra_structure.py` interpreter supports the
+keywords used by these schemas and rejects unsupported schema vocabulary. Closed objects,
+required fields, JSON types and variant constraints are checked before domain invariants
+and before any judgment is recorded. It is not a general Draft-07 implementation.
+Workflow final decisions remain deterministic projections of validated judgments.
 
 ## Deterministic Integrity
 
