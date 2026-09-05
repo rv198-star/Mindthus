@@ -298,6 +298,9 @@ def challenge_from_situated(challenge_packet: dict, situated: dict, mapping: dic
     ]
     for bundle in result["bundle_decision"]["bundle_assessments"]:
         bundle["member_ids"] = [original_to_alias[item] for item in bundle["member_ids"]]
+    for resolution in result.get("dependency_resolutions", []):
+        for field in ("dependent_id", "prerequisite_id"):
+            resolution[field] = original_to_alias[resolution[field]]
     return result
 
 
@@ -388,6 +391,124 @@ class SraV03RuntimeContractTests(unittest.TestCase):
         self.assertGreaterEqual(
             bundle_schema["properties"]["bundle_assessments"]["minItems"], 1
         )
+
+    def test_immediate_allocation_requires_dependency_resolution(self):
+        data = input_data(mode="full")
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["allocation_ledger"][0]["posture"] = "stop"
+        self.assertTrue(validate_situated_judgment(judgment, packet))
+
+    def test_dependency_authorization_truth_table(self):
+        for mode in ("lite", "full"):
+            for status, refs, allowed in (("satisfied", ["E-page"], True),
+                                           ("satisfied", [], False),
+                                           ("satisfied", ["E-payment"], False),
+                                           ("unmet", [], False), ("unknown", [], False)):
+                with self.subTest(mode=mode, status=status, refs=refs):
+                    data = input_data(mode=mode)
+                    data["candidates"][1]["depends_on"] = ["page-polish"]
+                    packet = build_packets(data)["situated_packet"]
+                    judgment = situated_judgment(packet)
+                    judgment["allocation_ledger"][0]["posture"] = "stop"
+                    judgment["dependency_resolutions"] = [{
+                        "dependent_id": "payment-validation", "prerequisite_id": "page-polish",
+                        "status": status, "evidence_refs": refs,
+                        "reason": "Explicit assessment of the prerequisite evidence.",
+                    }]
+                    findings = validate_situated_judgment(judgment, packet)
+                    self.assertEqual(not findings, allowed, findings)
+
+    def test_unmet_dependency_allows_predecessor_first_and_conditional_successor(self):
+        data = input_data()
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["dependency_resolutions"] = [{
+            "dependent_id": "payment-validation", "prerequisite_id": "page-polish",
+            "status": "unmet", "evidence_refs": [], "reason": "Prerequisite has not completed.",
+        }]
+        judgment["next_tranche"]["target_id"] = "page-polish"
+        judgment["allocation_ledger"][0]["posture"] = "candidate"
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
+        judgment["next_tranche"]["target_id"] = "payment-validation"
+        judgment["allocation_outcome"] = "conditional"
+        judgment["next_tranche"]["start_condition"] = "Start only after page prerequisite evidence is accepted."
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
+
+    def test_dependency_current_allocation_and_selected_bundle_do_not_imply_completion(self):
+        data = input_data(mode="full")
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["dependency_resolutions"] = [{
+            "dependent_id": "payment-validation", "prerequisite_id": "page-polish",
+            "status": "unknown", "evidence_refs": [], "reason": "No completion evidence.",
+        }]
+        judgment["bundle_decision"]["bundle_assessments"][0]["member_ids"].append("page-polish")
+        judgment["allocation_ledger"][0]["posture"] = "candidate"
+        self.assertTrue(any("immediate allocation" in x for x in validate_situated_judgment(judgment, packet)))
+        judgment["next_tranche"]["target_id"] = "page-polish"
+        judgment["next_tranche"]["resource_allocations"] = [allocation("engineer-time", 0.8)]
+        judgment["allocation_ledger"][1].update(posture="floor", current_allocations=[allocation("engineer-time", 0.1)])
+        self.assertTrue(any("immediate allocation" in x for x in validate_situated_judgment(judgment, packet)))
+
+    def test_multilevel_dependencies_authorize_only_the_ready_frontier(self):
+        data = input_data()
+        prerequisite = copy.deepcopy(data["candidates"][0])
+        prerequisite["candidate_id"] = "readiness-check"
+        data["candidates"].append(prerequisite)
+        data["candidates"][0]["depends_on"] = ["readiness-check"]
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["candidate_assessments"].append(assessment("readiness-check"))
+        judgment["allocation_ledger"].append({"candidate_id": "readiness-check", "posture": "candidate", "current_allocations": [], "reason": "Ready predecessor."})
+        judgment["allocation_ledger"][0]["posture"] = "candidate"
+        judgment["dependency_resolutions"] = [
+            {"dependent_id": a, "prerequisite_id": b, "status": "unmet", "evidence_refs": [], "reason": "Pending predecessor."}
+            for a, b in (("payment-validation", "page-polish"), ("page-polish", "readiness-check"))]
+        for target, allowed in (("payment-validation", False), ("page-polish", False), ("readiness-check", True)):
+            with self.subTest(target=target):
+                judgment["next_tranche"]["target_id"] = target
+                findings = validate_situated_judgment(judgment, packet)
+                self.assertEqual(not findings, allowed, findings)
+        judgment["dependency_resolutions"][1] = copy.deepcopy(judgment["dependency_resolutions"][0])
+        self.assertTrue(any("dependency" in x for x in validate_situated_judgment(judgment, packet)))
+
+    def test_dependency_alias_comparison_and_unmet_cycles(self):
+        from sra_runtime import validate_challenge_judgment
+        data = input_data()
+        data["candidates"][1]["depends_on"] = ["page-polish"]
+        built = build_packets(data)
+        situated = situated_judgment(built["situated_packet"])
+        situated["dependency_resolutions"] = [{
+            "dependent_id": "payment-validation", "prerequisite_id": "page-polish",
+            "status": "satisfied", "evidence_refs": ["E-page"], "reason": "Existing capability is accepted.",
+        }]
+        challenge = challenge_from_situated(built["challenge_packet"], situated, built["challenge_map"])
+        self.assertEqual(validate_challenge_judgment(challenge, built["challenge_packet"]), [])
+        def compare():
+            return compare_views(run_id=data["run_id"], challenge_packet_hash=built["challenge_packet"]["packet_hash"],
+                                 situated_packet_hash=built["situated_packet"]["packet_hash"],
+                                 challenge_judgment=challenge, situated_judgment=situated, challenge_map=built["challenge_map"])
+        self.assertEqual(compare()["status"], "agree")
+        challenge["dependency_resolutions"][0]["status"] = "unknown"
+        self.assertIn("dependency_resolutions", [x["field"] for x in compare()["conflict_fields"]])
+        data["candidates"][0]["depends_on"] = ["payment-validation"]
+        packet = build_packets(data)["situated_packet"]
+        judgment = situated_judgment(packet)
+        judgment["allocation_outcome"] = "conditional"
+        judgment["next_tranche"]["start_condition"] = "After both prerequisites."
+        judgment["dependency_resolutions"] = [
+            {"dependent_id": a, "prerequisite_id": b, "status": "unmet", "evidence_refs": [], "reason": "Pending."}
+            for a, b in (("payment-validation", "page-polish"), ("page-polish", "payment-validation"))]
+        self.assertTrue(any("cycle" in x for x in validate_situated_judgment(judgment, packet)))
+        for r in judgment["dependency_resolutions"]:
+            r["status"] = "satisfied"
+            r["evidence_refs"] = ["E-page" if r["prerequisite_id"] == "page-polish" else "E-payment"]
+        self.assertEqual(validate_situated_judgment(judgment, packet), [])
 
     def test_schema_vocabulary_and_json_type_boundaries(self):
         from sra_structure import validate_structure
