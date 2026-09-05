@@ -2,12 +2,38 @@
 
 ## Unreleased
 
-### SRA：目标对齐与成本适配
+## v1.10.0
 
-- 主线收敛为“保护目标成立的必要投入，再比较有意义投入的风险调整后边际价值”；明确长期、难量化和未知价值不等于零，SRA 比较任务投入而非人的价值。
-- 新增采用 v0.4 输入、由哈希绑定的 `sra.proportionate.v1` 策略：结构复杂度与校准成本分开，明确低后果可逆的 Full 可使用单视图，未知、高后果及污染场景保留双视图；旧 v0.3 输入保持原有策略与重放。
-- 新增 canonical draft intake、只读决策卡、completion-only 条件引用及精确冲突诊断、显式重新分配草稿。草稿不授予权限，条件引用不证明目标正确，重排不继承旧判断或修改父运行。
-- 本次不变更 TPlan、不发版、不声明新的模型效果或 Token ROI；详见 `skills/sra/resources/proportionate-runtime.md`。
+发布 tag：`v1.10.0`
+
+[发布说明](docs/releases/v1.10.0.md)
+
+发布日期：2026-09-05
+
+### SRA Proportionate Allocation
+
+- 主线收敛为“保护目标成立的必要投入，再比较有意义投入的风险调整后边际价值”；长期、难量化和未知价值不等于零，SRA 比较任务投入而非人的价值。
+- 新增 v0.4 输入与 `sra.proportionate.v1`：结构复杂度和校准成本分开，明确低后果、可逆且无污染的 Full 可以单视图，未知、高后果及污染场景保留双视图；旧 v0.3 输入/Run 保持原有策略与重放。
+- 新增 canonical draft intake、checked Decision Card、completion criterion reference、精确冲突诊断与显式 rerank lineage；草稿不授予权限，卡片不是第二事实源，重排不继承旧判断或修改父运行。
+- Single View 只减少不必要的第二次 Agentic 判断，不绕过资源、累计 Demand、依赖、Bundle、ceiling、authority 或 finalization 校验。
+
+### 合同与维护收敛
+
+- Schema 与接收结构合同统一；依赖满足与立即资源授权显式绑定。
+- SRA / TPlan 大脚本按职责拆分，保持公共入口、事务/权限 owner 与运行时指纹边界。
+- 测试生命周期清理只迁移有明确替代 owner 的重复保护，不以数量下降作为目标。
+- 历史 benchmark per-call 材料从日常 HEAD 迁出；固定历史源仍由完整 inventory、immutable recovery ref 与 reference map 可恢复，不做 history rewrite。
+
+### 补充发布包：1.10.0 ROI Beta（GPT/Sol）
+
+- Stable release 按默认规则同步提供 `v1.10.0-roi-beta` supplemental experimental asset。
+- Beta 从精确 `v1.10.0` Stable shared core 组装并继承本版 SRA 能力；ROI runtime delta 继续限定为 SRA-compatible ROI Thin Core、历史 ROI.2 3L5S Anti-Spiral correction、独立 identity / namespace 与 diagnostic 坐标。
+- Beta-specific 自然唤醒率、相对胜率、真实任务收益和 Token ROI 未重新测量，因此不作新增模型质量或商业效果声明。
+
+### 兼容性、验证与发布资产
+
+- Stable package / plugin manifest 使用 `1.10.0`；TPlan runtime generation 继续保持 `1.5.4` / `mindthus-v1.5.4`。
+- `v1.10.0` GitHub Release 提供 `mindthus-plugins-1.10.0.tar.gz`、`mindthus-skills-1.10.0.tar.gz`、`mindthus-beta-1.10.0-roi-beta.tar.gz` 与覆盖三份归档的 `SHA256SUMS`。
 
 ## v1.9.1
 
