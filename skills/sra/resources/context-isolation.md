@@ -55,12 +55,31 @@ sufficient, whether a risk is acceptable, or which candidate deserves priority.
 
 ## Version Boundary
 
-All active runtime artifacts use v0.3 identifiers. A prepared v0.2 run cannot be resumed
+Derived runtime artifacts retain v0.3 identifiers. Legacy raw inputs use v0.3; the named
+proportionate extensions use `sra.decision-context-input.v0.4` so older readers reject
+them explicitly. A prepared v0.2 run cannot be resumed
 or repaired under v0.3 because its resource carrier, context boundary, bundle model,
 comparison core, and finalization semantics differ.
 
 Start a new v0.3 run from the source decision context. Historical v0.2 release artifacts
 remain historical evidence; they are not silently rewritten.
+
+## Named Proportionate Extensions
+
+`proportionate-runtime.md` documents the explicit `sra.proportionate.v1` execution policy,
+`sra.completion-criteria.v1` catalog, and `sra.rerank-lineage.v1` draft link. Existing
+v0.3 inputs without these extensions keep the conservative policy and replay shape.
+The policy is part of immutable, versioned raw input and packet hashes. It changes calibration
+selection, not resource invariants or execution authority. Structural Full may be single
+only after an explicit ordinary/reversible assessment; uncertain, consequential or
+contaminated contexts remain dual. Coverage remains separate.
+
+Completion references bind identity, content, candidate scope, window and view packet.
+They replace the free-text completion carrier in that tranche; incompatible carriers
+cannot coexist. Free text keeps conservative comparison. New policy comparisons include
+precise diagnostic paths while retaining the existing conflict-resolution fields.
+Re-ranking creates a new draft from refreshed caller input; the parent decision is a
+reference, never inherited priority or permission. Repair does not migrate inputs.
 
 ## Input Contract
 
