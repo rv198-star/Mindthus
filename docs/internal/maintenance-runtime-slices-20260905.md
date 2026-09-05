@@ -24,7 +24,25 @@ of every #171 checkbox: packet/input/schema generation/carrier and larger integr
 organization remain separate follow-on slices. No same-wording conflict behavior was
 changed. Code size alone is not the acceptance criterion.
 
-## TPlan
+## TPlan slice 1 (#172)
 
-Not yet changed in this record. Pure extraction will precede any transaction/authority
-move; new implementation files must be added to the runtime manifest and fingerprints.
+- `tplan_identity.py` owns manifest loading, fingerprinting and provenance inspection.
+- `tplan_errors.py` owns the single TplanError class, directly re-exported by the runtime.
+- `execution_time_metrics.py` owns pure timestamp conversion, interval union/clipping,
+  elapsed reconciliation and token subset counting.
+- Mission reads, journal recovery, locks, authority receipts and mutation orchestration
+  remain in their original owner. No runtime fingerprint compatibility rule is relaxed.
+
+One-time AST comparison: nine identity functions, the error class and nine metric
+functions are identical to their original definitions. `runtime_skill_root` now defaults
+to the new module's file in the same scripts directory, producing the same skill root.
+The runtime manifest includes all three new modules in required_scripts and fingerprint_files.
+A regression deletes and modifies each module in a temporary skill copy, verifying missing
+modules block and modifications alter build_hash; restored bytes recover the exact hash.
+The original public import still refers to the same function/error objects.
+
+Focused TPlan suite: 364 tests passed. Existing transactional late-failure and recovery
+fault-injection tests remained unchanged and actually executed. Core definition lines moved:
+352 from tplan_runtime (8 import lines added), 109 from execution_cost_tree (7 added).
+This closes the first slice only. SVG/Markdown presentation and additional core breakup,
+followed by transaction-owner extraction, remain open in #172.

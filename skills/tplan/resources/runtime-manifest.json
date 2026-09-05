@@ -25,6 +25,9 @@
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",
+    "scripts/tplan_errors.py",
+    "scripts/tplan_identity.py",
+    "scripts/execution_time_metrics.py",
     "scripts/execution_cost_tree.py",
     "scripts/codex_telemetry_activation.py",
     "scripts/codex_telemetry_adapter.py",
@@ -36,6 +39,9 @@
   "fingerprint_files": [
     "resources/runtime-manifest.json",
     "scripts/tplan_runtime.py",
+    "scripts/tplan_errors.py",
+    "scripts/tplan_identity.py",
+    "scripts/execution_time_metrics.py",
     "scripts/execution_cost_tree.py",
     "scripts/codex_telemetry_activation.py",
     "scripts/codex_telemetry_adapter.py",
