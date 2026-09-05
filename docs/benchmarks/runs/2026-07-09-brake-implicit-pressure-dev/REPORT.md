@@ -1,5 +1,9 @@
 # Brake Implicit-Trigger And Pressure-Contract Dev Diagnostic
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: diagnostic dev pass only. This does not close the brake pathology and does
 not replace the next external shadow retest.
 

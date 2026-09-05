@@ -1,5 +1,9 @@
 # Mindthus V5 Targeted Validation Diagnostic
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: diagnostic run completed; V5 certification candidate deferred.
 
 This run followed the V5 protocol order for targeted evidence: hot-update the current

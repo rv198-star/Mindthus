@@ -1,5 +1,9 @@
 # V4 Human Review Packet
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Purpose: guide a narrow human adjudication pass over the V4 diagnostic run. This is not
 a second full benchmark. It targets cases where a human decision can change the meaning
 of the result: true product failure, no-load failure, rubric issue, or runner limitation.
