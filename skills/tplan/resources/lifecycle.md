@@ -5,6 +5,21 @@
 A Mission is `completed` only when every success-critical Task node is completed and
 Mission acceptance evidence is satisfied.
 
+Each new transition into Mission `completed` checks these prerequisites inside the
+existing transaction lock, before the journal is written. Every node marked
+`success-critical` must be completed. For each declared Mission acceptance ID, the
+latest mechanically qualified observation in evidence-stream order must be
+`acceptance_passed` or a complete compatible legacy `acceptance`; a later
+`acceptance_failed` blocks closure until a later qualified positive observation.
+Existing evidence and same-transaction prepared evidence form one snapshot. Duplicate
+IDs and invalid/wrong-scope observations cannot supply qualified acceptance.
+
+The gate checks declared references and pass/fail observations, not deliverable quality
+or reviewer correctness. Ordinary Task completion stays lightweight and does not itself
+satisfy Mission acceptance. Historical completed records remain readable; new closure
+checks do not backfill or certify their past acceptance. Recovery preserves frozen
+pending transaction contents rather than applying new semantic judgments to history.
+
 If remaining tasks are not worth executing, the Mission is closed under a non-completion
 terminal state.
 

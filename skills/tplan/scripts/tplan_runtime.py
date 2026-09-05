@@ -3294,6 +3294,46 @@ def _validate_trace_evidence_references(
     ]
 
 
+def _mission_completion_findings(
+    mission: dict[str, Any], events: list[dict[str, Any]]
+) -> list[str]:
+    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+    errors: list[str] = []
+    incomplete = sorted(
+        str(task["id"]) for task in mission["tasks"]
+        if task.get("role") == "success-critical" and task.get("status") != "completed"
+    )
+    if incomplete:
+        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
+    counts = Counter(
+        event.get("id") for event in events
+        if isinstance(event, dict) and isinstance(event.get("id"), str)
+    )
+    latest: dict[str, str] = {}
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        kind = event.get("event_type")
+        if not isinstance(kind, str) or kind not in {"acceptance", "acceptance_passed", "acceptance_failed"}:
+            continue
+        if validate_evidence_event(mission, event, compatibility=True, internal=True):
+            continue
+        if counts[event["id"]] != 1:
+            continue  # Ambiguous historical IDs cannot provide a qualified observation.
+        for acceptance_id in event["payload"]["acceptance_ids"]:
+            latest[acceptance_id] = kind
+    missing = sorted(
+        acceptance_id for acceptance_id in acceptance_ids(mission)
+        if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
+    )
+    if missing:
+        errors.append(
+            "Mission completion requires positive qualified acceptance: "
+            + ", ".join(f"{item} ({latest.get(item, 'missing')})" for item in missing)
+        )
+    return errors
+
+
 def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     event = dict(event)
     event.setdefault("id", _next_event_id(mission_dir))
@@ -4028,6 +4068,10 @@ def _commit_mission_state_unlocked(
     reference_errors = _validate_trace_evidence_references(records, evidence_snapshot)
     if reference_errors:
         raise TplanError("; ".join(reference_errors))
+    if before["mission"]["status"] != "completed" and after["mission"]["status"] == "completed":
+        completion_errors = _mission_completion_findings(after, evidence_snapshot)
+        if completion_errors:
+            raise TplanError("; ".join(completion_errors))
 
     paths = mission_paths(mission_dir)
     previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""
