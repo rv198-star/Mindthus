@@ -235,6 +235,7 @@ def reconstruct_runtime_expectation(
                 challenge_judgment=challenge,
                 situated_judgment=situated,
                 challenge_map=rebuilt["challenge_map"],
+                detailed="execution_policy" in rebuilt["base_packet"],
             )
             statuses["comparison"] = comparison["status"]
             if comparison["status"] == "agree":

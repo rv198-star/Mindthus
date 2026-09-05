@@ -13,6 +13,8 @@ from typing import Any, Iterable
 
 from sra_domain import *  # noqa: F403
 from sra_structure import validate_structure
+from sra_policy import default_view_plan, validate_execution_policy
+from sra_criteria import validate_criteria_input, tranche_schema, validate_completion_reference
 from sra_serialization import canonical_json, digest_data
 from sra_io import *  # noqa: F403
 from sra_views import normalized_decision_core, compare_views
@@ -452,9 +454,7 @@ def _validate_override_governance(
     if override_is_present(data, "mode") and not mode_downgrade:  # noqa: F405
         findings.append("overrides.mode is allowed only for a Full-to-Lite downgrade")
 
-    default_view = (
-        "dual_view" if mode == "full" or data.get("contamination_signals") else "situated_only"
-    )
+    default_view = default_view_plan(data, mode)
     view_downgrade = data.get("view_plan") == "situated_only" and default_view == "dual_view"
     if view_downgrade and not override_is_present(data, "view_plan"):  # noqa: F405
         findings.append(
@@ -547,8 +547,23 @@ def validate_context_input(data: Any) -> list[str]:
     findings: list[str] = []
     if not isinstance(data, dict):
         return ["SRA decision-context input must be an object"]
-    if data.get("schema_version") != INPUT_SCHEMA:  # noqa: F405
-        findings.append(f"schema_version must be {INPUT_SCHEMA}")
+    policy_findings = validate_execution_policy(data)
+    if policy_findings:
+        return policy_findings
+    if "rerank_lineage" in data:
+        lineage_findings = validate_structure(data["rerank_lineage"], rerank_lineage_schema(), "rerank_lineage")
+        if lineage_findings:
+            return lineage_findings
+        if data["rerank_lineage"]["parent_run_id"] == data.get("run_id"):
+            return ["rerank_lineage must reference a different parent run"]
+    input_version = data.get("schema_version")
+    if input_version not in {INPUT_SCHEMA, EXTENDED_INPUT_SCHEMA}:
+        findings.append(f"schema_version must be {INPUT_SCHEMA} or {EXTENDED_INPUT_SCHEMA}")
+    extensions = {"execution_policy", "completion_criteria", "rerank_lineage"} & set(data)
+    if extensions and input_version != EXTENDED_INPUT_SCHEMA:
+        findings.append(f"named SRA extensions require {EXTENDED_INPUT_SCHEMA}; prepare a new run")
+    if input_version == EXTENDED_INPUT_SCHEMA and "execution_policy" not in data:
+        findings.append("v0.4 input requires an explicit execution_policy")
     run_id = data.get("run_id")
     if not _is_non_empty_string(run_id) or not RUN_ID_RE.fullmatch(str(run_id)):
         findings.append("run_id must use 3-64 letters, numbers, '.', '_', or '-'")
@@ -575,6 +590,7 @@ def validate_context_input(data: Any) -> list[str]:
 
     _, resource_pools = _validate_resource_pools(data.get("allocation_frame"), findings)
     candidate_ids, candidates_by_id = _validate_candidates(data, resource_pools, findings)
+    findings.extend(validate_criteria_input(data))
     _validate_decision_question(data.get("decision_question"), candidate_ids, findings)
     evidence_ids, assumption_ids = _validate_evidence_and_assumptions(data, findings)
     context_ids, authority_by_id = _validate_context_items(
@@ -1009,6 +1025,7 @@ def _decision_output_schema(
         "stage": {"type": "string", "const": stage},
         "packet_hash": {"type": "string", "const": packet["packet_hash"]},
     })
+    props["next_tranche"] = tranche_schema(props["next_tranche"], packet)
     if dependency_edges(packet, id_field):
         required.append("dependency_resolutions")
         props["dependency_resolutions"] = dependency_resolution_schema(packet, id_field)
@@ -1582,6 +1599,7 @@ def _validate_decision_judgment(
         )
 
     findings.extend(validate_dependencies(judgment, packet, id_field))
+    findings.extend(validate_completion_reference(judgment, packet, id_field))
 
     selected_bundle_members = _validate_bundle_decision(
         judgment,
@@ -1695,7 +1713,8 @@ def _validate_decision_judgment(
                 resource_pools=resource_pools,
                 findings=findings,
             )  # noqa: F405
-        for field in ("window", "completion_signal", "reason"):
+        text_fields = ("window", "reason") if "completion_criterion_ref" in next_tranche else ("window", "completion_signal", "reason")
+        for field in text_fields:
             if not _is_non_empty_string(next_tranche.get(field)):
                 findings.append(f"next_tranche.{field} must be a non-empty string")
         start_condition = next_tranche.get("start_condition")

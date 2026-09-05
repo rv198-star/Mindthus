@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from sra_domain import *  # noqa: F403
+from sra_policy import policy_prompt
 from sra_runtime_core import (
     RECEIPT_BOUNDARY,
     STATE_CONSIDERATION_CODING,
@@ -58,7 +59,7 @@ replenishment tranche. This is a calibration view, not automatic final authority
 blocked when the packet is insufficient. Do not mutate files, tasks, Mission state,
 memory, or external systems.
 
-Return JSON matching `{CHALLENGE_JUDGMENT_SCHEMA}`.
+{policy_prompt(packet)}Return JSON matching `{CHALLENGE_JUDGMENT_SCHEMA}`.
 
 Challenge packet:
 ```json
@@ -84,7 +85,7 @@ files, tasks, Mission state, memory, or external systems.
 
 {STATE_CONSIDERATION_CODING}
 
-Return JSON matching `{SITUATED_JUDGMENT_SCHEMA}`.
+{policy_prompt(packet)}Return JSON matching `{SITUATED_JUDGMENT_SCHEMA}`.
 
 Situated packet:
 ```json
@@ -109,7 +110,7 @@ mutate files, tasks, Mission state, memory, or external systems.
 
 {STATE_CONSIDERATION_CODING}
 
-Return JSON matching `{RECONCILIATION_JUDGMENT_SCHEMA}`.
+{policy_prompt(packet)}Return JSON matching `{RECONCILIATION_JUDGMENT_SCHEMA}`.
 
 Reconciliation packet:
 ```json

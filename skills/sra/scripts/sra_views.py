@@ -4,6 +4,7 @@ from typing import Any
 from sra_domain import COMPARISON_FIELDS, COMPARISON_SCHEMA, canonical_bundle_key, normalize_resource_allocations
 from sra_dependencies import normalized_dependency_resolutions
 from sra_serialization import digest_data
+from sra_criteria import normalized_reference, differing_paths
 
 
 def _mapped_candidate(value: Any, mapping: dict[str, str]) -> Any:
@@ -129,6 +130,8 @@ def normalized_decision_core(
             ),
             "window": next_tranche.get("window"),
             "completion_signal": next_tranche.get("completion_signal"),
+            **({"completion_criterion_ref": normalized_reference(next_tranche["completion_criterion_ref"])}
+               if "completion_criterion_ref" in next_tranche else {}),
             "start_condition": next_tranche.get("start_condition"),
         },
         "investment_ceiling": normalize_resource_allocations(
@@ -157,6 +160,7 @@ def compare_views(
     challenge_judgment: dict[str, Any],
     situated_judgment: dict[str, Any],
     challenge_map: dict[str, str],
+    detailed: bool = False,
 ) -> dict[str, Any]:
     challenge_core = normalized_decision_core(
         challenge_judgment,
@@ -191,6 +195,8 @@ def compare_views(
             "corroboration, not proof; conflict chooses no winner."
         ),
     }
+    if detailed or any("completion_criterion_ref" in core["next_tranche"] for core in (challenge_core, situated_core)):
+        base["conflict_paths"] = differing_paths(challenge_core, situated_core)
     result = dict(base)
     result["comparison_hash"] = digest_data(base)
     return result
