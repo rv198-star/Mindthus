@@ -131,13 +131,23 @@ class RuntimeProvenanceTests(unittest.TestCase):
     def test_extracted_implementations_are_required_and_fingerprinted(self):
         from tplan_errors import TplanError as SharedError
         from tplan_identity import runtime_fingerprint as identity_fingerprint
+        from tplan_task_contract import normalize_task as task_normalizer
+        from tplan_runtime import normalize_task as public_task_normalizer
         self.assertIs(TplanError, SharedError)
         self.assertIs(runtime_fingerprint, identity_fingerprint)
+        self.assertIs(public_task_normalizer, task_normalizer)
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "skill"
             shutil.copytree(SKILL, root, ignore=shutil.ignore_patterns("__pycache__"))
             baseline = runtime_fingerprint(root)["build_hash"]
-            for name in ("tplan_errors.py", "tplan_identity.py", "execution_time_metrics.py"):
+            for name in (
+                "tplan_errors.py",
+                "tplan_identity.py",
+                "tplan_task_contract.py",
+                "execution_time_metrics.py",
+                "execution_svg_renderer.py",
+                "execution_markdown_renderer.py",
+            ):
                 with self.subTest(module=name):
                     path = root / "scripts" / name
                     content = path.read_bytes()
