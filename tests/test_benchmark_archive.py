@@ -8,7 +8,7 @@ import unittest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from benchmark_archive import git, inventory, safe_path, verify_manifest
+from benchmark_archive import generated_index_plan, git, inventory, safe_path, verify_manifest
 
 
 class BenchmarkArchiveTests(unittest.TestCase):
@@ -53,6 +53,19 @@ class BenchmarkArchiveTests(unittest.TestCase):
                 mutate(manifest)
                 with self.assertRaises(ValueError):
                     verify_manifest(self.repo, manifest)
+
+    def test_generated_index_plan_names_only_remaining_migrate_paths(self):
+        plan = generated_index_plan(self.repo, self.source, self.scope)
+        self.assertEqual(plan["status"], "ready_to_migrate")
+        self.assertEqual(plan["remaining_migrate_files"], 1)
+        self.assertEqual(plan["remove_paths"], [self.scope + "/events/case.jsonl"])
+        self.assertEqual(plan["missing_keep_paths"], [])
+        self.assertEqual(plan["unexpected_tracked_paths"], [])
+        git(self.repo, "rm", "--cached", "--", self.scope + "/events/case.jsonl")
+        complete = generated_index_plan(self.repo, self.source, self.scope)
+        self.assertEqual(complete["status"], "complete")
+        self.assertEqual(complete["remaining_migrate_files"], 0)
+        self.assertEqual(complete["remove_paths"], [])
 
     def test_index_must_match_reviewed_migration_exactly(self):
         with self.assertRaisesRegex(ValueError, "index differs"):

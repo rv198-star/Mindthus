@@ -80,6 +80,42 @@ def inventory(repo: Path, source: str, scope: str = ROOT.rstrip("/")) -> list[di
     return rows
 
 
+def generated_index_plan(repo: Path, source: str, scope: str) -> dict[str, Any]:
+    rows = inventory(repo, source, scope)
+    source_by_path = {row["path"]: row for row in rows}
+    indexed = {
+        path.decode("utf-8")
+        for path in git(repo, "ls-files", "-z", "--", safe_path(scope)).split(b"\0")
+        if path
+    }
+    keep = {path for path, row in source_by_path.items() if row["disposition"] == "keep"}
+    migrate = {
+        path for path, row in source_by_path.items() if row["disposition"] == "candidate_migrate"
+    }
+    remove_paths = sorted(indexed & migrate)
+    missing_keep = sorted(keep - indexed)
+    unexpected = sorted(indexed - set(source_by_path))
+    return {
+        "status": (
+            "complete"
+            if not remove_paths and not missing_keep and not unexpected
+            else "ready_to_migrate"
+            if not missing_keep and not unexpected
+            else "blocked"
+        ),
+        "source_commit": source,
+        "scope": safe_path(scope),
+        "source_files": len(rows),
+        "keep_files": len(keep),
+        "source_migrate_files": len(migrate),
+        "remaining_migrate_files": len(remove_paths),
+        "remaining_migrate_bytes": sum(source_by_path[path]["bytes"] for path in remove_paths),
+        "remove_paths": remove_paths,
+        "missing_keep_paths": missing_keep,
+        "unexpected_tracked_paths": unexpected,
+    }
+
+
 def verify_manifest(repo: Path, manifest: dict[str, Any], *, check_index: bool = False) -> dict[str, Any]:
     source, scope = manifest["source_commit"], safe_path(manifest["scope"])
     actual = {r["path"]: r for r in inventory(repo, source, scope)}
@@ -148,11 +184,14 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--summary", action="store_true")
     parser.add_argument("--check-index", action="store_true")
+    parser.add_argument("--index-plan", action="store_true")
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     try:
         if args.manifest:
             result = verify_manifest(repo, json.loads(args.manifest.read_text(encoding="utf-8")), check_index=args.check_index)
+        elif args.index_plan:
+            result = generated_index_plan(repo, args.source or "", args.scope)
         else:
             rows = inventory(repo, args.source or "", args.scope)
             if args.summary:
