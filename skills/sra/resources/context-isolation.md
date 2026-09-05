@@ -445,6 +445,15 @@ truth. Conflict selects no winner and opens one targeted reconciliation.
 The human-readable renderer follows this table. A blocked or infeasible result never says
 that work may start immediately.
 
+## Structural Reception Contract
+
+Every Agentic judgment is checked against the same packet-specific output schema that
+is supplied to its carrier. The bounded `sra_structure.py` interpreter supports the
+keywords used by these schemas and rejects unsupported schema vocabulary. Closed objects,
+required fields, JSON types and variant constraints are checked before domain invariants
+and before any judgment is recorded. It is not a general Draft-07 implementation.
+Workflow final decisions remain deterministic projections of validated judgments.
+
 ## Deterministic Integrity
 
 `run.json` is a cache, not independent authority. `check_sra_run.py` reconstructs from:

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from sra_domain import *  # noqa: F403
+from sra_structure import validate_structure
 
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$")
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$")
@@ -1610,6 +1611,9 @@ def validate_coverage_judgment(
     findings: list[str] = []
     if not isinstance(judgment, dict):
         return ["coverage judgment must be an object"]
+    structural = validate_structure(judgment, coverage_output_schema(packet), "coverage_judgment")
+    if structural:
+        return structural
     if judgment.get("schema_version") != COVERAGE_JUDGMENT_SCHEMA:  # noqa: F405
         findings.append(f"schema_version must be {COVERAGE_JUDGMENT_SCHEMA}")
     if judgment.get("stage") != "coverage":
@@ -2019,6 +2023,17 @@ def _validate_decision_judgment(
     findings: list[str] = []
     if not isinstance(judgment, dict):
         return [f"{stage} judgment must be an object"]
+    structural = validate_structure(
+        judgment,
+        _decision_output_schema(
+            packet=packet, title=f"SRA {stage} judgment", schema_version=schema_version,
+            stage=stage, id_field=id_field, outcomes=allowed_outcomes,
+            require_state=require_state, require_conflict_resolutions=stage == "reconciliation",
+        ),
+        f"{stage}_judgment",
+    )
+    if structural:
+        return structural
     if judgment.get("schema_version") != schema_version:
         findings.append(f"schema_version must be {schema_version}")
     if judgment.get("stage") != stage:
@@ -2491,7 +2506,7 @@ def validate_reconciliation_judgment(
         allowed_outcomes=RECONCILIATION_OUTCOMES,  # noqa: F405
         require_state=True,
     )
-    if not isinstance(judgment, dict):
+    if findings or not isinstance(judgment, dict):
         return findings
     conflict_fields = {item["field"] for item in packet.get("conflict_fields", [])}
     resolutions = judgment.get("conflict_resolutions")

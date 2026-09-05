@@ -389,6 +389,53 @@ class SraV03RuntimeContractTests(unittest.TestCase):
             bundle_schema["properties"]["bundle_assessments"]["minItems"], 1
         )
 
+    def test_schema_vocabulary_and_json_type_boundaries(self):
+        from sra_structure import validate_structure
+        probes = [
+            (True, {"type": "number"}),
+            (True, {"enum": [1]}),
+            (float("nan"), {"type": "number"}),
+            (float("inf"), {"type": "number"}),
+            ({}, {"type": "object", "properties": {"unused": {"unsupportedKeyword": True}}}),
+            ([], {"type": ["array", "null"]}),
+            ("x", {"oneOf": [{"type": "string"}, {"type": "string"}]}),
+            ([1, 1.0], {"type": "array", "uniqueItems": True}),
+        ]
+        for value, schema in probes:
+            with self.subTest(value=value, schema=schema):
+                self.assertTrue(validate_structure(value, schema))
+        self.assertEqual(validate_structure([True, 1], {"type": "array", "uniqueItems": True}), [])
+        self.assertEqual(validate_structure(1.0, {"type": "integer"}), [])
+
+    def test_closed_schema_rejects_unknown_fields_at_each_object_boundary(self):
+        packet = build_packets(input_data(mode="full"))["situated_packet"]
+        paths = [(), ("allocation_ledger", 0), ("candidate_assessments", 0),
+                 ("next_tranche",), ("reserve",), ("bundle_decision",),
+                 ("bundle_decision", "bundle_assessments", 0),
+                 ("next_tranche", "resource_allocations", 0, "quantity")]
+        for path in paths:
+            with self.subTest(path=path):
+                judgment = situated_judgment(packet)
+                target = judgment
+                for key in path:
+                    target = target[key]
+                target["unrecognized_authorization_override"] = True
+                findings = validate_situated_judgment(judgment, packet)
+                self.assertTrue(any("unrecognized_authorization_override" in x for x in findings), findings)
+
+    def test_closed_schema_rejects_missing_and_malformed_nested_fields(self):
+        packet = build_packets(input_data())["situated_packet"]
+        for field in ("evidence_refs", "assumption_refs", "missing_information"):
+            with self.subTest(missing=field):
+                judgment = situated_judgment(packet)
+                del judgment[field]
+                self.assertTrue(validate_situated_judgment(judgment, packet))
+        for value in (None, "not-an-object", [], True):
+            with self.subTest(tranche=value):
+                judgment = situated_judgment(packet)
+                judgment["next_tranche"] = value
+                self.assertTrue(validate_situated_judgment(judgment, packet))
+
     def test_valid_full_bundle_judgment_passes(self):
         packet = build_packets(input_data(mode="full"))["situated_packet"]
         self.assertEqual(validate_situated_judgment(situated_judgment(packet), packet), [])
