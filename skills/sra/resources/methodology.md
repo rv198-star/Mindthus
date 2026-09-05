@@ -22,8 +22,11 @@ SRA does more than rank a list. It can:
 
 Short rule:
 
-> 先排除不可行，再保护达标必要项；方向、依赖、瓶颈和窗口决定先后；
-> 组合价值决定本轮投哪套；边际价值决定下一份资源投哪里。
+> 以足够低的判断成本，先保护目标成立所必需的投入，
+> 再把下一份资源分给当前风险调整后边际价值最高的用途。
+
+“先生存、再图强” preserves the user's actual target, protected constraints and time
+horizon. It does not redefine success as bare survival or compare the worth of people.
 
 Execution shorthand:
 
@@ -62,18 +65,21 @@ SRA answers:
 > minimum needed to preserve operation or optionality, and which work is deferred or
 > stopped?
 
-The judgment is governed by this order:
+The mainline has three moves:
 
-1. hard gates and authority;
-2. target-reaching feasibility;
-3. threshold necessity;
-4. direction, dependency, bottlenecks, and opportunity windows;
-5. risk-adjusted value among feasible bundles;
-6. marginal value of the next meaningful resource tranche;
-7. option value of reserve capacity.
+1. Protect the minimum sufficient support for the real target and non-negotiable risk,
+   authority and stakeholder constraints. Check feasibility and dependencies.
+2. Compare risk-adjusted bundle value and the marginal value of complete useful tranches
+   over the declared horizon. Direction tests, bottlenecks, windows and information are
+   reasons a tranche may be valuable, not categories with automatic precedence.
+3. Fund worthwhile additions; retain justified maintenance or reserve, defer or stop the
+   rest, and identify the changes that would reopen this allocation.
 
-This order prevents a high-looking ROI from deleting required work, while also
-preventing the label `necessary` from becoming a claim on unlimited resources.
+A high-looking ROI cannot delete required work, and `necessary` is not a claim on
+unlimited resources. Unknown, qualitative and delayed benefits are not zero. Maintenance,
+learning, care, sustainable capacity and optionality remain visible where they serve the
+chosen goal. Protected safety, dignity and commitments constrain the feasible set before
+value comparison; this is work allocation, not a performance ranking of people.
 
 ## Entry Outcomes
 
@@ -138,8 +144,12 @@ Blocked should request only the minimum missing input that can change the alloca
 
 SRA itself consumes resources.
 
-> Use a reasoning depth whose cost is lower than the plausible loss from a wrong
-> allocation.
+> Spend on analysis only while its expected incremental benefit can repay its cost,
+> bounded by the plausible avoidable loss from a wrong allocation.
+
+Action duration alone is not a risk measure: an irreversible seconds-long operation may
+need substantial review. Conversely, a long reversible task with an obvious next step
+may need almost none. Do not manufacture numbers for this cost check.
 
 A reversible ten-minute choice should remain direct or Lite. A Sprint allocation, a
 cash-runway decision, or an irreversible construction path may justify Full.
@@ -184,8 +194,10 @@ Workflow owns deterministic structure and consequences. Evidence constrains clai
 
 View plans:
 
-- `situated_only`: ordinary reversible Lite;
-- `dual_view`: contaminated Lite and Full, with mutually hidden challenge and situated
+- `situated_only`: ordinary reversible Lite under the legacy policy; the named proportionate
+  policy also admits structural Full after explicit ordinary/reversible assessment;
+- `dual_view`: legacy Full, or consequential, uncertain or contaminated proportionate
+  judgments, with mutually hidden challenge and situated
   judgments;
 - optional coverage review checks packet readiness but cannot choose allocation.
 
@@ -268,7 +280,11 @@ whether candidates can share a comparison surface.
 Candidate granularity must remain stable. Splitting one candidate into five subtasks
 must not increase its allocation claim merely because it occupies more rows.
 
-## Priority Order
+## Priority Order — Full Analysis Detail
+
+These are dependent reasoning questions expanding the three-move mainline, not seven
+fixed priority classes. A direction or bottleneck label earns no automatic preference
+once necessities are covered. Dependencies may determine physical execution order.
 
 ### 1. Hard Gate
 
@@ -306,7 +322,9 @@ Small actions may deserve the first resource tranche when they:
 - prevent an irreversible loss;
 - protect a closing opportunity window.
 
-Task size is not priority.
+Task size is not priority. Compare these actions by their consequences and opportunity
+cost against other feasible uses; neither information gain nor a deadline guarantees a
+higher claim on resources.
 
 ### 5. Risk-Adjusted Bundle Value
 
@@ -512,7 +530,11 @@ Defer/stop: displaced work
 Rerank trigger: evidence, resource, risk, threshold, or window change
 ```
 
-Ordinary user-facing output should fit in one paragraph or a short block.
+Ordinary user-facing output should fit in one paragraph or a short block. A conversational
+Lite recommendation can expose the floor, next useful commitment and rerank trigger
+without a prepared runtime, numeric scoring table or audit ceremony. It remains advice,
+not a checked authorization artifact. Controlled allocations use the canonical runtime;
+draft intake generates structural defaults and keeps missing semantics explicit.
 
 ### Lite Example: Release Threshold Versus Polish
 

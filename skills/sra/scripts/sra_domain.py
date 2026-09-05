@@ -8,7 +8,10 @@ from datetime import datetime, timezone
 import math
 from typing import Any, Iterable
 
+from sra_policy import default_view_plan
+
 INPUT_SCHEMA = "sra.decision-context-input.v0.3"
+EXTENDED_INPUT_SCHEMA = "sra.decision-context-input.v0.4"
 RUN_SCHEMA = "sra.context-calibrated-run.v0.3"
 ADMISSION_SCHEMA = "sra.context-admission.v0.3"
 BASE_PACKET_SCHEMA = "sra.decision-base-packet.v0.3"
@@ -26,6 +29,18 @@ CHECK_REPORT_SCHEMA = "sra.run-check.v0.3"
 TRACE_SCHEMA = "sra.runtime-event.v0.3"
 WORKFLOW_BLOCKED_SCHEMA = "sra.workflow-blocked-decision.v0.3"
 FIDELITY_SCHEMA = "sra-fidelity-v0.2"
+RERANK_LINEAGE_SCHEMA = "sra.rerank-lineage.v1"
+
+
+def rerank_lineage_schema() -> dict[str, Any]:
+    properties = {
+        "schema_version": {"type": "string", "const": RERANK_LINEAGE_SCHEMA},
+        "parent_run_id": {"type": "string", "minLength": 3},
+        "parent_raw_input_hash": {"type": "string", "pattern": r"^sha256:[0-9a-f]{64}$"},
+        "parent_decision_hash": {"type": "string", "pattern": r"^sha256:[0-9a-f]{64}$"},
+        "reason": {"type": "string", "minLength": 1},
+    }
+    return {"type": "object", "additionalProperties": False, "required": list(properties), "properties": properties}
 
 MODES = {"auto", "lite", "full"}
 VIEW_PLANS = {"auto", "situated_only", "dual_view"}
@@ -820,9 +835,7 @@ def selected_mode(data: dict[str, Any]) -> str:
 
 def selected_view_plan(data: dict[str, Any], mode: str) -> tuple[str, list[str]]:
     requested = str(data.get("view_plan", "auto"))
-    default = (
-        "dual_view" if mode == "full" or data.get("contamination_signals") else "situated_only"
-    )
+    default = default_view_plan(data, mode)
     plan = requested if requested in {"situated_only", "dual_view"} else default
     warnings: list[str] = []
     if plan != default:
