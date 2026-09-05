@@ -1,0 +1,24 @@
+{
+  "schema_version": "tplan.case-pulse-view.v1",
+  "snapshot_boundary": "read_outcome_attribution_snapshot",
+  "official_mission_pulse": false,
+  "script_verdict": "shape_only",
+  "agentic_judgment_required": true,
+  "signals": [
+    "evidence:acceptance_failed"
+  ],
+  "scope": "mission",
+  "next_gate": "review_blocker",
+  "rationale": "Latest bounded review signal is evidence event acceptance_failed.",
+  "gate_owner": "agentic_review",
+  "winning_candidate": {
+    "signal": "evidence:acceptance_failed",
+    "priority_class": "bounded_snapshot_signal",
+    "candidate_next_gate": "review_blocker",
+    "source_ids": [
+      "E8d74e477"
+    ]
+  },
+  "validation_finding_count": 0,
+  "pulse_shape_finding_count": 0
+}

@@ -32,3 +32,16 @@ real or evaluation records accumulate.
 
 For product validation, follow `docs/real-use-validation.md`: prefer naturally occurring
 work, do not invent scores, and do not open an optimization issue from one mild event.
+
+## Reviewed incident evidence
+
+[Slidethus VQ execution overrun](cases/slidethus-vq-execution-overrun-20260905/README.md)
+is an owner-approved bounded real-use incident. Its `admission.json` carries the stable
+record ID, observation time, retrospective collection mode, consent and inclusion
+assessment. Original packet files remain byte-preserved; current synthetic code probes
+are separate evidence and are not additional real-use records.
+
+A usage-log row is not automatically an eligible complete prospective task. This incident
+was exported while its Mission remained active and is excluded from the #144 prospective
+denominator. Current v0.1 log validation checks the supported record fields, not the
+completeness or causal value of a task; typed status automation remains #144 work.

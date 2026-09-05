@@ -1,0 +1,50 @@
+{
+  "schema_version": "tplan.case-packet.v1",
+  "case_id": "slidethus-vq-execution-overrun-20260905",
+  "created_at_utc": "2026-09-05T12:54:56.124573+00:00",
+  "mode": "tplan",
+  "focus": "acceptance",
+  "consent": {
+    "export_requested_by_user": true,
+    "review_required_before_share": true,
+    "automatic_upload": false
+  },
+  "privacy": {
+    "contains_full_mission": false,
+    "contains_full_task_tree": false,
+    "contains_full_evidence_stream": false,
+    "contains_execution_trace": false,
+    "contains_step_logs": false,
+    "contains_user_selected_excerpts": true,
+    "redaction_status": "review_required",
+    "pattern_scan_status": "passed"
+  },
+  "source": {
+    "mission_binding": "sha256:3882889e6d22e8122a9fc0300874eb44dd7a6c5a4989cabaa2db6420067cc41f",
+    "runtime_provenance_status": "exact"
+  },
+  "selection": {
+    "selected_event_id": "E8d74e477",
+    "selected_evidence_ids": [
+      "Eee9fc023",
+      "E8d74e477"
+    ],
+    "reason": "Selected the most recent events matching focus=acceptance."
+  },
+  "links": {
+    "judgment_trace": null
+  },
+  "files": {
+    "mission_summary_json": "mission-summary.json",
+    "mission_summary_markdown": "mission-summary.md",
+    "selected_event": "selected-event.json",
+    "selected_evidence": "selected-evidence.json",
+    "pulse": "pulse.json",
+    "privacy_scan": "privacy-scan.json",
+    "privacy_notice": "README.md",
+    "excerpts": [
+      "excerpts/selected-log-summary.txt",
+      "excerpts/case-analysis-context.txt"
+    ]
+  }
+}
