@@ -128,6 +128,27 @@ class RuntimeProvenanceTests(unittest.TestCase):
         self.assertEqual(normalize_tplan_root(REPO / "skills"), SKILL.resolve())
         self.assertEqual(normalize_tplan_root(SKILL), SKILL.resolve())
 
+    def test_extracted_implementations_are_required_and_fingerprinted(self):
+        from tplan_errors import TplanError as SharedError
+        from tplan_identity import runtime_fingerprint as identity_fingerprint
+        self.assertIs(TplanError, SharedError)
+        self.assertIs(runtime_fingerprint, identity_fingerprint)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "skill"
+            shutil.copytree(SKILL, root, ignore=shutil.ignore_patterns("__pycache__"))
+            baseline = runtime_fingerprint(root)["build_hash"]
+            for name in ("tplan_errors.py", "tplan_identity.py", "execution_time_metrics.py"):
+                with self.subTest(module=name):
+                    path = root / "scripts" / name
+                    content = path.read_bytes()
+                    path.write_bytes(content + b"\n# fingerprint mutation probe\n")
+                    self.assertNotEqual(runtime_fingerprint(root)["build_hash"], baseline)
+                    path.unlink()
+                    with self.assertRaisesRegex(TplanError, "required scripts"):
+                        runtime_fingerprint(root)
+                    path.write_bytes(content)
+                    self.assertEqual(runtime_fingerprint(root)["build_hash"], baseline)
+
     def test_new_mission_pins_current_runtime_fingerprint(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission = read_mission(create_mission(tmp))
