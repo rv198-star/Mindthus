@@ -1,7 +1,7 @@
 # TPlan 执行过载案例：合同修复与接入方案
 
 Date: 2026-09-05
-Status: evidence admitted; defect issues to register; runtime implementation not performed in this change.
+Status: evidence admitted; #196–#200 registered; runtime implementation not performed in this change.
 Base: `407112ded87377b5b7dd351c49dd0d20b1d598d4` (TPlan source identical to v1.10.0).
 
 案例：[RU-20260905-SLIDETHUS-VQ-OVERRUN-01](../../../data/cases/slidethus-vq-execution-overrun-20260905/README.md)。
@@ -200,5 +200,16 @@ provenance、稀疏呈现和re-entry，不把本次新问题混成这些旧issue
 
 ## Issue 映射
 
-待登记：R1 evidence references；R2 active cursor；R3 completion；R4 continuation；
-D1 bounded external execution design。父证据入口复用#144，不新增一个大总纲。
+| 项目 | Issue | 状态 |
+|---|---|---|
+| R1 事务内证据引用解析 | #196 | P1缺陷已复现，待修复 |
+| R2 创建/激活与活动游标原子一致 | #197 | P1缺陷已复现，待修复 |
+| R3 Mission完成前置与验收范围 | #198 | P1矛盾已复现，关闭合同需先评审 |
+| R4 续行授权与实际mutation一致 | #199 | P1缺陷已复现，待修复 |
+| D1 外部受管执行与跨root续投边界 | #200 | 设计/验证候选，未批准实施 |
+
+父证据入口复用#144，不新增一个大总纲。#144已补入库记录和分母排除说明。
+
+本会话进行了两方面复核：证据/隐私复核确认原包逐字节保留，历史报告和合成复现
+分开；修复范围复核保留活动祖先/blocked游标、轻量动作、旧记录读取及宿主能力边界，
+撤回将单root上限称为既有Mission总预算的推断。均为ChatGPT自身复核，不称异模型认证。

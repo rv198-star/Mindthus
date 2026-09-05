@@ -69,6 +69,10 @@ R1/R2 与案例报告的机制对应；R3/R4 是本轮进一步合成复现，**
 完整机器输出：[current-runtime-observations.json](current-runtime-observations.json)。
 修复方案：[TPlan 执行控制缺口修复计划](../../../docs/internal/issues/tplan-execution-overrun-remediation-20260905.md)。
 
+对应issue：#196证据引用；#197活动游标；#198完成条件；#199续行授权后果。
+四项为已复现、尚未修复的P1；#200另管外部执行与跨root续投的设计验证。
+#200不是对既有全局预算绕过的定罪，也不是立即实施新的运行时功能。
+
 ## 重放与验证
 
 从仓库根执行：
