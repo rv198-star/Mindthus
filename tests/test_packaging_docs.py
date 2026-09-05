@@ -1108,6 +1108,7 @@ class PackagingDocsTests(unittest.TestCase):
         script = (REPO / "scripts" / "install-skills.sh").read_text(encoding="utf-8")
         self.assertIn("mindthus:tplan", install)
         self.assertIn("scripts/install-skills.sh", install)
+        self.assertNotIn("private `rv198-star/Mindthus` repository", install)
         for text in (install, readme, script):
             self.assertIn("CODEX_HOME", text)
             self.assertIn("skills/mindthus", text)

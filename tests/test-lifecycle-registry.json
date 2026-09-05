@@ -114,7 +114,7 @@
       "lifecycle_status": "historical_guard",
       "suite_role": "acceptance",
       "runtime_cost": "medium",
-      "notes": "Waves 1 and 2 preserve unique historical acceptance and licensing contracts. Current package asset checks formerly in v1.0 readiness now share the active packaging owner and a 17-path missing-asset fault-injection table; see test-lifecycle-cleanup-wave-2-2026-09-05.md."
+      "notes": "Waves 1-3 preserve unique historical acceptance records while current install, licensing, package-asset, and SELA judge contracts live under their active owners. See test-lifecycle-cleanup-wave-2-2026-09-05.md and test-lifecycle-cleanup-wave-3-2026-09-05.md."
     },
     {
       "test_id": "judgment-observability-and-case-export",
