@@ -57,8 +57,12 @@
     "metrics_independently_recounted_from_raw_stream": false,
     "mission_status_at_export": "active",
     "observed_outcome": "failed holdout and blocked RC at the bounded observation window",
+    "host": "Codex App",
+    "host_build": "unknown",
     "invocation_mode": "unknown",
-    "model": "unknown",
+    "model_mode": "Sol High",
+    "exact_underlying_model_id": "unknown",
+    "supplemental_user_confirmation": "User confirmed on 2026-09-05 that the approximately 16-hour run was executed in Codex App using Sol High mode.",
     "sra_record_available": false,
     "global_35_operation_authorization_proven": false
   },
@@ -66,7 +70,7 @@
     "unit": "one real incident, not one record per workspace or defect",
     "complete_task": false,
     "prospective_complete_task_denominator_included": false,
-    "exclusion_reasons": ["retrospective admission", "Mission remained active", "invocation path not exported"],
+    "exclusion_reasons": ["retrospective admission", "Mission remained active", "Mindthus invocation path not exported"],
     "unlock_issue_144_freeze": false,
     "automatic_benchmark_admission": false,
     "bug_probes_are_additional_real_use_records": false

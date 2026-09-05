@@ -29,6 +29,9 @@
 | 用户反馈 | 约16小时执行未达到其预期；真实负面体验 | TPlan 造成全部耗时、SRA 导致失败、修复后必然节约多少 |
 
 原包没有完整 execution trace、evidence log 或运行源码快照。
+用户后续明确补充：这次约16小时执行发生在 **Codex App**，运行模式为 **Sol High**。
+这使宿主与运行模式成为用户确认事实；具体 Codex build、Sol High 背后的精确模型 ID、
+Mindthus/TPlan 的具体调用路径，以及 Hook 的安装、信任、枚举和回调状态仍未随案例导出。
 `runtime_provenance=exact` 只表示导出工具报告的本地兼容性，不等于已知原执行使用了
 `v1.10.0`。`pulse.json` 明确是 **case-pulse-view**，不是执行时调用官方 Mission Pulse
 或应用其决定的证据。
@@ -98,8 +101,9 @@ python3.10 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-lo
 admission.json中结构化记录，并在旧记录notes中明确引用。
 现有logger只校验已支持字段；这不等于#144要求的分类型状态、元数据校验已实现。
 
-本记录不是10个完整前瞻任务中的第1个：整体Mission未结束、调用模式未知、入库为
-回溯。真实事故档案计数为1，本案例对完整前瞻任务分母的贡献为0。
+本记录不是10个完整前瞻任务中的第1个：整体Mission未结束、Mindthus具体调用模式未知、入库为
+回溯。宿主已确认是 Codex App、运行模式已确认是 Sol High，但这些信息不改变完整任务和
+prospective 纳入条件。真实事故档案计数为1，本案例对完整前瞻任务分母的贡献为0。
 它不会解除#144 freeze，也不会自动进入benchmark、对照保留集或SRA收益统计。
 `constraint_helped`、`decision_changed`、`rework_reduced`、Mindthus额外负担及因果伤害
 均为unknown；修复净收益尚未测量。后续追踪更新同一案例，不按root或缺陷拆成新样本。
