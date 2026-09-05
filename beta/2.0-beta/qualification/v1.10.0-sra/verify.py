@@ -191,8 +191,9 @@ def verify(stable: Path, candidate: Path, archive_a: Path | None, archive_b: Pat
         fail("prepared-input anchor regression is absent from the inherited source")
     for marker in (
         "test_legacy_full_stays_dual_and_policy_requires_explicit_assessment",
-        "test_input_version_prevents_old_reader_from_silently_ignoring_new_policy",
-        "test_rerank_requires_fresh_source_context",
+        "test_new_extensions_require_an_explicit_new_input_version",
+        "test_rerank_uses_refreshed_context_without_inheriting_parent_judgment",
+        "test_rerank_refuses_parent_changed_during_assessment",
     ):
         if marker not in proportionate:
             fail(f"proportionate compatibility regression is absent: {marker}")
