@@ -1,5 +1,9 @@
 # Mindthus V5 Register-Hint Diagnostic
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: diagnostic host-hint experiment completed; not a certification candidate.
 
 This run tests whether the V5 target-trigger register can serve as a mechanical

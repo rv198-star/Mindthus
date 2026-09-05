@@ -1,5 +1,9 @@
 # Mindthus v1.4.3-hotfix.1 Judgment Benchmark Run
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: caveated empirical run, not a certified clean causal benchmark.
 
 This run executed the external-audit 50-case judgment fixture through real Codex CLI calls after

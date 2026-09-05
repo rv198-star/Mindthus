@@ -8,7 +8,10 @@ import unittest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from benchmark_archive import generated_index_plan, git, inventory, safe_path, verify_manifest
+from benchmark_archive import (
+    ARCHIVE_POINTER, build_manifest, build_reference_map, generated_index_plan, git,
+    inventory, safe_path, verify_manifest,
+)
 
 
 class BenchmarkArchiveTests(unittest.TestCase):
@@ -21,6 +24,10 @@ class BenchmarkArchiveTests(unittest.TestCase):
         (root / "events").mkdir(parents=True)
         (root / "summary.json").write_text('{"status":"diagnostic"}\n', encoding="utf-8")
         (root / "events" / "case.jsonl").write_text('{"record":"historical"}\n', encoding="utf-8")
+        (root / "REPORT.md").write_text(
+            f"# Fixture\n\n> {ARCHIVE_POINTER}. Restore `events/case.jsonl`.\n",
+            encoding="utf-8",
+        )
         git(self.repo, "init", "-q")
         git(self.repo, "add", ".")
         git(self.repo, "-c", "user.name=Archive Fixture", "-c", "user.email=fixture@example.invalid",
@@ -34,7 +41,7 @@ class BenchmarkArchiveTests(unittest.TestCase):
     def test_recovery_verifies_all_bytes_without_mutating_checkout(self):
         before = {str(p.relative_to(self.repo)): p.read_bytes() for p in (self.repo / self.scope).rglob("*") if p.is_file()}
         result = verify_manifest(self.repo, self.manifest)
-        self.assertEqual(result["restored_files"], 2)
+        self.assertEqual(result["restored_files"], 3)
         self.assertEqual(result["migrate_files"], 1)
         self.assertEqual(result["migrate_bytes"], len(b'{"record":"historical"}\n'))
         self.assertFalse(result["checkout_mutated"])
@@ -53,6 +60,24 @@ class BenchmarkArchiveTests(unittest.TestCase):
                 mutate(manifest)
                 with self.assertRaises(ValueError):
                     verify_manifest(self.repo, manifest)
+
+    def test_v2_manifest_pins_every_recovery_ref_and_maps_report_references(self):
+        manifest = build_manifest(self.repo, self.source, self.scope)
+        self.assertEqual(len(manifest["files"]), 3)
+        for row in manifest["files"]:
+            self.assertEqual(row["recovery_ref"], f'{self.source}:{row["path"]}')
+        self.assertEqual(verify_manifest(self.repo, manifest)["status"], "verified")
+        mapping = build_reference_map(self.repo, manifest)
+        self.assertEqual(mapping["status"], "verified")
+        self.assertEqual(mapping["reports_checked"], 1)
+        self.assertEqual(
+            mapping["reports"][0]["references"][0]["resolved_paths"],
+            [self.scope + "/events/case.jsonl"],
+        )
+        corrupt = copy.deepcopy(manifest)
+        corrupt["files"][0]["recovery_ref"] = "main:wrong"
+        with self.assertRaisesRegex(ValueError, "recovery ref"):
+            verify_manifest(self.repo, corrupt)
 
     def test_generated_index_plan_names_only_remaining_migrate_paths(self):
         plan = generated_index_plan(self.repo, self.source, self.scope)

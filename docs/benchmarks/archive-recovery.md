@@ -59,15 +59,28 @@ git archive --format=tar --output=/tmp/mindthus-benchmark-pilot.tar \
 tar -tf /tmp/mindthus-benchmark-pilot.tar
 ```
 
-## Inventory for later batches
+## Full historical inventory
+
+The reviewed [full inventory](archive-inventory-20260905.json) covers all 6,493 files
+from the immutable source tree. Each row records its repository path, source blob OID,
+byte count, explicit `keep` or `migrate` disposition, reason, and exact
+`commit:path` recovery ref. The 102 names that were unclassified in the original audit
+are individually represented and conservatively kept.
+
+The [reference map](archive-reference-map-20260905.json) records every raw-artifact
+reference found in the 14 retained report, review, handoff, and manual-audit files. It
+maps each declaration to the source paths that can be restored from the immutable
+archive. It also verifies the run-folder references in `latest.md` and
+`v5-targeted-plan.md` against HEAD.
 
 ```bash
 python3.11 scripts/benchmark_archive.py \
-  --source d735d11c14d92325607fe6b844eb29f7c426df62 --summary
+  --manifest docs/benchmarks/archive-inventory-20260905.json --check-index
 python3.11 scripts/benchmark_archive.py \
-  --source d735d11c14d92325607fe6b844eb29f7c426df62
+  --manifest docs/benchmarks/archive-inventory-20260905.json \
+  --write-reference-map /tmp/mindthus-archive-reference-map.json
 ```
 
-The full output has one row per source file. `candidate_migrate` is a proposal, not a
-deletion approval. Later batches require their own committed full-scope rows, individual
-exceptions, review, recovery and reference checks before changing the tracked set.
+The first command performs a fresh 6,493-file archive restore, checks every recovered
+blob OID and byte count, and verifies that HEAD contains exactly the approved keep set.
+The second rechecks all retained report references without modifying the checkout.

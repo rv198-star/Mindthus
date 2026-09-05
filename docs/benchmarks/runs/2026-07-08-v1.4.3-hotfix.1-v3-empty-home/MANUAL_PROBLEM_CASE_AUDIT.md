@@ -1,5 +1,9 @@
 # V3 Problem-Case Manual Audit
 
+> Immutable archive base: `d735d11c14d92325607fe6b844eb29f7c426df62`. Any referenced
+> per-call material absent from HEAD is recoverable at the same repository-relative path;
+> see the [full inventory](../../archive-inventory-20260905.json) and [recovery guide](../../archive-recovery.md).
+
 Status: manual audit completed; this note does not change benchmark scores.
 
 This note reviews the treatment failures, partial passes, and regressions from the clean
