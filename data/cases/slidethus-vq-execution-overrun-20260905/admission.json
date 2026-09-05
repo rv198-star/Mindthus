@@ -1,0 +1,95 @@
+{
+  "schema_version": "mindthus.case-admission.v0.1",
+  "record_id": "RU-20260905-SLIDETHUS-VQ-OVERRUN-01",
+  "case_id": "slidethus-vq-execution-overrun-20260905",
+  "record_type": "real_use",
+  "collection_mode": "retrospective",
+  "reviewed_on": "2026-09-05",
+  "approval": {
+    "owner_confirmed": true,
+    "source": "Explicit user approval in the current Mindthus conversation on 2026-09-05",
+    "statement": "批准入库这个案例是我自己的使用场景，然后进一步思考要如何修复发现这几个问题，看是否需要先记录issue",
+    "scope": "This bounded uploaded packet, reviewed analysis, and corresponding Mindthus issue summaries",
+    "full_runtime_or_conversation_upload_authorized": false,
+    "automatic_collection_authorized": false,
+    "runtime_implementation_in_this_change": false
+  },
+  "source": {
+    "archive_name": "mindthus-tplan-case-slidethus-vq-execution-overrun-20260905.tar.gz",
+    "archive_sha256": "b446a79e11d4b537161311658c31ab7e6520d327b2d7ead090ebdddb09025f67",
+    "original_directory": "mindthus-tplan-case-slidethus-vq-execution-overrun-20260905",
+    "stored_directory": "packet",
+    "exported_at": "2026-09-05T12:54:56.124573+00:00",
+    "representation": "bounded exported summary and selected evidence; not full original logs",
+    "original_runtime_commit": "unknown",
+    "original_runtime_provenance": "exact as reported by exporter; exact source SHA was not included",
+    "full_raw_sources_available_in_packet": false,
+    "pulse_is_official_mission_pulse": false,
+    "original_consent_flags_preserved": true,
+    "files": [
+      {"path":"README.md","bytes":682,"sha256":"58f163472153d93bbf25935d2245a0f009571fddb8aedab3efac5431f203956c"},
+      {"path":"excerpts/case-analysis-context.txt","bytes":5474,"sha256":"1845a3af79b132e5c89efba42f15f8f586e4759f65f441850c247f9723029509"},
+      {"path":"excerpts/selected-log-summary.txt","bytes":2742,"sha256":"570641b64dcc444cbf63ef83620f989631333258c692df876be89f56da64e856"},
+      {"path":"manifest.json","bytes":1513,"sha256":"d62b7e9e44ed8ec42118d854852472d42fa6b101d148b8373da3c17367ad2794"},
+      {"path":"mission-summary.json","bytes":1769,"sha256":"d0f83433117eb40ff9b642e415ac8f8c4d57322aeded0e5c83a2f1014591cd71"},
+      {"path":"mission-summary.md","bytes":1145,"sha256":"587b0af7165f8cc3adc9f3f8791fae490e468b189928149f047e1f7204939af5"},
+      {"path":"privacy-scan.json","bytes":186,"sha256":"61939f2605641a0c750bb30aa93fd8462d556678782e07c79865d537626227dc"},
+      {"path":"pulse.json","bytes":722,"sha256":"d920f636aef50e8241fd58363488295552ab813d106fd4d166353c4a70b607c8"},
+      {"path":"selected-event.json","bytes":299,"sha256":"fc7d7b5c7f8cfa4613dfb16a18668b5606df598711beb54564ef1a84baaab08e"},
+      {"path":"selected-evidence.json","bytes":686,"sha256":"14b849ef0f7f216d34c445b4eb9a6c8aab5816c73c877aa9e68427af37edcdee"}
+    ]
+  },
+  "privacy_review": {
+    "all_ten_files_read": true,
+    "retained_identifiers": ["project name", "issue/task/event identifiers", "relative source paths", "timestamps", "hashes"],
+    "full_prompts_conversations_credentials_customer_slides": "not included in the uploaded packet",
+    "review_limit": "Manual content inspection and bounded pattern validation do not certify anonymity. Owner approved the retained project identifiers."
+  },
+  "observation": {
+    "observed_at": "2026-09-05T12:03:43.060520+00:00",
+    "reported_execution_start": "2026-09-04T19:56:31.895240+00:00",
+    "reported_blocker_at": "2026-09-05T12:03:43.060520+00:00",
+    "reported_metrics_source": "packet/excerpts/case-analysis-context.txt",
+    "reported_host_operations": 140,
+    "reported_provider_exchanges": 60,
+    "reported_new_workspace_count": 7,
+    "reported_pptx_outputs_in_those_workspaces": 0,
+    "metrics_independently_recounted_from_raw_stream": false,
+    "mission_status_at_export": "active",
+    "observed_outcome": "failed holdout and blocked RC at the bounded observation window",
+    "host": "Codex App",
+    "host_build": "unknown",
+    "invocation_mode": "unknown",
+    "model_mode": "Sol High",
+    "exact_underlying_model_id": "unknown",
+    "supplemental_user_confirmation": "User confirmed on 2026-09-05 that the approximately 16-hour run was executed in Codex App using Sol High mode.",
+    "sra_record_available": false,
+    "global_35_operation_authorization_proven": false
+  },
+  "sampling": {
+    "unit": "one real incident, not one record per workspace or defect",
+    "complete_task": false,
+    "prospective_complete_task_denominator_included": false,
+    "exclusion_reasons": ["retrospective admission", "Mission remained active", "Mindthus invocation path not exported"],
+    "unlock_issue_144_freeze": false,
+    "automatic_benchmark_admission": false,
+    "bug_probes_are_additional_real_use_records": false
+  },
+  "effects": {
+    "constraint_helped": "unknown",
+    "decision_changed": "unknown",
+    "rework_reduced": "unknown",
+    "overhead_level": "unknown",
+    "harm_observed_attributable_to_mindthus": "unknown",
+    "repair_effect": "not measured"
+  },
+  "current_code_verification": {
+    "commit": "407112ded87377b5b7dd351c49dd0d20b1d598d4",
+    "tree": "8232d69acd2f264159ebdc32fc3b249aefa1dc8c",
+    "tplan_sources_match_v1_10_0": true,
+    "python": "3.10.12",
+    "probe": "reproduce.py",
+    "results": "current-runtime-observations.json",
+    "scope": "Synthetic temporary Missions through supported APIs, separately from historical observations"
+  }
+}

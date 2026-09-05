@@ -5,6 +5,21 @@
 A Mission is `completed` only when every success-critical Task node is completed and
 Mission acceptance evidence is satisfied.
 
+Each new transition into Mission `completed` checks these prerequisites inside the
+existing transaction lock, before the journal is written. Every node marked
+`success-critical` must be completed. For each declared Mission acceptance ID, the
+latest mechanically qualified observation in evidence-stream order must be
+`acceptance_passed` or a complete compatible legacy `acceptance`; a later
+`acceptance_failed` blocks closure until a later qualified positive observation.
+Existing evidence and same-transaction prepared evidence form one snapshot. Duplicate
+IDs and invalid/wrong-scope observations cannot supply qualified acceptance.
+
+The gate checks declared references and pass/fail observations, not deliverable quality
+or reviewer correctness. Ordinary Task completion stays lightweight and does not itself
+satisfy Mission acceptance. Historical completed records remain readable; new closure
+checks do not backfill or certify their past acceptance. Recovery preserves frozen
+pending transaction contents rather than applying new semantic judgments to history.
+
 If remaining tasks are not worth executing, the Mission is closed under a non-completion
 terminal state.
 
@@ -55,6 +70,21 @@ supported unguarded mutation. A known incompatible fingerprint fails before any 
 those canonical artifacts change. Run `scripts/runtime_doctor.py` when selection is
 uncertain; the complete compatibility and recovery contract is in
 `runtime-provenance.md`.
+
+Before a new lifecycle transaction is journaled, its `refs.evidence_ids` resolve
+uniquely against the locked Mission evidence stream plus that transaction's prepared
+events. Artifact paths belong in `artifact_refs`. Historical references remain intact;
+only references used by the new transaction must resolve. Reference existence is a
+structural property, separate from acceptance sufficiency. Standalone trace append
+uses the same resolver under its existing lock. The compatibility `write_mission`
+entry delegates updates of an existing Mission to the canonical transaction boundary.
+Recovery replays the already-prepared transaction contents rather than reinterpreting
+later evidence.
+
+`check_mission.py` reports historical unresolvable references and unsupported current
+completion claims as `integrity_warning` diagnostics from one locked snapshot. These
+warnings preserve historical files and do not certify their acceptance. Its successful
+shape-check exit is separate from the prerequisites for a new completion write.
 
 ## Decision State
 

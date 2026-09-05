@@ -206,6 +206,12 @@ class InitLiteTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
+            accepted = run_script(
+                "record_evidence.py", str(mission_dir), "--event-type", "acceptance_passed",
+                "--task-id", "T1", "--summary", "Fixture confirms the recovery-state acceptance.",
+                "--payload-json", json.dumps({"acceptance_ids": ["A1"]}),
+            )
+            self.assertEqual(accepted.returncode, 0, accepted.stderr)
             closed = run_script("apply_decision.py", str(mission_dir), "--decision", str(decision))
 
             self.assertEqual(closed.returncode, 0, closed.stderr)

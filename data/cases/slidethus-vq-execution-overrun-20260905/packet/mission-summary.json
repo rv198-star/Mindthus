@@ -1,0 +1,52 @@
+{
+  "schema_version": "tplan.case-summary.v1",
+  "focus": "acceptance",
+  "focus_reason": "The read-only Pulse view selected an acceptance-related signal.",
+  "mission": {
+    "title": "Issue 3 PPTX 首次成稿质量与成本修复",
+    "objective": "按 VQ-000 至 VQ-014 工单依赖顺序完成 Slidethus 首次成稿视觉质量与成本修复，使 PPTX 生成更快、逻辑更清晰、视觉效果更好，并通过规定的测试、独立审计与真实 PowerPoint holdout 验收。",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 25,
+    "resource_sufficiency": 60
+  },
+  "active_task": null,
+  "parent_chain": [],
+  "pulse": {
+    "schema_version": "tplan.case-pulse-view.v1",
+    "snapshot_boundary": "read_outcome_attribution_snapshot",
+    "official_mission_pulse": false,
+    "script_verdict": "shape_only",
+    "agentic_judgment_required": true,
+    "signals": [
+      "evidence:acceptance_failed"
+    ],
+    "scope": "mission",
+    "next_gate": "review_blocker",
+    "rationale": "Latest bounded review signal is evidence event acceptance_failed.",
+    "gate_owner": "agentic_review",
+    "winning_candidate": {
+      "signal": "evidence:acceptance_failed",
+      "priority_class": "bounded_snapshot_signal",
+      "candidate_next_gate": "review_blocker",
+      "source_ids": [
+        "E8d74e477"
+      ]
+    },
+    "validation_finding_count": 0,
+    "pulse_shape_finding_count": 0
+  },
+  "runtime_provenance": {
+    "status": "exact",
+    "severity": "ok",
+    "compatible": true,
+    "origin": "native",
+    "diagnostic_codes": []
+  },
+  "selected_event_id": "E8d74e477",
+  "selected_evidence_ids": [
+    "Eee9fc023",
+    "E8d74e477"
+  ],
+  "selection_reason": "Selected the most recent events matching focus=acceptance."
+}
