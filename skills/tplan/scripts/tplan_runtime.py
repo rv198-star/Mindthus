@@ -838,11 +838,10 @@ def sync_mission_narrative(
 
 
 def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str | None = None) -> None:
-    """Write initial Mission state, but never bypass an open interaction guard.
+    """Initialize a Mission; existing-state writes share the canonical commit boundary.
 
-    Runtime mutations must use ``commit_mission_state``.  This compatibility writer
-    remains for initialization and tests; once a Mission has a guard, it is deliberately
-    fail-closed so a supported API cannot silently alter the protected baseline.
+    The compatibility entry retains its guard restriction and uses the same reference,
+    completion, provenance and lifecycle checks as ordinary runtime mutations.
     """
 
     paths = mission_paths(mission_dir)
@@ -852,14 +851,11 @@ def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str 
             if _read_interaction_guard_unlocked(mission_dir) is not None:
                 raise TplanError("interaction guard is open; write_mission cannot bypass protected Mission state")
             before = _read_mission_unlocked(mission_dir)
-            prepared = copy.deepcopy(data)
-            _prepare_runtime_provenance(
-                before,
-                prepared,
-                allow_legacy_adoption=True,
+            _commit_mission_state_unlocked(
+                mission_dir, before, copy.deepcopy(data),
+                source={"kind": "runtime_script", "name": "write_mission"},
+                latest_state=latest_state,
             )
-            write_json(paths["mission"], prepared)
-            sync_mission_narrative(mission_dir, prepared, latest_state=latest_state)
         return
     prepared = copy.deepcopy(data)
     prepared.setdefault("runtime_provenance", new_runtime_provenance())
@@ -1837,6 +1833,8 @@ def add_task_node(mission_dir: Path, raw: dict[str, Any]) -> dict[str, Any]:
     node = normalize_task_for_mission(mission, raw)
     updated = copy.deepcopy(mission)
     updated["tasks"] = list(mission.get("tasks", [])) + [node]
+    if node["status"] == "active":
+        set_task_status(updated, node["id"], "active")
     commit_mission_state(
         mission_dir,
         mission,
@@ -3272,6 +3270,66 @@ def _validate_new_evidence_ids_unlocked(
     return errors
 
 
+def _validate_trace_evidence_references(
+    records: list[dict[str, Any]], events: list[dict[str, Any]]
+) -> list[str]:
+    """Resolve typed IDs against one supplied evidence snapshot, without changing it."""
+    counts = Counter(
+        event.get("id") for event in events
+        if isinstance(event, dict) and isinstance(event.get("id"), str)
+    )
+    referenced = {
+        evidence_id
+        for record in records
+        for evidence_id in record.get("refs", {}).get("evidence_ids", [])
+    }
+    return [
+        f"evidence reference {evidence_id!r} must resolve to exactly one Mission event "
+        f"(found {counts[evidence_id]})"
+        for evidence_id in sorted(referenced) if counts[evidence_id] != 1
+    ]
+
+
+def _mission_completion_findings(
+    mission: dict[str, Any], events: list[dict[str, Any]]
+) -> list[str]:
+    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+    errors: list[str] = []
+    incomplete = sorted(
+        str(task["id"]) for task in mission["tasks"]
+        if task.get("role") == "success-critical" and task.get("status") != "completed"
+    )
+    if incomplete:
+        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
+    counts = Counter(
+        event.get("id") for event in events
+        if isinstance(event, dict) and isinstance(event.get("id"), str)
+    )
+    latest: dict[str, str] = {}
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        kind = event.get("event_type")
+        if not isinstance(kind, str) or kind not in {"acceptance", "acceptance_passed", "acceptance_failed"}:
+            continue
+        if validate_evidence_event(mission, event, compatibility=True, internal=True):
+            continue
+        if counts[event["id"]] != 1:
+            continue  # Ambiguous historical IDs cannot provide a qualified observation.
+        for acceptance_id in event["payload"]["acceptance_ids"]:
+            latest[acceptance_id] = kind
+    missing = sorted(
+        acceptance_id for acceptance_id in acceptance_ids(mission)
+        if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
+    )
+    if missing:
+        errors.append(
+            "Mission completion requires positive qualified acceptance: "
+            + ", ".join(f"{item} ({latest.get(item, 'missing')})" for item in missing)
+        )
+    return errors
+
+
 def prepare_event(mission_dir: Path, event: dict[str, Any]) -> dict[str, Any]:
     event = dict(event)
     event.setdefault("id", _next_event_id(mission_dir))
@@ -3762,6 +3820,9 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
     if errors:
         raise TplanError("; ".join(errors))
 
+    reference_errors = _validate_trace_evidence_references([normalized], _read_events_unlocked(mission_dir))
+    if reference_errors:
+        raise TplanError("; ".join(reference_errors))
     existing = _read_execution_trace_unlocked(mission_dir)
     event_id = normalized["event_id"]
     if any(item.get("event_id") == event_id for item in existing):
@@ -3781,6 +3842,9 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
         if observed_at < mission_started:
             raise TplanError("execution trace span event must not precede Mission initialization")
 
+    _prepare_supported_runtime_write_unlocked(
+        mission_dir, operation="append_execution_trace_record",
+    )
     path = mission_paths(mission_dir)["trace"]
     previous = path.read_text(encoding="utf-8") if path.exists() else ""
     if previous and not previous.endswith("\n"):
@@ -3792,10 +3856,6 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
 def append_execution_trace_record(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        _prepare_supported_runtime_write_unlocked(
-            mission_dir,
-            operation="append_execution_trace_record",
-        )
         return _append_execution_trace_record_unlocked(mission_dir, record)
 
 
@@ -4001,6 +4061,15 @@ def _commit_mission_state_unlocked(
         errors = validate_execution_trace_record(after, record)
         if errors:
             raise TplanError("; ".join(errors))
+
+    evidence_snapshot = _read_events_unlocked(mission_dir) + list(prepared_evidence_events or [])
+    reference_errors = _validate_trace_evidence_references(records, evidence_snapshot)
+    if reference_errors:
+        raise TplanError("; ".join(reference_errors))
+    if before["mission"]["status"] != "completed" and after["mission"]["status"] == "completed":
+        completion_errors = _mission_completion_findings(after, evidence_snapshot)
+        if completion_errors:
+            raise TplanError("; ".join(completion_errors))
 
     paths = mission_paths(mission_dir)
     previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""
@@ -6121,6 +6190,41 @@ def _validate_continuation_authorization(decision: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _validate_decision_consequences(decision: dict[str, Any]) -> list[str]:
+    """Enforce explicit stop/review ceilings without grading ROI or evidence quality."""
+    authorization = decision.get("continuation_authorization")
+    if not isinstance(authorization, dict):
+        return []  # Shape errors belong to the authorization validator.
+    action = authorization.get("authorized_action")
+    if not isinstance(action, str) or action not in {"stop", "mission_review", "anti_spiral_audit"}:
+        return []
+    narrowing = {
+        "transition_task": {"blocked", "paused", "pruned", "abandoned", "superseded"},
+        "set_mission_status": {"blocked", "requires_human", "budget_exhausted", "abandoned", "superseded"},
+    }
+    errors: list[str] = []
+    if decision.get("recommendation") in {"continue", "switch", "add"}:
+        errors.append(
+            f"continuation consequence: {action} cannot authorize recommendation "
+            f"{decision['recommendation']}"
+        )
+    mutations = decision.get("proposed_mutations")
+    if not isinstance(mutations, list):
+        return errors  # The shared shape check reports this separately.
+    for index, mutation in enumerate(mutations):
+        if not isinstance(mutation, dict):
+            errors.append(f"continuation consequence: mutation {index} must be an object")
+            continue
+        mutation_type, status = mutation.get("type"), mutation.get("status")
+        allowed = narrowing.get(mutation_type, set()) if isinstance(mutation_type, str) else set()
+        if not isinstance(status, str) or status not in allowed:
+            errors.append(
+                f"continuation consequence: {action} permits only narrowing mutations; "
+                f"mutation {index} requests {mutation.get('type')} / {mutation.get('status')}"
+            )
+    return errors
+
+
 def _validate_hook_output_messages(
     decision: Any,
     active_shared_risks: list[dict[str, Any]] | None = None,
@@ -6173,6 +6277,7 @@ def _validate_hook_output_messages(
         errors.extend(_validate_path_assessment(decision))
         errors.extend(_validate_risk_assessment(decision, active_shared_risks))
         errors.extend(_validate_continuation_authorization(decision))
+        errors.extend(_validate_decision_consequences(decision))
     return errors
 
 

@@ -17,6 +17,7 @@ from observe_model_call import ModelCallObserver
 from execution_cost_tree import _counted_tokens, _duration_hotspots, _span_cost, _usage_owner_event_ids
 from tplan_runtime import (
     TplanError,
+    append_event,
     begin_interaction_guard,
     record_execution_span,
     start_execution_span,
@@ -112,6 +113,12 @@ def create_tree_mission(tmp):
 
 
 def complete_mission_status(tmp, mission_dir):
+    # This is a lifecycle-rendering fixture, with explicitly supplied acceptance.
+    append_event(mission_dir, {
+        "event_type": "acceptance_passed", "task_id": "T1",
+        "summary": "Fixture supplies the completed tree/report acceptance observation.",
+        "payload": {"acceptance_ids": ["A1"]},
+    })
     decision = Path(tmp) / "complete-mission-decision.json"
     decision.write_text(
         json.dumps(
@@ -486,6 +493,11 @@ class ExecutionCostTreeTests(unittest.TestCase):
             self.assertEqual(added.returncode, 0, added.stderr)
             active = run_script("transition_task.py", str(mission_dir), "--task-id", "E1", "--status", "active")
             self.assertEqual(active.returncode, 0, active.stderr)
+            append_event(mission_dir, {
+                "id": "E-acceptance", "event_type": "acceptance_passed", "task_id": "E1",
+                "summary": "Fixture supplies the route artifact acceptance observation.",
+                "payload": {"acceptance_ids": ["A1"]},
+            })
             completed = run_script(
                 "transition_task.py",
                 str(mission_dir),
