@@ -4,7 +4,7 @@
   "source_tag_hint": "v1.9.1",
   "scope": "docs/benchmarks/runs/2026-07-09-brake-generalization-dev/repeat-1",
   "recovery": "Each relative path resolves at source_commit:scope/path. Full Git history or the immutable GitHub source archive is required; ordinary CI uses local synthetic fixtures.",
-  "approval": "inventory_only_pending_scoped_review",
+  "approval": "scoped_review_pass: docs/internal/audits/2026-09-05-archive-pilot-review.md",
   "files": [
     {"path":"activation-summary.json","blob_oid":"4ce6cd3e17d0fc2336ac5f83d7b299b0fa05fd23","bytes":1597,"disposition":"keep","reason":"Activation aggregate supports retained report"},
     {"path":"answers/brake-dev-doc-exception-loop-turn-1.txt","blob_oid":"798ccbbd38cc9f94cc5c22d93b8410b6cb6bec6d","bytes":1073,"disposition":"migrate","reason":"Recoverable per-call answer"},
