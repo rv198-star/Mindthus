@@ -18,6 +18,11 @@ Short rule:
 A method-fidelity pass does not prove that the selected priority, necessity claim, ROI
 judgment, bundle, or allocation is semantically correct.
 
+This structured artifact protocol applies when a runtime/fidelity artifact is requested.
+Conversational Lite may execute the same floor-and-next-tranche reasoning in a short
+recommendation without creating these files. It claims neither a fidelity validator pass
+nor runtime authorization. Method use alone is not a reason to pay the artifact cost.
+
 ## Entry Outcomes
 
 Every fidelity artifact uses one `entry_outcome`:

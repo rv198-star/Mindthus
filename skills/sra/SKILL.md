@@ -7,8 +7,11 @@ description: "Use directly when multiple already-judgeable actions or bundles co
 
 ## Core Claim
 
-> 先排除不可行，再保护达标必要项；方向、依赖、瓶颈和窗口决定先后；
-> 组合价值决定本轮投哪套；边际价值决定下一份资源投哪里。
+> 以足够低的判断成本，先保护目标成立所必需的投入，
+> 再把下一份资源分给当前风险调整后边际价值最高的用途。
+
+“先生存、再图强” means viability before optional improvement, under the user's real
+goal, time horizon and protected constraints. SRA ranks work, not the worth of people.
 
 Execution shorthand:
 
@@ -34,7 +37,9 @@ Choose one entry outcome:
 `auto` starts from Lite and expands only under named escalation conditions. It is a mode
 selector, not a third reasoning mode.
 
-Use a depth whose cost is lower than the plausible loss from a wrong allocation.
+Use a depth whose cost is lower than the plausible avoidable loss from a wrong allocation.
+Stop when more analysis is unlikely to change the next action enough to repay its cost.
+A seconds-long irreversible action can warrant more review than a long reversible task.
 
 ### Allocation Frame
 
@@ -78,18 +83,18 @@ hard-gate status, necessity, or another SRA role.
 
 ### Priority Order
 
-Apply this order:
+1. Protect the minimum sufficient support for the declared target, authority and risk
+   floor. Test necessity by what would break if that support were removed.
+2. Compare risk-adjusted bundle value and the marginal value of meaningful additional
+   resource commitments among feasible alternatives. Dependencies constrain executable
+   order; direction tests, bottlenecks and windows are sources of value, not automatic
+   priority labels.
+3. Commit only worthwhile tranches. Keep justified maintenance or reserve, and explicitly
+   defer or stop displaced work. Reconsider when relevant evidence or resources change.
 
-1. `hard_gate` and authority;
-2. `feasible_bundle` capable of reaching the target inside the window and risk floor;
-3. `threshold_essential` work whose removal breaks that bundle;
-4. `direction_or_bottleneck` action that changes the viable path, removes the dominant
-   constraint, protects a closing window, or creates decision-enabling evidence;
-5. `risk_adjusted_bundle_value` — risk-adjusted bundle value among remaining non-dominated feasible bundles;
-6. `marginal_tranche_value` of the next decision-relevant resource block;
-7. `reserve` when uncommitted capacity has greater option or recovery value.
-
-Compare fixed or indivisible thresholds as complete meaningful tranches.
+Compare fixed or indivisible thresholds as complete meaningful tranches. Unknown value is
+not zero; delayed benefits, learning, care, reliability and options count under the chosen
+horizon. No universal numeric ROI score or mandatory utilization target is required.
 
 ### Lite
 
@@ -144,7 +149,17 @@ no named positive-value hypothesis.
 ### Protect The Target Threshold
 
 Keep the requested target and risk floor fixed during contraction. A cheaper survival
-state becomes valid only through an explicit authorized target change.
+state becomes valid only through an explicit authorized target change. Necessary work
+receives sufficient support, not unlimited investment. If resources cannot support the
+floor, expose the infeasibility and the decision needed; do not silently lower the target.
+
+### Preserve The Real Objective
+
+This guardrail prevents short-term, measurable gains from replacing the user's goal.
+Use the declared horizon and affected-party constraints; protect safety, dignity, care,
+commitments and sustainable capacity where they bind the decision. High expected gain
+cannot buy a breach of a hard boundary. Low-confidence benefits may justify a bounded
+probe, not automatic rejection or unlimited speculative spending.
 
 ### Protect Small But Decisive Actions
 
@@ -193,28 +208,19 @@ Do not use SRA when there is no real shared resource contention. Do not treat th
 
 ## Runtime Support
 
-The version-bound v0.3 runtime uses:
+Conversational Lite may give bounded advice without creating a run. Controlled
+allocations use the sole v0.3 contract and `prepare_sra_run.py`, `record_sra_judgment.py`,
+`check_sra_run.py`, `repair_sra_run.py` and `render_sra_decision.py`.
 
-```text
-prepare_sra_run.py
-record_sra_judgment.py
-check_sra_run.py
-repair_sra_run.py
-render_sra_decision.py
-```
+Read `resources/proportionate-runtime.md` for draft intake, checked cards, completion
+references and explicit re-ranking. Helpers generate structure, not facts or permission.
+Legacy inputs retain conservative calibration; the named proportionate policy admits
+single-view structural Full only after an explicit ordinary/reversible assessment.
+Uncertain, consequential or contaminated cases retain mutually hidden dual views.
 
-The caller supplies separated question/context projections, declared resource pools and
-candidate demands, timestamped evidence, assumptions, and authority-bound downgrade
-overrides. Ordinary reversible Lite may use `situated_only`; contaminated Lite and Full
-use mutually hidden `dual_view`. Typed disagreement opens one bounded reconciliation.
+`run.json` is a cache. Raw input and Agentic judgments own the decision; Repair only
+rebuilds derived artifacts. Changed inputs require a new run. Prepared v0.2 runs are not
+resumed under v0.3. Detailed contracts live in `resources/context-isolation.md`.
 
-`run.json` is a cache. The checker reconstructs deterministic surfaces and state from raw
-input plus judgments; the repair command rebuilds derived artifacts without changing
-Agentic judgments. Full details live in `resources/context-isolation.md`.
-
-Prepared v0.2 runs are not resumed under v0.3. Start a new version-bound run from the
-source decision context.
-
-The runtime proves contract and observable carrier integrity only. It does not prove
-complete context, correct projection quality, absent hidden host context, semantic
-necessity, correct priority, optimal ROI, or real-world business value.
+Integrity checks prove neither complete context nor correct priority, optimal ROI or
+real-world value. A short card is a projection of the checked decision, not new authority.
