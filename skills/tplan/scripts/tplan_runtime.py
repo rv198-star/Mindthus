@@ -838,11 +838,10 @@ def sync_mission_narrative(
 
 
 def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str | None = None) -> None:
-    """Write initial Mission state, but never bypass an open interaction guard.
+    """Initialize a Mission; existing-state writes share the canonical commit boundary.
 
-    Runtime mutations must use ``commit_mission_state``.  This compatibility writer
-    remains for initialization and tests; once a Mission has a guard, it is deliberately
-    fail-closed so a supported API cannot silently alter the protected baseline.
+    The compatibility entry retains its guard restriction and uses the same reference,
+    completion, provenance and lifecycle checks as ordinary runtime mutations.
     """
 
     paths = mission_paths(mission_dir)
@@ -852,14 +851,11 @@ def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str 
             if _read_interaction_guard_unlocked(mission_dir) is not None:
                 raise TplanError("interaction guard is open; write_mission cannot bypass protected Mission state")
             before = _read_mission_unlocked(mission_dir)
-            prepared = copy.deepcopy(data)
-            _prepare_runtime_provenance(
-                before,
-                prepared,
-                allow_legacy_adoption=True,
+            _commit_mission_state_unlocked(
+                mission_dir, before, copy.deepcopy(data),
+                source={"kind": "runtime_script", "name": "write_mission"},
+                latest_state=latest_state,
             )
-            write_json(paths["mission"], prepared)
-            sync_mission_narrative(mission_dir, prepared, latest_state=latest_state)
         return
     prepared = copy.deepcopy(data)
     prepared.setdefault("runtime_provenance", new_runtime_provenance())
@@ -3824,6 +3820,9 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
     if errors:
         raise TplanError("; ".join(errors))
 
+    reference_errors = _validate_trace_evidence_references([normalized], _read_events_unlocked(mission_dir))
+    if reference_errors:
+        raise TplanError("; ".join(reference_errors))
     existing = _read_execution_trace_unlocked(mission_dir)
     event_id = normalized["event_id"]
     if any(item.get("event_id") == event_id for item in existing):
@@ -3843,6 +3842,9 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
         if observed_at < mission_started:
             raise TplanError("execution trace span event must not precede Mission initialization")
 
+    _prepare_supported_runtime_write_unlocked(
+        mission_dir, operation="append_execution_trace_record",
+    )
     path = mission_paths(mission_dir)["trace"]
     previous = path.read_text(encoding="utf-8") if path.exists() else ""
     if previous and not previous.endswith("\n"):
@@ -3854,10 +3856,6 @@ def _append_execution_trace_record_unlocked(mission_dir: Path, record: dict[str,
 def append_execution_trace_record(mission_dir: Path, record: dict[str, Any]) -> dict[str, Any]:
     with execution_trace_lock(mission_dir):
         _recover_pending_mission_transaction_unlocked(mission_dir)
-        _prepare_supported_runtime_write_unlocked(
-            mission_dir,
-            operation="append_execution_trace_record",
-        )
         return _append_execution_trace_record_unlocked(mission_dir, record)
 
 

@@ -2,10 +2,13 @@
 
 import copy
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event
 from unittest import mock
 
 SCRIPTS = Path(__file__).resolve().parents[2] / "skills" / "tplan" / "scripts"
@@ -344,6 +347,122 @@ class MissionCompletionIntegrityTests(AuthorityTestCase):
         self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
         event(self.mission, event_id="E-history-note")
         self.assertEqual(path.read_bytes(), historic)
+
+
+class AuthorityBoundaryReviewTests(AuthorityTestCase):
+    def test_compatibility_writer_cannot_bypass_completion_gate(self):
+        state = runtime.read_mission(self.mission)
+        state["mission"]["status"] = "completed"
+        self.assert_rejected_without_writes(
+            lambda: runtime.write_mission(self.mission, state), "Mission completion")
+
+    def test_standalone_trace_append_resolves_typed_evidence_ids(self):
+        state = runtime.read_mission(self.mission)
+        record = runtime._new_trace_record(
+            state, "active_node_changed", task_id="T1",
+            payload={"from_task_id": None, "to_task_id": "T1"},
+            refs={"evidence_ids": ["E-missing"]},
+            source={"kind": "test", "name": "standalone"}, commit_id="C-standalone",
+        )
+        self.assert_rejected_without_writes(
+            lambda: runtime.append_execution_trace_record(self.mission, record), "evidence.*reference")
+
+    def test_compatible_existing_writer_produces_canonical_lifecycle(self):
+        complete_tasks(self.mission)
+        pass_requirements(self.mission)
+        state = runtime.read_mission(self.mission)
+        state["mission"]["status"] = "completed"
+        runtime.write_mission(self.mission, state)
+        records = runtime.read_execution_trace(self.mission)
+        self.assertTrue(any(r["event_type"] == "mission_status_changed"
+                            and r["payload"]["to_status"] == "completed" for r in records))
+
+    def test_historical_reference_and_closure_warnings_preserve_files(self):
+        runtime.transition_task_status(self.mission, "T1", "completed")
+        paths = runtime.mission_paths(self.mission)
+        records = runtime.read_execution_trace(self.mission)
+        records[-1]["refs"] = {"evidence_ids": ["E-historical-missing"]}
+        paths["trace"].write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
+        state = runtime.read_mission(self.mission)
+        state["mission"]["status"] = "completed"
+        paths["mission"].write_text(json.dumps(state), encoding="utf-8")
+        before = snapshot(self.mission)
+        result = subprocess.run([sys.executable, str(SCRIPTS / "check_mission.py"), str(self.mission)],
+                                text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("integrity_warning: evidence reference", result.stdout)
+        self.assertIn("integrity_warning: Mission completion", result.stdout)
+        self.assertEqual(snapshot(self.mission), before)
+
+    def test_guarded_valid_closure_commits_and_releases_guard(self):
+        complete_tasks(self.mission)
+        pass_requirements(self.mission)
+        apply = guarded_apply(self.mission, close_decision())
+        self.assertEqual(apply()["disposition"], "apply_authorized_change")
+        self.assertIsNone(runtime.read_interaction_guard(self.mission))
+        self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
+
+    def test_concurrent_evidence_append_serializes_after_locked_closure(self):
+        complete_tasks(self.mission)
+        pass_requirements(self.mission)
+        entered, release, append_started, append_done = Event(), Event(), Event(), Event()
+        journal = runtime.mission_paths(self.mission)["transaction"]
+        real_write = runtime.write_json
+
+        def pause_journal(path, *args, **kwargs):
+            if path == journal:
+                entered.set()
+                if not release.wait(5):
+                    raise AssertionError("test release missing")
+            return real_write(path, *args, **kwargs)
+
+        def append_failure():
+            append_started.set()
+            try:
+                return event(self.mission, event_id="E-after-close", event_type="acceptance_failed",
+                             payload={"acceptance_ids": ["A1"]})
+            finally:
+                append_done.set()
+
+        with mock.patch.object(runtime, "write_json", side_effect=pause_journal):
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                closed = pool.submit(runtime.apply_decision, self.mission, close_decision())
+                try:
+                    self.assertTrue(entered.wait(5))
+                    appended = pool.submit(append_failure)
+                    self.assertTrue(append_started.wait(5))
+                    self.assertFalse(append_done.wait(0.1))
+                finally:
+                    release.set()
+                self.assertEqual(closed.result(timeout=5), "applied_decision")
+                self.assertEqual(appended.result(timeout=5)["id"], "E-after-close")
+        events = runtime.read_events(self.mission)
+        self.assertEqual(events[-2]["event_type"], "decision_applied")
+        self.assertEqual(events[-1]["id"], "E-after-close")
+        self.assertTrue(runtime._mission_completion_findings(runtime.read_mission(self.mission), events))
+
+    def test_interrupted_qualified_closure_recovers_once_from_prepared_contents(self):
+        complete_tasks(self.mission)
+        pass_requirements(self.mission)
+        trace_path = runtime.mission_paths(self.mission)["trace"]
+        real_write = runtime.write_text_atomic
+
+        def interrupt(path, *args, **kwargs):
+            if path == trace_path:
+                raise OSError("interrupted after journal")
+            return real_write(path, *args, **kwargs)
+
+        with mock.patch.object(runtime, "write_text_atomic", side_effect=interrupt):
+            with self.assertRaisesRegex(OSError, "interrupted after journal"):
+                runtime.apply_decision(self.mission, close_decision())
+        self.assertTrue(runtime.mission_paths(self.mission)["transaction"].exists())
+        self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
+        stable = snapshot(self.mission)
+        runtime.read_mission(self.mission)
+        self.assertEqual(snapshot(self.mission), stable)
+        events = runtime.read_events(self.mission)
+        self.assertEqual(sum(e["event_type"] == "decision_applied" for e in events), 1)
+        self.assertFalse(runtime.mission_paths(self.mission)["transaction"].exists())
 
 
 class EvidenceReferenceIntegrityTests(AuthorityTestCase):

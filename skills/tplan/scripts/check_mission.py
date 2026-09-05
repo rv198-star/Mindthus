@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate a tplan Mission runtime state.
 
-This checks runtime shape and acceptance evidence coverage only. It does not judge
-Mission value or semantic correctness.
+This checks runtime shape and reports historical reference/closure inconsistencies.
+It does not judge Mission value or semantic correctness.
 """
 
 from __future__ import annotations
@@ -13,8 +13,10 @@ from pathlib import Path
 
 from tplan_runtime import (
     TplanError,
-    read_execution_trace,
+    _mission_completion_findings,
+    _validate_trace_evidence_references,
     read_mission,
+    read_outcome_attribution_snapshot,
     runtime_provenance_report,
     validate_execution_trace,
     validate_mission,
@@ -32,11 +34,18 @@ def main() -> int:
     args = parse_args()
     mission_dir = Path(args.mission_dir)
     runtime_report = None
+    integrity_warnings = []
     try:
-        mission = read_mission(mission_dir)
+        read_mission(mission_dir)  # Preserve the check command's pending-recovery behavior.
+        snapshot = read_outcome_attribution_snapshot(mission_dir)
+        mission, trace, events = snapshot["mission"], snapshot["trace"], snapshot["events"]
         errors = validate_mission(mission)
         errors.extend(validate_mission_directory_identity(mission, mission_dir))
-        errors.extend(validate_execution_trace(mission, read_execution_trace(mission_dir)))
+        errors.extend(validate_execution_trace(mission, trace))
+        if not errors:
+            integrity_warnings.extend(_validate_trace_evidence_references(trace, events))
+            if mission["mission"]["status"] == "completed":
+                integrity_warnings.extend(_mission_completion_findings(mission, events))
         runtime_report = runtime_provenance_report(mission)
         if runtime_report["severity"] == "error":
             errors.extend(
@@ -54,6 +63,8 @@ def main() -> int:
         return 1
 
     print("mission_check: ok")
+    for warning in integrity_warnings:
+        print(f"integrity_warning: {warning}")
     if runtime_report is not None and runtime_report["severity"] == "warning":
         for item in runtime_report["diagnostics"]:
             print(f"runtime_warning: {item['code']}: {item['message']}")

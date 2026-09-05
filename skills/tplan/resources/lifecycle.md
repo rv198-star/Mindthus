@@ -75,8 +75,16 @@ Before a new lifecycle transaction is journaled, its `refs.evidence_ids` resolve
 uniquely against the locked Mission evidence stream plus that transaction's prepared
 events. Artifact paths belong in `artifact_refs`. Historical references remain intact;
 only references used by the new transaction must resolve. Reference existence is a
-structural property, separate from acceptance sufficiency. Recovery replays the
-already-prepared transaction contents rather than reinterpreting later evidence.
+structural property, separate from acceptance sufficiency. Standalone trace append
+uses the same resolver under its existing lock. The compatibility `write_mission`
+entry delegates updates of an existing Mission to the canonical transaction boundary.
+Recovery replays the already-prepared transaction contents rather than reinterpreting
+later evidence.
+
+`check_mission.py` reports historical unresolvable references and unsupported current
+completion claims as `integrity_warning` diagnostics from one locked snapshot. These
+warnings preserve historical files and do not certify their acceptance. Its successful
+shape-check exit is separate from the prerequisites for a new completion write.
 
 ## Decision State
 
