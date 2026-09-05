@@ -135,7 +135,7 @@ STATE_REF_KINDS_BY_CONSIDERATION = {
 COMPARISON_FIELDS = (
     "allocation_outcome", "candidate_assessments", "bundle_decision", "allocation_ledger",
     "next_tranche", "investment_ceiling", "authorization_horizon", "reserve",
-    "missing_information",
+    "missing_information", "dependency_resolutions",
 )
 OVERRIDE_FIELDS = (
     "override_reason", "approved_by", "authority_ref", "risk_acceptance_scope",

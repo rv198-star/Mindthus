@@ -193,6 +193,26 @@ next tranche is one cumulative commitment for the decision window and must remai
 that demand. Ordinal levels and indivisible blocks remain within the same declared
 candidate boundary.
 
+### Dependency Authorization
+
+`depends_on` records hard prerequisites. When the packet contains dependency edges,
+every judgment includes `dependency_resolutions`, one record per edge:
+`dependent_id`, `prerequisite_id`, `status`, `evidence_refs`, and `reason`.
+`status` is `satisfied`, `unmet`, or `unknown`. Satisfied edges cite evidence already
+bound to the prerequisite candidate. Reference checks do not prove semantic completion.
+
+Current allocations and immediately authorized next tranches require satisfied
+prerequisites. Selecting a prerequisite in a bundle is planning, not completion. A
+satisfied prerequisite may receive zero new resources. An unresolved prerequisite can
+be executed first; a successor may instead be conditional on named completion evidence.
+Unresolved cycles cannot define an executable selected path. Satisfied edges stop
+traversal, so completed historical cycles do not create false deadlocks.
+
+No-dependency v0.3 inputs retain their existing shape. Dependency-bearing old judgments
+without resolutions are insufficient for new authorization; prepare a new run from source
+evidence. Repair never adds dependency evidence or rewrites old Agentic judgments.
+This contract does not add a self-issued waiver/permission channel.
+
 ### Evidence
 
 Every evidence item records:

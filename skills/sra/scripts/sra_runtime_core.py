@@ -13,6 +13,10 @@ from typing import Any, Iterable
 
 from sra_domain import *  # noqa: F403
 from sra_structure import validate_structure
+from sra_dependencies import (
+    dependency_edges, dependency_resolution_schema, validate_dependencies,
+    normalized_dependency_resolutions,
+)
 
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$")
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$")
@@ -1532,6 +1536,9 @@ def _decision_output_schema(
         "stage": {"type": "string", "const": stage},
         "packet_hash": {"type": "string", "const": packet["packet_hash"]},
     })
+    if dependency_edges(packet, id_field):
+        required.append("dependency_resolutions")
+        props["dependency_resolutions"] = dependency_resolution_schema(packet, id_field)
     if require_conflict_resolutions:
         state_ids = [item["state_id"] for item in packet.get("state_items", [])]
         props["conflict_resolutions"] = {
@@ -2100,6 +2107,8 @@ def _validate_decision_judgment(
         findings.append(
             "candidate_assessments must cover every packet candidate exactly once"
         )
+
+    findings.extend(validate_dependencies(judgment, packet, id_field))
 
     selected_bundle_members = _validate_bundle_decision(
         judgment,
@@ -2689,6 +2698,8 @@ def normalized_decision_core(
             "review_time": reserve.get("review_time"),
         },
         "missing_information": sorted(missing) if isinstance(missing, list) else [repr(missing)],
+        **({"dependency_resolutions": normalized_dependency_resolutions(judgment, mapping)}
+           if "dependency_resolutions" in judgment else {}),
     }
 
 
@@ -2755,6 +2766,8 @@ def build_reconciliation_packet(
     )
     state_ids = set(situated_judgment.get("state_refs", []))
     for judgment in (challenge_judgment, situated_judgment):
+        for resolution in judgment.get("dependency_resolutions", []):
+            evidence_ids.update(resolution.get("evidence_refs", []))
         for assessment in judgment.get("candidate_assessments", []):
             if not isinstance(assessment, dict):
                 continue
