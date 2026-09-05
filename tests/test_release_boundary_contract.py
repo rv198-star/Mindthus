@@ -7,6 +7,34 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class ReleaseBoundaryContractTests(unittest.TestCase):
+    def test_dual_license_public_boundary_is_declared(self):
+        license_text = (REPO / "LICENSE").read_text(encoding="utf-8")
+        commercial_text = (REPO / "COMMERCIAL-LICENSE.md").read_text(encoding="utf-8")
+        readme = (REPO / "README.md").read_text(encoding="utf-8")
+        for phrase in (
+            "GNU AFFERO GENERAL PUBLIC LICENSE",
+            "Version 3, 19 November 2007",
+            "TERMS AND CONDITIONS",
+            "END OF TERMS AND CONDITIONS",
+        ):
+            self.assertIn(phrase, license_text)
+        for phrase in (
+            "AGPLv3",
+            "commercial dual licensing",
+            "closed-source commercial",
+            "private SaaS",
+            "commercial integration",
+            "separate commercial license",
+            "not legal advice",
+        ):
+            self.assertIn(phrase, commercial_text)
+        self.assertIn("https://github.com/rv198-star/Mindthus/issues", commercial_text)
+        self.assertIn("prompt-level", commercial_text)
+        self.assertIn("AGPLv3 + commercial dual licensing", readme)
+        self.assertIn("closed-source commercial use requires a separate commercial license", readme)
+        self.assertIn("SPDX `AGPL-3.0-only`", readme)
+        self.assertIn("rather than encoded in the SPDX field", readme)
+
     def test_current_release_log_does_not_record_exact_suite_count(self):
         release_log = (REPO / "docs" / "releases" / "v1.9.1.md").read_text(
             encoding="utf-8"
