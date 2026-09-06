@@ -25,6 +25,12 @@ request_id:int,revision_id:int,text:str}}.
 role is editor or reader; view working or published; surface list/detail/export.
 Return EXACTLY {status:'ready'|'loading'|'empty',revision:int|null,text:str|null,
 approved:bool,editable:bool}. Preserve input state. All ids within record are valid.
+editable is permission metadata for the selected content, NOT a declaration that
+an edit button is rendered on that surface. The projection returns IDENTICAL
+fields for list/detail/export for the same state,role,view. Each UI may freely
+choose whether and where to render an editing control; that never changes this
+permission metadata. In a ready editor working view editable is true. For a ready
+editor published view use the one globally selected allowed published-edit policy.
 The outer shell changes active_request whenever key, role, view or desired revision
 changes. Requests can resolve out of order. A response may belong to a different
 key, earlier request, or obsolete revision. Only display an admitted response for

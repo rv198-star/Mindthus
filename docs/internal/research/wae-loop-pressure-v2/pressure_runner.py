@@ -26,9 +26,12 @@ spec=importlib.util.spec_from_file_location('frozen_wave1_transport',OLD/'runner
 T=importlib.util.module_from_spec(spec); spec.loader.exec_module(T)
 REPO=T.REPO
 CONFIG={**T.CONFIG,
- 'experiment':'mindthus-207-pressure-wave2-v1',
- 'max_requests':40,'max_call_seconds':120,'max_cumulative_client_seconds':1800,
- 'max_batch_wall_seconds':7200,'batch_output_cap':250000,
+ 'experiment':'mindthus-207-pressure-wave2-v2',
+ 'max_requests':36,'max_call_seconds':120,'max_cumulative_client_seconds':1738.815305,
+ 'max_batch_wall_seconds':7200,'batch_output_cap':247267,
+ 'campaign_started_epoch':1788724956.2450905,
+ 'predecessor':{'commit':'d92ddb34dc8d584865421a69fe75fd0d03090cc2','calls':4,'client_seconds':61.184695,'output_charged':2733,'status':'stopped: F permission versus rendered-control ambiguity'},
+ 'campaign_max_requests':40,
  'owner_cycle_output_cap':6000,'owner_total_output_cap':12000,
  'boundary_output_cap':1500,'max_read_bytes_per_trial':24000,
  'baseline_definition':'A existing WAE, B new guide in normal evidence-enabled authoring, C explicit recurring boundary assessment; A/B may retrieve/probe across requests',
@@ -38,7 +41,7 @@ CONFIG={**T.CONFIG,
  'S_scope':'segmented-data planning and Markdown page representation; no rendering',
 }
 T.CONFIG=CONFIG
-T.TRACKED_INPUTS=[HERE/p for p in ('cases.py','evaluation_v2.py','pressure_runner.py','selftest_v2.py','PROTOCOL.md')]
+T.TRACKED_INPUTS=[HERE/p for p in ('cases.py','evaluation_v2.py','pressure_runner.py','selftest_v2.py','PROTOCOL.md','PRELIMINARY-STOP.json')]
 T.TRACKED_INPUTS += [OLD/p for p in ('runner.py','fixtures.py','evaluation.py','candidate.md')]
 T.TRACKED_INPUTS += [REPO/'skills/wae/SKILL.md',REPO/'skills/wae/resources/ownership-closure.md']
 TERMINAL={'completed','need_input','stop','unconverged','request_failed','protocol_error'}
@@ -60,7 +63,7 @@ def init(out):
         trials.append({'case':c,'arm':a,'status':'pending','owner_calls':0,'owner_output_charged':0,
           'artifact':case['initial'],'owner_response':None,'observed':copy.deepcopy(case['preloaded']),
           'observations':[],'actions':[],'read_bytes':0})
-    T.save_state(out,{'started_at':T.utc(),'started_epoch':time.time(),'calls':0,'client_seconds':0.0,'output_charged':0,
+    T.save_state(out,{'started_at':T.utc(),'started_epoch':CONFIG['campaign_started_epoch'],'calls':0,'client_seconds':0.0,'output_charged':0,
       'probe':'pending','blocked':None,'current':0,'trials':trials})
     return m
 
