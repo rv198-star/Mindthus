@@ -57,13 +57,15 @@ All other internal fields and algorithms are your choice. Initial selection is a
 select event: {kind:'select',record:str,role:'editor'|'reader',tab:'working'|'published'}.
 Every select advances epoch by one. receive event: {kind:'receive',record:str,
 epoch:int,rev:int,text:str}; never advances epoch. save event:
-{kind:'save',ok:bool,new_rev:int,text:str}; new_rev is unused in that record and
-higher than existing ids; text is nonempty. Authorized successful saves advance
+{kind:'save',ok:bool,new_rev:int,text:str}; when a record is selected, new_rev is
+unused and higher than its existing ids; otherwise it is any positive int. Text
+is nonempty. Save-before-selection is an admitted but unauthorized event. Authorized successful saves advance
 epoch by one. Other saves do not. Events are individually applied, no implicit fetch.
 The selected role/tab persist across a save. No edit permission without ready content.
 The output screen has exactly: {status:'ready'|'loading'|'empty',record:str|null,
 rev:int|null,text:str|null,approved:bool,can_edit:bool,error:null|'forbidden'|'save_failed'}.
-With no selection all nullable fields are null, booleans false, status empty.
+With no selection record/rev/text are null, booleans false, status empty.
+The error field always follows the save-error rules, including before selection.
 Otherwise record is the selected id even when loading/empty. Null content means
 rev/text null and approved/can_edit false. Errors use the last save result until
 selection or successful save clears them; receives leave errors unchanged.

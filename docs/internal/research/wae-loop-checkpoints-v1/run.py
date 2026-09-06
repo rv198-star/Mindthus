@@ -21,10 +21,12 @@ sys.path.insert(0,str(OLD))
 spec=importlib.util.spec_from_file_location('checkpoint_transport',OLD/'runner.py')
 T=importlib.util.module_from_spec(spec); spec.loader.exec_module(T)
 REPO=T.REPO
-CONFIG={**T.CONFIG,'experiment':'mindthus-207-handoff-checkpoints-g1-v1',
- 'max_requests':27,'max_call_seconds':120,'max_cumulative_client_seconds':1800,
+CONFIG={**T.CONFIG,'experiment':'mindthus-207-handoff-checkpoints-g1-v2',
+ 'max_requests':21,'max_call_seconds':120,'max_cumulative_client_seconds':1560.407628,
+ 'campaign_started_epoch':1788730342.3296797,'campaign_max_requests':27,
+ 'predecessor':{'revision':'55600314b2f364c94bdac7f88bf8cdf702ee1c45','requests':6,'client_seconds':239.592372,'output_tokens':11625},
  'max_batch_wall_seconds':7200,'owner_total_output_cap':12000,'owner_cycle_output_cap':6000,
- 'receiver_output_cap':6000,'boundary_output_cap':1500,'batch_output_cap':200000,
+ 'receiver_output_cap':6000,'boundary_output_cap':1500,'batch_output_cap':188375,
  'max_prompt_bytes':70000,
  'treatment':'guidance-strategy comparison under the same bounded controller; B ordinary work, C unchanged v0.2 WAE guide',
  'F_scope':'event reducer plus detail/list/export semantic projections; no browser/real production',
@@ -32,7 +34,7 @@ CONFIG={**T.CONFIG,'experiment':'mindthus-207-handoff-checkpoints-g1-v1',
  'evaluation':'pre-frozen behavior oracle + same-session nonblind author semantic audit; no independent-human certification',
  'promotion':'research only; G1 is not G2 convergence or G3 incremental value'}
 T.CONFIG=CONFIG
-T.TRACKED_INPUTS=[HERE/p for p in ('cases.py','oracle.py','run.py','selftest.py','PROTOCOL.md','G0.md')]
+T.TRACKED_INPUTS=[HERE/p for p in ('cases.py','oracle.py','run.py','selftest.py','PROTOCOL.md','G0.md','PREDECESSOR-STOP.json')]
 T.TRACKED_INPUTS += [OLD/p for p in ('runner.py','fixtures.py','candidate.md')]
 T.TRACKED_INPUTS += [HERE.parent/'wae-loop-evaluation-review-v1/MVP-ACCEPTANCE.zh-CN.md']
 TERMINAL={'completed','need_input','stop','unconverged','request_failed','protocol_error'}
@@ -79,7 +81,7 @@ def init(out):
         ts.append({'case':c,'arm':a,'status':'pending','owner_calls':0,'owner_output_charged':0,
           'artifact':CASES[c]['initial'],'policy':CASES[c]['initial_policy'] or '',
           'owner_results':[],'observations':[],'actions':[]})
-    T.save_state(out,{'started_at':T.utc(),'started_epoch':time.time(),'calls':0,'client_seconds':0.,'output_charged':0,
+    T.save_state(out,{'started_at':T.utc(),'started_epoch':CONFIG['campaign_started_epoch'],'calls':0,'client_seconds':0.,'output_charged':0,
        'probe':'pending','blocked':None,'current':0,'trials':ts})
     # Exact treatment is visible before any model call, independent of results.
     T.once(out/'treatment.json',{'common':COMMON,'B':BASELINE,'C':(OLD/'candidate.md').read_text(),

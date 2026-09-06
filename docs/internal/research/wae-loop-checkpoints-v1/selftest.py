@@ -17,6 +17,11 @@ class OracleTests(unittest.TestCase):
         for ref in (oracle.REFERENCE,oracle.REFERENCE_2):
             for policy in ('READ_ONLY','EDIT_CURRENT'):
                 r=oracle.check(ref,policy); self.assertEqual('pass',r['status'],r)
+    def test_preselection_error_is_not_erased(self):
+        self.bad("if sel is None: return result", "if sel is None: result['error']=None; return result")
+    def test_preselection_save_has_explicit_public_contract(self):
+        self.assertIn('Save-before-selection is an admitted but unauthorized event.',cases.INTERFACE)
+        self.assertNotIn('all nullable fields are null',cases.INTERFACE)
     def test_policies_are_behaviorally_different(self):
         a=oracle.suite('READ_ONLY'); b=oracle.suite('EDIT_CURRENT')
         self.assertNotEqual(a,b)

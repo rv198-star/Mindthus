@@ -28,6 +28,9 @@ def suite(policy,public=False):
         traces.append(dict(name=name,events=events,expected=expectations,epochs=epochs,
           final_records=copy.deepcopy(RECORDS if final_records is None else final_records),obligation=obligation))
     add('initial',[],[output()],[0],obligation='API/no selection')
+    add('save-before-selection',[dict(kind='save',ok=True,new_rev=99,text='unused'),receive(),select()],
+        [output(),output(error='forbidden'),output(error='forbidden'),output('loading','A')],
+        [0,0,0,1],obligation='G4/G5 no selection still retains forbidden error until select')
     # Values below are fixtures, not calculated by the reference implementation.
     selected={('A','working'):(2,'private A',False),('A','published'):(1,'approved A',True),
               ('B','working'):(5,'approved B',True),('B','published'):(5,'approved B',True),
