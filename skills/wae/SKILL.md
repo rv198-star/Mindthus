@@ -85,45 +85,29 @@ Use this only when the Minimal WAE Check is insufficient.
 
 ### Ownership Closure Mode / 所有权闭合
 
-Ownership Closure is a conditional extension after a semantic control assignment, not a
-default extra ceremony. Use it only when delegation may hide another semantic decision.
+Ownership Closure is a conditional extension after a semantic control assignment. Use it
+when delegation may hide another semantic decision. If downstream must invent an
+upstream-owned result-changing choice, diagnose `Semantic Ownership Leakage` and refine
+the owner/contract.
 
-Trigger signals include:
+Close through either the **Mechanical Boundary** or an authorized Agentic handoff. Core
+rule: **Ownership follows semantic choice; Workflow follows deterministic consequence.**
+Ownership follows semantic choice, not implementation depth. Evidence can reopen closure
+only when it reveals a missing semantic choice; an implementation defect in an already
+complete choice is execution repair, not Ownership Boundary Refinement.
 
-- a semantic owner delegates to a repository, adapter, helper, generator, template,
-  mapper, or other generic component;
-- the delegate still has multiple reasonable result-changing behaviors;
-- the delegate must interpret prose, names, field shapes, heuristics, or hidden context;
-- runtime Evidence shows that end-to-end behavior is not determined by the declared
-  owner's contract;
-- a supposedly mechanical layer must invent semantics for unknown input.
+Read `resources/ownership-closure.md` for the full trigger, closure, Evidence, WAE/TPlan,
+and anti-loop rules.
 
-When triggered:
+### Explicit WAE Loop Mode / 显式启用的委派深度循环
 
-1. Name the current semantic owner and the result-changing choices it should own.
-2. Inspect only delegations that may carry those choices downstream.
-3. If a delegate still needs semantic/domain judgment or must choose among multiple
-   reasonable result-changing outcomes, diagnose `Semantic Ownership Leakage`.
-4. Refine the owner or structured contract until the semantic choice is explicit, then
-   re-evaluate the next relevant boundary.
-5. Stop at the `Mechanical Boundary`: complete structured input determines admitted
-   behavior uniquely, no domain judgment remains, mechanical validation is sufficient,
-   and unknown/underspecified input fails closed.
+WAE Loop is **off by default** and enters only through explicit bounded activation. While
+active, each relevant responsibility handoff must pass a WAE checkpoint. `refine` uses one
+bounded Refinement Unit that must resolve and absorb before handoff. There is no minimum
+number of rounds: sufficient work may handoff in one pass.
 
-Core rule:
-
-> Ownership follows semantic choice; Workflow follows deterministic consequence.
-
-Ownership follows semantic choice, not implementation depth. A difficult or deeply
-nested executor can remain Workflow-controlled after semantics are complete.
-
-Evidence may reopen a previous closure judgment when it reveals a missing
-result-changing choice. A syntax error, malformed transform, timeout, or other defect in
-implementing an already-complete choice is execution repair, not Ownership Boundary
-Refinement.
-
-Read `resources/ownership-closure.md` for the detailed closure test, evidence-feedback
-rules, WAE/TPlan boundary, anti-loop guardrails, and frozen acceptance cases.
+Pilot traces live under `.mindthus/wae-loop/`; `wae-loop-run.json` is the portable
+retrieval artifact. Read `resources/delegation-loop.md` for the full runtime contract.
 
 ## Guardrails / 从属补漏
 
@@ -176,7 +160,8 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
   ordinary boundary, responsibility, process, or evidence questions.
 - Ownership Closure is a WAE semantic-boundary judgment, not Mission/task runtime. TPlan
   continues to own long-running state, ordering, blockers, checkpoints, recovery, and
-  resumption.
+  resumption. Explicit WAE Loop activation stores only the bounded control-mode/trace
+  facts needed by the pilot; it does not become a second Mission runtime.
 - Do not use WAE to slow down low-risk formatting or deterministic work.
 - Do not let worksheet completion, schema shape, or clean structure replace judgment.
 - Do not treat human escalation as a routine fourth control layer.
@@ -186,7 +171,10 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 
 Read `resources/methodology.md` when you need quadrants, risk modulators, runtime governance, boundary questions, hard rules, anti-patterns, or the practical decision table.
 
-- `resources/ownership-closure.md` — conditional Ownership Closure semantics, Mechanical Boundary stopping test, Evidence feedback, and WAE/TPlan boundary.
+- `resources/ownership-closure.md` — conditional Ownership Closure semantics, Mechanical/Agentic handoff closure, Evidence feedback, and WAE/TPlan boundary.
+- `resources/delegation-loop.md` — explicitly activated delegation-depth mode, handoff checkpoints, trace contract, and real-project pilot boundary.
+- `resources/wae-loop-trace.schema.json` — observable pilot trace schema; it does not judge semantic sufficiency.
+- `scripts/delegation_loop.py` — enable/status/checkpoint/work/refine-result/absorb/outcome/finish/validate runtime for project-local `.mindthus/wae-loop/` traces.
 - `resources/fidelity-contract.md` — WAE fidelity contract for v0.9.
 - `templates/fidelity-output.json` — example v0.9 fidelity output shape.
 - `scripts/validate_wae_output.py` — validate fidelity contract output shape with the shared core.

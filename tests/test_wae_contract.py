@@ -215,17 +215,48 @@ class WaeContractTests(unittest.TestCase):
     def test_ownership_closure_resource_defines_stop_and_non_loop_boundaries(self):
         text = CLOSURE.read_text(encoding="utf-8")
         for phrase in (
-            "Ownership must extend to the last non-mechanical decision point",
+            "Every result-changing remainder has an explicit authorized owner before delegation",
             "Trigger signals",
             "Semantic Ownership Leakage",
-            "Mechanical Boundary / 停止条件",
+            "Closure Boundaries / 停止条件",
+            "Agentic Handoff Boundary",
             "Unknown input fails closed",
             "Not a generic loop",
-            "Evidence is feedback, not WAE state",
+            "Evidence is feedback, not semantic state",
             "Boundary with TPlan",
             "WAE must not create duplicate Mission state or recovery machinery",
         ):
             self.assertIn(phrase, text)
+
+    def test_explicit_wae_loop_is_default_off_and_persists_only_bounded_trace_state(self):
+        skill = (WAE / "SKILL.md").read_text(encoding="utf-8")
+        loop = (WAE / "resources" / "delegation-loop.md").read_text(encoding="utf-8")
+        normalized = " ".join(skill.split())
+        normalized_loop = " ".join(loop.split())
+        for phrase in (
+            "Explicit WAE Loop Mode",
+            "WAE Loop is **off by default**",
+            "each relevant responsibility handoff must pass a WAE checkpoint",
+            ".mindthus/wae-loop/",
+            "wae-loop-run.json",
+            "There is no minimum number of rounds",
+        ):
+            self.assertIn(phrase, normalized)
+        for phrase in (
+            "WAE Loop 默认关闭",
+            "Mechanical handoff",
+            "Agentic handoff",
+            "trace.jsonl",
+            "private reasoning",
+            "guard-handoff",
+            "Parent Handoff Artifact",
+            "Refinement Unit",
+            "Refine Result",
+            "Absorb",
+            "Host-level enforcement varies",
+            "TPlan continues to own scheduling",
+        ):
+            self.assertIn(phrase, normalized_loop)
 
     def test_public_doc_explains_closure_without_turning_wae_into_tplan(self):
         text = WAE_DOC.read_text(encoding="utf-8")

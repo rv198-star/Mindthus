@@ -15,7 +15,12 @@ Ownership Closure adds a conditional second question:
 
 The target invariant is:
 
-> Ownership must extend to the last non-mechanical decision point.
+> Every result-changing remainder has an explicit authorized owner before delegation.
+
+A deterministic remainder may close at the Mechanical Boundary. An Agentic remainder
+may close earlier in implementation depth when it has been explicitly delegated to a
+capable downstream semantic owner and no upstream-owned meaning remains for that owner
+to invent.
 
 The governing rule is:
 
@@ -67,9 +72,12 @@ semantic choice.
 4. **Refine when needed.** If such a choice remains, the boundary is not closed. Diagnose
    `Semantic Ownership Leakage`, move the choice to an explicit semantic owner or make
    it explicit in a structured contract, then re-evaluate the next delegation boundary.
-5. **Stop at the Mechanical Boundary.** Once the remaining behavior is uniquely
-   derivable from complete structured input and unknown input fails closed, stop
-   refinement and keep the remainder mechanical/Workflow-controlled.
+5. **Close through the correct downstream owner.** Use either:
+   - **Mechanical Boundary** when complete structured input uniquely determines admitted
+     behavior and unknown input fails closed; or
+   - **Agentic Handoff Boundary** when the current Owner's choices are closed and the
+     remaining result-changing choices explicitly belong to an authorized downstream
+     semantic owner with enough material/support for the declared use.
 
 This is boundary convergence, not task decomposition. The analysis may revisit WAE as
 new evidence appears, but it does not create a generic execution loop.
@@ -93,9 +101,11 @@ Do not diagnose leakage merely because implementation is complex. A complicated 
 builder, transaction engine, renderer, or protocol stack can remain mechanical when its
 input already determines behavior uniquely.
 
-## Mechanical Boundary / 停止条件
+## Closure Boundaries / 停止条件
 
-Ownership Boundary Refinement must stop when the remaining work satisfies all of these:
+### Mechanical Boundary
+
+Ownership Boundary Refinement can stop at a mechanical executor when the remaining work satisfies all of these:
 
 1. **Complete structured input** — every result-changing admitted choice needed by the
    downstream executor is represented explicitly.
@@ -109,8 +119,23 @@ Ownership Boundary Refinement must stop when the remaining work satisfies all of
 5. **Unknown input fails closed** — unsupported or underspecified input is rejected or
    surfaced; it is not converted into a semantic guess.
 
-This is a WAE-local stopping test. It does not authorize a new schema, validator,
-runtime gate, or persistent state machine.
+This is the mechanical stopping test.
+
+### Agentic Handoff Boundary
+
+A downstream Agentic owner is also a valid closure point when all of these hold:
+
+1. the current Owner has completed the result-changing choices it is responsible for;
+2. remaining choices are explicitly inside the downstream Owner's authority rather than
+   accidental ambiguity;
+3. the downstream Owner has the material, capability basis, tools, and validation
+   surface needed for the declared handoff use;
+4. the handoff does not require the downstream Owner to invent upstream-owned facts,
+   reconcile unresolved upstream conflicts, or silently change a reserved decision.
+
+Multiple legitimate downstream implementations are compatible with closure. The current
+Owner does not need to make the downstream work mechanically unique before handing it to
+an Agentic owner.
 
 Ownership follows semantic choice, **not implementation depth**.
 
@@ -146,15 +171,20 @@ Only the first can reopen Ownership Closure.
 
 ### Not unlimited Agentic expansion
 
-Do not move deterministic work into Agentic control because it is difficult, deeply
-nested, domain-specific in syntax, or implemented in many layers. Stop as soon as the
-Mechanical Boundary test passes.
+Keep deterministic work mechanical once its semantics are complete. For Agentic
+handoffs, stop upstream refinement once current-owner choices are closed and the
+remaining choices legitimately belong downstream. Difficulty, nesting, domain-specific
+syntax, or code depth alone never justify pulling work upward.
 
-### Evidence is feedback, not WAE state
+### Evidence is feedback, not semantic state
 
-Ownership Closure does not require a WAE ledger, checkpoint history, task tree, or
-persistent refinement state. Evidence may be supplied by the surrounding work and may
-change the WAE judgment without becoming a new WAE runtime.
+Ordinary Ownership Closure does not require a WAE ledger, checkpoint history, task tree,
+or persistent refinement state. Evidence may be supplied by the surrounding work and
+may change the WAE judgment without becoming semantic truth by being logged.
+
+The explicitly activated WAE Loop pilot persists a lightweight activation pointer and
+observable trace so real projects can be replayed. That trace records control facts and
+outcomes; it does not replace the business artifact, Evidence, or TPlan Mission state.
 
 ## Boundary with TPlan
 
@@ -213,10 +243,14 @@ Ownership Closure does not:
 - create a new top-level Mindthus methodology;
 - replace WAE's Minimal Check or make deep analysis the default;
 - decompose Mission/Task/SubTask/Step structures;
-- own retry scheduling, task recovery, or checkpoints;
-- require persistent WAE state;
-- authorize new governance gates or schemas;
+- own retry scheduling, task recovery, or Mission checkpoints;
+- require persistent state in ordinary non-loop use;
+- treat a runtime trace/schema as proof that semantic closure is correct;
 - treat helper names, architecture layers, or code depth as proof of ownership.
+
+The explicit WAE Loop mode is a bounded runtime extension for delegation-depth research.
+It is off by default and uses `resources/delegation-loop.md` plus the project-local trace
+runtime without changing the above ownership semantics.
 
 Use the frozen acceptance casebook at
 `tests/wae/ownership_closure_acceptance_cases.md` as the implementation and regression
