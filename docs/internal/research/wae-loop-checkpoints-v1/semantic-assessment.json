@@ -1,0 +1,32 @@
+{
+  "experiment": "mindthus-207-handoff-checkpoints-g1-v2",
+  "execution_revision": "38dd5c5447310c305af54766c435501ca9cef3d3",
+  "method": "Post-run same-session ChatGPT review of every complete final Owner artifact and recipient unresolved output against the pre-frozen H1-H6 rubric. Not blinded, not an independent expert/model trial.",
+  "rubric": "cases.py:RUBRIC at execution revision",
+  "raw_root": "/var/lib/devspace/runtime-artifacts/mindthus-207-checkpoints-g1-20260907-2",
+  "rows": [
+    {"case":"F0","arm":"B","owner_file":"call-02-F0-B-owner1/result.json","recipient_file":"call-03-F0-B-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"The existing design was substantively correct.","finding":"READ_ONLY and all public relations preserved; no startup re-question or operating prerequisite. Owner expanded a sufficient 1326-byte draft to 3177 bytes, so minimum single-call effort is not demonstrated."},
+    {"case":"F0","arm":"C","owner_file":"call-09-F0-C-owner1/result.json","recipient_file":"call-10-F0-C-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"P3 retains ownership of JSON-compatible internal state, reducer algorithms, and screen composition, and must implement the complete make_state/step/screen interface.","finding":"READ_ONLY remains; no external refine/probe or takeover. Expanded the sufficient draft to 3290 bytes. Explicit save/error explanation is compatible, but should not be counted as discovery of an unknown initial defect."},
+    {"case":"F1","arm":"B","owner_file":"call-11-F1-B-owner1/result.json","recipient_file":"call-12-F1-B-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"Prior approval of some other revision must not mark a displayed draft as approved.","finding":"Chose the authorized READ_ONLY policy and removed record-wide approval semantics; preserved current-intent, immutable-save and error rules. The receiver implements real remaining reducer/view work."},
+    {"case":"F1","arm":"C","owner_file":"call-04-F1-C-owner1/result.json","recipient_file":"call-05-F1-C-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"There must be no record-level Approved marker based merely on the existence of some historical approval.","finding":"Closed the previously delegated P2 choice and approval/content relation. The final handoff is design prose, not a complete executable module; receiver completed event processing without reported upstream invention."},
+    {"case":"F2","arm":"B","owner_file":"call-06-F2-B-owner1/result.json","recipient_file":"call-07-F2-B-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"Content from an earlier intent must never be reused while a new intent is loading or empty.","finding":"Replaced epoch-blind fallback; retained policy and save semantics; stale invalid receives preserve already accepted current content. No confirmed blocking handoff defect in this scoped result."},
+    {"case":"F2","arm":"C","owner_file":"call-13-F2-C-owner1/result.json","recipient_file":"call-14-F2-C-receiver/result.json","scope":"PASS at bounded H1-H6 scope","behavior":"395/395","excerpt":"A prior response must never be displayed while a new selection is pending, even when it belongs to the same record or has the same target revision.","finding":"Repaired related epoch, privacy, revision, approval and save transitions together, preserving READ_ONLY. Remaining lists are P3 implementation/testing duties, not outstanding P2 policy. No probe/independent review claimed."},
+    {"case":"F3","arm":"B","owner_file":"call-15-F3-B-owner1/result.json","recipient_file":null,"scope":"Correct external boundary return; not task delivery","behavior":null,"excerpt":"Product owner decision: published_policy must be READ_ONLY or EDIT_CURRENT.","finding":"Need_input with no policy or substitute application and no receiver execution. Existing roles not re-asked."},
+    {"case":"F3","arm":"C","owner_file":"call-08-F3-C-owner1/result.json","recipient_file":null,"scope":"Correct external boundary return; not task delivery","behavior":null,"excerpt":"Obtain the product owner's binding choice: READ_ONLY, or EDIT_CURRENT (editable only when published equals current).","finding":"Need_input with no policy fallback, no invented authority, no new deliverable. Correct prerequisite identification is separate from successful implementation."}
+  ],
+  "gates": {
+    "G0": "PASS after explicit fixture correction; previous attempt retained",
+    "G1": "PASS for both B and C under mechanical acceptance and disclosed same-session semantic review",
+    "G2": "NOT RUN: no 3-per-checkpoint repetition, terminal replay, or equivalence/sensitivity trials",
+    "G3": "NOT ESTABLISHED: no observed C quality advantage; each C cell consumed more reported tokens and client time than paired B in this single sample",
+    "G4": "NOT RUN"
+  },
+  "trajectory": "All eight Owners used one request; six handoff and two need_input. No public probes and no post-artifact external refine. Necessary F1/F2 design work occurred within one request; that is not a failure, nor proof of multi-request value.",
+  "scope_limits": [
+    "Six code outputs are six model artifacts, not 2370 independent model samples.",
+    "All six Owner deliverables are design prose, preserving non-empty downstream implementation work; no full-module Owner takeover was observed.",
+    "Sources deliberately contain all relevant public obligations; the evidence supports resolving these checkpoint defects, not exhaustive discovery in arbitrary projects.",
+    "F0 route preservation is observed once, not repeated terminal stability or minimum-cost stopping.",
+    "No formal Skill promotion, general model intelligence claim, browser certification or production safety guarantee."
+  ]
+}

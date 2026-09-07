@@ -1,0 +1,19 @@
+{
+  "stopped_experiment": "mindthus-207-handoff-checkpoints-g1-v1",
+  "revision": "55600314b2f364c94bdac7f88bf8cdf702ee1c45",
+  "raw_root": "/var/lib/devspace/runtime-artifacts/mindthus-207-checkpoints-g1-20260907-1",
+  "manifest_sha256": "6676372f392a2b53eeade309fa33acda3c3b80d2f3a2eec3d487a5ea949fbae9",
+  "state_file_sha256": "ab554c361330b3d9abbb97deac1e511358faabddfa6acd3b8197ca3f0dd5c48b",
+  "reason": "F1-C recipient exposed a fixture API contradiction: all nullable screen fields null before selection versus unconditional forbidden save error. Save-before-selection validity was not explicit.",
+  "assessment": "Fixture/source ambiguity, not accepted as a model failure or as clean G1 qualification. Original outputs and behavior scores remain unchanged. No receiver run for the already produced F2-B owner draft.",
+  "retained": {"requests": 6, "client_seconds": 239.592372, "output_tokens": 11625},
+  "campaign_started_epoch": 1788730342.3296797,
+  "campaign_max_requests": 27,
+  "v2_remaining_requests": 21,
+  "v2_remaining_client_seconds": 1560.407628,
+  "v2_remaining_output_tokens": 188375,
+  "correction": "Explicitly admit save-before-selection as unauthorized. Only content/record fields are null before selection; error follows save outcome and persists. Add an independent no-selection save/receive/select trace and mutation regression.",
+  "rescore_old_outputs": false,
+  "automatic_retries": 0,
+  "new_authority_or_method_rule": false
+}
