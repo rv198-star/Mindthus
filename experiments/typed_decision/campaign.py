@@ -18,7 +18,7 @@ from .providers import TypeSafeJevProvider
 from .session import Limits, RecoveryRequired, Session, implementation_digest, read_record, write_once, safe_failure_reason
 
 DOCS = Path('docs/internal/research/typed-decision')
-FREEZE = DOCS / 'c01-v2-development-freeze.json'
+FREEZE = DOCS / 'c01-v2-r1-development-freeze.json'
 DATA = DOCS / 'c01-v2-zh-development.json'
 LIMITS = Limits(max_calls=78, max_seconds=300, max_request_bytes=98304)
 SCOPE = 'c01-v2-zh-development-typesafe-1'
@@ -43,6 +43,10 @@ def prepare(repo: Path, provider, recovery: Path | None = None,
     for path, expected in freeze['file_sha256'].items():
         require(sha(repo / path) == expected, 'frozen source/data changed:' + path)
     require(freeze['graph'] == c01.GRAPH, 'frozen graph changed')
+    if freeze.get('semantic_parent'):
+        parent = freeze['semantic_parent']
+        require(sha(repo / parent['source_ref']) == parent['record_sha256'],
+                'semantic parent observation changed')
     cases = json.loads((repo / DATA).read_text())['cases']
     require(len(cases) == freeze['case_count'] and len({c['id'] for c in cases}) == len(cases),
             'case identity/count mismatch')
@@ -66,9 +70,11 @@ def prepare(repo: Path, provider, recovery: Path | None = None,
         for owner in sorted(c01.METHODS):
             c01.run(RequestCollector(owner), case['context'], repo)
     admission = {
-        'scope': SCOPE, 'implementation': implementation_digest(),
+        'scope': SCOPE + ('-semantic-r1' if freeze['semantic_revisions_used'] else ''),
+        'implementation': implementation_digest(),
         'provider_configuration': provider_configuration(provider), 'limits': asdict(LIMITS),
-        'request_allowlist': sorted(allowlist), 'max_cost_usd': .25,
+        'request_allowlist': sorted(allowlist),
+        'max_cost_usd': .25 - freeze.get('prior_attempts_reserved_usd', 0),
         'reserve_per_call_usd': RESERVE_PER_CALL,
         'authorization_ref': 'Owner request: frozen Chinese development, official serving first; advisory only',
         'freeze_sha256': sha(repo / FREEZE),
@@ -76,7 +82,10 @@ def prepare(repo: Path, provider, recovery: Path | None = None,
     manifest = {
         'schema_version': 'mindthus.c01-live-development.v1', 'admission': admission,
         'case_ids': [c['id'] for c in cases], 'dataset_sha256': sha(repo / DATA),
-        'graph_sha256': digest(c01.GRAPH), 'semantic_revisions_used': 0,
+        'graph_sha256': digest(c01.GRAPH),
+        'semantic_revisions_used': freeze['semantic_revisions_used'],
+        'semantic_parent': freeze.get('semantic_parent'),
+        'series_prior_reserved_usd': freeze.get('prior_attempts_reserved_usd', 0),
         'purpose': 'development-local-judgments-only', 'downstream_consumption': 'not_authorized',
         'pricing': {'source': 'https://docs.typesafe.ai/models', 'checked_on': '2026-09-22',
                     'input_usd_per_million': PRICE_PER_MILLION, 'output_usd': 0,
@@ -100,22 +109,23 @@ def prepare(repo: Path, provider, recovery: Path | None = None,
         require(isinstance(recovery_reason, str) and bool(recovery_reason.strip())
                 and len(recovery_reason) <= 512, 'technical recovery reason required')
         prior = parent.get('technical_recovery', {})
-        ordinal = prior.get('ordinal', 0) + 1
+        ordinal = prior.get('ordinal', freeze.get('technical_recoveries_used', 0)) + 1
         require(ordinal <= 2, 'technical recovery limit reached')
         intents = list((recovery / 'calls').glob('*/intent.json')) + list(
             recovery.glob('transport-diagnostic-*/intent.json'))
         require(all((p.parent / 'outcome.json').exists() for p in intents),
                 'unresolved parent call; recovery cannot resubmit')
-        reserved = prior.get('prior_reserved_usd', 0) + len(intents) * RESERVE_PER_CALL
+        reserved = parent.get('series_prior_reserved_usd', 0) + len(intents) * RESERVE_PER_CALL
+        manifest['series_prior_reserved_usd'] = reserved
         require(reserved + RESERVE_PER_CALL <= .25, 'series budget exhausted')
         admission['max_cost_usd'] = .25 - reserved
-        admission['scope'] = SCOPE + '-technical-recovery-' + str(ordinal)
+        admission['scope'] += '-technical-recovery-' + str(ordinal)
         manifest['technical_recovery'] = {
             'ordinal': ordinal, 'parent_root': str(recovery), 'reason': recovery_reason,
             'parent_summary_sha256': sha(recovery / 'summary.json'),
             'parent_manifest_sha256': sha(recovery / 'campaign.json'),
             'prior_reserved_usd': reserved, 'series_cost_cap_usd': .25,
-            'same_semantic_sample': True, 'semantic_revisions_used': 0,
+            'same_semantic_sample': True, 'semantic_revisions_used': freeze['semantic_revisions_used'],
         }
     return manifest, cases
 
@@ -270,7 +280,7 @@ def summarize(rows, reports, manifest, stopped) -> dict:
             'resolved_runtimes': last.get('resolved_runtimes', []),
             'cost_coverage': 'partial; design/review/downstream task costs not measured here',
             'claim_ceiling': 'Agreement with preauthored development labels only; no host or holdout qualification',
-            'semantic_revision_used': 0, 'holdout': 'not_run', 'abc': 'not_run'}
+            'semantic_revision_used': manifest['semantic_revisions_used'], 'holdout': 'not_run', 'abc': 'not_run'}
 
 
 def run(repo: Path, root: Path, provider, manifest, cases) -> dict:

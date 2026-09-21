@@ -974,9 +974,9 @@ class LiveCarrierTests(unittest.TestCase):
             write_once(parent / directory / 'intent.json', {'attempt': True})
             write_once(parent / directory / 'outcome.json', {'completed': True})
         recovered, _ = campaign.prepare(ROOT, provider, parent, 'Add safe failure observation')
-        self.assertEqual(recovered['technical_recovery']['ordinal'], 1)
+        self.assertEqual(recovered['technical_recovery']['ordinal'], 2)
         self.assertEqual(recovered['technical_recovery']['parent_root'], str(parent.resolve()))
-        self.assertAlmostEqual(recovered['admission']['max_cost_usd'], .25 - 2 * campaign.RESERVE_PER_CALL)
+        self.assertAlmostEqual(recovered['admission']['max_cost_usd'], manifest['admission']['max_cost_usd'] - 2 * campaign.RESERVE_PER_CALL)
         self.assertEqual(recovered['dataset_sha256'], manifest['dataset_sha256'])
         (parent / 'calls/first/outcome.json').unlink()
         with self.assertRaisesRegex(ContractError, 'unresolved parent call'):

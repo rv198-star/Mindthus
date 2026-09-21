@@ -1,0 +1,391 @@
+{
+  "source_commit": "b945c40c5037f8898dde48948bc290e0093efed5",
+  "summary": {
+    "abc": "not_run",
+    "abstentions": [],
+    "applicability_matches": 5,
+    "campaign": "c01-v2-zh-development-typesafe-1-technical-recovery-1",
+    "case_results": [
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "48252e678dc5f9a063e6df46bbe9673eab073b8f0aa00366434a46bead7579bf",
+          "cdb85e14df8707bf0d3beed492e48ba9f3a12edbdbf331907004798e943cc5fe",
+          "7c3975e6e630fbe78a89b951aa72833ca4ae3ec0ac304176358a2a39f8b5ea38"
+        ],
+        "case_id": "D01",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-contention",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sra",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "d398197ef88ac684ce94c02e5a1acdb26ab83f0ea0290eec6012bec2b48f9765"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "4e2a2078af10ba77656eca5a52642ca33de94b490e52a56e1f2f203be28d6e4c"
+        ],
+        "case_id": "D02",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-contention",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "1a4c64681921dee61edeeb9633d4c1e94de76ec89e06197772df2a0a17c00388"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "a74f738764ba55297a01e35e91282ab7db450de745f1daee7da116759b89baa4"
+        ],
+        "case_id": "D03",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "acquire_information",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-missing-facts",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "acquire_information",
+          "reason": "decision_critical_information_required",
+          "route": "acquire_information",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "5b1debd58a39e17dfddd04ca9ffdc40633affd4dbc7b553f5b958721b5c3e92b"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "a83048bacfe0a9f0738e0e3875cff4b1569d03d411be5434da89584342cdb816",
+          "a75f27436d6e9969740868145dcba4d38528267ca5bb46ee3fabf6ee7cfb6273",
+          "5a409472f5b459e9e713dd577fac08b351c7e9bee8c1c022574e53528ff523b6"
+        ],
+        "case_id": "D04",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-missing-facts",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sra",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "bb498612558f2b417ab687de14d787e83df95bc10185d21070cc7129fb3530b8"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "8f086dd94179df654ac82c1765ab44247ab3f7c37ecc40db34f27bb6f4945259",
+          "9a2a477da5da3556ef188d0ef7e5f34a7de6d0c0ba972402e5a183c3376e283c",
+          "3991ee1598da12b5ad693c5af41301872d447cd0eb9bc14e25ce2f6a9b6669b5"
+        ],
+        "case_id": "D05",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "direction-versus-carrier",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "mpg",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "4d89610ca3fd27fbf207dd809f8aa3d81da6091ea9a3fcc6bbb0b7ad30a11732"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "5ce613a1479045f7110afe73cbaa2ae0d9b0e848bb56869c0c930a384553426e",
+          "e6dd4863a65c494935b6208267a5edabc0d05756a0a1569175f821ca080c5595",
+          "67ec5ca116300f60f76ea5e36a8eca4e73539aa996db25af8f606611c739adad"
+        ],
+        "case_id": "D06",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "direction-versus-carrier",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sela",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "d31466056a84f93efca9f25324af9b2de2f2e9e2e2609e8d2ba15e3379951385"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "10c7bd1b6ad319dcd2adda9fb998a422d9cdc226bdbaa549a2a064a091dc5a4a",
+          "0352b3af97b579efcd303165cf3fc30e421600b8d3acf0ff945cd6cd9e8415e0",
+          "492dc4767ad2baff49494bb2bc887077202b75b426c1681eca071266d3ab05e7"
+        ],
+        "case_id": "D07",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "agent-control-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "wae",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "00b9b905ea0f7942df41a20afb580c1bc323d540af9c6434a86d09a80e1c7b5c"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "11983126fa2578fdeaffde6915aa1675c3d7e31e28b8df665528c807bc407fe7"
+        ],
+        "case_id": "D08",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "agent-control-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "bef6e79f6f2e3f7e6b44652ab3ed9f1e09f0120a87fc0b9971dde4c2cbfb57f6"
+      },
+      {
+        "applicability_match": false,
+        "call_keys": [
+          "e60324a8ba239bb88001015618ecde2a5c67c5266ca7a6ff321a985f67ed210e"
+        ],
+        "case_id": "D09",
+        "d0_match": true,
+        "entry_match": false,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "tvg",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "artifact-value-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": false,
+        "route_match": false,
+        "run_id": "233dddb7bc0f06add20fe8daba98032b7b26e0eb4cdeb5ac85fe20de79b6c1dc"
+      }
+    ],
+    "cases_completed": 9,
+    "cases_planned": 26,
+    "claim_ceiling": "Agreement with preauthored development labels only; no host or holdout qualification",
+    "cost_coverage": "partial; design/review/downstream task costs not measured here",
+    "d0_matches": 9,
+    "development_thresholds_met": false,
+    "entry_matches": 8,
+    "estimated_cost_usd_from_reported_tokens": 0.002642976,
+    "evidence_kind": "live_model",
+    "false_interventions": [],
+    "family_pairs": {
+      "agent-control-versus-format": {
+        "all_match": true,
+        "case_ids": [
+          "D07",
+          "D08"
+        ]
+      },
+      "allocation-contention": {
+        "all_match": true,
+        "case_ids": [
+          "D01",
+          "D02"
+        ]
+      },
+      "allocation-missing-facts": {
+        "all_match": true,
+        "case_ids": [
+          "D03",
+          "D04"
+        ]
+      },
+      "artifact-value-versus-format": {
+        "all_match": false,
+        "case_ids": [
+          "D09"
+        ]
+      },
+      "direction-versus-carrier": {
+        "all_match": true,
+        "case_ids": [
+          "D05",
+          "D06"
+        ]
+      }
+    },
+    "holdout": "not_run",
+    "no_match_coverage": {
+      "correct": 0,
+      "observed": 0
+    },
+    "obligation_matches": 9,
+    "owner_cases_completed": 6,
+    "owner_matches": 5,
+    "provider_status_failures": [],
+    "resolved_runtimes": [
+      {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      }
+    ],
+    "route_matches": 8,
+    "semantic_cases_completed": 9,
+    "semantic_revision_used": 0,
+    "stop_reason": "hard_judgment_sent_to_direct",
+    "technical_recovery": {
+      "ordinal": 1,
+      "parent_manifest_sha256": "2fe8e7149df95ac5f6ebf1801c2016c6c87e274d1462d73326020479eedaaa2e",
+      "parent_root": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-dev-1",
+      "parent_summary_sha256": "aa8bcc827054422f7a38e0d89af0125ac914f71aaf06f879a542988a9af473e7",
+      "prior_reserved_usd": 0.010752,
+      "reason": "safe-failure-observation",
+      "same_semantic_sample": true,
+      "semantic_revisions_used": 0,
+      "series_cost_cap_usd": 0.25
+    },
+    "trial_inference_seconds": 15.894247626998549,
+    "trial_usage": {
+      "cost_usd": null,
+      "input_tokens": 62928,
+      "output_tokens": 1568
+    },
+    "unique_calls": 19
+  },
+  "wire_records": 19,
+  "original_failure_cause": "still unknown; original batch not replaced",
+  "total_series_attempts": 23,
+  "series_reserved_usd": 0.061824,
+  "actual_total_cost_usd": null,
+  "mechanical_verification": {
+    "targeted": 79,
+    "full_suite_run": 1163,
+    "failed": 0,
+    "skipped": 7,
+    "lifecycle": "80/80",
+    "full_suite_log_sha256": "e8a1dc994795db6fefcc75fb089130751c99dd6e36fdfb919c68437ddf6cdd19"
+  },
+  "frozen_labels_unchanged": true,
+  "semantic_revisions_used": 0,
+  "interpretation": "First 8 development rows agree on entry/route and selected owners; D09 is a frozen-label catastrophic mismatch and stops this run. No holdout or value qualification."
+}

@@ -24,9 +24,10 @@ not the active workspace. OCI is no longer the working location.
 Owner explicitly invoked TPlan to finish #209–#212 in order. Runtime:
 `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/mission`.
 Installed skill runtime is pinned at `mindthus/1.9.1/skills/tplan`; human_in_loop=0,
-risk_tolerance=25, resource_sufficiency=50. The active work is failure observability
-under C01. Shared risk R1 records the original loss of validation evidence. C02 remains
-pending while that shared issue is unresolved. C03–C08 remain portfolio candidates only.
+risk_tolerance=25, resource_sufficiency=50. Failure observability is repaired at `b945c40c5`, verified with 79 targeted tests,
+1163 full-suite tests (7 skipped), and 19 official calls. Shared risk R1 is resolved for
+future observation; the lost original response remains unknown. Active work is the one
+allowed C01 semantic revision. C02 remains pending until C01 reaches its bounded outcome. C03–C08 remain portfolio candidates only.
 
 A named source-only technical recovery adds safe validation codes and whitelist numeric
 wire evidence without changing C01 questions/labels/validators or Engine/Provider
@@ -124,14 +125,24 @@ all relevant canonical SKILL sources, the graph, source and semantic plan. Expec
 are separate author judgments. Official development was attempted and stopped on a
 technical validation failure; semantic revisions used: 0/1. Holdout has not been created/frozen or evaluated.
 
-Next: repair the narrow failure-observation gap before any new technical recovery run.
-Retain a bounded local validation code and safe response/usage evidence, without remote
-exception text, headers or credentials. The original failure cannot be reconstructed;
-none of the diagnostic successes explains it. A recovery run needs a named technical
-delta, parent failure identity and cumulative accounting, not deletion/reset of this
-trial. Keep the C01 contract, case labels, validators and one semantic-revision allowance
-unchanged until an observed failure justifies a change. Unchanged passed tests need no
-rerun. OpenRouter remains a separately reported backup, not an automatic substitution.
+Technical recovery 1 stopped at D09 after 19 calls: D01–D08 matched their frozen entry,
+route and selected-owner labels; D09 returned direct execution instead of the expected
+artifact-value intervention. See `c01-v2-typesafe-recovery-1.json`. Model snapshot stayed
+`jev-1.13.0`, 62928 input / 1568 output tokens, estimated USD 0.002642976; actual cost
+is unknown. All 19 calls have safe wire observations. No original failed batch was replaced.
+
+One bounded semantic revision is now used (1/1): J1 clarifies artifact-value judgment
+versus fully prescribed transformation; no other judgment/control/source truth changes.
+The competing simple-synthesis interpretation of D09 is documented; labels are not
+infallible. Cases/labels/criteria thresholds remain identical. See `c01-v2-r1-review.md`
+and `c01-v2-r1-development-freeze.json` (graph 2.1). Original freeze remains historical.
+
+Next: after final regression, execute the prepared revision-1 development root once:
+`/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-semantic-r1`.
+No call has occurred there at this checkpoint. Check actual journal and Mission checkpoint
+before resuming. Prior 23 attempts reserve USD 0.061824; remaining series reserve is
+USD 0.188176. No further semantic revision. A further severe semantic failure requires
+stop/narrow, not label changes, a second prompt revision, holdout tuning or another root.
 
 Only after development stabilizes may holdout be frozen and accepted once. Full A/B/C,
 native host consumption, net-value evidence and #212 remain unstarted. See
