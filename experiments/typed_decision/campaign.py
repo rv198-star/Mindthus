@@ -7,13 +7,15 @@ import hashlib
 import getpass
 import json
 import os
+import math
+import re
 import sys
 from pathlib import Path
 
 from . import c01
 from .contracts import ContractError, DecisionResult, digest, project_context, provider_configuration, require
 from .providers import TypeSafeJevProvider
-from .session import Limits, RecoveryRequired, Session, implementation_digest, read_record, write_once
+from .session import Limits, RecoveryRequired, Session, implementation_digest, read_record, write_once, safe_failure_reason
 
 DOCS = Path('docs/internal/research/typed-decision')
 FREEZE = DOCS / 'c01-v2-development-freeze.json'
@@ -34,7 +36,8 @@ def request_key(specs, context) -> str:
                    'context_sha256': digest(project_context(specs, context))})
 
 
-def prepare(repo: Path, provider) -> tuple[dict, list]:
+def prepare(repo: Path, provider, recovery: Path | None = None,
+            recovery_reason: str | None = None) -> tuple[dict, list]:
     """Explore possible control paths to admit exact requests; never consult labels."""
     freeze = json.loads((repo / FREEZE).read_text())
     for path, expected in freeze['file_sha256'].items():
@@ -83,7 +86,95 @@ def prepare(repo: Path, provider) -> tuple[dict, list]:
         'retry_policy': 'none; unknown in-flight call stops; never delete/reset a trial to retry',
         'egress': 'frozen synthetic context + exact relevant canonical contracts/questions only',
     }
+    if recovery is not None:
+        recovery = recovery.resolve()
+        parent = read_record(recovery / 'campaign.json')
+        terminal = read_record(recovery / 'summary.json')
+        require(terminal['stop_reason'] == 'provider_or_contract_failure',
+                'technical recovery requires a terminal technical failure')
+        require(parent['admission']['implementation'] != admission['implementation'],
+                'technical recovery requires a named source delta')
+        require(parent['admission']['freeze_sha256'] == admission['freeze_sha256']
+                and parent['dataset_sha256'] == manifest['dataset_sha256']
+                and parent['graph_sha256'] == manifest['graph_sha256'], 'semantic freeze changed')
+        require(isinstance(recovery_reason, str) and bool(recovery_reason.strip())
+                and len(recovery_reason) <= 512, 'technical recovery reason required')
+        prior = parent.get('technical_recovery', {})
+        ordinal = prior.get('ordinal', 0) + 1
+        require(ordinal <= 2, 'technical recovery limit reached')
+        intents = list((recovery / 'calls').glob('*/intent.json')) + list(
+            recovery.glob('transport-diagnostic-*/intent.json'))
+        require(all((p.parent / 'outcome.json').exists() for p in intents),
+                'unresolved parent call; recovery cannot resubmit')
+        reserved = prior.get('prior_reserved_usd', 0) + len(intents) * RESERVE_PER_CALL
+        require(reserved + RESERVE_PER_CALL <= .25, 'series budget exhausted')
+        admission['max_cost_usd'] = .25 - reserved
+        admission['scope'] = SCOPE + '-technical-recovery-' + str(ordinal)
+        manifest['technical_recovery'] = {
+            'ordinal': ordinal, 'parent_root': str(recovery), 'reason': recovery_reason,
+            'parent_summary_sha256': sha(recovery / 'summary.json'),
+            'parent_manifest_sha256': sha(recovery / 'campaign.json'),
+            'prior_reserved_usd': reserved, 'series_cost_cap_usd': .25,
+            'same_semantic_sample': True, 'semantic_revisions_used': 0,
+        }
     return manifest, cases
+
+
+def observed_transport(root: Path, transport):
+    """Capture numeric/schema facts before adapter validation; no headers or remote prose."""
+    def numeric(value):
+        if type(value) in (int, float) and math.isfinite(value):
+            return value
+        return {'invalid_type': type(value).__name__}
+
+    def call(url, headers, body, timeout):
+        record = {'body_sha256': digest(body), 'context_sha256': digest(body['state']),
+                  'question_ids': sorted(body['questions'])}
+        path = root / 'wire' / (digest(body) + '.json')
+        require(not path.exists(), 'wire observation already exists; reconcile before resubmission')
+        try:
+            raw = transport(url, headers, body, timeout)
+        except Exception as exc:
+            record['failure'] = safe_failure_reason(exc)
+            write_once(path, record)
+            raise
+        record['response_type'] = type(raw).__name__
+        if isinstance(raw, dict):
+            model = raw.get('model')
+            record['model'] = model if isinstance(model, str) and re.fullmatch(
+                r'(?:typesafe/)?jev-\d+\.\d+(?:\.\d+)?(?:-\d{8})?', model) else None
+            record['model_type'] = type(model).__name__
+            usage = raw.get('usage')
+            record['usage_type'] = type(usage).__name__
+            if isinstance(usage, dict):
+                record['usage'] = {k: numeric(usage[k]) for k in
+                                   ('input_tokens', 'output_tokens', 'cost') if k in usage}
+            answers = raw.get('answers')
+            record['answers_type'] = type(answers).__name__
+            record['answers'] = {}
+            if isinstance(answers, dict):
+                record['extra_answer_count'] = len(set(answers) - set(body['questions']))
+                for key, question in body['questions'].items():
+                    answer = answers.get(key)
+                    item = {'answer_type': type(answer).__name__}
+                    if isinstance(answer, dict):
+                        item['type'] = answer.get('type') if answer.get('type') in (
+                            'choice', 'noul', 'score') else None
+                        # This carrier's frozen C01 graph uses only Choice.
+                        options = question['criteria']
+                        choice = answer.get('choice')
+                        item['choice'] = choice if isinstance(choice, str) and choice in options else None
+                        item['confidence'] = numeric(answer.get('confidence'))
+                        probabilities = answer.get('probabilities')
+                        item['probabilities_type'] = type(probabilities).__name__
+                        if isinstance(probabilities, dict):
+                            item['extra_option_count'] = len(set(probabilities) - set(options))
+                            item['probabilities'] = {k: numeric(probabilities[k])
+                                                     for k in options if k in probabilities}
+                    record['answers'][key] = item
+        write_once(path, record)
+        return raw
+    return call
 
 
 def observed_answers(report: dict, root: Path) -> dict:
@@ -151,7 +242,8 @@ def summarize(rows, reports, manifest, stopped) -> dict:
     route_matches = sum(r['route_match'] for r in semantic)
     d0_matches = sum(r['d0_match'] for r in rows)
     no_match = [r for r in semantic if r['expected']['entry_mode'] == 'unclear']
-    return {'campaign': SCOPE, 'evidence_kind': 'live_model', 'cases_completed': len(rows),
+    return {'campaign': manifest['admission']['scope'],
+            'technical_recovery': manifest.get('technical_recovery'), 'evidence_kind': 'live_model', 'cases_completed': len(rows),
             'cases_planned': len(manifest['case_ids']), 'stop_reason': stopped,
             'entry_matches': entry_matches, 'route_matches': route_matches,
             'd0_matches': d0_matches,
@@ -187,36 +279,43 @@ def run(repo: Path, root: Path, provider, manifest, cases) -> dict:
     require(read_record(root / 'campaign.json') == manifest, 'campaign differs from prepared manifest')
     require(not (root / 'summary.json').exists(), 'campaign already finished; read its immutable summary')
     require(bool(os.environ.get('TYPESAFE_API_KEY')), 'missing_local_Typesafe_credential')
-    rows, reports, stopped = [], [], None
-    for case in cases:
-        with Session(root, provider, scope=SCOPE, limits=LIMITS,
-                     live_admission=manifest['admission']) as session:
-            report = c01.run(session, case['context'], repo)
-        # Labels are read by the evaluator only, after the model/graph result exists.
-        row = score_case(case, report, observed_answers(report, root))
-        rows.append(row)
-        reports.append(report)
-        stopped = stop_reason(case, report)
-        if stopped:
-            break
-        # Pricing bounds are independently checked against reported token telemetry.
-        for key in report['call_keys']:
-            used = read_record(root / 'calls' / key / 'outcome.json')['usage']
-            if used['input_tokens'] is not None and used['input_tokens'] > INPUT_TOKEN_CEILING:
-                stopped = 'reported_tokens_exceed_priced_ceiling'
-            if used['cost_usd'] is not None and used['cost_usd'] > RESERVE_PER_CALL:
-                stopped = 'reported_cost_exceeds_reserve'
-        if stopped:
-            break
-    summary = summarize(rows, reports, manifest, stopped)
-    write_once(root / 'summary.json', summary)
-    return summary
+    original_transport = provider.transport
+    provider.transport = observed_transport(root, original_transport)
+    try:
+        rows, reports, stopped = [], [], None
+        for case in cases:
+            with Session(root, provider, scope=manifest['admission']['scope'], limits=LIMITS,
+                         live_admission=manifest['admission']) as session:
+                report = c01.run(session, case['context'], repo)
+            # Labels are read by the evaluator only, after the model/graph result exists.
+            row = score_case(case, report, observed_answers(report, root))
+            rows.append(row)
+            reports.append(report)
+            stopped = stop_reason(case, report)
+            if stopped:
+                break
+            # Pricing bounds are independently checked against reported token telemetry.
+            for key in report['call_keys']:
+                used = read_record(root / 'calls' / key / 'outcome.json')['usage']
+                if used['input_tokens'] is not None and used['input_tokens'] > INPUT_TOKEN_CEILING:
+                    stopped = 'reported_tokens_exceed_priced_ceiling'
+                if used['cost_usd'] is not None and used['cost_usd'] > RESERVE_PER_CALL:
+                    stopped = 'reported_cost_exceeds_reserve'
+            if stopped:
+                break
+        summary = summarize(rows, reports, manifest, stopped)
+        write_once(root / 'summary.json', summary)
+        return summary
+    finally:
+        provider.transport = original_transport
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['prepare', 'run', 'report'])
     parser.add_argument('--state-root', type=Path, required=True)
+    parser.add_argument('--recovery-of', type=Path)
+    parser.add_argument('--recovery-reason')
     parser.add_argument('--prompt-key', action='store_true',
                         help='Read the official key with hidden input from a local terminal; never persist it')
     args = parser.parse_args(argv)
@@ -230,7 +329,7 @@ def main(argv=None) -> int:
             print(json.dumps(read_record(root / 'summary.json'), ensure_ascii=False, indent=2))
             return 0
         provider = TypeSafeJevProvider()
-        manifest, cases = prepare(repo, provider)
+        manifest, cases = prepare(repo, provider, args.recovery_of, args.recovery_reason)
         if args.action == 'prepare':
             if (root / 'campaign.json').exists():
                 require(read_record(root / 'campaign.json') == manifest, 'existing campaign changed')
@@ -238,7 +337,7 @@ def main(argv=None) -> int:
                 write_once(root / 'campaign.json', manifest)
             print(json.dumps({'prepared': str(root / 'campaign.json'), 'cases': len(cases),
                               'request_variants': len(manifest['admission']['request_allowlist']),
-                              'max_calls': LIMITS.max_calls, 'max_cost_usd': .25,
+                              'max_calls': LIMITS.max_calls, 'max_cost_usd': manifest['admission']['max_cost_usd'],
                               'inference_performed': False}))
         else:
             # Validate the prepared campaign before asking for any credential.

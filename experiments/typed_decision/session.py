@@ -33,6 +33,28 @@ from .contracts import (
 from .providers import ProviderError
 
 
+def safe_failure_reason(exc: Exception) -> str:
+    """Only known local validation codes or bounded HTTP status; never remote text."""
+    allowed = {
+        'resolved TypeSafe model differs from requested model', 'invalid resolved model',
+        'resolved TypeSafe provider changed', 'invalid Jev answer ids',
+        'Jev answer type mismatch', 'missing Jev value', 'missing native uncertainty',
+        'invalid distribution support', 'distribution not normalized', 'invalid probability',
+        'invalid confidence', 'choice is not an argmax', 'invalid usage value',
+        'out-of-contract choice', 'invalid provider usage shape',
+        'successful provider result requires resolved runtime',
+        'resolved runtime drift within trial', 'weighted rating/distribution mismatch',
+        'invalid weighted rating', 'deadline_exceeded', 'transport_failure',
+        'response_too_large', 'invalid_json_shape', 'invalid_json', 'redirect_rejected',
+    }
+    value = str(exc)
+    if value in allowed:
+        return type(exc).__name__ + ':' + value.replace(' ', '_')
+    if value.startswith('http_') and len(value) == 8 and value[5:].isdigit():
+        return type(exc).__name__ + ':' + value
+    return type(exc).__name__
+
+
 class RecoveryRequired(RuntimeError):
     """Original external call may have occurred; reconcile before any resubmission."""
 
@@ -327,7 +349,7 @@ class Session:
             batch = BatchResult({
                 spec.id: DecisionResult(
                     'provider_error',
-                    reason=type(exc).__name__,
+                    reason=safe_failure_reason(exc),
                 ) for spec in specs
             })
 

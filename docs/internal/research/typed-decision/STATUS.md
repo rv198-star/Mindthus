@@ -19,6 +19,22 @@ The independent recovery bundle remains at
 patch, exact edit operations and test logs. It is now historical recovery evidence,
 not the active workspace. OCI is no longer the working location.
 
+## TPlan sequential Mission
+
+Owner explicitly invoked TPlan to finish #209–#212 in order. Runtime:
+`/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/mission`.
+Installed skill runtime is pinned at `mindthus/1.9.1/skills/tplan`; human_in_loop=0,
+risk_tolerance=25, resource_sufficiency=50. The active work is failure observability
+under C01. Shared risk R1 records the original loss of validation evidence. C02 remains
+pending while that shared issue is unresolved. C03–C08 remain portfolio candidates only.
+
+A named source-only technical recovery adds safe validation codes and whitelist numeric
+wire evidence without changing C01 questions/labels/validators or Engine/Provider
+abstraction. See `c01-v2-technical-recovery.md`. The recovery manifest is prepared at
+`/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-recovery-1/campaign.json`.
+Its final regression/live outcome must be read from the Mission checkpoint on resume;
+do not resubmit or regenerate a trial root to bypass an existing record.
+
 ## Goal and boundaries
 
 Complete #211 C01 in sequence: contract correction, offline verification, frozen Chinese

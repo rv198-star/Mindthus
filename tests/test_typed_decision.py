@@ -930,5 +930,67 @@ class LiveCarrierTests(unittest.TestCase):
         self.assertEqual(len(self.network), 1)
 
 
+    def test_malformed_response_preserves_numeric_evidence_and_bounded_error(self):
+        def transport(*_):
+            return {'model': 'jev-1.13.0', 'answers': {
+                key: {'type': 'choice', 'choice': value, 'confidence': .7,
+                      'probabilities': probabilities, 'remote_text': 'fixture-secret'}
+                for key, value, probabilities in [
+                    ('entry_mode', 'mindthus_intervention', {'direct_execution': .1,
+                     'acquire_information': .1, 'mindthus_intervention': .7, 'unclear': .09}),
+                    ('unresolved_obligation', 'clear', {'clear': 1., 'present': 0., 'unclear': 0.})]},
+                'usage': {'input_tokens': 123, 'output_tokens': 45}, 'debug': 'fixture-secret'}
+        provider = TypeSafeJevProvider(transport=transport)
+        manifest, cases = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        result = campaign.run(ROOT, self.root, provider, manifest, cases)
+        outcome = read_record(next((self.root / 'calls').glob('*/outcome.json')))
+        self.assertEqual(outcome['results']['entry_mode']['reason'],
+                         'ContractError:distribution_not_normalized')
+        wire = read_record(next((self.root / 'wire').glob('*.json')))
+        self.assertEqual(wire['usage']['input_tokens'], 123)
+        self.assertEqual(wire['answers']['entry_mode']['probabilities']['unclear'], .09)
+        self.assertNotIn('fixture-secret', str(wire))
+        self.assertEqual(result['cases_completed'], 1)
+
+    def test_wire_observer_suppresses_remote_secret_values_and_extra_keys(self):
+        raw = {'model': 'fixture-secret', 'answers': {'test': {
+            'type': 'fixture-secret', 'choice': 'fixture-secret', 'confidence': 'fixture-secret',
+            'probabilities': {'yes': 'fixture-secret', 'no': .5, 'fixture-secret': .1}},
+            'fixture-secret': {}}, 'usage': {'input_tokens': 'fixture-secret'}}
+        body = {'state': {'text': 'fixture'}, 'questions': {'test': {'criteria': spec().criteria}}}
+        got = campaign.observed_transport(self.root, lambda *_: raw)('unused', {}, body, 1)
+        self.assertIs(got, raw)  # observation never fixes/rewrites model output
+        self.assertNotIn('fixture-secret', next((self.root / 'wire').glob('*.json')).read_text())
+
+    def test_technical_recovery_keeps_failure_identity_and_cumulative_reserve(self):
+        provider = self.native(lambda *_: 'yes')
+        parent = self.root / 'parent'
+        manifest, _ = campaign.prepare(ROOT, provider)
+        manifest['admission']['implementation'] = 'a' * 64
+        write_once(parent / 'campaign.json', manifest)
+        write_once(parent / 'summary.json', {'stop_reason': 'provider_or_contract_failure'})
+        for directory in ('calls/first', 'transport-diagnostic-1'):
+            write_once(parent / directory / 'intent.json', {'attempt': True})
+            write_once(parent / directory / 'outcome.json', {'completed': True})
+        recovered, _ = campaign.prepare(ROOT, provider, parent, 'Add safe failure observation')
+        self.assertEqual(recovered['technical_recovery']['ordinal'], 1)
+        self.assertEqual(recovered['technical_recovery']['parent_root'], str(parent.resolve()))
+        self.assertAlmostEqual(recovered['admission']['max_cost_usd'], .25 - 2 * campaign.RESERVE_PER_CALL)
+        self.assertEqual(recovered['dataset_sha256'], manifest['dataset_sha256'])
+        (parent / 'calls/first/outcome.json').unlink()
+        with self.assertRaisesRegex(ContractError, 'unresolved parent call'):
+            campaign.prepare(ROOT, provider, parent, 'Add safe failure observation')
+
+    def test_technical_recovery_rejects_unchanged_source_or_semantic_failure(self):
+        for index, reason in enumerate(('provider_or_contract_failure', 'hard_judgment_sent_to_direct')):
+            parent = self.root / str(index)
+            manifest, _ = campaign.prepare(ROOT, TypeSafeJevProvider())
+            write_once(parent / 'campaign.json', manifest)
+            write_once(parent / 'summary.json', {'stop_reason': reason})
+            with self.assertRaises(ContractError):
+                campaign.prepare(ROOT, TypeSafeJevProvider(), parent, 'No implementation delta')
+
+
 if __name__ == '__main__':
     unittest.main()
