@@ -1,0 +1,455 @@
+{
+  "schema_version": "mindthus.c01-live-observation.v1",
+  "source_commit": "dceb7bf25",
+  "root": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-semantic-r1",
+  "artifact_sha256": {
+    "calls/309ca5ddf32f9d7838e1e003ba2a526d93ef545442546fa481e4d8760bf105e1/intent.json": "7507340ea3b0f199b1a1aef91d6fe87af3abb47cf5df7bc9bbf861e250b3cf4c",
+    "calls/309ca5ddf32f9d7838e1e003ba2a526d93ef545442546fa481e4d8760bf105e1/outcome.json": "561055a3293e92c073a0575c773b1fc2cf4cd60528fde0deb1e269e28780fc85",
+    "calls/3cd24eb6c7afe4dc7d13b79c163048af048222531ed28af9380c6720bb56a452/intent.json": "7ac4cbbc7f4cd15a6fee073c524217f3b984172247905ed66012597384d1a66e",
+    "calls/3cd24eb6c7afe4dc7d13b79c163048af048222531ed28af9380c6720bb56a452/outcome.json": "6a1a3b0528828fbf198e96e56ca592fb6e2b045cfc9d96a490fd7eda0743cabb",
+    "calls/5f48fb56eab6d7d2b2176baa7c8b7711d509e8ed3bdf72d6843f7d99f5a5d4f5/intent.json": "e9a6978bc5e4d874ef6a4b4205ea2fae946208dd459109cbe09c8fdc83d9e73c",
+    "calls/5f48fb56eab6d7d2b2176baa7c8b7711d509e8ed3bdf72d6843f7d99f5a5d4f5/outcome.json": "2a56ad038b10d9f50da3f2ad926224d7ec652d9653ac0e2c5115aababf2c33c1",
+    "calls/6b836c0c30b81620405fb536630a7bbf652619efad1e722f59f89c79e7edf719/intent.json": "a003815b4abc5174b4a9a0005b97c8b9ff9453a35bae28e34fba9317fb676f66",
+    "calls/6b836c0c30b81620405fb536630a7bbf652619efad1e722f59f89c79e7edf719/outcome.json": "7ea87501f9f2782ca6689f5cdd3a039e0bf302dbcb235ae1a460a4f8d9f643d3",
+    "calls/7daa97e762a9bb4fae73424307e4423e70a8abfc564baeab3a61e288c1d23bce/intent.json": "35e69fc200e6a0fb1b6e3639997aed40fa7c147552e748927033a2bb74ba92fd",
+    "calls/7daa97e762a9bb4fae73424307e4423e70a8abfc564baeab3a61e288c1d23bce/outcome.json": "e2ff0270fa093026700abb8a60a81153c3a545b545eeeb55600474ea6a87ed98",
+    "calls/8b196a7af64233b201f71224e838f9e9e026378684482ac665b105645a342c41/intent.json": "5ad4990fbf595f8f82414328300f325fd79c362808ae58312182b4acd63080a3",
+    "calls/8b196a7af64233b201f71224e838f9e9e026378684482ac665b105645a342c41/outcome.json": "0685305aee27e3a0541024cdc2e414cb09bfabcf96243340026ca2c66b3a2017",
+    "calls/8fa00e47e13c67d8c05ac2fa94a6d040d6e8147803f0837ddb934025a19abcf7/intent.json": "ef53df8ac6f435d6f90e017fa59b50fbbcdf7c5d0c69fed769515cd443fa9eaf",
+    "calls/8fa00e47e13c67d8c05ac2fa94a6d040d6e8147803f0837ddb934025a19abcf7/outcome.json": "f7253d27df10a5e077e3f7510b4628d7a048dd416da3b6427e1d6c09dc5e2749",
+    "calls/a8d69f126c1c2b42193ed7bf1eebe21b32f5d4ea82383dcf62beb2d86a01d121/intent.json": "aa0b673c8518ace2cf22ceda4be32cdc583d20f8d39c4d844c0e83213df65eab",
+    "calls/a8d69f126c1c2b42193ed7bf1eebe21b32f5d4ea82383dcf62beb2d86a01d121/outcome.json": "111c2a938ceac0bb021b97cd354e22816e25213ab6d9807e99222c276dadb7f9",
+    "calls/adc0364da446ae7cb89aa1593af47dca8a6d3a4ba7e880bb5e6e5ae94fb54a8e/intent.json": "3d462bf0d7e68b1d262717b937ba178fa3e8d779afc7e5854840428b8c6a1d96",
+    "calls/adc0364da446ae7cb89aa1593af47dca8a6d3a4ba7e880bb5e6e5ae94fb54a8e/outcome.json": "0b4b4fd48d910cd91a7f1569f5b8b46dbb19477cbc416dd0f8529d4f95ccc21f",
+    "calls/b9b3784268af9d3c4c70f9c820f343c9a30b00cb9d0ec0ae7371982ab942d843/intent.json": "a25983c39cf44d601dc3dbe911ea2704ce60001ec32e377467c7bfec38209f03",
+    "calls/b9b3784268af9d3c4c70f9c820f343c9a30b00cb9d0ec0ae7371982ab942d843/outcome.json": "28569444c2933db9499901e549c60593d41d9bbf4e8b188ae1ebfaa33f9fe9c8",
+    "calls/bfe04d3ec842d292d15f9124df547e3521b19851acc2e7e98b9077d0b5f922f1/intent.json": "63e01c8408fdd21321e8c8d67905d1249f85282c88e016a6587617f1ccb77d78",
+    "calls/bfe04d3ec842d292d15f9124df547e3521b19851acc2e7e98b9077d0b5f922f1/outcome.json": "38539eee88b71deeb1503ead716f7597d5c97f2b8f43fa1112dae18b9ae5affc",
+    "calls/c8dfebf49fea799b86e42c1a68e5861d7da9abdee16aa87a49481f48c7bf1838/intent.json": "513b2520bdf2467c403d5565fa233a4b878f8d5f52c423c42fc90b851a1ae27c",
+    "calls/c8dfebf49fea799b86e42c1a68e5861d7da9abdee16aa87a49481f48c7bf1838/outcome.json": "9c1e97fe15ca67eb524639c9d5b32aa994f8c1663645c4b64d9a229c5e81fb28",
+    "calls/cab8e869e1287af5f68b0d80fa7919acfa87673ab4eef1ee41aa662327a2b0aa/intent.json": "a68d3dc300c8bbae93f1f0a0883f2940d22f2947006b8c6f41f83ef32a9b5e0b",
+    "calls/cab8e869e1287af5f68b0d80fa7919acfa87673ab4eef1ee41aa662327a2b0aa/outcome.json": "7f331a0581712dd4e2ecbf6a97ef831ec4db3366eb17be58c3d4d618b88c9798",
+    "calls/d269871be8c80a18e243ff1b814c1fb2cd5f448d36ca2b2ec9debb4461084b88/intent.json": "36348c32bce0209271d5a3a69f3c2eb02abac6c2a678df7b88647b362a1bcdfe",
+    "calls/d269871be8c80a18e243ff1b814c1fb2cd5f448d36ca2b2ec9debb4461084b88/outcome.json": "d577856150bb1bac5517ba0931acfbff689e796aa06b3d6b02e4317516319e09",
+    "calls/e683f5f99950880e60fe3fd1116d4b57ad31eef840a54624c244fe9a842e238b/intent.json": "1689ba948ba0333cf49a092b8a9c6b6e86883a29b069024bac70df06f0d78575",
+    "calls/e683f5f99950880e60fe3fd1116d4b57ad31eef840a54624c244fe9a842e238b/outcome.json": "a16735ec10a229b1db7de7a34e6999dbbfc5935b8a251e922331f05a52d5b5d1",
+    "calls/ee7b1ce8e2bdb250a3695ccced76d7bd0b0c4ce2ea27024c639d46111a713c8d/intent.json": "68635bfec88736de50605b2039a33fb45b64437e8a7e835900c2322afe5a89f9",
+    "calls/ee7b1ce8e2bdb250a3695ccced76d7bd0b0c4ce2ea27024c639d46111a713c8d/outcome.json": "9331e3d1155fa3f3057b7a1de1f001b53373bc891f8033e158769e2c754c1227",
+    "calls/f7c3376765f712594b33b7b879b8c535c4fc49746fc70a4dc79114b0a44ba1f2/intent.json": "9e2258b783c9b3f3bc58d675ab4501072834b66547cf8396064ea1f97b17b02b",
+    "calls/f7c3376765f712594b33b7b879b8c535c4fc49746fc70a4dc79114b0a44ba1f2/outcome.json": "336b3fd60c78c8ecde1414d80ea1dd26dfda0b135328ad2322c62860c4b9f858",
+    "calls/f886991a33a6a35311ecda8d5b38fce38f6117396d768ca2ace9c55d920b1a7a/intent.json": "a32cd798ef9bd90305dae30ca92b50d0a4348fdc2cf97e77c902511ce512ae71",
+    "calls/f886991a33a6a35311ecda8d5b38fce38f6117396d768ca2ace9c55d920b1a7a/outcome.json": "9d7ab9d6a46067eaf0d82513186cdfc540e660f0b95de38ba8810cf78990508a",
+    "calls/f8c281ef4395e64db603aeeb17443a68be9fdc83ab61a7142b5871373c265db6/intent.json": "c9a799906754797c8262ff7395af4e581817894539bb5a13919454d785d9285c",
+    "calls/f8c281ef4395e64db603aeeb17443a68be9fdc83ab61a7142b5871373c265db6/outcome.json": "51800241de89d5cf63c0ab6d84fce6558a39c435daeac21d9af20aee03629a57",
+    "campaign.json": "ec71c9e8dbeeb4bae093e0ccae695e4ba3cf067a564eb7e3eb1ffc3b2288a869",
+    "policy.json": "b987d6db40d8576860c7bcbc9af1e2028ca8ed1341bd687eca8a37c19cf5ed4b",
+    "resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+    "runs/0f53ef9be23a674842026c175dbd94c4ca50952a852f231d4bbcea83ac3f46dc.json": "59981a2ada7f87405142c4a59f8f6c88d28d1e0d093f1357e8d19efa1df0d16c",
+    "runs/4a69e60b5fec77793bc45d838ec05a5251272ee19d207ace2c1ac997ba3cffd5.json": "899cf33fcd6253e2eea2250284c4e3b3a04bb4ba9f34d50b21e4f57ac2c9b0d9",
+    "runs/5e04fe879a54be4383aa5559058f64983246b247d63f4fe0d78edf3150f87d05.json": "33df8f4cefdfc3477b0232e02263b42fc7be0e0919c60aef27f84a77bcba00ab",
+    "runs/69a8085bb84f851f02dff71d50a8891f6ee833d1644621b948d7dc7aba5858f5.json": "d17486b778f0a0fce714677ad2548ca1d744f27018902bf2eee488b68b1d8a6d",
+    "runs/6dfc8cb3b09f7b6a26209ed830d19feba1eeb3b2b277991f8caa5ee73c78ad09.json": "b0b6a9ea56d8c7bf7247f74be36491a0af8a07af7b6ce856d138c64579223624",
+    "runs/6fe4bda3c13948180b9c0b7f97bce32ffc022e70215ac4ba9616d97c4c345901.json": "3cd5593e3742743bc57b7c7a3ec61eceb74005263b28760e453eccef227a7c94",
+    "runs/98636ddbde58222464498077669986a5b422bcdecea001583eb70b93c5ba88de.json": "f244f9a8f217baeec19ca594fd852041d620c89b8f7512b6f794ad36b8ec296a",
+    "runs/acc3bdf0bdc0b63e6e39292e1d2fe58784a0c795b5d19c7b2f87aebfdcad689a.json": "286ebbba5d1f810845dc27ab55f6b66b01929b2318f5e5824cceb5d077fac24a",
+    "runs/f68e42de29d4e340b84b68c1dc1c45167f462b9d96e581f88321e2de8aed2b3f.json": "b97f1250be5e4f1081523b7908599074f5fae939d94f84b066e9d4178c57fca8",
+    "summary.json": "b202f9ce35898264b5cb190d980a22fa074426e0d0315ccf0ba8c2f7c04d84fa",
+    "wire/2276654a98e7ce80c93b9d61193250ec881eba6c73ed64b0cbab6e491708fd60.json": "64093dbc41a7655cd669ff35034af19b946e8089c01b5a8a7c859f153c20b9c3",
+    "wire/312804250a8a2a06ffdc5f6ffb923871113115a36b238b03645837bd45747d87.json": "91e245d367a4bd4912f9d4eb32972600a1d1a65299967047e4929d051abb75ef",
+    "wire/3b0c8b3bd9e1de4cd5bf4cf216a226e4df13e21bf4db72871d042012f8e340a6.json": "fc380c78d550f7178cd90dd0ef07faa67c49ee47738a5858e04523f8cfa84cca",
+    "wire/40d71df39fe783b9f7ea7edc02ddb6d1c1dd2aeb0c3880d579fa349b374f1f89.json": "ed7682c58115d0c31a9fe4a16eb3c48c0b5a849eb3466f369b25eeef0c079a22",
+    "wire/4ae2aaf18ba9db89370fdb54a6b7348b48c25cf7cd3d44a386ae1dff6218a887.json": "54796ef4e5e64f106c1a067141785b8cf79a1faa9a2ddd113426979a6030d31e",
+    "wire/4e212364cb314c9d7cae746b3ef1dad81c6e456346965d47825a7f3d6c6fb991.json": "fc302284f894e9a58ae4d377a46db94a7c9008f7b89be0297ee690904f5ff3df",
+    "wire/5dc9fa1cd028d45b8d235b31caaf7c44fe6c10e05998062795d417cde7c5c1b8.json": "73f5afe3fea9453160ae869f28ba90557c093b4f18c9a8ca35fe7fdf5fd6c561",
+    "wire/6cc5a8d3559f54d94341bb1bd742776e53ee475a862abdbdfb0ef705ab3c6c82.json": "32bca0aec95f6e3a9472dc5eafa60b4856dd26ad80fc628ff0442ead2c8176d1",
+    "wire/7a9c0b737374b0d8fd057c096b9f2b27d0fd9d024e09dc21ad2f8e622af94c5c.json": "95abdc5a0f375842d835a5bdc713a02c35189aaeb12d831985e6ed2b598b0bed",
+    "wire/7c23a9c32cf733ac67254fe4e8179b3dba7c66af9c881c43c1f0097f1885574f.json": "23c2f7ced09f316b9e3efde774236f63a7cb6e86920a72a48685705c97086b51",
+    "wire/93b2c8a21bcba6491d964390fe973eed4e2e674554796467a0fe9a5f4793a85c.json": "4ffeded9c4039218c9f34a2ca4bea673ed65262b73a9b32a502bd9a5ea864b8c",
+    "wire/b747806d9b486c6fd65f515f5cebc0b0ef34b6bc53020f5cd27ae2115b2feb93.json": "89dabb3aa6d2fe196c257f73823cf95347ce9091aba859146d742475e3411959",
+    "wire/c012fb5c1907c52b0a7a8519e0362870a0b304ffa2a1a7ec7f1c09acfa814bb7.json": "972d203175632168baee98110e8d31586b8684cd4150e1c4b599ab0955addbea",
+    "wire/d29981168da4e755fa15b2f273c2e70978d1c4c5daad7e7e1e32c5831e255f0c.json": "ad806a41c24563ecc531824389ea941741200e71f75c2f3c0118a35616aaac8f",
+    "wire/e0595c6b2408b347f879474e8596f4efcd68f092da75377210ca43112768a846.json": "f07f09951f7454e13497135d8c0472a4719fac192bf566d9d7179bcadb95c133",
+    "wire/e1393be4b927b836c963bf91aaf3eea68dd47d8a80758bc716d333015fdba8a9.json": "2d9be5eba4c002d9d23369dfe604725122a8c2653c9e0c35efe6f00bcf53ff76",
+    "wire/fb6b1a407fd78a96cdc611482d9513c7e75e621ced45d06c143eaae25c2bb9ee.json": "7a40471e357c7afa3b1ea3a1b173d859d320213c82e609b109f13cd6b8b5b916",
+    "wire/fefcec1eee64787fdf6c6031c73e4521491de3d223e3b6fcfa182635d7c55676.json": "56c140a4bc214d11e17fd28d662b4a57efe3b226bb6cad3015f4b21c1871dd4c",
+    "wire/ffd884ceb0d4de7ec5eb396d10e88d83591004a3de4979c056fa318c26166bf3.json": "0dc4ace357dce934b21d34ede7d4016c45615761f8a199c08012dc49754dca3d"
+  },
+  "summary": {
+    "abc": "not_run",
+    "abstentions": [],
+    "applicability_matches": 5,
+    "campaign": "c01-v2-zh-development-typesafe-1-semantic-r1",
+    "case_results": [
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "309ca5ddf32f9d7838e1e003ba2a526d93ef545442546fa481e4d8760bf105e1",
+          "b9b3784268af9d3c4c70f9c820f343c9a30b00cb9d0ec0ae7371982ab942d843",
+          "f7c3376765f712594b33b7b879b8c535c4fc49746fc70a4dc79114b0a44ba1f2"
+        ],
+        "case_id": "D01",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-contention",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sra",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "4a69e60b5fec77793bc45d838ec05a5251272ee19d207ace2c1ac997ba3cffd5"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "adc0364da446ae7cb89aa1593af47dca8a6d3a4ba7e880bb5e6e5ae94fb54a8e"
+        ],
+        "case_id": "D02",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-contention",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "6fe4bda3c13948180b9c0b7f97bce32ffc022e70215ac4ba9616d97c4c345901"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "e683f5f99950880e60fe3fd1116d4b57ad31eef840a54624c244fe9a842e238b"
+        ],
+        "case_id": "D03",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "acquire_information",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-missing-facts",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "acquire_information",
+          "reason": "decision_critical_information_required",
+          "route": "acquire_information",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "6dfc8cb3b09f7b6a26209ed830d19feba1eeb3b2b277991f8caa5ee73c78ad09"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "bfe04d3ec842d292d15f9124df547e3521b19851acc2e7e98b9077d0b5f922f1",
+          "d269871be8c80a18e243ff1b814c1fb2cd5f448d36ca2b2ec9debb4461084b88",
+          "a8d69f126c1c2b42193ed7bf1eebe21b32f5d4ea82383dcf62beb2d86a01d121"
+        ],
+        "case_id": "D04",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-missing-facts",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sra",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "69a8085bb84f851f02dff71d50a8891f6ee833d1644621b948d7dc7aba5858f5"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "5f48fb56eab6d7d2b2176baa7c8b7711d509e8ed3bdf72d6843f7d99f5a5d4f5",
+          "cab8e869e1287af5f68b0d80fa7919acfa87673ab4eef1ee41aa662327a2b0aa",
+          "6b836c0c30b81620405fb536630a7bbf652619efad1e722f59f89c79e7edf719"
+        ],
+        "case_id": "D05",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "direction-versus-carrier",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "mpg",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "5e04fe879a54be4383aa5559058f64983246b247d63f4fe0d78edf3150f87d05"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "7daa97e762a9bb4fae73424307e4423e70a8abfc564baeab3a61e288c1d23bce",
+          "8fa00e47e13c67d8c05ac2fa94a6d040d6e8147803f0837ddb934025a19abcf7",
+          "c8dfebf49fea799b86e42c1a68e5861d7da9abdee16aa87a49481f48c7bf1838"
+        ],
+        "case_id": "D06",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "direction-versus-carrier",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "sela",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "0f53ef9be23a674842026c175dbd94c4ca50952a852f231d4bbcea83ac3f46dc"
+      },
+      {
+        "applicability_match": true,
+        "call_keys": [
+          "f886991a33a6a35311ecda8d5b38fce38f6117396d768ca2ace9c55d920b1a7a",
+          "8b196a7af64233b201f71224e838f9e9e026378684482ac665b105645a342c41",
+          "3cd24eb6c7afe4dc7d13b79c163048af048222531ed28af9380c6720bb56a452"
+        ],
+        "case_id": "D07",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "agent-control-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "selected_owner": "wae",
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": true,
+        "route_match": true,
+        "run_id": "98636ddbde58222464498077669986a5b422bcdecea001583eb70b93c5ba88de"
+      },
+      {
+        "applicability_match": null,
+        "call_keys": [
+          "ee7b1ce8e2bdb250a3695ccced76d7bd0b0c4ce2ea27024c639d46111a713c8d"
+        ],
+        "case_id": "D08",
+        "d0_match": true,
+        "entry_match": true,
+        "expected": {
+          "applicable": null,
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "agent-control-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": null,
+        "route_match": true,
+        "run_id": "acc3bdf0bdc0b63e6e39292e1d2fe58784a0c795b5d19c7b2f87aebfdcad689a"
+      },
+      {
+        "applicability_match": false,
+        "call_keys": [
+          "f8c281ef4395e64db603aeeb17443a68be9fdc83ab61a7142b5871373c265db6"
+        ],
+        "case_id": "D09",
+        "d0_match": true,
+        "entry_match": false,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "tvg",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "artifact-value-versus-format",
+        "obligation_match": true,
+        "observed": {
+          "entry_mode": "direct_execution",
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "selected_owner": null,
+          "status": "ok",
+          "unresolved_obligation": "clear"
+        },
+        "owner_match": false,
+        "route_match": false,
+        "run_id": "f68e42de29d4e340b84b68c1dc1c45167f462b9d96e581f88321e2de8aed2b3f"
+      }
+    ],
+    "cases_completed": 9,
+    "cases_planned": 26,
+    "claim_ceiling": "Agreement with preauthored development labels only; no host or holdout qualification",
+    "cost_coverage": "partial; design/review/downstream task costs not measured here",
+    "d0_matches": 9,
+    "development_thresholds_met": false,
+    "entry_matches": 8,
+    "estimated_cost_usd_from_reported_tokens": 0.002661876,
+    "evidence_kind": "live_model",
+    "false_interventions": [],
+    "family_pairs": {
+      "agent-control-versus-format": {
+        "all_match": true,
+        "case_ids": [
+          "D07",
+          "D08"
+        ]
+      },
+      "allocation-contention": {
+        "all_match": true,
+        "case_ids": [
+          "D01",
+          "D02"
+        ]
+      },
+      "allocation-missing-facts": {
+        "all_match": true,
+        "case_ids": [
+          "D03",
+          "D04"
+        ]
+      },
+      "artifact-value-versus-format": {
+        "all_match": false,
+        "case_ids": [
+          "D09"
+        ]
+      },
+      "direction-versus-carrier": {
+        "all_match": true,
+        "case_ids": [
+          "D05",
+          "D06"
+        ]
+      }
+    },
+    "holdout": "not_run",
+    "no_match_coverage": {
+      "correct": 0,
+      "observed": 0
+    },
+    "obligation_matches": 9,
+    "owner_cases_completed": 6,
+    "owner_matches": 5,
+    "provider_status_failures": [],
+    "resolved_runtimes": [
+      {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      }
+    ],
+    "route_matches": 8,
+    "semantic_cases_completed": 9,
+    "semantic_revision_used": 1,
+    "stop_reason": "hard_judgment_sent_to_direct",
+    "technical_recovery": null,
+    "trial_inference_seconds": 18.35501154000667,
+    "trial_usage": {
+      "cost_usd": null,
+      "input_tokens": 63378,
+      "output_tokens": 1568
+    },
+    "unique_calls": 19
+  },
+  "wire_records": 19,
+  "total_series_attempts": 42,
+  "series_reserved_usd": 0.112896,
+  "actual_total_cost_usd": null,
+  "known_inference_estimate_usd": 0.005461218,
+  "mechanical_verification": {
+    "full_suite_run": 1163,
+    "failed": 0,
+    "skipped": 7,
+    "lifecycle": "80/80",
+    "full_suite_log_sha256": "ef66c280d6df05eb204a5fd5001ae720e28a81219f1ba88fce470f56903cc045"
+  },
+  "semantic_revisions_used": 1,
+  "frozen_labels_unchanged": true,
+  "disposition": "stop_C01_qualification_keep_non_Jev_baseline",
+  "interpretation": "D09 repeats the frozen-label catastrophic mismatch after the sole allowed revision. Direct synthesis is also a plausible reading; this is failure against the frozen protocol, not proof of inherent engine incapability. No second revision, holdout, native consumption or A/B/C. No positive value claim."
+}

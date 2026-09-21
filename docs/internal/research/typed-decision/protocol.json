@@ -1,6 +1,6 @@
 {
   "schema_version": "mindthus.typed-decision-protocol.v1",
-  "protocol_revision": "c01-local-development-carrier-1",
+  "protocol_revision": "c01-v2-semantic-r1-stopped",
   "source_baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
   "scope": "offline-engineering-and-bounded-local-development",
   "offline": {
@@ -28,11 +28,7 @@
     "status": "not_preregistered",
     "execution_authorized": false,
     "blockers": [
-      "development semantic observations and review not completed",
-      "independent holdout and one acceptance run not prepared",
-      "exact A/B/C host, downstream executor and evaluator bindings required",
-      "later comparison campaign ceilings and egress not frozen",
-      "quality and cost thresholds must be frozen before comparison results"
+      "C01 failed its frozen development stop rule after the only permitted semantic revision; holdout and A/B/C not admitted"
     ],
     "arms": [
       "A-current-non-Jev",
@@ -46,9 +42,9 @@
     "promotion": "requires-independent-task-and-cost-evidence",
     "scope": "later-independent-holdout-and-abc"
   },
-  "development_freeze": "c01-v2-development-freeze.json",
+  "development_freeze": "c01-v2-r1-development-freeze.json",
   "local_development": {
-    "status": "stopped_on_contract_validation_failure",
+    "status": "stopped_after_sole_semantic_revision",
     "carrier": "c01-v2-live-carrier.md",
     "campaign_scope": "c01-v2-zh-development-typesafe-1",
     "serving": "typesafe/systemone-v1/jev-1.13.0",
@@ -58,13 +54,13 @@
     "max_projected_request_bytes": 98304,
     "max_cost_usd": 0.25,
     "reserve_per_call_usd": 0.002688,
-    "semantic_revisions_used": 0,
-    "live_observations": 0,
-    "native_consumption": "not_authorized",
-    "real_calls_attempted": 1,
-    "accepted_development_batches": 0,
+    "semantic_revisions_used": 1,
+    "live_observations": 18,
+    "native_consumption": "not_qualified",
+    "real_calls_attempted": 39,
+    "accepted_development_batches": 38,
     "diagnostic_calls_separate": 3,
-    "observation_record": "c01-v2-typesafe-dev-1.json",
+    "observation_record": "c01-v2-typesafe-semantic-r1.json",
     "credential_status": "available_from_owner_linked_local_task"
   }
 }

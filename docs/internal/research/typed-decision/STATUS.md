@@ -27,7 +27,9 @@ Installed skill runtime is pinned at `mindthus/1.9.1/skills/tplan`; human_in_loo
 risk_tolerance=25, resource_sufficiency=50. Failure observability is repaired at `b945c40c5`, verified with 79 targeted tests,
 1163 full-suite tests (7 skipped), and 19 official calls. Shared risk R1 is resolved for
 future observation; the lost original response remains unknown. Active work is the one
-allowed C01 semantic revision. C02 remains pending until C01 reaches its bounded outcome. C03–C08 remain portfolio candidates only.
+allowed C01 semantic revision has finished and failed its frozen stop rule. See
+`c01-v2-disposition.md`. Active next work is the conditional C02 admission assessment;
+no C02 graph or live run exists yet. C03–C08 remain portfolio candidates only.
 
 A named source-only technical recovery adds safe validation codes and whitelist numeric
 wire evidence without changing C01 questions/labels/validators or Engine/Provider
@@ -137,15 +139,17 @@ The competing simple-synthesis interpretation of D09 is documented; labels are n
 infallible. Cases/labels/criteria thresholds remain identical. See `c01-v2-r1-review.md`
 and `c01-v2-r1-development-freeze.json` (graph 2.1). Original freeze remains historical.
 
-Next: after final regression, execute the prepared revision-1 development root once:
+The final regression passed: 1163 tests, 7 skipped. Revision-1 development ran once at:
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-semantic-r1`.
-No call has occurred there at this checkpoint. Check actual journal and Mission checkpoint
-before resuming. Prior 23 attempts reserve USD 0.061824; remaining series reserve is
-USD 0.188176. No further semantic revision. A further severe semantic failure requires
-stop/narrow, not label changes, a second prompt revision, holdout tuning or another root.
+It stopped at D09 on the same hard-judgment/direct label mismatch, after 19 calls and
+9 observed cases. See `c01-v2-typesafe-semantic-r1.json`; all original artifacts remain.
+There are 42 total series attempts, reserving USD 0.112896. Semantic revisions: 1/1.
+C01 qualification is stopped. Do not rerun, change labels or narrow to observed successes
+to bypass the failed protocol. D09's plausible direct-synthesis interpretation is an
+explicit label limitation, not permission to alter the frozen score.
 
-Only after development stabilizes may holdout be frozen and accepted once. Full A/B/C,
-native host consumption, net-value evidence and #212 remain unstarted. See
+Holdout and full A/B/C were not admitted. Native host consumption and net-value evidence
+remain unmeasured. #212 is at conditional admission assessment only. See
 `c01-v2-semantic-plan.md` for frozen development scoring and separation rules.
 
 ## Resume discipline

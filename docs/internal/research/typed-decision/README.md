@@ -23,4 +23,8 @@ The fixture deliberately supplies decisions to test execution. It is not Jev out
 The runtime consumes a provider-neutral Decision Engine contract. `TypeSafeJevProvider` and `OpenRouterJevProvider` expose the same logical `JevEngine` through different serving paths; `ChatProvider` is the ordinary structured-output comparison engine. Configured serving identity and observed resolved runtime identity are recorded separately. Tests inject HTTP replies; they use no inference credentials or network. The original fixture CLI remains offline. The separate `experiments.typed_decision.campaign` entry point admits the frozen official-TypeSafe development run with exact egress and cumulative limits; see [local carrier](c01-v2-live-carrier.md). The first official development batch stopped on a local contract-validation error; separate successful diagnostics do not establish development acceptance. No default skill, release package or Mission writer calls this experiment.
 
 ## Boundaries
-A zero-error offline suite proves the tested mechanics only. Semantic method selection, real API compatibility, final task quality, and whole-task cost are still unmeasured. Unchanged historical frozen experiments remain unchanged; no #112 or #207 promotion is implied.
+A zero-error offline suite proves the tested mechanics only. Official API compatibility
+was observed; C01 development stopped at the same disputed entry label after its sole
+semantic revision. See [bounded outcome](c01-v2-disposition.md). Holdout, native host
+consumption, final task quality and whole-task savings remain unqualified. Unchanged
+historical frozen experiments remain unchanged; no #112 or #207 promotion is implied.
