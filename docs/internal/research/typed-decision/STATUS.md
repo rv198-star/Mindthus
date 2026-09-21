@@ -47,6 +47,8 @@ Engine/serving/resolved-runtime implementation remains unchanged.
 
 ## Evidence
 
+C01-v2 functional source commit: `61063b773698368e55e1c9bd122fc510dadc525a`.
+
 `verification.json` binds the final runtime digest and source-file hashes. Prior evidence
 is preserved in `verification-engine-serving-e9e78cc.json`.
 
