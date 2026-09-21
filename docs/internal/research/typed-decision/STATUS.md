@@ -29,7 +29,7 @@ or dynamic designer. Confidence, interface compatibility and schema tests confer
 behavioral qualification or execution permission.
 
 Keys remain in NexusDock encrypted Private Notes. Only official-key metadata was read
-this turn. No key plaintext was retrieved, logged, stored or committed. Local TypeSafe
+during this local implementation. No key plaintext was retrieved, logged, stored or committed. Local TypeSafe
 and OpenRouter environment credentials are absent.
 
 ## Completed source slice
@@ -62,6 +62,32 @@ is preserved in `verification-engine-serving-e9e78cc.json`.
   first 3 batches; resume 0 new / 3 reused; same run ID; SRA selected; native load unobserved.
 - These are mechanical checks and author review, not independent semantic qualification.
 
+## Local live carrier (engineering complete)
+
+Carrier source commit: `ff4b1d309c383d3dd380dd573b428115bd9aa3f8`.
+`verification-live-carrier.json` binds the new runtime/source digest and evidence; it does
+not replace the earlier C01 evidence in `verification.json`.
+
+- 75 typed-decision tests passed (14 added carrier/credential tests, injected transport only).
+- Final full suite: 1159 tests run, zero failures/errors, 7 optional-dependency skips.
+- Test Lifecycle: 80/80. Frozen-file hashes, C01 vendor scan and secret-pattern scan passed.
+- Existing Engine/Provider/Resolved Runtime abstraction and all frozen C01 semantics unchanged.
+- New Session admission binds exact egress, runtime/serving, cumulative limits and cost reserve.
+- The evaluator separates expected labels, reports all routes/pairs/failures, and stops on
+  catastrophic errors. A completed campaign cannot be rerun; unknown calls cannot be retried.
+
+Official TypeSafe development is prepared at
+`/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-dev-1/campaign.json`:
+26 cases, 225 prospective exact request hashes, at most 78 calls / 300 inference seconds /
+USD 0.25. There are zero real inference intents or observations. The earlier `/tmp` prepare
+probe is obsolete and also made zero calls. Preparation is not a model run.
+
+The remaining dependency is local key delivery. NexusDock exposes no local Mac node or
+secret-reference injection entry. No OCI command was executed in this carrier slice.
+The CLI supports `--prompt-key` in an interactive local terminal; it neither echoes nor
+persists the key. An async question asks which local input route is available. See
+`c01-v2-live-carrier.md` for the exact command. Never ask the user to paste a key into chat.
+
 ## Development freeze and next step
 
 `c01-v2-development-freeze.json` binds 26 Chinese synthetic cases in 13 paired families,
@@ -69,11 +95,12 @@ all relevant canonical SKILL sources, the graph, source and semantic plan. Expec
 are separate author judgments, not observed model answers. No live run has occurred;
 semantic revisions used: 0/1. Holdout has not been created/frozen or evaluated.
 
-Next: prepare the bounded local live carrier, secret-safe key delivery and numeric
-campaign budget. The local restoration is complete; unchanged source tests and the
-development freeze must not be rerun or rewritten merely to recover context. Official TypeSafe is primary;
-OpenRouter is backup / separately reported serving-consistency evidence. The existing
-Session/CLI remains offline-only. Never mark a live provider as a fixture to bypass it.
+Next: use the prepared local carrier after secret-safe key injection, then review the
+first official TypeSafe development observations against the frozen plan. The local
+restoration and carrier engineering are complete. Unchanged passed tests and the freeze
+must not be rerun or rewritten merely to recover context. OpenRouter remains a separate
+backup / serving-consistency trial. The original fixture CLI stays offline; the separate
+campaign CLI has explicit live admission. Never mark a live provider as a fixture.
 
 Only after development stabilizes may holdout be frozen and accepted once. Full A/B/C,
 native host consumption, net-value evidence and #212 remain unstarted. See

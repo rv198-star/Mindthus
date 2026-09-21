@@ -1,0 +1,58 @@
+{
+  "schema_version": "mindthus.typed-decision-engineering-evidence.v1",
+  "source_commit": "ff4b1d309c383d3dd380dd573b428115bd9aa3f8",
+  "source_parent": "21d88bcb9",
+  "slice": "bounded-local-development-carrier",
+  "runtime_source_sha256": "34a5fa4012f9781e3cafd3fd9d3807ba5152cefd2333181d9a2094234240c3c7",
+  "source_file_sha256": {
+    "experiments/typed_decision/session.py": "25c51d74b18e7d84196a5510401064fe67320a6e0f1f65e64ff69bffc6016a45",
+    "experiments/typed_decision/campaign.py": "58b106711d683893f8dcd7271aa8f00a25ea06738301b9b21b505cdc0ef8f6ec",
+    "tests/test_typed_decision.py": "9328f90275078561d6c966bf282ef82f949fed62de1b0c8d2714da825e5bb7b2"
+  },
+  "semantic_delta": "none; original C01/source/contracts/development freeze remain exact",
+  "previous_evidence": "verification.json",
+  "tests": {
+    "targeted": 75,
+    "failed": 0,
+    "full_suite_run": 1159,
+    "full_suite_failed": 0,
+    "full_suite_skipped": 7,
+    "test_lifecycle": "80/80",
+    "python": "3.12.9",
+    "skips": {
+      "missing_Pillow": 5,
+      "missing_jsonschema": 2
+    },
+    "full_suite_log": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-v2-live-carrier/full-suite-final.log",
+    "full_suite_log_sha256": "3e12763a154c583afab413af22db8fe1e4a9faf3b532fd6fb4cd3ad09dcee729",
+    "transport": "all injected; no real inference"
+  },
+  "scans": {
+    "frozen_files": "pass",
+    "c01_vendor_leakage": "pass",
+    "changed_text_secret_patterns": "pass",
+    "engine_provider_contracts": "unchanged"
+  },
+  "prepared_campaign": {
+    "path": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-dev-1/campaign.json",
+    "file_sha256": "2fe8e7149df95ac5f6ebf1801c2016c6c87e274d1462d73326020479eedaaa2e",
+    "payload_sha256": "71eabdfa63eaa8db08136de38e96d947b83862f7138ff44b0d7b47743e6da208",
+    "cases": 26,
+    "request_variants": 225,
+    "max_calls": 78,
+    "max_seconds": 300,
+    "max_cost_usd": 0.25,
+    "calls_observed": 0
+  },
+  "claim_ceiling": {
+    "carrier_mechanics": "tested",
+    "semantic_quality": "not_evaluated",
+    "semantic_revisions_used": 0,
+    "native_host_integration": "not_implemented",
+    "net_value": "unknown",
+    "holdout": "not_frozen",
+    "abc": "not_started",
+    "c02": "not_started"
+  },
+  "blocker": "Local secret-safe TypeSafe credential injection pending. Hidden terminal input is implemented; no plaintext was retrieved through tools."
+}
