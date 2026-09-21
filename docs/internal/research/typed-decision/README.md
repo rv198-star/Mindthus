@@ -1,7 +1,11 @@
 # Typed decision experiment
 
 ## Core
-An opt-in experimental branch, separate from non-Jev main. Start with #211 C01; #212 C02 follows shared engineering validation. Dynamic design remains a bounded optional exception, not a prerequisite or recursive runtime.
+An opt-in experimental branch, separate from non-Jev main. C01 and then C02 reached
+bounded stop decisions: neither current contract/data pair qualified. Read
+[C01 disposition](c01-v2-disposition.md) and [C02 disposition](c02-disposition.md)
+before any continuation. Existing non-Jev methods remain the baseline. Dynamic design
+is a bounded optional exception, not a prerequisite or recursive runtime.
 
 ## Mainline
 Read `STATUS.md` to resume; `standard.md` for the provider-neutral contract; `portfolio.md` for the frozen candidate rationale; `implementation.md` and `protocol.json` for the exact delivered slice and remaining live gates.

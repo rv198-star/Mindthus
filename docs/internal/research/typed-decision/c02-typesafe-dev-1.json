@@ -1,0 +1,455 @@
+{
+  "schema_version": "mindthus.c02-live-observation.v1",
+  "source_commit": "776adcc12",
+  "root": "/Users/william/Documents/Codex/2026-09-22/mindthus-c02-typesafe-dev-1",
+  "artifact_sha256": {
+    "calls/04b72375141ab7844a853ca210360fd901eb69b33fe4a6940c3996e74bf21bd8/intent.json": "63987ec0acb770dff09b99a7cb739f4fc9858e60e35a7d0b8bf9ae1f5302b195",
+    "calls/04b72375141ab7844a853ca210360fd901eb69b33fe4a6940c3996e74bf21bd8/outcome.json": "e469c9566d08dcd7297779d08667872295902d7faa7540c6bed863f7ecc73971",
+    "calls/0b22e3284c88d27121f93b9c30d6a543553197f5171a755f6531d9bd7f55d1fc/intent.json": "748fe059f674b8c32784d8158ac4fcbc8644997a326e93defd2385afac7a2387",
+    "calls/0b22e3284c88d27121f93b9c30d6a543553197f5171a755f6531d9bd7f55d1fc/outcome.json": "1eb2c0ea5b5eb80d7a2170ac88e5d9814143253be4ba7788dec198a6fd17cccf",
+    "calls/0be7a51357a60006d3ee2172656ccbb9f316db98f2fcf262a6eadb0b565dd29d/intent.json": "952ac54679f57e26185847ada5d988abbbdac70ae0d93dda05767b5efd8faa6d",
+    "calls/0be7a51357a60006d3ee2172656ccbb9f316db98f2fcf262a6eadb0b565dd29d/outcome.json": "49261cd1e7e0acf629e649f9be8d2ed52eee6ca842ad23f9d4359123d9adfc4b",
+    "calls/1bdcc25b8175b7a4d5cd105b85e533dce6e06a93a5ba32febb7b81de7384fe9b/intent.json": "66723911bee8e38326a98781a615eb018edbeff3615e19c955088e1ddd3007d0",
+    "calls/1bdcc25b8175b7a4d5cd105b85e533dce6e06a93a5ba32febb7b81de7384fe9b/outcome.json": "390a315cca3b9c3f2fc467ae7ff3de567940a265b3123939daf6eb68840a1180",
+    "calls/374c30df2e24f622d76ccab03ffa510cadfa43ec712c7eb84bc3254c65cef0ed/intent.json": "63bda46354ac941868efd4db3aa6cf89c29f7f8fa9b204403673e8523c88a597",
+    "calls/374c30df2e24f622d76ccab03ffa510cadfa43ec712c7eb84bc3254c65cef0ed/outcome.json": "569c4dbb4f1249fbec8cad5f04219b79683ddc623ec5077abe8d0fa50a22f34d",
+    "calls/3e26cbd1dc289d67a6738b3ca53dbfb23413bf3c69ef961c08a56c6784553ca5/intent.json": "66b55accc6d9081ab5ae4b61daaca7e513b20fbc1abdffaf19e8b8335e44e23a",
+    "calls/3e26cbd1dc289d67a6738b3ca53dbfb23413bf3c69ef961c08a56c6784553ca5/outcome.json": "0816ad201b5bf556055575feb3294b44d0bf733315d3045ea206061dcbc9a350",
+    "calls/4185fec267f865c5dea384651dcc5e98d2c2d1112cdb0cf2749473678733957e/intent.json": "1c8b513cc82839241fd74af0e6371c7cb89a5534f95682bff0321a9b8f4ff91d",
+    "calls/4185fec267f865c5dea384651dcc5e98d2c2d1112cdb0cf2749473678733957e/outcome.json": "f241034e4936589f8366137ad8bcb0946f4c0a0195b98fac60026dbd67e85806",
+    "calls/43098937b2c560496c13ed4cb50d4499c1dd54193181631fb78b451ad5852ea7/intent.json": "1c00587d50a87d233be7c1a21ca2c68d916337f701d2b99151106c229d9d8f23",
+    "calls/43098937b2c560496c13ed4cb50d4499c1dd54193181631fb78b451ad5852ea7/outcome.json": "a1eec11a0ec15a316b04ce7df070d8c0ff81a871361031387f0dfe84ce5d55a2",
+    "calls/4853496406b663287b6aa68cd6a3dfe297ee1bfa8f3f945ed55e7dd26352a39e/intent.json": "a16a9ec60ad7fc5ee6c743b8d6593915be857be9f4e8806ae071ef56e4fcf5aa",
+    "calls/4853496406b663287b6aa68cd6a3dfe297ee1bfa8f3f945ed55e7dd26352a39e/outcome.json": "d6d3df256f4853e30dbff5d0eeceae35eca50b1ae6923e015b07c4cd9417b700",
+    "calls/4ed180126558fa700b7faae281b11af10fa49b66a209a9439109fc8177f1de40/intent.json": "d26067796c08bf8900f9ad7a6163431e42bdd814449865613d15d19fa4b8d544",
+    "calls/4ed180126558fa700b7faae281b11af10fa49b66a209a9439109fc8177f1de40/outcome.json": "129c6e952f25899df3219f2c6254f0a562cda2a4698c8749500c2efbc24b8384",
+    "calls/63b183638fede87a66edcc3b623140f88e6b881625ea882d005e595d9ce5b12b/intent.json": "0f1af2301fb2faaaba6cfe15b1e702365f316cffcd15bc686fa7d3bf9a6b6bc9",
+    "calls/63b183638fede87a66edcc3b623140f88e6b881625ea882d005e595d9ce5b12b/outcome.json": "628f4cf88f51bc2ba594b9a346bde3d426b8e44e996e388d68219976ae1f141b",
+    "calls/7a106abc4dfa68dfe064706a7124ec6d8591a773286b096e064a81b88a5bcb7a/intent.json": "3e6ecaf4b4f5bd07920673f84c0df45742b4c80bd9e94307038365309038f07b",
+    "calls/7a106abc4dfa68dfe064706a7124ec6d8591a773286b096e064a81b88a5bcb7a/outcome.json": "e22f454615f3db5f40692884a7fce2546c17289731e67a19c16f544737e4cacb",
+    "calls/95f80a8661cd317e44ba9d90bb3fe9e9986c8729b084cab4823aadca619a975a/intent.json": "7af8b591a9f228a0b9265036e15fb78a03fce83ab88f5a8c832f150b8c59b82c",
+    "calls/95f80a8661cd317e44ba9d90bb3fe9e9986c8729b084cab4823aadca619a975a/outcome.json": "78005e75312ba717d20f8f2e5b78c4b39ee844fdbacc9a1adb265709cbb37efc",
+    "calls/a43c0f579d7be2636f6069d6981594ac0d0531e46959787bd8eac57e6a6b11e6/intent.json": "48c6c45508f6de619f3b444333087ea24b2b1978043a2ba56e33cbdd957b174d",
+    "calls/a43c0f579d7be2636f6069d6981594ac0d0531e46959787bd8eac57e6a6b11e6/outcome.json": "23c332873a280253752d02bdfa5083b4c82338c7a3673808d11fda3105649363",
+    "calls/b5dd6524a928c4575a33eb0df9144c8993a6ab780aefb721997c8cb9ab79937b/intent.json": "1c73452eedc9aa4215120e5824ffe1eff5a5b74572cf3e562d10833c540249af",
+    "calls/b5dd6524a928c4575a33eb0df9144c8993a6ab780aefb721997c8cb9ab79937b/outcome.json": "557464ae05a04ae70eafb3f49c3f68231d69166064a0441ba31ecdce2c41f11b",
+    "calls/b71ed566745ca82d854f84cb26b8005de6d3834da23451e6df55b19d8d00d97d/intent.json": "7b1472336055f14adb56f284d34f5700f917e3c69ec982ed25625724609126ee",
+    "calls/b71ed566745ca82d854f84cb26b8005de6d3834da23451e6df55b19d8d00d97d/outcome.json": "45928a9796509528273fad66a1c6d2c728d3182dc0fdf567dd9cac8f2e7482db",
+    "calls/ccad23d03490c3048037cb67a685cb2adda4dcacb59fe17127e8ea2ad063947f/intent.json": "38cdfd1d7b3b727ef5b2f926ab5e6c073588ac23dd7f243409428c9cc0c848d9",
+    "calls/ccad23d03490c3048037cb67a685cb2adda4dcacb59fe17127e8ea2ad063947f/outcome.json": "46c8ecb7a38767ad214f079beaffece6b7b707b3a51eaf10b49e190a685c2b86",
+    "calls/e662c7019c3eca86285ec2119dc4d776d9fa74e7ed69d73c38b64f4b7e074616/intent.json": "5e60785c8d4c76cd5ea9950710c0b97a5490426c4c3b45f37d892aeb8a48637a",
+    "calls/e662c7019c3eca86285ec2119dc4d776d9fa74e7ed69d73c38b64f4b7e074616/outcome.json": "b41ebcd9ed677ea1fd45392f84c798745507c7f634972d1107786d78c73c30c1",
+    "campaign.json": "45d2351906f3bd1bb41c8dd28b58b3e5439e33f6d8701aec2910a3e65e4bb472",
+    "policy.json": "8b155436325d4bd3b1433b5f7e3fe4ecc82b175fc9a986f3f5a5b69f640af9d7",
+    "resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+    "runs/04a977cbc9195612060e5630e837e1955a9e491385c1bef58d07ca25c84910a3.json": "e08c4485bfef8b9c1874679c8f335215902a110004d9f477d5f3ed785d965ba6",
+    "runs/0526c1f6b89f27c850cc0451ca4f122a041196eb005c59276fde8111d6cc8909.json": "a9dde7357a68953fddf54f627894ba92942fee5449b6a6907445c3be68414294",
+    "runs/0662f04f47d93e466f1f08bcf2d9b6e6f7ca4cbb38677d9edc51d6ba72e48f15.json": "73df7a8496669009e671829abc74df2126c96ddd21b5d5868ae25255eece8654",
+    "runs/0ccf5ed0eca56d6c82d13d4383ace7979a6378109bdc5fe41c3ce2bc89863518.json": "cac1a68d7450b01778deecabdf8118394688846dd4cf8a26ca88bfca4b924b0a",
+    "runs/16921b62e326ad46831ec9114f7ef76342ae6d9017ccbaee5bf917c12063110e.json": "e21ec57892471d002eec9729884780a666ab08399154b4ee69d869a86520c832",
+    "runs/403a370abf1e7fc4b2942a3456c2e4de9f810b2bf5d600859324cc2b9889f418.json": "c9489c5f16b178cc5f0f2547ec3c715f4ab4304b3ec53e964213d90d1466cbd2",
+    "runs/4abfc1c4697741993a9f4dab9d5dad143af707dbaff7c64a4835dc6f6b290db8.json": "d11464d2a945726770fee15df8e5991282713c9a8e1f0ac3a3725fbafabe2a28",
+    "runs/55836050dd8ce99d425e6a2bca326b7c2f8a38c814ceabc779a04e47ecfea3ee.json": "f1a254f00218ed3223b4c12001e21be4b33329ba004da20d226e827c08fb67a8",
+    "runs/88c3fce98c2bf616b83c81985909ed7ebf1dce006b12eb8699368befd1d6a08a.json": "8a31d2896832fe1f2c6bc2495d7078b962976725de171428cc4a98eee2c16d77",
+    "runs/ba68cb6846dcd10eb11e82bc910fc4471679fd5310d31d68a1e8c5d8c9fba49e.json": "9b36557923deea56c877d00798335124dda9e57d44732b7bcdce719f4a461827",
+    "runs/d1c0db4cfef2dc3997e2e165a64f6d7b3a0578ad92984432d0c59c9cb2c6aa08.json": "8d91593234a8cddb236e5134c3ff533a59f7ec2a972a720130cfbdac095bd30b",
+    "runs/ea9f1d427b06467d2232c86191655e1a0ccd3d9b0eb15a6465912a6c19e2e3ec.json": "3c529de4bdcc05e3472b8a93f0a6074443337cc123c58819ed91c87897b9122b",
+    "summary.json": "6bcbb1d73274706ec40efdcf395a654d36fe1d7036d63aa849deeb378efd9624",
+    "wire/01174d8e2d619c1e76e10a06694211840094398afcad4838f318423d1a1b1542.json": "546f53010d5e3a4a79cf160aebcf4f453349fa8618a8fa6b9aeddd3ef958a83c",
+    "wire/10e64b03e0ef4ef155a703436d48aeaa5c4393bb0595d2adda4605f8648711d6.json": "dc17c2261d4a48eb09d58221d613bebb76fbf36babe9c1f40d108277f46f440c",
+    "wire/18ef918e687a18748113fd8e7420478dbbea4f6fc3d03d3e89a6dd6bb9a1259b.json": "74a54f34fffafc5d3bbd5c78dcf3fc21dfc4aaba862de13d0c3d9efee74a7cf9",
+    "wire/1f1a0a5525c7f1c6fd03b8650ed4630b6fc887311e98f7ea6e89914aa978b843.json": "d72ff4fcf54a6f71be856a7f325088a614a9df0594e1fc020ebb5ad5b9d5cc78",
+    "wire/35f8dc9deffdee99b034afc8fe6193c91cf44b6d033fa4b5bd719d8bf54f01b3.json": "6f3d17975f19e7d47e0982e30e29e3acfebe048be7a21701953556c569630470",
+    "wire/4c97816967ce252da6eee483ca04e34d72b64531810f82c995ad7d8c06e01706.json": "cd2126aa51a58698bfd7d0e6430cb9f4ab19c135cec1b88536177ff4890a2c80",
+    "wire/8e925c04b623e2a91ee21e2b46e560ef686ca440862dc206149105be7040d872.json": "ee54af7cbd184a4f324d3cd9e049fc627fff1288feefbaa8ef78bfb39ae603e4",
+    "wire/91ac8b8d16ec7cfa47e31b0bb1e0a1538e2175e74d2befd73859a81cdb376c20.json": "585a529349a27bd80d4a6457ca001080e7b7cd84d7e2b2f8e6cc65aa2199a321",
+    "wire/930c7ed09cc1b21873d260d9bdfc801a5d8c7ec4ee0c4cd674fcd51c4a5b397e.json": "c90ccaf159c8f9d8cac0049d91d0cc2dde05697284d5e74c60e60cfb712f4022",
+    "wire/a00dca0097ccd2fc361742d02c4aa44fad828b363c34b58291126d75a184ce2b.json": "0ac84a6e3c23c98e4219aa1da1621775ec13a30c3575581c3efb44566bcdd1b7",
+    "wire/a9b0672ea1809fea471d705c9984fe2c68c3687aca0cf184b4c132e012b68f67.json": "d6b6837f74b516d31b31e476eeb81fc3668047c80e7c0d82071065df69bfaa45",
+    "wire/ad0aeee591cfcc448ee881b5d42215b787a67dabec5ec70703ca0d979c978011.json": "a91075c07123b043b1ad414e36fc8d01180f06bbb5a5701f53897acf309eee59",
+    "wire/afa0cdd386c28638bd9045ae0aafd3096d35a8c9e4b0907ce2416e8ef158741b.json": "09c64bcd8adf93e04ceac0e68584476628bb68906489a572d2ef488529dd9bcd",
+    "wire/b2cc17470c8ab74a38ff79dc20ca55319f48d7f2959e32d7f1b26993968b9f0f.json": "c4e2b47d5a55ec575dcdc84c98aa063b4738ac3ee42b0dad140d6073448ea428",
+    "wire/b5190d6c6146ea40cce6c6773a497b65a39dfc4364ac96a1c66cf6906d3a648f.json": "8ba8e5dbea3f940b24605afc4726da084bbf8e16f2bbc0b0d25d8eae9d8dc569",
+    "wire/cc5b30d752961acb5c20ba13907a15987d02b7b3b7d60eeb289661e1a8ff4fa7.json": "bff6cee567e36a5086433f2c7c5795fd8fccdbb6149b9ec2302ddf92459494d3",
+    "wire/e42f416ae5a70073d45eb2c5613e9beb3a08d0605bb2c38588d8b99bf14ac670.json": "65b61e705957f91490df49d68eda1c1b2470b73d20a456c839d633c65535e358",
+    "wire/e9dec9f4162745212dd9c4b6dccaac47b6d68d3d505b08dfa4b426b8355a7287.json": "043226cb08ad5fde9b349bca1c9f90d9b790e8b7f578a277cae6e69a793cfe9a"
+  },
+  "summary": {
+    "abc": "not_run",
+    "campaign": "c02-development-v1-typesafe",
+    "cases_observed": 12,
+    "cases_planned": 12,
+    "cost_coverage": "inference telemetry only; host design/generation/review unknown",
+    "final_artifact_gate": "not_evaluated",
+    "holdout": "not_run",
+    "local_decision_gate_met": false,
+    "matches": {
+      "action": 11,
+      "route": 10,
+      "support": 12,
+      "utility": 9
+    },
+    "resolved_runtimes": [
+      {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "C02D01",
+        "expected": {
+          "action": "make_actionable",
+          "route": "rewrite_candidate",
+          "support": "sufficient",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": "make_actionable",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "deficit"
+          },
+          "reason": "bounded_action_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "0662f04f47d93e466f1f08bcf2d9b6e6f7ca4cbb38677d9edc51d6ba72e48f15"
+      },
+      {
+        "case_id": "C02D02",
+        "expected": {
+          "action": "leave_unchanged",
+          "route": "original_exit_owner",
+          "support": "sufficient",
+          "utility": "adequate"
+        },
+        "matches": {
+          "action": false,
+          "route": false,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": "make_actionable",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "bounded_action_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "04a977cbc9195612060e5630e837e1955a9e491385c1bef58d07ca25c84910a3"
+      },
+      {
+        "case_id": "C02D03",
+        "expected": {
+          "action": null,
+          "route": "acquire_information",
+          "support": "missing",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "missing",
+            "utility": "deficit"
+          },
+          "reason": "evidence_not_established",
+          "route": "acquire_information"
+        },
+        "run_id": "0ccf5ed0eca56d6c82d13d4383ace7979a6378109bdc5fe41c3ce2bc89863518"
+      },
+      {
+        "case_id": "C02D04",
+        "expected": {
+          "action": "compact_preserve",
+          "route": "rewrite_candidate",
+          "support": "sufficient",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": false
+        },
+        "observed": {
+          "action": "compact_preserve",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "bounded_action_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "ea9f1d427b06467d2232c86191655e1a0ccd3d9b0eb15a6465912a6c19e2e3ec"
+      },
+      {
+        "case_id": "C02D05",
+        "expected": {
+          "action": null,
+          "route": "original_exit_owner",
+          "support": null,
+          "utility": "conflict"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "conflict"
+          },
+          "reason": "scope_or_target_unresolved",
+          "route": "original_exit_owner"
+        },
+        "run_id": "ba68cb6846dcd10eb11e82bc910fc4471679fd5310d31d68a1e8c5d8c9fba49e"
+      },
+      {
+        "case_id": "C02D06",
+        "expected": {
+          "action": null,
+          "route": "original_exit_owner",
+          "support": null,
+          "utility": "outside_scope"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "missing",
+            "utility": "outside_scope"
+          },
+          "reason": "scope_or_target_unresolved",
+          "route": "original_exit_owner"
+        },
+        "run_id": "88c3fce98c2bf616b83c81985909ed7ebf1dce006b12eb8699368befd1d6a08a"
+      },
+      {
+        "case_id": "C02D07",
+        "expected": {
+          "action": "explain_tradeoff",
+          "route": "rewrite_candidate",
+          "support": "sufficient",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": "explain_tradeoff",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "deficit"
+          },
+          "reason": "bounded_action_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "0526c1f6b89f27c850cc0451ca4f122a041196eb005c59276fde8111d6cc8909"
+      },
+      {
+        "case_id": "C02D08",
+        "expected": {
+          "action": "leave_unchanged",
+          "route": "original_exit_owner",
+          "support": "sufficient",
+          "utility": "adequate"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": "leave_unchanged",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "no_local_rewrite",
+          "route": "original_exit_owner"
+        },
+        "run_id": "4abfc1c4697741993a9f4dab9d5dad143af707dbaff7c64a4835dc6f6b290db8"
+      },
+      {
+        "case_id": "C02D09",
+        "expected": {
+          "action": null,
+          "route": "acquire_information",
+          "support": "missing",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": false,
+          "support": true,
+          "utility": false
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "missing",
+            "utility": "conflict"
+          },
+          "reason": "scope_or_target_unresolved",
+          "route": "original_exit_owner"
+        },
+        "run_id": "16921b62e326ad46831ec9114f7ef76342ae6d9017ccbaee5bf917c12063110e"
+      },
+      {
+        "case_id": "C02D10",
+        "expected": {
+          "action": "compact_preserve",
+          "route": "rewrite_candidate",
+          "support": "sufficient",
+          "utility": "deficit"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": false
+        },
+        "observed": {
+          "action": "compact_preserve",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "bounded_action_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "403a370abf1e7fc4b2942a3456c2e4de9f810b2bf5d600859324cc2b9889f418"
+      },
+      {
+        "case_id": "C02D11",
+        "expected": {
+          "action": null,
+          "route": "original_exit_owner",
+          "support": null,
+          "utility": "conflict"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "sufficient",
+            "utility": "conflict"
+          },
+          "reason": "scope_or_target_unresolved",
+          "route": "original_exit_owner"
+        },
+        "run_id": "d1c0db4cfef2dc3997e2e165a64f6d7b3a0578ad92984432d0c59c9cb2c6aa08"
+      },
+      {
+        "case_id": "C02D12",
+        "expected": {
+          "action": null,
+          "route": "original_exit_owner",
+          "support": null,
+          "utility": "outside_scope"
+        },
+        "matches": {
+          "action": true,
+          "route": true,
+          "support": true,
+          "utility": true
+        },
+        "observed": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "support": "missing",
+            "utility": "outside_scope"
+          },
+          "reason": "scope_or_target_unresolved",
+          "route": "original_exit_owner"
+        },
+        "run_id": "55836050dd8ce99d425e6a2bca326b7c2f8a38c814ceabc779a04e47ecfea3ee"
+      }
+    ],
+    "semantic_revisions_used": 0,
+    "stop_reason": null,
+    "trial_inference_seconds": 14.248902418010402,
+    "trial_usage": {
+      "cost_usd": null,
+      "input_tokens": 53100,
+      "output_tokens": 1713
+    },
+    "unique_calls": 18,
+    "value_qualification": "unknown"
+  },
+  "series_attempts": 18,
+  "series_reserved_usd": 0.048384,
+  "estimated_inference_cost_usd": 0.0022302,
+  "reported_actual_cost_usd": null,
+  "full_cost_usd": null,
+  "semantic_revisions_used": 0,
+  "disposition": "stop_current_C02_contract_and_dataset_qualification",
+  "reason": "Development labels for redundant yet usable modules lack a stable independent deficit threshold. Do not change labels/targets after observations or force answers by rubric tuning. Ordinary TVG remains unchanged."
+}

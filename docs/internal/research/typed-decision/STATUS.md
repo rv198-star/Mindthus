@@ -28,9 +28,10 @@ risk_tolerance=25, resource_sufficiency=50. Failure observability is repaired at
 1163 full-suite tests (7 skipped), and 19 official calls. Shared risk R1 is resolved for
 future observation; the lost original response remains unknown. Active work is the one
 allowed C01 semantic revision has finished and failed its frozen stop rule. See
-`c01-v2-disposition.md`. C02 admission was assessed separately and its bounded graph
-and development protocol are now frozen; see the C02 checkpoint below. C03–C08 remain
-portfolio candidates only.
+`c01-v2-disposition.md`. C02 then completed its first frozen development run and stopped
+on contract/label validity defects; see `c02-disposition.md`. The TPlan Mission is now
+`abandoned` (bounded stop, not completed acceptance). #211/#212 full value acceptance
+remains unmet; GitHub issues remain OPEN. C03–C08 remain unstarted portfolio candidates.
 
 A named source-only technical recovery adds safe validation codes and whitelist numeric
 wire evidence without changing C01 questions/labels/validators or Engine/Provider
@@ -167,17 +168,30 @@ synthetic development cases across operating-instruction/design-explanation purp
 each including thin/adequate/missing-evidence/redundant/conflict/outside-scope examples.
 Standards and labels are author-created, not independent human adjudication.
 
-91 targeted tests and lifecycle 80/80 passed. Final-source full regression is running;
-read `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/c02-final-full-suite.log`
-before proceeding. A previous C02-only intermediate full suite passed 1173 tests with
-7 skips; it predates the final trial driver and two final checks.
+91 targeted tests and lifecycle 80/80 passed. Final-source full regression passed
+1175 tests with 7 optional-dependency skips; see `verification-c02-engineering.json`.
+The full log is `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/c02-final-full-suite.log`.
+Do not rerun unchanged passed checks. A previous intermediate full suite passed 1173
+tests with 7 skips; it predates the final trial driver and two final checks.
 
 Official development root is prepared at
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c02-typesafe-dev-1`:
 36 exact request variants, max 24 calls / 120 inference seconds, USD 0.064512 reserve;
-entire C02 development Jev series cap USD 0.25. At this checkpoint no C02 live calls,
-generation, recheck, holdout or A/B/C occurred. Verify actual journals before resuming.
+entire C02 development Jev series cap USD 0.25. It ran once: 18 calls, all 12 cases,
+10/12 route matches, 9/12 utility matches and 5/6 expected action selections. The frozen
+local decision gate was not met. Safe original observations are in `c02-typesafe-dev-1.json`.
+Semantic revisions used: 0/1. The two redundant-but-usable deficit labels lack a stable
+independent standard, so changing a question alone is not a defensible repair. The current
+contract/data qualification path is stopped. Do not relabel, change targets, retry, or
+silently replace the dataset. No generation, live recheck, holdout or A/B/C was admitted.
 Host LLM design/context/review costs remain unknown, never zero. No saving claim.
+
+The terminal TPlan report and SVG are under
+`/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/mission/reports/`.
+They describe lifecycle and observed telemetry only; inference accounting is also
+recorded in the two pilot observation reports. A new experimental proposal would need
+independent adjudication of disputed standards and a new data/protocol identity, not
+a reset of either stopped campaign. Preserve all original evidence.
 
 ## Resume discipline
 
