@@ -9,10 +9,28 @@ import unittest
 from unittest.mock import patch
 
 from experiments.typed_decision import c01
-from experiments.typed_decision.contracts import (BatchResult, ContractError, DecisionResult,
-                                                DecisionSpec, canonical, digest, project_context)
-from experiments.typed_decision.providers import (ChatProvider, FixtureProvider, JevProvider,
-                                                 OpenRouterJevProvider, ProviderError, _NoRedirect)
+from experiments.typed_decision.contracts import (
+    BatchResult,
+    ContractError,
+    DecisionResult,
+    DecisionSpec,
+    EngineIdentity,
+    ResolvedRuntime,
+    ServingIdentity,
+    canonical,
+    digest,
+    project_context,
+    provider_configuration,
+)
+from experiments.typed_decision.providers import (
+    ChatProvider,
+    FixtureProvider,
+    JevProvider,
+    OpenRouterJevProvider,
+    ProviderError,
+    TypeSafeJevProvider,
+    _NoRedirect,
+)
 from experiments.typed_decision.session import Limits, RecoveryRequired, Session, read_record
 from experiments.typed_decision.trace import from_c01, validate_with_existing
 
@@ -96,9 +114,14 @@ class ProviderTests(unittest.TestCase):
             batch = provider.evaluate(specs, {'text': 'fixture'}, 5)
         self.assertEqual(batch.results['rate'].value, 1.05)
         self.assertIsNone(batch.results['probability'].uncertainty)
+        self.assertEqual(batch.resolved_runtime.model, 'jev-1.13.0')
+        self.assertEqual(batch.resolved_runtime.provider, 'TypeSafe')
         self.assertIsNone(batch.usage['cost_usd'])
         self.assertEqual([v['type'] for v in seen[0][1]['questions'].values()], ['choice', 'noul', 'score'])
-        self.assertNotIn('fixture-only-credential', str(provider.identity))
+        config = provider_configuration(provider)
+        self.assertEqual(config['engine']['model_family'], 'jev-1.13')
+        self.assertEqual(config['serving']['provider'], 'typesafe')
+        self.assertNotIn('fixture-only-credential', str(config))
 
     def test_native_missing_key_fails_without_transport(self):
         with patch.dict(os.environ, {}, clear=True), self.assertRaises(ProviderError):
@@ -135,11 +158,36 @@ class ProviderTests(unittest.TestCase):
         provider = OpenRouterJevProvider(transport=transport)
         with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'fixture-only-credential'}):
             batch = provider.evaluate(specs, {'text': 'fixture'}, 5)
-        self.assertEqual(batch.model, 'typesafe/jev-1.13-20260917')
+        self.assertEqual(batch.resolved_runtime.model, 'typesafe/jev-1.13-20260917')
+        self.assertEqual(batch.resolved_runtime.provider, 'TypeSafe')
         self.assertEqual(batch.usage['cost_usd'], 2.415e-05)
         self.assertEqual(seen[0][0], 'https://openrouter.ai/api/alpha/decisions')
         self.assertEqual(seen[0][2]['model'], 'typesafe/jev-1.13')
-        self.assertNotIn('fixture-only-credential', str(provider.identity))
+        config = provider_configuration(provider)
+        self.assertEqual(config['engine']['model_family'], 'jev-1.13')
+        self.assertEqual(config['serving']['provider'], 'openrouter')
+        self.assertNotIn('fixture-only-credential', str(config))
+
+    def test_same_jev_engine_can_use_distinct_serving_paths(self):
+        native = TypeSafeJevProvider()
+        routed = OpenRouterJevProvider()
+        self.assertEqual(native.engine_identity, routed.engine_identity)
+        self.assertEqual(native.engine_identity, EngineIdentity(
+            family='system_one',
+            implementation='jev',
+            model_family='jev-1.13',
+        ))
+        self.assertNotEqual(native.serving_identity, routed.serving_identity)
+        self.assertEqual(native.serving_identity.provider, 'typesafe')
+        self.assertEqual(routed.serving_identity.provider, 'openrouter')
+        self.assertEqual(
+            provider_configuration(native)['engine'],
+            provider_configuration(routed)['engine'],
+        )
+        self.assertNotEqual(
+            provider_configuration(native)['serving'],
+            provider_configuration(routed)['serving'],
+        )
 
     def test_openrouter_jev_rejects_alias_missing_key_and_wrong_family(self):
         with self.assertRaises(ContractError):
@@ -289,17 +337,129 @@ class SessionTests(unittest.TestCase):
             with Session(self.root, FixtureProvider({'test': 'no'}), scope='test'):
                 pass
 
+    def test_openrouter_resolved_snapshot_differs_from_requested_model_and_replays(self):
+        class OfflineOpenRouter(OpenRouterJevProvider):
+            is_live = False
+
+        raw = {
+            'model': 'typesafe/jev-1.13-20260917',
+            'provider': 'TypeSafe',
+            'answers': {
+                'test': {
+                    'type': 'choice',
+                    'choice': 'yes',
+                    'probabilities': {'yes': 1.0, 'no': 0.0},
+                    'confidence': 1.0,
+                },
+            },
+            'usage': {'input_tokens': 10, 'output_tokens': 1, 'cost': .000001},
+        }
+        calls = []
+        def transport(*_):
+            calls.append('network')
+            return raw
+
+        with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'fixture'}):
+            with Session(
+                self.root,
+                OfflineOpenRouter(transport=transport),
+                scope='test',
+            ) as run:
+                result = run.evaluate([spec()], {'text': 'same'})
+                report = run.finish(
+                    {'id': 'probe'},
+                    {'text': 'same'},
+                    {'route': 'fixture'},
+                )
+            with Session(
+                self.root,
+                OfflineOpenRouter(
+                    transport=lambda *_: self.fail('replay called transport')
+                ),
+                scope='test',
+            ) as run:
+                replay = run.evaluate([spec()], {'text': 'same'})
+
+        self.assertEqual(result['test'].value, 'yes')
+        self.assertEqual(replay['test'].value, 'yes')
+        self.assertEqual(calls, ['network'])
+        self.assertEqual(
+            read_record(self.root / 'resolved-runtime.json'),
+            {
+                'model': 'typesafe/jev-1.13-20260917',
+                'provider': 'TypeSafe',
+            },
+        )
+        self.assertEqual(
+            report['resolved_runtimes'],
+            [{
+                'model': 'typesafe/jev-1.13-20260917',
+                'provider': 'TypeSafe',
+            }],
+        )
+        policy = read_record(self.root / 'policy.json')
+        self.assertEqual(
+            policy['provider_configuration']['engine']['model_family'],
+            'jev-1.13',
+        )
+        self.assertEqual(
+            policy['provider_configuration']['serving']['requested_model'],
+            'typesafe/jev-1.13',
+        )
+
+    def test_resolved_runtime_drift_fails_closed_within_trial(self):
+        class OfflineOpenRouter(OpenRouterJevProvider):
+            is_live = False
+
+        snapshots = iter([
+            'typesafe/jev-1.13-20260917',
+            'typesafe/jev-1.13-20260918',
+        ])
+        def transport(*_):
+            snapshot = next(snapshots)
+            return {
+                'model': snapshot,
+                'provider': 'TypeSafe',
+                'answers': {
+                    'test': {
+                        'type': 'choice',
+                        'choice': 'yes',
+                        'probabilities': {'yes': 1.0, 'no': 0.0},
+                        'confidence': 1.0,
+                    },
+                },
+            }
+
+        with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'fixture'}):
+            with Session(
+                self.root,
+                OfflineOpenRouter(transport=transport),
+                scope='test',
+            ) as run:
+                first = run.evaluate([spec()], {'text': 'first'})
+                second = run.evaluate([spec()], {'text': 'second'})
+
+        self.assertEqual(first['test'].value, 'yes')
+        self.assertEqual(second['test'].status, 'provider_error')
+        self.assertEqual(
+            read_record(self.root / 'resolved-runtime.json')['model'],
+            'typesafe/jev-1.13-20260917',
+        )
+
     def test_corrupt_or_hash_correct_invalid_result_fails_closed(self):
         with Session(self.root, self.provider, scope='test') as run:
             run.evaluate([spec()], {'text': 'same'})
         path = next((self.root / 'calls').glob('*/outcome.json'))
         old = json.loads(path.read_text())
-        for mutate in ('checksum', 'enum', 'extra'):
+        for mutate in ('checksum', 'enum', 'runtime', 'extra'):
             broken = copy.deepcopy(old)
             if mutate == 'checksum':
                 broken['sha256'] = 'wrong'
             elif mutate == 'enum':
                 broken['payload']['results']['test']['value'] = 'foreign'
+                broken['sha256'] = digest(broken['payload'])
+            elif mutate == 'runtime':
+                broken['payload']['resolved_runtime']['model'] = 'foreign-model'
                 broken['sha256'] = digest(broken['payload'])
             else:
                 broken['payload']['results']['unrequested'] = broken['payload']['results']['test']

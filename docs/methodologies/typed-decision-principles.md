@@ -30,6 +30,17 @@ Policy & Runtime
 
 A typed answer proves only that the provider returned a value inside the declared answer space. It does not prove the state was sufficient, the contract was correct, the answer was true, or the resulting action is authorized.
 
+### Portability invariant
+
+```text
+Decision Contract = standard
+Decision Engine   = replaceable semantic capability
+Provider/Transport = serving path
+Resolved Runtime  = observed execution fact
+```
+
+A provider swap for the same engine must not require a Decision DAG rewrite. A different engine may implement the same `select / assess_proposition / rate` API, but behavioral qualification never transfers automatically across engines, versions, languages, distributions or consequence classes. Provider/transport details must stay in adapters and runtime evidence, not in the Decision Contract.
+
 ## 1. Start From Execution Consequence
 
 Design from the concrete downstream decision:

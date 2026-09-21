@@ -126,17 +126,114 @@ class DecisionResult:
         return result
 
 
+@dataclass(frozen=True)
+class EngineIdentity:
+    """Logical semantic engine identity, independent of serving path."""
+
+    family: str
+    implementation: str
+    model_family: str
+    interface_version: str = 'typed-decision.v1'
+
+    def validate(self) -> None:
+        for label, value in (
+            ('engine family', self.family),
+            ('engine implementation', self.implementation),
+            ('engine model family', self.model_family),
+            ('engine interface version', self.interface_version),
+        ):
+            require(isinstance(value, str) and bool(value.strip()) and len(value) <= 256,
+                    'invalid ' + label)
+
+    def to_dict(self) -> dict:
+        self.validate()
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ServingIdentity:
+    """Configured provider/transport path. It is not the resolved runtime observation."""
+
+    provider: str
+    transport: str
+    requested_model: str
+    endpoint: str
+    adapter_version: str = '1'
+
+    def validate(self) -> None:
+        for label, value in (
+            ('serving provider', self.provider),
+            ('serving transport', self.transport),
+            ('requested model', self.requested_model),
+            ('serving endpoint', self.endpoint),
+            ('adapter version', self.adapter_version),
+        ):
+            require(isinstance(value, str) and bool(value.strip()) and len(value) <= 512,
+                    'invalid ' + label)
+
+    def to_dict(self) -> dict:
+        self.validate()
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ResolvedRuntime:
+    """Observable model/provider actually used for one provider response."""
+
+    model: str
+    provider: str
+
+    def validate(self) -> None:
+        require(isinstance(self.model, str) and bool(self.model.strip()) and len(self.model) <= 512,
+                'invalid resolved model')
+        require(isinstance(self.provider, str) and bool(self.provider.strip()) and len(self.provider) <= 256,
+                'invalid resolved provider')
+
+    def to_dict(self) -> dict:
+        self.validate()
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, raw: dict) -> 'ResolvedRuntime':
+        require(isinstance(raw, dict) and set(raw) == {'model', 'provider'},
+                'resolved runtime shape mismatch')
+        runtime = cls(**raw)
+        runtime.validate()
+        return runtime
+
+
+def provider_configuration(provider: 'DecisionProvider') -> dict:
+    """Stable trial identity: logical engine plus configured serving path."""
+
+    require(isinstance(provider.engine_identity, EngineIdentity), 'missing engine identity')
+    require(isinstance(provider.serving_identity, ServingIdentity), 'missing serving identity')
+    provider.engine_identity.validate()
+    provider.serving_identity.validate()
+    require(isinstance(provider.capabilities, frozenset) and bool(provider.capabilities)
+            and provider.capabilities <= KINDS, 'invalid provider capabilities')
+    return {
+        'engine': provider.engine_identity.to_dict(),
+        'serving': provider.serving_identity.to_dict(),
+        'capabilities': sorted(provider.capabilities),
+    }
+
+
 @dataclass
 class BatchResult:
     results: dict[str, DecisionResult]
-    model: str
+    resolved_runtime: ResolvedRuntime | None = None
     usage: dict = field(default_factory=lambda: {
         'input_tokens': None, 'output_tokens': None, 'cost_usd': None})
 
     def validate(self, specs: list[DecisionSpec]) -> None:
         require(isinstance(self.results, dict) and set(self.results) == {s.id for s in specs},
                 'answer ids differ from question ids')
-        require(isinstance(self.model, str) and bool(self.model), 'missing actual model')
+        if self.resolved_runtime is not None:
+            require(isinstance(self.resolved_runtime, ResolvedRuntime), 'invalid resolved runtime type')
+            self.resolved_runtime.validate()
+        require(not any(self.results[s.id].status == 'ok' for s in specs)
+                or self.resolved_runtime is not None,
+                'successful provider result requires resolved runtime')
         require(isinstance(self.usage, dict) and set(self.usage) ==
                 {'input_tokens', 'output_tokens', 'cost_usd'}, 'invalid usage keys')
         for k, v in self.usage.items():
@@ -147,12 +244,16 @@ class BatchResult:
 
 
 class DecisionProvider(Protocol):
-    """Only local semantic evaluation; providers do not execute actions."""
-    identity: dict
+    """Semantic evaluation only; engine and serving identities are deliberately separate."""
+
+    engine_identity: EngineIdentity
+    serving_identity: ServingIdentity
     capabilities: frozenset[str]
     is_live: bool
 
     def evaluate(self, specs: list[DecisionSpec], context: dict, timeout: float) -> BatchResult: ...
+
+    def validate_runtime(self, runtime: ResolvedRuntime) -> None: ...
 
 
 def project_context(specs: list[DecisionSpec], context: dict) -> dict:
