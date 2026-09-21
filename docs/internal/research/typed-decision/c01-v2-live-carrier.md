@@ -40,8 +40,9 @@ USD 0.209664. This is a client reservation based on published pricing, not a pro
 account spending limit. Unexpected reported cost/token overruns stop further calls;
 unknown actual cost remains unknown, with token-derived estimates reported separately.
 
-The official key remains in NexusDock encrypted Private Notes. No plaintext key has
-been retrieved by tools or copied to files. The CLI accepts an existing process environment
+Keys have encrypted Private Notes records. The owner subsequently identified an existing
+local environment file through a linked task; its official key was loaded in process
+memory for this run, with no new credential file. The CLI accepts an existing process environment
 or hidden input from an interactive local terminal; hidden input is held only in this
 process environment and removed on exit. Never put the key in command text or chat.
 
@@ -60,7 +61,11 @@ it is superseded by the persistent path above, which binds the final carrier sou
 
 ## Boundary
 
-As of this handoff there are zero real observations and zero semantic revisions.
-The remaining dependency is local secret-safe credential input. Holdout is not frozen
+The first official development call has now failed local contract validation; the
+campaign stopped with zero accepted semantic batches. Three separately admitted
+diagnostics succeeded but do not substitute for that failed observation. The owner
+resolved credential input through an existing local environment file. See
+`c01-v2-typesafe-dev-1.json` and `STATUS.md` for evidence and the remaining failure-
+observation gap. Semantic revisions remain zero. Holdout is not frozen
 or evaluated; A/B/C and #212 are unstarted. After development observations, review all
 mismatches before any bounded semantic revision or independent holdout freeze.

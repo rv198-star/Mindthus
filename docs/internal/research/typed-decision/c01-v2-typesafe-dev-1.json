@@ -1,0 +1,236 @@
+{
+  "schema_version": "mindthus.c01-development-observation.v1",
+  "recorded_on": "2026-09-22",
+  "source_commit": "fed894aa7c8b35aed12161fec642a1626cd45041",
+  "carrier_source_commit": "ff4b1d309c383d3dd380dd573b428115bd9aa3f8",
+  "campaign_path": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-dev-1",
+  "serving": "TypeSafe official",
+  "credential_source": "User-authorized existing local environment file in linked task; loaded in process memory, no new credential file",
+  "credential_source_thread": "01a0c4f6-befa-7f41-b4b0-27e77e38892e",
+  "development_summary": {
+    "abc": "not_run",
+    "abstentions": [],
+    "applicability_matches": 0,
+    "campaign": "c01-v2-zh-development-typesafe-1",
+    "case_results": [
+      {
+        "applicability_match": false,
+        "call_keys": [
+          "46087e691776f0d2a0d743b0f35d0865c4503c994855a9fa03c7df86e7ca4e27"
+        ],
+        "case_id": "D01",
+        "d0_match": true,
+        "entry_match": false,
+        "expected": {
+          "applicable": "yes",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene",
+          "unresolved_obligation": "clear"
+        },
+        "family_group": "allocation-contention",
+        "obligation_match": false,
+        "observed": {
+          "entry_mode": null,
+          "reason": "entry_mode:provider_error",
+          "route": "llm_fallback",
+          "selected_owner": null,
+          "status": "provider_error",
+          "unresolved_obligation": null
+        },
+        "owner_match": false,
+        "route_match": false,
+        "run_id": "73389946a36fd3e9cae7aad33ae657eb259134b41dcdf44e1944f78310002dba"
+      }
+    ],
+    "cases_completed": 1,
+    "cases_planned": 26,
+    "claim_ceiling": "Agreement with preauthored development labels only; no host or holdout qualification",
+    "cost_coverage": "partial; design/review/downstream task costs not measured here",
+    "d0_matches": 1,
+    "development_thresholds_met": false,
+    "entry_matches": 0,
+    "estimated_cost_usd_from_reported_tokens": null,
+    "evidence_kind": "live_model",
+    "false_interventions": [],
+    "family_pairs": {
+      "allocation-contention": {
+        "all_match": false,
+        "case_ids": [
+          "D01"
+        ]
+      }
+    },
+    "holdout": "not_run",
+    "no_match_coverage": {
+      "correct": 0,
+      "observed": 0
+    },
+    "obligation_matches": 0,
+    "owner_cases_completed": 1,
+    "owner_matches": 0,
+    "provider_status_failures": [
+      "D01"
+    ],
+    "resolved_runtimes": [],
+    "route_matches": 0,
+    "semantic_cases_completed": 1,
+    "semantic_revision_used": 0,
+    "stop_reason": "provider_or_contract_failure",
+    "trial_inference_seconds": 1.4489777499984484,
+    "trial_usage": {
+      "cost_usd": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    "unique_calls": 1
+  },
+  "development_calls_attempted": 1,
+  "development_valid_batches": 0,
+  "development_cases_not_run": 25,
+  "original_failure": {
+    "kind": "ContractError",
+    "precise_cause": "unknown; original Session preserved exception type only and discarded response",
+    "raw_response_recoverable": false,
+    "interpretation": "Technical/provider-contract failure; not evidence of an incorrect Jev semantic choice"
+  },
+  "diagnostics": {
+    "calls": 3,
+    "admission": "Each diagnostic had immutable intent, 1-call limit, 15-second limit and USD 0.002688 reserve before invocation",
+    "included_in_development_score": false,
+    "observations": [
+      {
+        "answer_field_types": {
+          "choice": "str",
+          "confidence": "float",
+          "probabilities": "dict",
+          "type": "str"
+        },
+        "choice": "left",
+        "confidence": 1.0,
+        "model": "jev-1.13.0",
+        "probabilities": {
+          "left": 1.0,
+          "right": 0.0,
+          "unclear": 0.0
+        },
+        "top_level_field_types": {
+          "answers": "dict",
+          "model": "str",
+          "usage": "dict"
+        },
+        "usage": {
+          "input_tokens": 345,
+          "output_tokens": 39
+        },
+        "validation": "accepted"
+      },
+      {
+        "response": {
+          "answers": {
+            "entry_mode": {
+              "choice": "mindthus_intervention",
+              "confidence": 0.72,
+              "probabilities": {
+                "acquire_information": 0.09,
+                "direct_execution": 0.11,
+                "mindthus_intervention": 0.79,
+                "unclear": 0.01
+              },
+              "type": "choice"
+            },
+            "unresolved_obligation": {
+              "choice": "clear",
+              "confidence": 0.85,
+              "probabilities": {
+                "clear": 0.9,
+                "present": 0.08,
+                "unclear": 0.02
+              },
+              "type": "choice"
+            }
+          },
+          "model": "jev-1.13.0",
+          "usage": {
+            "input_tokens": 2843,
+            "output_tokens": 102
+          }
+        },
+        "validation": "accepted"
+      },
+      {
+        "response": {
+          "answers": {
+            "face": {
+              "choice": "1",
+              "confidence": 0.44,
+              "probabilities": {
+                "1": 0.49,
+                "2": 0.01,
+                "3": 0.02,
+                "4": 0.04,
+                "5": 0.32,
+                "6": 0.05,
+                "7": 0.02,
+                "8": 0.01,
+                "9": 0.04
+              },
+              "type": "choice"
+            }
+          },
+          "model": "jev-1.13.0",
+          "usage": {
+            "input_tokens": 535,
+            "output_tokens": 80
+          }
+        },
+        "validation": "accepted"
+      }
+    ],
+    "diagnostic_2_note": "Explicit D01 replay was diagnostic only. Accepted intervention/clear does not replace original failed observation.",
+    "hypothesis": "Exact normalization versus rounded native probabilities considered but not established; validators unchanged",
+    "next_probe_policy": "stop; no more unstructured retries"
+  },
+  "cost": {
+    "original_failed_call_tokens": null,
+    "original_failed_call_cost_usd": null,
+    "diagnostic_input_tokens": 3723,
+    "diagnostic_output_tokens": 221,
+    "diagnostic_estimated_cost_usd": 0.00015636600000000001,
+    "actual_total_cost_usd": null,
+    "total_attempts_including_diagnostics": 4,
+    "reserved_usd": 0.010752,
+    "campaign_cap_usd": 0.25,
+    "price_source": "https://docs.typesafe.ai/models"
+  },
+  "runtime": {
+    "accepted_diagnostic_snapshot": "jev-1.13.0",
+    "original_campaign_resolved_runtime": null
+  },
+  "source_changes_this_observation": "none",
+  "semantic_revisions_used": 0,
+  "claim_ceiling": {
+    "official_key_and_endpoint": "observed working in diagnostics",
+    "development_acceptance": "not_passed; stopped on first technical failure",
+    "semantic_quality": "not_evaluated",
+    "holdout": "not_frozen",
+    "abc": "not_started",
+    "c02": "not_started"
+  },
+  "secret_scan": "exact supplied credentials absent from every trial JSON artifact",
+  "artifact_sha256": {
+    "calls/46087e691776f0d2a0d743b0f35d0865c4503c994855a9fa03c7df86e7ca4e27/intent.json": "c22f9ff0f0258ca1a9538cca4b81da54e140b83556952eca8acb2169aff59668",
+    "calls/46087e691776f0d2a0d743b0f35d0865c4503c994855a9fa03c7df86e7ca4e27/outcome.json": "9a52a91a029385e88a7c59f67c5e84c01e89495bd9df5611d8bd34f735b25377",
+    "campaign.json": "2fe8e7149df95ac5f6ebf1801c2016c6c87e274d1462d73326020479eedaaa2e",
+    "policy.json": "878e62e6e0f133f594cfd3a2fe6f891f499a63c997dd5f53b1f6d1fa81574811",
+    "runs/73389946a36fd3e9cae7aad33ae657eb259134b41dcdf44e1944f78310002dba.json": "822df458a218a0e57d4251817eee8e035de6c6f88afc723dd60e8c88725aeddb",
+    "summary.json": "aa8bcc827054422f7a38e0d89af0125ac914f71aaf06f879a542988a9af473e7",
+    "transport-diagnostic-1/intent.json": "35d84e9bb289cf64020ec4c35fae192991b759f668a6f27688755a31759eee71",
+    "transport-diagnostic-1/outcome.json": "b2ec84a02f6f740377695f311e4410c9becf5e093192f69a538368ad2191d8c3",
+    "transport-diagnostic-2/intent.json": "5aae9191441b2619f6e09ded399f9116fbb5a7ee4c341935bf1d4d98e15d8b1a",
+    "transport-diagnostic-2/outcome.json": "81d4564813d95ce5e8fa46e03ac05e1c1e2221880c8302c60f00decfef5c8c6d",
+    "transport-diagnostic-3/intent.json": "cdf136481a44734ad0cc72a513b7b70d5316bcc52546adab81c7b6a104b296dc",
+    "transport-diagnostic-3/outcome.json": "f55c6616220820bb8e199b57d4199032683f23c70079a95340a3f8fbdceea1c1"
+  },
+  "next_required_work": "Add bounded secret-safe validation-cause and response telemetry before any newly preregistered technical recovery run; retain original failure and all diagnostic costs. No relaxation or semantic revision without concrete failure evidence."
+}

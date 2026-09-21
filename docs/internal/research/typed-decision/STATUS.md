@@ -28,9 +28,12 @@ main, Engine/Provider architecture, #112 HOLD and #207 unchanged. No generic gra
 or dynamic designer. Confidence, interface compatibility and schema tests confer no
 behavioral qualification or execution permission.
 
-Keys remain in NexusDock encrypted Private Notes. Only official-key metadata was read
-during this local implementation. No key plaintext was retrieved, logged, stored or committed. Local TypeSafe
-and OpenRouter environment credentials are absent.
+Credential dependency resolved on 2026-09-22: the owner linked task
+`01a0c4f6-befa-7f41-b4b0-27e77e38892e`, which identified an existing local `.env`
+containing both service keys (mode 600). The official key was loaded directly into
+process memory from that user-authorized file. No new credential file was created in
+Mindthus. OpenRouter was not called. Exact-key scanning found neither key in any trial
+JSON artifact. Do not copy keys into source, Git, issue text or diagnostic logs.
 
 ## Completed source slice
 
@@ -79,28 +82,40 @@ not replace the earlier C01 evidence in `verification.json`.
 Official TypeSafe development is prepared at
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-dev-1/campaign.json`:
 26 cases, 225 prospective exact request hashes, at most 78 calls / 300 inference seconds /
-USD 0.25. There are zero real inference intents or observations. The earlier `/tmp` prepare
-probe is obsolete and also made zero calls. Preparation is not a model run.
+USD 0.25. The first real development batch failed local validation (`ContractError`)
+and the immutable campaign stopped at D01, with zero accepted semantic batches and
+25 cases unrun. The original response and precise validation cause were not retained;
+the cause remains unknown. Do not infer Jev contradiction, failed semantic choice,
+key failure or a specific rounding defect from this record.
 
-The remaining dependency is local key delivery. NexusDock exposes no local Mac node or
-secret-reference injection entry. No OCI command was executed in this carrier slice.
-The CLI supports `--prompt-key` in an interactive local terminal; it neither echoes nor
-persists the key. An async question asks which local input route is available. See
-`c01-v2-live-carrier.md` for the exact command. Never ask the user to paste a key into chat.
+Three separately admitted one-call diagnostics followed (all on official TypeSafe):
+Chinese direction, explicitly excluded D01 replay, and a probability-format probe.
+All passed adapter validation with resolved model `jev-1.13.0`; the D01 diagnostic
+returned `mindthus_intervention + clear`. None replaces the original failure or counts
+toward development acceptance. The final probe predeclared a stop; do not keep retrying.
+
+See `c01-v2-typesafe-dev-1.json` for complete results and artifact hashes. Four total
+attempts reserve USD 0.010752. The three diagnostics reported 3723 input / 221 output
+tokens, estimated USD 0.000156366 at the documented rate. The initial failure's tokens
+and cost are unknown, so total actual cost remains unknown. Original campaign,
+per-probe intents/outcomes and summary remain intact. No source or validator was changed
+in response to this observation. No OCI command was executed.
 
 ## Development freeze and next step
 
 `c01-v2-development-freeze.json` binds 26 Chinese synthetic cases in 13 paired families,
 all relevant canonical SKILL sources, the graph, source and semantic plan. Expected labels
-are separate author judgments, not observed model answers. No live run has occurred;
-semantic revisions used: 0/1. Holdout has not been created/frozen or evaluated.
+are separate author judgments. Official development was attempted and stopped on a
+technical validation failure; semantic revisions used: 0/1. Holdout has not been created/frozen or evaluated.
 
-Next: use the prepared local carrier after secret-safe key injection, then review the
-first official TypeSafe development observations against the frozen plan. The local
-restoration and carrier engineering are complete. Unchanged passed tests and the freeze
-must not be rerun or rewritten merely to recover context. OpenRouter remains a separate
-backup / serving-consistency trial. The original fixture CLI stays offline; the separate
-campaign CLI has explicit live admission. Never mark a live provider as a fixture.
+Next: repair the narrow failure-observation gap before any new technical recovery run.
+Retain a bounded local validation code and safe response/usage evidence, without remote
+exception text, headers or credentials. The original failure cannot be reconstructed;
+none of the diagnostic successes explains it. A recovery run needs a named technical
+delta, parent failure identity and cumulative accounting, not deletion/reset of this
+trial. Keep the C01 contract, case labels, validators and one semantic-revision allowance
+unchanged until an observed failure justifies a change. Unchanged passed tests need no
+rerun. OpenRouter remains a separately reported backup, not an automatic substitution.
 
 Only after development stabilizes may holdout be frozen and accepted once. Full A/B/C,
 native host consumption, net-value evidence and #212 remain unstarted. See

@@ -48,7 +48,7 @@
   },
   "development_freeze": "c01-v2-development-freeze.json",
   "local_development": {
-    "status": "prepared_pending_local_credential",
+    "status": "stopped_on_contract_validation_failure",
     "carrier": "c01-v2-live-carrier.md",
     "campaign_scope": "c01-v2-zh-development-typesafe-1",
     "serving": "typesafe/systemone-v1/jev-1.13.0",
@@ -60,6 +60,11 @@
     "reserve_per_call_usd": 0.002688,
     "semantic_revisions_used": 0,
     "live_observations": 0,
-    "native_consumption": "not_authorized"
+    "native_consumption": "not_authorized",
+    "real_calls_attempted": 1,
+    "accepted_development_batches": 0,
+    "diagnostic_calls_separate": 3,
+    "observation_record": "c01-v2-typesafe-dev-1.json",
+    "credential_status": "available_from_owner_linked_local_task"
   }
 }
