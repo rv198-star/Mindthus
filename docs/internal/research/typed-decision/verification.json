@@ -1,15 +1,17 @@
 {
   "schema_version": "mindthus.typed-decision-engineering-evidence.v1",
-  "source_commit": "119d06813a01c49d87140e0192488f9a87a32602",
+  "source_commit": "e9e78ccb009f1bddbad5991e35df90e7805ac343",
   "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
-  "runtime_source_sha256": "c951a1e3763b11fbc6ae1f93416d7e21a96ff211f1f40225b48117b434a12205",
+  "runtime_source_sha256": "288bffb225d1af15542cb58734de4d15ca11d61fd0b8b3cde40bba74fa5f93dc",
   "tests": {
-    "targeted": 47,
-    "full_suite": 1131,
+    "targeted": 50,
+    "related_regression": 157,
+    "related_regression_skipped": 4,
+    "full_suite": 1134,
     "full_suite_skipped": 5,
     "full_suite_exit_code": 0,
     "test_registry": "80/80",
-    "full_suite_log_sha256": "c2469d7458612fbd82c62e0f7316d5748ac41ae958d74f201a817c5c6f6c1b4a"
+    "full_suite_log_sha256": "3423075a69fef2f871c05ab30894a12b0f749ee8ec33231b4928e2463d8d9225"
   },
   "probe": {
     "first": {
@@ -25,6 +27,15 @@
     "same_run_id": true,
     "native_skill_load": "not_observed",
     "read_receipt_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514"
+  },
+  "engine_serving_abstraction": {
+    "provider_neutral_c01_scan": "pass",
+    "typesafe_and_openrouter_share_jev_engine_identity": true,
+    "serving_paths_remain_distinct_trial_identity": true,
+    "configured_model_may_differ_from_resolved_snapshot": "tested",
+    "same_snapshot_replay_without_provider_call": "tested",
+    "resolved_runtime_drift_within_trial": "fail_closed",
+    "qualification_transfer_across_engines_or_providers": "not_claimed"
   },
   "review": {
     "author_self_review": "completed",
