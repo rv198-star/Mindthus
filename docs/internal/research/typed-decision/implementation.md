@@ -18,3 +18,11 @@ Read STATUS.md, inspect git status and the referenced issue before edits. A comp
 
 ## Dynamic design
 The standard's bounded dynamic-design exception is preserved as a design rule. This pilot does not include a recursive designer, generated-code evaluator, or automatic global-template promotion.
+
+## OpenRouter Jev live compatibility smoke
+
+A single explicitly authorized live smoke was run on 2026-09-21 through the OpenRouter alpha Decisions endpoint with the pinned family `typesafe/jev-1.13`. The response resolved to `typesafe/jev-1.13-20260917`, provider `TypeSafe`, HTTP 200, with 575 input tokens, 91 output tokens and reported cost `$0.00002415`; observed wall time was 0.453 seconds.
+
+The routing choice selected `sra` with provider confidence `0.99`, while a separate Noul question about fact sufficiency returned `0.23`. This is intentionally recorded as an API/shape smoke only: it demonstrates that authentication, request mapping, answer types, resolved snapshot identity and usage reporting work. It does **not** qualify Chinese semantics, Noul thresholds, route accuracy or net value.
+
+`OpenRouterJevProvider` therefore treats `typesafe/jev-1.13` as the pinned family and records the dated resolved snapshot returned by OpenRouter. `~typesafe/jev-latest` remains inadmissible for qualification runs. No API credential is stored in the repository or evidence files.

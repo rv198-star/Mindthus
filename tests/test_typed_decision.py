@@ -12,7 +12,7 @@ from experiments.typed_decision import c01
 from experiments.typed_decision.contracts import (BatchResult, ContractError, DecisionResult,
                                                 DecisionSpec, canonical, digest, project_context)
 from experiments.typed_decision.providers import (ChatProvider, FixtureProvider, JevProvider,
-                                                 ProviderError, _NoRedirect)
+                                                 OpenRouterJevProvider, ProviderError, _NoRedirect)
 from experiments.typed_decision.session import Limits, RecoveryRequired, Session, read_record
 from experiments.typed_decision.trace import from_c01, validate_with_existing
 
@@ -118,6 +118,38 @@ class ProviderTests(unittest.TestCase):
             with self.subTest(response=response), patch.dict(os.environ, {'TYPESAFE_API_KEY': 'fixture'}), \
                     self.assertRaises(ContractError):
                 JevProvider(transport=lambda *_, r=response: r).evaluate([spec()], {'text': 1}, 3)
+
+    def test_openrouter_jev_mapping_accepts_resolved_snapshot_and_cost(self):
+        seen = []
+        specs = [spec('select'), spec('probability', 'assess_proposition', {'true': 'yes', 'false': 'no'}),
+                 spec('rate', 'rate', ['low', 'mid', 'high'])]
+        raw = {'model': 'typesafe/jev-1.13-20260917', 'provider': 'TypeSafe', 'answers': {
+            'select': {'type': 'choice', 'choice': 'yes', 'probabilities': {'yes': .99, 'no': .01}, 'confidence': .98},
+            'probability': {'type': 'noul', 'noul': .75},
+            'rate': {'type': 'score', 'score': 1.05, 'probabilities': {'0': 0., '1': .95, '2': .05},
+                     'legend': {'0': 'low', '1': 'mid', '2': 'high'}, 'confidence': .92}},
+            'usage': {'input_tokens': 575, 'output_tokens': 91, 'cost': 2.415e-05}}
+        def transport(url, headers, body, timeout):
+            seen.append((url, headers, body, timeout))
+            return raw
+        provider = OpenRouterJevProvider(transport=transport)
+        with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'fixture-only-credential'}):
+            batch = provider.evaluate(specs, {'text': 'fixture'}, 5)
+        self.assertEqual(batch.model, 'typesafe/jev-1.13-20260917')
+        self.assertEqual(batch.usage['cost_usd'], 2.415e-05)
+        self.assertEqual(seen[0][0], 'https://openrouter.ai/api/alpha/decisions')
+        self.assertEqual(seen[0][2]['model'], 'typesafe/jev-1.13')
+        self.assertNotIn('fixture-only-credential', str(provider.identity))
+
+    def test_openrouter_jev_rejects_alias_missing_key_and_wrong_family(self):
+        with self.assertRaises(ContractError):
+            OpenRouterJevProvider('~typesafe/jev-latest')
+        with patch.dict(os.environ, {}, clear=True), self.assertRaises(ProviderError):
+            OpenRouterJevProvider(transport=lambda *_: self.fail('network called')).evaluate([spec()], {'text': 1}, 3)
+        raw = {'model': 'typesafe/jev-1.14-20260920', 'answers': {'test': {
+            'type': 'choice', 'choice': 'yes', 'probabilities': {'yes': 1, 'no': 0}, 'confidence': 1}}}
+        with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'fixture'}), self.assertRaises(ContractError):
+            OpenRouterJevProvider(transport=lambda *_: raw).evaluate([spec()], {'text': 1}, 3)
 
     def test_llm_select_has_unknown_confidence_and_strict_schema(self):
         seen = []

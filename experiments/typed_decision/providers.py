@@ -111,6 +111,69 @@ class JevProvider:
         return batch
 
 
+class OpenRouterJevProvider:
+    """OpenRouter Decisions API adapter for a pinned Jev family."""
+    capabilities = frozenset({'select', 'assess_proposition', 'rate'})
+    is_live = True
+
+    def __init__(self, model: str = 'typesafe/jev-1.13', *, transport: Transport = post_json):
+        require(isinstance(model, str) and model.startswith('typesafe/jev-')
+                and 'latest' not in model and 'preview' not in model,
+                'pin an OpenRouter Jev version')
+        self.model = model
+        self.transport = transport
+        self.identity = {'backend': 'openrouter-decisions-alpha-v1', 'model': model,
+                         'endpoint': 'https://openrouter.ai/api/alpha/decisions', 'adapter': '1'}
+
+    def evaluate(self, specs: list[DecisionSpec], context: dict, timeout: float) -> BatchResult:
+        key = os.environ.get('OPENROUTER_API_KEY')
+        if not key:
+            raise ProviderError('missing_credential:OPENROUTER_API_KEY')
+        questions = {}
+        for spec in specs:
+            spec.validate()
+            questions[spec.id] = {
+                'type': {'select': 'choice', 'assess_proposition': 'noul', 'rate': 'score'}[spec.kind],
+                'instructions': spec.question,
+                'criteria': spec.criteria}
+        raw = self.transport(self.identity['endpoint'],
+                             {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'},
+                             {'model': self.model, 'state': context, 'questions': questions}, timeout)
+        require(isinstance(raw, dict), 'provider response must be an object')
+        actual_model = raw.get('model')
+        require(isinstance(actual_model, str)
+                and (actual_model == self.model or actual_model.startswith(self.model + '-')),
+                'actual OpenRouter Jev model differs from pinned family')
+        answers = raw.get('answers')
+        require(isinstance(answers, dict) and set(answers) == set(questions),
+                'invalid OpenRouter Jev answer ids')
+        results = {}
+        for spec in specs:
+            answer = answers[spec.id]
+            require(isinstance(answer, dict) and answer.get('type') == questions[spec.id]['type'],
+                    'OpenRouter Jev answer type mismatch')
+            field = {'select': 'choice', 'assess_proposition': 'noul', 'rate': 'score'}[spec.kind]
+            require(field in answer, 'missing OpenRouter Jev value')
+            uncertainty = None
+            if spec.kind != 'assess_proposition':
+                require('confidence' in answer and 'probabilities' in answer,
+                        'missing OpenRouter native uncertainty')
+                uncertainty = {'source': 'provider_distribution', 'confidence': answer['confidence'],
+                               'probabilities': answer['probabilities']}
+                if spec.kind == 'rate':
+                    require(answer.get('legend') == {str(i): text for i, text in enumerate(spec.criteria)},
+                            'OpenRouter Jev rating legend differs from rubric')
+            results[spec.id] = DecisionResult('ok', answer[field], uncertainty)
+        require(raw.get('usage') is None or isinstance(raw['usage'], dict),
+                'invalid OpenRouter provider usage shape')
+        usage = raw.get('usage') or {}
+        batch = BatchResult(results, actual_model, {
+            'input_tokens': usage.get('input_tokens'), 'output_tokens': usage.get('output_tokens'),
+            'cost_usd': usage.get('cost')})
+        batch.validate(specs)
+        return batch
+
+
 class ChatProvider:
     """Explicit structured-output model; no fabricated probability or numeric parity."""
     capabilities = frozenset({'select'})

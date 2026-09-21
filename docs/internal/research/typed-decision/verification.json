@@ -4,12 +4,12 @@
   "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
   "runtime_source_sha256": "c951a1e3763b11fbc6ae1f93416d7e21a96ff211f1f40225b48117b434a12205",
   "tests": {
-    "targeted": 45,
-    "full_suite": 1129,
+    "targeted": 47,
+    "full_suite": 1131,
     "full_suite_skipped": 5,
     "full_suite_exit_code": 0,
     "test_registry": "80/80",
-    "full_suite_log_sha256": "7d9aa6bd789b9a74795bbd1c188ec546f6adfc7a5fc5c6d06af59cb490895b8f"
+    "full_suite_log_sha256": "c2469d7458612fbd82c62e0f7316d5748ac41ae958d74f201a817c5c6f6c1b4a"
   },
   "probe": {
     "first": {
@@ -32,11 +32,34 @@
   },
   "claim_ceiling": {
     "offline_mechanics": "tested",
-    "live_api_compatibility": "not_run",
+    "live_api_compatibility": "openrouter_single_smoke_observed; TypeSafe-native path not run",
     "native_host_integration": "not_implemented",
     "semantic_quality": "not_evaluated",
     "net_value": "unknown",
     "c02": "not_started"
   },
-  "raw_log_root": "/srv/agentdock/tmp/mindthus-typed-review"
+  "raw_log_root": "/srv/agentdock/tmp/mindthus-typed-review",
+  "live_smoke": {
+    "transport": "openrouter-decisions-alpha",
+    "configured_model": "typesafe/jev-1.13",
+    "resolved_model": "typesafe/jev-1.13-20260917",
+    "provider": "TypeSafe",
+    "http_status": 200,
+    "elapsed_seconds_observed": 0.453,
+    "usage": {
+      "input_tokens": 575,
+      "output_tokens": 91,
+      "cost_usd": 2.415e-05
+    },
+    "sample_observation": {
+      "route_family": {
+        "choice": "sra",
+        "confidence": 0.99
+      },
+      "facts_sufficient_noul": 0.23,
+      "decision_complexity_score": 1.37,
+      "decision_complexity_confidence": 0.29
+    },
+    "claim": "API authentication, OpenRouter Decisions wire shape, typed answers, resolved snapshot identity and usage/cost reporting were observed once. Semantic quality is not qualified; the divergent noul result requires dataset-based evaluation."
+  }
 }
