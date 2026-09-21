@@ -522,7 +522,7 @@ class C01Tests(unittest.TestCase):
 
     def test_real_dependency_order_and_selected_file_consumption(self):
         report, provider = self.run_graph()
-        self.assertEqual(provider.calls, [['facts', 'hard_judgment', 'obligations'], ['owner'], ['applicable']])
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation'], ['owner'], ['applicable']])
         self.assertEqual(report['result']['owner'], 'sra')
         receipt = c01.read_selected_method(report, ROOT)
         self.assertIn('Scarce Resource', receipt['content'])
@@ -560,10 +560,10 @@ class C01Tests(unittest.TestCase):
             c01.read_selected_method(report, ROOT)
 
     def test_fact_gap_direct_and_obligation_paths(self):
-        cases = [({'facts': 'missing'}, 'acquire_information'),
-                 ({'hard_judgment': 'absent'}, 'direct_execute'),
-                 ({'obligations': 'present'}, 'llm_fallback'),
-                 ({'facts': 'unclear'}, 'llm_fallback'),
+        cases = [({'entry_mode': 'acquire_information'}, 'acquire_information'),
+                 ({'entry_mode': 'direct_execution'}, 'direct_execute'),
+                 ({'unresolved_obligation': 'present'}, 'llm_fallback'),
+                 ({'entry_mode': 'unclear'}, 'llm_fallback'),
                  ({'owner': 'unclear'}, 'llm_fallback'),
                  ({'applicable': 'no'}, 'llm_fallback')]
         for i, (changes, expected) in enumerate(cases):
@@ -573,9 +573,35 @@ class C01Tests(unittest.TestCase):
 
     def test_explicit_method_preserved_but_not_a_precondition_waiver(self):
         context = copy.deepcopy(FIXTURE['context']); context['explicit_method'] = 'wae'
-        report, provider = self.run_graph({'hard_judgment': 'absent', 'applicable': 'no'}, context)
+        report, provider = self.run_graph({'entry_mode': 'mindthus_intervention', 'applicable': 'no'}, context)
         self.assertEqual(report['result']['route'], 'llm_fallback')
-        self.assertEqual(provider.calls, [['facts', 'hard_judgment', 'obligations'], ['applicable']])
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation'], ['applicable']])
+        self.assertIsNone(report['result']['hard_judgment'])
+
+    def test_rejected_applicability_still_binds_full_method_identity(self):
+        repo = self.root / 'source'
+        (repo / 'skills/using-mindthus').mkdir(parents=True)
+        (repo / 'skills/sra').mkdir(parents=True)
+        (repo / 'skills/using-mindthus/SKILL.md').write_text((ROOT / 'skills/using-mindthus/SKILL.md').read_text())
+        path = repo / 'skills/sra/SKILL.md'
+        path.write_text('First ineligible contract.')
+        first, _ = self.run_graph({'applicable': 'no'}, root=self.root / 'trial', repo=repo)
+        path.write_text('Second ineligible contract.')
+        second, provider = self.run_graph({'applicable': 'no'}, root=self.root / 'trial', repo=repo)
+        self.assertNotEqual(first['run_id'], second['run_id'])
+        self.assertEqual(provider.calls, [['applicable']])
+
+    def test_missing_selected_contract_is_information_gap_without_applicability_call(self):
+        original = Path.read_text
+        def read(path, *args, **kwargs):
+            if path == ROOT / 'skills/sra/SKILL.md':
+                raise FileNotFoundError('missing selected source')
+            return original(path, *args, **kwargs)
+        with patch.object(Path, 'read_text', read):
+            report, provider = self.run_graph()
+        self.assertEqual(report['result']['reason'], 'selected_contract_unavailable')
+        self.assertEqual(report['result']['status'], 'missing_context')
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation'], ['owner']])
 
     def test_preexisting_obligations_cannot_be_cleared_by_model(self):
         context = copy.deepcopy(FIXTURE['context']); context['known_obligations'] = ['anti_spiral_required']
@@ -594,8 +620,110 @@ class C01Tests(unittest.TestCase):
 
     def test_high_risk_direct_path_falls_back(self):
         context = dict(FIXTURE['context'], risk='high')
-        report, _ = self.run_graph({'hard_judgment': 'absent'}, context)
+        report, _ = self.run_graph({'entry_mode': 'direct_execution'}, context)
         self.assertEqual(report['result']['route'], 'llm_fallback')
+
+    def test_all_entry_modes_and_obligation_combinations(self):
+        for mode in ('direct_execution', 'acquire_information', 'mindthus_intervention', 'unclear'):
+            for obligation in ('clear', 'present', 'unclear'):
+                with self.subTest(mode=mode, obligation=obligation):
+                    report, provider = self.run_graph(
+                        {'entry_mode': mode, 'unresolved_obligation': obligation},
+                        root=self.root / (mode + '-' + obligation))
+                    expected = {'direct_execution': 'direct_execute',
+                                'acquire_information': 'acquire_information',
+                                'mindthus_intervention': 'intervene',
+                                'unclear': 'llm_fallback'}[mode] if obligation == 'clear' else 'llm_fallback'
+                    self.assertEqual(report['result']['route'], expected)
+                    self.assertEqual(len(provider.calls), 3 if expected == 'intervene' else 1)
+                    self.assertEqual(report['result']['consumption'], 'not_executed')
+                    self.assertEqual(report['result']['hard_judgment'],
+                                     {'direct_execution': False, 'mindthus_intervention': True}.get(mode))
+
+    def test_same_state_contains_constraints_and_selected_full_contract_is_later(self):
+        seen = []
+        class Capture(FixtureProvider):
+            def evaluate(self, specs, context, timeout):
+                seen.append((specs, context))
+                return super().evaluate(specs, context, timeout)
+        with Session(self.root, Capture(FIXTURE['answers']), scope='c01') as session:
+            c01.run(session, copy.deepcopy(FIXTURE['context']), ROOT)
+        specs, state = seen[0]
+        self.assertEqual([s.id for s in specs], ['entry_mode', 'unresolved_obligation'])
+        self.assertEqual(specs[0].required_context, specs[1].required_context)
+        self.assertEqual(state['known_obligations'], [])
+        self.assertEqual(state['explicit_method'], 'not_requested')
+        self.assertNotIn('method_contract', state)
+        self.assertNotIn('method_contract', seen[1][1])
+        self.assertEqual(seen[2][1]['method_contract'], (ROOT / 'skills/sra/SKILL.md').read_text())
+        self.assertEqual(seen[2][1]['selected_owner'], 'sra')
+
+    def test_d0_rejects_missing_fields_identity_evidence_and_permission_without_calls(self):
+        contexts = []
+        for field in ('request', 'constraints', 'evidence', 'provenance', 'known_obligations',
+                      'risk', 'freshness', 'permission'):
+            context = copy.deepcopy(FIXTURE['context'])
+            del context[field]
+            contexts.append(context)
+        contexts += [dict(FIXTURE['context'], **change) for change in (
+            {'provenance': {'source_ref': 'test', 'revision': ''}},
+            {'evidence': [{'summary': 'no source'}]},
+            {'permission': {'mode': 'advisory', 'source_ref': ''}},
+            {'permission': {'mode': 'bounded_execution', 'source_ref': 'unsupported'}},
+            {'permission': {'mode': 'denied', 'source_ref': 'host'}},
+        )]
+        for i, context in enumerate(contexts):
+            with self.subTest(i=i):
+                report, provider = self.run_graph(context=context, root=self.root / str(i))
+                self.assertEqual(report['result']['route'], 'original_path')
+                self.assertEqual(provider.calls, [])
+
+    def test_empty_evidence_is_not_a_mechanical_information_gap(self):
+        context = dict(FIXTURE['context'], request='把“周一”改为“周二”。', evidence=[])
+        report, provider = self.run_graph({'entry_mode': 'direct_execution'}, context)
+        self.assertEqual(report['result']['route'], 'direct_execute')
+        self.assertEqual(len(provider.calls), 1)
+
+    def test_explicit_method_cannot_be_erased_by_direct_choice(self):
+        context = dict(FIXTURE['context'], explicit_method='sra')
+        report, provider = self.run_graph({'entry_mode': 'direct_execution'}, context)
+        self.assertEqual(report['result']['reason'], 'explicit_method_conflicts_with_direct')
+        self.assertEqual(len(provider.calls), 1)
+
+    def test_known_obligation_change_invalidates_entry_state(self):
+        self.run_graph()
+        context = dict(FIXTURE['context'], known_obligations=['new_evidence_ceiling'])
+        report, provider = self.run_graph(context=context)
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation']])
+        self.assertEqual(report['result']['route'], 'llm_fallback')
+        self.assertIn('new_evidence_ceiling', report['result']['obligations'])
+
+    def test_partial_batch_failure_keeps_successful_obligation(self):
+        for status in ('missing_context', 'unsupported', 'provider_error', 'abstain'):
+            report, provider = self.run_graph({
+                'entry_mode': asdict(DecisionResult(status)),
+                'unresolved_obligation': 'present'}, root=self.root / status)
+            self.assertEqual(report['result']['status'], status)
+            self.assertIn('unresolved_entry_obligation', report['result']['obligations'])
+            self.assertEqual(len(provider.calls), 1)
+
+    def test_high_confidence_cannot_override_obligation_or_grant_execution(self):
+        report, provider = self.run_graph({'entry_mode': asdict(DecisionResult(
+            'ok', 'direct_execution', {'source': 'provider_distribution', 'confidence': 1.0})),
+            'unresolved_obligation': 'present'})
+        self.assertEqual(report['result']['route'], 'llm_fallback')
+        self.assertEqual(report['result']['consumption'], 'not_executed')
+        self.assertEqual(report['result']['reason'], 'unresolved_or_conflicting_judgment')
+        self.assertEqual(len(provider.calls), 1)
+
+    def test_entry_no_match_and_transport_failure_have_distinct_reasons(self):
+        no_match, _ = self.run_graph({'entry_mode': 'unclear'}, root=self.root / 'no-match')
+        failure, _ = self.run_graph({'entry_mode': asdict(DecisionResult('provider_error'))},
+                                    root=self.root / 'failed')
+        self.assertEqual(no_match['result']['reason'], 'entry_mode_no_match')
+        self.assertEqual(no_match['result']['status'], 'abstain')
+        self.assertEqual(failure['result']['reason'], 'entry_mode:provider_error')
+        self.assertEqual(failure['result']['status'], 'provider_error')
 
     def test_cycle_unknown_parent_rejected(self):
         for graph in [{'dependencies': {'a': ['b'], 'b': ['a']}}, {'dependencies': {'a': ['missing']}}]:

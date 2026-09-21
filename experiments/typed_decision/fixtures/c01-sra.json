@@ -2,11 +2,33 @@
   "evidence_kind": "offline_control_flow_fixture_not_semantic_holdout",
   "context": {
     "request": "两个已明确的开发任务争夺今天同一份两小时预算，先完成哪个？",
-    "constraints": ["保留现有任务目标和权限", "这里只决定下一份投入，不修改Mission"],
-    "evidence": [{"source_ref": "fixture:tasks", "summary": "两项均已可判断，使用同一两小时预算。"}],
-    "provenance": {"source_ref": "authored-control-flow-fixture", "revision": "1"},
-    "known_obligations": [], "explicit_method": null, "risk": "low", "freshness": "current"
+    "constraints": [
+      "保留现有任务目标和权限",
+      "这里只决定下一份投入，不修改Mission"
+    ],
+    "evidence": [
+      {
+        "source_ref": "fixture:tasks",
+        "summary": "两项均已可判断，使用同一两小时预算。"
+      }
+    ],
+    "provenance": {
+      "source_ref": "authored-control-flow-fixture",
+      "revision": "1"
+    },
+    "known_obligations": [],
+    "explicit_method": null,
+    "risk": "low",
+    "freshness": "current",
+    "permission": {
+      "mode": "advisory",
+      "source_ref": "offline-fixture-policy"
+    }
   },
-  "answers": {"facts": "sufficient", "hard_judgment": "present", "obligations": "clear",
-              "owner": "sra", "applicable": "yes"}
+  "answers": {
+    "entry_mode": "mindthus_intervention",
+    "unresolved_obligation": "clear",
+    "owner": "sra",
+    "applicable": "yes"
+  }
 }

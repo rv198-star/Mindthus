@@ -9,13 +9,13 @@ Read `STATUS.md` to resume; `standard.md` for the provider-neutral contract; `po
 Run from the repository root (Python 3.10+, POSIX; standard library runtime):
 
 ```bash
-python3 -m unittest tests.test_typed_decision -v
+python3.12 -m unittest discover -s tests -p test_typed_decision.py -v
 python3 scripts/check-test-lifecycle.py
 python3 -m experiments.typed_decision c01 \
-  --state-root /tmp/mindthus-c01-trial-1 --read-selected-method
+  --state-root /tmp/mindthus-c01-v2-trial-1 --read-selected-method
 # Identical invocation reuses the completed batches, rather than asking again.
 python3 -m experiments.typed_decision c01 \
-  --state-root /tmp/mindthus-c01-trial-1 --read-selected-method
+  --state-root /tmp/mindthus-c01-v2-trial-1 --read-selected-method
 ```
 
 The fixture deliberately supplies decisions to test execution. It is not Jev output or a blinded semantic benchmark. The printed Judgment Trace uses the existing v1.1 validator. A local file read is reported separately from native host skill activation.

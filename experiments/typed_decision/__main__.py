@@ -18,7 +18,7 @@ def main(argv=None) -> int:
     parser.add_argument('command', choices=['c01'])
     parser.add_argument('--fixture', type=Path, default=Path(__file__).parent / 'fixtures/c01-sra.json')
     parser.add_argument('--state-root', type=Path, required=True, help='local trial directory outside source')
-    parser.add_argument('--scope', default='offline-c01-v1')
+    parser.add_argument('--scope', default='offline-c01-v2')
     parser.add_argument('--read-selected-method', action='store_true')
     args = parser.parse_args(argv)
     repo = Path(__file__).resolve().parents[2]

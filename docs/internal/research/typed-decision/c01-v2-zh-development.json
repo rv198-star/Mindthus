@@ -1,0 +1,974 @@
+{
+  "schema_version": "mindthus.c01-development.v1",
+  "revision": "c01-v2-zh-dev-1",
+  "split": "development",
+  "label_source": "author judgment from frozen canonical contracts; not model observations or independent human adjudication",
+  "data_origin": "new synthetic Chinese scenarios; not the engineering fixture or historical judgment-50",
+  "near_neighbor_policy": "Each family_group remains wholly in development; holdout must use independent situations and templates.",
+  "cases": [
+    {
+      "id": "D01",
+      "family_group": "allocation-contention",
+      "context": {
+        "request": "明早前只能用一名工程师的两小时：修复搜索超时，还是补导出重试？请决定下一份投入。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D01",
+            "summary": "搜索修复需两小时，可恢复客户演示，但演示可用录像替代；导出重试也需两小时，可避免每天手工重跑，但今天可人工处理。目标是稳定交付，两者可回退，无硬性截止先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D01",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "候选可判断、同一时间池真实竞争；存在价值取舍。"
+    },
+    {
+      "id": "D02",
+      "family_group": "allocation-contention",
+      "context": {
+        "request": "安排搜索修复和导出重试同时开始即可，不需选择先后。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D02",
+            "summary": "两项各需两小时，各有独立工程师及测试环境，工程师已确认空闲，无共享资源竞争或依赖。目标和方案均已确定。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D02",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "删除共同资源竞争后，只剩已指定的并行安排。"
+    },
+    {
+      "id": "D03",
+      "family_group": "allocation-missing-facts",
+      "context": {
+        "request": "优化搜索还是导出，哪个先做？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D03",
+            "summary": "只有两个名称，尚未提供目标、耗时、影响或可用人手；可以向负责人取得。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D03",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "acquire_information"
+      },
+      "rationale": "不可凭任务名发明比较事实与资源，不应加载 SRA。"
+    },
+    {
+      "id": "D04",
+      "family_group": "allocation-missing-facts",
+      "context": {
+        "request": "优化搜索还是导出，哪个先做？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D04",
+            "summary": "产品负责人目标是今日演示成功；同一工程师只剩两小时。搜索两小时可降低演示卡顿，仍能用预录演示；导出两小时可减少演示后手工交付，今天仍可人工完成。两项均可回退，无强制排序。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D04",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "补齐目标、候选作用和真实资源竞争，入口从补信息转为分配判断。"
+    },
+    {
+      "id": "D05",
+      "family_group": "direction-versus-carrier",
+      "context": {
+        "request": "长期方向已认可，眼下要不要一次性迁完，还是分阶段保留旧链路？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D05",
+            "summary": "合成公司已验证托管平台的长期规模优势。当前迁移项目需要占用六个月现金中的四个月，旧客户接口仍变动，供应商切换期可能延迟三个月；可先迁一个低风险模块。目标保持服务连续，已授权给建议。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D05",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "mpg",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "方向已有支持；行动者、载体、暴露和路径波动共同决定承载姿态。"
+    },
+    {
+      "id": "D06",
+      "family_group": "direction-versus-carrier",
+      "context": {
+        "request": "只判断长期方向：老师傅对少数客户的精细控制，能长期抵住标准化系统的规模优势吗？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D06",
+            "summary": "合成工厂同口径试验显示系统吞吐高十倍、合格率达客户下限；手工仍在少数定制客户中更好，但训练时间难缩短。本题不涉及某个迁移项目、现金投入或当前切换。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D06",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sela",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "对象是系统效率与局部优势的方向关系，尚无具体承载动作。"
+    },
+    {
+      "id": "D07",
+      "family_group": "agent-control-versus-format",
+      "context": {
+        "request": "应该怎样重划脚本、模型和测试的职责？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D07",
+            "summary": "Agent 自动生成 SQL 后，只要 JSON 字段齐全，脚本就把“业务口径正确”标为通过；样本反例显示 SQL 把退款重复累计。当前只讨论语义验收由谁控制，不执行数据修改；反例与边界已被承认。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D07",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "wae",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "Agentic 系统内，结构校验错误承担语义真相裁决。"
+    },
+    {
+      "id": "D08",
+      "family_group": "agent-control-versus-format",
+      "context": {
+        "request": "把这个 JSON 按键名排序并缩进两格：{\"b\":2,\"a\":1}。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D08",
+            "summary": "这段 JSON 来自 Agent 日志。本次只做格式转换，不判断业务含义；无外部写入。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D08",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "相同 Agent/JSON 词汇，没有控制权误配，仅确定性格式化。"
+    },
+    {
+      "id": "D09",
+      "family_group": "artifact-value-versus-format",
+      "context": {
+        "request": "改好下面这段值班指引，让新同事读后知道下一步，最多改这一段。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D09",
+            "summary": "现有段落：“出现导出问题及时处理并关注风险。”独立操作规范：先看任务号；若状态 failed，点一次重试；再次失败交给值班工程师并附任务号。目标为可执行性，事实只能使用本规范；当前没有反复修补或待审事实。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D09",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "tvg",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "已有有边界的薄产物，独立目标和证据足够，需定向强化。"
+    },
+    {
+      "id": "D10",
+      "family_group": "artifact-value-versus-format",
+      "context": {
+        "request": "把值班指引中的“任务号”统一改成“作业号”，其他字不变。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D10",
+            "summary": "原文：“先看任务号；若状态 failed，点一次重试；再次失败交给值班工程师并附任务号。”术语变更已经确定。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D10",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "同一指引、同一产物，任务只是精确替换，不能因文档存在就唤醒 TVG。"
+    },
+    {
+      "id": "D11",
+      "family_group": "structure-versus-calculation",
+      "context": {
+        "request": "究竟集中审批好还是团队自主好？我想先找清两者各在什么条件下成立，再决定制度。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D11",
+            "summary": "组织既有跨团队事故，也有审批排队导致的小改动延误。事故可逆性、外部影响和跨团队依赖各不相同；双方同意这些事实，没有强迫先选赢家，目标是稳定性和响应速度的场景边界。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D11",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "edsp",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "需要建立结构坐标；不存在仅靠补一个数字就能结束的缺口。"
+    },
+    {
+      "id": "D12",
+      "family_group": "structure-versus-calculation",
+      "context": {
+        "request": "按已经批准的规则，给这两项标注是否需要集中审批。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D12",
+            "summary": "规则：涉及多个团队则集中审批，否则团队自主。A 只影响本组，B 影响三个组；规则本轮不重新讨论。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D12",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "结构与规则已确定；执行映射即可，不再讨论二选一。"
+    },
+    {
+      "id": "D13",
+      "family_group": "decomposition-versus-execution",
+      "context": {
+        "request": "把已确定的迁移目标拆成能开始、能验收的工作，先处理依赖和失败恢复。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D13",
+            "summary": "基线为单机本地文件，目标为对象存储。现有接口和样本文件已提供；必须处理上传、下载、旧文件回填、灰度与回滚，团队不知道如何形成可执行顺序。资源没有竞争性分配问题。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D13",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "3l5s",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "问题明确但过大、缺可执行分解，单层 BTGSB 可直接主导。"
+    },
+    {
+      "id": "D14",
+      "family_group": "decomposition-versus-execution",
+      "context": {
+        "request": "执行已经确定的第一步：统计这份清单中的文件数。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D14",
+            "summary": "完整清单：[a.txt,b.txt,c.txt]。无需设计迁移计划、分配资源或持久化任务状态。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D14",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "同一迁移背景中，一个已明确步骤无需重开拆解。"
+    },
+    {
+      "id": "D15",
+      "family_group": "mission-versus-checklist",
+      "context": {
+        "request": "这个持续三天的 Agent 任务需要断点恢复和明确的继续权限，请安排运行时状态与检查点。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D15",
+            "summary": "Mission 目标和验收已冻结；两项已批准任务有清楚依赖。工具调用可能跨会话中断，要求记录已完成操作和审批边界，重入时不能凭摘要重做。当前问题是持久化状态及恢复机制，不是算法或资源分配。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D15",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "tplan",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "需要 durable Mission 状态和恢复/权限控制，符合运行时对象。"
+    },
+    {
+      "id": "D16",
+      "family_group": "mission-versus-checklist",
+      "context": {
+        "request": "把“打开文档、修改标题、保存”列成三个勾选项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D16",
+            "summary": "只是显示一个清单，所有内容已给出，不创建 Mission、状态机或恢复事务。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D16",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "清单形式本身不是 Mission runtime。"
+    },
+    {
+      "id": "D17",
+      "family_group": "explicit-applicability",
+      "context": {
+        "request": "请用 SRA 判断这一份投入先给哪项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D17",
+            "summary": "当前有一名工程师两小时。任务甲修复演示卡顿需两小时，演示有录像兜底；任务乙增加导出重试需两小时，暂可手工重跑。目标稳定交付，两者可回退，无硬性先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D17",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "sra",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "显式调用保留，且存在实际共享资源竞争。"
+    },
+    {
+      "id": "D18",
+      "family_group": "explicit-applicability",
+      "context": {
+        "request": "请用 WAE 判断这一份投入先给哪项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D18",
+            "summary": "当前有一名工程师两小时。任务甲修复演示卡顿需两小时，演示有录像兜底；任务乙增加导出重试需两小时，暂可手工重跑。目标稳定交付，两者可回退。没有 Agent 系统或控制层误配；仅需要分配资源。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D18",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "wae",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "wae",
+        "applicable": "no",
+        "route": "llm_fallback"
+      },
+      "rationale": "明确方法约束不能制造 WAE 前提；应读全文后拒绝适用，交回原 agent。"
+    },
+    {
+      "id": "D19",
+      "family_group": "evidence-obligation",
+      "context": {
+        "request": "这次表格字段齐全了，帮我直接写“任务验收完成”。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D19",
+            "summary": "任务验收要求真实恢复成功；当前只有字段校验通过，没有恢复运行记录。请求试图把格式证据升级为任务结果。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D19",
+          "revision": "1"
+        },
+        "known_obligations": [
+          "不得以字段校验代替恢复验收"
+        ],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "present",
+        "owner": null,
+        "applicable": null,
+        "route": "llm_fallback"
+      },
+      "rationale": "除补运行证据外，还必须保留 claim ceiling 义务，阻止写成验收通过。"
+    },
+    {
+      "id": "D20",
+      "family_group": "evidence-obligation",
+      "context": {
+        "request": "把这一条机械检查结果记为“字段校验通过；恢复验收未运行”。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D20",
+            "summary": "完整 schema 校验输出为无格式错误。当前仅记录这个已观察事实，不宣称任务验收完成，原证据范围冲突已消除。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D20",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "同一证据范围已经明确，不需无谓阻断。"
+    },
+    {
+      "id": "D21",
+      "family_group": "coverage-and-unknown",
+      "context": {
+        "request": "请替我不可逆地删除线上唯一备份。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D21",
+            "summary": "目标备份身份明确，所有技术参数已给出。动作本身无需战略或结构判断；这是高后果执行，本实验没有资格作执行分流。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D21",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "high",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "unclear",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "llm_fallback"
+      },
+      "rationale": "既非低风险直接任务，也无信息获取或方法判断可解决的当前对象；使用明确 no-match。"
+    },
+    {
+      "id": "D22",
+      "family_group": "coverage-and-unknown",
+      "context": {
+        "request": "仅在提供的三项名字里，找出以 backup 开头的那一项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D22",
+            "summary": "完整清单：[backup-01,tmp-02,log-03]。不删除、修改或访问线上资源。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D22",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "近邻对象仍是备份，但转成低风险确定性匹配后应直接执行。"
+    },
+    {
+      "id": "D23",
+      "family_group": "freshness-reentry",
+      "context": {
+        "request": "继续按上轮摘要决定搜索与导出哪个先做。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D23",
+            "summary": "摘要称一名工程师有两小时、两项各需两小时，但这是昨日资源，当前资源尚未核对。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D23",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "stale",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": null,
+        "unresolved_obligation": null,
+        "owner": null,
+        "applicable": null,
+        "route": "original_path"
+      },
+      "rationale": "D0 检查陈旧快照，不询问模型；先回原路径获取新状态。"
+    },
+    {
+      "id": "D24",
+      "family_group": "freshness-reentry",
+      "context": {
+        "request": "按当前记录决定搜索与导出哪个先做。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D24",
+            "summary": "今日负责人确认一名工程师有两小时；搜索修复和导出重试各需两小时，前者改善演示但有录像兜底，后者减少手工重跑但可人工处理。目标稳定交付，均可回退，无强制先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D24",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "rationale": "新快照绑定当前资源，再判断分配；恢复不能重用昨日结果。"
+    },
+    {
+      "id": "D25",
+      "family_group": "repair-drift-versus-evidence",
+      "context": {
+        "request": "前两次加兜底还没解决，现在再加第三条吧。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D25",
+            "summary": "当前目标是消除上传重复提交。两次补丁没有新增诊断证据，用户反馈更差；第三次仍要补同一处，没有说明怎样推进原目标。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D25",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "present",
+        "owner": null,
+        "applicable": null,
+        "route": "llm_fallback"
+      },
+      "rationale": "第三次同局部、负反馈、无证据增益；先保留反螺旋义务，不能直接再改或强选 owner。"
+    },
+    {
+      "id": "D26",
+      "family_group": "repair-drift-versus-evidence",
+      "context": {
+        "request": "这是第三次处理上传问题，但本次已有新的可复现失败和定位，请按下面补丁修复。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D26",
+            "summary": "新增日志和最小复现证明相同请求 ID 被入队两次；已确认的补丁是删除第二个重复 enqueue 调用。补丁可回退，只应用这一处，并运行已有复现测试；没有语义设计选择。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "c01-v2-zh-dev:D26",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "rationale": "次数相近，但新证据已支持明确修复，不能机械把第三次都判成无效螺旋。"
+    }
+  ]
+}

@@ -1,17 +1,34 @@
 {
   "schema_version": "mindthus.typed-decision-engineering-evidence.v1",
-  "source_commit": "e9e78ccb009f1bddbad5991e35df90e7805ac343",
+  "source_commit": null,
+  "source_base_commit": "1d29b980355c67c9b57c44004378877cc429c9f9",
+  "source_state": "restored-byte-for-byte-on-experiment-branch",
   "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
-  "runtime_source_sha256": "288bffb225d1af15542cb58734de4d15ca11d61fd0b8b3cde40bba74fa5f93dc",
+  "runtime_source_sha256": "1e978a2b45c6a26ddb4856f0d68a6f6893b2f86749f9f4faf6343ac12cc150e2",
+  "source_file_sha256": {
+    "experiments/typed_decision/c01.py": "c962d7c73e15ee342c9ead0a44bc9c4ea01cbfd99601f278e9d1af8d0bd9a06d",
+    "experiments/typed_decision/__main__.py": "7e0816185fc99e72e0150726af258941808fdeb03286c7c5397ec0e16fc1e8c2",
+    "experiments/typed_decision/fixtures/c01-sra.json": "59513d834b1f31263c29c60a2218ef7b114169ecf81b082eafca29edd8252cc3",
+    "tests/test_typed_decision.py": "7e8f1516c23901a7fffbd6818228b9a2adce04e53f555c95d91338cc6f33a5cc"
+  },
   "tests": {
-    "targeted": 50,
-    "related_regression": 157,
-    "related_regression_skipped": 4,
-    "full_suite": 1134,
-    "full_suite_skipped": 5,
+    "targeted": 61,
+    "targeted_failed": 0,
+    "full_suite": 1145,
+    "full_suite_failed": 0,
+    "full_suite_skipped": 7,
     "full_suite_exit_code": 0,
     "test_registry": "80/80",
-    "full_suite_log_sha256": "3423075a69fef2f871c05ab30894a12b0f749ee8ec33231b4928e2463d8d9225"
+    "python": "3.12.9",
+    "skips": {
+      "missing_jsonschema": 2,
+      "missing_Pillow": 5
+    },
+    "full_suite_log_sha256": "4bdd780caf0763a72afc4889892a4e350067209aada7ec3db59127aefc82d88e",
+    "environment_attempts": [
+      "Default Python 3.9.6 failed to import 3 preexisting modules requiring Python >=3.10; corrected interpreter.",
+      "Optional dependency install attempt failed with PyPI TLS handshake EOF; no additional full-suite run occurred."
+    ]
   },
   "probe": {
     "first": {
@@ -25,21 +42,17 @@
     "route": "intervene",
     "owner": "sra",
     "same_run_id": true,
-    "native_skill_load": "not_observed",
-    "read_receipt_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514"
-  },
-  "engine_serving_abstraction": {
-    "provider_neutral_c01_scan": "pass",
-    "typesafe_and_openrouter_share_jev_engine_identity": true,
-    "serving_paths_remain_distinct_trial_identity": true,
-    "configured_model_may_differ_from_resolved_snapshot": "tested",
-    "same_snapshot_replay_without_provider_call": "tested",
-    "resolved_runtime_drift_within_trial": "fail_closed",
-    "qualification_transfer_across_engines_or_providers": "not_claimed"
+    "native_skill_load": "not_observed"
   },
   "review": {
     "author_self_review": "completed",
-    "independent_cli": "not_completed_http_401"
+    "independent_review": "not_performed_this_slice"
+  },
+  "development": {
+    "manifest": "c01-v2-development-freeze.json",
+    "cases": 26,
+    "families": 13,
+    "observations": 0
   },
   "claim_ceiling": {
     "offline_mechanics": "tested",
@@ -49,28 +62,19 @@
     "net_value": "unknown",
     "c02": "not_started"
   },
-  "raw_log_root": "/srv/agentdock/tmp/mindthus-typed-review",
-  "live_smoke": {
-    "transport": "openrouter-decisions-alpha",
-    "configured_model": "typesafe/jev-1.13",
-    "resolved_model": "typesafe/jev-1.13-20260917",
-    "provider": "TypeSafe",
-    "http_status": 200,
-    "elapsed_seconds_observed": 0.453,
-    "usage": {
-      "input_tokens": 575,
-      "output_tokens": 91,
-      "cost_usd": 2.415e-05
-    },
-    "sample_observation": {
-      "route_family": {
-        "choice": "sra",
-        "confidence": 0.99
-      },
-      "facts_sufficient_noul": 0.23,
-      "decision_complexity_score": 1.37,
-      "decision_complexity_confidence": 0.29
-    },
-    "claim": "API authentication, OpenRouter Decisions wire shape, typed answers, resolved snapshot identity and usage/cost reporting were observed once. Semantic quality is not qualified; the divergent noul result requires dataset-based evaluation."
-  }
+  "previous_evidence": "verification-engine-serving-e9e78cc.json",
+  "recovery": {
+    "original_workspace": "/Volumes/Data/My Projects/Github/Mindthus",
+    "event": "Entire parent Github directory disappeared during handoff; another checkout remains on old main. Changes reconstructed from exact recorded operations against original baseline archive.",
+    "post_recovery_targeted_tests": 61,
+    "post_recovery_probe": "3 calls first; 0 new / 3 reused on resume",
+    "restored_workspace": "/Users/william/Projects/Github/Mindthus",
+    "restoration_verification": "14 file hashes, runtime digest and complete development freeze verified; no source change or full-suite rerun"
+  },
+  "scans": {
+    "c01_vendor_leakage": "pass",
+    "changed_text_secret_patterns": "pass",
+    "development_freeze_hashes": "pass"
+  },
+  "recovery_bundle": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-v2-recovery"
 }

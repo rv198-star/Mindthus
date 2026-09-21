@@ -1,0 +1,76 @@
+{
+  "schema_version": "mindthus.typed-decision-engineering-evidence.v1",
+  "source_commit": "e9e78ccb009f1bddbad5991e35df90e7805ac343",
+  "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
+  "runtime_source_sha256": "288bffb225d1af15542cb58734de4d15ca11d61fd0b8b3cde40bba74fa5f93dc",
+  "tests": {
+    "targeted": 50,
+    "related_regression": 157,
+    "related_regression_skipped": 4,
+    "full_suite": 1134,
+    "full_suite_skipped": 5,
+    "full_suite_exit_code": 0,
+    "test_registry": "80/80",
+    "full_suite_log_sha256": "3423075a69fef2f871c05ab30894a12b0f749ee8ec33231b4928e2463d8d9225"
+  },
+  "probe": {
+    "first": {
+      "new_calls": 3,
+      "reused_calls": 0
+    },
+    "resume": {
+      "new_calls": 0,
+      "reused_calls": 3
+    },
+    "route": "intervene",
+    "owner": "sra",
+    "same_run_id": true,
+    "native_skill_load": "not_observed",
+    "read_receipt_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514"
+  },
+  "engine_serving_abstraction": {
+    "provider_neutral_c01_scan": "pass",
+    "typesafe_and_openrouter_share_jev_engine_identity": true,
+    "serving_paths_remain_distinct_trial_identity": true,
+    "configured_model_may_differ_from_resolved_snapshot": "tested",
+    "same_snapshot_replay_without_provider_call": "tested",
+    "resolved_runtime_drift_within_trial": "fail_closed",
+    "qualification_transfer_across_engines_or_providers": "not_claimed"
+  },
+  "review": {
+    "author_self_review": "completed",
+    "independent_cli": "not_completed_http_401"
+  },
+  "claim_ceiling": {
+    "offline_mechanics": "tested",
+    "live_api_compatibility": "openrouter_single_smoke_observed; TypeSafe-native path not run",
+    "native_host_integration": "not_implemented",
+    "semantic_quality": "not_evaluated",
+    "net_value": "unknown",
+    "c02": "not_started"
+  },
+  "raw_log_root": "/srv/agentdock/tmp/mindthus-typed-review",
+  "live_smoke": {
+    "transport": "openrouter-decisions-alpha",
+    "configured_model": "typesafe/jev-1.13",
+    "resolved_model": "typesafe/jev-1.13-20260917",
+    "provider": "TypeSafe",
+    "http_status": 200,
+    "elapsed_seconds_observed": 0.453,
+    "usage": {
+      "input_tokens": 575,
+      "output_tokens": 91,
+      "cost_usd": 2.415e-05
+    },
+    "sample_observation": {
+      "route_family": {
+        "choice": "sra",
+        "confidence": 0.99
+      },
+      "facts_sufficient_noul": 0.23,
+      "decision_complexity_score": 1.37,
+      "decision_complexity_confidence": 0.29
+    },
+    "claim": "API authentication, OpenRouter Decisions wire shape, typed answers, resolved snapshot identity and usage/cost reporting were observed once. Semantic quality is not qualified; the divergent noul result requires dataset-based evaluation."
+  }
+}

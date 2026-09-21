@@ -1,6 +1,6 @@
 {
   "schema_version": "mindthus.typed-decision-protocol.v1",
-  "protocol_revision": "c01-engineering-1",
+  "protocol_revision": "c01-engineering-2",
   "source_baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
   "scope": "offline-engineering-only",
   "offline": {
@@ -13,7 +13,7 @@
       "typed values and non-ok statuses stay separate",
       "native Jev Choice/Noul/Score mappings preserve API semantics",
       "chat comparison never invents calibrated probabilities",
-      "C01 first batch then selected-owner then dependent-applicability",
+      "C01-v2 same-State entry_mode + unresolved_obligation; then owner; then selected full contract and dependent applicability",
       "same-input resume uses original observations with zero new calls",
       "changed method input invalidates its dependent batch only",
       "unknown in-flight call is not silently repeated",
@@ -34,11 +34,16 @@
       "per-campaign money/time/call ceilings and egress scope require approval",
       "quality noninferiority and cost thresholds must be frozen before comparison results"
     ],
-    "arms": ["A-current-non-Jev", "B-same-graph-LLM", "C-same-graph-Jev"],
+    "arms": [
+      "A-current-non-Jev",
+      "B-same-graph-LLM",
+      "C-same-graph-Jev"
+    ],
     "development_adjustments_max": 1,
     "holdout_acceptances_max": 1,
     "catastrophic_error_action": "stop-and-attribute",
     "missing_telemetry": "unknown",
     "promotion": "requires-independent-task-and-cost-evidence"
-  }
+  },
+  "development_freeze": "c01-v2-development-freeze.json"
 }
