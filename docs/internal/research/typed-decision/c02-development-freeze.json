@@ -1,0 +1,28 @@
+{
+  "schema_version": "mindthus.c02-development-freeze.v1",
+  "cases": 12,
+  "semantic_revisions_used": 0,
+  "implementation": "56eb94c4d1c55062fdb78d8d25c64beff4e7e4765285886a1f3aaf11331c57fc",
+  "labels": "host-LLM preauthored, not independent human adjudication",
+  "file_sha256": {
+    "experiments/typed_decision/trace.py": "0f7f34cfbbdda279baa5234476020fb811841abb8ac7b53095b2b7a0c2ffb2af",
+    "experiments/typed_decision/c01.py": "f8884694554724425d447e33687bd925f2f40f94a35b2b8e90945adb7278d039",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b",
+    "experiments/typed_decision/__init__.py": "f850a5e16c015cfcd86dc6965d370a1921369c30c96e2b704fedd4ca4205a8cb",
+    "experiments/typed_decision/c02_trial.py": "87eb95b3d87dc338fd3db85a0c63b80c56afc41c8ae69f36e63d301cae197e77",
+    "experiments/typed_decision/campaign.py": "a356fe762743453d0a2f69c57d8d149c38741a63994a866873de5a9053139d8a",
+    "experiments/typed_decision/providers.py": "2515a15b7535cee2737842d7bae17013f8ea57340082e08336b2ba02f0dd2bca",
+    "experiments/typed_decision/contracts.py": "c86b9e19187672369db16e3990a1983c8e5dd2403e2d81ff46a506e57ded2291",
+    "experiments/typed_decision/c02.py": "7331929944d1bbaccd0ddb84d47c28f84c21e2aefbcc2ab015b98ec57b809b9c",
+    "experiments/typed_decision/__main__.py": "7e0816185fc99e72e0150726af258941808fdeb03286c7c5397ec0e16fc1e8c2",
+    "docs/internal/research/typed-decision/c02-admission.md": "c95d291a20750f25977ae1ff539e6591eea3b2854925e4b9de4fcc5a56a7a8c8",
+    "docs/internal/research/typed-decision/c02-protocol.md": "46162dde1ecfb46ebc059386a5b77a0e553f74edfb4207799485872b0216f989",
+    "docs/internal/research/typed-decision/c02-local-contract.json": "deabff4b496900da2909bee55376f3c6d6d05eeeeee8693af800232855073df0",
+    "docs/internal/research/typed-decision/c02-independent-standards.json": "22f3be02255b5e66bb39ff9aff280a3cb9b3db969ddcdd8d89f1b0e15633e1a3",
+    "docs/internal/research/typed-decision/c02-zh-development.json": "9297d21a845af25ba3e6da0bc5ebc34119f606f0447ed6f1a4c995aeaa03b21b",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/tvg/resources/fidelity-contract.md": "a298dce0c12d9cd13dac116faf17073582f5c74bfd4128546816d54260e1f385"
+  },
+  "scope": "C02 one bounded rewrite; original exit owner; exact local planner requests admitted separately",
+  "cost_cap_usd": 0.25
+}

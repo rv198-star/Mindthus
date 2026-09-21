@@ -1,0 +1,16 @@
+{
+  "schema_version": "mindthus.c02-independent-standards.v1",
+  "provenance": "LLM-authored synthetic scenario rules; not real operational evidence; fixed separately from artifact specimens",
+  "instruction": {
+    "source_ref": "synthetic:booking-rule-v1",
+    "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+    "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。",
+    "facts": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+  },
+  "design": {
+    "source_ref": "synthetic:exhibit-design-v1",
+    "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+    "standard": "说明选离线页面而非联网直播的原因、离线内容的更新限制及人工更新方式，不宣称不存在的测试结果。",
+    "facts": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+  }
+}

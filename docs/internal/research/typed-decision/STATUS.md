@@ -28,8 +28,9 @@ risk_tolerance=25, resource_sufficiency=50. Failure observability is repaired at
 1163 full-suite tests (7 skipped), and 19 official calls. Shared risk R1 is resolved for
 future observation; the lost original response remains unknown. Active work is the one
 allowed C01 semantic revision has finished and failed its frozen stop rule. See
-`c01-v2-disposition.md`. Active next work is the conditional C02 admission assessment;
-no C02 graph or live run exists yet. C03–C08 remain portfolio candidates only.
+`c01-v2-disposition.md`. C02 admission was assessed separately and its bounded graph
+and development protocol are now frozen; see the C02 checkpoint below. C03–C08 remain
+portfolio candidates only.
 
 A named source-only technical recovery adds safe validation codes and whitelist numeric
 wire evidence without changing C01 questions/labels/validators or Engine/Provider
@@ -149,8 +150,34 @@ to bypass the failed protocol. D09's plausible direct-synthesis interpretation i
 explicit label limitation, not permission to alter the frozen score.
 
 Holdout and full A/B/C were not admitted. Native host consumption and net-value evidence
-remain unmeasured. #212 is at conditional admission assessment only. See
+remain unmeasured. #212 now follows its separate admission decision. See
 `c01-v2-semantic-plan.md` for frozen development scoring and separation rules.
+
+## C02 current checkpoint
+
+`c02-admission.md` records the conditional decision after C01 stopped. C02 uses existing
+DecisionSpec/Session, with no new Engine/Provider abstraction or graph platform.
+`c02.py` runs same-State utility/support questions, dependent action selection, one
+host-generation intent/outcome, and one changed-artifact recheck. The original TVG
+agent still owns exit; no script writes freeze/PASS. No canonical method was changed.
+
+`c02-local-contract.json`, `c02-independent-standards.json`, `c02-zh-development.json`
+and `c02-protocol.md` are bound by `c02-development-freeze.json`. There are 12 Chinese
+synthetic development cases across operating-instruction/design-explanation purposes,
+each including thin/adequate/missing-evidence/redundant/conflict/outside-scope examples.
+Standards and labels are author-created, not independent human adjudication.
+
+91 targeted tests and lifecycle 80/80 passed. Final-source full regression is running;
+read `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/c02-final-full-suite.log`
+before proceeding. A previous C02-only intermediate full suite passed 1173 tests with
+7 skips; it predates the final trial driver and two final checks.
+
+Official development root is prepared at
+`/Users/william/Documents/Codex/2026-09-22/mindthus-c02-typesafe-dev-1`:
+36 exact request variants, max 24 calls / 120 inference seconds, USD 0.064512 reserve;
+entire C02 development Jev series cap USD 0.25. At this checkpoint no C02 live calls,
+generation, recheck, holdout or A/B/C occurred. Verify actual journals before resuming.
+Host LLM design/context/review costs remain unknown, never zero. No saving claim.
 
 ## Resume discipline
 

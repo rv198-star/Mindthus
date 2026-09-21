@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from experiments.typed_decision import c01, campaign
+from experiments.typed_decision import c01, c02, campaign
 from experiments.typed_decision.contracts import (
     BatchResult,
     ContractError,
@@ -990,6 +990,131 @@ class LiveCarrierTests(unittest.TestCase):
             write_once(parent / 'summary.json', {'stop_reason': reason})
             with self.assertRaises(ContractError):
                 campaign.prepare(ROOT, TypeSafeJevProvider(), parent, 'No implementation delta')
+
+
+class C02Tests(unittest.TestCase):
+    def setUp(self):
+        docs = ROOT / 'docs/internal/research/typed-decision'
+        self.contract = json.loads((docs / 'c02-local-contract.json').read_text())
+        self.data = json.loads((docs / 'c02-zh-development.json').read_text())['cases'][0]['context']
+        self.data['tvg_contract'] = (ROOT / 'skills/tvg/SKILL.md').read_text()
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.answers = {'utility': 'deficit', 'support': 'sufficient', 'action': 'make_actionable',
+                        'recheck_utility': 'adequate', 'recheck_support': 'sufficient'}
+
+    def session(self, answers=None):
+        return Session(self.root, FixtureProvider(answers or self.answers), scope='c02-offline')
+
+    def test_shared_batch_then_real_dependency(self):
+        with self.session() as s:
+            report = c02.plan(s, self.data, self.contract)
+            self.assertEqual(s.provider.calls, [['utility', 'support'], ['action']])
+            self.assertEqual(report['result']['action'], 'make_actionable')
+            self.assertEqual(report['result']['consumption'], 'not_executed')
+            self.assertIsNone(report['result']['exit_state'])
+            second = read_record(self.root / 'calls' / s.records[1]['call_key'] / 'intent.json')
+            self.assertIn('weaknesses', second['identity']['questions'][0]['required_context'])
+
+    def test_missing_evidence_never_selects_rewrite(self):
+        with self.session({**self.answers, 'support': 'missing'}) as s:
+            report = c02.plan(s, self.data, self.contract)
+            self.assertEqual(report['result']['route'], 'acquire_information')
+            self.assertEqual(len(s.provider.calls), 1)
+            with self.assertRaises(ContractError):
+                c02.begin_rewrite(s, report, self.data, self.contract, 'test-generator')
+
+    def test_scope_or_target_conflict_returns_without_action(self):
+        for value in ('outside_scope', 'conflict', 'unclear'):
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as root:
+                with Session(Path(root), FixtureProvider({**self.answers, 'utility': value}), scope=value) as s:
+                    report = c02.plan(s, self.data, self.contract)
+                    self.assertEqual(report['result']['route'], 'original_exit_owner')
+                    self.assertEqual(len(s.provider.calls), 1)
+
+    def test_mechanical_admission_zero_calls(self):
+        for change in ({'freshness': 'old'}, {'permission': {'mode': 'execute'}},
+                       {'target': {**self.data['target'], 'source_ref': self.data['source_ref']}}):
+            with self.subTest(change=change), self.session() as s:
+                report = c02.plan(s, {**self.data, **change}, self.contract)
+                self.assertEqual(report['result']['route'], 'original_exit_owner')
+                self.assertEqual(s.calls_made, 0)
+
+    def test_adequate_and_abstain_have_no_automatic_exit(self):
+        for value in ('leave_unchanged', 'abstain'):
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as root:
+                with Session(Path(root), FixtureProvider({**self.answers, 'action': value}), scope=value) as s:
+                    report = c02.plan(s, self.data, self.contract)
+                    self.assertEqual(report['result']['route'], 'original_exit_owner')
+                    self.assertIsNone(report['result']['exit_state'])
+
+    def test_resume_reuses_both_local_batches(self):
+        with self.session() as s:
+            original = c02.plan(s, self.data, self.contract)
+        with self.session() as s:
+            resumed = c02.plan(s, self.data, self.contract)
+            self.assertEqual(original['run_id'], resumed['run_id'])
+            self.assertEqual((s.calls_made, s.calls_reused), (0, 2))
+
+    def test_generation_intent_blocks_blind_retry(self):
+        with self.session() as s:
+            report = c02.plan(s, self.data, self.contract)
+            c02.begin_rewrite(s, report, self.data, self.contract, 'test-generator')
+            with self.assertRaises(RecoveryRequired):
+                c02.begin_rewrite(s, report, self.data, self.contract, 'test-generator')
+
+    def test_one_actual_rewrite_then_one_recheck_and_replay(self):
+        with self.session() as s:
+            report = c02.plan(s, self.data, self.contract)
+            c02.begin_rewrite(s, report, self.data, self.contract, 'test-generator')
+            c02.record_rewrite(s, report['run_id'], 'fixture output, not semantic evidence',
+                generation_evidence='offline-fixture', usage={'input_tokens': None, 'output_tokens': None, 'cost_usd': None})
+            checked = c02.recheck(s, report, self.data, self.contract)
+            self.assertEqual(s.calls_made, 3)
+            self.assertEqual(checked['result']['route'], 'original_exit_owner')
+            self.assertIsNone(checked['result']['exit_state'])
+            again = c02.recheck(s, report, self.data, self.contract)
+            self.assertEqual(again['run_id'], checked['run_id'])
+            self.assertEqual(s.calls_made, 3)
+            with self.assertRaisesRegex(ContractError, 'second rewrite'):
+                c02.record_rewrite(s, report['run_id'], 'another output', generation_evidence='offline-fixture',
+                    usage={'input_tokens': None, 'output_tokens': None, 'cost_usd': None})
+
+    def test_changed_target_invalidates_rewrite_handoff(self):
+        with self.session() as s:
+            report = c02.plan(s, self.data, self.contract)
+            changed = {**self.data, 'target': {**self.data['target'], 'standard': 'different'}}
+            with self.assertRaisesRegex(ContractError, 'lineage'):
+                c02.begin_rewrite(s, report, changed, self.contract, 'test-generator')
+
+    def test_design_is_declarative_and_answer_policy_must_match(self):
+        bad = copy.deepcopy(self.contract)
+        bad['action']['criteria']['shell_command'] = 'arbitrary execution'
+        with self.assertRaises(ContractError):
+            c02.specs(bad)
+        bad = copy.deepcopy(self.contract)
+        del bad['utility']['criteria']['unclear']
+        with self.assertRaises(ContractError):
+            c02.specs(bad)
+
+    def test_c02_live_admission_is_exact_and_label_independent(self):
+        from experiments.typed_decision import c02_trial
+        provider = TypeSafeJevProvider()
+        manifest, design, cases = c02_trial.prepare(ROOT, provider)
+        self.assertEqual(len(manifest['admission']['request_allowlist']), 36)
+        self.assertEqual(manifest['admission']['max_cost_usd'], 24 * campaign.RESERVE_PER_CALL)
+        changed = copy.deepcopy(cases)
+        for case in changed:
+            case['expected'] = {'arbitrary': 'must not affect egress'}
+            case['category'] = 'label-only'
+        with patch.object(c02_trial, 'inputs', return_value=(design, changed)):
+            other, _, _ = c02_trial.prepare(ROOT, provider)
+        self.assertEqual(other['admission'], manifest['admission'])
+
+    def test_rewrite_id_cannot_escape_journal(self):
+        with self.assertRaises(ContractError):
+            c02.rewrite_directory(self.root, '../' * 22)
 
 
 if __name__ == '__main__':
