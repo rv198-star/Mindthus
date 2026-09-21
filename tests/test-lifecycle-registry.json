@@ -149,6 +149,21 @@
       "suite_role": "mixed",
       "runtime_cost": "high",
       "notes": "Kept separate from Judgment Trace lifecycle because TPlan is a stateful runtime rather than a judgment lens."
+    },
+    {
+      "test_id": "typed-decision-c01-experiment",
+      "paths": [
+        "tests/test_typed_decision.py"
+      ],
+      "owner": "runtime",
+      "protects": [
+        "opt-in typed result integrity, canonical projection, provider adapters, bounded inference journal, C01 dependency and source-binding contracts"
+      ],
+      "introduced_by": "issues #209 #211",
+      "lifecycle_status": "active_regression",
+      "suite_role": "mixed",
+      "runtime_cost": "low",
+      "notes": "Offline engineering fixtures and injected transports only. Not semantic accuracy, live API compatibility, host-native routing or value qualification."
     }
   ],
   "review_candidates": [],
