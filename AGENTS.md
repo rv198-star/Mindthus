@@ -38,6 +38,17 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 里的 Gate Probes 做一次定位自省；如果发现目标漂移、证据不足、误用信号、继续收益不明
 或权限不清，先返修、降级、停止、转交或请求确认。
 
+## Typed Decision / System-One 规约
+
+当 Jev 或其他快速类型化语义模型参与运行时判断、路由、评分、门槛、交接或动态子图设计时，
+先按 `docs/methodologies/typed-decision-principles.md` 设计或审查 Decision Contract。
+核心边界：State 提供充分相关事实；Decision Contract 定义语义；System-One 只做局部类型化判断；
+Policy / Runtime 拥有组合、阈值、veto、权限、执行和恢复。确定性事实继续由代码判断；
+同 State 的独立问题优先合批；只有真实 State / 候选 / 合同依赖才开启下一批。
+不要制造没有独立用途的“信息是否足够”等元判断；候选可能覆盖不全时提供明确 no-match / unclear 出口。
+概率与 confidence 不是权限。LLM 运行时动态设计属于有边界的动态编译：优先复用已有合格合同，
+新语义版本固定后执行，有预算和修订上限，不因结果不满意而反复改题，也不自动继承高风险执行资格。
+
 ## No Abstract Jargon Wall
 
 不要堆 Mindthus 术语。先讲清“这对你意味着什么”，再讲方法名。

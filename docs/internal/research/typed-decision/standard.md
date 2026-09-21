@@ -3,6 +3,9 @@
 
 # 通用类型化裁决范式使用规范 v0.1
 
+> Normative Decision Contract design principles: `docs/methodologies/typed-decision-principles.md`.
+> 本文件负责实验治理、接入、验证与价值账；若涉及 State / Question / Choice-Noul-Score / batching / policy / dynamic design 的设计规则，以该规范资产为准。
+
 状态：设计草案 / 待试点验证；不是已上线能力或已通过模型资格认证。登记日期：2026-09-21。
 本轮授权：制定规范、比较候选、登记最多两个试点；运行时代码、真实推理预算和发布不在本轮执行范围。
 
