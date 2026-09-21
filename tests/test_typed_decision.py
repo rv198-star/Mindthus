@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from experiments.typed_decision import c01
+from experiments.typed_decision import c01, campaign
 from experiments.typed_decision.contracts import (
     BatchResult,
     ContractError,
@@ -31,7 +31,7 @@ from experiments.typed_decision.providers import (
     TypeSafeJevProvider,
     _NoRedirect,
 )
-from experiments.typed_decision.session import Limits, RecoveryRequired, Session, read_record
+from experiments.typed_decision.session import Limits, RecoveryRequired, Session, read_record, write_once, implementation_digest
 from experiments.typed_decision.trace import from_c01, validate_with_existing
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -729,6 +729,205 @@ class C01Tests(unittest.TestCase):
         for graph in [{'dependencies': {'a': ['b'], 'b': ['a']}}, {'dependencies': {'a': ['missing']}}]:
             with self.subTest(graph=graph), self.assertRaises(ContractError):
                 c01.validate_graph(graph)
+
+
+class LiveCarrierTests(unittest.TestCase):
+    """Injected native transport only; these tests produce no semantic evidence."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.network = []
+        self.env = patch.dict(os.environ, {'TYPESAFE_API_KEY': 'fixture-only-credential'})
+        self.env.start()
+        self.addCleanup(self.env.stop)
+
+    def native(self, choose, usage=None):
+        def transport(url, headers, body, timeout):
+            self.network.append(body)  # Deliberately exclude authorization headers.
+            return {'model': 'jev-1.13.0', 'answers': {
+                key: {'type': 'choice', 'choice': choose(key, body['state']),
+                      'probabilities': {v: float(v == choose(key, body['state']))
+                                        for v in question['criteria']}, 'confidence': 1.0}
+                for key, question in body['questions'].items()},
+                'usage': usage or {'input_tokens': 10, 'output_tokens': 1}}
+        return TypeSafeJevProvider(transport=transport)
+
+    def admission(self, provider, **delta):
+        return dict({'scope': 'test', 'implementation': implementation_digest(),
+                     'provider_configuration': provider_configuration(provider),
+                     'limits': asdict(Limits()), 'request_allowlist': [
+                         campaign.request_key([spec()], {'text': v}) for v in ('first', 'second')],
+                     'max_cost_usd': .01, 'reserve_per_call_usd': .01,
+                     'authorization_ref': 'Injected transport unit test only',
+                     'freeze_sha256': 'a' * 64}, **delta)
+
+    def test_live_admission_rejects_identity_changes_before_transport(self):
+        provider = self.native(lambda *_: 'yes')
+        for delta in ({'scope': 'other'}, {'implementation': 'b' * 64},
+                      {'limits': asdict(Limits(max_calls=9))}, {'freeze_sha256': 'z' * 64},
+                      {'max_cost_usd': 2}):
+            with self.subTest(delta=delta), self.assertRaises(ContractError):
+                Session(self.root, provider, scope='test', live_admission=self.admission(provider, **delta))
+        self.assertEqual(self.network, [])
+
+    def test_live_egress_and_input_admission_are_detached(self):
+        provider = self.native(lambda *_: 'yes')
+        admission = self.admission(provider)
+        with Session(self.root, provider, scope='test', live_admission=admission) as session:
+            admission['request_allowlist'].append(campaign.request_key([spec()], {'text': 'extra'}))
+            with self.assertRaisesRegex(ContractError, 'outside frozen live egress'):
+                session.evaluate([spec()], {'text': 'extra'})
+        self.assertEqual(self.network, [])
+
+    def test_reserved_cost_survives_resume_but_cache_is_free(self):
+        provider = self.native(lambda *_: 'yes')
+        admission = self.admission(provider)
+        for index in range(2):
+            with Session(self.root, provider, scope='test', live_admission=admission) as session:
+                session.evaluate([spec()], {'text': 'first'})
+                self.assertEqual(session.calls_reused, index)
+                report = session.finish({'id': 'test'}, {'text': 'first'}, {'route': 'test'})
+                self.assertEqual(report['evidence_kind'], 'live_model')
+                with self.assertRaisesRegex(ContractError, 'cost reservation exhausted'):
+                    session.evaluate([spec()], {'text': 'second'})
+        self.assertEqual(len(self.network), 1)
+        self.assertIsNone(report['trial_usage']['cost_usd'])
+
+    def test_cost_policy_cannot_expand_after_restart(self):
+        provider = self.native(lambda *_: 'yes')
+        with Session(self.root, provider, scope='test', live_admission=self.admission(provider)):
+            pass
+        with self.assertRaises(ContractError):
+            with Session(self.root, provider, scope='test',
+                         live_admission=self.admission(provider, max_cost_usd=.02)):
+                self.fail('budget expanded')
+
+    def test_actual_cost_over_reserve_stops_next_call(self):
+        provider = self.native(lambda *_: 'yes', {'input_tokens': 1, 'output_tokens': 1, 'cost': .02})
+        with Session(self.root, provider, scope='test',
+                     live_admission=self.admission(provider, max_cost_usd=.03)) as session:
+            session.evaluate([spec()], {'text': 'first'})
+            with self.assertRaisesRegex(ContractError, 'observed cost exceeds reserve'):
+                session.evaluate([spec()], {'text': 'second'})
+        self.assertEqual(len(self.network), 1)
+
+    def test_prepare_frozen_egress_without_transport_or_label_access(self):
+        provider = self.native(lambda *_: self.fail('preparation called transport'))
+        manifest, cases = campaign.prepare(ROOT, provider)
+        self.assertEqual(len(cases), 26)
+        self.assertEqual(len(manifest['admission']['request_allowlist']), 225)
+        self.assertNotIn('expected', canonical(manifest).decode())
+        self.assertEqual(self.network, [])
+        original = Path.read_text
+        def poison_labels(path, *args, **kwargs):
+            text = original(path, *args, **kwargs)
+            if path == ROOT / campaign.DATA:
+                data = json.loads(text)
+                for case in data['cases']:
+                    del case['expected']
+                    del case['rationale']
+                return json.dumps(data)
+            return text
+        with patch.object(Path, 'read_text', poison_labels):
+            unlabeled, _ = campaign.prepare(ROOT, provider)
+        self.assertEqual(unlabeled, manifest)
+
+    def test_prepare_rejects_changed_freeze_source(self):
+        with patch.object(campaign, 'sha', return_value='b' * 64), self.assertRaises(ContractError):
+            campaign.prepare(ROOT, TypeSafeJevProvider())
+
+    def test_campaign_stops_dangerous_direct_once_and_refuses_rerun(self):
+        provider = self.native(lambda key, _: {'entry_mode': 'direct_execution',
+                                              'unresolved_obligation': 'clear'}[key])
+        manifest, cases = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        result = campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertEqual(result['cases_completed'], 1)
+        self.assertEqual(result['stop_reason'], 'hard_judgment_sent_to_direct')
+        self.assertFalse(result['development_thresholds_met'])
+        with self.assertRaisesRegex(ContractError, 'already finished'):
+            campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertEqual(len(self.network), 1)
+
+    def test_campaign_mocked_full_report_and_no_label_egress(self):
+        # A keyed answer script verifies the evaluator, never model competence.
+        cases = json.loads((ROOT / campaign.DATA).read_text())['cases']
+        answers = {c['context']['provenance']['source_ref']: c['expected'] for c in cases}
+        provider = self.native(lambda key, state: answers[state['provenance']['source_ref']][key])
+        manifest, cases = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        result = campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertTrue(result['development_thresholds_met'])
+        self.assertEqual((result['d0_matches'], result['entry_matches'], result['route_matches']), (26, 25, 25))
+        self.assertEqual((result['owner_matches'], result['applicability_matches']), (12, 12))
+        self.assertEqual(len(result['family_pairs']), 13)
+        self.assertTrue(all(f['all_match'] for f in result['family_pairs'].values()))
+        self.assertIsNone(result['trial_usage']['cost_usd'])
+        self.assertEqual(result['unique_calls'], len(self.network))
+        self.assertEqual(result['case_results'][22]['call_keys'], [])  # stale D23
+        for body in self.network:
+            self.assertFalse({'expected', 'rationale', 'family_group', 'cases'} & set(body['state']))
+        self.assertEqual(result['case_results'][17]['observed']['selected_owner'], 'wae')
+        self.assertEqual(result['case_results'][17]['observed']['applicable'], 'no')
+
+    def test_campaign_transport_failure_is_recorded_without_retry(self):
+        def fail(*_):
+            self.network.append('attempt')
+            raise ProviderError('untrusted remote text fixture-only-credential')
+        provider = TypeSafeJevProvider(transport=fail)
+        manifest, cases = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        result = campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertEqual(result['stop_reason'], 'provider_or_contract_failure')
+        self.assertEqual(result['provider_status_failures'], ['D01'])
+        self.assertEqual(len(self.network), 1)
+        self.assertNotIn('fixture-only-credential', ''.join(p.read_text() for p in self.root.rglob('*.json')))
+
+    def test_campaign_rejects_missing_key_before_any_intent(self):
+        provider = self.native(lambda *_: self.fail('network called'))
+        manifest, cases = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        with patch.dict(os.environ, {}, clear=True), self.assertRaisesRegex(ContractError, 'credential'):
+            campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertFalse((self.root / 'calls').exists())
+
+
+    def test_hidden_key_cli_removes_process_credential_after_failure(self):
+        provider = TypeSafeJevProvider()
+        manifest, _ = campaign.prepare(ROOT, provider)
+        write_once(self.root / 'campaign.json', manifest)
+        with patch.dict(os.environ, {}, clear=True), patch('sys.stdin.isatty', return_value=True), \
+                patch.object(campaign.getpass, 'getpass', return_value='fixture-secret'), \
+                patch.object(campaign, 'run', side_effect=RecoveryRequired('no retry')), \
+                patch('builtins.print') as output:
+            self.assertEqual(campaign.main(['run', '--state-root', str(self.root), '--prompt-key']), 2)
+            self.assertNotIn('TYPESAFE_API_KEY', os.environ)
+            self.assertNotIn('fixture-secret', str(output.call_args_list))
+
+    def test_hidden_key_cli_rejects_nonterminal_before_prompt(self):
+        manifest, _ = campaign.prepare(ROOT, TypeSafeJevProvider())
+        write_once(self.root / 'campaign.json', manifest)
+        with patch('sys.stdin.isatty', return_value=False), \
+                patch.object(campaign.getpass, 'getpass') as prompt, patch('builtins.print'):
+            self.assertEqual(campaign.main(['run', '--state-root', str(self.root), '--prompt-key']), 2)
+            prompt.assert_not_called()
+
+
+    def test_last_completed_call_over_reserve_stops_campaign(self):
+        provider = self.native(lambda key, _: {'entry_mode': 'direct_execution',
+                                              'unresolved_obligation': 'clear'}[key],
+                               {'input_tokens': 10, 'output_tokens': 1, 'cost': .03})
+        manifest, cases = campaign.prepare(ROOT, provider)
+        # Isolate the D02 one-call path, so there is no later Session call to detect overspend.
+        cases = [cases[1]]
+        manifest['case_ids'] = [cases[0]['id']]
+        write_once(self.root / 'campaign.json', manifest)
+        result = campaign.run(ROOT, self.root, provider, manifest, cases)
+        self.assertEqual(result['stop_reason'], 'reported_cost_exceeds_reserve')
+        self.assertFalse(result['development_thresholds_met'])
+        self.assertEqual(len(self.network), 1)
 
 
 if __name__ == '__main__':

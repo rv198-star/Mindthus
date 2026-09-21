@@ -105,7 +105,8 @@ class Limits:
 
 
 class Session:
-    def __init__(self, root: Path, provider, *, scope: str, limits: Limits = Limits()):
+    def __init__(self, root: Path, provider, *, scope: str, limits: Limits = Limits(),
+                 live_admission: dict | None = None):
         self.root = Path(root)
         self.provider = provider
         self.scope = scope
@@ -114,11 +115,34 @@ class Session:
         require(isinstance(scope, str) and bool(scope.strip()),
                 'explicit trial scope required')
         self.provider_config = provider_configuration(provider)
-        # Offline delivery is intentionally usable without authorizing a paid campaign.
-        # A future preregistered host carrier owns live budgets, egress and consumption.
-        require(not provider.is_live,
-                'live_campaign_not_preregistered: use an authorized host carrier')
         self.impl = implementation_digest()
+        self.live_admission = json.loads(canonical(live_admission)) if live_admission is not None else None
+        live_admission = self.live_admission
+        self.evidence_kind = 'live_model' if provider.is_live else 'offline_fixture'
+        if provider.is_live:
+            require(isinstance(live_admission, dict), 'live_campaign_not_preregistered')
+            require(set(live_admission) == {'scope', 'implementation', 'provider_configuration',
+                    'limits', 'request_allowlist', 'max_cost_usd', 'reserve_per_call_usd',
+                    'authorization_ref', 'freeze_sha256'}, 'invalid live admission')
+            require(live_admission['scope'] == scope and live_admission['implementation'] == self.impl
+                    and live_admission['provider_configuration'] == self.provider_config
+                    and live_admission['limits'] == asdict(limits), 'live identity/limits mismatch')
+            allowlist = live_admission['request_allowlist']
+            require(isinstance(allowlist, list) and 0 < len(allowlist) <= 1000
+                    and all(isinstance(x, str) and len(x) == 64
+                            and set(x) <= set('0123456789abcdef') for x in allowlist),
+                    'invalid live request allowlist')
+            require(number(live_admission['max_cost_usd'], .000001, 1)
+                    and number(live_admission['reserve_per_call_usd'], .000001, 1),
+                    'invalid live cost ceiling')
+            require(isinstance(live_admission['authorization_ref'], str)
+                    and bool(live_admission['authorization_ref'].strip())
+                    and isinstance(live_admission['freeze_sha256'], str)
+                    and len(live_admission['freeze_sha256']) == 64
+                    and set(live_admission['freeze_sha256']) <= set('0123456789abcdef'),
+                    'missing live authority/freeze')
+        else:
+            require(live_admission is None, 'live admission requires a live provider')
         self.calls_made = 0
         self.calls_reused = 0
         self.records = []
@@ -146,6 +170,8 @@ class Session:
                 'provider_configuration': self.provider_config,
                 'implementation': self.impl,
             }
+            if self.live_admission is not None:
+                policy['live_admission'] = self.live_admission
             path = self.root / 'policy.json'
             if path.exists():
                 require(read_record(path) == policy,
@@ -202,6 +228,11 @@ class Session:
             'implementation': self.impl,
             'scope': self.scope,
         }
+        if self.live_admission is not None:
+            request_key = digest({'questions': identity['questions'],
+                                  'context_sha256': identity['context_sha256']})
+            require(request_key in self.live_admission['request_allowlist'],
+                    'request outside frozen live egress')
         key = digest(identity)
         directory = self.root / 'calls' / key
         intent = directory / 'intent.json'
@@ -254,6 +285,14 @@ class Session:
             spent += self._read_outcome(prior_outcome)['elapsed_seconds']
 
         require(len(intents) < self.limits.max_calls, 'call budget exhausted')
+        if self.live_admission is not None:
+            # Reserve every attempted call, including unknown or failed billing.
+            require((len(intents) + 1) * self.live_admission['reserve_per_call_usd']
+                    <= self.live_admission['max_cost_usd'], 'cost reservation exhausted')
+            for prior in intents:
+                usage = self._read_outcome(prior.parent / 'outcome.json')['usage']
+                require(usage['cost_usd'] is None or usage['cost_usd']
+                        <= self.live_admission['reserve_per_call_usd'], 'observed cost exceeds reserve')
         remaining = self.limits.max_seconds - max(
             spent,
             time.monotonic() - self.started,
@@ -305,7 +344,7 @@ class Session:
             'usage': batch.usage,
             'elapsed_seconds': time.monotonic() - begin,
             'projected_request_bytes': request_bytes,
-            'evidence_kind': 'offline_fixture',
+            'evidence_kind': self.evidence_kind,
         }
         write_once(outcome, record)
         self.records.append({'call_key': key, 'reused': False})
@@ -330,7 +369,7 @@ class Session:
         if raw['resolved_runtime'] is not None:
             runtime = ResolvedRuntime.from_dict(raw['resolved_runtime'])
             self.provider.validate_runtime(runtime)
-        require(raw['evidence_kind'] == 'offline_fixture',
+        require(raw['evidence_kind'] == self.evidence_kind,
                 'persisted evidence kind changed')
         require(number(raw['elapsed_seconds'], 0, 86400),
                 'invalid elapsed time')
@@ -421,5 +460,5 @@ class Session:
             'cost_coverage': 'partial',
             'semantic_outcome': 'not_evaluated',
             'end_to_end_value': 'unknown',
-            'evidence_kind': 'offline_fixture',
+            'evidence_kind': self.evidence_kind,
         }
