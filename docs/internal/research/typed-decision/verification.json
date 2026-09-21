@@ -1,0 +1,42 @@
+{
+  "schema_version": "mindthus.typed-decision-engineering-evidence.v1",
+  "source_commit": "119d06813a01c49d87140e0192488f9a87a32602",
+  "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
+  "runtime_source_sha256": "c951a1e3763b11fbc6ae1f93416d7e21a96ff211f1f40225b48117b434a12205",
+  "tests": {
+    "targeted": 45,
+    "full_suite": 1129,
+    "full_suite_skipped": 5,
+    "full_suite_exit_code": 0,
+    "test_registry": "80/80",
+    "full_suite_log_sha256": "7d9aa6bd789b9a74795bbd1c188ec546f6adfc7a5fc5c6d06af59cb490895b8f"
+  },
+  "probe": {
+    "first": {
+      "new_calls": 3,
+      "reused_calls": 0
+    },
+    "resume": {
+      "new_calls": 0,
+      "reused_calls": 3
+    },
+    "route": "intervene",
+    "owner": "sra",
+    "same_run_id": true,
+    "native_skill_load": "not_observed",
+    "read_receipt_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514"
+  },
+  "review": {
+    "author_self_review": "completed",
+    "independent_cli": "not_completed_http_401"
+  },
+  "claim_ceiling": {
+    "offline_mechanics": "tested",
+    "live_api_compatibility": "not_run",
+    "native_host_integration": "not_implemented",
+    "semantic_quality": "not_evaluated",
+    "net_value": "unknown",
+    "c02": "not_started"
+  },
+  "raw_log_root": "/srv/agentdock/tmp/mindthus-typed-review"
+}

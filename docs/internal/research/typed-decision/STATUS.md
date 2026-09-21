@@ -15,6 +15,8 @@ Implement #209/#210 design and #211 C01 first. Start #212 C02 only after the sha
 - Dynamic design is optional; do not build an automatic designer as a pilot prerequisite.
 
 ## Current step
+Functional source commit: `119d06813a01c49d87140e0192488f9a87a32602`. See verification.json for the runtime digest.
+
 #209/#210 source documents are landed. #211 first offline engineering slice is implemented: typed contracts, native Jev/structured-chat adapters, immutable batched-call journal, C01 DAG, local method-file consumption and existing Trace v1.1 bridge.
 
 Final verification: 45 targeted tests; full suite 1129 tests with 5 skipped; lifecycle coverage 80/80. Sources for skills/scripts/TPlan/release remain unchanged. Separate Codex read-only review failed authentication (HTTP 401); only author self-review and executable probes were completed.
