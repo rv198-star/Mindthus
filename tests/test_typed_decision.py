@@ -937,6 +937,66 @@ class C01HandoffTests(unittest.TestCase):
         self.assertIsNone(bundle['selected_method'])
 
 
+    def test_host_view_removes_diagnostics_but_keeps_task_and_method(self):
+        report, _ = self.run_graph()
+        bundle = handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+        bundle['source_run_id'] = 'PRIVATE_RUN_ID'
+        bundle['proposal']['reason'] = 'PRIVATE_REASON'
+        bundle['selected_method']['sha256'] = 'PRIVATE_METHOD_DIGEST'
+        before = copy.deepcopy(bundle)
+        text = handoff.host_prompt(bundle)
+        self.assertIn(json.dumps(FIXTURE['context'], ensure_ascii=False, indent=2), text)
+        self.assertIn(bundle['selected_method']['content'], text)
+        for sentinel in ('PRIVATE_RUN_ID', 'PRIVATE_REASON', 'PRIVATE_METHOD_DIGEST'):
+            self.assertNotIn(sentinel, text)
+        self.assertEqual(bundle, before)
+
+    def test_rejection_view_keeps_reasoning_material_not_raw_verdict_fields(self):
+        context = dict(FIXTURE['context'], explicit_method='wae')
+        report, _ = self.run_graph({'applicable':'no'}, context)
+        bundle = handoff.prepare(self.root, report['run_id'], context, ROOT)
+        text = handoff.host_prompt(bundle)
+        self.assertIn('found inapplicable', text)
+        self.assertIn('not an unavailable tool', text)
+        self.assertIn(bundle['fallback_method_check']['content'], text)
+        self.assertNotIn('fallback_method_check', text)
+        self.assertNotIn('"status": "ok"', text)
+        self.assertNotIn('"value": "no"', text)
+        self.assertIsNone(bundle['selected_method'])
+        self.assertEqual(bundle['fallback_method_check']['value'], 'no')
+
+    def test_uncertain_and_failed_views_are_not_rejections(self):
+        for i, value in enumerate(['unclear', asdict(DecisionResult('provider_error'))]):
+            root = self.root / str(i)
+            report, _ = self.run_graph({'applicable':value}, root=root)
+            bundle = handoff.prepare(root, report['run_id'], FIXTURE['context'], ROOT)
+            text = handoff.host_prompt(bundle)
+            self.assertNotIn('found inapplicable', text)
+            self.assertIn('remains uncertain' if i == 0 else 'did not provide a usable verdict', text)
+
+    def test_host_view_preserves_explicit_duties(self):
+        context = dict(FIXTURE['context'], known_obligations=['retain written approval before mutation'])
+        report, _ = self.run_graph({'unresolved_obligation':'present'}, context)
+        bundle = handoff.prepare(self.root, report['run_id'], context, ROOT)
+        text = handoff.host_prompt(bundle)
+        self.assertIn('retain written approval before mutation', text)
+        self.assertIn('supported entry duty remains unresolved', text)
+        self.assertNotIn('unresolved_entry_obligation', text)
+
+    def test_host_view_has_no_invented_applicability_on_entry_fallback(self):
+        report, _ = self.run_graph({'unresolved_obligation':'present'})
+        bundle = handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+        text = handoff.host_prompt(bundle)
+        self.assertNotIn('Method considered, not selected:', text)
+        self.assertNotIn('found inapplicable', text)
+
+    def test_original_task_machinery_words_are_not_censored(self):
+        context = dict(FIXTURE['context'], request='Explain the field fallback_method_check, preserving status/value.')
+        report, _ = self.run_graph({'entry_mode':'direct_execution'}, context)
+        bundle = handoff.prepare(self.root, report['run_id'], context, ROOT)
+        self.assertIn(context['request'], handoff.host_prompt(bundle))
+
+
 
 class C01HostTests(unittest.TestCase):
     def setUp(self):
