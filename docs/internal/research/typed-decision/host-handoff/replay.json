@@ -1,0 +1,162 @@
+{
+  "source_trial": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-implementation/trial",
+  "count": 14,
+  "new_inference_calls": 0,
+  "semantic_revisions": 0,
+  "qualification": "not_granted",
+  "host_execution": "not_run",
+  "rows": [
+    {
+      "case_id": "L01",
+      "source_run_id": "63bf8d05ffb05c1b5e69fd651fad91f7c1f4b620131160fc38cc367b19e42237",
+      "handoff_sha256": "296f0f3ae4cbd3e0c54893e98b399a18f65a58c65fabd5fcee37aa07a83f2b67",
+      "route": "direct_execute",
+      "owner": null,
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L05",
+      "source_run_id": "94d57cb1e993b4d86ac71ceb936c1fc86043dc36255751e88949dea4d1a33639",
+      "handoff_sha256": "0ca74d2ca8214d0363afd3e0284a7febe7d28d5ea05133cf0edc81ca112bb3bc",
+      "route": "acquire_information",
+      "owner": null,
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L21",
+      "source_run_id": "1486b068405ad17b2521ffb767a5fe0a939b849277ef4d80f3511af7879eb039",
+      "handoff_sha256": "3ba0965d4d39271500f63d2cd26cf2568e260a07a1b7e798db35be8d70708c71",
+      "route": "intervene",
+      "owner": "wae",
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L22",
+      "source_run_id": "48efe37f799cea1ea19364510ac7fe787ee854bf511dd7b0fe52bff535162639",
+      "handoff_sha256": "33b156ed7bdd83485047d4bf1755fed8a74b7c433a5e7d1af40fe4d63fb3c034",
+      "route": "intervene",
+      "owner": "wae",
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L25",
+      "source_run_id": "83d3d492d665f4339ef9ea31efa8c12f12062edd7ef314ee110a7c25166cd601",
+      "handoff_sha256": "c72ed11e26c1dcff4ee499a315bf9a721bd43e22e477ae0e23510f20a3ed902c",
+      "route": "intervene",
+      "owner": "sra",
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L26",
+      "source_run_id": "9df07b1469c777e1a85cf097a1ac4f19223e7914e67927505a4054e1be4e3134",
+      "handoff_sha256": "5294f412f152dbc1faa3c5d1bcb59b3a09fee4916ed83dc76421bca29c8a652b",
+      "route": "intervene",
+      "owner": "edsp",
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L27",
+      "source_run_id": "c3c8767f02294f77cb685915af6bf392446a23089d07206c56f37872582b1af7",
+      "handoff_sha256": "a7a8a32591d1cfd09d2ea723afa7e685e1d9cb601cac1c75a3cd44bae6ddac14",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L28",
+      "source_run_id": "23ac1ec094f59d4d078f1bc45f9bc7482c27d7575f403aa1263745299b0e43ae",
+      "handoff_sha256": "97e2108d8604039202d94b6352213d0c79e849c406a8f03bf70ab2d5736a621e",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L29",
+      "source_run_id": "374860cbb6616d593f2ee524e863f53d326ab3d1c968ac050564654b6d520ab4",
+      "handoff_sha256": "3ac8566f9ec741d31f320ee0f77a19f7f0b42c7f63a6df6bf41a41e4bde7ae77",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [
+        "No voting result exists yet; do not upgrade completed preparations into selection of a design.",
+        "unresolved_entry_obligation"
+      ],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "L30",
+      "source_run_id": "e74e11f99fb7802335fb1667e115c0bb5974d8e98c06727f046c4ecdf18610df",
+      "handoff_sha256": "fe36d79465b9b4e19b24d36a598af281cd4594e091f7cc3612236420950ca374",
+      "route": "original_path",
+      "owner": null,
+      "obligations": [],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "N01",
+      "source_run_id": "0889d06955ba7be5cfb41697c4ed296829b142195c2c5c51a4c07284ee079666",
+      "handoff_sha256": "b3710e8a13f0de9f6be39a4be0815ba5faf3e66c5a7f5da697a2b409bbb361a7",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [
+        "unresolved_entry_obligation"
+      ],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "N02",
+      "source_run_id": "ee610f89e9f77b7852726e740c83aa156d0788b4dde482032752be0a0391f46b",
+      "handoff_sha256": "24da4bbc2e92191da597bf1971cc2fd9a7fda5a7994c5f842a59709a6a65dd71",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [
+        "unresolved_entry_obligation"
+      ],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "N03",
+      "source_run_id": "7c339224adb7dcfe730fe39894c9e822bad6c883a5aa5ca44e5c8aa02a703698",
+      "handoff_sha256": "520ba02c6c7f42d3fcb98a2afe3b5e375013e7f318294b486cb4c89c617ec0fa",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [
+        "unresolved_entry_obligation"
+      ],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    },
+    {
+      "case_id": "N04",
+      "source_run_id": "9623ba2b5865e713a9e6b359407042e4259e7f96106e2a59c5dd7043ff087302",
+      "handoff_sha256": "1ed266fafaa2a932f67e3b403ac30730facb91b79e662aedf3c2d8a44aea62e8",
+      "route": "llm_fallback",
+      "owner": null,
+      "obligations": [
+        "The current agent must complete the required framing review before starting this analysis; that review has not occurred.",
+        "unresolved_entry_obligation"
+      ],
+      "consumption": "not_executed",
+      "native_skill_load": "not_observed"
+    }
+  ]
+}

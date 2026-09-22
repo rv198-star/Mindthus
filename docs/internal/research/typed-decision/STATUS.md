@@ -5,6 +5,24 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current C01 host handoff — engineering complete; host model/channel pending
+
+[Handoff usage and boundaries](host-handoff/README.md), [replay records](host-handoff/replay.json),
+[verification](host-handoff/verification.json). A thin prepare-only CLI now turns immutable C01
+results into host task context, handling branch, retained obligations and complete selected contract.
+It replays exact recorded questions/State/results and checks graph/contract/runtime identity without
+inference or journal mutation. Changed or missing evidence blocks preparation, never invents a load.
+All14 previous v4 results prepared,0 new model calls and0 semantic revisions. N03 remains fallback
+with unresolved obligation. No actual host consumption, native skill load, or task-quality result yet.
+133targeted +8final boundary checks;1218full(1211 success/7skip),81/81lifecycle;
+14handoff JSON integrity and final locked replayPASS; key scanPASS.
+C01 graph/questions, Engine/Provider/Session and canonical methods unchanged. New handoff module
+changes whole-package implementation digest; old live freezes are historical and must not rerun.
+User was asked to choose host model/channel for actual task comparison; no other-model call made.
+Next: agree host access, then freeze bounded host-consumption protocol; old-case replay is integration
+feedback only, not holdout or a fresh paired cost benchmark. Original-A must use real host configuration.
+Main untouched; #211 unqualified and #212 conditional. The prior13/14 semantic finding still applies.
+
 ## Current C01 implementation — graph 4 delivered; targeted gate 13/14, not qualified
 
 [Disposition](c01-implementation/disposition.md), [observations](c01-implementation/observation.json),

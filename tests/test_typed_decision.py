@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from experiments.typed_decision import c01, c02, campaign
+from experiments.typed_decision import c01, c02, campaign, handoff
 from experiments.typed_decision.contracts import (
     BatchResult,
     ContractError,
@@ -816,6 +816,97 @@ class C01Tests(unittest.TestCase):
         for graph in [{'dependencies': {'a': ['b'], 'b': ['a']}}, {'dependencies': {'a': ['missing']}}]:
             with self.subTest(graph=graph), self.assertRaises(ContractError):
                 c01.validate_graph(graph)
+
+
+
+class C01HandoffTests(unittest.TestCase):
+    """Host-boundary checks: preparing context is not execution evidence."""
+    setUp = C01Tests.setUp
+    tearDown = C01Tests.tearDown
+    run_graph = C01Tests.run_graph
+
+    def test_all_routes_prepare_without_inference_or_inventing_consumption(self):
+        scenarios = [({}, {}, 'intervene'), ({'entry_mode': 'direct_execution'}, {}, 'direct_execute'),
+                     ({'entry_mode': 'acquire_information'}, {}, 'acquire_information'),
+                     ({'unresolved_obligation': 'present'}, {}, 'llm_fallback'),
+                     ({}, {'freshness': 'stale'}, 'original_path')]
+        for i, (answers, changes, route) in enumerate(scenarios):
+            with self.subTest(route=route):
+                root = self.root / str(i)
+                context = dict(FIXTURE['context'], **changes)
+                report, _ = self.run_graph(answers, context, root=root)
+                before = {str(p): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+                with patch.object(FixtureProvider, 'evaluate', side_effect=AssertionError('no inference')):
+                    bundle = handoff.prepare(root, report['run_id'], context, ROOT)
+                self.assertEqual(bundle['proposal']['route'], route)
+                self.assertEqual(bundle['context'], context)
+                self.assertEqual(bundle['consumption'], 'not_executed')
+                self.assertEqual(bundle['native_skill_load'], 'not_observed')
+                self.assertEqual(bundle['task_acceptance'], 'not_evaluated')
+                self.assertEqual(bundle['evidence_kind'], 'offline_fixture')
+                if route == 'intervene':
+                    self.assertEqual(bundle['selected_method']['content'], (ROOT / 'skills/sra/SKILL.md').read_text())
+                else:
+                    self.assertIsNone(bundle['selected_method'])
+                self.assertTrue(handoff.host_prompt(bundle))
+                self.assertEqual(before, {str(p): p.read_bytes() for p in root.rglob('*') if p.is_file()})
+
+    def test_obligations_and_explicit_constraint_survive_handoff(self):
+        context = dict(FIXTURE['context'], explicit_method='sra', known_obligations=['required_review'])
+        report, _ = self.run_graph({'entry_mode': 'direct_execution'}, context)
+        bundle = handoff.prepare(self.root, report['run_id'], context, ROOT)
+        self.assertEqual(bundle['context']['explicit_method'], 'sra')
+        self.assertIn('required_review', bundle['proposal']['obligations'])
+        self.assertEqual(bundle['proposal']['route'], 'llm_fallback')
+        self.assertIsNone(bundle['selected_method'])
+
+    def test_changed_context_and_traversal_id_are_rejected(self):
+        report, _ = self.run_graph()
+        with self.assertRaises(ContractError):
+            handoff.prepare(self.root, report['run_id'], dict(FIXTURE['context'], request='Another task'), ROOT)
+        with self.assertRaises(ContractError):
+            handoff.prepare(self.root, '../policy', FIXTURE['context'], ROOT)
+
+    def test_resigned_final_result_cannot_override_recorded_decisions(self):
+        report, _ = self.run_graph()
+        path = self.root / 'runs' / (report['run_id'] + '.json')
+        record = read_record(path)
+        record['result']['owner'] = 'wae'
+        path.write_bytes(canonical({'schema': 'mindthus.decision-record.v1', 'payload': record, 'sha256': digest(record)}))
+        with self.assertRaises(handoff.ReplayMismatch):
+            handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+
+    def test_changed_method_contract_blocks_handoff(self):
+        report, _ = self.run_graph()
+        original = Path.read_text
+        def changed(path, *args, **kwargs):
+            if path == ROOT / 'skills/sra/SKILL.md':
+                return 'Changed full contract.'
+            return original(path, *args, **kwargs)
+        with patch.object(Path, 'read_text', changed), self.assertRaises(handoff.ReplayMismatch):
+            handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+
+    def test_missing_outcome_cannot_turn_into_an_ordinary_fallback(self):
+        report, _ = self.run_graph({'unresolved_obligation': 'present'})
+        (self.root / 'calls' / report['call_keys'][0] / 'outcome.json').unlink()
+        with self.assertRaises(ContractError):
+            handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+
+    def test_runtime_lock_mismatch_blocks_handoff(self):
+        report, _ = self.run_graph()
+        path = self.root / 'resolved-runtime.json'
+        record = read_record(path); record['model'] = 'different-model'
+        path.write_bytes(canonical({'schema': 'mindthus.decision-record.v1', 'payload': record, 'sha256': digest(record)}))
+        with self.assertRaises(handoff.ReplayMismatch):
+            handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+
+    def test_active_writer_blocks_handoff_without_waiting_or_mutating(self):
+        with Session(self.root, FixtureProvider(FIXTURE['answers']), scope='c01') as session:
+            report = c01.run(session, FIXTURE['context'], ROOT)
+            with self.assertRaises(handoff.ReplayMismatch):
+                handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+        self.assertEqual(handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+                         ['proposal']['route'], 'intervene')
 
 
 class LiveCarrierTests(unittest.TestCase):
