@@ -5,6 +5,20 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Language boundary reassessment — next evidence priority
+
+User identified Chinese input as a possible mismatch. Official model docs confirm English
+as primary/best-supported training language, with unequal CJK performance; no evidence
+for the absolute claim that no Chinese was used in training. Six reconstructed requests
+use English questions but Chinese/mixed task, evidence and method-contract State.
+See [language-boundary reassessment](language-boundary-reassessment.md).
+Prioritize faithful English execution views and paired language diagnostics before larger
+Chinese-only coverage or further prompt tuning. Translation must preserve artifact gaps,
+source/target separation and complete canonical meaning; typed output IDs stay unchanged.
+This is a new hypothesis, not proven root cause or semantic qualification. No new live
+calls, source edits, admission, or holdout occurred. Old stopped campaigns remain intact;
+C01/C02 should be assessed separately and all translation/verification costs counted.
+
 ## Bounded iteration — stopped after candidate 1 (5/6)
 
 Owner authorized optimizing iteration until predefined pass or anti-spiral stop. New
