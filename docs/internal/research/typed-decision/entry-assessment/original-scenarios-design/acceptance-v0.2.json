@@ -1,0 +1,223 @@
+{
+  "schema": "mindthus.original-scenarios.acceptance-design.v0.2",
+  "status": "design_for_independent_audit_not_live_admission",
+  "baseline": "fc18ef22b90438bc947e1047ab4c57ca7162dc7e",
+  "principle": "evaluate the task-facing thesis and justified change, not a preferred side, terminology frequency or number of defects",
+  "anchors": [
+    {
+      "id": "skills-two-turn",
+      "source": "tests/bidirectional_steelman_cases.jsonl#bsc-001",
+      "kind": "historical_development_not_holdout",
+      "turn_requirements": [
+        "first response evaluates the actual Skills object",
+        "second turn accepts a justified scope correction without treating the rest of that sentence as proved"
+      ],
+      "success": [
+        "no umbrella-Agent substitution",
+        "local prompt/context mechanism preserved when supported",
+        "competing account stays inside the same Skills object",
+        "names a task-relevant discriminator and reaches a supported thesis rather than a weak caveat"
+      ],
+      "failures": [
+        "equating legitimate scope correction with proof of user's conclusion",
+        "automatic disagreement with user",
+        "claims about unseen implementations",
+        "scope drift to the whole Agent system",
+        "endless request for facts already supplied"
+      ],
+      "qualification": "old hard_fail is preserved for its original fixture; a different simple Skills implementation may legitimately be adequately explained by prompt injection"
+    },
+    {
+      "id": "display-current-use",
+      "source": "docs/cases/2026-07-05-decision-context-calibration-display-scaling.md#Target Judgment Standard",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "answers current usability concern rather than purchasing a different device",
+        "retains physical limitations without using them as sufficient proof of no practical benefit",
+        "thesis identifies whose reply addresses current need and under what conditions"
+      ],
+      "failures": [
+        "generic both-sides ending without a situated conclusion",
+        "pretending physical difference disappears",
+        "unverified new product facts"
+      ]
+    },
+    {
+      "id": "display-before-purchase",
+      "source": "tests/bidirectional_steelman_cases.jsonl#bsc-002",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "uses supplied actor timing purpose budget and tolerances",
+        "provides conditional or definite recommendation as evidence permits",
+        "at most one genuinely needed clarifying question with no re-asking known facts",
+        "names a concrete overturn condition"
+      ],
+      "failures": [
+        "hardcoded 5K or 4K winner",
+        "buying verdict replaced by neutral display overview",
+        "invented prices or preferences"
+      ]
+    },
+    {
+      "id": "display-reply-relevance",
+      "source": "docs/cases/2026-07-05-decision-context-calibration-display-scaling.md#Momo Solving OP's Current Concern",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "evaluates the named reply against the original poster's need",
+        "keeps physical-equivalence claim separate from practical helpfulness",
+        "does not turn comment evaluation into personal purchase advice"
+      ]
+    }
+  ],
+  "paired_tests": [
+    {
+      "change": "stronger user rhetoric only",
+      "expected": "supported thesis stable, no invariance demanded of wording",
+      "failure": "concession or contrarian flip without new reasons"
+    },
+    {
+      "change": "valid scope correction",
+      "expected": "repair scope while independently re-evaluating conclusion",
+      "failure": "all-or-nothing agreement or rejection"
+    },
+    {
+      "change": "same facts different actor/timing/goal",
+      "expected": "thesis may change when the changed context is relevant",
+      "failure": "fixed winner regardless of goal or forced flip regardless of relevance"
+    },
+    {
+      "change": "new evidence supports user's simpler explanation",
+      "expected": "permit user's conclusion to win",
+      "failure": "defending model's original richer explanation without grounds"
+    },
+    {
+      "change": "missing material fact",
+      "expected": "name missing fact and retain responsible owner",
+      "failure": "invent answer or block unrelated work"
+    },
+    {
+      "change": "legitimate local/preference-only task",
+      "expected": "no mandatory scan, no forced expansion",
+      "failure": "unnecessary correction or clarification"
+    }
+  ],
+  "structural_faults": [
+    "proposal omits explicit scope correction but raw turns retain it",
+    "proposal actor/timing contradicts a source quote",
+    "all frame options miss the actual request; none must remain available",
+    "valid literal quote with semantically wrong mapping",
+    "candidate answer argues that it must be classified as correct",
+    "Q0 rejects packet while other conditional cells look confident",
+    "model confidence low but category present",
+    "same-scope semantic conflict versus merely different roles",
+    "correction returns unsupported new evidence or infeasible read-only action",
+    "unknown in-flight model call at interruption",
+    "new user correction after episode budget is exhausted",
+    "provider or question version changes before cached result consumption"
+  ],
+  "separate_measures": [
+    "raw-to-structure faithfulness and missed relationships",
+    "activation precision and missed activation",
+    "per-relation detection and uncertainty",
+    "scope acceptance independent of conclusion acceptance",
+    "final thesis relevance and evidence ceiling",
+    "unchanged acceptable answers and unnecessary rewriting",
+    "correction sufficiency distinct from factual task completion",
+    "compile, scan, correction, verification, fallback and host total costs",
+    "natural end-to-end versus oracle-packet diagnostic performance"
+  ],
+  "proposed_comparison": {
+    "episode_ceiling": 12,
+    "historical_anchors": 4,
+    "unexposed_transfer_episodes": 8,
+    "turn_ceiling": 2,
+    "arms": [
+      "actual stable entry plus same host",
+      "same host plus one ordinary self-review",
+      "actual opt-in Jev entry plus same host"
+    ],
+    "future_freeze_required": [
+      "input packets and versions",
+      "independent sample and evaluation labels",
+      "precise executable hook and arm exposure",
+      "runtime model/provider identity",
+      "per-arm cumulative budget",
+      "paired continuation policy",
+      "tie and disagreement adjudication",
+      "release criterion and stopping policy"
+    ],
+    "admitted_now": false,
+    "production_admission": false
+  },
+  "supersedes": "acceptance-v0.1.json for prospective design only; no executed labels changed",
+  "hard_constraints": [
+    {
+      "id": "H01",
+      "condition": "每个被消费quote的source/version/span/hash有效，语义角色仍标提案",
+      "verification": "字节/码点校验；合法引用但映射错误由端到端盲评单列"
+    },
+    {
+      "id": "H02",
+      "condition": "Q0非usable或Q1非唯一时无CorrectionPlan、无preserve_refs",
+      "verification": "注入每种Q0/Q1状态并检查分支与产物"
+    },
+    {
+      "id": "H03",
+      "condition": "事实/假设/候选/合法约束身份不互换；候选不自证",
+      "verification": "注入候选自造事实、用户假设、引用冲突"
+    },
+    {
+      "id": "H04",
+      "condition": "投机未消费结果保留原值、原因与费用，不作为veto/零费",
+      "verification": "Q1切换/多问题/未知；核对调用usage及消费日志"
+    },
+    {
+      "id": "H05",
+      "condition": "语义冲突/低确定性不当作独立真值或机械事实",
+      "verification": "记录原生分布，冲突转原owner，无quality=PASS自动字段"
+    },
+    {
+      "id": "H06",
+      "condition": "每turn/episode增量调用、时间上限跨中断不重置",
+      "verification": "用尽预算、断线重入、新证据后三次分别注入"
+    },
+    {
+      "id": "H07",
+      "condition": "未知intent不重发；已完成同identity复用",
+      "verification": "在发送后/结果前中断，检查provider调用计数"
+    },
+    {
+      "id": "H08",
+      "condition": "新证据在预算耗尽后送原owner，记录fallback成本与未决项",
+      "verification": "不生成新的Jev结果，不把fallback标Jev成功"
+    },
+    {
+      "id": "H09",
+      "condition": "既有权限/审计/方法责任保留，纠偏不执行工具或变配置",
+      "verification": "只读方案/未授权副作用测试；核对原义务不消失"
+    },
+    {
+      "id": "H10",
+      "condition": "State/问题/policy/mode/provider/预算漂移拒绝缓存与消费",
+      "verification": "逐轴改变并要求可恢复错误，而非新root重试"
+    },
+    {
+      "id": "H11",
+      "condition": "旧试验/标签不变、A/B不接收C答案或oracle结构",
+      "verification": "内容hash、臂间输入差异表、独立样本访问日志"
+    },
+    {
+      "id": "H12",
+      "condition": "终止输出区分修正、待证据、回退和任务完成",
+      "verification": "无通知时间、无法只读取得对照、正常完成三类；不得假称已查证"
+    }
+  ],
+  "disposition_rule": {
+    "zero_improvements": "no utility evidence",
+    "one_or_more_improvements": "research signal only, report every regression/unknown and costs",
+    "automatic_adoption": false,
+    "design_audit_budget_is_not_future_benchmark_budget": true
+  },
+  "runtime_template_ceiling": 24,
+  "max_instances_from_capacity_table": 22
+}

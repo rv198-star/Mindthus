@@ -1,0 +1,35 @@
+{
+  "schema": "mindthus.original-scenarios.audit-freeze.v1",
+  "round": 2,
+  "base_commit": "59c9e7c4be2e1ece12dd3b53c7e91ace34d0b476",
+  "inputs": {
+    "design-v0.1.md": "683bb4c8dd05d86cd7b5a9aa03c74d6af60c1954852ef19321f73963589e6b4b",
+    "acceptance-v0.1.json": "7d1d2be47c90caa7fc0a2fa77f2d4c2220d725e180a5306b4b51fb06efe1ac80",
+    "source-packet.md": "e66716c3353cbb5c1b72365a1be4173f5833ae47de4cfecbac4e23e7ed0be04f",
+    "source-index.json": "27bc5822011dfeaeef44baea16250fd61d6ed12b7af1a3d43f66becc6a1b54c2",
+    "audit-protocol.md": "b08a996fa9d791e20203576d2384512fe5754742faac072f4aa5936facea43a9",
+    "audit.py": "94b6f4f7e7fa4de3af91b06e4a598beb507b29c97226c6f18d6a3c1ffec657a0",
+    "design-v0.2.md": "e50bdbbbc5fdc316d23976f19c21fe74f4f2375274d5ead91bc116b3db2760f9",
+    "finding-disposition.json": "27d1e2f29e333dbe1fa34c82c963a1f56c7e572842016f944fcb85c3c533d168",
+    "round-1/A/review.md": "a387de8a4a1044f6ab81ebe8abab2263645a3a764403dae684aa1b396eb238c1",
+    "round-1/B/review.md": "98503c8f178d094ddd470f70f5086e53ab1f9b0919cd6baa74d73707999284e5"
+  },
+  "requests": {
+    "A": "ef8b7093f0cb91485982fd814faff6639d0ade47cbdda47e542123ea4f4fb808",
+    "B": "c7971c7e2b4f4fb21edeba0603a4afa6ed9f04bc97aaf6086b4edaf6a997bab4"
+  },
+  "request_bytes": {
+    "A": 176785,
+    "B": 176771
+  },
+  "model": "deepseek-v4.1-flash",
+  "endpoint": "https://cpa.72live.com/v1/chat/completions",
+  "max_tokens": 4500,
+  "timeout_seconds": 90,
+  "max_attempts_this_round": 2,
+  "max_attempts_task": 4,
+  "retries": 0,
+  "root": "/srv/agentdock/tmp/mindthus-original-scenarios-design-audit-v1/round-2",
+  "independence": "fresh same-model contexts; not statistical independence",
+  "authorization": "Owner requested concrete design and internal independent audit; no Jev scenario calls"
+}
