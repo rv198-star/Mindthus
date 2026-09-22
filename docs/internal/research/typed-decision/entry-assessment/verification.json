@@ -1,0 +1,112 @@
+{
+  "schema": "mindthus.entry-assessment-i1-verification.v1",
+  "source_commit": "6be53766a14c7208b5e499e74c963f8cf3b66f8f",
+  "baseline_commit": "c164e98692ddea70e939b74908c01cc1beb83762",
+  "runtime_digest": "fd5a8d2a0994e406bf954f58b12fa54d7cf9ad1a57ce163696493623b7e1bd53",
+  "source_sha256": {
+    "experiments/typed_decision/assessment.py": "950f8de806ef3f5daf81575e82862686ac439cbae8bacd2ba79acdf527944d6f",
+    "experiments/typed_decision/entry.py": "9c852bf6ca18e7cef4e7b53e0cdfc66b0526333b0d6d36bc8a62767e7eb20c48",
+    "experiments/typed_decision/fixtures/entry-correction.json": "5cf77cf6b2aedcafe690b79a30785762853c466df738ccd882e8911175c12207",
+    "tests/test_entry_assessment.py": "97eb6bc23717204eb20d6e58069078355f02204eb1a608cfd630164fd9f7f444",
+    "docs/methodologies/typed-decision-principles.md": "1f7094062d9594cad3d79a6b8adaf1cb3191bdcf8096f6f3f690e488f9f8f186",
+    "docs/internal/research/typed-decision/using-mindthus-assessment-design.md": "77cbc1bcef5f51f6cdde7d56d1cb2a59738910bd10ab4b6a622a8a4762572310"
+  },
+  "checks": {
+    "new_tests": {
+      "run": 46,
+      "passed": 46,
+      "failed": 0,
+      "log_sha256": "64edb8d89dea0fc7472d08f1ec7fe94c8d68e2eaf9f40a056082d1b4050c2b66"
+    },
+    "full_suite": {
+      "run": 1281,
+      "passed": 1276,
+      "skipped": 5,
+      "failed": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "log_sha256": "0b925daed8a8faf0d5ace18821a91a48de430ad1902d0f5741d0143aece041b9"
+    },
+    "lifecycle": "82/82",
+    "changed_source_secret_scan": "PASS",
+    "diff_check": "PASS",
+    "post_documentation_tests": {
+      "run": 60,
+      "passed": 59,
+      "skipped": 1,
+      "failed": 0,
+      "exit_code": 0,
+      "log_sha256": "71f1e2cec6340d91c929393363bd48940d43cdb525f38d55634977eba24e7aab"
+    },
+    "local_document_links": 14
+  },
+  "offline_episode": {
+    "root": "/srv/agentdock/tmp/mindthus-entry-i1-6be5376",
+    "status": "corrected_rechecked",
+    "first_calls": {
+      "assessment_batches": 2,
+      "host_corrections": 1
+    },
+    "reentry_calls": {
+      "assessment_batches": 0,
+      "host_corrections": 0
+    },
+    "reentry_result_identical": true,
+    "records_unchanged_on_reentry": true,
+    "original_task_preserved": true,
+    "record_sha256": {
+      "manifest.json": "7a03f7ccf7e69f66108676da03aaf3e76d59e5d9e5d812f008e1fbcd0f64cb53",
+      "correction-request.json": "bd224fbcec38ab1d302b9ea5aa5eb81244640250ac0abf18a6e94ab7832c7e71",
+      "initial.json": "54d43dbe08d9ce2ab1f7571a3099049c3eff5c5ebbf5271e62a5dd01f3648a43",
+      "revision.json": "4b9ed99378785496d2a0ce7a2833e9472145abfcb9168c78d5dc7a7abf1af101",
+      "resolved-runtime.json": "87901f821f9c71639be3b12a417e81e43fa9b8ce78ab7905cc4273c9e57aee37",
+      "recheck.json": "fd4b73dae5c389166bad06f790fb178e310c2a6e6deb91ca42d046c1fc9f1a6b",
+      "summary.json": "8c389b6f657f299b8bfece863a2a9dccad45f3b9df4a685319a6b63ee32ee833",
+      "correction/outcome.json": "985e062f525545fdd134c6ab7f7a7d3715dcb16b05f8e1de293f8b7d4d1145a5",
+      "correction/intent.json": "6a4a89088af734a918c5d1dd4cab411d03b8cc6eb98731f4b0d458566b69be45",
+      "assessment/policy.json": "f8b014394e72c51a207f1eb0644130b42754fb7ec21773a1d0c135a3e9e0fc9e",
+      "assessment/resolved-runtime.json": "87901f821f9c71639be3b12a417e81e43fa9b8ce78ab7905cc4273c9e57aee37",
+      "assessment/calls/835b3955a2419c2a0c00e60f1ccccacd664ab7186881e5293527215fd9c14e9c/outcome.json": "c4b874bac1ea0e80cfaeb58e89e15e83314fc096bd8601d19504035f5c87efc6",
+      "assessment/calls/835b3955a2419c2a0c00e60f1ccccacd664ab7186881e5293527215fd9c14e9c/intent.json": "6c2194ac0168c3b43074f007777c900067e13c48f89d1eb59b83bb3bd3efe711",
+      "assessment/calls/6b57840de1fe47fc58bee5205887e41475c30e8155c940edd70c0e44ea9ea36d/outcome.json": "985d46c58655080059cd63c17d875aaaa669cf11ed3d303953868c40b1a61654",
+      "assessment/calls/6b57840de1fe47fc58bee5205887e41475c30e8155c940edd70c0e44ea9ea36d/intent.json": "1db5a86805a2d187825dfc01c5472ebd808fe333a4636e80666eef0637d5734f",
+      "assessment/runs/218a8686dd1f7b8885aeeb8e1308934d643818333fe77cf4b7e143f8c9a159d2.json": "7085fb7c5eb6c86c8609c61bee1050de55c2549a5a7e7aa5a2f86a4fab7b496f",
+      "assessment/runs/9806e1ec5ba7605e829307ee5f71f4def2bc358efc75e6c0db52ca0f96fdfe6b.json": "0c6f72681d99572e1781ab13aceabeef9450b7948fd909fed14989f4aee35533"
+    },
+    "qualification": false,
+    "revision_source": "explicit scripted fixture, not LLM output"
+  },
+  "preserved": [
+    "C01 graph4",
+    "canonical skills and primitives",
+    "DecisionProvider/Engine/Serving contracts",
+    "Session",
+    "existing handoff and trace",
+    "all prior frozen trials",
+    "main"
+  ],
+  "review": {
+    "type": "author/source review plus executable fault injection; not independent semantic review",
+    "covered": [
+      "unknown-call and correction crash recovery",
+      "same-State batch and S0/S1/S2 distinction",
+      "original goal/scope retention",
+      "one correction and one recheck",
+      "simultaneous P1/P3 and inverse-scope controls",
+      "all active changed-target dimensions rechecked",
+      "shared time and cross-stage runtime identity",
+      "old router/handoff/Trace continuation"
+    ],
+    "operational_note": "An earlier combined focused command hit its 30-second tool limit; no model call was involved. Final source passed the complete 1281-test suite."
+  },
+  "claim_ceiling": {
+    "engineering_slice": "implemented and offline verified",
+    "live_semantic_quality": "not_evaluated",
+    "live_host_correction": "not_evaluated",
+    "billing_formula": "unverified",
+    "native_skill_activation": "not_observed",
+    "net_value": "unknown",
+    "production_admission": false,
+    "new_paid_model_calls": 0
+  }
+}

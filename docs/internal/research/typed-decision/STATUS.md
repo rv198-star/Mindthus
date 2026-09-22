@@ -6,7 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current direction — manual 1.1 and C01-next design; no new execution
+## Current implementation — C01-next I1 executable, offline verified
+
+Source `6be53766a14c7208b5e499e74c963f8cf3b66f8f` implements the approved three-check/one-correction slice.
+See [entry-assessment/README.md](entry-assessment/README.md) and
+[bound evidence](entry-assessment/verification.json). New `assessment.py` evaluates P1–P3
+as same-State DecisionSpecs; `entry.py` consumes the matrix into one original-host correction,
+S2, at most one related recheck, and optional unchanged graph4/handoff/Trace continuation.
+Original task/goals remain immutable; no target means no answer inspection; unknown calls
+never resend. Corrections do not waive canonical audits, and high-risk work stays with its owner.
+
+46 new tests PASS; full suite1281 run =1276 success/5 skipped, zero failures/errors;
+lifecycle82/82. An exact offline execution used2 check batches+1 scripted host correction;
+reentry used0 provider/hook calls with all records unchanged. These are mechanics, not
+Jev detection accuracy or real LLM correction evidence. New paid calls0; no credentials read.
+Runtime digest is `fd5a8d2a0994e406bf954f58b12fa54d7cf9ad1a57ce163696493623b7e1bd53`. Existing graph4, Provider/Session/contracts,
+canonical skills and prior trial artifacts are unchanged; new modules change the aggregate
+runtime digest, so do not rebind or rerun old frozen campaigns.
+
+The driver/CLI is offline-only pending combined live admission; the low-level assessment seam
+accepts an already-admitted Session. This is an opt-in experiment, not an installed default hook.
+Next is a separately frozen, small live detection/correction validation with reverse controls
+and full cost accounting—not further platform expansion or a rerun of old formal-abc.
+Old A/B/C admission remains paused, #211 OPEN/unqualified, #212 not restarted, main unchanged.
+Active implementation task: `tsk_4ae0ff7cbf442b39`.
+
+## Previous direction — manual 1.1 and C01-next design; no new execution
 
 Owner requested consolidating the expanded usage discussion into the existing ten-rule manual,
 then designing the using-mindthus entry optimization. The normative manual is now
