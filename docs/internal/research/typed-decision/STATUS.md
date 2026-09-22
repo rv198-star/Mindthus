@@ -5,7 +5,21 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current correction — retain C01 routing research; current implementation unqualified
+## Current node attribution — offline decomposition delivered; no new inference
+
+[Node report](node-attribution/README.md), [64-view data](node-attribution/observations.json)
+and CSV/reproducer now separate node observations from final fields. Four original summaries and
+88 outcomes verified. 54 valid semantic views:40 joint matches;14 first divergences =11 J1,
+2 J2 blocks,1 J4 owner. This is first-observed path attribution, not proven causal explanation.
+Owner actually ran14 times (13 matching), versus22 required implicit-owner views; selection bias
+prevents a general accuracy claim. Three further owners were explicit code bindings. J5 ran17 times,
+all yes; rejection cases were blocked upstream. No independent frozen J2/J5 gold, no node accuracy claim.
+Preserve3 technical failures,3 unrun English views,4 D0 views; bilingual and adapter stages distinct.
+Next design:conditional owner probe with same-contract ordinary-LLM comparison and no-match controls;
+then targeted explicit-owner applicability negatives. Draft only:runtime/gold/cost freeze still needed.
+No live calls, runtime/prompt/label edits, qualification or C02 startup. Previous checks reused; main unchanged.
+
+## Previous correction — retain C01 routing research; current implementation unqualified
 
 Owner challenged the inference from composite failures to abandoning semantic routing.
 [Reconsideration](c01-routing-reconsideration-2026-09-22.md) checks the official skill-suggestion
