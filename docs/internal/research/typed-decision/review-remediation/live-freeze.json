@@ -1,0 +1,56 @@
+{
+  "schema_version": "mindthus.reviewed-development-freeze.v1",
+  "source_parent": "033d71743",
+  "scope": "reviewed-c01-v3-c02-v2-dev-r1",
+  "implementation": "fc715acf068898d0b91aa276765115cb592722cc979dd96dbe7388abc4efb19d",
+  "file_sha256": {
+    "experiments/typed_decision/trace.py": "0f7f34cfbbdda279baa5234476020fb811841abb8ac7b53095b2b7a0c2ffb2af",
+    "experiments/typed_decision/c01.py": "05e564a5a49e648efca6b754b4291077da93f79cf8c09bd73bd1e30adb9c67ea",
+    "experiments/typed_decision/review_trial.py": "342a7d71436476062e4adda5c56433510291a0992f072f3a506403bcf34d3ce1",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b",
+    "experiments/typed_decision/__init__.py": "f850a5e16c015cfcd86dc6965d370a1921369c30c96e2b704fedd4ca4205a8cb",
+    "experiments/typed_decision/c02_trial.py": "87eb95b3d87dc338fd3db85a0c63b80c56afc41c8ae69f36e63d301cae197e77",
+    "experiments/typed_decision/campaign.py": "a356fe762743453d0a2f69c57d8d149c38741a63994a866873de5a9053139d8a",
+    "experiments/typed_decision/providers.py": "2515a15b7535cee2737842d7bae17013f8ea57340082e08336b2ba02f0dd2bca",
+    "experiments/typed_decision/contracts.py": "c86b9e19187672369db16e3990a1983c8e5dd2403e2d81ff46a506e57ded2291",
+    "experiments/typed_decision/c02.py": "13476e3c1718d4d7e0b5cf195a648127d1815b33aa42d89a229715f600a80590",
+    "experiments/typed_decision/__main__.py": "7e0816185fc99e72e0150726af258941808fdeb03286c7c5397ec0e16fc1e8c2",
+    "tests/test_typed_decision_review.py": "c4840fe037f94617a406395b611a73381c6acc4abc17cd1a6c987e44b647c4d6",
+    "tests/test_typed_decision.py": "133769be0056534d1c3d75183c80890f64ac5a64acd53a1149a8e560b5d1dda9",
+    "docs/internal/research/typed-decision/review-remediation/live-protocol.md": "ae4743f00cd66d66664e82034b81d57dbbc12fc8926fb37f3e9125f21eb3280d",
+    "docs/internal/research/typed-decision/review-remediation/live-review.md": "dd46488e362263cd3adf104abdcaf2353ac63cefdd443e4064018cf2b191de7c",
+    "docs/internal/research/typed-decision/review-remediation/cases.json": "8b456a8035ea52b709e731a947ef2618317090b4cabc4f2d87760a4790548498",
+    "docs/internal/research/typed-decision/review-remediation/standards.json": "13269279d63f1ad0e9b0b1b3e61ef1b36abb01a60ef50de932c47c199a5970bc",
+    "docs/internal/research/typed-decision/review-remediation/c02-contract-v2.json": "2650dff7c0a8deae23ec5781f7ebb01dfb48aa8e14878849f6a43950cb700952",
+    "skills/using-mindthus/SKILL.md": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+    "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+    "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+    "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+    "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+    "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+    "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96"
+  },
+  "semantic_revision_limit": 0,
+  "sample": "17 development diagnostic cases; two fidelity parent scenarios; N01 excluded",
+  "qualification": "no production/holdout/ABC inheritance",
+  "engineering": {
+    "targeted_successful": 112,
+    "full_total": 1196,
+    "full_successful": 1189,
+    "full_skipped": 7,
+    "lifecycle": "81/81"
+  },
+  "log_sha256": {
+    "targeted.log": "d322fd2043b846e835c1fb5ce2443065113a986c1016484d5db3b6b157fac9ea",
+    "full-suite.log": "0164db0b0d1c01f669ca4171b46db2cd24ef0d8e0806000f4f4b83581b96a6d6",
+    "lifecycle.log": "ac26365e6bce84bed223ebee51cdb4d0144d98e7f02a82a4e4347c1cf0c48539"
+  },
+  "pricing": {
+    "source": "https://docs.typesafe.ai/models",
+    "checked_on": "2026-09-22",
+    "input_per_million_usd": 0.042,
+    "output_usd": 0
+  }
+}

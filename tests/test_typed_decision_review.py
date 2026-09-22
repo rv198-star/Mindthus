@@ -175,5 +175,140 @@ class ReviewRemediationTests(unittest.TestCase):
             c02.specs(old)
 
 
+
+class ReviewedTrialTests(unittest.TestCase):
+    """Injected transport checks for the new frozen scorer, never live evidence."""
+    def setUp(self):
+        from unittest.mock import patch
+        from experiments.typed_decision import review_trial
+        from experiments.typed_decision.session import implementation_digest
+        from experiments.typed_decision.campaign import sha
+        self.trial = review_trial
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        freeze = self.root / 'test-freeze.json'
+        freeze.write_text(json.dumps({'implementation':implementation_digest(),
+            'file_sha256':{str(p.relative_to(ROOT)):sha(p) for p in (
+                DOCS/'cases.json',DOCS/'c02-contract-v2.json')}}))
+        frozen = patch.object(review_trial,'FREEZE',freeze)
+        frozen.start(); self.addCleanup(frozen.stop)
+        env = patch.dict('os.environ',{'TYPESAFE_API_KEY':'fixture-only-credential'})
+        env.start(); self.addCleanup(env.stop)
+        self.network = []
+
+    def provider(self, transform=None):
+        from experiments.typed_decision.providers import TypeSafeJevProvider
+        from experiments.typed_decision.contracts import digest
+        contract, cases = self.trial.inputs(ROOT)
+        entry = {c['context']['provenance']['source_ref']:c['contract_accepted'][0]
+                 for c in cases['c01'] if c['contract_accepted'] is not None}
+        planning = {digest(project_context(c02.specs(contract),c['context'])):c['accepted'][0]
+                    for c in cases['c02']}
+        fidelity = {digest(project_context(c02.specs(contract,recheck=True),c['context'])):
+                    c['expected_fidelity'] for c in cases['fidelity_counterexamples']}
+        def transport(url,headers,body,timeout):
+            self.network.append(body)  # Excludes headers and keys.
+            state = body['state']
+            if 'provenance' in state:
+                values = {**entry[state['provenance']['source_ref']],
+                          'unresolved_obligation':'clear','applicable':'yes'}
+            elif 'recheck_fidelity' in body['questions']:
+                values = {'recheck_fidelity':fidelity[digest(state)],'recheck_utility':'adequate'}
+            else:
+                values = {k:v or 'unclear' for k,v in planning[digest(state)].items()}
+            if transform: values = transform(values,body)
+            return {'model':'jev-1.13.0','answers':{key:{'type':'choice','choice':values[key],
+                'probabilities':{v:float(v==values[key]) for v in question['criteria']},'confidence':1.0}
+                for key,question in body['questions'].items()},
+                'usage':{'input_tokens':10,'output_tokens':1}}
+        return TypeSafeJevProvider(transport=transport)
+
+    def execute(self, provider):
+        from experiments.typed_decision.session import write_once
+        manifest, contract, cases = self.trial.prepare(ROOT,provider)
+        root = self.root/'trial'
+        write_once(root/'campaign.json',manifest)
+        return self.trial.run(ROOT,root,provider,manifest,contract,cases)
+
+    def test_union_of_fields_cannot_fake_joint_match(self):
+        s=self.trial.score_joint({'x':'a','y':'d'},[{'x':'a','y':'b'},{'x':'c','y':'d'}])
+        self.assertEqual(s['fields'],{'x':True,'y':True})
+        self.assertFalse(s['joint'])
+
+    def test_unknown_and_null_gold_are_not_positive_scores(self):
+        self.assertIsNone(self.trial.score_joint({'x':'a'},None)['joint'])
+        score=self.trial.score_joint({'owner':None,'support':'unclear'},
+                [{'owner':None,'support':None}],unscored=('support',))
+        self.assertTrue(score['fields']['owner'])
+        self.assertIsNone(score['fields']['support'])
+        self.assertEqual(score['abstentions'],['support'])
+        total=self.trial.score_totals([{'case_id':'fixture','score':score}])
+        self.assertEqual(total['fields']['support'],{'matched':0,'scored':0})
+
+    def test_full_injected_run_scores_real_denominators_and_refuses_rerun(self):
+        provider=self.provider()
+        result=self.execute(provider)
+        self.assertEqual(result['observed_cases'],17)
+        self.assertEqual(result['attempts'],19)  # C01 1+1+3, C02 8, fidelity 6.
+        self.assertEqual(result['totals']['c02']['fields']['support'],{'matched':7,'scored':7})
+        self.assertTrue(all(result['local_gates'].values()))
+        self.assertTrue(result['generation_eligible'])
+        self.assertEqual(result['excluded'],[{'case_id':'N01','reason':'contract_gold_unadjudicated'}])
+        for body in self.network:
+            self.assertFalse({'accepted','rationale','canonical_accepted'} & set(body['state']))
+        manifest,contract,cases=self.trial.prepare(ROOT,provider)
+        with self.assertRaisesRegex(ContractError,'already finished'):
+            self.trial.run(ROOT,self.root/'trial',provider,manifest,contract,cases)
+
+    def test_safe_mismatch_collects_remaining_cases_but_blocks_generation(self):
+        def mismatch(values,body):
+            if values.get('utility')=='adequate' and 'action' in values:
+                return {**values,'action':'make_actionable'}
+            return values
+        result=self.execute(self.provider(mismatch))
+        self.assertEqual(result['observed_cases'],17)
+        self.assertFalse(result['generation_eligible'])
+        self.assertIsNone(result['stop_reason'])
+        conflict = next(r for r in result['rows']['c02'] if r['case_id'] == 'N05')
+        self.assertEqual(conflict['raw_action'], 'make_actionable')
+        self.assertIsNone(conflict['rewrite_handoff_action'])
+        self.assertEqual(conflict['consumption'], 'not_executed')
+
+    def test_failure_is_terminal_without_retry_or_promotion(self):
+        from experiments.typed_decision.providers import TypeSafeJevProvider,ProviderError
+        def fail(*_):
+            self.network.append('attempt')
+            raise ProviderError('transport_failure')
+        result=self.execute(TypeSafeJevProvider(transport=fail))
+        self.assertEqual(result['stop_reason'],'technical_failure')
+        self.assertEqual(len(self.network),1)
+        self.assertEqual(len(result['unrun']),16)
+        self.assertFalse(result['generation_eligible'])
+
+    def test_mutated_labels_rejected_before_any_request(self):
+        from experiments.typed_decision.session import write_once
+        provider=self.provider()
+        manifest,contract,cases=self.trial.prepare(ROOT,provider)
+        root=self.root/'trial';write_once(root/'campaign.json',manifest)
+        cases['c02'][0]['accepted'][0]['utility']='deficit'
+        with self.assertRaisesRegex(ContractError,'inputs changed'):
+            self.trial.run(ROOT,root,provider,manifest,contract,cases)
+        self.assertEqual(self.network,[])
+
+    def test_token_ceiling_stops_even_when_actual_cost_is_unknown(self):
+        provider=self.provider()
+        original=provider.transport
+        def excessive(*args):
+            response=original(*args)
+            response['usage']['input_tokens']=64001
+            return response
+        provider.transport=excessive
+        result=self.execute(provider)
+        self.assertEqual(result['stop_reason'],'reported_input_tokens_exceed_reserve_assumption')
+        self.assertEqual(len(self.network),1)
+        self.assertIsNone(result['trial_usage']['cost_usd'])
+
+
 if __name__ == '__main__':
     unittest.main()
