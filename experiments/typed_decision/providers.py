@@ -25,6 +25,7 @@ from .contracts import (
     ServingIdentity,
     canonical,
     digest,
+    number,
     require,
 )
 
@@ -82,7 +83,8 @@ class JevEngine:
 
     capabilities = JEV_CAPABILITIES
 
-    def __init__(self, model_family: str):
+    def __init__(self, model_family: str, *, choice_rounding: bool = False):
+        self.choice_rounding = choice_rounding
         self.identity = EngineIdentity(
             family='system_one',
             implementation='jev',
@@ -112,6 +114,7 @@ class JevEngine:
             field = {'select': 'choice', 'assess_proposition': 'noul', 'rate': 'score'}[spec.kind]
             require(field in answer, 'missing Jev value')
             uncertainty = None
+            reason = ''
             if spec.kind != 'assess_proposition':
                 require('confidence' in answer and 'probabilities' in answer,
                         'missing native uncertainty')
@@ -120,11 +123,22 @@ class JevEngine:
                     'confidence': answer['confidence'],
                     'probabilities': answer['probabilities'],
                 }
+                # Opt-in research policy, not a claim about the service's rounding.
+                # Raw wire evidence and provider confidence remain unchanged.
+                probs = answer['probabilities']
+                if (self.choice_rounding and spec.kind == 'select'
+                        and isinstance(probs, dict) and set(probs) == set(spec.criteria)
+                        and all(number(v, 0, 1) for v in probs.values())
+                        and all(abs(v * 100 - round(v * 100)) <= 1e-9 for v in probs.values())):
+                    total = sum(probs.values())
+                    if 1e-6 < abs(total - 1) <= .01 + 1e-9:
+                        uncertainty['probabilities'] = {k: v / total for k, v in probs.items()}
+                        reason = 'choice_probability_sum_normalized_v1'
                 if spec.kind == 'rate':
                     require(answer.get('legend') ==
                             {str(i): text for i, text in enumerate(spec.criteria)},
                             'Jev rating legend differs from rubric')
-            results[spec.id] = DecisionResult('ok', answer[field], uncertainty)
+            results[spec.id] = DecisionResult('ok', answer[field], uncertainty, reason)
         return results
 
 
@@ -133,8 +147,9 @@ class TypeSafeJevProvider:
 
     is_live = True
 
-    def __init__(self, model: str = 'jev-1.13.0', *, transport: Transport = post_json):
-        self.engine = JevEngine(model)
+    def __init__(self, model: str = 'jev-1.13.0', *, transport: Transport = post_json,
+                 choice_rounding: bool = False):
+        self.engine = JevEngine(model, choice_rounding=choice_rounding)
         self.engine_identity = self.engine.identity
         self.capabilities = self.engine.capabilities
         self.serving_identity = ServingIdentity(
@@ -142,7 +157,7 @@ class TypeSafeJevProvider:
             transport='systemone-v1',
             requested_model=model,
             endpoint='https://api.typesafe.ai/v1/systemone',
-            adapter_version='2',
+            adapter_version='2-choice-rounding-v1' if choice_rounding else '2',
         )
         self.transport = transport
 
@@ -192,8 +207,9 @@ class OpenRouterJevProvider:
 
     is_live = True
 
-    def __init__(self, model: str = 'typesafe/jev-1.13', *, transport: Transport = post_json):
-        self.engine = JevEngine(model)
+    def __init__(self, model: str = 'typesafe/jev-1.13', *, transport: Transport = post_json,
+                 choice_rounding: bool = False):
+        self.engine = JevEngine(model, choice_rounding=choice_rounding)
         self.engine_identity = self.engine.identity
         self.capabilities = self.engine.capabilities
         self.serving_identity = ServingIdentity(
@@ -201,7 +217,7 @@ class OpenRouterJevProvider:
             transport='decisions-alpha-v1',
             requested_model=model,
             endpoint='https://openrouter.ai/api/alpha/decisions',
-            adapter_version='2',
+            adapter_version='2-choice-rounding-v1' if choice_rounding else '2',
         )
         self.transport = transport
 

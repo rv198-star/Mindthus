@@ -1,0 +1,38 @@
+{
+  "evidence_kind": "offline_reinterpretation_of_preserved_wire",
+  "live_calls": 0,
+  "original_outcome_unchanged": true,
+  "original_call": "4109e6436eca7cbf24437bedff9bd6f8015f6d6f630786515dc3cd6e19d7c932",
+  "results": {
+    "entry_mode": {
+      "status": "ok",
+      "value": "direct_execution",
+      "uncertainty": {
+        "source": "provider_distribution",
+        "confidence": 0.38,
+        "probabilities": {
+          "acquire_information": 0.06,
+          "direct_execution": 0.54,
+          "mindthus_intervention": 0.39,
+          "unclear": 0.01
+        }
+      },
+      "reason": ""
+    },
+    "unresolved_obligation": {
+      "status": "ok",
+      "value": "clear",
+      "uncertainty": {
+        "source": "provider_distribution",
+        "confidence": 0.9,
+        "probabilities": {
+          "clear": 0.9393939393939393,
+          "present": 0.050505050505050504,
+          "unclear": 0.0101010101010101
+        }
+      },
+      "reason": "choice_probability_sum_normalized_v1"
+    }
+  },
+  "interpretation": "J1 still chooses direct_execution, contrary to frozen SELA intervention label; accepting J2 normalization would not make this case a semantic success. No valid matched English view."
+}

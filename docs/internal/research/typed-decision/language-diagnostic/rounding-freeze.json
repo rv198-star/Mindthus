@@ -1,0 +1,124 @@
+{
+  "schema": "mindthus.language-rounding-recovery-freeze.v1",
+  "source_parent": "bf73be10c136b5f52013bca410a0ef85c81dcb4c",
+  "implementation": "dd0b59faff73995d5e608f2b7482f72c6b0ee91b5cde5f07cd91977b04e63c17",
+  "graph": {
+    "id": "mindthus.c01",
+    "version": "3.1",
+    "dependencies": {
+      "D0": [],
+      "J1": [
+        "D0"
+      ],
+      "J2": [
+        "D0"
+      ],
+      "M1": [
+        "J1",
+        "J2"
+      ],
+      "J4": [
+        "M1"
+      ],
+      "L1": [
+        "J4"
+      ],
+      "J5": [
+        "L1"
+      ],
+      "M2": [
+        "J5"
+      ]
+    }
+  },
+  "files": {
+    "docs/internal/research/typed-decision/language-diagnostic/backup-recovery.md": "f05daebafebb8413b0b86fb62b1db8e28dcc8c1765e8964cfb3ca549e8fbbd7c",
+    "docs/internal/research/typed-decision/language-diagnostic/cases.json": "264a203b8aa7d7e69f57a4ddde41c16251333132c5954efb974884df9ac7cb8e",
+    "docs/internal/research/typed-decision/language-diagnostic/contract-translations.json": "f9e7e08370ddbc9c813cb906aff977ee1e9e23a23c75f0f230b9a8b45e090ae1",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/3l5s/SKILL.md": "ee5d6023e9e02a1c62b76f4fd958432d65a4ba14ed9bbec28d2342826c6b84f3",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/edsp/SKILL.md": "74752ef4c5ce812e3fd2eb02a09361710b2394d7449c43f62ccfca384297c589",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/mpg/SKILL.md": "8ae81df5090faa3188e100af2a942edf1845263834ab21e81b4c2a2d7d8a4fb2",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/sela/SKILL.md": "62bcd1d98555ac9bc4ede44a99f2603b0b511cfd1b1860886eb2e0935d23681e",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/sra/SKILL.md": "9c8b82e1ed44bb477bcb5af207bfa69c4a53dddfc09676f040838f2715e8e541",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/tplan/SKILL.md": "1bfaab186574f4a348cb9dba81bca8e8f441444cff2b1276e0c530b1d0085db2",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/tvg/SKILL.md": "ca0947d7e37920971a1bc986bde254e9493db1324d836c4bbac482435c88a5ee",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/using-mindthus/SKILL.md": "819bcf5e05f6040a879a85735b357cbea81f965477fcc8bfb54b0fdfdc1a6587",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/wae/SKILL.md": "2a8c6d0b8b9f41012f2e7f4c4ed4855165dd67a444cc44130e2043908dc4070e",
+    "docs/internal/research/typed-decision/language-diagnostic/freeze.json": "c86b417434d4498fcbfe8af1428dc956a36fc72293c397130ed55e3e6af0d9e7",
+    "docs/internal/research/typed-decision/language-diagnostic/observation.json": "d66330fe6ef2cb5d1f9565ed8c984a4836d40b80caf9508103ec9e1815b4b45e",
+    "docs/internal/research/typed-decision/language-diagnostic/preflight-review.md": "bc1a7b258a4369449ee6d29f4f5e67fb771d2e3bc8284e6c57a99b2aa28885b5",
+    "docs/internal/research/typed-decision/language-diagnostic/protocol.md": "f0ccc935cd280364bbebbaefcf77b15c8d8e8b882ba65d624e4a38a5633a247f",
+    "docs/internal/research/typed-decision/language-diagnostic/source-contexts.json": "b68bcdd0d976d74307148f76cecf038250539d47677e8565096be066e41c9036",
+    "docs/internal/research/typed-decision/language-diagnostic/translation-review.json": "cba557f4daf8f608c35c7e5e984f1755440e0fe6867f4f1318c57d9af5754d02",
+    "experiments/typed_decision/__init__.py": "f850a5e16c015cfcd86dc6965d370a1921369c30c96e2b704fedd4ca4205a8cb",
+    "experiments/typed_decision/__main__.py": "7e0816185fc99e72e0150726af258941808fdeb03286c7c5397ec0e16fc1e8c2",
+    "experiments/typed_decision/bounded_screen.py": "1295bacf2c9a70ec1287b60c5d6ffeefc45e8f5aca42e742bf0bf498cec5db6c",
+    "experiments/typed_decision/c01.py": "dad505db425666b8c30acf48993e4f78f3a94b8a8511271857e9d13567f27001",
+    "experiments/typed_decision/c02.py": "49760e8e1c443e9fd9079e3babd07852986fb5904a9b42e3ebdc2a949f5c7192",
+    "experiments/typed_decision/c02_trial.py": "87eb95b3d87dc338fd3db85a0c63b80c56afc41c8ae69f36e63d301cae197e77",
+    "experiments/typed_decision/campaign.py": "a356fe762743453d0a2f69c57d8d149c38741a63994a866873de5a9053139d8a",
+    "experiments/typed_decision/contracts.py": "c86b9e19187672369db16e3990a1983c8e5dd2403e2d81ff46a506e57ded2291",
+    "experiments/typed_decision/language_trial.py": "804f258afcf8ff91cb529504f258ebe80da4e171c8f5ac432013573374d3a04f",
+    "experiments/typed_decision/providers.py": "9ef958f3adb971f8595c7f3424767ada1e16b124e15600302bf18a9fb67e90eb",
+    "experiments/typed_decision/review_trial.py": "b6580165a94792ddebfa807bf241132f11c8c46053988f510c4874b0eedc8e44",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b",
+    "experiments/typed_decision/trace.py": "0f7f34cfbbdda279baa5234476020fb811841abb8ac7b53095b2b7a0c2ffb2af",
+    "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+    "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+    "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+    "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+    "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+    "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/using-mindthus/SKILL.md": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+    "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+    "tests/test_typed_decision.py": "8f6442941666117a7a53b947bc8fc6c66209a65ea52b9234aa199a9daa7e8046",
+    "tests/test_typed_decision_review.py": "ffd5366eb5f11877f6a4143fc58ae479e715fe4427c41157964a968611b9314e",
+    "docs/internal/research/typed-decision/language-diagnostic/proxy-recovery.md": "c1288ae426baff8055460c79a91ecf85ed01fe02329fdfdbc711f27009152cef",
+    "docs/internal/research/typed-decision/language-diagnostic/backup-freeze.json": "8fae6824e386d2ad799542173866a042bd7d5b0d259562b6241debf590897279",
+    "docs/internal/research/typed-decision/language-diagnostic/backup-observation.json": "10aec69b9f0b56832543f054f1fce00c8717911fbda815a60d41e2f845ee35c4",
+    "docs/internal/research/typed-decision/language-diagnostic/proxy-freeze.json": "e37379f01ea41b6d1f2df797876b99d87fd7ad7194ed615055d8f9d458542458",
+    "docs/internal/research/typed-decision/language-diagnostic/proxy-observation.json": "7ea2f185228b5b039183039e6959f8eddc189827ef6de66023412bf3ae089141",
+    "docs/internal/research/typed-decision/language-diagnostic/rounding-recovery.md": "d7751b44d46850d2aea0f96312ef86efc08920c4127d71b6c4d01597a0e6072a",
+    "docs/internal/research/typed-decision/language-diagnostic/rounding-offline-l17.json": "0acbc5ddabfeb761bf9c2dc23f14ea0d2185b539ed3489f09d9a38faf7317d58"
+  },
+  "limits": {
+    "max_calls": 45,
+    "max_seconds": 260,
+    "max_request_bytes": 98304
+  },
+  "excluded_case_ids": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L15",
+    "L16",
+    "L17"
+  ],
+  "prior_series_attempts": 47,
+  "native_summary_sha256": "e4b7cd882ca19dc68e0f2028b8c1c03474be1afbafc365982f6b3da9d7b744e0",
+  "candidate_revisions": 0,
+  "engineering": {
+    "targeted_successful": 124,
+    "full_total": 1208,
+    "full_successful": 1201,
+    "full_skipped": 7
+  },
+  "backup_summary_sha256": "732dfbe2cf7836ddd20f123757c4a3a5e5a1c9e7690ccdc9efa38d4225637d8b",
+  "compatibility_policy": "opt-in-choice-rounding-v1",
+  "technical_delta_files": [
+    "experiments/typed_decision/providers.py",
+    "tests/test_typed_decision.py"
+  ]
+}

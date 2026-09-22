@@ -26,6 +26,7 @@ from experiments.typed_decision.providers import (
     ChatProvider,
     FixtureProvider,
     JevProvider,
+    JevEngine,
     OpenRouterJevProvider,
     ProviderError,
     TypeSafeJevProvider,
@@ -42,6 +43,55 @@ def spec(ident='test', kind='select', criteria=None, reads=('text',)):
     if criteria is None:
         criteria = {'yes': 'positive', 'no': 'negative'}
     return DecisionSpec(ident, 'Evaluate the named criterion.', criteria, reads, kind=kind)
+
+
+class ChoiceRoundingTests(unittest.TestCase):
+    def result(self, probs, choice='yes', enabled=True):
+        s = spec(criteria={'yes': 'positive', 'no': 'negative', 'unclear': 'abstain'})
+        answer = {'type': 'choice', 'choice': choice, 'confidence': .9, 'probabilities': probs}
+        original = copy.deepcopy(answer)
+        r = JevEngine('jev-1.13.0', choice_rounding=enabled).results([s], {'test': answer})['test']
+        self.assertEqual(answer, original)
+        r.validate(s)
+        return r
+
+    def test_bounded_decimal_sum_adjustment_preserves_choice_confidence_and_raw(self):
+        for probs in [{'yes': .93, 'no': .05, 'unclear': .01},
+                      {'yes': .93, 'no': .07, 'unclear': .01}]:
+            r = self.result(probs)
+            self.assertEqual(r.value, 'yes')
+            self.assertEqual(r.uncertainty['confidence'], .9)
+            self.assertAlmostEqual(sum(r.uncertainty['probabilities'].values()), 1)
+            self.assertEqual(r.reason, 'choice_probability_sum_normalized_v1')
+
+    def test_strict_default_and_shared_contract_unchanged(self):
+        with self.assertRaisesRegex(ContractError, 'distribution not normalized'):
+            self.result({'yes': .93, 'no': .05, 'unclear': .01}, enabled=False)
+        self.assertEqual(self.result({'yes': .93, 'no': .06, 'unclear': .01}).reason, '')
+        for cls in (TypeSafeJevProvider, OpenRouterJevProvider):
+            self.assertNotEqual(provider_configuration(cls()),
+                                provider_configuration(cls(choice_rounding=True)))
+
+    def test_normalization_does_not_admit_other_invalid_results(self):
+        for probs in [{'yes': .93, 'no': .04, 'unclear': .01},
+                      {'yes': .931, 'no': .049, 'unclear': .01},
+                      {'yes': .93, 'no': .06},
+                      {'yes': .93, 'no': .05, 'unclear': .01, 'extra': 0},
+                      {'yes': 1.01, 'no': -.03, 'unclear': .01},
+                      {'yes': True, 'no': 0, 'unclear': 0},
+                      {'yes': float('inf'), 'no': 0, 'unclear': 0}]:
+            with self.subTest(probs=probs), self.assertRaises(ContractError):
+                self.result(probs)
+        with self.assertRaisesRegex(ContractError, 'argmax'):
+            self.result({'yes': .93, 'no': .05, 'unclear': .01}, choice='no')
+
+    def test_rate_is_not_normalized(self):
+        s = spec(kind='rate', criteria=['low', 'high'])
+        r = JevEngine('jev-1.13.0', choice_rounding=True).results([s], {'test': {
+            'type': 'score', 'score': .05, 'confidence': .9,
+            'probabilities': {'0': .94, '1': .05}, 'legend': {'0': 'low', '1': 'high'}}})['test']
+        with self.assertRaisesRegex(ContractError, 'distribution not normalized'):
+            r.validate(s)
 
 
 class ContractTests(unittest.TestCase):
