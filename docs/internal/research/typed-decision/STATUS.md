@@ -5,6 +5,23 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current channel restriction and value interpretation
+
+Owner explicitly restricted OpenRouter to Jev only. No other model may be called through it.
+Discuss any other comparison model and channel with the owner first; owner may provide a separate
+channel/model. Existing keys or historical Sonnet admission are not permission for future calls.
+This rule is also recorded in AGENTS.md. Historical frozen carriers remain evidence, not executable
+authorization. No new inference was made while recording this restriction.
+
+The completed comparison supplies positive evidence for continuing C01/Jev: on this workload,
+Jev call time was64.065sec vs193.438sec (~one third), and native price-estimated inference cost
+wasUSD0.006026664 vs Sonnet API-reportedUSD0.54983313 (~one ninety-first). These are routing
+inference observations across different serving paths and48vs46 calls, not isolated model speed
+or full-system cost. Main score tied25/30; predefined sensitivity favored Jev21/22vs20/22.
+Prioritize verifying whether these observed economics survive genuine-A/task-level/held-out tests;
+do not interpret limited accuracy evidence as proven equivalence or general superiority.
+Keep existing permission/quality boundaries. Other-model access must be agreed before new live comparisons.
+
 ## Current paired retest — complete; main score tied, qualification unproven
 
 [Results and adjudication](paired-retest/disposition.md), [observations](paired-retest/observation.json)
