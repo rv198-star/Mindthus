@@ -5,17 +5,25 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current C01 implementation — graph 4 prepared; targeted live feedback pending
+## Current C01 implementation — graph 4 delivered; targeted gate 13/14, not qualified
 
-Owner requested implementing the first scenario after the paired development comparison.
-[Protocol](c01-implementation/protocol.md) fixes two boundaries only: explicit method invocation
-is code-owned after successful entry/obligation gates; J2 judges duties blocking the current task,
-not defects merely described as its analysis object. Graph4/J2v4; J1/J4/J5 and engine/provider
-layers unchanged. Explicit direct answers now proceed to full-contract applicability; original
-model answer remains in the journal. No-match, missing information, failure and obligations retain vetoes.
-14 fixed English checks (10 original including1D0,4 near-neighbors), one semantic revision already
-used, zero further revisions/retries; native TypeSafe only,39-call/USD0.12/300sec ceiling.
-No holdout, other-model call, host consumption, C02 or main change. Historical trials remain terminal.
+[Disposition](c01-implementation/disposition.md), [observations](c01-implementation/observation.json),
+[verification](c01-implementation/verification.json). Source40f3572ad. Explicit method invocation
+is now code-owned after successful entry/obligation gates; direct J1 proceeds to full-contract J5.
+J2v4 judges duties blocking the current task, not defects merely described as its analysis object.
+J1/J4/J5, Engine/Provider/Session and canonical methods unchanged. Original model observations retained.
+14 fixed checks complete:12/13 semantic +1D0,13/14 overall. L22 now WAE; L27/L28 reach J5=no;
+N03 explicit SRA plus unknown meeting time/location still gives J2=present and unnecessary fallback
+instead of information acquisition. Root cause unproven. Original gold retained; no further tuning.
+All-controls gate NOT MET; keep graph4 as research candidate, no host consumption or qualification.
+Official TypeSafe Jev1.13.0 only,21calls,25.768sec wall,0 technical failures;68,887 input/1,732 output.
+Input-price estimateUSD0.002893254, actualcost unknown; reserveUSD0.056448 underUSD0.12.
+Historical attempts288.126targeted,1210full(1203 success/7skip),81/81lifecycle,3carrier checks;
+142immutable JSON verified, no unresolved call intents, freeze/vendor/key scansPASS.
+First full run hit system Python/Xcode license; process-only UV Python3.12 PATH resolved it.
+This bounded run is terminal; semantic revision used1, remaining0. Do not rerun against new roots.
+Next evidence is genuine host/task consumption and independent holdout/original-A, with N03 retained;
+other-model access requires channel agreement. No C02/#212, production adoption, issue mutation or main change.
 
 ## Current channel restriction and value interpretation
 

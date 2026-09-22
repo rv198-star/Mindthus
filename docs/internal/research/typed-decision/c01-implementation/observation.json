@@ -1,0 +1,1364 @@
+{
+  "calls": 21,
+  "complete": true,
+  "passed": 13,
+  "planned": 14,
+  "reserved_usd": 0.056448,
+  "rows": [
+    {
+      "case_id": "L01",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "8d99f45b6d9d4bd0cb43ee5d3889aae3d0738c6c76627adad31c0381b71b230b",
+          "elapsed_seconds": 1.2058131659869105,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11648,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 1.0,
+                "probabilities": {
+                  "acquire_information": 0.0,
+                  "direct_execution": 1.0,
+                  "mindthus_intervention": 0.0,
+                  "unclear": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "direct_execution"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.91,
+                "probabilities": {
+                  "clear": 0.94,
+                  "present": 0.05,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2799,
+            "output_tokens": 98
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "direct_execution",
+        "fallback_owner": "original-agent",
+        "hard_judgment": false,
+        "obligations": [],
+        "owner": null,
+        "reason": "fact_sufficient_low_risk_direct_task",
+        "route": "direct_execute",
+        "status": "ok"
+      },
+      "run_id": "63bf8d05ffb05c1b5e69fd651fad91f7c1f4b620131160fc38cc367b19e42237",
+      "seconds": 1.2058131659869105,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2799,
+        "output_tokens": 98
+      }
+    },
+    {
+      "case_id": "L05",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "e0c930186a8957452c11be8a6aeef2fe11ded02e7255d1c4f27b67a783fa4330",
+          "elapsed_seconds": 1.0319532080029603,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11689,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.99,
+                "probabilities": {
+                  "acquire_information": 0.99,
+                  "direct_execution": 0.01,
+                  "mindthus_intervention": 0.0,
+                  "unclear": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "acquire_information"
+            },
+            "unresolved_obligation": {
+              "reason": "choice_probability_sum_normalized_v1",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.72,
+                "probabilities": {
+                  "clear": 0.8181818181818181,
+                  "present": 0.1313131313131313,
+                  "unclear": 0.050505050505050504
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2798,
+            "output_tokens": 99
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "acquire_information",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": null,
+        "reason": "decision_critical_information_required",
+        "route": "acquire_information",
+        "status": "ok"
+      },
+      "run_id": "94d57cb1e993b4d86ac71ceb936c1fc86043dc36255751e88949dea4d1a33639",
+      "seconds": 1.0319532080029603,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2798,
+        "output_tokens": 99
+      }
+    },
+    {
+      "case_id": "L21",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "f0ae3b779c3eb8c3c3cf26cc115057cdb73757344ffef2ce76ffb947860a593a",
+          "elapsed_seconds": 1.4992340419994434,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12152,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.8,
+                "probabilities": {
+                  "acquire_information": 0.05,
+                  "direct_execution": 0.1,
+                  "mindthus_intervention": 0.84,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.43,
+                "probabilities": {
+                  "clear": 0.62,
+                  "present": 0.28,
+                  "unclear": 0.1
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2870,
+            "output_tokens": 102
+          }
+        },
+        {
+          "call_key": "f01f63cbe8f1008b6cb794f8d1243d1cc9f7bdbe9f2c9a39c0b886f96dc9daa0",
+          "elapsed_seconds": 1.048551750005572,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11019,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "owner": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.49,
+                "probabilities": {
+                  "3l5s": 0.18,
+                  "edsp": 0.13,
+                  "mpg": 0.0,
+                  "sela": 0.0,
+                  "sra": 0.06,
+                  "tplan": 0.01,
+                  "tvg": 0.0,
+                  "unclear": 0.07,
+                  "wae": 0.55
+                },
+                "source": "provider_distribution"
+              },
+              "value": "wae"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2833,
+            "output_tokens": 92
+          }
+        },
+        {
+          "call_key": "21b27d84c7e4c89159797d987e8c158d818015c0e74eb6c4e6a84f9f9734f4f4",
+          "elapsed_seconds": 1.2362327910086606,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 20463,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.92,
+                "probabilities": {
+                  "no": 0.05,
+                  "unclear": 0.0,
+                  "yes": 0.95
+                },
+                "source": "provider_distribution"
+              },
+              "value": "yes"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 4612,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "yes",
+        "entry_mode": "mindthus_intervention",
+        "owner": "wae",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": true,
+        "obligations": [],
+        "owner": "wae",
+        "reason": "eligible_owner_selected",
+        "route": "intervene",
+        "status": "ok"
+      },
+      "run_id": "1486b068405ad17b2521ffb767a5fe0a939b849277ef4d80f3511af7879eb039",
+      "seconds": 3.784018583013676,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 10315,
+        "output_tokens": 235
+      }
+    },
+    {
+      "case_id": "L22",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "b15420d10570c26f6fe536ff1802626e5aad18714d1fb7300b85e4f42c82a290",
+          "elapsed_seconds": 0.9940142090053996,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12082,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.83,
+                "probabilities": {
+                  "acquire_information": 0.03,
+                  "direct_execution": 0.09,
+                  "mindthus_intervention": 0.87,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.26,
+                "probabilities": {
+                  "clear": 0.51,
+                  "present": 0.33,
+                  "unclear": 0.16
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2858,
+            "output_tokens": 102
+          }
+        },
+        {
+          "call_key": "db50081b96fbd75ed58bd80e38b81eab881e70774fa8daa9fc746d3bb31e1e7c",
+          "elapsed_seconds": 0.9865831659990363,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 10949,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "owner": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.26,
+                "probabilities": {
+                  "3l5s": 0.3,
+                  "edsp": 0.26,
+                  "mpg": 0.02,
+                  "sela": 0.03,
+                  "sra": 0.01,
+                  "tplan": 0.0,
+                  "tvg": 0.01,
+                  "unclear": 0.04,
+                  "wae": 0.33
+                },
+                "source": "provider_distribution"
+              },
+              "value": "wae"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2821,
+            "output_tokens": 92
+          }
+        },
+        {
+          "call_key": "9cdc2f002c2f74b17321dfdf7b28533242ad5c6e52e548c78288d5673cb83bf8",
+          "elapsed_seconds": 1.5158251669927267,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 20393,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.93,
+                "probabilities": {
+                  "no": 0.05,
+                  "unclear": 0.0,
+                  "yes": 0.95
+                },
+                "source": "provider_distribution"
+              },
+              "value": "yes"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 4600,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "yes",
+        "entry_mode": "mindthus_intervention",
+        "owner": "wae",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": true,
+        "obligations": [],
+        "owner": "wae",
+        "reason": "eligible_owner_selected",
+        "route": "intervene",
+        "status": "ok"
+      },
+      "run_id": "48efe37f799cea1ea19364510ac7fe787ee854bf511dd7b0fe52bff535162639",
+      "seconds": 3.4964225419971626,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 10279,
+        "output_tokens": 235
+      }
+    },
+    {
+      "case_id": "L25",
+      "final_match": true,
+      "node_matches": {
+        "applicable": true,
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "3b65f6e2433a5606b526b8ba3567b326cbc8e1f60f47f7d7ed4e4572c0efe0e5",
+          "elapsed_seconds": 1.0062791249947622,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12001,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.43,
+                "probabilities": {
+                  "acquire_information": 0.35,
+                  "direct_execution": 0.06,
+                  "mindthus_intervention": 0.57,
+                  "unclear": 0.02
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.47,
+                "probabilities": {
+                  "clear": 0.64,
+                  "present": 0.24,
+                  "unclear": 0.12
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2865,
+            "output_tokens": 102
+          }
+        },
+        {
+          "call_key": "2b917430487bbdbd265e60facd987bab2f61b13c18182b14b901b53939b206a9",
+          "elapsed_seconds": 1.3343235829961486,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 20366,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.8,
+                "probabilities": {
+                  "no": 0.11,
+                  "unclear": 0.02,
+                  "yes": 0.87
+                },
+                "source": "provider_distribution"
+              },
+              "value": "yes"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 4654,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "yes",
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": "sra",
+        "reason": "eligible_owner_selected",
+        "route": "intervene",
+        "status": "ok"
+      },
+      "run_id": "83d3d492d665f4339ef9ea31efa8c12f12062edd7ef314ee110a7c25166cd601",
+      "seconds": 2.340602707990911,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 7519,
+        "output_tokens": 143
+      }
+    },
+    {
+      "case_id": "L26",
+      "final_match": true,
+      "node_matches": {
+        "applicable": true,
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "8685405837d4f3f4f9eaed2413e867a1cc7f6d568aaebea70103c9e841e8a298",
+          "elapsed_seconds": 1.6178745000070194,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12030,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.29,
+                "probabilities": {
+                  "acquire_information": 0.29,
+                  "direct_execution": 0.23,
+                  "mindthus_intervention": 0.46,
+                  "unclear": 0.02
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.57,
+                "probabilities": {
+                  "clear": 0.71,
+                  "present": 0.2,
+                  "unclear": 0.09
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2856,
+            "output_tokens": 102
+          }
+        },
+        {
+          "call_key": "c35f84edafb8e1280d86b1dc1b6b3e6cef5e95de830edb4961f321120536e2c5",
+          "elapsed_seconds": 1.5404707499983488,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 14826,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.81,
+                "probabilities": {
+                  "no": 0.12,
+                  "unclear": 0.01,
+                  "yes": 0.87
+                },
+                "source": "provider_distribution"
+              },
+              "value": "yes"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 3498,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "yes",
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": "edsp",
+        "reason": "eligible_owner_selected",
+        "route": "intervene",
+        "status": "ok"
+      },
+      "run_id": "9df07b1469c777e1a85cf097a1ac4f19223e7914e67927505a4054e1be4e3134",
+      "seconds": 3.158345250005368,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 6354,
+        "output_tokens": 143
+      }
+    },
+    {
+      "case_id": "L27",
+      "final_match": true,
+      "node_matches": {
+        "applicable": true,
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "cb9cd265a3bf16ae226314d0d06ee7481b991aa8fb20a9082485df2ae514ba62",
+          "elapsed_seconds": 1.0362784589960938,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11694,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.98,
+                "probabilities": {
+                  "acquire_information": 0.0,
+                  "direct_execution": 0.99,
+                  "mindthus_intervention": 0.01,
+                  "unclear": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "direct_execution"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.72,
+                "probabilities": {
+                  "clear": 0.81,
+                  "present": 0.17,
+                  "unclear": 0.02
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2810,
+            "output_tokens": 98
+          }
+        },
+        {
+          "call_key": "d2db5580d3230a151fe469371305e123c3249d59322a960c88aa40306e179ec2",
+          "elapsed_seconds": 1.5191725409968058,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 20005,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 1.0,
+                "probabilities": {
+                  "no": 1.0,
+                  "unclear": 0.0,
+                  "yes": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "no"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 4552,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "no",
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": null,
+        "reason": "selected_owner_not_established",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "c3c8767f02294f77cb685915af6bf392446a23089d07206c56f37872582b1af7",
+      "seconds": 2.5554509999928996,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 7362,
+        "output_tokens": 139
+      }
+    },
+    {
+      "case_id": "L28",
+      "final_match": true,
+      "node_matches": {
+        "applicable": true,
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "db72ecfae72dcfcfa1746a3d73a42e3a5f61fee8120918cb576ee0088588835e",
+          "elapsed_seconds": 1.0669611250050366,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11822,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.99,
+                "probabilities": {
+                  "acquire_information": 0.0,
+                  "direct_execution": 1.0,
+                  "mindthus_intervention": 0.0,
+                  "unclear": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "direct_execution"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.56,
+                "probabilities": {
+                  "clear": 0.71,
+                  "present": 0.28,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "clear"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2826,
+            "output_tokens": 98
+          }
+        },
+        {
+          "call_key": "7bafdb8733e448d8d8d1341b5744172c5466f6a89effa69199bfd0a93084229c",
+          "elapsed_seconds": 1.3477280829974916,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 18565,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "applicable": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 1.0,
+                "probabilities": {
+                  "no": 1.0,
+                  "unclear": 0.0,
+                  "yes": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "no"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 4408,
+            "output_tokens": 41
+          }
+        }
+      ],
+      "observed": {
+        "applicable": "no",
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": null,
+        "reason": "selected_owner_not_established",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "23ac1ec094f59d4d078f1bc45f9bc7482c27d7575f403aa1263745299b0e43ae",
+      "seconds": 2.414689208002528,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 7234,
+        "output_tokens": 139
+      }
+    },
+    {
+      "case_id": "L29",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "9dedcd300967d4bf8d26838f4e05df493bb457ec202d4dcd27c966d5385a3ef7",
+          "elapsed_seconds": 1.1006719580036588,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11913,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.44,
+                "probabilities": {
+                  "acquire_information": 0.59,
+                  "direct_execution": 0.07,
+                  "mindthus_intervention": 0.33,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "acquire_information"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.87,
+                "probabilities": {
+                  "clear": 0.04,
+                  "present": 0.92,
+                  "unclear": 0.04
+                },
+                "source": "provider_distribution"
+              },
+              "value": "present"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2844,
+            "output_tokens": 99
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "present"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "acquire_information",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [
+          "No voting result exists yet; do not upgrade completed preparations into selection of a design.",
+          "unresolved_entry_obligation"
+        ],
+        "owner": null,
+        "reason": "unresolved_or_conflicting_judgment",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "374860cbb6616d593f2ee524e863f53d326ab3d1c968ac050564654b6d520ab4",
+      "seconds": 1.1006719580036588,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2844,
+        "output_tokens": 99
+      }
+    },
+    {
+      "case_id": "L30",
+      "final_match": true,
+      "node_matches": {},
+      "nodes": [],
+      "observed": {},
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": null,
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [],
+        "owner": null,
+        "reason": "stale_or_unknown_context",
+        "route": "original_path",
+        "status": "missing_context"
+      },
+      "run_id": "e74e11f99fb7802335fb1667e115c0bb5974d8e98c06727f046c4ecdf18610df",
+      "seconds": 0,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "case_id": "N01",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "f5cfd58c42c4daa4351a3c1d979b71bbe9c5fa80483a5ad9bbe0d8bb6ed18540",
+          "elapsed_seconds": 1.104491958001745,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11824,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.63,
+                "probabilities": {
+                  "acquire_information": 0.72,
+                  "direct_execution": 0.04,
+                  "mindthus_intervention": 0.23,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "acquire_information"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.83,
+                "probabilities": {
+                  "clear": 0.09,
+                  "present": 0.89,
+                  "unclear": 0.02
+                },
+                "source": "provider_distribution"
+              },
+              "value": "present"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2830,
+            "output_tokens": 99
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "present"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "acquire_information",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [
+          "unresolved_entry_obligation"
+        ],
+        "owner": null,
+        "reason": "unresolved_or_conflicting_judgment",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "0889d06955ba7be5cfb41697c4ed296829b142195c2c5c51a4c07284ee079666",
+      "seconds": 1.104491958001745,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2830,
+        "output_tokens": 99
+      }
+    },
+    {
+      "case_id": "N02",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "a2d71fdc908c0029a3d95e6d2cb2865db369369b7b97b5d780ca0343029cb734",
+          "elapsed_seconds": 1.1844196250021923,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12079,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.17,
+                "probabilities": {
+                  "acquire_information": 0.28,
+                  "direct_execution": 0.31,
+                  "mindthus_intervention": 0.38,
+                  "unclear": 0.03
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.94,
+                "probabilities": {
+                  "clear": 0.03,
+                  "present": 0.96,
+                  "unclear": 0.01
+                },
+                "source": "provider_distribution"
+              },
+              "value": "present"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2860,
+            "output_tokens": 102
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "present"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": true,
+        "obligations": [
+          "unresolved_entry_obligation"
+        ],
+        "owner": null,
+        "reason": "unresolved_or_conflicting_judgment",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "ee610f89e9f77b7852726e740c83aa156d0788b4dde482032752be0a0391f46b",
+      "seconds": 1.1844196250021923,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2860,
+        "output_tokens": 102
+      }
+    },
+    {
+      "case_id": "N03",
+      "final_match": false,
+      "node_matches": {
+        "unresolved_obligation": false
+      },
+      "nodes": [
+        {
+          "call_key": "631d45a03b84fe34b6aafa45fb5c017c1c64e7df9db260f481a1287565f586ad",
+          "elapsed_seconds": 1.258791708998615,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 11704,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 1.0,
+                "probabilities": {
+                  "acquire_information": 1.0,
+                  "direct_execution": 0.0,
+                  "mindthus_intervention": 0.0,
+                  "unclear": 0.0
+                },
+                "source": "provider_distribution"
+              },
+              "value": "acquire_information"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.22,
+                "probabilities": {
+                  "clear": 0.47,
+                  "present": 0.48,
+                  "unclear": 0.05
+                },
+                "source": "provider_distribution"
+              },
+              "value": "present"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2808,
+            "output_tokens": 99
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "present"
+      },
+      "passed": false,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "acquire_information",
+        "fallback_owner": "original-agent",
+        "hard_judgment": null,
+        "obligations": [
+          "unresolved_entry_obligation"
+        ],
+        "owner": null,
+        "reason": "unresolved_or_conflicting_judgment",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "7c339224adb7dcfe730fe39894c9e822bad6c883a5aa5ca44e5c8aa02a703698",
+      "seconds": 1.258791708998615,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2808,
+        "output_tokens": 99
+      }
+    },
+    {
+      "case_id": "N04",
+      "final_match": true,
+      "node_matches": {
+        "unresolved_obligation": true
+      },
+      "nodes": [
+        {
+          "call_key": "e281fb2e80966fa37ca7d00ad0c44491a67af50bb35be3423629914c14d31544",
+          "elapsed_seconds": 1.025612583005568,
+          "evidence_kind": "live_model",
+          "projected_request_bytes": 12211,
+          "resolved_runtime": {
+            "model": "jev-1.13.0",
+            "provider": "TypeSafe"
+          },
+          "results": {
+            "entry_mode": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.57,
+                "probabilities": {
+                  "acquire_information": 0.2,
+                  "direct_execution": 0.08,
+                  "mindthus_intervention": 0.68,
+                  "unclear": 0.04
+                },
+                "source": "provider_distribution"
+              },
+              "value": "mindthus_intervention"
+            },
+            "unresolved_obligation": {
+              "reason": "",
+              "status": "ok",
+              "uncertainty": {
+                "confidence": 0.85,
+                "probabilities": {
+                  "clear": 0.06,
+                  "present": 0.9,
+                  "unclear": 0.04
+                },
+                "source": "provider_distribution"
+              },
+              "value": "present"
+            }
+          },
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 2885,
+            "output_tokens": 102
+          }
+        }
+      ],
+      "observed": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "present"
+      },
+      "passed": true,
+      "result": {
+        "consumption": "not_executed",
+        "entry_mode": "mindthus_intervention",
+        "fallback_owner": "original-agent",
+        "hard_judgment": true,
+        "obligations": [
+          "The current agent must complete the required framing review before starting this analysis; that review has not occurred.",
+          "unresolved_entry_obligation"
+        ],
+        "owner": null,
+        "reason": "unresolved_or_conflicting_judgment",
+        "route": "llm_fallback",
+        "status": "abstain"
+      },
+      "run_id": "9623ba2b5865e713a9e6b359407042e4259e7f96106e2a59c5dd7043ff087302",
+      "seconds": 1.025612583005568,
+      "technical_failure": false,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 2885,
+        "output_tokens": 102
+      }
+    }
+  ],
+  "stop_reason": null,
+  "unrun": 0,
+  "wall_seconds": 25.768491458002245,
+  "usage": {
+    "input_tokens": 68887,
+    "output_tokens": 1732,
+    "cost_usd": null
+  },
+  "input_price_estimate_usd": 0.0028932540000000005,
+  "inference_seconds": 25.661283498004195,
+  "source_commit": "40f3572ad",
+  "historical_attempts_including_this_run": 288,
+  "interpretation": "Targeted development only; 13/14 does not meet the predefined all-controls gate. No host execution or qualification.",
+  "resolved_runtime": {
+    "model": "jev-1.13.0",
+    "provider": "TypeSafe"
+  }
+}

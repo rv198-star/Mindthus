@@ -1,5 +1,5 @@
 {
-  "stage": "pre-live",
+  "stage": "complete",
   "targeted": {
     "total": 126,
     "passed": 126
@@ -16,5 +16,18 @@
   "secret_scan": "PASS",
   "environment_incident": "Initial full run had 168 failures and 8 errors caused by subprocess python3 resolving to Xcode-gated system Python. Repeated under the existing UV Python 3.12 bin PATH; 1210 tests then passed with 7 skips. No code change for this environment correction.",
   "main_remote": "1527f32b99c375db9ff73f80812c644686a6576a",
-  "semantic_qualification": false
+  "semantic_qualification": false,
+  "wrapped_records_verified": 142,
+  "unresolved_intents": 0,
+  "live": {
+    "passed": 13,
+    "planned": 14,
+    "calls": 21,
+    "technical_failures": 0,
+    "semantic_gate": "NOT_MET"
+  },
+  "source_commit": "40f3572ad",
+  "original_reused_cases_unchanged": 10,
+  "final_exact_key_scanned_files": 181,
+  "final_freeze": "PASS"
 }
