@@ -3,6 +3,7 @@ import importlib.util
 import io
 from pathlib import Path
 import tempfile
+import secrets
 import unittest
 from unittest.mock import patch
 s=importlib.util.spec_from_file_location('host_run',Path(__file__).with_name('run.py'))
@@ -11,6 +12,7 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 class HostChecks(unittest.TestCase):
     def simulate(self,fail=None):
         calls=[]
+        fake_key=secrets.token_hex(24)
         def fake(url,headers,body,timeout):
             self.assertEqual(url,m.ENDPOINT);self.assertEqual(body['model'],'deepseek-v4.1-flash')
             self.assertNotIn('tools',body);self.assertLessEqual(timeout,60)
@@ -20,10 +22,10 @@ class HostChecks(unittest.TestCase):
                     'message':{'content':'offline useful response','reasoning_content':'DO NOT PERSIST REASONING'}}],
                     'usage':{'prompt_tokens':100,'completion_tokens':20,'cost':.001}}
         with tempfile.TemporaryDirectory() as d,patch.object(m,'post_json',fake),contextlib.redirect_stdout(io.StringIO()):
-            root=Path(d)/'trial';r=m.run(root,'offline-secret')
-            with self.assertRaises(Exception):m.run(root,'offline-secret')
+            root=Path(d)/'trial';r=m.run(root,fake_key)
+            with self.assertRaises(Exception):m.run(root,fake_key)
             for f in root.rglob('*.json'):
-                self.assertNotIn('offline-secret',f.read_text());self.assertNotIn('DO NOT PERSIST REASONING',f.read_text())
+                self.assertNotIn(fake_key,f.read_text());self.assertNotIn('DO NOT PERSIST REASONING',f.read_text())
             self.assertEqual(len(calls),r['attempts']);return r
 
     def test_complete_without_keys_reasoning_or_false_currency(self):

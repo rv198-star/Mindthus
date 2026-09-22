@@ -58,8 +58,9 @@ N03仍为 llm_fallback，保留 unresolved_entry_obligation；没有改判、删
 
 ## 下一步宿主试用
 
-模型/渠道待用户选择。这遵守用户已明确的限制：OpenRouter只能调用Jev；其他模型和
-渠道需先商议。没有把历史Sonnet凭据或本地Codex登录当成本轮模型调用授权。
+更新：用户已提供CPA渠道，首选DeepSeek、备用GLM；首轮chat消费试用见
+[结果](../host-trial/disposition.md)。下文保留接入设计边界。OpenRouter仍只能调用Jev，
+历史Sonnet凭据不构成新的调用许可。
 
 确认渠道后先做小规模宿主交接试用，核实实际方法上下文被消费、缺信息时会询问、
 回退可以继续完成任务。预先固定模型、版本、权限、数据、最大调用数/时间/成本、

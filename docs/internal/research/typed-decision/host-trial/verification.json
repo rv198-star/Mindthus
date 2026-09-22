@@ -1,5 +1,5 @@
 {
-  "stage": "pre-live",
+  "stage": "completed",
   "carrier_checks": 3,
   "unchanged_runtime_full_suite_reused": {
     "total": 1218,
@@ -11,5 +11,12 @@
   "selected_model": "deepseek-v4.1-flash",
   "fallback_model_authorized_but_not_used": "glm-5.3-flash",
   "monetary_cost": "unknown",
-  "native_skill_load": "not_observed"
+  "native_skill_load": "not_observed",
+  "freeze": "PASS",
+  "wrapped_records_verified": 14,
+  "unresolved_calls": 0,
+  "exact_key_scan": "PASS in authenticated worker before source use and after trial",
+  "host_calls": 6,
+  "task_criteria": "5/6",
+  "protocol_deviation": "After secret-scan hardening, the offline literal fake key triggered the scan. The shell sequence continued and the live batch began before the final offline rerun. The fixture alone was changed to a random ephemeral fake key; all 3 checks then passed while live calls were running. Frozen live code/payloads were not changed after start. Pre-live 3-PASS evidence referred to the earlier carrier; final verification timing is not claimed to precede inference."
 }

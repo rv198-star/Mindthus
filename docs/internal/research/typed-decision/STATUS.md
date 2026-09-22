@@ -5,16 +5,26 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current host channel — CPA authorized; DeepSeek consumer trial frozen
+## Current CPA host consumption — complete, task criteria5/6; no native-host qualification
 
-Owner supplied https://cpa.72live.com/v1 and authorized deepseek-v4.1-flash first,
-glm-5.3-flash as backup. Secret remains process-memory only, not repo/logs/issues.
-Read-only models discovery confirmed both; first failed GET had no recorded status, second GET200.
-[Protocol](host-trial/protocol.md):6 fixed existing handoffs, DeepSeek only,6POST/1600output tokens
-per request/240sec total, no retry or in-run model switch. Fees/currency contract unknown, no USD-cap
-claim. This is a real chat consumer integration test, not native Codex loading or original-A/ABC.
-Inputs and task criteria frozen; C01/engine/provider/Session unchanged. Prior runtime tests reused;
-3new carrier checks pass. No host inference yet at this checkpoint. OpenRouter remains Jev only.
+[Disposition](host-trial/disposition.md), [answers and evaluation](host-trial/observation.json),
+[verification](host-trial/verification.json). Owner authorized CPA https://cpa.72live.com/v1:
+deepseek-v4.1-flash preferred, glm-5.3-flash backup. OpenRouter remains Jev only.
+Frozen sourcee5a97b73c;6fixed existing handoffs consumed by DeepSeek chat,6complete responses,
+0retry/GLM/newJev calls. Returned model consistent; upstream provider/snapshot unobservable.
+Parent nonblind predefined task criteria5/6: L27 sorted correctly but failed to explain why WAE
+was inapplicable. N03 host recovered to useful information request; original Jev false block stays.
+This is chat-consumer integration only, not original-A/ABC, native skill execution or holdout.
+5295prompt/645completion tokens,28.344sec wall; actualcharges/prices unknown. Total historical
+attempts294 across routing and host generation, not one benchmark. Terminal root; do not rerun.
+3carrier checks finallyPASS; core unchanged so1218full(1211success/7skip) reused.14wrapped records
+valid,6intents resolved,freeze and worker exact-key scansPASS. Credential process exited, no persistedkey.
+Execution-order deviation: secret-scan hardening rejected literal fakekey in test source; shell continued
+and live batch began before final offline rerun. Fixed fixture only to ephemeral random fakekey,
+3checks passed; live frozen code/inputs unchanged. Recorded honestly, no paid repetition to erase it.
+Next implementation candidate: preserve evidence for explaining rejected methods in fallback handoff;
+causal contribution to L27 not proven. No further prompt tuning/model switching in this completed batch.
+Main untouched, #211 unqualified/#212 conditional. Host channel no longer pending.
 
 ## Current C01 host handoff — engineering complete; host model/channel pending
 

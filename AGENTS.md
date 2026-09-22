@@ -53,6 +53,9 @@ Policy / Runtime 拥有组合、阈值、veto、权限、执行和恢复。确�
 需要普通 LLM 或其他对照模型时，先与用户商议具体渠道和型号，由用户确认或另行提供。
 已有 Key、模型目录可见性和历史实验授权都不能替代这项确认；历史 Sonnet 对照只保留证据，
 不得按旧协议再次通过 OpenRouter 运行。
+新增授权渠道（2026-09-22）：`https://cpa.72live.com/v1` 可使用 `deepseek-v4.1-flash`
+（优先）与 `glm-5.3-flash`（备用）。固定试验中不静默切换模型；密钥不进入源码、Git、
+issue或日志。该授权不解除OpenRouter的仅Jev限制。
 
 ## No Abstract Jargon Wall
 
