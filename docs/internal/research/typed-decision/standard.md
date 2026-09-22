@@ -6,6 +6,21 @@
 > Normative Decision Contract design principles: `docs/methodologies/typed-decision-principles.md`.
 > 本文件负责实验治理、接入、验证与价值账；若涉及 State / Question / Choice-Noul-Score / batching / policy / dynamic design 的设计规则，以该规范资产为准。
 
+## 当前设计口径 / 十条使用手册 v1.1
+
+[规范性使用手册](../../../methodologies/typed-decision-principles.md)已统一直接裁决、同State多维矩阵、
+针对已知失效模式的语义检查、树/DAG与有界LLM动态设计。评估必须绑定对象/关系/时点，
+并定义能改变什么动作；不把八选一、八个二分类或全量40题扫描当成唯一架构。
+[using-mindthus后继方案](using-mindthus-assessment-design.md)是设计提案，C01 graph4未改变。
+
+对本治理合同的澄清：有明确消费后果的框架/候选回答审查可以使用；禁止的是无用途的反复
+自评。组合中确定性规则只承担批准过的含义，未决语义仍交给裁决者。批量计费公式、准确率
+提升及纠偏收益须单独验证，不能从并行接口推导。历史预算、试验结果和停止规则原样保留；
+新题组/新图不继承旧资格，当前不续跑旧formal A/B/C，也不启动付费或生产部署。
+
+以下 v0.1 的规划日期与“本轮只登记”表述描述起始设计快照；当前实施进展以 STATUS.md 为准，
+不把旧阶段文字当成新能力已经完成的证明。
+
 状态：设计草案 / 待试点验证；不是已上线能力或已通过模型资格认证。登记日期：2026-09-21。
 本轮授权：制定规范、比较候选、登记最多两个试点；运行时代码、真实推理预算和发布不在本轮执行范围。
 

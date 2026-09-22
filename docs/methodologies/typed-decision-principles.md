@@ -1,301 +1,217 @@
 # Typed Decision / System-One Decision Contract Principles
 
-Status: **Normative design rule for the experimental typed-decision line**  
-Scope: Jev and other fast typed semantic-decision providers  
-Current first provider: Jev  
-Related governance: #209, #210, #211, #212
+文档版本：**1.1**。状态：实验线的规范性使用手册；不表示任何新运行能力已上线。
+适用范围：Jev 及其他可替换的快速类型化语义模型。关联：#209 / #210 / #211 / #212。
+保留十条原则；本版统一多种使用形态，不把单一路由分类器或全量扫描定为唯一架构。
 
-## Core
+## Core / 核心
 
-> LLM / human compiles an open problem into a bounded decision contract; System-One executes fast typed semantic judgments; deterministic runtime owns composition, policy, permission, execution, evidence and recovery.
+> 设计者定义值得判断的问题；快速模型给出有边界的语义评估；流程消费评估，决定继续、补证据、调整主判断、选择方法或转交。效果由实际任务结果检验。
 
-The reusable asset is the **Decision Contract**, not a Jev-specific prompt or API shape.
+核心资产是**问题合同 + 评估结果的消费规则**。一项完整能力应说清：
 
-Four layers must remain distinct:
+`已知失效模式/目标 → 所需材料 → 检查问题 → 类型化评估 → 处理动作 → 实际效果`
 
-```text
-Evidence / State
-      ↓
-Decision Contract
-      ↓
-System-One Judgment
-      ↓
-Policy & Runtime
-```
+四个职责层保持分离：Evidence / State → Decision Contract → System-One Judgment → Policy & Runtime。
+State 中可以存在已记录的判断，但必须标明是谁对什么材料作出的判断；它不会因进入 State 而成为事实。
+模型回答不是权限、事实认证或用户目标的替代品。代码落实已批准的规则，不发明语义真相。
 
-- **State does not decide.**
-- **Decision Contract does not execute.**
-- **System-One does not invent policy or authority.**
-- **Runtime does not invent semantic meaning.**
+可移植边界保持：**Decision Contract 是标准；Decision Engine 是可替换能力；Provider/Transport 是服务路径；Resolved Runtime 是本次实际执行身份。**
+TypeSafe 与 OpenRouter 可服务同一 Jev engine，切换路径不要求重写业务图，但验证资格不自动转移。
 
-A typed answer proves only that the provider returned a value inside the declared answer space. It does not prove the state was sufficient, the contract was correct, the answer was true, or the resulting action is authorized.
+## Mainline / 按需求组合的使用形态
 
-### Portability invariant
+| 形态 | 典型输入与输出 | 选择依据 |
+| --- | --- | --- |
+| 直接裁决 | 一个问题 → 候选/命题概率/等级 | 有限选择已能解决需求；无需为显得复杂而拆题 |
+| 同 State 多维评估 | 同一快照 + 有独立用途的问题组 → 评估矩阵 | 不同切面能影响不同动作，或帮助定位相关分歧 |
+| 定点语义纠偏 | 原任务/证据 + 当前框架、计划或候选回答 → 具名风险及纠偏分支 | 针对反复出现的失效模式，把提醒变成明确执行的检查 |
+| 树/DAG 组合 | 若干评估、取证、生成节点 → 有边界的后续决定 | 存在真实依赖或需要组合判断；逻辑图不等于 API 调用图 |
+| LLM 设计 + 快速模型执行 | 固定模板或必要时动态生成的局部问题合同 → 重复裁决 | 设计有收益且边界可控制；动态设计不是每次调用前置 |
 
-```text
-Decision Contract = standard
-Decision Engine   = replaceable semantic capability
-Provider/Transport = serving path
-Resolved Runtime  = observed execution fact
-```
+这些形态可以组合，也可以单独使用。直接问方法适用性、问更基本的关系、检查候选回答都合法；
+哪种有效由任务证据决定。矩阵是多视角评估产物，不是无遗漏的世界模型，不自动优于一个好问题。[T1]
 
-A provider swap for the same engine must not require a Decision DAG rewrite. A different engine may implement the same `select / assess_proposition / rate` API, but behavioral qualification never transfers automatically across engines, versions, languages, distributions or consequence classes. Provider/transport details must stay in adapters and runtime evidence, not in the Decision Contract.
+## 1. Start From Execution Consequence / 从实际后果倒推
 
-## 1. Start From Execution Consequence
+先定义这项判断改变哪个动作、主判断、证据要求、方法选择或停止条件，再选择问题和执行位置。
+只有提示而没有任何消费用途的分数不进入默认路径。简单确定性工作继续直接执行。
 
-Design from the concrete downstream decision:
+已知规则、精确查找、计算、版本、显式授权与动作凭据由代码和已有权威来源处理；
+开放式候选生成、对象重构和新的因果解释仍由人或 LLM 承担。快速模型可以评估这些候选，不能凭空补齐没有提供的解释。
+一项窄而连贯的高层语义检查是合法的，不要求把每项判断降成字面事实提取。[T1]
 
-- Which branch, gate, rank, handoff, or bounded action can change?
-- Which part of that change actually needs semantic judgment?
-- Which parts are already deterministic and belong in code?
+## 2. State = Sufficient Relevant Context / 绑定对象、关系与时点
 
-Do not begin from “what can Jev answer?”
+给足相关材料、排除无关内容，保持正在判断的关系完整。只缩短 token 而丢掉关系不是优化。
+每个评估对象应有引用/版本；涉及关系时标明主体、客体、范围和时间。
 
-Deterministic lookup, arithmetic, schema validation, identity, permissions, counters, dependency existence and exact state transitions stay deterministic.
+区分原始用户表述、有效目标/偏好/范围、来源事实、规则、LLM 推断、候选产物及未知项。
+摘要与模型生成的“整体解释”保持推断身份，不能成为用来证明自身正确的新证据。
+事实真伪不由用户偏好决定；用户合法目标、时点、风险姿态与局部范围也不能被当作偏见擦除。
 
-Open-ended problem definition, candidate creation, broad causal reasoning and artifact generation stay LLM/human-owned unless a bounded sub-judgment is explicitly compiled.
+区分两个常用快照：
+- **S0**：原请求、目标、约束、相关事实与当前状态，支持入口判断。
+- **S1**：S0 加明确标为待评估的框架/计划/候选回答，支持回答或处理方式审查。
 
-## 2. State = Sufficient Relevant Context, Not Context Dump
+候选回答尚不存在时，不评价“该回答是否跑偏”，也不为路由强制生成完整答案。
+被分析系统存在缺陷，不等于当前助手没有分析资格。当前授权必须从真实权威来源取得。
+同次 Jev 请求的所有问题看见同一 State；题目里的字段引用不是数据访问隔离。[T2]
 
-A DecisionProvider receives the context needed for the specific judgment, with irrelevant material excluded.
+## 3. One Question = One Coherent Semantic Dimension / 连贯而不过度拆分
 
-Do **not** optimize for the smallest possible token count when doing so destroys the relationship being judged. Keep mutually relevant facts together.
+一个问题围绕一个可解释的关系和消费目的。独立维度可分开，关系本身不可拆坏。
+“这个任务适合 WAE 吗”可以是好问题；把它拆成很多近义布尔值不自动更准。
 
-Prefer named structured state:
+同题组可以同时包含直接适用性、关系判断和元层审视。注意相关与必要、适用与必须调用、
+被检查的方法与最终选中方法、当前任务义务与被分析对象的缺陷，分别具有不同语义。
+方法来源以 canonical 合同为准，不从一组自编 AND/OR 特征重写方法定义。
 
-```yaml
-claim: ...
-evidence: ...
-policy: ...
-relevant_history: ...
-```
+把“格局小”“被牵着走”等词改写成有参照的检查：是否遗漏改变目标成立的因素、
+把未证实前提当成事实、把局部解释升级为整体结论，或无必要地超出用户范围。
+更抽象、更长、更多方法，不等于更好。
 
-Separate provenance classes where they matter:
+## 4. Questions Must Be Self-Describing / 问题与问题组都要有合同
 
-- observed fact / runtime evidence;
-- user goal, value or risk posture;
-- policy / method contract;
-- LLM inference or summary;
-- unknown / missing input.
+含义写入 instructions/criteria，不依赖 ID、方法名或标签。近邻候选用定义、排除范围与反例区分。[T3]
+每项设计至少交代：
 
-A summary cannot silently increase the evidence status of its sources.
+| 合同项 | 必须回答的内容 |
+| --- | --- |
+| 身份与来源 | 问题/题组版本；来自哪个方法、认知原语或明确目标 |
+| 对象与输入 | 评估谁或谁和谁的关系；所需 State 字段、候选和时效 |
+| 激活与停止使用 | 哪个事件/风险使它值得问；何时不适用、跳过或退回原路径 |
+| 答案空间 | 选项或等级的含义；多标签、未知、缺材料与失败分别怎样表示 |
+| 消费 | 哪个结果改变什么动作；谁拥有该策略及权限；是否依赖别题结果 |
+| 验证与成本 | 什么能证伪判断；误报/漏报后果；调用、准备、纠偏与维护预算 |
 
-System-One calls are stateless. Required context must be present in the current snapshot or explicit reference contract; do not assume memory from prior calls.
+这些是设计检查项，可复用图级默认值，不要求现在扩展所有运行时 schema。
+题组还应声明同义/相关问题、真实依赖、推测前提、汇合规则和终点。问题的文本与消费规则一起版本化。
 
-## 3. One Question = One Coherent Semantic Dimension
+## 5. Purposeful Semantic Checks / 让纠偏检查有位置、有动作
 
-A question should be narrow enough that its answer has one meaning and one downstream use.
+对已知失效模式设置具名检查点是允许的，包括对当前解释或候选回答的高层审视。
+这不是泛泛要求模型“再认真想一次”，也不是让模型评价自己的总体聪明程度。
 
-“Single dimension” does **not** mean “split semantics into the smallest possible atoms.” Preserve the relationship being judged.
+例如检查“候选主判断是否用局部实现解释整个对象，并遗漏影响目标的因素”，可以导致：
+范围匹配则继续；局部越界则限定局部真相并重构主判断；过度扩大则收回用户范围；
+关键事实缺失则只暂停依赖该事实的判断。具体修正由原责任 LLM 完成。
 
-Good pattern:
+只有结果改变处理方式时才问“信息是否充分”等元问题。机械缺字段用代码检查；
+语义上确实需要评估某项证据能否支持某个决定时，不因它属于“元判断”就一概禁止。
 
-> Given the declared responsibility, dependencies and task state, is this candidate suitable to own this responsibility?
+一次检查触发一次有针对性的、处于既有授权内的纠偏，不默认重写整份产物或重开整个流程。
+检测未命中不等于绝对无错；未检查也不记为通过。任何模糊风险都不得自动成为全局 veto。
+原有必须执行的审计或安全规则继续有效，快速检查不是绕过它们的新入口。
 
-Bad pattern:
+## 6. Batch Independent Questions / 并行、依赖与计费分开
 
-> Is this good, safe, complete and ready to ship?
+同 State、无需别题答案构造本题输入、访问范围相容且有消费价值的问题优先同批。
+允许带显式前提的推测提问；前提不成立时忽略其答案及置信度，不以未消费分支阻断主流程。[T4]
 
-Split independent dimensions when their answers have different meaning, downstream consequence or error policy.
+当上游结果决定需要的新事实、候选、合同或候选产物时，再形成新快照/下一批。
+条件式激活用来控制范围与预算，不是制造额外串行调用的理由，也不是漏掉隐含风险的关键词白名单。
+设计可以宽，运行按相关性和预算选择；固定问 40 题不是目标。
 
-## 4. Questions Must Be Self-Describing
+**计算并行、请求中只出现一份 State、实际账单只计一次 State，是不同命题。**
+本项目尚无成功的多问题计费对照探针。不得把 `S + ΣQ` 当作已验证的计费公式，
+也不得在证据不足时断言一定按 `N × S` 收费。需要时在独立预算内比较同 State 的
+1/4/8/16 题批次与拆分调用，分别记录请求字节、reported tokens、cost/账单、缓存口径和延迟；
+固定版本、问题和输入，区分费用观测与推算。该探针不是本手册修订或设计工作的必跑项。
 
-Question IDs are runtime identifiers, not semantic instructions.
+同批问题互不读取答案不等于错误统计独立；合批的准确度和延迟收益需要验证。[T4]
 
-Every question must carry enough meaning in its instructions and criteria to be understood from the supplied State.
+## 7. Typed Results And Assessment Matrix / 保留答案语义与未知
 
-When useful, reference named State fields explicitly.
+| 通用能力 | Jev 映射 | 正确解释 |
+| --- | --- | --- |
+| select | Choice | 定义集合内的选择；存在多种同时成立的标签时，分别评估或设计明确的集合合同 |
+| assess_proposition | Noul | 肯定命题的概率，不是程度；没有独立 confidence |
+| rate | Score | 描述性有序等级的概率加权位置，不自动是现实测量单位 |
 
-For close Choice options, prefer criteria that distinguish:
+原语含义来自官方接口文档；普通 LLM 后端缺乏同口径概率时保留 unknown，不伪造置信度。[T3][T5][T6]
 
-```text
-what it is
-what it is not for
-representative examples / boundary cases
-```
+评估矩阵是**对象/关系 × 维度**的稀疏结果视图，不是单一“总体正确率”。
+在已有记录上保留目标引用、范围、State/问题版本、status/value、原生 uncertainty、
+来源类别、是否被消费及消费规则即可；这是概念性记录要求，不是新数据库或统一日志平台。
 
-Do not rely on method names, short labels or option names to carry the full semantics.
+`not_evaluated`、`not_applicable`、`missing_context`、`abstain/unclear`、
+`unsupported`、`provider_error` 与明确否定有不同含义；可映射到现有 status/value/元数据，
+不得一律变成 false、0分、清除义务或 PASS。模型生成的矩阵单元保持评估身份，引用不证明内容为真。
 
-## 5. Do Not Manufacture Meta-Judgments
+## 8. Composition, Policy And Correction / 组合结果，而不掩盖未决语义
 
-Do not add a second-order question such as:
+Policy 消费矩阵产生路由、补证据、纠偏或停止动作。权重、阈值、必要条件和权限来自
+外部有效政策；只有可补偿偏好才允许加权，硬约束不能被好分数平均掉。
 
-> “Do you have enough information to answer the previous question?”
+检查冲突时先对齐对象、时点、前提和作用范围。“方法适用”与“无需调用方法”可以同时成立；
+“系统有缺陷”与“当前分析可以开始”也可以同时成立。它们不是逻辑矛盾。
+同一主张、相同范围出现真正冲突时，走命名仲裁/LLM分支，不多数投票或选择更顺眼的答案。
 
-unless that judgment has an independent downstream use that cannot be handled more directly.
+多个认知切面可以是主判断、约束或支持。方法组合不能自动变成八选一、八个二分类或
+手写特征公式的唯一投影。确定性规则只执行已批准含义；主导权仍有语义争议时保留裁决者。
 
-Use deterministic checks for mechanically required fields.
+轨迹说明“用了哪些评估和规则”，不声称揭示模型内部推理，也不事后生成理由伪装观测。
+完整诊断留在审计记录，面向用户只呈现实际结论、依据和必要边界。
 
-If semantic option coverage may be incomplete, represent that explicitly with an admissible outcome such as:
+## 9. Qualification And Marginal Value / 验证纠偏效果与问题的边际价值
 
-```text
-unclear
-other
-none_of_the_above
-not_applicable
-```
+概率/置信度描述局部答案分布，不证明题目正确、State完整、整个图正确或动作已获准。[T7]
+资格绑定对象分布、语言、问题/消费规则、后端/实际模型和动作后果；接口兼容不继承行为资格。
 
-A low confidence answer, missing field, provider failure and genuine semantic no-match are different states and must not be collapsed.
+至少区分：检测命中与误报、未覆盖与弃权、方法必要性与偏好、原回答与纠偏后的任务质量、
+不必要阻断/重写、总调用与端到端成本。使用“拿掉这题/题组会怎样”的删减对照，避免只会加题。
+多题相关误报可能叠加；要测组合后的系统行为，而不只看各题分数。
 
-## 6. Batch Independent Questions Sharing the Same State
+针对局部正确/定框偏离，准备同事实的中性问法与诱导问法、正确的局部范围、确实由局部
+机制控制结果的反例，以及有效用户偏好。允许更具体的视角胜出，不以“升维率”当收益。
+评审角色、跨模型与独立采样分别说明；多个模型上下文不等于独立事实来源。
 
-Logical dependency and physical API batching are separate concerns.
+题组的增加、修订、合并与删除在开发阶段有界进行，冻结后不依据保留集结果改题、改标准或
+换样本。计入设计、取数/投影、翻译、全部调用、工具、重试、回退、修正和维护；缺值写 unknown。
+设计持续改善和单次任务内反复自审是两件事。门槛不满足时保留原路径或缩小/停止投入。
 
-Questions that:
+## 10. Bounded LLM Design / 设计与执行配合，修订不递归
 
-- use the same State;
-- do not require another model answer to construct their own input;
-- have compatible access boundaries;
+优先复用已验证问题/题组；其次在模板内绑定对象与参数；确有具名覆盖缺口且值得时，
+允许 LLM 在运行时设计局部新问题/子图。一次性直接可解的问题不为使用 Jev 额外造图。
 
-should normally be evaluated together.
+设计保留用户目标、证据标准来源、责任与授权；新版本固定后执行。采用允许的声明式节点，
+不执行模型随意生成的宿主代码。新语义不自动继承旧阈值和高后果执行资格。
 
-Speculative questions may be evaluated before the runtime knows whether their answers will be consumed, when doing so stays inside the declared budget.
+为设计、评估、纠偏与复查设一个总预算。每个触发的处理循环先声明修订/复查上限，
+不因结果不满意递归改题、改答、加预算。默认纠偏一次；仍未解决则回到原责任方、补具名
+证据或停止该依赖分支，而不是要求所有单元格变绿。高风险确认规则继续独立生效。
 
-Start a later batch only when an upstream result materially changes:
+同一有效快照与合同下的已完成结果可复用；新回答、新事实或新题义只使相关结果及后继失效。
+所有设计/结果版本保留 lineage。改变消费权重而不改变评估含义时可复用原结果；仍需检查采纳资格。
+未知外部调用先核对原执行状态；不以换目录或重开 trial 实现静默重试。
 
-- what evidence must be acquired;
-- the State snapshot;
-- the candidate set / rubric;
-- the applicable contract or authority surface.
+## Guardrails / 三个容易混淆的界限
 
-A Decision DAG is a **semantic dependency graph**, not an API-call graph.
+“全息扫描”只比喻多视角覆盖，不承诺全知、独立裁判或必然提高准确率。
+“语义检查点”保证检查被执行与处理，不保证检查永远正确，也不代替最终责任人。
+“认知元语参与”不把共享原语变成新总控；全局意味着对当前目标更有解释权，不意味着抽象层级更高。
 
-## 7. Use Choice / Noul / Score According To Their Semantics
+## Runtime support / 文档与实现边界
 
-### Choice
+本版只定义使用纪律。现有 DecisionSpec/DecisionProvider/Session、C01 graph4、方法技能与
+Judgment Trace 未因本手册改写而升级。新题组、矩阵消费和检查点接线须另有设计及验证。
+AGENTS.md 保持紧凑触发引用；仅设计/审查相关能力时阅读本手册，运行时按需加载选中合同。
 
-Use for selecting among a declared set of qualitatively different alternatives.
+[实验治理](../internal/research/typed-decision/standard.md)管理预算、接入与历史边界；
+[入口后继方案](../internal/research/typed-decision/using-mindthus-assessment-design.md)说明具体优化。
+[认知原语索引](shared-primitives.md)及其 canonical 细则继续是方法语义来源。
 
-If the alternatives may not cover reality, include an explicit no-match / other / unclear option or use another admissibility mechanism.
+## References / 官方语义来源与本项目约定
 
-Do not force a wrong choice simply to keep the answer typed.
+下列文档在本次修订中重新核对。它们支持接口与设计模式；本手册的纠偏预算、资格纪律和
+Mindthus 接入边界是项目设计，不冒称供应商保证。并发计费与准确率收益仍需独立实证。
 
-### Noul / Proposition Probability
-
-Use for a clearly defined yes/no proposition.
-
-Its numeric result is the provider's probability for the affirmative proposition.
-
-Noul is not a general “degree” or “strength” scale. If the concept is ordinal, use a Score rubric instead.
-
-### Score
-
-Use for a genuinely ordered set of semantic levels.
-
-Rubric levels should be meaningful descriptions, not bare arbitrary numbers.
-
-The returned score is a position induced by the probability distribution across those levels; it is not automatically a real-world measurement unit.
-
-## 8. Composition, Weights And Vetoes Belong To Policy
-
-Multiple typed judgments may be combined when the policy is declared outside the provider.
-
-Weighted composition is legitimate for compensatory preferences when:
-
-- the component semantics are stable;
-- normalization is explicit;
-- weights are owned by policy / code;
-- the composed result has a declared meaning.
-
-Hard vetoes, safety limits, authority constraints and mandatory prerequisites must remain separate. They cannot be averaged away by favorable scores elsewhere.
-
-Do not multiply provider probabilities and call the result “overall decision correctness” unless a separately justified statistical model actually supports that interpretation.
-
-## 9. Probability And Confidence Are Signals, Not Authority
-
-Provider probabilities / confidence describe the local answer distribution under the supplied State and Decision Contract.
-
-They do **not** directly measure:
-
-- correctness of the Decision Contract;
-- completeness of State;
-- correctness of the overall DAG;
-- correctness of user goals or policy;
-- authorization to execute;
-- whole-task success probability.
-
-Execution requires a separate qualification and policy decision:
-
-```text
-typed result
-+ qualified node / graph version
-+ validated language / input distribution
-+ risk and consequence policy
-+ authority boundary
-→ advisory / bounded execution / escalate / stop
-```
-
-Thresholds are empirical properties of a particular provider, version, contract, language, task distribution and consequence class. They are not universal constants.
-
-## 10. Runtime LLM Design = Bounded Dynamic Compilation
-
-Default order:
-
-1. reuse a qualified DecisionSpec / GraphSpec;
-2. bind parameters within a qualified template;
-3. compose existing qualified pieces when semantics remain unchanged;
-4. only for a named coverage gap, allow LLM/human to design a bounded new question or subgraph;
-5. otherwise let the LLM handle the open problem directly.
-
-Dynamic design must:
-
-- name the uncovered problem;
-- preserve the existing goal, policy source, authority and acceptance floor;
-- produce a declarative, versioned contract;
-- freeze that version for the current run;
-- have a design / execution budget and semantic-revision limit;
-- avoid recursively launching unbounded new design chains;
-- avoid changing the question because the current answer is undesirable;
-- start with no inherited high-risk execution qualification unless separately validated;
-- retain lineage to the predecessor contract / run.
-
-A temporary dynamic graph remains scoped to the declared task until wider reuse is independently qualified.
-
-## Design Review Checklist
-
-Before adding or changing a System-One node, verify:
-
-1. **Consequence** — Which real action or branch can this answer change?
-2. **Owner** — Why is this semantic judgment not deterministic code or open-ended LLM work?
-3. **State** — Are all relevant facts present and irrelevant material excluded?
-4. **Provenance** — Are facts, inference, policy and user constraints distinguishable?
-5. **Question** — Is one coherent semantic dimension being judged?
-6. **Coverage** — Can reality fall outside the answer space? If yes, where is the no-match path?
-7. **Batch** — Which same-state questions can execute together?
-8. **Dependency** — Which later questions truly require changed State or candidate sets?
-9. **Policy** — Where are weights, vetoes, thresholds and authority defined?
-10. **Fallback** — What happens on missing context, no-match, abstention, unsupported capability and provider error?
-11. **Recovery** — Which result can be reused after interruption and what invalidates it?
-12. **Evidence** — How will local judgment quality and end-to-end value be evaluated independently?
-
-## Mindthus Boundary
-
-This rule does not require every Mindthus method to become a Decision DAG.
-
-Use typed decisions only where a bounded semantic judgment can be stated and independently tested without destroying the parent method's meaning.
-
-Method truth remains owned by the canonical Mindthus method contracts.
-
-TPlan continues to own Mission/task lifecycle and mutation authority. Existing evidence, permission and release gates remain authoritative unless an explicit experiment delta says otherwise.
-
-The experimental typed-decision line must not claim Stable promotion from schema validity, fast latency, low price or a few high-confidence examples.
-
-## References
-
-Current experimental governance and implementation:
-
-- `docs/internal/research/typed-decision/standard.md`
-- `docs/internal/research/typed-decision/portfolio.md`
-- `docs/internal/research/typed-decision/implementation.md`
-- `docs/internal/research/typed-decision/verification.json`
-
-External model documentation is supporting evidence for provider semantics; Mindthus acceptance remains based on its own tests and task evidence.
-
-Provider-design references checked during the 2026-09-22 consolidation:
-
-- `https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md`
-- `https://docs.typesafe.ai/concepts/state`
-- `https://docs.typesafe.ai/primitives/choice`
-- `https://docs.typesafe.ai/primitives/noul`
-- `https://docs.typesafe.ai/primitives/score`
-- `https://docs.typesafe.ai/confidence`
+[T1]: https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md
+[T2]: https://docs.typesafe.ai/concepts/state
+[T3]: https://docs.typesafe.ai/primitives/choice
+[T4]: https://docs.typesafe.ai/patterns/fan-out
+[T5]: https://docs.typesafe.ai/primitives/noul
+[T6]: https://docs.typesafe.ai/primitives/score
+[T7]: https://docs.typesafe.ai/confidence

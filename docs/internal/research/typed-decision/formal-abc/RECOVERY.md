@@ -1,5 +1,11 @@
 # C01 acceptance — current execution checkpoint
 
+> Current direction: the Owner requested the revised ten-rule usage manual and a new using-mindthus
+> assessment/checkpoint design. See [successor design](../using-mindthus-assessment-design.md) and
+> [STATUS](../STATUS.md). This preflight is retained as historical work; its live admission is paused.
+> Do not launch the prior label review or A/B/C while implementing the successor. The 18 authored
+> candidates are not independent v5 holdout data. No prior results, labels or freezes are rewritten.
+
 Task: `tsk_9fba19b015e7e9d7`; branch `experiment/typed-decision-runtime`.
 Current function source: `ae96281f4625e9729007dd4d36e838fa26477dd4`.
 Main remains `1527f32b99c375db9ff73f80812c644686a6576a`.

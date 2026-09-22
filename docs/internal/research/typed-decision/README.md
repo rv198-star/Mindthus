@@ -1,6 +1,13 @@
 # Typed decision experiment
 
-## Core
+## Current reading path
+
+Start at [STATUS](STATUS.md), then the [ten-rule usage manual 1.1](../../../methodologies/typed-decision-principles.md)
+and [using-mindthus assessment design](using-mindthus-assessment-design.md). The successor is a design
+proposal, not a graph5 runtime. Existing graph4 and live integration evidence remain valid within their
+original scope; pending formal-abc admission is paused, not silently rerun for the successor.
+
+## Core / historical experiment scope
 An opt-in experimental branch, separate from non-Jev main. C01 and then C02 reached
 bounded stop decisions: neither current contract/data pair qualified. Read
 [C01 disposition](c01-v2-disposition.md) and [C02 disposition](c02-disposition.md)

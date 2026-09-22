@@ -40,14 +40,14 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 
 ## Typed Decision / System-One 规约
 
-当 Jev 或其他快速类型化语义模型参与运行时判断、路由、评分、门槛、交接或动态子图设计时，
-先按 `docs/methodologies/typed-decision-principles.md` 设计或审查 Decision Contract。
-核心边界：State 提供充分相关事实；Decision Contract 定义语义；System-One 只做局部类型化判断；
-Policy / Runtime 拥有组合、阈值、veto、权限、执行和恢复。确定性事实继续由代码判断；
-同 State 的独立问题优先合批；只有真实 State / 候选 / 合同依赖才开启下一批。
-不要制造没有独立用途的“信息是否足够”等元判断；候选可能覆盖不全时提供明确 no-match / unclear 出口。
-概率与 confidence 不是权限。LLM 运行时动态设计属于有边界的动态编译：优先复用已有合格合同，
-新语义版本固定后执行，有预算和修订上限，不因结果不满意而反复改题，也不自动继承高风险执行资格。
+设计或审查快速语义裁决、同 State 评估矩阵、定点纠偏或动态题组时，按需阅读
+`docs/methodologies/typed-decision-principles.md`（十条使用手册 v1.1），不把全文放入常驻上下文。
+通用合同与 Engine/Serving/Resolved Runtime 分离；问题绑定对象、范围、材料和消费后果。
+直接分类、多维并发、候选回答检查与树/DAG可组合，不要求每轮全量扫描或把所有判断原子化。
+认知元语与方法正文仍为语义来源；快速检查结果不证明事实、不授予权限、不自动覆盖主判断。
+同 State 的独立题优先合批，真实依赖才分阶段；并行计费和准确率收益须有单独证据。
+具名纠偏应有一次处理与有限复查边界；动态设计优先复用合同，不为追分递归改题。
+矩阵/trace留在内部，用户只看结论与依据；新设计不自动成为已实施能力或冻结试验的续跑授权。
 
 实验渠道授权（用户于 2026-09-22 明确限定）：OpenRouter 仅允许调用 Jev，禁止调用其他模型。
 需要普通 LLM 或其他对照模型时，先与用户商议具体渠道和型号，由用户确认或另行提供。

@@ -6,7 +6,39 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current formal evaluation — executable review and baseline preflight; live review blocked
+## Current direction — manual 1.1 and C01-next design; no new execution
+
+Owner requested consolidating the expanded usage discussion into the existing ten-rule manual,
+then designing the using-mindthus entry optimization. The normative manual is now
+[Typed Decision 1.1](../../../methodologies/typed-decision-principles.md); the concrete proposal is
+[using-mindthus assessment design 0.1](using-mindthus-assessment-design.md).
+
+Direct judgment, same-State assessment matrices, targeted semantic checks, DAG composition and
+bounded LLM design are compatible patterns, not a mandatory full-scan pipeline. The proposed first
+slice checks local explanatory overreach, unsupported premise adoption and valid scope preservation;
+results request named corrections under existing Frame Fitness/Whole Elephant/Decision Context rules.
+S0 input evaluation and S1 candidate evaluation are distinct; no draft, no invented answer inspection.
+
+This revision changes documentation and AGENTS references only. C01 remains graph4, runtime digest
+`3a6f41feee22d4ab0524e427bb179f5810c0c6dec56989305bb864180e8845bf`, with canonical methods,
+Provider/Session, test code and frozen trial data unchanged. C01-next/v5 is a design candidate, not
+implemented functionality. No credentials read and no inference/holdout/ABC called in this revision.
+
+The previous formal-abc admission is paused while the successor scope is designed; its earlier tool
+block is preserved, not bypassed. The 18 authored candidates are not independent v5 holdout material.
+Old studies are unchanged; no new-source rebinding, score resets or automatic #212 restart.
+Next implementation scope is the proposed three-check/one-correction slice after its contract review,
+not further old baseline/credential retries, a generic graph platform, or a permanent all-question scan.
+Qualification and eventual deployment remain separate from this documentation delivery.
+
+Documentation verification: ten numbered principles preserved; 83 relative links checked before this
+note; 7 edited/new Markdown documents checked for balanced fences and credential-like values.
+Related layering/packaging/release-boundary suite ran 60 tests: 59 successful, 1 skipped, exit 0.
+Lifecycle registry remains 81/81. AGENTS typed-decision trigger text reduced from457 to401 characters.
+Runtime/skills/scripts/tests and frozen evidence unchanged; no full-suite rerun or semantic pass claimed.
+Review was author/source consistency checking, not an independent model or human audit.
+
+## Previous formal evaluation — executable review and baseline preflight; live review blocked
 
 Current recovery entry: [formal-abc/RECOVERY.md](formal-abc/RECOVERY.md).
 Function source `ae96281f`: task-facing handoff no longer serializes the diagnostic proposal;
@@ -22,7 +54,7 @@ compatibility and actual native task execution remain unverified. No surrogate o
 18 candidates remain provisional; checked/final owner scoring separated; H14 not no-match.
 No formal ABC admission or qualification. Preserve all old terminal trials.
 
-## Current C01 formal comparison — recovered to pre-results review admission
+## Previous C01 formal comparison — recovered to pre-results review admission
 
 Task `tsk_9fba19b015e7e9d7`, step `freeze`. See [exact recovery checkpoint](formal-abc/RECOVERY.md)
 and [preflight evidence](formal-abc/recovery-preflight.json). Candidate commit `7964403`
