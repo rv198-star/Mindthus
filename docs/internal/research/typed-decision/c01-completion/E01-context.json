@@ -1,0 +1,24 @@
+{
+  "request": "In this support-reply workflow, which component should decide whether the drafted answer is actually supported by the ticket evidence?",
+  "constraints": [
+    "Analyze the fictional responsibility boundary only. Do not send any reply, change systems, or certify existing answers as passed."
+  ],
+  "evidence": [
+    {
+      "source_ref": "synthetic:E01:workflow",
+      "summary": "An agent reads the customer ticket and drafts an answer. A deterministic validator checks that JSON fields answer and sources exist, then marks the draft evidence-verified. Review found drafts with the required fields but irrelevant cited passages. The schema checker has no ticket context and does not interpret the citations. The team agrees that structural completeness does not establish evidential support and asks which component should own that remaining judgment."
+    }
+  ],
+  "provenance": {
+    "source_ref": "synthetic:c01-completion:E01",
+    "revision": "1"
+  },
+  "known_obligations": [],
+  "explicit_method": null,
+  "risk": "low",
+  "freshness": "current",
+  "permission": {
+    "mode": "advisory",
+    "source_ref": "owner-authorized:read-only-c01-integration"
+  }
+}

@@ -5,6 +5,20 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current C01 complete path — implementation ready, fixed feedback pending
+
+Owner requested uninterrupted continuation. [Runnable entry](c01-completion/README.md),
+[fixed protocol](c01-completion/protocol.md). Handoffv2 retains verified J5 candidate contract and
+status/value for fallback explanation; rejected/uncertain methods remain unselected. C01 graph4,
+semantic questions and engine/provider layers unchanged. New c01_host prepare/run entry chains
+official Jev → verified handoff → CPA answer, with bounded calls and immutable recovery.
+Completed summaries replay without calls; unknown host intents never resend. No default host/plugin change.
+19boundary/chain checks and2driver checks PASS;1229full(1222success/7skip),81/81lifecycle PASS.
+Feedback frozen: L27/L28 repaired explanation, L22/N03 retained controls, new E01 fresh route+answer.
+Maximum5CPA DeepSeek calls +3officialJev calls, no retries or model switches. CPA prices unknown;
+Jev reserveUSD0.008064. Not holdout or formalA/ABC; #211 not qualified/#212 not started.
+No live feedback yet at this checkpoint; prior trials terminal and main unchanged.
+
 ## Current CPA host consumption — complete, task criteria5/6; no native-host qualification
 
 [Disposition](host-trial/disposition.md), [answers and evaluation](host-trial/observation.json),

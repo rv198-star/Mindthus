@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from experiments.typed_decision import c01, c02, campaign, handoff
+from experiments.typed_decision import c01, c02, campaign, handoff, c01_host
 from experiments.typed_decision.contracts import (
     BatchResult,
     ContractError,
@@ -907,6 +907,143 @@ class C01HandoffTests(unittest.TestCase):
                 handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
         self.assertEqual(handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
                          ['proposal']['route'], 'intervene')
+
+    def test_rejected_method_keeps_verified_contract_without_selecting_it(self):
+        context = dict(FIXTURE['context'], explicit_method='wae')
+        report, _ = self.run_graph({'entry_mode': 'direct_execution', 'applicable': 'no'}, context)
+        bundle = handoff.prepare(self.root, report['run_id'], context, ROOT)
+        self.assertEqual(bundle['proposal']['route'], 'llm_fallback')
+        self.assertIsNone(bundle['proposal']['owner'])
+        self.assertIsNone(bundle['selected_method'])
+        check = bundle['fallback_method_check']
+        self.assertEqual((check['owner'], check['status'], check['value']), ('wae', 'ok', 'no'))
+        self.assertEqual(check['content'], (ROOT / 'skills/wae/SKILL.md').read_text())
+        self.assertEqual(check['sha256'], report['identity']['graph']['selected_method_sha256'])
+        self.assertEqual(bundle['consumption'], 'not_executed')
+
+    def test_unclear_and_failed_checks_are_not_relabelled_as_rejection(self):
+        for i, answer in enumerate(['unclear', asdict(DecisionResult('provider_error'))]):
+            report, _ = self.run_graph({'applicable': answer}, root=self.root / str(i))
+            bundle = handoff.prepare(self.root / str(i), report['run_id'], FIXTURE['context'], ROOT)
+            check = bundle['fallback_method_check']
+            self.assertEqual((check['status'], check['value']),
+                             ('ok', 'unclear') if i == 0 else ('provider_error', None))
+            self.assertIsNone(bundle['selected_method'])
+
+    def test_entry_block_does_not_invent_a_method_check(self):
+        report, _ = self.run_graph({'unresolved_obligation': 'present'})
+        bundle = handoff.prepare(self.root, report['run_id'], FIXTURE['context'], ROOT)
+        self.assertIsNone(bundle['fallback_method_check'])
+        self.assertIsNone(bundle['selected_method'])
+
+
+
+class C01HostTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name) / 'chain'
+        self.env = patch.dict(os.environ, {'TYPESAFE_API_KEY': 'offline-fixture'})
+        self.env.start(); self.addCleanup(self.env.stop)
+        self.routing_calls = []; self.host_calls = []
+        self.values = dict(FIXTURE['answers'])
+
+    def native(self, url, headers, body, timeout):
+        self.routing_calls.append(body)
+        return {'model': body['model'], 'answers': {
+            k: {'type': 'choice', 'choice': self.values[k], 'confidence': 1.,
+                'probabilities': {o: float(o == self.values[k]) for o in q['criteria']}}
+            for k, q in body['questions'].items()}, 'usage': {'input_tokens': 10, 'output_tokens': 2}}
+
+    def host(self, url, headers, body, timeout):
+        self.host_calls.append(body)
+        self.assertEqual(url, c01_host.ENDPOINT)
+        self.assertNotIn('tools', body)
+        return {'model': body['model'], 'choices': [{'finish_reason': 'stop', 'message': {'content': 'Fixture answer'}}],
+                'usage': {'prompt_tokens': 10, 'completion_tokens': 2}}
+
+    def run_chain(self, context=None, host=None):
+        manifest = c01_host.admission(context or FIXTURE['context'], ROOT, c01_host.MODELS[0], 'offline transport test')
+        return c01_host.run(manifest, self.root, 'offline-host',
+                            provider=TypeSafeJevProvider(transport=self.native, choice_rounding=True),
+                            host_transport=host or self.host)
+
+    def test_full_chain_and_completed_reentry_do_not_repay(self):
+        first = self.run_chain()
+        second = self.run_chain()
+        self.assertEqual(first, second)
+        self.assertEqual(first['status'], 'complete')
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (3, 1))
+        prompt = self.host_calls[0]['messages'][1]['content']
+        self.assertIn('Scarce Resource', prompt)
+        self.assertEqual(first['routing']['result']['consumption'], 'not_executed')
+        self.assertEqual(first['host']['native_skill_load'], 'not_observed')
+        self.assertFalse(first['qualification'])
+
+    def test_unknown_host_attempt_never_repeats(self):
+        def interrupted(*args):
+            self.host_calls.append('attempted')
+            raise KeyboardInterrupt()
+        with self.assertRaises(KeyboardInterrupt): self.run_chain(host=interrupted)
+        self.assertTrue((self.root / 'host/intent.json').exists())
+        self.assertFalse((self.root / 'host/outcome.json').exists())
+        with self.assertRaises(RecoveryRequired): self.run_chain()
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (3, 1))
+
+    def test_model_drift_and_truncation_are_terminal_without_backup(self):
+        for i, failure in enumerate(['model', 'length']):
+            self.root = Path(self.temp.name) / str(i)
+            def wrong(*args):
+                raw = self.host(*args)
+                if failure == 'model': raw['model'] = c01_host.MODELS[1]
+                else: raw['choices'][0]['finish_reason'] = 'length'
+                return raw
+            result = self.run_chain(host=wrong)
+            before = (len(self.routing_calls), len(self.host_calls))
+            self.assertEqual(result['status'], 'host_failed')
+            self.assertIsNone(result['host']['answer'])
+            self.assertEqual(self.run_chain(), result)
+            self.assertEqual((len(self.routing_calls), len(self.host_calls)), before)
+
+    def test_rejected_method_reaches_host_as_evidence_not_selection(self):
+        self.values.update(entry_mode='direct_execution', applicable='no')
+        context = dict(FIXTURE['context'], explicit_method='wae')
+        result = self.run_chain(context)
+        bundle = read_record(self.root / 'handoff.json')
+        self.assertIsNone(bundle['selected_method'])
+        self.assertEqual(bundle['fallback_method_check']['value'], 'no')
+        self.assertEqual(result['routing']['result']['route'], 'llm_fallback')
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (2, 1))
+
+    def test_changed_frozen_input_blocks_all_calls(self):
+        manifest = c01_host.admission(FIXTURE['context'], ROOT, c01_host.MODELS[0], 'offline transport test')
+        manifest = copy.deepcopy(manifest); manifest['context']['request'] = 'changed'
+        with self.assertRaises(ContractError):
+            c01_host.run(manifest, self.root, 'offline-host', host_transport=self.host)
+        self.assertEqual(self.host_calls, [])
+        self.assertFalse(self.root.exists())
+
+    def test_routing_failure_stops_before_host_and_does_not_retry(self):
+        def failed(*args):
+            self.routing_calls.append('failed'); raise ProviderError('transport_failure')
+        self.native = failed
+        result = self.run_chain()
+        self.assertEqual(result['status'], 'routing_failed')
+        self.assertIsNone(result['host'])
+        self.run_chain()
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (1, 0))
+
+    def test_d0_returns_to_host_without_native_inference(self):
+        result = self.run_chain(dict(FIXTURE['context'], freshness='stale'))
+        self.assertEqual(result['routing']['result']['route'], 'original_path')
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (0, 1))
+
+    def test_missing_host_key_blocks_before_routing(self):
+        manifest = c01_host.admission(FIXTURE['context'], ROOT, c01_host.MODELS[0], 'offline transport test')
+        with self.assertRaises(ContractError):
+            c01_host.run(manifest, self.root, '',
+                        provider=TypeSafeJevProvider(transport=self.native, choice_rounding=True), host_transport=self.host)
+        self.assertEqual((len(self.routing_calls), len(self.host_calls)), (0, 0))
 
 
 class LiveCarrierTests(unittest.TestCase):

@@ -1,0 +1,149 @@
+{
+  "implementation": "941cb274debf0ce3a7f51204aaa14b4d423f6b430f95a800c8687120f21e0abe",
+  "files": {
+    "docs/internal/research/typed-decision/c01-completion/run.py": "8b49edd1a785855a8826102e213ac6219fed3f87060427bb373a6b0d03a9c484",
+    "docs/internal/research/typed-decision/c01-completion/protocol.md": "50928e021e6a90af6eafbe3c3c6e5134bd7f919ec63779c35e1e79663615947b",
+    "docs/internal/research/typed-decision/c01-completion/E01-context.json": "9953b5c4d4166d317fdd1bd754ad9e4e15ddc61a228b77900de7e1000977a72a"
+  },
+  "host_requests": {
+    "L27": "9705d46e533b0d329c2782bc6c52ac0192d0918d72b8491f1f96630877968949",
+    "L28": "234f2c164feb264baf0ef661b22afa514d3adf7a682b78c4db8a63d81949acd3",
+    "L22": "356ab7f799dd62282f801d15350ef4193334452bfff5a22ef53eac8cb75805fe",
+    "N03": "c800fd6235b3d94449bd63412dec967d8159e1a4d55bb348a5601e2f6497869a"
+  },
+  "handoff_digests": {
+    "L27": "cc871c16d9699eb771d8a6b4d8ff71fc866b35cbde3bd3fdbfbd08e9cd9c9f27",
+    "L28": "293ca5dbf29c6cae5a8eb0be737209cde52a885ab88032a831e602615895cc99",
+    "L22": "c6a8dd41777775b3be99b73e3a75628df7b703db4fcf0b16c1d9385d0003b086",
+    "N03": "6aeee97df482e39d727c3c58a5cb4ea7fc99fc44aeca61b48e0146bf812abd92"
+  },
+  "chain_manifest": {
+    "schema": "mindthus.c01-host-admission.v1",
+    "context": {
+      "request": "In this support-reply workflow, which component should decide whether the drafted answer is actually supported by the ticket evidence?",
+      "constraints": [
+        "Analyze the fictional responsibility boundary only. Do not send any reply, change systems, or certify existing answers as passed."
+      ],
+      "evidence": [
+        {
+          "source_ref": "synthetic:E01:workflow",
+          "summary": "An agent reads the customer ticket and drafts an answer. A deterministic validator checks that JSON fields answer and sources exist, then marks the draft evidence-verified. Review found drafts with the required fields but irrelevant cited passages. The schema checker has no ticket context and does not interpret the citations. The team agrees that structural completeness does not establish evidential support and asks which component should own that remaining judgment."
+        }
+      ],
+      "provenance": {
+        "source_ref": "synthetic:c01-completion:E01",
+        "revision": "1"
+      },
+      "known_obligations": [],
+      "explicit_method": null,
+      "risk": "low",
+      "freshness": "current",
+      "permission": {
+        "mode": "advisory",
+        "source_ref": "owner-authorized:read-only-c01-integration"
+      }
+    },
+    "method_root": "/Users/william/Projects/Github/Mindthus/docs/internal/research/typed-decision/language-diagnostic/english",
+    "method_sha256": {
+      "skills/3l5s/SKILL.md": "ee5d6023e9e02a1c62b76f4fd958432d65a4ba14ed9bbec28d2342826c6b84f3",
+      "skills/edsp/SKILL.md": "74752ef4c5ce812e3fd2eb02a09361710b2394d7449c43f62ccfca384297c589",
+      "skills/mpg/SKILL.md": "8ae81df5090faa3188e100af2a942edf1845263834ab21e81b4c2a2d7d8a4fb2",
+      "skills/sela/SKILL.md": "62bcd1d98555ac9bc4ede44a99f2603b0b511cfd1b1860886eb2e0935d23681e",
+      "skills/sra/SKILL.md": "9c8b82e1ed44bb477bcb5af207bfa69c4a53dddfc09676f040838f2715e8e541",
+      "skills/tplan/SKILL.md": "1bfaab186574f4a348cb9dba81bca8e8f441444cff2b1276e0c530b1d0085db2",
+      "skills/tvg/SKILL.md": "ca0947d7e37920971a1bc986bde254e9493db1324d836c4bbac482435c88a5ee",
+      "skills/using-mindthus/SKILL.md": "819bcf5e05f6040a879a85735b357cbea81f965477fcc8bfb54b0fdfdc1a6587",
+      "skills/wae/SKILL.md": "2a8c6d0b8b9f41012f2e7f4c4ed4855165dd67a444cc44130e2043908dc4070e"
+    },
+    "implementation": "941cb274debf0ce3a7f51204aaa14b4d423f6b430f95a800c8687120f21e0abe",
+    "graph": {
+      "id": "mindthus.c01",
+      "version": "4",
+      "dependencies": {
+        "D0": [],
+        "J1": [
+          "D0"
+        ],
+        "J2": [
+          "D0"
+        ],
+        "M1": [
+          "J1",
+          "J2"
+        ],
+        "J4": [
+          "M1"
+        ],
+        "L1": [
+          "J4"
+        ],
+        "J5": [
+          "L1"
+        ],
+        "M2": [
+          "J5"
+        ]
+      }
+    },
+    "routing": {
+      "provider_configuration": {
+        "engine": {
+          "family": "system_one",
+          "implementation": "jev",
+          "model_family": "jev-1.13",
+          "interface_version": "typed-decision.v1"
+        },
+        "serving": {
+          "provider": "typesafe",
+          "transport": "systemone-v1",
+          "requested_model": "jev-1.13.0",
+          "endpoint": "https://api.typesafe.ai/v1/systemone",
+          "adapter_version": "2-choice-rounding-v1"
+        },
+        "capabilities": [
+          "assess_proposition",
+          "rate",
+          "select"
+        ]
+      },
+      "limits": {
+        "max_calls": 3,
+        "max_seconds": 60,
+        "max_request_bytes": 32768
+      },
+      "request_allowlist": [
+        "185136414913f06aad8563572273ce641fd30ad831df0889b8e83ecfc16ee3d1",
+        "2398fc463bb12dfe42ca12f8c65508f9e731b38518315271c360808e7363d701",
+        "24bf78d8919549a08a41fb347ea3e5a5b2000aceabbab7c88bbc766d8ff12488",
+        "6f7428bee21a23145efd9253f9cbefed49532179682008de89f0d481f403dc19",
+        "75afebd7b2025edf8d085379b51f22c49701468f144e3efe5e93e8710e881054",
+        "80b96d24f5332575cd3e36c74a07e7ab4936134889a0e1ef809005757a182b99",
+        "b5663e639eb3a91c1f3db083e728959fc746ef6e51a9d23ab32e8923f6144027",
+        "bfab1840215c2b5fb5cd166e88d2e2459f8b5ea348f5e9be233ac49b1daf5506",
+        "c2ca3912293293b47cee069d426234a539d7254aba36283c12a708bdde21bf4c",
+        "f892abd0427fdd98c28373586a63861d11069ee6741a243a4e67921ce65f7fc5"
+      ],
+      "max_cost_usd": 0.008064,
+      "reserve_per_call_usd": 0.002688
+    },
+    "host": {
+      "endpoint": "https://cpa.72live.com/v1/chat/completions",
+      "model": "deepseek-v4.1-flash",
+      "max_tokens": 1600,
+      "max_seconds": 60,
+      "max_request_bytes": 49152,
+      "max_calls": 1,
+      "cost_usd": null
+    },
+    "authorization_ref": "Owner requested uninterrupted C01 implementation; c01-completion/protocol.md",
+    "mode": "read_only_chat_integration",
+    "total_call_ceiling": 4,
+    "automatic_retries": 0,
+    "qualification": false
+  },
+  "max_host_calls": 5,
+  "max_jev_calls": 3,
+  "host_model": "deepseek-v4.1-flash",
+  "semantic_revisions": 0,
+  "retries": 0
+}
