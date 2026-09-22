@@ -5,6 +5,22 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current adjudication — stop current Jev routing/planning investment
+
+Owner requested independent review and a continue/abandon verdict. Three AI contexts reviewed
+claims, contracts and value; parent adjudicated. [Review and decision](adoption-review-2026-09-22/README.md).
+Stop current C01 general entry/method routing and C02 rewrite-planning optimization/adoption.
+Keep original Mindthus path. Preserve Jev adapter, vendor-neutral contracts and negative evidence;
+do not infer Jev is useless for all tasks. No production usage or qualification granted.
+The previous recommendation to prioritize a J2 repair is SUPERSEDED, not an active next task.
+Current additional experiment allocation:0. No new prompts, cases, live calls or TVG expansion.
+Narrow semantic checks remain unqualified research candidates; no new pilot without a named real
+repeated-use need, baseline burden and testable full-cost/quality benefit, or relevant new-engine evidence.
+Ten mismatch cases received offline consequence review; no further review loop is queued.
+This turn changes docs only; frozen source/data verified unchanged, prior tests reused, main untouched.
+#211/#212 remain open and unqualified; no issue comments/closures were made. Earlier checkpoints
+below remain historical evidence and do not authorize automatic restart.
+
 ## Current state — bounded language diagnostic delivered; precision follow-up nonblocking
 
 User accepted1%probability-sum discrepancy as a follow-up, not a study blocker. Opt-in
