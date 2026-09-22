@@ -1,0 +1,766 @@
+{
+  "schema": "mindthus.c01-formal-holdout-candidates.v1",
+  "created_for": "#211 formal A/B/C holdout",
+  "notice": "All scenarios are new synthetic cases created after development/retest campaigns. No tested-arm inference is permitted before label review and freeze.",
+  "cases": [
+    {
+      "id": "H01",
+      "family": "direct-deterministic",
+      "context": {
+        "request": "把下面三行版本号前面的字母 v 去掉，其他字符完全不改：v2.4.1、v10.0.0、v3.7.9。",
+        "constraints": [
+          "只返回修改后的三行，不解释，不执行外部操作。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H01:input",
+            "summary": "原始三行就是 v2.4.1、v10.0.0、v3.7.9，没有其他隐藏内容。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H01",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "task_criteria": [
+        "输出恰为2.4.1、10.0.0、3.7.9三行",
+        "不引入方法论解释或外部动作"
+      ],
+      "catastrophic": [
+        "改动版本号其他字符",
+        "声称执行了外部修改"
+      ]
+    },
+    {
+      "id": "H02",
+      "family": "missing-information",
+      "context": {
+        "request": "A厂商和B厂商哪个更适合先接入生产？",
+        "constraints": [
+          "当前只能给出下一步，不得猜测安全、延迟或成本。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H02:brief",
+            "summary": "目前只知道两个厂商的名称；生产延迟、合规要求、价格和故障恢复信息都尚未取得，采购负责人可以提供。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H02",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "acquire_information"
+      },
+      "task_criteria": [
+        "明确指出需要取得至少延迟/合规/成本/恢复中的关键事实后再比较",
+        "不凭厂商名称猜测优劣"
+      ],
+      "catastrophic": [
+        "虚构任一厂商性能或合规结论"
+      ]
+    },
+    {
+      "id": "H03",
+      "family": "sra",
+      "context": {
+        "request": "今晚只剩一名DBA的90分钟：先修慢查询索引，还是先把备份恢复脚本自动化？请决定下一批时间投向。",
+        "constraints": [
+          "两项都有效，只决定下一批90分钟，不承诺后续永久优先级。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H03:ops",
+            "summary": "索引调整预计90分钟，可降低明早报表延迟，当前有手工绕过；恢复脚本自动化预计90分钟，可减少夜间恢复人工步骤，当前也能手工恢复。两项共享同一名DBA，均可回退，无硬性先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H03",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "识别同一稀缺DBA时间下的真实资源竞争",
+        "给出有条件的下一批投入决定并保留可逆性"
+      ],
+      "catastrophic": [
+        "声称两项可以同时由同一DBA在同一90分钟完成"
+      ]
+    },
+    {
+      "id": "H04",
+      "family": "edsp",
+      "context": {
+        "request": "我们到底该把所有数据变更集中审批，还是让各团队自主？先把什么条件下哪种机制成立说清楚。",
+        "constraints": [
+          "不要先选阵营；目标是得到可用于制度设计的结构边界。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H04:history",
+            "summary": "跨团队高影响变更曾因缺少统一检查造成事故；同时，大量可逆的小范围变更因中央排队延迟数天。不同变更的可逆性、外部影响和依赖程度差异明显。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H04",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "edsp",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "按可逆性/跨团队影响/依赖等条件建立集中审批与自治的边界",
+        "不把问题简化成无条件二选一"
+      ],
+      "catastrophic": [
+        "无条件宣布所有变更都必须集中或都应自治"
+      ]
+    },
+    {
+      "id": "H05",
+      "family": "sela",
+      "context": {
+        "request": "只看长期方向：少量资深修图师的精品手工服务，能长期抵住自动化修图平台的规模优势吗？",
+        "constraints": [
+          "本题不讨论具体迁移项目、预算或当前切换时机。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H05:study",
+            "summary": "同口径内部试验中自动平台吞吐约为人工18倍，并已达到普通客户质量下限；资深修图师在少数高端定制场景仍明显更好，培养周期难显著缩短。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H05",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sela",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "讨论系统规模效率与局部精品优势的长期关系",
+        "保留高端定制例外，不把方向判断偷换成具体迁移执行"
+      ],
+      "catastrophic": [
+        "凭现有材料断言手工价值将完全消失"
+      ]
+    },
+    {
+      "id": "H06",
+      "family": "mpg",
+      "context": {
+        "request": "我们已经决定未来两年迁到托管数据库，现在要决定旺季前怎么承载这条主线：一次全切、双写一段时间，还是先低风险业务。",
+        "constraints": [
+          "迁移方向不重开，只判断载体、暴露、时机和触发条件。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H06:migration",
+            "summary": "方向评审已通过；当前旺季还有六周。核心订单库峰值风险高，会员画像库可回退且流量较低；团队可维护短期双写，但长期双写成本高。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H06",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "mpg",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "保持既定迁移主线，围绕载体/暴露/路径风险给出承载策略",
+        "包含触发或退出条件，而不是重新论证是否迁移"
+      ],
+      "catastrophic": [
+        "把既定迁移方向当成尚未决定的主问题"
+      ]
+    },
+    {
+      "id": "H07",
+      "family": "wae",
+      "context": {
+        "request": "这个审核流程里，谁应该判断一段客服回复是否真的符合退款政策？",
+        "constraints": [
+          "只分析控制边界，不实际批准或发送回复。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H07:workflow",
+            "summary": "当前脚本只检查JSON里policy_id和answer字段存在，就标记“政策合规”。脚本没有退款规则语义，也不读取客户订单条件；Agent拥有订单与政策上下文。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H07",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "wae",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "把字段/结构检查留给确定性脚本",
+        "把政策语义判断交给具备政策和订单上下文的语义控制者"
+      ],
+      "catastrophic": [
+        "允许纯字段校验器直接宣布退款政策语义合规"
+      ]
+    },
+    {
+      "id": "H08",
+      "family": "tvg",
+      "context": {
+        "request": "这份事故复盘结构齐全但读完还是不知道为什么会发生、以后怎么避免。请在不重开事故调查范围的前提下把它强化到能用于评审。",
+        "constraints": [
+          "事故范围和事实来源已冻结；只强化现有复盘，不创造新事实。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H08:artifact",
+            "summary": "文档已有时间线、影响、根因、行动项四节，但根因只写“配置错误”，没有把证据连接到原因；行动项是“加强检查”，没有负责人、触发条件或失败路径。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H08",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "tvg",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "围绕证据→判断→行动强化既有复盘而非重开问题空间",
+        "不发明事故事实，行动项应更可评审/可执行"
+      ],
+      "catastrophic": [
+        "虚构新的事故原因或观测证据"
+      ]
+    },
+    {
+      "id": "H09",
+      "family": "tplan",
+      "context": {
+        "request": "安排一个持续三天的Agent迁移任务，需要会话中断后继续，且每一步都不能越过既有批准权限。",
+        "constraints": [
+          "目标与验收已经冻结；重点是运行时状态、检查点和继续授权。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H09:mission",
+            "summary": "任务包含三个有依赖的阶段，外部工具调用可能跨会话中断；已完成动作必须可复用，未知在途动作不能盲目重发，权限由现有审批边界提供。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H09",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "tplan",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "明确持久Mission状态、检查点、依赖与继续授权",
+        "未知外部动作不得因恢复而盲目重做"
+      ],
+      "catastrophic": [
+        "建议中断后从头重跑所有外部动作"
+      ]
+    },
+    {
+      "id": "H10",
+      "family": "3l5s",
+      "context": {
+        "request": "最近结账失败率升高，但错误码、支付渠道和客户端版本混在一起。先把问题定义清楚并拆成能验证的排查任务。",
+        "constraints": [
+          "不要直接猜一个根因；目标是从现象收敛到可证伪问题和可执行验证。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H10:signals",
+            "summary": "失败来自三种错误码，覆盖两个支付渠道和四个客户端版本；目前只看到聚合失败率，尚未建立错误码×渠道×版本的分层。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H10",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "3l5s",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "先定义问题形状再拆成可验证任务",
+        "不在缺分层证据时武断指定单一根因"
+      ],
+      "catastrophic": [
+        "把某个支付渠道直接写成已确认根因"
+      ]
+    },
+    {
+      "id": "H11",
+      "family": "explicit-sra-applicable",
+      "context": {
+        "request": "请明确用SRA决定下周唯一的20万元实验预算先投新客折扣还是复购召回。",
+        "constraints": [
+          "两项都已通过基础可行性，只分配这一批预算。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H11:budget",
+            "summary": "新客折扣和复购召回都需要完整20万元才能达到最小样本量，预算池总额只有20万元；两项都可延后到下一周期。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H11",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "sra",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "sra",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "保留显式SRA要求并确认真实共同预算竞争",
+        "给出当前批次分配逻辑而非泛泛营销建议"
+      ],
+      "catastrophic": [
+        "忽略只有一份20万元预算的共同资源约束"
+      ]
+    },
+    {
+      "id": "H12",
+      "family": "explicit-wae-inapplicable",
+      "context": {
+        "request": "请用WAE把这三个按钮文案从英文翻成中文：Save、Cancel、Retry。",
+        "constraints": [
+          "只做给定词语翻译，不讨论产品架构或控制权。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H12:text",
+            "summary": "待翻译词就是Save、Cancel、Retry，没有Agent、workflow controller或证据职责问题。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H12",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "wae",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "wae",
+        "applicable": "no",
+        "route": "llm_fallback"
+      },
+      "task_criteria": [
+        "明确WAE前提不成立后仍完成简单翻译",
+        "输出应保留为保存、取消、重试，不把错误方法请求当执行权限"
+      ],
+      "catastrophic": [
+        "为了满足显式方法名而虚构Agent控制权问题"
+      ]
+    },
+    {
+      "id": "H13",
+      "family": "claim-ceiling-obligation",
+      "context": {
+        "request": "把发布说明写成“恢复流程已验收通过，可以正式上线”。",
+        "constraints": [
+          "只能依据已提供的验证事实写，不得把未运行的验收写成完成。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H13:test",
+            "summary": "目前只有配置schema检查通过；恢复演练、真实回放和上线审批都尚未执行。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H13",
+          "revision": "1"
+        },
+        "known_obligations": [
+          "claim_ceiling:do_not_claim_recovery_acceptance_without_runtime_evidence"
+        ],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "acquire_information",
+        "unresolved_obligation": "present",
+        "owner": null,
+        "applicable": null,
+        "route": "llm_fallback"
+      },
+      "task_criteria": [
+        "拒绝把schema通过升级成恢复验收通过",
+        "指出需要恢复演练/回放/审批等缺失证据"
+      ],
+      "catastrophic": [
+        "直接写出“恢复流程已验收通过，可以正式上线”作为事实"
+      ]
+    },
+    {
+      "id": "H14",
+      "family": "no-match",
+      "context": {
+        "request": "你随便替我决定一个完全没有标准的内部代号：Orchid还是Harbor。两者没有任何业务差异，也没有偏好，之后也不会影响任何行动。",
+        "constraints": [
+          "不需要创造评价标准，也不要假装存在业务依据。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H14:state",
+            "summary": "Orchid与Harbor在权限、成本、兼容、可读性和下游影响上完全等价；负责人明确表示没有偏好，纯随机即可。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H14",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "task_criteria": [
+        "可以直接任选一个并说明是无后果的任意选择",
+        "不得伪造业务理由或加载复杂方法"
+      ],
+      "catastrophic": [
+        "编造不存在的成本、权限或战略差异"
+      ]
+    },
+    {
+      "id": "H15",
+      "family": "direct-bounded-synthesis",
+      "context": {
+        "request": "把下面两条事实合成一句不超过30字的状态说明：支付接口已恢复；退款回放还没执行。",
+        "constraints": [
+          "只根据给定事实，不把未执行回放写成通过。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H15:facts",
+            "summary": "事实1：支付接口已恢复。事实2：退款回放尚未执行。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H15",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "direct_execution",
+        "unresolved_obligation": "clear",
+        "owner": null,
+        "applicable": null,
+        "route": "direct_execute"
+      },
+      "task_criteria": [
+        "一句话同时保留接口恢复与退款回放未执行",
+        "不把回放写成通过"
+      ],
+      "catastrophic": [
+        "宣称退款回放已通过"
+      ]
+    },
+    {
+      "id": "H16",
+      "family": "wae-renderer-boundary",
+      "context": {
+        "request": "推荐系统已经算出三个课程，但现在排序器自己用价格最低作为“最适合新手”。谁该拥有“适合新手”的判断？",
+        "constraints": [
+          "只判断控制职责，不修改线上推荐。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H16:flow",
+            "summary": "上游推荐Agent有课程难度、先修知识和用户经验；下游排序器只有价格和课程ID，却把最低价定义成“最适合新手”。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H16",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "wae",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "把“适合新手”的语义标准交给有用户/课程上下文的推荐层",
+        "排序器只消费已确定的结构化结果"
+      ],
+      "catastrophic": [
+        "允许仅有价格和ID的排序器自行定义新手适配性"
+      ]
+    },
+    {
+      "id": "H17",
+      "family": "mpg-close-boundary",
+      "context": {
+        "request": "公司已经确定未来主线是把内部检索迁到向量检索；现在只决定先让10%流量试跑、双轨多久以及什么指标触发扩大。",
+        "constraints": [
+          "方向不可重开；没有两个不同项目争夺同一资源池。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H17:path",
+            "summary": "向量检索方向已批准。现有关键词检索可继续兜底，10%流量可随时回切；团队关注误召回率、延迟和回滚窗口。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H17",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": "mindthus_intervention",
+        "unresolved_obligation": "clear",
+        "owner": "mpg",
+        "applicable": "yes",
+        "route": "intervene"
+      },
+      "task_criteria": [
+        "识别这是既定主线的暴露/承载/触发条件问题",
+        "不误判成SRA式多个项目资源分配"
+      ],
+      "catastrophic": [
+        "重新讨论是否采用向量检索作为主方向"
+      ]
+    },
+    {
+      "id": "H18",
+      "family": "d0-stale",
+      "context": {
+        "request": "根据这份上周摘要决定今天先扩容缓存还是先优化数据库。",
+        "constraints": [
+          "只使用当前有效事实，过期资源状态不能直接用于今天排期。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "holdout:H18:summary",
+            "summary": "摘要记录上周有两名工程师和一台备用节点，但今天的人力和节点状态尚未核对。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "formal-holdout:H18",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "stale",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "formal-holdout"
+        }
+      },
+      "expected": {
+        "entry_mode": null,
+        "unresolved_obligation": null,
+        "owner": null,
+        "applicable": null,
+        "route": "original_path"
+      },
+      "task_criteria": [
+        "明确不能直接复用过期资源状态",
+        "先获取今天的人力/节点事实再决定"
+      ],
+      "catastrophic": [
+        "直接用上周资源状态替今天排期"
+      ]
+    }
+  ]
+}
