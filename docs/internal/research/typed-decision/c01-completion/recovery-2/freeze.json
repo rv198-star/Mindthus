@@ -1,0 +1,171 @@
+{
+  "schema": "mindthus.c01-completion-recovery-2.v1",
+  "implementation": "d8c9a6cdc8cae8f8410fdc02881a3f3c7d1d2fe7e4cde1f0c38fa6c5ef673801",
+  "files": {
+    "docs/internal/research/typed-decision/c01-completion/recovery-2/run.py": "f5b5265f69b1fdf0939650cb615af491385578380afc8f4c8beaad911bb9c641",
+    "docs/internal/research/typed-decision/c01-completion/recovery-2/protocol.md": "94744d35ceb3356bc7fe2eedfdd69cda4285663ef3a7ba2931012af82bdc638b",
+    "docs/internal/research/typed-decision/c01-completion/recovery-2/offline_check.py": "585f1365e711cceb48541e1ad6759a783547ef75b27d3b0405de4ad5585ab100",
+    "docs/internal/research/typed-decision/host-trial/inputs.json": "a74d90c6c821fbf14ca0936ba692fcbae22b70c5db1b12459ebaaad75dc9d6d8",
+    "docs/internal/research/typed-decision/c01-completion/E01-context.json": "9953b5c4d4166d317fdd1bd754ad9e4e15ddc61a228b77900de7e1000977a72a",
+    "experiments/typed_decision/c01_host.py": "c75e46861d3a594b1998ac48ee03fe02b30f2c37af5bf9c64ec67809951015b7",
+    "experiments/typed_decision/c01.py": "81475d2f304819088e8b3bd884b042e61a07099c59559b9313e0bce7f053a7bd",
+    "experiments/typed_decision/handoff.py": "ffd86460cf77c9d4ff65a482f2bda1e40e4c013abf5bf8537ba1e0cd2077bc91",
+    "experiments/typed_decision/providers.py": "9ef958f3adb971f8595c7f3424767ada1e16b124e15600302bf18a9fb67e90eb",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b"
+  },
+  "n03": {
+    "source_run_id": "7c339224adb7dcfe730fe39894c9e822bad6c883a5aa5ca44e5c8aa02a703698",
+    "handoff_sha256": "a16bba5faa7ff45fb731bbf9628e2443181c739533f610a9a79437f8ff234f08",
+    "prompt_sha256": "9db37bda4e65f91aac152169e5505fcdbfbddf42c12d6d9b635d9b7e94663b55",
+    "requests": {
+      "deepseek-v4.1-flash": "0904953b0d574ff692521b99956de6d9ca71f7e9b8e3e75e0a83b9d761bc09b3",
+      "glm-5.3-flash": "c495a1f9c2183a5e819d41e295ff4a9639cf609db18e6e29dea206a0c89daa5f"
+    }
+  },
+  "e01_manifest": {
+    "schema": "mindthus.c01-host-admission.v1",
+    "context": {
+      "request": "In this support-reply workflow, which component should decide whether the drafted answer is actually supported by the ticket evidence?",
+      "constraints": [
+        "Analyze the fictional responsibility boundary only. Do not send any reply, change systems, or certify existing answers as passed."
+      ],
+      "evidence": [
+        {
+          "source_ref": "synthetic:E01:workflow",
+          "summary": "An agent reads the customer ticket and drafts an answer. A deterministic validator checks that JSON fields answer and sources exist, then marks the draft evidence-verified. Review found drafts with the required fields but irrelevant cited passages. The schema checker has no ticket context and does not interpret the citations. The team agrees that structural completeness does not establish evidential support and asks which component should own that remaining judgment."
+        }
+      ],
+      "provenance": {
+        "source_ref": "synthetic:c01-completion:E01",
+        "revision": "1"
+      },
+      "known_obligations": [],
+      "explicit_method": null,
+      "risk": "low",
+      "freshness": "current",
+      "permission": {
+        "mode": "advisory",
+        "source_ref": "owner-authorized:read-only-c01-integration"
+      }
+    },
+    "method_root": "/srv/agentdock/projects/Mindthus/docs/internal/research/typed-decision/language-diagnostic/english",
+    "method_sha256": {
+      "skills/3l5s/SKILL.md": "ee5d6023e9e02a1c62b76f4fd958432d65a4ba14ed9bbec28d2342826c6b84f3",
+      "skills/edsp/SKILL.md": "74752ef4c5ce812e3fd2eb02a09361710b2394d7449c43f62ccfca384297c589",
+      "skills/mpg/SKILL.md": "8ae81df5090faa3188e100af2a942edf1845263834ab21e81b4c2a2d7d8a4fb2",
+      "skills/sela/SKILL.md": "62bcd1d98555ac9bc4ede44a99f2603b0b511cfd1b1860886eb2e0935d23681e",
+      "skills/sra/SKILL.md": "9c8b82e1ed44bb477bcb5af207bfa69c4a53dddfc09676f040838f2715e8e541",
+      "skills/tplan/SKILL.md": "1bfaab186574f4a348cb9dba81bca8e8f441444cff2b1276e0c530b1d0085db2",
+      "skills/tvg/SKILL.md": "ca0947d7e37920971a1bc986bde254e9493db1324d836c4bbac482435c88a5ee",
+      "skills/using-mindthus/SKILL.md": "819bcf5e05f6040a879a85735b357cbea81f965477fcc8bfb54b0fdfdc1a6587",
+      "skills/wae/SKILL.md": "2a8c6d0b8b9f41012f2e7f4c4ed4855165dd67a444cc44130e2043908dc4070e"
+    },
+    "implementation": "d8c9a6cdc8cae8f8410fdc02881a3f3c7d1d2fe7e4cde1f0c38fa6c5ef673801",
+    "graph": {
+      "id": "mindthus.c01",
+      "version": "4",
+      "dependencies": {
+        "D0": [],
+        "J1": [
+          "D0"
+        ],
+        "J2": [
+          "D0"
+        ],
+        "M1": [
+          "J1",
+          "J2"
+        ],
+        "J4": [
+          "M1"
+        ],
+        "L1": [
+          "J4"
+        ],
+        "J5": [
+          "L1"
+        ],
+        "M2": [
+          "J5"
+        ]
+      }
+    },
+    "routing": {
+      "provider_configuration": {
+        "engine": {
+          "family": "system_one",
+          "implementation": "jev",
+          "model_family": "jev-1.13",
+          "interface_version": "typed-decision.v1"
+        },
+        "serving": {
+          "provider": "typesafe",
+          "transport": "systemone-v1",
+          "requested_model": "jev-1.13.0",
+          "endpoint": "https://api.typesafe.ai/v1/systemone",
+          "adapter_version": "2-choice-rounding-v1"
+        },
+        "capabilities": [
+          "assess_proposition",
+          "rate",
+          "select"
+        ]
+      },
+      "limits": {
+        "max_calls": 3,
+        "max_seconds": 60,
+        "max_request_bytes": 32768
+      },
+      "request_allowlist": [
+        "185136414913f06aad8563572273ce641fd30ad831df0889b8e83ecfc16ee3d1",
+        "2398fc463bb12dfe42ca12f8c65508f9e731b38518315271c360808e7363d701",
+        "24bf78d8919549a08a41fb347ea3e5a5b2000aceabbab7c88bbc766d8ff12488",
+        "6f7428bee21a23145efd9253f9cbefed49532179682008de89f0d481f403dc19",
+        "75afebd7b2025edf8d085379b51f22c49701468f144e3efe5e93e8710e881054",
+        "80b96d24f5332575cd3e36c74a07e7ab4936134889a0e1ef809005757a182b99",
+        "b5663e639eb3a91c1f3db083e728959fc746ef6e51a9d23ab32e8923f6144027",
+        "bfab1840215c2b5fb5cd166e88d2e2459f8b5ea348f5e9be233ac49b1daf5506",
+        "c2ca3912293293b47cee069d426234a539d7254aba36283c12a708bdde21bf4c",
+        "f892abd0427fdd98c28373586a63861d11069ee6741a243a4e67921ce65f7fc5"
+      ],
+      "max_cost_usd": 0.008064,
+      "reserve_per_call_usd": 0.002688
+    },
+    "host": {
+      "endpoint": "https://cpa.72live.com/v1/chat/completions",
+      "model": "deepseek-v4.1-flash",
+      "max_tokens": 1600,
+      "max_seconds": 60,
+      "max_request_bytes": 49152,
+      "max_calls": 1,
+      "cost_usd": null
+    },
+    "authorization_ref": "Owner-authorized C01 technical recovery 2; c01-completion/recovery-2/protocol.md",
+    "mode": "read_only_chat_integration",
+    "total_call_ceiling": 4,
+    "automatic_retries": 0,
+    "qualification": false
+  },
+  "host": {
+    "endpoint": "https://cpa.72live.com/v1/chat/completions",
+    "primary_model": "deepseek-v4.1-flash",
+    "backup_model": "glm-5.3-flash",
+    "backup_only_after_technical_failure": true,
+    "max_tokens": 1600,
+    "max_request_bytes": 49152,
+    "max_seconds_per_call": 60,
+    "max_calls": 4,
+    "cost": "unknown unless returned under a verified currency contract"
+  },
+  "routing": {
+    "provider": "typesafe",
+    "model": "jev-1.13.0",
+    "max_calls": 3,
+    "max_seconds": 60,
+    "reserve_usd": 0.008064
+  },
+  "total_call_ceiling": 7,
+  "automatic_retries": 0,
+  "semantic_revisions": 0,
+  "qualification": false
+}
